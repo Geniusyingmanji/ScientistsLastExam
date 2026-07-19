@@ -1,8 +1,9 @@
 # Contributing to Frontier-Science
 
-We need the community to expand this benchmark across scientific disciplines. We welcome
-new optimization tasks via Pull Requests. If you'd like to contribute, follow the standards
-and process below.
+The current priority is certifying and hardening the existing inventory, not increasing its
+size. We welcome fixes, task cards, scientific tests, and carefully reviewed new optimization
+tasks via Pull Requests. Discovery makes a package visible with `--all`; admission to the
+default benchmark requires the separate certification gate below.
 
 > **AI-assisted contributions are welcome.** However, please verify all oracle code and
 > reference values yourself — do not leave scientific correctness entirely to AI.
@@ -11,20 +12,27 @@ and process below.
 
 ## Task requirements
 
-Every Frontier-Science task must satisfy **all five** of these:
+Every certified Frontier-Science task must satisfy **all seven** of these:
 
-1. **Continuous, improvable metric.** The oracle returns a numeric `combined_score` that can be
+1. **PhD/expert difficulty floor.** The task must require doctoral-level domain knowledge,
+   advanced numerical optimization, or current research heuristics. Do not submit educational
+   prompts, textbook exercises, toy demos, or easy/medium on-ramp tasks as benchmark items.
+2. **Continuous, improvable metric.** The oracle returns a numeric `combined_score` that can be
    meaningfully improved — not a binary pass/fail.
-2. **Deterministic, frozen oracle.** Same candidate program → same score. No LLM judge, no
+3. **Deterministic, frozen oracle.** Same candidate program → same score. No LLM judge, no
    network, no randomness without a fixed seed.
-3. **Locally runnable.** Easy/Medium tasks: CPU, < 2 min. Hard/Flagship tasks may use GPU but
-   must finish a single evaluation within a few minutes.
-4. **Black-box safety.** The agent must not be able to read the oracle code, the test-split
-   answers, or the verification internals. The oracle runs in a subprocess on a copy of the
-   candidate file.
-5. **Scientific significance.** Improvement corresponds to real scientific value (a better
+4. **Locally runnable.** CPU-only hard tasks should finish within a few minutes; flagship tasks
+   may use GPU or heavier assets if the dependency and budget are documented.
+5. **Black-box safety.** The agent must not be able to read the oracle code, the test-split
+   answers, or the verification internals. The candidate runs in a restricted sandbox and the
+   trusted parent process alone imports the oracle and produces metrics.
+6. **Scientific significance.** Improvement corresponds to real scientific value (a better
    algorithm, a better molecular design, a lower energy, ...). Provide a citable reference for
    the baseline and the best-known result.
+7. **Auditable task card and review.** Add `TASK_CARD.yaml` with the scientific question,
+   artifact semantics, equations/oracle, normalization, stable DOI/arXiv/URL identifiers,
+   invariants, known shortcuts, licensing/contamination notes, and both domain and evaluator
+   review status. A directory without this evidence remains `candidate`.
 
 ---
 
@@ -38,16 +46,17 @@ benchmarks/
 └── <Domain>/                         # e.g. Chemistry, Physics, Algorithm, Mathematics
     └── <Task>/                       # e.g. LennardJonesCluster, CapSet
         ├── Task.md                   # [Required] Agent-visible task description
+        ├── TASK_CARD.yaml            # [Required for certification] evidence + reviews
         ├── solution.py               # [Required] Weak-but-valid baseline program
         ├── frontier_eval/            # [Required] Black-box evaluation contract
         │   ├── metadata.yaml         # Task metadata (see below)
         │   ├── initial_program.txt   # Points to the baseline file (e.g. "solution.py")
         │   ├── candidate_destination.txt  # File the agent edits (e.g. "solution.py")
-        │   ├── eval_command.txt      # Eval command template (see below)
+        │   ├── entrypoint.txt        # Required callable exported by solution.py
         │   ├── constraints.txt       # Natural-language constraints shown to the agent
         │   ├── agent_files.txt       # Files the agent is allowed to see
         │   ├── readonly_files.txt    # Files the agent must not modify
-        │   └── run_eval.py           # Subprocess entry: loads candidate, calls oracle
+        │   └── run_eval.py           # Legacy compatibility; never trusted for metrics
         ├── verification/             # [Required] Hidden oracle — agent CANNOT see this
         │   └── evaluator.py          # The frozen scoring function
         └── references/               # [Optional] Data, configs, known-best records
@@ -59,8 +68,8 @@ benchmarks/
 ```yaml
 domain: Chemistry                    # top-level domain directory name
 task: LennardJonesCluster            # task directory name
-difficulty: medium                   # easy | medium | hard | flagship
-tier: T1                             # T0 (on-ramp) | T1 | T2 | T3 (flagship)
+difficulty: hard                     # hard | flagship
+tier: T2                             # T2 (expert) | T3 (flagship)
 oracle_type: analytical              # analytical | physical_sim | dataset_oracle | neural_surrogate
 score_mode: clipped                  # clipped (cap at [0,1]) | uncapped (SoTA-relative, >1 = beat SoTA)
 gpu_required: false
@@ -71,54 +80,12 @@ reference_sota: <description>        # best-known result and its source
 citation: "Author, Journal, Year"    # citable reference(s)
 ```
 
-### `frontier_eval/eval_command.txt`
+### `frontier_eval/entrypoint.txt`
 
-Use this exact template (the harness substitutes `{python}`, `{candidate}`, `{metrics}`):
-
-```
-{python} frontier_eval/run_eval.py --candidate {candidate} --metrics-out {metrics}
-```
-
-### `frontier_eval/run_eval.py` (template)
-
-```python
-"""Black-box eval entrypoint for <YourTask>."""
-from __future__ import annotations
-import argparse, importlib.util, json, sys
-from pathlib import Path
-
-INVALID = -1e18
-TASK_DIR = Path(__file__).resolve().parent.parent
-
-def _load_callable(path, name):
-    spec = importlib.util.spec_from_file_location("fs_candidate", path)
-    mod = importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
-    return getattr(mod, name)
-
-def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--candidate", required=True)
-    ap.add_argument("--metrics-out", required=True)
-    args = ap.parse_args()
-    metrics = {"combined_score": INVALID, "valid": 0.0}
-    try:
-        sys.path.insert(0, str(TASK_DIR / "verification"))
-        import evaluator as oracle
-        entry = _load_callable(Path(args.candidate).resolve(), "YOUR_ENTRYPOINT")
-        result = oracle.evaluate(entry)
-        metrics.update(result); metrics["raw_score"] = result.get("combined_score")
-    except Exception as exc:
-        metrics["error_message"] = f"{type(exc).__name__}: {exc}"
-    Path(args.metrics_out).write_text(json.dumps(metrics, indent=2, default=str))
-    print(json.dumps({k: metrics.get(k) for k in ("combined_score", "valid")}))
-    return 0
-
-if __name__ == "__main__":
-    raise SystemExit(main())
-```
-
-Replace `YOUR_ENTRYPOINT` with the function name the agent must implement (e.g. `build_cluster`,
-`solve`, `build_capset`).
+This file contains one callable name, such as `build_cluster`, `solve`, or `build_capset`.
+The trusted evaluator imports `verification/evaluator.py`; it invokes this candidate callable
+only through the sandboxed JSON RPC worker. Benchmark-local `run_eval.py` and
+`eval_command.txt` remain for legacy tooling, but their metrics are never trusted by the runner.
 
 ### `verification/evaluator.py` contract
 
@@ -141,7 +108,7 @@ Optional fields: `feasibility_rate`, `constraint_violations`, `beat_sota`, `per_
 
 | Mode | When to use | Score range |
 |---|---|---|
-| `clipped` | The optimum is known and reachable (easy/medium tasks) | `[0, 1]` |
+| `clipped` | A hard task has a strong known reference value | `[0, 1]` |
 | `uncapped` | The best-known value is a live research frontier (flagship tasks) | `[0, ∞)` — reaching SoTA = 1.0, beating it > 1.0 |
 
 For `uncapped` tasks, also provide `references/known_best.md` documenting the current
@@ -160,15 +127,18 @@ best-known value, its source, and the date.
 
 ## Checklist before submitting a PR
 
-- [ ] `python -m frontier_science eval --task <Domain>/<Task>` runs and returns a valid
+- [ ] Add the new task to `frontier_science/certification.yaml` as `candidate` first; do not
+      self-certify an unreviewed task.
+- [ ] `python -m frontier_science eval --allow-uncertified --task <Domain>/<Task>` runs and returns a valid
       `metrics.json` with `combined_score` near 0 for the baseline.
-- [ ] `python -m frontier_science list` shows the new task with correct domain/difficulty.
+- [ ] `python -m frontier_science list --all` shows the new package with correct metadata.
 - [ ] The oracle is deterministic (run twice, get the same score).
 - [ ] The agent files (`Task.md`, `solution.py`, `constraints.txt`) do not leak the oracle
       implementation or the answer.
 - [ ] No absolute paths, no `.env` files, no API keys, no `__pycache__`, no large data files.
 - [ ] `metadata.yaml` is complete (all fields filled in).
 - [ ] For flagship (`uncapped`) tasks: `references/known_best.md` exists with sourced values.
+- [ ] `python scripts/audit_tasks.py` reports no admission issues and all invariant tests pass.
 
 ---
 
@@ -179,10 +149,10 @@ best-known value, its source, and the date.
 3. **Add your task** following the directory layout above. Use an existing task (e.g.
    `Chemistry/LennardJonesCluster` for clipped, `Mathematics/CapSet` for uncapped) as a
    template.
-4. **Test locally**:
+4. **Test locally** (new packages are uncertified by default):
    ```bash
-   python -m frontier_science eval --task <Domain>/<Task>        # baseline score
-   python -m frontier_science run  --task <Domain>/<Task> --budget 3  # quick evolve smoke
+   python -m frontier_science eval --allow-uncertified --task <Domain>/<Task>
+   python -m frontier_science run --allow-uncertified --task <Domain>/<Task> --budget 3
    ```
 5. **Submit a Pull Request** to `main`. In the PR description, include:
    - Scientific background (1–2 sentences).

@@ -1,68 +1,138 @@
 # Frontier-Science
 
-A multi-discipline benchmark of **open-ended scientific optimization** problems. An agent
-iteratively rewrites one runnable program; each edit is scored by a **frozen, deterministic
-oracle** (simulator / analytic solution / dataset) that returns a **continuous, improvable**
-`combined_score` — not a 0/1 answer. We measure the best solution found within a budget.
+Frontier-Science is a research prototype for **cross-domain, executable,
+budget-constrained scientific generative optimization**. An agent edits one runnable
+program; a frozen deterministic oracle scores each candidate, and the benchmark measures
+both the best feasible artifact and its cost-aware discovery trajectory.
 
-It is the science counterpart of
-[Frontier-Engineering](https://github.com/EinsiaLab/Frontier-Engineering): same
-generative-optimization paradigm and black-box per-task contract, applied to scientific
-discovery. See [`CONTRIBUTING.md`](CONTRIBUTING.md) for how to add new tasks.
+This repository is inspired by
+[Frontier-Engineering](https://github.com/EinsiaLab/Frontier-Engineering). It is not the
+text-question benchmark named *FrontierScience* in
+[arXiv:2601.21165](https://arxiv.org/abs/2601.21165).
 
-## Tasks
+> Scope: an improved simulator/verifier score demonstrates scientific optimization. It is
+> not, by itself, autonomous scientific discovery. Mechanism recovery, hidden-shift or
+> physical validation, and claim–evidence provenance are separate future gates.
 
-**50 tasks across 50 scientific domains**, spanning the difficulty ladder:
-- **3 medium** (on-ramp): LennardJonesCluster, SpinGlassGroundState, PoissonSolver2D
-- **45 hard**: fluid dynamics, control theory, cryptography, geophysics, quantum computing, etc.
-- **2 flagship** (uncapped, AlphaEvolve-tier): MatrixMultiplicationRank, CapSet
+## Current status
 
-Domains include: acoustics, aerodynamics, astrophysics, bioinformatics, biology, chemical
-engineering, chemistry, climatology, combinatorics, control theory, cryptography, ecology,
-electrical engineering, electrochemistry, electromagnetism, epidemiology, evolutionary biology,
-fluid dynamics, genetics, geophysics, graph theory, image processing, materials science,
-mathematics, network science, nuclear physics, numerical methods, oceanography, operations
-research, optics, optimization, pharmacology, photonics, physics, plasma physics, power systems,
-quantum computing, robotics, scheduling, scientific computing, seismology, signal processing,
-spectroscopy, statistical mechanics, structural engineering, telecommunications, thermodynamics,
-tribology, and more.
+The repository contains **49 task packages in 46 metadata domains**:
 
-All oracles are pure `numpy`/`scipy`, CPU-only, deterministic. 20 tasks have full scientific
-oracles; 30 have stub evaluators inviting community contributions (see `CONTRIBUTING.md`).
-Flagship tasks use **uncapped scoring** — reaching published SoTA = 1.0, beating it > 1.0.
+- **7 certified core tasks**: Lennard–Jones clusters, spin glass, Poisson solver,
+  matrix-multiplication rank, Cap Set, circle packing, and multilayer thin films.
+- **37 candidate tasks** pending scientific certification.
+- **5 quarantined tasks** whose claimed scientific models are generic cloned objectives.
+
+The default CLI exposes only the certified core. `--all` explicitly shows the full
+inventory. Certification status is not a difficulty claim: the inventory metadata contains
+47 `hard` and 2 `flagship` packages, but only certified tasks are benchmark-admissible.
+
+All candidate code runs in a networkless Bubblewrap sandbox with read-only mounts, resource
+and process limits, and a typed JSON RPC boundary. The trusted parent alone imports the
+oracle and validates metrics. The current audit reports:
+
+- 15/15 security/regression tests passed.
+- 49/49 inventory baselines were deterministic across two secure runs.
+- 48/49 baselines were valid; `ClimateScience/EnergyBalanceModel` returned a non-finite
+  oracle metric and was correctly rejected fail-closed.
+- 7 certified / 37 candidate / 5 quarantined in the task-card and citation audit.
+
+Machine-readable evidence lives in [`experiments/`](experiments/).
+All five dated P0–P2 reports were regenerated from clean source revision `f48b101` and pass
+their declared gates. The two P2 smokes are baseline-only; the repository does not yet contain
+credible nonzero-budget, multi-seed model-performance evidence.
 
 ## Quickstart
 
 ```bash
-python -m frontier_science list                       # discover tasks
-python -m frontier_science eval --task LennardJonesCluster   # score the baseline program
-python -m frontier_science run  --task LennardJonesCluster --budget 10   # evolve with an LLM
-python -m frontier_science smoke                      # check the configured LLM endpoint
+python -m frontier_science list
+python -m frontier_science list --all
+python -m frontier_science eval --task LennardJonesCluster
+python -m frontier_science run --task LennardJonesCluster \
+  --algorithm greedy_rewrite --budget 10 --seed 0 --workdir runs/lj/seed-0
 ```
+
+Resume the exact work directory with `--resume`. Available algorithm names are:
+
+- `greedy_rewrite`: the built-in single-incumbent full-file baseline.
+- `openevolve`: official OpenEvolve 0.2.26 population/MAP-Elites backend (optional,
+  Python ≥3.10).
+- `abmcts`: official TreeQuest AB-MCTS-A backend (optional, Python ≥3.11).
+- `shinkaevolve`: official ShinkaEvolve backend (optional, Python ≥3.10).
+
+Named optional backends fail explicitly when their upstream package or supported wire is
+unavailable; they never silently substitute the greedy baseline. Every backend routes
+candidate scoring through the same secure evaluator and writes the unified
+trajectory-schema-v2 `trajectory.jsonl`/`summary.json`, plus `checkpoint` and
+`best_program.py` artifacts.
+Pinned optional dependencies are listed in
+[`requirements-upstream.txt`](requirements-upstream.txt); TreeQuest needs a Python 3.11
+environment, so it cannot share this host's Python 3.8 runtime.
+
+Run a preregistered multi-seed experiment with:
+
+```bash
+python scripts/batch_evolve.py \
+  --algorithms greedy_rewrite \
+  --feedback-modes normal,none,shuffled \
+  --seeds 0,1,2,3,4 --budget 30
+```
+
+The runner reports terminal best score, best-so-far AUC over charged proposal/benchmark
+`budget_units`, actual `oracle_calls` as a separate count, wall time, token/cost fields, and
+Student-t 95% confidence intervals. Thus, for example, an unparsable proposal consumes a
+budget unit without fabricating an oracle call. Here `none`/`shuffled` control only the metrics
+shown in the proposal prompt; incumbent/parent selection still uses true oracle scores, and each
+summary records that scope. They are diagnostic prompt-feedback ablations, not yet strict causal
+no-feedback controls. Unsupported combinations fail rather than changing semantics.
 
 ## LLM configuration
 
-The runner uses any **OpenAI-compatible** endpoint. Copy the example and fill in your own:
+Copy the public example and provide an OpenAI-compatible endpoint:
 
 ```bash
-cp frontier_science/conf/llm/openai_compatible.example.yaml frontier_science/conf/llm/local.yaml
+cp frontier_science/conf/llm/openai_compatible.example.yaml \
+   frontier_science/conf/llm/local.yaml
 # edit base_url / api_key / model, or export OPENAI_API_KEY
+python -m frontier_science smoke
 ```
 
-`conf/llm/local.yaml` is git-ignored. Resolution order:
-`--llm-config` / `FS_LLM_CONFIG` → `conf/llm/local.yaml` → the committed example.
+`local.yaml` is git-ignored. Resolution order is `--llm-config` / `FS_LLM_CONFIG`, then
+`conf/llm/local.yaml`, then the committed example. The built-in client supports Chat
+Completions and Responses; optional upstream frameworks currently require Chat Completions.
 
-## Adding a task
+## Task contract and certification
 
-Create `benchmarks/<Domain>/<Task>/` with a `frontier_eval/` contract (`metadata.yaml`,
-`initial_program.txt`, `candidate_destination.txt`, `eval_command.txt`, `constraints.txt`,
-`run_eval.py`), an editable baseline program, and a hidden `verification/` oracle. No harness
-change is needed — the task is auto-discovered. Use an existing task as a template.
+A task package has `Task.md`, an editable baseline, a hidden
+`verification/evaluator.py`, and a `frontier_eval/` contract containing `metadata.yaml`,
+`initial_program.txt`, `candidate_destination.txt`, `entrypoint.txt`, and
+`constraints.txt`. Adding a directory makes it discoverable, but does **not** make it
+certified.
 
-## Contract (black-box)
+Certification additionally requires a task card, stable citation identifiers, a trusted
+sandbox entrypoint, deterministic baseline, scientific invariants, defensible normalization
+anchors, and reviewer evidence. See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the admission
+process and [`frontier_science/certification.yaml`](frontier_science/certification.yaml) for
+current status.
 
-The agent sees only `Task.md`, the editable program, `constraints.txt`, and the returned
-`metrics.json`. It never sees `verification/` (the oracle) or the eval internals. Each
-candidate is run in a subprocess; `combined_score` ranges from 0 (baseline) to 1 (SoTA)
-for clipped tasks, and is uncapped (>1 = beat SoTA) for flagship tasks. See
-[`CONTRIBUTING.md`](CONTRIBUTING.md) for the full spec.
+## Reproduce audits
+
+```bash
+python scripts/run_security_audit.py --output /tmp/security.json
+python scripts/audit_tasks.py --output /tmp/certification.json
+python scripts/run_secure_baseline.py --repeats 2 --output /tmp/baselines.json
+python -m unittest discover -v -s tests
+# From each compatible optional-backend venv:
+python scripts/smoke_upstream_backends.py --backend openevolve --output /tmp/openevolve.json
+# Repeat for abmcts and shinkaevolve, then validate/merge all three:
+python scripts/merge_upstream_smokes.py \
+  --input /tmp/openevolve.json --input /tmp/abmcts.json --input /tmp/shinkaevolve.json \
+  --output /tmp/upstream-smokes.json
+```
+
+Every new machine-readable report includes its command, Git revision, scoped source-dirty state,
+and changed source paths. Trusted dated evidence must report a clean source tree.
+
+Historical results produced before sandboxing are retained unchanged for provenance and are
+classified `UNTRUSTED_PRE_SANDBOX` in [`experiments/TRUST.md`](experiments/TRUST.md); they must
+not be used as benchmark evidence.

@@ -1,10 +1,13 @@
 # Frontier-Science — Experiment Log
 
-All runs use the local **keyless GPT-5.5** (Azure managed-identity proxy, Responses API).
-That endpoint is configured only in the git-ignored `conf/llm/local.yaml`; the repo ships a
-neutral `openai_compatible.example.yaml`.
+Historical model runs through 2026-06 used the local **keyless GPT-5.5** endpoint. The July
+security, certification, baseline, and protocol-zero smokes do not call a model; the three
+official-backend smokes evaluate only their initial program. Endpoint details remain confined
+to git-ignored `conf/llm/local.yaml`; the repo ships a neutral public example.
 
-Run python: `/home/azureuser/.local/bin/python3.10` (numpy/scipy/requests/yaml/openai present).
+Historical June model-run Python: `/home/azureuser/.local/bin/python3.10`. Each July JSON report
+records its own exact interpreter and platform; the three optional backends use separate
+version-compatible environments.
 
 ---
 
@@ -95,8 +98,9 @@ benchmark.
 - **PoissonSolver2D**: switch to an accuracy×cost objective with a FLOP/wall-clock budget, and
   a non-separable RHS (no clean modal spectral shortcut), so higher-order *and* efficient
   solvers are rewarded rather than an exact modal reconstruction.
-- Cross-cutting: report sample-efficiency (AUC of best-score vs eval count), not just final
-  best, so the metric stays continuous even when the ceiling is reachable.
+- Cross-cutting: report sample-efficiency (best-so-far AUC over charged proposal/benchmark
+  `budget_units`), not just final best, so the metric stays continuous even when the ceiling is
+  reachable; report actual `oracle_calls` separately.
 
 These are tracked as the next implementation step; v0 is committed as the working foundation.
 
@@ -180,3 +184,120 @@ Packomania best-known. Baseline (regular grid) = 0.
 **Pattern confirmed**: tasks with known reachable optima (T0/T1) saturate for GPT-5.5; only
 the flagship T3 tasks with open-frontier optima resist. The full benchmark now has a clean
 difficulty ladder: easy calibration (6 tasks) + genuinely hard flagships (2 tasks).
+
+---
+
+## 2026-06-21 — current 49-task inventory + baseline audit (superseded)
+
+After the difficulty rebalance (`2bf1618`), the repository is no longer the old 50-task
+snapshot. Current CLI discovery reports **49 tasks**:
+
+- **47 hard** clipped tasks and **2 flagship** uncapped tasks.
+- Oracle types: **12 analytical**, **36 physical_sim**, **1 dataset_oracle**.
+- Flagships remain `Algorithm/MatrixMultiplicationRank` and `Mathematics/CapSet`.
+- All tasks are currently metadata-marked CPU-only.
+
+Baseline smoke audit:
+
+```bash
+python3 -m frontier_science list
+# 49 tasks
+
+# one-pass baseline audit over all discovered tasks, timeout 180s/eval
+# output: experiments/current_49_baseline_audit.json
+```
+
+Trust status: **`UNTRUSTED_PRE_SANDBOX`**. This run predates trusted candidate isolation and
+must not be used as benchmark evidence. It is retained only for provenance. At the time,
+**49/49 baseline programs produced valid metrics**, with mean eval wall time **0.258s**
+and max **1.686s** (`ChemicalKinetics/ReactionMechanismFitting`). Required contract files are
+present for every task. Hash checks found no exact duplicate `Task.md`, `solution.py`,
+`frontier_eval/run_eval.py`, or `verification/evaluator.py` files across the 49 tasks.
+
+Notable baseline scores after the current hardening edits:
+
+| Task | Baseline combined_score |
+|---|---:|
+| Photonics/MultilayerThinFilm | 0.605147 |
+| Physics/SpinGlassGroundState | 0.195778 |
+| Chemistry/LennardJonesCluster | 0.041930 |
+| FluidMechanics/StokesShapeDrag | 0.002646 |
+| Geophysics/GravityInversion | ~0 |
+| Most remaining tasks | 0.0 |
+
+Stale result warning: `experiments/batch_evolve_results.json` is from the previous **50-task**
+batch. Against the current 49-task tree, it covers only **35 current tasks**, contains **15
+removed tasks**, and misses **14 current tasks** added during the rebalance. It should be treated
+as historical evidence only until a fresh 49-task evolve run is completed.
+
+Recommended next run: refresh `batch_evolve_results.json` (or write a new timestamped result
+file) only after the integrity and certification gates, then update this log with
+cost-aware multi-seed trajectories on the certified core.
+
+---
+
+## 2026-07-19 — P0 integrity and P1 certification gates
+
+The evaluator was replaced with a trusted-oracle / isolated-candidate design. Candidate code
+runs under Bubblewrap with no network, read-only mounts, a minimal environment, memory/CPU/file
+limits, and seccomp denial of fork/clone. A typed JSON RPC layer supports arrays, complex
+numbers, tuples, mappings, candidate callables, and trusted callbacks without exposing the
+oracle or metrics path.
+
+Formal artifacts:
+
+- `security_audit_2026-07-19.json`: **15/15 security/regression tests passed**, including
+  oracle/file reads, network, fork, timeout, symlink, stdout/RPC forgery, non-finite output,
+  callback deadline cases, typed-value codec checks, and preservation of scientific `raw_score`.
+- `task_certification_audit_2026-07-19.json`: **7 certified, 37 candidate, 5 quarantined**;
+  all certified records pass required-file, task-card, metadata, and stable-citation checks.
+- `secure_baseline_determinism_2026-07-19.json`: **49/49 deterministic** over two secure runs;
+  **48/49 valid**, **49/49 fail-closed**, and zero infrastructure failures. The sole invalid
+  baseline is `ClimateScience/EnergyBalanceModel`: its oracle emits a non-finite metric and is
+  correctly rejected. It remains a candidate, not part of the certified core.
+
+The default registry now exposes only the seven certified tasks. The five generic trigonometric
+oracles masquerading as domain simulators are quarantined. Historical `batch_evolve_results.json`
+and `current_49_baseline_audit.json` are classified `UNTRUSTED_PRE_SANDBOX` in `TRUST.md` and
+remain unchanged as provenance only.
+
+---
+
+## 2026-07-19 — P2 protocol implementation and smoke status
+
+Implemented:
+
+- Unified append-only trajectory schema v2 with candidate/parent hashes, best-so-far AUC over
+  charged proposal/benchmark `budget_units`, separate actual `oracle_calls`, wall time,
+  token/cost fields, seed, checkpoint/resume, and best-program artifacts. An unparsable proposal
+  consumes budget without being counted as an oracle call.
+- `greedy_rewrite` is explicitly named and no longer presented as OpenEvolve.
+- Optional adapters for official OpenEvolve 0.2.26, TreeQuest AB-MCTS-A, and ShinkaEvolve. Named
+  backends never silently fall back; all scores still use the secure evaluator.
+- CLI selection (`--algorithm`, `--seed`, `--resume`, `--workdir`, `--feedback-mode`) and a
+  multi-task/multi-seed experiment runner with Student-t 95% CIs for best score, AUC, wall,
+  charged budget units, actual oracle calls, tokens, and estimated cost.
+- Normal/none/shuffled **prompt-metric** controls for `greedy_rewrite`; incumbent/parent selection
+  still uses true oracle scores, so these are diagnostics rather than strict causal no-feedback
+  controls. Unsupported controls on upstream frameworks fail explicitly.
+
+Local protocol/unit smoke passed without model calls. A live GPT-5.5 experiment was not recorded:
+the git-ignored local Responses endpoint returned HTTP 403 on the required smoke check. Therefore
+there is deliberately no claimed P2 model-performance result yet. The next valid run must use a
+working endpoint and the preregistered five-seed runner; zero-step or synthetic runs are not
+scientific evidence.
+
+`protocol_smoke_2026-07-19.json` is a baseline-only two-seed runner smoke. It verifies secure
+evaluation, trajectory-schema-v2 budget-unit AUC and separate oracle-call accounting, and
+confidence-interval serialization, and is explicitly tagged `PROTOCOL_SMOKE_ONLY`; it contains
+no search iterations and is not performance evidence.
+
+`upstream_backend_smoke_2026-07-19.json` records real optional-environment imports, trajectory
+schema v2 accounting, and secure baseline evaluations for OpenEvolve 0.2.26 on Python 3.10,
+TreeQuest AB-MCTS-A on Python 3.12, and ShinkaEvolve at commit `b67a073` on Python 3.10. All
+three passed. These are baseline-only integration checks, not search-performance runs.
+
+All five dated reports referenced above were regenerated from clean source revision `f48b101`; each records
+`execution_passed=true`, `trusted_evidence=true`, and `passed=true`. Result JSON and narrative
+notes are outside the provenance source-dirty scope. This closes the local P0–P2 infrastructure
+record, but it does not create nonzero-budget model-performance evidence.

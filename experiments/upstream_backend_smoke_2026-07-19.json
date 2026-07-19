@@ -1,0 +1,204 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_SECURE_EVAL",
+  "evidence_scope": "UPSTREAM_BASELINE_SMOKE_ONLY",
+  "created_at": "2026-07-19T21:54:06.285563+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "f48b1013bebdef239b45f8d215c05a7d6ebcf247",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/merge_upstream_smokes.py",
+      "--input",
+      "/tmp/f48b101-openevolve.json",
+      "--input",
+      "/tmp/f48b101-abmcts.json",
+      "--input",
+      "/tmp/f48b101-shinkaevolve.json",
+      "--output",
+      "experiments/upstream_backend_smoke_2026-07-19.json"
+    ]
+  },
+  "reports": [
+    {
+      "schema_version": 1,
+      "trust_status": "TRUSTED_SECURE_EVAL",
+      "evidence_scope": "UPSTREAM_BASELINE_SMOKE_ONLY",
+      "source_provenance": {
+        "git_available": true,
+        "git_revision": "f48b1013bebdef239b45f8d215c05a7d6ebcf247",
+        "source_tree_dirty": false,
+        "source_changes": [],
+        "source_scope": [
+          "frontier_science",
+          "scripts",
+          "tests",
+          "benchmarks",
+          "requirements-upstream.txt"
+        ],
+        "command": [
+          "/tmp/fs-oe-venv.MM95BQ/bin/python",
+          "scripts/smoke_upstream_backends.py",
+          "--backend",
+          "openevolve",
+          "--output",
+          "/tmp/f48b101-openevolve.json"
+        ]
+      },
+      "created_at": "2026-07-19T21:37:49.134553+00:00",
+      "python": "3.10.20 (main, Apr  7 2026, 20:44:18) [Clang 22.1.1 ]",
+      "task": "Chemistry/LennardJonesCluster",
+      "backends": [
+        {
+          "backend": "openevolve",
+          "status": "passed",
+          "evaluated": 1,
+          "installed_distribution": {
+            "package": "openevolve",
+            "version": "0.2.26"
+          },
+          "baseline_score": 0.041930443440283925,
+          "trajectory_schema_version": 2,
+          "budget_units": 1,
+          "oracle_calls": 1,
+          "best_so_far_auc": 0.041930443440283925,
+          "upstream": {
+            "name": "openevolve",
+            "version": "0.2.26",
+            "commit": "ad9c9c1769e55a776549715b5b48e13a84a93a30"
+          }
+        }
+      ],
+      "execution_passed": true,
+      "trusted_evidence": true,
+      "passed": true
+    },
+    {
+      "schema_version": 1,
+      "trust_status": "TRUSTED_SECURE_EVAL",
+      "evidence_scope": "UPSTREAM_BASELINE_SMOKE_ONLY",
+      "source_provenance": {
+        "git_available": true,
+        "git_revision": "f48b1013bebdef239b45f8d215c05a7d6ebcf247",
+        "source_tree_dirty": false,
+        "source_changes": [],
+        "source_scope": [
+          "frontier_science",
+          "scripts",
+          "tests",
+          "benchmarks",
+          "requirements-upstream.txt"
+        ],
+        "command": [
+          "/tmp/fs-tq-venv.gVIPI8/bin/python",
+          "scripts/smoke_upstream_backends.py",
+          "--backend",
+          "abmcts",
+          "--output",
+          "/tmp/f48b101-abmcts.json"
+        ]
+      },
+      "created_at": "2026-07-19T21:37:49.132410+00:00",
+      "python": "3.12.13 (main, Apr  7 2026, 20:45:25) [Clang 22.1.1 ]",
+      "task": "Chemistry/LennardJonesCluster",
+      "backends": [
+        {
+          "backend": "abmcts",
+          "status": "passed",
+          "evaluated": 1,
+          "installed_distribution": {
+            "package": "treequest",
+            "version": "0.3.2"
+          },
+          "baseline_score": 0.041930443440283925,
+          "trajectory_schema_version": 2,
+          "budget_units": 1,
+          "oracle_calls": 1,
+          "best_so_far_auc": 0.041930443440283925,
+          "upstream": {
+            "name": "treequest",
+            "version": "0.3.2",
+            "commit": "96047d712d66bbbf4dcc86dcd3e2eaab98c35f83"
+          }
+        }
+      ],
+      "execution_passed": true,
+      "trusted_evidence": true,
+      "passed": true
+    },
+    {
+      "schema_version": 1,
+      "trust_status": "TRUSTED_SECURE_EVAL",
+      "evidence_scope": "UPSTREAM_BASELINE_SMOKE_ONLY",
+      "source_provenance": {
+        "git_available": true,
+        "git_revision": "f48b1013bebdef239b45f8d215c05a7d6ebcf247",
+        "source_tree_dirty": false,
+        "source_changes": [],
+        "source_scope": [
+          "frontier_science",
+          "scripts",
+          "tests",
+          "benchmarks",
+          "requirements-upstream.txt"
+        ],
+        "command": [
+          "/tmp/fs-shinka-venv.euv9jE/bin/python",
+          "scripts/smoke_upstream_backends.py",
+          "--backend",
+          "shinkaevolve",
+          "--output",
+          "/tmp/f48b101-shinkaevolve.json"
+        ]
+      },
+      "created_at": "2026-07-19T21:37:49.177377+00:00",
+      "python": "3.10.20 (main, Apr  7 2026, 20:44:18) [Clang 22.1.1 ]",
+      "task": "Chemistry/LennardJonesCluster",
+      "backends": [
+        {
+          "backend": "shinkaevolve",
+          "status": "passed",
+          "evaluated": 1,
+          "installed_distribution": {
+            "package": "shinka-evolve",
+            "version": "0.0.7",
+            "direct_url": {
+              "url": "https://github.com/SakanaAI/ShinkaEvolve.git",
+              "vcs_info": {
+                "commit_id": "b67a07328ab7e21e999d9e20a44f4f0054a4b83c",
+                "requested_revision": "b67a07328ab7e21e999d9e20a44f4f0054a4b83c",
+                "vcs": "git"
+              }
+            }
+          },
+          "baseline_score": 0.041930443440283925,
+          "trajectory_schema_version": 2,
+          "budget_units": 1,
+          "oracle_calls": 1,
+          "best_so_far_auc": 0.041930443440283925,
+          "upstream": {
+            "name": "shinkaevolve",
+            "version": "0.0.7",
+            "commit": "b67a07328ab7e21e999d9e20a44f4f0054a4b83c"
+          }
+        }
+      ],
+      "execution_passed": true,
+      "trusted_evidence": true,
+      "passed": true
+    }
+  ],
+  "issues": [],
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}
