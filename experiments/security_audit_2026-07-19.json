@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_SECURE_EVAL",
+  "started_at": "2026-07-19T17:22:16.322354+00:00",
+  "completed_at": "2026-07-19T17:22:26.687964+00:00",
+  "command": [
+    "/usr/bin/python3",
+    "-W",
+    "error::ResourceWarning",
+    "-m",
+    "unittest",
+    "-v",
+    "tests.test_secure_eval"
+  ],
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "duration_seconds": 10.365516470745206,
+  "returncode": 0,
+  "passed": true,
+  "test_count": 15,
+  "tests": [
+    {
+      "name": "test_metric_validation_preserves_scientific_raw_score",
+      "case": "tests.test_secure_eval.CodecTests",
+      "status": "ok"
+    },
+    {
+      "name": "test_rejects_objects_and_non_finite",
+      "case": "tests.test_secure_eval.CodecTests",
+      "status": "ok"
+    },
+    {
+      "name": "test_roundtrip_supported_values",
+      "case": "tests.test_secure_eval.CodecTests",
+      "status": "ok"
+    },
+    {
+      "name": "test_seccomp_file_fallback_is_available",
+      "case": "tests.test_secure_eval.CodecTests",
+      "status": "ok"
+    },
+    {
+      "name": "test_candidate_stdout_cannot_forge_rpc",
+      "case": "tests.test_secure_eval.SecureEvaluationTests",
+      "status": "ok"
+    },
+    {
+      "name": "test_fork_is_blocked_by_seccomp",
+      "case": "tests.test_secure_eval.SecureEvaluationTests",
+      "status": "ok"
+    },
+    {
+      "name": "test_host_secret_and_path_traversal_are_not_visible",
+      "case": "tests.test_secure_eval.SecureEvaluationTests",
+      "status": "ok"
+    },
+    {
+      "name": "test_metrics_path_and_argv_are_not_exposed",
+      "case": "tests.test_secure_eval.SecureEvaluationTests",
+      "status": "ok"
+    },
+    {
+      "name": "test_network_namespace_is_disconnected",
+      "case": "tests.test_secure_eval.SecureEvaluationTests",
+      "status": "ok"
+    },
+    {
+      "name": "test_non_finite_candidate_output_is_rejected",
+      "case": "tests.test_secure_eval.SecureEvaluationTests",
+      "status": "ok"
+    },
+    {
+      "name": "test_oracle_import_is_not_visible",
+      "case": "tests.test_secure_eval.SecureEvaluationTests",
+      "status": "ok"
+    },
+    {
+      "name": "test_partial_rpc_frame_cannot_bypass_deadline",
+      "case": "tests.test_secure_eval.SecureEvaluationTests",
+      "status": "ok"
+    },
+    {
+      "name": "test_symlink_candidate_is_resolved_before_mount",
+      "case": "tests.test_secure_eval.SecureEvaluationTests",
+      "status": "ok"
+    },
+    {
+      "name": "test_timeout_kills_worker",
+      "case": "tests.test_secure_eval.SecureEvaluationTests",
+      "status": "ok"
+    },
+    {
+      "name": "test_trusted_callback_is_also_wall_time_supervised",
+      "case": "tests.test_secure_eval.SecureEvaluationTests",
+      "status": "ok"
+    }
+  ],
+  "stdout": "",
+  "stderr": "test_metric_validation_preserves_scientific_raw_score (tests.test_secure_eval.CodecTests) ... ok\ntest_rejects_objects_and_non_finite (tests.test_secure_eval.CodecTests) ... ok\ntest_roundtrip_supported_values (tests.test_secure_eval.CodecTests) ... ok\ntest_seccomp_file_fallback_is_available (tests.test_secure_eval.CodecTests) ... ok\ntest_candidate_stdout_cannot_forge_rpc (tests.test_secure_eval.SecureEvaluationTests) ... ok\ntest_fork_is_blocked_by_seccomp (tests.test_secure_eval.SecureEvaluationTests) ... ok\ntest_host_secret_and_path_traversal_are_not_visible (tests.test_secure_eval.SecureEvaluationTests) ... ok\ntest_metrics_path_and_argv_are_not_exposed (tests.test_secure_eval.SecureEvaluationTests) ... ok\ntest_network_namespace_is_disconnected (tests.test_secure_eval.SecureEvaluationTests) ... ok\ntest_non_finite_candidate_output_is_rejected (tests.test_secure_eval.SecureEvaluationTests) ... ok\ntest_oracle_import_is_not_visible (tests.test_secure_eval.SecureEvaluationTests) ... ok\ntest_partial_rpc_frame_cannot_bypass_deadline (tests.test_secure_eval.SecureEvaluationTests) ... ok\ntest_symlink_candidate_is_resolved_before_mount (tests.test_secure_eval.SecureEvaluationTests) ... ok\ntest_timeout_kills_worker (tests.test_secure_eval.SecureEvaluationTests) ... ok\ntest_trusted_callback_is_also_wall_time_supervised (tests.test_secure_eval.SecureEvaluationTests) ... ok\n\n----------------------------------------------------------------------\nRan 15 tests in 10.200s\n\nOK\n"
+}

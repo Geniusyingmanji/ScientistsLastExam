@@ -51,6 +51,7 @@ class TaskSpec:
     constraints: str = ""
     task_md: str = ""
     agent_files: list[str] = field(default_factory=list)
+    entrypoint: str = ""
 
     @property
     def initial_program_path(self) -> Path:
@@ -91,4 +92,5 @@ def load_task_spec(task_dir: Path) -> TaskSpec:
         constraints=_read_text(eval_dir / "constraints.txt") or "",
         task_md=_read_text(task_dir / "Task.md") or "",
         agent_files=_read_list(eval_dir / "agent_files.txt"),
+        entrypoint=_read_scalar(eval_dir / "entrypoint.txt") or "",
     )
