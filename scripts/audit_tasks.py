@@ -7,7 +7,9 @@ import argparse
 import ast
 import hashlib
 import json
+import platform
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 import yaml
@@ -16,6 +18,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from frontier_science.certification import certification_record, load_certification  # noqa: E402
+from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402
 from frontier_science.registry import list_tasks  # noqa: E402
 
 REQUIRED_FILES = (
@@ -107,12 +110,19 @@ def main() -> int:
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
     report = audit()
+    execution_passed = bool(report.pop("passed"))
+    report.update({
+        "created_at": datetime.now(timezone.utc).isoformat(),
+        "environment": {"python": sys.version, "platform": platform.platform()},
+        "source_provenance": source_provenance(ROOT),
+    })
+    finalize_report_trust(report, execution_passed)
     text = json.dumps(report, indent=2) + "\n"
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(text, encoding="utf-8")
     print(text, end="")
-    return 0 if report["passed"] else 1
+    return 0 if execution_passed else 1
 
 
 if __name__ == "__main__":

@@ -17,6 +17,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from frontier_science.evaluate import INVALID_SCORE, evaluate_candidate  # noqa: E402
+from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402
 from frontier_science.registry import list_tasks  # noqa: E402
 
 
@@ -38,6 +39,7 @@ def main() -> int:
     report: dict[str, Any] = {
         "schema_version": 1,
         "trust_status": "TRUSTED_SECURE_EVAL",
+        "source_provenance": source_provenance(ROOT),
         "created_at": datetime.now(timezone.utc).isoformat(),
         "environment": {"python": sys.version, "platform": platform.platform()},
         "config": {"repeats": args.repeats, "timeout_s": args.timeout},
@@ -85,17 +87,18 @@ def main() -> int:
         "fail_closed_count": sum(bool(row["fail_closed_all"]) for row in report["tasks"]),
         "infrastructure_failure_count": sum(bool(row["infrastructure_failure"]) for row in report["tasks"]),
     }
-    report["passed"] = (
+    execution_passed = (
         report["summary"]["deterministic_count"] == len(specs)
         and report["summary"]["fail_closed_count"] == len(specs)
         and report["summary"]["infrastructure_failure_count"] == 0
     )
+    finalize_report_trust(report, execution_passed)
     output = args.output.resolve()
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(report, indent=2, allow_nan=False) + "\n", encoding="utf-8")
     print(json.dumps(report["summary"], indent=2))
     print("Report: %s" % output)
-    return 0 if report["passed"] else 1
+    return 0 if execution_passed else 1
 
 
 if __name__ == "__main__":

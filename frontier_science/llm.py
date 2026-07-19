@@ -40,6 +40,8 @@ class LLMConfig:
     reasoning_effort: Optional[str] = None  # for reasoning models on the responses wire
     timeout_seconds: float = 600.0
     extra_headers: dict = field(default_factory=dict)
+    input_cost_per_million: Optional[float] = None
+    output_cost_per_million: Optional[float] = None
 
     @classmethod
     def from_dict(cls, d: dict) -> "LLMConfig":
@@ -51,6 +53,15 @@ class LLMConfig:
 class LLMClient:
     def __init__(self, config: LLMConfig):
         self.config = config
+        self.last_usage: dict[str, Any] = {}
+        self.total_usage: dict[str, Any] = {
+            "calls": 0, "input_tokens": 0, "output_tokens": 0,
+            "total_tokens": 0,
+            "estimated_cost_usd": (
+                0.0 if config.input_cost_per_million is not None
+                and config.output_cost_per_million is not None else None
+            ),
+        }
 
     # ---- public API -----------------------------------------------------
     def complete(self, prompt: str, system: Optional[str] = None) -> str:
@@ -77,6 +88,7 @@ class LLMClient:
             headers["Authorization"] = f"Bearer {self.config.api_key}"
         headers.update(self.config.extra_headers)
         data = self._post(url, payload, headers)
+        self._record_usage(data.get("usage") or {})
         return data["choices"][0]["message"]["content"] or ""
 
     # ---- wire: responses API -------------------------------------------
@@ -98,7 +110,43 @@ class LLMClient:
             headers["Authorization"] = f"Bearer {self.config.api_key}"
         headers.update(self.config.extra_headers)
         data = self._post(url, payload, headers)
+        self._record_usage(data.get("usage") or {})
         return self._extract_responses_text(data)
+
+    def _record_usage(self, usage: dict[str, Any]) -> None:
+        input_key = "input_tokens" if "input_tokens" in usage else "prompt_tokens"
+        output_key = "output_tokens" if "output_tokens" in usage else "completion_tokens"
+        input_tokens = int(usage[input_key]) if input_key in usage else None
+        output_tokens = int(usage[output_key]) if output_key in usage else None
+        if "total_tokens" in usage:
+            total_tokens = int(usage["total_tokens"])
+        elif input_tokens is not None and output_tokens is not None:
+            total_tokens = input_tokens + output_tokens
+        else:
+            total_tokens = None
+        pricing_available = (
+            self.config.input_cost_per_million is not None
+            and self.config.output_cost_per_million is not None
+        )
+        estimated_cost = None
+        if pricing_available and input_tokens is not None and output_tokens is not None:
+            estimated_cost = (
+                input_tokens * float(self.config.input_cost_per_million) / 1_000_000
+                + output_tokens * float(self.config.output_cost_per_million) / 1_000_000
+            )
+        self.last_usage = {
+            "usage_available": input_tokens is not None and output_tokens is not None,
+            "pricing_available": pricing_available,
+            "input_tokens": input_tokens, "output_tokens": output_tokens,
+            "total_tokens": total_tokens, "estimated_cost_usd": estimated_cost,
+        }
+        self.total_usage["calls"] += 1
+        for key in ("input_tokens", "output_tokens", "total_tokens", "estimated_cost_usd"):
+            value = self.last_usage[key]
+            if self.total_usage[key] is None or value is None:
+                self.total_usage[key] = None
+            else:
+                self.total_usage[key] += value
 
     @staticmethod
     def _extract_responses_text(data: dict) -> str:
