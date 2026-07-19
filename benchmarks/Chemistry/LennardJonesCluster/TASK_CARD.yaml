@@ -1,0 +1,19 @@
+schema_version: 1
+scientific_question: Find low-energy three-dimensional Lennard-Jones clusters at fixed sizes.
+artifact: Cartesian coordinates with shape (N, 3), in reduced Lennard-Jones length units.
+oracle:
+  model: "E = 4 sum_{i<j} (r_ij^-12 - r_ij^-6)"
+  feasibility: finite coordinates, correct shape, no coincident atoms
+  deterministic: true
+normalization:
+  baseline: random-gas initial program
+  reference: Cambridge Cluster Database minima for N=13,19,38
+  score: mean clipped ratio of achieved negative energy to reference energy
+citations:
+  - id: doi:10.1021/jp970984n
+    title: Global Optimization by Basin-Hopping and the Lowest Energy Structures of Lennard-Jones Clusters Containing up to 110 Atoms
+invariants: [translation invariance, rotation/reflection invariance, atom-permutation invariance]
+known_shortcuts: Public cluster minima can be memorized; future hidden sizes must be procedural or time-held-out.
+review:
+  domain: pending_external
+  evaluator_security: automated_invariant_and_sandbox_tests

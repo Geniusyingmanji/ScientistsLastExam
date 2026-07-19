@@ -1,0 +1,19 @@
+schema_version: 1
+scientific_question: Pack equal unit circles into the smallest square for fixed cardinalities.
+artifact: Circle-center coordinates and a positive square side length.
+oracle:
+  model: exact boundary and pairwise-distance feasibility checks
+  feasibility: every center is one radius from the boundary and every pair is at least two radii apart
+  deterministic: true
+normalization:
+  baseline: regular square grid
+  reference: dated Packomania best-known side lengths for N=7,10,13
+  score: clipped fraction of side-length gap closed
+citations:
+  - {id: "url:http://hydra.nat.uni-magdeburg.de/packing/csq/csq.html", title: Packomania circle packings in a square}
+  - {id: doi:10.1007/978-0-387-45676-8, title: New Approaches to Circle Packing in a Square}
+invariants: [translation within an enlarged box, rotation/reflection invariance, center-permutation invariance]
+known_shortcuts: Public coordinates may be memorized; hidden cardinalities and a contamination policy are required.
+review:
+  domain: pending_external
+  evaluator_security: automated_invariant_and_sandbox_tests

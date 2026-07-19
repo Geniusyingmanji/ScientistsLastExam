@@ -22,20 +22,21 @@ def solve(n: int, J: "np.ndarray") -> "np.ndarray":
     array of spins in {-1, +1} with energy as low as possible."""
 ```
 
-The evaluator builds several fixed instances, calls `solve(n, J)`, and compares your
-configuration's energy to the exact ground state (precomputed by full enumeration).
+The evaluator builds several fixed `N=32..64` instances, calls `solve(n, J)`, and compares
+your configuration's energy to a strong hidden reference found by an expensive offline
+search. These sizes are intentionally beyond full-enumeration toy cases.
 
 ## Scoring
 
-Per instance, with `E_ref` the energy of the all-`+1` configuration and `E_min` the exact
-ground state:
+Per instance, with `E_ref` the energy of the all-`+1` configuration and `E_best` the fixed
+hidden reference energy:
 
 ```
-score = clip( (E_ref − E_found) / (E_ref − E_min), 0, 1 )
+score = clip( (E_ref - E_found) / (E_ref - E_best), 0, 1 )
 ```
 
-`combined_score` is the mean over instances. A trivial guess scores ~0; reaching the exact
-ground state scores 1.0.
+`combined_score` is the mean over instances. A trivial guess scores ~0; matching or beating
+the fixed reference scores 1.0.
 
 ## Rules
 

@@ -7,5 +7,5 @@ gpu_required: false
 eval_time_seconds: 5
 science_metric: broadband_antireflection_quality
 reference_baseline: "single_layer_MgF2_quarter_wave"
-reference_sota: "optimized 6-layer broadband AR (Dobrowolski), mean R < 0.1%"
-citation: "Macleod 2017; Dobrowolski et al. Appl. Opt. 35, 644 (1996)"
+reference_sota: "physical lower bound: zero mean reflectance over the evaluation band"
+citation: "Macleod, Thin-Film Optical Filters, DOI 10.1201/9781420073034"

@@ -77,11 +77,9 @@ def evaluate(design_coating):
     R = _reflectance_spectrum(materials, thicknesses)
     mean_R = float(np.mean(R))
 
-    # Score: how much of the bare-glass reflectance was eliminated
-    # Bare glass: ~4.2% mean R. Perfect AR: 0%. SoTA 6-layer: ~0.1%
-    # Normalize: score = (R_bare - R_achieved) / (R_bare - R_sota)
-    R_sota = 0.001  # 0.1% target
-    score = (_R_BARE_MEAN - mean_R) / (_R_BARE_MEAN - R_sota)
+    # Score against the physical lower bound R=0, not an invented literature "SoTA".
+    # This remains interpretable even when a design improves on a historical coating.
+    score = (_R_BARE_MEAN - mean_R) / _R_BARE_MEAN
     score = float(max(0.0, min(1.0, score)))
 
     return {

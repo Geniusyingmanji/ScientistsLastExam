@@ -1,0 +1,19 @@
+schema_version: 1
+scientific_question: Construct large subsets of finite affine spaces with no nontrivial three-term arithmetic progression.
+artifact: A collection of length-N vectors over the field with three elements.
+oracle:
+  model: exhaustive pair closure check for x+y+z=0 modulo 3
+  feasibility: correct vector length and absence of distinct collinear triples
+  deterministic: true
+normalization:
+  baseline: the {0,1}^N hypercube construction
+  reference: documented maximum sizes for public dimensions 4 through 6
+  score: uncapped fraction of cardinality improvement
+citations:
+  - {id: doi:10.4007/annals.2017.185.1.8, title: On large subsets of finite vector spaces with no three-term arithmetic progression}
+  - {id: doi:10.1038/s41586-023-06924-6, title: Mathematical discoveries from program search with large language models}
+invariants: [affine-translation invariance, invertible-linear-map invariance, duplicate-point idempotence]
+known_shortcuts: Public low-dimensional maxima are known; open or hidden dimensions are required for novelty claims.
+review:
+  domain: pending_external
+  evaluator_security: automated_invariant_and_sandbox_tests

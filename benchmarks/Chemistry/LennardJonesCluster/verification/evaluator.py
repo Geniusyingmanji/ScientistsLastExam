@@ -21,8 +21,9 @@ GLOBAL_MINIMA = {
     38: -173.928427,
 }
 
-# Test set for this task (small enough for seconds-scale CPU evaluation).
-TEST_SIZES = [7, 13, 19]
+# Expert-level test set. N=38 is the classic double-funnel LJ cluster that separates
+# local basin hopping from generic local relaxation.
+TEST_SIZES = [13, 19, 38]
 HARDCORE = 0.3  # distances below this are physically impossible
 
 

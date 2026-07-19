@@ -11,8 +11,9 @@ Cambridge Cluster Database and are the standard reference values.
 
 ## Your task
 
-Implement a function that returns atomic coordinates for several cluster sizes. Lower total
-LJ energy is better. You are optimizing the geometry, not the potential.
+Implement a function that returns atomic coordinates for several cluster sizes, including
+the classic `N=38` double-funnel cluster. Lower total LJ energy is better. You are
+optimizing the geometry, not the potential.
 
 Edit **`solution.py`** so it defines:
 
@@ -40,5 +41,7 @@ closer than a hard-core cutoff or producing non-finite energy is invalid.
 ## Rules
 
 - Deterministic for a given `(n, seed)`. No network. CPU only, seconds per size.
+  The hidden test set includes expert-level cluster sizes where naive local relaxation
+  commonly gets trapped in the wrong basin.
 - Keep the `build_cluster` signature and the `(n_atoms, 3)` array contract.
 - You may use `numpy` and `scipy` only.

@@ -1,0 +1,20 @@
+schema_version: 1
+scientific_question: Construct exact low-rank bilinear algorithms for matrix multiplication tensors.
+artifact: Complex coefficient matrices U, V, W with a shared rank dimension.
+oracle:
+  model: exact tensor reconstruction plus random-integer functional multiplication checks
+  feasibility: finite two-dimensional arrays with dimensionally consistent shapes
+  deterministic: true
+normalization:
+  baseline: schoolbook scalar-multiplication count
+  reference: published rank counts 7, 23, and 48 for the public sizes
+  score: uncapped fraction of multiplication-count improvement
+citations:
+  - {id: doi:10.1007/BF02165411, title: Gaussian elimination is not optimal}
+  - {id: doi:10.1090/S0002-9904-1976-13988-2, title: A noncommutative algorithm for multiplying 3x3 matrices using 23 multiplications}
+  - {id: arxiv:2506.13131, title: AlphaEvolve}
+invariants: [tensor equality, functional equality on integer matrices, rank-axis permutation invariance]
+known_shortcuts: All public reference algorithms may occur in model training; hidden shapes are needed for discovery claims.
+review:
+  domain: pending_external
+  evaluator_security: automated_invariant_and_sandbox_tests

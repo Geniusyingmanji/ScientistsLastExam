@@ -1,20 +1,19 @@
 """Frozen oracle for PoissonSolver2D (hidden from the agent).
 
 Solves -laplacian(u) = f on the unit square with homogeneous Dirichlet BCs. The exact
-solution is a fixed sum of sine modes (kept hidden so the agent cannot return it directly;
-the single-mode shortcut u = f/(2 pi^2) is wrong for this multi-mode f). The score is the
-log-scaled error reduction between a weak baseline (Jacobi, 50 sweeps) and a 4th-order
-Mehrstellen reference, both precomputed at task build time on the N=49 interior grid.
+solution is a held-out sum of sine modes; only the sampled right-hand side is passed to the
+candidate. The score is the log-scaled error reduction between a weak Jacobi baseline and
+a near-exact spectral-sine reference on the N=127 interior grid.
 """
 
 from __future__ import annotations
 
 import numpy as np
 
-N = 49                       # interior points per dimension; h = 1/(N+1)
-MODES = [(1, 1, 1.0), (2, 3, 0.5), (3, 1, 0.3), (4, 2, 0.2)]   # (k, m, coeff) — hidden u*
-E_BASELINE = 8.2009e-01      # rel. L2 error of Jacobi-50 (normalization floor -> score 0)
-E_REFERENCE = 1.4828e-06     # rel. L2 error of 4th-order Mehrstellen (ceiling -> score 1)
+N = 127
+MODES = [(1, 1, 1.0), (3, 5, 0.6), (7, 2, -0.35), (9, 8, 0.2), (13, 4, -0.15)]
+E_BASELINE = 8.981737822457003e-01
+E_REFERENCE = 1.0e-10
 
 
 def _h() -> float:
@@ -43,8 +42,9 @@ def u_true_grid() -> np.ndarray:
 
 def evaluate(solve_poisson) -> dict:
     U = u_true_grid()
+    rhs = f_grid()
     try:
-        u = np.asarray(solve_poisson(N), dtype=float)
+        u = np.asarray(solve_poisson(N, rhs.copy()), dtype=float)
     except Exception as exc:  # noqa: BLE001
         return {"combined_score": 0.0, "valid": 0.0, "error_message": f"raised: {exc}"}
     if u.shape != (N, N) or not np.all(np.isfinite(u)):

@@ -1,0 +1,638 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_CERTIFICATION_AUDIT",
+  "inventory_count": 49,
+  "status_counts": {
+    "certified": 7,
+    "candidate": 37,
+    "quarantined": 5
+  },
+  "orphaned_manifest_records": [],
+  "duplicate_oracle_groups": [
+    [
+      "CrystalGrowth/CzochralskiProcess",
+      "Electromagnetics/WaveguideModeSolver",
+      "Geomechanics/TunnelSupportDesign",
+      "MolecularDynamics/ForceFieldCalibration",
+      "Optoelectronics/LaserCavityDesign"
+    ]
+  ],
+  "tasks": [
+    {
+      "task": "AcousticMetamaterials/BroadbandAbsorber",
+      "status": "candidate",
+      "reason": "not yet reviewed against certification gates",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "Acoustics/RoomImpulseResponse",
+      "status": "candidate",
+      "reason": "not yet reviewed against certification gates",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "Algorithm/MatrixMultiplicationRank",
+      "status": "certified",
+      "reason": "exact tensor reconstruction plus redundant functional checks",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1007/BF02165411",
+        "doi:10.1090/S0002-9904-1976-13988-2",
+        "arxiv:2506.13131"
+      ],
+      "issues": []
+    },
+    {
+      "task": "Astrodynamics/LowThrustTransfer",
+      "status": "candidate",
+      "reason": "not yet reviewed against certification gates",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "AtmosphericScience/RadiativeTransferFit",
+      "status": "candidate",
+      "reason": "not yet reviewed against certification gates",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "BayesianInference/OptimalExperimentDesign",
+      "status": "candidate",
+      "reason": "not yet reviewed against certification gates",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "Biomechanics/ProstheticJointDesign",
+      "status": "candidate",
+      "reason": "not yet reviewed against certification gates",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "ChemicalKinetics/ReactionMechanismFitting",
+      "status": "candidate",
+      "reason": "not yet reviewed against certification gates",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "ChemicalProcess/DistillationColumnDesign",
+      "status": "candidate",
+      "reason": "not yet reviewed against certification gates",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "Chemistry/LennardJonesCluster",
+      "status": "certified",
+      "reason": "analytic energy oracle; published minima and invariance tests",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1021/jp970984n"
+      ],
+      "issues": []
+    },
+    {
+      "task": "ClimateScience/EnergyBalanceModel",
+      "status": "candidate",
+      "reason": "not yet reviewed against certification gates",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "Combustion/FlameSpeedOptimization",
+      "status": "candidate",
+      "reason": "not yet reviewed against certification gates",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "ControlTheory/InvertedPendulumSwingUp",
+      "status": "candidate",
+      "reason": "not yet reviewed against certification gates",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "CrystalGrowth/CzochralskiProcess",
+      "status": "quarantined",
+      "reason": "claimed Stefan model is a generic eight-variable trigonometric objective",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "DynamicalSystems/LyapunovControl",
+      "status": "candidate",
+      "reason": "not yet reviewed against certification gates",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "Electromagnetics/AntennaArraySynthesis",
+      "status": "candidate",
+      "reason": "not yet reviewed against certification gates",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "Electromagnetics/WaveguideModeSolver",
+      "status": "quarantined",
+      "reason": "claimed eigenmode solver is a generic eight-variable trigonometric objective",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "FluidDynamics/LidDrivenCavity",
+      "status": "candidate",
+      "reason": "not yet reviewed against certification gates",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "FluidMechanics/StokesShapeDrag",
+      "status": "candidate",
+      "reason": "not yet reviewed against certification gates",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "Geomechanics/TunnelSupportDesign",
+      "status": "quarantined",
+      "reason": "claimed FEM/Mohr-Coulomb model is a generic eight-variable trigonometric objective",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "Geophysics/GravityInversion",
+      "status": "candidate",
+      "reason": "not yet reviewed against certification gates",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "Geophysics/SeismicInversion",
+      "status": "candidate",
+      "reason": "not yet reviewed against certification gates",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "HeatTransfer/ConvectionDiffusionOpt",
+      "status": "candidate",
+      "reason": "not yet reviewed against certification gates",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "InventoryManagement/MultiEchelonStock",
+      "status": "candidate",
+      "reason": "not yet reviewed against certification gates",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "MaterialsScience/AlloyHardnessOptimization",
+      "status": "candidate",
+      "reason": "not yet reviewed against certification gates",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "Mathematics/CapSet",
+      "status": "certified",
+      "reason": "exhaustive finite-field collinearity verifier and documented anchors",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.4007/annals.2017.185.1.8",
+        "doi:10.1038/s41586-023-06924-6"
+      ],
+      "issues": []
+    },
+    {
+      "task": "MolecularDynamics/ForceFieldCalibration",
+      "status": "quarantined",
+      "reason": "claimed Monte Carlo/RDF model is a generic eight-variable trigonometric objective",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "NuclearEngineering/NeutronDiffusionCriticality",
+      "status": "candidate",
+      "reason": "not yet reviewed against certification gates",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "Oceanography/OceanCurrentInversion",
+      "status": "candidate",
+      "reason": "not yet reviewed against certification gates",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "status": "candidate",
+      "reason": "not yet reviewed against certification gates",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "Optimization/CirclePacking",
+      "status": "certified",
+      "reason": "geometric feasibility oracle and dated Packomania anchors",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "url:http://hydra.nat.uni-magdeburg.de/packing/csq/csq.html",
+        "doi:10.1007/978-0-387-45676-8"
+      ],
+      "issues": []
+    },
+    {
+      "task": "Optoelectronics/LaserCavityDesign",
+      "status": "quarantined",
+      "reason": "claimed ABCD laser model is a generic eight-variable trigonometric objective",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "ParticlePhysics/CalorimeterDesign",
+      "status": "candidate",
+      "reason": "not yet reviewed against certification gates",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "Photonics/MultilayerThinFilm",
+      "status": "certified",
+      "reason": "transfer-matrix physics oracle with analytic boundary tests",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1201/9781420073034",
+        "doi:10.1364/AO.35.000644"
+      ],
+      "issues": []
+    },
+    {
+      "task": "Physics/SpinGlassGroundState",
+      "status": "certified",
+      "reason": "analytic SK energy with fixed instances and offline reference search",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1103/PhysRevLett.35.1792"
+      ],
+      "issues": []
+    },
+    {
+      "task": "PopulationGenetics/DemographicSFS",
+      "status": "candidate",
+      "reason": "not yet reviewed against certification gates",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "PowerSystems/OptimalPowerFlow",
+      "status": "candidate",
+      "reason": "not yet reviewed against certification gates",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "QuantumChemistry/HartreeFockSCF",
+      "status": "candidate",
+      "reason": "not yet reviewed against certification gates",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "QuantumControl/GateSynthesis",
+      "status": "candidate",
+      "reason": "not yet reviewed against certification gates",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "ScientificComputing/PoissonSolver2D",
+      "status": "certified",
+      "reason": "manufactured-solution PDE oracle with residual and convergence tests",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1137/1.9780898717839"
+      ],
+      "issues": []
+    },
+    {
+      "task": "Semiconductor/MOSFETDoping",
+      "status": "candidate",
+      "reason": "not yet reviewed against certification gates",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "SignalProcessing/SparseRecovery",
+      "status": "candidate",
+      "reason": "not yet reviewed against certification gates",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "Spectroscopy/NMRSpectrumFitting",
+      "status": "candidate",
+      "reason": "not yet reviewed against certification gates",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "StructuralEngineering/TrussWeightMinimization",
+      "status": "candidate",
+      "reason": "not yet reviewed against certification gates",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "Thermodynamics/HeatExchangerDesign",
+      "status": "candidate",
+      "reason": "not yet reviewed against certification gates",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "Thermodynamics/RankineCycleOpt",
+      "status": "candidate",
+      "reason": "not yet reviewed against certification gates",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "Transportation/TrafficSignalTiming",
+      "status": "candidate",
+      "reason": "not yet reviewed against certification gates",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "Turbulence/RANSCalibration",
+      "status": "candidate",
+      "reason": "not yet reviewed against certification gates",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "WavePropagation/SeismicWaveInversion",
+      "status": "candidate",
+      "reason": "not yet reviewed against certification gates",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    }
+  ],
+  "passed": true
+}

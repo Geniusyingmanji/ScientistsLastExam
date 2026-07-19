@@ -1,0 +1,19 @@
+schema_version: 1
+scientific_question: Minimize the energy of fixed Sherrington-Kirkpatrick Ising instances.
+artifact: A length-N vector of spins in {-1,+1}.
+oracle:
+  model: "E(s) = -0.5 s^T J s, symmetric Gaussian J/sqrt(N)"
+  feasibility: correct shape, finite nonzero binary spins
+  deterministic: true
+normalization:
+  baseline: all-plus reference energy
+  reference: fixed energies from a longer offline annealing/local-search run
+  score: mean clipped fraction of the baseline-to-reference energy gap closed
+citations:
+  - id: doi:10.1103/PhysRevLett.35.1792
+    title: Solvable Model of a Spin-Glass
+invariants: [global-spin-flip invariance, symmetric-coupling invariance]
+known_shortcuts: Public seeds and reference energies permit instance memorization; hidden seeds are required for a release test set.
+review:
+  domain: pending_external
+  evaluator_security: automated_invariant_and_sandbox_tests

@@ -1,0 +1,19 @@
+schema_version: 1
+scientific_question: Solve a two-dimensional Dirichlet Poisson problem accurately on a fixed grid.
+artifact: An N by N finite array of interior solution values.
+oracle:
+  model: "-Laplacian(u)=f on (0,1)^2 with homogeneous Dirichlet boundary conditions"
+  feasibility: finite array with the exact grid shape
+  deterministic: true
+normalization:
+  baseline: 50 Jacobi sweeps
+  reference: near-exact manufactured sine-series solution
+  score: clipped log-scale relative-error reduction
+citations:
+  - id: doi:10.1137/1.9780898717839
+    title: Finite Difference Methods for Ordinary and Partial Differential Equations
+invariants: [linearity, zero-boundary consistency, second-order discrete-residual convergence]
+known_shortcuts: The public forcing is separable; release evaluation needs hidden nonseparable manufactured solutions.
+review:
+  domain: pending_external
+  evaluator_security: automated_invariant_and_sandbox_tests

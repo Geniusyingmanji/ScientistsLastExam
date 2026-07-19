@@ -1,0 +1,70 @@
+schema_version: 1
+policy:
+  default_registry: certified
+  certified_requires:
+    - trusted_sandbox
+    - task_card
+    - citation_identifier
+    - deterministic_baseline
+    - invariant_tests
+  statuses: [certified, candidate, quarantined]
+
+tasks:
+  Chemistry/LennardJonesCluster:
+    status: certified
+    reason: analytic energy oracle; published minima and invariance tests
+    citation_ids: [doi:10.1021/jp970984n]
+  Physics/SpinGlassGroundState:
+    status: certified
+    reason: analytic SK energy with fixed instances and offline reference search
+    citation_ids: [doi:10.1103/PhysRevLett.35.1792]
+  ScientificComputing/PoissonSolver2D:
+    status: certified
+    reason: manufactured-solution PDE oracle with residual and convergence tests
+    citation_ids: [doi:10.1137/1.9780898717839]
+  Algorithm/MatrixMultiplicationRank:
+    status: certified
+    reason: exact tensor reconstruction plus redundant functional checks
+    citation_ids:
+      - doi:10.1007/BF02165411
+      - doi:10.1090/S0002-9904-1976-13988-2
+      - arxiv:2506.13131
+  Mathematics/CapSet:
+    status: certified
+    reason: exhaustive finite-field collinearity verifier and documented anchors
+    citation_ids:
+      - doi:10.4007/annals.2017.185.1.8
+      - doi:10.1038/s41586-023-06924-6
+  Optimization/CirclePacking:
+    status: certified
+    reason: geometric feasibility oracle and dated Packomania anchors
+    citation_ids:
+      - url:http://hydra.nat.uni-magdeburg.de/packing/csq/csq.html
+      - doi:10.1007/978-0-387-45676-8
+  Photonics/MultilayerThinFilm:
+    status: certified
+    reason: transfer-matrix physics oracle with analytic boundary tests
+    citation_ids:
+      - doi:10.1201/9781420073034
+      - doi:10.1364/AO.35.000644
+
+  CrystalGrowth/CzochralskiProcess:
+    status: quarantined
+    reason: claimed Stefan model is a generic eight-variable trigonometric objective
+    duplicate_group: generic_trig_8d_v1
+  Electromagnetics/WaveguideModeSolver:
+    status: quarantined
+    reason: claimed eigenmode solver is a generic eight-variable trigonometric objective
+    duplicate_group: generic_trig_8d_v1
+  Geomechanics/TunnelSupportDesign:
+    status: quarantined
+    reason: claimed FEM/Mohr-Coulomb model is a generic eight-variable trigonometric objective
+    duplicate_group: generic_trig_8d_v1
+  MolecularDynamics/ForceFieldCalibration:
+    status: quarantined
+    reason: claimed Monte Carlo/RDF model is a generic eight-variable trigonometric objective
+    duplicate_group: generic_trig_8d_v1
+  Optoelectronics/LaserCavityDesign:
+    status: quarantined
+    reason: claimed ABCD laser model is a generic eight-variable trigonometric objective
+    duplicate_group: generic_trig_8d_v1

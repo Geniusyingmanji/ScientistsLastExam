@@ -1,0 +1,19 @@
+schema_version: 1
+scientific_question: Minimize broadband normal-incidence reflectance of a multilayer coating on BK7 glass.
+artifact: Ordered material identifiers and layer thicknesses in nanometres.
+oracle:
+  model: characteristic transfer-matrix propagation with Cauchy refractive indices
+  feasibility: 1 to 12 supported layers with thicknesses from 1 to 500 nm
+  deterministic: true
+normalization:
+  baseline: bare-glass reflectance
+  reference: physical lower bound of zero mean reflectance
+  score: clipped fraction of bare-to-target reflectance reduction
+citations:
+  - {id: doi:10.1201/9781420073034, title: Thin-Film Optical Filters}
+  - {id: doi:10.1364/AO.35.000644, title: Optimal single-band normal-incidence antireflection coatings}
+invariants: [zero-thickness identity, reflectance bounds, empty-stack Fresnel limit]
+known_shortcuts: The current dispersion and incidence model are simplified; high-fidelity confirmation is needed for discovery claims.
+review:
+  domain: pending_external
+  evaluator_security: automated_invariant_and_sandbox_tests

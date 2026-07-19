@@ -7,7 +7,7 @@ Usage:
     create_task({
         "domain": "Physics",
         "task": "HarmonicOscillatorControl",
-        "difficulty": "hard",
+        "difficulty": "hard",        # hard | flagship only
         "oracle_type": "physical_sim",
         "score_mode": "clipped",
         "eval_time_seconds": 5,
@@ -64,6 +64,12 @@ citation: "{citation}"
 def create_task(spec: dict, repo: Path = REPO) -> Path:
     domain = spec["domain"]
     task = spec["task"]
+    difficulty = str(spec.get("difficulty", "")).strip().lower()
+    if difficulty not in {"hard", "flagship"}:
+        raise ValueError(
+            "Frontier-Science tasks must be PhD/expert difficulty: "
+            "set difficulty to 'hard' or 'flagship'."
+        )
     task_dir = repo / "benchmarks" / domain / task
     eval_dir = task_dir / "frontier_eval"
     ver_dir = task_dir / "verification"
@@ -91,6 +97,7 @@ def create_task(spec: dict, repo: Path = REPO) -> Path:
              "reference_sota","citation"]}), encoding="utf-8")
     (eval_dir / "initial_program.txt").write_text("solution.py\n", encoding="utf-8")
     (eval_dir / "candidate_destination.txt").write_text("solution.py\n", encoding="utf-8")
+    (eval_dir / "entrypoint.txt").write_text(entrypoint + "\n", encoding="utf-8")
     (eval_dir / "eval_command.txt").write_text(
         "{python} frontier_eval/run_eval.py --candidate {candidate} --metrics-out {metrics}\n",
         encoding="utf-8")
