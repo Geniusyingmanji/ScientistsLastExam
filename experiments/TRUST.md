@@ -25,6 +25,8 @@ remain baseline-only and must not be promoted to model-performance evidence.
 | `candidate_wave3_admission_audit_2026-07-21_v2.json` | `TRUSTED_ADMISSION_AUDIT` | On clean source `2d2d62d`, verifies five remaining wave-3 defects and the OED-v2 rebuild: finite-output rejection, ten converged references, six development and four shifted-validation instances. |
 | `task_certification_audit_2026-07-21_v5.json` | `TRUSTED_CERTIFICATION_AUDIT` | On clean source `2d2d62d`, records 50 packages: seven certified, 19 candidate and 24 quarantined after OED-v2 re-admission. |
 | `gpt55_oed_v2_b1_2026-07-21.json` | `TRUSTED_SECURE_EVAL / CALIBRATION_ONLY` | GPT-5.5 reaches 0.990615 development and 0.993697 sealed shifted validation in one proposal on clean source `2d2d62d`; this establishes budget-one saturation, not a multi-seed leaderboard. |
+| `candidate_wave4_admission_audit_2026-07-21.json` | `TRUSTED_ADMISSION_AUDIT` | On clean source `5187019`, reproduces all 12 fail-open, unreachable-anchor, missing-observation, uncoupled-system or degenerate-objective defects in the final unscreened tranche. |
+| `task_certification_audit_2026-07-21_v6.json` | `TRUSTED_CERTIFICATION_AUDIT` | On clean source `5187019`, records the fully triaged 50-package inventory: seven certified, seven candidate and 36 quarantined. |
 
 Raw `.out`/`.log` files predating the trusted evaluator inherit
 `UNTRUSTED_PRE_SANDBOX` unless a dated trusted report explicitly incorporates them.

@@ -649,3 +649,7 @@ traffic model trivially solved by maximum greens because no conflicting phase ex
 these packages also expose direct non-finite fail-open paths. All 50 inventory packages have now
 received an adversarial admission pass; the resulting 7 certified / 7 candidate / 36
 quarantined split makes explicit that directory count was never the target.
+
+`candidate_wave4_admission_audit_2026-07-21.json` and
+`task_certification_audit_2026-07-21_v6.json` bind clean revision `5187019`; both set
+`execution_passed=true`, `trusted_evidence=true` and `passed=true`.

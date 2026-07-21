@@ -1,0 +1,215 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_ADMISSION_AUDIT",
+  "created_at": "2026-07-21T20:00:04.447849+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "5187019fdfa9117b56e31156e4728da315121ccb",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/home/azureuser/.local/bin/python3.10",
+      "scripts/audit_candidate_wave4.py",
+      "--output",
+      "experiments/candidate_wave4_admission_audit_2026-07-21.json"
+    ]
+  },
+  "environment": {
+    "python": "3.10.20 (main, Apr  7 2026, 20:44:18) [Clang 22.1.1 ]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.31"
+  },
+  "records": [
+    {
+      "task": "AcousticMetamaterials/BroadbandAbsorber",
+      "admission": "quarantine",
+      "defect": "the fixed lumped impedance model is uncalibrated to the cited 0.92 absorber anchor: its baseline is 2e-4 and a deterministic 512-design sample remains below 0.01; non-finite geometry also passes the task-level validity path",
+      "baseline_mean_absorption": 0.0002170970987069909,
+      "declared_reference_absorption": 0.92,
+      "sampled_valid_designs": 512,
+      "sampled_best_mean_absorption": 0.0036736824693202664,
+      "nonfinite_task_score": 1.0,
+      "nonfinite_task_valid": true,
+      "passed": true
+    },
+    {
+      "task": "Biomechanics/ProstheticJointDesign",
+      "admission": "quarantine",
+      "defect": "the hand-written rollback/conformity product is solved exactly by setting all radii to their upper bounds, which is defined to be twice baseline and full score; non-finite geometry also passes task-level validation",
+      "baseline_joint_quality": 0.23481115817620826,
+      "upper_corner_joint_quality": 0.4696223163524165,
+      "upper_to_baseline_ratio": 2.0,
+      "upper_corner_score": 1.0,
+      "nonfinite_task_score": 1.0,
+      "nonfinite_task_valid": true,
+      "passed": true
+    },
+    {
+      "task": "ChemicalProcess/DistillationColumnDesign",
+      "admission": "quarantine",
+      "defect": "the alleged tray calculation hard-codes distillate purity to 0.99, never accepts feed composition, and produces identical low-reflux outputs across 10--60 trays; there is no material balance supporting the separation claim",
+      "unique_top_purities_over_grid": [
+        0.99
+      ],
+      "low_reflux_unique_outputs_across_tray_counts": 1,
+      "tray_calculation_parameters": [
+        "n_trays",
+        "reflux_ratio",
+        "feed_tray",
+        "alpha"
+      ],
+      "feed_composition_enters_tray_calculation": false,
+      "passed": true
+    },
+    {
+      "task": "Combustion/FlameSpeedOptimization",
+      "admission": "quarantine",
+      "defect": "the simplified algebraic formula clips both methane baseline and claimed H2-enriched reference at 5 m/s, leaving a zero normalization denominator; most random feasible mixtures also hit the same cap",
+      "methane_baseline_speed_m_s": 5.0,
+      "claimed_reference_speed_m_s": 5.0,
+      "normalization_denominator": 0.0,
+      "sampled_cap_fraction": 0.8828125,
+      "passed": true
+    },
+    {
+      "task": "FluidMechanics/StokesShapeDrag",
+      "admission": "quarantine",
+      "defect": "the oracle does not solve Stokes flow: drag is only normalized perimeter. At fixed area the isoperimetric inequality makes the circle optimal, contradicting the declared 0.85 non-circular reference; non-finite shapes pass task validation",
+      "oracle_explicitly_uses_perimeter_proxy": true,
+      "circle_area": 3.141592653589793,
+      "circle_drag": 0.9996031586350926,
+      "declared_reference_drag": 0.85,
+      "nonfinite_task_score": 1.0,
+      "nonfinite_task_valid": true,
+      "passed": true
+    },
+    {
+      "task": "HeatTransfer/ConvectionDiffusionOpt",
+      "admission": "quarantine",
+      "defect": "the program receives only grid dimensions and source count, not the fixed hidden target field or an experiment callback, so the inverse-design claim requires guessing one embedded answer; non-finite sources pass task-level validity",
+      "entrypoint_arguments": [
+        "nx",
+        "ny",
+        "n_sources"
+      ],
+      "entrypoint_receives_target_or_experiment": false,
+      "hidden_target_instance_count": 1,
+      "nonfinite_task_score": 1.0,
+      "nonfinite_task_valid": true,
+      "passed": true
+    },
+    {
+      "task": "InventoryManagement/MultiEchelonStock",
+      "admission": "quarantine",
+      "defect": "each stage receives its own previous orders without upstream fulfillment, so retailer service is exactly invariant to factory and warehouse stocks; the model does not implement a coupled multi-echelon supply chain",
+      "upstream_stock_pairs": [
+        [
+          0,
+          0
+        ],
+        [
+          200,
+          0
+        ],
+        [
+          0,
+          200
+        ],
+        [
+          200,
+          200
+        ]
+      ],
+      "service_levels_at_fixed_retailer_stock": [
+        0.995,
+        0.995,
+        0.995,
+        0.995
+      ],
+      "costs_at_fixed_retailer_stock": [
+        506.675,
+        899.675,
+        636.085,
+        583.685
+      ],
+      "service_level_range": 0.0,
+      "passed": true
+    },
+    {
+      "task": "ParticlePhysics/CalorimeterDesign",
+      "admission": "quarantine",
+      "defect": "the documented uniform baseline is claimed to have 3.8% resolution but contains only 10.7 radiation lengths, triggers the oracle's containment failure, and is actually scored as 100%; non-finite layers also receive full task score",
+      "baseline_total_radiation_lengths": 10.714285714285715,
+      "minimum_required_radiation_lengths": 20.0,
+      "documented_baseline_sigma": 0.038,
+      "oracle_baseline_sigma": 1.0,
+      "oracle_baseline_sampling_fraction": 0.0,
+      "baseline_marked_valid": true,
+      "nonfinite_task_score": 1.0,
+      "passed": true
+    },
+    {
+      "task": "QuantumChemistry/HartreeFockSCF",
+      "admission": "quarantine",
+      "defect": "a dense scan of the complete two-coefficient projective orbital space finds the baseline is already the oracle minimum at +0.444915 Ha, while normalization claims an unreachable -1.1167 Ha H2/STO-3G energy; non-finite orbitals score one",
+      "projective_grid_size": 20001,
+      "oracle_grid_minimum_hartree": 0.444914959051933,
+      "oracle_baseline_hartree": 0.4449149590519331,
+      "declared_exact_hf_hartree": -1.1167,
+      "minimum_minus_baseline_hartree": -1.1102230246251565e-16,
+      "nonfinite_task_score": 1.0,
+      "passed": true
+    },
+    {
+      "task": "Semiconductor/MOSFETDoping",
+      "admission": "quarantine",
+      "defect": "the stated per-m3 doping bounds are six orders below realistic semiconductor scales, producing only 48 microvolts and Ion/Ioff 1.0019 even at the upper bound versus the 1e8 anchor; non-finite profiles receive full task score",
+      "upper_bound_doping_per_m3": 1e+20,
+      "upper_bound_max_potential_v": 4.8241432997644685e-05,
+      "upper_bound_ion_ioff_ratio": 1.0018571621240766,
+      "declared_reference_ratio": 100000000.0,
+      "nonfinite_task_score": 1.0,
+      "passed": true
+    },
+    {
+      "task": "Thermodynamics/RankineCycleOpt",
+      "admission": "quarantine",
+      "defect": "the polynomial steam surrogate assigns zero efficiency to its public baseline; a 2,772-point feasible grid reaches only 6.55%, far below the unrelated 46% ultra-supercritical anchor",
+      "baseline_efficiency": 0.0,
+      "coarse_grid_size": 2772,
+      "coarse_grid_max_efficiency": 0.06548986430607387,
+      "coarse_grid_best_parameters": [
+        30.0,
+        400.0,
+        15.0,
+        1.0
+      ],
+      "declared_reference_efficiency": 0.46,
+      "passed": true
+    },
+    {
+      "task": "Transportation/TrafficSignalTiming",
+      "admission": "quarantine",
+      "defect": "the model has only one traffic direction and no conflicting phase or shared green-time constraint, so setting every signal to maximum green with travel-time offsets trivially clips to full score; non-finite timing also scores one",
+      "all_max_green_ideal_offset_score": 1.0,
+      "all_max_green_total_delay": 5415.0,
+      "nonfinite_task_score": 1.0,
+      "nonfinite_task_valid": true,
+      "passed": true
+    }
+  ],
+  "summary": {
+    "task_count": 12,
+    "reproduced_defect_count": 12,
+    "recommended_quarantine_count": 12
+  },
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}
