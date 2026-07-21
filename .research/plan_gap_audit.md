@@ -36,7 +36,7 @@ physical validation, and auditable claim–evidence provenance.
 | Multifidelity/Pareto | Missing | Plan text only | At least one certified proxy/exact task with rank-correlation calibration; objective vectors/hypervolume |
 | Feedback learning claim | Missing | Controls exist but no causal result | Structured feedback must beat shuffled/no-feedback under paired repeated runs |
 | Mechanistic discovery | Missing | Outcome scores only | Separate equation/causal artifact score and intervention generalization |
-| Validation/distribution shift | Missing | No proxy→exact/hidden shift/physical tier | Independent high-fidelity or physical confirmation and abstention cases |
+| Validation/distribution shift | Calibration-level | Pendulum-v2 budget-three diagnostic: visible development 0.691→0.854 while shifted robustness 0.641→0.639; single seed and non-sealed adapter feedback | Paired repeated hidden-shift studies plus independent high-fidelity or physical confirmation and abstention cases |
 | Research-integrity track | Partial | Immutable candidate/parent hashes and artifacts | Hypothesis–test–evidence records, failed branches, claim links and calibrated refusal |
 
 ## What the latest literature changes

@@ -538,3 +538,19 @@ One hidden low-mass/long-pendulum case runs away, producing a development–robu
 retains a measurable robustness problem. The paired failed diagnostic also establishes a
 benchmark-design lesson: apparent model failure caused by an underspecified plant contract is
 not scientific headroom.
+
+### Pendulum-v2 budget-three development/robustness divergence
+
+`gpt55_pendulum_v2_b3_2026-07-21.json` is the first short trajectory in this project to expose
+a science-specific proxy gap. Starting from the corrected public contract, GPT-5.5 produces a
+valid controller at every proposal. Step 1 scores development **0.690588** and hidden shifted
+robustness **0.640591**. Oracle feedback then helps step 2 improve the selected development
+score to **0.854016**, while robustness slightly falls to **0.639041**; the gap widens from
+**0.049997** to **0.214975**. Step 3 reaches development 0.850876 and robustness 0.634523 and is
+correctly rejected by development selection.
+
+This single-seed diagnostic does not prove a causal feedback or Goodhart effect, but it
+demonstrates why Frontier-Eng-style best-score curves are insufficient in scientific settings:
+the agent learned to improve the visible nominal objective without improving evaluator-only
+robust control. A preregistered paired multi-seed normal/selection-blind study is required before
+making an inferential claim.

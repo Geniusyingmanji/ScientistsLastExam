@@ -46,7 +46,9 @@ meaning.
   repaired on-ramps; neutron has a repaired oracle and verified anchor but still needs hidden
   regimes; sparse recovery is a near-saturated on-ramp. Pendulum-v2 has been rebuilt and
   restored as a candidate: GPT-5.5 reaches 0.797 development and 0.631 shifted robustness at
-  budget one. The other six remain quarantined after reproducible adversarial review: RIR
+  budget one. At budget three, visible development rises from 0.691 to 0.854 while shifted
+  robustness stays near 0.64, making it the first useful development–validation gap task. The
+  other six remain quarantined after reproducible adversarial review: RIR
   length failure, unstable low-thrust propagation, centerline-spoofable cavity scoring,
   pseudo-data alloy hardness, scalar-FFT pseudo-RCWA and a degenerate heat-exchanger objective.
 - **25 candidates with incomplete scientific metadata.** These require citation, baseline and
