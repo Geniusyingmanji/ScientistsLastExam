@@ -33,9 +33,10 @@ meaning.
   review and a server-held split.
 - **4 candidates screened at budget one.** SparseRecovery reaches 0.958 through standard
   sparse solvers and needs hidden sensing/noise/sparsity shifts. SeismicInversion is currently
-  non-identifiable, LyapunovControl omits feedback derivatives from its MLE calculation, and
-  NeutronDiffusionCriticality uses an unverified fixed score anchor. The latter three must be
-  repaired or recalibrated before their GPT-5.5 scores have admission meaning.
+  non-identifiable. LyapunovControl's omitted feedback derivative has since been repaired with
+  a two-trajectory closed-loop estimator; replaying the candidate gives MLE -1.413 and clipped
+  score 1.0, so it is an on-ramp rather than a headline task. NeutronDiffusionCriticality still
+  uses an unverified fixed score anchor.
 - **11 earlier candidates with complete metadata fields.** These are the fastest next review
   tranche: RoomImpulseResponse, LowThrustTransfer, InvertedPendulumSwingUp, LyapunovControl,
   LidDrivenCavity, SeismicInversion, AlloyHardnessOptimization, NeutronDiffusionCriticality,

@@ -411,3 +411,15 @@ valid numerical output are insufficient admission criteria. Budget-one screening
 not precede, identifiability and oracle review. Template-solvable tasks should become on-ramps
 or gain procedural hidden regimes; defective or unsupported evaluators must be repaired and all
 old scores superseded before any longer trajectory is run.
+
+### Lyapunov oracle correction and replay
+
+The Lyapunov evaluator now measures the actual sampled-data closed loop with a black-box,
+two-trajectory Benettin estimator, including a 20-time-unit transient. An analytic cancellation
+plus damping regression distinguishes it from the old open-loop variational equation. The zero
+controller gives MLE **0.9134**, consistent with the classical Lorenz regime. Re-evaluating the
+immutable wave-1 GPT-5.5 candidate gives MLE **-1.4132**, average control energy **0.4844**, and
+clipped score **1.0**. Thus the old 0.3055 score is superseded, but the correction does not rescue
+task headroom: nearest-equilibrium feedback is a standard one-proposal solution. The task is an
+on-ramp until hidden parameter/initial-condition/actuator regimes and a genuine energy-stability
+tradeoff replace the single clipped target.

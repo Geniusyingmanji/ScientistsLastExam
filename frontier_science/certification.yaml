@@ -54,6 +54,13 @@ tasks:
     citation_ids:
       - doi:10.7551/mitpress/11283.001.0001
 
+  DynamicalSystems/LyapunovControl:
+    status: candidate
+    reason: corrected closed-loop MLE oracle is scientifically valid but known equilibrium feedback saturates at budget one; retain as an on-ramp pending hidden regimes and a nontrivial energy-stability frontier
+    citation_ids:
+      - doi:10.1103/PhysRevLett.64.1196
+      - doi:10.1016/0375-9601(92)90745-8
+
   CrystalGrowth/CzochralskiProcess:
     status: quarantined
     reason: claimed Stefan model is a generic eight-variable trigonometric objective

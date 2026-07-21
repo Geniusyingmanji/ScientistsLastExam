@@ -151,6 +151,33 @@ def discover_mechanism(n, observe, intervene, budget):
         self.assertTrue(all(not row["valid"] for row in metrics["per_world"]))
         self.assertTrue(all("budget exceeded" in row["reason"] for row in metrics["per_world"]))
 
+    def test_lyapunov_oracle_measures_closed_loop_feedback(self):
+        oracle = load_oracle("DynamicalSystems/LyapunovControl")
+        # Cancellation plus damping makes the sampled closed loop locally stable. Its exact
+        # exponent differs slightly from -gain because feedback is held for each RK4 step;
+        # an open-loop-only variational equation would instead report strong instability.
+        gain = 1.0
+
+        def controller(state):
+            x, y, z = np.asarray(state, dtype=float)
+            plant = np.array([
+                oracle.SIGMA * (y - x),
+                x * (oracle.RHO - z) - y,
+                x * y - oracle.BETA * z,
+            ])
+            return -plant - gain * np.array([x, y, z])
+
+        mle, _ = oracle._compute_mle(controller, n_steps=2000,
+                                     initial_state=np.zeros(3), burn_in_steps=0)
+        self.assertLess(mle, -0.8)
+        self.assertGreater(mle, -1.1)
+
+    def test_lyapunov_oracle_rejects_nonfinite_control(self):
+        oracle = load_oracle("DynamicalSystems/LyapunovControl")
+        with self.assertRaisesRegex(ValueError, "three finite values"):
+            oracle._compute_mle(lambda _state: np.array([np.nan, 0.0, 0.0]),
+                                n_steps=10, burn_in_steps=0)
+
 
 if __name__ == "__main__":
     unittest.main()

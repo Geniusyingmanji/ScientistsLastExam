@@ -1,8 +1,10 @@
-"""Oracle: Lorenz system chaos control via Lyapunov exponent reduction.
+"""Oracle: Lorenz-system chaos control via closed-loop Lyapunov reduction.
 
-Agent designs a feedback controller u(x) for the Lorenz system (σ=10, ρ=28, β=8/3).
-Oracle integrates the controlled system + variational equations to compute the maximum
-Lyapunov exponent (MLE). Goal: make MLE negative (stabilize) with minimal control energy.
+The controller is treated as a black-box sampled-data feedback law: it is evaluated once at
+the start of each integration step and its output is held constant over that RK4 step.  The
+maximum Lyapunov exponent is estimated with a two-trajectory Benettin method, so the measured
+closed-loop map includes the state dependence of *any* deterministic controller without
+requiring or approximating an explicit controller Jacobian.
 """
 import numpy as np
 
@@ -11,6 +13,9 @@ DT = 0.01
 T_TOTAL = 100.0
 N_STEPS = int(T_TOTAL / DT)
 U_MAX_SQ = 50.0  # max average ||u||^2
+PERTURBATION = 1e-7
+RENORM_INTERVAL = 10
+BURN_IN_STEPS = 2000
 
 def _rk4_step(f, t, y, dt):
     k1 = f(t, y)
@@ -19,55 +24,71 @@ def _rk4_step(f, t, y, dt):
     k4 = f(t + dt, y + dt * k3)
     return y + dt/6 * (k1 + 2*k2 + 2*k3 + k4)
 
-def _compute_mle(controller):
-    """Compute MLE of controlled Lorenz via Benettin's algorithm."""
-    x = np.array([1.0, 1.0, 1.0])
-    # Perturbation vector for variational equation
-    w = np.array([1.0, 0.0, 0.0])
-    w = w / np.linalg.norm(w)
+def _safe_control(controller, state):
+    """Evaluate one controller call and enforce the public componentwise actuator limit."""
+    u = np.asarray(controller(state.copy()), dtype=float).ravel()
+    if u.shape != (3,) or not np.all(np.isfinite(u)):
+        raise ValueError("controller must return three finite values")
+    return np.clip(u, -20.0, 20.0)
+
+
+def _lorenz_step(state, control):
+    """Advance one zero-order-held controlled Lorenz step."""
+    def dynamics(_t, s):
+        return np.array([
+            SIGMA * (s[1] - s[0]) + control[0],
+            s[0] * (RHO - s[2]) - s[1] + control[1],
+            s[0] * s[1] - BETA * s[2] + control[2],
+        ])
+    return _rk4_step(dynamics, 0.0, state, DT)
+
+
+def _compute_mle(controller, n_steps=N_STEPS, initial_state=None, burn_in_steps=BURN_IN_STEPS):
+    """Estimate the maximum exponent of the actual sampled-data closed-loop map.
+
+    A reference and a nearby trajectory receive independently evaluated feedback.  Periodic
+    renormalization keeps their separation in the local linear regime.  This is deliberately
+    black-box: finite-difference propagation captures ``du/dx`` for smooth feedback and also
+    gives the operational local stability of clipped or piecewise feedback laws.
+    """
+    x = np.array([1.0, 1.0, 1.0] if initial_state is None else initial_state,
+                 dtype=float)
+    if x.shape != (3,) or not np.all(np.isfinite(x)):
+        raise ValueError("initial state must contain three finite values")
+    direction = np.array([1.0, 0.0, 0.0], dtype=float)
+    x_perturbed = x + PERTURBATION * direction
     lyap_sum = 0.0
     total_u_sq = 0.0
-    renorm_interval = 10  # steps between QR renormalizations
+    elapsed = 0.0
+    burn_in_steps = max(0, min(int(burn_in_steps), int(n_steps) - RENORM_INTERVAL))
 
-    for step in range(N_STEPS):
-        # Get control
-        try:
-            u = np.asarray(controller(x.copy()), dtype=float).ravel()[:3]
-            u = np.clip(u, -20, 20)
-        except:
-            u = np.zeros(3)
+    for step in range(int(n_steps)):
+        u = _safe_control(controller, x)
+        u_perturbed = _safe_control(controller, x_perturbed)
         total_u_sq += np.sum(u**2)
+        x = _lorenz_step(x, u)
+        x_perturbed = _lorenz_step(x_perturbed, u_perturbed)
+        if not np.all(np.isfinite(x)) or not np.all(np.isfinite(x_perturbed)):
+            raise ValueError("controlled trajectory became non-finite")
 
-        # Lorenz + control
-        def lorenz_controlled(t, state):
-            s = state[:3]
-            dx = SIGMA * (s[1] - s[0]) + u[0]
-            dy = s[0] * (RHO - s[2]) - s[1] + u[1]
-            dz = s[0] * s[1] - BETA * s[2] + u[2]
-            return np.array([dx, dy, dz])
+        if (step + 1) % RENORM_INTERVAL == 0:
+            delta = x_perturbed - x
+            separation = float(np.linalg.norm(delta))
+            if not np.isfinite(separation) or separation <= 1e-15:
+                # Numerically indistinguishable trajectories imply contraction at least to
+                # machine precision.  Preserve a direction for the remaining experiment.
+                separation = 1e-15
+                delta = direction * separation
+            direction = delta / separation
+            if step + 1 > burn_in_steps:
+                lyap_sum += np.log(separation / PERTURBATION)
+                elapsed += RENORM_INTERVAL * DT
+            x_perturbed = x + PERTURBATION * direction
 
-        # Jacobian of Lorenz at current state (for variational eq)
-        J = np.array([
-            [-SIGMA, SIGMA, 0],
-            [RHO - x[2], -1, -x[0]],
-            [x[1], x[0], -BETA]
-        ])
-
-        # Advance state
-        x = _rk4_step(lorenz_controlled, step * DT, x, DT)
-
-        # Advance perturbation: dw/dt = J w
-        w = w + DT * (J @ w)
-
-        # Renormalize periodically
-        if (step + 1) % renorm_interval == 0:
-            norm_w = np.linalg.norm(w)
-            if norm_w > 1e-15:
-                lyap_sum += np.log(norm_w)
-                w = w / norm_w
-
-    mle = lyap_sum / T_TOTAL
-    avg_u_sq = total_u_sq / N_STEPS
+    if elapsed <= 0.0:
+        raise ValueError("trajectory too short for Lyapunov estimation")
+    mle = lyap_sum / elapsed
+    avg_u_sq = total_u_sq / int(n_steps)
     return float(mle), float(avg_u_sq)
 
 # Uncontrolled MLE (precomputed once)
@@ -86,7 +107,11 @@ def evaluate(design_controller):
     if not callable(controller):
         return {"combined_score": 0.0, "valid": 0.0, "error_message": "not callable", "feasibility_rate": 0.0}
 
-    mle, avg_u_sq = _compute_mle(controller)
+    try:
+        mle, avg_u_sq = _compute_mle(controller)
+    except Exception as e:
+        return {"combined_score": 0.0, "valid": 0.0,
+                "error_message": str(e), "feasibility_rate": 0.0}
 
     # Constraint: average control energy
     if avg_u_sq > U_MAX_SQ:
@@ -98,4 +123,7 @@ def evaluate(design_controller):
     mle_unc = _MLE_UNCONTROLLED
     score = max(0.0, min(1.0, (mle_unc - mle) / (mle_unc - mle_target)))
     return {"combined_score": float(score), "valid": 1.0, "feasibility_rate": 1.0,
-            "mle": round(mle, 4), "mle_uncontrolled": round(mle_unc, 4), "avg_control_energy": round(avg_u_sq, 4)}
+            "raw_score": float(mle), "mle": round(mle, 4),
+            "mle_uncontrolled": round(mle_unc, 4),
+            "avg_control_energy": round(avg_u_sq, 4),
+            "mle_method": "two_trajectory_benettin_sampled_feedback"}

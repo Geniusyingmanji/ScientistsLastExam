@@ -9,6 +9,14 @@ perturbations can stabilize unstable periodic orbits.
 
 Reference: Ott, Grebogi & Yorke, PRL 64, 1196 (1990); Pyragas, Phys. Lett. A 170, 421 (1992).
 
+The benchmark implements a sampled-data controller: `controller(state)` is evaluated at every
+`dt=0.01` integration step and that control is held constant during the step. The evaluator
+estimates the closed-loop MLE by evolving and periodically renormalizing two nearby controlled
+trajectories. Consequently, nonlinear, clipped and piecewise feedback is evaluated without
+assuming an analytic controller Jacobian. The returned controller must be a deterministic,
+memoryless function of its supplied state; hidden mutable state would make the paired local
+stability experiment ill-defined.
+
 ## Your task
 ```python
 def design_controller(sigma, rho, beta):
