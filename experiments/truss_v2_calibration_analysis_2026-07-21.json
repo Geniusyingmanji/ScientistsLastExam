@@ -1,0 +1,268 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_DERIVED_EVIDENCE",
+  "evidence_scope": "TRUSS_HEADROOM_DIAGNOSTIC_NOT_CAUSAL_OR_POPULATION_EVIDENCE",
+  "created_at": "2026-07-21T23:03:00.132402+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "29c05676eb9d7a84242f93c599f2059045f1bcb3",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/analyze_truss_v2_calibrations.py",
+      "--output",
+      "experiments/truss_v2_calibration_analysis_2026-07-21.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "input_source_revision": "4c31f5d1b1cb448b38629f54a053ac1cf01f6385",
+  "records": {
+    "budget_one": {
+      "label": "budget_one",
+      "report": "experiments/gpt55_truss_v2_b1_2026-07-21.json",
+      "report_sha256": "68a339292039b359ae670a2d4cbb6d84d307f1f6055da6f6e70fa712d8e2de14",
+      "trajectory_sha256": "c07a74a242a894c620eebb4b7ef6c696a23103797fa6caba805e157cebee1e6c",
+      "source_revision": "4c31f5d1b1cb448b38629f54a053ac1cf01f6385",
+      "feedback_mode": "normal",
+      "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+      "seed": 0,
+      "proposal_budget": 1,
+      "server_side_seed_control": false,
+      "oracle_calls": 2,
+      "total_tokens": 4287,
+      "best_score": 0.0,
+      "selected_step": 0,
+      "selected_candidate_sha256": "dd89ba5c3aff3d54eb84802cd80cb9da210e60811085a0dcdcf70c4a5e735661",
+      "selected_metrics": {
+        "combined_score": 0.0,
+        "robustness_score": 0.0,
+        "heldout_policy_score": 0.0,
+        "heldout_robustness_score": 0.0,
+        "mean_shifted_case_feasibility_rate": 1.0,
+        "mean_shifted_constraint_feasibility_rate": 1.0
+      },
+      "trajectory": [
+        {
+          "step": 0,
+          "accepted": true,
+          "valid": true,
+          "candidate_sha256": "dd89ba5c3aff3d54eb84802cd80cb9da210e60811085a0dcdcf70c4a5e735661",
+          "parent_sha256": null,
+          "combined_score": 0.0,
+          "robustness_score": 0.0,
+          "heldout_policy_score": 0.0,
+          "heldout_robustness_score": 0.0,
+          "mean_shifted_case_feasibility_rate": 1.0,
+          "mean_shifted_constraint_feasibility_rate": 1.0
+        },
+        {
+          "step": 1,
+          "accepted": false,
+          "valid": true,
+          "candidate_sha256": "e2cec90df78a341b71ab452017ee5625ab87360299156ed6a2e3e2a04fbdf219",
+          "parent_sha256": "dd89ba5c3aff3d54eb84802cd80cb9da210e60811085a0dcdcf70c4a5e735661",
+          "combined_score": 0.0,
+          "robustness_score": 0.0,
+          "heldout_policy_score": 0.0,
+          "heldout_robustness_score": 0.0,
+          "mean_shifted_case_feasibility_rate": 1.0,
+          "mean_shifted_constraint_feasibility_rate": 1.0
+        }
+      ]
+    },
+    "normal_budget_three": {
+      "label": "normal_budget_three",
+      "report": "experiments/gpt55_truss_v2_b3_2026-07-21.json",
+      "report_sha256": "f3cc0c719baab592fd7723bcaf117d96b0fafddad2983c71da7bb84a6f25d063",
+      "trajectory_sha256": "1f5e48e232415b132dc3845f306201c6ae75fa6e00e0c438e824b65556034c2f",
+      "source_revision": "4c31f5d1b1cb448b38629f54a053ac1cf01f6385",
+      "feedback_mode": "normal",
+      "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+      "seed": 1,
+      "proposal_budget": 3,
+      "server_side_seed_control": false,
+      "oracle_calls": 4,
+      "total_tokens": 19659,
+      "best_score": 0.6114935558376748,
+      "selected_step": 3,
+      "selected_candidate_sha256": "61d1073ad2b6d62ce8fd4a70c2c8dace00082b959f2b554ca9b87e6ca66382bf",
+      "selected_metrics": {
+        "combined_score": 0.6114935558376748,
+        "robustness_score": 0.5360975531291581,
+        "heldout_policy_score": 0.4223478862036328,
+        "heldout_robustness_score": 0.07788103926987092,
+        "mean_shifted_case_feasibility_rate": 0.75,
+        "mean_shifted_constraint_feasibility_rate": 0.9887152777777778
+      },
+      "trajectory": [
+        {
+          "step": 0,
+          "accepted": true,
+          "valid": true,
+          "candidate_sha256": "dd89ba5c3aff3d54eb84802cd80cb9da210e60811085a0dcdcf70c4a5e735661",
+          "parent_sha256": null,
+          "combined_score": 0.0,
+          "robustness_score": 0.0,
+          "heldout_policy_score": 0.0,
+          "heldout_robustness_score": 0.0,
+          "mean_shifted_case_feasibility_rate": 1.0,
+          "mean_shifted_constraint_feasibility_rate": 1.0
+        },
+        {
+          "step": 1,
+          "accepted": true,
+          "valid": true,
+          "candidate_sha256": "6059f5eb1a6c55cba6796b1e04972a17f12abef9b4d751962119856adedb7fcf",
+          "parent_sha256": "dd89ba5c3aff3d54eb84802cd80cb9da210e60811085a0dcdcf70c4a5e735661",
+          "combined_score": 0.4155791815661502,
+          "robustness_score": 0.5372503690739883,
+          "heldout_policy_score": 0.0,
+          "heldout_robustness_score": 0.0,
+          "mean_shifted_case_feasibility_rate": 1.0,
+          "mean_shifted_constraint_feasibility_rate": 1.0
+        },
+        {
+          "step": 2,
+          "accepted": true,
+          "valid": true,
+          "candidate_sha256": "b641225a44c1bcf56651b303097a504878ea44001dde0f3d957441b26c74881b",
+          "parent_sha256": "6059f5eb1a6c55cba6796b1e04972a17f12abef9b4d751962119856adedb7fcf",
+          "combined_score": 0.5484970821077498,
+          "robustness_score": 0.5360975531291581,
+          "heldout_policy_score": 0.25132141838571087,
+          "heldout_robustness_score": 0.20643821494573883,
+          "mean_shifted_case_feasibility_rate": 0.75,
+          "mean_shifted_constraint_feasibility_rate": 0.9869791666666666
+        },
+        {
+          "step": 3,
+          "accepted": true,
+          "valid": true,
+          "candidate_sha256": "61d1073ad2b6d62ce8fd4a70c2c8dace00082b959f2b554ca9b87e6ca66382bf",
+          "parent_sha256": "b641225a44c1bcf56651b303097a504878ea44001dde0f3d957441b26c74881b",
+          "combined_score": 0.6114935558376748,
+          "robustness_score": 0.5360975531291581,
+          "heldout_policy_score": 0.4223478862036328,
+          "heldout_robustness_score": 0.07788103926987092,
+          "mean_shifted_case_feasibility_rate": 0.75,
+          "mean_shifted_constraint_feasibility_rate": 0.9887152777777778
+        }
+      ]
+    },
+    "blind_budget_three": {
+      "label": "blind_budget_three",
+      "report": "experiments/gpt55_truss_v2_blind_b3_2026-07-21.json",
+      "report_sha256": "795c277240a101f68fa888e7338b4e40a535b34971c4dd061b933f992d801702",
+      "trajectory_sha256": "8c380f4d2b6e9a561e6a5de10577ad343c7204cb78b2c5bd7a0ed70f738a294c",
+      "source_revision": "4c31f5d1b1cb448b38629f54a053ac1cf01f6385",
+      "feedback_mode": "selection_blind",
+      "feedback_scope": "open-loop proposal batch: every proposal sees the frozen baseline program and its allowlisted baseline metrics; evaluated scores are retained only for offline best-of-batch analysis and never change a later parent or prompt; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+      "seed": 1,
+      "proposal_budget": 3,
+      "server_side_seed_control": false,
+      "oracle_calls": 4,
+      "total_tokens": 12637,
+      "best_score": 0.08462868264136335,
+      "selected_step": 3,
+      "selected_candidate_sha256": "02e03db3edd949ff5cf9b18cec25512faedf75bddc01e804fd03b96893e22f4d",
+      "selected_metrics": {
+        "combined_score": 0.08462868264136335,
+        "robustness_score": 0.0698669254738856,
+        "heldout_policy_score": 0.2777878043533903,
+        "heldout_robustness_score": 0.41643801863190333,
+        "mean_shifted_case_feasibility_rate": 0.90625,
+        "mean_shifted_constraint_feasibility_rate": 0.9977678571428572
+      },
+      "trajectory": [
+        {
+          "step": 0,
+          "accepted": true,
+          "valid": true,
+          "candidate_sha256": "dd89ba5c3aff3d54eb84802cd80cb9da210e60811085a0dcdcf70c4a5e735661",
+          "parent_sha256": null,
+          "combined_score": 0.0,
+          "robustness_score": 0.0,
+          "heldout_policy_score": 0.0,
+          "heldout_robustness_score": 0.0,
+          "mean_shifted_case_feasibility_rate": 1.0,
+          "mean_shifted_constraint_feasibility_rate": 1.0
+        },
+        {
+          "step": 1,
+          "accepted": false,
+          "valid": false,
+          "candidate_sha256": "3f62353e7f72694c48db5a742d9ebf5a0a5eff50072189e88aaeafb0c77e677f",
+          "parent_sha256": "dd89ba5c3aff3d54eb84802cd80cb9da210e60811085a0dcdcf70c4a5e735661",
+          "combined_score": 0.08566189335168957,
+          "robustness_score": 0.06959265308337399,
+          "heldout_policy_score": 0.2838469286841534,
+          "heldout_robustness_score": 0.4256140801093638,
+          "mean_shifted_case_feasibility_rate": 0.65625,
+          "mean_shifted_constraint_feasibility_rate": 0.7477678571428572
+        },
+        {
+          "step": 2,
+          "accepted": false,
+          "valid": false,
+          "candidate_sha256": "dc7a996b6639ae961821b520a6f6dd893fbf95325828c798f19366fb4fb26158",
+          "parent_sha256": "dd89ba5c3aff3d54eb84802cd80cb9da210e60811085a0dcdcf70c4a5e735661",
+          "combined_score": 0.0,
+          "robustness_score": 0.0,
+          "heldout_policy_score": 0.0,
+          "heldout_robustness_score": 0.0,
+          "mean_shifted_case_feasibility_rate": 0.75,
+          "mean_shifted_constraint_feasibility_rate": 0.75
+        },
+        {
+          "step": 3,
+          "accepted": true,
+          "valid": true,
+          "candidate_sha256": "02e03db3edd949ff5cf9b18cec25512faedf75bddc01e804fd03b96893e22f4d",
+          "parent_sha256": "dd89ba5c3aff3d54eb84802cd80cb9da210e60811085a0dcdcf70c4a5e735661",
+          "combined_score": 0.08462868264136335,
+          "robustness_score": 0.0698669254738856,
+          "heldout_policy_score": 0.2777878043533903,
+          "heldout_robustness_score": 0.41643801863190333,
+          "mean_shifted_case_feasibility_rate": 0.90625,
+          "mean_shifted_constraint_feasibility_rate": 0.9977678571428572
+        }
+      ]
+    }
+  },
+  "normal_minus_blind_selected_contrast": {
+    "combined_score": 0.5268648731963115,
+    "robustness_score": 0.46623062765527246,
+    "heldout_policy_score": 0.1445600818502425,
+    "heldout_robustness_score": -0.33855697936203244,
+    "mean_shifted_case_feasibility_rate": -0.15625,
+    "mean_shifted_constraint_feasibility_rate": -0.009052579365079416,
+    "total_tokens": 7022,
+    "oracle_calls": 0
+  },
+  "within_normal_final_accepted_change": {
+    "development_score": 0.062996473729925,
+    "heldout_policy_score": 0.1710264678179219,
+    "heldout_robustness_score": -0.1285571756758679
+  },
+  "limitations": [
+    "Normal and selection-blind each have one replicate identifier; no confidence interval or causal feedback claim is supported.",
+    "The Azure endpoint exposes no server-side random seed, so equal local identifiers do not imply paired model randomness.",
+    "Normal used more tokens than selection-blind, so the conditions are call-matched but not token- or context-matched.",
+    "Budget-one uses a different local identifier and is an independent calibration, not a prefix of the budget-three trajectory.",
+    "Held-out and shifted metrics were sealed from proposal and selection state throughout all conditions."
+  ],
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}
