@@ -178,6 +178,32 @@ def discover_mechanism(n, observe, intervene, budget):
             oracle._compute_mle(lambda _state: np.array([np.nan, 0.0, 0.0]),
                                 n_steps=10, burn_in_steps=0)
 
+    def test_neutron_diffusion_operator_is_symmetric_and_reference_is_reproducible(self):
+        oracle = load_oracle("NuclearEngineering/NeutronDiffusionCriticality")
+        uniform = np.full(oracle.N_ZONES, oracle.AVG_ENRICH_MAX)
+        k_uniform = oracle._compute_keff(uniform)
+        k_reference = oracle._compute_keff(oracle.REFERENCE_LOADING)
+        self.assertAlmostEqual(float(np.mean(oracle.REFERENCE_LOADING)),
+                               oracle.AVG_ENRICH_MAX, places=12)
+        self.assertAlmostEqual(k_uniform, 0.9841790542, places=8)
+        self.assertAlmostEqual(k_reference, 1.0591815191, places=8)
+        self.assertAlmostEqual(k_reference - k_uniform, 0.0750024649, places=8)
+
+        _, _, _, _, diffusion, absorption, _ = oracle._cross_sections(
+            np.repeat(oracle.REFERENCE_LOADING,
+                      oracle.N_MESH // oracle.N_ZONES)
+        )
+        h = oracle.SLAB_WIDTH / (oracle.N_MESH + 1)
+        interface = 2 * diffusion[:-1] * diffusion[1:] / (
+            diffusion[:-1] + diffusion[1:]
+        )
+        left = np.concatenate(([diffusion[0]], interface))
+        right = np.concatenate((interface, [diffusion[-1]]))
+        matrix = np.diag((left + right) / h**2 + absorption)
+        matrix += np.diag(-interface / h**2, 1)
+        matrix += np.diag(-interface / h**2, -1)
+        self.assertTrue(np.allclose(matrix, matrix.T, atol=1e-14))
+
 
 if __name__ == "__main__":
     unittest.main()

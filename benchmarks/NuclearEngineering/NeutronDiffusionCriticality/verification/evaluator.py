@@ -12,6 +12,14 @@ N_ZONES = 20
 N_MESH = 200
 SLAB_WIDTH = 100.0  # cm
 AVG_ENRICH_MAX = 0.05
+REFERENCE_LOADING = np.array([
+    0.02, 0.02, 0.02, 0.02, 0.02, 0.02,
+    0.04401186635287959, 0.08829194345257642,
+    0.11627672306003041, 0.13141946713451355,
+    0.13141946713451355, 0.11627672306003041,
+    0.08829194345257642, 0.04401186635287959,
+    0.02, 0.02, 0.02, 0.02, 0.02, 0.02,
+])
 
 def _cross_sections(enrichment):
     """Two-group macroscopic cross-sections as linear functions of U-235 enrichment."""
@@ -29,7 +37,10 @@ def _cross_sections(enrichment):
 
 def _compute_keff(enrichments):
     """Power iteration for k_eff given enrichment per zone."""
-    h = SLAB_WIDTH / N_MESH
+    # N cell centres with homogeneous Dirichlet values one spacing beyond the centres.
+    # The harmonic interface coefficient gives a symmetric conservative finite-volume
+    # diffusion operator for spatially varying D.
+    h = SLAB_WIDTH / (N_MESH + 1)
     zone_width = N_MESH // N_ZONES
     # Map each mesh point to its zone enrichment
     e_mesh = np.zeros(N_MESH)
@@ -40,10 +51,13 @@ def _compute_keff(enrichments):
     D1, Sr1, nuSf1, Ss12, D2, Sa2, nuSf2 = _cross_sections(e_mesh)
     # Build diffusion matrices (tridiagonal)
     def diffusion_matrix(D, Sigma_r):
-        diag_main = 2 * D / h**2 + Sigma_r
-        diag_off = -D[:-1] / h**2  # simplified: average D at interfaces
-        A = diags([diag_main, np.append(diag_off, 0), np.append(0, diag_off)],
-                  [0, -1, 1], shape=(N_MESH, N_MESH), format='csc')
+        interface = 2.0 * D[:-1] * D[1:] / (D[:-1] + D[1:])
+        left = np.concatenate(([D[0]], interface))
+        right = np.concatenate((interface, [D[-1]]))
+        diag_main = (left + right) / h**2 + Sigma_r
+        diag_off = -interface / h**2
+        A = diags([diag_off, diag_main, diag_off], [-1, 0, 1],
+                  shape=(N_MESH, N_MESH), format='csc')
         return A
     A1 = diffusion_matrix(D1, Sr1)
     A2 = diffusion_matrix(D2, Sa2)
@@ -66,7 +80,7 @@ def _compute_keff(enrichments):
         # Normalize
         norm = np.sqrt(np.sum(phi1_new**2) + np.sum(phi2_new**2))
         phi1, phi2 = phi1_new / norm, phi2_new / norm
-        if abs(k_new - k) < 1e-7:
+        if abs(k_new - k) < 1e-11:
             k = k_new
             break
         k = k_new
@@ -74,11 +88,14 @@ def _compute_keff(enrichments):
 
 # Reference: uniform 5% enrichment
 _K_UNIFORM = None
+_K_REFERENCE = None
 
 def evaluate(optimize_enrichment):
-    global _K_UNIFORM
+    global _K_UNIFORM, _K_REFERENCE
     if _K_UNIFORM is None:
         _K_UNIFORM = _compute_keff(np.full(N_ZONES, 0.05))
+    if _K_REFERENCE is None:
+        _K_REFERENCE = _compute_keff(REFERENCE_LOADING)
     try:
         enrichments = np.asarray(optimize_enrichment(N_ZONES, AVG_ENRICH_MAX), dtype=float)
     except Exception as e:
@@ -91,7 +108,9 @@ def evaluate(optimize_enrichment):
                 "error_message": f"avg enrichment {np.mean(enrichments):.4f} > {AVG_ENRICH_MAX}", "feasibility_rate": 0.0}
     k = _compute_keff(enrichments)
     k_baseline = _K_UNIFORM
-    k_sota = k_baseline + 0.07  # ~7% pcm improvement is a good target
+    k_sota = _K_REFERENCE
     score = max(0.0, min(1.0, (k - k_baseline) / (k_sota - k_baseline)))
     return {"combined_score": float(score), "valid": 1.0, "feasibility_rate": 1.0,
-            "k_eff": round(k, 6), "k_baseline": round(k_baseline, 6), "avg_enrichment": round(float(np.mean(enrichments)), 4)}
+            "raw_score": float(k), "k_eff": round(k, 6),
+            "k_baseline": round(k_baseline, 6), "k_reference": round(k_sota, 6),
+            "avg_enrichment": round(float(np.mean(enrichments)), 4)}

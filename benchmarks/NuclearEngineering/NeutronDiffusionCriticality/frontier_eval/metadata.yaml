@@ -7,5 +7,5 @@ gpu_required: false
 eval_time_seconds: 10
 science_metric: k_eff_improvement_over_uniform
 reference_baseline: "uniform 5% enrichment"
-reference_sota: "optimized zoned loading (~7% pcm improvement)"
+reference_sota: "reproducible symmetric multistart-SLSQP witness: k_eff 1.059182 vs uniform 0.984179"
 citation: "Duderstadt & Hamilton 1976; Yamamoto et al. 2002"

@@ -35,8 +35,10 @@ meaning.
   sparse solvers and needs hidden sensing/noise/sparsity shifts. SeismicInversion is currently
   non-identifiable. LyapunovControl's omitted feedback derivative has since been repaired with
   a two-trajectory closed-loop estimator; replaying the candidate gives MLE -1.413 and clipped
-  score 1.0, so it is an on-ramp rather than a headline task. NeutronDiffusionCriticality still
-  uses an unverified fixed score anchor.
+  score 1.0, so it is an on-ramp rather than a headline task. NeutronDiffusionCriticality's
+  asymmetric diffusion stencil and fixed anchor have since been replaced by a conservative
+  symmetric operator and a reproducible optimization/eigenvalue witness; its old GPT-5.5 score
+  is superseded.
 - **11 earlier candidates with complete metadata fields.** These are the fastest next review
   tranche: RoomImpulseResponse, LowThrustTransfer, InvertedPendulumSwingUp, LyapunovControl,
   LidDrivenCavity, SeismicInversion, AlloyHardnessOptimization, NeutronDiffusionCriticality,

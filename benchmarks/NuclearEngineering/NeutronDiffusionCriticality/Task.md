@@ -17,8 +17,11 @@ def optimize_enrichment(n_zones, avg_max):
 ```
 
 ## Scoring
-`score = clip((k - k_uniform) / 0.07, 0, 1)` where k_uniform is for flat 5% enrichment.
-Optimal zoned loading achieves ~7% pcm improvement by flattening the neutron flux profile.
+`score = clip((k - k_uniform) / (k_reference - k_uniform), 0, 1)`, where the flat 5%
+loading gives `k_uniform = 0.984179` and a reproducible constrained numerical witness gives
+`k_reference = 1.059182`. The reference uses low enrichment near the leaking boundaries and
+concentrates fuel toward the high-importance central region. It is a calibration witness, not a
+claim of a globally proved physical optimum.
 
 ## Rules
 - Only edit `solution.py`. numpy/scipy only. CPU. Do not read `verification/`.

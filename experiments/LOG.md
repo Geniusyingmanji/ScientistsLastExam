@@ -423,3 +423,19 @@ clipped score **1.0**. Thus the old 0.3055 score is superseded, but the correcti
 task headroom: nearest-equilibrium feedback is a standard one-proposal solution. The task is an
 on-ramp until hidden parameter/initial-condition/actuator regimes and a genuine energy-stability
 tradeoff replace the single clipped target.
+
+### Neutron-diffusion stencil and anchor correction
+
+The original variable-diffusion tridiagonal assembly shifted one off-diagonal array by one
+cell. It was therefore nonsymmetric and nonconservative, allowing artificial loadings with
+`k_eff` near 3.9 and supporting the incorrect edge-enrichment story in the prompt. The corrected
+finite-volume stencil uses harmonic interface coefficients on matching upper/lower diagonals.
+A separate dense generalized-eigenvalue implementation agrees with power iteration to below
+`2e-11`: uniform 5% gives **0.9841790542**, while a deterministic symmetric multistart
+multistart-SLSQP witness gives **1.0591815191**, an improvement of **0.0750024649**. The score now uses
+this checked witness rather than the unsupported `k_baseline + 0.07` constant.
+
+Replaying the immutable wave-1 candidate under the corrected oracle gives `k_eff=0.904128` and
+score **0.0**, superseding its old 0.3662. It had moved enrichment toward leaking boundaries,
+which was rewarded only by the faulty stencil. The repaired task still needs procedural reactor
+regimes and independent domain review before certification.

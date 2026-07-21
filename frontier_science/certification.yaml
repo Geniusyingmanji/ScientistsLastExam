@@ -61,6 +61,12 @@ tasks:
       - doi:10.1103/PhysRevLett.64.1196
       - doi:10.1016/0375-9601(92)90745-8
 
+  NuclearEngineering/NeutronDiffusionCriticality:
+    status: candidate
+    reason: corrected conservative two-group diffusion oracle and reproducible numerical anchor; awaiting procedural reactor regimes and independent domain review
+    citation_ids:
+      - isbn:9780471223634
+
   CrystalGrowth/CzochralskiProcess:
     status: quarantined
     reason: claimed Stefan model is a generic eight-variable trigonometric objective
