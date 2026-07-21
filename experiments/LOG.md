@@ -528,3 +528,13 @@ controller assumed a point-mass pendulum, whereas the evaluator uses the `4/3` e
 cart-pole equations. Because the original v2 Task text disclosed parameters but not those exact
 equations, this run cannot establish headroom. The dynamics were subsequently added verbatim to
 the public contract; the diagnostic artifact is retained but superseded for admission purposes.
+
+With the exact equations disclosed, the clean-revision rerun
+`gpt55_pendulum_v2_contract_b1_2026-07-21.json` improves development from **0.000021** to
+**0.796874** in one proposal using 3,263 tokens. It implements energy shaping plus local LQR,
+balances on 97.97% of scored development time, and obtains shifted robustness **0.630753**.
+One hidden low-mass/long-pendulum case runs away, producing a development–robustness gap of
+**0.166122**. The task is therefore restored as a candidate: it is partly template-solvable but
+retains a measurable robustness problem. The paired failed diagnostic also establishes a
+benchmark-design lesson: apparent model failure caused by an underspecified plant contract is
+not scientific headroom.

@@ -85,8 +85,10 @@ tasks:
     status: quarantined
     reason: the 30-day trajectory uses 1000 Euler steps, causing catastrophic unforced orbital-energy drift; fuel anchors are unsupported
   ControlTheory/InvertedPendulumSwingUp:
-    status: quarantined
-    reason: rebuilt with corrected down-zero dynamics and separate shifted robustness evaluation; awaiting clean reference calibration and frontier-model headroom screening
+    status: candidate
+    reason: rebuilt and calibrated with correct dynamics; GPT-5.5 reaches 0.797 development but only 0.631 shifted robustness at budget one, leaving a measurable nominal-to-robust control gap
+    citation_ids:
+      - doi:10.1016/S0005-1098(99)00140-5
   FluidDynamics/LidDrivenCavity:
     status: quarantined
     reason: fixed centerline-only scoring accepts nonphysical field injection without boundary, divergence, momentum or pressure checks

@@ -44,18 +44,19 @@ meaning.
   is superseded.
 - **The 11 metadata-complete candidates have now been screened.** Lyapunov and seismic are
   repaired on-ramps; neutron has a repaired oracle and verified anchor but still needs hidden
-  regimes; sparse recovery is a near-saturated on-ramp. The other seven are quarantined after
-  reproducible adversarial review: RIR length failure, unstable low-thrust propagation,
-  inverted pendulum semantics, centerline-spoofable cavity scoring, pseudo-data alloy hardness,
-  scalar-FFT pseudo-RCWA and a degenerate heat-exchanger objective.
+  regimes; sparse recovery is a near-saturated on-ramp. Pendulum-v2 has been rebuilt and
+  restored as a candidate: GPT-5.5 reaches 0.797 development and 0.631 shifted robustness at
+  budget one. The other six remain quarantined after reproducible adversarial review: RIR
+  length failure, unstable low-thrust propagation, centerline-spoofable cavity scoring,
+  pseudo-data alloy hardness, scalar-FFT pseudo-RCWA and a degenerate heat-exchanger objective.
 - **25 candidates with incomplete scientific metadata.** These require citation, baseline and
   best-known anchors before detailed admission review.
-- **13 quarantined packages.** Five generic-objective clones must be replaced with real domain
+- **12 quarantined packages.** Five generic-objective clones must be replaced with real domain
   oracles; metadata completion alone cannot rehabilitate them. The sixth,
   `ClimateScience/EnergyBalanceModel`, uses an unstable explicit diffusion iteration, an
   unverified ERA5 attribution and a structurally underdetermined seven-parameter fit to one
   steady profile. It requires replacement with documented multi-regime data, not a numerical
-  patch. Seven additional wave-2 tasks are blocked by the concrete oracle failures listed
+  patch. Six additional wave-2 tasks remain blocked by the concrete oracle failures listed
   above; none may contribute model-performance evidence until rebuilt and re-admitted.
 
 ## Priority review findings
