@@ -93,6 +93,9 @@ def compact_trajectory_snapshot(path: Path) -> dict[str, Any]:
                 "candidate_sha256": event["candidate_sha256"],
                 "parent_sha256": event["parent_sha256"],
                 "metrics": compact_scalar_metrics(event.get("metrics") or {}),
+                "algorithm_metadata": compact_scalar_metrics(
+                    event.get("algorithm_metadata") or {}
+                ),
                 "error": event.get("error"),
             }
             for event in events

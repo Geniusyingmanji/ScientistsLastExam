@@ -39,6 +39,12 @@ class BatchAggregationTests(unittest.TestCase):
         self.assertAlmostEqual(condition["oracle_calls"]["mean"], 3.5)
         self.assertIn("estimated_cost_usd", condition)
 
+    def test_feedback_condition_order_is_counterbalanced_by_seed(self):
+        modes = ["normal", "selection_blind"]
+        self.assertEqual(MODULE._condition_order(modes, 0), modes)
+        self.assertEqual(MODULE._condition_order(modes, 1), list(reversed(modes)))
+        self.assertEqual(MODULE._condition_order(modes, 2), modes)
+
     def test_aggregation_uses_latest_attempt_without_dropping_history(self):
         failed = {"task": "T/X", "algorithm": "greedy_rewrite",
                   "feedback_mode": "normal", "seed": 0, "error": "offline"}
@@ -117,6 +123,15 @@ class BatchAggregationTests(unittest.TestCase):
             self.assertTrue(report["execution_passed"])
             self.assertFalse(report["trusted_evidence"])
             self.assertFalse(report["passed"])
+
+    def test_selection_blind_rejects_unsupported_backend_mix(self):
+        with self.assertRaisesRegex(SystemExit, "only for greedy_rewrite"):
+            MODULE.main([
+                "--tasks", "LennardJonesCluster",
+                "--algorithms", "greedy_rewrite,openevolve",
+                "--feedback-modes", "selection_blind",
+                "--budget", "0",
+            ])
 
 
 if __name__ == "__main__":

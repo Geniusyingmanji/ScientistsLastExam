@@ -89,7 +89,11 @@ def main(argv=None) -> int:
     pr.add_argument("--seed", type=int, default=0)
     pr.add_argument("--resume", action="store_true")
     pr.add_argument("--workdir", default=None)
-    pr.add_argument("--feedback-mode", choices=("normal", "none", "shuffled"), default="normal")
+    pr.add_argument(
+        "--feedback-mode",
+        choices=("normal", "none", "shuffled", "selection_blind"),
+        default="normal",
+    )
     pr.add_argument("--allow-uncertified", action="store_true")
 
     ps = sub.add_parser("smoke"); ps.set_defaults(fn=_cmd_smoke)

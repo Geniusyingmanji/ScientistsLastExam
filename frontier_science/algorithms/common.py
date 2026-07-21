@@ -34,6 +34,31 @@ PROMPT_FEEDBACK_SCOPE = (
 )
 
 
+def feedback_scope(feedback_mode: str) -> str:
+    """Describe exactly how feedback can affect later proposals."""
+    if feedback_mode == "selection_blind":
+        return (
+            "open-loop proposal batch: every proposal sees the frozen baseline program and "
+            "its allowlisted baseline metrics; evaluated scores are retained only for offline "
+            "best-of-batch analysis and never change a later parent or prompt; "
+            + METRIC_VISIBILITY_SCOPE
+        )
+    if feedback_mode == "none":
+        return (
+            "proposal prompts omit metrics, but true combined_score still selects the next "
+            "incumbent program; " + METRIC_VISIBILITY_SCOPE
+        )
+    if feedback_mode == "shuffled":
+        return (
+            "proposal prompts receive a randomly selected prior allowlisted metric record, "
+            "while true combined_score still selects the next incumbent program; "
+            + METRIC_VISIBILITY_SCOPE
+        )
+    if feedback_mode == "normal":
+        return PROMPT_FEEDBACK_SCOPE
+    raise ValueError("unknown feedback mode %r" % feedback_mode)
+
+
 def _canonical_hash(value: Any) -> str:
     rendered = json.dumps(value, sort_keys=True, separators=(",", ":"), default=str)
     return hashlib.sha256(rendered.encode("utf-8")).hexdigest()
@@ -142,7 +167,7 @@ def ensure_run_manifest(
         },
         "seed": int(seed),
         "feedback_mode": feedback_mode,
-        "feedback_scope": PROMPT_FEEDBACK_SCOPE,
+        "feedback_scope": feedback_scope(feedback_mode),
         "llm_condition_sha256": llm_condition_sha256(llm),
         "upstream": upstream,
     }
@@ -343,7 +368,7 @@ class TrajectoryRecorder:
                 "baseline_score": float(baseline_score),
                 "budget": self.budget,
                 "feedback_mode": self.feedback_mode,
-                "feedback_scope": PROMPT_FEEDBACK_SCOPE,
+                "feedback_scope": feedback_scope(self.feedback_mode),
             }
         )
         if extra:

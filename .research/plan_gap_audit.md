@@ -173,8 +173,10 @@ Accordingly, “P0–P2 implemented and recorded” must not be shortened to “
 - [ ] Add structural/behavioral diversity and genealogy-collapse diagnostics.
 - [ ] Add adaptive allocation/stopping baselines (for example, SMC-style convergence control).
 - [ ] Implement delayed-feedback controls and preregister paired Track F contrasts.
-- [ ] Implement strict selection-blind controls (frozen/random parents or open-loop proposal
-  batches); prompt masking alone cannot identify causal use of oracle feedback.
+- [x] Implement a strict selection-blind open-loop control with frozen baseline parent/metrics,
+  offline-only best selection, explicit parent-hash tests and machine-readable feedback scope.
+- [ ] Add a narrower score-information-only control with matched parent programs and feedback
+  message lengths; selection-blind currently tests the full value of iterative feedback.
 - [ ] Evaluate persistent scientific memory/world-model quality over long horizons, beyond
   checkpoint/resume correctness.
 

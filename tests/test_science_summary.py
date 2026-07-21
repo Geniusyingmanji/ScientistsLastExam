@@ -48,6 +48,10 @@ class ScienceCalibrationSummaryTests(unittest.TestCase):
             "candidate_sha256": "candidate",
             "parent_sha256": None,
             "metrics": {"robustness_score": 0.25, "per_instance": [{"x": 1}]},
+            "algorithm_metadata": {
+                "selection_policy": "offline_best_of_open_loop_batch",
+                "nested": {"omit": True},
+            },
         }
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "trajectory.jsonl"
@@ -55,6 +59,10 @@ class ScienceCalibrationSummaryTests(unittest.TestCase):
             snapshot = compact_trajectory_snapshot(path)
         self.assertEqual(len(snapshot["trajectory_sha256"]), 64)
         self.assertEqual(snapshot["events"][0]["metrics"], {"robustness_score": 0.25})
+        self.assertEqual(
+            snapshot["events"][0]["algorithm_metadata"],
+            {"selection_policy": "offline_best_of_open_loop_batch"},
+        )
 
 
 if __name__ == "__main__":

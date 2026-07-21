@@ -23,9 +23,9 @@ from ..spec import TaskSpec
 from ..protocol import TrajectoryEvent, append_event, load_trajectory, sha256_text, summarize_trajectory
 from .common import (
     EvolveResult,
-    PROMPT_FEEDBACK_SCOPE,
     atomic_write_text,
     ensure_run_manifest,
+    feedback_scope,
     restore_committed_trajectory,
 )
 
@@ -51,14 +51,29 @@ def extract_code(text: str) -> Optional[str]:
     return None
 
 
-def _build_prompt(spec: TaskSpec, program: str, metrics: dict) -> str:
+def _build_prompt(
+    spec: TaskSpec,
+    program: str,
+    metrics: dict,
+    *,
+    proposal_slot: int | None = None,
+    proposal_budget: int | None = None,
+) -> str:
     shown = search_visible_metrics(metrics)
+    slot = ""
+    if proposal_slot is not None and proposal_budget is not None:
+        slot = (
+            "## Preregistered proposal slot\n"
+            f"This is proposal {proposal_slot} of {proposal_budget}. Explore a concrete "
+            "implementation improvement appropriate to this slot.\n\n"
+        )
     return (
         f"{spec.agent_visible_text()}\n\n"
-        f"## Current best program (`{spec.candidate_destination}`)\n"
+        f"{slot}"
+        f"## Parent program (`{spec.candidate_destination}`)\n"
         f"```python\n{program}\n```\n\n"
         f"## Its measured metrics\n```json\n{json.dumps(shown, indent=2)}\n```\n\n"
-        "Improve the program to increase `combined_score`. Return one complete "
+        "Propose a complete program intended to increase `combined_score`. Return one complete "
         "```python``` file implementing the same entrypoint."
     )
 
@@ -74,8 +89,10 @@ def greedy_rewrite(
     resume: bool = False,
     feedback_mode: str = "normal",
 ) -> EvolveResult:
-    if feedback_mode not in {"normal", "none", "shuffled"}:
-        raise ValueError("feedback_mode must be normal, none, or shuffled")
+    if feedback_mode not in {"normal", "none", "shuffled", "selection_blind"}:
+        raise ValueError(
+            "feedback_mode must be normal, none, shuffled, or selection_blind"
+        )
     if budget < 0:
         raise ValueError("budget must be non-negative")
     random.seed(seed)
@@ -103,12 +120,17 @@ def greedy_rewrite(
             raise ValueError("checkpoint task/seed mismatch")
         baseline_src = spec.initial_program_path.read_text(encoding="utf-8")
         baseline_score = float(checkpoint["baseline_score"])
+        baseline_metrics = search_visible_metrics(dict(
+            checkpoint.get("baseline_metrics", checkpoint["best_metrics"])
+        ))
         best_score = float(checkpoint["best_score"])
         best_program = str(checkpoint["best_program"])
         if sha256_text(best_program) != checkpoint.get("best_sha256"):
             raise ValueError("checkpoint best program hash mismatch")
         # Checkpoints are search state and therefore contain only search-visible metrics.
         best_metrics = search_visible_metrics(dict(checkpoint["best_metrics"]))
+        if feedback_mode == "selection_blind" and "baseline_metrics" not in checkpoint:
+            raise ValueError("selection_blind checkpoint is missing frozen baseline metrics")
         start_iter = int(checkpoint["next_iter"])
         if budget + 1 < start_iter:
             raise ValueError("requested budget is smaller than the committed checkpoint")
@@ -128,6 +150,7 @@ def greedy_rewrite(
         baseline_score = float(metrics.get("combined_score", INVALID_SCORE))
         best_score, best_program = baseline_score, baseline_src
         best_metrics = search_visible_metrics(metrics)
+        baseline_metrics = dict(best_metrics)
         log_fn(f"[{spec.task_id}] baseline combined_score={baseline_score:.6f} valid={metrics.get('valid')}")
         result = EvolveResult(spec.task_id, best_score, baseline_score, best_program,
                               algorithm="greedy_rewrite", seed=seed)
@@ -146,6 +169,7 @@ def greedy_rewrite(
         atomic_write_text(checkpoint_path, json.dumps({
             "schema_version": 1, "algorithm": "greedy_rewrite", "task_id": spec.task_id,
             "seed": seed, "next_iter": next_iter, "baseline_score": baseline_score,
+            "baseline_metrics": baseline_metrics,
             "best_score": best_score, "best_metrics": best_metrics,
             "best_program": best_program, "best_sha256": sha256_text(best_program),
         }, indent=2, allow_nan=False) + "\n")
@@ -155,7 +179,7 @@ def greedy_rewrite(
 
     for it in range(start_iter, budget + 1):
         step_started = time.monotonic()
-        parent_sha = sha256_text(best_program)
+        prompt_program = best_program
         prompt_metrics = best_metrics
         if feedback_mode == "none":
             prompt_metrics = {}
@@ -163,8 +187,21 @@ def greedy_rewrite(
             shuffled = load_trajectory(trajectory_path)
             prior = [e.get("metrics", {}) for e in shuffled if int(e.get("step", 0)) < it]
             prompt_metrics = random.choice(prior) if prior else best_metrics
+        elif feedback_mode == "selection_blind":
+            prompt_program = baseline_src
+            prompt_metrics = baseline_metrics
+        parent_sha = sha256_text(prompt_program)
         try:
-            reply = llm.complete(_build_prompt(spec, best_program, prompt_metrics), system=SYSTEM_PROMPT)
+            reply = llm.complete(
+                _build_prompt(
+                    spec,
+                    prompt_program,
+                    prompt_metrics,
+                    proposal_slot=it,
+                    proposal_budget=budget,
+                ),
+                system=SYSTEM_PROMPT,
+            )
             llm_usage = dict(getattr(llm, "last_usage", {}) or {})
             llm_error = None
         except Exception as exc:  # noqa: BLE001
@@ -205,6 +242,19 @@ def greedy_rewrite(
             budget_units=it + 1,
             metrics=m, llm=llm_usage,
             error=error,
+            algorithm_metadata={
+                "selection_policy": (
+                    "offline_best_of_open_loop_batch"
+                    if feedback_mode == "selection_blind"
+                    else "online_incumbent"
+                ),
+                "accepted_semantics": (
+                    "offline_best_update"
+                    if feedback_mode == "selection_blind"
+                    else "online_incumbent_update"
+                ),
+                "proposal_slot": it,
+            },
         ))
         save_checkpoint(it + 1)
         log_fn(f"[{spec.task_id}] iter {it}: score={score:.6f} best={best_score:.6f} "
@@ -215,7 +265,12 @@ def greedy_rewrite(
     result.summary.update({"algorithm": "greedy_rewrite", "task_id": spec.task_id,
                            "seed": seed, "baseline_score": baseline_score,
                            "budget": budget, "feedback_mode": feedback_mode,
-                           "feedback_scope": PROMPT_FEEDBACK_SCOPE})
+                           "feedback_scope": feedback_scope(feedback_mode),
+                           "selection_policy": (
+                               "offline_best_of_open_loop_batch"
+                               if feedback_mode == "selection_blind"
+                               else "online_incumbent"
+                           )})
     atomic_write_text(
         workdir / "summary.json",
         json.dumps(result.summary, indent=2, allow_nan=False) + "\n",

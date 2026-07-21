@@ -19,7 +19,7 @@ from frontier_science.metric_visibility import (load_full_metrics, search_visibl
                                                 source_sha256, store_full_metrics)
 from frontier_science.protocol import (TrajectoryEvent, append_event, best_so_far_auc,
                                        load_trajectory, mean_confidence_interval,
-                                       summarize_trajectory)
+                                       sha256_text, summarize_trajectory)
 from frontier_science.registry import find_task
 from frontier_science import upstream_evaluator
 from frontier_science.upstream_evaluator import write_configured_wrapper
@@ -28,6 +28,7 @@ from frontier_science.upstream_evaluator import write_configured_wrapper
 class FakeLLM:
     def __init__(self, replies):
         self.replies = iter(replies)
+        self.prompts = []
         self.last_usage = {}
         self.config = LLMConfig(
             wire="chat", base_url="https://example.invalid/v1", model="fixture",
@@ -35,6 +36,7 @@ class FakeLLM:
         )
 
     def complete(self, prompt, system=None):
+        self.prompts.append(prompt)
         self.last_usage = {"input_tokens": 10, "output_tokens": 5,
                            "total_tokens": 15, "estimated_cost_usd": 0.001}
         value = next(self.replies)
@@ -323,6 +325,52 @@ class GreedyRewriteTests(unittest.TestCase):
             self.assertIn("robustness_score", events[0]["metrics"])
             self.assertIn("per_scenario", events[0]["metrics"])
 
+    def test_selection_blind_freezes_parent_and_metrics_but_retains_offline_best(self):
+        spec = find_task("LennardJonesCluster")
+        baseline = spec.initial_program_path.read_text(encoding="utf-8")
+        proposal_one = "# OPEN_LOOP_PROPOSAL_ONE\ndef optimize_cluster(n_atoms):\n    return []\n"
+        proposal_two = "# OPEN_LOOP_PROPOSAL_TWO\ndef optimize_cluster(n_atoms):\n    return []\n"
+        llm = FakeLLM([
+            "```python\n%s\n```" % proposal_one,
+            "```python\n%s\n```" % proposal_two,
+        ])
+        metrics = [
+            {"combined_score": 0.0, "valid": 1.0, "feasibility_rate": 1.0},
+            {"combined_score": 0.8, "valid": 1.0, "feasibility_rate": 1.0},
+            {"combined_score": 0.7, "valid": 1.0, "feasibility_rate": 1.0},
+        ]
+        with tempfile.TemporaryDirectory() as tmp, patch(
+            "frontier_science.algorithms.evolve.evaluate_candidate",
+            side_effect=metrics,
+        ):
+            result = greedy_rewrite(
+                spec,
+                llm,
+                budget=2,
+                timeout_s=20,
+                workdir=Path(tmp),
+                feedback_mode="selection_blind",
+                log_fn=lambda _: None,
+            )
+            events = load_trajectory(Path(tmp) / "trajectory.jsonl")
+
+        self.assertEqual(result.best_score, 0.8)
+        self.assertEqual(result.best_program.strip(), proposal_one.strip())
+        self.assertEqual(result.summary["selection_policy"], "offline_best_of_open_loop_batch")
+        self.assertEqual(events[1]["parent_sha256"], sha256_text(baseline))
+        self.assertEqual(events[2]["parent_sha256"], sha256_text(baseline))
+        self.assertEqual(
+            events[2]["algorithm_metadata"]["accepted_semantics"],
+            "offline_best_update",
+        )
+        self.assertIn(baseline, llm.prompts[0])
+        self.assertIn(baseline, llm.prompts[1])
+        self.assertNotIn("OPEN_LOOP_PROPOSAL_ONE", llm.prompts[1])
+        self.assertIn('"combined_score": 0.0', llm.prompts[0])
+        self.assertIn('"combined_score": 0.0', llm.prompts[1])
+        self.assertIn("proposal 1 of 2", llm.prompts[0])
+        self.assertIn("proposal 2 of 2", llm.prompts[1])
+
 
 class AlgorithmAdapterTests(unittest.TestCase):
     def test_named_algorithms_do_not_alias_greedy(self):
@@ -346,6 +394,10 @@ class AlgorithmAdapterTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "unsupported"):
                 backend(spec, FakeLLM([]), budget=0, timeout_s=20,
                         workdir=Path(tmp), feedback_mode="shuffled")
+        with tempfile.TemporaryDirectory() as tmp:
+            with self.assertRaisesRegex(ValueError, "unsupported"):
+                backend(spec, FakeLLM([]), budget=0, timeout_s=20,
+                        workdir=Path(tmp), feedback_mode="selection_blind")
 
     def test_shinka_island_copies_do_not_consume_oracle_budget(self):
         rows = [

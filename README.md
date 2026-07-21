@@ -34,7 +34,7 @@ All candidate code runs in a networkless Bubblewrap sandbox with read-only mount
 and process limits, and a typed JSON RPC boundary. The trusted parent alone imports the
 oracle and validates metrics. The current audit reports:
 
-- 77/77 unit, security, protocol and scientific-invariant tests passed.
+- 82/82 unit, security, protocol and scientific-invariant tests passed.
 - The latest 51×2 secure-baseline audit reports 51/51 deterministic, 50/51 valid, 51/51
   fail-closed and zero infrastructure failures. The sole invalid baseline is the explicitly
   quarantined `ClimateScience/EnergyBalanceModel`.
@@ -73,17 +73,22 @@ Named optional backends fail explicitly when their upstream package or supported
 unavailable; they never silently substitute the greedy baseline. Every backend routes
 candidate scoring through the same secure evaluator and writes the unified
 trajectory-schema-v2 `trajectory.jsonl`/`summary.json`, plus `checkpoint` and
-`best_program.py` artifacts.
-Pinned optional dependencies are listed in
+`best_program.py` artifacts. Pinned optional dependencies are listed in
 [`requirements-upstream.txt`](requirements-upstream.txt); TreeQuest needs a Python 3.11
 environment, so it cannot share this host's Python 3.8 runtime.
+
+`greedy_rewrite` additionally supports `--feedback-mode selection_blind`. In this open-loop
+control, every proposal sees the frozen baseline program and baseline public metrics; evaluation
+results are retained only for offline best-of-batch analysis and never alter a later prompt or
+parent. Local run seeds label paired replicates and control local sampling, but the current Azure
+Responses endpoint does not expose a server-side random seed.
 
 Run a preregistered multi-seed experiment with:
 
 ```bash
 python scripts/batch_evolve.py \
   --algorithms greedy_rewrite \
-  --feedback-modes normal,none,shuffled \
+  --feedback-modes normal,selection_blind \
   --seeds 0,1,2,3,4 --budget 30
 ```
 
@@ -92,8 +97,9 @@ The runner reports terminal best score, best-so-far AUC over charged proposal/be
 Student-t 95% confidence intervals. Thus, for example, an unparsable proposal consumes a
 budget unit without fabricating an oracle call. Here `none`/`shuffled` control only the metrics
 shown in the proposal prompt; incumbent/parent selection still uses true oracle scores, and each
-summary records that scope. They are diagnostic prompt-feedback ablations, not yet strict causal
-no-feedback controls. Unsupported combinations fail rather than changing semantics.
+summary records that scope. They are diagnostic prompt-feedback ablations; `selection_blind` is
+the strict open-loop control for the whole iterative-feedback package. Unsupported combinations
+fail rather than changing semantics.
 
 ## LLM configuration
 

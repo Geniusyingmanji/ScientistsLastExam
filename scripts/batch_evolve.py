@@ -50,6 +50,12 @@ def _run_key(task_id: str, algorithm: str, feedback_mode: str, seed: int) -> str
     return "%s|%s|%s|%d" % (task_id, algorithm, feedback_mode, seed)
 
 
+def _condition_order(feedback_modes: list[str], seed: int) -> list[str]:
+    """Counterbalance sequential condition order across replicate identifiers."""
+    modes = list(feedback_modes)
+    return list(reversed(modes)) if int(seed) % 2 else modes
+
+
 def _latest_runs(runs: list[dict[str, Any]]) -> list[dict[str, Any]]:
     latest: dict[str, dict[str, Any]] = {}
     for run in runs:
@@ -103,7 +109,10 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--tasks", default=None, help="comma-separated task IDs/names")
     parser.add_argument("--all", action="store_true", help="include uncertified inventory")
     parser.add_argument("--algorithms", default="greedy_rewrite", help="comma-separated algorithms")
-    parser.add_argument("--feedback-modes", default="normal", help="normal,none,shuffled")
+    parser.add_argument(
+        "--feedback-modes", default="normal",
+        help="normal,none,shuffled,selection_blind (selection_blind is greedy-only)",
+    )
     parser.add_argument("--seeds", type=_seeds, default=[0, 1, 2, 3, 4])
     parser.add_argument("--budget", type=int, default=30)
     parser.add_argument("--timeout", type=float, default=300.0)
@@ -124,9 +133,16 @@ def main(argv: list[str] | None = None) -> int:
     if unknown:
         raise SystemExit("unknown algorithms: %s" % ", ".join(unknown))
     feedback_modes = _csv(args.feedback_modes)
-    unknown_modes = sorted(set(feedback_modes) - {"normal", "none", "shuffled"})
+    unknown_modes = sorted(
+        set(feedback_modes) - {"normal", "none", "shuffled", "selection_blind"}
+    )
     if unknown_modes:
         raise SystemExit("unknown feedback modes: %s" % ", ".join(unknown_modes))
+    if "selection_blind" in feedback_modes and set(algorithms) != {"greedy_rewrite"}:
+        raise SystemExit(
+            "selection_blind is implemented only for greedy_rewrite; run upstream "
+            "backend controls as separately named conditions"
+        )
 
     include_uncertified = bool(args.all)
     if args.tasks:
@@ -152,6 +168,7 @@ def main(argv: list[str] | None = None) -> int:
         "tasks": [spec.task_id for spec in specs],
         "algorithms": algorithms,
         "feedback_modes": feedback_modes,
+        "condition_order": "as_listed_for_even_seeds_reversed_for_odd_seeds",
         "seeds": args.seeds,
         "budget": args.budget,
         "timeout_s": args.timeout,
@@ -166,6 +183,7 @@ def main(argv: list[str] | None = None) -> int:
             "reasoning_effort": llm.config.reasoning_effort,
             "input_cost_per_million": llm.config.input_cost_per_million,
             "output_cost_per_million": llm.config.output_cost_per_million,
+            "server_side_seed_control": False,
         },
     }
 
@@ -210,8 +228,8 @@ def main(argv: list[str] | None = None) -> int:
     for spec in specs:
         for algorithm_name in algorithms:
             algorithm = get_algorithm(algorithm_name)
-            for feedback_mode in feedback_modes:
-                for seed in args.seeds:
+            for seed in args.seeds:
+                for feedback_mode in _condition_order(feedback_modes, seed):
                     counter += 1
                     key = _run_key(spec.task_id, algorithm_name, feedback_mode, seed)
                     if key in done:

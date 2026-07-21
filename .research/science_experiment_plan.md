@@ -47,6 +47,13 @@ one control must make selection blind as well, for example:
 - delay all outcomes until the end of a fixed proposal block; or
 - replay feedback from a different paired run while keeping timing and message shape fixed.
 
+The built-in greedy runner now implements the first strict control as `selection_blind`.
+Every proposal uses the same frozen baseline parent and public baseline metrics; scores are
+retained only for offline best-of-batch analysis. The control isolates the value of iterative
+incumbent/score feedback from repeated open-loop sampling. It does not isolate score text from
+parent-program adaptation, and the current Azure endpoint exposes no server-side random seed;
+both limitations must be stated in paired-result reports.
+
 Normal and control runs should use paired task instances, seeds, call budgets, tool access, and
 feedback-message lengths. The treatment contrast is the information content of feedback, not
 extra compute.
