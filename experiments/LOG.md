@@ -362,3 +362,13 @@ paired-intervention identifiability calibration, which does not read hidden para
 0.978 raw mechanism and 0.931 sealed-intervention prediction within the exact 28-unit laboratory
 budget. The package remains uncertified pending clean full-inventory audit, GPT-5.5 calibration,
 independent evaluator/domain review and a server-held split.
+
+Clean-revision reports bound to `dbbd063` subsequently closed the local inventory checks:
+
+- `task_certification_audit_2026-07-21.json`: 50 packages; 7 certified, 38 candidate and
+  5 quarantined; no orphaned records or admission issues on certified tasks.
+- `secure_baseline_determinism_2026-07-21.json`: 50/50 deterministic over two runs, 49/50
+  valid, 50/50 fail-closed and zero infrastructure failures. The only invalid baseline remains
+  `ClimateScience/EnergyBalanceModel`; the new SCM baseline is valid and deterministic.
+
+Both reports set `execution_passed=true`, `trusted_evidence=true` and `passed=true`.

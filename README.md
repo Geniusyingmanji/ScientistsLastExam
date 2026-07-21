@@ -33,17 +33,17 @@ and process limits, and a typed JSON RPC boundary. The trusted parent alone impo
 oracle and validates metrics. The current audit reports:
 
 - 15/15 security/regression tests passed.
-- The last full clean-revision audit covered the preceding 49-package inventory: 49/49
-  baselines were deterministic across two secure runs.
-- In that audit, 48/49 baselines were valid; `ClimateScience/EnergyBalanceModel` returned a non-finite
+- The current clean-revision audit covers all 50 packages: 50/50 baselines were deterministic
+  across two secure runs.
+- 49/50 baselines were valid; `ClimateScience/EnergyBalanceModel` returned a non-finite
   oracle metric and was correctly rejected fail-closed.
-- The newly added 50th package has passed local invariant, callback-budget and deterministic
-  secure-baseline tests; a fresh full 50-package clean-revision audit is still required.
+- All 50 packages failed closed and there were no infrastructure failures. The newly added
+  mechanism task passed invariant, callback-budget and deterministic secure-baseline tests.
 - Current manifest: 7 certified / 38 candidate / 5 quarantined.
 
 Machine-readable evidence lives in [`experiments/`](experiments/).
-All five dated P0–P2 reports were regenerated from clean source revision `f48b101` and pass
-their declared gates. The two P2 smokes are baseline-only; the repository does not yet contain
+The original five dated P0–P2 reports were regenerated from clean source revision `f48b101`;
+the current 50-package audits bind revision `dbbd063`. The two P2 smokes are baseline-only; the repository does not yet contain
 credible multi-seed model-performance evidence. A clean-revision GPT-5.5 budget-one core pilot
 is recorded as task calibration, not a benchmark leaderboard.
 
