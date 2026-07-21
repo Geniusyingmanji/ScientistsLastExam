@@ -57,6 +57,49 @@ def load_trajectory(path: Path) -> list[dict[str, Any]]:
     return events
 
 
+def compact_scalar_metrics(metrics: dict[str, Any]) -> dict[str, Any]:
+    """Return portable scalar metrics while omitting bulky nested diagnostics."""
+    retained: dict[str, Any] = {}
+    for key, value in metrics.items():
+        if isinstance(value, bool) or value is None or isinstance(value, str):
+            retained[key] = value
+        elif isinstance(value, (int, float)) and not isinstance(value, bool):
+            if not math.isfinite(float(value)):
+                raise ValueError("trajectory metric %s must be finite" % key)
+            retained[key] = value
+    return retained
+
+
+def compact_trajectory_snapshot(path: Path) -> dict[str, Any]:
+    """Freeze scalar science curves and bind them to the full raw trajectory.
+
+    The snapshot is generated after search completes. It is suitable for an outer
+    experiment report and must never be placed back into algorithm search state.
+    """
+    path = Path(path)
+    events = load_trajectory(path)
+    return {
+        "schema_version": 1,
+        "trajectory_sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+        "events": [
+            {
+                "step": int(event["step"]),
+                "oracle_calls": int(event["oracle_calls"]),
+                "budget_units": int(event.get("budget_units") or event["oracle_calls"]),
+                "score": event["score"],
+                "best_score": event["best_score"],
+                "valid": bool(event["valid"]),
+                "accepted": bool(event["accepted"]),
+                "candidate_sha256": event["candidate_sha256"],
+                "parent_sha256": event["parent_sha256"],
+                "metrics": compact_scalar_metrics(event.get("metrics") or {}),
+                "error": event.get("error"),
+            }
+            for event in events
+        ],
+    }
+
+
 def validate_trajectory(events: list[dict[str, Any]]) -> None:
     previous_calls = 0
     previous_best = float("-inf")

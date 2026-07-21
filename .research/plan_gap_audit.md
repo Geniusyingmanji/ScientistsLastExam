@@ -33,7 +33,7 @@ physical validation, and auditable claim–evidence provenance.
 | TreeQuest AB-MCTS | Implemented, trusted baseline smoke | Real TreeQuest AB-MCTS-A ask/tell adapter; clean-revision secure baseline passed under Python 3.12 | Run nonzero-budget/checkpoint integration and multi-seed study |
 | ShinkaEvolve | Implemented, trusted baseline smoke | Official runner/database adapter at pinned commit; clean-revision secure baseline passed under Python 3.10 | Run nonzero-budget/resume integration and token accounting audit |
 | Classical/domain baselines | Missing | None | Random/quasi-random plus BO/CMA-ES/DE and one domain heuristic where meaningful |
-| Multi-seed benchmark evidence | Missing | Keyless GPT-5.5 Responses path now passes smoke; trusted one-seed budget-one core, SCM and candidate calibration reports exist | Certified-core report with uncertainty and raw trajectories |
+| Multi-seed benchmark evidence | Missing | Keyless GPT-5.5 Responses path passes smoke; trusted one-seed candidate calibrations now include OED, Pendulum, GateSynthesis, ActiveLawDiscovery and OPF | Certified-core and science-subset reports with paired uncertainty and portable raw trajectories |
 | Multifidelity/Pareto | Missing | Plan text only | At least one certified proxy/exact task with rank-correlation calibration; objective vectors/hypervolume |
 | Feedback learning claim | Missing | Controls exist but no causal result | Structured feedback must beat shuffled/no-feedback under paired repeated runs |
 | Mechanistic discovery | Missing | Outcome scores only | Separate equation/causal artifact score and intervention generalization |
@@ -151,6 +151,9 @@ Accordingly, “P0–P2 implemented and recorded” must not be shortened to “
 
 - [x] Unified trajectory schema v2, budget-unit AUC, separate oracle-call/cost fields, seeds,
   hashes, checkpoint/resume.
+- [x] Add post-search compact trajectory snapshots with scalar sealed metrics and raw-trajectory
+  hashes to future batch reports; backfill the current science calibrations with a trusted
+  derived summary.
 - [x] Greedy normal/none/shuffled prompt-metric modes and multi-seed statistics runner; scope is
   machine-readable and does not claim selection-blind feedback ablation.
 - [x] Real optional OpenEvolve, TreeQuest AB-MCTS-A and ShinkaEvolve adapters.

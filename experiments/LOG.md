@@ -721,6 +721,34 @@ The nominal DC-OPF witness reaches development/held-out nominal score **1.0/1.0*
 N-1 robustness is only **0.031378/0.0000007**. The security-constrained witness instead reaches
 development/held-out nominal score **0.144294/0.079133** and N-1 robustness approximately
 **1.0/1.0**. The proportional baseline is feasible under every tested outage, while non-finite
-and unbalanced dispatches fail closed. These dirty-tree diagnostics establish the calibration
-target but are not trusted experiment evidence; the calibration and admission reports must be
-regenerated after the OPF-v2 source revision is frozen.
+and unbalanced dispatches fail closed. The clean-revision calibration reproduces these values
+on `f64aeeb`, as do the updated wave-3 admission, 51-package certification and 51×2 secure
+baseline reports. All four set `execution_passed=true`, `trusted_evidence=true` and
+`passed=true`; the secure baseline remains 51/51 deterministic, 50/51 valid, 51/51 fail-closed
+with zero infrastructure failures.
+
+### GPT-5.5 OPF calibration
+
+At budget one, GPT-5.5 writes a generic nominal DC-OPF solver and reaches development/held-out
+nominal score approximately **1.0/1.0** in 3,784 tokens. The sealed N-1 results sharply differ:
+development/held-out robustness is **0.031378/0.0000007**, and only **0.113997** of complete
+development outage scenarios are feasible on average. The candidate enumerates no line
+contingencies; it implements the visible nominal problem exactly.
+
+An independent budget-three run first produces an invalid candidate, then two valid nominal
+solutions near score 1.0. Both valid proposals retain development robustness **0.031378**,
+held-out robustness **0.0000007** and outage feasibility **0.113997**. The run uses 12,309
+tokens. These one-seed calibrations indicate a reproducible nominal/security separation within
+each trajectory, but do not identify a causal feedback effect or a population-level model
+property. `gpt55_opf_v2_b1_2026-07-21.json` and `gpt55_opf_v2_b3_2026-07-21.json` bind clean
+revision `f64aeeb` and retain full trusted metrics outside search state.
+
+### Portable science-curve archive
+
+Historical batch reports retained run summaries while their full per-step science metrics lived
+under git-ignored `runs/`. The batch runner now writes a post-search compact trajectory snapshot
+containing scalar visible and sealed metrics, candidate lineage hashes and a SHA-256 binding to
+the full raw trajectory. This snapshot is written only after a backend returns and is never
+placed in agent or search state. A derived evidence builder backfills the nine trusted OED,
+Pendulum, GateSynthesis, ActiveLawDiscovery and OPF calibration conditions; their cross-task
+claim audit is recorded in `.research/science_common_findings.md`.

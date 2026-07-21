@@ -1,0 +1,1618 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_TASK_CALIBRATION",
+  "evidence_scope": "SCIENTIFIC_CALIBRATION_NOT_MODEL_PERFORMANCE",
+  "created_at": "2026-07-21T21:06:31.312071+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "f64aeeb93e4b3b41aab2499f3bcfd6d8e2e7da8b",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/home/azureuser/.local/bin/python3.10",
+      "scripts/calibrate_opf_v2.py",
+      "--output",
+      "experiments/optimal_power_flow_v2_calibration_2026-07-21.json"
+    ]
+  },
+  "environment": {
+    "python": "3.10.20 (main, Apr  7 2026, 20:44:18) [Clang 22.1.1 ]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.31"
+  },
+  "baseline": {
+    "combined_score": 0.0,
+    "valid": 1.0,
+    "feasibility_rate": 1.0,
+    "development_score": 0.0,
+    "robustness_score": 0.0,
+    "development_validation_gap": 0.0,
+    "heldout_policy_score": 0.0,
+    "heldout_robustness_score": 0.0,
+    "heldout_feasibility_rate": 1.0,
+    "mean_contingency_constraint_feasibility": 1.0,
+    "mean_contingency_feasibility_rate": 1.0,
+    "per_instance": [
+      {
+        "name": "dev_mesh5",
+        "split": "development",
+        "valid": true,
+        "score": 0.0,
+        "generation_cost": 1548.3072648577104,
+        "baseline_cost": 1548.3072648577104,
+        "nominal_reference_cost": 1426.3518500303012,
+        "security_reference_cost": 1525.2763906620207,
+        "robustness_score": 0.0,
+        "security_cost_score": 0.0,
+        "nominal_max_loading_ratio": 0.6794686287670657,
+        "contingency_max_loading_ratio": 0.9615384615384616,
+        "contingency_constraint_feasibility": 1.0,
+        "contingency_feasibility_rate": 1.0,
+        "total_normalized_overload": 0.0,
+        "per_contingency": [
+          {
+            "outage": 0,
+            "max_loading_ratio": 0.9615384615384616,
+            "feasible": true
+          },
+          {
+            "outage": 1,
+            "max_loading_ratio": 0.9389678088488748,
+            "feasible": true
+          },
+          {
+            "outage": 2,
+            "max_loading_ratio": 0.9615384615384616,
+            "feasible": true
+          },
+          {
+            "outage": 3,
+            "max_loading_ratio": 0.9615384615384616,
+            "feasible": true
+          },
+          {
+            "outage": 4,
+            "max_loading_ratio": 0.952344410028203,
+            "feasible": true
+          },
+          {
+            "outage": 5,
+            "max_loading_ratio": 0.785861751864473,
+            "feasible": true
+          },
+          {
+            "outage": 6,
+            "max_loading_ratio": 0.8528718470851125,
+            "feasible": true
+          }
+        ]
+      },
+      {
+        "name": "heldout_mesh8",
+        "split": "heldout",
+        "valid": true,
+        "score": 0.0,
+        "generation_cost": 1416.279762315483,
+        "baseline_cost": 1416.279762315483,
+        "nominal_reference_cost": 1291.3429824619025,
+        "security_reference_cost": 1406.6992856909742,
+        "robustness_score": 0.0,
+        "security_cost_score": 0.0,
+        "nominal_max_loading_ratio": 0.8104952709195584,
+        "contingency_max_loading_ratio": 0.9615384615384616,
+        "contingency_constraint_feasibility": 1.0,
+        "contingency_feasibility_rate": 1.0,
+        "total_normalized_overload": 0.0,
+        "per_contingency": [
+          {
+            "outage": 0,
+            "max_loading_ratio": 0.9615384615384616,
+            "feasible": true
+          },
+          {
+            "outage": 1,
+            "max_loading_ratio": 0.888392502739819,
+            "feasible": true
+          },
+          {
+            "outage": 2,
+            "max_loading_ratio": 0.7802994223674548,
+            "feasible": true
+          },
+          {
+            "outage": 3,
+            "max_loading_ratio": 0.8618912139323741,
+            "feasible": true
+          },
+          {
+            "outage": 4,
+            "max_loading_ratio": 0.9615384615384616,
+            "feasible": true
+          },
+          {
+            "outage": 5,
+            "max_loading_ratio": 0.8714006709532314,
+            "feasible": true
+          },
+          {
+            "outage": 6,
+            "max_loading_ratio": 0.9615384615384616,
+            "feasible": true
+          },
+          {
+            "outage": 7,
+            "max_loading_ratio": 0.8098319665286187,
+            "feasible": true
+          },
+          {
+            "outage": 8,
+            "max_loading_ratio": 0.7562156091372082,
+            "feasible": true
+          },
+          {
+            "outage": 9,
+            "max_loading_ratio": 0.9419239153411963,
+            "feasible": true
+          },
+          {
+            "outage": 10,
+            "max_loading_ratio": 0.9615384615384616,
+            "feasible": true
+          },
+          {
+            "outage": 11,
+            "max_loading_ratio": 0.761585425762938,
+            "feasible": true
+          },
+          {
+            "outage": 12,
+            "max_loading_ratio": 0.8132888331570238,
+            "feasible": true
+          }
+        ]
+      },
+      {
+        "name": "dev_mesh6",
+        "split": "development",
+        "valid": true,
+        "score": 0.0,
+        "generation_cost": 894.4350652141189,
+        "baseline_cost": 894.4350652141189,
+        "nominal_reference_cost": 832.1922239924719,
+        "security_reference_cost": 880.3343738038877,
+        "robustness_score": 0.0,
+        "security_cost_score": 0.0,
+        "nominal_max_loading_ratio": 0.7129063160158405,
+        "contingency_max_loading_ratio": 0.9615384615384616,
+        "contingency_constraint_feasibility": 1.0,
+        "contingency_feasibility_rate": 1.0,
+        "total_normalized_overload": 0.0,
+        "per_contingency": [
+          {
+            "outage": 0,
+            "max_loading_ratio": 0.9615384615384616,
+            "feasible": true
+          },
+          {
+            "outage": 1,
+            "max_loading_ratio": 0.9615384615384616,
+            "feasible": true
+          },
+          {
+            "outage": 2,
+            "max_loading_ratio": 0.9002329601334665,
+            "feasible": true
+          },
+          {
+            "outage": 3,
+            "max_loading_ratio": 0.7538633792242283,
+            "feasible": true
+          },
+          {
+            "outage": 4,
+            "max_loading_ratio": 0.9615384615384616,
+            "feasible": true
+          },
+          {
+            "outage": 5,
+            "max_loading_ratio": 0.8319751623559523,
+            "feasible": true
+          },
+          {
+            "outage": 6,
+            "max_loading_ratio": 0.9615384615384615,
+            "feasible": true
+          },
+          {
+            "outage": 7,
+            "max_loading_ratio": 0.7406463342996443,
+            "feasible": true
+          },
+          {
+            "outage": 8,
+            "max_loading_ratio": 0.8025070280061884,
+            "feasible": true
+          }
+        ]
+      },
+      {
+        "name": "heldout_mesh9",
+        "split": "heldout",
+        "valid": true,
+        "score": 0.0,
+        "generation_cost": 2503.0001270806533,
+        "baseline_cost": 2503.0001270806533,
+        "nominal_reference_cost": 2402.746523980031,
+        "security_reference_cost": 2494.821095038641,
+        "robustness_score": 0.0,
+        "security_cost_score": 0.0,
+        "nominal_max_loading_ratio": 0.804852312008099,
+        "contingency_max_loading_ratio": 0.9615384615384616,
+        "contingency_constraint_feasibility": 1.0,
+        "contingency_feasibility_rate": 1.0,
+        "total_normalized_overload": 0.0,
+        "per_contingency": [
+          {
+            "outage": 0,
+            "max_loading_ratio": 0.8737697219176376,
+            "feasible": true
+          },
+          {
+            "outage": 1,
+            "max_loading_ratio": 0.9615384615384616,
+            "feasible": true
+          },
+          {
+            "outage": 2,
+            "max_loading_ratio": 0.9615384615384615,
+            "feasible": true
+          },
+          {
+            "outage": 3,
+            "max_loading_ratio": 0.8033356129568962,
+            "feasible": true
+          },
+          {
+            "outage": 4,
+            "max_loading_ratio": 0.9615384615384616,
+            "feasible": true
+          },
+          {
+            "outage": 5,
+            "max_loading_ratio": 0.9359483591033672,
+            "feasible": true
+          },
+          {
+            "outage": 6,
+            "max_loading_ratio": 0.774499997588016,
+            "feasible": true
+          },
+          {
+            "outage": 7,
+            "max_loading_ratio": 0.9615384615384616,
+            "feasible": true
+          },
+          {
+            "outage": 8,
+            "max_loading_ratio": 0.9615384615384616,
+            "feasible": true
+          },
+          {
+            "outage": 9,
+            "max_loading_ratio": 0.8896113893512205,
+            "feasible": true
+          },
+          {
+            "outage": 10,
+            "max_loading_ratio": 0.8567414981617535,
+            "feasible": true
+          },
+          {
+            "outage": 11,
+            "max_loading_ratio": 0.8024874771968866,
+            "feasible": true
+          },
+          {
+            "outage": 12,
+            "max_loading_ratio": 0.8002451716086552,
+            "feasible": true
+          },
+          {
+            "outage": 13,
+            "max_loading_ratio": 0.7768797924257246,
+            "feasible": true
+          },
+          {
+            "outage": 14,
+            "max_loading_ratio": 0.8396233110156976,
+            "feasible": true
+          },
+          {
+            "outage": 15,
+            "max_loading_ratio": 0.9615384615384615,
+            "feasible": true
+          }
+        ]
+      },
+      {
+        "name": "dev_mesh7",
+        "split": "development",
+        "valid": true,
+        "score": 0.0,
+        "generation_cost": 1521.2047338785526,
+        "baseline_cost": 1521.2047338785526,
+        "nominal_reference_cost": 1348.771926077381,
+        "security_reference_cost": 1505.9422515013548,
+        "robustness_score": 0.0,
+        "security_cost_score": 0.0,
+        "nominal_max_loading_ratio": 0.7185633827710436,
+        "contingency_max_loading_ratio": 0.9615384615384616,
+        "contingency_constraint_feasibility": 1.0,
+        "contingency_feasibility_rate": 1.0,
+        "total_normalized_overload": 0.0,
+        "per_contingency": [
+          {
+            "outage": 0,
+            "max_loading_ratio": 0.9615384615384615,
+            "feasible": true
+          },
+          {
+            "outage": 1,
+            "max_loading_ratio": 0.9615384615384615,
+            "feasible": true
+          },
+          {
+            "outage": 2,
+            "max_loading_ratio": 0.870905952697146,
+            "feasible": true
+          },
+          {
+            "outage": 3,
+            "max_loading_ratio": 0.7571287943579821,
+            "feasible": true
+          },
+          {
+            "outage": 4,
+            "max_loading_ratio": 0.9615384615384615,
+            "feasible": true
+          },
+          {
+            "outage": 5,
+            "max_loading_ratio": 0.9615384615384616,
+            "feasible": true
+          },
+          {
+            "outage": 6,
+            "max_loading_ratio": 0.721328725066571,
+            "feasible": true
+          },
+          {
+            "outage": 7,
+            "max_loading_ratio": 0.9615384615384615,
+            "feasible": true
+          },
+          {
+            "outage": 8,
+            "max_loading_ratio": 0.9615384615384616,
+            "feasible": true
+          },
+          {
+            "outage": 9,
+            "max_loading_ratio": 0.8855874432928678,
+            "feasible": true
+          },
+          {
+            "outage": 10,
+            "max_loading_ratio": 0.8682931855500089,
+            "feasible": true
+          }
+        ]
+      },
+      {
+        "name": "dev_alt6",
+        "split": "development",
+        "valid": true,
+        "score": 0.0,
+        "generation_cost": 1157.2635492540985,
+        "baseline_cost": 1157.2635492540985,
+        "nominal_reference_cost": 972.9970880097596,
+        "security_reference_cost": 1143.7618816732486,
+        "robustness_score": 0.0,
+        "security_cost_score": 0.0,
+        "nominal_max_loading_ratio": 0.7682374851669677,
+        "contingency_max_loading_ratio": 0.9615384615384616,
+        "contingency_constraint_feasibility": 1.0,
+        "contingency_feasibility_rate": 1.0,
+        "total_normalized_overload": 0.0,
+        "per_contingency": [
+          {
+            "outage": 0,
+            "max_loading_ratio": 0.9615384615384616,
+            "feasible": true
+          },
+          {
+            "outage": 1,
+            "max_loading_ratio": 0.7661786704006814,
+            "feasible": true
+          },
+          {
+            "outage": 2,
+            "max_loading_ratio": 0.9615384615384616,
+            "feasible": true
+          },
+          {
+            "outage": 3,
+            "max_loading_ratio": 0.9615384615384615,
+            "feasible": true
+          },
+          {
+            "outage": 4,
+            "max_loading_ratio": 0.9615384615384616,
+            "feasible": true
+          },
+          {
+            "outage": 5,
+            "max_loading_ratio": 0.8916364583649264,
+            "feasible": true
+          },
+          {
+            "outage": 6,
+            "max_loading_ratio": 0.8980353121233167,
+            "feasible": true
+          },
+          {
+            "outage": 7,
+            "max_loading_ratio": 0.8684794495594157,
+            "feasible": true
+          },
+          {
+            "outage": 8,
+            "max_loading_ratio": 0.8832868749175744,
+            "feasible": true
+          }
+        ]
+      }
+    ]
+  },
+  "nominal_qp_reference": {
+    "combined_score": 1.0,
+    "valid": 1.0,
+    "feasibility_rate": 1.0,
+    "development_score": 1.0,
+    "robustness_score": 0.031378316244233706,
+    "development_validation_gap": 0.9686216837557663,
+    "heldout_policy_score": 1.0,
+    "heldout_robustness_score": 7.32964296817017e-07,
+    "heldout_feasibility_rate": 1.0,
+    "mean_contingency_constraint_feasibility": 0.7791666666666667,
+    "mean_contingency_feasibility_rate": 0.11399711399711399,
+    "per_instance": [
+      {
+        "name": "dev_mesh5",
+        "split": "development",
+        "valid": true,
+        "score": 1.0,
+        "generation_cost": 1426.3518500303012,
+        "baseline_cost": 1548.3072648577104,
+        "nominal_reference_cost": 1426.3518500303012,
+        "security_reference_cost": 1525.2763906620207,
+        "robustness_score": 0.12393313444637845,
+        "security_cost_score": 1.0,
+        "nominal_max_loading_ratio": 0.8446138005154256,
+        "contingency_max_loading_ratio": 1.256911289510667,
+        "contingency_constraint_feasibility": 0.8333333333333334,
+        "contingency_feasibility_rate": 0.14285714285714285,
+        "total_normalized_overload": 0.6960043657180122,
+        "per_contingency": [
+          {
+            "outage": 0,
+            "max_loading_ratio": 1.0661401291903632,
+            "feasible": false
+          },
+          {
+            "outage": 1,
+            "max_loading_ratio": 1.1897990196139463,
+            "feasible": false
+          },
+          {
+            "outage": 2,
+            "max_loading_ratio": 1.256911289510667,
+            "feasible": false
+          },
+          {
+            "outage": 3,
+            "max_loading_ratio": 1.026177665644194,
+            "feasible": false
+          },
+          {
+            "outage": 4,
+            "max_loading_ratio": 1.027749752411931,
+            "feasible": false
+          },
+          {
+            "outage": 5,
+            "max_loading_ratio": 0.8341953024945984,
+            "feasible": true
+          },
+          {
+            "outage": 6,
+            "max_loading_ratio": 1.1038090723477494,
+            "feasible": false
+          }
+        ]
+      },
+      {
+        "name": "heldout_mesh8",
+        "split": "heldout",
+        "valid": true,
+        "score": 1.0,
+        "generation_cost": 1291.3429824619025,
+        "baseline_cost": 1416.279762315483,
+        "nominal_reference_cost": 1291.3429824619025,
+        "security_reference_cost": 1406.6992856909742,
+        "robustness_score": 2.089382236271683e-07,
+        "security_cost_score": 1.0,
+        "nominal_max_loading_ratio": 1.0000000000000002,
+        "contingency_max_loading_ratio": 2.0067846458703142,
+        "contingency_constraint_feasibility": 0.8974358974358975,
+        "contingency_feasibility_rate": 0.38461538461538464,
+        "total_normalized_overload": 5.127075736468482,
+        "per_contingency": [
+          {
+            "outage": 0,
+            "max_loading_ratio": 2.0067846458703142,
+            "feasible": false
+          },
+          {
+            "outage": 1,
+            "max_loading_ratio": 0.8886245077795443,
+            "feasible": true
+          },
+          {
+            "outage": 2,
+            "max_loading_ratio": 0.9085297866753762,
+            "feasible": true
+          },
+          {
+            "outage": 3,
+            "max_loading_ratio": 1.0467360903624547,
+            "feasible": false
+          },
+          {
+            "outage": 4,
+            "max_loading_ratio": 1.635706332587713,
+            "feasible": false
+          },
+          {
+            "outage": 5,
+            "max_loading_ratio": 0.9095605497017356,
+            "feasible": true
+          },
+          {
+            "outage": 6,
+            "max_loading_ratio": 1.818508187276744,
+            "feasible": false
+          },
+          {
+            "outage": 7,
+            "max_loading_ratio": 0.9685106567100751,
+            "feasible": true
+          },
+          {
+            "outage": 8,
+            "max_loading_ratio": 1.4381905382105848,
+            "feasible": false
+          },
+          {
+            "outage": 9,
+            "max_loading_ratio": 1.0348415930178174,
+            "feasible": false
+          },
+          {
+            "outage": 10,
+            "max_loading_ratio": 1.0435200594902703,
+            "feasible": false
+          },
+          {
+            "outage": 11,
+            "max_loading_ratio": 1.33341840635437,
+            "feasible": false
+          },
+          {
+            "outage": 12,
+            "max_loading_ratio": 0.953368955506,
+            "feasible": true
+          }
+        ]
+      },
+      {
+        "name": "dev_mesh6",
+        "split": "development",
+        "valid": true,
+        "score": 1.0,
+        "generation_cost": 832.1922239924719,
+        "baseline_cost": 894.4350652141189,
+        "nominal_reference_cost": 832.1922239924719,
+        "security_reference_cost": 880.3343738038877,
+        "robustness_score": 0.0015513663163850674,
+        "security_cost_score": 1.0,
+        "nominal_max_loading_ratio": 0.9999999999999997,
+        "contingency_max_loading_ratio": 1.56920521757819,
+        "contingency_constraint_feasibility": 0.8194444444444444,
+        "contingency_feasibility_rate": 0.2222222222222222,
+        "total_normalized_overload": 2.1562064139656876,
+        "per_contingency": [
+          {
+            "outage": 0,
+            "max_loading_ratio": 1.0237463673842662,
+            "feasible": false
+          },
+          {
+            "outage": 1,
+            "max_loading_ratio": 1.4819327660428958,
+            "feasible": false
+          },
+          {
+            "outage": 2,
+            "max_loading_ratio": 1.5304718561564576,
+            "feasible": false
+          },
+          {
+            "outage": 3,
+            "max_loading_ratio": 0.9755792368847443,
+            "feasible": true
+          },
+          {
+            "outage": 4,
+            "max_loading_ratio": 1.56920521757819,
+            "feasible": false
+          },
+          {
+            "outage": 5,
+            "max_loading_ratio": 1.0376277428974923,
+            "feasible": false
+          },
+          {
+            "outage": 6,
+            "max_loading_ratio": 1.060161944302573,
+            "feasible": false
+          },
+          {
+            "outage": 7,
+            "max_loading_ratio": 1.076957325390203,
+            "feasible": false
+          },
+          {
+            "outage": 8,
+            "max_loading_ratio": 0.9967562357662897,
+            "feasible": true
+          }
+        ]
+      },
+      {
+        "name": "heldout_mesh9",
+        "split": "heldout",
+        "valid": true,
+        "score": 1.0,
+        "generation_cost": 2402.746523980031,
+        "baseline_cost": 2503.0001270806533,
+        "nominal_reference_cost": 2402.746523980031,
+        "security_reference_cost": 2494.821095038641,
+        "robustness_score": 1.2569903700068658e-06,
+        "security_cost_score": 1.0,
+        "nominal_max_loading_ratio": 0.9663619522279523,
+        "contingency_max_loading_ratio": 1.8964772909956151,
+        "contingency_constraint_feasibility": 0.8625,
+        "contingency_feasibility_rate": 0.25,
+        "total_normalized_overload": 4.528930096492633,
+        "per_contingency": [
+          {
+            "outage": 0,
+            "max_loading_ratio": 1.2504887662435182,
+            "feasible": false
+          },
+          {
+            "outage": 1,
+            "max_loading_ratio": 1.144517150476857,
+            "feasible": false
+          },
+          {
+            "outage": 2,
+            "max_loading_ratio": 1.1007053415075456,
+            "feasible": false
+          },
+          {
+            "outage": 3,
+            "max_loading_ratio": 0.9671103316428521,
+            "feasible": true
+          },
+          {
+            "outage": 4,
+            "max_loading_ratio": 1.1774886117645256,
+            "feasible": false
+          },
+          {
+            "outage": 5,
+            "max_loading_ratio": 1.0419062181452405,
+            "feasible": false
+          },
+          {
+            "outage": 6,
+            "max_loading_ratio": 0.9899396674620763,
+            "feasible": true
+          },
+          {
+            "outage": 7,
+            "max_loading_ratio": 1.8964772909956151,
+            "feasible": false
+          },
+          {
+            "outage": 8,
+            "max_loading_ratio": 1.3258970009893352,
+            "feasible": false
+          },
+          {
+            "outage": 9,
+            "max_loading_ratio": 1.1741676166239254,
+            "feasible": false
+          },
+          {
+            "outage": 10,
+            "max_loading_ratio": 1.0009929538295368,
+            "feasible": false
+          },
+          {
+            "outage": 11,
+            "max_loading_ratio": 0.971981378558688,
+            "feasible": true
+          },
+          {
+            "outage": 12,
+            "max_loading_ratio": 0.984709075512431,
+            "feasible": true
+          },
+          {
+            "outage": 13,
+            "max_loading_ratio": 1.0261668173642844,
+            "feasible": false
+          },
+          {
+            "outage": 14,
+            "max_loading_ratio": 1.1654014728128637,
+            "feasible": false
+          },
+          {
+            "outage": 15,
+            "max_loading_ratio": 1.263898198226436,
+            "feasible": false
+          }
+        ]
+      },
+      {
+        "name": "dev_mesh7",
+        "split": "development",
+        "valid": true,
+        "score": 1.0,
+        "generation_cost": 1348.771926077381,
+        "baseline_cost": 1521.2047338785526,
+        "nominal_reference_cost": 1348.771926077381,
+        "security_reference_cost": 1505.9422515013548,
+        "robustness_score": 1.7561968461356814e-09,
+        "security_cost_score": 1.0,
+        "nominal_max_loading_ratio": 0.9822056688044615,
+        "contingency_max_loading_ratio": 1.4924579331198167,
+        "contingency_constraint_feasibility": 0.7,
+        "contingency_feasibility_rate": 0.09090909090909091,
+        "total_normalized_overload": 6.720038416283341,
+        "per_contingency": [
+          {
+            "outage": 0,
+            "max_loading_ratio": 1.4326107819764708,
+            "feasible": false
+          },
+          {
+            "outage": 1,
+            "max_loading_ratio": 1.4199150822529132,
+            "feasible": false
+          },
+          {
+            "outage": 2,
+            "max_loading_ratio": 1.3589328737066335,
+            "feasible": false
+          },
+          {
+            "outage": 3,
+            "max_loading_ratio": 1.0555175440953524,
+            "feasible": false
+          },
+          {
+            "outage": 4,
+            "max_loading_ratio": 1.0020654584834188,
+            "feasible": false
+          },
+          {
+            "outage": 5,
+            "max_loading_ratio": 1.3925675352469802,
+            "feasible": false
+          },
+          {
+            "outage": 6,
+            "max_loading_ratio": 1.0425584770902674,
+            "feasible": false
+          },
+          {
+            "outage": 7,
+            "max_loading_ratio": 1.4924579331198167,
+            "feasible": false
+          },
+          {
+            "outage": 8,
+            "max_loading_ratio": 0.9938552508975499,
+            "feasible": true
+          },
+          {
+            "outage": 9,
+            "max_loading_ratio": 1.313081835962639,
+            "feasible": false
+          },
+          {
+            "outage": 10,
+            "max_loading_ratio": 1.1658556776738194,
+            "feasible": false
+          }
+        ]
+      },
+      {
+        "name": "dev_alt6",
+        "split": "development",
+        "valid": true,
+        "score": 1.0,
+        "generation_cost": 972.9970880097596,
+        "baseline_cost": 1157.2635492540985,
+        "nominal_reference_cost": 972.9970880097596,
+        "security_reference_cost": 1143.7618816732486,
+        "robustness_score": 2.8762457974448295e-05,
+        "security_cost_score": 1.0,
+        "nominal_max_loading_ratio": 1.0000000000000007,
+        "contingency_max_loading_ratio": 1.6178731595829812,
+        "contingency_constraint_feasibility": 0.7638888888888888,
+        "contingency_feasibility_rate": 0.0,
+        "total_normalized_overload": 3.485479854575636,
+        "per_contingency": [
+          {
+            "outage": 0,
+            "max_loading_ratio": 1.6178731595829812,
+            "feasible": false
+          },
+          {
+            "outage": 1,
+            "max_loading_ratio": 1.015352150788389,
+            "feasible": false
+          },
+          {
+            "outage": 2,
+            "max_loading_ratio": 1.116175691056184,
+            "feasible": false
+          },
+          {
+            "outage": 3,
+            "max_loading_ratio": 1.0948090821827796,
+            "feasible": false
+          },
+          {
+            "outage": 4,
+            "max_loading_ratio": 1.5772908783684405,
+            "feasible": false
+          },
+          {
+            "outage": 5,
+            "max_loading_ratio": 1.2529416191508784,
+            "feasible": false
+          },
+          {
+            "outage": 6,
+            "max_loading_ratio": 1.3130683207043476,
+            "feasible": false
+          },
+          {
+            "outage": 7,
+            "max_loading_ratio": 1.0586726144770504,
+            "feasible": false
+          },
+          {
+            "outage": 8,
+            "max_loading_ratio": 1.1141250196132382,
+            "feasible": false
+          }
+        ]
+      }
+    ]
+  },
+  "security_constrained_qp_reference": {
+    "combined_score": 0.14429375237305758,
+    "valid": 1.0,
+    "feasibility_rate": 1.0,
+    "development_score": 0.14429375237305758,
+    "robustness_score": 0.9999999999999727,
+    "development_validation_gap": -0.855706247626915,
+    "heldout_policy_score": 0.07913300920358998,
+    "heldout_robustness_score": 0.9999999999999494,
+    "heldout_feasibility_rate": 1.0,
+    "mean_contingency_constraint_feasibility": 1.0,
+    "mean_contingency_feasibility_rate": 1.0,
+    "per_instance": [
+      {
+        "name": "dev_mesh5",
+        "split": "development",
+        "valid": true,
+        "score": 0.1888466717798701,
+        "generation_cost": 1525.2763906620207,
+        "baseline_cost": 1548.3072648577104,
+        "nominal_reference_cost": 1426.3518500303012,
+        "security_reference_cost": 1525.2763906620207,
+        "robustness_score": 0.9999999999999294,
+        "security_cost_score": 1.0,
+        "nominal_max_loading_ratio": 0.7004803360648364,
+        "contingency_max_loading_ratio": 1.0000000000000138,
+        "contingency_constraint_feasibility": 1.0,
+        "contingency_feasibility_rate": 1.0,
+        "total_normalized_overload": 2.353672812205332e-14,
+        "per_contingency": [
+          {
+            "outage": 0,
+            "max_loading_ratio": 0.9811492095768174,
+            "feasible": true
+          },
+          {
+            "outage": 1,
+            "max_loading_ratio": 1.0000000000000138,
+            "feasible": true
+          },
+          {
+            "outage": 2,
+            "max_loading_ratio": 1.0000000000000098,
+            "feasible": true
+          },
+          {
+            "outage": 3,
+            "max_loading_ratio": 0.9833270947506418,
+            "feasible": true
+          },
+          {
+            "outage": 4,
+            "max_loading_ratio": 0.865649883762031,
+            "feasible": true
+          },
+          {
+            "outage": 5,
+            "max_loading_ratio": 0.7109611010627149,
+            "feasible": true
+          },
+          {
+            "outage": 6,
+            "max_loading_ratio": 0.8938865151349294,
+            "feasible": true
+          }
+        ]
+      },
+      {
+        "name": "heldout_mesh8",
+        "split": "heldout",
+        "valid": true,
+        "score": 0.07668259607568365,
+        "generation_cost": 1406.6992856909742,
+        "baseline_cost": 1416.279762315483,
+        "nominal_reference_cost": 1291.3429824619025,
+        "security_reference_cost": 1406.6992856909742,
+        "robustness_score": 0.99999999999994,
+        "security_cost_score": 1.0,
+        "nominal_max_loading_ratio": 0.7888057419120131,
+        "contingency_max_loading_ratio": 1.000000000000014,
+        "contingency_constraint_feasibility": 1.0,
+        "contingency_feasibility_rate": 1.0,
+        "total_normalized_overload": 1.9984014443252818e-14,
+        "per_contingency": [
+          {
+            "outage": 0,
+            "max_loading_ratio": 1.000000000000014,
+            "feasible": true
+          },
+          {
+            "outage": 1,
+            "max_loading_ratio": 0.8674962791097272,
+            "feasible": true
+          },
+          {
+            "outage": 2,
+            "max_loading_ratio": 0.7561424274046651,
+            "feasible": true
+          },
+          {
+            "outage": 3,
+            "max_loading_ratio": 0.8291551333980194,
+            "feasible": true
+          },
+          {
+            "outage": 4,
+            "max_loading_ratio": 0.9634851638295259,
+            "feasible": true
+          },
+          {
+            "outage": 5,
+            "max_loading_ratio": 0.854698464456216,
+            "feasible": true
+          },
+          {
+            "outage": 6,
+            "max_loading_ratio": 1.0000000000000056,
+            "feasible": true
+          },
+          {
+            "outage": 7,
+            "max_loading_ratio": 0.7884099805527629,
+            "feasible": true
+          },
+          {
+            "outage": 8,
+            "max_loading_ratio": 0.7119985220850619,
+            "feasible": true
+          },
+          {
+            "outage": 9,
+            "max_loading_ratio": 0.9283167542323352,
+            "feasible": true
+          },
+          {
+            "outage": 10,
+            "max_loading_ratio": 1.0000000000000004,
+            "feasible": true
+          },
+          {
+            "outage": 11,
+            "max_loading_ratio": 0.8184610275977112,
+            "feasible": true
+          },
+          {
+            "outage": 12,
+            "max_loading_ratio": 0.7924011942274548,
+            "feasible": true
+          }
+        ]
+      },
+      {
+        "name": "dev_mesh6",
+        "split": "development",
+        "valid": true,
+        "score": 0.22654318365735557,
+        "generation_cost": 880.3343738038877,
+        "baseline_cost": 894.4350652141189,
+        "nominal_reference_cost": 832.1922239924719,
+        "security_reference_cost": 880.3343738038877,
+        "robustness_score": 0.9999999999999893,
+        "security_cost_score": 1.0,
+        "nominal_max_loading_ratio": 0.7037213918064734,
+        "contingency_max_loading_ratio": 1.0000000000000029,
+        "contingency_constraint_feasibility": 1.0,
+        "contingency_feasibility_rate": 1.0,
+        "total_normalized_overload": 3.552713678800501e-15,
+        "per_contingency": [
+          {
+            "outage": 0,
+            "max_loading_ratio": 0.9782584281943764,
+            "feasible": true
+          },
+          {
+            "outage": 1,
+            "max_loading_ratio": 1.0000000000000029,
+            "feasible": true
+          },
+          {
+            "outage": 2,
+            "max_loading_ratio": 0.906027598071354,
+            "feasible": true
+          },
+          {
+            "outage": 3,
+            "max_loading_ratio": 0.748762574682138,
+            "feasible": true
+          },
+          {
+            "outage": 4,
+            "max_loading_ratio": 1.0000000000000007,
+            "feasible": true
+          },
+          {
+            "outage": 5,
+            "max_loading_ratio": 0.8354513983292228,
+            "feasible": true
+          },
+          {
+            "outage": 6,
+            "max_loading_ratio": 0.9877043791621274,
+            "feasible": true
+          },
+          {
+            "outage": 7,
+            "max_loading_ratio": 0.7117694734676332,
+            "feasible": true
+          },
+          {
+            "outage": 8,
+            "max_loading_ratio": 0.7551392042107726,
+            "feasible": true
+          }
+        ]
+      },
+      {
+        "name": "heldout_mesh9",
+        "split": "heldout",
+        "valid": true,
+        "score": 0.08158342233149632,
+        "generation_cost": 2494.821095038641,
+        "baseline_cost": 2503.0001270806533,
+        "nominal_reference_cost": 2402.746523980031,
+        "security_reference_cost": 2494.821095038641,
+        "robustness_score": 0.9999999999999587,
+        "security_cost_score": 1.0,
+        "nominal_max_loading_ratio": 0.8195074072096994,
+        "contingency_max_loading_ratio": 1.000000000000007,
+        "contingency_constraint_feasibility": 1.0,
+        "contingency_feasibility_rate": 1.0,
+        "total_normalized_overload": 1.3766765505351941e-14,
+        "per_contingency": [
+          {
+            "outage": 0,
+            "max_loading_ratio": 0.9330678891312236,
+            "feasible": true
+          },
+          {
+            "outage": 1,
+            "max_loading_ratio": 0.9816011089764324,
+            "feasible": true
+          },
+          {
+            "outage": 2,
+            "max_loading_ratio": 0.9596598839346148,
+            "feasible": true
+          },
+          {
+            "outage": 3,
+            "max_loading_ratio": 0.8176207195408587,
+            "feasible": true
+          },
+          {
+            "outage": 4,
+            "max_loading_ratio": 1.0000000000000042,
+            "feasible": true
+          },
+          {
+            "outage": 5,
+            "max_loading_ratio": 0.9530639780418493,
+            "feasible": true
+          },
+          {
+            "outage": 6,
+            "max_loading_ratio": 0.78799443878554,
+            "feasible": true
+          },
+          {
+            "outage": 7,
+            "max_loading_ratio": 1.000000000000007,
+            "feasible": true
+          },
+          {
+            "outage": 8,
+            "max_loading_ratio": 0.9796281476107416,
+            "feasible": true
+          },
+          {
+            "outage": 9,
+            "max_loading_ratio": 0.9122591894908059,
+            "feasible": true
+          },
+          {
+            "outage": 10,
+            "max_loading_ratio": 0.8643925011150467,
+            "feasible": true
+          },
+          {
+            "outage": 11,
+            "max_loading_ratio": 0.8239514775597255,
+            "feasible": true
+          },
+          {
+            "outage": 12,
+            "max_loading_ratio": 0.8134490139701694,
+            "feasible": true
+          },
+          {
+            "outage": 13,
+            "max_loading_ratio": 0.7889980743390262,
+            "feasible": true
+          },
+          {
+            "outage": 14,
+            "max_loading_ratio": 0.8593533711750139,
+            "feasible": true
+          },
+          {
+            "outage": 15,
+            "max_loading_ratio": 1.0000000000000024,
+            "feasible": true
+          }
+        ]
+      },
+      {
+        "name": "dev_mesh7",
+        "split": "development",
+        "valid": true,
+        "score": 0.08851263614982491,
+        "generation_cost": 1505.9422515013548,
+        "baseline_cost": 1521.2047338785526,
+        "nominal_reference_cost": 1348.771926077381,
+        "security_reference_cost": 1505.9422515013548,
+        "robustness_score": 0.9999999999999933,
+        "security_cost_score": 1.0,
+        "nominal_max_loading_ratio": 0.7428259547836342,
+        "contingency_max_loading_ratio": 1.000000000000001,
+        "contingency_constraint_feasibility": 1.0,
+        "contingency_feasibility_rate": 1.0,
+        "total_normalized_overload": 2.220446049250313e-15,
+        "per_contingency": [
+          {
+            "outage": 0,
+            "max_loading_ratio": 0.9944239125530057,
+            "feasible": true
+          },
+          {
+            "outage": 1,
+            "max_loading_ratio": 1.0000000000000009,
+            "feasible": true
+          },
+          {
+            "outage": 2,
+            "max_loading_ratio": 0.9123388291793467,
+            "feasible": true
+          },
+          {
+            "outage": 3,
+            "max_loading_ratio": 0.749748141020688,
+            "feasible": true
+          },
+          {
+            "outage": 4,
+            "max_loading_ratio": 0.9661616776581424,
+            "feasible": true
+          },
+          {
+            "outage": 5,
+            "max_loading_ratio": 0.9986756440126247,
+            "feasible": true
+          },
+          {
+            "outage": 6,
+            "max_loading_ratio": 0.7457097391797256,
+            "feasible": true
+          },
+          {
+            "outage": 7,
+            "max_loading_ratio": 1.000000000000001,
+            "feasible": true
+          },
+          {
+            "outage": 8,
+            "max_loading_ratio": 0.9574721280417117,
+            "feasible": true
+          },
+          {
+            "outage": 9,
+            "max_loading_ratio": 0.9153166240746019,
+            "feasible": true
+          },
+          {
+            "outage": 10,
+            "max_loading_ratio": 0.8960126249885388,
+            "feasible": true
+          }
+        ]
+      },
+      {
+        "name": "dev_alt6",
+        "split": "development",
+        "valid": true,
+        "score": 0.07327251790517973,
+        "generation_cost": 1143.7618816732486,
+        "baseline_cost": 1157.2635492540985,
+        "nominal_reference_cost": 972.9970880097596,
+        "security_reference_cost": 1143.7618816732486,
+        "robustness_score": 0.9999999999999787,
+        "security_cost_score": 1.0,
+        "nominal_max_loading_ratio": 0.7868255747229896,
+        "contingency_max_loading_ratio": 1.0000000000000038,
+        "contingency_constraint_feasibility": 1.0,
+        "contingency_feasibility_rate": 1.0,
+        "total_normalized_overload": 7.105427357601002e-15,
+        "per_contingency": [
+          {
+            "outage": 0,
+            "max_loading_ratio": 1.0000000000000033,
+            "feasible": true
+          },
+          {
+            "outage": 1,
+            "max_loading_ratio": 0.7849594478260953,
+            "feasible": true
+          },
+          {
+            "outage": 2,
+            "max_loading_ratio": 0.9615384615384616,
+            "feasible": true
+          },
+          {
+            "outage": 3,
+            "max_loading_ratio": 0.961538461538462,
+            "feasible": true
+          },
+          {
+            "outage": 4,
+            "max_loading_ratio": 1.0000000000000038,
+            "feasible": true
+          },
+          {
+            "outage": 5,
+            "max_loading_ratio": 0.9273019166995269,
+            "feasible": true
+          },
+          {
+            "outage": 6,
+            "max_loading_ratio": 0.9244673826130262,
+            "feasible": true
+          },
+          {
+            "outage": 7,
+            "max_loading_ratio": 0.8840475077097303,
+            "feasible": true
+          },
+          {
+            "outage": 8,
+            "max_loading_ratio": 0.9012346235256422,
+            "feasible": true
+          }
+        ]
+      }
+    ]
+  },
+  "nonfinite_rejection": {
+    "combined_score": 0.0,
+    "valid": 0.0,
+    "feasibility_rate": 0.0,
+    "development_score": 0.0,
+    "robustness_score": 0.0,
+    "development_validation_gap": 0.0,
+    "heldout_policy_score": 0.0,
+    "heldout_robustness_score": 0.0,
+    "heldout_feasibility_rate": 0.0,
+    "mean_contingency_constraint_feasibility": 0.0,
+    "mean_contingency_feasibility_rate": 0.0,
+    "per_instance": [
+      {
+        "name": "dev_mesh5",
+        "split": "development",
+        "valid": false,
+        "reason": "ValueError: dispatch must be a finite vector with one value per generator",
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "contingency_constraint_feasibility": 0.0,
+        "contingency_feasibility_rate": 0.0,
+        "total_normalized_overload": 1000000.0
+      },
+      {
+        "name": "heldout_mesh8",
+        "split": "heldout",
+        "valid": false,
+        "reason": "ValueError: dispatch must be a finite vector with one value per generator",
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "contingency_constraint_feasibility": 0.0,
+        "contingency_feasibility_rate": 0.0,
+        "total_normalized_overload": 1000000.0
+      },
+      {
+        "name": "dev_mesh6",
+        "split": "development",
+        "valid": false,
+        "reason": "ValueError: dispatch must be a finite vector with one value per generator",
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "contingency_constraint_feasibility": 0.0,
+        "contingency_feasibility_rate": 0.0,
+        "total_normalized_overload": 1000000.0
+      },
+      {
+        "name": "heldout_mesh9",
+        "split": "heldout",
+        "valid": false,
+        "reason": "ValueError: dispatch must be a finite vector with one value per generator",
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "contingency_constraint_feasibility": 0.0,
+        "contingency_feasibility_rate": 0.0,
+        "total_normalized_overload": 1000000.0
+      },
+      {
+        "name": "dev_mesh7",
+        "split": "development",
+        "valid": false,
+        "reason": "ValueError: dispatch must be a finite vector with one value per generator",
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "contingency_constraint_feasibility": 0.0,
+        "contingency_feasibility_rate": 0.0,
+        "total_normalized_overload": 1000000.0
+      },
+      {
+        "name": "dev_alt6",
+        "split": "development",
+        "valid": false,
+        "reason": "ValueError: dispatch must be a finite vector with one value per generator",
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "contingency_constraint_feasibility": 0.0,
+        "contingency_feasibility_rate": 0.0,
+        "total_normalized_overload": 1000000.0
+      }
+    ]
+  },
+  "unbalanced_rejection": {
+    "combined_score": 0.0,
+    "valid": 0.0,
+    "feasibility_rate": 0.0,
+    "development_score": 0.0,
+    "robustness_score": 0.0,
+    "development_validation_gap": 0.0,
+    "heldout_policy_score": 0.0,
+    "heldout_robustness_score": 0.0,
+    "heldout_feasibility_rate": 0.0,
+    "mean_contingency_constraint_feasibility": 0.0,
+    "mean_contingency_feasibility_rate": 0.0,
+    "per_instance": [
+      {
+        "name": "dev_mesh5",
+        "split": "development",
+        "valid": false,
+        "reason": "ValueError: generator dispatch violates public minimum/maximum bounds",
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "contingency_constraint_feasibility": 0.0,
+        "contingency_feasibility_rate": 0.0,
+        "total_normalized_overload": 1000000.0
+      },
+      {
+        "name": "heldout_mesh8",
+        "split": "heldout",
+        "valid": false,
+        "reason": "ValueError: generator dispatch violates public minimum/maximum bounds",
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "contingency_constraint_feasibility": 0.0,
+        "contingency_feasibility_rate": 0.0,
+        "total_normalized_overload": 1000000.0
+      },
+      {
+        "name": "dev_mesh6",
+        "split": "development",
+        "valid": false,
+        "reason": "ValueError: generator dispatch violates public minimum/maximum bounds",
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "contingency_constraint_feasibility": 0.0,
+        "contingency_feasibility_rate": 0.0,
+        "total_normalized_overload": 1000000.0
+      },
+      {
+        "name": "heldout_mesh9",
+        "split": "heldout",
+        "valid": false,
+        "reason": "ValueError: generator dispatch violates public minimum/maximum bounds",
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "contingency_constraint_feasibility": 0.0,
+        "contingency_feasibility_rate": 0.0,
+        "total_normalized_overload": 1000000.0
+      },
+      {
+        "name": "dev_mesh7",
+        "split": "development",
+        "valid": false,
+        "reason": "ValueError: generator dispatch violates public minimum/maximum bounds",
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "contingency_constraint_feasibility": 0.0,
+        "contingency_feasibility_rate": 0.0,
+        "total_normalized_overload": 1000000.0
+      },
+      {
+        "name": "dev_alt6",
+        "split": "development",
+        "valid": false,
+        "reason": "ValueError: generator dispatch violates public minimum/maximum bounds",
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "contingency_constraint_feasibility": 0.0,
+        "contingency_feasibility_rate": 0.0,
+        "total_normalized_overload": 1000000.0
+      }
+    ]
+  },
+  "reference_checks": [
+    {
+      "name": "dev_mesh5",
+      "baseline_cost": 1548.3072648577104,
+      "nominal_reference_cost": 1426.3518500303012,
+      "security_reference_cost": 1525.2763906620207,
+      "baseline_contingency_max_loading": 0.9615384615384616,
+      "nominal_contingency_max_loading": 1.256911289510667,
+      "security_contingency_max_loading": 1.0000000000000138,
+      "passed": true
+    },
+    {
+      "name": "heldout_mesh8",
+      "baseline_cost": 1416.279762315483,
+      "nominal_reference_cost": 1291.3429824619025,
+      "security_reference_cost": 1406.6992856909742,
+      "baseline_contingency_max_loading": 0.9615384615384616,
+      "nominal_contingency_max_loading": 2.0067846458703142,
+      "security_contingency_max_loading": 1.000000000000014,
+      "passed": true
+    },
+    {
+      "name": "dev_mesh6",
+      "baseline_cost": 894.4350652141189,
+      "nominal_reference_cost": 832.1922239924719,
+      "security_reference_cost": 880.3343738038877,
+      "baseline_contingency_max_loading": 0.9615384615384616,
+      "nominal_contingency_max_loading": 1.56920521757819,
+      "security_contingency_max_loading": 1.0000000000000029,
+      "passed": true
+    },
+    {
+      "name": "heldout_mesh9",
+      "baseline_cost": 2503.0001270806533,
+      "nominal_reference_cost": 2402.746523980031,
+      "security_reference_cost": 2494.821095038641,
+      "baseline_contingency_max_loading": 0.9615384615384616,
+      "nominal_contingency_max_loading": 1.8964772909956151,
+      "security_contingency_max_loading": 1.000000000000007,
+      "passed": true
+    },
+    {
+      "name": "dev_mesh7",
+      "baseline_cost": 1521.2047338785526,
+      "nominal_reference_cost": 1348.771926077381,
+      "security_reference_cost": 1505.9422515013548,
+      "baseline_contingency_max_loading": 0.9615384615384616,
+      "nominal_contingency_max_loading": 1.4924579331198167,
+      "security_contingency_max_loading": 1.000000000000001,
+      "passed": true
+    },
+    {
+      "name": "dev_alt6",
+      "baseline_cost": 1157.2635492540985,
+      "nominal_reference_cost": 972.9970880097596,
+      "security_reference_cost": 1143.7618816732486,
+      "baseline_contingency_max_loading": 0.9615384615384616,
+      "nominal_contingency_max_loading": 1.6178731595829812,
+      "security_contingency_max_loading": 1.0000000000000038,
+      "passed": true
+    }
+  ],
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}

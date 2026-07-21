@@ -73,6 +73,9 @@ class BatchAggregationTests(unittest.TestCase):
             self.assertTrue(report["passed"])
             self.assertTrue(report["execution_passed"])
             self.assertTrue(report["trusted_evidence"])
+            snapshot = report["runs"][0]["trajectory_snapshot"]
+            self.assertEqual(len(snapshot["trajectory_sha256"]), 64)
+            self.assertEqual(len(snapshot["events"]), 1)
 
     def test_resume_rejects_changed_experiment_config(self):
         client = type("Client", (), {"config": self.Config()})()

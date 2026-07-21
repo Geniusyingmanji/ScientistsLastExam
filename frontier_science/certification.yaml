@@ -79,7 +79,7 @@ tasks:
 
   PowerSystems/OptimalPowerFlow:
     status: candidate
-    reason: v2 supplies complete procedural DC networks, valid safe baselines, independent nominal/security-constrained QP witnesses and sealed exhaustive N-1 metrics; awaiting GPT-5.5 headroom calibration, server-held networks and independent review
+    reason: v2 is scientifically valid but GPT-5.5 reproduces nominal DC-OPF at budget one with development/held-out score 1.0 while sealed N-1 robustness is 0.031/0.000001; budget-three nominal feedback leaves the security failure unchanged, so retain for economy-versus-security studies pending paired controls, server-held networks, AC replication and independent review
     citation_ids:
       - doi:10.1016/0142-0615(79)90026-7
       - doi:10.1109/TPWRS.2013.2271980

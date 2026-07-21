@@ -34,19 +34,15 @@ All candidate code runs in a networkless Bubblewrap sandbox with read-only mount
 and process limits, and a typed JSON RPC boundary. The trusted parent alone imports the
 oracle and validates metrics. The current audit reports:
 
-- 75/75 unit, security, protocol and scientific-invariant tests passed.
-- The latest full-inventory secure-baseline audit predates ActiveLawDiscovery and covers the
-  original 50 packages: 50/50 baselines were deterministic
-  across two secure runs.
-- 49/50 baselines were valid; `ClimateScience/EnergyBalanceModel` returned a non-finite
-  oracle metric and was correctly rejected fail-closed.
-- All original 50 packages failed closed and there were no infrastructure failures.
-ActiveLawDiscovery separately passes invariant, callback-budget and secure-baseline tests;
-  the latest 51×2 audit confirms 51/51 deterministic, 50/51 valid, 51/51 fail-closed and zero
-  infrastructure failures.
+- 77/77 unit, security, protocol and scientific-invariant tests passed.
+- The latest 51×2 secure-baseline audit reports 51/51 deterministic, 50/51 valid, 51/51
+  fail-closed and zero infrastructure failures. The sole invalid baseline is the explicitly
+  quarantined `ClimateScience/EnergyBalanceModel`.
 - Current manifest: 7 certified / 10 candidate / 34 quarantined. D-optimal design, quantum
   gate synthesis and DC optimal power flow have been rebuilt with separate sealed validation
-  or robustness metrics and re-admitted as candidates.
+  or robustness metrics and re-admitted as candidates. GPT-5.5 reaches nominal OPF score 1.0
+  at budget one while sealed N-1 robustness is only 0.031 on development and approximately
+  zero on held-out networks.
 
 Machine-readable evidence lives in [`experiments/`](experiments/).
 The original five dated P0–P2 reports were regenerated from clean source revision `f48b101`;

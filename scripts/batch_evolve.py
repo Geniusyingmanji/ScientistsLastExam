@@ -27,6 +27,7 @@ from frontier_science.algorithms.common import llm_condition_sha256  # noqa: E40
 from frontier_science.algorithms.common import atomic_write_text  # noqa: E402
 from frontier_science.config import load_llm_client  # noqa: E402
 from frontier_science.protocol import mean_confidence_interval  # noqa: E402
+from frontier_science.protocol import compact_trajectory_snapshot  # noqa: E402
 from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402
 from frontier_science.registry import find_task, list_tasks  # noqa: E402
 
@@ -236,6 +237,11 @@ def main(argv: list[str] | None = None) -> int:
                             "evaluated": result.evaluated,
                             "workdir": str(run_dir),
                             "summary": result.summary,
+                            # Generated only after the backend returns. Sealed science
+                            # metrics remain outside all agent/search-owned state.
+                            "trajectory_snapshot": compact_trajectory_snapshot(
+                                run_dir / "trajectory.jsonl"
+                            ),
                         }
                     except Exception as exc:  # noqa: BLE001 - retain failed conditions
                         entry = {

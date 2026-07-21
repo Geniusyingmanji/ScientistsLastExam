@@ -38,6 +38,12 @@ remain baseline-only and must not be promoted to model-performance evidence.
 | `secure_baseline_determinism_2026-07-21_v4.json` | `TRUSTED_SECURE_EVAL` | On clean source `236d8cd`, all 51 baselines are deterministic/fail-closed, 50 are valid, and infrastructure failures are zero. |
 | `gpt55_gate_v2_b1_2026-07-21.json` | `TRUSTED_SECURE_EVAL / CALIBRATION_ONLY` | Budget-one GPT-5.5 reaches 0.999872 nominal development and 0.999992 held-out policy but only 0.956894/0.983037 sealed hardware robustness; clean source `236d8cd`. |
 | `gpt55_gate_v2_b3_2026-07-21.json` | `TRUSTED_SECURE_EVAL / CALIBRATION_ONLY` | Independent budget-three run on clean source `236d8cd`; nominal saturates at numerical unity, development robustness rises 0.966531→0.974567, and held-out robustness remains near 0.9845. |
+| `optimal_power_flow_v2_calibration_2026-07-21.json` | `TRUSTED_TASK_CALIBRATION` | On clean source `f64aeeb`, independent nominal and N-1 security-constrained QP policies reproduce the 1.0/0.031 and 0.144/~1.0 economy-security split; invalid dispatches fail closed. |
+| `candidate_wave3_admission_audit_2026-07-21_v4.json` | `TRUSTED_ADMISSION_AUDIT` | On clean source `f64aeeb`, verifies OED-v2, GateSynthesis-v2 and OPF-v2 rebuilds while retaining truss, antenna and NMR in quarantine. |
+| `task_certification_audit_2026-07-21_v9.json` | `TRUSTED_CERTIFICATION_AUDIT` | On clean source `f64aeeb`, records all 51 packages with explicit manifest coverage: seven certified, ten candidate and 34 quarantined. |
+| `secure_baseline_determinism_2026-07-21_v5.json` | `TRUSTED_SECURE_EVAL` | On clean source `f64aeeb`, all 51 baselines are deterministic/fail-closed, 50 are valid, and infrastructure failures are zero. |
+| `gpt55_opf_v2_b1_2026-07-21.json` | `TRUSTED_SECURE_EVAL / CALIBRATION_ONLY` | Budget-one GPT-5.5 reaches nominal development/held-out score 1.0 but sealed N-1 robustness 0.031378/0.0000007 and development outage feasibility 0.113997; clean source `f64aeeb`. |
+| `gpt55_opf_v2_b3_2026-07-21.json` | `TRUSTED_SECURE_EVAL / CALIBRATION_ONLY` | Independent budget-three run on clean source `f64aeeb`; both valid nominal-score-one proposals retain the same N-1 robustness and outage-feasibility failure. |
 
 Raw `.out`/`.log` files predating the trusted evaluator inherit
 `UNTRUSTED_PRE_SANDBOX` unless a dated trusted report explicitly incorporates them.

@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_ADMISSION_AUDIT",
+  "created_at": "2026-07-21T21:06:34.178230+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "f64aeeb93e4b3b41aab2499f3bcfd6d8e2e7da8b",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/home/azureuser/.local/bin/python3.10",
+      "scripts/audit_candidate_wave3.py",
+      "--output",
+      "experiments/candidate_wave3_admission_audit_2026-07-21_v4.json"
+    ]
+  },
+  "environment": {
+    "python": "3.10.20 (main, Apr  7 2026, 20:44:18) [Clang 22.1.1 ]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.31"
+  },
+  "records": [
+    {
+      "task": "Spectroscopy/NMRSpectrumFitting",
+      "admission": "quarantine",
+      "defect": "non-finite peak parameters pass validation and receive full score; the fixed single spectrum also scores reconstruction only, not peak/mechanism recovery",
+      "nonfinite_candidate_score": 1.0,
+      "nonfinite_candidate_marked_valid": true,
+      "reported_residual_is_finite": false,
+      "instance_count": 1,
+      "passed": true
+    },
+    {
+      "task": "BayesianInference/OptimalExperimentDesign",
+      "admission": "candidate",
+      "resolved_defect": "v2 rejects non-finite indices, replaces the random-search multiplier with Kiefer-Wolfowitz-certified references, and separates procedural development from shifted-family validation",
+      "nonfinite_candidate_score": 0.0,
+      "nonfinite_candidate_marked_valid": false,
+      "all_nonfinite_instances_failed_closed": true,
+      "reference_count": 10,
+      "all_references_converged": true,
+      "development_instance_count": 6,
+      "validation_instance_count": 4,
+      "rebuild_passed": true,
+      "passed": true
+    },
+    {
+      "task": "QuantumControl/GateSynthesis",
+      "admission": "candidate",
+      "resolved_defect": "v2 rejects non-finite and out-of-bound pulses, exposes each nominal Hamiltonian and target, and retains hardware-shift and held-out-target metrics separately",
+      "nonfinite_candidate_score": 0.0,
+      "nonfinite_candidate_marked_valid": false,
+      "all_nonfinite_instances_failed_closed": true,
+      "instance_count": 6,
+      "development_instance_count": 4,
+      "heldout_instance_count": 2,
+      "instance_shapes_valid": true,
+      "rebuild_passed": true,
+      "passed": true
+    },
+    {
+      "task": "PowerSystems/OptimalPowerFlow",
+      "admission": "candidate",
+      "resolved_defect": "v2 supplies complete procedural network data, rejects invalid dispatches, uses independent convex nominal/security QP witnesses and seals exhaustive N-1 metrics",
+      "nonfinite_candidate_score": 0.0,
+      "nonfinite_candidate_marked_valid": false,
+      "all_nonfinite_instances_failed_closed": true,
+      "instance_count": 6,
+      "development_instance_count": 4,
+      "heldout_instance_count": 2,
+      "all_baselines_n_minus_1_safe": true,
+      "all_reference_costs_ordered": true,
+      "rebuild_passed": true,
+      "passed": true
+    },
+    {
+      "task": "StructuralEngineering/TrussWeightMinimization",
+      "admission": "quarantine",
+      "defect": "the purported canonical 10-bar topology contains the same middle vertical member twice, so its FEM and cited 5060-lb reference describe different problems",
+      "declared_member_count": 10,
+      "unique_undirected_member_count": 9,
+      "duplicated_undirected_members": [
+        [
+          2,
+          3
+        ]
+      ],
+      "all_max_baseline_weight_lbs": 13643.8,
+      "passed": true
+    },
+    {
+      "task": "Electromagnetics/AntennaArraySynthesis",
+      "admission": "quarantine",
+      "defect": "the zero array normalizes 0/0 and receives full score; additionally the fixed mainlobe mask measures the uniform arrays near -9 dB while normalization claims -13.3 dB, so the score and stated beam constraint are inconsistent",
+      "zero_array_score": 1.0,
+      "zero_array_marked_valid": true,
+      "zero_array_psll_is_finite": [
+        false,
+        false
+      ],
+      "measured_uniform_psll_db": [
+        -9.02,
+        -9.55
+      ],
+      "declared_uniform_psll_db": [
+        -13.3,
+        -13.3
+      ],
+      "absolute_baseline_mismatch_db": [
+        4.280000000000001,
+        3.75
+      ],
+      "passed": true
+    }
+  ],
+  "summary": {
+    "task_count": 6,
+    "check_pass_count": 6,
+    "resolved_rebuild_count": 3,
+    "remaining_quarantine_count": 3
+  },
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}

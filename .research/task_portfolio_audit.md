@@ -117,8 +117,10 @@ The first review tranche contains real scientific topics but several narrow eval
   baselines, independent nominal and security-constrained QP witnesses, and exhaustive
   non-islanding N-1 evaluation. The nominal witness reaches development score 1.0 but only
   0.031 sealed robustness, whereas the security-constrained witness reaches approximately
-  unit robustness at nominal score 0.144. This economy--security split is ready for GPT-5.5
-  calibration but still needs server-held networks, AC replication and independent review.
+  unit robustness at nominal score 0.144. GPT-5.5 reproduces the nominal witness at budget one,
+  reaching development/held-out nominal score 1.0 but N-1 robustness 0.031/0.000001. An
+  independent budget-three run leaves the same security failure unchanged. This candidate still
+  needs paired controls, server-held networks, AC replication and independent review.
 
 ## Expansion rule
 
