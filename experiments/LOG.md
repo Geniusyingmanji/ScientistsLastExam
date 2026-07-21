@@ -606,3 +606,7 @@ generator-bus assignments. The purported canonical 10-bar truss has only nine un
 undirected members because its middle vertical is duplicated, invalidating its literature
 anchor. All six packages are quarantined pending substantive v2 rebuilds; this is not a judgment
 that their scientific domains lack value.
+
+`candidate_wave3_admission_audit_2026-07-21.json` and
+`task_certification_audit_2026-07-21_v4.json` bind clean revision `e911639`; both set
+`execution_passed=true`, `trusted_evidence=true` and `passed=true`.

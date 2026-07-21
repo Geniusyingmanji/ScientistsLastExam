@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_ADMISSION_AUDIT",
+  "created_at": "2026-07-21T19:33:11.947213+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "e911639327414764a05eb38cdcd373923ce56d68",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/home/azureuser/.local/bin/python3.10",
+      "scripts/audit_candidate_wave3.py",
+      "--output",
+      "experiments/candidate_wave3_admission_audit_2026-07-21.json"
+    ]
+  },
+  "environment": {
+    "python": "3.10.20 (main, Apr  7 2026, 20:44:18) [Clang 22.1.1 ]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.31"
+  },
+  "records": [
+    {
+      "task": "Spectroscopy/NMRSpectrumFitting",
+      "admission": "quarantine",
+      "defect": "non-finite peak parameters pass validation and receive full score; the fixed single spectrum also scores reconstruction only, not peak/mechanism recovery",
+      "nonfinite_candidate_score": 1.0,
+      "nonfinite_candidate_marked_valid": true,
+      "reported_residual_is_finite": false,
+      "instance_count": 1,
+      "passed": true
+    },
+    {
+      "task": "BayesianInference/OptimalExperimentDesign",
+      "admission": "quarantine",
+      "defect": "non-finite designs are clipped but not rejected and receive full score; the normalization multiplies a log-determinant by 1.02 rather than using a sourced D-optimal reference",
+      "nonfinite_candidate_score": 1.0,
+      "nonfinite_candidate_marked_valid": true,
+      "reported_eig_is_finite": [
+        false,
+        false
+      ],
+      "passed": true
+    },
+    {
+      "task": "QuantumControl/GateSynthesis",
+      "admission": "quarantine",
+      "defect": "non-finite pulse amplitudes pass validation and receive full score; evaluation uses one fixed nominal Hamiltonian without robustness, fluence or slew checks",
+      "nonfinite_candidate_score": 1.0,
+      "nonfinite_candidate_marked_valid": true,
+      "reported_fidelity_is_finite": false,
+      "nominal_system_count": 1,
+      "passed": true
+    },
+    {
+      "task": "PowerSystems/OptimalPowerFlow",
+      "admission": "quarantine",
+      "defect": "non-finite dispatch passes all balance/flow checks and receives full score; the candidate interface omits line susceptances and generator-bus assignments, while the declared baseline is itself line-infeasible",
+      "nonfinite_candidate_score": 1.0,
+      "nonfinite_candidate_marked_valid": true,
+      "reported_cost_is_finite": false,
+      "reported_violation_is_finite": false,
+      "equal_dispatch_feasibility_rate": 0.0,
+      "equal_dispatch_line_violation_mw": 65.0,
+      "passed": true
+    },
+    {
+      "task": "StructuralEngineering/TrussWeightMinimization",
+      "admission": "quarantine",
+      "defect": "the purported canonical 10-bar topology contains the same middle vertical member twice, so its FEM and cited 5060-lb reference describe different problems",
+      "declared_member_count": 10,
+      "unique_undirected_member_count": 9,
+      "duplicated_undirected_members": [
+        [
+          2,
+          3
+        ]
+      ],
+      "all_max_baseline_weight_lbs": 13643.8,
+      "passed": true
+    },
+    {
+      "task": "Electromagnetics/AntennaArraySynthesis",
+      "admission": "quarantine",
+      "defect": "the zero array normalizes 0/0 and receives full score; additionally the fixed mainlobe mask measures the uniform arrays near -9 dB while normalization claims -13.3 dB, so the score and stated beam constraint are inconsistent",
+      "zero_array_score": 1.0,
+      "zero_array_marked_valid": true,
+      "zero_array_psll_is_finite": [
+        false,
+        false
+      ],
+      "measured_uniform_psll_db": [
+        -9.02,
+        -9.55
+      ],
+      "declared_uniform_psll_db": [
+        -13.3,
+        -13.3
+      ],
+      "absolute_baseline_mismatch_db": [
+        4.280000000000001,
+        3.75
+      ],
+      "passed": true
+    }
+  ],
+  "summary": {
+    "task_count": 6,
+    "reproduced_defect_count": 6,
+    "recommended_quarantine_count": 6
+  },
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}
