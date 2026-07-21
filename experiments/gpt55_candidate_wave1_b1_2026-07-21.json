@@ -1,0 +1,457 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_SECURE_EVAL",
+  "evidence_scope": "MODEL_PERFORMANCE",
+  "created_at": "2026-07-21T17:35:59.334119+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "98bc6950804ca49f8797cb1b76ea0864eb2a8fb2",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/home/azureuser/.local/bin/python3.10",
+      "/home/azureuser/workspace-gzy/zyf/frontier-science/scripts/batch_evolve.py",
+      "--all",
+      "--tasks",
+      "SignalProcessing/SparseRecovery,Geophysics/SeismicInversion,NuclearEngineering/NeutronDiffusionCriticality,DynamicalSystems/LyapunovControl",
+      "--algorithms",
+      "greedy_rewrite",
+      "--feedback-modes",
+      "normal",
+      "--seeds",
+      "0",
+      "--budget",
+      "1",
+      "--timeout",
+      "90",
+      "--workdir",
+      "runs/gpt55_candidate_wave1_b1_20260721",
+      "--output",
+      "experiments/gpt55_candidate_wave1_b1_2026-07-21.json"
+    ]
+  },
+  "environment": {
+    "python": "3.10.20 (main, Apr  7 2026, 20:44:18) [Clang 22.1.1 ]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.31"
+  },
+  "config": {
+    "tasks": [
+      "SignalProcessing/SparseRecovery",
+      "Geophysics/SeismicInversion",
+      "NuclearEngineering/NeutronDiffusionCriticality",
+      "DynamicalSystems/LyapunovControl"
+    ],
+    "algorithms": [
+      "greedy_rewrite"
+    ],
+    "feedback_modes": [
+      "normal"
+    ],
+    "seeds": [
+      0
+    ],
+    "budget": 1,
+    "timeout_s": 90.0,
+    "work_root": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/gpt55_candidate_wave1_b1_20260721",
+    "llm_condition_sha256": "5b0df4671481f6b3505155bc6c5654a64c4da5591422fb806904e7d0f44fc4d2",
+    "llm": {
+      "wire": "responses",
+      "endpoint_sha256": "b22995a1fcaf8ad713ac37716f006c717313dfdebd357ac02a077a5582650bb6",
+      "model": "gpt-5.5",
+      "max_output_tokens": 16000,
+      "temperature": null,
+      "reasoning_effort": "low",
+      "input_cost_per_million": null,
+      "output_cost_per_million": null
+    }
+  },
+  "runs": [
+    {
+      "task": "SignalProcessing/SparseRecovery",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 0,
+      "baseline": 6.588598725280577e-18,
+      "best": 0.9583008265612911,
+      "accepted": 1,
+      "evaluated": 2,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/gpt55_candidate_wave1_b1_20260721/SignalProcessing__SparseRecovery/greedy_rewrite/normal/seed_0",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 2,
+        "budget_units": 2,
+        "best_score": 0.9583008265612911,
+        "best_so_far_auc": 0.47915041328064556,
+        "valid_rate": 1.0,
+        "accepted": 1,
+        "wall_seconds": 26.751071165315807,
+        "llm": {
+          "calls": 1,
+          "provider_usage_records": 1,
+          "input_tokens": 492,
+          "output_tokens": 2091,
+          "total_tokens": 2583,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "SignalProcessing/SparseRecovery",
+        "seed": 0,
+        "baseline_score": 6.588598725280577e-18,
+        "budget": 1,
+        "feedback_mode": "normal",
+        "feedback_scope": "proposal_prompt_metrics_only; search selection still uses true oracle scores"
+      }
+    },
+    {
+      "task": "Geophysics/SeismicInversion",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 0,
+      "baseline": 0.0,
+      "best": 0.0,
+      "accepted": 0,
+      "evaluated": 2,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/gpt55_candidate_wave1_b1_20260721/Geophysics__SeismicInversion/greedy_rewrite/normal/seed_0",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 2,
+        "budget_units": 2,
+        "best_score": 0.0,
+        "best_so_far_auc": 0.0,
+        "valid_rate": 1.0,
+        "accepted": 0,
+        "wall_seconds": 45.72400995902717,
+        "llm": {
+          "calls": 1,
+          "provider_usage_records": 1,
+          "input_tokens": 477,
+          "output_tokens": 3823,
+          "total_tokens": 4300,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "Geophysics/SeismicInversion",
+        "seed": 0,
+        "baseline_score": 0.0,
+        "budget": 1,
+        "feedback_mode": "normal",
+        "feedback_scope": "proposal_prompt_metrics_only; search selection still uses true oracle scores"
+      }
+    },
+    {
+      "task": "NuclearEngineering/NeutronDiffusionCriticality",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 0,
+      "baseline": 0.0,
+      "best": 0.3662361928168746,
+      "accepted": 1,
+      "evaluated": 2,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/gpt55_candidate_wave1_b1_20260721/NuclearEngineering__NeutronDiffusionCriticality/greedy_rewrite/normal/seed_0",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 2,
+        "budget_units": 2,
+        "best_score": 0.3662361928168746,
+        "best_so_far_auc": 0.1831180964084373,
+        "valid_rate": 1.0,
+        "accepted": 1,
+        "wall_seconds": 32.4624788640067,
+        "llm": {
+          "calls": 1,
+          "provider_usage_records": 1,
+          "input_tokens": 539,
+          "output_tokens": 1772,
+          "total_tokens": 2311,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "NuclearEngineering/NeutronDiffusionCriticality",
+        "seed": 0,
+        "baseline_score": 0.0,
+        "budget": 1,
+        "feedback_mode": "normal",
+        "feedback_scope": "proposal_prompt_metrics_only; search selection still uses true oracle scores"
+      }
+    },
+    {
+      "task": "DynamicalSystems/LyapunovControl",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 0,
+      "baseline": 0.0,
+      "best": 0.30545039981047134,
+      "accepted": 1,
+      "evaluated": 2,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/gpt55_candidate_wave1_b1_20260721/DynamicalSystems__LyapunovControl/greedy_rewrite/normal/seed_0",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 2,
+        "budget_units": 2,
+        "best_score": 0.30545039981047134,
+        "best_so_far_auc": 0.15272519990523567,
+        "valid_rate": 1.0,
+        "accepted": 1,
+        "wall_seconds": 54.08336958754808,
+        "llm": {
+          "calls": 1,
+          "provider_usage_records": 1,
+          "input_tokens": 604,
+          "output_tokens": 2310,
+          "total_tokens": 2914,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "DynamicalSystems/LyapunovControl",
+        "seed": 0,
+        "baseline_score": 0.0,
+        "budget": 1,
+        "feedback_mode": "normal",
+        "feedback_scope": "proposal_prompt_metrics_only; search selection still uses true oracle scores"
+      }
+    }
+  ],
+  "aggregate": {
+    "attempt_count": 4,
+    "superseded_attempts": 0,
+    "successful_runs": 4,
+    "failed_runs": 0,
+    "by_condition": {
+      "DynamicalSystems/LyapunovControl|greedy_rewrite|normal": {
+        "n": 1,
+        "best_score": {
+          "n": 1,
+          "mean": 0.30545039981047134,
+          "ci95_low": 0.30545039981047134,
+          "ci95_high": 0.30545039981047134
+        },
+        "best_so_far_auc": {
+          "n": 1,
+          "mean": 0.15272519990523567,
+          "ci95_low": 0.15272519990523567,
+          "ci95_high": 0.15272519990523567
+        },
+        "budget_units": {
+          "n": 1,
+          "mean": 2.0,
+          "ci95_low": 2.0,
+          "ci95_high": 2.0
+        },
+        "oracle_calls": {
+          "n": 1,
+          "mean": 2.0,
+          "ci95_low": 2.0,
+          "ci95_high": 2.0
+        },
+        "wall_seconds": {
+          "n": 1,
+          "mean": 54.08336958754808,
+          "ci95_low": 54.08336958754808,
+          "ci95_high": 54.08336958754808
+        },
+        "total_tokens": {
+          "n": 1,
+          "mean": 2914.0,
+          "ci95_low": 2914.0,
+          "ci95_high": 2914.0
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      },
+      "Geophysics/SeismicInversion|greedy_rewrite|normal": {
+        "n": 1,
+        "best_score": {
+          "n": 1,
+          "mean": 0.0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.0
+        },
+        "best_so_far_auc": {
+          "n": 1,
+          "mean": 0.0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.0
+        },
+        "budget_units": {
+          "n": 1,
+          "mean": 2.0,
+          "ci95_low": 2.0,
+          "ci95_high": 2.0
+        },
+        "oracle_calls": {
+          "n": 1,
+          "mean": 2.0,
+          "ci95_low": 2.0,
+          "ci95_high": 2.0
+        },
+        "wall_seconds": {
+          "n": 1,
+          "mean": 45.72400995902717,
+          "ci95_low": 45.72400995902717,
+          "ci95_high": 45.72400995902717
+        },
+        "total_tokens": {
+          "n": 1,
+          "mean": 4300.0,
+          "ci95_low": 4300.0,
+          "ci95_high": 4300.0
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      },
+      "NuclearEngineering/NeutronDiffusionCriticality|greedy_rewrite|normal": {
+        "n": 1,
+        "best_score": {
+          "n": 1,
+          "mean": 0.3662361928168746,
+          "ci95_low": 0.3662361928168746,
+          "ci95_high": 0.3662361928168746
+        },
+        "best_so_far_auc": {
+          "n": 1,
+          "mean": 0.1831180964084373,
+          "ci95_low": 0.1831180964084373,
+          "ci95_high": 0.1831180964084373
+        },
+        "budget_units": {
+          "n": 1,
+          "mean": 2.0,
+          "ci95_low": 2.0,
+          "ci95_high": 2.0
+        },
+        "oracle_calls": {
+          "n": 1,
+          "mean": 2.0,
+          "ci95_low": 2.0,
+          "ci95_high": 2.0
+        },
+        "wall_seconds": {
+          "n": 1,
+          "mean": 32.4624788640067,
+          "ci95_low": 32.4624788640067,
+          "ci95_high": 32.4624788640067
+        },
+        "total_tokens": {
+          "n": 1,
+          "mean": 2311.0,
+          "ci95_low": 2311.0,
+          "ci95_high": 2311.0
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      },
+      "SignalProcessing/SparseRecovery|greedy_rewrite|normal": {
+        "n": 1,
+        "best_score": {
+          "n": 1,
+          "mean": 0.9583008265612911,
+          "ci95_low": 0.9583008265612911,
+          "ci95_high": 0.9583008265612911
+        },
+        "best_so_far_auc": {
+          "n": 1,
+          "mean": 0.47915041328064556,
+          "ci95_low": 0.47915041328064556,
+          "ci95_high": 0.47915041328064556
+        },
+        "budget_units": {
+          "n": 1,
+          "mean": 2.0,
+          "ci95_low": 2.0,
+          "ci95_high": 2.0
+        },
+        "oracle_calls": {
+          "n": 1,
+          "mean": 2.0,
+          "ci95_low": 2.0,
+          "ci95_high": 2.0
+        },
+        "wall_seconds": {
+          "n": 1,
+          "mean": 26.751071165315807,
+          "ci95_low": 26.751071165315807,
+          "ci95_high": 26.751071165315807
+        },
+        "total_tokens": {
+          "n": 1,
+          "mean": 2583.0,
+          "ci95_low": 2583.0,
+          "ci95_high": 2583.0
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      }
+    },
+    "overall": {
+      "best_score": {
+        "n": 4,
+        "mean": 0.40749685479715925,
+        "ci95_low": -0.22993289770518355,
+        "ci95_high": 1.044926607299502
+      },
+      "best_so_far_auc": {
+        "n": 4,
+        "mean": 0.20374842739857962,
+        "ci95_low": -0.11496644885259177,
+        "ci95_high": 0.522463303649751
+      },
+      "budget_units": {
+        "n": 4,
+        "mean": 2.0,
+        "ci95_low": 2.0,
+        "ci95_high": 2.0
+      },
+      "oracle_calls": {
+        "n": 4,
+        "mean": 2.0,
+        "ci95_low": 2.0,
+        "ci95_high": 2.0
+      },
+      "wall_seconds": {
+        "n": 4,
+        "mean": 39.75523239397444,
+        "ci95_low": 19.985512138398278,
+        "ci95_high": 59.5249526495506
+      },
+      "total_tokens": {
+        "n": 4,
+        "mean": 3027.0,
+        "ci95_low": 1620.9394040689426,
+        "ci95_high": 4433.060595931058
+      },
+      "estimated_cost_usd": {
+        "n": 0,
+        "mean": null,
+        "ci95_low": null,
+        "ci95_high": null
+      }
+    }
+  },
+  "completed_at": "2026-07-21T17:38:38.377440+00:00",
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}

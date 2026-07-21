@@ -32,7 +32,7 @@ physical validation, and auditable claim–evidence provenance.
 | TreeQuest AB-MCTS | Implemented, trusted baseline smoke | Real TreeQuest AB-MCTS-A ask/tell adapter; clean-revision secure baseline passed under Python 3.12 | Run nonzero-budget/checkpoint integration and multi-seed study |
 | ShinkaEvolve | Implemented, trusted baseline smoke | Official runner/database adapter at pinned commit; clean-revision secure baseline passed under Python 3.10 | Run nonzero-budget/resume integration and token accounting audit |
 | Classical/domain baselines | Missing | None | Random/quasi-random plus BO/CMA-ES/DE and one domain heuristic where meaningful |
-| Multi-seed benchmark evidence | Missing | Runner exists; live endpoint smoke returned HTTP 403 | Certified-core report with uncertainty and raw trajectories |
+| Multi-seed benchmark evidence | Missing | Keyless GPT-5.5 Responses path now passes smoke; trusted one-seed budget-one core, SCM and candidate calibration reports exist | Certified-core report with uncertainty and raw trajectories |
 | Multifidelity/Pareto | Missing | Plan text only | At least one certified proxy/exact task with rank-correlation calibration; objective vectors/hypervolume |
 | Feedback learning claim | Missing | Controls exist but no causal result | Structured feedback must beat shuffled/no-feedback under paired repeated runs |
 | Mechanistic discovery | Missing | Outcome scores only | Separate equation/causal artifact score and intervention generalization |
@@ -80,12 +80,13 @@ or make the executable-optimization qualifier unavoidable.
 
 ## Remaining plan deficiencies
 
-### 1. No empirical P2 evidence yet
+### 1. Only calibration-level empirical P2 evidence exists
 
-The protocol implementation and baseline-only official-backend integration smokes passed, but
-the configured GPT-5.5 Responses endpoint returned HTTP 403. There are no valid five-seed
+The keyless GPT-5.5 Responses path was restored and trusted budget-one pilots now cover the
+seven-task core, the SCM mechanism candidate and four additional candidates. They expose
+one-step saturation and multiple oracle defects, but there are still no valid five-seed
 certified-core trajectories, no paired feedback-control result, and no nonzero-budget official-
-backend search run. The project must distinguish “implemented/baseline-smoked” from
+backend search run. The project must distinguish “calibrated at budget one” from
 “experimentally validated” everywhere.
 
 ### 2. Optional frameworks lack one reproducible environment
@@ -151,7 +152,8 @@ Accordingly, “P0–P2 implemented and recorded” must not be shortened to “
   machine-readable and does not claim selection-blind feedback ablation.
 - [x] Real optional OpenEvolve, TreeQuest AB-MCTS-A and ShinkaEvolve adapters.
 - [ ] Add a locked Python 3.10/3.11 upstream environment and integration tests.
-- [ ] Restore a working, authorized LLM endpoint and record smoke metadata.
+- [x] Restore a working, authorized LLM endpoint and record smoke metadata (keyless local
+  Responses proxy; endpoint details remain git-ignored).
 - [ ] Run ≥5 seeds on all seven certified tasks at 30/100/300 proposal/benchmark budget units;
   report the actual oracle-call counts separately.
 - [ ] Publish raw trajectories, environment lock, paired uncertainty and performance profiles.
@@ -177,7 +179,8 @@ Accordingly, “P0–P2 implemented and recorded” must not be shortened to “
 - [ ] Independently review all seven core tasks and generate hidden/time-held-out instances.
 - [ ] Define task-family/time-held-out splits for search-policy training and transfer studies.
 - [ ] Add one certified proxy/exact multifidelity task with measured rank correlation.
-- [ ] Add one intervention-based mechanism task and separate mechanism score.
+- [x] Add one intervention-based mechanism task and separate mechanism score (SCM-v1 is an
+  on-ramp: GPT-5.5 reaches 0.983 at budget one, so harder regimes remain required).
 - [ ] Add misspecification/refusal cases and false-discovery penalties.
 - [ ] Add calibrated confidence, active stopping, and unnecessary-experiment metrics.
 - [ ] Add hypothesis–test–evidence/belief-update artifacts, explicit exploration DAGs,

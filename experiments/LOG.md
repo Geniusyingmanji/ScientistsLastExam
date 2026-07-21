@@ -391,3 +391,23 @@ every variable directly intervenable admits a standard total-effect inversion th
 implement in one proposal. The next version needs hidden/latent variables, partial intervention
 access, mixed nonlinear mechanisms, model-misspecified/null cases or a tighter adaptive budget;
 the current package remains a candidate/on-ramp rather than an open-frontier headline task.
+
+## 2026-07-21 — GPT-5.5 candidate wave 1: oracle-first triage
+
+`gpt55_candidate_wave1_b1_2026-07-21.json` screened four metadata-complete candidates with
+GPT-5.5, greedy full-file rewrite, seed 0 and one proposal. The report is a trusted secure-eval
+artifact bound to clean source revision `98bc695`; all four runs completed and their proposed
+programs were valid. It is calibration evidence only, not a model comparison or certification.
+
+| Task | Baseline | Best after one proposal | Tokens | Admission interpretation |
+|---|---:|---:|---:|---|
+| Sparse recovery | 0.0000 | 0.9583 | 2,583 | Near-saturated by standard OMP/CoSaMP/HTP methods; add sensing, sparsity and noise shifts before using it as a headline task. |
+| Seismic inversion | 0.0000 | 0.0000 | 4,300 | Result is non-diagnostic: the visible forward model depends only on mean velocity, so the requested layerwise inverse is non-identifiable. |
+| Neutron diffusion criticality | 0.0000 | 0.3662 | 2,311 | Apparent headroom, but the fixed `k_baseline + 0.07` normalization anchor has not been independently established. |
+| Lyapunov control | 0.0000 | 0.3055 | 2,914 | Invalid for capability claims: the variational equation omitted the state derivative of feedback, so the reported quantity was not the closed-loop MLE. |
+
+The cross-task lesson agrees with the certified-core pilot: a plausible scientific name and a
+valid numerical output are insufficient admission criteria. Budget-one screening must follow,
+not precede, identifiability and oracle review. Template-solvable tasks should become on-ramps
+or gain procedural hidden regimes; defective or unsupported evaluators must be repaired and all
+old scores superseded before any longer trajectory is run.

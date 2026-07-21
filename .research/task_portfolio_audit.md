@@ -31,6 +31,11 @@ meaning.
   worlds. GPT-5.5 nevertheless reaches 0.983 in one proposal through textbook total-effect
   inversion, so it needs latent/partial/nonlinear/misspecified regimes in addition to external
   review and a server-held split.
+- **4 candidates screened at budget one.** SparseRecovery reaches 0.958 through standard
+  sparse solvers and needs hidden sensing/noise/sparsity shifts. SeismicInversion is currently
+  non-identifiable, LyapunovControl omits feedback derivatives from its MLE calculation, and
+  NeutronDiffusionCriticality uses an unverified fixed score anchor. The latter three must be
+  repaired or recalibrated before their GPT-5.5 scores have admission meaning.
 - **11 earlier candidates with complete metadata fields.** These are the fastest next review
   tranche: RoomImpulseResponse, LowThrustTransfer, InvertedPendulumSwingUp, LyapunovControl,
   LidDrivenCavity, SeismicInversion, AlloyHardnessOptimization, NeutronDiffusionCriticality,
