@@ -32,6 +32,12 @@ remain baseline-only and must not be promoted to model-performance evidence.
 | `secure_baseline_determinism_2026-07-21_v3.json` | `TRUSTED_SECURE_EVAL` | On clean source `cd65c17`, all 51 baselines are deterministic and fail closed, 50 are valid, and there are no infrastructure failures; the sole invalid task remains quarantined Climate EBM. |
 | `gpt55_active_law_b1_2026-07-21.json` | `TRUSTED_SECURE_EVAL / CALIBRATION_ONLY` | Budget-one GPT-5.5 reaches 0.796 development, 0.745 sealed validation mechanism and near-perfect rollout, but falsely claims both misspecified worlds; clean source `cd65c17`. |
 | `gpt55_active_law_b3_2026-07-21.json` | `TRUSTED_SECURE_EVAL / CALIBRATION_ONLY` | Independent budget-three GPT-5.5 run on clean source `cd65c17`; later proposals do not beat 0.711 development and none fixes the development/validation misspecification false discoveries. |
+| `gate_synthesis_v2_calibration_2026-07-21.json` | `TRUSTED_TASK_CALIBRATION` | On clean source `236d8cd`, an independent nominal GRAPE witness reaches numerical unit fidelity on all six targets while sealed hardware scores 0.957/0.984; finite/bound checks and unitary invariants pass. |
+| `candidate_wave3_admission_audit_2026-07-21_v3.json` | `TRUSTED_ADMISSION_AUDIT` | On clean source `236d8cd`, verifies OED-v2 and GateSynthesis-v2 rebuilds plus four remaining quarantines. |
+| `task_certification_audit_2026-07-21_v8.json` | `TRUSTED_CERTIFICATION_AUDIT` | On clean source `236d8cd`, records 51 packages: seven certified, nine candidate and 35 quarantined. |
+| `secure_baseline_determinism_2026-07-21_v4.json` | `TRUSTED_SECURE_EVAL` | On clean source `236d8cd`, all 51 baselines are deterministic/fail-closed, 50 are valid, and infrastructure failures are zero. |
+| `gpt55_gate_v2_b1_2026-07-21.json` | `TRUSTED_SECURE_EVAL / CALIBRATION_ONLY` | Budget-one GPT-5.5 reaches 0.999872 nominal development and 0.999992 held-out policy but only 0.956894/0.983037 sealed hardware robustness; clean source `236d8cd`. |
+| `gpt55_gate_v2_b3_2026-07-21.json` | `TRUSTED_SECURE_EVAL / CALIBRATION_ONLY` | Independent budget-three run on clean source `236d8cd`; nominal saturates at numerical unity, development robustness rises 0.966531→0.974567, and held-out robustness remains near 0.9845. |
 
 Raw `.out`/`.log` files predating the trusted evaluator inherit
 `UNTRUSTED_PRE_SANDBOX` unless a dated trusted report explicitly incorporates them.

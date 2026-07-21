@@ -1,0 +1,784 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_TASK_CALIBRATION",
+  "evidence_scope": "SCIENTIFIC_CALIBRATION_NOT_MODEL_PERFORMANCE",
+  "created_at": "2026-07-21T20:34:21.675477+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "236d8cd2eb7034d665f50d977184b3a59c26e507",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/home/azureuser/.local/bin/python3.10",
+      "scripts/calibrate_gate_synthesis_v2.py",
+      "--output",
+      "experiments/gate_synthesis_v2_calibration_2026-07-21.json"
+    ]
+  },
+  "environment": {
+    "python": "3.10.20 (main, Apr  7 2026, 20:44:18) [Clang 22.1.1 ]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.31"
+  },
+  "baseline": {
+    "combined_score": 0.0,
+    "valid": 1.0,
+    "feasibility_rate": 1.0,
+    "development_score": 0.0,
+    "robustness_score": 0.0,
+    "development_validation_gap": 0.0,
+    "heldout_policy_score": 0.0,
+    "heldout_robustness_score": 0.0,
+    "heldout_feasibility_rate": 1.0,
+    "mean_nominal_process_fidelity": 0.18560263808702554,
+    "mean_worst_shifted_process_fidelity": 0.16622687071756456,
+    "per_instance": [
+      {
+        "name": "dev_hadamard",
+        "split": "development",
+        "valid": true,
+        "score": 0.0,
+        "nominal_process_fidelity": 0.0403379879688766,
+        "baseline_process_fidelity": 0.0403379879688766,
+        "robustness_score": 0.0,
+        "worst_shifted_process_fidelity": 0.0214837663086786,
+        "pulse_rms": 0.0,
+        "pulse_max_slew": 0.0,
+        "per_variant": [
+          {
+            "variant": "nominal",
+            "process_fidelity": 0.0403379879688766,
+            "baseline_process_fidelity": 0.0403379879688766,
+            "score": 0.0
+          },
+          {
+            "variant": "underdrive_plus_detuning",
+            "process_fidelity": 0.0644417569644905,
+            "baseline_process_fidelity": 0.0644417569644905,
+            "score": 0.0
+          },
+          {
+            "variant": "overdrive_minus_detuning",
+            "process_fidelity": 0.0214837663086786,
+            "baseline_process_fidelity": 0.0214837663086786,
+            "score": 0.0
+          },
+          {
+            "variant": "positive_detuning",
+            "process_fidelity": 0.0644417569644905,
+            "baseline_process_fidelity": 0.0644417569644905,
+            "score": 0.0
+          },
+          {
+            "variant": "negative_detuning",
+            "process_fidelity": 0.0214837663086786,
+            "baseline_process_fidelity": 0.0214837663086786,
+            "score": 0.0
+          }
+        ]
+      },
+      {
+        "name": "heldout_xx",
+        "split": "heldout",
+        "valid": true,
+        "score": 0.0,
+        "nominal_process_fidelity": 0.06379101705924453,
+        "baseline_process_fidelity": 0.06379101705924453,
+        "robustness_score": 0.0,
+        "worst_shifted_process_fidelity": 0.06095477443162629,
+        "pulse_rms": 0.0,
+        "pulse_max_slew": 0.0,
+        "per_variant": [
+          {
+            "variant": "nominal",
+            "process_fidelity": 0.06379101705924453,
+            "baseline_process_fidelity": 0.06379101705924453,
+            "score": 0.0
+          },
+          {
+            "variant": "underdrive_plus_detuning",
+            "process_fidelity": 0.06544694155973986,
+            "baseline_process_fidelity": 0.06544694155973986,
+            "score": 0.0
+          },
+          {
+            "variant": "overdrive_minus_detuning",
+            "process_fidelity": 0.06095477443162629,
+            "baseline_process_fidelity": 0.06095477443162629,
+            "score": 0.0
+          },
+          {
+            "variant": "positive_detuning",
+            "process_fidelity": 0.06544694155973986,
+            "baseline_process_fidelity": 0.06544694155973986,
+            "score": 0.0
+          },
+          {
+            "variant": "negative_detuning",
+            "process_fidelity": 0.06095477443162629,
+            "baseline_process_fidelity": 0.06095477443162629,
+            "score": 0.0
+          }
+        ]
+      },
+      {
+        "name": "dev_cnot",
+        "split": "development",
+        "valid": true,
+        "score": 0.0,
+        "nominal_process_fidelity": 0.032825785557344334,
+        "baseline_process_fidelity": 0.032825785557344334,
+        "robustness_score": 0.0,
+        "worst_shifted_process_fidelity": 0.02234337209496232,
+        "pulse_rms": 0.0,
+        "pulse_max_slew": 0.0,
+        "per_variant": [
+          {
+            "variant": "nominal",
+            "process_fidelity": 0.032825785557344334,
+            "baseline_process_fidelity": 0.032825785557344334,
+            "score": 0.0
+          },
+          {
+            "variant": "underdrive_plus_detuning",
+            "process_fidelity": 0.04497067029138012,
+            "baseline_process_fidelity": 0.04497067029138012,
+            "score": 0.0
+          },
+          {
+            "variant": "overdrive_minus_detuning",
+            "process_fidelity": 0.02234337209496232,
+            "baseline_process_fidelity": 0.02234337209496232,
+            "score": 0.0
+          },
+          {
+            "variant": "positive_detuning",
+            "process_fidelity": 0.04497067029138012,
+            "baseline_process_fidelity": 0.04497067029138012,
+            "score": 0.0
+          },
+          {
+            "variant": "negative_detuning",
+            "process_fidelity": 0.02234337209496232,
+            "baseline_process_fidelity": 0.02234337209496232,
+            "score": 0.0
+          }
+        ]
+      },
+      {
+        "name": "heldout_sqrt_y",
+        "split": "heldout",
+        "valid": true,
+        "score": 0.0,
+        "nominal_process_fidelity": 0.4281498398919991,
+        "baseline_process_fidelity": 0.4281498398919991,
+        "robustness_score": 0.0,
+        "worst_shifted_process_fidelity": 0.39825338263021604,
+        "pulse_rms": 0.0,
+        "pulse_max_slew": 0.0,
+        "per_variant": [
+          {
+            "variant": "nominal",
+            "process_fidelity": 0.4281498398919991,
+            "baseline_process_fidelity": 0.4281498398919991,
+            "score": 0.0
+          },
+          {
+            "variant": "underdrive_plus_detuning",
+            "process_fidelity": 0.45358575607507207,
+            "baseline_process_fidelity": 0.45358575607507207,
+            "score": 0.0
+          },
+          {
+            "variant": "overdrive_minus_detuning",
+            "process_fidelity": 0.39825338263021604,
+            "baseline_process_fidelity": 0.39825338263021604,
+            "score": 0.0
+          },
+          {
+            "variant": "positive_detuning",
+            "process_fidelity": 0.45358575607507207,
+            "baseline_process_fidelity": 0.45358575607507207,
+            "score": 0.0
+          },
+          {
+            "variant": "negative_detuning",
+            "process_fidelity": 0.39825338263021604,
+            "baseline_process_fidelity": 0.39825338263021604,
+            "score": 0.0
+          }
+        ]
+      },
+      {
+        "name": "dev_sqrt_x",
+        "split": "development",
+        "valid": true,
+        "score": 0.0,
+        "nominal_process_fidelity": 0.4471296193221792,
+        "baseline_process_fidelity": 0.4471296193221792,
+        "robustness_score": 0.0,
+        "worst_shifted_process_fidelity": 0.4204090180938628,
+        "pulse_rms": 0.0,
+        "pulse_max_slew": 0.0,
+        "per_variant": [
+          {
+            "variant": "nominal",
+            "process_fidelity": 0.4471296193221792,
+            "baseline_process_fidelity": 0.4471296193221792,
+            "score": 0.0
+          },
+          {
+            "variant": "underdrive_plus_detuning",
+            "process_fidelity": 0.4204090180938628,
+            "baseline_process_fidelity": 0.4204090180938628,
+            "score": 0.0
+          },
+          {
+            "variant": "overdrive_minus_detuning",
+            "process_fidelity": 0.468914461049673,
+            "baseline_process_fidelity": 0.468914461049673,
+            "score": 0.0
+          },
+          {
+            "variant": "positive_detuning",
+            "process_fidelity": 0.4204090180938628,
+            "baseline_process_fidelity": 0.4204090180938628,
+            "score": 0.0
+          },
+          {
+            "variant": "negative_detuning",
+            "process_fidelity": 0.468914461049673,
+            "baseline_process_fidelity": 0.468914461049673,
+            "score": 0.0
+          }
+        ]
+      },
+      {
+        "name": "dev_cz",
+        "split": "development",
+        "valid": true,
+        "score": 0.0,
+        "nominal_process_fidelity": 0.222117159499702,
+        "baseline_process_fidelity": 0.222117159499702,
+        "robustness_score": 0.0,
+        "worst_shifted_process_fidelity": 0.20067132637275453,
+        "pulse_rms": 0.0,
+        "pulse_max_slew": 0.0,
+        "per_variant": [
+          {
+            "variant": "nominal",
+            "process_fidelity": 0.222117159499702,
+            "baseline_process_fidelity": 0.222117159499702,
+            "score": 0.0
+          },
+          {
+            "variant": "underdrive_plus_detuning",
+            "process_fidelity": 0.23247823600591902,
+            "baseline_process_fidelity": 0.23247823600591902,
+            "score": 0.0
+          },
+          {
+            "variant": "overdrive_minus_detuning",
+            "process_fidelity": 0.20067132637275453,
+            "baseline_process_fidelity": 0.20067132637275453,
+            "score": 0.0
+          },
+          {
+            "variant": "positive_detuning",
+            "process_fidelity": 0.23247823600591902,
+            "baseline_process_fidelity": 0.23247823600591902,
+            "score": 0.0
+          },
+          {
+            "variant": "negative_detuning",
+            "process_fidelity": 0.20067132637275453,
+            "baseline_process_fidelity": 0.20067132637275453,
+            "score": 0.0
+          }
+        ]
+      }
+    ]
+  },
+  "nominal_grape_reference": {
+    "combined_score": 0.999999999999553,
+    "valid": 1.0,
+    "feasibility_rate": 1.0,
+    "development_score": 0.999999999999553,
+    "robustness_score": 0.9571959756317026,
+    "development_validation_gap": 0.04280402436785047,
+    "heldout_policy_score": 0.9999999999990954,
+    "heldout_robustness_score": 0.9840748317959667,
+    "heldout_feasibility_rate": 1.0,
+    "mean_nominal_process_fidelity": 0.9999999999996286,
+    "mean_worst_shifted_process_fidelity": 0.9640764851348472,
+    "per_instance": [
+      {
+        "name": "dev_hadamard",
+        "split": "development",
+        "valid": true,
+        "score": 0.9999999999999977,
+        "nominal_process_fidelity": 0.9999999999999978,
+        "baseline_process_fidelity": 0.0403379879688766,
+        "robustness_score": 0.9323068823193461,
+        "worst_shifted_process_fidelity": 0.9366691457570915,
+        "pulse_rms": 4.081714031616371,
+        "pulse_max_slew": 2.4585887549953647,
+        "per_variant": [
+          {
+            "variant": "nominal",
+            "process_fidelity": 0.9999999999999978,
+            "baseline_process_fidelity": 0.0403379879688766,
+            "score": 0.9999999999999977
+          },
+          {
+            "variant": "underdrive_plus_detuning",
+            "process_fidelity": 0.9366691457570915,
+            "baseline_process_fidelity": 0.0644417569644905,
+            "score": 0.9323068823193461
+          },
+          {
+            "variant": "overdrive_minus_detuning",
+            "process_fidelity": 0.9513909005636575,
+            "baseline_process_fidelity": 0.0214837663086786,
+            "score": 0.9503236658088224
+          },
+          {
+            "variant": "positive_detuning",
+            "process_fidelity": 0.9996530813337123,
+            "baseline_process_fidelity": 0.0644417569644905,
+            "score": 0.9996291853886488
+          },
+          {
+            "variant": "negative_detuning",
+            "process_fidelity": 0.9996148781548924,
+            "baseline_process_fidelity": 0.0214837663086786,
+            "score": 0.9996064226306652
+          }
+        ]
+      },
+      {
+        "name": "heldout_xx",
+        "split": "heldout",
+        "valid": true,
+        "score": 0.9999999999981908,
+        "nominal_process_fidelity": 0.9999999999983062,
+        "baseline_process_fidelity": 0.06379101705924453,
+        "robustness_score": 0.9770839425708638,
+        "worst_shifted_process_fidelity": 0.9785837284422082,
+        "pulse_rms": 2.048789957590393,
+        "pulse_max_slew": 3.3942594509444097,
+        "per_variant": [
+          {
+            "variant": "nominal",
+            "process_fidelity": 0.9999999999983062,
+            "baseline_process_fidelity": 0.06379101705924453,
+            "score": 0.9999999999981908
+          },
+          {
+            "variant": "underdrive_plus_detuning",
+            "process_fidelity": 0.9785837284422082,
+            "baseline_process_fidelity": 0.06544694155973986,
+            "score": 0.9770839425708638
+          },
+          {
+            "variant": "overdrive_minus_detuning",
+            "process_fidelity": 0.9793648781036358,
+            "baseline_process_fidelity": 0.06095477443162629,
+            "score": 0.9780254227011543
+          },
+          {
+            "variant": "positive_detuning",
+            "process_fidelity": 0.991190117219865,
+            "baseline_process_fidelity": 0.06544694155973986,
+            "score": 0.9905731593294036
+          },
+          {
+            "variant": "negative_detuning",
+            "process_fidelity": 0.9911817942138671,
+            "baseline_process_fidelity": 0.06095477443162629,
+            "score": 0.9906093918098614
+          }
+        ]
+      },
+      {
+        "name": "dev_cnot",
+        "split": "development",
+        "valid": true,
+        "score": 0.9999999999994997,
+        "nominal_process_fidelity": 0.9999999999995162,
+        "baseline_process_fidelity": 0.032825785557344334,
+        "robustness_score": 0.9791950486838045,
+        "worst_shifted_process_fidelity": 0.9796599014524798,
+        "pulse_rms": 1.9787347904852342,
+        "pulse_max_slew": 3.0980866906115154,
+        "per_variant": [
+          {
+            "variant": "nominal",
+            "process_fidelity": 0.9999999999995162,
+            "baseline_process_fidelity": 0.032825785557344334,
+            "score": 0.9999999999994997
+          },
+          {
+            "variant": "underdrive_plus_detuning",
+            "process_fidelity": 0.9874057476811002,
+            "baseline_process_fidelity": 0.04497067029138012,
+            "score": 0.9868127062414489
+          },
+          {
+            "variant": "overdrive_minus_detuning",
+            "process_fidelity": 0.9796599014524798,
+            "baseline_process_fidelity": 0.02234337209496232,
+            "score": 0.9791950486838045
+          },
+          {
+            "variant": "positive_detuning",
+            "process_fidelity": 0.9908429549219125,
+            "baseline_process_fidelity": 0.04497067029138012,
+            "score": 0.9904117655937528
+          },
+          {
+            "variant": "negative_detuning",
+            "process_fidelity": 0.9908749250654888,
+            "baseline_process_fidelity": 0.02234337209496232,
+            "score": 0.990666380532739
+          }
+        ]
+      },
+      {
+        "name": "heldout_sqrt_y",
+        "split": "heldout",
+        "valid": true,
+        "score": 1.0,
+        "nominal_process_fidelity": 1.0,
+        "baseline_process_fidelity": 0.4281498398919991,
+        "robustness_score": 0.9910657210210695,
+        "worst_shifted_process_fidelity": 0.9946238278457906,
+        "pulse_rms": 1.1585594630339033,
+        "pulse_max_slew": 1.2792052630071415,
+        "per_variant": [
+          {
+            "variant": "nominal",
+            "process_fidelity": 1.0,
+            "baseline_process_fidelity": 0.4281498398919991,
+            "score": 1.0
+          },
+          {
+            "variant": "underdrive_plus_detuning",
+            "process_fidelity": 0.9954328057773676,
+            "baseline_process_fidelity": 0.45358575607507207,
+            "score": 0.9916415169014886
+          },
+          {
+            "variant": "overdrive_minus_detuning",
+            "process_fidelity": 0.9946238278457906,
+            "baseline_process_fidelity": 0.39825338263021604,
+            "score": 0.9910657210210695
+          },
+          {
+            "variant": "positive_detuning",
+            "process_fidelity": 0.9953068429913143,
+            "baseline_process_fidelity": 0.45358575607507207,
+            "score": 0.9914109907256912
+          },
+          {
+            "variant": "negative_detuning",
+            "process_fidelity": 0.995342342905004,
+            "baseline_process_fidelity": 0.39825338263021604,
+            "score": 0.992259770208008
+          }
+        ]
+      },
+      {
+        "name": "dev_sqrt_x",
+        "split": "development",
+        "valid": true,
+        "score": 0.9999999999999996,
+        "nominal_process_fidelity": 0.9999999999999998,
+        "baseline_process_fidelity": 0.4471296193221792,
+        "robustness_score": 0.9815635287545937,
+        "worst_shifted_process_fidelity": 0.9893143875279907,
+        "pulse_rms": 0.9519388730982161,
+        "pulse_max_slew": 0.9590778732512122,
+        "per_variant": [
+          {
+            "variant": "nominal",
+            "process_fidelity": 0.9999999999999998,
+            "baseline_process_fidelity": 0.4471296193221792,
+            "score": 0.9999999999999996
+          },
+          {
+            "variant": "underdrive_plus_detuning",
+            "process_fidelity": 0.9893143875279907,
+            "baseline_process_fidelity": 0.4204090180938628,
+            "score": 0.9815635287545937
+          },
+          {
+            "variant": "overdrive_minus_detuning",
+            "process_fidelity": 0.991507745335502,
+            "baseline_process_fidelity": 0.468914461049673,
+            "score": 0.9840096292561783
+          },
+          {
+            "variant": "positive_detuning",
+            "process_fidelity": 0.9952727744448593,
+            "baseline_process_fidelity": 0.4204090180938628,
+            "score": 0.9918438593720109
+          },
+          {
+            "variant": "negative_detuning",
+            "process_fidelity": 0.9952435784885051,
+            "baseline_process_fidelity": 0.468914461049673,
+            "score": 0.9910439634246191
+          }
+        ]
+      },
+      {
+        "name": "dev_cz",
+        "split": "development",
+        "valid": true,
+        "score": 0.9999999999987155,
+        "nominal_process_fidelity": 0.9999999999990008,
+        "baseline_process_fidelity": 0.222117159499702,
+        "robustness_score": 0.9357184427690658,
+        "worst_shifted_process_fidelity": 0.9506625058018269,
+        "pulse_rms": 2.489363776869092,
+        "pulse_max_slew": 7.333125442446427,
+        "per_variant": [
+          {
+            "variant": "nominal",
+            "process_fidelity": 0.9999999999990008,
+            "baseline_process_fidelity": 0.222117159499702,
+            "score": 0.9999999999987155
+          },
+          {
+            "variant": "underdrive_plus_detuning",
+            "process_fidelity": 0.9506625058018269,
+            "baseline_process_fidelity": 0.23247823600591902,
+            "score": 0.9357184427690658
+          },
+          {
+            "variant": "overdrive_minus_detuning",
+            "process_fidelity": 0.9886614258209158,
+            "baseline_process_fidelity": 0.20067132637275453,
+            "score": 0.9858148787186236
+          },
+          {
+            "variant": "positive_detuning",
+            "process_fidelity": 0.9919945657662491,
+            "baseline_process_fidelity": 0.23247823600591902,
+            "score": 0.9895697625666122
+          },
+          {
+            "variant": "negative_detuning",
+            "process_fidelity": 0.9919507621873827,
+            "baseline_process_fidelity": 0.20067132637275453,
+            "score": 0.9899300024155383
+          }
+        ]
+      }
+    ]
+  },
+  "invariant_checks": [
+    {
+      "name": "dev_hadamard",
+      "unitarity_error": 8.881784197001252e-16,
+      "global_phase_fidelity": 0.9999999999999996
+    },
+    {
+      "name": "heldout_xx",
+      "unitarity_error": 1.3322676295501878e-15,
+      "global_phase_fidelity": 0.9999999999999998
+    },
+    {
+      "name": "dev_cnot",
+      "unitarity_error": 1.7763568394002505e-15,
+      "global_phase_fidelity": 1.0
+    },
+    {
+      "name": "heldout_sqrt_y",
+      "unitarity_error": 0.0,
+      "global_phase_fidelity": 0.9999999999999998
+    },
+    {
+      "name": "dev_sqrt_x",
+      "unitarity_error": 8.881784197001252e-16,
+      "global_phase_fidelity": 0.9999999999999998
+    },
+    {
+      "name": "dev_cz",
+      "unitarity_error": 1.9984014443252818e-15,
+      "global_phase_fidelity": 1.0
+    }
+  ],
+  "nonfinite_rejection": {
+    "combined_score": 0.0,
+    "valid": 0.0,
+    "feasibility_rate": 0.0,
+    "development_score": 0.0,
+    "robustness_score": 0.0,
+    "development_validation_gap": 0.0,
+    "heldout_policy_score": 0.0,
+    "heldout_robustness_score": 0.0,
+    "heldout_feasibility_rate": 0.0,
+    "mean_nominal_process_fidelity": 0.0,
+    "mean_worst_shifted_process_fidelity": 0.0,
+    "per_instance": [
+      {
+        "name": "dev_hadamard",
+        "split": "development",
+        "valid": false,
+        "reason": "ValueError: pulse contains non-finite amplitudes",
+        "score": 0.0,
+        "nominal_process_fidelity": 0.0,
+        "baseline_process_fidelity": 0.0,
+        "robustness_score": 0.0,
+        "worst_shifted_process_fidelity": 0.0
+      },
+      {
+        "name": "heldout_xx",
+        "split": "heldout",
+        "valid": false,
+        "reason": "ValueError: pulse contains non-finite amplitudes",
+        "score": 0.0,
+        "nominal_process_fidelity": 0.0,
+        "baseline_process_fidelity": 0.0,
+        "robustness_score": 0.0,
+        "worst_shifted_process_fidelity": 0.0
+      },
+      {
+        "name": "dev_cnot",
+        "split": "development",
+        "valid": false,
+        "reason": "ValueError: pulse contains non-finite amplitudes",
+        "score": 0.0,
+        "nominal_process_fidelity": 0.0,
+        "baseline_process_fidelity": 0.0,
+        "robustness_score": 0.0,
+        "worst_shifted_process_fidelity": 0.0
+      },
+      {
+        "name": "heldout_sqrt_y",
+        "split": "heldout",
+        "valid": false,
+        "reason": "ValueError: pulse contains non-finite amplitudes",
+        "score": 0.0,
+        "nominal_process_fidelity": 0.0,
+        "baseline_process_fidelity": 0.0,
+        "robustness_score": 0.0,
+        "worst_shifted_process_fidelity": 0.0
+      },
+      {
+        "name": "dev_sqrt_x",
+        "split": "development",
+        "valid": false,
+        "reason": "ValueError: pulse contains non-finite amplitudes",
+        "score": 0.0,
+        "nominal_process_fidelity": 0.0,
+        "baseline_process_fidelity": 0.0,
+        "robustness_score": 0.0,
+        "worst_shifted_process_fidelity": 0.0
+      },
+      {
+        "name": "dev_cz",
+        "split": "development",
+        "valid": false,
+        "reason": "ValueError: pulse contains non-finite amplitudes",
+        "score": 0.0,
+        "nominal_process_fidelity": 0.0,
+        "baseline_process_fidelity": 0.0,
+        "robustness_score": 0.0,
+        "worst_shifted_process_fidelity": 0.0
+      }
+    ]
+  },
+  "out_of_bound_rejection": {
+    "combined_score": 0.0,
+    "valid": 0.0,
+    "feasibility_rate": 0.0,
+    "development_score": 0.0,
+    "robustness_score": 0.0,
+    "development_validation_gap": 0.0,
+    "heldout_policy_score": 0.0,
+    "heldout_robustness_score": 0.0,
+    "heldout_feasibility_rate": 0.0,
+    "mean_nominal_process_fidelity": 0.0,
+    "mean_worst_shifted_process_fidelity": 0.0,
+    "per_instance": [
+      {
+        "name": "dev_hadamard",
+        "split": "development",
+        "valid": false,
+        "reason": "ValueError: pulse amplitude exceeds the public hardware limit",
+        "score": 0.0,
+        "nominal_process_fidelity": 0.0,
+        "baseline_process_fidelity": 0.0,
+        "robustness_score": 0.0,
+        "worst_shifted_process_fidelity": 0.0
+      },
+      {
+        "name": "heldout_xx",
+        "split": "heldout",
+        "valid": false,
+        "reason": "ValueError: pulse amplitude exceeds the public hardware limit",
+        "score": 0.0,
+        "nominal_process_fidelity": 0.0,
+        "baseline_process_fidelity": 0.0,
+        "robustness_score": 0.0,
+        "worst_shifted_process_fidelity": 0.0
+      },
+      {
+        "name": "dev_cnot",
+        "split": "development",
+        "valid": false,
+        "reason": "ValueError: pulse amplitude exceeds the public hardware limit",
+        "score": 0.0,
+        "nominal_process_fidelity": 0.0,
+        "baseline_process_fidelity": 0.0,
+        "robustness_score": 0.0,
+        "worst_shifted_process_fidelity": 0.0
+      },
+      {
+        "name": "heldout_sqrt_y",
+        "split": "heldout",
+        "valid": false,
+        "reason": "ValueError: pulse amplitude exceeds the public hardware limit",
+        "score": 0.0,
+        "nominal_process_fidelity": 0.0,
+        "baseline_process_fidelity": 0.0,
+        "robustness_score": 0.0,
+        "worst_shifted_process_fidelity": 0.0
+      },
+      {
+        "name": "dev_sqrt_x",
+        "split": "development",
+        "valid": false,
+        "reason": "ValueError: pulse amplitude exceeds the public hardware limit",
+        "score": 0.0,
+        "nominal_process_fidelity": 0.0,
+        "baseline_process_fidelity": 0.0,
+        "robustness_score": 0.0,
+        "worst_shifted_process_fidelity": 0.0
+      },
+      {
+        "name": "dev_cz",
+        "split": "development",
+        "valid": false,
+        "reason": "ValueError: pulse amplitude exceeds the public hardware limit",
+        "score": 0.0,
+        "nominal_process_fidelity": 0.0,
+        "baseline_process_fidelity": 0.0,
+        "robustness_score": 0.0,
+        "worst_shifted_process_fidelity": 0.0
+      }
+    ]
+  },
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}

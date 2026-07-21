@@ -72,7 +72,7 @@ tasks:
 
   QuantumControl/GateSynthesis:
     status: candidate
-    reason: v2 has public multi-target Hamiltonians, finite bounded pulses, exact process fidelity and sealed hardware-shift/held-out policy evaluation; awaiting GPT-5.5 headroom calibration, server-held plants and independent review
+    reason: v2 is valid but nominally saturates with GPT-5.5 at budget one; sealed hardware robustness remains 0.957 at budget one and improves to 0.975 in an independent budget-three diagnostic while held-out robustness stays near 0.984; retain for nominal-versus-hardware studies pending paired controls, server-held plants and independent review
     citation_ids:
       - doi:10.1016/j.jmr.2004.11.004
       - doi:10.1140/epjd/e2015-60464-1

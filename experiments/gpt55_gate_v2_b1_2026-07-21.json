@@ -1,0 +1,211 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_SECURE_EVAL",
+  "evidence_scope": "MODEL_PERFORMANCE",
+  "created_at": "2026-07-21T20:35:47.574371+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "236d8cd2eb7034d665f50d977184b3a59c26e507",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/home/azureuser/.local/bin/python3.10",
+      "/home/azureuser/workspace-gzy/zyf/frontier-science/scripts/batch_evolve.py",
+      "--all",
+      "--tasks",
+      "QuantumControl/GateSynthesis",
+      "--algorithms",
+      "greedy_rewrite",
+      "--feedback-modes",
+      "normal",
+      "--seeds",
+      "0",
+      "--budget",
+      "1",
+      "--timeout",
+      "180",
+      "--workdir",
+      "runs/gpt55_gate_v2_b1_20260721",
+      "--output",
+      "experiments/gpt55_gate_v2_b1_2026-07-21.json"
+    ]
+  },
+  "environment": {
+    "python": "3.10.20 (main, Apr  7 2026, 20:44:18) [Clang 22.1.1 ]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.31"
+  },
+  "config": {
+    "tasks": [
+      "QuantumControl/GateSynthesis"
+    ],
+    "algorithms": [
+      "greedy_rewrite"
+    ],
+    "feedback_modes": [
+      "normal"
+    ],
+    "seeds": [
+      0
+    ],
+    "budget": 1,
+    "timeout_s": 180.0,
+    "work_root": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/gpt55_gate_v2_b1_20260721",
+    "llm_condition_sha256": "5b0df4671481f6b3505155bc6c5654a64c4da5591422fb806904e7d0f44fc4d2",
+    "llm": {
+      "wire": "responses",
+      "endpoint_sha256": "b22995a1fcaf8ad713ac37716f006c717313dfdebd357ac02a077a5582650bb6",
+      "model": "gpt-5.5",
+      "max_output_tokens": 16000,
+      "temperature": null,
+      "reasoning_effort": "low",
+      "input_cost_per_million": null,
+      "output_cost_per_million": null
+    }
+  },
+  "runs": [
+    {
+      "task": "QuantumControl/GateSynthesis",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 0,
+      "baseline": 0.0,
+      "best": 0.9998716210528881,
+      "accepted": 1,
+      "evaluated": 2,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/gpt55_gate_v2_b1_20260721/QuantumControl__GateSynthesis/greedy_rewrite/normal/seed_0",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 2,
+        "budget_units": 2,
+        "best_score": 0.9998716210528881,
+        "best_so_far_auc": 0.49993581052644404,
+        "valid_rate": 1.0,
+        "accepted": 1,
+        "wall_seconds": 39.13351761456579,
+        "llm": {
+          "calls": 1,
+          "provider_usage_records": 1,
+          "input_tokens": 871,
+          "output_tokens": 2624,
+          "total_tokens": 3495,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "QuantumControl/GateSynthesis",
+        "seed": 0,
+        "baseline_score": 0.0,
+        "budget": 1,
+        "feedback_mode": "normal",
+        "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace"
+      }
+    }
+  ],
+  "aggregate": {
+    "attempt_count": 1,
+    "superseded_attempts": 0,
+    "successful_runs": 1,
+    "failed_runs": 0,
+    "by_condition": {
+      "QuantumControl/GateSynthesis|greedy_rewrite|normal": {
+        "n": 1,
+        "best_score": {
+          "n": 1,
+          "mean": 0.9998716210528881,
+          "ci95_low": 0.9998716210528881,
+          "ci95_high": 0.9998716210528881
+        },
+        "best_so_far_auc": {
+          "n": 1,
+          "mean": 0.49993581052644404,
+          "ci95_low": 0.49993581052644404,
+          "ci95_high": 0.49993581052644404
+        },
+        "budget_units": {
+          "n": 1,
+          "mean": 2.0,
+          "ci95_low": 2.0,
+          "ci95_high": 2.0
+        },
+        "oracle_calls": {
+          "n": 1,
+          "mean": 2.0,
+          "ci95_low": 2.0,
+          "ci95_high": 2.0
+        },
+        "wall_seconds": {
+          "n": 1,
+          "mean": 39.13351761456579,
+          "ci95_low": 39.13351761456579,
+          "ci95_high": 39.13351761456579
+        },
+        "total_tokens": {
+          "n": 1,
+          "mean": 3495.0,
+          "ci95_low": 3495.0,
+          "ci95_high": 3495.0
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      }
+    },
+    "overall": {
+      "best_score": {
+        "n": 1,
+        "mean": 0.9998716210528881,
+        "ci95_low": 0.9998716210528881,
+        "ci95_high": 0.9998716210528881
+      },
+      "best_so_far_auc": {
+        "n": 1,
+        "mean": 0.49993581052644404,
+        "ci95_low": 0.49993581052644404,
+        "ci95_high": 0.49993581052644404
+      },
+      "budget_units": {
+        "n": 1,
+        "mean": 2.0,
+        "ci95_low": 2.0,
+        "ci95_high": 2.0
+      },
+      "oracle_calls": {
+        "n": 1,
+        "mean": 2.0,
+        "ci95_low": 2.0,
+        "ci95_high": 2.0
+      },
+      "wall_seconds": {
+        "n": 1,
+        "mean": 39.13351761456579,
+        "ci95_low": 39.13351761456579,
+        "ci95_high": 39.13351761456579
+      },
+      "total_tokens": {
+        "n": 1,
+        "mean": 3495.0,
+        "ci95_low": 3495.0,
+        "ci95_high": 3495.0
+      },
+      "estimated_cost_usd": {
+        "n": 0,
+        "mean": null,
+        "ci95_low": null,
+        "ci95_high": null
+      }
+    }
+  },
+  "completed_at": "2026-07-21T20:36:26.713474+00:00",
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}

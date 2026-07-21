@@ -125,9 +125,10 @@ The target is approximately 50 **admissible** open scientific optimization tasks
 4. add missing mechanism, multifidelity, experimental-design and null/misspecification families;
 5. run frontier-model budget-one screening before expensive budget 30/100/300 studies.
 
-After complete original-inventory triage, adding ActiveLawDiscovery and rebuilding Gate-v2, the net expansion gap
-is approximately 41 admissible tasks, not zero: 51 folders minus 35 quarantines leaves only 16
-internally admissible certified or candidate packages. New work should emphasize procedural task families and independent regimes,
+After complete original-inventory triage, adding ActiveLawDiscovery and rebuilding Gate-v2, the
+net expansion gap is approximately 34 admissible tasks: 51 folders minus 35 quarantines leaves
+16 internally admissible certified or candidate packages, while the target is about 50. New
+work should emphasize procedural task families and independent regimes,
 not one-off fixed instances or scientific names around hand-written scalar objectives.
 
 A candidate that saturates across seeds at budget one is a calibration/on-ramp task, not an

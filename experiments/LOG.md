@@ -696,3 +696,13 @@ transfer, RMS and slew. An independent nominal GRAPE witness reaches essentially
 on all six targets; the same nominal pulses score 0.957 development robustness and 0.984 held-out
 robustness, establishing a real but attainable hardware-shift gap. Gate-v2 is re-admitted as a
 candidate pending frontier-model calibration and independent review.
+
+GPT-5.5 reproduces a general GRAPE-style solver at budget one, reaching nominal development
+**0.999872** and held-out policy **0.999992** in 3,495 tokens. Sealed hardware robustness is
+lower at **0.956894/0.983037**; the development gap is driven especially by the high-slew CZ
+pulse, whose worst-shift score is 0.867070. In an independent budget-three run, visible nominal
+score rises from 0.99999956 to numerical unity. Development hardware robustness incidentally
+rises from 0.966531 to 0.974567 as CNOT/CZ pulses change, while held-out robustness remains
+approximately 0.9845. Because robustness was sealed and only one seed was run, this correlated
+improvement is not evidence that score feedback teaches robust control. It does show that a
+Frontier-Eng-style saturated nominal curve can hide a materially lower hardware curve.
