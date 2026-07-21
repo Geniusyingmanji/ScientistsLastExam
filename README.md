@@ -16,11 +16,12 @@ text-question benchmark named *FrontierScience* in
 
 ## Current status
 
-The repository contains **49 task packages in 46 metadata domains**:
+The repository contains **50 task packages in 47 metadata domains**:
 
 - **7 certified core tasks**: Lennard–Jones clusters, spin glass, Poisson solver,
   matrix-multiplication rank, Cap Set, circle packing, and multilayer thin films.
-- **37 candidate tasks** pending scientific certification.
+- **38 candidate tasks** pending scientific certification, including an intervention-based
+  causal-mechanism laboratory whose prediction and mechanism metrics are reported separately.
 - **5 quarantined tasks** whose claimed scientific models are generic cloned objectives.
 
 The default CLI exposes only the certified core. `--all` explicitly shows the full
@@ -32,15 +33,19 @@ and process limits, and a typed JSON RPC boundary. The trusted parent alone impo
 oracle and validates metrics. The current audit reports:
 
 - 15/15 security/regression tests passed.
-- 49/49 inventory baselines were deterministic across two secure runs.
-- 48/49 baselines were valid; `ClimateScience/EnergyBalanceModel` returned a non-finite
+- The last full clean-revision audit covered the preceding 49-package inventory: 49/49
+  baselines were deterministic across two secure runs.
+- In that audit, 48/49 baselines were valid; `ClimateScience/EnergyBalanceModel` returned a non-finite
   oracle metric and was correctly rejected fail-closed.
-- 7 certified / 37 candidate / 5 quarantined in the task-card and citation audit.
+- The newly added 50th package has passed local invariant, callback-budget and deterministic
+  secure-baseline tests; a fresh full 50-package clean-revision audit is still required.
+- Current manifest: 7 certified / 38 candidate / 5 quarantined.
 
 Machine-readable evidence lives in [`experiments/`](experiments/).
 All five dated P0–P2 reports were regenerated from clean source revision `f48b101` and pass
 their declared gates. The two P2 smokes are baseline-only; the repository does not yet contain
-credible nonzero-budget, multi-seed model-performance evidence.
+credible multi-seed model-performance evidence. A clean-revision GPT-5.5 budget-one core pilot
+is recorded as task calibration, not a benchmark leaderboard.
 
 ## Quickstart
 

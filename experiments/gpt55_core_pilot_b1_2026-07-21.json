@@ -1,0 +1,700 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_SECURE_EVAL",
+  "evidence_scope": "MODEL_PERFORMANCE",
+  "created_at": "2026-07-21T17:06:20.724930+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "1c55b846194675bf991cca61fb268041a4c996e4",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/home/azureuser/.local/bin/python3.10",
+      "/home/azureuser/workspace-gzy/zyf/frontier-science/scripts/batch_evolve.py",
+      "--algorithms",
+      "greedy_rewrite",
+      "--feedback-modes",
+      "normal",
+      "--seeds",
+      "0",
+      "--budget",
+      "1",
+      "--timeout",
+      "90",
+      "--workdir",
+      "runs/gpt55_core_pilot_b1_20260721",
+      "--output",
+      "experiments/gpt55_core_pilot_b1_2026-07-21.json"
+    ]
+  },
+  "environment": {
+    "python": "3.10.20 (main, Apr  7 2026, 20:44:18) [Clang 22.1.1 ]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.31"
+  },
+  "config": {
+    "tasks": [
+      "Algorithm/MatrixMultiplicationRank",
+      "Chemistry/LennardJonesCluster",
+      "Mathematics/CapSet",
+      "Optimization/CirclePacking",
+      "Photonics/MultilayerThinFilm",
+      "Physics/SpinGlassGroundState",
+      "ScientificComputing/PoissonSolver2D"
+    ],
+    "algorithms": [
+      "greedy_rewrite"
+    ],
+    "feedback_modes": [
+      "normal"
+    ],
+    "seeds": [
+      0
+    ],
+    "budget": 1,
+    "timeout_s": 90.0,
+    "work_root": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/gpt55_core_pilot_b1_20260721",
+    "llm_condition_sha256": "5b0df4671481f6b3505155bc6c5654a64c4da5591422fb806904e7d0f44fc4d2",
+    "llm": {
+      "wire": "responses",
+      "endpoint_sha256": "b22995a1fcaf8ad713ac37716f006c717313dfdebd357ac02a077a5582650bb6",
+      "model": "gpt-5.5",
+      "max_output_tokens": 16000,
+      "temperature": null,
+      "reasoning_effort": "low",
+      "input_cost_per_million": null,
+      "output_cost_per_million": null
+    }
+  },
+  "runs": [
+    {
+      "task": "Algorithm/MatrixMultiplicationRank",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 0,
+      "baseline": 0.0,
+      "best": 0.6458333333333334,
+      "accepted": 1,
+      "evaluated": 2,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/gpt55_core_pilot_b1_20260721/Algorithm__MatrixMultiplicationRank/greedy_rewrite/normal/seed_0",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 2,
+        "budget_units": 2,
+        "best_score": 0.6458333333333334,
+        "best_so_far_auc": 0.3229166666666667,
+        "valid_rate": 1.0,
+        "accepted": 1,
+        "wall_seconds": 25.909029840491712,
+        "llm": {
+          "calls": 1,
+          "provider_usage_records": 1,
+          "input_tokens": 1336,
+          "output_tokens": 2148,
+          "total_tokens": 3484,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "Algorithm/MatrixMultiplicationRank",
+        "seed": 0,
+        "baseline_score": 0.0,
+        "budget": 1,
+        "feedback_mode": "normal",
+        "feedback_scope": "proposal_prompt_metrics_only; search selection still uses true oracle scores"
+      }
+    },
+    {
+      "task": "Chemistry/LennardJonesCluster",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 0,
+      "baseline": 0.041930443440283925,
+      "best": 0.9816946393977908,
+      "accepted": 1,
+      "evaluated": 2,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/gpt55_core_pilot_b1_20260721/Chemistry__LennardJonesCluster/greedy_rewrite/normal/seed_0",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 2,
+        "budget_units": 2,
+        "best_score": 0.9816946393977908,
+        "best_so_far_auc": 0.5118125414190373,
+        "valid_rate": 1.0,
+        "accepted": 1,
+        "wall_seconds": 43.806797770783305,
+        "llm": {
+          "calls": 1,
+          "provider_usage_records": 1,
+          "input_tokens": 988,
+          "output_tokens": 3209,
+          "total_tokens": 4197,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "Chemistry/LennardJonesCluster",
+        "seed": 0,
+        "baseline_score": 0.041930443440283925,
+        "budget": 1,
+        "feedback_mode": "normal",
+        "feedback_scope": "proposal_prompt_metrics_only; search selection still uses true oracle scores"
+      }
+    },
+    {
+      "task": "Mathematics/CapSet",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 0,
+      "baseline": 0.0,
+      "best": 0.6495726495726496,
+      "accepted": 1,
+      "evaluated": 2,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/gpt55_core_pilot_b1_20260721/Mathematics__CapSet/greedy_rewrite/normal/seed_0",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 2,
+        "budget_units": 2,
+        "best_score": 0.6495726495726496,
+        "best_so_far_auc": 0.3247863247863248,
+        "valid_rate": 1.0,
+        "accepted": 1,
+        "wall_seconds": 52.202686666511,
+        "llm": {
+          "calls": 1,
+          "provider_usage_records": 1,
+          "input_tokens": 928,
+          "output_tokens": 3009,
+          "total_tokens": 3937,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "Mathematics/CapSet",
+        "seed": 0,
+        "baseline_score": 0.0,
+        "budget": 1,
+        "feedback_mode": "normal",
+        "feedback_scope": "proposal_prompt_metrics_only; search selection still uses true oracle scores"
+      }
+    },
+    {
+      "task": "Optimization/CirclePacking",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 0,
+      "baseline": 0.0,
+      "best": 0.0,
+      "accepted": 0,
+      "evaluated": 2,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/gpt55_core_pilot_b1_20260721/Optimization__CirclePacking/greedy_rewrite/normal/seed_0",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 2,
+        "budget_units": 2,
+        "best_score": 0.0,
+        "best_so_far_auc": 0.0,
+        "valid_rate": 0.5,
+        "accepted": 0,
+        "wall_seconds": 138.19042272493243,
+        "llm": {
+          "calls": 1,
+          "provider_usage_records": 1,
+          "input_tokens": 817,
+          "output_tokens": 3396,
+          "total_tokens": 4213,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "Optimization/CirclePacking",
+        "seed": 0,
+        "baseline_score": 0.0,
+        "budget": 1,
+        "feedback_mode": "normal",
+        "feedback_scope": "proposal_prompt_metrics_only; search selection still uses true oracle scores"
+      }
+    },
+    {
+      "task": "Photonics/MultilayerThinFilm",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 0,
+      "baseline": 0.5908038368710128,
+      "best": 0.8904980946848123,
+      "accepted": 1,
+      "evaluated": 2,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/gpt55_core_pilot_b1_20260721/Photonics__MultilayerThinFilm/greedy_rewrite/normal/seed_0",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 2,
+        "budget_units": 2,
+        "best_score": 0.8904980946848123,
+        "best_so_far_auc": 0.7406509657779126,
+        "valid_rate": 1.0,
+        "accepted": 1,
+        "wall_seconds": 39.68445931468159,
+        "llm": {
+          "calls": 1,
+          "provider_usage_records": 1,
+          "input_tokens": 820,
+          "output_tokens": 2546,
+          "total_tokens": 3366,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "Photonics/MultilayerThinFilm",
+        "seed": 0,
+        "baseline_score": 0.5908038368710128,
+        "budget": 1,
+        "feedback_mode": "normal",
+        "feedback_scope": "proposal_prompt_metrics_only; search selection still uses true oracle scores"
+      }
+    },
+    {
+      "task": "Physics/SpinGlassGroundState",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 0,
+      "baseline": 0.19577848761593986,
+      "best": 0.9999999980244798,
+      "accepted": 1,
+      "evaluated": 2,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/gpt55_core_pilot_b1_20260721/Physics__SpinGlassGroundState/greedy_rewrite/normal/seed_0",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 2,
+        "budget_units": 2,
+        "best_score": 0.9999999980244798,
+        "best_so_far_auc": 0.5978892428202098,
+        "valid_rate": 1.0,
+        "accepted": 1,
+        "wall_seconds": 51.11433638911694,
+        "llm": {
+          "calls": 1,
+          "provider_usage_records": 1,
+          "input_tokens": 872,
+          "output_tokens": 2838,
+          "total_tokens": 3710,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "Physics/SpinGlassGroundState",
+        "seed": 0,
+        "baseline_score": 0.19577848761593986,
+        "budget": 1,
+        "feedback_mode": "normal",
+        "feedback_scope": "proposal_prompt_metrics_only; search selection still uses true oracle scores"
+      }
+    },
+    {
+      "task": "ScientificComputing/PoissonSolver2D",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 0,
+      "baseline": 0.0,
+      "best": 1.0,
+      "accepted": 1,
+      "evaluated": 2,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/gpt55_core_pilot_b1_20260721/ScientificComputing__PoissonSolver2D/greedy_rewrite/normal/seed_0",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 2,
+        "budget_units": 2,
+        "best_score": 1.0,
+        "best_so_far_auc": 0.5,
+        "valid_rate": 1.0,
+        "accepted": 1,
+        "wall_seconds": 17.81849905382842,
+        "llm": {
+          "calls": 1,
+          "provider_usage_records": 1,
+          "input_tokens": 1002,
+          "output_tokens": 808,
+          "total_tokens": 1810,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "ScientificComputing/PoissonSolver2D",
+        "seed": 0,
+        "baseline_score": 0.0,
+        "budget": 1,
+        "feedback_mode": "normal",
+        "feedback_scope": "proposal_prompt_metrics_only; search selection still uses true oracle scores"
+      }
+    }
+  ],
+  "aggregate": {
+    "attempt_count": 7,
+    "superseded_attempts": 0,
+    "successful_runs": 7,
+    "failed_runs": 0,
+    "by_condition": {
+      "Algorithm/MatrixMultiplicationRank|greedy_rewrite|normal": {
+        "n": 1,
+        "best_score": {
+          "n": 1,
+          "mean": 0.6458333333333334,
+          "ci95_low": 0.6458333333333334,
+          "ci95_high": 0.6458333333333334
+        },
+        "best_so_far_auc": {
+          "n": 1,
+          "mean": 0.3229166666666667,
+          "ci95_low": 0.3229166666666667,
+          "ci95_high": 0.3229166666666667
+        },
+        "budget_units": {
+          "n": 1,
+          "mean": 2.0,
+          "ci95_low": 2.0,
+          "ci95_high": 2.0
+        },
+        "oracle_calls": {
+          "n": 1,
+          "mean": 2.0,
+          "ci95_low": 2.0,
+          "ci95_high": 2.0
+        },
+        "wall_seconds": {
+          "n": 1,
+          "mean": 25.909029840491712,
+          "ci95_low": 25.909029840491712,
+          "ci95_high": 25.909029840491712
+        },
+        "total_tokens": {
+          "n": 1,
+          "mean": 3484.0,
+          "ci95_low": 3484.0,
+          "ci95_high": 3484.0
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      },
+      "Chemistry/LennardJonesCluster|greedy_rewrite|normal": {
+        "n": 1,
+        "best_score": {
+          "n": 1,
+          "mean": 0.9816946393977908,
+          "ci95_low": 0.9816946393977908,
+          "ci95_high": 0.9816946393977908
+        },
+        "best_so_far_auc": {
+          "n": 1,
+          "mean": 0.5118125414190373,
+          "ci95_low": 0.5118125414190373,
+          "ci95_high": 0.5118125414190373
+        },
+        "budget_units": {
+          "n": 1,
+          "mean": 2.0,
+          "ci95_low": 2.0,
+          "ci95_high": 2.0
+        },
+        "oracle_calls": {
+          "n": 1,
+          "mean": 2.0,
+          "ci95_low": 2.0,
+          "ci95_high": 2.0
+        },
+        "wall_seconds": {
+          "n": 1,
+          "mean": 43.806797770783305,
+          "ci95_low": 43.806797770783305,
+          "ci95_high": 43.806797770783305
+        },
+        "total_tokens": {
+          "n": 1,
+          "mean": 4197.0,
+          "ci95_low": 4197.0,
+          "ci95_high": 4197.0
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      },
+      "Mathematics/CapSet|greedy_rewrite|normal": {
+        "n": 1,
+        "best_score": {
+          "n": 1,
+          "mean": 0.6495726495726496,
+          "ci95_low": 0.6495726495726496,
+          "ci95_high": 0.6495726495726496
+        },
+        "best_so_far_auc": {
+          "n": 1,
+          "mean": 0.3247863247863248,
+          "ci95_low": 0.3247863247863248,
+          "ci95_high": 0.3247863247863248
+        },
+        "budget_units": {
+          "n": 1,
+          "mean": 2.0,
+          "ci95_low": 2.0,
+          "ci95_high": 2.0
+        },
+        "oracle_calls": {
+          "n": 1,
+          "mean": 2.0,
+          "ci95_low": 2.0,
+          "ci95_high": 2.0
+        },
+        "wall_seconds": {
+          "n": 1,
+          "mean": 52.202686666511,
+          "ci95_low": 52.202686666511,
+          "ci95_high": 52.202686666511
+        },
+        "total_tokens": {
+          "n": 1,
+          "mean": 3937.0,
+          "ci95_low": 3937.0,
+          "ci95_high": 3937.0
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      },
+      "Optimization/CirclePacking|greedy_rewrite|normal": {
+        "n": 1,
+        "best_score": {
+          "n": 1,
+          "mean": 0.0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.0
+        },
+        "best_so_far_auc": {
+          "n": 1,
+          "mean": 0.0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.0
+        },
+        "budget_units": {
+          "n": 1,
+          "mean": 2.0,
+          "ci95_low": 2.0,
+          "ci95_high": 2.0
+        },
+        "oracle_calls": {
+          "n": 1,
+          "mean": 2.0,
+          "ci95_low": 2.0,
+          "ci95_high": 2.0
+        },
+        "wall_seconds": {
+          "n": 1,
+          "mean": 138.19042272493243,
+          "ci95_low": 138.19042272493243,
+          "ci95_high": 138.19042272493243
+        },
+        "total_tokens": {
+          "n": 1,
+          "mean": 4213.0,
+          "ci95_low": 4213.0,
+          "ci95_high": 4213.0
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      },
+      "Photonics/MultilayerThinFilm|greedy_rewrite|normal": {
+        "n": 1,
+        "best_score": {
+          "n": 1,
+          "mean": 0.8904980946848123,
+          "ci95_low": 0.8904980946848123,
+          "ci95_high": 0.8904980946848123
+        },
+        "best_so_far_auc": {
+          "n": 1,
+          "mean": 0.7406509657779126,
+          "ci95_low": 0.7406509657779126,
+          "ci95_high": 0.7406509657779126
+        },
+        "budget_units": {
+          "n": 1,
+          "mean": 2.0,
+          "ci95_low": 2.0,
+          "ci95_high": 2.0
+        },
+        "oracle_calls": {
+          "n": 1,
+          "mean": 2.0,
+          "ci95_low": 2.0,
+          "ci95_high": 2.0
+        },
+        "wall_seconds": {
+          "n": 1,
+          "mean": 39.68445931468159,
+          "ci95_low": 39.68445931468159,
+          "ci95_high": 39.68445931468159
+        },
+        "total_tokens": {
+          "n": 1,
+          "mean": 3366.0,
+          "ci95_low": 3366.0,
+          "ci95_high": 3366.0
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      },
+      "Physics/SpinGlassGroundState|greedy_rewrite|normal": {
+        "n": 1,
+        "best_score": {
+          "n": 1,
+          "mean": 0.9999999980244798,
+          "ci95_low": 0.9999999980244798,
+          "ci95_high": 0.9999999980244798
+        },
+        "best_so_far_auc": {
+          "n": 1,
+          "mean": 0.5978892428202098,
+          "ci95_low": 0.5978892428202098,
+          "ci95_high": 0.5978892428202098
+        },
+        "budget_units": {
+          "n": 1,
+          "mean": 2.0,
+          "ci95_low": 2.0,
+          "ci95_high": 2.0
+        },
+        "oracle_calls": {
+          "n": 1,
+          "mean": 2.0,
+          "ci95_low": 2.0,
+          "ci95_high": 2.0
+        },
+        "wall_seconds": {
+          "n": 1,
+          "mean": 51.11433638911694,
+          "ci95_low": 51.11433638911694,
+          "ci95_high": 51.11433638911694
+        },
+        "total_tokens": {
+          "n": 1,
+          "mean": 3710.0,
+          "ci95_low": 3710.0,
+          "ci95_high": 3710.0
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      },
+      "ScientificComputing/PoissonSolver2D|greedy_rewrite|normal": {
+        "n": 1,
+        "best_score": {
+          "n": 1,
+          "mean": 1.0,
+          "ci95_low": 1.0,
+          "ci95_high": 1.0
+        },
+        "best_so_far_auc": {
+          "n": 1,
+          "mean": 0.5,
+          "ci95_low": 0.5,
+          "ci95_high": 0.5
+        },
+        "budget_units": {
+          "n": 1,
+          "mean": 2.0,
+          "ci95_low": 2.0,
+          "ci95_high": 2.0
+        },
+        "oracle_calls": {
+          "n": 1,
+          "mean": 2.0,
+          "ci95_low": 2.0,
+          "ci95_high": 2.0
+        },
+        "wall_seconds": {
+          "n": 1,
+          "mean": 17.81849905382842,
+          "ci95_low": 17.81849905382842,
+          "ci95_high": 17.81849905382842
+        },
+        "total_tokens": {
+          "n": 1,
+          "mean": 1810.0,
+          "ci95_low": 1810.0,
+          "ci95_high": 1810.0
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      }
+    },
+    "overall": {
+      "best_score": {
+        "n": 7,
+        "mean": 0.7382283878590093,
+        "ci95_low": 0.40456863055375103,
+        "ci95_high": 1.0718881451642677
+      },
+      "best_so_far_auc": {
+        "n": 7,
+        "mean": 0.4282936773528787,
+        "ci95_low": 0.20693354828487898,
+        "ci95_high": 0.6496538064208784
+      },
+      "budget_units": {
+        "n": 7,
+        "mean": 2.0,
+        "ci95_low": 2.0,
+        "ci95_high": 2.0
+      },
+      "oracle_calls": {
+        "n": 7,
+        "mean": 2.0,
+        "ci95_low": 2.0,
+        "ci95_high": 2.0
+      },
+      "wall_seconds": {
+        "n": 7,
+        "mean": 52.67517596576363,
+        "ci95_low": 15.884169036020168,
+        "ci95_high": 89.46618289550709
+      },
+      "total_tokens": {
+        "n": 7,
+        "mean": 3531.0,
+        "ci95_low": 2766.753599926107,
+        "ci95_high": 4295.246400073893
+      },
+      "estimated_cost_usd": {
+        "n": 0,
+        "mean": null,
+        "ci95_low": null,
+        "ci95_high": null
+      }
+    }
+  },
+  "completed_at": "2026-07-21T17:12:29.485581+00:00",
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}

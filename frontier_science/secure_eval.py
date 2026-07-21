@@ -166,6 +166,10 @@ class CandidateProxy:
                 raise TimeoutError("candidate timeout")
             chunk = os.read(fd, 65536)
             if not chunk:
+                returncode = self.proc.poll()
+                if returncode == -getattr(signal, "SIGXCPU", 24):
+                    self.close(kill=True)
+                    raise TimeoutError("candidate timeout (CPU limit)")
                 raise CandidateError("candidate worker exited: %s" % self._stderr())
             self._stdout_buffer += chunk
             if len(self._stdout_buffer) > 100 * 1024 * 1024:
@@ -207,6 +211,11 @@ class CandidateProxy:
         return decode(value)
 
     def _invoke(self, target: str, *args: Any, **kwargs: Any) -> Any:
+        # Some multi-instance oracles catch a candidate exception so they can emit
+        # per-instance diagnostics. Preserve the first worker failure: calling a dead
+        # worker again must not replace a timeout with BrokenPipe/closed-file noise.
+        if self.failure is not None:
+            raise self.failure
         callbacks: dict[str, Any] = {}
 
         def encode_call(value: Any) -> Any:
@@ -257,13 +266,15 @@ class CandidateProxy:
                 raise CandidateError(str(response.get("error", "candidate call failed")))
             return self._decode_result(response.get("result"))
         except TimeoutError as exc:
-            self.failure = exc
+            if self.failure is None:
+                self.failure = exc
             raise
         except (BrokenPipeError, OSError, json.JSONDecodeError, CandidateError,
                 ValueError, TypeError) as exc:
             error = exc if isinstance(exc, CandidateError) else CandidateError(str(exc))
-            self.failure = error
-            raise error
+            if self.failure is None:
+                self.failure = error
+            raise self.failure
 
     def close(self, kill: bool = False) -> None:
         if not hasattr(self, "proc"):

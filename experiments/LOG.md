@@ -301,3 +301,64 @@ All five dated reports referenced above were regenerated from clean source revis
 `execution_passed=true`, `trusted_evidence=true`, and `passed=true`. Result JSON and narrative
 notes are outside the provenance source-dirty scope. This closes the local P0–P2 infrastructure
 record, but it does not create nonzero-budget model-performance evidence.
+
+---
+
+## 2026-07-21 — keyless GPT-5.5 path restored and clean budget-one core pilot
+
+The stale local Azure proxy on port 9876 returned HTTP 403 because its legacy resources had
+public access disabled. Without disrupting that shared process, this project switched its
+git-ignored local configuration to the existing keyless managed-identity failover proxy on port
+9877 (SCUS/SWC). `python3.10 -m frontier_science smoke` returned `FS_SMOKE_OK`; endpoint details
+remain excluded from version control.
+
+`gpt55_core_pilot_b1_2026-07-21.json` is the first nonzero-budget schema-v2 report after the
+security/provenance hardening. It was run from clean source revision `1c55b84` with GPT-5.5,
+greedy full-file rewrite, one seed and one proposal per certified task. All seven conditions
+completed with trusted secure evaluation. This is calibration evidence, not a multi-seed model
+comparison.
+
+| Task | Baseline | Best after one proposal | Valid proposal? | Tokens |
+|---|---:|---:|---:|---:|
+| Matrix multiplication rank | 0.0000 | 0.6458 | yes | 3,484 |
+| Lennard-Jones cluster | 0.0419 | 0.9817 | yes | 4,197 |
+| Cap Set | 0.0000 | 0.6496 | yes | 3,937 |
+| Circle packing | 0.0000 | 0.0000 | no | 4,213 |
+| Multilayer thin film | 0.5908 | 0.8905 | yes | 3,366 |
+| Spin-glass ground state | 0.1958 | 1.0000 | yes | 3,710 |
+| Poisson solver | 0.0000 | 1.0000 | yes | 1,810 |
+
+The accepted programs use recognizable domain methods: recursive Strassen, basin-hopping/local
+relaxation, randomized cap construction, transfer-matrix-guided coating optimization, tabu
+search and a sine pseudospectral solver. The Circle Packing proposal attempted a legitimate
+relaxation search but exhausted its candidate-evaluation time. The recorded
+`I/O operation on closed file` was a diagnostic masking bug: after the oracle caught the first
+timeout and moved to another instance, a second call to the failed worker replaced the original
+exception. The secure driver now preserves the first failure so future reports classify it as a
+timeout.
+
+### Pilot conclusion
+
+The pipeline now works end to end, including model usage accounting, immutable lineage and
+trusted oracle isolation. The task calibration is not yet adequate for the planned budget
+30/100/300 study: Poisson and Spin Glass saturate in one proposal, Lennard-Jones nearly does,
+and public small-instance constructions create recall/contamination risk. Strong models first
+map prompts to known scientific algorithms; fixed instances and a single visible proxy therefore
+measure algorithm reproduction more than long-horizon discovery. Hidden procedural instances,
+distribution shifts, high-fidelity validation and mechanism-specific tasks must be added before
+large-budget claims.
+
+## 2026-07-21 — 50th package: intervention-based SCM mechanism recovery
+
+Added `CausalDiscovery/InterventionalSCM` as a **candidate**, bringing the inventory to 50
+packages without changing the seven-task certified core. It exposes budgeted observational and
+interventional callbacks over hidden permuted linear SCMs, including a null world. Directed graph
+and coefficient recovery define the optimization target; sealed intervention prediction,
+experimental cost and correct null abstention are reported separately.
+
+The conservative baseline scores normalized 0.0 (raw mechanism 1/6 by correctly abstaining only
+on the null world) and is deterministic through the Bubblewrap callback boundary. A standard
+paired-intervention identifiability calibration, which does not read hidden parameters, reaches
+0.978 raw mechanism and 0.931 sealed-intervention prediction within the exact 28-unit laboratory
+budget. The package remains uncertified pending clean full-inventory audit, GPT-5.5 calibration,
+independent evaluator/domain review and a server-held split.

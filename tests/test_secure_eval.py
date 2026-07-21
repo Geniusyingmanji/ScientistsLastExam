@@ -92,6 +92,20 @@ class SecureEvaluationTests(unittest.TestCase):
         self.assert_rejected(result)
         self.assertEqual(result.get("timeout"), 1.0)
 
+    def test_caught_multi_instance_timeout_is_not_masked_by_closed_worker(self):
+        spec = load_task_spec(BENCHMARKS / "Optimization" / "CirclePacking")
+        with tempfile.TemporaryDirectory() as tmp:
+            candidate = Path(tmp) / "candidate.py"
+            candidate.write_text(textwrap.dedent("""
+                def pack_circles(n):
+                    while True:
+                        pass
+            """), encoding="utf-8")
+            result = evaluate_candidate(spec, candidate, timeout_s=0.5)
+        self.assert_rejected(result)
+        self.assertEqual(result.get("timeout"), 1.0)
+        self.assertNotIn("closed file", result["error_message"])
+
     def test_trusted_callback_is_also_wall_time_supervised(self):
         spec = load_task_spec(BENCHMARKS / "MaterialsScience" / "AlloyHardnessOptimization")
         with tempfile.TemporaryDirectory() as tmp:

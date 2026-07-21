@@ -48,6 +48,12 @@ tasks:
       - doi:10.1201/9781420073034
       - doi:10.1364/AO.35.000644
 
+  CausalDiscovery/InterventionalSCM:
+    status: candidate
+    reason: mechanism-recovery task awaiting independent domain review and nonzero-budget calibration
+    citation_ids:
+      - doi:10.7551/mitpress/11283.001.0001
+
   CrystalGrowth/CzochralskiProcess:
     status: quarantined
     reason: claimed Stefan model is a generic eight-variable trigonometric objective

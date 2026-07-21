@@ -1,11 +1,14 @@
 from __future__ import annotations
 
 import importlib.util
+import tempfile
 import unittest
+from pathlib import Path
 
 import numpy as np
 
 from frontier_science.certification import certification_status, load_certification
+from frontier_science.evaluate import evaluate_candidate
 from frontier_science.registry import find_task, list_tasks
 
 
@@ -23,7 +26,7 @@ class CertificationPolicyTests(unittest.TestCase):
         tasks = list_tasks()
         self.assertEqual(len(tasks), 7)
         self.assertTrue(all(certification_status(s.task_id) == "certified" for s in tasks))
-        self.assertEqual(len(list_tasks(None)), 49)
+        self.assertEqual(len(list_tasks(None)), 50)
 
     def test_quarantined_clone_group_is_not_default_visible(self):
         default_ids = {s.task_id for s in list_tasks()}
@@ -102,6 +105,51 @@ class ScientificInvariantTests(unittest.TestCase):
         oracle = load_oracle("Photonics/MultilayerThinFilm")
         spectrum = oracle._reflectance_spectrum([0], [0.0])
         self.assertTrue(np.allclose(spectrum, oracle._R_BARE, atol=1e-12))
+
+    def test_interventional_scm_is_acyclic_and_exact_model_scores_one(self):
+        oracle = load_oracle("CausalDiscovery/InterventionalSCM")
+        for index, seed in enumerate(oracle.WORLD_SEEDS):
+            coefficients, order, noise = oracle._make_world(
+                seed, null=index == oracle.NULL_WORLD
+            )
+            ordered = coefficients[np.ix_(order, order)]
+            self.assertTrue(np.allclose(np.tril(ordered), 0.0))
+            adjacency = np.abs(coefficients) > 1e-12
+            edge_f1, coefficient_score, mechanism = oracle._mechanism_metrics(
+                coefficients, adjacency, coefficients
+            )
+            self.assertAlmostEqual(edge_f1, 1.0)
+            self.assertAlmostEqual(coefficient_score, 1.0)
+            self.assertAlmostEqual(mechanism, 1.0)
+            self.assertAlmostEqual(
+                oracle._prediction_score(coefficients, coefficients), 1.0
+            )
+            samples = oracle._simulate(
+                coefficients, order, noise, 16, seed, intervention=(3, 1.25)
+            )
+            self.assertTrue(np.all(samples[:, 3] == 1.25))
+
+    def test_interventional_scm_budget_violation_fails_closed(self):
+        spec = find_task("CausalDiscovery/InterventionalSCM", include_uncertified=True)
+        source = """
+import numpy as np
+def discover_mechanism(n, observe, intervene, budget):
+    try:
+        for _ in range(budget + 1):
+            observe(32)
+    except Exception:
+        pass
+    return {"adjacency": np.zeros((n,n)), "coefficients": np.zeros((n,n)),
+            "abstain": True, "confidence": 0.0}
+"""
+        with tempfile.TemporaryDirectory() as tmp:
+            candidate = Path(tmp) / "candidate.py"
+            candidate.write_text(source, encoding="utf-8")
+            metrics = evaluate_candidate(spec, candidate, timeout_s=20)
+        self.assertEqual(metrics["valid"], 0.0)
+        self.assertEqual(metrics["combined_score"], 0.0)
+        self.assertTrue(all(not row["valid"] for row in metrics["per_world"]))
+        self.assertTrue(all("budget exceeded" in row["reason"] for row in metrics["per_world"]))
 
 
 if __name__ == "__main__":

@@ -1,0 +1,5 @@
+1) Only edit solution.py. Keep the discover_mechanism() signature.
+2) Experimental callbacks are budgeted; exceeding budget invalidates the world.
+3) numpy/scipy/stdlib only. CPU, seconds. No network or child processes.
+4) Do not read verification/ or frontier_eval/.
+

@@ -1,0 +1,13 @@
+domain: CausalDiscovery
+task: InterventionalSCM
+difficulty: hard
+tier: T2
+oracle_type: physical_sim
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 15
+science_metric: directed_graph_and_structural_coefficient_recovery
+reference_baseline: calibrated_null_mechanism_abstention
+reference_sota: exact_hidden_SCM_recovery_and_sealed_intervention_prediction
+citation: "Peters, Janzing & Schoelkopf, Elements of Causal Inference, DOI 10.7551/mitpress/11283.001.0001"
+

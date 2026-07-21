@@ -1,0 +1,23 @@
+schema_version: 1
+scientific_question: Recover directed causal structure and structural coefficients by choosing budgeted observations and interventions.
+artifact: A directed adjacency matrix, structural coefficient matrix, confidence, and optional null-mechanism abstention.
+oracle:
+  model: procedurally generated linear-Gaussian acyclic structural causal models with hidden variable order and a null world
+  feasibility: fixed sample-budget callbacks, finite matrices of shape seven by seven, no self edges
+  deterministic: true
+normalization:
+  baseline: always abstain and submit the null mechanism
+  reference: exact hidden graph and structural coefficients
+  score: clipped improvement in mechanism recovery over calibrated no-claim abstention
+citations:
+  - id: doi:10.7551/mitpress/11283.001.0001
+    title: Elements of Causal Inference
+invariants:
+  - generated structural graphs are acyclic under a hidden permutation
+  - interventions clamp their target and remove its incoming mechanisms
+  - exact coefficients attain perfect mechanism and sealed-intervention scores
+known_shortcuts: Linear-Gaussian worlds are deliberately controlled and do not establish nonlinear, latent-confounded, or real-laboratory discovery. Public evaluator seeds require a future server-held split for contamination-resistant claims.
+review:
+  domain: pending_external
+  evaluator_security: automated_invariant_sandbox_and_callback_tests
+
