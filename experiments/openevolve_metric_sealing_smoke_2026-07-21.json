@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_SECURE_EVAL",
+  "evidence_scope": "UPSTREAM_BASELINE_SMOKE_ONLY",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "aff026ddb50cd350acad24e5a2741b9a6a6cbcf0",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/home/azureuser/workspace-gzy/zyf/frontier-science/.venvs/openevolve/bin/python",
+      "scripts/smoke_upstream_backends.py",
+      "--backend",
+      "openevolve",
+      "--all",
+      "--task",
+      "ControlTheory/InvertedPendulumSwingUp",
+      "--expect-sealed-metric",
+      "robustness_score",
+      "--timeout",
+      "60",
+      "--output",
+      "experiments/openevolve_metric_sealing_smoke_2026-07-21.json"
+    ]
+  },
+  "created_at": "2026-07-21T19:13:06.244504+00:00",
+  "python": "3.10.20 (main, Apr  7 2026, 20:44:18) [Clang 22.1.1 ]",
+  "task": "ControlTheory/InvertedPendulumSwingUp",
+  "backends": [
+    {
+      "backend": "openevolve",
+      "status": "passed",
+      "evaluated": 1,
+      "installed_distribution": {
+        "package": "openevolve",
+        "version": "0.2.26"
+      },
+      "baseline_score": 2.1076699100262634e-05,
+      "trajectory_schema_version": 2,
+      "budget_units": 1,
+      "oracle_calls": 1,
+      "best_so_far_auc": 2.1076699100262634e-05,
+      "upstream": {
+        "name": "openevolve",
+        "version": "0.2.26",
+        "commit": "ad9c9c1769e55a776549715b5b48e13a84a93a30"
+      },
+      "expected_sealed_metric": "robustness_score",
+      "sealed_metric_retained_in_trusted_trace": true,
+      "sealed_metric_absent_from_search_state": true
+    }
+  ],
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}

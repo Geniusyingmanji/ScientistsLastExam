@@ -566,3 +566,12 @@ only after upstream search completes. Unknown future fields are sealed by defaul
 through new task-specific names. Sidecar determinism, public/full consistency, checkpoint
 redaction and prompt visibility are covered by the 65-test suite. Official-backend integration
 reproduction is the remaining acceptance check.
+
+That acceptance check is now complete at baseline-integration scope. From clean revision
+`aff026d`, OpenEvolve 0.2.26, TreeQuest 0.3.2 and ShinkaEvolve commit `b67a0732` each evaluated
+Pendulum-v2 through the trusted sandbox. In every backend, `robustness_score` is present in the
+unified trusted trajectory and absent from upstream-owned search state/database/checkpoints.
+`upstream_metric_sealing_audit_2026-07-21.json` validates the common revision, pinned
+distributions/commits, trajectory accounting and no-leak assertions with no issues; it sets
+`execution_passed=true`, `trusted_evidence=true` and `passed=true`. This is still baseline-only
+integration evidence, not a nonzero-budget framework comparison.
