@@ -20,9 +20,9 @@ The repository contains **50 task packages in 47 metadata domains**:
 
 - **7 certified core tasks**: Lennard–Jones clusters, spin glass, Poisson solver,
   matrix-multiplication rank, Cap Set, circle packing, and multilayer thin films.
-- **31 candidate tasks** pending scientific certification, including an intervention-based
+- **24 candidate tasks** pending scientific certification, including an intervention-based
   causal-mechanism laboratory whose prediction and mechanism metrics are reported separately.
-- **12 quarantined tasks** with reproduced scientific-oracle, identifiability, provenance or
+- **19 quarantined tasks** with reproduced scientific-oracle, identifiability, provenance or
   shortcut defects; these remain inventory packages but are not admissible benchmark tasks.
 
 The default CLI exposes only the certified core. `--all` explicitly shows the full
@@ -33,14 +33,14 @@ All candidate code runs in a networkless Bubblewrap sandbox with read-only mount
 and process limits, and a typed JSON RPC boundary. The trusted parent alone imports the
 oracle and validates metrics. The current audit reports:
 
-- 59/59 unit, security, protocol and scientific-invariant tests passed.
+- 66/66 unit, security, protocol and scientific-invariant tests passed.
 - The current clean-revision audit covers all 50 packages: 50/50 baselines were deterministic
   across two secure runs.
 - 49/50 baselines were valid; `ClimateScience/EnergyBalanceModel` returned a non-finite
   oracle metric and was correctly rejected fail-closed.
 - All 50 packages failed closed and there were no infrastructure failures. The newly added
   mechanism task passed invariant, callback-budget and deterministic secure-baseline tests.
-- Current manifest: 7 certified / 31 candidate / 12 quarantined.
+- Current manifest: 7 certified / 24 candidate / 19 quarantined.
 
 Machine-readable evidence lives in [`experiments/`](experiments/).
 The original five dated P0–P2 reports were regenerated from clean source revision `f48b101`;
@@ -127,6 +127,7 @@ current status.
 ```bash
 python scripts/run_security_audit.py --output /tmp/security.json
 python scripts/audit_tasks.py --output /tmp/certification.json
+python scripts/audit_inverse_candidates.py --output /tmp/inverse-admission.json
 python scripts/run_secure_baseline.py --repeats 2 --output /tmp/baselines.json
 python -m unittest discover -v -s tests
 # From each compatible optional-backend venv:

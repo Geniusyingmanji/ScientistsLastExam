@@ -575,3 +575,18 @@ unified trusted trajectory and absent from upstream-owned search state/database/
 distributions/commits, trajectory accounting and no-leak assertions with no issues; it sets
 `execution_passed=true`, `trusted_evidence=true` and `passed=true`. This is still baseline-only
 integration evidence, not a nonzero-budget framework comparison.
+
+## 2026-07-21 — inverse/discovery candidate admission audit
+
+Seven of eight inverse-track candidates have reproducible scientific-validity failures and are
+quarantined before model screening. Radiative retrieval maps 10 observations to 20 unknowns
+while selecting on one hidden fixed-profile RMSE. The true chemical-kinetics parameters and an
+infinite-rate mechanism differ in score by only `3.2e-12`. Gravity signal RMS is only 0.033 of
+the declared noise and both instances share one truth. Ocean current signal displacement is
+0.57 m versus 1007 m noise, so even the true field scores `1.97e-5`. The demographic SFS
+surrogate has rank-two sensitivity for five parameters and exactly ignores three. The RANS
+surrogate has rank three for five constants and uses analytic pseudo-DNS. The FWI entrypoint
+receives no observed waveform or experiment callback and can only guess one fixed hidden model.
+NMR fitting remains a candidate for procedural multi-spectrum rebuilding. These results sharpen
+the common conclusion: an inverse-problem narrative does not create a scientific-discovery task
+unless observations identify the claim and the interface actually supplies evidence.

@@ -102,6 +102,28 @@ tasks:
     status: quarantined
     reason: objective is monotone in unconstrained area and the implemented multipass formula is pass-count invariant
 
+  AtmosphericScience/RadiativeTransferFit:
+    status: quarantined
+    reason: ten radiances cannot identify twenty temperatures, while selection rewards hidden fixed-profile RMSE instead of evidence-supported retrieval
+  ChemicalKinetics/ReactionMechanismFitting:
+    status: quarantined
+    reason: sampled reactions are effectively complete; true Arrhenius parameters and an infinite-rate mechanism receive the same score
+  Geophysics/GravityInversion:
+    status: quarantined
+    reason: synthetic gravity signal RMS is only 0.033 times the declared noise and both instances reuse one hidden body geometry
+  Oceanography/OceanCurrentInversion:
+    status: quarantined
+    reason: true-current displacement is sub-metre while injected trajectory noise is about 1 km, so even the true field scores approximately zero
+  PopulationGenetics/DemographicSFS:
+    status: quarantined
+    reason: five-parameter surrogate has rank-two local sensitivity and radically different demographic parameters produce identical SFS
+  Turbulence/RANSCalibration:
+    status: quarantined
+    reason: claimed DNS is an analytic profile fit and the algebraic surrogate identifies only three combinations of five constants
+  WavePropagation/SeismicWaveInversion:
+    status: quarantined
+    reason: entrypoint receives no observed waveforms or experiment callback and can only guess one fixed hidden velocity model
+
   CrystalGrowth/CzochralskiProcess:
     status: quarantined
     reason: claimed Stefan model is a generic eight-variable trigonometric objective

@@ -51,15 +51,20 @@ meaning.
   other six remain quarantined after reproducible adversarial review: RIR
   length failure, unstable low-thrust propagation, centerline-spoofable cavity scoring,
   pseudo-data alloy hardness, scalar-FFT pseudo-RCWA and a degenerate heat-exchanger objective.
-- **25 candidates with incomplete scientific metadata.** These require citation, baseline and
-  best-known anchors before detailed admission review.
-- **12 quarantined packages.** Five generic-objective clones must be replaced with real domain
+- **18 candidates remain after the inverse-track audit.** Most still require citations,
+  normalization anchors and shortcut review. NMR peak fitting remains a promising inverse
+  candidate but needs procedural spectra, baseline/lineshape shifts, matched-peak mechanism
+  scoring and held-out reconstruction.
+- **19 quarantined packages.** Five generic-objective clones must be replaced with real domain
   oracles; metadata completion alone cannot rehabilitate them. The sixth,
   `ClimateScience/EnergyBalanceModel`, uses an unstable explicit diffusion iteration, an
   unverified ERA5 attribution and a structurally underdetermined seven-parameter fit to one
   steady profile. It requires replacement with documented multi-regime data, not a numerical
-  patch. Six additional wave-2 tasks remain blocked by the concrete oracle failures listed
-  above; none may contribute model-performance evidence until rebuilt and re-admitted.
+  patch. Six wave-2 and seven inverse-track tasks remain blocked by concrete oracle failures;
+  none may contribute model-performance evidence until rebuilt and re-admitted. The inverse
+  failures include rank-deficient hidden-truth retrieval, saturated reaction data, gravity and
+  ocean signal/noise inversions, a rank-two demographic surrogate, underidentified pseudo-DNS
+  RANS fitting and an FWI interface with no observations.
 
 ## Priority review findings
 
