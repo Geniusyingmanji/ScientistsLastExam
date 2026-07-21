@@ -1,0 +1,342 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_SECURE_EVAL",
+  "evidence_scope": "MODEL_PERFORMANCE",
+  "created_at": "2026-07-21T23:35:00.305164+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "8c1373a97698ea198a15d87f203dc39e3be90a4d",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/home/azureuser/.local/bin/python3.10",
+      "/home/azureuser/workspace-gzy/zyf/frontier-science/scripts/batch_evolve.py",
+      "--all",
+      "--tasks",
+      "Electromagnetics/AntennaArraySynthesis",
+      "--algorithms",
+      "greedy_rewrite",
+      "--feedback-modes",
+      "normal",
+      "--seeds",
+      "1",
+      "--budget",
+      "3",
+      "--timeout",
+      "240",
+      "--llm-config",
+      "frontier_science/conf/llm/local.yaml",
+      "--workdir",
+      "runs/gpt55_antenna_v2_b3_20260721",
+      "--output",
+      "experiments/gpt55_antenna_v2_b3_2026-07-21.json"
+    ]
+  },
+  "environment": {
+    "python": "3.10.20 (main, Apr  7 2026, 20:44:18) [Clang 22.1.1 ]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.31"
+  },
+  "config": {
+    "tasks": [
+      "Electromagnetics/AntennaArraySynthesis"
+    ],
+    "algorithms": [
+      "greedy_rewrite"
+    ],
+    "feedback_modes": [
+      "normal"
+    ],
+    "condition_order": "as_listed_for_even_seeds_reversed_for_odd_seeds",
+    "seeds": [
+      1
+    ],
+    "budget": 3,
+    "timeout_s": 240.0,
+    "work_root": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/gpt55_antenna_v2_b3_20260721",
+    "llm_condition_sha256": "5b0df4671481f6b3505155bc6c5654a64c4da5591422fb806904e7d0f44fc4d2",
+    "llm": {
+      "wire": "responses",
+      "endpoint_sha256": "b22995a1fcaf8ad713ac37716f006c717313dfdebd357ac02a077a5582650bb6",
+      "model": "gpt-5.5",
+      "max_output_tokens": 16000,
+      "temperature": null,
+      "reasoning_effort": "low",
+      "input_cost_per_million": null,
+      "output_cost_per_million": null,
+      "server_side_seed_control": false
+    }
+  },
+  "runs": [
+    {
+      "task": "Electromagnetics/AntennaArraySynthesis",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 1,
+      "baseline": 0.0,
+      "best": 1.0,
+      "accepted": 3,
+      "evaluated": 4,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/gpt55_antenna_v2_b3_20260721/Electromagnetics__AntennaArraySynthesis/greedy_rewrite/normal/seed_1",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 4,
+        "budget_units": 4,
+        "best_score": 1.0,
+        "best_so_far_auc": 0.7096092706332029,
+        "valid_rate": 1.0,
+        "accepted": 3,
+        "wall_seconds": 197.34394771791995,
+        "llm": {
+          "calls": 3,
+          "provider_usage_records": 3,
+          "input_tokens": 8953,
+          "output_tokens": 10492,
+          "total_tokens": 19445,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "Electromagnetics/AntennaArraySynthesis",
+        "seed": 1,
+        "baseline_score": 0.0,
+        "budget": 3,
+        "feedback_mode": "normal",
+        "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "online_incumbent"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 1,
+        "trajectory_sha256": "3a25128afc21ce3c6098dd2d20b3ddefb2a504a95f5920837eee16140b5d3fd2",
+        "events": [
+          {
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "0e396fdd9f33a2ca226860507f0a35fee6fc43c52f63033292aa8598e81f3003",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.0,
+              "robustness_score": 0.0,
+              "development_validation_gap": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "heldout_feasibility_rate": 1.0,
+              "mean_worst_shifted_quality_db": 7.319405232263453,
+              "mean_shifted_target_gain_feasibility_rate": 1.0,
+              "raw_score": 0.0
+            },
+            "algorithm_metadata": {},
+            "error": null
+          },
+          {
+            "step": 1,
+            "oracle_calls": 2,
+            "budget_units": 2,
+            "score": 0.845170035391249,
+            "best_score": 0.845170035391249,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "47fbf0e23af602d6d64b8ebcad6ab34dc2200bf8ea70d36fd43a1db99b148956",
+            "parent_sha256": "0e396fdd9f33a2ca226860507f0a35fee6fc43c52f63033292aa8598e81f3003",
+            "metrics": {
+              "combined_score": 0.845170035391249,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.845170035391249,
+              "robustness_score": 0.7048233219859321,
+              "development_validation_gap": 0.1403467134053169,
+              "heldout_policy_score": 0.9079188024368512,
+              "heldout_robustness_score": 0.5499153249651714,
+              "heldout_feasibility_rate": 1.0,
+              "mean_worst_shifted_quality_db": 10.98239695311973,
+              "mean_shifted_target_gain_feasibility_rate": 1.0,
+              "raw_score": 0.845170035391249
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 1
+            },
+            "error": null
+          },
+          {
+            "step": 2,
+            "oracle_calls": 3,
+            "budget_units": 3,
+            "score": 0.9932670471415624,
+            "best_score": 0.9932670471415624,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "3ac82af09589613eb6a9d9593fbc0d2daba730203874d471fce2936738603905",
+            "parent_sha256": "47fbf0e23af602d6d64b8ebcad6ab34dc2200bf8ea70d36fd43a1db99b148956",
+            "metrics": {
+              "combined_score": 0.9932670471415624,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.9932670471415624,
+              "robustness_score": 0.6355114369146961,
+              "development_validation_gap": 0.3577556102268663,
+              "heldout_policy_score": 0.9983885386082243,
+              "heldout_robustness_score": 0.493204175253512,
+              "heldout_feasibility_rate": 1.0,
+              "mean_worst_shifted_quality_db": 10.62128801374778,
+              "mean_shifted_target_gain_feasibility_rate": 1.0,
+              "raw_score": 0.9932670471415624
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 2
+            },
+            "error": null
+          },
+          {
+            "step": 3,
+            "oracle_calls": 4,
+            "budget_units": 4,
+            "score": 1.0,
+            "best_score": 1.0,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "7e029209642ddaa2e912d5dde5495448242be4a5fd0a5ba6a7f6a52968292132",
+            "parent_sha256": "3ac82af09589613eb6a9d9593fbc0d2daba730203874d471fce2936738603905",
+            "metrics": {
+              "combined_score": 1.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 1.0,
+              "robustness_score": 0.5763477069318705,
+              "development_validation_gap": 0.42365229306812946,
+              "heldout_policy_score": 0.9987172622022304,
+              "heldout_robustness_score": 0.5347751145630723,
+              "heldout_feasibility_rate": 1.0,
+              "mean_worst_shifted_quality_db": 10.350562122106533,
+              "mean_shifted_target_gain_feasibility_rate": 1.0,
+              "raw_score": 1.0
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 3
+            },
+            "error": null
+          }
+        ]
+      }
+    }
+  ],
+  "aggregate": {
+    "attempt_count": 1,
+    "superseded_attempts": 0,
+    "successful_runs": 1,
+    "failed_runs": 0,
+    "by_condition": {
+      "Electromagnetics/AntennaArraySynthesis|greedy_rewrite|normal": {
+        "n": 1,
+        "best_score": {
+          "n": 1,
+          "mean": 1.0,
+          "ci95_low": 1.0,
+          "ci95_high": 1.0
+        },
+        "best_so_far_auc": {
+          "n": 1,
+          "mean": 0.7096092706332029,
+          "ci95_low": 0.7096092706332029,
+          "ci95_high": 0.7096092706332029
+        },
+        "budget_units": {
+          "n": 1,
+          "mean": 4.0,
+          "ci95_low": 4.0,
+          "ci95_high": 4.0
+        },
+        "oracle_calls": {
+          "n": 1,
+          "mean": 4.0,
+          "ci95_low": 4.0,
+          "ci95_high": 4.0
+        },
+        "wall_seconds": {
+          "n": 1,
+          "mean": 197.34394771791995,
+          "ci95_low": 197.34394771791995,
+          "ci95_high": 197.34394771791995
+        },
+        "total_tokens": {
+          "n": 1,
+          "mean": 19445.0,
+          "ci95_low": 19445.0,
+          "ci95_high": 19445.0
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      }
+    },
+    "overall": {
+      "best_score": {
+        "n": 1,
+        "mean": 1.0,
+        "ci95_low": 1.0,
+        "ci95_high": 1.0
+      },
+      "best_so_far_auc": {
+        "n": 1,
+        "mean": 0.7096092706332029,
+        "ci95_low": 0.7096092706332029,
+        "ci95_high": 0.7096092706332029
+      },
+      "budget_units": {
+        "n": 1,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "oracle_calls": {
+        "n": 1,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "wall_seconds": {
+        "n": 1,
+        "mean": 197.34394771791995,
+        "ci95_low": 197.34394771791995,
+        "ci95_high": 197.34394771791995
+      },
+      "total_tokens": {
+        "n": 1,
+        "mean": 19445.0,
+        "ci95_low": 19445.0,
+        "ci95_high": 19445.0
+      },
+      "estimated_cost_usd": {
+        "n": 0,
+        "mean": null,
+        "ci95_low": null,
+        "ci95_high": null
+      }
+    }
+  },
+  "completed_at": "2026-07-21T23:38:17.661697+00:00",
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}

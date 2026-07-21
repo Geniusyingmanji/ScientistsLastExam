@@ -37,7 +37,7 @@ physical validation, and auditable claim–evidence provenance.
 | Multifidelity/Pareto | Missing | Plan text only | At least one certified proxy/exact task with rank-correlation calibration; objective vectors/hypervolume |
 | Feedback learning claim | Negative pilot only | A strict open-loop control and three-replicate four-task pilot are complete; no direction-stable visible or sealed lift, and normal uses more tokens | Token-matched preregistered ≥10-replicate study with delayed/replayed and score-only controls |
 | Mechanistic discovery | Missing | Outcome scores only | Separate equation/causal artifact score and intervention generalization |
-| Validation/distribution shift | Calibration-level | Pendulum-v2 visible improvement leaves robustness flat; Truss-v2 development rises 0.000→0.611 while the final accepted step raises held-out nominal 0.251→0.422 and lowers sealed robustness 0.206→0.078; both are single-run diagnostics | Paired repeated hidden-shift studies plus independent high-fidelity or physical confirmation and abstention cases |
+| Validation/distribution shift | Calibration-level | Pendulum leaves robustness flat; Truss final nominal improvement lowers held-out robustness 0.206→0.078; Antenna accepted nominal improvements 0.845→0.993→1.0 lower hardware robustness 0.705→0.636→0.576; all are single-run diagnostics | Paired repeated hidden-shift studies plus independent high-fidelity or physical confirmation and abstention cases |
 | Research-integrity track | Partial | Immutable candidate/parent hashes and artifacts | Hypothesis–test–evidence records, failed branches, claim links and calibrated refusal |
 
 ## What the latest literature changes

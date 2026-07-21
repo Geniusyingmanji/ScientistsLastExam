@@ -842,3 +842,24 @@ Citation metadata was checked through Crossref and DOI resolution. Dolph's artic
 Howerton's element-failure/error study is *JASA* 68(3), 901--906, DOI `10.1121/1.384777`.
 Antenna-v2 is re-admitted as a candidate pending GPT-5.5 headroom calibration, server-held
 arrays, full-wave or measured-pattern replication and independent antenna-domain review.
+
+### GPT-5.5 Antenna-v2 calibration
+
+At budget one, GPT-5.5 writes a general taper/null-projection policy that reaches development
+and held-out nominal scores **0.999263/0.995115**. Sealed development/held-out robustness is
+only **0.624204/0.394718**, despite shifted target-gain feasibility remaining one. This makes
+Antenna-v2 a useful nominal-versus-hardware on-ramp, but not a long-horizon nominal-optimization
+headline task.
+
+An independent budget-three normal run accepts all three proposals and raises visible
+development score **0.845170 -> 0.993267 -> 1.000000**. Across those accepted proposals,
+development robustness falls **0.704823 -> 0.635511 -> 0.576348** and mean worst-shift quality
+falls **10.9824 -> 10.6213 -> 10.3506 dB**. Held-out nominal ends at **0.998717** and held-out
+robustness at **0.534775**. The dissociation shows that nominal selection did not optimize the
+sealed hardware objective within this trajectory. It is descriptive, not a causal feedback or
+population result: each condition has one run, the endpoint exposes no model seed, and no
+robustness-aware treatment was run.
+
+The task calibration, wave-3 admission, 51-package certification, 51x2 secure baseline and both
+GPT-5.5 reports bind clean task revision `8c1373a`. A dedicated analyzer validates report and
+raw-trajectory hashes, accepted-parent lineage and every accepted nominal/robustness contrast.

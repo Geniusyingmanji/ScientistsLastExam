@@ -34,6 +34,10 @@ DEFAULT_REPORTS = (
     "experiments/gpt55_active_law_b3_2026-07-21.json",
     "experiments/gpt55_opf_v2_b1_2026-07-21.json",
     "experiments/gpt55_opf_v2_b3_2026-07-21.json",
+    "experiments/gpt55_truss_v2_b1_2026-07-21.json",
+    "experiments/gpt55_truss_v2_b3_2026-07-21.json",
+    "experiments/gpt55_antenna_v2_b1_2026-07-21.json",
+    "experiments/gpt55_antenna_v2_b3_2026-07-21.json",
 )
 
 

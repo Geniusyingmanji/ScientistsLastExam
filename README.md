@@ -34,7 +34,7 @@ All candidate code runs in a networkless Bubblewrap sandbox with read-only mount
 and process limits, and a typed JSON RPC boundary. The trusted parent alone imports the
 oracle and validates metrics. The current audit reports:
 
-- 89/89 unit, security, protocol and scientific-invariant tests passed.
+- 92/92 unit, security, protocol and scientific-invariant tests passed.
 - The latest 51×2 secure-baseline audit reports 51/51 deterministic, 50/51 valid, 51/51
   fail-closed and zero infrastructure failures. The sole invalid baseline is the explicitly
   quarantined `ClimateScience/EnergyBalanceModel`.
@@ -45,7 +45,9 @@ oracle and validates metrics. The current audit reports:
   zero on held-out networks. On Truss-v2, a separate budget-three run improves development
   `0.000 -> 0.416 -> 0.548 -> 0.611`, while its final accepted step increases held-out nominal
   transfer and decreases sealed held-out robustness; these are calibration trajectories, not
-  multi-seed feedback claims.
+  multi-seed feedback claims. On Antenna-v2, budget one nearly saturates nominal pattern quality,
+  while a budget-three nominal curve `0.845 -> 0.993 -> 1.000` coincides with decreasing sealed
+  hardware robustness `0.705 -> 0.636 -> 0.576`.
 
 Machine-readable evidence lives in [`experiments/`](experiments/).
 The original five dated P0–P2 reports were regenerated from clean source revision `f48b101`;

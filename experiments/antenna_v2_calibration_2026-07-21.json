@@ -1,0 +1,4769 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_TASK_CALIBRATION",
+  "evidence_scope": "SCIENTIFIC_CALIBRATION_NOT_MODEL_PERFORMANCE",
+  "created_at": "2026-07-21T23:33:30.736338+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "8c1373a97698ea198a15d87f203dc39e3be90a4d",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/calibrate_antenna_v2.py",
+      "--output",
+      "experiments/antenna_v2_calibration_2026-07-21.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "reference_method": {
+    "description": "Independent exhaustive 25-by-30 beta/alpha enumeration of a Kaiser-taper plus regularized-null-projection domain family.",
+    "beta_grid": [
+      0.0,
+      0.25,
+      0.5,
+      0.75,
+      1.0,
+      1.25,
+      1.5,
+      1.75,
+      2.0,
+      2.25,
+      2.5,
+      2.75,
+      3.0,
+      3.25,
+      3.5,
+      3.75,
+      4.0,
+      4.25,
+      4.5,
+      4.75,
+      5.0,
+      5.25,
+      5.5,
+      5.75,
+      6.0
+    ],
+    "alpha_grid": [
+      0.0,
+      0.001,
+      0.0017782794100389228,
+      0.0031622776601683794,
+      0.005623413251903491,
+      0.01,
+      0.01778279410038923,
+      0.03162277660168379,
+      0.05623413251903491,
+      0.1,
+      0.1778279410038923,
+      0.31622776601683794,
+      0.5623413251903491,
+      1.0,
+      1.7782794100389228,
+      3.1622776601683795,
+      5.623413251903491,
+      10.0,
+      17.78279410038923,
+      31.622776601683793,
+      56.23413251903491,
+      100.0,
+      177.82794100389228,
+      316.22776601683796,
+      562.341325190349,
+      1000.0,
+      1778.2794100389228,
+      3162.2776601683795,
+      5623.413251903491,
+      10000.0
+    ],
+    "global_optimality_claimed": false,
+    "normalization_clips_better_feasible_candidates": true
+  },
+  "baseline": {
+    "combined_score": 0.0,
+    "valid": 1.0,
+    "feasibility_rate": 1.0,
+    "development_score": 0.0,
+    "robustness_score": 0.0,
+    "development_validation_gap": 0.0,
+    "heldout_policy_score": 0.0,
+    "heldout_robustness_score": 0.0,
+    "heldout_feasibility_rate": 1.0,
+    "mean_worst_shifted_quality_db": 7.319405232263451,
+    "mean_shifted_target_gain_feasibility_rate": 1.0,
+    "per_instance": [
+      {
+        "name": "dev_broadside12",
+        "split": "development",
+        "valid": true,
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "nominal_quality_db": 10.012963628546052,
+        "nominal_suppression_db": 10.012963628546052,
+        "nominal_peak_sidelobe_level_db": -13.057102715220303,
+        "nominal_peak_null_level_db": -19.5553887229393,
+        "baseline_nominal_quality_db": 10.012963628546052,
+        "nominal_reference_quality_db": 25.678475510098178,
+        "baseline_robust_quality_db": 4.199902563299521,
+        "robust_reference_quality_db": 9.258591112760538,
+        "worst_shifted_quality_db": 4.199902563299521,
+        "worst_shifted_suppression_db": 4.199902563299521,
+        "minimum_shifted_target_gain": 0.9166666666666667,
+        "shifted_target_gain_feasibility_rate": 1.0,
+        "normalized_l2_norm": 0.28867513459481287,
+        "normalized_max_element_amplitude": 0.08333333333333333,
+        "nominal": {
+          "name": "nominal",
+          "quality_db": 10.012963628546052,
+          "suppression_db": 10.012963628546052,
+          "peak_sidelobe_level_db": -13.057102715220303,
+          "peak_null_level_db": -19.5553887229393,
+          "target_gain": 1.0,
+          "target_gain_feasible": true
+        },
+        "shifted": [
+          {
+            "name": "frequency_low",
+            "quality_db": 10.012597704269632,
+            "suppression_db": 10.012597704269632,
+            "peak_sidelobe_level_db": -13.057305255481111,
+            "peak_null_level_db": -19.55502279866288,
+            "target_gain": 1.0,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "frequency_high",
+            "quality_db": 10.691234928287209,
+            "suppression_db": 10.691234928287209,
+            "peak_sidelobe_level_db": -13.058001232184145,
+            "peak_null_level_db": -20.23366002268046,
+            "target_gain": 1.0,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "position_error",
+            "quality_db": 9.785210882820127,
+            "suppression_db": 9.785210882820127,
+            "peak_sidelobe_level_db": -13.043201473086237,
+            "peak_null_level_db": -19.327635977213376,
+            "target_gain": 1.0,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "gain_phase_error",
+            "quality_db": 10.40456641607086,
+            "suppression_db": 10.40456641607086,
+            "peak_sidelobe_level_db": -13.000218875903283,
+            "peak_null_level_db": -19.94699151046411,
+            "target_gain": 0.9975523988812206,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_0",
+            "quality_db": 9.76897682701761,
+            "suppression_db": 9.76897682701761,
+            "peak_sidelobe_level_db": -13.018326837067807,
+            "peak_null_level_db": -19.31140192141086,
+            "target_gain": 0.9166666666666667,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_1",
+            "quality_db": 8.699182768939636,
+            "suppression_db": 8.699182768939636,
+            "peak_sidelobe_level_db": -14.895198332792912,
+            "peak_null_level_db": -18.241607863332884,
+            "target_gain": 0.9166666666666667,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_2",
+            "quality_db": 4.199902563299521,
+            "suppression_db": 4.199902563299521,
+            "peak_sidelobe_level_db": -13.742029032772077,
+            "peak_null_level_db": -13.742327657692769,
+            "target_gain": 0.9166666666666667,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_3",
+            "quality_db": 7.514406024871397,
+            "suppression_db": 7.514406024871397,
+            "peak_sidelobe_level_db": -12.361464422674747,
+            "peak_null_level_db": -17.056831119264647,
+            "target_gain": 0.9166666666666667,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_4",
+            "quality_db": 10.63149190888743,
+            "suppression_db": 10.63149190888743,
+            "peak_sidelobe_level_db": -10.63149190888743,
+            "peak_null_level_db": -23.445331713693957,
+            "target_gain": 0.9166666666666667,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_5",
+            "quality_db": 5.108291431171916,
+            "suppression_db": 5.108291431171916,
+            "peak_sidelobe_level_db": -9.658594408753824,
+            "peak_null_level_db": -14.650716525565166,
+            "target_gain": 0.9166666666666667,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_6",
+            "quality_db": 5.108291431171914,
+            "suppression_db": 5.108291431171914,
+            "peak_sidelobe_level_db": -9.658594408753826,
+            "peak_null_level_db": -14.650716525565164,
+            "target_gain": 0.9166666666666667,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_7",
+            "quality_db": 10.63149190888743,
+            "suppression_db": 10.63149190888743,
+            "peak_sidelobe_level_db": -10.63149190888743,
+            "peak_null_level_db": -23.44533171369396,
+            "target_gain": 0.9166666666666667,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_8",
+            "quality_db": 7.514406024871397,
+            "suppression_db": 7.514406024871397,
+            "peak_sidelobe_level_db": -12.361464422674747,
+            "peak_null_level_db": -17.056831119264647,
+            "target_gain": 0.9166666666666667,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_9",
+            "quality_db": 4.199902563299522,
+            "suppression_db": 4.199902563299522,
+            "peak_sidelobe_level_db": -13.742029032772074,
+            "peak_null_level_db": -13.742327657692769,
+            "target_gain": 0.9166666666666667,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_10",
+            "quality_db": 8.699182768939634,
+            "suppression_db": 8.699182768939634,
+            "peak_sidelobe_level_db": -14.895198332792912,
+            "peak_null_level_db": -18.24160786333288,
+            "target_gain": 0.9166666666666667,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_11",
+            "quality_db": 9.76897682701761,
+            "suppression_db": 9.76897682701761,
+            "peak_sidelobe_level_db": -13.018326837067807,
+            "peak_null_level_db": -19.31140192141086,
+            "target_gain": 0.9166666666666667,
+            "target_gain_feasible": true
+          }
+        ]
+      },
+      {
+        "name": "heldout_scan14",
+        "split": "heldout",
+        "valid": true,
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "nominal_quality_db": 12.895352278158214,
+        "nominal_suppression_db": 12.895352278158214,
+        "nominal_peak_sidelobe_level_db": -13.110830727458577,
+        "nominal_peak_null_level_db": -22.437777372551466,
+        "baseline_nominal_quality_db": 12.895352278158214,
+        "nominal_reference_quality_db": 25.423457080087708,
+        "baseline_robust_quality_db": 6.516274421352954,
+        "robust_reference_quality_db": 10.94307592537139,
+        "worst_shifted_quality_db": 6.516274421352954,
+        "worst_shifted_suppression_db": 6.516274421352954,
+        "minimum_shifted_target_gain": 0.9285714285714284,
+        "shifted_target_gain_feasibility_rate": 1.0,
+        "normalized_l2_norm": 0.2672612419124244,
+        "normalized_max_element_amplitude": 0.07142857142857144,
+        "nominal": {
+          "name": "nominal",
+          "quality_db": 12.895352278158214,
+          "suppression_db": 12.895352278158214,
+          "peak_sidelobe_level_db": -13.110830727458577,
+          "peak_null_level_db": -22.437777372551466,
+          "target_gain": 1.0,
+          "target_gain_feasible": true
+        },
+        "shifted": [
+          {
+            "name": "frequency_low",
+            "quality_db": 13.044637760581807,
+            "suppression_db": 13.044637760581807,
+            "peak_sidelobe_level_db": -13.044637760581807,
+            "peak_null_level_db": -22.71579506489319,
+            "target_gain": 0.9924230964792249,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "frequency_high",
+            "quality_db": 11.606833796070369,
+            "suppression_db": 11.606833796070369,
+            "peak_sidelobe_level_db": -13.044967511018813,
+            "peak_null_level_db": -21.149258890463617,
+            "target_gain": 0.9924230964792249,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "position_error",
+            "quality_db": 12.90072760109342,
+            "suppression_db": 12.90072760109342,
+            "peak_sidelobe_level_db": -13.086382920087619,
+            "peak_null_level_db": -22.443152695486667,
+            "target_gain": 0.9999609253670755,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "gain_phase_error",
+            "quality_db": 12.934492229588663,
+            "suppression_db": 12.934492229588663,
+            "peak_sidelobe_level_db": -13.06939172111888,
+            "peak_null_level_db": -22.476917323981912,
+            "target_gain": 0.9995618777867455,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_0",
+            "quality_db": 13.17268982572271,
+            "suppression_db": 13.17268982572271,
+            "peak_sidelobe_level_db": -13.17268982572271,
+            "peak_null_level_db": -26.39392667049541,
+            "target_gain": 0.9285714285714285,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_1",
+            "quality_db": 7.0351718307627955,
+            "suppression_db": 7.0351718307627955,
+            "peak_sidelobe_level_db": -15.21685338991058,
+            "peak_null_level_db": -16.577596925156044,
+            "target_gain": 0.9285714285714285,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_2",
+            "quality_db": 6.516274421352954,
+            "suppression_db": 6.516274421352954,
+            "peak_sidelobe_level_db": -15.043443598901227,
+            "peak_null_level_db": -16.058699515746202,
+            "target_gain": 0.9285714285714285,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_3",
+            "quality_db": 7.475481201637166,
+            "suppression_db": 7.475481201637166,
+            "peak_sidelobe_level_db": -13.473534497010656,
+            "peak_null_level_db": -17.017906296030418,
+            "target_gain": 0.9285714285714285,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_4",
+            "quality_db": 11.250773432463973,
+            "suppression_db": 11.250773432463973,
+            "peak_sidelobe_level_db": -12.075315004375229,
+            "peak_null_level_db": -20.793198526857218,
+            "target_gain": 0.9285714285714286,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_5",
+            "quality_db": 6.60280124338116,
+            "suppression_db": 6.60280124338116,
+            "peak_sidelobe_level_db": -10.81346098973762,
+            "peak_null_level_db": -16.145226337774407,
+            "target_gain": 0.9285714285714285,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_6",
+            "quality_db": 9.697549367515744,
+            "suppression_db": 9.697549367515744,
+            "peak_sidelobe_level_db": -10.110396459410861,
+            "peak_null_level_db": -19.239974461908997,
+            "target_gain": 0.9285714285714284,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_7",
+            "quality_db": 10.126096481383478,
+            "suppression_db": 10.126096481383478,
+            "peak_sidelobe_level_db": -10.126096481383478,
+            "peak_null_level_db": -20.149870217936538,
+            "target_gain": 0.9285714285714285,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_8",
+            "quality_db": 7.330170513253053,
+            "suppression_db": 7.330170513253053,
+            "peak_sidelobe_level_db": -10.74350873169497,
+            "peak_null_level_db": -16.8725956076463,
+            "target_gain": 0.9285714285714285,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_9",
+            "quality_db": 7.874783747610642,
+            "suppression_db": 7.874783747610642,
+            "peak_sidelobe_level_db": -12.074165627092876,
+            "peak_null_level_db": -17.41720884200389,
+            "target_gain": 0.9285714285714286,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_10",
+            "quality_db": 7.278136430363531,
+            "suppression_db": 7.278136430363531,
+            "peak_sidelobe_level_db": -13.606522812605185,
+            "peak_null_level_db": -16.82056152475678,
+            "target_gain": 0.9285714285714285,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_11",
+            "quality_db": 8.706819785005152,
+            "suppression_db": 8.706819785005152,
+            "peak_sidelobe_level_db": -15.127543763394023,
+            "peak_null_level_db": -18.249244879398397,
+            "target_gain": 0.9285714285714286,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_12",
+            "quality_db": 6.661445119380046,
+            "suppression_db": 6.661445119380046,
+            "peak_sidelobe_level_db": -15.28934468420951,
+            "peak_null_level_db": -16.203870213773296,
+            "target_gain": 0.9285714285714286,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_13",
+            "quality_db": 10.811700119411976,
+            "suppression_db": 10.811700119411976,
+            "peak_sidelobe_level_db": -13.001514540272417,
+            "peak_null_level_db": -20.354125213805222,
+            "target_gain": 0.9285714285714286,
+            "target_gain_feasible": true
+          }
+        ]
+      },
+      {
+        "name": "dev_scan16",
+        "split": "development",
+        "valid": true,
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "nominal_quality_db": 10.562628611294587,
+        "nominal_suppression_db": 10.562628611294587,
+        "nominal_peak_sidelobe_level_db": -13.147335878570823,
+        "nominal_peak_null_level_db": -20.105053705687833,
+        "baseline_nominal_quality_db": 10.562628611294587,
+        "nominal_reference_quality_db": 25.393229607496735,
+        "baseline_robust_quality_db": 5.762747760746489,
+        "robust_reference_quality_db": 12.108028937971355,
+        "worst_shifted_quality_db": 5.762747760746489,
+        "worst_shifted_suppression_db": 5.762747760746489,
+        "minimum_shifted_target_gain": 0.9375,
+        "shifted_target_gain_feasibility_rate": 1.0,
+        "normalized_l2_norm": 0.25,
+        "normalized_max_element_amplitude": 0.0625,
+        "nominal": {
+          "name": "nominal",
+          "quality_db": 10.562628611294587,
+          "suppression_db": 10.562628611294587,
+          "peak_sidelobe_level_db": -13.147335878570823,
+          "peak_null_level_db": -20.105053705687833,
+          "target_gain": 1.0,
+          "target_gain_feasible": true
+        },
+        "shifted": [
+          {
+            "name": "frequency_low",
+            "quality_db": 10.424889679562732,
+            "suppression_db": 10.424889679562732,
+            "peak_sidelobe_level_db": -13.00830475276497,
+            "peak_null_level_db": -19.967314773955984,
+            "target_gain": 0.9841774553292417,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "frequency_high",
+            "quality_db": 10.423657337551813,
+            "suppression_db": 10.423657337551813,
+            "peak_sidelobe_level_db": -13.00835887739195,
+            "peak_null_level_db": -19.96608243194506,
+            "target_gain": 0.9841774553292417,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "position_error",
+            "quality_db": 10.743358313071987,
+            "suppression_db": 10.743358313071987,
+            "peak_sidelobe_level_db": -13.124188822614569,
+            "peak_null_level_db": -20.285783407465235,
+            "target_gain": 0.9999257415492828,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "gain_phase_error",
+            "quality_db": 10.313985400300787,
+            "suppression_db": 10.313985400300787,
+            "peak_sidelobe_level_db": -12.922389707104756,
+            "peak_null_level_db": -19.856410494694035,
+            "target_gain": 1.001428449391232,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_0",
+            "quality_db": 11.019133598105078,
+            "suppression_db": 11.019133598105078,
+            "peak_sidelobe_level_db": -13.131692037835418,
+            "peak_null_level_db": -20.56155869249833,
+            "target_gain": 0.9375,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_1",
+            "quality_db": 8.411396038804256,
+            "suppression_db": 8.411396038804256,
+            "peak_sidelobe_level_db": -14.746534809680263,
+            "peak_null_level_db": -17.953821133197504,
+            "target_gain": 0.9375,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_2",
+            "quality_db": 7.106311873669794,
+            "suppression_db": 7.106311873669794,
+            "peak_sidelobe_level_db": -15.480325673331162,
+            "peak_null_level_db": -16.64873696806304,
+            "target_gain": 0.9375,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_3",
+            "quality_db": 5.762747760746489,
+            "suppression_db": 5.762747760746489,
+            "peak_sidelobe_level_db": -14.613147752556863,
+            "peak_null_level_db": -15.305172855139737,
+            "target_gain": 0.9375,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_4",
+            "quality_db": 8.091853471200883,
+            "suppression_db": 8.091853471200883,
+            "peak_sidelobe_level_db": -13.164764412620471,
+            "peak_null_level_db": -17.634278565594133,
+            "target_gain": 0.9375,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_5",
+            "quality_db": 11.8639154050544,
+            "suppression_db": 11.8639154050544,
+            "peak_sidelobe_level_db": -11.8639154050544,
+            "peak_null_level_db": -26.766694789863056,
+            "target_gain": 0.9375,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_6",
+            "quality_db": 8.453973734608104,
+            "suppression_db": 8.453973734608104,
+            "peak_sidelobe_level_db": -10.944472470109481,
+            "peak_null_level_db": -17.99639882900135,
+            "target_gain": 0.9375,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_7",
+            "quality_db": 6.232083236096777,
+            "suppression_db": 6.232083236096777,
+            "peak_sidelobe_level_db": -10.47497018156474,
+            "peak_null_level_db": -15.774508330490027,
+            "target_gain": 0.9375,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_8",
+            "quality_db": 6.232083236096777,
+            "suppression_db": 6.232083236096777,
+            "peak_sidelobe_level_db": -10.47497018156474,
+            "peak_null_level_db": -15.774508330490027,
+            "target_gain": 0.9375,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_9",
+            "quality_db": 8.4539737346081,
+            "suppression_db": 8.4539737346081,
+            "peak_sidelobe_level_db": -10.944472470109481,
+            "peak_null_level_db": -17.99639882900135,
+            "target_gain": 0.9375,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_10",
+            "quality_db": 11.863915405054401,
+            "suppression_db": 11.863915405054401,
+            "peak_sidelobe_level_db": -11.863915405054401,
+            "peak_null_level_db": -26.766694789863056,
+            "target_gain": 0.9375,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_11",
+            "quality_db": 8.091853471200883,
+            "suppression_db": 8.091853471200883,
+            "peak_sidelobe_level_db": -13.164764412620471,
+            "peak_null_level_db": -17.634278565594133,
+            "target_gain": 0.9375,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_12",
+            "quality_db": 5.762747760746489,
+            "suppression_db": 5.762747760746489,
+            "peak_sidelobe_level_db": -14.613147752556861,
+            "peak_null_level_db": -15.305172855139737,
+            "target_gain": 0.9375,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_13",
+            "quality_db": 7.106311873669794,
+            "suppression_db": 7.106311873669794,
+            "peak_sidelobe_level_db": -15.480325673331162,
+            "peak_null_level_db": -16.64873696806304,
+            "target_gain": 0.9375,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_14",
+            "quality_db": 8.411396038804257,
+            "suppression_db": 8.411396038804257,
+            "peak_sidelobe_level_db": -14.746534809680263,
+            "peak_null_level_db": -17.953821133197504,
+            "target_gain": 0.9375,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_15",
+            "quality_db": 11.019133598105078,
+            "suppression_db": 11.019133598105078,
+            "peak_sidelobe_level_db": -13.131692037835418,
+            "peak_null_level_db": -20.561558692498323,
+            "target_gain": 0.9375,
+            "target_gain_feasible": true
+          }
+        ]
+      },
+      {
+        "name": "heldout_scan22",
+        "split": "heldout",
+        "valid": true,
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "nominal_quality_db": 13.202248794848721,
+        "nominal_suppression_db": 13.202248794848721,
+        "nominal_peak_sidelobe_level_db": -13.202248794848721,
+        "nominal_peak_null_level_db": -24.00287080753899,
+        "baseline_nominal_quality_db": 13.202248794848721,
+        "nominal_reference_quality_db": 19.57332616435086,
+        "baseline_robust_quality_db": 9.405610681068467,
+        "robust_reference_quality_db": 14.531249541212429,
+        "worst_shifted_quality_db": 9.405610681068467,
+        "worst_shifted_suppression_db": 9.405610681068467,
+        "minimum_shifted_target_gain": 0.9395920455026165,
+        "shifted_target_gain_feasibility_rate": 1.0,
+        "normalized_l2_norm": 0.21320071635561044,
+        "normalized_max_element_amplitude": 0.04545454545454546,
+        "nominal": {
+          "name": "nominal",
+          "quality_db": 13.202248794848721,
+          "suppression_db": 13.202248794848721,
+          "peak_sidelobe_level_db": -13.202248794848721,
+          "peak_null_level_db": -24.00287080753899,
+          "target_gain": 1.0,
+          "target_gain_feasible": true
+        },
+        "shifted": [
+          {
+            "name": "frequency_low",
+            "quality_db": 12.661879947081617,
+            "suppression_db": 12.661879947081617,
+            "peak_sidelobe_level_db": -12.661879947081617,
+            "peak_null_level_db": -23.58424976831058,
+            "target_gain": 0.9395920455026165,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "frequency_high",
+            "quality_db": 12.66084582905229,
+            "suppression_db": 12.66084582905229,
+            "peak_sidelobe_level_db": -12.66084582905229,
+            "peak_null_level_db": -23.344328243185444,
+            "target_gain": 0.9395920455026167,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "position_error",
+            "quality_db": 12.915187752841845,
+            "suppression_db": 12.915187752841845,
+            "peak_sidelobe_level_db": -12.915187752841845,
+            "peak_null_level_db": -24.000929191330304,
+            "target_gain": 0.9998255543671778,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "gain_phase_error",
+            "quality_db": 13.062890056731366,
+            "suppression_db": 13.062890056731366,
+            "peak_sidelobe_level_db": -13.062890056731366,
+            "peak_null_level_db": -23.76284870169766,
+            "target_gain": 1.000145183625806,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_0",
+            "quality_db": 12.74932575444629,
+            "suppression_db": 12.74932575444629,
+            "peak_sidelobe_level_db": -13.191714555348868,
+            "peak_null_level_db": -22.291750848839538,
+            "target_gain": 0.9545454545454546,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_1",
+            "quality_db": 11.29763805529059,
+            "suppression_db": 11.29763805529059,
+            "peak_sidelobe_level_db": -14.016131775002538,
+            "peak_null_level_db": -20.840063149683843,
+            "target_gain": 0.9545454545454546,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_2",
+            "quality_db": 14.043542309983154,
+            "suppression_db": 14.043542309983154,
+            "peak_sidelobe_level_db": -14.632326842474255,
+            "peak_null_level_db": -23.585967404376404,
+            "target_gain": 0.9545454545454546,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_3",
+            "quality_db": 9.669034290428238,
+            "suppression_db": 9.669034290428238,
+            "peak_sidelobe_level_db": -14.810823594981098,
+            "peak_null_level_db": -19.211459384821488,
+            "target_gain": 0.9545454545454546,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_4",
+            "quality_db": 9.8987768416808,
+            "suppression_db": 9.8987768416808,
+            "peak_sidelobe_level_db": -14.488581926836053,
+            "peak_null_level_db": -19.441201936074048,
+            "target_gain": 0.9545454545454546,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_5",
+            "quality_db": 13.797467044803922,
+            "suppression_db": 13.797467044803922,
+            "peak_sidelobe_level_db": -13.797467044803922,
+            "peak_null_level_db": -24.80170869791219,
+            "target_gain": 0.9545454545454546,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_6",
+            "quality_db": 10.901852617076738,
+            "suppression_db": 10.901852617076738,
+            "peak_sidelobe_level_db": -13.092184401227588,
+            "peak_null_level_db": -20.44427771146999,
+            "target_gain": 0.9545454545454546,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_7",
+            "quality_db": 11.878878785332072,
+            "suppression_db": 11.878878785332072,
+            "peak_sidelobe_level_db": -12.339807837486369,
+            "peak_null_level_db": -21.421303879725322,
+            "target_gain": 0.9545454545454546,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_8",
+            "quality_db": 9.406565429743356,
+            "suppression_db": 9.406565429743356,
+            "peak_sidelobe_level_db": -11.808326182266402,
+            "peak_null_level_db": -18.948990524136605,
+            "target_gain": 0.9545454545454546,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_9",
+            "quality_db": 10.938493421079016,
+            "suppression_db": 10.938493421079016,
+            "peak_sidelobe_level_db": -11.377904025081138,
+            "peak_null_level_db": -20.480918515472265,
+            "target_gain": 0.9545454545454546,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_10",
+            "quality_db": 11.188453173803056,
+            "suppression_db": 11.188453173803056,
+            "peak_sidelobe_level_db": -11.188453173803056,
+            "peak_null_level_db": -22.998771516030594,
+            "target_gain": 0.9545454545454546,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_11",
+            "quality_db": 11.18845038949524,
+            "suppression_db": 11.18845038949524,
+            "peak_sidelobe_level_db": -11.18845038949524,
+            "peak_null_level_db": -22.989257870822932,
+            "target_gain": 0.9545454545454546,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_12",
+            "quality_db": 10.940176047506473,
+            "suppression_db": 10.940176047506473,
+            "peak_sidelobe_level_db": -11.37803972377174,
+            "peak_null_level_db": -20.48260114189972,
+            "target_gain": 0.9545454545454546,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_13",
+            "quality_db": 9.405610681068467,
+            "suppression_db": 9.405610681068467,
+            "peak_sidelobe_level_db": -11.808092719763259,
+            "peak_null_level_db": -18.948035775461715,
+            "target_gain": 0.9545454545454546,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_14",
+            "quality_db": 11.878875681132502,
+            "suppression_db": 11.878875681132502,
+            "peak_sidelobe_level_db": -12.34039688755952,
+            "peak_null_level_db": -21.42130077552575,
+            "target_gain": 0.9545454545454546,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_15",
+            "quality_db": 10.904204099164268,
+            "suppression_db": 10.904204099164268,
+            "peak_sidelobe_level_db": -13.091535757861424,
+            "peak_null_level_db": -20.446629193557516,
+            "target_gain": 0.9545454545454546,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_16",
+            "quality_db": 13.798431725770794,
+            "suppression_db": 13.798431725770794,
+            "peak_sidelobe_level_db": -13.798431725770794,
+            "peak_null_level_db": -24.798132978193127,
+            "target_gain": 0.9545454545454546,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_17",
+            "quality_db": 9.903289250100354,
+            "suppression_db": 9.903289250100354,
+            "peak_sidelobe_level_db": -14.487939512461466,
+            "peak_null_level_db": -19.445714344493602,
+            "target_gain": 0.9545454545454546,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_18",
+            "quality_db": 9.67011329600566,
+            "suppression_db": 9.67011329600566,
+            "peak_sidelobe_level_db": -14.811018909500557,
+            "peak_null_level_db": -19.212538390398908,
+            "target_gain": 0.9545454545454546,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_19",
+            "quality_db": 14.025115341524302,
+            "suppression_db": 14.025115341524302,
+            "peak_sidelobe_level_db": -14.633013721339701,
+            "peak_null_level_db": -23.56754043591755,
+            "target_gain": 0.9545454545454546,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_20",
+            "quality_db": 11.305834034436337,
+            "suppression_db": 11.305834034436337,
+            "peak_sidelobe_level_db": -14.014828480073575,
+            "peak_null_level_db": -20.84825912882959,
+            "target_gain": 0.9545454545454546,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_21",
+            "quality_db": 12.764894678689224,
+            "suppression_db": 12.764894678689224,
+            "peak_sidelobe_level_db": -13.193070495445053,
+            "peak_null_level_db": -22.307319773082472,
+            "target_gain": 0.9545454545454546,
+            "target_gain_feasible": true
+          }
+        ]
+      },
+      {
+        "name": "dev_scan20",
+        "split": "development",
+        "valid": true,
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "nominal_quality_db": 13.189175035011615,
+        "nominal_suppression_db": 13.189175035011615,
+        "nominal_peak_sidelobe_level_db": -13.189175035011615,
+        "nominal_peak_null_level_db": -23.633699296193328,
+        "baseline_nominal_quality_db": 13.189175035011615,
+        "nominal_reference_quality_db": 25.13538791691274,
+        "baseline_robust_quality_db": 8.802886166373039,
+        "robust_reference_quality_db": 13.72930887398569,
+        "worst_shifted_quality_db": 8.802886166373039,
+        "worst_shifted_suppression_db": 8.802886166373039,
+        "minimum_shifted_target_gain": 0.95,
+        "shifted_target_gain_feasibility_rate": 1.0,
+        "normalized_l2_norm": 0.223606797749979,
+        "normalized_max_element_amplitude": 0.05,
+        "nominal": {
+          "name": "nominal",
+          "quality_db": 13.189175035011615,
+          "suppression_db": 13.189175035011615,
+          "peak_sidelobe_level_db": -13.189175035011615,
+          "peak_null_level_db": -23.633699296193328,
+          "target_gain": 1.0,
+          "target_gain_feasible": true
+        },
+        "shifted": [
+          {
+            "name": "frequency_low",
+            "quality_db": 12.777096391107602,
+            "suppression_db": 12.777096391107602,
+            "peak_sidelobe_level_db": -12.777096391107602,
+            "peak_null_level_db": -23.224540623623415,
+            "target_gain": 0.9537632848668607,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "frequency_high",
+            "quality_db": 12.777198291120673,
+            "suppression_db": 12.777198291120673,
+            "peak_sidelobe_level_db": -12.777198291120673,
+            "peak_null_level_db": -23.224627331235975,
+            "target_gain": 0.9537632848668605,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "position_error",
+            "quality_db": 13.188731093790693,
+            "suppression_db": 13.188731093790693,
+            "peak_sidelobe_level_db": -13.188731093790693,
+            "peak_null_level_db": -23.632827272828692,
+            "target_gain": 0.9998832050515103,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "gain_phase_error",
+            "quality_db": 13.0392649431638,
+            "suppression_db": 13.0392649431638,
+            "peak_sidelobe_level_db": -13.0392649431638,
+            "peak_null_level_db": -23.637670540088035,
+            "target_gain": 0.9994078205811268,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_0",
+            "quality_db": 13.18052715249249,
+            "suppression_db": 13.18052715249249,
+            "peak_sidelobe_level_db": -13.18052715249249,
+            "peak_null_level_db": -23.512582771163515,
+            "target_gain": 0.95,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_1",
+            "quality_db": 10.042385560074056,
+            "suppression_db": 10.042385560074056,
+            "peak_sidelobe_level_db": -14.175286775049795,
+            "peak_null_level_db": -19.584810654467304,
+            "target_gain": 0.95,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_2",
+            "quality_db": 8.851732257658437,
+            "suppression_db": 8.851732257658437,
+            "peak_sidelobe_level_db": -14.888310105878375,
+            "peak_null_level_db": -18.39415735205169,
+            "target_gain": 0.95,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_3",
+            "quality_db": 10.2913652317145,
+            "suppression_db": 10.2913652317145,
+            "peak_sidelobe_level_db": -14.904232885153327,
+            "peak_null_level_db": -19.83379032610775,
+            "target_gain": 0.95,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_4",
+            "quality_db": 14.282687092469526,
+            "suppression_db": 14.282687092469526,
+            "peak_sidelobe_level_db": -14.282687092469526,
+            "peak_null_level_db": -25.968321107905727,
+            "target_gain": 0.95,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_5",
+            "quality_db": 10.788660254686835,
+            "suppression_db": 10.788660254686835,
+            "peak_sidelobe_level_db": -13.389065643229088,
+            "peak_null_level_db": -20.331085349080084,
+            "target_gain": 0.95,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_6",
+            "quality_db": 8.802886166373039,
+            "suppression_db": 8.802886166373039,
+            "peak_sidelobe_level_db": -12.502502628835472,
+            "peak_null_level_db": -18.345311260766287,
+            "target_gain": 0.95,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_7",
+            "quality_db": 11.56488480516657,
+            "suppression_db": 11.56488480516657,
+            "peak_sidelobe_level_db": -11.76835779065662,
+            "peak_null_level_db": -21.10730989955982,
+            "target_gain": 0.95,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_8",
+            "quality_db": 11.253854324956304,
+            "suppression_db": 11.253854324956304,
+            "peak_sidelobe_level_db": -11.253854324956304,
+            "peak_null_level_db": -23.633542745274376,
+            "target_gain": 0.9500000000000001,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_9",
+            "quality_db": 9.55297049445585,
+            "suppression_db": 9.55297049445585,
+            "peak_sidelobe_level_db": -10.991277744928254,
+            "peak_null_level_db": -19.095395588849097,
+            "target_gain": 0.95,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_10",
+            "quality_db": 9.552970494455849,
+            "suppression_db": 9.552970494455849,
+            "peak_sidelobe_level_db": -10.99127774492825,
+            "peak_null_level_db": -19.095395588849097,
+            "target_gain": 0.95,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_11",
+            "quality_db": 11.253854324956302,
+            "suppression_db": 11.253854324956302,
+            "peak_sidelobe_level_db": -11.253854324956302,
+            "peak_null_level_db": -23.633542745274376,
+            "target_gain": 0.95,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_12",
+            "quality_db": 11.564884805166571,
+            "suppression_db": 11.564884805166571,
+            "peak_sidelobe_level_db": -11.76835779065662,
+            "peak_null_level_db": -21.107309899559823,
+            "target_gain": 0.95,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_13",
+            "quality_db": 8.802886166373039,
+            "suppression_db": 8.802886166373039,
+            "peak_sidelobe_level_db": -12.502502628835472,
+            "peak_null_level_db": -18.345311260766287,
+            "target_gain": 0.95,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_14",
+            "quality_db": 10.788660254686839,
+            "suppression_db": 10.788660254686839,
+            "peak_sidelobe_level_db": -13.389065643229088,
+            "peak_null_level_db": -20.331085349080084,
+            "target_gain": 0.95,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_15",
+            "quality_db": 14.282687092469523,
+            "suppression_db": 14.282687092469523,
+            "peak_sidelobe_level_db": -14.282687092469523,
+            "peak_null_level_db": -25.968321107905766,
+            "target_gain": 0.95,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_16",
+            "quality_db": 10.291365231714503,
+            "suppression_db": 10.291365231714503,
+            "peak_sidelobe_level_db": -14.904232885153327,
+            "peak_null_level_db": -19.83379032610775,
+            "target_gain": 0.95,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_17",
+            "quality_db": 8.851732257658437,
+            "suppression_db": 8.851732257658437,
+            "peak_sidelobe_level_db": -14.888310105878375,
+            "peak_null_level_db": -18.394157352051685,
+            "target_gain": 0.95,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_18",
+            "quality_db": 10.042385560074056,
+            "suppression_db": 10.042385560074056,
+            "peak_sidelobe_level_db": -14.175286775049795,
+            "peak_null_level_db": -19.584810654467304,
+            "target_gain": 0.95,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_19",
+            "quality_db": 13.180527152492491,
+            "suppression_db": 13.180527152492491,
+            "peak_sidelobe_level_db": -13.180527152492491,
+            "peak_null_level_db": -23.512582771163515,
+            "target_gain": 0.95,
+            "target_gain_feasible": true
+          }
+        ]
+      },
+      {
+        "name": "dev_scan24",
+        "split": "development",
+        "valid": true,
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "nominal_quality_db": 13.211448213702896,
+        "nominal_suppression_db": 13.211448213702896,
+        "nominal_peak_sidelobe_level_db": -13.211448213702896,
+        "nominal_peak_null_level_db": -25.354987700619738,
+        "baseline_nominal_quality_db": 13.211448213702896,
+        "nominal_reference_quality_db": 24.992539757926547,
+        "baseline_robust_quality_db": 10.512084438634755,
+        "robust_reference_quality_db": 15.065929650609744,
+        "worst_shifted_quality_db": 10.512084438634755,
+        "worst_shifted_suppression_db": 10.512084438634755,
+        "minimum_shifted_target_gain": 0.9583333333333333,
+        "shifted_target_gain_feasibility_rate": 1.0,
+        "normalized_l2_norm": 0.2041241452319315,
+        "normalized_max_element_amplitude": 0.041666666666666664,
+        "nominal": {
+          "name": "nominal",
+          "quality_db": 13.211448213702896,
+          "suppression_db": 13.211448213702896,
+          "peak_sidelobe_level_db": -13.211448213702896,
+          "peak_null_level_db": -25.354987700619738,
+          "target_gain": 1.0,
+          "target_gain_feasible": true
+        },
+        "shifted": [
+          {
+            "name": "frequency_low",
+            "quality_db": 13.126934608770355,
+            "suppression_db": 13.126934608770355,
+            "peak_sidelobe_level_db": -13.126934608770355,
+            "peak_null_level_db": -30.374201466227618,
+            "target_gain": 0.9903719747098837,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "frequency_high",
+            "quality_db": 13.127723690204665,
+            "suppression_db": 13.127723690204665,
+            "peak_sidelobe_level_db": -13.127723690204665,
+            "peak_null_level_db": -25.039834928406506,
+            "target_gain": 0.9903719747098836,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "position_error",
+            "quality_db": 13.200515196396939,
+            "suppression_db": 13.200515196396939,
+            "peak_sidelobe_level_db": -13.200515196396939,
+            "peak_null_level_db": -25.09466904648345,
+            "target_gain": 0.9999810840450073,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "gain_phase_error",
+            "quality_db": 13.14988592633943,
+            "suppression_db": 13.14988592633943,
+            "peak_sidelobe_level_db": -13.14988592633943,
+            "peak_null_level_db": -27.16026246843812,
+            "target_gain": 0.9987155165058615,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_0",
+            "quality_db": 13.206100858780786,
+            "suppression_db": 13.206100858780786,
+            "peak_sidelobe_level_db": -13.206100858780786,
+            "peak_null_level_db": -30.47571683128333,
+            "target_gain": 0.9583333333333334,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_1",
+            "quality_db": 12.187420132155415,
+            "suppression_db": 12.187420132155415,
+            "peak_sidelobe_level_db": -13.88127666162726,
+            "peak_null_level_db": -21.729845226548665,
+            "target_gain": 0.9583333333333334,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_2",
+            "quality_db": 10.539366611111783,
+            "suppression_db": 10.539366611111783,
+            "peak_sidelobe_level_db": -14.4331966977389,
+            "peak_null_level_db": -20.081791705505033,
+            "target_gain": 0.9583333333333333,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_3",
+            "quality_db": 12.870918231810705,
+            "suppression_db": 12.870918231810705,
+            "peak_sidelobe_level_db": -14.676107881658712,
+            "peak_null_level_db": -22.413343326203954,
+            "target_gain": 0.9583333333333333,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_4",
+            "quality_db": 11.583437646587386,
+            "suppression_db": 11.583437646587386,
+            "peak_sidelobe_level_db": -14.530330906146013,
+            "peak_null_level_db": -21.125862740980637,
+            "target_gain": 0.9583333333333333,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_5",
+            "quality_db": 13.038196142937963,
+            "suppression_db": 13.038196142937963,
+            "peak_sidelobe_level_db": -14.08112312128151,
+            "peak_null_level_db": -22.580621237331215,
+            "target_gain": 0.9583333333333333,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_6",
+            "quality_db": 10.512084438634755,
+            "suppression_db": 10.512084438634755,
+            "peak_sidelobe_level_db": -13.478533707556313,
+            "peak_null_level_db": -20.054509533028003,
+            "target_gain": 0.9583333333333334,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_7",
+            "quality_db": 12.852652044499688,
+            "suppression_db": 12.852652044499688,
+            "peak_sidelobe_level_db": -12.852652044499688,
+            "peak_null_level_db": -23.49419002384629,
+            "target_gain": 0.9583333333333333,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_8",
+            "quality_db": 12.283684331398721,
+            "suppression_db": 12.283684331398721,
+            "peak_sidelobe_level_db": -12.283684331398721,
+            "peak_null_level_db": -28.563928651507652,
+            "target_gain": 0.9583333333333333,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_9",
+            "quality_db": 11.49525088529771,
+            "suppression_db": 11.49525088529771,
+            "peak_sidelobe_level_db": -11.826175308320103,
+            "peak_null_level_db": -21.03767597969096,
+            "target_gain": 0.9583333333333333,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_10",
+            "quality_db": 10.894513655026268,
+            "suppression_db": 10.894513655026268,
+            "peak_sidelobe_level_db": -11.509672130188306,
+            "peak_null_level_db": -20.436938749419514,
+            "target_gain": 0.9583333333333333,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_11",
+            "quality_db": 11.346314499231854,
+            "suppression_db": 11.346314499231854,
+            "peak_sidelobe_level_db": -11.346314499231854,
+            "peak_null_level_db": -22.80374263145273,
+            "target_gain": 0.9583333333333333,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_12",
+            "quality_db": 11.346314499231854,
+            "suppression_db": 11.346314499231854,
+            "peak_sidelobe_level_db": -11.346314499231854,
+            "peak_null_level_db": -22.80374263145273,
+            "target_gain": 0.9583333333333333,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_13",
+            "quality_db": 10.894513655026273,
+            "suppression_db": 10.894513655026273,
+            "peak_sidelobe_level_db": -11.509672130188308,
+            "peak_null_level_db": -20.436938749419518,
+            "target_gain": 0.9583333333333333,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_14",
+            "quality_db": 11.49525088529771,
+            "suppression_db": 11.49525088529771,
+            "peak_sidelobe_level_db": -11.826175308320103,
+            "peak_null_level_db": -21.03767597969096,
+            "target_gain": 0.9583333333333333,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_15",
+            "quality_db": 12.28368433139872,
+            "suppression_db": 12.28368433139872,
+            "peak_sidelobe_level_db": -12.28368433139872,
+            "peak_null_level_db": -28.56392865150766,
+            "target_gain": 0.9583333333333333,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_16",
+            "quality_db": 12.852652044499687,
+            "suppression_db": 12.852652044499687,
+            "peak_sidelobe_level_db": -12.852652044499687,
+            "peak_null_level_db": -23.49419002384629,
+            "target_gain": 0.9583333333333333,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_17",
+            "quality_db": 10.512084438634757,
+            "suppression_db": 10.512084438634757,
+            "peak_sidelobe_level_db": -13.478533707556313,
+            "peak_null_level_db": -20.054509533028003,
+            "target_gain": 0.9583333333333334,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_18",
+            "quality_db": 13.038196142937966,
+            "suppression_db": 13.038196142937966,
+            "peak_sidelobe_level_db": -14.08112312128151,
+            "peak_null_level_db": -22.580621237331215,
+            "target_gain": 0.9583333333333333,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_19",
+            "quality_db": 11.583437646587386,
+            "suppression_db": 11.583437646587386,
+            "peak_sidelobe_level_db": -14.530330906146013,
+            "peak_null_level_db": -21.125862740980637,
+            "target_gain": 0.9583333333333333,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_20",
+            "quality_db": 12.870918231810705,
+            "suppression_db": 12.870918231810705,
+            "peak_sidelobe_level_db": -14.676107881658712,
+            "peak_null_level_db": -22.413343326203954,
+            "target_gain": 0.9583333333333333,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_21",
+            "quality_db": 10.539366611111785,
+            "suppression_db": 10.539366611111785,
+            "peak_sidelobe_level_db": -14.4331966977389,
+            "peak_null_level_db": -20.081791705505033,
+            "target_gain": 0.9583333333333333,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_22",
+            "quality_db": 12.187420132155415,
+            "suppression_db": 12.187420132155415,
+            "peak_sidelobe_level_db": -13.88127666162726,
+            "peak_null_level_db": -21.729845226548665,
+            "target_gain": 0.9583333333333334,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_23",
+            "quality_db": 13.206100858780786,
+            "suppression_db": 13.206100858780786,
+            "peak_sidelobe_level_db": -13.206100858780786,
+            "peak_null_level_db": -30.475716831283336,
+            "target_gain": 0.9583333333333334,
+            "target_gain_feasible": true
+          }
+        ]
+      }
+    ]
+  },
+  "nominal_reference_policy": {
+    "combined_score": 1.0,
+    "valid": 1.0,
+    "feasibility_rate": 1.0,
+    "development_score": 1.0,
+    "robustness_score": 0.4659902703974701,
+    "development_validation_gap": 0.5340097296025299,
+    "heldout_policy_score": 1.0,
+    "heldout_robustness_score": 0.30231708059370843,
+    "heldout_feasibility_rate": 1.0,
+    "mean_worst_shifted_quality_db": 9.756806080267499,
+    "mean_shifted_target_gain_feasibility_rate": 1.0,
+    "per_instance": [
+      {
+        "name": "dev_broadside12",
+        "split": "development",
+        "valid": true,
+        "score": 1.0,
+        "robustness_score": 0.42697605315045595,
+        "nominal_quality_db": 25.678475510098178,
+        "nominal_suppression_db": 25.678475510098178,
+        "nominal_peak_sidelobe_level_db": -25.678475510098178,
+        "nominal_peak_null_level_db": -35.25273552096118,
+        "baseline_nominal_quality_db": 10.012963628546052,
+        "nominal_reference_quality_db": 25.678475510098178,
+        "baseline_robust_quality_db": 4.199902563299521,
+        "robust_reference_quality_db": 9.258591112760538,
+        "worst_shifted_quality_db": 6.359841434265791,
+        "worst_shifted_suppression_db": 6.359841434265791,
+        "minimum_shifted_target_gain": 0.8711826568549261,
+        "shifted_target_gain_feasibility_rate": 1.0,
+        "normalized_l2_norm": 0.3149764521673722,
+        "normalized_max_element_amplitude": 0.12881735186409318,
+        "nominal": {
+          "name": "nominal",
+          "quality_db": 25.678475510098178,
+          "suppression_db": 25.678475510098178,
+          "peak_sidelobe_level_db": -25.678475510098178,
+          "peak_null_level_db": -35.25273552096118,
+          "target_gain": 1.0,
+          "target_gain_feasible": true
+        },
+        "shifted": [
+          {
+            "name": "frequency_low",
+            "quality_db": 21.90332368910653,
+            "suppression_db": 21.90332368910653,
+            "peak_sidelobe_level_db": -21.90332368910653,
+            "peak_null_level_db": -34.82895068880519,
+            "target_gain": 1.0,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "frequency_high",
+            "quality_db": 25.71061668136956,
+            "suppression_db": 25.71061668136956,
+            "peak_sidelobe_level_db": -26.408086512888286,
+            "peak_null_level_db": -35.25304177576281,
+            "target_gain": 1.0,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "position_error",
+            "quality_db": 22.755214717206126,
+            "suppression_db": 22.755214717206126,
+            "peak_sidelobe_level_db": -25.69118602084128,
+            "peak_null_level_db": -32.297639811599375,
+            "target_gain": 1.0,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "gain_phase_error",
+            "quality_db": 20.54333651674584,
+            "suppression_db": 20.54333651674584,
+            "peak_sidelobe_level_db": -25.657624719817164,
+            "peak_null_level_db": -30.085761611139084,
+            "target_gain": 0.9992741211195736,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_0",
+            "quality_db": 20.545129039131016,
+            "suppression_db": 20.545129039131016,
+            "peak_sidelobe_level_db": -22.484434441213054,
+            "peak_null_level_db": -30.087554133524264,
+            "target_gain": 0.9735301481748441,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_1",
+            "quality_db": 16.436775338750525,
+            "suppression_db": 16.436775338750525,
+            "peak_sidelobe_level_db": -19.377411322388888,
+            "peak_null_level_db": -25.979200433143777,
+            "target_gain": 0.9498882271575401,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_2",
+            "quality_db": 10.394629312695706,
+            "suppression_db": 10.394629312695706,
+            "peak_sidelobe_level_db": -17.570089344155836,
+            "peak_null_level_db": -19.937054407088958,
+            "target_gain": 0.9235151380075438,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_3",
+            "quality_db": 9.134713520364354,
+            "suppression_db": 9.134713520364354,
+            "peak_sidelobe_level_db": -17.05161753226186,
+            "peak_null_level_db": -18.677138614757606,
+            "target_gain": 0.8999426260079793,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_4",
+            "quality_db": 8.582306218212869,
+            "suppression_db": 8.582306218212869,
+            "peak_sidelobe_level_db": -16.28023271436195,
+            "peak_null_level_db": -18.124731312606116,
+            "target_gain": 0.8819412267107745,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_5",
+            "quality_db": 6.359841434265792,
+            "suppression_db": 6.359841434265792,
+            "peak_sidelobe_level_db": -14.053372150867647,
+            "peak_null_level_db": -15.90226652865904,
+            "target_gain": 0.8711826568549261,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_6",
+            "quality_db": 6.359841434265791,
+            "suppression_db": 6.359841434265791,
+            "peak_sidelobe_level_db": -14.053372150867645,
+            "peak_null_level_db": -15.90226652865904,
+            "target_gain": 0.8711826568549261,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_7",
+            "quality_db": 8.582306218212869,
+            "suppression_db": 8.582306218212869,
+            "peak_sidelobe_level_db": -16.280232714361954,
+            "peak_null_level_db": -18.124731312606116,
+            "target_gain": 0.8819412267107745,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_8",
+            "quality_db": 9.134713520364354,
+            "suppression_db": 9.134713520364354,
+            "peak_sidelobe_level_db": -17.051617532261865,
+            "peak_null_level_db": -18.677138614757606,
+            "target_gain": 0.8999426260079794,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_9",
+            "quality_db": 10.394629312695717,
+            "suppression_db": 10.394629312695717,
+            "peak_sidelobe_level_db": -17.570089344155836,
+            "peak_null_level_db": -19.937054407088965,
+            "target_gain": 0.9235151380075438,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_10",
+            "quality_db": 16.43677533875053,
+            "suppression_db": 16.43677533875053,
+            "peak_sidelobe_level_db": -19.377411322388888,
+            "peak_null_level_db": -25.979200433143777,
+            "target_gain": 0.9498882271575401,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_11",
+            "quality_db": 20.54512903913102,
+            "suppression_db": 20.54512903913102,
+            "peak_sidelobe_level_db": -22.484434441213054,
+            "peak_null_level_db": -30.087554133524268,
+            "target_gain": 0.9735301481748441,
+            "target_gain_feasible": true
+          }
+        ]
+      },
+      {
+        "name": "heldout_scan14",
+        "split": "heldout",
+        "valid": true,
+        "score": 1.0,
+        "robustness_score": 0.2590566160442896,
+        "nominal_quality_db": 25.423457080087708,
+        "nominal_suppression_db": 25.423457080087708,
+        "nominal_peak_sidelobe_level_db": -25.423457080087708,
+        "nominal_peak_null_level_db": -37.05466940385199,
+        "baseline_nominal_quality_db": 12.895352278158214,
+        "nominal_reference_quality_db": 25.423457080087708,
+        "baseline_robust_quality_db": 6.516274421352954,
+        "robust_reference_quality_db": 10.94307592537139,
+        "worst_shifted_quality_db": 7.663066638883742,
+        "worst_shifted_suppression_db": 7.663066638883742,
+        "minimum_shifted_target_gain": 0.8892971077755807,
+        "shifted_target_gain_feasibility_rate": 1.0,
+        "normalized_l2_norm": 0.290720796200682,
+        "normalized_max_element_amplitude": 0.11071929200764248,
+        "nominal": {
+          "name": "nominal",
+          "quality_db": 25.423457080087708,
+          "suppression_db": 25.423457080087708,
+          "peak_sidelobe_level_db": -25.423457080087708,
+          "peak_null_level_db": -37.05466940385199,
+          "target_gain": 1.0,
+          "target_gain_feasible": true
+        },
+        "shifted": [
+          {
+            "name": "frequency_low",
+            "quality_db": 18.47138000294295,
+            "suppression_db": 18.47138000294295,
+            "peak_sidelobe_level_db": -18.47138000294295,
+            "peak_null_level_db": -36.401507503368634,
+            "target_gain": 0.9952408649185503,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "frequency_high",
+            "quality_db": 24.27741824729018,
+            "suppression_db": 24.27741824729018,
+            "peak_sidelobe_level_db": -24.27741824729018,
+            "peak_null_level_db": -35.105957416194094,
+            "target_gain": 0.995302496767123,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "position_error",
+            "quality_db": 25.42181603537523,
+            "suppression_db": 25.42181603537523,
+            "peak_sidelobe_level_db": -25.42181603537523,
+            "peak_null_level_db": -35.19912270607602,
+            "target_gain": 1.0000144819316537,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "gain_phase_error",
+            "quality_db": 24.84909514356427,
+            "suppression_db": 24.84909514356427,
+            "peak_sidelobe_level_db": -25.35503202048828,
+            "peak_null_level_db": -34.391520237957515,
+            "target_gain": 0.9995242836635463,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_0",
+            "quality_db": 22.934414795428424,
+            "suppression_db": 22.934414795428424,
+            "peak_sidelobe_level_db": -22.934414795428424,
+            "peak_null_level_db": -32.72091101905446,
+            "target_gain": 0.9788982751671507,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_1",
+            "quality_db": 17.206931274233163,
+            "suppression_db": 17.206931274233163,
+            "peak_sidelobe_level_db": -20.361252467966153,
+            "peak_null_level_db": -26.749356368626415,
+            "target_gain": 0.9612136336857865,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_2",
+            "quality_db": 12.747530498446833,
+            "suppression_db": 12.747530498446833,
+            "peak_sidelobe_level_db": -18.67193182829325,
+            "peak_null_level_db": -22.289955592840084,
+            "target_gain": 0.9410560094989285,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_3",
+            "quality_db": 11.247540661643088,
+            "suppression_db": 11.247540661643088,
+            "peak_sidelobe_level_db": -18.23530670852339,
+            "peak_null_level_db": -20.789965756036338,
+            "target_gain": 0.923062560214268,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_4",
+            "quality_db": 10.789769569939192,
+            "suppression_db": 10.789769569939192,
+            "peak_sidelobe_level_db": -17.64953062651114,
+            "peak_null_level_db": -20.33219466433244,
+            "target_gain": 0.9105552210902698,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_5",
+            "quality_db": 8.406407399687359,
+            "suppression_db": 8.406407399687359,
+            "peak_sidelobe_level_db": -16.81769338884609,
+            "peak_null_level_db": -17.94883249408061,
+            "target_gain": 0.8959216229688247,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_6",
+            "quality_db": 7.663066638883742,
+            "suppression_db": 7.663066638883742,
+            "peak_sidelobe_level_db": -14.951990802791617,
+            "peak_null_level_db": -17.20549173327699,
+            "target_gain": 0.8892971077755807,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_7",
+            "quality_db": 8.726666365424192,
+            "suppression_db": 8.726666365424192,
+            "peak_sidelobe_level_db": -15.114877551211357,
+            "peak_null_level_db": -18.269091459817442,
+            "target_gain": 0.8918880513656134,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_8",
+            "quality_db": 9.034061865013935,
+            "suppression_db": 9.034061865013935,
+            "peak_sidelobe_level_db": -16.576956249134692,
+            "peak_null_level_db": -18.576486959407184,
+            "target_gain": 0.8971570360969255,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_9",
+            "quality_db": 9.143858353759668,
+            "suppression_db": 9.143858353759668,
+            "peak_sidelobe_level_db": -16.75981810431218,
+            "peak_null_level_db": -18.686283448152917,
+            "target_gain": 0.906751104035819,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_10",
+            "quality_db": 11.572219889639776,
+            "suppression_db": 11.572219889639776,
+            "peak_sidelobe_level_db": -18.18045165511323,
+            "peak_null_level_db": -21.114644984033024,
+            "target_gain": 0.9243181358022459,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_11",
+            "quality_db": 15.22323349103572,
+            "suppression_db": 15.22323349103572,
+            "peak_sidelobe_level_db": -18.854735115761848,
+            "peak_null_level_db": -24.765658585428966,
+            "target_gain": 0.9439767802922602,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_12",
+            "quality_db": 15.203949886245898,
+            "suppression_db": 15.203949886245898,
+            "peak_sidelobe_level_db": -20.12790288449398,
+            "peak_null_level_db": -24.746374980639146,
+            "target_gain": 0.9585430420437964,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_13",
+            "quality_db": 19.55168975678997,
+            "suppression_db": 19.55168975678997,
+            "peak_sidelobe_level_db": -22.74222788770995,
+            "peak_null_level_db": -29.09411485118322,
+            "target_gain": 0.9773765573636787,
+            "target_gain_feasible": true
+          }
+        ]
+      },
+      {
+        "name": "dev_scan16",
+        "split": "development",
+        "valid": true,
+        "score": 1.0,
+        "robustness_score": 0.4893873655675554,
+        "nominal_quality_db": 25.393229607496735,
+        "nominal_suppression_db": 25.393229607496735,
+        "nominal_peak_sidelobe_level_db": -25.393229607496735,
+        "nominal_peak_null_level_db": -35.61911650929708,
+        "baseline_nominal_quality_db": 10.562628611294587,
+        "nominal_reference_quality_db": 25.393229607496735,
+        "baseline_robust_quality_db": 5.762747760746489,
+        "robust_reference_quality_db": 12.108028937971355,
+        "worst_shifted_quality_db": 8.868048199853963,
+        "worst_shifted_suppression_db": 8.868048199853963,
+        "minimum_shifted_target_gain": 0.9045329940440044,
+        "shifted_target_gain_feasibility_rate": 1.0,
+        "normalized_l2_norm": 0.27112140301944393,
+        "normalized_max_element_amplitude": 0.0954670174146106,
+        "nominal": {
+          "name": "nominal",
+          "quality_db": 25.393229607496735,
+          "suppression_db": 25.393229607496735,
+          "peak_sidelobe_level_db": -25.393229607496735,
+          "peak_null_level_db": -35.61911650929708,
+          "target_gain": 1.0,
+          "target_gain_feasible": true
+        },
+        "shifted": [
+          {
+            "name": "frequency_low",
+            "quality_db": 16.858579148517062,
+            "suppression_db": 16.858579148517062,
+            "peak_sidelobe_level_db": -16.858579148517062,
+            "peak_null_level_db": -35.91557743191191,
+            "target_gain": 0.9900589712416823,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "frequency_high",
+            "quality_db": 22.053746059726066,
+            "suppression_db": 22.053746059726066,
+            "peak_sidelobe_level_db": -22.053746059726066,
+            "peak_null_level_db": -35.402711456630584,
+            "target_gain": 0.9899926082613275,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "position_error",
+            "quality_db": 25.41361085823027,
+            "suppression_db": 25.41361085823027,
+            "peak_sidelobe_level_db": -25.41361085823027,
+            "peak_null_level_db": -37.13021189252532,
+            "target_gain": 0.999953538080789,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "gain_phase_error",
+            "quality_db": 24.841545663286013,
+            "suppression_db": 24.841545663286013,
+            "peak_sidelobe_level_db": -24.841545663286013,
+            "peak_null_level_db": -35.4665525685853,
+            "target_gain": 0.9991103940330951,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_0",
+            "quality_db": 23.11711533905016,
+            "suppression_db": 23.11711533905016,
+            "peak_sidelobe_level_db": -23.11711533905016,
+            "peak_null_level_db": -33.948745601598674,
+            "target_gain": 0.9807635351041338,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_1",
+            "quality_db": 17.9548338481799,
+            "suppression_db": 17.9548338481799,
+            "peak_sidelobe_level_db": -21.10629709737788,
+            "peak_null_level_db": -27.49725894257315,
+            "target_gain": 0.9678495728250068,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_2",
+            "quality_db": 15.649200342861075,
+            "suppression_db": 15.649200342861075,
+            "peak_sidelobe_level_db": -19.683071771281966,
+            "peak_null_level_db": -25.191625437254324,
+            "target_gain": 0.9539708837077324,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_3",
+            "quality_db": 12.22089310064872,
+            "suppression_db": 12.22089310064872,
+            "peak_sidelobe_level_db": -19.00933562726007,
+            "peak_null_level_db": -21.763318195041972,
+            "target_gain": 0.9398238248274939,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_4",
+            "quality_db": 11.629297384299003,
+            "suppression_db": 11.629297384299003,
+            "peak_sidelobe_level_db": -19.21326038682706,
+            "peak_null_level_db": -21.171722478692253,
+            "target_gain": 0.9271524379279296,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_5",
+            "quality_db": 11.663515056470226,
+            "suppression_db": 11.663515056470226,
+            "peak_sidelobe_level_db": -18.245532441018742,
+            "peak_null_level_db": -21.205940150863473,
+            "target_gain": 0.9170974385584064,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_6",
+            "quality_db": 9.672830086960108,
+            "suppression_db": 9.672830086960108,
+            "peak_sidelobe_level_db": -17.12128426273392,
+            "peak_null_level_db": -19.215255181353356,
+            "target_gain": 0.9088096276032254,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_7",
+            "quality_db": 8.868048199853964,
+            "suppression_db": 8.868048199853964,
+            "peak_sidelobe_level_db": -15.81772355254261,
+            "peak_null_level_db": -18.410473294247215,
+            "target_gain": 0.9045329940440047,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_8",
+            "quality_db": 8.868048199853963,
+            "suppression_db": 8.868048199853963,
+            "peak_sidelobe_level_db": -15.817723552542608,
+            "peak_null_level_db": -18.41047329424721,
+            "target_gain": 0.9045329940440044,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_9",
+            "quality_db": 9.67283008696011,
+            "suppression_db": 9.67283008696011,
+            "peak_sidelobe_level_db": -17.12128426273392,
+            "peak_null_level_db": -19.21525518135336,
+            "target_gain": 0.9088096276032254,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_10",
+            "quality_db": 11.66351505647022,
+            "suppression_db": 11.66351505647022,
+            "peak_sidelobe_level_db": -18.245532441018742,
+            "peak_null_level_db": -21.20594015086347,
+            "target_gain": 0.9170974385584064,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_11",
+            "quality_db": 11.629297384299,
+            "suppression_db": 11.629297384299,
+            "peak_sidelobe_level_db": -19.213260386827063,
+            "peak_null_level_db": -21.171722478692246,
+            "target_gain": 0.9271524379279296,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_12",
+            "quality_db": 12.220893100648727,
+            "suppression_db": 12.220893100648727,
+            "peak_sidelobe_level_db": -19.009335627260075,
+            "peak_null_level_db": -21.763318195041975,
+            "target_gain": 0.9398238248274939,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_13",
+            "quality_db": 15.649200342861086,
+            "suppression_db": 15.649200342861086,
+            "peak_sidelobe_level_db": -19.683071771281966,
+            "peak_null_level_db": -25.19162543725433,
+            "target_gain": 0.9539708837077324,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_14",
+            "quality_db": 17.954833848179902,
+            "suppression_db": 17.954833848179902,
+            "peak_sidelobe_level_db": -21.10629709737788,
+            "peak_null_level_db": -27.49725894257315,
+            "target_gain": 0.9678495728250068,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_15",
+            "quality_db": 23.117115339050166,
+            "suppression_db": 23.117115339050166,
+            "peak_sidelobe_level_db": -23.117115339050166,
+            "peak_null_level_db": -33.94874560159866,
+            "target_gain": 0.9807635351041338,
+            "target_gain_feasible": true
+          }
+        ]
+      },
+      {
+        "name": "heldout_scan22",
+        "split": "heldout",
+        "valid": true,
+        "score": 1.0,
+        "robustness_score": 0.34557754514312733,
+        "nominal_quality_db": 19.57332616435086,
+        "nominal_suppression_db": 19.57332616435086,
+        "nominal_peak_sidelobe_level_db": -19.57332616435086,
+        "nominal_peak_null_level_db": -31.887276881547407,
+        "baseline_nominal_quality_db": 13.202248794848721,
+        "nominal_reference_quality_db": 19.57332616435086,
+        "baseline_robust_quality_db": 9.405610681068467,
+        "robust_reference_quality_db": 14.531249541212429,
+        "worst_shifted_quality_db": 11.176916375647235,
+        "worst_shifted_suppression_db": 11.176916375647235,
+        "minimum_shifted_target_gain": 0.9314974236627374,
+        "shifted_target_gain_feasibility_rate": 1.0,
+        "normalized_l2_norm": 0.2299775105890352,
+        "normalized_max_element_amplitude": 0.0685025763372626,
+        "nominal": {
+          "name": "nominal",
+          "quality_db": 19.57332616435086,
+          "suppression_db": 19.57332616435086,
+          "peak_sidelobe_level_db": -19.57332616435086,
+          "peak_null_level_db": -31.887276881547407,
+          "target_gain": 1.0,
+          "target_gain_feasible": true
+        },
+        "shifted": [
+          {
+            "name": "frequency_low",
+            "quality_db": 12.730310637462793,
+            "suppression_db": 12.730310637462793,
+            "peak_sidelobe_level_db": -12.730310637462793,
+            "peak_null_level_db": -34.644985229098936,
+            "target_gain": 0.9610564146033691,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "frequency_high",
+            "quality_db": 16.967203169361042,
+            "suppression_db": 16.967203169361042,
+            "peak_sidelobe_level_db": -16.967203169361042,
+            "peak_null_level_db": -29.29974706550956,
+            "target_gain": 0.9610564146033692,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "position_error",
+            "quality_db": 19.616087591958248,
+            "suppression_db": 19.616087591958248,
+            "peak_sidelobe_level_db": -19.616087591958248,
+            "peak_null_level_db": -31.608716767878718,
+            "target_gain": 0.99983672318422,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "gain_phase_error",
+            "quality_db": 19.561588025514563,
+            "suppression_db": 19.561588025514563,
+            "peak_sidelobe_level_db": -19.561588025514563,
+            "peak_null_level_db": -31.89704573999686,
+            "target_gain": 0.9997203739358793,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_0",
+            "quality_db": 19.87605117328166,
+            "suppression_db": 19.87605117328166,
+            "peak_sidelobe_level_db": -19.87605117328166,
+            "peak_null_level_db": -32.74848534611691,
+            "target_gain": 0.9859261295211994,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_1",
+            "quality_db": 17.609512666046573,
+            "suppression_db": 17.609512666046573,
+            "peak_sidelobe_level_db": -18.189205315668392,
+            "peak_null_level_db": -27.15193776043982,
+            "target_gain": 0.9795682526684997,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_2",
+            "quality_db": 19.50490973283698,
+            "suppression_db": 19.50490973283698,
+            "peak_sidelobe_level_db": -19.50490973283698,
+            "peak_null_level_db": -30.19733394836976,
+            "target_gain": 0.9727041819799522,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_3",
+            "quality_db": 16.079365982172348,
+            "suppression_db": 16.079365982172348,
+            "peak_sidelobe_level_db": -17.480510078894987,
+            "peak_null_level_db": -25.6217910765656,
+            "target_gain": 0.9655820701485958,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_4",
+            "quality_db": 14.782590304515393,
+            "suppression_db": 14.782590304515393,
+            "peak_sidelobe_level_db": -18.99894399934808,
+            "peak_null_level_db": -24.325015398908644,
+            "target_gain": 0.9584782597262484,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_5",
+            "quality_db": 16.326670367302707,
+            "suppression_db": 16.326670367302707,
+            "peak_sidelobe_level_db": -17.039798537643456,
+            "peak_null_level_db": -25.869095461695956,
+            "target_gain": 0.9516828866442149,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_6",
+            "quality_db": 11.953442622716736,
+            "suppression_db": 11.953442622716736,
+            "peak_sidelobe_level_db": -18.659955719669558,
+            "peak_null_level_db": -21.495867717109984,
+            "target_gain": 0.9454842581154873,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_7",
+            "quality_db": 13.795535089331112,
+            "suppression_db": 13.795535089331112,
+            "peak_sidelobe_level_db": -17.04082375594816,
+            "peak_null_level_db": -23.337960183724363,
+            "target_gain": 0.9401529644914668,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_8",
+            "quality_db": 11.213701152711963,
+            "suppression_db": 11.213701152711963,
+            "peak_sidelobe_level_db": -18.482837768233065,
+            "peak_null_level_db": -20.75612624710521,
+            "target_gain": 0.9359267156563857,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_9",
+            "quality_db": 12.300572357327464,
+            "suppression_db": 12.300572357327464,
+            "peak_sidelobe_level_db": -17.50699486132573,
+            "peak_null_level_db": -21.842997451720713,
+            "target_gain": 0.9329968573852123,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_10",
+            "quality_db": 12.337565048611994,
+            "suppression_db": 12.337565048611994,
+            "peak_sidelobe_level_db": -17.59548686569719,
+            "peak_null_level_db": -21.879990143005237,
+            "target_gain": 0.9314974236627374,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_11",
+            "quality_db": 12.254261796389063,
+            "suppression_db": 12.254261796389063,
+            "peak_sidelobe_level_db": -17.595392044958505,
+            "peak_null_level_db": -21.79668689078231,
+            "target_gain": 0.9314974236627374,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_12",
+            "quality_db": 12.3018383754081,
+            "suppression_db": 12.3018383754081,
+            "peak_sidelobe_level_db": -17.44402063392043,
+            "peak_null_level_db": -21.844263469801348,
+            "target_gain": 0.9329968573852123,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_13",
+            "quality_db": 11.176916375647235,
+            "suppression_db": 11.176916375647235,
+            "peak_sidelobe_level_db": -18.467189751355043,
+            "peak_null_level_db": -20.719341470040483,
+            "target_gain": 0.9359267156563859,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_14",
+            "quality_db": 13.795191495964175,
+            "suppression_db": 13.795191495964175,
+            "peak_sidelobe_level_db": -16.982221468205726,
+            "peak_null_level_db": -23.337616590357424,
+            "target_gain": 0.9401529644914668,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_15",
+            "quality_db": 11.96776344830273,
+            "suppression_db": 11.96776344830273,
+            "peak_sidelobe_level_db": -18.616492011630143,
+            "peak_null_level_db": -21.51018854269598,
+            "target_gain": 0.9454842581154872,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_16",
+            "quality_db": 16.33157595125717,
+            "suppression_db": 16.33157595125717,
+            "peak_sidelobe_level_db": -16.997392716747093,
+            "peak_null_level_db": -25.87400104565042,
+            "target_gain": 0.9516828866442149,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_17",
+            "quality_db": 14.86639445930129,
+            "suppression_db": 14.86639445930129,
+            "peak_sidelobe_level_db": -18.961262268721907,
+            "peak_null_level_db": -24.40881955369454,
+            "target_gain": 0.9584782597262484,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_18",
+            "quality_db": 16.080191869549555,
+            "suppression_db": 16.080191869549555,
+            "peak_sidelobe_level_db": -17.453963266162702,
+            "peak_null_level_db": -25.622616963942804,
+            "target_gain": 0.9655820701485958,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_19",
+            "quality_db": 19.482503188783422,
+            "suppression_db": 19.482503188783422,
+            "peak_sidelobe_level_db": -19.482503188783422,
+            "peak_null_level_db": -30.422643200528874,
+            "target_gain": 0.9727041819799522,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_20",
+            "quality_db": 17.56767579868356,
+            "suppression_db": 17.56767579868356,
+            "peak_sidelobe_level_db": -18.174519525790252,
+            "peak_null_level_db": -27.11010089307681,
+            "target_gain": 0.9795682526684997,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_21",
+            "quality_db": 19.870131333791512,
+            "suppression_db": 19.870131333791512,
+            "peak_sidelobe_level_db": -19.870131333791512,
+            "peak_null_level_db": -32.76360846814478,
+            "target_gain": 0.9859261295211996,
+            "target_gain_feasible": true
+          }
+        ]
+      },
+      {
+        "name": "dev_scan20",
+        "split": "development",
+        "valid": true,
+        "score": 1.0,
+        "robustness_score": 0.45400219813384,
+        "nominal_quality_db": 25.13538791691274,
+        "nominal_suppression_db": 25.13538791691274,
+        "nominal_peak_sidelobe_level_db": -25.13538791691274,
+        "nominal_peak_null_level_db": -36.1234792148075,
+        "baseline_nominal_quality_db": 13.189175035011615,
+        "nominal_reference_quality_db": 25.13538791691274,
+        "baseline_robust_quality_db": 8.802886166373039,
+        "robust_reference_quality_db": 13.72930887398569,
+        "worst_shifted_quality_db": 11.039492904565646,
+        "worst_shifted_suppression_db": 11.039492904565646,
+        "minimum_shifted_target_gain": 0.924427982415502,
+        "shifted_target_gain_feasibility_rate": 1.0,
+        "normalized_l2_norm": 0.24150826421190058,
+        "normalized_max_element_amplitude": 0.07557201758449801,
+        "nominal": {
+          "name": "nominal",
+          "quality_db": 25.13538791691274,
+          "suppression_db": 25.13538791691274,
+          "peak_sidelobe_level_db": -25.13538791691274,
+          "peak_null_level_db": -36.1234792148075,
+          "target_gain": 1.0,
+          "target_gain_feasible": true
+        },
+        "shifted": [
+          {
+            "name": "frequency_low",
+            "quality_db": 13.679901170945081,
+            "suppression_db": 13.679901170945081,
+            "peak_sidelobe_level_db": -13.679901170945081,
+            "peak_null_level_db": -35.85697357835847,
+            "target_gain": 0.9703546749298194,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "frequency_high",
+            "quality_db": 17.77563839911336,
+            "suppression_db": 17.77563839911336,
+            "peak_sidelobe_level_db": -17.77563839911336,
+            "peak_null_level_db": -35.85718746733994,
+            "target_gain": 0.9703546749298193,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "position_error",
+            "quality_db": 25.13453038257691,
+            "suppression_db": 25.13453038257691,
+            "peak_sidelobe_level_db": -25.13453038257691,
+            "peak_null_level_db": -36.12183913095808,
+            "target_gain": 0.9998857623979264,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "gain_phase_error",
+            "quality_db": 23.76978279301273,
+            "suppression_db": 23.76978279301273,
+            "peak_sidelobe_level_db": -23.76978279301273,
+            "peak_null_level_db": -36.08971212426007,
+            "target_gain": 0.9997128103130772,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_0",
+            "quality_db": 23.32157517947699,
+            "suppression_db": 23.32157517947699,
+            "peak_sidelobe_level_db": -23.32157517947699,
+            "peak_null_level_db": -34.06049610086089,
+            "target_gain": 0.9844642201801808,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_1",
+            "quality_db": 19.361183883190986,
+            "suppression_db": 19.361183883190986,
+            "peak_sidelobe_level_db": -22.008018901507175,
+            "peak_null_level_db": -28.903608977584234,
+            "target_gain": 0.9766702248997892,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_2",
+            "quality_db": 16.869671675654182,
+            "suppression_db": 16.869671675654182,
+            "peak_sidelobe_level_db": -20.91663089813477,
+            "peak_null_level_db": -26.412096770047434,
+            "target_gain": 0.9682275257017655,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_3",
+            "quality_db": 15.921758944828504,
+            "suppression_db": 15.921758944828504,
+            "peak_sidelobe_level_db": -20.223245806252695,
+            "peak_null_level_db": -25.464184039221752,
+            "target_gain": 0.9595134017585158,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_4",
+            "quality_db": 16.714835970134963,
+            "suppression_db": 16.714835970134963,
+            "peak_sidelobe_level_db": -20.01781663648657,
+            "peak_null_level_db": -26.257261064528215,
+            "target_gain": 0.9509467017011256,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_5",
+            "quality_db": 13.613807718926001,
+            "suppression_db": 13.613807718926001,
+            "peak_sidelobe_level_db": -20.378488276206145,
+            "peak_null_level_db": -23.15623281331925,
+            "target_gain": 0.942960958132079,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_6",
+            "quality_db": 11.875329146968042,
+            "suppression_db": 11.875329146968042,
+            "peak_sidelobe_level_db": -19.832242341914455,
+            "peak_null_level_db": -21.417754241361287,
+            "target_gain": 0.935975639225462,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_7",
+            "quality_db": 12.315401640229165,
+            "suppression_db": 12.315401640229165,
+            "peak_sidelobe_level_db": -19.6770103050845,
+            "peak_null_level_db": -21.857826734622414,
+            "target_gain": 0.9303677047079472,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_8",
+            "quality_db": 12.519495116390422,
+            "suppression_db": 12.519495116390422,
+            "peak_sidelobe_level_db": -17.94128638215559,
+            "peak_null_level_db": -22.061920210783672,
+            "target_gain": 0.9264456412776332,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_9",
+            "quality_db": 11.039492904565646,
+            "suppression_db": 11.039492904565646,
+            "peak_sidelobe_level_db": -17.11591625273818,
+            "peak_null_level_db": -20.581917998958893,
+            "target_gain": 0.924427982415502,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_10",
+            "quality_db": 11.039492904565646,
+            "suppression_db": 11.039492904565646,
+            "peak_sidelobe_level_db": -17.11591625273818,
+            "peak_null_level_db": -20.581917998958893,
+            "target_gain": 0.924427982415502,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_11",
+            "quality_db": 12.519495116390422,
+            "suppression_db": 12.519495116390422,
+            "peak_sidelobe_level_db": -17.94128638215559,
+            "peak_null_level_db": -22.061920210783672,
+            "target_gain": 0.9264456412776332,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_12",
+            "quality_db": 12.315401640229167,
+            "suppression_db": 12.315401640229167,
+            "peak_sidelobe_level_db": -19.6770103050845,
+            "peak_null_level_db": -21.857826734622417,
+            "target_gain": 0.930367704707947,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_13",
+            "quality_db": 11.875329146968042,
+            "suppression_db": 11.875329146968042,
+            "peak_sidelobe_level_db": -19.832242341914455,
+            "peak_null_level_db": -21.417754241361287,
+            "target_gain": 0.935975639225462,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_14",
+            "quality_db": 13.613807718926001,
+            "suppression_db": 13.613807718926001,
+            "peak_sidelobe_level_db": -20.378488276206145,
+            "peak_null_level_db": -23.15623281331925,
+            "target_gain": 0.942960958132079,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_15",
+            "quality_db": 16.714835970134967,
+            "suppression_db": 16.714835970134967,
+            "peak_sidelobe_level_db": -20.017816636486575,
+            "peak_null_level_db": -26.257261064528215,
+            "target_gain": 0.9509467017011257,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_16",
+            "quality_db": 15.921758944828504,
+            "suppression_db": 15.921758944828504,
+            "peak_sidelobe_level_db": -20.223245806252695,
+            "peak_null_level_db": -25.464184039221752,
+            "target_gain": 0.9595134017585158,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_17",
+            "quality_db": 16.869671675654182,
+            "suppression_db": 16.869671675654182,
+            "peak_sidelobe_level_db": -20.916630898134777,
+            "peak_null_level_db": -26.412096770047427,
+            "target_gain": 0.9682275257017656,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_18",
+            "quality_db": 19.361183883190986,
+            "suppression_db": 19.361183883190986,
+            "peak_sidelobe_level_db": -22.008018901507175,
+            "peak_null_level_db": -28.903608977584234,
+            "target_gain": 0.9766702248997892,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_19",
+            "quality_db": 23.321575179476994,
+            "suppression_db": 23.321575179476994,
+            "peak_sidelobe_level_db": -23.321575179476994,
+            "peak_null_level_db": -34.06049610086088,
+            "target_gain": 0.9844642201801808,
+            "target_gain_feasible": true
+          }
+        ]
+      },
+      {
+        "name": "dev_scan24",
+        "split": "development",
+        "valid": true,
+        "score": 1.0,
+        "robustness_score": 0.49359546473802896,
+        "nominal_quality_db": 24.992539757926547,
+        "nominal_suppression_db": 24.992539757926547,
+        "nominal_peak_sidelobe_level_db": -24.992539757926547,
+        "nominal_peak_null_level_db": -38.080451765896505,
+        "baseline_nominal_quality_db": 13.211448213702896,
+        "nominal_reference_quality_db": 24.992539757926547,
+        "baseline_robust_quality_db": 10.512084438634755,
+        "robust_reference_quality_db": 15.065929650609744,
+        "worst_shifted_quality_db": 12.759841782384598,
+        "worst_shifted_suppression_db": 12.759841782384598,
+        "minimum_shifted_target_gain": 0.937359300537418,
+        "shifted_target_gain_feasibility_rate": 1.0,
+        "normalized_l2_norm": 0.2199574485400826,
+        "normalized_max_element_amplitude": 0.06264069946258201,
+        "nominal": {
+          "name": "nominal",
+          "quality_db": 24.992539757926547,
+          "suppression_db": 24.992539757926547,
+          "peak_sidelobe_level_db": -24.992539757926547,
+          "peak_null_level_db": -38.080451765896505,
+          "target_gain": 1.0,
+          "target_gain_feasible": true
+        },
+        "shifted": [
+          {
+            "name": "frequency_low",
+            "quality_db": 17.332267811136806,
+            "suppression_db": 17.332267811136806,
+            "peak_sidelobe_level_db": -17.332267811136806,
+            "peak_null_level_db": -39.55120432488369,
+            "target_gain": 0.9937892229446326,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "frequency_high",
+            "quality_db": 23.937630238144195,
+            "suppression_db": 23.937630238144195,
+            "peak_sidelobe_level_db": -23.937630238144195,
+            "peak_null_level_db": -37.15858939001778,
+            "target_gain": 0.9937892229446326,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "position_error",
+            "quality_db": 24.98702700429218,
+            "suppression_db": 24.98702700429218,
+            "peak_sidelobe_level_db": -24.98702700429218,
+            "peak_null_level_db": -36.89036294024872,
+            "target_gain": 0.9999809532632074,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "gain_phase_error",
+            "quality_db": 24.923476295892097,
+            "suppression_db": 24.923476295892097,
+            "peak_sidelobe_level_db": -24.923476295892097,
+            "peak_null_level_db": -39.30110831486645,
+            "target_gain": 0.9994582365234408,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_0",
+            "quality_db": 23.651296163411395,
+            "suppression_db": 23.651296163411395,
+            "peak_sidelobe_level_db": -23.651296163411395,
+            "peak_null_level_db": -40.00397131086938,
+            "target_gain": 0.9871363548202249,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_1",
+            "quality_db": 21.773952784497006,
+            "suppression_db": 21.773952784497006,
+            "peak_sidelobe_level_db": -22.699728318886237,
+            "peak_null_level_db": -31.316377878890258,
+            "target_gain": 0.9818518958498166,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_2",
+            "quality_db": 19.1078834032693,
+            "suppression_db": 19.1078834032693,
+            "peak_sidelobe_level_db": -21.841584766801006,
+            "peak_null_level_db": -28.65030849766255,
+            "target_gain": 0.9761661914001156,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_3",
+            "quality_db": 19.615734145244453,
+            "suppression_db": 19.615734145244453,
+            "peak_sidelobe_level_db": -21.199271984518155,
+            "peak_null_level_db": -29.158159239637705,
+            "target_gain": 0.9702488303122077,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_4",
+            "quality_db": 16.893101238336968,
+            "suppression_db": 16.893101238336968,
+            "peak_sidelobe_level_db": -20.845167713896355,
+            "peak_null_level_db": -26.435526332730216,
+            "target_gain": 0.9642888164032217,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_5",
+            "quality_db": 17.02121278570155,
+            "suppression_db": 17.02121278570155,
+            "peak_sidelobe_level_db": -20.83100869596808,
+            "peak_null_level_db": -26.563637880094795,
+            "target_gain": 0.9584864254230322,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_6",
+            "quality_db": 14.585325877791355,
+            "suppression_db": 14.585325877791355,
+            "peak_sidelobe_level_db": -21.211325325962378,
+            "peak_null_level_db": -24.127750972184604,
+            "target_gain": 0.9530442849290357,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_7",
+            "quality_db": 15.301802604164635,
+            "suppression_db": 15.301802604164635,
+            "peak_sidelobe_level_db": -20.974040729090618,
+            "peak_null_level_db": -24.844227698557884,
+            "target_gain": 0.9481581317161065,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_8",
+            "quality_db": 15.335210106081155,
+            "suppression_db": 15.335210106081155,
+            "peak_sidelobe_level_db": -20.99949753989844,
+            "peak_null_level_db": -24.877635200474405,
+            "target_gain": 0.9440077252153654,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_9",
+            "quality_db": 13.045997558757268,
+            "suppression_db": 13.045997558757268,
+            "peak_sidelobe_level_db": -19.718989598646665,
+            "peak_null_level_db": -22.588422653150516,
+            "target_gain": 0.9407483924752271,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_10",
+            "quality_db": 12.759841782384598,
+            "suppression_db": 12.759841782384598,
+            "peak_sidelobe_level_db": -18.553568519366745,
+            "peak_null_level_db": -22.302266876777846,
+            "target_gain": 0.9385036509182293,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_11",
+            "quality_db": 13.389221328422071,
+            "suppression_db": 13.389221328422071,
+            "peak_sidelobe_level_db": -17.990575019330844,
+            "peak_null_level_db": -22.93164642281532,
+            "target_gain": 0.937359300537418,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_12",
+            "quality_db": 13.38922132842207,
+            "suppression_db": 13.38922132842207,
+            "peak_sidelobe_level_db": -17.990575019330844,
+            "peak_null_level_db": -22.93164642281532,
+            "target_gain": 0.937359300537418,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_13",
+            "quality_db": 12.759841782384598,
+            "suppression_db": 12.759841782384598,
+            "peak_sidelobe_level_db": -18.553568519366745,
+            "peak_null_level_db": -22.302266876777846,
+            "target_gain": 0.9385036509182293,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_14",
+            "quality_db": 13.045997558757264,
+            "suppression_db": 13.045997558757264,
+            "peak_sidelobe_level_db": -19.718989598646665,
+            "peak_null_level_db": -22.588422653150513,
+            "target_gain": 0.9407483924752271,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_15",
+            "quality_db": 15.335210106081155,
+            "suppression_db": 15.335210106081155,
+            "peak_sidelobe_level_db": -20.99949753989844,
+            "peak_null_level_db": -24.877635200474405,
+            "target_gain": 0.9440077252153654,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_16",
+            "quality_db": 15.301802604164635,
+            "suppression_db": 15.301802604164635,
+            "peak_sidelobe_level_db": -20.974040729090618,
+            "peak_null_level_db": -24.844227698557884,
+            "target_gain": 0.9481581317161065,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_17",
+            "quality_db": 14.585325877791355,
+            "suppression_db": 14.585325877791355,
+            "peak_sidelobe_level_db": -21.21132532596237,
+            "peak_null_level_db": -24.127750972184604,
+            "target_gain": 0.9530442849290357,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_18",
+            "quality_db": 17.021212785701554,
+            "suppression_db": 17.021212785701554,
+            "peak_sidelobe_level_db": -20.83100869596808,
+            "peak_null_level_db": -26.563637880094802,
+            "target_gain": 0.9584864254230322,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_19",
+            "quality_db": 16.89310123833697,
+            "suppression_db": 16.89310123833697,
+            "peak_sidelobe_level_db": -20.84516771389636,
+            "peak_null_level_db": -26.43552633273022,
+            "target_gain": 0.9642888164032217,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_20",
+            "quality_db": 19.615734145244453,
+            "suppression_db": 19.615734145244453,
+            "peak_sidelobe_level_db": -21.199271984518155,
+            "peak_null_level_db": -29.158159239637705,
+            "target_gain": 0.9702488303122077,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_21",
+            "quality_db": 19.10788340326931,
+            "suppression_db": 19.10788340326931,
+            "peak_sidelobe_level_db": -21.841584766801006,
+            "peak_null_level_db": -28.650308497662557,
+            "target_gain": 0.9761661914001156,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_22",
+            "quality_db": 21.77395278449701,
+            "suppression_db": 21.77395278449701,
+            "peak_sidelobe_level_db": -22.699728318886237,
+            "peak_null_level_db": -31.316377878890258,
+            "target_gain": 0.9818518958498166,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_23",
+            "quality_db": 23.6512961634114,
+            "suppression_db": 23.6512961634114,
+            "peak_sidelobe_level_db": -23.6512961634114,
+            "peak_null_level_db": -40.003971310869375,
+            "target_gain": 0.9871363548202249,
+            "target_gain_feasible": true
+          }
+        ]
+      }
+    ]
+  },
+  "robust_reference_policy": {
+    "combined_score": 0.3843748949384173,
+    "valid": 1.0,
+    "feasibility_rate": 1.0,
+    "development_score": 0.3843748949384173,
+    "robustness_score": 1.0,
+    "development_validation_gap": -0.6156251050615826,
+    "heldout_policy_score": 0.5079326526478438,
+    "heldout_robustness_score": 1.0,
+    "heldout_feasibility_rate": 1.0,
+    "mean_worst_shifted_quality_db": 12.540464643831832,
+    "mean_shifted_target_gain_feasibility_rate": 1.0,
+    "per_instance": [
+      {
+        "name": "dev_broadside12",
+        "split": "development",
+        "valid": true,
+        "score": 0.31480393148527763,
+        "robustness_score": 1.0,
+        "nominal_quality_db": 14.94452835758799,
+        "nominal_suppression_db": 14.94452835758799,
+        "nominal_peak_sidelobe_level_db": -14.94452835758799,
+        "nominal_peak_null_level_db": -61.85138785879875,
+        "baseline_nominal_quality_db": 10.012963628546052,
+        "nominal_reference_quality_db": 25.678475510098178,
+        "baseline_robust_quality_db": 4.199902563299521,
+        "robust_reference_quality_db": 9.258591112760538,
+        "worst_shifted_quality_db": 9.258591112760538,
+        "worst_shifted_suppression_db": 9.258591112760538,
+        "minimum_shifted_target_gain": 0.8976294320021698,
+        "shifted_target_gain_feasibility_rate": 1.0,
+        "normalized_l2_norm": 0.2965112840456563,
+        "normalized_max_element_amplitude": 0.10257758075543824,
+        "nominal": {
+          "name": "nominal",
+          "quality_db": 14.94452835758799,
+          "suppression_db": 14.94452835758799,
+          "peak_sidelobe_level_db": -14.94452835758799,
+          "peak_null_level_db": -61.85138785879875,
+          "target_gain": 1.0,
+          "target_gain_feasible": true
+        },
+        "shifted": [
+          {
+            "name": "frequency_low",
+            "quality_db": 14.94497729399704,
+            "suppression_db": 14.94497729399704,
+            "peak_sidelobe_level_db": -14.94497729399704,
+            "peak_null_level_db": -40.762733405397746,
+            "target_gain": 1.0,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "frequency_high",
+            "quality_db": 14.944932440797672,
+            "suppression_db": 14.944932440797672,
+            "peak_sidelobe_level_db": -14.944932440797672,
+            "peak_null_level_db": -41.089984353689424,
+            "target_gain": 1.0,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "position_error",
+            "quality_db": 14.93417228945194,
+            "suppression_db": 14.93417228945194,
+            "peak_sidelobe_level_db": -14.93417228945194,
+            "peak_null_level_db": -35.93210959992009,
+            "target_gain": 1.0,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "gain_phase_error",
+            "quality_db": 14.850604803911779,
+            "suppression_db": 14.850604803911779,
+            "peak_sidelobe_level_db": -14.850604803911779,
+            "peak_null_level_db": -34.521108718912444,
+            "target_gain": 0.998857359663671,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_0",
+            "quality_db": 14.425396680966285,
+            "suppression_db": 14.425396680966285,
+            "peak_sidelobe_level_db": -14.425396680966285,
+            "peak_null_level_db": -25.94587822454497,
+            "target_gain": 0.9526643946414811,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_1",
+            "quality_db": 12.640742111840513,
+            "suppression_db": 12.640742111840513,
+            "peak_sidelobe_level_db": -16.775118790529092,
+            "peak_null_level_db": -22.18316720623376,
+            "target_gain": 0.9285515173963849,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_2",
+            "quality_db": 9.258591112779186,
+            "suppression_db": 9.258591112779186,
+            "peak_sidelobe_level_db": -15.616747785217807,
+            "peak_null_level_db": -18.801016207172438,
+            "target_gain": 0.8976294320023704,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_3",
+            "quality_db": 10.872087891060499,
+            "suppression_db": 10.872087891060499,
+            "peak_sidelobe_level_db": -13.036886397603688,
+            "peak_null_level_db": -20.414512985453747,
+            "target_gain": 0.9130975764904046,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_4",
+            "quality_db": 10.495052430383085,
+            "suppression_db": 10.495052430383085,
+            "peak_sidelobe_level_db": -12.00321487780225,
+            "peak_null_level_db": -20.03747752477633,
+            "target_gain": 0.9102011296700472,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_5",
+            "quality_db": 9.31693968597763,
+            "suppression_db": 9.31693968597763,
+            "peak_sidelobe_level_db": -10.266609364581015,
+            "peak_null_level_db": -18.85936478037088,
+            "target_gain": 0.8979032373617201,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_6",
+            "quality_db": 9.31693968598899,
+            "suppression_db": 9.31693968598899,
+            "peak_sidelobe_level_db": -10.266609364585783,
+            "peak_null_level_db": -18.859364780382236,
+            "target_gain": 0.8979032373618396,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_7",
+            "quality_db": 10.495052430369732,
+            "suppression_db": 10.495052430369732,
+            "peak_sidelobe_level_db": -12.00321487779686,
+            "peak_null_level_db": -20.037477524762977,
+            "target_gain": 0.910201129669923,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_8",
+            "quality_db": 10.87208789105648,
+            "suppression_db": 10.87208789105648,
+            "peak_sidelobe_level_db": -13.036886397603265,
+            "peak_null_level_db": -20.414512985449733,
+            "target_gain": 0.9130975764903669,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_9",
+            "quality_db": 9.258591112760538,
+            "suppression_db": 9.258591112760538,
+            "peak_sidelobe_level_db": -15.616747785216221,
+            "peak_null_level_db": -18.801016207153786,
+            "target_gain": 0.8976294320021698,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_10",
+            "quality_db": 12.640742111826913,
+            "suppression_db": 12.640742111826913,
+            "peak_sidelobe_level_db": -16.77511879052153,
+            "peak_null_level_db": -22.183167206220162,
+            "target_gain": 0.9285515173962776,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_11",
+            "quality_db": 14.425396680965974,
+            "suppression_db": 14.425396680965974,
+            "peak_sidelobe_level_db": -14.425396680965974,
+            "peak_null_level_db": -25.945878224533033,
+            "target_gain": 0.9526643946414173,
+            "target_gain_feasible": true
+          }
+        ]
+      },
+      {
+        "name": "heldout_scan14",
+        "split": "heldout",
+        "valid": true,
+        "score": 0.1851328110432533,
+        "robustness_score": 1.0,
+        "nominal_quality_db": 15.214715537183901,
+        "nominal_suppression_db": 15.214715537183901,
+        "nominal_peak_sidelobe_level_db": -15.214715537183901,
+        "nominal_peak_null_level_db": -67.25370483446822,
+        "baseline_nominal_quality_db": 12.895352278158214,
+        "nominal_reference_quality_db": 25.423457080087708,
+        "baseline_robust_quality_db": 6.516274421352954,
+        "robust_reference_quality_db": 10.94307592537139,
+        "worst_shifted_quality_db": 10.94307592537139,
+        "worst_shifted_suppression_db": 10.94307592537139,
+        "minimum_shifted_target_gain": 0.9142642726910075,
+        "shifted_target_gain_feasibility_rate": 1.0,
+        "normalized_l2_norm": 0.2739264127559675,
+        "normalized_max_element_amplitude": 0.08622476522953862,
+        "nominal": {
+          "name": "nominal",
+          "quality_db": 15.214715537183901,
+          "suppression_db": 15.214715537183901,
+          "peak_sidelobe_level_db": -15.214715537183901,
+          "peak_null_level_db": -67.25370483446822,
+          "target_gain": 1.0000000000000002,
+          "target_gain_feasible": true
+        },
+        "shifted": [
+          {
+            "name": "frequency_low",
+            "quality_db": 15.162379125167295,
+            "suppression_db": 15.162379125167295,
+            "peak_sidelobe_level_db": -15.162379125167295,
+            "peak_null_level_db": -42.06360367241103,
+            "target_gain": 0.993882793723924,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "frequency_high",
+            "quality_db": 15.158473434911283,
+            "suppression_db": 15.158473434911283,
+            "peak_sidelobe_level_db": -15.158473434911283,
+            "peak_null_level_db": -44.568217581166365,
+            "target_gain": 0.9933910103692302,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "position_error",
+            "quality_db": 15.214813398990545,
+            "suppression_db": 15.214813398990545,
+            "peak_sidelobe_level_db": -15.214813398990545,
+            "peak_null_level_db": -34.84699781735497,
+            "target_gain": 0.9999766772506734,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "gain_phase_error",
+            "quality_db": 15.258102079802054,
+            "suppression_db": 15.258102079802054,
+            "peak_sidelobe_level_db": -15.258102079802054,
+            "peak_null_level_db": -37.6486592580729,
+            "target_gain": 0.9996080261541476,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_0",
+            "quality_db": 14.386593003067652,
+            "suppression_db": 14.386593003067652,
+            "peak_sidelobe_level_db": -14.386593003067652,
+            "peak_null_level_db": -27.5161633803747,
+            "target_gain": 0.9606653305774601,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_1",
+            "quality_db": 13.838894285942956,
+            "suppression_db": 13.838894285942956,
+            "peak_sidelobe_level_db": -16.463104108262556,
+            "peak_null_level_db": -23.3813193803362,
+            "target_gain": 0.9372940527641898,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_2",
+            "quality_db": 12.136801968697878,
+            "suppression_db": 12.136801968697878,
+            "peak_sidelobe_level_db": -16.359184739905558,
+            "peak_null_level_db": -21.679227063091126,
+            "target_gain": 0.9245312551049654,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_3",
+            "quality_db": 11.123684491720736,
+            "suppression_db": 11.123684491720736,
+            "peak_sidelobe_level_db": -14.290407244780576,
+            "peak_null_level_db": -20.666109586113986,
+            "target_gain": 0.9164393076542444,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_4",
+            "quality_db": 13.450205998281888,
+            "suppression_db": 13.450205998281888,
+            "peak_sidelobe_level_db": -14.453559896750194,
+            "peak_null_level_db": -22.992631092675136,
+            "target_gain": 0.9339695396481928,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_5",
+            "quality_db": 10.94307592537139,
+            "suppression_db": 10.94307592537139,
+            "peak_sidelobe_level_db": -11.885203587016061,
+            "peak_null_level_db": -20.48550101976464,
+            "target_gain": 0.9142642726910075,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_6",
+            "quality_db": 10.988869972317998,
+            "suppression_db": 10.988869972317998,
+            "peak_sidelobe_level_db": -11.10259775734506,
+            "peak_null_level_db": -20.531295066711248,
+            "target_gain": 0.914367134357154,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_7",
+            "quality_db": 11.275135303521203,
+            "suppression_db": 11.275135303521203,
+            "peak_sidelobe_level_db": -11.275135303521203,
+            "peak_null_level_db": -21.051522472524894,
+            "target_gain": 0.9188428449955556,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_8",
+            "quality_db": 11.042310905037311,
+            "suppression_db": 11.042310905037311,
+            "peak_sidelobe_level_db": -11.928803551120982,
+            "peak_null_level_db": -20.584735999430563,
+            "target_gain": 0.9147290513628126,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_9",
+            "quality_db": 12.66801816911638,
+            "suppression_db": 12.66801816911638,
+            "peak_sidelobe_level_db": -14.145237369784196,
+            "peak_null_level_db": -22.210443263509628,
+            "target_gain": 0.9282340157017808,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_10",
+            "quality_db": 11.385425413103247,
+            "suppression_db": 11.385425413103247,
+            "peak_sidelobe_level_db": -14.791139136053669,
+            "peak_null_level_db": -20.927850507496494,
+            "target_gain": 0.9181872734068389,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_11",
+            "quality_db": 12.465448038570504,
+            "suppression_db": 12.465448038570504,
+            "peak_sidelobe_level_db": -16.524898335468574,
+            "peak_null_level_db": -22.007873132963752,
+            "target_gain": 0.9269444647092613,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_12",
+            "quality_db": 13.19742960664384,
+            "suppression_db": 13.19742960664384,
+            "peak_sidelobe_level_db": -16.147329555660765,
+            "peak_null_level_db": -22.739854701037086,
+            "target_gain": 0.9323828968927734,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_13",
+            "quality_db": 14.506008447615347,
+            "suppression_db": 14.506008447615347,
+            "peak_sidelobe_level_db": -14.506008447615347,
+            "peak_null_level_db": -27.369004678892757,
+            "target_gain": 0.959438128109634,
+            "target_gain_feasible": true
+          }
+        ]
+      },
+      {
+        "name": "dev_scan16",
+        "split": "development",
+        "valid": true,
+        "score": 0.3753519008872661,
+        "robustness_score": 1.0,
+        "nominal_quality_db": 16.129322886519645,
+        "nominal_suppression_db": 16.129322886519645,
+        "nominal_peak_sidelobe_level_db": -16.129322886519645,
+        "nominal_peak_null_level_db": -56.07270343536989,
+        "baseline_nominal_quality_db": 10.562628611294587,
+        "nominal_reference_quality_db": 25.393229607496735,
+        "baseline_robust_quality_db": 5.762747760746489,
+        "robust_reference_quality_db": 12.108028937971355,
+        "worst_shifted_quality_db": 12.108028937971355,
+        "worst_shifted_suppression_db": 12.108028937971355,
+        "minimum_shifted_target_gain": 0.9245919189363706,
+        "shifted_target_gain_feasibility_rate": 1.0,
+        "normalized_l2_norm": 0.2560556268515042,
+        "normalized_max_element_amplitude": 0.07541349542173076,
+        "nominal": {
+          "name": "nominal",
+          "quality_db": 16.129322886519645,
+          "suppression_db": 16.129322886519645,
+          "peak_sidelobe_level_db": -16.129322886519645,
+          "peak_null_level_db": -56.07270343536989,
+          "target_gain": 1.0,
+          "target_gain_feasible": true
+        },
+        "shifted": [
+          {
+            "name": "frequency_low",
+            "quality_db": 15.99894232853295,
+            "suppression_db": 15.99894232853295,
+            "peak_sidelobe_level_db": -15.99894232853295,
+            "peak_null_level_db": -43.26285705537302,
+            "target_gain": 0.9850759676237801,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "frequency_high",
+            "quality_db": 16.034066832364033,
+            "suppression_db": 16.034066832364033,
+            "peak_sidelobe_level_db": -16.034066832364033,
+            "peak_null_level_db": -42.386068535825544,
+            "target_gain": 0.9890189064222978,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "position_error",
+            "quality_db": 16.18366991470371,
+            "suppression_db": 16.18366991470371,
+            "peak_sidelobe_level_db": -16.18366991470371,
+            "peak_null_level_db": -46.80569391367878,
+            "target_gain": 1.0003287518498267,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "gain_phase_error",
+            "quality_db": 15.907883708196838,
+            "suppression_db": 15.907883708196838,
+            "peak_sidelobe_level_db": -15.907883708196838,
+            "peak_null_level_db": -50.368331168682545,
+            "target_gain": 1.0007255269118565,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_0",
+            "quality_db": 15.60219502970735,
+            "suppression_db": 15.60219502970735,
+            "peak_sidelobe_level_db": -15.60219502970735,
+            "peak_null_level_db": -27.89106489129788,
+            "target_gain": 0.9637243108057069,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_1",
+            "quality_db": 16.04996972856124,
+            "suppression_db": 16.04996972856124,
+            "peak_sidelobe_level_db": -16.81340276699281,
+            "peak_null_level_db": -25.592394822954493,
+            "target_gain": 0.9515967475577936,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_2",
+            "quality_db": 14.599563260273582,
+            "suppression_db": 14.599563260273582,
+            "peak_sidelobe_level_db": -18.509255020809817,
+            "peak_null_level_db": -24.141988354666832,
+            "target_gain": 0.9422280821784133,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_3",
+            "quality_db": 13.231076544815751,
+            "suppression_db": 13.231076544815751,
+            "peak_sidelobe_level_db": -16.591128309966614,
+            "peak_null_level_db": -22.773501639209,
+            "target_gain": 0.933230395368131,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_4",
+            "quality_db": 12.499795144965066,
+            "suppression_db": 12.499795144965066,
+            "peak_sidelobe_level_db": -14.917941311833406,
+            "peak_null_level_db": -22.042220239358315,
+            "target_gain": 0.9271883888962041,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_5",
+            "quality_db": 12.957445307869168,
+            "suppression_db": 12.957445307869168,
+            "peak_sidelobe_level_db": -14.45801214607394,
+            "peak_null_level_db": -22.499870402262413,
+            "target_gain": 0.9317177352832666,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_6",
+            "quality_db": 12.293896083690765,
+            "suppression_db": 12.293896083690765,
+            "peak_sidelobe_level_db": -12.935728772966621,
+            "peak_null_level_db": -21.836321178084013,
+            "target_gain": 0.9258089067556993,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_7",
+            "quality_db": 12.10802893797236,
+            "suppression_db": 12.10802893797236,
+            "peak_sidelobe_level_db": -12.10802893797236,
+            "peak_null_level_db": -21.689275086668918,
+            "target_gain": 0.9245919189363975,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_8",
+            "quality_db": 12.108028937971355,
+            "suppression_db": 12.108028937971355,
+            "peak_sidelobe_level_db": -12.108028937971355,
+            "peak_null_level_db": -21.689275086665518,
+            "target_gain": 0.9245919189363706,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_9",
+            "quality_db": 12.293896083691031,
+            "suppression_db": 12.293896083691031,
+            "peak_sidelobe_level_db": -12.93572877296738,
+            "peak_null_level_db": -21.836321178084283,
+            "target_gain": 0.9258089067557,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_10",
+            "quality_db": 12.957445307870222,
+            "suppression_db": 12.957445307870222,
+            "peak_sidelobe_level_db": -14.458012146074887,
+            "peak_null_level_db": -22.49987040226347,
+            "target_gain": 0.9317177352832748,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_11",
+            "quality_db": 12.499795144968449,
+            "suppression_db": 12.499795144968449,
+            "peak_sidelobe_level_db": -14.917941311834156,
+            "peak_null_level_db": -22.0422202393617,
+            "target_gain": 0.9271883888962306,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_12",
+            "quality_db": 13.231076544818572,
+            "suppression_db": 13.231076544818572,
+            "peak_sidelobe_level_db": -16.591128309967985,
+            "peak_null_level_db": -22.773501639211823,
+            "target_gain": 0.9332303953681502,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_13",
+            "quality_db": 14.599563260282372,
+            "suppression_db": 14.599563260282372,
+            "peak_sidelobe_level_db": -18.509255020814386,
+            "peak_null_level_db": -24.14198835467562,
+            "target_gain": 0.9422280821784689,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_14",
+            "quality_db": 16.049969728562363,
+            "suppression_db": 16.049969728562363,
+            "peak_sidelobe_level_db": -16.813402766991715,
+            "peak_null_level_db": -25.59239482295561,
+            "target_gain": 0.9515967475577987,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_15",
+            "quality_db": 15.60219502970722,
+            "suppression_db": 15.60219502970722,
+            "peak_sidelobe_level_db": -15.60219502970722,
+            "peak_null_level_db": -27.891064891299347,
+            "target_gain": 0.9637243108057175,
+            "target_gain_feasible": true
+          }
+        ]
+      },
+      {
+        "name": "heldout_scan22",
+        "split": "heldout",
+        "valid": true,
+        "score": 0.8307324942524343,
+        "robustness_score": 1.0,
+        "nominal_quality_db": 18.49490978909047,
+        "nominal_suppression_db": 18.49490978909047,
+        "nominal_peak_sidelobe_level_db": -18.49490978909047,
+        "nominal_peak_null_level_db": -60.88756626116347,
+        "baseline_nominal_quality_db": 13.202248794848721,
+        "nominal_reference_quality_db": 19.57332616435086,
+        "baseline_robust_quality_db": 9.405610681068467,
+        "robust_reference_quality_db": 14.531249541212429,
+        "worst_shifted_quality_db": 14.531249541212429,
+        "worst_shifted_suppression_db": 14.531249541212429,
+        "minimum_shifted_target_gain": 0.9417454326561943,
+        "shifted_target_gain_feasibility_rate": 1.0,
+        "normalized_l2_norm": 0.22044301433659874,
+        "normalized_max_element_amplitude": 0.05826094688735647,
+        "nominal": {
+          "name": "nominal",
+          "quality_db": 18.49490978909047,
+          "suppression_db": 18.49490978909047,
+          "peak_sidelobe_level_db": -18.49490978909047,
+          "peak_null_level_db": -60.88756626116347,
+          "target_gain": 1.0,
+          "target_gain_feasible": true
+        },
+        "shifted": [
+          {
+            "name": "frequency_low",
+            "quality_db": 18.07240380685561,
+            "suppression_db": 18.07240380685561,
+            "peak_sidelobe_level_db": -18.07240380685561,
+            "peak_null_level_db": -49.03291359558854,
+            "target_gain": 0.9525054129014316,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "frequency_high",
+            "quality_db": 18.086918678813223,
+            "suppression_db": 18.086918678813223,
+            "peak_sidelobe_level_db": -18.086918678813223,
+            "peak_null_level_db": -59.31466149726597,
+            "target_gain": 0.9540299775933941,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "position_error",
+            "quality_db": 18.010096183587684,
+            "suppression_db": 18.010096183587684,
+            "peak_sidelobe_level_db": -18.010096183587684,
+            "peak_null_level_db": -61.08760618083683,
+            "target_gain": 0.9997955711325451,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "gain_phase_error",
+            "quality_db": 18.458720570159176,
+            "suppression_db": 18.458720570159176,
+            "peak_sidelobe_level_db": -18.458720570159176,
+            "peak_null_level_db": -43.57815510443209,
+            "target_gain": 0.9993970890094636,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_0",
+            "quality_db": 17.860156167289134,
+            "suppression_db": 17.860156167289134,
+            "peak_sidelobe_level_db": -17.860156167289134,
+            "peak_null_level_db": -32.705769394177835,
+            "target_gain": 0.978258700026146,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_1",
+            "quality_db": 16.944245677972226,
+            "suppression_db": 16.944245677972226,
+            "peak_sidelobe_level_db": -16.944245677972226,
+            "peak_null_level_db": -30.331934193496338,
+            "target_gain": 0.9713416228060866,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_2",
+            "quality_db": 18.499652034146763,
+            "suppression_db": 18.499652034146763,
+            "peak_sidelobe_level_db": -18.499652034146763,
+            "peak_null_level_db": -28.22125934732208,
+            "target_gain": 0.9634622950402487,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_3",
+            "quality_db": 16.331496570307714,
+            "suppression_db": 16.331496570307714,
+            "peak_sidelobe_level_db": -16.331496570307714,
+            "peak_null_level_db": -26.95743056016921,
+            "target_gain": 0.9574010286305,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_4",
+            "quality_db": 16.750442607521133,
+            "suppression_db": 16.750442607521133,
+            "peak_sidelobe_level_db": -18.663796286061153,
+            "peak_null_level_db": -26.292867701914382,
+            "target_gain": 0.9543916363657547,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_5",
+            "quality_db": 16.599642580332677,
+            "suppression_db": 16.599642580332677,
+            "peak_sidelobe_level_db": -16.599642580332677,
+            "peak_null_level_db": -26.472703838897075,
+            "target_gain": 0.9550471108982856,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_6",
+            "quality_db": 15.50749984337845,
+            "suppression_db": 15.50749984337845,
+            "peak_sidelobe_level_db": -17.82627226175571,
+            "peak_null_level_db": -25.0499249377717,
+            "target_gain": 0.9479193620123139,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_7",
+            "quality_db": 15.18645573559256,
+            "suppression_db": 15.18645573559256,
+            "peak_sidelobe_level_db": -16.690232398517498,
+            "peak_null_level_db": -24.728880829985805,
+            "target_gain": 0.945614282808141,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_8",
+            "quality_db": 14.579655362351362,
+            "suppression_db": 14.579655362351362,
+            "peak_sidelobe_level_db": -15.834753617515085,
+            "peak_null_level_db": -24.122080456744612,
+            "target_gain": 0.9418984694663671,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_9",
+            "quality_db": 14.75233228974824,
+            "suppression_db": 14.75233228974824,
+            "peak_sidelobe_level_db": -14.964932426271682,
+            "peak_null_level_db": -24.29475738414149,
+            "target_gain": 0.9428932388646459,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_10",
+            "quality_db": 14.534634697929272,
+            "suppression_db": 14.534634697929272,
+            "peak_sidelobe_level_db": -14.576815461394093,
+            "peak_null_level_db": -24.077059792322522,
+            "target_gain": 0.941768586728838,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_11",
+            "quality_db": 14.531249541212429,
+            "suppression_db": 14.531249541212429,
+            "peak_sidelobe_level_db": -14.576403074321046,
+            "peak_null_level_db": -24.073674635605677,
+            "target_gain": 0.9417454326561943,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_12",
+            "quality_db": 14.7585124442117,
+            "suppression_db": 14.7585124442117,
+            "peak_sidelobe_level_db": -14.968864855831349,
+            "peak_null_level_db": -24.30093753860495,
+            "target_gain": 0.9429178391629941,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_13",
+            "quality_db": 14.57352447267126,
+            "suppression_db": 14.57352447267126,
+            "peak_sidelobe_level_db": -15.836435356628407,
+            "peak_null_level_db": -24.11594956706451,
+            "target_gain": 0.9418591662969161,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_14",
+            "quality_db": 15.190752406484576,
+            "suppression_db": 15.190752406484576,
+            "peak_sidelobe_level_db": -16.65389175013696,
+            "peak_null_level_db": -24.733177500877822,
+            "target_gain": 0.9456463599530937,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_15",
+            "quality_db": 15.503080096911916,
+            "suppression_db": 15.503080096911916,
+            "peak_sidelobe_level_db": -17.824486537289417,
+            "peak_null_level_db": -25.045505191305164,
+            "target_gain": 0.9478923902726012,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_16",
+            "quality_db": 16.57040691981344,
+            "suppression_db": 16.57040691981344,
+            "peak_sidelobe_level_db": -16.57040691981344,
+            "peak_null_level_db": -26.47761901531176,
+            "target_gain": 0.9550705975363364,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_17",
+            "quality_db": 16.746543998038632,
+            "suppression_db": 16.746543998038632,
+            "peak_sidelobe_level_db": -18.646170318821355,
+            "peak_null_level_db": -26.28896909243188,
+            "target_gain": 0.954377963390907,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_18",
+            "quality_db": 16.30667887190658,
+            "suppression_db": 16.30667887190658,
+            "peak_sidelobe_level_db": -16.30667887190658,
+            "peak_null_level_db": -26.950294665806798,
+            "target_gain": 0.9573682832110256,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_19",
+            "quality_db": 18.487902041007196,
+            "suppression_db": 18.487902041007196,
+            "peak_sidelobe_level_db": -18.487902041007196,
+            "peak_null_level_db": -28.23799048607635,
+            "target_gain": 0.9635302539829358,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_20",
+            "quality_db": 16.923612993470904,
+            "suppression_db": 16.923612993470904,
+            "peak_sidelobe_level_db": -16.923612993470904,
+            "peak_null_level_db": -30.3143597029562,
+            "target_gain": 0.9712862637949579,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_21",
+            "quality_db": 17.86225995293706,
+            "suppression_db": 17.86225995293706,
+            "peak_sidelobe_level_db": -17.86225995293706,
+            "peak_null_level_db": -32.74244741175457,
+            "target_gain": 0.978364394786124,
+            "target_gain_feasible": true
+          }
+        ]
+      },
+      {
+        "name": "dev_scan20",
+        "split": "development",
+        "valid": true,
+        "score": 0.3709904494283514,
+        "robustness_score": 1.0,
+        "nominal_quality_db": 17.621105921034875,
+        "nominal_suppression_db": 17.621105921034875,
+        "nominal_peak_sidelobe_level_db": -17.621105921034875,
+        "nominal_peak_null_level_db": -54.46277342891439,
+        "baseline_nominal_quality_db": 13.189175035011615,
+        "nominal_reference_quality_db": 25.13538791691274,
+        "baseline_robust_quality_db": 8.802886166373039,
+        "robust_reference_quality_db": 13.72930887398569,
+        "worst_shifted_quality_db": 13.72930887398569,
+        "worst_shifted_suppression_db": 13.72930887398569,
+        "minimum_shifted_target_gain": 0.9373426486631988,
+        "shifted_target_gain_feasibility_rate": 1.0,
+        "normalized_l2_norm": 0.2287901949874091,
+        "normalized_max_element_amplitude": 0.06265861252361739,
+        "nominal": {
+          "name": "nominal",
+          "quality_db": 17.621105921034875,
+          "suppression_db": 17.621105921034875,
+          "peak_sidelobe_level_db": -17.621105921034875,
+          "peak_null_level_db": -54.46277342891439,
+          "target_gain": 1.0,
+          "target_gain_feasible": true
+        },
+        "shifted": [
+          {
+            "name": "frequency_low",
+            "quality_db": 17.286037813917833,
+            "suppression_db": 17.286037813917833,
+            "peak_sidelobe_level_db": -17.286037813917833,
+            "peak_null_level_db": -39.681000761140005,
+            "target_gain": 0.9622591844805732,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "frequency_high",
+            "quality_db": 17.288320054373607,
+            "suppression_db": 17.288320054373607,
+            "peak_sidelobe_level_db": -17.288320054373607,
+            "peak_null_level_db": -38.66911142397386,
+            "target_gain": 0.9625666797140385,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "position_error",
+            "quality_db": 17.620864033134417,
+            "suppression_db": 17.620864033134417,
+            "peak_sidelobe_level_db": -17.620864033134417,
+            "peak_null_level_db": -54.38198328153648,
+            "target_gain": 0.9998850777691912,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "gain_phase_error",
+            "quality_db": 17.389419764543106,
+            "suppression_db": 17.389419764543106,
+            "peak_sidelobe_level_db": -17.389419764543106,
+            "peak_null_level_db": -39.5960999626702,
+            "target_gain": 0.9997616823498406,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_0",
+            "quality_db": 16.99449061639912,
+            "suppression_db": 16.99449061639912,
+            "peak_sidelobe_level_db": -16.99449061639912,
+            "peak_null_level_db": -30.482832106963855,
+            "target_gain": 0.9724217899942892,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_1",
+            "quality_db": 17.89813306203904,
+            "suppression_db": 17.89813306203904,
+            "peak_sidelobe_level_db": -17.89813306203904,
+            "peak_null_level_db": -27.664752813876326,
+            "target_gain": 0.9620751188671123,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_2",
+            "quality_db": 17.1903271892212,
+            "suppression_db": 17.1903271892212,
+            "peak_sidelobe_level_db": -19.60902951518513,
+            "peak_null_level_db": -26.732752283614445,
+            "target_gain": 0.9568783245918058,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_3",
+            "quality_db": 16.23215395173353,
+            "suppression_db": 16.23215395173353,
+            "peak_sidelobe_level_db": -19.8285450347764,
+            "peak_null_level_db": -25.77457904612678,
+            "target_gain": 0.9517345724057445,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_4",
+            "quality_db": 16.15729908013781,
+            "suppression_db": 16.15729908013781,
+            "peak_sidelobe_level_db": -19.077732847210488,
+            "peak_null_level_db": -25.699724174531056,
+            "target_gain": 0.952340027537,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_5",
+            "quality_db": 14.924738571343513,
+            "suppression_db": 14.924738571343513,
+            "peak_sidelobe_level_db": -17.125899176125195,
+            "peak_null_level_db": -24.467163665736763,
+            "target_gain": 0.9441749927642372,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_6",
+            "quality_db": 14.53775850529873,
+            "suppression_db": 14.53775850529873,
+            "peak_sidelobe_level_db": -16.735667246347443,
+            "peak_null_level_db": -24.080183599691978,
+            "target_gain": 0.9422294592255058,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_7",
+            "quality_db": 14.349994373921797,
+            "suppression_db": 14.349994373921797,
+            "peak_sidelobe_level_db": -15.191234644955355,
+            "peak_null_level_db": -23.892419468315044,
+            "target_gain": 0.9406481187311179,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_8",
+            "quality_db": 14.133756952779867,
+            "suppression_db": 14.133756952779867,
+            "peak_sidelobe_level_db": -14.295176929865203,
+            "peak_null_level_db": -23.676182047173118,
+            "target_gain": 0.9401704936649025,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_9",
+            "quality_db": 13.72930887398569,
+            "suppression_db": 13.72930887398569,
+            "peak_sidelobe_level_db": -13.72930887398569,
+            "peak_null_level_db": -23.3984801940198,
+            "target_gain": 0.9373426486631988,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_10",
+            "quality_db": 13.729308873985902,
+            "suppression_db": 13.729308873985902,
+            "peak_sidelobe_level_db": -13.729308873985902,
+            "peak_null_level_db": -23.398480194020507,
+            "target_gain": 0.9373426486632036,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_11",
+            "quality_db": 14.133756952780054,
+            "suppression_db": 14.133756952780054,
+            "peak_sidelobe_level_db": -14.295176929864988,
+            "peak_null_level_db": -23.676182047173306,
+            "target_gain": 0.9401704936649039,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_12",
+            "quality_db": 14.349994373922447,
+            "suppression_db": 14.349994373922447,
+            "peak_sidelobe_level_db": -15.191234644955234,
+            "peak_null_level_db": -23.892419468315698,
+            "target_gain": 0.940648118731122,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_13",
+            "quality_db": 14.537758505299053,
+            "suppression_db": 14.537758505299053,
+            "peak_sidelobe_level_db": -16.735667246346893,
+            "peak_null_level_db": -24.0801835996923,
+            "target_gain": 0.9422294592255078,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_14",
+            "quality_db": 14.924738571343301,
+            "suppression_db": 14.924738571343301,
+            "peak_sidelobe_level_db": -17.125899176125472,
+            "peak_null_level_db": -24.46716366573655,
+            "target_gain": 0.9441749927642361,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_15",
+            "quality_db": 16.157299080137786,
+            "suppression_db": 16.157299080137786,
+            "peak_sidelobe_level_db": -19.077732847211724,
+            "peak_null_level_db": -25.699724174531035,
+            "target_gain": 0.9523400275369998,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_16",
+            "quality_db": 16.232153951733782,
+            "suppression_db": 16.232153951733782,
+            "peak_sidelobe_level_db": -19.828545034775537,
+            "peak_null_level_db": -25.77457904612703,
+            "target_gain": 0.9517345724057459,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_17",
+            "quality_db": 17.190327189221474,
+            "suppression_db": 17.190327189221474,
+            "peak_sidelobe_level_db": -19.609029515185213,
+            "peak_null_level_db": -26.732752283614722,
+            "target_gain": 0.9568783245918071,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_18",
+            "quality_db": 17.898133062038948,
+            "suppression_db": 17.898133062038948,
+            "peak_sidelobe_level_db": -17.898133062038948,
+            "peak_null_level_db": -27.664752813875726,
+            "target_gain": 0.9620751188671098,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_19",
+            "quality_db": 16.994490616399382,
+            "suppression_db": 16.994490616399382,
+            "peak_sidelobe_level_db": -16.994490616399382,
+            "peak_null_level_db": -30.48283210696379,
+            "target_gain": 0.9724217899942889,
+            "target_gain_feasible": true
+          }
+        ]
+      },
+      {
+        "name": "dev_scan24",
+        "split": "development",
+        "valid": true,
+        "score": 0.4763532979527741,
+        "robustness_score": 1.0,
+        "nominal_quality_db": 18.823410024277372,
+        "nominal_suppression_db": 18.823410024277372,
+        "nominal_peak_sidelobe_level_db": -18.823410024277372,
+        "nominal_peak_null_level_db": -50.11486933360919,
+        "baseline_nominal_quality_db": 13.211448213702896,
+        "nominal_reference_quality_db": 24.992539757926547,
+        "baseline_robust_quality_db": 10.512084438634755,
+        "robust_reference_quality_db": 15.065929650609744,
+        "worst_shifted_quality_db": 15.065929650609744,
+        "worst_shifted_suppression_db": 15.065929650609744,
+        "minimum_shifted_target_gain": 0.946773253764031,
+        "shifted_target_gain_feasibility_rate": 1.0,
+        "normalized_l2_norm": 0.21029455521727916,
+        "normalized_max_element_amplitude": 0.053227043997390505,
+        "nominal": {
+          "name": "nominal",
+          "quality_db": 18.823410024277372,
+          "suppression_db": 18.823410024277372,
+          "peak_sidelobe_level_db": -18.823410024277372,
+          "peak_null_level_db": -50.11486933360919,
+          "target_gain": 1.0,
+          "target_gain_feasible": true
+        },
+        "shifted": [
+          {
+            "name": "frequency_low",
+            "quality_db": 18.760107417386433,
+            "suppression_db": 18.760107417386433,
+            "peak_sidelobe_level_db": -18.760107417386433,
+            "peak_null_level_db": -35.45754351425756,
+            "target_gain": 0.9926030868025555,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "frequency_high",
+            "quality_db": 18.759466218038494,
+            "suppression_db": 18.759466218038494,
+            "peak_sidelobe_level_db": -18.759466218038494,
+            "peak_null_level_db": -41.54277224797227,
+            "target_gain": 0.9923381172556867,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "position_error",
+            "quality_db": 18.82501398109972,
+            "suppression_db": 18.82501398109972,
+            "peak_sidelobe_level_db": -18.82501398109972,
+            "peak_null_level_db": -35.344224947852084,
+            "target_gain": 0.9999984394548557,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "gain_phase_error",
+            "quality_db": 18.82737222189416,
+            "suppression_db": 18.82737222189416,
+            "peak_sidelobe_level_db": -18.82737222189416,
+            "peak_null_level_db": -37.7052375749519,
+            "target_gain": 0.999361506035191,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_0",
+            "quality_db": 18.261010557662267,
+            "suppression_db": 18.261010557662267,
+            "peak_sidelobe_level_db": -18.261010557662267,
+            "peak_null_level_db": -31.918259485994493,
+            "target_gain": 0.9782204225615279,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_1",
+            "quality_db": 18.906121988417762,
+            "suppression_db": 18.906121988417762,
+            "peak_sidelobe_level_db": -18.906121988417762,
+            "peak_null_level_db": -31.10097935052441,
+            "target_gain": 0.973873234362909,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_2",
+            "quality_db": 19.204793781000237,
+            "suppression_db": 19.204793781000237,
+            "peak_sidelobe_level_db": -19.760185749357806,
+            "peak_null_level_db": -28.747218875393486,
+            "target_gain": 0.9666171014808557,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_3",
+            "quality_db": 18.822378512230568,
+            "suppression_db": 18.822378512230568,
+            "peak_sidelobe_level_db": -21.213897019871382,
+            "peak_null_level_db": -28.364803606623816,
+            "target_gain": 0.9645254844098633,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_4",
+            "quality_db": 17.64321498075992,
+            "suppression_db": 17.64321498075992,
+            "peak_sidelobe_level_db": -21.132868027533927,
+            "peak_null_level_db": -27.18564007515317,
+            "target_gain": 0.960853253049033,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_5",
+            "quality_db": 17.31273549435174,
+            "suppression_db": 17.31273549435174,
+            "peak_sidelobe_level_db": -20.295632026913957,
+            "peak_null_level_db": -26.855160588744987,
+            "target_gain": 0.9588787113941772,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_6",
+            "quality_db": 16.355495237674155,
+            "suppression_db": 16.355495237674155,
+            "peak_sidelobe_level_db": -18.669554025692015,
+            "peak_null_level_db": -25.897920332067407,
+            "target_gain": 0.9534553758544184,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_7",
+            "quality_db": 15.924874874613446,
+            "suppression_db": 15.924874874613446,
+            "peak_sidelobe_level_db": -18.203217514999885,
+            "peak_null_level_db": -25.467299969006696,
+            "target_gain": 0.9511281013449184,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_8",
+            "quality_db": 15.883362317648428,
+            "suppression_db": 15.883362317648428,
+            "peak_sidelobe_level_db": -17.279622382432574,
+            "peak_null_level_db": -25.425787412041675,
+            "target_gain": 0.951596175465573,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_9",
+            "quality_db": 15.342438389891475,
+            "suppression_db": 15.342438389891475,
+            "peak_sidelobe_level_db": -16.116545493658418,
+            "peak_null_level_db": -24.884863484284722,
+            "target_gain": 0.9472673282825538,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_10",
+            "quality_db": 15.116095483212469,
+            "suppression_db": 15.116095483212469,
+            "peak_sidelobe_level_db": -15.406616247233423,
+            "peak_null_level_db": -24.658520577605717,
+            "target_gain": 0.946773253764031,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_11",
+            "quality_db": 15.065929650609744,
+            "suppression_db": 15.065929650609744,
+            "peak_sidelobe_level_db": -15.065929650609744,
+            "peak_null_level_db": -24.663310876579768,
+            "target_gain": 0.9468210786056723,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_12",
+            "quality_db": 15.065929650609755,
+            "suppression_db": 15.065929650609755,
+            "peak_sidelobe_level_db": -15.065929650609755,
+            "peak_null_level_db": -24.663310876579807,
+            "target_gain": 0.9468210786056728,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_13",
+            "quality_db": 15.116095483212506,
+            "suppression_db": 15.116095483212506,
+            "peak_sidelobe_level_db": -15.406616247233424,
+            "peak_null_level_db": -24.658520577605753,
+            "target_gain": 0.9467732537640311,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_14",
+            "quality_db": 15.342438389891447,
+            "suppression_db": 15.342438389891447,
+            "peak_sidelobe_level_db": -16.11654549365845,
+            "peak_null_level_db": -24.884863484284697,
+            "target_gain": 0.9472673282825537,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_15",
+            "quality_db": 15.883362317648453,
+            "suppression_db": 15.883362317648453,
+            "peak_sidelobe_level_db": -17.279622382432525,
+            "peak_null_level_db": -25.425787412041704,
+            "target_gain": 0.9515961754655732,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_16",
+            "quality_db": 15.92487487461344,
+            "suppression_db": 15.92487487461344,
+            "peak_sidelobe_level_db": -18.203217514999885,
+            "peak_null_level_db": -25.467299969006692,
+            "target_gain": 0.9511281013449184,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_17",
+            "quality_db": 16.35549523767414,
+            "suppression_db": 16.35549523767414,
+            "peak_sidelobe_level_db": -18.66955402569201,
+            "peak_null_level_db": -25.897920332067386,
+            "target_gain": 0.9534553758544183,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_18",
+            "quality_db": 17.312735494351735,
+            "suppression_db": 17.312735494351735,
+            "peak_sidelobe_level_db": -20.295632026914042,
+            "peak_null_level_db": -26.855160588744983,
+            "target_gain": 0.9588787113941772,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_19",
+            "quality_db": 17.643214980759943,
+            "suppression_db": 17.643214980759943,
+            "peak_sidelobe_level_db": -21.132868027534016,
+            "peak_null_level_db": -27.18564007515319,
+            "target_gain": 0.960853253049033,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_20",
+            "quality_db": 18.82237851223048,
+            "suppression_db": 18.82237851223048,
+            "peak_sidelobe_level_db": -21.213897019871393,
+            "peak_null_level_db": -28.364803606623727,
+            "target_gain": 0.9645254844098631,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_21",
+            "quality_db": 19.204793781000234,
+            "suppression_db": 19.204793781000234,
+            "peak_sidelobe_level_db": -19.76018574935785,
+            "peak_null_level_db": -28.747218875393482,
+            "target_gain": 0.9666171014808556,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_22",
+            "quality_db": 18.90612198841773,
+            "suppression_db": 18.90612198841773,
+            "peak_sidelobe_level_db": -18.90612198841773,
+            "peak_null_level_db": -31.10097935052442,
+            "target_gain": 0.973873234362909,
+            "target_gain_feasible": true
+          },
+          {
+            "name": "element_failure_23",
+            "quality_db": 18.26101055766226,
+            "suppression_db": 18.26101055766226,
+            "peak_sidelobe_level_db": -18.26101055766226,
+            "peak_null_level_db": -31.91825948599459,
+            "target_gain": 0.9782204225615281,
+            "target_gain_feasible": true
+          }
+        ]
+      }
+    ]
+  },
+  "nonfinite_rejection": {
+    "combined_score": 0.0,
+    "valid": 0.0,
+    "feasibility_rate": 0.0,
+    "development_score": 0.0,
+    "robustness_score": 0.0,
+    "development_validation_gap": 0.0,
+    "heldout_policy_score": 0.0,
+    "heldout_robustness_score": 0.0,
+    "heldout_feasibility_rate": 0.0,
+    "mean_worst_shifted_quality_db": -1000000.0,
+    "mean_shifted_target_gain_feasibility_rate": 0.0,
+    "per_instance": [
+      {
+        "name": "dev_broadside12",
+        "split": "development",
+        "valid": false,
+        "reason": "ValueError: weights must be one finite complex value per element",
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "worst_shifted_quality_db": -1000000.0,
+        "worst_shifted_suppression_db": -1000000.0,
+        "minimum_shifted_target_gain": 0.0,
+        "shifted_target_gain_feasibility_rate": 0.0
+      },
+      {
+        "name": "heldout_scan14",
+        "split": "heldout",
+        "valid": false,
+        "reason": "ValueError: weights must be one finite complex value per element",
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "worst_shifted_quality_db": -1000000.0,
+        "worst_shifted_suppression_db": -1000000.0,
+        "minimum_shifted_target_gain": 0.0,
+        "shifted_target_gain_feasibility_rate": 0.0
+      },
+      {
+        "name": "dev_scan16",
+        "split": "development",
+        "valid": false,
+        "reason": "ValueError: weights must be one finite complex value per element",
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "worst_shifted_quality_db": -1000000.0,
+        "worst_shifted_suppression_db": -1000000.0,
+        "minimum_shifted_target_gain": 0.0,
+        "shifted_target_gain_feasibility_rate": 0.0
+      },
+      {
+        "name": "heldout_scan22",
+        "split": "heldout",
+        "valid": false,
+        "reason": "ValueError: weights must be one finite complex value per element",
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "worst_shifted_quality_db": -1000000.0,
+        "worst_shifted_suppression_db": -1000000.0,
+        "minimum_shifted_target_gain": 0.0,
+        "shifted_target_gain_feasibility_rate": 0.0
+      },
+      {
+        "name": "dev_scan20",
+        "split": "development",
+        "valid": false,
+        "reason": "ValueError: weights must be one finite complex value per element",
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "worst_shifted_quality_db": -1000000.0,
+        "worst_shifted_suppression_db": -1000000.0,
+        "minimum_shifted_target_gain": 0.0,
+        "shifted_target_gain_feasibility_rate": 0.0
+      },
+      {
+        "name": "dev_scan24",
+        "split": "development",
+        "valid": false,
+        "reason": "ValueError: weights must be one finite complex value per element",
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "worst_shifted_quality_db": -1000000.0,
+        "worst_shifted_suppression_db": -1000000.0,
+        "minimum_shifted_target_gain": 0.0,
+        "shifted_target_gain_feasibility_rate": 0.0
+      }
+    ]
+  },
+  "zero_response_rejection": {
+    "combined_score": 0.0,
+    "valid": 0.0,
+    "feasibility_rate": 0.0,
+    "development_score": 0.0,
+    "robustness_score": 0.0,
+    "development_validation_gap": 0.0,
+    "heldout_policy_score": 0.0,
+    "heldout_robustness_score": 0.0,
+    "heldout_feasibility_rate": 0.0,
+    "mean_worst_shifted_quality_db": -1000000.0,
+    "mean_shifted_target_gain_feasibility_rate": 0.0,
+    "per_instance": [
+      {
+        "name": "dev_broadside12",
+        "split": "development",
+        "valid": false,
+        "reason": "ValueError: nominal target response must be finite and nonzero",
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "worst_shifted_quality_db": -1000000.0,
+        "worst_shifted_suppression_db": -1000000.0,
+        "minimum_shifted_target_gain": 0.0,
+        "shifted_target_gain_feasibility_rate": 0.0
+      },
+      {
+        "name": "heldout_scan14",
+        "split": "heldout",
+        "valid": false,
+        "reason": "ValueError: nominal target response must be finite and nonzero",
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "worst_shifted_quality_db": -1000000.0,
+        "worst_shifted_suppression_db": -1000000.0,
+        "minimum_shifted_target_gain": 0.0,
+        "shifted_target_gain_feasibility_rate": 0.0
+      },
+      {
+        "name": "dev_scan16",
+        "split": "development",
+        "valid": false,
+        "reason": "ValueError: nominal target response must be finite and nonzero",
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "worst_shifted_quality_db": -1000000.0,
+        "worst_shifted_suppression_db": -1000000.0,
+        "minimum_shifted_target_gain": 0.0,
+        "shifted_target_gain_feasibility_rate": 0.0
+      },
+      {
+        "name": "heldout_scan22",
+        "split": "heldout",
+        "valid": false,
+        "reason": "ValueError: nominal target response must be finite and nonzero",
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "worst_shifted_quality_db": -1000000.0,
+        "worst_shifted_suppression_db": -1000000.0,
+        "minimum_shifted_target_gain": 0.0,
+        "shifted_target_gain_feasibility_rate": 0.0
+      },
+      {
+        "name": "dev_scan20",
+        "split": "development",
+        "valid": false,
+        "reason": "ValueError: nominal target response must be finite and nonzero",
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "worst_shifted_quality_db": -1000000.0,
+        "worst_shifted_suppression_db": -1000000.0,
+        "minimum_shifted_target_gain": 0.0,
+        "shifted_target_gain_feasibility_rate": 0.0
+      },
+      {
+        "name": "dev_scan24",
+        "split": "development",
+        "valid": false,
+        "reason": "ValueError: nominal target response must be finite and nonzero",
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "worst_shifted_quality_db": -1000000.0,
+        "worst_shifted_suppression_db": -1000000.0,
+        "minimum_shifted_target_gain": 0.0,
+        "shifted_target_gain_feasibility_rate": 0.0
+      }
+    ]
+  },
+  "wrong_length_rejection": {
+    "combined_score": 0.0,
+    "valid": 0.0,
+    "feasibility_rate": 0.0,
+    "development_score": 0.0,
+    "robustness_score": 0.0,
+    "development_validation_gap": 0.0,
+    "heldout_policy_score": 0.0,
+    "heldout_robustness_score": 0.0,
+    "heldout_feasibility_rate": 0.0,
+    "mean_worst_shifted_quality_db": -1000000.0,
+    "mean_shifted_target_gain_feasibility_rate": 0.0,
+    "per_instance": [
+      {
+        "name": "dev_broadside12",
+        "split": "development",
+        "valid": false,
+        "reason": "ValueError: weights must be one finite complex value per element",
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "worst_shifted_quality_db": -1000000.0,
+        "worst_shifted_suppression_db": -1000000.0,
+        "minimum_shifted_target_gain": 0.0,
+        "shifted_target_gain_feasibility_rate": 0.0
+      },
+      {
+        "name": "heldout_scan14",
+        "split": "heldout",
+        "valid": false,
+        "reason": "ValueError: weights must be one finite complex value per element",
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "worst_shifted_quality_db": -1000000.0,
+        "worst_shifted_suppression_db": -1000000.0,
+        "minimum_shifted_target_gain": 0.0,
+        "shifted_target_gain_feasibility_rate": 0.0
+      },
+      {
+        "name": "dev_scan16",
+        "split": "development",
+        "valid": false,
+        "reason": "ValueError: weights must be one finite complex value per element",
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "worst_shifted_quality_db": -1000000.0,
+        "worst_shifted_suppression_db": -1000000.0,
+        "minimum_shifted_target_gain": 0.0,
+        "shifted_target_gain_feasibility_rate": 0.0
+      },
+      {
+        "name": "heldout_scan22",
+        "split": "heldout",
+        "valid": false,
+        "reason": "ValueError: weights must be one finite complex value per element",
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "worst_shifted_quality_db": -1000000.0,
+        "worst_shifted_suppression_db": -1000000.0,
+        "minimum_shifted_target_gain": 0.0,
+        "shifted_target_gain_feasibility_rate": 0.0
+      },
+      {
+        "name": "dev_scan20",
+        "split": "development",
+        "valid": false,
+        "reason": "ValueError: weights must be one finite complex value per element",
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "worst_shifted_quality_db": -1000000.0,
+        "worst_shifted_suppression_db": -1000000.0,
+        "minimum_shifted_target_gain": 0.0,
+        "shifted_target_gain_feasibility_rate": 0.0
+      },
+      {
+        "name": "dev_scan24",
+        "split": "development",
+        "valid": false,
+        "reason": "ValueError: weights must be one finite complex value per element",
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "worst_shifted_quality_db": -1000000.0,
+        "worst_shifted_suppression_db": -1000000.0,
+        "minimum_shifted_target_gain": 0.0,
+        "shifted_target_gain_feasibility_rate": 0.0
+      }
+    ]
+  },
+  "excessive_excitation_rejection": {
+    "combined_score": 0.0,
+    "valid": 0.0,
+    "feasibility_rate": 0.0,
+    "development_score": 0.0,
+    "robustness_score": 0.0,
+    "development_validation_gap": 0.0,
+    "heldout_policy_score": 0.0,
+    "heldout_robustness_score": 0.0,
+    "heldout_feasibility_rate": 0.0,
+    "mean_worst_shifted_quality_db": -1000000.0,
+    "mean_shifted_target_gain_feasibility_rate": 0.0,
+    "per_instance": [
+      {
+        "name": "dev_broadside12",
+        "split": "development",
+        "valid": false,
+        "reason": "ValueError: normalized excitation l2 norm exceeds public limit",
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "worst_shifted_quality_db": -1000000.0,
+        "worst_shifted_suppression_db": -1000000.0,
+        "minimum_shifted_target_gain": 0.0,
+        "shifted_target_gain_feasibility_rate": 0.0
+      },
+      {
+        "name": "heldout_scan14",
+        "split": "heldout",
+        "valid": false,
+        "reason": "ValueError: normalized excitation l2 norm exceeds public limit",
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "worst_shifted_quality_db": -1000000.0,
+        "worst_shifted_suppression_db": -1000000.0,
+        "minimum_shifted_target_gain": 0.0,
+        "shifted_target_gain_feasibility_rate": 0.0
+      },
+      {
+        "name": "dev_scan16",
+        "split": "development",
+        "valid": false,
+        "reason": "ValueError: normalized excitation l2 norm exceeds public limit",
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "worst_shifted_quality_db": -1000000.0,
+        "worst_shifted_suppression_db": -1000000.0,
+        "minimum_shifted_target_gain": 0.0,
+        "shifted_target_gain_feasibility_rate": 0.0
+      },
+      {
+        "name": "heldout_scan22",
+        "split": "heldout",
+        "valid": false,
+        "reason": "ValueError: normalized excitation l2 norm exceeds public limit",
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "worst_shifted_quality_db": -1000000.0,
+        "worst_shifted_suppression_db": -1000000.0,
+        "minimum_shifted_target_gain": 0.0,
+        "shifted_target_gain_feasibility_rate": 0.0
+      },
+      {
+        "name": "dev_scan20",
+        "split": "development",
+        "valid": false,
+        "reason": "ValueError: normalized excitation l2 norm exceeds public limit",
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "worst_shifted_quality_db": -1000000.0,
+        "worst_shifted_suppression_db": -1000000.0,
+        "minimum_shifted_target_gain": 0.0,
+        "shifted_target_gain_feasibility_rate": 0.0
+      },
+      {
+        "name": "dev_scan24",
+        "split": "development",
+        "valid": false,
+        "reason": "ValueError: normalized excitation l2 norm exceeds public limit",
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "worst_shifted_quality_db": -1000000.0,
+        "worst_shifted_suppression_db": -1000000.0,
+        "minimum_shifted_target_gain": 0.0,
+        "shifted_target_gain_feasibility_rate": 0.0
+      }
+    ]
+  },
+  "independent_reference_checks": [
+    {
+      "name": "dev_broadside12",
+      "grid_candidate_count": 750,
+      "feasible_grid_candidate_count": 750,
+      "declared_nominal_beta": 3.0,
+      "declared_nominal_alpha": 0.03162277660168379,
+      "grid_best_nominal_beta": 3.0,
+      "grid_best_nominal_alpha": 0.03162277660168379,
+      "declared_nominal_quality_db": 25.678475510098178,
+      "grid_best_nominal_quality_db": 25.67847551009816,
+      "declared_robust_beta": 1.25,
+      "declared_robust_alpha": 5623.413251903491,
+      "grid_best_robust_beta": 1.25,
+      "grid_best_robust_alpha": 5623.413251903491,
+      "declared_worst_shifted_quality_db": 9.258591112760538,
+      "grid_best_worst_shifted_quality_db": 9.258591112760541,
+      "minimum_robust_reference_target_gain": 0.8976294320021698,
+      "independent_nominal_quality_error_db": 0.0,
+      "independent_robust_quality_error_db": 0.0,
+      "position_translation_magnitude_error": 1.7104373473131318e-15,
+      "complex_scale_invariance_error": 3.552713678800501e-15,
+      "passed": true
+    },
+    {
+      "name": "heldout_scan14",
+      "grid_candidate_count": 750,
+      "feasible_grid_candidate_count": 750,
+      "declared_nominal_beta": 3.0,
+      "declared_nominal_alpha": 0.31622776601683794,
+      "grid_best_nominal_beta": 3.0,
+      "grid_best_nominal_alpha": 0.31622776601683794,
+      "declared_nominal_quality_db": 25.423457080087708,
+      "grid_best_nominal_quality_db": 25.42345708008771,
+      "declared_robust_beta": 1.25,
+      "declared_robust_alpha": 3162.2776601683795,
+      "grid_best_robust_beta": 1.25,
+      "grid_best_robust_alpha": 3162.2776601683795,
+      "declared_worst_shifted_quality_db": 10.94307592537139,
+      "grid_best_worst_shifted_quality_db": 10.94307592537139,
+      "minimum_robust_reference_target_gain": 0.9142642726910073,
+      "independent_nominal_quality_error_db": 0.0,
+      "independent_robust_quality_error_db": 0.0,
+      "position_translation_magnitude_error": 1.0373646386341306e-15,
+      "complex_scale_invariance_error": 3.552713678800501e-15,
+      "passed": true
+    },
+    {
+      "name": "dev_scan16",
+      "grid_candidate_count": 750,
+      "feasible_grid_candidate_count": 750,
+      "declared_nominal_beta": 3.0,
+      "declared_nominal_alpha": 0.05623413251903491,
+      "grid_best_nominal_beta": 3.0,
+      "grid_best_nominal_alpha": 0.05623413251903491,
+      "declared_nominal_quality_db": 25.393229607496735,
+      "grid_best_nominal_quality_db": 25.39322960749673,
+      "declared_robust_beta": 1.5,
+      "declared_robust_alpha": 1000.0,
+      "grid_best_robust_beta": 1.5,
+      "grid_best_robust_alpha": 1000.0,
+      "declared_worst_shifted_quality_db": 12.108028937971355,
+      "grid_best_worst_shifted_quality_db": 12.108028937971325,
+      "minimum_robust_reference_target_gain": 0.9245919189363706,
+      "independent_nominal_quality_error_db": 0.0,
+      "independent_robust_quality_error_db": 0.0,
+      "position_translation_magnitude_error": 1.2134390714457766e-15,
+      "complex_scale_invariance_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "heldout_scan22",
+      "grid_candidate_count": 750,
+      "feasible_grid_candidate_count": 750,
+      "declared_nominal_beta": 3.0,
+      "declared_nominal_alpha": 0.0,
+      "grid_best_nominal_beta": 3.0,
+      "grid_best_nominal_alpha": 0.0,
+      "declared_nominal_quality_db": 19.57332616435086,
+      "grid_best_nominal_quality_db": 19.57332616435086,
+      "declared_robust_beta": 2.0,
+      "declared_robust_alpha": 177.82794100389228,
+      "grid_best_robust_beta": 2.0,
+      "grid_best_robust_alpha": 177.82794100389228,
+      "declared_worst_shifted_quality_db": 14.531249541212429,
+      "grid_best_worst_shifted_quality_db": 14.531249541212423,
+      "minimum_robust_reference_target_gain": 0.9417454326561943,
+      "independent_nominal_quality_error_db": 0.0,
+      "independent_robust_quality_error_db": 0.0,
+      "position_translation_magnitude_error": 1.0460382560140147e-15,
+      "complex_scale_invariance_error": 0.0,
+      "passed": true
+    },
+    {
+      "name": "dev_scan20",
+      "grid_candidate_count": 750,
+      "feasible_grid_candidate_count": 750,
+      "declared_nominal_beta": 3.0,
+      "declared_nominal_alpha": 0.0,
+      "grid_best_nominal_beta": 3.0,
+      "grid_best_nominal_alpha": 0.0,
+      "declared_nominal_quality_db": 25.13538791691274,
+      "grid_best_nominal_quality_db": 25.13538791691274,
+      "declared_robust_beta": 1.75,
+      "declared_robust_alpha": 100.0,
+      "grid_best_robust_beta": 1.75,
+      "grid_best_robust_alpha": 100.0,
+      "declared_worst_shifted_quality_db": 13.72930887398569,
+      "grid_best_worst_shifted_quality_db": 13.72930887398568,
+      "minimum_robust_reference_target_gain": 0.9373426486631988,
+      "independent_nominal_quality_error_db": 0.0,
+      "independent_robust_quality_error_db": 0.0,
+      "position_translation_magnitude_error": 8.101158632811689e-16,
+      "complex_scale_invariance_error": 7.105427357601002e-15,
+      "passed": true
+    },
+    {
+      "name": "dev_scan24",
+      "grid_candidate_count": 750,
+      "feasible_grid_candidate_count": 750,
+      "declared_nominal_beta": 3.0,
+      "declared_nominal_alpha": 0.0,
+      "grid_best_nominal_beta": 3.0,
+      "grid_best_nominal_alpha": 0.0,
+      "declared_nominal_quality_db": 24.992539757926547,
+      "grid_best_nominal_quality_db": 24.992539757926547,
+      "declared_robust_beta": 2.0,
+      "declared_robust_alpha": 10.0,
+      "grid_best_robust_beta": 2.0,
+      "grid_best_robust_alpha": 10.0,
+      "declared_worst_shifted_quality_db": 15.065929650609744,
+      "grid_best_worst_shifted_quality_db": 15.065929650609743,
+      "minimum_robust_reference_target_gain": 0.946773253764031,
+      "independent_nominal_quality_error_db": 0.0,
+      "independent_robust_quality_error_db": 0.0,
+      "position_translation_magnitude_error": 1.0304257447302234e-15,
+      "complex_scale_invariance_error": 3.552713678800501e-15,
+      "passed": true
+    }
+  ],
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}

@@ -1,15 +1,18 @@
 # Cross-task science calibration findings
 
 Date: 2026-07-21 (UTC). These findings use trusted GPT-5.5 `greedy_rewrite` calibrations on
-OED-v2, Pendulum-v2, GateSynthesis-v2, ActiveLawDiscovery and OPF-v2. The nine model conditions
-each contain one seed and proposal budget one or three. They calibrate tasks and motivate
-experiments; they are not a model leaderboard, a causal feedback study or population evidence.
+OED-v2, Pendulum-v2, GateSynthesis-v2, ActiveLawDiscovery, OPF-v2, Truss-v2 and Antenna-v2.
+The 13 normal-feedback model conditions each contain one seed and proposal budget one or three.
+They calibrate tasks and motivate experiments; they are not a model leaderboard, a causal
+feedback study or population evidence.
 
 The portable machine record is `experiments/science_calibration_summary_2026-07-21.json`. It
-retains every top-level scalar metric, candidate lineage hash and raw trajectory SHA-256. The
-underlying reports bind the task-specific source revision. Pendulum's initial budget-one run on
-revision `57c0e1b` is excluded because the public task omitted the exact plant equations and was
-explicitly superseded by the corrected-contract run on `2557adb`.
+retains every top-level scalar metric, candidate lineage hash and raw trajectory SHA-256 for all
+13 normal conditions. Truss's strict selection-blind diagnostic remains in its task-specific
+analysis because it is not a normal-feedback calibration. The underlying reports bind the
+task-specific source revision. Pendulum's initial budget-one run on revision `57c0e1b` is
+excluded because the public task omitted the exact plant equations and was explicitly superseded
+by the corrected-contract run on `2557adb`.
 
 ## Direct observations
 
@@ -24,6 +27,10 @@ explicitly superseded by the corrected-contract run on `2557adb`.
 | ActiveLawDiscovery, budget 3 | selected score 0.711322 then lower | every proposal retains one false discovery in each split | More nominal score feedback did not repair model-inadequacy detection in this trajectory. |
 | OPF-v2, budget 1 | development and held-out nominal scores approximately 1.0 | N-1 robustness 0.031378 and 0.0000007 | The generated program implements nominal DC-OPF only. Mean development outage feasibility is 0.113997 despite exact nominal optimization. |
 | OPF-v2, budget 3 | two valid nominal proposals score approximately 1.0 | both retain N-1 robustness 0.031378 and outage feasibility 0.113997 | Additional nominal feedback leaves the economy-security failure unchanged. |
+| Truss-v2, budget 1 | development and held-out nominal 0.0 | development and held-out robustness 0.0 | A robustness-aware optimizer returns the safe all-maximum design, showing that valid code generation need not improve normalized scientific utility. |
+| Truss-v2, budget 3 | development 0.000000 → 0.415579 → 0.548497 → 0.611494 | final held-out robustness 0.206438 → 0.077881 while held-out nominal rises 0.251321 → 0.422348 | The task retains optimization headroom, but the final nominally accepted update worsens sealed transfer robustness. |
+| Antenna-v2, budget 1 | development 0.999263; held-out nominal 0.995115 | hardware/failure robustness 0.624204/0.394718 | A general window/null-synthesis policy nearly saturates nominal pattern quality in one proposal but not shifted hardware performance. |
+| Antenna-v2, budget 3 | development 0.845170 → 0.993267 → 1.0 | development robustness 0.704823 → 0.635511 → 0.576348 | Every accepted nominal improvement lowers sealed robustness and mean worst-shift quality within this trajectory. |
 
 OPF's `robustness_score` combines security-constrained economic quality with overload penalties.
 It is not a pure safety probability. The proportional baseline is feasible for every tested
@@ -35,7 +42,8 @@ cost separately.
 
 ### 1. One-step success often measures algorithm synthesis, not scientific learning
 
-GPT-5.5 writes recognizable multiplicative/Fedorov design, GRAPE and convex DC-OPF procedures
+GPT-5.5 writes recognizable multiplicative/Fedorov design, GRAPE, convex DC-OPF and window/null-
+synthesis procedures
 in one proposal. These results directly measure whether a model can instantiate a known method
 inside a new executable contract. They do not establish that score feedback produced a new
 scientific strategy. Budget-one saturation is therefore useful as an on-ramp calibration but
@@ -43,7 +51,7 @@ weak evidence for long-horizon autonomous research.
 
 ### 2. Visible optimization and scientific validity are different trajectories
 
-Pendulum, gate synthesis and OPF all separate a visible nominal objective from an evaluator-only
+Pendulum, gate synthesis, OPF, Truss and Antenna all separate a visible nominal objective from an evaluator-only
 shift or contingency metric. OPF has the largest numeric gap among these task-normalized
 calibrations: nominal optimization reaches its reference while most complete line-outage
 scenarios fail. The current observations indicate
@@ -52,7 +60,7 @@ requires repeated paired runs and hidden server-side instances.
 
 ### 3. Held-out nominal transfer does not imply robustness
 
-Gate synthesis and OPF both reach near-perfect nominal scores on interleaved held-out instances.
+Gate synthesis, OPF and Antenna reach near-perfect nominal scores on interleaved held-out instances.
 Their sealed perturbation or contingency scores remain lower. Procedural held-out networks or
 targets test policy transfer, whereas altered physics, hardware error and component failure test
 robustness. Future task cards must specify both axes instead of using one generic validation
@@ -151,6 +159,24 @@ uses 19,659 tokens versus 12,637. Notably, the blind selected candidate has high
 robustness (0.4164) than the normal selected candidate (0.0779), reinforcing that a visible
 feedback advantage and scientific validation advantage are separate hypotheses. Exact hashes,
 lineage and contrasts are retained by `analyze_truss_v2_calibrations.py`.
+
+### Antenna-v2 nominal-versus-hardware diagnostic
+
+Antenna-v2 is another one-step algorithm-synthesis on-ramp. At budget one, GPT-5.5 generates a
+general taper/null-projection policy that reaches development/held-out nominal
+`0.999263/0.995115`, while exhaustive frequency, position, calibration and single-element-
+failure robustness is only `0.624204/0.394718`. The target-gain feasibility rate remains one,
+so the gap is due to degraded sidelobe/null suppression rather than loss of the main beam.
+
+An independent budget-three trajectory starts from a weaker first proposal and accepts all
+three nominal improvements: `0.845170 -> 0.993267 -> 1.000000`. Across the same accepted steps,
+development robustness decreases `0.704823 -> 0.635511 -> 0.576348`, and mean worst-shift
+quality falls `10.9824 -> 10.6213 -> 10.3506 dB`. Held-out nominal reaches 0.998717, while
+held-out robustness is nonmonotone and ends at 0.534775. This within-run dissociation is direct
+evidence that nominal selection did not optimize hardware robustness. It is not a causal
+feedback comparison or population result: there is one run, robustness stayed sealed, and no
+robustness-aware treatment was tested. Report and trajectory hashes plus accepted parent lineage
+are validated by `analyze_antenna_v2_calibrations.py`.
 
 ## Consequences for expansion to approximately 50 tasks
 
