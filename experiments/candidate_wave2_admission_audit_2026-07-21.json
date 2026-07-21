@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_ADMISSION_AUDIT",
+  "created_at": "2026-07-21T18:28:27.376249+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "3b12e7cfc854557b6ea768a8b865b9f60cbd5105",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/home/azureuser/.local/bin/python3.10",
+      "scripts/audit_candidate_wave2.py",
+      "--output",
+      "experiments/candidate_wave2_admission_audit_2026-07-21.json"
+    ]
+  },
+  "environment": {
+    "python": "3.10.20 (main, Apr  7 2026, 20:44:18) [Clang 22.1.1 ]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.31"
+  },
+  "records": [
+    {
+      "task": "Acoustics/RoomImpulseResponse",
+      "admission": "quarantine",
+      "defect": "a reference-length candidate crashes when compared with the shorter order-zero baseline",
+      "exact_reference_candidate_crashed": true,
+      "error": "ValueError: operands could not be broadcast together with shapes (3732,) (234,) ",
+      "passed": true
+    },
+    {
+      "task": "Astrodynamics/LowThrustTransfer",
+      "admission": "quarantine",
+      "defect": "one Euler step spans nearly half a LEO orbit and the unforced orbit gains nonphysical energy",
+      "propagation_returned_ok": true,
+      "dt_seconds": 2592.0,
+      "initial_orbit_period_seconds": 5828.516637686015,
+      "dt_over_period": 0.44471006280408465,
+      "unforced_relative_energy_drift": 9.335594227764515,
+      "unforced_final_radius_m": 56471871778.80925,
+      "passed": true
+    },
+    {
+      "task": "ControlTheory/InvertedPendulumSwingUp",
+      "admission": "quarantine",
+      "defect": "the dynamics make theta=0 unstable and theta=pi stable, opposite to the public down/upright labels and reward",
+      "d_theta_acceleration_at_zero": 7.895853658534692,
+      "d_theta_acceleration_at_pi": -7.89585365963836,
+      "passed": true
+    },
+    {
+      "task": "FluidDynamics/LidDrivenCavity",
+      "admission": "quarantine",
+      "defect": "centerline-only scoring accepts fields that violate boundary conditions and never solve Navier-Stokes",
+      "profile_injection_score": 0.999442807129432,
+      "top_wall_max_error": 1.0,
+      "pressure_is_unchecked": true,
+      "passed": true
+    },
+    {
+      "task": "MaterialsScience/AlloyHardnessOptimization",
+      "admission": "quarantine",
+      "defect": "the claimed experimental-data surrogate is a hand-written pseudo-physical polynomial with no dataset artifact",
+      "oracle_self_labels_pseudo_physical": true,
+      "dataset_artifact_present": false,
+      "passed": true
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "admission": "quarantine",
+      "defect": "the oracle is a scalar phase FFT, not RCWA, and a disclosed analytic phase ramp gives unit efficiency",
+      "analytic_phase_ramp_score": 1.0,
+      "efficiencies": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "passed": true
+    },
+    {
+      "task": "Thermodynamics/HeatExchangerDesign",
+      "admission": "quarantine",
+      "defect": "effectiveness is monotone in unconstrained area and the implemented pass formula is pass-count invariant",
+      "pass_count_effectiveness_spreads": [
+        2.220446049250313e-16,
+        5.551115123125783e-16
+      ],
+      "maximum_area_score": 0.7467569293455024,
+      "passed": true
+    }
+  ],
+  "summary": {
+    "task_count": 7,
+    "reproduced_defect_count": 7,
+    "recommended_quarantine_count": 7
+  },
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}

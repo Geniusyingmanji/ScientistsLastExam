@@ -503,3 +503,6 @@ on the scalar-FFT task mislabeled RCWA; and the heat-exchanger pass count change
 by less than `6e-16` while maximum area trivially improves the score. All seven are quarantined
 pending replacement or substantive repair. No model calls were used on invalid measurement
 instruments.
+
+`candidate_wave2_admission_audit_2026-07-21.json` reproduces all seven defects from clean
+revision `3b12e7c`; it sets `execution_passed=true`, `trusted_evidence=true` and `passed=true`.
