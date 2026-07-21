@@ -521,3 +521,10 @@ desired science-specific gap: nominal task success does not imply robust control
 
 `pendulum_v2_calibration_2026-07-21.json` records this result from clean revision `e098dc2`; it
 sets `execution_passed=true`, `trusted_evidence=true` and `passed=true`.
+
+An initial GPT-5.5 budget-one diagnostic on revision `57c0e1b` failed to improve the zero-force
+baseline (proposal 0.0000185 versus baseline 0.0000211). Inspection showed that the generated
+controller assumed a point-mass pendulum, whereas the evaluator uses the `4/3` effective-inertia
+cart-pole equations. Because the original v2 Task text disclosed parameters but not those exact
+equations, this run cannot establish headroom. The dynamics were subsequently added verbatim to
+the public contract; the diagnostic artifact is retained but superseded for admission purposes.
