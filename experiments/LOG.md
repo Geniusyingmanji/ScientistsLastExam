@@ -518,3 +518,6 @@ balanced time, terminal stabilization, RMS force and cart travel; robustness is 
 separately. A public-input nominal energy-shaping plus LQR reference scores **0.870997** on
 development with balanced fraction 1.0, but only **0.454697** on shifted validation. This is the
 desired science-specific gap: nominal task success does not imply robust control discovery.
+
+`pendulum_v2_calibration_2026-07-21.json` records this result from clean revision `e098dc2`; it
+sets `execution_passed=true`, `trusted_evidence=true` and `passed=true`.

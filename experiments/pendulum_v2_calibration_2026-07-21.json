@@ -1,0 +1,240 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_TASK_CALIBRATION",
+  "created_at": "2026-07-21T18:49:06.661563+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "e098dc2acab7f43b0b4888db66d5cf2bdf8dee23",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/home/azureuser/.local/bin/python3.10",
+      "scripts/calibrate_pendulum_v2.py",
+      "--output",
+      "experiments/pendulum_v2_calibration_2026-07-21.json"
+    ]
+  },
+  "environment": {
+    "python": "3.10.20 (main, Apr  7 2026, 20:44:18) [Clang 22.1.1 ]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.31"
+  },
+  "reference_solver": "public nominal energy shaping plus LQR",
+  "baseline_metrics": {
+    "combined_score": 2.1076699100262634e-05,
+    "valid": 1.0,
+    "feasibility_rate": 1.0,
+    "raw_score": 2.1076699100262634e-05,
+    "development_score": 2.1076699100262634e-05,
+    "robustness_score": 8.595368529745794e-06,
+    "development_robustness_gap": 1.248133057051684e-05,
+    "mean_balanced_fraction": 0.0,
+    "mean_rms_force": 0.0,
+    "mean_rms_cart_position": 0.33459590482195123,
+    "per_scenario": [
+      {
+        "group": "development",
+        "utility": 1.8929589792824298e-05,
+        "balanced_fraction": 0.0,
+        "terminal_score": 6.309876527902458e-05,
+        "rms_force": 0.0,
+        "rms_cart_position": 0.006483894756002306,
+        "first_balance_time": null,
+        "runaway": false
+      },
+      {
+        "group": "development",
+        "utility": 2.088400512846921e-05,
+        "balanced_fraction": 0.0,
+        "terminal_score": 6.970202142004256e-05,
+        "rms_force": 0.0,
+        "rms_cart_position": 0.1595589937735797,
+        "first_balance_time": null,
+        "runaway": false
+      },
+      {
+        "group": "development",
+        "utility": 2.2082680881119118e-05,
+        "balanced_fraction": 0.0,
+        "terminal_score": 7.552144770105449e-05,
+        "rms_force": 0.0,
+        "rms_cart_position": 0.7162437621656151,
+        "first_balance_time": null,
+        "runaway": false
+      },
+      {
+        "group": "development",
+        "utility": 2.3656441998027393e-05,
+        "balanced_fraction": 0.0,
+        "terminal_score": 8.02801237054132e-05,
+        "rms_force": 0.0,
+        "rms_cart_position": 0.5985615048713852,
+        "first_balance_time": null,
+        "runaway": false
+      },
+      {
+        "group": "development",
+        "utility": 1.9830777700873164e-05,
+        "balanced_fraction": 0.0,
+        "terminal_score": 6.622471208541573e-05,
+        "rms_force": 0.0,
+        "rms_cart_position": 0.19213136854317378,
+        "first_balance_time": null,
+        "runaway": false
+      },
+      {
+        "group": "validation",
+        "utility": 0.0,
+        "balanced_fraction": 0.0,
+        "terminal_score": 0.0,
+        "rms_force": 0.0,
+        "rms_cart_position": 2.292600999172247,
+        "first_balance_time": null,
+        "runaway": true
+      },
+      {
+        "group": "validation",
+        "utility": 0.0,
+        "balanced_fraction": 0.0,
+        "terminal_score": 5.5468978218142094e-05,
+        "rms_force": 0.0,
+        "rms_cart_position": 1.9758312377842284,
+        "first_balance_time": null,
+        "runaway": true
+      },
+      {
+        "group": "validation",
+        "utility": 1.7232212042857584e-05,
+        "balanced_fraction": 0.0,
+        "terminal_score": 5.968927395814428e-05,
+        "rms_force": 0.0,
+        "rms_cart_position": 0.8763459216542111,
+        "first_balance_time": null,
+        "runaway": false
+      },
+      {
+        "group": "validation",
+        "utility": 1.7149262076125597e-05,
+        "balanced_fraction": 0.0,
+        "terminal_score": 6.254750935891389e-05,
+        "rms_force": 0.0,
+        "rms_cart_position": 1.3416293701054818,
+        "first_balance_time": null,
+        "runaway": false
+      }
+    ]
+  },
+  "reference_metrics": {
+    "combined_score": 0.8709973637300482,
+    "valid": 1.0,
+    "feasibility_rate": 1.0,
+    "raw_score": 0.8709973637300482,
+    "development_score": 0.8709973637300482,
+    "robustness_score": 0.45469689653482154,
+    "development_robustness_gap": 0.4163004671952267,
+    "mean_balanced_fraction": 1.0,
+    "mean_rms_force": 2.1762434003679845,
+    "mean_rms_cart_position": 0.626128057731709,
+    "per_scenario": [
+      {
+        "group": "development",
+        "utility": 0.8690269184837551,
+        "balanced_fraction": 1.0,
+        "terminal_score": 0.9999999999933822,
+        "rms_force": 2.206564097146373,
+        "rms_cart_position": 0.6108690519769508,
+        "first_balance_time": 4.08,
+        "runaway": false
+      },
+      {
+        "group": "development",
+        "utility": 0.8768670988582687,
+        "balanced_fraction": 1.0,
+        "terminal_score": 0.9999999999912741,
+        "rms_force": 2.144705948000448,
+        "rms_cart_position": 0.5728132094597879,
+        "first_balance_time": 4.24,
+        "runaway": false
+      },
+      {
+        "group": "development",
+        "utility": 0.8757021986180611,
+        "balanced_fraction": 1.0,
+        "terminal_score": 0.9999999999896961,
+        "rms_force": 2.12824254795436,
+        "rms_cart_position": 0.6244004033172927,
+        "first_balance_time": 4.3,
+        "runaway": false
+      },
+      {
+        "group": "development",
+        "utility": 0.8748016888414567,
+        "balanced_fraction": 1.0,
+        "terminal_score": 0.9999999999897257,
+        "rms_force": 2.130226417941822,
+        "rms_cart_position": 0.6373608842733385,
+        "first_balance_time": 4.3,
+        "runaway": false
+      },
+      {
+        "group": "development",
+        "utility": 0.8585889138486995,
+        "balanced_fraction": 1.0,
+        "terminal_score": 0.9999999999964265,
+        "rms_force": 2.271477990796919,
+        "rms_cart_position": 0.6851967396311749,
+        "first_balance_time": 3.68,
+        "runaway": false
+      },
+      {
+        "group": "validation",
+        "utility": 0.0032881693242562664,
+        "balanced_fraction": 0.0,
+        "terminal_score": 0.012178294534354931,
+        "rms_force": 1.896148646456611,
+        "rms_cart_position": 0.5561827144491258,
+        "first_balance_time": null,
+        "runaway": false
+      },
+      {
+        "group": "validation",
+        "utility": 0.9038701093066907,
+        "balanced_fraction": 1.0,
+        "terminal_score": 0.9999971993749277,
+        "rms_force": 1.762190434209097,
+        "rms_cart_position": 0.6846297533774014,
+        "first_balance_time": 3.22,
+        "runaway": false
+      },
+      {
+        "group": "validation",
+        "utility": 0.0024981305821012963,
+        "balanced_fraction": 0.0,
+        "terminal_score": 0.009260191120607683,
+        "rms_force": 1.9851222174848795,
+        "rms_cart_position": 0.39221022519766946,
+        "first_balance_time": null,
+        "runaway": false
+      },
+      {
+        "group": "validation",
+        "utility": 0.909131176926238,
+        "balanced_fraction": 1.0,
+        "terminal_score": 0.9999999840406193,
+        "rms_force": 1.859827029415178,
+        "rms_cart_position": 0.4193320139231987,
+        "first_balance_time": 4.16,
+        "runaway": false
+      }
+    ]
+  },
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}
