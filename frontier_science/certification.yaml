@@ -202,7 +202,7 @@ tasks:
     reason: non-finite peak parameters receive full score, and one fixed spectrum measures reconstruction without peak matching or held-out lineshape validation
   StructuralEngineering/TrussWeightMinimization:
     status: candidate
-    reason: v2 has six unique procedural structures, complete stress/displacement/Euler-buckling FEM, multistart feasible nominal/robust references and sealed load/material/manufacturing shifts; awaiting GPT-5.5 headroom calibration, server-held structures and independent domain review
+    reason: v2 has six unique procedural structures, complete stress/displacement/Euler-buckling FEM, multistart feasible references and sealed physical shifts; GPT-5.5 improves development 0.0 to 0.611 across three accepted proposals while final held-out robustness falls from 0.206 to 0.078, leaving useful non-saturated optimization/validation headroom pending paired controls, server-held structures and independent domain review
     citation_ids:
       - doi:10.2514/3.49321
       - doi:10.1007/BF01376857

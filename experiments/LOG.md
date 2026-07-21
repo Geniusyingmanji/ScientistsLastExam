@@ -800,3 +800,21 @@ development/held-out robustness is **0.0/0.0**. The robust witness trades nomina
 safe under all shifts, and non-finite, wrong-length, out-of-bound and nominally infeasible
 designs fail closed. Truss-v2 is re-admitted as a candidate pending GPT-5.5 headroom calibration,
 server-held structures and independent structural-engineering review.
+
+### GPT-5.5 Truss-v2 calibration
+
+At budget one, GPT-5.5 writes a robustness-aware SLSQP policy but returns the all-maximum design
+on every instance, so development, held-out and shifted robustness scores remain zero. In an
+independent budget-three normal run, all three proposals are accepted and visible development
+rises **0.000000 -> 0.415579 -> 0.548497 -> 0.611494**. The selected policy transfers nominally
+to held-out structures at **0.422348**, but its final accepted update lowers sealed held-out
+robustness from **0.206438** to **0.077881** while raising held-out nominal score from 0.251321.
+Development robustness ends at 0.536098 and only 75% of development shifted cases are feasible.
+
+A same-local-identifier strict selection-blind budget-three diagnostic selects development
+**0.084629**, development robustness **0.069867**, held-out nominal **0.277788** and held-out
+robustness **0.416438**. Normal therefore has a large visible advantage in this one diagnostic
+but worse held-out robustness. It also uses 19,659 versus 12,637 tokens, and the Azure endpoint
+has no server-side seed. The contrast is evidence of task headroom and motivates a token-matched
+paired study; it is not a causal feedback claim. All three reports bind clean task source
+revision `4c31f5d`; a derived analyzer validates raw trajectory hashes and parent lineage.

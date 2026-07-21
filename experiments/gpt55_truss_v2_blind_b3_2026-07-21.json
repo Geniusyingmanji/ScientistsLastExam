@@ -1,0 +1,342 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_SECURE_EVAL",
+  "evidence_scope": "MODEL_PERFORMANCE",
+  "created_at": "2026-07-21T22:55:13.983607+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "4c31f5d1b1cb448b38629f54a053ac1cf01f6385",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/home/azureuser/.local/bin/python3.10",
+      "/home/azureuser/workspace-gzy/zyf/frontier-science/scripts/batch_evolve.py",
+      "--all",
+      "--tasks",
+      "StructuralEngineering/TrussWeightMinimization",
+      "--algorithms",
+      "greedy_rewrite",
+      "--feedback-modes",
+      "selection_blind",
+      "--seeds",
+      "1",
+      "--budget",
+      "3",
+      "--timeout",
+      "240",
+      "--llm-config",
+      "frontier_science/conf/llm/local.yaml",
+      "--workdir",
+      "runs/gpt55_truss_v2_blind_b3_20260721",
+      "--output",
+      "experiments/gpt55_truss_v2_blind_b3_2026-07-21.json"
+    ]
+  },
+  "environment": {
+    "python": "3.10.20 (main, Apr  7 2026, 20:44:18) [Clang 22.1.1 ]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.31"
+  },
+  "config": {
+    "tasks": [
+      "StructuralEngineering/TrussWeightMinimization"
+    ],
+    "algorithms": [
+      "greedy_rewrite"
+    ],
+    "feedback_modes": [
+      "selection_blind"
+    ],
+    "condition_order": "as_listed_for_even_seeds_reversed_for_odd_seeds",
+    "seeds": [
+      1
+    ],
+    "budget": 3,
+    "timeout_s": 240.0,
+    "work_root": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/gpt55_truss_v2_blind_b3_20260721",
+    "llm_condition_sha256": "5b0df4671481f6b3505155bc6c5654a64c4da5591422fb806904e7d0f44fc4d2",
+    "llm": {
+      "wire": "responses",
+      "endpoint_sha256": "b22995a1fcaf8ad713ac37716f006c717313dfdebd357ac02a077a5582650bb6",
+      "model": "gpt-5.5",
+      "max_output_tokens": 16000,
+      "temperature": null,
+      "reasoning_effort": "low",
+      "input_cost_per_million": null,
+      "output_cost_per_million": null,
+      "server_side_seed_control": false
+    }
+  },
+  "runs": [
+    {
+      "task": "StructuralEngineering/TrussWeightMinimization",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "selection_blind",
+      "seed": 1,
+      "baseline": 0.0,
+      "best": 0.08462868264136335,
+      "accepted": 1,
+      "evaluated": 4,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/gpt55_truss_v2_blind_b3_20260721/StructuralEngineering__TrussWeightMinimization/greedy_rewrite/selection_blind/seed_1",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 4,
+        "budget_units": 4,
+        "best_score": 0.08462868264136335,
+        "best_so_far_auc": 0.021157170660340837,
+        "valid_rate": 0.5,
+        "accepted": 1,
+        "wall_seconds": 111.50416689738631,
+        "llm": {
+          "calls": 3,
+          "provider_usage_records": 3,
+          "input_tokens": 3678,
+          "output_tokens": 8959,
+          "total_tokens": 12637,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "StructuralEngineering/TrussWeightMinimization",
+        "seed": 1,
+        "baseline_score": 0.0,
+        "budget": 3,
+        "feedback_mode": "selection_blind",
+        "feedback_scope": "open-loop proposal batch: every proposal sees the frozen baseline program and its allowlisted baseline metrics; evaluated scores are retained only for offline best-of-batch analysis and never change a later parent or prompt; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "offline_best_of_open_loop_batch"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 1,
+        "trajectory_sha256": "8c380f4d2b6e9a561e6a5de10577ad343c7204cb78b2c5bd7a0ed70f738a294c",
+        "events": [
+          {
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "dd89ba5c3aff3d54eb84802cd80cb9da210e60811085a0dcdcf70c4a5e735661",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.0,
+              "robustness_score": 0.0,
+              "development_validation_gap": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "heldout_feasibility_rate": 1.0,
+              "mean_shifted_case_feasibility_rate": 1.0,
+              "mean_shifted_constraint_feasibility_rate": 1.0,
+              "raw_score": 0.0
+            },
+            "algorithm_metadata": {},
+            "error": null
+          },
+          {
+            "step": 1,
+            "oracle_calls": 2,
+            "budget_units": 2,
+            "score": 0.08566189335168957,
+            "best_score": 0.0,
+            "valid": false,
+            "accepted": false,
+            "candidate_sha256": "3f62353e7f72694c48db5a742d9ebf5a0a5eff50072189e88aaeafb0c77e677f",
+            "parent_sha256": "dd89ba5c3aff3d54eb84802cd80cb9da210e60811085a0dcdcf70c4a5e735661",
+            "metrics": {
+              "combined_score": 0.08566189335168957,
+              "valid": 0.0,
+              "feasibility_rate": 0.75,
+              "development_score": 0.08566189335168957,
+              "robustness_score": 0.06959265308337399,
+              "development_validation_gap": 0.016069240268315577,
+              "heldout_policy_score": 0.2838469286841534,
+              "heldout_robustness_score": 0.4256140801093638,
+              "heldout_feasibility_rate": 1.0,
+              "mean_shifted_case_feasibility_rate": 0.65625,
+              "mean_shifted_constraint_feasibility_rate": 0.7477678571428572,
+              "raw_score": 0.08566189335168957
+            },
+            "algorithm_metadata": {
+              "selection_policy": "offline_best_of_open_loop_batch",
+              "accepted_semantics": "offline_best_update",
+              "proposal_slot": 1
+            },
+            "error": null
+          },
+          {
+            "step": 2,
+            "oracle_calls": 3,
+            "budget_units": 3,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": false,
+            "accepted": false,
+            "candidate_sha256": "dc7a996b6639ae961821b520a6f6dd893fbf95325828c798f19366fb4fb26158",
+            "parent_sha256": "dd89ba5c3aff3d54eb84802cd80cb9da210e60811085a0dcdcf70c4a5e735661",
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 0.0,
+              "feasibility_rate": 0.75,
+              "development_score": 0.0,
+              "robustness_score": 0.0,
+              "development_validation_gap": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "heldout_feasibility_rate": 1.0,
+              "mean_shifted_case_feasibility_rate": 0.75,
+              "mean_shifted_constraint_feasibility_rate": 0.75,
+              "raw_score": 0.0
+            },
+            "algorithm_metadata": {
+              "selection_policy": "offline_best_of_open_loop_batch",
+              "accepted_semantics": "offline_best_update",
+              "proposal_slot": 2
+            },
+            "error": null
+          },
+          {
+            "step": 3,
+            "oracle_calls": 4,
+            "budget_units": 4,
+            "score": 0.08462868264136335,
+            "best_score": 0.08462868264136335,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "02e03db3edd949ff5cf9b18cec25512faedf75bddc01e804fd03b96893e22f4d",
+            "parent_sha256": "dd89ba5c3aff3d54eb84802cd80cb9da210e60811085a0dcdcf70c4a5e735661",
+            "metrics": {
+              "combined_score": 0.08462868264136335,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.08462868264136335,
+              "robustness_score": 0.0698669254738856,
+              "development_validation_gap": 0.014761757167477754,
+              "heldout_policy_score": 0.2777878043533903,
+              "heldout_robustness_score": 0.41643801863190333,
+              "heldout_feasibility_rate": 1.0,
+              "mean_shifted_case_feasibility_rate": 0.90625,
+              "mean_shifted_constraint_feasibility_rate": 0.9977678571428572,
+              "raw_score": 0.08462868264136335
+            },
+            "algorithm_metadata": {
+              "selection_policy": "offline_best_of_open_loop_batch",
+              "accepted_semantics": "offline_best_update",
+              "proposal_slot": 3
+            },
+            "error": null
+          }
+        ]
+      }
+    }
+  ],
+  "aggregate": {
+    "attempt_count": 1,
+    "superseded_attempts": 0,
+    "successful_runs": 1,
+    "failed_runs": 0,
+    "by_condition": {
+      "StructuralEngineering/TrussWeightMinimization|greedy_rewrite|selection_blind": {
+        "n": 1,
+        "best_score": {
+          "n": 1,
+          "mean": 0.08462868264136335,
+          "ci95_low": 0.08462868264136335,
+          "ci95_high": 0.08462868264136335
+        },
+        "best_so_far_auc": {
+          "n": 1,
+          "mean": 0.021157170660340837,
+          "ci95_low": 0.021157170660340837,
+          "ci95_high": 0.021157170660340837
+        },
+        "budget_units": {
+          "n": 1,
+          "mean": 4.0,
+          "ci95_low": 4.0,
+          "ci95_high": 4.0
+        },
+        "oracle_calls": {
+          "n": 1,
+          "mean": 4.0,
+          "ci95_low": 4.0,
+          "ci95_high": 4.0
+        },
+        "wall_seconds": {
+          "n": 1,
+          "mean": 111.50416689738631,
+          "ci95_low": 111.50416689738631,
+          "ci95_high": 111.50416689738631
+        },
+        "total_tokens": {
+          "n": 1,
+          "mean": 12637.0,
+          "ci95_low": 12637.0,
+          "ci95_high": 12637.0
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      }
+    },
+    "overall": {
+      "best_score": {
+        "n": 1,
+        "mean": 0.08462868264136335,
+        "ci95_low": 0.08462868264136335,
+        "ci95_high": 0.08462868264136335
+      },
+      "best_so_far_auc": {
+        "n": 1,
+        "mean": 0.021157170660340837,
+        "ci95_low": 0.021157170660340837,
+        "ci95_high": 0.021157170660340837
+      },
+      "budget_units": {
+        "n": 1,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "oracle_calls": {
+        "n": 1,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "wall_seconds": {
+        "n": 1,
+        "mean": 111.50416689738631,
+        "ci95_low": 111.50416689738631,
+        "ci95_high": 111.50416689738631
+      },
+      "total_tokens": {
+        "n": 1,
+        "mean": 12637.0,
+        "ci95_low": 12637.0,
+        "ci95_high": 12637.0
+      },
+      "estimated_cost_usd": {
+        "n": 0,
+        "mean": null,
+        "ci95_low": null,
+        "ci95_high": null
+      }
+    }
+  },
+  "completed_at": "2026-07-21T22:57:05.498500+00:00",
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}

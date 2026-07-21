@@ -126,6 +126,32 @@ leave hypotheses 1--3 open for a larger, token-matched study and prohibit a posi
 claim from the current evidence. Exact paired estimates and limitations are recorded in
 `feedback_pilot_results.md` and `experiments/feedback_pilot_analysis_2026-07-21.json`.
 
+### Truss-v2 headroom diagnostic
+
+Truss-v2 adds a qualitatively different structural-design case. An independent budget-one
+GPT-5.5 proposal attempts a robustness-aware optimizer but falls back to the all-maximum baseline
+on every structure, leaving development and sealed scores at zero. In a separate budget-three
+normal run, all three proposals are accepted and development score rises
+`0.0000 -> 0.4156 -> 0.5485 -> 0.6115`; held-out nominal transfer also reaches 0.4223. The task
+therefore has genuine iterative optimization headroom rather than the one-step saturation seen
+in OED, gate synthesis and nominal OPF.
+
+The science trajectory does not improve monotonically with the visible curve. From the second
+to the third accepted proposal, held-out nominal score rises from 0.2513 to 0.4223 while sealed
+held-out robustness falls from 0.2064 to 0.0779; development shifted-case feasibility remains
+0.75. The final policy is nominally feasible on all six structures, but its steel Pratt
+development structure and titanium held-out structure fail every shifted case. Thus policy
+transfer to a new nominal topology/material does not imply physical-shift transfer, consistent
+with the gate and OPF findings.
+
+A same-identifier budget-three strict open-loop diagnostic selects only 0.0846 development,
+compared with 0.6115 for normal iteration. This is a useful feedback-headroom signal, not a
+causal estimate: each condition has one run, the endpoint has no server-side seed, and normal
+uses 19,659 tokens versus 12,637. Notably, the blind selected candidate has higher held-out
+robustness (0.4164) than the normal selected candidate (0.0779), reinforcing that a visible
+feedback advantage and scientific validation advantage are separate hypotheses. Exact hashes,
+lineage and contrasts are retained by `analyze_truss_v2_calibrations.py`.
+
 ## Consequences for expansion to approximately 50 tasks
 
 Every new or rebuilt task must pass the following gate before it counts toward the target:

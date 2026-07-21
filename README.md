@@ -34,7 +34,7 @@ All candidate code runs in a networkless Bubblewrap sandbox with read-only mount
 and process limits, and a typed JSON RPC boundary. The trusted parent alone imports the
 oracle and validates metrics. The current audit reports:
 
-- 85/85 unit, security, protocol and scientific-invariant tests passed.
+- 87/87 unit, security, protocol and scientific-invariant tests passed.
 - The latest 51×2 secure-baseline audit reports 51/51 deterministic, 50/51 valid, 51/51
   fail-closed and zero infrastructure failures. The sole invalid baseline is the explicitly
   quarantined `ClimateScience/EnergyBalanceModel`.
@@ -42,7 +42,10 @@ oracle and validates metrics. The current audit reports:
   gate synthesis, DC optimal power flow and truss sizing have been rebuilt with separate sealed
   validation or robustness metrics and re-admitted as candidates. GPT-5.5 reaches nominal OPF score 1.0
   at budget one while sealed N-1 robustness is only 0.031 on development and approximately
-  zero on held-out networks.
+  zero on held-out networks. On Truss-v2, a separate budget-three run improves development
+  `0.000 -> 0.416 -> 0.548 -> 0.611`, while its final accepted step increases held-out nominal
+  transfer and decreases sealed held-out robustness; these are calibration trajectories, not
+  multi-seed feedback claims.
 
 Machine-readable evidence lives in [`experiments/`](experiments/).
 The original five dated P0–P2 reports were regenerated from clean source revision `f48b101`;

@@ -103,9 +103,11 @@ The first review tranche contains real scientific topics but several narrow eval
   analysis. Rename the fidelity or replace it with a validated RCWA oracle.
 - Neutron diffusion has a substantive PDE/eigenvalue oracle but only one geometry/loading
   regime and an unsupported fixed normalization increment; validate anchors and add shifts.
-- Truss sizing, antenna synthesis and NMR fitting remain valuable task families, but their
-  current packages cannot support model evidence. Re-admission requires procedural instances,
-  finite-output checks, independent anchors, and sealed shifted or mechanism metrics.
+- Truss-v2 now supplies six procedural structures, finite-output checks, independently reproduced
+  nominal/robust local witnesses and sealed topology/physical-shift metrics. Its non-saturated
+  GPT-5.5 trajectory makes it a useful optimization/validation candidate, pending server-held
+  structures, paired controls and independent review. Antenna synthesis and NMR fitting still
+  require corresponding substantive rebuilds before they can support model evidence.
 - OED-v2 now meets those internal evaluator criteria: six development and four shifted model
   families, finite integer allocations, numerically whitened Fisher sensitivities, and
   Kiefer-Wolfowitz-certified references. GPT-5.5 then reaches 0.991 development and 0.994
