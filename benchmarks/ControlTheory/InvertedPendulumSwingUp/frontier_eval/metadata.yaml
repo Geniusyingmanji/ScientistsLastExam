@@ -5,7 +5,7 @@ oracle_type: physical_sim
 score_mode: clipped
 gpu_required: false
 eval_time_seconds: 10
-science_metric: swing_up_success_and_efficiency
-reference_baseline: "bang_bang_controller"
-reference_sota: "energy_based_swing_up"
-citation: "Astrom & Furuta 2000; Tedrake 2009"
+science_metric: development_swing_up_utility_with_separate_shifted_robustness
+reference_baseline: "zero-force controller"
+reference_sota: "energy-shaping swing-up with local LQR stabilization"
+citation: "Astrom & Furuta 2000 doi:10.1016/S0005-1098(99)00140-5; Tedrake Underactuated Robotics"

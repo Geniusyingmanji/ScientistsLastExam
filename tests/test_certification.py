@@ -250,6 +250,29 @@ def discover_mechanism(n, observe, intervene, budget):
             self.assertAlmostEqual(baseline["mechanism_score"], 0.0, places=12)
             self.assertAlmostEqual(baseline["holdout_prediction_score"], 0.0, places=12)
 
+    def test_pendulum_down_is_stable_and_upright_is_unstable(self):
+        oracle = load_oracle("ControlTheory/InvertedPendulumSwingUp")
+        plant = oracle._plant_tuple()
+        step = 1e-6
+
+        def acceleration(theta):
+            state = np.array([0.0, 0.0, theta, 0.0])
+            return oracle.cart_pole_derivative(state, 0.0, plant)[3]
+
+        down_derivative = (acceleration(step) - acceleration(-step)) / (2 * step)
+        upright_derivative = (
+            acceleration(np.pi + step) - acceleration(np.pi - step)
+        ) / (2 * step)
+        self.assertLess(down_derivative, 0.0)
+        self.assertGreater(upright_derivative, 0.0)
+
+    def test_pendulum_rk4_preserves_hanging_equilibrium(self):
+        oracle = load_oracle("ControlTheory/InvertedPendulumSwingUp")
+        state = np.zeros(4)
+        for _ in range(100):
+            state = oracle._rk4_step(state, 0.0, oracle._plant_tuple())
+        self.assertTrue(np.allclose(state, np.zeros(4), atol=1e-12))
+
 
 if __name__ == "__main__":
     unittest.main()

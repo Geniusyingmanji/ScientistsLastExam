@@ -86,7 +86,7 @@ tasks:
     reason: the 30-day trajectory uses 1000 Euler steps, causing catastrophic unforced orbital-energy drift; fuel anchors are unsupported
   ControlTheory/InvertedPendulumSwingUp:
     status: quarantined
-    reason: dynamics make theta zero unstable and theta pi stable, contradicting the public down/upright convention and rewarding the wrong equilibrium
+    reason: rebuilt with corrected down-zero dynamics and separate shifted robustness evaluation; awaiting clean reference calibration and frontier-model headroom screening
   FluidDynamics/LidDrivenCavity:
     status: quarantined
     reason: fixed centerline-only scoring accepts nonphysical field injection without boundary, divergence, momentum or pressure checks

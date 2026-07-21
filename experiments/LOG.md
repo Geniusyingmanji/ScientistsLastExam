@@ -506,3 +506,15 @@ instruments.
 
 `candidate_wave2_admission_audit_2026-07-21.json` reproduces all seven defects from clean
 revision `3b12e7c`; it sets `execution_passed=true`, `trusted_evidence=true` and `passed=true`.
+
+### Pendulum-v2 rebuild
+
+The pendulum task was rebuilt rather than numerically patched. The public convention remains
+`theta=0` down and `theta=pi` upright, and the corrected dynamics now make those equilibria
+stable and unstable respectively. Two-substep RK4 replaces forward Euler. Five development
+initial states share a disclosed nominal plant, while four evaluator-only robustness scenarios
+change masses/length/friction and apply bounded force pulses. Development utility combines
+balanced time, terminal stabilization, RMS force and cart travel; robustness is reported
+separately. A public-input nominal energy-shaping plus LQR reference scores **0.870997** on
+development with balanced fraction 1.0, but only **0.454697** on shifted validation. This is the
+desired science-specific gap: nominal task success does not imply robust control discovery.

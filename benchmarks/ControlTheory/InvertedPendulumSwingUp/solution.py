@@ -1,5 +1,4 @@
-"""Baseline: simple bang-bang (pushes right always)."""
-import numpy as np
+"""Baseline: no control; the pendulum remains near its hanging equilibrium."""
 
 def swing_up_controller(state, t, dt):
-    return 5.0  # constant push
+    return 0.0
