@@ -490,3 +490,16 @@ decisions. `task_certification_audit_2026-07-21_v2.json` records 50 packages: **
 two repetitions. The sole invalid baseline is the explicitly quarantined Climate EBM; it is
 deterministically rejected at the non-finite metric boundary. Both reports set
 `execution_passed=true`, `trusted_evidence=true` and `passed=true`.
+
+## 2026-07-21 — candidate wave 2 adversarial admission audit
+
+The remaining seven metadata-complete candidates were audited before spending GPT-5.5 calls.
+All seven have admission-blocking defects: a reference-length RIR crashes against its shorter
+baseline; the low-thrust integrator advances 0.445 initial orbital periods per step and gives an
+unforced relative energy drift of 9.34; the pendulum's stable/unstable equilibria contradict its
+labels; a nonphysical centerline injection scores 0.9994 on the cavity task; the alloy surrogate
+is a hand-written pseudo-physical polynomial with no dataset; an analytic phase ramp scores 1.0
+on the scalar-FFT task mislabeled RCWA; and the heat-exchanger pass count changes effectiveness
+by less than `6e-16` while maximum area trivially improves the score. All seven are quarantined
+pending replacement or substantive repair. No model calls were used on invalid measurement
+instruments.

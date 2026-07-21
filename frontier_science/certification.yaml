@@ -78,6 +78,28 @@ tasks:
     status: quarantined
     reason: explicit diffusion iteration is numerically unstable, embedded ERA5 attribution is not provenance-backed, and one steady profile cannot identify the seven claimed parameters; replace with a documented multi-regime inverse task
 
+  Acoustics/RoomImpulseResponse:
+    status: quarantined
+    reason: reference-length candidates crash against a shorter baseline and the fixed simplified image-source proxy lacks robust hidden-scene validation
+  Astrodynamics/LowThrustTransfer:
+    status: quarantined
+    reason: the 30-day trajectory uses 1000 Euler steps, causing catastrophic unforced orbital-energy drift; fuel anchors are unsupported
+  ControlTheory/InvertedPendulumSwingUp:
+    status: quarantined
+    reason: dynamics make theta zero unstable and theta pi stable, contradicting the public down/upright convention and rewarding the wrong equilibrium
+  FluidDynamics/LidDrivenCavity:
+    status: quarantined
+    reason: fixed centerline-only scoring accepts nonphysical field injection without boundary, divergence, momentum or pressure checks
+  MaterialsScience/AlloyHardnessOptimization:
+    status: quarantined
+    reason: claimed experimental-data surrogate is a hand-written pseudo-physical polynomial with no dataset provenance
+  Optics/DiffractionGratingDesign:
+    status: quarantined
+    reason: claimed RCWA is a scalar phase FFT with an analytic unit-efficiency phase-ramp shortcut
+  Thermodynamics/HeatExchangerDesign:
+    status: quarantined
+    reason: objective is monotone in unconstrained area and the implemented multipass formula is pass-count invariant
+
   CrystalGrowth/CzochralskiProcess:
     status: quarantined
     reason: claimed Stefan model is a generic eight-variable trigonometric objective

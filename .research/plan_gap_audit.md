@@ -24,8 +24,8 @@ physical validation, and auditable claim–evidence provenance.
 |---|---|---|---|
 | Candidate/oracle isolation | Implemented | Clean-revision report `f48b101`; 15/15 security/regression tests; Bubblewrap, no network, read-only mounts, resource/seccomp limits, typed RPC | Reproduce in clean Linux CI; document portability/non-Linux behavior |
 | Fail-closed trusted metrics | Implemented | Clean-revision 50×2 run: 50 deterministic, 49 valid, 50 fail-closed; non-finite Climate oracle rejected | Repair or quarantine every invalid candidate oracle before certification |
-| Task admission policy | Implemented, narrow | Current manifest: 7 certified / 37 candidate / 6 quarantined; the SCM task and repaired candidates remain calibration/on-ramp tasks | Independent domain + evaluator reviews are still declarations, not completed external review |
-| Scientific validity of inventory | Partial | Seven core tasks have citation IDs and invariants; five false-model clones quarantined; intervention-based SCM candidate added | Deep audit all 38 candidates; hidden/generated instances and shortcut analysis |
+| Task admission policy | Implemented, narrow | Current manifest: 7 certified / 30 candidate / 13 quarantined; the SCM task and repaired candidates remain calibration/on-ramp tasks | Independent domain + evaluator reviews are still declarations, not completed external review |
+| Scientific validity of inventory | Partial | Seven core tasks have citation IDs/invariants; 13 packages are quarantined after clone, numerical, identifiability, provenance or shortcut audits | Deep audit the remaining 30 candidates; hidden/generated instances and shortcut analysis |
 | Unified trajectory/accounting | Implemented, protocol-smoked | Clean-revision two-seed baseline smoke; trajectory schema v2, hashes, AUC over `budget_units`, separate `oracle_calls`, wall/token/cost, seed, checkpoint/resume | Validate nonzero-budget schema-v2 artifact replay in CI and version future changes |
 | Prompt-metric none/shuffled controls | Implemented, unrun | Code and unit smoke; summaries disclose that selection still uses true scores | Add selection-blind controls, then run ≥5 paired seeds with preregistered budgets |
 | Official OpenEvolve adapter | Implemented, trusted baseline smoke | Explicit 0.2.26 adapter; clean-revision secure baseline passed under Python 3.10 | Run nonzero-budget/checkpoint integration and multi-seed study |
@@ -139,8 +139,8 @@ Accordingly, “P0–P2 implemented and recorded” must not be shortened to “
 
 - [x] Trusted oracle / isolated candidate architecture and adversarial regression suite.
 - [x] Current 50-package deterministic secure baseline and certification audit; invalid Climate oracle fails closed.
-- [x] Seven-task certified core, 37 candidates and six quarantined packages (five clones plus
-  the invalid Climate EBM).
+- [x] Seven-task certified core, 30 candidates and 13 quarantined packages after wave-2
+  adversarial admission review.
 - [x] Task-card/citation/invariant audit and dated machine-readable evidence.
 - [ ] Add Linux CI reproduction of all dated audits (local clean-revision reproduction is done).
 - [x] Quarantine `ClimateScience/EnergyBalanceModel`; replace its unstable, untraceable,
