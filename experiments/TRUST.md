@@ -27,6 +27,11 @@ remain baseline-only and must not be promoted to model-performance evidence.
 | `gpt55_oed_v2_b1_2026-07-21.json` | `TRUSTED_SECURE_EVAL / CALIBRATION_ONLY` | GPT-5.5 reaches 0.990615 development and 0.993697 sealed shifted validation in one proposal on clean source `2d2d62d`; this establishes budget-one saturation, not a multi-seed leaderboard. |
 | `candidate_wave4_admission_audit_2026-07-21.json` | `TRUSTED_ADMISSION_AUDIT` | On clean source `5187019`, reproduces all 12 fail-open, unreachable-anchor, missing-observation, uncoupled-system or degenerate-objective defects in the final unscreened tranche. |
 | `task_certification_audit_2026-07-21_v6.json` | `TRUSTED_CERTIFICATION_AUDIT` | On clean source `5187019`, records the fully triaged 50-package inventory: seven certified, seven candidate and 36 quarantined. |
+| `active_law_discovery_calibration_2026-07-21.json` | `TRUSTED_TASK_CALIBRATION` | On clean source `cd65c17`, always-abstain scores zero; exact laws/refusals and all stability checks pass; a generic active SINDy reference exposes a 0.721/0.394 development/validation mechanism gap and false discoveries. |
+| `task_certification_audit_2026-07-21_v7.json` | `TRUSTED_CERTIFICATION_AUDIT` | On clean source `cd65c17`, records 51 packages: seven certified, eight candidate and 36 quarantined. |
+| `secure_baseline_determinism_2026-07-21_v3.json` | `TRUSTED_SECURE_EVAL` | On clean source `cd65c17`, all 51 baselines are deterministic and fail closed, 50 are valid, and there are no infrastructure failures; the sole invalid task remains quarantined Climate EBM. |
+| `gpt55_active_law_b1_2026-07-21.json` | `TRUSTED_SECURE_EVAL / CALIBRATION_ONLY` | Budget-one GPT-5.5 reaches 0.796 development, 0.745 sealed validation mechanism and near-perfect rollout, but falsely claims both misspecified worlds; clean source `cd65c17`. |
+| `gpt55_active_law_b3_2026-07-21.json` | `TRUSTED_SECURE_EVAL / CALIBRATION_ONLY` | Independent budget-three GPT-5.5 run on clean source `cd65c17`; later proposals do not beat 0.711 development and none fixes the development/validation misspecification false discoveries. |
 
 Raw `.out`/`.log` files predating the trusted evaluator inherit
 `UNTRUSTED_PRE_SANDBOX` unless a dated trusted report explicitly incorporates them.

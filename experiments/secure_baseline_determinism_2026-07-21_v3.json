@@ -1,0 +1,3374 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_SECURE_EVAL",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "cd65c17169a8d7f8404bab22514da920fc716632",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/home/azureuser/.local/bin/python3.10",
+      "scripts/run_secure_baseline.py",
+      "--repeats",
+      "2",
+      "--output",
+      "experiments/secure_baseline_determinism_2026-07-21_v3.json"
+    ]
+  },
+  "created_at": "2026-07-21T20:15:40.683411+00:00",
+  "environment": {
+    "python": "3.10.20 (main, Apr  7 2026, 20:44:18) [Clang 22.1.1 ]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.31"
+  },
+  "config": {
+    "repeats": 2,
+    "timeout_s": 180.0
+  },
+  "tasks": [
+    {
+      "task": "AcousticMetamaterials/BroadbandAbsorber",
+      "candidate_sha256": "3cdc0bf60e7afea08b49af5aba8a9544cc55343206ac5c2e80134e19066d9774",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.44285997468978167,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "mean_absorption": 0.0002,
+            "baseline_absorption": 0.0002,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.4426341885700822,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "mean_absorption": 0.0002,
+            "baseline_absorption": 0.0002,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "Acoustics/RoomImpulseResponse",
+      "candidate_sha256": "4c3f8535b7be01064288c97f14b7281596b91304a8574e472a342f47b6f0a731",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 1.8710585376247764,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_scenario": [
+              {
+                "valid": true,
+                "snr": 0.5,
+                "score": 0.0
+              },
+              {
+                "valid": true,
+                "snr": 0.38,
+                "score": 0.0
+              }
+            ],
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 1.8541387291625142,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_scenario": [
+              {
+                "valid": true,
+                "snr": 0.5,
+                "score": 0.0
+              },
+              {
+                "valid": true,
+                "snr": 0.38,
+                "score": 0.0
+              }
+            ],
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "Algorithm/MatrixMultiplicationRank",
+      "candidate_sha256": "cb394c23be55857134a630cbef1cf12bb0eb2b295d56ffcf5b85504d0132db6f",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.444184641353786,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "beat_sota": false,
+            "per_size": [
+              {
+                "mnp": [
+                  2,
+                  2,
+                  2
+                ],
+                "valid": true,
+                "R": 8,
+                "sota_ref": 7,
+                "score": 0.0
+              },
+              {
+                "mnp": [
+                  3,
+                  3,
+                  3
+                ],
+                "valid": true,
+                "R": 27,
+                "sota_ref": 23,
+                "score": 0.0
+              },
+              {
+                "mnp": [
+                  4,
+                  4,
+                  4
+                ],
+                "valid": true,
+                "R": 64,
+                "sota_ref": 48,
+                "score": 0.0
+              }
+            ],
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.44035579077899456,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "beat_sota": false,
+            "per_size": [
+              {
+                "mnp": [
+                  2,
+                  2,
+                  2
+                ],
+                "valid": true,
+                "R": 8,
+                "sota_ref": 7,
+                "score": 0.0
+              },
+              {
+                "mnp": [
+                  3,
+                  3,
+                  3
+                ],
+                "valid": true,
+                "R": 27,
+                "sota_ref": 23,
+                "score": 0.0
+              },
+              {
+                "mnp": [
+                  4,
+                  4,
+                  4
+                ],
+                "valid": true,
+                "R": 64,
+                "sota_ref": 48,
+                "score": 0.0
+              }
+            ],
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "Astrodynamics/LowThrustTransfer",
+      "candidate_sha256": "9186009dad17aeaf4e1dbd4c91b7a6ff52cd1628227849292965bb6da62f93e1",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.45510090328752995,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_scenario": [
+              {
+                "valid": true,
+                "fuel": 7776.0,
+                "pos_err": 1117.758258,
+                "score": 0.0
+              }
+            ],
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.4608945483341813,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_scenario": [
+              {
+                "valid": true,
+                "fuel": 7776.0,
+                "pos_err": 1117.758258,
+                "score": 0.0
+              }
+            ],
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "AtmosphericScience/RadiativeTransferFit",
+      "candidate_sha256": "a61f78744a143a9674e0b1b6011f4bef15f6d14eb15c8995c633c68af973bca2",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.4422925943508744,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "rmse_K": 24.275,
+            "rmse_baseline_K": 24.275,
+            "spectral_residual": 0.517649,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.44436185620725155,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "rmse_K": 24.275,
+            "rmse_baseline_K": 24.275,
+            "spectral_residual": 0.517649,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "BayesianInference/OptimalExperimentDesign",
+      "candidate_sha256": "0a868f82510d0bba7bf1ce718c2842ec9607724d67875af12fe4cce6ee3498b8",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 3.3839805042371154,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "development_score": 0.0,
+            "robustness_score": 0.0,
+            "development_validation_gap": 0.0,
+            "validation_feasibility_rate": 1.0,
+            "mean_development_d_efficiency": 3.393090636301963e-05,
+            "mean_validation_d_efficiency": 1.7721047522589666e-07,
+            "per_instance": [
+              {
+                "name": "dev_legendre_5",
+                "family": "legendre",
+                "split": "development",
+                "valid": true,
+                "score": 0.0,
+                "d_efficiency": 0.00010899522545829894,
+                "baseline_d_efficiency": 0.00010899522545829894,
+                "unique_designs": 14,
+                "n_measurements": 14,
+                "n_parameters": 5
+              },
+              {
+                "name": "dev_legendre_8",
+                "family": "legendre",
+                "split": "development",
+                "valid": true,
+                "score": 0.0,
+                "d_efficiency": 1.3022460232220465e-06,
+                "baseline_d_efficiency": 1.3022460232220465e-06,
+                "unique_designs": 22,
+                "n_measurements": 22,
+                "n_parameters": 8
+              },
+              {
+                "name": "dev_fourier_7",
+                "family": "fourier",
+                "split": "development",
+                "valid": true,
+                "score": 0.0,
+                "d_efficiency": 7.035127742457061e-05,
+                "baseline_d_efficiency": 7.035127742457061e-05,
+                "unique_designs": 20,
+                "n_measurements": 20,
+                "n_parameters": 7
+              },
+              {
+                "name": "dev_fourier_10",
+                "family": "fourier",
+                "split": "development",
+                "valid": true,
+                "score": 0.0,
+                "d_efficiency": 0.0,
+                "baseline_d_efficiency": 0.0,
+                "unique_designs": 28,
+                "n_measurements": 28,
+                "n_parameters": 10
+              },
+              {
+                "name": "dev_decay_7",
+                "family": "exponential_decay",
+                "split": "development",
+                "valid": true,
+                "score": 0.0,
+                "d_efficiency": 2.2936689272026196e-05,
+                "baseline_d_efficiency": 2.2936689272026196e-05,
+                "unique_designs": 20,
+                "n_measurements": 20,
+                "n_parameters": 7
+              },
+              {
+                "name": "dev_saturation_7",
+                "family": "saturation",
+                "split": "development",
+                "valid": true,
+                "score": 0.0,
+                "d_efficiency": 0.0,
+                "baseline_d_efficiency": 0.0,
+                "unique_designs": 20,
+                "n_measurements": 20,
+                "n_parameters": 7
+              },
+              {
+                "name": "val_legendre_11",
+                "family": "legendre_shift",
+                "split": "validation",
+                "valid": true,
+                "score": 0.0,
+                "d_efficiency": 0.0,
+                "baseline_d_efficiency": 0.0,
+                "unique_designs": 32,
+                "n_measurements": 32,
+                "n_parameters": 11
+              },
+              {
+                "name": "val_fourier_12",
+                "family": "fourier_shift",
+                "split": "validation",
+                "valid": true,
+                "score": 0.0,
+                "d_efficiency": 0.0,
+                "baseline_d_efficiency": 0.0,
+                "unique_designs": 34,
+                "n_measurements": 34,
+                "n_parameters": 12
+              },
+              {
+                "name": "val_decay_9",
+                "family": "decay_rate_shift",
+                "split": "validation",
+                "valid": true,
+                "score": 0.0,
+                "d_efficiency": 7.081694063486401e-07,
+                "baseline_d_efficiency": 7.081694063486401e-07,
+                "unique_designs": 28,
+                "n_measurements": 28,
+                "n_parameters": 9
+              },
+              {
+                "name": "val_saturation_9",
+                "family": "scale_shift",
+                "split": "validation",
+                "valid": true,
+                "score": 0.0,
+                "d_efficiency": 6.724945549465648e-10,
+                "baseline_d_efficiency": 6.724945549465648e-10,
+                "unique_designs": 28,
+                "n_measurements": 28,
+                "n_parameters": 9
+              }
+            ],
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 3.461351747624576,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "development_score": 0.0,
+            "robustness_score": 0.0,
+            "development_validation_gap": 0.0,
+            "validation_feasibility_rate": 1.0,
+            "mean_development_d_efficiency": 3.393090636301963e-05,
+            "mean_validation_d_efficiency": 1.7721047522589666e-07,
+            "per_instance": [
+              {
+                "name": "dev_legendre_5",
+                "family": "legendre",
+                "split": "development",
+                "valid": true,
+                "score": 0.0,
+                "d_efficiency": 0.00010899522545829894,
+                "baseline_d_efficiency": 0.00010899522545829894,
+                "unique_designs": 14,
+                "n_measurements": 14,
+                "n_parameters": 5
+              },
+              {
+                "name": "dev_legendre_8",
+                "family": "legendre",
+                "split": "development",
+                "valid": true,
+                "score": 0.0,
+                "d_efficiency": 1.3022460232220465e-06,
+                "baseline_d_efficiency": 1.3022460232220465e-06,
+                "unique_designs": 22,
+                "n_measurements": 22,
+                "n_parameters": 8
+              },
+              {
+                "name": "dev_fourier_7",
+                "family": "fourier",
+                "split": "development",
+                "valid": true,
+                "score": 0.0,
+                "d_efficiency": 7.035127742457061e-05,
+                "baseline_d_efficiency": 7.035127742457061e-05,
+                "unique_designs": 20,
+                "n_measurements": 20,
+                "n_parameters": 7
+              },
+              {
+                "name": "dev_fourier_10",
+                "family": "fourier",
+                "split": "development",
+                "valid": true,
+                "score": 0.0,
+                "d_efficiency": 0.0,
+                "baseline_d_efficiency": 0.0,
+                "unique_designs": 28,
+                "n_measurements": 28,
+                "n_parameters": 10
+              },
+              {
+                "name": "dev_decay_7",
+                "family": "exponential_decay",
+                "split": "development",
+                "valid": true,
+                "score": 0.0,
+                "d_efficiency": 2.2936689272026196e-05,
+                "baseline_d_efficiency": 2.2936689272026196e-05,
+                "unique_designs": 20,
+                "n_measurements": 20,
+                "n_parameters": 7
+              },
+              {
+                "name": "dev_saturation_7",
+                "family": "saturation",
+                "split": "development",
+                "valid": true,
+                "score": 0.0,
+                "d_efficiency": 0.0,
+                "baseline_d_efficiency": 0.0,
+                "unique_designs": 20,
+                "n_measurements": 20,
+                "n_parameters": 7
+              },
+              {
+                "name": "val_legendre_11",
+                "family": "legendre_shift",
+                "split": "validation",
+                "valid": true,
+                "score": 0.0,
+                "d_efficiency": 0.0,
+                "baseline_d_efficiency": 0.0,
+                "unique_designs": 32,
+                "n_measurements": 32,
+                "n_parameters": 11
+              },
+              {
+                "name": "val_fourier_12",
+                "family": "fourier_shift",
+                "split": "validation",
+                "valid": true,
+                "score": 0.0,
+                "d_efficiency": 0.0,
+                "baseline_d_efficiency": 0.0,
+                "unique_designs": 34,
+                "n_measurements": 34,
+                "n_parameters": 12
+              },
+              {
+                "name": "val_decay_9",
+                "family": "decay_rate_shift",
+                "split": "validation",
+                "valid": true,
+                "score": 0.0,
+                "d_efficiency": 7.081694063486401e-07,
+                "baseline_d_efficiency": 7.081694063486401e-07,
+                "unique_designs": 28,
+                "n_measurements": 28,
+                "n_parameters": 9
+              },
+              {
+                "name": "val_saturation_9",
+                "family": "scale_shift",
+                "split": "validation",
+                "valid": true,
+                "score": 0.0,
+                "d_efficiency": 6.724945549465648e-10,
+                "baseline_d_efficiency": 6.724945549465648e-10,
+                "unique_designs": 28,
+                "n_measurements": 28,
+                "n_parameters": 9
+              }
+            ],
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "Biomechanics/ProstheticJointDesign",
+      "candidate_sha256": "662179c82d164da3a8fb9b338c01e38096f8ce5a13682fbc1ec91db18d6ecf97",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.4460816690698266,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "joint_quality": 0.2348,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.4446025211364031,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "joint_quality": 0.2348,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "CausalDiscovery/InterventionalSCM",
+      "candidate_sha256": "e00399f59ccd3e7845f64ec861e043f22bef6804ddc8fcefaf43b40a4ea657fe",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.46598795894533396,
+          "metrics": {
+            "combined_score": 0.0,
+            "raw_score": 0.16666666666666666,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "mechanism_score": 0.16666666666666666,
+            "intervention_prediction_score": 0.16666666666666666,
+            "null_abstention_correct": true,
+            "mean_experiment_calls": 1.0,
+            "mean_experiment_budget_units": 1.0,
+            "per_world": [
+              {
+                "valid": true,
+                "edge_f1": 0.0,
+                "coefficient_score": 0.0,
+                "mechanism_score": 0.0,
+                "intervention_prediction_score": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1,
+                "abstained": true,
+                "confidence": 0.0,
+                "null_world": false
+              },
+              {
+                "valid": true,
+                "edge_f1": 0.0,
+                "coefficient_score": 0.0,
+                "mechanism_score": 0.0,
+                "intervention_prediction_score": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1,
+                "abstained": true,
+                "confidence": 0.0,
+                "null_world": false
+              },
+              {
+                "valid": true,
+                "edge_f1": 0.0,
+                "coefficient_score": 0.0,
+                "mechanism_score": 0.0,
+                "intervention_prediction_score": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1,
+                "abstained": true,
+                "confidence": 0.0,
+                "null_world": false
+              },
+              {
+                "valid": true,
+                "edge_f1": 0.0,
+                "coefficient_score": 0.0,
+                "mechanism_score": 0.0,
+                "intervention_prediction_score": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1,
+                "abstained": true,
+                "confidence": 0.0,
+                "null_world": false
+              },
+              {
+                "valid": true,
+                "edge_f1": 0.0,
+                "coefficient_score": 0.0,
+                "mechanism_score": 0.0,
+                "intervention_prediction_score": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1,
+                "abstained": true,
+                "confidence": 0.0,
+                "null_world": false
+              },
+              {
+                "valid": true,
+                "edge_f1": 1.0,
+                "coefficient_score": 1.0,
+                "mechanism_score": 1.0,
+                "intervention_prediction_score": 1.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1,
+                "abstained": true,
+                "confidence": 0.0,
+                "null_world": true
+              }
+            ]
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.4620317490771413,
+          "metrics": {
+            "combined_score": 0.0,
+            "raw_score": 0.16666666666666666,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "mechanism_score": 0.16666666666666666,
+            "intervention_prediction_score": 0.16666666666666666,
+            "null_abstention_correct": true,
+            "mean_experiment_calls": 1.0,
+            "mean_experiment_budget_units": 1.0,
+            "per_world": [
+              {
+                "valid": true,
+                "edge_f1": 0.0,
+                "coefficient_score": 0.0,
+                "mechanism_score": 0.0,
+                "intervention_prediction_score": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1,
+                "abstained": true,
+                "confidence": 0.0,
+                "null_world": false
+              },
+              {
+                "valid": true,
+                "edge_f1": 0.0,
+                "coefficient_score": 0.0,
+                "mechanism_score": 0.0,
+                "intervention_prediction_score": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1,
+                "abstained": true,
+                "confidence": 0.0,
+                "null_world": false
+              },
+              {
+                "valid": true,
+                "edge_f1": 0.0,
+                "coefficient_score": 0.0,
+                "mechanism_score": 0.0,
+                "intervention_prediction_score": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1,
+                "abstained": true,
+                "confidence": 0.0,
+                "null_world": false
+              },
+              {
+                "valid": true,
+                "edge_f1": 0.0,
+                "coefficient_score": 0.0,
+                "mechanism_score": 0.0,
+                "intervention_prediction_score": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1,
+                "abstained": true,
+                "confidence": 0.0,
+                "null_world": false
+              },
+              {
+                "valid": true,
+                "edge_f1": 0.0,
+                "coefficient_score": 0.0,
+                "mechanism_score": 0.0,
+                "intervention_prediction_score": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1,
+                "abstained": true,
+                "confidence": 0.0,
+                "null_world": false
+              },
+              {
+                "valid": true,
+                "edge_f1": 1.0,
+                "coefficient_score": 1.0,
+                "mechanism_score": 1.0,
+                "intervention_prediction_score": 1.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1,
+                "abstained": true,
+                "confidence": 0.0,
+                "null_world": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "task": "ChemicalKinetics/ReactionMechanismFitting",
+      "candidate_sha256": "60f6092b9d61e4b3393bc66aac63c8591a3ed47ff9846aab550ef886d91660d5",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 1.2770527033135295,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "r2": 0.680889,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 1.2570516159757972,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "r2": 0.680889,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "ChemicalProcess/DistillationColumnDesign",
+      "candidate_sha256": "b3dd53bd52a3956ceacde7fa804e1d0a65261e0ba83ce0e0b708cf62b500a1c9",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.44508300069719553,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "x_distillate": 0.99,
+            "x_bottoms": 0.1468,
+            "duty_kJ_mol": 180.0,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.44391127675771713,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "x_distillate": 0.99,
+            "x_bottoms": 0.1468,
+            "duty_kJ_mol": 180.0,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "Chemistry/LennardJonesCluster",
+      "candidate_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.448792670853436,
+          "metrics": {
+            "combined_score": 0.041930443440283925,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_size": [
+              {
+                "n": 13,
+                "valid": true,
+                "energy": -1.6608566740915731,
+                "e_min": -44.326801,
+                "score": 0.03746845331995812
+              },
+              {
+                "n": 19,
+                "valid": true,
+                "energy": -3.2668830121309282,
+                "e_min": -72.659782,
+                "score": 0.04496136545153587
+              },
+              {
+                "n": 38,
+                "valid": true,
+                "energy": -7.541799496122128,
+                "e_min": -173.928427,
+                "score": 0.04336151154935776
+              }
+            ],
+            "raw_score": 0.041930443440283925
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.45174793526530266,
+          "metrics": {
+            "combined_score": 0.041930443440283925,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_size": [
+              {
+                "n": 13,
+                "valid": true,
+                "energy": -1.6608566740915731,
+                "e_min": -44.326801,
+                "score": 0.03746845331995812
+              },
+              {
+                "n": 19,
+                "valid": true,
+                "energy": -3.2668830121309282,
+                "e_min": -72.659782,
+                "score": 0.04496136545153587
+              },
+              {
+                "n": 38,
+                "valid": true,
+                "energy": -7.541799496122128,
+                "e_min": -173.928427,
+                "score": 0.04336151154935776
+              }
+            ],
+            "raw_score": 0.041930443440283925
+          }
+        }
+      ]
+    },
+    {
+      "task": "ClimateScience/EnergyBalanceModel",
+      "candidate_sha256": "4510b8e248a37ec7a191e0e9c937f121b8382a20d37e9cd30c51269a36922a1f",
+      "deterministic": true,
+      "valid_all": false,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.601779866963625,
+          "metrics": {
+            "combined_score": -1e+18,
+            "valid": 0.0,
+            "error_message": "ValueError: metrics contain non-finite or non-JSON values"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.5967546850442886,
+          "metrics": {
+            "combined_score": -1e+18,
+            "valid": 0.0,
+            "error_message": "ValueError: metrics contain non-finite or non-JSON values"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Combustion/FlameSpeedOptimization",
+      "candidate_sha256": "43294827e6840fe6247a1166dcc854691025f7032ca1a280c8e44acbc78c5a11",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.6331268949434161,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "flame_speed_m_s": 5.0,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.6040644915774465,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "flame_speed_m_s": 5.0,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "ControlTheory/InvertedPendulumSwingUp",
+      "candidate_sha256": "a238ad8399a344671ed871e7d27a06de80adaf1b5c9483c1141c929520a4b44b",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 2.282430689781904,
+          "metrics": {
+            "combined_score": 2.1076699100262634e-05,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 2.1076699100262634e-05,
+            "development_score": 2.1076699100262634e-05,
+            "robustness_score": 8.595368529745794e-06,
+            "development_robustness_gap": 1.248133057051684e-05,
+            "mean_balanced_fraction": 0.0,
+            "mean_rms_force": 0.0,
+            "mean_rms_cart_position": 0.33459590482195123,
+            "per_scenario": [
+              {
+                "group": "development",
+                "utility": 1.8929589792824298e-05,
+                "balanced_fraction": 0.0,
+                "terminal_score": 6.309876527902458e-05,
+                "rms_force": 0.0,
+                "rms_cart_position": 0.006483894756002306,
+                "first_balance_time": null,
+                "runaway": false
+              },
+              {
+                "group": "development",
+                "utility": 2.088400512846921e-05,
+                "balanced_fraction": 0.0,
+                "terminal_score": 6.970202142004256e-05,
+                "rms_force": 0.0,
+                "rms_cart_position": 0.1595589937735797,
+                "first_balance_time": null,
+                "runaway": false
+              },
+              {
+                "group": "development",
+                "utility": 2.2082680881119118e-05,
+                "balanced_fraction": 0.0,
+                "terminal_score": 7.552144770105449e-05,
+                "rms_force": 0.0,
+                "rms_cart_position": 0.7162437621656151,
+                "first_balance_time": null,
+                "runaway": false
+              },
+              {
+                "group": "development",
+                "utility": 2.3656441998027393e-05,
+                "balanced_fraction": 0.0,
+                "terminal_score": 8.02801237054132e-05,
+                "rms_force": 0.0,
+                "rms_cart_position": 0.5985615048713852,
+                "first_balance_time": null,
+                "runaway": false
+              },
+              {
+                "group": "development",
+                "utility": 1.9830777700873164e-05,
+                "balanced_fraction": 0.0,
+                "terminal_score": 6.622471208541573e-05,
+                "rms_force": 0.0,
+                "rms_cart_position": 0.19213136854317378,
+                "first_balance_time": null,
+                "runaway": false
+              },
+              {
+                "group": "validation",
+                "utility": 0.0,
+                "balanced_fraction": 0.0,
+                "terminal_score": 0.0,
+                "rms_force": 0.0,
+                "rms_cart_position": 2.292600999172247,
+                "first_balance_time": null,
+                "runaway": true
+              },
+              {
+                "group": "validation",
+                "utility": 0.0,
+                "balanced_fraction": 0.0,
+                "terminal_score": 5.5468978218142094e-05,
+                "rms_force": 0.0,
+                "rms_cart_position": 1.9758312377842284,
+                "first_balance_time": null,
+                "runaway": true
+              },
+              {
+                "group": "validation",
+                "utility": 1.7232212042857584e-05,
+                "balanced_fraction": 0.0,
+                "terminal_score": 5.968927395814428e-05,
+                "rms_force": 0.0,
+                "rms_cart_position": 0.8763459216542111,
+                "first_balance_time": null,
+                "runaway": false
+              },
+              {
+                "group": "validation",
+                "utility": 1.7149262076125597e-05,
+                "balanced_fraction": 0.0,
+                "terminal_score": 6.254750935891389e-05,
+                "rms_force": 0.0,
+                "rms_cart_position": 1.3416293701054818,
+                "first_balance_time": null,
+                "runaway": false
+              }
+            ]
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 2.245276767760515,
+          "metrics": {
+            "combined_score": 2.1076699100262634e-05,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 2.1076699100262634e-05,
+            "development_score": 2.1076699100262634e-05,
+            "robustness_score": 8.595368529745794e-06,
+            "development_robustness_gap": 1.248133057051684e-05,
+            "mean_balanced_fraction": 0.0,
+            "mean_rms_force": 0.0,
+            "mean_rms_cart_position": 0.33459590482195123,
+            "per_scenario": [
+              {
+                "group": "development",
+                "utility": 1.8929589792824298e-05,
+                "balanced_fraction": 0.0,
+                "terminal_score": 6.309876527902458e-05,
+                "rms_force": 0.0,
+                "rms_cart_position": 0.006483894756002306,
+                "first_balance_time": null,
+                "runaway": false
+              },
+              {
+                "group": "development",
+                "utility": 2.088400512846921e-05,
+                "balanced_fraction": 0.0,
+                "terminal_score": 6.970202142004256e-05,
+                "rms_force": 0.0,
+                "rms_cart_position": 0.1595589937735797,
+                "first_balance_time": null,
+                "runaway": false
+              },
+              {
+                "group": "development",
+                "utility": 2.2082680881119118e-05,
+                "balanced_fraction": 0.0,
+                "terminal_score": 7.552144770105449e-05,
+                "rms_force": 0.0,
+                "rms_cart_position": 0.7162437621656151,
+                "first_balance_time": null,
+                "runaway": false
+              },
+              {
+                "group": "development",
+                "utility": 2.3656441998027393e-05,
+                "balanced_fraction": 0.0,
+                "terminal_score": 8.02801237054132e-05,
+                "rms_force": 0.0,
+                "rms_cart_position": 0.5985615048713852,
+                "first_balance_time": null,
+                "runaway": false
+              },
+              {
+                "group": "development",
+                "utility": 1.9830777700873164e-05,
+                "balanced_fraction": 0.0,
+                "terminal_score": 6.622471208541573e-05,
+                "rms_force": 0.0,
+                "rms_cart_position": 0.19213136854317378,
+                "first_balance_time": null,
+                "runaway": false
+              },
+              {
+                "group": "validation",
+                "utility": 0.0,
+                "balanced_fraction": 0.0,
+                "terminal_score": 0.0,
+                "rms_force": 0.0,
+                "rms_cart_position": 2.292600999172247,
+                "first_balance_time": null,
+                "runaway": true
+              },
+              {
+                "group": "validation",
+                "utility": 0.0,
+                "balanced_fraction": 0.0,
+                "terminal_score": 5.5468978218142094e-05,
+                "rms_force": 0.0,
+                "rms_cart_position": 1.9758312377842284,
+                "first_balance_time": null,
+                "runaway": true
+              },
+              {
+                "group": "validation",
+                "utility": 1.7232212042857584e-05,
+                "balanced_fraction": 0.0,
+                "terminal_score": 5.968927395814428e-05,
+                "rms_force": 0.0,
+                "rms_cart_position": 0.8763459216542111,
+                "first_balance_time": null,
+                "runaway": false
+              },
+              {
+                "group": "validation",
+                "utility": 1.7149262076125597e-05,
+                "balanced_fraction": 0.0,
+                "terminal_score": 6.254750935891389e-05,
+                "rms_force": 0.0,
+                "rms_cart_position": 1.3416293701054818,
+                "first_balance_time": null,
+                "runaway": false
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "task": "CrystalGrowth/CzochralskiProcess",
+      "candidate_sha256": "745dec8685e7b19a8384215bb90dee44aa8d9f0f01692445f5c1b6c19be3d0b8",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.6144950399175286,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "objective": -3.426759,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.6010513585060835,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "objective": -3.426759,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "candidate_sha256": "2386f20f4c54a118ebf66187a97e3f1a0b04c47bd182d5db48a733b2d1c4f331",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.6670263800770044,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "mechanism_score": 0.2857142857142857,
+            "development_prediction_score": 0.16666666666666666,
+            "robustness_score": 0.0,
+            "validation_prediction_score": 0.2,
+            "development_validation_gap": 0.0,
+            "validation_feasibility_rate": 1.0,
+            "development_false_discoveries": 0,
+            "validation_false_discoveries": 0,
+            "development_correct_abstentions": 2,
+            "validation_correct_abstentions": 2,
+            "mean_experiment_calls": 1.0,
+            "mean_experiment_budget_units": 1.0,
+            "per_world": [
+              {
+                "split": "development",
+                "world_index": 0,
+                "kind": "in_library",
+                "valid": true,
+                "edge_f1": 0.0,
+                "coefficient_score": 0.0,
+                "mechanism_score": 0.0,
+                "rollout_prediction_score": 0.0,
+                "correct_abstention": false,
+                "false_discovery": false,
+                "abstained": true,
+                "confidence": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1
+              },
+              {
+                "split": "development",
+                "world_index": 1,
+                "kind": "in_library",
+                "valid": true,
+                "edge_f1": 0.0,
+                "coefficient_score": 0.0,
+                "mechanism_score": 0.0,
+                "rollout_prediction_score": 0.0,
+                "correct_abstention": false,
+                "false_discovery": false,
+                "abstained": true,
+                "confidence": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1
+              },
+              {
+                "split": "development",
+                "world_index": 2,
+                "kind": "in_library",
+                "valid": true,
+                "edge_f1": 0.0,
+                "coefficient_score": 0.0,
+                "mechanism_score": 0.0,
+                "rollout_prediction_score": 0.0,
+                "correct_abstention": false,
+                "false_discovery": false,
+                "abstained": true,
+                "confidence": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1
+              },
+              {
+                "split": "development",
+                "world_index": 3,
+                "kind": "in_library",
+                "valid": true,
+                "edge_f1": 0.0,
+                "coefficient_score": 0.0,
+                "mechanism_score": 0.0,
+                "rollout_prediction_score": 0.0,
+                "correct_abstention": false,
+                "false_discovery": false,
+                "abstained": true,
+                "confidence": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1
+              },
+              {
+                "split": "development",
+                "world_index": 4,
+                "kind": "in_library",
+                "valid": true,
+                "edge_f1": 0.0,
+                "coefficient_score": 0.0,
+                "mechanism_score": 0.0,
+                "rollout_prediction_score": 0.0,
+                "correct_abstention": false,
+                "false_discovery": false,
+                "abstained": true,
+                "confidence": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1
+              },
+              {
+                "split": "development",
+                "world_index": 5,
+                "kind": "null",
+                "valid": true,
+                "edge_f1": 1.0,
+                "coefficient_score": 1.0,
+                "mechanism_score": 1.0,
+                "rollout_prediction_score": 1.0,
+                "correct_abstention": true,
+                "false_discovery": false,
+                "abstained": true,
+                "confidence": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1
+              },
+              {
+                "split": "development",
+                "world_index": 6,
+                "kind": "misspecified",
+                "valid": true,
+                "edge_f1": 1.0,
+                "coefficient_score": 1.0,
+                "mechanism_score": 1.0,
+                "rollout_prediction_score": null,
+                "correct_abstention": true,
+                "false_discovery": false,
+                "abstained": true,
+                "confidence": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1
+              },
+              {
+                "split": "validation",
+                "world_index": 0,
+                "kind": "in_library",
+                "valid": true,
+                "edge_f1": 0.0,
+                "coefficient_score": 0.0,
+                "mechanism_score": 0.0,
+                "rollout_prediction_score": 0.0,
+                "correct_abstention": false,
+                "false_discovery": false,
+                "abstained": true,
+                "confidence": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1
+              },
+              {
+                "split": "validation",
+                "world_index": 1,
+                "kind": "in_library",
+                "valid": true,
+                "edge_f1": 0.0,
+                "coefficient_score": 0.0,
+                "mechanism_score": 0.0,
+                "rollout_prediction_score": 0.0,
+                "correct_abstention": false,
+                "false_discovery": false,
+                "abstained": true,
+                "confidence": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1
+              },
+              {
+                "split": "validation",
+                "world_index": 2,
+                "kind": "in_library",
+                "valid": true,
+                "edge_f1": 0.0,
+                "coefficient_score": 0.0,
+                "mechanism_score": 0.0,
+                "rollout_prediction_score": 0.0,
+                "correct_abstention": false,
+                "false_discovery": false,
+                "abstained": true,
+                "confidence": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1
+              },
+              {
+                "split": "validation",
+                "world_index": 3,
+                "kind": "in_library",
+                "valid": true,
+                "edge_f1": 0.0,
+                "coefficient_score": 0.0,
+                "mechanism_score": 0.0,
+                "rollout_prediction_score": 0.0,
+                "correct_abstention": false,
+                "false_discovery": false,
+                "abstained": true,
+                "confidence": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1
+              },
+              {
+                "split": "validation",
+                "world_index": 4,
+                "kind": "null",
+                "valid": true,
+                "edge_f1": 1.0,
+                "coefficient_score": 1.0,
+                "mechanism_score": 1.0,
+                "rollout_prediction_score": 1.0,
+                "correct_abstention": true,
+                "false_discovery": false,
+                "abstained": true,
+                "confidence": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1
+              },
+              {
+                "split": "validation",
+                "world_index": 5,
+                "kind": "misspecified",
+                "valid": true,
+                "edge_f1": 1.0,
+                "coefficient_score": 1.0,
+                "mechanism_score": 1.0,
+                "rollout_prediction_score": null,
+                "correct_abstention": true,
+                "false_discovery": false,
+                "abstained": true,
+                "confidence": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1
+              }
+            ],
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.6669304091483355,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "mechanism_score": 0.2857142857142857,
+            "development_prediction_score": 0.16666666666666666,
+            "robustness_score": 0.0,
+            "validation_prediction_score": 0.2,
+            "development_validation_gap": 0.0,
+            "validation_feasibility_rate": 1.0,
+            "development_false_discoveries": 0,
+            "validation_false_discoveries": 0,
+            "development_correct_abstentions": 2,
+            "validation_correct_abstentions": 2,
+            "mean_experiment_calls": 1.0,
+            "mean_experiment_budget_units": 1.0,
+            "per_world": [
+              {
+                "split": "development",
+                "world_index": 0,
+                "kind": "in_library",
+                "valid": true,
+                "edge_f1": 0.0,
+                "coefficient_score": 0.0,
+                "mechanism_score": 0.0,
+                "rollout_prediction_score": 0.0,
+                "correct_abstention": false,
+                "false_discovery": false,
+                "abstained": true,
+                "confidence": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1
+              },
+              {
+                "split": "development",
+                "world_index": 1,
+                "kind": "in_library",
+                "valid": true,
+                "edge_f1": 0.0,
+                "coefficient_score": 0.0,
+                "mechanism_score": 0.0,
+                "rollout_prediction_score": 0.0,
+                "correct_abstention": false,
+                "false_discovery": false,
+                "abstained": true,
+                "confidence": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1
+              },
+              {
+                "split": "development",
+                "world_index": 2,
+                "kind": "in_library",
+                "valid": true,
+                "edge_f1": 0.0,
+                "coefficient_score": 0.0,
+                "mechanism_score": 0.0,
+                "rollout_prediction_score": 0.0,
+                "correct_abstention": false,
+                "false_discovery": false,
+                "abstained": true,
+                "confidence": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1
+              },
+              {
+                "split": "development",
+                "world_index": 3,
+                "kind": "in_library",
+                "valid": true,
+                "edge_f1": 0.0,
+                "coefficient_score": 0.0,
+                "mechanism_score": 0.0,
+                "rollout_prediction_score": 0.0,
+                "correct_abstention": false,
+                "false_discovery": false,
+                "abstained": true,
+                "confidence": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1
+              },
+              {
+                "split": "development",
+                "world_index": 4,
+                "kind": "in_library",
+                "valid": true,
+                "edge_f1": 0.0,
+                "coefficient_score": 0.0,
+                "mechanism_score": 0.0,
+                "rollout_prediction_score": 0.0,
+                "correct_abstention": false,
+                "false_discovery": false,
+                "abstained": true,
+                "confidence": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1
+              },
+              {
+                "split": "development",
+                "world_index": 5,
+                "kind": "null",
+                "valid": true,
+                "edge_f1": 1.0,
+                "coefficient_score": 1.0,
+                "mechanism_score": 1.0,
+                "rollout_prediction_score": 1.0,
+                "correct_abstention": true,
+                "false_discovery": false,
+                "abstained": true,
+                "confidence": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1
+              },
+              {
+                "split": "development",
+                "world_index": 6,
+                "kind": "misspecified",
+                "valid": true,
+                "edge_f1": 1.0,
+                "coefficient_score": 1.0,
+                "mechanism_score": 1.0,
+                "rollout_prediction_score": null,
+                "correct_abstention": true,
+                "false_discovery": false,
+                "abstained": true,
+                "confidence": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1
+              },
+              {
+                "split": "validation",
+                "world_index": 0,
+                "kind": "in_library",
+                "valid": true,
+                "edge_f1": 0.0,
+                "coefficient_score": 0.0,
+                "mechanism_score": 0.0,
+                "rollout_prediction_score": 0.0,
+                "correct_abstention": false,
+                "false_discovery": false,
+                "abstained": true,
+                "confidence": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1
+              },
+              {
+                "split": "validation",
+                "world_index": 1,
+                "kind": "in_library",
+                "valid": true,
+                "edge_f1": 0.0,
+                "coefficient_score": 0.0,
+                "mechanism_score": 0.0,
+                "rollout_prediction_score": 0.0,
+                "correct_abstention": false,
+                "false_discovery": false,
+                "abstained": true,
+                "confidence": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1
+              },
+              {
+                "split": "validation",
+                "world_index": 2,
+                "kind": "in_library",
+                "valid": true,
+                "edge_f1": 0.0,
+                "coefficient_score": 0.0,
+                "mechanism_score": 0.0,
+                "rollout_prediction_score": 0.0,
+                "correct_abstention": false,
+                "false_discovery": false,
+                "abstained": true,
+                "confidence": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1
+              },
+              {
+                "split": "validation",
+                "world_index": 3,
+                "kind": "in_library",
+                "valid": true,
+                "edge_f1": 0.0,
+                "coefficient_score": 0.0,
+                "mechanism_score": 0.0,
+                "rollout_prediction_score": 0.0,
+                "correct_abstention": false,
+                "false_discovery": false,
+                "abstained": true,
+                "confidence": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1
+              },
+              {
+                "split": "validation",
+                "world_index": 4,
+                "kind": "null",
+                "valid": true,
+                "edge_f1": 1.0,
+                "coefficient_score": 1.0,
+                "mechanism_score": 1.0,
+                "rollout_prediction_score": 1.0,
+                "correct_abstention": true,
+                "false_discovery": false,
+                "abstained": true,
+                "confidence": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1
+              },
+              {
+                "split": "validation",
+                "world_index": 5,
+                "kind": "misspecified",
+                "valid": true,
+                "edge_f1": 1.0,
+                "coefficient_score": 1.0,
+                "mechanism_score": 1.0,
+                "rollout_prediction_score": null,
+                "correct_abstention": true,
+                "false_discovery": false,
+                "abstained": true,
+                "confidence": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1
+              }
+            ],
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "DynamicalSystems/LyapunovControl",
+      "candidate_sha256": "6198243820b96ba9e1a44aaaca59c104eed6f83026b298758c4190b6741d59ea",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 4.811920765787363,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.9134483259132644,
+            "mle": 0.9134,
+            "mle_uncontrolled": 0.9134,
+            "avg_control_energy": 0.0,
+            "mle_method": "two_trajectory_benettin_sampled_feedback"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 4.876188320107758,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.9134483259132644,
+            "mle": 0.9134,
+            "mle_uncontrolled": 0.9134,
+            "avg_control_energy": 0.0,
+            "mle_method": "two_trajectory_benettin_sampled_feedback"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Electromagnetics/AntennaArraySynthesis",
+      "candidate_sha256": "c966a9bce65758104107aec3535de112f904f7f4db24095ad6c8dabec2ae56c4",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.4605852123349905,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_instance": [
+              {
+                "valid": true,
+                "psll_dB": -9.02,
+                "n": 16,
+                "score": 0.0
+              },
+              {
+                "valid": true,
+                "psll_dB": -9.55,
+                "n": 32,
+                "score": 0.0
+              }
+            ],
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.4526186380535364,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_instance": [
+              {
+                "valid": true,
+                "psll_dB": -9.02,
+                "n": 16,
+                "score": 0.0
+              },
+              {
+                "valid": true,
+                "psll_dB": -9.55,
+                "n": 32,
+                "score": 0.0
+              }
+            ],
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "Electromagnetics/WaveguideModeSolver",
+      "candidate_sha256": "8c90e42c53eb21433423604b629354956cfbe4b182e86b80113b624305c8d9de",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.6087850676849484,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "objective": -3.426759,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.5972002539783716,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "objective": -3.426759,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "FluidDynamics/LidDrivenCavity",
+      "candidate_sha256": "95c613c7ddfbb67d0bad8dafed63e4a0d02f0783fcbc04acda7be2624c732efa",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.4432408753782511,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_instance": [
+              {
+                "valid": true,
+                "err_u": 1.5637,
+                "err_v": 0.5453,
+                "score": 0.0
+              }
+            ],
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.48028493393212557,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_instance": [
+              {
+                "valid": true,
+                "err_u": 1.5637,
+                "err_v": 0.5453,
+                "score": 0.0
+              }
+            ],
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "FluidMechanics/StokesShapeDrag",
+      "candidate_sha256": "cf6e67327ced658342cc56d2ea5a7eac13c72575671906698b455abaf2302f15",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.4501886088401079,
+          "metrics": {
+            "combined_score": 0.002645609099382421,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "drag_coefficient": 0.999603,
+            "area": 3.1416,
+            "raw_score": 0.002645609099382421
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.44518048223108053,
+          "metrics": {
+            "combined_score": 0.002645609099382421,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "drag_coefficient": 0.999603,
+            "area": 3.1416,
+            "raw_score": 0.002645609099382421
+          }
+        }
+      ]
+    },
+    {
+      "task": "Geomechanics/TunnelSupportDesign",
+      "candidate_sha256": "f7d1f17f1b80857eda90943c30e4652217ad84de7e0e25fbc2272e6749efdabb",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.6262956634163857,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "objective": -3.426759,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.6008237330242991,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "objective": -3.426759,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "Geophysics/GravityInversion",
+      "candidate_sha256": "d72ddc1c0c2c38b8fe01e066a7bc3dea1a0e9c9061a2654e9a4b9d566baacd30",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.46589700784534216,
+          "metrics": {
+            "combined_score": 3.822260582853762e-14,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_instance": [
+              {
+                "valid": true,
+                "chi2": 17.26,
+                "ssim": 0.0,
+                "score": 3.822260582853762e-14
+              },
+              {
+                "valid": true,
+                "chi2": 25.64,
+                "ssim": 0.0,
+                "score": 3.822260582853762e-14
+              }
+            ],
+            "raw_score": 3.822260582853762e-14
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.46258230693638325,
+          "metrics": {
+            "combined_score": 3.822260582853762e-14,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_instance": [
+              {
+                "valid": true,
+                "chi2": 17.26,
+                "ssim": 0.0,
+                "score": 3.822260582853762e-14
+              },
+              {
+                "valid": true,
+                "chi2": 25.64,
+                "ssim": 0.0,
+                "score": 3.822260582853762e-14
+              }
+            ],
+            "raw_score": 3.822260582853762e-14
+          }
+        }
+      ]
+    },
+    {
+      "task": "Geophysics/SeismicInversion",
+      "candidate_sha256": "ac82d112d46a0fff331a74c0a2afbc5ffa75cbdd8aeebc8eb7b40b17068aac17",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.465811257250607,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": -397.32018150814474,
+            "development_score": 0.0,
+            "mechanism_score": 0.0,
+            "holdout_prediction_score": 0.0,
+            "mean_development_rmse_ms": 397.32018150814474,
+            "mean_holdout_rmse_ms": 799.2025826899277,
+            "per_scenario": [
+              {
+                "development_score": 0.0,
+                "mechanism_score": 0.0,
+                "holdout_prediction_score": 0.0,
+                "development_rmse_ms": 309.52122522577514,
+                "velocity_relative_error": 0.2812967653598652,
+                "holdout_rmse_ms": 612.7626849973203,
+                "valid": true,
+                "n_layers": 4
+              },
+              {
+                "development_score": 0.0,
+                "mechanism_score": 0.0,
+                "holdout_prediction_score": 0.0,
+                "development_rmse_ms": 377.998373033445,
+                "velocity_relative_error": 0.3205553902996688,
+                "holdout_rmse_ms": 763.970908019104,
+                "valid": true,
+                "n_layers": 5
+              },
+              {
+                "development_score": 0.0,
+                "mechanism_score": 0.0,
+                "holdout_prediction_score": 0.0,
+                "development_rmse_ms": 482.6551927980141,
+                "velocity_relative_error": 0.397695395923585,
+                "holdout_rmse_ms": 976.3746400986648,
+                "valid": true,
+                "n_layers": 6
+              },
+              {
+                "development_score": 0.0,
+                "mechanism_score": 0.0,
+                "holdout_prediction_score": 0.0,
+                "development_rmse_ms": 371.6576523532586,
+                "velocity_relative_error": 0.27848389076310154,
+                "holdout_rmse_ms": 735.7603100312037,
+                "valid": true,
+                "n_layers": 4
+              },
+              {
+                "development_score": 0.0,
+                "mechanism_score": 0.0,
+                "holdout_prediction_score": 0.0,
+                "development_rmse_ms": 343.10797288378075,
+                "velocity_relative_error": 0.30540320567415336,
+                "holdout_rmse_ms": 698.717645542126,
+                "valid": true,
+                "n_layers": 5
+              },
+              {
+                "development_score": 0.0,
+                "mechanism_score": 0.0,
+                "holdout_prediction_score": 0.0,
+                "development_rmse_ms": 498.98067275459493,
+                "velocity_relative_error": 0.4018530563168533,
+                "holdout_rmse_ms": 1007.629307451148,
+                "valid": true,
+                "n_layers": 6
+              }
+            ]
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.4536877293139696,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": -397.32018150814474,
+            "development_score": 0.0,
+            "mechanism_score": 0.0,
+            "holdout_prediction_score": 0.0,
+            "mean_development_rmse_ms": 397.32018150814474,
+            "mean_holdout_rmse_ms": 799.2025826899277,
+            "per_scenario": [
+              {
+                "development_score": 0.0,
+                "mechanism_score": 0.0,
+                "holdout_prediction_score": 0.0,
+                "development_rmse_ms": 309.52122522577514,
+                "velocity_relative_error": 0.2812967653598652,
+                "holdout_rmse_ms": 612.7626849973203,
+                "valid": true,
+                "n_layers": 4
+              },
+              {
+                "development_score": 0.0,
+                "mechanism_score": 0.0,
+                "holdout_prediction_score": 0.0,
+                "development_rmse_ms": 377.998373033445,
+                "velocity_relative_error": 0.3205553902996688,
+                "holdout_rmse_ms": 763.970908019104,
+                "valid": true,
+                "n_layers": 5
+              },
+              {
+                "development_score": 0.0,
+                "mechanism_score": 0.0,
+                "holdout_prediction_score": 0.0,
+                "development_rmse_ms": 482.6551927980141,
+                "velocity_relative_error": 0.397695395923585,
+                "holdout_rmse_ms": 976.3746400986648,
+                "valid": true,
+                "n_layers": 6
+              },
+              {
+                "development_score": 0.0,
+                "mechanism_score": 0.0,
+                "holdout_prediction_score": 0.0,
+                "development_rmse_ms": 371.6576523532586,
+                "velocity_relative_error": 0.27848389076310154,
+                "holdout_rmse_ms": 735.7603100312037,
+                "valid": true,
+                "n_layers": 4
+              },
+              {
+                "development_score": 0.0,
+                "mechanism_score": 0.0,
+                "holdout_prediction_score": 0.0,
+                "development_rmse_ms": 343.10797288378075,
+                "velocity_relative_error": 0.30540320567415336,
+                "holdout_rmse_ms": 698.717645542126,
+                "valid": true,
+                "n_layers": 5
+              },
+              {
+                "development_score": 0.0,
+                "mechanism_score": 0.0,
+                "holdout_prediction_score": 0.0,
+                "development_rmse_ms": 498.98067275459493,
+                "velocity_relative_error": 0.4018530563168533,
+                "holdout_rmse_ms": 1007.629307451148,
+                "valid": true,
+                "n_layers": 6
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "task": "HeatTransfer/ConvectionDiffusionOpt",
+      "candidate_sha256": "29a91794c53d6d5d8441d8bf6a52b3cfb726a5bd835a5eb691b8bab60e76b903",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.5262290854007006,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "temperature_rmse": 0.308013,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.5391847221180797,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "temperature_rmse": 0.308013,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "InventoryManagement/MultiEchelonStock",
+      "candidate_sha256": "b1c2676be52c68698aa700c7e1d9ebda2a08e449b130ea44d80927e832370bc3",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.44706759601831436,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "avg_cost_per_period": 176.5,
+            "service_level": 0.995,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.44483429845422506,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "avg_cost_per_period": 176.5,
+            "service_level": 0.995,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "MaterialsScience/AlloyHardnessOptimization",
+      "candidate_sha256": "b1353bfba701db2409aaa4e81e21130fc0f35b0caf788c5dbbb61a3ccf59cc92",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.44791329745203257,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "best_hardness": 357.12,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.4420838803052902,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "best_hardness": 357.12,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "Mathematics/CapSet",
+      "candidate_sha256": "a52d292c05a65500e8fb3d527233b6762408a4d1200877921cfe6ae0705cd55c",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.4471996258944273,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "beat_sota": false,
+            "per_dim": [
+              {
+                "n": 4,
+                "valid": true,
+                "size": 16,
+                "sota_ref": 20,
+                "score": 0.0
+              },
+              {
+                "n": 5,
+                "valid": true,
+                "size": 32,
+                "sota_ref": 45,
+                "score": 0.0
+              },
+              {
+                "n": 6,
+                "valid": true,
+                "size": 64,
+                "sota_ref": 112,
+                "score": 0.0
+              }
+            ],
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.4452450470998883,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "beat_sota": false,
+            "per_dim": [
+              {
+                "n": 4,
+                "valid": true,
+                "size": 16,
+                "sota_ref": 20,
+                "score": 0.0
+              },
+              {
+                "n": 5,
+                "valid": true,
+                "size": 32,
+                "sota_ref": 45,
+                "score": 0.0
+              },
+              {
+                "n": 6,
+                "valid": true,
+                "size": 64,
+                "sota_ref": 112,
+                "score": 0.0
+              }
+            ],
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "MolecularDynamics/ForceFieldCalibration",
+      "candidate_sha256": "b44f351bdc9898715d009707391c5bae8df4cfd37275a2253a1347eb1f9b37f9",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.6198785891756415,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "objective": -3.426759,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.611434624530375,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "objective": -3.426759,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "NuclearEngineering/NeutronDiffusionCriticality",
+      "candidate_sha256": "5257d7dabbfc42e0b7175f1e45945079cb57ae91a602c1096dc0944a0ea99500",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.5583473658189178,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.9841790542199828,
+            "k_eff": 0.984179,
+            "k_baseline": 0.984179,
+            "k_reference": 1.059182,
+            "avg_enrichment": 0.05
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.54336610250175,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.9841790542199828,
+            "k_eff": 0.984179,
+            "k_baseline": 0.984179,
+            "k_reference": 1.059182,
+            "avg_enrichment": 0.05
+          }
+        }
+      ]
+    },
+    {
+      "task": "Oceanography/OceanCurrentInversion",
+      "candidate_sha256": "38458be3a748ee15bd39ebd0a5890c28d3f8777b909c792edc777f1467a19510",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.6245444547384977,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "trajectory_rmse_m": 1007.0,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.6397001594305038,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "trajectory_rmse_m": 1007.0,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "candidate_sha256": "da2301e307e380c369674203557fdaa01d647c786343a9d1a98429d27536cb3e",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.445676670409739,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_scenario": [
+              {
+                "valid": true,
+                "efficiency": 0.0,
+                "score": 0.0
+              },
+              {
+                "valid": true,
+                "efficiency": 0.0,
+                "score": 0.0
+              },
+              {
+                "valid": true,
+                "efficiency": 0.0,
+                "score": 0.0
+              }
+            ],
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.44459532853215933,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_scenario": [
+              {
+                "valid": true,
+                "efficiency": 0.0,
+                "score": 0.0
+              },
+              {
+                "valid": true,
+                "efficiency": 0.0,
+                "score": 0.0
+              },
+              {
+                "valid": true,
+                "efficiency": 0.0,
+                "score": 0.0
+              }
+            ],
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "Optimization/CirclePacking",
+      "candidate_sha256": "4189f1c26472a29105d61e3f6475c6de6555f254e73fe68eb504a830b75f6b7a",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.4389386298134923,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_instance": [
+              {
+                "n": 7,
+                "valid": true,
+                "side": 6.0,
+                "best_known": 5.7321,
+                "baseline_side": 6.0,
+                "score": 0.0
+              },
+              {
+                "n": 10,
+                "valid": true,
+                "side": 8.0,
+                "best_known": 6.7474,
+                "baseline_side": 8.0,
+                "score": 0.0
+              },
+              {
+                "n": 13,
+                "valid": true,
+                "side": 8.0,
+                "best_known": 7.6274,
+                "baseline_side": 8.0,
+                "score": 0.0
+              }
+            ],
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.4526844993233681,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_instance": [
+              {
+                "n": 7,
+                "valid": true,
+                "side": 6.0,
+                "best_known": 5.7321,
+                "baseline_side": 6.0,
+                "score": 0.0
+              },
+              {
+                "n": 10,
+                "valid": true,
+                "side": 8.0,
+                "best_known": 6.7474,
+                "baseline_side": 8.0,
+                "score": 0.0
+              },
+              {
+                "n": 13,
+                "valid": true,
+                "side": 8.0,
+                "best_known": 7.6274,
+                "baseline_side": 8.0,
+                "score": 0.0
+              }
+            ],
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "Optoelectronics/LaserCavityDesign",
+      "candidate_sha256": "b9c33ed8aef5de4acdf071e3a2fba494728025c61bef0567566c8f579a4cb028",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.5968203777447343,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "objective": -3.426759,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.6259735291823745,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "objective": -3.426759,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "ParticlePhysics/CalorimeterDesign",
+      "candidate_sha256": "6400a49a7e41037332a1a801fc60e25e12f532cfda9dd72162bb52a28fe89fb0",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.5270023243501782,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "sigma_over_E_percent": 100.0,
+            "sampling_fraction": 0.0,
+            "total_length_mm": 180.0,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.5347626665607095,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "sigma_over_E_percent": 100.0,
+            "sampling_fraction": 0.0,
+            "total_length_mm": 180.0,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "Photonics/MultilayerThinFilm",
+      "candidate_sha256": "d6d43007ed7eadd9f999f7010a716fc40ce9714a916c827c2efea239063c1904",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.4516394129022956,
+          "metrics": {
+            "combined_score": 0.5908038368710128,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "mean_reflectance": 0.017264,
+            "n_layers": 1,
+            "raw_score": 0.5908038368710128
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.44586402364075184,
+          "metrics": {
+            "combined_score": 0.5908038368710128,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "mean_reflectance": 0.017264,
+            "n_layers": 1,
+            "raw_score": 0.5908038368710128
+          }
+        }
+      ]
+    },
+    {
+      "task": "Physics/SpinGlassGroundState",
+      "candidate_sha256": "e0ad7fd64918dac10b3c2e560d3b2eab9980077a16d64085b77e0e6548987f75",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.4449730487540364,
+          "metrics": {
+            "combined_score": 0.19577848761593986,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_instance": [
+              {
+                "n": 32,
+                "seed": 0,
+                "valid": true,
+                "energy": -0.24510697562788353,
+                "e_best": -14.486503,
+                "score": 0.2275933857683759
+              },
+              {
+                "n": 48,
+                "seed": 1,
+                "valid": true,
+                "energy": -1.4177937632373216,
+                "e_best": -25.261139,
+                "score": 0.11636882257386556
+              },
+              {
+                "n": 64,
+                "seed": 2,
+                "valid": true,
+                "energy": -5.526034437068936,
+                "e_best": -33.076214,
+                "score": 0.24337325450557815
+              }
+            ],
+            "raw_score": 0.19577848761593986
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.4493215251713991,
+          "metrics": {
+            "combined_score": 0.19577848761593986,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_instance": [
+              {
+                "n": 32,
+                "seed": 0,
+                "valid": true,
+                "energy": -0.24510697562788353,
+                "e_best": -14.486503,
+                "score": 0.2275933857683759
+              },
+              {
+                "n": 48,
+                "seed": 1,
+                "valid": true,
+                "energy": -1.4177937632373216,
+                "e_best": -25.261139,
+                "score": 0.11636882257386556
+              },
+              {
+                "n": 64,
+                "seed": 2,
+                "valid": true,
+                "energy": -5.526034437068936,
+                "e_best": -33.076214,
+                "score": 0.24337325450557815
+              }
+            ],
+            "raw_score": 0.19577848761593986
+          }
+        }
+      ]
+    },
+    {
+      "task": "PopulationGenetics/DemographicSFS",
+      "candidate_sha256": "5210ae1fe0f782985977038cf995cc0c08b774262d30d77250452e117316993b",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.43817094899713993,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "chi2": 4237.48,
+            "chi2_baseline": 4237.48,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.4437637012451887,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "chi2": 4237.48,
+            "chi2_baseline": 4237.48,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "PowerSystems/OptimalPowerFlow",
+      "candidate_sha256": "5a923cd5f646e960ea7e0f4086c9af52b3848971c3bc29bb56ea4bc88c59b1b2",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.4442813666537404,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 0.0,
+            "cost": 2490.0,
+            "cost_baseline": 2490.0,
+            "line_violations_mw": 65.0,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.4456719867885113,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 0.0,
+            "cost": 2490.0,
+            "cost_baseline": 2490.0,
+            "line_violations_mw": 65.0,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "QuantumChemistry/HartreeFockSCF",
+      "candidate_sha256": "9aabfe8205c562e02dec4bee2f380cdd6a940180a8b7c52e4de49019fd90ca8d",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.44640558306127787,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "energy_hartree": 0.444915,
+            "exact_hf": -1.1167,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.44403290934860706,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "energy_hartree": 0.444915,
+            "exact_hf": -1.1167,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "QuantumControl/GateSynthesis",
+      "candidate_sha256": "61169902868a9925c383f1b703f66626eef0153e05a6e38880168dca22727668",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.5101933581754565,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "gate_fidelity": 0.192538,
+            "baseline_fidelity": 0.192538,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.5119779706001282,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "gate_fidelity": 0.192538,
+            "baseline_fidelity": 0.192538,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "ScientificComputing/PoissonSolver2D",
+      "candidate_sha256": "378f2e69a6836cb02588d13e311cf0802bdc3cb8f1d1b7b24ccb11aa495e30d0",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.457755989395082,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "rel_l2_error": 0.8981737822457003,
+            "e_baseline": 0.8981737822457003,
+            "e_reference": 1e-10,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.4619091423228383,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "rel_l2_error": 0.8981737822457003,
+            "e_baseline": 0.8981737822457003,
+            "e_reference": 1e-10,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "Semiconductor/MOSFETDoping",
+      "candidate_sha256": "d6d0918d1514b5a6d486dd518765e0803cba31106e998811b0f829565e38ff73",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.5307496134191751,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "ion_ioff_ratio_log10": 0.0,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.532922487705946,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "ion_ioff_ratio_log10": 0.0,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "SignalProcessing/SparseRecovery",
+      "candidate_sha256": "d4ae359138bd6dc62ab465f60d5221f496e0b36287dde2f3a5e3d0fb0be120bc",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.47445564065128565,
+          "metrics": {
+            "combined_score": 6.588598725280577e-18,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_instance": [
+              {
+                "valid": true,
+                "snr": 1.64,
+                "score": 0.0
+              },
+              {
+                "valid": true,
+                "snr": 1.59,
+                "score": 0.0
+              },
+              {
+                "valid": true,
+                "snr": 1.39,
+                "score": 0.0
+              },
+              {
+                "valid": true,
+                "snr": 1.96,
+                "score": 3.2942993626402884e-17
+              },
+              {
+                "valid": true,
+                "snr": 1.28,
+                "score": 0.0
+              }
+            ],
+            "raw_score": 6.588598725280577e-18
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.47882970701903105,
+          "metrics": {
+            "combined_score": 6.588598725280577e-18,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_instance": [
+              {
+                "valid": true,
+                "snr": 1.64,
+                "score": 0.0
+              },
+              {
+                "valid": true,
+                "snr": 1.59,
+                "score": 0.0
+              },
+              {
+                "valid": true,
+                "snr": 1.39,
+                "score": 0.0
+              },
+              {
+                "valid": true,
+                "snr": 1.96,
+                "score": 3.2942993626402884e-17
+              },
+              {
+                "valid": true,
+                "snr": 1.28,
+                "score": 0.0
+              }
+            ],
+            "raw_score": 6.588598725280577e-18
+          }
+        }
+      ]
+    },
+    {
+      "task": "Spectroscopy/NMRSpectrumFitting",
+      "candidate_sha256": "5d5703d757523fb0da96b63545102883ae3f35f946602924985be96f186d7a73",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.44238094706088305,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "residual_rms": 0.758325,
+            "n_peaks_found": 1,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.442258526571095,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "residual_rms": 0.758325,
+            "n_peaks_found": 1,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "StructuralEngineering/TrussWeightMinimization",
+      "candidate_sha256": "6a3fd70d896d63c5218165d55e3fd3a6afd253f999056d338fba72dba75e9c96",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.4427799480035901,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "weight_lbs": 13643.8,
+            "max_stress_psi": 8571.0,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.4452289529144764,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "weight_lbs": 13643.8,
+            "max_stress_psi": 8571.0,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "Thermodynamics/HeatExchangerDesign",
+      "candidate_sha256": "28c17acfc230885f91f347922e8eb4edf8dd02edb0e22c27f78a46f02838d3bc",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.4395487131550908,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_scenario": [
+              {
+                "valid": true,
+                "effectiveness": 0.511,
+                "score": 0.0
+              },
+              {
+                "valid": true,
+                "effectiveness": 0.3991,
+                "score": 0.0
+              }
+            ],
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.4425769569352269,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_scenario": [
+              {
+                "valid": true,
+                "effectiveness": 0.511,
+                "score": 0.0
+              },
+              {
+                "valid": true,
+                "effectiveness": 0.3991,
+                "score": 0.0
+              }
+            ],
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "Thermodynamics/RankineCycleOpt",
+      "candidate_sha256": "2d8c57f0fc1f99dbec0779139f33f4fca8872c7841fc49d271efb5cb75c07306",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.43947229627519846,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "thermal_efficiency": 0.0,
+            "baseline_efficiency": 0.0,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.44685397017747164,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "thermal_efficiency": 0.0,
+            "baseline_efficiency": 0.0,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "Transportation/TrafficSignalTiming",
+      "candidate_sha256": "3b7e4664b57f2d25f4aac46a9cb8e230e1da4f20454898023782433c1f0df9ce",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.44349781796336174,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "total_delay": 54679.0,
+            "baseline_delay": 54679.0,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.44520419370383024,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "total_delay": 54679.0,
+            "baseline_delay": 54679.0,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "Turbulence/RANSCalibration",
+      "candidate_sha256": "6ce5e0b09891a52c1070892f4f1d3fc186db1e95fcf8a44157c59898b004eaa9",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.4413350773975253,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "relative_error": 0.844077,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.44268124364316463,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "relative_error": 0.844077,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "WavePropagation/SeismicWaveInversion",
+      "candidate_sha256": "2dd3ef7780589cbd1ff87c76e2648f28f2774b2a4e7844c6f1b8588810f19433",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.5886256359517574,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "waveform_misfit_norm": 0.02977,
+            "velocity_rmse": 620.8,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.5879625314846635,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "waveform_misfit_norm": 0.02977,
+            "velocity_rmse": 620.8,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "inventory_count": 51,
+    "deterministic_count": 51,
+    "valid_count": 50,
+    "fail_closed_count": 51,
+    "infrastructure_failure_count": 0
+  },
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}

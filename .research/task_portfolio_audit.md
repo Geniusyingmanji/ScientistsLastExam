@@ -56,6 +56,12 @@ meaning.
   SCM, Lyapunov control, neutron criticality, seismic refraction, pendulum control, sparse
   recovery, OED-v2 and the new ActiveLawDiscovery laboratory. All are currently on-ramps or
   repair/calibration candidates rather than externally reviewed open-frontier tasks.
+- **ActiveLawDiscovery preserves science-specific headroom.** GPT-5.5 budget one attains 0.796
+  development and 0.745 sealed validation mechanism score with approximately 0.996 rollout
+  prediction, but makes a high-confidence false discovery in both misspecified worlds. In an
+  independent budget-three run, all three proposals retain the same two false discoveries;
+  score feedback does not fix model-inadequacy detection and later proposals reduce mechanism
+  recovery. This is a reliability/refusal frontier rather than an ordinary prediction frontier.
 - **36 quarantined packages.** Five generic-objective clones must be replaced with real domain
   oracles; metadata completion alone cannot rehabilitate them. The sixth,
   `ClimateScience/EnergyBalanceModel`, uses an unstable explicit diffusion iteration, an

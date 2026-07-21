@@ -41,8 +41,9 @@ oracle and validates metrics. The current audit reports:
 - 49/50 baselines were valid; `ClimateScience/EnergyBalanceModel` returned a non-finite
   oracle metric and was correctly rejected fail-closed.
 - All original 50 packages failed closed and there were no infrastructure failures.
-  ActiveLawDiscovery separately passes invariant, callback-budget and secure-baseline tests;
-  the next full-inventory audit must include all 51 packages.
+ActiveLawDiscovery separately passes invariant, callback-budget and secure-baseline tests;
+  the latest 51×2 audit confirms 51/51 deterministic, 50/51 valid, 51/51 fail-closed and zero
+  infrastructure failures.
 - Current manifest: 7 certified / 8 candidate / 36 quarantined. The rebuilt D-optimal
   experimental-design task is re-admitted as a candidate with sealed shifted-family validation.
 

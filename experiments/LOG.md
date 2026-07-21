@@ -666,3 +666,21 @@ persistently excited SINDy reference reaches development mechanism **0.721**, se
 mechanism **0.394**, and rollout prediction **0.962/0.772**. It nevertheless makes one
 development and two validation false discoveries, establishing a useful prediction–mechanism–
 refusal separation before any LLM calibration.
+
+### GPT-5.5 active-law calibration
+
+At budget one, GPT-5.5 writes a diverse active-experiment plan plus sparse integral regression.
+It reaches development mechanism **0.796281**, sealed validation mechanism **0.744607**, and
+sealed rollout prediction **0.997392/0.995864**. Every in-library mechanism is recovered near
+perfectly and both null worlds are correctly rejected, but both out-of-library worlds receive
+high-confidence polynomial explanations. Thus the remaining error is epistemic refusal, not
+trajectory prediction. The run uses 4,964 tokens.
+
+An independent budget-three run shows the limitation persists under outer score feedback.
+Its first proposal reaches development/validation mechanism **0.711322/0.717925** and rollout
+**0.985386/0.992275**, again with false mechanisms in both misspecified worlds. Later proposals
+score 0.692210 and 0.679995 and are rejected; all retain the same two false discoveries. Because
+the search sees only normalized development mechanism, these single-seed diagnostics do not
+prove a causal feedback effect, but they establish non-saturation and a concrete reliability
+frontier for paired feedback/refusal studies. `gpt55_active_law_b1_2026-07-21.json` and
+`gpt55_active_law_b3_2026-07-21.json` both bind clean revision `cd65c17`.

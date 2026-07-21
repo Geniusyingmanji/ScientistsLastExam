@@ -1,0 +1,697 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_CERTIFICATION_AUDIT",
+  "inventory_count": 51,
+  "status_counts": {
+    "certified": 7,
+    "candidate": 8,
+    "quarantined": 36
+  },
+  "orphaned_manifest_records": [],
+  "duplicate_oracle_groups": [
+    [
+      "CrystalGrowth/CzochralskiProcess",
+      "Electromagnetics/WaveguideModeSolver",
+      "Geomechanics/TunnelSupportDesign",
+      "MolecularDynamics/ForceFieldCalibration",
+      "Optoelectronics/LaserCavityDesign"
+    ]
+  ],
+  "tasks": [
+    {
+      "task": "AcousticMetamaterials/BroadbandAbsorber",
+      "status": "quarantined",
+      "reason": "uncalibrated lumped impedance model gives 0.0002 baseline and sampled designs below 0.01 versus an unrelated 0.92 literature anchor; non-finite geometry passes task validation",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "Acoustics/RoomImpulseResponse",
+      "status": "quarantined",
+      "reason": "reference-length candidates crash against a shorter baseline and the fixed simplified image-source proxy lacks robust hidden-scene validation",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "Algorithm/MatrixMultiplicationRank",
+      "status": "certified",
+      "reason": "exact tensor reconstruction plus redundant functional checks",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1007/BF02165411",
+        "doi:10.1090/S0002-9904-1976-13988-2",
+        "arxiv:2506.13131"
+      ],
+      "issues": []
+    },
+    {
+      "task": "Astrodynamics/LowThrustTransfer",
+      "status": "quarantined",
+      "reason": "the 30-day trajectory uses 1000 Euler steps, causing catastrophic unforced orbital-energy drift; fuel anchors are unsupported",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "AtmosphericScience/RadiativeTransferFit",
+      "status": "quarantined",
+      "reason": "ten radiances cannot identify twenty temperatures, while selection rewards hidden fixed-profile RMSE instead of evidence-supported retrieval",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "BayesianInference/OptimalExperimentDesign",
+      "status": "candidate",
+      "reason": "v2 is scientifically valid with procedural families and sealed shifts, but GPT-5.5 implements a generic D-optimal algorithm and reaches 0.991 development plus 0.994 validation at budget one; retain as an on-ramp pending harder sequential model-discrimination regimes and independent review",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1214/ss/1177009939",
+        "doi:10.1137/1.9780898719109",
+        "doi:10.4153/CJM-1960-030-4"
+      ],
+      "issues": []
+    },
+    {
+      "task": "Biomechanics/ProstheticJointDesign",
+      "status": "quarantined",
+      "reason": "hand-written rollback/conformity objective is exactly solved by all-upper-bound radii and non-finite geometry receives full score",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "CausalDiscovery/InterventionalSCM",
+      "status": "candidate",
+      "reason": "mechanism-recovery task awaiting independent domain review and nonzero-budget calibration",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.7551/mitpress/11283.001.0001"
+      ],
+      "issues": []
+    },
+    {
+      "task": "ChemicalKinetics/ReactionMechanismFitting",
+      "status": "quarantined",
+      "reason": "sampled reactions are effectively complete; true Arrhenius parameters and an infinite-rate mechanism receive the same score",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "ChemicalProcess/DistillationColumnDesign",
+      "status": "quarantined",
+      "reason": "tray calculation hard-codes top purity to 0.99, omits feed composition and lacks a material balance; multiple tray counts give identical outputs",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "Chemistry/LennardJonesCluster",
+      "status": "certified",
+      "reason": "analytic energy oracle; published minima and invariance tests",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1021/jp970984n"
+      ],
+      "issues": []
+    },
+    {
+      "task": "ClimateScience/EnergyBalanceModel",
+      "status": "quarantined",
+      "reason": "explicit diffusion iteration is numerically unstable, embedded ERA5 attribution is not provenance-backed, and one steady profile cannot identify the seven claimed parameters; replace with a documented multi-regime inverse task",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "Combustion/FlameSpeedOptimization",
+      "status": "quarantined",
+      "reason": "simplified algebraic flame formula clips both methane baseline and claimed H2 reference at 5 m/s, leaving no score normalization or meaningful headroom",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "ControlTheory/InvertedPendulumSwingUp",
+      "status": "candidate",
+      "reason": "rebuilt and calibrated with correct dynamics; GPT-5.5 reaches 0.797 development but only 0.631 shifted robustness at budget one, leaving a measurable nominal-to-robust control gap",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1016/S0005-1098(99)00140-5"
+      ],
+      "issues": []
+    },
+    {
+      "task": "CrystalGrowth/CzochralskiProcess",
+      "status": "quarantined",
+      "reason": "claimed Stefan model is a generic eight-variable trigonometric objective",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "status": "candidate",
+      "reason": "active sparse-law laboratory has budgeted experiments, null and misspecified worlds, separate mechanism and sealed rollout/shift metrics; awaiting GPT-5.5 headroom calibration, server-held worlds and independent review",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1073/pnas.1517384113",
+        "doi:10.1073/pnas.0609476104",
+        "doi:10.1214/ss/1177009939"
+      ],
+      "issues": []
+    },
+    {
+      "task": "DynamicalSystems/LyapunovControl",
+      "status": "candidate",
+      "reason": "corrected closed-loop MLE oracle is scientifically valid but known equilibrium feedback saturates at budget one; retain as an on-ramp pending hidden regimes and a nontrivial energy-stability frontier",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1103/PhysRevLett.64.1196",
+        "doi:10.1016/0375-9601(92)90745-8"
+      ],
+      "issues": []
+    },
+    {
+      "task": "Electromagnetics/AntennaArraySynthesis",
+      "status": "quarantined",
+      "reason": "zero excitation normalizes 0/0 and receives full score, while the actual uniform-array PSLL disagrees with the score anchor by more than 3 dB",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "Electromagnetics/WaveguideModeSolver",
+      "status": "quarantined",
+      "reason": "claimed eigenmode solver is a generic eight-variable trigonometric objective",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "FluidDynamics/LidDrivenCavity",
+      "status": "quarantined",
+      "reason": "fixed centerline-only scoring accepts nonphysical field injection without boundary, divergence, momentum or pressure checks",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "FluidMechanics/StokesShapeDrag",
+      "status": "quarantined",
+      "reason": "oracle uses perimeter rather than Stokes flow, making the circle optimal by the isoperimetric inequality and contradicting its 0.85 shape anchor",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "Geomechanics/TunnelSupportDesign",
+      "status": "quarantined",
+      "reason": "claimed FEM/Mohr-Coulomb model is a generic eight-variable trigonometric objective",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "Geophysics/GravityInversion",
+      "status": "quarantined",
+      "reason": "synthetic gravity signal RMS is only 0.033 times the declared noise and both instances reuse one hidden body geometry",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "Geophysics/SeismicInversion",
+      "status": "candidate",
+      "reason": "identifiable refraction inverse and useful on-ramp, but GPT-5.5 reaches 0.994 at budget one with standard global/local optimization; harder model-mismatch and survey-design regimes plus independent review are required",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "isbn:9780521708425",
+        "isbn:9780931830149"
+      ],
+      "issues": []
+    },
+    {
+      "task": "HeatTransfer/ConvectionDiffusionOpt",
+      "status": "quarantined",
+      "reason": "candidate receives no target observations or experiment callback and can only guess one fixed hidden field; non-finite sources receive full score",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "InventoryManagement/MultiEchelonStock",
+      "status": "quarantined",
+      "reason": "stages receive their own prior orders without upstream fulfillment, so retailer service is exactly independent of factory and warehouse stocks",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "MaterialsScience/AlloyHardnessOptimization",
+      "status": "quarantined",
+      "reason": "claimed experimental-data surrogate is a hand-written pseudo-physical polynomial with no dataset provenance",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "Mathematics/CapSet",
+      "status": "certified",
+      "reason": "exhaustive finite-field collinearity verifier and documented anchors",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.4007/annals.2017.185.1.8",
+        "doi:10.1038/s41586-023-06924-6"
+      ],
+      "issues": []
+    },
+    {
+      "task": "MolecularDynamics/ForceFieldCalibration",
+      "status": "quarantined",
+      "reason": "claimed Monte Carlo/RDF model is a generic eight-variable trigonometric objective",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "NuclearEngineering/NeutronDiffusionCriticality",
+      "status": "candidate",
+      "reason": "corrected conservative two-group diffusion oracle and reproducible numerical anchor; awaiting procedural reactor regimes and independent domain review",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "isbn:9780471223634"
+      ],
+      "issues": []
+    },
+    {
+      "task": "Oceanography/OceanCurrentInversion",
+      "status": "quarantined",
+      "reason": "true-current displacement is sub-metre while injected trajectory noise is about 1 km, so even the true field scores approximately zero",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "status": "quarantined",
+      "reason": "claimed RCWA is a scalar phase FFT with an analytic unit-efficiency phase-ramp shortcut",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "Optimization/CirclePacking",
+      "status": "certified",
+      "reason": "geometric feasibility oracle and dated Packomania anchors",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "url:http://hydra.nat.uni-magdeburg.de/packing/csq/csq.html",
+        "doi:10.1007/978-0-387-45676-8"
+      ],
+      "issues": []
+    },
+    {
+      "task": "Optoelectronics/LaserCavityDesign",
+      "status": "quarantined",
+      "reason": "claimed ABCD laser model is a generic eight-variable trigonometric objective",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "ParticlePhysics/CalorimeterDesign",
+      "status": "quarantined",
+      "reason": "documented uniform baseline has only 10.7 radiation lengths and scores 100 percent resolution rather than claimed 3.8 percent; non-finite layers receive full score",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "Photonics/MultilayerThinFilm",
+      "status": "certified",
+      "reason": "transfer-matrix physics oracle with analytic boundary tests",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1201/9781420073034",
+        "doi:10.1364/AO.35.000644"
+      ],
+      "issues": []
+    },
+    {
+      "task": "Physics/SpinGlassGroundState",
+      "status": "certified",
+      "reason": "analytic SK energy with fixed instances and offline reference search",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1103/PhysRevLett.35.1792"
+      ],
+      "issues": []
+    },
+    {
+      "task": "PopulationGenetics/DemographicSFS",
+      "status": "quarantined",
+      "reason": "five-parameter surrogate has rank-two local sensitivity and radically different demographic parameters produce identical SFS",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "PowerSystems/OptimalPowerFlow",
+      "status": "quarantined",
+      "reason": "non-finite dispatch receives full score, the candidate lacks required network parameters, and the declared equal-dispatch baseline violates line limits",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "QuantumChemistry/HartreeFockSCF",
+      "status": "quarantined",
+      "reason": "complete two-coefficient scan finds the oracle minimum is the baseline at +0.444915 Ha, while normalization claims unreachable -1.1167 Ha; non-finite orbitals receive full score",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "QuantumControl/GateSynthesis",
+      "status": "quarantined",
+      "reason": "non-finite pulses receive full score and one nominal Hamiltonian has no robustness, fluence or slew-rate validation",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "ScientificComputing/PoissonSolver2D",
+      "status": "certified",
+      "reason": "manufactured-solution PDE oracle with residual and convergence tests",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1137/1.9780898717839"
+      ],
+      "issues": []
+    },
+    {
+      "task": "Semiconductor/MOSFETDoping",
+      "status": "quarantined",
+      "reason": "stated per-m3 doping scale yields at most 48 microvolts and Ion/Ioff 1.0019 versus a 1e8 anchor; non-finite profiles receive full score",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "SignalProcessing/SparseRecovery",
+      "status": "candidate",
+      "reason": "not yet reviewed against certification gates",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "Spectroscopy/NMRSpectrumFitting",
+      "status": "quarantined",
+      "reason": "non-finite peak parameters receive full score, and one fixed spectrum measures reconstruction without peak matching or held-out lineshape validation",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "StructuralEngineering/TrussWeightMinimization",
+      "status": "quarantined",
+      "reason": "the purported canonical 10-bar topology duplicates one member, so its FEM objective and cited 5060-lb reference are different problems",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "Thermodynamics/HeatExchangerDesign",
+      "status": "quarantined",
+      "reason": "objective is monotone in unconstrained area and the implemented multipass formula is pass-count invariant",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "Thermodynamics/RankineCycleOpt",
+      "status": "quarantined",
+      "reason": "polynomial steam surrogate gives zero efficiency at its baseline and below 6.6 percent on a broad feasible grid versus an unrelated 46 percent anchor",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "Transportation/TrafficSignalTiming",
+      "status": "quarantined",
+      "reason": "no conflicting phase or shared green constraint makes all-maximum greens plus travel-time offsets a trivial full-score corner; non-finite timing receives full score",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "Turbulence/RANSCalibration",
+      "status": "quarantined",
+      "reason": "claimed DNS is an analytic profile fit and the algebraic surrogate identifies only three combinations of five constants",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    },
+    {
+      "task": "WavePropagation/SeismicWaveInversion",
+      "status": "quarantined",
+      "reason": "entrypoint receives no observed waveforms or experiment callback and can only guess one fixed hidden velocity model",
+      "missing_files": [],
+      "missing_metadata": [
+        "science_metric",
+        "reference_baseline",
+        "reference_sota",
+        "citation"
+      ],
+      "citation_ids": [],
+      "issues": []
+    }
+  ],
+  "created_at": "2026-07-21T20:15:40.504848+00:00",
+  "environment": {
+    "python": "3.10.20 (main, Apr  7 2026, 20:44:18) [Clang 22.1.1 ]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.31"
+  },
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "cd65c17169a8d7f8404bab22514da920fc716632",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/home/azureuser/.local/bin/python3.10",
+      "scripts/audit_tasks.py",
+      "--output",
+      "experiments/task_certification_audit_2026-07-21_v7.json"
+    ]
+  },
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}
