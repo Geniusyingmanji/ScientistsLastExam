@@ -97,8 +97,11 @@ The first review tranche contains real scientific topics but several narrow eval
   mechanism metrics where applicable.
 - OED-v2 now meets those internal evaluator criteria: six development and four shifted model
   families, finite integer allocations, numerically whitened Fisher sensitivities, and
-  Kiefer-Wolfowitz-certified references. It remains a candidate pending GPT-5.5 headroom
-  calibration, server-held procedural instances and independent domain review.
+  Kiefer-Wolfowitz-certified references. GPT-5.5 then reaches 0.991 development and 0.994
+  sealed validation in one proposal by implementing whitening, multiplicative design and
+  determinant/exchange optimization. It is therefore a useful, scientifically valid on-ramp,
+  not a long-horizon headline task; harder sequential model-discrimination regimes,
+  server-held instances and independent review remain necessary.
 
 ## Expansion rule
 

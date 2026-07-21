@@ -56,7 +56,7 @@ tasks:
 
   BayesianInference/OptimalExperimentDesign:
     status: candidate
-    reason: v2 has procedural multi-family D-optimal instances, certified numerical references and sealed shifted validation; awaiting frontier-model headroom calibration and independent domain review
+    reason: v2 is scientifically valid with procedural families and sealed shifts, but GPT-5.5 implements a generic D-optimal algorithm and reaches 0.991 development plus 0.994 validation at budget one; retain as an on-ramp pending harder sequential model-discrimination regimes and independent review
     citation_ids:
       - doi:10.1214/ss/1177009939
       - doi:10.1137/1.9780898719109

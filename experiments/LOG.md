@@ -624,3 +624,12 @@ The weak first-k baseline scores 0; a generic uniform policy scores about 0.859 
 0.852 validation, while a sequential determinant-gain implementation scores about 0.989 and
 0.993. Non-finite indices now fail closed on all ten instances. The task is re-admitted as a
 candidate pending GPT-5.5 headroom calibration, independent review and server-held instances.
+
+The clean-revision GPT-5.5 calibration resolves the headroom question for v2. In one proposal,
+the model writes a generic column-whitening, multiplicative approximate-design, sequential
+determinant-gain and Fedorov-style exchange implementation. Development rises from 0 to
+**0.990615**, while sealed shifted-family validation rises from 0 to **0.993697**; the proposal
+uses 4,774 tokens. This is scientifically coherent generalization, but it also means the task
+saturates at budget one. OED-v2 is retained as an on-ramp and feedback/validation control, not
+as evidence of long-horizon autonomous discovery. `gpt55_oed_v2_b1_2026-07-21.json` binds clean
+revision `2d2d62d` and sets `execution_passed=true`, `trusted_evidence=true` and `passed=true`.
