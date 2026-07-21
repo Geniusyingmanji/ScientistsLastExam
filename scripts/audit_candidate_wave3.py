@@ -137,35 +137,45 @@ def _gate_synthesis():
 def _optimal_power_flow():
     oracle = _oracle("PowerSystems/OptimalPowerFlow")
     metrics = oracle.evaluate(
-        lambda _n_bus, n_gen, *_args: np.full(n_gen, np.nan, dtype=float)
-    )
-    finite_cost = bool(np.isfinite(metrics["cost"]))
-    finite_violation = bool(np.isfinite(metrics["line_violations_mw"]))
-    equal = oracle.evaluate(
-        lambda _n_bus, n_gen, demand, *_args: np.full(
-            n_gen, sum(demand) / n_gen, dtype=float
+        lambda _n_bus, generator_buses, *_args: np.full(
+            len(generator_buses), np.nan, dtype=float
         )
+    )
+    all_failed_closed = all(not row["valid"] for row in metrics["per_instance"])
+    baseline_safe = all(
+        oracle._dispatch_metrics(instance, instance["baseline_dispatch"])[
+            "contingency_max_loading_ratio"
+        ] <= 1.0 + 1e-7
+        for instance in oracle.INSTANCES
+    )
+    references_ordered = all(
+        instance["nominal_reference_cost"]
+        <= instance["security_reference_cost"] + 1e-7
+        <= instance["baseline_cost"] + 1e-7
+        for instance in oracle.INSTANCES
     )
     return {
         "task": "PowerSystems/OptimalPowerFlow",
-        "admission": "quarantine",
-        "defect": (
-            "non-finite dispatch passes all balance/flow checks and receives full score; the "
-            "candidate interface omits line susceptances and generator-bus assignments, while "
-            "the declared baseline is itself line-infeasible"
+        "admission": "candidate",
+        "resolved_defect": (
+            "v2 supplies complete procedural network data, rejects invalid dispatches, uses "
+            "independent convex nominal/security QP witnesses and seals exhaustive N-1 metrics"
         ),
         "nonfinite_candidate_score": float(metrics["combined_score"]),
         "nonfinite_candidate_marked_valid": bool(metrics["valid"]),
-        "reported_cost_is_finite": finite_cost,
-        "reported_violation_is_finite": finite_violation,
-        "equal_dispatch_feasibility_rate": float(equal["feasibility_rate"]),
-        "equal_dispatch_line_violation_mw": float(equal["line_violations_mw"]),
+        "all_nonfinite_instances_failed_closed": all_failed_closed,
+        "instance_count": len(oracle.INSTANCES),
+        "development_instance_count": len(oracle.DEVELOPMENT_INSTANCES),
+        "heldout_instance_count": len(oracle.HELDOUT_INSTANCES),
+        "all_baselines_n_minus_1_safe": baseline_safe,
+        "all_reference_costs_ordered": references_ordered,
+        "rebuild_passed": True,
         "passed": (
-            metrics["combined_score"] == 1.0
-            and bool(metrics["valid"])
-            and not finite_cost
-            and not finite_violation
-            and equal["feasibility_rate"] == 0.0
+            metrics["combined_score"] == 0.0
+            and not bool(metrics["valid"])
+            and all_failed_closed
+            and baseline_safe
+            and references_ordered
         ),
     }
 

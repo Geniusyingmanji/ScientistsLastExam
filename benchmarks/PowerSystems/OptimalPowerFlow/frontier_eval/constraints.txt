@@ -1,3 +1,4 @@
-1) Only edit solution.py. Keep the solve_opf() signature.
-2) numpy/scipy only. CPU, seconds. No network.
-3) Do not read verification/ or frontier_eval/.
+1) Only edit solution.py. Keep the full solve_opf(n_bus, generator_buses, demand, p_min, p_max, cost_quadratic, cost_linear, lines, susceptances, line_limits) signature.
+2) Return one finite output per generator; balance demand and satisfy public generator/nominal-line constraints. Values are rejected, not clipped.
+3) Handle varying meshed topologies, generator locations, load and cost regimes.
+4) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read verification/ or frontier_eval/.

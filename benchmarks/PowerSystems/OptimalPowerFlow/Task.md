@@ -1,23 +1,56 @@
-# OptimalPowerFlow — minimize generation cost in a power network
+# OptimalPowerFlow — economic dispatch with sealed N-1 security
 
 ## Scientific background
-Optimal Power Flow (OPF) determines the least-cost generator dispatch that satisfies load
-demand, Kirchhoff's laws, and thermal line limits. Even the DC approximation (linear power
-flow) with quadratic costs is non-trivial when line constraints bind, creating a constrained
-QP with network coupling. OPF is solved millions of times daily by power system operators
-worldwide and is central to electricity market clearing.
 
-Reference: Carpentier, Bull. Soc. Française Électriciens 3, 431 (1962); Dommel & Tinney 1968.
+DC optimal power flow dispatches generators at minimum quadratic cost while satisfying global
+power balance, generator limits, Kirchhoff's laws and transmission ratings. If `theta` denotes
+bus voltage angles, each line `(i,j)` carries
 
-## Your task
-```python
-def solve_opf(n_bus, n_gen, demand, gen_pmax, gen_pmin, cost_a, cost_b, lines, line_limits):
-    \"\"\"Return generator outputs (n_gen,) that minimize quadratic cost while satisfying
-    power balance and line flow limits. 6-bus system with 3 generators.\"\"\"
+```text
+flow_ij = susceptance_ij * (theta_i - theta_j),
+B theta = generation - demand.
 ```
 
-## Scoring
-Cost reduction vs equal-dispatch baseline, penalized for line violations.
+A nominally economical dispatch can overload the remaining network after one line trips. Power
+systems therefore use security-constrained OPF and the N-1 criterion; nominal economy and
+contingency robustness must be reported separately.
+
+## Your task
+
+Implement a network-general dispatch policy:
+
+```python
+def solve_opf(n_bus, generator_buses, demand, p_min, p_max,
+              cost_quadratic, cost_linear, lines, susceptances, line_limits):
+    """Return one finite power output per generator.
+
+    Cost is sum_i cost_quadratic[i] * p[i]^2 + cost_linear[i] * p[i].
+    lines[k] = (from_bus, to_bus); all power quantities use consistent units.
+    """
+```
+
+The dispatch must exactly balance total demand, remain within generator bounds and satisfy all
+nominal line ratings. The evaluator calls the same policy on several meshed networks with
+different sizes, topologies, costs, load patterns and congestion. Do not hard-code one dispatch.
+
+## Evaluation
+
+`combined_score` is nominal generation-cost improvement above a safe proportional baseline,
+normalized by an independently solved convex DC-OPF reference. The trusted evaluator separately
+opens every non-islanding line and retains:
+
+- `robustness_score`: N-1 security-constrained economic quality;
+- contingency constraint and outage feasibility rates;
+- maximum loading and normalized overload;
+- held-out-network nominal and robustness scores; and
+- nominal and security-constrained reference costs.
+
+Only nominal development cost controls search. All contingency, robustness, held-out and
+per-instance metrics are evaluator-only.
 
 ## Rules
-- Only edit `solution.py`. numpy/scipy only. CPU. Do not read `verification/`.
+
+- Only edit `solution.py`; keep the full `solve_opf` signature.
+- Return a finite vector of exact generator count. Values are rejected, not clipped or repaired.
+- Deterministic CPU code using the Python standard library, NumPy and SciPy only.
+- No network or process creation. Do not read `verification/` or `frontier_eval/`.

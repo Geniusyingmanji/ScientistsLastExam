@@ -1,0 +1,27 @@
+schema_version: 1
+scientific_question: Minimize generation cost across varying meshed DC networks while measuring whether the dispatch remains secure under every non-islanding single-line outage.
+artifact: A generator dispatch vector for each fully supplied nominal network.
+oracle:
+  model: exact linear DC power flow with quadratic generation costs, generator limits, nominal thermal ratings and exhaustive non-islanding N-1 line contingencies
+  feasibility: finite exact-length dispatch, power balance, generator bounds and all nominal line limits
+  deterministic: true
+normalization:
+  baseline: proportional generator-headroom dispatch constructed nominally and N-1 feasible
+  reference: independent convex QP witnesses for nominal DC-OPF and N-1 security-constrained DC-OPF
+  score: nominal economic improvement controls search; security-constrained economy and held-out networks remain separate
+citations:
+  - id: doi:10.1016/0142-0615(79)90026-7
+    title: Optimal power flows
+  - id: doi:10.1109/TPWRS.2013.2271980
+    title: Identification of Umbrella Constraints in DC-Based Security-Constrained Optimal Power Flow
+invariants:
+  - balanced dispatch and DC flow obey nodal Kirchhoff equations
+  - adding a constant to all voltage angles leaves every line flow unchanged
+  - proportional baselines are nominally and N-1 feasible
+  - independent nominal and security-constrained QP witnesses satisfy all corresponding constraints
+  - non-finite, unbalanced, out-of-bound and nominally overloaded dispatches fail closed
+  - N-1, held-out-network and per-instance metrics remain evaluator-only
+known_shortcuts: The DC approximation omits reactive power, voltage magnitude, losses and dynamic stability. Procedural networks are controlled stress tests, not utility cases. Public seeds require a future server-held split, and real operational claims require AC and dynamic contingency replication.
+review:
+  domain: pending_external
+  evaluator_security: automated_invariant_sandbox_and_metric_sealing_tests

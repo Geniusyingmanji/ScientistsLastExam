@@ -77,6 +77,13 @@ tasks:
       - doi:10.1016/j.jmr.2004.11.004
       - doi:10.1140/epjd/e2015-60464-1
 
+  PowerSystems/OptimalPowerFlow:
+    status: candidate
+    reason: v2 supplies complete procedural DC networks, valid safe baselines, independent nominal/security-constrained QP witnesses and sealed exhaustive N-1 metrics; awaiting GPT-5.5 headroom calibration, server-held networks and independent review
+    citation_ids:
+      - doi:10.1016/0142-0615(79)90026-7
+      - doi:10.1109/TPWRS.2013.2271980
+
   DynamicalSystems/LyapunovControl:
     status: candidate
     reason: corrected closed-loop MLE oracle is scientifically valid but known equilibrium feedback saturates at budget one; retain as an on-ramp pending hidden regimes and a nontrivial energy-stability frontier
@@ -96,6 +103,12 @@ tasks:
     citation_ids:
       - isbn:9780521708425
       - isbn:9780931830149
+
+  SignalProcessing/SparseRecovery:
+    status: candidate
+    reason: valid compressed-sensing on-ramp, but GPT-5.5 reaches 0.958 at budget one with standard sparse solvers; procedural sensing, sparsity and noise shifts plus independent review are required
+    citation_ids:
+      - doi:10.1109/TIT.2006.871582
 
   ClimateScience/EnergyBalanceModel:
     status: quarantined
@@ -187,9 +200,6 @@ tasks:
   Spectroscopy/NMRSpectrumFitting:
     status: quarantined
     reason: non-finite peak parameters receive full score, and one fixed spectrum measures reconstruction without peak matching or held-out lineshape validation
-  PowerSystems/OptimalPowerFlow:
-    status: quarantined
-    reason: non-finite dispatch receives full score, the candidate lacks required network parameters, and the declared equal-dispatch baseline violates line limits
   StructuralEngineering/TrussWeightMinimization:
     status: quarantined
     reason: the purported canonical 10-bar topology duplicates one member, so its FEM objective and cited 5060-lb reference are different problems

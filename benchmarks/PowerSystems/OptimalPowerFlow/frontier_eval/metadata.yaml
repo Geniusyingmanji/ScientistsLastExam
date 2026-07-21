@@ -1,7 +1,12 @@
 domain: PowerSystems
 task: OptimalPowerFlow
 difficulty: hard
+tier: T2
 oracle_type: analytical
 score_mode: clipped
 gpu_required: false
-eval_time_seconds: 10
+eval_time_seconds: 20
+science_metric: nominal_DC_OPF_cost_with_sealed_N_minus_1_security
+reference_baseline: proportional dispatch across generator headroom, constructed nominally and N-1 feasible
+reference_sota: independently solved convex nominal and security-constrained QP witnesses for each generated network
+citation: "Carpentier, Optimal power flows, DOI 10.1016/0142-0615(79)90026-7"

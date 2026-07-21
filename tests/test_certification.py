@@ -29,6 +29,11 @@ class CertificationPolicyTests(unittest.TestCase):
         self.assertTrue(all(certification_status(s.task_id) == "certified" for s in tasks))
         self.assertEqual(len(list_tasks(None)), 51)
 
+    def test_manifest_explicitly_covers_inventory(self):
+        inventory_ids = {spec.task_id for spec in list_tasks(None)}
+        manifest_ids = set(load_certification()["tasks"])
+        self.assertEqual(manifest_ids, inventory_ids)
+
     def test_quarantined_clone_group_is_not_default_visible(self):
         default_ids = {s.task_id for s in list_tasks()}
         records = load_certification()["tasks"]
@@ -328,6 +333,67 @@ def select_designs(candidate_points, feature_matrix, n_measurements):
             )
         )
         for metrics in (nonfinite, outside):
+            self.assertEqual(metrics["valid"], 0.0)
+            self.assertEqual(metrics["combined_score"], 0.0)
+            self.assertTrue(all(
+                not row["valid"] for row in metrics["per_instance"]
+            ))
+
+    def test_opf_v2_reference_order_security_and_metric_sealing(self):
+        oracle = load_oracle("PowerSystems/OptimalPowerFlow")
+        self.assertEqual(len(oracle.DEVELOPMENT_INSTANCES), 4)
+        self.assertEqual(len(oracle.HELDOUT_INSTANCES), 2)
+        for instance in oracle.INSTANCES:
+            baseline = oracle._dispatch_metrics(instance, instance["baseline_dispatch"])
+            nominal = oracle._dispatch_metrics(
+                instance, instance["nominal_reference_dispatch"]
+            )
+            secure = oracle._dispatch_metrics(
+                instance, instance["security_reference_dispatch"]
+            )
+            self.assertLessEqual(
+                instance["nominal_reference_cost"],
+                instance["security_reference_cost"] + 1e-7,
+            )
+            self.assertLessEqual(
+                instance["security_reference_cost"], instance["baseline_cost"] + 1e-7
+            )
+            self.assertLessEqual(
+                baseline["contingency_max_loading_ratio"], 1.0 + 1e-7
+            )
+            self.assertGreater(
+                nominal["contingency_max_loading_ratio"], 1.0 + 1e-3
+            )
+            self.assertLessEqual(
+                secure["contingency_max_loading_ratio"], 1.0 + 1e-7
+            )
+
+        def proportional(_n_bus, _generator_buses, demand, p_min, p_max, *_args):
+            remaining = np.sum(demand) - np.sum(p_min)
+            return p_min + remaining * (p_max - p_min) / np.sum(p_max - p_min)
+
+        metrics = oracle.evaluate(proportional)
+        self.assertEqual(metrics["combined_score"], 0.0)
+        self.assertEqual(metrics["valid"], 1.0)
+        self.assertEqual(metrics["mean_contingency_feasibility_rate"], 1.0)
+        shown = search_visible_metrics(metrics)
+        self.assertNotIn("robustness_score", shown)
+        self.assertNotIn("heldout_policy_score", shown)
+        self.assertNotIn("per_instance", shown)
+
+    def test_opf_v2_nonfinite_and_unbalanced_fail_closed(self):
+        oracle = load_oracle("PowerSystems/OptimalPowerFlow")
+        nonfinite = oracle.evaluate(
+            lambda _n_bus, generator_buses, *_args: np.full(
+                len(generator_buses), np.nan
+            )
+        )
+        unbalanced = oracle.evaluate(
+            lambda _n_bus, generator_buses, *_args: np.zeros(
+                len(generator_buses)
+            )
+        )
+        for metrics in (nonfinite, unbalanced):
             self.assertEqual(metrics["valid"], 0.0)
             self.assertEqual(metrics["combined_score"], 0.0)
             self.assertTrue(all(

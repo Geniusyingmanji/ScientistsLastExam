@@ -87,6 +87,7 @@ def audit() -> dict:
             "citation_ids": citation_ids, "issues": issues,
         })
     orphaned = sorted(set(manifest["tasks"]) - ids)
+    missing_manifest = sorted(ids - set(manifest["tasks"]))
     duplicate_groups = {}
     for spec in specs:
         digest = hashlib.sha256(_normalized_oracle(spec.task_dir / "verification/evaluator.py").encode()).hexdigest()
@@ -98,10 +99,15 @@ def audit() -> dict:
         "inventory_count": len(specs),
         "status_counts": {s: sum(r["status"] == s for r in records)
                           for s in ("certified", "candidate", "quarantined")},
+        "missing_manifest_records": missing_manifest,
         "orphaned_manifest_records": orphaned,
         "duplicate_oracle_groups": duplicates,
         "tasks": records,
-        "passed": not orphaned and not any(r["issues"] for r in records),
+        "passed": (
+            not missing_manifest
+            and not orphaned
+            and not any(r["issues"] for r in records)
+        ),
     }
 
 

@@ -706,3 +706,21 @@ rises from 0.966531 to 0.974567 as CNOT/CZ pulses change, while held-out robustn
 approximately 0.9845. Because robustness was sealed and only one seed was run, this correlated
 improvement is not evidence that score feedback teaches robust control. It does show that a
 Frontier-Eng-style saturated nominal curve can hide a materially lower hardware curve.
+
+## 2026-07-21 — DC optimal power flow v2 rebuild
+
+The fail-open fixed six-bus package was replaced by a network-general policy task over six
+complete 5--9 bus meshed DC networks. Candidate policies receive generator locations, demands,
+bounds, quadratic/linear costs, line topology, susceptances and thermal limits. Dispatches must
+be finite, balanced, within generator bounds and nominally feasible. The trusted evaluator then
+exhaustively opens every non-islanding line and retains N-1 security, held-out-network and
+per-instance metrics outside the search-visible score.
+
+Two separately implemented convex QP policies expose the intended economy--security frontier.
+The nominal DC-OPF witness reaches development/held-out nominal score **1.0/1.0**, but sealed
+N-1 robustness is only **0.031378/0.0000007**. The security-constrained witness instead reaches
+development/held-out nominal score **0.144294/0.079133** and N-1 robustness approximately
+**1.0/1.0**. The proportional baseline is feasible under every tested outage, while non-finite
+and unbalanced dispatches fail closed. These dirty-tree diagnostics establish the calibration
+target but are not trusted experiment evidence; the calibration and admission reports must be
+regenerated after the OPF-v2 source revision is frozen.

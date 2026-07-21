@@ -52,17 +52,18 @@ meaning.
   other six remain quarantined after reproducible adversarial review: RIR
   length failure, unstable low-thrust propagation, centerline-spoofable cavity scoring,
   pseudo-data alloy hardness, scalar-FFT pseudo-RCWA and a degenerate heat-exchanger objective.
-- **No original unscreened candidates remain after wave 4; nine candidates remain in total.** They are
+- **No original unscreened candidates remain after wave 4; ten candidates remain in total.** They are
   SCM, Lyapunov control, neutron criticality, seismic refraction, pendulum control, sparse
-  recovery, OED-v2, GateSynthesis-v2 and the new ActiveLawDiscovery laboratory. All are currently on-ramps or
-  repair/calibration candidates rather than externally reviewed open-frontier tasks.
+  recovery, OED-v2, GateSynthesis-v2, OPF-v2 and the new ActiveLawDiscovery laboratory. All are
+  currently on-ramps or repair/calibration candidates rather than externally reviewed
+  open-frontier tasks.
 - **ActiveLawDiscovery preserves science-specific headroom.** GPT-5.5 budget one attains 0.796
   development and 0.745 sealed validation mechanism score with approximately 0.996 rollout
   prediction, but makes a high-confidence false discovery in both misspecified worlds. In an
   independent budget-three run, all three proposals retain the same two false discoveries;
   score feedback does not fix model-inadequacy detection and later proposals reduce mechanism
   recovery. This is a reliability/refusal frontier rather than an ordinary prediction frontier.
-- **36 quarantined packages.** Five generic-objective clones must be replaced with real domain
+- **34 quarantined packages.** Five generic-objective clones must be replaced with real domain
   oracles; metadata completion alone cannot rehabilitate them. The sixth,
   `ClimateScience/EnergyBalanceModel`, uses an unstable explicit diffusion iteration, an
   unverified ERA5 attribution and a structurally underdetermined seven-parameter fit to one
@@ -74,8 +75,8 @@ meaning.
   RANS fitting and an FWI interface with no observations.
   Wave 3 additionally isolates six scientifically promising topics whose current evaluators are
   unusable: fail-open NMR/OED/gate/OPF/antenna scores and a non-canonical duplicated-member
-  truss topology. OED-v2 and GateSynthesis-v2 have since been substantively rebuilt and
-  re-admitted; the other four
+  truss topology. OED-v2, GateSynthesis-v2 and OPF-v2 have since been substantively rebuilt and
+  re-admitted; the other three
   task families should be rebuilt rather than cosmetically patched.
   Wave 4 quarantines the final 12 unscreened packages after reproducing fail-open paths,
   unreachable anchors, missing observations, uncoupled systems, degenerate corners and models
@@ -102,10 +103,9 @@ The first review tranche contains real scientific topics but several narrow eval
   analysis. Rename the fidelity or replace it with a validated RCWA oracle.
 - Neutron diffusion has a substantive PDE/eigenvalue oracle but only one geometry/loading
   regime and an unsupported fixed normalization increment; validate anchors and add shifts.
-- Gate synthesis, OPF, truss sizing, antenna synthesis and NMR fitting are valuable task
-  families, but their current packages cannot support model evidence. Re-admission requires
-  procedural instances, finite-output checks, independent anchors, and sealed shifted or
-  mechanism metrics where applicable.
+- Truss sizing, antenna synthesis and NMR fitting remain valuable task families, but their
+  current packages cannot support model evidence. Re-admission requires procedural instances,
+  finite-output checks, independent anchors, and sealed shifted or mechanism metrics.
 - OED-v2 now meets those internal evaluator criteria: six development and four shifted model
   families, finite integer allocations, numerically whitened Fisher sensitivities, and
   Kiefer-Wolfowitz-certified references. GPT-5.5 then reaches 0.991 development and 0.994
@@ -113,6 +113,12 @@ The first review tranche contains real scientific topics but several narrow eval
   determinant/exchange optimization. It is therefore a useful, scientifically valid on-ramp,
   not a long-horizon headline task; harder sequential model-discrimination regimes,
   server-held instances and independent review remain necessary.
+- OPF-v2 supplies six complete 5--9 bus meshed DC networks, finite dispatch validation, safe
+  baselines, independent nominal and security-constrained QP witnesses, and exhaustive
+  non-islanding N-1 evaluation. The nominal witness reaches development score 1.0 but only
+  0.031 sealed robustness, whereas the security-constrained witness reaches approximately
+  unit robustness at nominal score 0.144. This economy--security split is ready for GPT-5.5
+  calibration but still needs server-held networks, AC replication and independent review.
 
 ## Expansion rule
 
@@ -125,9 +131,10 @@ The target is approximately 50 **admissible** open scientific optimization tasks
 4. add missing mechanism, multifidelity, experimental-design and null/misspecification families;
 5. run frontier-model budget-one screening before expensive budget 30/100/300 studies.
 
-After complete original-inventory triage, adding ActiveLawDiscovery and rebuilding Gate-v2, the
-net expansion gap is approximately 34 admissible tasks: 51 folders minus 35 quarantines leaves
-16 internally admissible certified or candidate packages, while the target is about 50. New
+After complete original-inventory triage, adding ActiveLawDiscovery and rebuilding Gate-v2 and
+OPF-v2, the net expansion gap is approximately 33 admissible tasks: 51 folders minus 34
+quarantines leaves 17 internally admissible certified or candidate packages, while the target
+is about 50. New
 work should emphasize procedural task families and independent regimes,
 not one-off fixed instances or scientific names around hand-written scalar objectives.
 
