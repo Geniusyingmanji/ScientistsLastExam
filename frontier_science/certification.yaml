@@ -54,6 +54,14 @@ tasks:
     citation_ids:
       - doi:10.7551/mitpress/11283.001.0001
 
+  BayesianInference/OptimalExperimentDesign:
+    status: candidate
+    reason: v2 has procedural multi-family D-optimal instances, certified numerical references and sealed shifted validation; awaiting frontier-model headroom calibration and independent domain review
+    citation_ids:
+      - doi:10.1214/ss/1177009939
+      - doi:10.1137/1.9780898719109
+      - doi:10.4153/CJM-1960-030-4
+
   DynamicalSystems/LyapunovControl:
     status: candidate
     reason: corrected closed-loop MLE oracle is scientifically valid but known equilibrium feedback saturates at budget one; retain as an on-ramp pending hidden regimes and a nontrivial energy-stability frontier
@@ -127,9 +135,6 @@ tasks:
   Spectroscopy/NMRSpectrumFitting:
     status: quarantined
     reason: non-finite peak parameters receive full score, and one fixed spectrum measures reconstruction without peak matching or held-out lineshape validation
-  BayesianInference/OptimalExperimentDesign:
-    status: quarantined
-    reason: non-finite designs receive full score and the reference is an unsourced random-search log-determinant multiplier; rebuild as a procedural multi-model design-policy task
   QuantumControl/GateSynthesis:
     status: quarantined
     reason: non-finite pulses receive full score and one nominal Hamiltonian has no robustness, fluence or slew-rate validation

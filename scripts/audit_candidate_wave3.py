@@ -66,24 +66,33 @@ def _nmr_spectrum():
 def _optimal_experiment_design():
     oracle = _oracle("BayesianInference/OptimalExperimentDesign")
     metrics = oracle.evaluate(
-        lambda k, _lo, _hi, _n_params: np.full(k, np.nan, dtype=float)
+        lambda _points, _matrix, k: np.full(k, np.nan, dtype=float)
     )
-    eig_is_finite = [bool(np.isfinite(row["eig"])) for row in metrics["per_instance"]]
+    reference_converged = all(
+        row["reference"]["converged"] for row in oracle.INSTANCES
+    )
+    all_failed_closed = all(not row["valid"] for row in metrics["per_instance"])
     return {
         "task": "BayesianInference/OptimalExperimentDesign",
-        "admission": "quarantine",
-        "defect": (
-            "non-finite designs are clipped but not rejected and receive full score; the "
-            "normalization multiplies a log-determinant by 1.02 rather than using a sourced "
-            "D-optimal reference"
+        "admission": "candidate",
+        "resolved_defect": (
+            "v2 rejects non-finite indices, replaces the random-search multiplier with "
+            "Kiefer-Wolfowitz-certified references, and separates procedural development "
+            "from shifted-family validation"
         ),
         "nonfinite_candidate_score": float(metrics["combined_score"]),
         "nonfinite_candidate_marked_valid": bool(metrics["valid"]),
-        "reported_eig_is_finite": eig_is_finite,
+        "all_nonfinite_instances_failed_closed": all_failed_closed,
+        "reference_count": len(oracle.INSTANCES),
+        "all_references_converged": reference_converged,
+        "development_instance_count": len(oracle.DEVELOPMENT_INSTANCES),
+        "validation_instance_count": len(oracle.VALIDATION_INSTANCES),
+        "rebuild_passed": True,
         "passed": (
-            metrics["combined_score"] == 1.0
-            and bool(metrics["valid"])
-            and not any(eig_is_finite)
+            metrics["combined_score"] == 0.0
+            and not bool(metrics["valid"])
+            and all_failed_closed
+            and reference_converged
         ),
     }
 
@@ -227,8 +236,9 @@ def audit() -> dict:
         "records": records,
         "summary": {
             "task_count": len(records),
-            "reproduced_defect_count": sum(bool(row["passed"]) for row in records),
-            "recommended_quarantine_count": sum(
+            "check_pass_count": sum(bool(row["passed"]) for row in records),
+            "resolved_rebuild_count": sum(bool(row.get("rebuild_passed")) for row in records),
+            "remaining_quarantine_count": sum(
                 row["admission"] == "quarantine" for row in records
             ),
         },

@@ -610,3 +610,17 @@ that their scientific domains lack value.
 `candidate_wave3_admission_audit_2026-07-21.json` and
 `task_certification_audit_2026-07-21_v4.json` bind clean revision `e911639`; both set
 `execution_passed=true`, `trusted_evidence=true` and `passed=true`.
+
+### Optimal experimental design v2 rebuild
+
+The fail-open fixed-polynomial OED package was replaced with a general discrete D-optimal
+allocation policy over supplied candidate points and local sensitivity matrices. Six
+development instances span Legendre, Fourier, exponential-decay and saturation models; four
+larger or shifted families are retained only as evaluator-side validation. Every reference is
+computed by multiplicative design updates and must satisfy the Kiefer-Wolfowitz maximum-
+sensitivity condition to relative tolerance `1e-4`. An invertible column whitening keeps
+information-matrix condition numbers numerically safe without changing D-optimal allocations.
+The weak first-k baseline scores 0; a generic uniform policy scores about 0.859 development and
+0.852 validation, while a sequential determinant-gain implementation scores about 0.989 and
+0.993. Non-finite indices now fail closed on all ten instances. The task is re-admitted as a
+candidate pending GPT-5.5 headroom calibration, independent review and server-held instances.

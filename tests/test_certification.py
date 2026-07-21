@@ -9,6 +9,7 @@ import numpy as np
 
 from frontier_science.certification import certification_status, load_certification
 from frontier_science.evaluate import evaluate_candidate
+from frontier_science.metric_visibility import search_visible_metrics
 from frontier_science.registry import find_task, list_tasks
 
 
@@ -150,6 +151,67 @@ def discover_mechanism(n, observe, intervene, budget):
         self.assertEqual(metrics["combined_score"], 0.0)
         self.assertTrue(all(not row["valid"] for row in metrics["per_world"]))
         self.assertTrue(all("budget exceeded" in row["reason"] for row in metrics["per_world"]))
+
+    def test_optimal_experiment_design_reference_and_sealed_shift(self):
+        oracle = load_oracle("BayesianInference/OptimalExperimentDesign")
+        self.assertEqual(len(oracle.DEVELOPMENT_INSTANCES), 6)
+        self.assertEqual(len(oracle.VALIDATION_INSTANCES), 4)
+        for instance in oracle.INSTANCES:
+            reference = instance["reference"]
+            n_parameters = instance["matrix"].shape[1]
+            self.assertTrue(reference["converged"])
+            self.assertLessEqual(
+                reference["maximum_sensitivity"],
+                n_parameters * (1.0 + oracle.REFERENCE_TOLERANCE),
+            )
+            self.assertEqual(
+                np.linalg.matrix_rank(instance["matrix"]), n_parameters
+            )
+
+        def uniform(candidate_points, _feature_matrix, n_measurements):
+            return np.rint(np.linspace(
+                0, len(candidate_points) - 1, n_measurements
+            )).astype(int)
+
+        metrics = oracle.evaluate(uniform)
+        self.assertEqual(metrics["valid"], 1.0)
+        self.assertGreater(metrics["combined_score"], 0.7)
+        self.assertIn("robustness_score", metrics)
+        self.assertNotIn("robustness_score", search_visible_metrics(metrics))
+        self.assertNotIn("per_instance", search_visible_metrics(metrics))
+
+        # D-optimal allocations are invariant to a nonsingular parameter transform.  Verify
+        # both the selected-design efficiency and the numerical whitening used by the oracle.
+        rng = np.random.default_rng(20260721)
+        original = oracle.DEVELOPMENT_INSTANCES[0]["matrix"]
+        transform = rng.normal(size=(original.shape[1], original.shape[1]))
+        transform += np.eye(original.shape[1])
+        transformed = original @ transform
+        whitened_original = oracle._scaled_columns(original)
+        whitened_transformed = oracle._scaled_columns(transformed)
+        gram_original = whitened_original @ whitened_original.T
+        gram_transformed = whitened_transformed @ whitened_transformed.T
+        self.assertTrue(np.allclose(
+            gram_original, gram_transformed, rtol=1e-8, atol=1e-8
+        ))
+
+    def test_optimal_experiment_design_nonfinite_indices_fail_closed(self):
+        spec = find_task(
+            "BayesianInference/OptimalExperimentDesign", include_uncertified=True
+        )
+        source = """
+import numpy as np
+def select_designs(candidate_points, feature_matrix, n_measurements):
+    return np.full(n_measurements, np.nan)
+"""
+        with tempfile.TemporaryDirectory() as tmp:
+            candidate = Path(tmp) / "candidate.py"
+            candidate.write_text(source, encoding="utf-8")
+            metrics = evaluate_candidate(spec, candidate, timeout_s=20)
+        self.assertEqual(metrics["valid"], 0.0)
+        self.assertEqual(metrics["combined_score"], 0.0)
+        self.assertEqual(metrics["validation_feasibility_rate"], 0.0)
+        self.assertTrue(all(not row["valid"] for row in metrics["per_instance"]))
 
     def test_lyapunov_oracle_measures_closed_loop_feedback(self):
         oracle = load_oracle("DynamicalSystems/LyapunovControl")

@@ -51,7 +51,7 @@ meaning.
   other six remain quarantined after reproducible adversarial review: RIR
   length failure, unstable low-thrust propagation, centerline-spoofable cavity scoring,
   pseudo-data alloy hardness, scalar-FFT pseudo-RCWA and a degenerate heat-exchanger objective.
-- **12 unscreened candidates remain after the wave-3 audit; 18 candidates remain in total.**
+- **12 unscreened candidates remain after the wave-3 audit; 19 candidates remain in total.**
   Most still require citations, normalization anchors and shortcut review. The six previously
   screened/rebuilt candidates remain SCM, Lyapunov control, neutron criticality, seismic
   refraction, pendulum control and sparse recovery.
@@ -67,7 +67,8 @@ meaning.
   RANS fitting and an FWI interface with no observations.
   Wave 3 additionally isolates six scientifically promising topics whose current evaluators are
   unusable: fail-open NMR/OED/gate/OPF/antenna scores and a non-canonical duplicated-member
-  truss topology. These task families should be rebuilt rather than cosmetically patched.
+  truss topology. OED-v2 has since been substantively rebuilt and re-admitted; the other five
+  task families should be rebuilt rather than cosmetically patched.
 
 ## Priority review findings
 
@@ -90,10 +91,14 @@ The first review tranche contains real scientific topics but several narrow eval
   analysis. Rename the fidelity or replace it with a validated RCWA oracle.
 - Neutron diffusion has a substantive PDE/eigenvalue oracle but only one geometry/loading
   regime and an unsupported fixed normalization increment; validate anchors and add shifts.
-- OED, gate synthesis, OPF, truss sizing, antenna synthesis and NMR fitting are valuable task
+- Gate synthesis, OPF, truss sizing, antenna synthesis and NMR fitting are valuable task
   families, but their current packages cannot support model evidence. Re-admission requires
   procedural instances, finite-output checks, independent anchors, and sealed shifted or
   mechanism metrics where applicable.
+- OED-v2 now meets those internal evaluator criteria: six development and four shifted model
+  families, finite integer allocations, numerically whitened Fisher sensitivities, and
+  Kiefer-Wolfowitz-certified references. It remains a candidate pending GPT-5.5 headroom
+  calibration, server-held procedural instances and independent domain review.
 
 ## Expansion rule
 

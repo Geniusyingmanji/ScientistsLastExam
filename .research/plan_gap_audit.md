@@ -24,8 +24,8 @@ physical validation, and auditable claim–evidence provenance.
 |---|---|---|---|
 | Candidate/oracle isolation | Implemented | Clean-revision report `f48b101`; 15/15 security/regression tests; Bubblewrap, no network, read-only mounts, resource/seccomp limits, typed RPC | Reproduce in clean Linux CI; document portability/non-Linux behavior |
 | Fail-closed trusted metrics | Implemented | Clean-revision 50×2 run: 50 deterministic, 49 valid, 50 fail-closed; non-finite Climate oracle rejected | Repair or quarantine every invalid candidate oracle before certification |
-| Task admission policy | Implemented, narrow | Current manifest: 7 certified / 18 candidate / 25 quarantined; Pendulum-v2 is restored as a nominal-vs-robust candidate | Independent domain + evaluator reviews are still declarations, not completed external review |
-| Scientific validity of inventory | Partial | Seven core tasks have citation IDs/invariants; 25 packages are quarantined after clone, numerical, identifiability, SNR, provenance, normalization or shortcut audits | Deep audit the remaining 18 candidates; hidden/generated instances and shortcut analysis |
+| Task admission policy | Implemented, narrow | Current manifest: 7 certified / 19 candidate / 24 quarantined; Pendulum-v2 and OED-v2 are restored with sealed shifted validation | Independent domain + evaluator reviews are still declarations, not completed external review |
+| Scientific validity of inventory | Partial | Seven core tasks have citation IDs/invariants; 24 packages are quarantined after clone, numerical, identifiability, SNR, provenance, normalization or shortcut audits | Deep audit the remaining candidates; hidden/generated instances and shortcut analysis |
 | Unified trajectory/accounting | Implemented, protocol-smoked | Clean-revision two-seed baseline smoke; trajectory schema v2, hashes, AUC over `budget_units`, separate `oracle_calls`, wall/token/cost, seed, checkpoint/resume | Validate nonzero-budget schema-v2 artifact replay in CI and version future changes |
 | Prompt-metric none/shuffled controls | Implemented, unrun | Code and unit smoke; summaries disclose that selection still uses true scores | Add selection-blind controls, then run ≥5 paired seeds with preregistered budgets |
 | Evaluator-only metric sealing | Implemented and integration-verified | Closed search-visible allowlist; search-state redaction/hash-keyed sidecars; 65-test suite; clean pinned OpenEvolve/TreeQuest/Shinka no-leak report `aff026d` | Extend from baseline smoke to nonzero-budget upstream runs before comparative claims |
@@ -140,8 +140,8 @@ Accordingly, “P0–P2 implemented and recorded” must not be shortened to “
 
 - [x] Trusted oracle / isolated candidate architecture and adversarial regression suite.
 - [x] Current 50-package deterministic secure baseline and certification audit; invalid Climate oracle fails closed.
-- [x] Seven-task certified core, 18 candidates and 25 quarantined packages after wave-2,
-  inverse-track and wave-3 audits, with Pendulum-v2 rebuilt and re-admitted.
+- [x] Seven-task certified core, 19 candidates and 24 quarantined packages after wave-2,
+  inverse-track and wave-3 audits, with Pendulum-v2 and OED-v2 rebuilt and re-admitted.
 - [x] Task-card/citation/invariant audit and dated machine-readable evidence.
 - [ ] Add Linux CI reproduction of all dated audits (local clean-revision reproduction is done).
 - [x] Quarantine `ClimateScience/EnergyBalanceModel`; replace its unstable, untraceable,
