@@ -633,3 +633,19 @@ uses 4,774 tokens. This is scientifically coherent generalization, but it also m
 saturates at budget one. OED-v2 is retained as an on-ramp and feedback/validation control, not
 as evidence of long-horizon autonomous discovery. `gpt55_oed_v2_b1_2026-07-21.json` binds clean
 revision `2d2d62d` and sets `execution_passed=true`, `trusted_evidence=true` and `passed=true`.
+
+## 2026-07-21 — candidate wave 4: complete inventory triage
+
+The final 12 unscreened candidates all fail scientific admission. Reproduced defects include:
+an acoustic absorber whose model stays below 0.01 absorption against a 0.92 anchor; a prosthetic
+joint objective solved by all-upper bounds; distillation with fixed 0.99 top purity and no feed
+balance; flame speeds clipped at 5 m/s for both baseline and reference; a purported Stokes
+solver that only measures perimeter; heat-source inversion with no target observations; an
+inventory simulator whose retailer service is independent of upstream stocks; a calorimeter
+baseline with 10.7 X0 and 100% rather than 3.8% resolution; an HF energy functional whose
+complete two-coefficient minimum is +0.444915 Ha versus a claimed -1.1167 Ha; MOSFET units that
+produce Ion/Ioff 1.0019 versus 1e8; a Rankine surrogate below 6.6% versus its 46% anchor; and a
+traffic model trivially solved by maximum greens because no conflicting phase exists. Seven of
+these packages also expose direct non-finite fail-open paths. All 50 inventory packages have now
+received an adversarial admission pass; the resulting 7 certified / 7 candidate / 36
+quarantined split makes explicit that directory count was never the target.

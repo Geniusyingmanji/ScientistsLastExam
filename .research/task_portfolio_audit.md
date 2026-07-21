@@ -51,11 +51,11 @@ meaning.
   other six remain quarantined after reproducible adversarial review: RIR
   length failure, unstable low-thrust propagation, centerline-spoofable cavity scoring,
   pseudo-data alloy hardness, scalar-FFT pseudo-RCWA and a degenerate heat-exchanger objective.
-- **12 unscreened candidates remain after the wave-3 audit; 19 candidates remain in total.**
-  Most still require citations, normalization anchors and shortcut review. The six previously
-  screened/rebuilt candidates remain SCM, Lyapunov control, neutron criticality, seismic
-  refraction, pendulum control and sparse recovery.
-- **25 quarantined packages.** Five generic-objective clones must be replaced with real domain
+- **No unscreened candidates remain after wave 4; seven candidates remain in total.** They are
+  SCM, Lyapunov control, neutron criticality, seismic refraction, pendulum control, sparse
+  recovery and OED-v2. All are currently on-ramps or repair/calibration candidates rather than
+  externally reviewed open-frontier tasks.
+- **36 quarantined packages.** Five generic-objective clones must be replaced with real domain
   oracles; metadata completion alone cannot rehabilitate them. The sixth,
   `ClimateScience/EnergyBalanceModel`, uses an unstable explicit diffusion iteration, an
   unverified ERA5 attribution and a structurally underdetermined seven-parameter fit to one
@@ -69,6 +69,9 @@ meaning.
   unusable: fail-open NMR/OED/gate/OPF/antenna scores and a non-canonical duplicated-member
   truss topology. OED-v2 has since been substantively rebuilt and re-admitted; the other five
   task families should be rebuilt rather than cosmetically patched.
+  Wave 4 quarantines the final 12 unscreened packages after reproducing fail-open paths,
+  unreachable anchors, missing observations, uncoupled systems, degenerate corners and models
+  that do not implement the claimed science.
 
 ## Priority review findings
 
@@ -113,6 +116,11 @@ The target is approximately 50 **admissible** open scientific optimization tasks
 3. replace pseudo-scientific or narrow proxies;
 4. add missing mechanism, multifidelity, experimental-design and null/misspecification families;
 5. run frontier-model budget-one screening before expensive budget 30/100/300 studies.
+
+After complete inventory triage, the net expansion gap is approximately 43 admissible tasks,
+not zero: 50 folders minus 36 quarantines leaves only 14 internally admissible certified or
+candidate packages. New work should emphasize procedural task families and independent regimes,
+not one-off fixed instances or scientific names around hand-written scalar objectives.
 
 A candidate that saturates across seeds at budget one is a calibration/on-ramp task, not an
 open-optimization headline task. A candidate that improves development score without sealed

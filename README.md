@@ -20,9 +20,9 @@ The repository contains **50 task packages in 47 metadata domains**:
 
 - **7 certified core tasks**: Lennard–Jones clusters, spin glass, Poisson solver,
   matrix-multiplication rank, Cap Set, circle packing, and multilayer thin films.
-- **19 candidate tasks** pending scientific certification, including an intervention-based
+- **7 candidate tasks** pending scientific certification, including an intervention-based
   causal-mechanism laboratory whose prediction and mechanism metrics are reported separately.
-- **24 quarantined tasks** with reproduced scientific-oracle, identifiability, provenance or
+- **36 quarantined tasks** with reproduced scientific-oracle, identifiability, provenance or
   shortcut defects; these remain inventory packages but are not admissible benchmark tasks.
 
 The default CLI exposes only the certified core. `--all` explicitly shows the full
@@ -40,7 +40,7 @@ oracle and validates metrics. The current audit reports:
   oracle metric and was correctly rejected fail-closed.
 - All 50 packages failed closed and there were no infrastructure failures. The newly added
   mechanism task passed invariant, callback-budget and deterministic secure-baseline tests.
-- Current manifest: 7 certified / 19 candidate / 24 quarantined. The rebuilt D-optimal
+- Current manifest: 7 certified / 7 candidate / 36 quarantined. The rebuilt D-optimal
   experimental-design task is re-admitted as a candidate with sealed shifted-family validation.
 
 Machine-readable evidence lives in [`experiments/`](experiments/).
@@ -130,6 +130,7 @@ python scripts/run_security_audit.py --output /tmp/security.json
 python scripts/audit_tasks.py --output /tmp/certification.json
 python scripts/audit_inverse_candidates.py --output /tmp/inverse-admission.json
 python scripts/audit_candidate_wave3.py --output /tmp/candidate-wave3.json
+python scripts/audit_candidate_wave4.py --output /tmp/candidate-wave4.json
 python scripts/run_secure_baseline.py --repeats 2 --output /tmp/baselines.json
 python -m unittest discover -v -s tests
 # From each compatible optional-backend venv:
