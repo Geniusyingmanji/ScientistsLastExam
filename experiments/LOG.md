@@ -554,3 +554,15 @@ demonstrates why Frontier-Eng-style best-score curves are insufficient in scient
 the agent learned to improve the visible nominal objective without improving evaluator-only
 robust control. A preregistered paired multi-seed normal/selection-blind study is required before
 making an inferential claim.
+
+### Default-sealed science metric protocol
+
+Search visibility is now a closed allowlist rather than an evaluator convention. Greedy and
+AB-MCTS search state/checkpoints retain only feasibility and selection metrics. OpenEvolve and
+Shinka receive the same public view; the trusted evaluator atomically stores the full metric
+dictionary in a candidate-source-hash sidecar, and the adapter merges it into the unified trace
+only after upstream search completes. Unknown future fields are sealed by default, so
+`robustness_score`, `mechanism_score`, held-out predictions and per-instance details cannot leak
+through new task-specific names. Sidecar determinism, public/full consistency, checkpoint
+redaction and prompt visibility are covered by the 65-test suite. Official-backend integration
+reproduction is the remaining acceptance check.

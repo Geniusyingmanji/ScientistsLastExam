@@ -18,6 +18,7 @@ from typing import Callable, Optional
 
 from ..evaluate import evaluate_candidate, INVALID_SCORE
 from ..llm import LLMClient
+from ..metric_visibility import search_visible_metrics
 from ..spec import TaskSpec
 from ..protocol import TrajectoryEvent, append_event, load_trajectory, sha256_text, summarize_trajectory
 from .common import (
@@ -51,9 +52,7 @@ def extract_code(text: str) -> Optional[str]:
 
 
 def _build_prompt(spec: TaskSpec, program: str, metrics: dict) -> str:
-    shown = {k: metrics[k] for k in (
-        "combined_score", "valid", "feasibility_rate", "constraint_violations",
-        "raw_score", "error_message") if k in metrics}
+    shown = search_visible_metrics(metrics)
     return (
         f"{spec.agent_visible_text()}\n\n"
         f"## Current best program (`{spec.candidate_destination}`)\n"
@@ -108,7 +107,8 @@ def greedy_rewrite(
         best_program = str(checkpoint["best_program"])
         if sha256_text(best_program) != checkpoint.get("best_sha256"):
             raise ValueError("checkpoint best program hash mismatch")
-        best_metrics = dict(checkpoint["best_metrics"])
+        # Checkpoints are search state and therefore contain only search-visible metrics.
+        best_metrics = search_visible_metrics(dict(checkpoint["best_metrics"]))
         start_iter = int(checkpoint["next_iter"])
         if budget + 1 < start_iter:
             raise ValueError("requested budget is smaller than the committed checkpoint")
@@ -126,7 +126,8 @@ def greedy_rewrite(
         metrics = evaluate_candidate(spec, cand_path, timeout_s=timeout_s)
         eval_wall = time.monotonic() - eval_started
         baseline_score = float(metrics.get("combined_score", INVALID_SCORE))
-        best_score, best_program, best_metrics = baseline_score, baseline_src, metrics
+        best_score, best_program = baseline_score, baseline_src
+        best_metrics = search_visible_metrics(metrics)
         log_fn(f"[{spec.task_id}] baseline combined_score={baseline_score:.6f} valid={metrics.get('valid')}")
         result = EvolveResult(spec.task_id, best_score, baseline_score, best_program,
                               algorithm="greedy_rewrite", seed=seed)
@@ -188,7 +189,8 @@ def greedy_rewrite(
             candidate_sha = sha256_text(code)
             error = m.get("error_message")
         if accepted:
-            best_score, best_program, best_metrics = score, code, m
+            best_score, best_program = score, code
+            best_metrics = search_visible_metrics(m)
             result.best_score, result.best_program = best_score, best_program
             result.accepted += 1
         entry = {"iter": it, "score": score, "best": best_score, "accepted": accepted,

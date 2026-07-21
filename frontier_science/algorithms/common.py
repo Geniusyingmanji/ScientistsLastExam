@@ -26,8 +26,11 @@ from ..protocol import (
     summarize_trajectory,
 )
 
+from ..metric_visibility import METRIC_VISIBILITY_SCOPE
+
 PROMPT_FEEDBACK_SCOPE = (
-    "proposal_prompt_metrics_only; search selection still uses true oracle scores"
+    "proposal prompt sees only allowlisted selection metrics; search selection uses "
+    "combined_score; " + METRIC_VISIBILITY_SCOPE
 )
 
 

@@ -17,6 +17,7 @@ from typing import Any, Callable, Optional
 
 from ..evaluate import INVALID_SCORE, evaluate_candidate
 from ..llm import LLMClient
+from ..metric_visibility import search_visible_metrics
 from ..protocol import sha256_text
 from ..spec import TaskSpec
 from .common import (
@@ -138,7 +139,10 @@ def abmcts(
         started = time.monotonic()
         baseline_metrics = evaluate_candidate(spec, candidate_path, timeout_s=timeout_s)
         baseline_score, baseline_valid = metrics_score(baseline_metrics)
-        baseline_state = ProgramState(baseline_code, baseline_metrics, baseline_score)
+        # TreeQuest search state must never contain evaluator-only science metrics.
+        baseline_state = ProgramState(
+            baseline_code, search_visible_metrics(baseline_metrics), baseline_score
+        )
         best_state = baseline_state
         states = [baseline_state]
         oracle_calls = 1
@@ -234,7 +238,7 @@ def abmcts(
                 "error_message": error or "no_code",
             }
         score, valid = metrics_score(metrics)
-        child = ProgramState(code, metrics, score)
+        child = ProgramState(code, search_visible_metrics(metrics), score)
         search_tree = algo.tell(
             search_tree,
             trial.trial_id,

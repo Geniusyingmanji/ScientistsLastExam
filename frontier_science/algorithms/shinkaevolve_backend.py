@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Any, Callable, Optional
 
 from ..llm import LLMClient
+from ..metric_visibility import load_full_metrics
 from ..protocol import sha256_text
 from ..spec import TaskSpec
 from ..upstream_evaluator import write_configured_wrapper
@@ -165,7 +166,8 @@ def shinkaevolve(
         max_novelty_attempts=1,
     )
     evaluator_file = write_configured_wrapper(
-        workdir / "upstream_evaluator.py", spec.task_id, timeout_s
+        workdir / "upstream_evaluator.py", spec.task_id, timeout_s,
+        full_metrics_dir=workdir / "trusted_full_metrics",
     )
     job = LocalJobConfig(
         eval_program_path=str(evaluator_file),
@@ -196,12 +198,15 @@ def shinkaevolve(
     history = []
     for index, row in enumerate(rows):
         generation = int(row["generation"])
-        metrics = {
+        public_metrics = {
             **dict(row.get("public_metrics") or {}),
             **dict(row.get("private_metrics") or {}),
             "combined_score": row.get("combined_score"),
             "valid": 1.0 if bool(row.get("correct")) else 0.0,
         }
+        metrics = load_full_metrics(
+            workdir / "trusted_full_metrics", str(row["code"]), public_metrics
+        )
         score, valid = metrics_score(metrics)
         improved = valid and score > best_score
         if improved:

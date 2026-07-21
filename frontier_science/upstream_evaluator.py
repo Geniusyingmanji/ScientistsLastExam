@@ -19,30 +19,35 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from frontier_science.evaluate import INVALID_SCORE, evaluate_candidate
+from frontier_science.metric_visibility import search_visible_metrics, store_full_metrics
 from frontier_science.registry import find_task
 
 
 TASK_ID = ""
 TIMEOUT_S = 300.0
+FULL_METRICS_DIR = ""
 
 
-def configure(task_id: str, timeout_s: float) -> None:
-    global TASK_ID, TIMEOUT_S
+def configure(task_id: str, timeout_s: float, full_metrics_dir: str = "") -> None:
+    global TASK_ID, TIMEOUT_S, FULL_METRICS_DIR
     TASK_ID = str(task_id)
     TIMEOUT_S = float(timeout_s)
+    FULL_METRICS_DIR = str(full_metrics_dir or "")
 
 
-def write_configured_wrapper(path: Path, task_id: str, timeout_s: float) -> Path:
+def write_configured_wrapper(path: Path, task_id: str, timeout_s: float,
+                             full_metrics_dir: Path | None = None) -> Path:
     """Write a per-run wrapper without credentials or mutable process-global routing."""
     repository = str(ROOT)
     source = (
         "import sys\n"
         "sys.path.insert(0, %r)\n"
         "from frontier_science.upstream_evaluator import configure, evaluate, main, shinka_main\n"
-        "configure(%r, %r)\n"
+        "configure(%r, %r, %r)\n"
         "if __name__ == '__main__':\n"
         "    raise SystemExit(main())\n"
-    ) % (repository, str(task_id), float(timeout_s))
+    ) % (repository, str(task_id), float(timeout_s),
+         str(Path(full_metrics_dir).resolve()) if full_metrics_dir else "")
     path = Path(path)
     path.write_text(source, encoding="utf-8")
     return path
@@ -58,7 +63,11 @@ def evaluate(program_path: str) -> dict[str, Any]:
         if any(marker in normalized for marker in ("API_KEY", "AUTHORIZATION", "TOKEN")):
             sensitive[key] = os.environ.pop(key)
     try:
-        return evaluate_candidate(spec, Path(program_path).resolve(), timeout_s=TIMEOUT_S)
+        candidate = Path(program_path).resolve()
+        full_metrics = evaluate_candidate(spec, candidate, timeout_s=TIMEOUT_S)
+        if FULL_METRICS_DIR:
+            store_full_metrics(Path(FULL_METRICS_DIR), candidate, full_metrics)
+        return search_visible_metrics(full_metrics)
     finally:
         os.environ.update(sensitive)
 

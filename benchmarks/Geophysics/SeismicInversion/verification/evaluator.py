@@ -193,8 +193,8 @@ def evaluate(invert_seismic):
         "raw_score": -float(np.mean(development_rmse)) if development_rmse else -1e9,
         "development_score": development,
         "mechanism_score": mechanism,
-        # This is a separate held-out diagnostic. It is not yet called strictly sealed because
-        # all upstream framework adapters do not yet redact non-selection metrics.
+        # This held-out diagnostic is retained in the trusted trajectory and redacted from the
+        # search framework's public metric view.
         "holdout_prediction_score": holdout,
         "mean_development_rmse_ms": (
             float(np.mean(development_rmse)) if development_rmse else 1e12

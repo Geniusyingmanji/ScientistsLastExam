@@ -28,6 +28,7 @@ physical validation, and auditable claim–evidence provenance.
 | Scientific validity of inventory | Partial | Seven core tasks have citation IDs/invariants; 12 packages remain quarantined after clone, numerical, identifiability, provenance or shortcut audits | Deep audit the remaining 31 candidates; hidden/generated instances and shortcut analysis |
 | Unified trajectory/accounting | Implemented, protocol-smoked | Clean-revision two-seed baseline smoke; trajectory schema v2, hashes, AUC over `budget_units`, separate `oracle_calls`, wall/token/cost, seed, checkpoint/resume | Validate nonzero-budget schema-v2 artifact replay in CI and version future changes |
 | Prompt-metric none/shuffled controls | Implemented, unrun | Code and unit smoke; summaries disclose that selection still uses true scores | Add selection-blind controls, then run ≥5 paired seeds with preregistered budgets |
+| Evaluator-only metric sealing | Implemented, integration pending | Closed search-visible allowlist; greedy/AB-MCTS search state redaction; hash-keyed full-metric sidecars for OpenEvolve/Shinka; 65-test suite | Re-run all three official-backend integrations from pinned environments and record a cross-backend no-leak audit |
 | Official OpenEvolve adapter | Implemented, trusted baseline smoke | Explicit 0.2.26 adapter; clean-revision secure baseline passed under Python 3.10 | Run nonzero-budget/checkpoint integration and multi-seed study |
 | TreeQuest AB-MCTS | Implemented, trusted baseline smoke | Real TreeQuest AB-MCTS-A ask/tell adapter; clean-revision secure baseline passed under Python 3.12 | Run nonzero-budget/checkpoint integration and multi-seed study |
 | ShinkaEvolve | Implemented, trusted baseline smoke | Official runner/database adapter at pinned commit; clean-revision secure baseline passed under Python 3.10 | Run nonzero-budget/resume integration and token accounting audit |
@@ -176,8 +177,9 @@ Accordingly, “P0–P2 implemented and recorded” must not be shortened to “
 
 ### P3 — scientific validity and distinctiveness
 
-- [ ] Record separate development, sealed-validation and mechanism trajectories; never reduce
-  them to one “science score”.
+- [x] Implement separate development/validation/mechanism trajectory retention and default
+  search redaction; do not reduce them to one “science score”. Official-backend integration
+  reproduction remains required before using the word strictly sealed in results.
 - [ ] Independently review all seven core tasks and generate hidden/time-held-out instances.
 - [ ] Define task-family/time-held-out splits for search-policy training and transfer studies.
 - [ ] Add one certified proxy/exact multifidelity task with measured rank correlation.

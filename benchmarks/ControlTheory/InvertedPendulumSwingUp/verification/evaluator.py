@@ -214,8 +214,8 @@ def evaluate(swing_up_controller):
         "feasibility_rate": 1.0,
         "raw_score": development_score,
         "development_score": development_score,
-        # Evaluator-only shifted scenarios. This remains a diagnostic rather than a strictly
-        # sealed metric until every search adapter redacts non-selection metrics.
+        # Evaluator-only shifted scenarios are retained in the trusted trajectory and removed
+        # from every search framework's public metric view by the visibility contract.
         "robustness_score": robustness_score,
         "development_robustness_gap": development_score - robustness_score,
         "mean_balanced_fraction": float(np.mean([

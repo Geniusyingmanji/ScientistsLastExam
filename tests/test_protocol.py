@@ -15,6 +15,8 @@ from frontier_science.algorithms.common import restore_committed_trajectory
 from frontier_science.algorithms.common import require_evaluation_budget
 from frontier_science.algorithms.common import llm_condition_sha256
 from frontier_science.llm import LLMClient, LLMConfig
+from frontier_science.metric_visibility import (load_full_metrics, search_visible_metrics,
+                                                source_sha256, store_full_metrics)
 from frontier_science.protocol import (TrajectoryEvent, append_event, best_so_far_auc,
                                        load_trajectory, mean_confidence_interval,
                                        summarize_trajectory)
@@ -154,7 +156,7 @@ class ProtocolMetricTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             path = write_configured_wrapper(Path(tmp) / "evaluator.py", "D/T", 12.5)
             source = path.read_text(encoding="utf-8")
-            self.assertIn("configure('D/T', 12.5)", source)
+            self.assertIn("configure('D/T', 12.5, '')", source)
             self.assertIn("sys.path.insert", source)
             self.assertNotIn("API_KEY", source)
 
@@ -184,6 +186,74 @@ class ProtocolMetricTests(unittest.TestCase):
             self.assertIsNone(seen["credential"])
             self.assertEqual(seen["timeout_s"], 12.5)
 
+    def test_science_metrics_are_sealed_by_default(self):
+        full = {
+            "combined_score": 0.7,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 4.2,
+            "robustness_score": 0.1,
+            "mechanism_score": 0.2,
+            "holdout_prediction_score": 0.3,
+            "per_scenario": [{"secret": 1}],
+            "unexpected_future_science_metric": 0.4,
+        }
+        visible = search_visible_metrics(full)
+        self.assertEqual(set(visible), {
+            "combined_score", "valid", "feasibility_rate", "raw_score"
+        })
+        for key in (
+            "robustness_score", "mechanism_score", "holdout_prediction_score",
+            "per_scenario", "unexpected_future_science_metric",
+        ):
+            self.assertNotIn(key, visible)
+
+    def test_trusted_metric_sidecar_roundtrip_and_public_consistency(self):
+        source = "def solve():\n    return 1\n"
+        full = {
+            "combined_score": 0.7, "valid": 1.0,
+            "robustness_score": 0.2, "per_scenario": [{"utility": 0.2}],
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            candidate = root / "candidate.py"
+            candidate.write_text(source, encoding="utf-8")
+            digest = store_full_metrics(root / "sealed", candidate, full)
+            self.assertEqual(digest, source_sha256(source))
+            loaded = load_full_metrics(
+                root / "sealed", source,
+                {"combined_score": 0.7, "valid": 1.0},
+            )
+            self.assertEqual(loaded, full)
+            with self.assertRaisesRegex(ValueError, "mismatch"):
+                load_full_metrics(
+                    root / "sealed", source,
+                    {"combined_score": 0.8, "valid": 1.0},
+                )
+            with self.assertRaisesRegex(RuntimeError, "nondeterministic"):
+                store_full_metrics(
+                    root / "sealed", candidate,
+                    {**full, "robustness_score": 0.9},
+                )
+
+    def test_upstream_evaluator_returns_public_and_stores_full_metrics(self):
+        full = {
+            "combined_score": 0.4, "valid": 1.0,
+            "robustness_score": 0.9, "mechanism_score": 0.8,
+        }
+        with tempfile.TemporaryDirectory() as tmp, patch.object(
+            upstream_evaluator, "find_task", return_value=object()
+        ), patch.object(
+            upstream_evaluator, "evaluate_candidate", return_value=full
+        ):
+            candidate = Path(tmp) / "candidate.py"
+            candidate.write_text("x = 1\n", encoding="utf-8")
+            sidecar = Path(tmp) / "sealed"
+            upstream_evaluator.configure("D/T", 12.5, str(sidecar))
+            visible = upstream_evaluator.evaluate(str(candidate))
+            self.assertEqual(visible, {"combined_score": 0.4, "valid": 1.0})
+            self.assertEqual(load_full_metrics(sidecar, "x = 1\n"), full)
+
 
 class GreedyRewriteTests(unittest.TestCase):
     def test_trace_cost_and_resume(self):
@@ -198,7 +268,8 @@ class GreedyRewriteTests(unittest.TestCase):
             events = load_trajectory(work / "trajectory.jsonl")
             self.assertEqual([e["step"] for e in events], [0, 1])
             self.assertEqual(events[1]["llm"]["total_tokens"], 15)
-            self.assertIn("selection still uses true oracle scores", result.summary["feedback_scope"])
+            self.assertIn("search selection uses combined_score", result.summary["feedback_scope"])
+            self.assertIn("evaluator-only validation", result.summary["feedback_scope"])
             checkpoint = json.loads((work / "checkpoint.json").read_text())
             self.assertEqual(checkpoint["next_iter"], 2)
             manifest = json.loads((work / "run_manifest.json").read_text())
@@ -234,6 +305,23 @@ class GreedyRewriteTests(unittest.TestCase):
             self.assertEqual(result.evaluated, 1)
             events = load_trajectory(Path(tmp) / "trajectory.jsonl")
             self.assertEqual(events[-1]["error"], "LLM error: offline")
+
+    def test_checkpoint_search_state_does_not_store_sealed_metrics(self):
+        spec = find_task("ControlTheory/InvertedPendulumSwingUp", include_uncertified=True)
+        baseline = spec.initial_program_path.read_text(encoding="utf-8")
+        fenced = "```python\n" + baseline + "\n```"
+        with tempfile.TemporaryDirectory() as tmp:
+            work = Path(tmp)
+            greedy_rewrite(
+                spec, FakeLLM([fenced]), budget=1, timeout_s=20,
+                workdir=work, seed=9, log_fn=lambda _: None,
+            )
+            checkpoint = json.loads((work / "checkpoint.json").read_text(encoding="utf-8"))
+            self.assertNotIn("robustness_score", checkpoint["best_metrics"])
+            self.assertNotIn("per_scenario", checkpoint["best_metrics"])
+            events = load_trajectory(work / "trajectory.jsonl")
+            self.assertIn("robustness_score", events[0]["metrics"])
+            self.assertIn("per_scenario", events[0]["metrics"])
 
 
 class AlgorithmAdapterTests(unittest.TestCase):

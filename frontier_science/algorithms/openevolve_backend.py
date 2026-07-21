@@ -11,6 +11,7 @@ from typing import Any, Callable, Optional
 
 from ..llm import LLMClient
 from ..evaluate import INVALID_SCORE
+from ..metric_visibility import load_full_metrics
 from ..protocol import sha256_text
 from ..spec import TaskSpec
 from ..upstream_evaluator import write_configured_wrapper
@@ -142,7 +143,8 @@ def openevolve(
     config.llm.api_key = model.api_key
 
     evaluator_file = write_configured_wrapper(
-        workdir / "upstream_evaluator.py", spec.task_id, timeout_s
+        workdir / "upstream_evaluator.py", spec.task_id, timeout_s,
+        full_metrics_dir=workdir / "trusted_full_metrics",
     )
     controller = OpenEvolve(
         initial_program_path=str(spec.initial_program_path),
@@ -185,7 +187,10 @@ def openevolve(
     baseline_score = None
     history: list[dict[str, Any]] = []
     for index, program in enumerate(programs):
-        metrics = dict(program.metrics or {})
+        public_metrics = dict(program.metrics or {})
+        metrics = load_full_metrics(
+            workdir / "trusted_full_metrics", program.code, public_metrics
+        )
         score, valid = metrics_score(metrics)
         oracle_calls += 1
         improved = valid and score > best_raw
