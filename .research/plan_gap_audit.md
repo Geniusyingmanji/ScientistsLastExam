@@ -1,7 +1,8 @@
 # Frontier-Science plan gap audit
 
-Audit date: 2026-07-19 (UTC). Evidence base: `literature_matrix.md`, current source/tests,
-and the dated artifacts in `experiments/`.
+Audit date: 2026-07-19 (UTC), with the experiment roadmap extended on 2026-07-21 after a
+full-text EdgeBench comparison. Evidence base: `literature_matrix.md`,
+`science_experiment_plan.md`, current source/tests, and the dated artifacts in `experiments/`.
 
 ## Executive decision
 
@@ -51,6 +52,13 @@ The literature matrix separates four capabilities that the old plan collapsed:
    stopping, and response to model misspecification.
 4. **Research integrity.** Xcientist/XScientist-style work and long-horizon systems motivate
    immutable lineage, failed branches, evidence links, and re-execution—not score-only logs.
+
+EdgeBench adds a strong long-horizon comparator: its 134-task study motivates dual local/judge
+feedback loops, evaluator-only trajectory snapshots, continuous-run versus restart controls,
+context/memory ablations, and explicit curve forecasting. It does not replace shuffled or
+strict selection-blind controls, and its aggregate best-so-far curves do not establish mechanism
+recovery or independent scientific validation. The science-specific experiment matrix and
+minimum publishable sequence are specified in `science_experiment_plan.md`.
 
 `arXiv:2601.21165` also creates a direct naming collision: *FrontierScience* already denotes an
 expert-authored Olympiad/Research question benchmark. Public release should rename this project
@@ -164,6 +172,8 @@ Accordingly, “P0–P2 implemented and recorded” must not be shortened to “
 
 ### P3 — scientific validity and distinctiveness
 
+- [ ] Record separate development, sealed-validation and mechanism trajectories; never reduce
+  them to one “science score”.
 - [ ] Independently review all seven core tasks and generate hidden/time-held-out instances.
 - [ ] Define task-family/time-held-out splits for search-policy training and transfer studies.
 - [ ] Add one certified proxy/exact multifidelity task with measured rank correlation.
