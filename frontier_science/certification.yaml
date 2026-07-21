@@ -69,7 +69,7 @@ tasks:
 
   Geophysics/SeismicInversion:
     status: candidate
-    reason: identifiable direct/head-wave refraction inverse with procedural 4-6 layer surveys and separate mechanism/holdout diagnostics; awaiting frontier-model headroom and independent domain review
+    reason: identifiable refraction inverse and useful on-ramp, but GPT-5.5 reaches 0.994 at budget one with standard global/local optimization; harder model-mismatch and survey-design regimes plus independent review are required
     citation_ids:
       - isbn:9780521708425
       - isbn:9780931830149

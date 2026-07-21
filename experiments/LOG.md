@@ -458,3 +458,13 @@ next GPT-5.5 budget-one calibration must test.
 
 `seismic_inversion_calibration_2026-07-21.json` records the reference and rank checks from clean
 revision `7d1add3`; it sets `execution_passed=true`, `trusted_evidence=true` and `passed=true`.
+
+The subsequent clean-revision GPT-5.5 budget-one run
+`gpt55_seismic_v2_b1_2026-07-21.json` improves the weak baseline from 0 to **0.993985** using
+3,224 tokens. The submitted program implements the disclosed head-wave equations with
+multistart SLSQP plus differential evolution. Its separate velocity-mechanism score is
+**0.983173** and unobserved-offset prediction score is **0.997326**, so optimization,
+mechanism recovery and interpolation improve together here. This validates the repaired task
+but also establishes that it is an on-ramp: the remaining science challenge needs unknown
+thicknesses, low-velocity/non-identifiable layers, outliers, anisotropy/model mismatch, adaptive
+survey design and calibrated refusal rather than simply more optimizer proposals.

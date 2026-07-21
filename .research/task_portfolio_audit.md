@@ -34,7 +34,8 @@ meaning.
 - **4 candidates screened at budget one.** SparseRecovery reaches 0.958 through standard
   sparse solvers and needs hidden sensing/noise/sparsity shifts. SeismicInversion's mean-only
   forward model has since been replaced with identifiable 4–6 layer direct/head-wave surveys
-  and separate velocity/holdout diagnostics; frontier-model headroom remains to be measured.
+  and separate velocity/holdout diagnostics; GPT-5.5 then reaches 0.994 in one proposal, so it
+  is a scientifically valid on-ramp rather than a long-horizon headline task.
   LyapunovControl's omitted feedback derivative has since been repaired with
   a two-trajectory closed-loop estimator; replaying the candidate gives MLE -1.413 and clipped
   score 1.0, so it is an on-ramp rather than a headline task. NeutronDiffusionCriticality's
