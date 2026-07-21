@@ -590,3 +590,7 @@ receives no observed waveform or experiment callback and can only guess one fixe
 NMR fitting remains a candidate for procedural multi-spectrum rebuilding. These results sharpen
 the common conclusion: an inverse-problem narrative does not create a scientific-discovery task
 unless observations identify the claim and the interface actually supplies evidence.
+
+The machine-readable reports `inverse_candidate_admission_audit_2026-07-21.json` and
+`task_certification_audit_2026-07-21_v3.json` bind clean source revision `54f992d`; both set
+`execution_passed=true`, `trusted_evidence=true` and `passed=true`.

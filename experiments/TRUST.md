@@ -18,6 +18,8 @@ remain baseline-only and must not be promoted to model-performance evidence.
 | `secure_baseline_determinism_2026-07-19.json` | `TRUSTED_SECURE_EVAL` | Two secure evaluations per inventory task on `f48b101`; 49 deterministic, 48 valid, 49 fail-closed. |
 | `protocol_smoke_2026-07-19.json` | `TRUSTED_SECURE_EVAL / PROTOCOL_SMOKE_ONLY` | Baseline-only two-seed run on `f48b101` validating trajectory schema v2, budget-unit AUC, separate oracle-call accounting, and runner artifacts. It is not model-performance evidence. |
 | `upstream_backend_smoke_2026-07-19.json` | `TRUSTED_SECURE_EVAL / UPSTREAM_BASELINE_SMOKE_ONLY` | On `f48b101`, official OpenEvolve 0.2.26 (Python 3.10), TreeQuest AB-MCTS-A (Python 3.12), and ShinkaEvolve at the pinned commit (Python 3.10) each evaluated the secure baseline with trajectory schema v2 successfully. |
+| `inverse_candidate_admission_audit_2026-07-21.json` | `TRUSTED_ADMISSION_AUDIT` | On clean source `54f992d`, reproduces all seven inverse-track identifiability, signal-to-noise, surrogate-rank or missing-observation defects and recommends quarantine before model screening. |
+| `task_certification_audit_2026-07-21_v3.json` | `TRUSTED_CERTIFICATION_AUDIT` | On clean source `54f992d`, records 50 packages: seven certified, 24 candidate and 19 quarantined, with no certified-task admission issues or orphaned manifest records. |
 
 Raw `.out`/`.log` files predating the trusted evaluator inherit
 `UNTRUSTED_PRE_SANDBOX` unless a dated trusted report explicitly incorporates them.
