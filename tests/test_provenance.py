@@ -66,6 +66,9 @@ class MergeUpstreamSmokeTests(unittest.TestCase):
                 "oracle_calls": 1,
                 "upstream": upstream,
                 "installed_distribution": distribution,
+                "expected_sealed_metric": "robustness_score",
+                "sealed_metric_retained_in_trusted_trace": True,
+                "sealed_metric_absent_from_search_state": True,
             }],
         }
 
@@ -117,6 +120,19 @@ class MergeUpstreamSmokeTests(unittest.TestCase):
             self.assertFalse(report["passed"])
             self.assertTrue(any("exactly one" in issue for issue in report["issues"]))
             self.assertTrue(any("clean source" in issue for issue in report["issues"]))
+
+    def test_merge_rejects_metric_sealing_failure(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            paths = self._paths(Path(tmp))
+            child = json.loads(paths[1].read_text(encoding="utf-8"))
+            child["backends"][0]["sealed_metric_absent_from_search_state"] = False
+            paths[1].write_text(json.dumps(child), encoding="utf-8")
+            clean = {"git_available": True, "git_revision": "abc",
+                     "source_tree_dirty": False}
+            with patch.object(MERGE, "source_provenance", return_value=clean):
+                report = MERGE.merge_reports(paths)
+            self.assertFalse(report["execution_passed"])
+            self.assertTrue(any("metric sealing" in issue for issue in report["issues"]))
 
 
 if __name__ == "__main__":

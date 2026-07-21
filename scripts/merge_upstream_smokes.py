@@ -87,6 +87,12 @@ def merge_reports(paths: list[Path]) -> dict[str, Any]:
             vcs = (distribution.get("direct_url") or {}).get("vcs_info") or {}
             if vcs.get("commit_id") != SHINKA_COMMIT:
                 issues.append("installed ShinkaEvolve Git commit does not match the pin")
+        expected_sealed = row.get("expected_sealed_metric")
+        if expected_sealed is not None and (
+            row.get("sealed_metric_retained_in_trusted_trace") is not True
+            or row.get("sealed_metric_absent_from_search_state") is not True
+        ):
+            issues.append("backend failed evaluator-only metric sealing validation")
     provenance = source_provenance(ROOT)
     if provenance.get("source_tree_dirty") is not False:
         issues.append("merge used a source tree that was not clean")
