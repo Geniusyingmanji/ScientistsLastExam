@@ -1,3 +1,4 @@
-1) Only edit solution.py. Keep the design_truss() signature.
-2) numpy/scipy only. CPU, seconds. No network.
-3) Do not read verification/ or frontier_eval/.
+1) Only edit solution.py. Keep the complete design_truss(nodes, members, fixed_dofs, load_cases, youngs_modulus, density, tension_allowable, compression_allowable, displacement_limit, area_min, area_max, inertia_coefficient) signature.
+2) Return exactly one finite area per supplied member, inside the public bounds. Values are rejected, not clipped or repaired.
+3) Satisfy nominal stress, free-DOF displacement and pin-ended Euler-buckling constraints for every supplied load case; handle varying topology, material and member count.
+4) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read verification/ or frontier_eval/.

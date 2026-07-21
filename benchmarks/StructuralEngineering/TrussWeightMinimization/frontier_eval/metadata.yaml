@@ -1,7 +1,12 @@
 domain: StructuralEngineering
 task: TrussWeightMinimization
 difficulty: hard
+tier: T2
 oracle_type: analytical
 score_mode: clipped
 gpu_required: false
-eval_time_seconds: 10
+eval_time_seconds: 30
+science_metric: nominal weight reduction with sealed topology transfer and load/material/manufacturing robustness
+reference_baseline: all members at their maximum public areas, feasible under nominal and shifted cases
+reference_sota: independently calibrated multistart feasible nominal and shift-robust witnesses; no global-optimality claim
+citation: "Schmit and Farshi, Some approximation concepts for structural synthesis, DOI 10.2514/3.49321"

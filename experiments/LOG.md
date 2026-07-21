@@ -779,3 +779,24 @@ analysis workflow run end to end. They do not establish that iterative feedback 
 ineffective. A confirmatory Track F study requires at least ten replicates, matched token/context
 budgets and delayed/replayed plus score-information-only controls. Full interpretation is in
 `.research/feedback_pilot_results.md`.
+
+## 2026-07-21 — structural truss sizing v2 rebuild
+
+The invalid duplicate-member fixed 10-bar package was replaced with a policy task over six
+interleaved procedural structures: four development and two held-out aluminum, steel and
+titanium X-braced/Pratt families with 8--15 unique members and two load cases each. Candidates
+receive complete geometry, support, load, material, allowable, displacement, area and similar-
+section inertia data. The trusted direct-stiffness FEM rejects malformed or nominally infeasible
+areas and evaluates asymmetric tension/compression stress, every free displacement degree and
+pin-ended Euler buckling. Evaluator-only load, modulus/allowable, manufactured-area and combined
+shifts remain outside search state.
+
+Independent five-start SLSQP calibration with separately implemented FEM residuals produces
+feasible nominal and robust local witnesses with a 5e-4 utilization margin; no global optimum is
+claimed and lighter feasible candidates may score one. The nominal witness policy reaches
+development/held-out nominal score **1.0/1.0**, but every instance fails at least one shift and
+development/held-out robustness is **0.0/0.0**. The robust witness trades nominal score down to
+**0.732604/0.667469** while reaching shifted robustness **1.0/1.0**. The all-maximum baseline is
+safe under all shifts, and non-finite, wrong-length, out-of-bound and nominally infeasible
+designs fail closed. Truss-v2 is re-admitted as a candidate pending GPT-5.5 headroom calibration,
+server-held structures and independent structural-engineering review.

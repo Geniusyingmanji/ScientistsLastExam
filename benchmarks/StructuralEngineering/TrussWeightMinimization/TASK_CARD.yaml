@@ -1,0 +1,28 @@
+schema_version: 1
+scientific_question: Can one sizing policy reduce truss weight across varying geometries and materials while retaining stress, displacement and Euler-buckling feasibility under load, material and manufacturing shifts?
+artifact: One intended cross-sectional area per supplied planar-truss member.
+oracle:
+  model: linear-elastic direct-stiffness FEM with asymmetric stress limits, free-DOF displacement limits and pin-ended Euler buckling for similar cross-sections I=kappa*A^2
+  feasibility: exact finite member count, public area bounds, and every nominal constraint under every public load case
+  deterministic: true
+normalization:
+  baseline: all public maximum areas, checked feasible under every nominal and shifted case
+  reference: independently calibrated multistart feasible nominal and robust local witnesses
+  score: nominal development weight reduction controls search; held-out topology transfer and shifted physical robustness remain separate
+citations:
+  - id: doi:10.2514/3.49321
+    title: Some approximation concepts for structural synthesis
+  - id: doi:10.1007/BF01376857
+    title: Difficulties in truss topology optimization with stress and local buckling constraints
+invariants:
+  - member strain and stress are invariant to rigid translation of the solved displacement field
+  - assembled stiffness is symmetric and reactions plus external loads satisfy force balance
+  - canonical two-bay topology has ten unique undirected members
+  - all-maximum baselines satisfy nominal and every evaluator-only shifted scenario
+  - nominal and robust reference witnesses independently satisfy their declared constraints
+  - non-finite, wrong-length, out-of-bound, singular and nominally infeasible designs fail closed
+  - held-out and shifted metrics remain evaluator-only
+known_shortcuts: Linear pin-jointed FEM omits joint rigidity, geometric and material nonlinearity, fatigue, connection design, self-weight and code load combinations. Public deterministic families require future server-held instances; engineering claims require nonlinear finite-element and domain-expert replication. Reference witnesses are local feasible designs, not proofs of global optimality.
+review:
+  domain: pending_external
+  evaluator_security: automated_invariant_sandbox_and_metric_sealing_tests

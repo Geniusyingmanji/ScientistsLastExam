@@ -201,8 +201,11 @@ tasks:
     status: quarantined
     reason: non-finite peak parameters receive full score, and one fixed spectrum measures reconstruction without peak matching or held-out lineshape validation
   StructuralEngineering/TrussWeightMinimization:
-    status: quarantined
-    reason: the purported canonical 10-bar topology duplicates one member, so its FEM objective and cited 5060-lb reference are different problems
+    status: candidate
+    reason: v2 has six unique procedural structures, complete stress/displacement/Euler-buckling FEM, multistart feasible nominal/robust references and sealed load/material/manufacturing shifts; awaiting GPT-5.5 headroom calibration, server-held structures and independent domain review
+    citation_ids:
+      - doi:10.2514/3.49321
+      - doi:10.1007/BF01376857
   Electromagnetics/AntennaArraySynthesis:
     status: quarantined
     reason: zero excitation normalizes 0/0 and receives full score, while the actual uniform-array PSLL disagrees with the score anchor by more than 3 dB

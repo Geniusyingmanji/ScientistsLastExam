@@ -182,22 +182,71 @@ def _optimal_power_flow():
 
 def _truss():
     oracle = _oracle("StructuralEngineering/TrussWeightMinimization")
-    undirected = [tuple(sorted(map(int, pair))) for pair in oracle.ELEMENTS]
-    unique = sorted(set(undirected))
-    duplicates = sorted({pair for pair in undirected if undirected.count(pair) > 1})
-    baseline = oracle.evaluate(lambda n_bars: np.full(n_bars, oracle.A_MAX))
+    def all_max(_nodes, members, _fixed_dofs, _load_cases, _youngs_modulus,
+                _density, _tension_allowable, _compression_allowable,
+                _displacement_limit, _area_min, area_max, _inertia_coefficient):
+        return np.full(len(members), area_max, dtype=float)
+
+    def nonfinite(_nodes, members, *_args):
+        return np.full(len(members), np.nan, dtype=float)
+
+    baseline = oracle.evaluate(all_max)
+    invalid = oracle.evaluate(nonfinite)
+    unique_topologies = all(
+        len({tuple(sorted(map(int, pair))) for pair in instance["members"]})
+        == len(instance["members"])
+        for instance in oracle.INSTANCES
+    )
+    baseline_shift_safe = all(
+        oracle._scenario_analysis(
+            instance, instance["baseline_areas"], shift, shift["name"]
+        )["feasible"]
+        for instance in oracle.INSTANCES for shift in oracle.SHIFT_SPECS
+    )
+    nominal_references_feasible = all(
+        oracle._scenario_analysis(
+            instance, instance["nominal_reference_areas"]
+        )["feasible"]
+        for instance in oracle.INSTANCES
+    )
+    robust_references_feasible = all(
+        oracle._scenario_analysis(
+            instance, instance["robust_reference_areas"], shift, shift["name"]
+        )["feasible"]
+        for instance in oracle.INSTANCES for shift in oracle.SHIFT_SPECS
+    )
+    nominal_references_fail_shifts = all(
+        any(not oracle._scenario_analysis(
+            instance, instance["nominal_reference_areas"], shift, shift["name"]
+        )["feasible"] for shift in oracle.SHIFT_SPECS)
+        for instance in oracle.INSTANCES
+    )
     return {
         "task": "StructuralEngineering/TrussWeightMinimization",
-        "admission": "quarantine",
-        "defect": (
-            "the purported canonical 10-bar topology contains the same middle vertical "
-            "member twice, so its FEM and cited 5060-lb reference describe different problems"
+        "admission": "candidate",
+        "resolved_defect": (
+            "v2 replaces the duplicate-member fixed topology with six fully supplied unique "
+            "procedural structures, complete stress/displacement/Euler-buckling FEM, "
+            "multistart feasible references and sealed physical shifts"
         ),
-        "declared_member_count": int(len(oracle.ELEMENTS)),
-        "unique_undirected_member_count": int(len(unique)),
-        "duplicated_undirected_members": [list(pair) for pair in duplicates],
-        "all_max_baseline_weight_lbs": float(baseline["weight_lbs"]),
-        "passed": len(oracle.ELEMENTS) == 10 and len(unique) == 9 and bool(duplicates),
+        "instance_count": len(oracle.INSTANCES),
+        "development_instance_count": len(oracle.DEVELOPMENT_INSTANCES),
+        "heldout_instance_count": len(oracle.HELDOUT_INSTANCES),
+        "all_topologies_have_unique_members": unique_topologies,
+        "all_max_baseline_valid": bool(baseline["valid"]),
+        "all_max_baseline_shift_safe": baseline_shift_safe,
+        "nonfinite_candidate_score": float(invalid["combined_score"]),
+        "nonfinite_candidate_marked_valid": bool(invalid["valid"]),
+        "nominal_references_feasible": nominal_references_feasible,
+        "robust_references_feasible": robust_references_feasible,
+        "nominal_references_fail_at_least_one_shift": nominal_references_fail_shifts,
+        "rebuild_passed": True,
+        "passed": bool(
+            unique_topologies and baseline["valid"] == 1.0 and baseline_shift_safe
+            and invalid["combined_score"] == 0.0 and invalid["valid"] == 0.0
+            and nominal_references_feasible and robust_references_feasible
+            and nominal_references_fail_shifts
+        ),
     }
 
 

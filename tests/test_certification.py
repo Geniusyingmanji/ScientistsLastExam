@@ -400,6 +400,88 @@ def select_designs(candidate_points, feature_matrix, n_measurements):
                 not row["valid"] for row in metrics["per_instance"]
             ))
 
+    def test_truss_v2_topology_references_and_metric_sealing(self):
+        oracle = load_oracle("StructuralEngineering/TrussWeightMinimization")
+        self.assertEqual(len(oracle.DEVELOPMENT_INSTANCES), 4)
+        self.assertEqual(len(oracle.HELDOUT_INSTANCES), 2)
+        for instance in oracle.INSTANCES:
+            undirected = [
+                tuple(sorted(map(int, pair))) for pair in instance["members"]
+            ]
+            self.assertEqual(len(undirected), len(set(undirected)))
+            baseline = oracle._scenario_analysis(
+                instance, instance["baseline_areas"]
+            )
+            nominal = oracle._scenario_analysis(
+                instance, instance["nominal_reference_areas"]
+            )
+            self.assertTrue(baseline["feasible"])
+            self.assertTrue(nominal["feasible"])
+            for loads in instance["load_cases"]:
+                mechanics = oracle._case_analysis(
+                    instance, instance["baseline_areas"], loads
+                )
+                self.assertLessEqual(
+                    mechanics["stiffness_symmetry_error"], 1e-10
+                )
+                self.assertLessEqual(
+                    mechanics["force_equilibrium_error_lbs"], 1e-6
+                )
+            self.assertTrue(all(
+                oracle._scenario_analysis(
+                    instance, instance["baseline_areas"], shift, shift["name"]
+                )["feasible"]
+                for shift in oracle.SHIFT_SPECS
+            ))
+            self.assertTrue(all(
+                oracle._scenario_analysis(
+                    instance, instance["robust_reference_areas"], shift,
+                    shift["name"],
+                )["feasible"]
+                for shift in oracle.SHIFT_SPECS
+            ))
+            self.assertTrue(any(
+                not oracle._scenario_analysis(
+                    instance, instance["nominal_reference_areas"], shift,
+                    shift["name"],
+                )["feasible"]
+                for shift in oracle.SHIFT_SPECS
+            ))
+
+        def all_max(_nodes, members, _fixed, _loads, _modulus, _density,
+                    _tension, _compression, _displacement, _area_min, area_max,
+                    _inertia):
+            return np.full(len(members), area_max)
+
+        metrics = oracle.evaluate(all_max)
+        self.assertEqual(metrics["valid"], 1.0)
+        self.assertEqual(metrics["combined_score"], 0.0)
+        self.assertEqual(metrics["mean_shifted_case_feasibility_rate"], 1.0)
+        shown = search_visible_metrics(metrics)
+        self.assertNotIn("robustness_score", shown)
+        self.assertNotIn("heldout_policy_score", shown)
+        self.assertNotIn("per_instance", shown)
+
+    def test_truss_v2_nonfinite_bounds_and_nominal_infeasibility_fail_closed(self):
+        oracle = load_oracle("StructuralEngineering/TrussWeightMinimization")
+        nonfinite = oracle.evaluate(
+            lambda _nodes, members, *_args: np.full(len(members), np.nan)
+        )
+        outside = oracle.evaluate(
+            lambda _nodes, members, *_args: np.full(len(members), -1.0)
+        )
+        minimum = oracle.evaluate(
+            lambda _nodes, members, _fixed, _loads, _modulus, _density,
+            _tension, _compression, _displacement, area_min, _area_max,
+            _inertia: np.full(len(members), area_min)
+        )
+        for metrics in (nonfinite, outside, minimum):
+            self.assertEqual(metrics["valid"], 0.0)
+            self.assertEqual(metrics["combined_score"], 0.0)
+            self.assertTrue(all(
+                not row["valid"] for row in metrics["per_instance"]
+            ))
+
     def test_lyapunov_oracle_measures_closed_loop_feedback(self):
         oracle = load_oracle("DynamicalSystems/LyapunovControl")
         # Cancellation plus damping makes the sampled closed loop locally stable. Its exact
