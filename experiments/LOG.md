@@ -439,3 +439,7 @@ Replaying the immutable wave-1 candidate under the corrected oracle gives `k_eff
 score **0.0**, superseding its old 0.3662. It had moved enrichment toward leaking boundaries,
 which was rewarded only by the faulty stencil. The repaired task still needs procedural reactor
 regimes and independent domain review before certification.
+
+`neutron_diffusion_anchor_2026-07-21.json` records this calibration from clean revision
+`3d9075a`. All 16 deterministic starts converged, both independent solvers agreed, and the
+report sets `execution_passed=true`, `trusted_evidence=true` and `passed=true`.
