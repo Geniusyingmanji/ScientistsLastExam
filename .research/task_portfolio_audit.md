@@ -46,12 +46,14 @@ meaning.
   tranche: RoomImpulseResponse, LowThrustTransfer, InvertedPendulumSwingUp, LyapunovControl,
   LidDrivenCavity, SeismicInversion, AlloyHardnessOptimization, NeutronDiffusionCriticality,
   DiffractionGratingDesign, SparseRecovery and HeatExchangerDesign.
-- **26 candidates with incomplete scientific metadata.** These require citation, baseline and
+- **25 candidates with incomplete scientific metadata.** These require citation, baseline and
   best-known anchors before detailed admission review.
-- **5 quarantined generic-objective clones.** They must be replaced with real domain oracles;
-  metadata completion alone cannot rehabilitate them.
-- **1 known invalid candidate.** `ClimateScience/EnergyBalanceModel` returns non-finite metrics
-  and must be repaired or quarantined.
+- **6 quarantined packages.** Five generic-objective clones must be replaced with real domain
+  oracles; metadata completion alone cannot rehabilitate them. The sixth,
+  `ClimateScience/EnergyBalanceModel`, uses an unstable explicit diffusion iteration, an
+  unverified ERA5 attribution and a structurally underdetermined seven-parameter fit to one
+  steady profile. It requires replacement with documented multi-regime data, not a numerical
+  patch.
 
 ## Priority review findings
 

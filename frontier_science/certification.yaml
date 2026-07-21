@@ -74,6 +74,10 @@ tasks:
       - isbn:9780521708425
       - isbn:9780931830149
 
+  ClimateScience/EnergyBalanceModel:
+    status: quarantined
+    reason: explicit diffusion iteration is numerically unstable, embedded ERA5 attribution is not provenance-backed, and one steady profile cannot identify the seven claimed parameters; replace with a documented multi-regime inverse task
+
   CrystalGrowth/CzochralskiProcess:
     status: quarantined
     reason: claimed Stefan model is a generic eight-variable trigonometric objective

@@ -468,3 +468,15 @@ mechanism recovery and interpolation improve together here. This validates the r
 but also establishes that it is an on-ramp: the remaining science challenge needs unknown
 thicknesses, low-velocity/non-identifiable layers, outliers, anisotropy/model mismatch, adaptive
 survey design and calibrated refusal rather than simply more optimizer proposals.
+
+### Climate EBM quarantine decision
+
+`ClimateScience/EnergyBalanceModel` is now explicitly quarantined. Its explicit diffusion
+iteration uses `D * dt / dx^2 = 85.184` at the textbook baseline, far outside the stability
+region, so it produces all-NaN temperatures and correctly fails closed at the secure metric
+boundary. More importantly, the embedded temperature vector has no reproducible ERA5 data
+provenance and a single steady profile cannot identify the seven jointly fitted radiation,
+diffusion, albedo, ice-threshold and solar-scaling parameters. A stable linear solve alone would
+not cure those scientific defects. The replacement must use documented data extraction,
+multiple forcing/climate regimes, uncertainty, held-out years and parameter/prediction
+separation.
