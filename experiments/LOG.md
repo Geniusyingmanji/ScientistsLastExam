@@ -443,3 +443,15 @@ regimes and independent domain review before certification.
 `neutron_diffusion_anchor_2026-07-21.json` records this calibration from clean revision
 `3d9075a`. All 16 deterministic starts converged, both independent solvers agreed, and the
 report sets `execution_passed=true`, `trusted_evidence=true` and `passed=true`.
+
+### Seismic refraction identifiability repair
+
+The superseded SeismicInversion forward model returned `path_length / mean(velocities)`, making
+all layer permutations and infinitely many profiles observationally equivalent. It has been
+replaced by first-arrival direct/head-wave physics for procedurally generated 4–6 layer surveys.
+Every scenario has a full-column-rank finite-difference sensitivity matrix (condition numbers
+8.4–20.8). A multistart nonlinear least-squares solver that uses only public task inputs reaches
+development score **0.9981**, velocity-mechanism score **0.9988**, and unobserved-offset
+prediction score **0.9997**. The task now measures a genuine, identifiable inverse problem;
+these high reference values also warn that it may remain a textbook-template task, which the
+next GPT-5.5 budget-one calibration must test.

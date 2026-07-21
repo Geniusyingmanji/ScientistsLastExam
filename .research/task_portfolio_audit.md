@@ -32,8 +32,10 @@ meaning.
   inversion, so it needs latent/partial/nonlinear/misspecified regimes in addition to external
   review and a server-held split.
 - **4 candidates screened at budget one.** SparseRecovery reaches 0.958 through standard
-  sparse solvers and needs hidden sensing/noise/sparsity shifts. SeismicInversion is currently
-  non-identifiable. LyapunovControl's omitted feedback derivative has since been repaired with
+  sparse solvers and needs hidden sensing/noise/sparsity shifts. SeismicInversion's mean-only
+  forward model has since been replaced with identifiable 4–6 layer direct/head-wave surveys
+  and separate velocity/holdout diagnostics; frontier-model headroom remains to be measured.
+  LyapunovControl's omitted feedback derivative has since been repaired with
   a two-trajectory closed-loop estimator; replaying the candidate gives MLE -1.413 and clipped
   score 1.0, so it is an on-ramp rather than a headline task. NeutronDiffusionCriticality's
   asymmetric diffusion stencil and fixed anchor have since been replaced by a conservative

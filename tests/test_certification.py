@@ -204,6 +204,52 @@ def discover_mechanism(n, observe, intervene, budget):
         matrix += np.diag(-interface / h**2, -1)
         self.assertTrue(np.allclose(matrix, matrix.T, atol=1e-14))
 
+    def test_seismic_refraction_is_translation_invariant_and_layer_identifiable(self):
+        oracle = load_oracle("Geophysics/SeismicInversion")
+        profile = np.array([1800.0, 2350.0, 3000.0, 3850.0, 5000.0])
+        offsets = np.linspace(200.0, 12000.0, 200)
+        times = oracle.first_arrival_times(profile, offsets)
+        perturbed = profile.copy()
+        perturbed[2] += 120.0
+        shifted_times = oracle.first_arrival_times(perturbed, offsets)
+        self.assertGreater(float(np.max(np.abs(times - shifted_times))), 1e-4)
+
+        sc = oracle.SCENARIOS[1]
+        reconstructed_offsets = np.abs(sc["receivers"] - sc["sources"])
+        self.assertTrue(np.allclose(reconstructed_offsets, sc["offsets"], atol=1e-12))
+        self.assertTrue(np.allclose(
+            oracle.first_arrival_times(sc["true_v"], reconstructed_offsets),
+            sc["clean_times"],
+            atol=1e-12,
+        ))
+        jacobian = []
+        for layer in range(sc["n_layers"]):
+            step = 1e-3 * sc["true_v"][layer]
+            upper = sc["true_v"].copy()
+            lower = sc["true_v"].copy()
+            upper[layer] += step
+            lower[layer] -= step
+            jacobian.append((
+                oracle.first_arrival_times(upper, reconstructed_offsets)
+                - oracle.first_arrival_times(lower, reconstructed_offsets)
+            ) / (2.0 * step))
+        self.assertEqual(
+            np.linalg.matrix_rank(np.column_stack(jacobian), tol=1e-12),
+            sc["n_layers"],
+        )
+
+    def test_seismic_truth_and_baseline_scores_are_calibrated(self):
+        oracle = load_oracle("Geophysics/SeismicInversion")
+        for sc in oracle.SCENARIOS:
+            truth = oracle._score_profile(sc, sc["true_v"])
+            baseline = oracle._score_profile(sc, oracle._constant_velocity(sc))
+            self.assertGreater(truth["development_score"], 0.99)
+            self.assertAlmostEqual(truth["mechanism_score"], 1.0, places=12)
+            self.assertAlmostEqual(truth["holdout_prediction_score"], 1.0, places=12)
+            self.assertAlmostEqual(baseline["development_score"], 0.0, places=12)
+            self.assertAlmostEqual(baseline["mechanism_score"], 0.0, places=12)
+            self.assertAlmostEqual(baseline["holdout_prediction_score"], 0.0, places=12)
+
 
 if __name__ == "__main__":
     unittest.main()

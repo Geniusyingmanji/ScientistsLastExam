@@ -67,6 +67,13 @@ tasks:
     citation_ids:
       - isbn:9780471223634
 
+  Geophysics/SeismicInversion:
+    status: candidate
+    reason: identifiable direct/head-wave refraction inverse with procedural 4-6 layer surveys and separate mechanism/holdout diagnostics; awaiting frontier-model headroom and independent domain review
+    citation_ids:
+      - isbn:9780521708425
+      - isbn:9780931830149
+
   CrystalGrowth/CzochralskiProcess:
     status: quarantined
     reason: claimed Stefan model is a generic eight-variable trigonometric objective
