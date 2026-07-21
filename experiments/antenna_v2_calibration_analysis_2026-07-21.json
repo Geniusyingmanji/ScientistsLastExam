@@ -1,0 +1,166 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_DERIVED_EVIDENCE",
+  "evidence_scope": "ANTENNA_CALIBRATION_NOT_CAUSAL_OR_POPULATION_EVIDENCE",
+  "created_at": "2026-07-21T23:50:55.523539+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "30496a0b9afaeb437ff8a93f6a16d4808acb5b90",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/analyze_antenna_v2_calibrations.py",
+      "--output",
+      "experiments/antenna_v2_calibration_analysis_2026-07-21.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "input_source_revision": "8c1373a97698ea198a15d87f203dc39e3be90a4d",
+  "records": {
+    "budget_one": {
+      "label": "budget_one",
+      "report": "experiments/gpt55_antenna_v2_b1_2026-07-21.json",
+      "report_sha256": "22cf3b7d227c66fadf68d289f86afe762871d4d53bb53fcaadfc6a279ba3fc2e",
+      "trajectory_sha256": "2937a4cc76db5ca310fe5359f161bacc3f96b9f77313bd1128d782e3996f7b0a",
+      "source_revision": "8c1373a97698ea198a15d87f203dc39e3be90a4d",
+      "seed": 0,
+      "proposal_budget": 1,
+      "server_side_seed_control": false,
+      "oracle_calls": 2,
+      "total_tokens": 4235,
+      "best_score": 0.9992629057519586,
+      "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+      "trajectory": [
+        {
+          "step": 0,
+          "accepted": true,
+          "candidate_sha256": "0e396fdd9f33a2ca226860507f0a35fee6fc43c52f63033292aa8598e81f3003",
+          "parent_sha256": null,
+          "combined_score": 0.0,
+          "robustness_score": 0.0,
+          "heldout_policy_score": 0.0,
+          "heldout_robustness_score": 0.0,
+          "mean_worst_shifted_quality_db": 7.319405232263453,
+          "mean_shifted_target_gain_feasibility_rate": 1.0
+        },
+        {
+          "step": 1,
+          "accepted": true,
+          "candidate_sha256": "1e56600f6c66a0f481ac32b8860e1277f6edaecacb47d0283e889bd358b7320e",
+          "parent_sha256": "0e396fdd9f33a2ca226860507f0a35fee6fc43c52f63033292aa8598e81f3003",
+          "combined_score": 0.9992629057519586,
+          "robustness_score": 0.6242036849349171,
+          "heldout_policy_score": 0.9951147114068993,
+          "heldout_robustness_score": 0.394718057282172,
+          "mean_worst_shifted_quality_db": 10.580767850076768,
+          "mean_shifted_target_gain_feasibility_rate": 1.0
+        }
+      ]
+    },
+    "budget_three": {
+      "label": "budget_three",
+      "report": "experiments/gpt55_antenna_v2_b3_2026-07-21.json",
+      "report_sha256": "3f1afc8d1cb22061794bd42fe197f7e0900a5f3007091f73b7573c5af935c139",
+      "trajectory_sha256": "3a25128afc21ce3c6098dd2d20b3ddefb2a504a95f5920837eee16140b5d3fd2",
+      "source_revision": "8c1373a97698ea198a15d87f203dc39e3be90a4d",
+      "seed": 1,
+      "proposal_budget": 3,
+      "server_side_seed_control": false,
+      "oracle_calls": 4,
+      "total_tokens": 19445,
+      "best_score": 1.0,
+      "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+      "trajectory": [
+        {
+          "step": 0,
+          "accepted": true,
+          "candidate_sha256": "0e396fdd9f33a2ca226860507f0a35fee6fc43c52f63033292aa8598e81f3003",
+          "parent_sha256": null,
+          "combined_score": 0.0,
+          "robustness_score": 0.0,
+          "heldout_policy_score": 0.0,
+          "heldout_robustness_score": 0.0,
+          "mean_worst_shifted_quality_db": 7.319405232263453,
+          "mean_shifted_target_gain_feasibility_rate": 1.0
+        },
+        {
+          "step": 1,
+          "accepted": true,
+          "candidate_sha256": "47fbf0e23af602d6d64b8ebcad6ab34dc2200bf8ea70d36fd43a1db99b148956",
+          "parent_sha256": "0e396fdd9f33a2ca226860507f0a35fee6fc43c52f63033292aa8598e81f3003",
+          "combined_score": 0.845170035391249,
+          "robustness_score": 0.7048233219859321,
+          "heldout_policy_score": 0.9079188024368512,
+          "heldout_robustness_score": 0.5499153249651714,
+          "mean_worst_shifted_quality_db": 10.98239695311973,
+          "mean_shifted_target_gain_feasibility_rate": 1.0
+        },
+        {
+          "step": 2,
+          "accepted": true,
+          "candidate_sha256": "3ac82af09589613eb6a9d9593fbc0d2daba730203874d471fce2936738603905",
+          "parent_sha256": "47fbf0e23af602d6d64b8ebcad6ab34dc2200bf8ea70d36fd43a1db99b148956",
+          "combined_score": 0.9932670471415624,
+          "robustness_score": 0.6355114369146961,
+          "heldout_policy_score": 0.9983885386082243,
+          "heldout_robustness_score": 0.493204175253512,
+          "mean_worst_shifted_quality_db": 10.62128801374778,
+          "mean_shifted_target_gain_feasibility_rate": 1.0
+        },
+        {
+          "step": 3,
+          "accepted": true,
+          "candidate_sha256": "7e029209642ddaa2e912d5dde5495448242be4a5fd0a5ba6a7f6a52968292132",
+          "parent_sha256": "3ac82af09589613eb6a9d9593fbc0d2daba730203874d471fce2936738603905",
+          "combined_score": 1.0,
+          "robustness_score": 0.5763477069318705,
+          "heldout_policy_score": 0.9987172622022304,
+          "heldout_robustness_score": 0.5347751145630723,
+          "mean_worst_shifted_quality_db": 10.350562122106533,
+          "mean_shifted_target_gain_feasibility_rate": 1.0
+        }
+      ]
+    }
+  },
+  "budget_three_accepted_step_changes": [
+    {
+      "from_step": 1,
+      "to_step": 2,
+      "development_score": 0.14809701175031342,
+      "robustness_score": -0.06931188507123598,
+      "heldout_policy_score": 0.0904697361713731,
+      "heldout_robustness_score": -0.05671114971165936,
+      "mean_worst_shifted_quality_db": -0.36110893937195065
+    },
+    {
+      "from_step": 2,
+      "to_step": 3,
+      "development_score": 0.0067329528584375575,
+      "robustness_score": -0.0591637299828256,
+      "heldout_policy_score": 0.0003287235940061528,
+      "heldout_robustness_score": 0.04157093930956024,
+      "mean_worst_shifted_quality_db": -0.2707258916412467
+    }
+  ],
+  "limitations": [
+    "Each budget condition has one independent run; no population or causal feedback estimate is supported.",
+    "Budget-one and budget-three use different local identifiers and are not prefixes of one trajectory.",
+    "The Azure endpoint exposes no server-side model seed, so replicate identifiers do not control generation randomness.",
+    "Robustness and held-out metrics were sealed from proposal and selection state.",
+    "The within-budget-three dissociation is descriptive: accepted nominal improvements coincide with lower sealed robustness, but no robustness-aware treatment was run."
+  ],
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}

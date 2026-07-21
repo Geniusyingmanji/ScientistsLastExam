@@ -2,10 +2,10 @@
   "schema_version": 1,
   "trust_status": "TRUSTED_DERIVED_EVIDENCE",
   "evidence_scope": "SINGLE_SEED_CALIBRATION_NOT_CAUSAL_OR_POPULATION_EVIDENCE",
-  "created_at": "2026-07-21T21:22:03.383598+00:00",
+  "created_at": "2026-07-21T23:50:55.511753+00:00",
   "source_provenance": {
     "git_available": true,
-    "git_revision": "9b6b1904f3530543436518896b83c6cf5527dedf",
+    "git_revision": "30496a0b9afaeb437ff8a93f6a16d4808acb5b90",
     "source_tree_dirty": false,
     "source_changes": [],
     "source_scope": [
@@ -16,17 +16,17 @@
       "requirements-upstream.txt"
     ],
     "command": [
-      "/home/azureuser/.local/bin/python3.10",
+      "/usr/bin/python3",
       "scripts/summarize_science_calibrations.py",
       "--output",
       "experiments/science_calibration_summary_2026-07-21.json"
     ]
   },
   "environment": {
-    "python": "3.10.20 (main, Apr  7 2026, 20:44:18) [Clang 22.1.1 ]",
-    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.31"
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
   },
-  "input_count": 9,
+  "input_count": 13,
   "records": [
     {
       "report": "experiments/gpt55_oed_v2_b1_2026-07-21.json",
@@ -75,6 +75,7 @@
             "mean_validation_d_efficiency": 1.7721047522589666e-07,
             "raw_score": 0.0
           },
+          "algorithm_metadata": {},
           "error": null
         },
         {
@@ -99,6 +100,7 @@
             "mean_validation_d_efficiency": 0.9936968587356689,
             "raw_score": 0.9906153361079914
           },
+          "algorithm_metadata": {},
           "error": null
         }
       ]
@@ -150,6 +152,7 @@
             "mean_rms_force": 0.0,
             "mean_rms_cart_position": 0.33459590482195123
           },
+          "algorithm_metadata": {},
           "error": null
         },
         {
@@ -174,6 +177,7 @@
             "mean_rms_force": 2.671066261545405,
             "mean_rms_cart_position": 0.7889701091046731
           },
+          "algorithm_metadata": {},
           "error": null
         }
       ]
@@ -225,6 +229,7 @@
             "mean_rms_force": 0.0,
             "mean_rms_cart_position": 0.33459590482195123
           },
+          "algorithm_metadata": {},
           "error": null
         },
         {
@@ -249,6 +254,7 @@
             "mean_rms_force": 3.2478035963271084,
             "mean_rms_cart_position": 0.8551760886431584
           },
+          "algorithm_metadata": {},
           "error": null
         },
         {
@@ -273,6 +279,7 @@
             "mean_rms_force": 2.356631110178108,
             "mean_rms_cart_position": 0.5917060973921584
           },
+          "algorithm_metadata": {},
           "error": null
         },
         {
@@ -297,6 +304,7 @@
             "mean_rms_force": 2.3787392703987975,
             "mean_rms_cart_position": 0.599883557304323
           },
+          "algorithm_metadata": {},
           "error": null
         }
       ]
@@ -350,6 +358,7 @@
             "mean_worst_shifted_process_fidelity": 0.16622687071756456,
             "raw_score": 0.0
           },
+          "algorithm_metadata": {},
           "error": null
         },
         {
@@ -376,6 +385,7 @@
             "mean_worst_shifted_process_fidelity": 0.9667383761878487,
             "raw_score": 0.9998716210528881
           },
+          "algorithm_metadata": {},
           "error": null
         }
       ]
@@ -429,6 +439,7 @@
             "mean_worst_shifted_process_fidelity": 0.16622687071756456,
             "raw_score": 0.0
           },
+          "algorithm_metadata": {},
           "error": null
         },
         {
@@ -455,6 +466,7 @@
             "mean_worst_shifted_process_fidelity": 0.9728921203317952,
             "raw_score": 0.9999995639172876
           },
+          "algorithm_metadata": {},
           "error": null
         },
         {
@@ -481,6 +493,7 @@
             "mean_worst_shifted_process_fidelity": 0.9792101624600307,
             "raw_score": 0.9999999999992989
           },
+          "algorithm_metadata": {},
           "error": null
         },
         {
@@ -507,6 +520,7 @@
             "mean_worst_shifted_process_fidelity": 0.9801309591462231,
             "raw_score": 0.9999999999999871
           },
+          "algorithm_metadata": {},
           "error": null
         }
       ]
@@ -564,6 +578,7 @@
             "mean_experiment_budget_units": 1.0,
             "raw_score": 0.0
           },
+          "algorithm_metadata": {},
           "error": null
         },
         {
@@ -594,6 +609,7 @@
             "mean_experiment_budget_units": 18.0,
             "raw_score": 0.7962808
           },
+          "algorithm_metadata": {},
           "error": null
         }
       ]
@@ -651,6 +667,7 @@
             "mean_experiment_budget_units": 1.0,
             "raw_score": 0.0
           },
+          "algorithm_metadata": {},
           "error": null
         },
         {
@@ -681,6 +698,7 @@
             "mean_experiment_budget_units": 14.0,
             "raw_score": 0.7113217999999999
           },
+          "algorithm_metadata": {},
           "error": null
         },
         {
@@ -711,6 +729,7 @@
             "mean_experiment_budget_units": 20.0,
             "raw_score": 0.6922098000000001
           },
+          "algorithm_metadata": {},
           "error": null
         },
         {
@@ -741,6 +760,7 @@
             "mean_experiment_budget_units": 16.0,
             "raw_score": 0.6799951999999999
           },
+          "algorithm_metadata": {},
           "error": null
         }
       ]
@@ -794,6 +814,7 @@
             "mean_contingency_feasibility_rate": 1.0,
             "raw_score": 0.0
           },
+          "algorithm_metadata": {},
           "error": null
         },
         {
@@ -820,6 +841,7 @@
             "mean_contingency_feasibility_rate": 0.11399711399711399,
             "raw_score": 0.9999999999998589
           },
+          "algorithm_metadata": {},
           "error": null
         }
       ]
@@ -873,6 +895,7 @@
             "mean_contingency_feasibility_rate": 1.0,
             "raw_score": 0.0
           },
+          "algorithm_metadata": {},
           "error": null
         },
         {
@@ -890,6 +913,7 @@
             "valid": 0.0,
             "error_message": "frontier_science.secure_eval.CandidateError: candidate worker exited:"
           },
+          "algorithm_metadata": {},
           "error": "frontier_science.secure_eval.CandidateError: candidate worker exited:"
         },
         {
@@ -916,6 +940,7 @@
             "mean_contingency_feasibility_rate": 0.11399711399711399,
             "raw_score": 0.9999999999999772
           },
+          "algorithm_metadata": {},
           "error": null
         },
         {
@@ -941,6 +966,471 @@
             "mean_contingency_constraint_feasibility": 0.7791666666666667,
             "mean_contingency_feasibility_rate": 0.11399711399711399,
             "raw_score": 0.9999999999998711
+          },
+          "algorithm_metadata": {},
+          "error": null
+        }
+      ]
+    },
+    {
+      "report": "experiments/gpt55_truss_v2_b1_2026-07-21.json",
+      "report_sha256": "68a339292039b359ae670a2d4cbb6d84d307f1f6055da6f6e70fa712d8e2de14",
+      "trajectory_sha256": "c07a74a242a894c620eebb4b7ef6c696a23103797fa6caba805e157cebee1e6c",
+      "source_revision": "4c31f5d1b1cb448b38629f54a053ac1cf01f6385",
+      "task": "StructuralEngineering/TrussWeightMinimization",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 0,
+      "proposal_budget": 1,
+      "baseline_score": 0.0,
+      "best_score": 0.0,
+      "accepted_proposals": 0,
+      "oracle_calls": 2,
+      "trajectory_event_count": 2,
+      "llm": {
+        "calls": 1,
+        "provider_usage_records": 1,
+        "input_tokens": 1226,
+        "output_tokens": 3061,
+        "total_tokens": 4287,
+        "estimated_cost_usd": null
+      },
+      "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+      "trajectory": [
+        {
+          "step": 0,
+          "oracle_calls": 1,
+          "budget_units": 1,
+          "score": 0.0,
+          "best_score": 0.0,
+          "valid": true,
+          "accepted": true,
+          "candidate_sha256": "dd89ba5c3aff3d54eb84802cd80cb9da210e60811085a0dcdcf70c4a5e735661",
+          "parent_sha256": null,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "development_score": 0.0,
+            "robustness_score": 0.0,
+            "development_validation_gap": 0.0,
+            "heldout_policy_score": 0.0,
+            "heldout_robustness_score": 0.0,
+            "heldout_feasibility_rate": 1.0,
+            "mean_shifted_case_feasibility_rate": 1.0,
+            "mean_shifted_constraint_feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "algorithm_metadata": {},
+          "error": null
+        },
+        {
+          "step": 1,
+          "oracle_calls": 2,
+          "budget_units": 2,
+          "score": 0.0,
+          "best_score": 0.0,
+          "valid": true,
+          "accepted": false,
+          "candidate_sha256": "e2cec90df78a341b71ab452017ee5625ab87360299156ed6a2e3e2a04fbdf219",
+          "parent_sha256": "dd89ba5c3aff3d54eb84802cd80cb9da210e60811085a0dcdcf70c4a5e735661",
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "development_score": 0.0,
+            "robustness_score": 0.0,
+            "development_validation_gap": 0.0,
+            "heldout_policy_score": 0.0,
+            "heldout_robustness_score": 0.0,
+            "heldout_feasibility_rate": 1.0,
+            "mean_shifted_case_feasibility_rate": 1.0,
+            "mean_shifted_constraint_feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "algorithm_metadata": {
+            "selection_policy": "online_incumbent",
+            "accepted_semantics": "online_incumbent_update",
+            "proposal_slot": 1
+          },
+          "error": null
+        }
+      ]
+    },
+    {
+      "report": "experiments/gpt55_truss_v2_b3_2026-07-21.json",
+      "report_sha256": "f3cc0c719baab592fd7723bcaf117d96b0fafddad2983c71da7bb84a6f25d063",
+      "trajectory_sha256": "1f5e48e232415b132dc3845f306201c6ae75fa6e00e0c438e824b65556034c2f",
+      "source_revision": "4c31f5d1b1cb448b38629f54a053ac1cf01f6385",
+      "task": "StructuralEngineering/TrussWeightMinimization",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 1,
+      "proposal_budget": 3,
+      "baseline_score": 0.0,
+      "best_score": 0.6114935558376748,
+      "accepted_proposals": 3,
+      "oracle_calls": 4,
+      "trajectory_event_count": 4,
+      "llm": {
+        "calls": 3,
+        "provider_usage_records": 3,
+        "input_tokens": 8786,
+        "output_tokens": 10873,
+        "total_tokens": 19659,
+        "estimated_cost_usd": null
+      },
+      "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+      "trajectory": [
+        {
+          "step": 0,
+          "oracle_calls": 1,
+          "budget_units": 1,
+          "score": 0.0,
+          "best_score": 0.0,
+          "valid": true,
+          "accepted": true,
+          "candidate_sha256": "dd89ba5c3aff3d54eb84802cd80cb9da210e60811085a0dcdcf70c4a5e735661",
+          "parent_sha256": null,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "development_score": 0.0,
+            "robustness_score": 0.0,
+            "development_validation_gap": 0.0,
+            "heldout_policy_score": 0.0,
+            "heldout_robustness_score": 0.0,
+            "heldout_feasibility_rate": 1.0,
+            "mean_shifted_case_feasibility_rate": 1.0,
+            "mean_shifted_constraint_feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "algorithm_metadata": {},
+          "error": null
+        },
+        {
+          "step": 1,
+          "oracle_calls": 2,
+          "budget_units": 2,
+          "score": 0.4155791815661502,
+          "best_score": 0.4155791815661502,
+          "valid": true,
+          "accepted": true,
+          "candidate_sha256": "6059f5eb1a6c55cba6796b1e04972a17f12abef9b4d751962119856adedb7fcf",
+          "parent_sha256": "dd89ba5c3aff3d54eb84802cd80cb9da210e60811085a0dcdcf70c4a5e735661",
+          "metrics": {
+            "combined_score": 0.4155791815661502,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "development_score": 0.4155791815661502,
+            "robustness_score": 0.5372503690739883,
+            "development_validation_gap": -0.12167118750783806,
+            "heldout_policy_score": 0.0,
+            "heldout_robustness_score": 0.0,
+            "heldout_feasibility_rate": 1.0,
+            "mean_shifted_case_feasibility_rate": 1.0,
+            "mean_shifted_constraint_feasibility_rate": 1.0,
+            "raw_score": 0.4155791815661502
+          },
+          "algorithm_metadata": {
+            "selection_policy": "online_incumbent",
+            "accepted_semantics": "online_incumbent_update",
+            "proposal_slot": 1
+          },
+          "error": null
+        },
+        {
+          "step": 2,
+          "oracle_calls": 3,
+          "budget_units": 3,
+          "score": 0.5484970821077498,
+          "best_score": 0.5484970821077498,
+          "valid": true,
+          "accepted": true,
+          "candidate_sha256": "b641225a44c1bcf56651b303097a504878ea44001dde0f3d957441b26c74881b",
+          "parent_sha256": "6059f5eb1a6c55cba6796b1e04972a17f12abef9b4d751962119856adedb7fcf",
+          "metrics": {
+            "combined_score": 0.5484970821077498,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "development_score": 0.5484970821077498,
+            "robustness_score": 0.5360975531291581,
+            "development_validation_gap": 0.012399528978591756,
+            "heldout_policy_score": 0.25132141838571087,
+            "heldout_robustness_score": 0.20643821494573883,
+            "heldout_feasibility_rate": 1.0,
+            "mean_shifted_case_feasibility_rate": 0.75,
+            "mean_shifted_constraint_feasibility_rate": 0.9869791666666666,
+            "raw_score": 0.5484970821077498
+          },
+          "algorithm_metadata": {
+            "selection_policy": "online_incumbent",
+            "accepted_semantics": "online_incumbent_update",
+            "proposal_slot": 2
+          },
+          "error": null
+        },
+        {
+          "step": 3,
+          "oracle_calls": 4,
+          "budget_units": 4,
+          "score": 0.6114935558376748,
+          "best_score": 0.6114935558376748,
+          "valid": true,
+          "accepted": true,
+          "candidate_sha256": "61d1073ad2b6d62ce8fd4a70c2c8dace00082b959f2b554ca9b87e6ca66382bf",
+          "parent_sha256": "b641225a44c1bcf56651b303097a504878ea44001dde0f3d957441b26c74881b",
+          "metrics": {
+            "combined_score": 0.6114935558376748,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "development_score": 0.6114935558376748,
+            "robustness_score": 0.5360975531291581,
+            "development_validation_gap": 0.07539600270851676,
+            "heldout_policy_score": 0.4223478862036328,
+            "heldout_robustness_score": 0.07788103926987092,
+            "heldout_feasibility_rate": 1.0,
+            "mean_shifted_case_feasibility_rate": 0.75,
+            "mean_shifted_constraint_feasibility_rate": 0.9887152777777778,
+            "raw_score": 0.6114935558376748
+          },
+          "algorithm_metadata": {
+            "selection_policy": "online_incumbent",
+            "accepted_semantics": "online_incumbent_update",
+            "proposal_slot": 3
+          },
+          "error": null
+        }
+      ]
+    },
+    {
+      "report": "experiments/gpt55_antenna_v2_b1_2026-07-21.json",
+      "report_sha256": "22cf3b7d227c66fadf68d289f86afe762871d4d53bb53fcaadfc6a279ba3fc2e",
+      "trajectory_sha256": "2937a4cc76db5ca310fe5359f161bacc3f96b9f77313bd1128d782e3996f7b0a",
+      "source_revision": "8c1373a97698ea198a15d87f203dc39e3be90a4d",
+      "task": "Electromagnetics/AntennaArraySynthesis",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 0,
+      "proposal_budget": 1,
+      "baseline_score": 0.0,
+      "best_score": 0.9992629057519586,
+      "accepted_proposals": 1,
+      "oracle_calls": 2,
+      "trajectory_event_count": 2,
+      "llm": {
+        "calls": 1,
+        "provider_usage_records": 1,
+        "input_tokens": 1312,
+        "output_tokens": 2923,
+        "total_tokens": 4235,
+        "estimated_cost_usd": null
+      },
+      "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+      "trajectory": [
+        {
+          "step": 0,
+          "oracle_calls": 1,
+          "budget_units": 1,
+          "score": 0.0,
+          "best_score": 0.0,
+          "valid": true,
+          "accepted": true,
+          "candidate_sha256": "0e396fdd9f33a2ca226860507f0a35fee6fc43c52f63033292aa8598e81f3003",
+          "parent_sha256": null,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "development_score": 0.0,
+            "robustness_score": 0.0,
+            "development_validation_gap": 0.0,
+            "heldout_policy_score": 0.0,
+            "heldout_robustness_score": 0.0,
+            "heldout_feasibility_rate": 1.0,
+            "mean_worst_shifted_quality_db": 7.319405232263453,
+            "mean_shifted_target_gain_feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "algorithm_metadata": {},
+          "error": null
+        },
+        {
+          "step": 1,
+          "oracle_calls": 2,
+          "budget_units": 2,
+          "score": 0.9992629057519586,
+          "best_score": 0.9992629057519586,
+          "valid": true,
+          "accepted": true,
+          "candidate_sha256": "1e56600f6c66a0f481ac32b8860e1277f6edaecacb47d0283e889bd358b7320e",
+          "parent_sha256": "0e396fdd9f33a2ca226860507f0a35fee6fc43c52f63033292aa8598e81f3003",
+          "metrics": {
+            "combined_score": 0.9992629057519586,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "development_score": 0.9992629057519586,
+            "robustness_score": 0.6242036849349171,
+            "development_validation_gap": 0.37505922081704157,
+            "heldout_policy_score": 0.9951147114068993,
+            "heldout_robustness_score": 0.394718057282172,
+            "heldout_feasibility_rate": 1.0,
+            "mean_worst_shifted_quality_db": 10.580767850076768,
+            "mean_shifted_target_gain_feasibility_rate": 1.0,
+            "raw_score": 0.9992629057519586
+          },
+          "algorithm_metadata": {
+            "selection_policy": "online_incumbent",
+            "accepted_semantics": "online_incumbent_update",
+            "proposal_slot": 1
+          },
+          "error": null
+        }
+      ]
+    },
+    {
+      "report": "experiments/gpt55_antenna_v2_b3_2026-07-21.json",
+      "report_sha256": "3f1afc8d1cb22061794bd42fe197f7e0900a5f3007091f73b7573c5af935c139",
+      "trajectory_sha256": "3a25128afc21ce3c6098dd2d20b3ddefb2a504a95f5920837eee16140b5d3fd2",
+      "source_revision": "8c1373a97698ea198a15d87f203dc39e3be90a4d",
+      "task": "Electromagnetics/AntennaArraySynthesis",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 1,
+      "proposal_budget": 3,
+      "baseline_score": 0.0,
+      "best_score": 1.0,
+      "accepted_proposals": 3,
+      "oracle_calls": 4,
+      "trajectory_event_count": 4,
+      "llm": {
+        "calls": 3,
+        "provider_usage_records": 3,
+        "input_tokens": 8953,
+        "output_tokens": 10492,
+        "total_tokens": 19445,
+        "estimated_cost_usd": null
+      },
+      "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+      "trajectory": [
+        {
+          "step": 0,
+          "oracle_calls": 1,
+          "budget_units": 1,
+          "score": 0.0,
+          "best_score": 0.0,
+          "valid": true,
+          "accepted": true,
+          "candidate_sha256": "0e396fdd9f33a2ca226860507f0a35fee6fc43c52f63033292aa8598e81f3003",
+          "parent_sha256": null,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "development_score": 0.0,
+            "robustness_score": 0.0,
+            "development_validation_gap": 0.0,
+            "heldout_policy_score": 0.0,
+            "heldout_robustness_score": 0.0,
+            "heldout_feasibility_rate": 1.0,
+            "mean_worst_shifted_quality_db": 7.319405232263453,
+            "mean_shifted_target_gain_feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "algorithm_metadata": {},
+          "error": null
+        },
+        {
+          "step": 1,
+          "oracle_calls": 2,
+          "budget_units": 2,
+          "score": 0.845170035391249,
+          "best_score": 0.845170035391249,
+          "valid": true,
+          "accepted": true,
+          "candidate_sha256": "47fbf0e23af602d6d64b8ebcad6ab34dc2200bf8ea70d36fd43a1db99b148956",
+          "parent_sha256": "0e396fdd9f33a2ca226860507f0a35fee6fc43c52f63033292aa8598e81f3003",
+          "metrics": {
+            "combined_score": 0.845170035391249,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "development_score": 0.845170035391249,
+            "robustness_score": 0.7048233219859321,
+            "development_validation_gap": 0.1403467134053169,
+            "heldout_policy_score": 0.9079188024368512,
+            "heldout_robustness_score": 0.5499153249651714,
+            "heldout_feasibility_rate": 1.0,
+            "mean_worst_shifted_quality_db": 10.98239695311973,
+            "mean_shifted_target_gain_feasibility_rate": 1.0,
+            "raw_score": 0.845170035391249
+          },
+          "algorithm_metadata": {
+            "selection_policy": "online_incumbent",
+            "accepted_semantics": "online_incumbent_update",
+            "proposal_slot": 1
+          },
+          "error": null
+        },
+        {
+          "step": 2,
+          "oracle_calls": 3,
+          "budget_units": 3,
+          "score": 0.9932670471415624,
+          "best_score": 0.9932670471415624,
+          "valid": true,
+          "accepted": true,
+          "candidate_sha256": "3ac82af09589613eb6a9d9593fbc0d2daba730203874d471fce2936738603905",
+          "parent_sha256": "47fbf0e23af602d6d64b8ebcad6ab34dc2200bf8ea70d36fd43a1db99b148956",
+          "metrics": {
+            "combined_score": 0.9932670471415624,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "development_score": 0.9932670471415624,
+            "robustness_score": 0.6355114369146961,
+            "development_validation_gap": 0.3577556102268663,
+            "heldout_policy_score": 0.9983885386082243,
+            "heldout_robustness_score": 0.493204175253512,
+            "heldout_feasibility_rate": 1.0,
+            "mean_worst_shifted_quality_db": 10.62128801374778,
+            "mean_shifted_target_gain_feasibility_rate": 1.0,
+            "raw_score": 0.9932670471415624
+          },
+          "algorithm_metadata": {
+            "selection_policy": "online_incumbent",
+            "accepted_semantics": "online_incumbent_update",
+            "proposal_slot": 2
+          },
+          "error": null
+        },
+        {
+          "step": 3,
+          "oracle_calls": 4,
+          "budget_units": 4,
+          "score": 1.0,
+          "best_score": 1.0,
+          "valid": true,
+          "accepted": true,
+          "candidate_sha256": "7e029209642ddaa2e912d5dde5495448242be4a5fd0a5ba6a7f6a52968292132",
+          "parent_sha256": "3ac82af09589613eb6a9d9593fbc0d2daba730203874d471fce2936738603905",
+          "metrics": {
+            "combined_score": 1.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "development_score": 1.0,
+            "robustness_score": 0.5763477069318705,
+            "development_validation_gap": 0.42365229306812946,
+            "heldout_policy_score": 0.9987172622022304,
+            "heldout_robustness_score": 0.5347751145630723,
+            "heldout_feasibility_rate": 1.0,
+            "mean_worst_shifted_quality_db": 10.350562122106533,
+            "mean_shifted_target_gain_feasibility_rate": 1.0,
+            "raw_score": 1.0
+          },
+          "algorithm_metadata": {
+            "selection_policy": "online_incumbent",
+            "accepted_semantics": "online_incumbent_update",
+            "proposal_slot": 3
           },
           "error": null
         }
