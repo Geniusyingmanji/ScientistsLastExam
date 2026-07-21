@@ -653,3 +653,16 @@ quarantined split makes explicit that directory count was never the target.
 `candidate_wave4_admission_audit_2026-07-21.json` and
 `task_certification_audit_2026-07-21_v6.json` bind clean revision `5187019`; both set
 `execution_passed=true`, `trusted_evidence=true` and `passed=true`.
+
+## 2026-07-21 — active dynamical-law discovery laboratory
+
+Added `DynamicalSystems/ActiveLawDiscovery` as the first task designed jointly around active
+experiment choice, sparse governing-equation recovery, sealed rollout/shift validation and
+calibrated refusal. The public 13-term controlled polynomial library is evaluated across seven
+development and six shifted-validation worlds, including null and out-of-library dynamics.
+Every experiment is charged in integration-step blocks. Always abstaining is normalized to
+zero; exact laws and correct null/model-inadequacy abstention score one. A generic multi-start,
+persistently excited SINDy reference reaches development mechanism **0.721**, sealed validation
+mechanism **0.394**, and rollout prediction **0.962/0.772**. It nevertheless makes one
+development and two validation false discoveries, establishing a useful prediction–mechanism–
+refusal separation before any LLM calibration.

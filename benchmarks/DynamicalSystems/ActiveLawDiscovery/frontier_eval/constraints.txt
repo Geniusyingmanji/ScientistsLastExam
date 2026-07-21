@@ -1,0 +1,4 @@
+1) Only edit solution.py. Keep discover_law(n_states, term_names, experiment, budget_units).
+2) Return finite coefficient/support matrices with shape (len(term_names), n_states), confidence in [0,1], and optional abstain.
+3) Experiment initial states are in [-2,2], controls in [-1.5,1.5], and each query has 8-64 steps. Do not exceed budget_units.
+4) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read verification/ or frontier_eval/.

@@ -1,0 +1,12 @@
+domain: DynamicalSystems
+task: ActiveLawDiscovery
+difficulty: hard
+tier: T2
+oracle_type: physical_sim
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 20
+science_metric: active_sparse_law_recovery_with_sealed_rollout_and_refusal
+reference_baseline: one small experiment followed by abstention on every world
+reference_sota: exact hidden sparse laws plus correct null and model-inadequacy abstention
+citation: "Brunton, Proctor & Kutz, PNAS 2016, DOI 10.1073/pnas.1517384113"

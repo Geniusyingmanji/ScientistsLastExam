@@ -1,7 +1,8 @@
 # Scientific task portfolio audit
 
-Audit date: 2026-07-21 (UTC). The repository now contains 50 discoverable task packages. This
-count is an inventory fact, not evidence that all 50 are benchmark-admissible.
+Audit date: 2026-07-21 (UTC). The original inventory contained 50 discoverable task packages;
+the new ActiveLawDiscovery candidate brings the current inventory to 51. This count is an
+inventory fact, not evidence that all packages are benchmark-admissible.
 
 ## Admission dimensions
 
@@ -51,10 +52,10 @@ meaning.
   other six remain quarantined after reproducible adversarial review: RIR
   length failure, unstable low-thrust propagation, centerline-spoofable cavity scoring,
   pseudo-data alloy hardness, scalar-FFT pseudo-RCWA and a degenerate heat-exchanger objective.
-- **No unscreened candidates remain after wave 4; seven candidates remain in total.** They are
+- **No original unscreened candidates remain after wave 4; eight candidates remain in total.** They are
   SCM, Lyapunov control, neutron criticality, seismic refraction, pendulum control, sparse
-  recovery and OED-v2. All are currently on-ramps or repair/calibration candidates rather than
-  externally reviewed open-frontier tasks.
+  recovery, OED-v2 and the new ActiveLawDiscovery laboratory. All are currently on-ramps or
+  repair/calibration candidates rather than externally reviewed open-frontier tasks.
 - **36 quarantined packages.** Five generic-objective clones must be replaced with real domain
   oracles; metadata completion alone cannot rehabilitate them. The sixth,
   `ClimateScience/EnergyBalanceModel`, uses an unstable explicit diffusion iteration, an
@@ -117,9 +118,9 @@ The target is approximately 50 **admissible** open scientific optimization tasks
 4. add missing mechanism, multifidelity, experimental-design and null/misspecification families;
 5. run frontier-model budget-one screening before expensive budget 30/100/300 studies.
 
-After complete inventory triage, the net expansion gap is approximately 43 admissible tasks,
-not zero: 50 folders minus 36 quarantines leaves only 14 internally admissible certified or
-candidate packages. New work should emphasize procedural task families and independent regimes,
+After complete original-inventory triage and adding ActiveLawDiscovery, the net expansion gap
+is approximately 42 admissible tasks, not zero: 51 folders minus 36 quarantines leaves only 15
+internally admissible certified or candidate packages. New work should emphasize procedural task families and independent regimes,
 not one-off fixed instances or scientific names around hand-written scalar objectives.
 
 A candidate that saturates across seeds at budget one is a calibration/on-ramp task, not an

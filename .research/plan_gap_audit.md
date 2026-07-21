@@ -24,8 +24,8 @@ physical validation, and auditable claim–evidence provenance.
 |---|---|---|---|
 | Candidate/oracle isolation | Implemented | Clean-revision report `f48b101`; 15/15 security/regression tests; Bubblewrap, no network, read-only mounts, resource/seccomp limits, typed RPC | Reproduce in clean Linux CI; document portability/non-Linux behavior |
 | Fail-closed trusted metrics | Implemented | Clean-revision 50×2 run: 50 deterministic, 49 valid, 50 fail-closed; non-finite Climate oracle rejected | Repair or quarantine every invalid candidate oracle before certification |
-| Task admission policy | Implemented, narrow | Current manifest: 7 certified / 7 candidate / 36 quarantined; Pendulum-v2 and OED-v2 are restored with sealed shifted validation | Independent domain + evaluator reviews are still declarations, not completed external review |
-| Scientific validity of inventory | Audited, sparse | All 50 packages passed through adversarial admission waves; only seven certified and seven repair/calibration candidates remain, while 36 have reproduced defects | Rebuild high-value families and add approximately 43 net admissible tasks; hidden/generated instances and shortcut analysis remain mandatory |
+| Task admission policy | Implemented, narrow | Current manifest: 7 certified / 8 candidate / 36 quarantined; Pendulum-v2 and OED-v2 are restored and ActiveLawDiscovery adds a science-specific candidate | Independent domain + evaluator reviews are still declarations, not completed external review |
+| Scientific validity of inventory | Audited, sparse | All original 50 packages passed through adversarial admission waves; the new active-law package brings the inventory to 51, with seven certified, eight candidates and 36 reproduced-defect quarantines | Rebuild high-value families and add approximately 42 net admissible tasks; hidden/generated instances and shortcut analysis remain mandatory |
 | Unified trajectory/accounting | Implemented, protocol-smoked | Clean-revision two-seed baseline smoke; trajectory schema v2, hashes, AUC over `budget_units`, separate `oracle_calls`, wall/token/cost, seed, checkpoint/resume | Validate nonzero-budget schema-v2 artifact replay in CI and version future changes |
 | Prompt-metric none/shuffled controls | Implemented, unrun | Code and unit smoke; summaries disclose that selection still uses true scores | Add selection-blind controls, then run ≥5 paired seeds with preregistered budgets |
 | Evaluator-only metric sealing | Implemented and integration-verified | Closed search-visible allowlist; search-state redaction/hash-keyed sidecars; 65-test suite; clean pinned OpenEvolve/TreeQuest/Shinka no-leak report `aff026d` | Extend from baseline smoke to nonzero-budget upstream runs before comparative claims |
@@ -186,6 +186,8 @@ Accordingly, “P0–P2 implemented and recorded” must not be shortened to “
 - [ ] Add one certified proxy/exact multifidelity task with measured rank correlation.
 - [x] Add one intervention-based mechanism task and separate mechanism score (SCM-v1 is an
   on-ramp: GPT-5.5 reaches 0.983 at budget one, so harder regimes remain required).
+- [x] Add an active dynamical-law candidate with budgeted experiments, sparse mechanism
+  recovery, sealed rollout/shift validation, and null/misspecified refusal cases.
 - [ ] Add misspecification/refusal cases and false-discovery penalties.
 - [ ] Add calibrated confidence, active stopping, and unnecessary-experiment metrics.
 - [ ] Add hypothesis–test–evidence/belief-update artifacts, explicit exploration DAGs,

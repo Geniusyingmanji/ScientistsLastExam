@@ -27,7 +27,7 @@ class CertificationPolicyTests(unittest.TestCase):
         tasks = list_tasks()
         self.assertEqual(len(tasks), 7)
         self.assertTrue(all(certification_status(s.task_id) == "certified" for s in tasks))
-        self.assertEqual(len(list_tasks(None)), 50)
+        self.assertEqual(len(list_tasks(None)), 51)
 
     def test_quarantined_clone_group_is_not_default_visible(self):
         default_ids = {s.task_id for s in list_tasks()}
@@ -151,6 +151,75 @@ def discover_mechanism(n, observe, intervene, budget):
         self.assertEqual(metrics["combined_score"], 0.0)
         self.assertTrue(all(not row["valid"] for row in metrics["per_world"]))
         self.assertTrue(all("budget exceeded" in row["reason"] for row in metrics["per_world"]))
+
+    def test_active_law_exact_mechanisms_and_abstentions_score_one(self):
+        oracle = load_oracle("DynamicalSystems/ActiveLawDiscovery")
+        self.assertEqual(len(oracle.DEVELOPMENT_SPECS), 7)
+        self.assertEqual(len(oracle.VALIDATION_SPECS), 6)
+        for specs in (oracle.DEVELOPMENT_SPECS, oracle.VALIDATION_SPECS):
+            for spec in specs:
+                world = oracle._world(spec)
+                if world["kind"] == "in_library":
+                    support = np.abs(world["coefficients"]) > 0.0
+                    metrics = oracle._mechanism_metrics(
+                        world, world["coefficients"], support, False
+                    )
+                    self.assertAlmostEqual(metrics["mechanism_score"], 1.0)
+                    self.assertAlmostEqual(
+                        oracle._prediction_score(world, world["coefficients"]), 1.0
+                    )
+                else:
+                    zeros = np.zeros_like(world["coefficients"])
+                    metrics = oracle._mechanism_metrics(
+                        world, zeros, np.zeros_like(zeros, dtype=bool), True
+                    )
+                    self.assertAlmostEqual(metrics["mechanism_score"], 1.0)
+                    self.assertTrue(metrics["correct_abstention"])
+
+        def always_abstain(n_states, term_names, experiment, _budget):
+            experiment(np.zeros(n_states), np.zeros(8), 8)
+            shape = (len(term_names), n_states)
+            return {
+                "coefficients": np.zeros(shape),
+                "support": np.zeros(shape),
+                "confidence": 0.0,
+                "abstain": True,
+            }
+
+        baseline = oracle.evaluate(always_abstain)
+        self.assertEqual(baseline["combined_score"], 0.0)
+        self.assertEqual(baseline["robustness_score"], 0.0)
+        self.assertEqual(baseline["valid"], 1.0)
+        self.assertNotIn("mechanism_score", search_visible_metrics(baseline))
+        self.assertNotIn("robustness_score", search_visible_metrics(baseline))
+        self.assertNotIn("per_world", search_visible_metrics(baseline))
+
+    def test_active_law_budget_violation_fails_closed(self):
+        spec = find_task(
+            "DynamicalSystems/ActiveLawDiscovery", include_uncertified=True
+        )
+        source = """
+import numpy as np
+def discover_law(n_states, term_names, experiment, budget_units):
+    try:
+        for _ in range(budget_units + 1):
+            experiment(np.zeros(n_states), np.zeros(16), 16)
+    except Exception:
+        pass
+    shape = (len(term_names), n_states)
+    return {"coefficients": np.zeros(shape), "support": np.zeros(shape),
+            "confidence": 0.0, "abstain": True}
+"""
+        with tempfile.TemporaryDirectory() as tmp:
+            candidate = Path(tmp) / "candidate.py"
+            candidate.write_text(source, encoding="utf-8")
+            metrics = evaluate_candidate(spec, candidate, timeout_s=30)
+        self.assertEqual(metrics["valid"], 0.0)
+        self.assertEqual(metrics["combined_score"], 0.0)
+        self.assertTrue(all(not row["valid"] for row in metrics["per_world"]))
+        self.assertTrue(all(
+            "budget exceeded" in row["reason"] for row in metrics["per_world"]
+        ))
 
     def test_optimal_experiment_design_reference_and_sealed_shift(self):
         oracle = load_oracle("BayesianInference/OptimalExperimentDesign")

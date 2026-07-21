@@ -16,12 +16,13 @@ text-question benchmark named *FrontierScience* in
 
 ## Current status
 
-The repository contains **50 task packages in 47 metadata domains**:
+The repository contains **51 task packages in 47 metadata domains**:
 
 - **7 certified core tasks**: Lennard–Jones clusters, spin glass, Poisson solver,
   matrix-multiplication rank, Cap Set, circle packing, and multilayer thin films.
-- **7 candidate tasks** pending scientific certification, including an intervention-based
-  causal-mechanism laboratory whose prediction and mechanism metrics are reported separately.
+- **8 candidate tasks** pending scientific certification, including intervention-based causal
+  and active dynamical-law laboratories whose prediction and mechanism metrics are reported
+  separately.
 - **36 quarantined tasks** with reproduced scientific-oracle, identifiability, provenance or
   shortcut defects; these remain inventory packages but are not admissible benchmark tasks.
 
@@ -33,14 +34,16 @@ All candidate code runs in a networkless Bubblewrap sandbox with read-only mount
 and process limits, and a typed JSON RPC boundary. The trusted parent alone imports the
 oracle and validates metrics. The current audit reports:
 
-- 68/68 unit, security, protocol and scientific-invariant tests passed.
-- The current clean-revision audit covers all 50 packages: 50/50 baselines were deterministic
+- 70/70 unit, security, protocol and scientific-invariant tests passed.
+- The latest full-inventory secure-baseline audit predates ActiveLawDiscovery and covers the
+  original 50 packages: 50/50 baselines were deterministic
   across two secure runs.
 - 49/50 baselines were valid; `ClimateScience/EnergyBalanceModel` returned a non-finite
   oracle metric and was correctly rejected fail-closed.
-- All 50 packages failed closed and there were no infrastructure failures. The newly added
-  mechanism task passed invariant, callback-budget and deterministic secure-baseline tests.
-- Current manifest: 7 certified / 7 candidate / 36 quarantined. The rebuilt D-optimal
+- All original 50 packages failed closed and there were no infrastructure failures.
+  ActiveLawDiscovery separately passes invariant, callback-budget and secure-baseline tests;
+  the next full-inventory audit must include all 51 packages.
+- Current manifest: 7 certified / 8 candidate / 36 quarantined. The rebuilt D-optimal
   experimental-design task is re-admitted as a candidate with sealed shifted-family validation.
 
 Machine-readable evidence lives in [`experiments/`](experiments/).
