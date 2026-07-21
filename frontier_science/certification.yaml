@@ -70,6 +70,13 @@ tasks:
       - doi:10.1137/1.9780898719109
       - doi:10.4153/CJM-1960-030-4
 
+  QuantumControl/GateSynthesis:
+    status: candidate
+    reason: v2 has public multi-target Hamiltonians, finite bounded pulses, exact process fidelity and sealed hardware-shift/held-out policy evaluation; awaiting GPT-5.5 headroom calibration, server-held plants and independent review
+    citation_ids:
+      - doi:10.1016/j.jmr.2004.11.004
+      - doi:10.1140/epjd/e2015-60464-1
+
   DynamicalSystems/LyapunovControl:
     status: candidate
     reason: corrected closed-loop MLE oracle is scientifically valid but known equilibrium feedback saturates at budget one; retain as an on-ramp pending hidden regimes and a nontrivial energy-stability frontier
@@ -180,9 +187,6 @@ tasks:
   Spectroscopy/NMRSpectrumFitting:
     status: quarantined
     reason: non-finite peak parameters receive full score, and one fixed spectrum measures reconstruction without peak matching or held-out lineshape validation
-  QuantumControl/GateSynthesis:
-    status: quarantined
-    reason: non-finite pulses receive full score and one nominal Hamiltonian has no robustness, fluence or slew-rate validation
   PowerSystems/OptimalPowerFlow:
     status: quarantined
     reason: non-finite dispatch receives full score, the candidate lacks required network parameters, and the declared equal-dispatch baseline violates line limits

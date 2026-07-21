@@ -100,26 +100,36 @@ def _optimal_experiment_design():
 def _gate_synthesis():
     oracle = _oracle("QuantumControl/GateSynthesis")
     metrics = oracle.evaluate(
-        lambda n_steps, n_controls, _dim: np.full(
-            (n_steps, n_controls), np.nan, dtype=float
+        lambda _drift, controls, _target, n_steps, _dt, _limit: np.full(
+            (n_steps, len(controls)), np.nan, dtype=float
         )
     )
-    fidelity_is_finite = bool(np.isfinite(metrics["gate_fidelity"]))
+    all_failed_closed = all(not row["valid"] for row in metrics["per_instance"])
+    instance_shapes_valid = all(
+        row["drift"].shape[0] == row["target"].shape[0]
+        and row["controls"].shape[1:] == row["drift"].shape
+        for row in oracle.INSTANCES
+    )
     return {
         "task": "QuantumControl/GateSynthesis",
-        "admission": "quarantine",
-        "defect": (
-            "non-finite pulse amplitudes pass validation and receive full score; evaluation "
-            "uses one fixed nominal Hamiltonian without robustness, fluence or slew checks"
+        "admission": "candidate",
+        "resolved_defect": (
+            "v2 rejects non-finite and out-of-bound pulses, exposes each nominal Hamiltonian "
+            "and target, and retains hardware-shift and held-out-target metrics separately"
         ),
         "nonfinite_candidate_score": float(metrics["combined_score"]),
         "nonfinite_candidate_marked_valid": bool(metrics["valid"]),
-        "reported_fidelity_is_finite": fidelity_is_finite,
-        "nominal_system_count": 1,
+        "all_nonfinite_instances_failed_closed": all_failed_closed,
+        "instance_count": len(oracle.INSTANCES),
+        "development_instance_count": len(oracle.DEVELOPMENT_INSTANCES),
+        "heldout_instance_count": len(oracle.HELDOUT_INSTANCES),
+        "instance_shapes_valid": instance_shapes_valid,
+        "rebuild_passed": True,
         "passed": (
-            metrics["combined_score"] == 1.0
-            and bool(metrics["valid"])
-            and not fidelity_is_finite
+            metrics["combined_score"] == 0.0
+            and not bool(metrics["valid"])
+            and all_failed_closed
+            and instance_shapes_valid
         ),
     }
 

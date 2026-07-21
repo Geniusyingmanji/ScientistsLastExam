@@ -1,19 +1,60 @@
-# GateSynthesis — design control pulses to implement a quantum gate
+# GateSynthesis — synthesize transferable quantum-control pulses
 
 ## Scientific background
-Quantum gate synthesis finds time-dependent control fields that steer a quantum system to
-implement a target unitary transformation (here: CNOT gate on 2 qubits). The system has a
-fixed ZZ coupling and 4 control channels (X, Y on each qubit). The control landscape has
-many local traps, and the matrix exponential propagation creates a highly nonlinear map from
-pulse amplitudes to gate fidelity. This is the core problem in quantum optimal control (GRAPE).
 
-Reference: Khaneja et al., J. Magn. Reson. 172, 296 (2005); Glaser et al., EPJ D 69, 279 (2015).
+Quantum optimal control chooses piecewise-constant fields that steer a known Hamiltonian to a
+target unitary. At time slice `t`,
+
+```text
+H(t) = H_drift + sum_c amplitude[t,c] * H_control[c],
+U(t+dt) = exp(-i H(t) dt) U(t).
+```
+
+The nominal objective is global-phase-invariant process fidelity
+
+```text
+F = |Tr(U_target^dagger U)|^2 / dimension^2.
+```
+
+In laboratory hardware, a pulse that is perfect for one calibrated Hamiltonian may fail under
+detuning, amplitude miscalibration or finite control bandwidth. Nominal synthesis and robust
+control are therefore evaluated separately.
 
 ## Your task
+
+Implement a general one- and two-qubit pulse-design policy:
+
 ```python
-def design_pulse(n_steps, n_controls, dim):
-    \"\"\"Return (n_steps=50, n_controls=4) array of control amplitudes in [-5, 5].
-    Goal: maximize gate fidelity with CNOT target.\"\"\"
+def design_pulse(drift, controls, target, n_steps, dt, amplitude_limit):
+    """Return a real array with shape (n_steps, len(controls)).
+
+    drift:    (d,d) Hermitian drift Hamiltonian
+    controls: (n_controls,d,d) Hermitian control Hamiltonians
+    target:   (d,d) target unitary
+    """
 ```
+
+Every nominal Hamiltonian, target, time step and amplitude bound is supplied. The policy is
+called on several one- and two-qubit gates; do not hard-code a CNOT pulse or fixed dimensions.
+
+## Evaluation
+
+`combined_score` is mean nominal development fidelity normalized above free evolution. The
+trusted evaluator separately retains:
+
+- `robustness_score`: worst-case detuning, +/-6% amplitude calibration and bandwidth-filtered
+  implementation on development targets;
+- `heldout_policy_score`: nominal performance on evaluator-only target/Hamiltonian regimes;
+- `heldout_robustness_score`: their shifted-hardware performance; and
+- pulse RMS, slew and per-variant fidelities.
+
+Only nominal development score controls search. Robustness, held-out performance and all
+per-instance values are sealed from proposal prompts and parent selection.
+
 ## Rules
-- Only edit `solution.py`. numpy/scipy only. CPU. Do not read `verification/`.
+
+- Only edit `solution.py`; keep the `design_pulse` signature.
+- Return finite real amplitudes within `[-amplitude_limit, amplitude_limit]`; values are rejected,
+  not clipped.
+- Deterministic CPU code using the Python standard library, NumPy and SciPy only.
+- No network or process creation. Do not read `verification/` or `frontier_eval/`.

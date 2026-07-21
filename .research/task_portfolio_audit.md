@@ -52,9 +52,9 @@ meaning.
   other six remain quarantined after reproducible adversarial review: RIR
   length failure, unstable low-thrust propagation, centerline-spoofable cavity scoring,
   pseudo-data alloy hardness, scalar-FFT pseudo-RCWA and a degenerate heat-exchanger objective.
-- **No original unscreened candidates remain after wave 4; eight candidates remain in total.** They are
+- **No original unscreened candidates remain after wave 4; nine candidates remain in total.** They are
   SCM, Lyapunov control, neutron criticality, seismic refraction, pendulum control, sparse
-  recovery, OED-v2 and the new ActiveLawDiscovery laboratory. All are currently on-ramps or
+  recovery, OED-v2, GateSynthesis-v2 and the new ActiveLawDiscovery laboratory. All are currently on-ramps or
   repair/calibration candidates rather than externally reviewed open-frontier tasks.
 - **ActiveLawDiscovery preserves science-specific headroom.** GPT-5.5 budget one attains 0.796
   development and 0.745 sealed validation mechanism score with approximately 0.996 rollout
@@ -74,7 +74,8 @@ meaning.
   RANS fitting and an FWI interface with no observations.
   Wave 3 additionally isolates six scientifically promising topics whose current evaluators are
   unusable: fail-open NMR/OED/gate/OPF/antenna scores and a non-canonical duplicated-member
-  truss topology. OED-v2 has since been substantively rebuilt and re-admitted; the other five
+  truss topology. OED-v2 and GateSynthesis-v2 have since been substantively rebuilt and
+  re-admitted; the other four
   task families should be rebuilt rather than cosmetically patched.
   Wave 4 quarantines the final 12 unscreened packages after reproducing fail-open paths,
   unreachable anchors, missing observations, uncoupled systems, degenerate corners and models
@@ -124,8 +125,8 @@ The target is approximately 50 **admissible** open scientific optimization tasks
 4. add missing mechanism, multifidelity, experimental-design and null/misspecification families;
 5. run frontier-model budget-one screening before expensive budget 30/100/300 studies.
 
-After complete original-inventory triage and adding ActiveLawDiscovery, the net expansion gap
-is approximately 42 admissible tasks, not zero: 51 folders minus 36 quarantines leaves only 15
+After complete original-inventory triage, adding ActiveLawDiscovery and rebuilding Gate-v2, the net expansion gap
+is approximately 41 admissible tasks, not zero: 51 folders minus 35 quarantines leaves only 16
 internally admissible certified or candidate packages. New work should emphasize procedural task families and independent regimes,
 not one-off fixed instances or scientific names around hand-written scalar objectives.
 

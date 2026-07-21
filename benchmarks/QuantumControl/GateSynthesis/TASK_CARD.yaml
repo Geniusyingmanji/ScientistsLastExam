@@ -1,0 +1,26 @@
+schema_version: 1
+scientific_question: Synthesize bounded one- and two-qubit control pulses that implement supplied target gates and remain useful under hidden hardware shifts.
+artifact: A real piecewise-constant control-amplitude matrix for each supplied Hamiltonian and target.
+oracle:
+  model: exact time-ordered matrix-exponential propagation of finite-dimensional closed quantum systems
+  feasibility: finite real amplitudes of the exact requested shape within the public hardware bound
+  deterministic: true
+normalization:
+  baseline: uncontrolled free evolution for the same plant and target
+  reference: unit global-phase-invariant process fidelity
+  score: nominal development improvement above free evolution; shifted hardware and held-out targets remain separate
+citations:
+  - id: doi:10.1016/j.jmr.2004.11.004
+    title: "Optimal control of coupled spin dynamics: design of NMR pulse sequences by gradient ascent algorithms"
+  - id: doi:10.1140/epjd/e2015-60464-1
+    title: "Training Schrodinger's cat: quantum optimal control"
+invariants:
+  - propagated unitaries remain unitary to numerical precision
+  - process fidelity is invariant to global phase on either target or achieved gate
+  - exact target equality attains unit fidelity and free evolution attains normalized zero
+  - non-finite, wrong-shape and out-of-bound pulses fail closed
+  - hardware-shift and held-out metrics remain evaluator-only
+known_shortcuts: Closed-system piecewise-constant control omits decoherence, leakage and device-specific transfer functions. Hidden shifts are controlled stress tests, not physical validation. Public plants require a future server-held split and hardware replication for discovery claims.
+review:
+  domain: pending_external
+  evaluator_security: automated_invariant_sandbox_and_metric_sealing_tests

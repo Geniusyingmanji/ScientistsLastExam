@@ -684,3 +684,15 @@ the search sees only normalized development mechanism, these single-seed diagnos
 prove a causal feedback effect, but they establish non-saturation and a concrete reliability
 frontier for paired feedback/refusal studies. `gpt55_active_law_b1_2026-07-21.json` and
 `gpt55_active_law_b3_2026-07-21.json` both bind clean revision `cd65c17`.
+
+## 2026-07-21 — quantum gate synthesis v2 rebuild
+
+The fail-open single-CNOT package was replaced with a policy task over supplied one- and
+two-qubit Hamiltonians and targets. Four development and two interleaved held-out instances use
+exact matrix-exponential propagation and global-phase-invariant process fidelity. Pulse shape,
+finiteness and amplitude bounds are rejected rather than clipped. Evaluator-only metrics retain
+worst-case detuning, +/-6% amplitude calibration, bandwidth-filtered execution, held-out target
+transfer, RMS and slew. An independent nominal GRAPE witness reaches essentially unit fidelity
+on all six targets; the same nominal pulses score 0.957 development robustness and 0.984 held-out
+robustness, establishing a real but attainable hardware-shift gap. Gate-v2 is re-admitted as a
+candidate pending frontier-model calibration and independent review.

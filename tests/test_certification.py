@@ -282,6 +282,58 @@ def select_designs(candidate_points, feature_matrix, n_measurements):
         self.assertEqual(metrics["validation_feasibility_rate"], 0.0)
         self.assertTrue(all(not row["valid"] for row in metrics["per_instance"]))
 
+    def test_gate_synthesis_unitarity_phase_and_metric_sealing(self):
+        oracle = load_oracle("QuantumControl/GateSynthesis")
+        self.assertEqual(len(oracle.DEVELOPMENT_INSTANCES), 4)
+        self.assertEqual(len(oracle.HELDOUT_INSTANCES), 2)
+        for instance in oracle.INSTANCES:
+            pulse = np.zeros((instance["n_steps"], len(instance["controls"])))
+            unitary = oracle._propagate(
+                instance["drift"], instance["controls"], pulse, instance["dt"]
+            )
+            self.assertTrue(np.allclose(
+                unitary.conj().T @ unitary,
+                np.eye(len(unitary)), atol=1e-11, rtol=0.0,
+            ))
+            self.assertAlmostEqual(
+                oracle._process_fidelity(
+                    instance["target"], np.exp(0.37j) * instance["target"]
+                ),
+                1.0,
+                places=12,
+            )
+
+        baseline = oracle.evaluate(
+            lambda _drift, controls, _target, n_steps, _dt, _limit: np.zeros(
+                (n_steps, len(controls))
+            )
+        )
+        self.assertEqual(baseline["combined_score"], 0.0)
+        self.assertEqual(baseline["valid"], 1.0)
+        shown = search_visible_metrics(baseline)
+        self.assertNotIn("robustness_score", shown)
+        self.assertNotIn("heldout_policy_score", shown)
+        self.assertNotIn("per_instance", shown)
+
+    def test_gate_synthesis_nonfinite_and_out_of_bound_fail_closed(self):
+        oracle = load_oracle("QuantumControl/GateSynthesis")
+        nonfinite = oracle.evaluate(
+            lambda _drift, controls, _target, n_steps, _dt, _limit: np.full(
+                (n_steps, len(controls)), np.nan
+            )
+        )
+        outside = oracle.evaluate(
+            lambda _drift, controls, _target, n_steps, _dt, limit: np.full(
+                (n_steps, len(controls)), limit + 1.0
+            )
+        )
+        for metrics in (nonfinite, outside):
+            self.assertEqual(metrics["valid"], 0.0)
+            self.assertEqual(metrics["combined_score"], 0.0)
+            self.assertTrue(all(
+                not row["valid"] for row in metrics["per_instance"]
+            ))
+
     def test_lyapunov_oracle_measures_closed_loop_feedback(self):
         oracle = load_oracle("DynamicalSystems/LyapunovControl")
         # Cancellation plus damping makes the sampled closed loop locally stable. Its exact

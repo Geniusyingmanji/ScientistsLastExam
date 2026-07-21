@@ -1,7 +1,12 @@
 domain: QuantumControl
 task: GateSynthesis
 difficulty: hard
+tier: T2
 oracle_type: physical_sim
 score_mode: clipped
 gpu_required: false
 eval_time_seconds: 30
+science_metric: nominal_process_fidelity_with_sealed_hardware_shift_and_policy_transfer
+reference_baseline: zero controls and free drift evolution
+reference_sota: unit process fidelity, the exact physical upper bound for each supplied target
+citation: "Khaneja et al., JMR 172, 296-305 (2005), DOI 10.1016/j.jmr.2004.11.004"

@@ -20,10 +20,10 @@ The repository contains **51 task packages in 47 metadata domains**:
 
 - **7 certified core tasks**: Lennard–Jones clusters, spin glass, Poisson solver,
   matrix-multiplication rank, Cap Set, circle packing, and multilayer thin films.
-- **8 candidate tasks** pending scientific certification, including intervention-based causal
+- **9 candidate tasks** pending scientific certification, including intervention-based causal
   and active dynamical-law laboratories whose prediction and mechanism metrics are reported
   separately.
-- **36 quarantined tasks** with reproduced scientific-oracle, identifiability, provenance or
+- **35 quarantined tasks** with reproduced scientific-oracle, identifiability, provenance or
   shortcut defects; these remain inventory packages but are not admissible benchmark tasks.
 
 The default CLI exposes only the certified core. `--all` explicitly shows the full
@@ -34,7 +34,7 @@ All candidate code runs in a networkless Bubblewrap sandbox with read-only mount
 and process limits, and a typed JSON RPC boundary. The trusted parent alone imports the
 oracle and validates metrics. The current audit reports:
 
-- 70/70 unit, security, protocol and scientific-invariant tests passed.
+- 72/72 unit, security, protocol and scientific-invariant tests passed.
 - The latest full-inventory secure-baseline audit predates ActiveLawDiscovery and covers the
   original 50 packages: 50/50 baselines were deterministic
   across two secure runs.
@@ -44,7 +44,7 @@ oracle and validates metrics. The current audit reports:
 ActiveLawDiscovery separately passes invariant, callback-budget and secure-baseline tests;
   the latest 51×2 audit confirms 51/51 deterministic, 50/51 valid, 51/51 fail-closed and zero
   infrastructure failures.
-- Current manifest: 7 certified / 8 candidate / 36 quarantined. The rebuilt D-optimal
+- Current manifest: 7 certified / 9 candidate / 35 quarantined. The rebuilt D-optimal
   experimental-design task is re-admitted as a candidate with sealed shifted-family validation.
 
 Machine-readable evidence lives in [`experiments/`](experiments/).
