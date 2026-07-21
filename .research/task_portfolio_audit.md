@@ -51,11 +51,11 @@ meaning.
   other six remain quarantined after reproducible adversarial review: RIR
   length failure, unstable low-thrust propagation, centerline-spoofable cavity scoring,
   pseudo-data alloy hardness, scalar-FFT pseudo-RCWA and a degenerate heat-exchanger objective.
-- **18 candidates remain after the inverse-track audit.** Most still require citations,
-  normalization anchors and shortcut review. NMR peak fitting remains a promising inverse
-  candidate but needs procedural spectra, baseline/lineshape shifts, matched-peak mechanism
-  scoring and held-out reconstruction.
-- **19 quarantined packages.** Five generic-objective clones must be replaced with real domain
+- **12 unscreened candidates remain after the wave-3 audit; 18 candidates remain in total.**
+  Most still require citations, normalization anchors and shortcut review. The six previously
+  screened/rebuilt candidates remain SCM, Lyapunov control, neutron criticality, seismic
+  refraction, pendulum control and sparse recovery.
+- **25 quarantined packages.** Five generic-objective clones must be replaced with real domain
   oracles; metadata completion alone cannot rehabilitate them. The sixth,
   `ClimateScience/EnergyBalanceModel`, uses an unstable explicit diffusion iteration, an
   unverified ERA5 attribution and a structurally underdetermined seven-parameter fit to one
@@ -65,6 +65,9 @@ meaning.
   failures include rank-deficient hidden-truth retrieval, saturated reaction data, gravity and
   ocean signal/noise inversions, a rank-two demographic surrogate, underidentified pseudo-DNS
   RANS fitting and an FWI interface with no observations.
+  Wave 3 additionally isolates six scientifically promising topics whose current evaluators are
+  unusable: fail-open NMR/OED/gate/OPF/antenna scores and a non-canonical duplicated-member
+  truss topology. These task families should be rebuilt rather than cosmetically patched.
 
 ## Priority review findings
 
@@ -87,6 +90,10 @@ The first review tranche contains real scientific topics but several narrow eval
   analysis. Rename the fidelity or replace it with a validated RCWA oracle.
 - Neutron diffusion has a substantive PDE/eigenvalue oracle but only one geometry/loading
   regime and an unsupported fixed normalization increment; validate anchors and add shifts.
+- OED, gate synthesis, OPF, truss sizing, antenna synthesis and NMR fitting are valuable task
+  families, but their current packages cannot support model evidence. Re-admission requires
+  procedural instances, finite-output checks, independent anchors, and sealed shifted or
+  mechanism metrics where applicable.
 
 ## Expansion rule
 

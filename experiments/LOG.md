@@ -594,3 +594,15 @@ unless observations identify the claim and the interface actually supplies evide
 The machine-readable reports `inverse_candidate_admission_audit_2026-07-21.json` and
 `task_certification_audit_2026-07-21_v3.json` bind clean source revision `54f992d`; both set
 `execution_passed=true`, `trusted_evidence=true` and `passed=true`.
+
+## 2026-07-21 — candidate wave 3 admission audit
+
+Six high-priority scientific topics were adversarially checked before model screening. NMR,
+D-optimal design, quantum gate synthesis, DC OPF and antenna synthesis all contain non-finite
+fail-open paths; `NaN` or a zero array receives full score. The antenna evaluator also measures
+its uniform arrays near -9 dB while normalizing against a claimed -13.3 dB PSLL. The OPF
+baseline has 65 MW of line violations, yet the candidate interface omits susceptances and
+generator-bus assignments. The purported canonical 10-bar truss has only nine unique
+undirected members because its middle vertical is duplicated, invalidating its literature
+anchor. All six packages are quarantined pending substantive v2 rebuilds; this is not a judgment
+that their scientific domains lack value.

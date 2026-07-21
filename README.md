@@ -20,9 +20,9 @@ The repository contains **50 task packages in 47 metadata domains**:
 
 - **7 certified core tasks**: Lennard–Jones clusters, spin glass, Poisson solver,
   matrix-multiplication rank, Cap Set, circle packing, and multilayer thin films.
-- **24 candidate tasks** pending scientific certification, including an intervention-based
+- **18 candidate tasks** pending scientific certification, including an intervention-based
   causal-mechanism laboratory whose prediction and mechanism metrics are reported separately.
-- **19 quarantined tasks** with reproduced scientific-oracle, identifiability, provenance or
+- **25 quarantined tasks** with reproduced scientific-oracle, identifiability, provenance or
   shortcut defects; these remain inventory packages but are not admissible benchmark tasks.
 
 The default CLI exposes only the certified core. `--all` explicitly shows the full
@@ -40,7 +40,7 @@ oracle and validates metrics. The current audit reports:
   oracle metric and was correctly rejected fail-closed.
 - All 50 packages failed closed and there were no infrastructure failures. The newly added
   mechanism task passed invariant, callback-budget and deterministic secure-baseline tests.
-- Current manifest: 7 certified / 24 candidate / 19 quarantined.
+- Current manifest: 7 certified / 18 candidate / 25 quarantined.
 
 Machine-readable evidence lives in [`experiments/`](experiments/).
 The original five dated P0–P2 reports were regenerated from clean source revision `f48b101`;
@@ -128,6 +128,7 @@ current status.
 python scripts/run_security_audit.py --output /tmp/security.json
 python scripts/audit_tasks.py --output /tmp/certification.json
 python scripts/audit_inverse_candidates.py --output /tmp/inverse-admission.json
+python scripts/audit_candidate_wave3.py --output /tmp/candidate-wave3.json
 python scripts/run_secure_baseline.py --repeats 2 --output /tmp/baselines.json
 python -m unittest discover -v -s tests
 # From each compatible optional-backend venv:

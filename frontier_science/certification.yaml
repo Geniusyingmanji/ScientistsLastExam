@@ -124,6 +124,25 @@ tasks:
     status: quarantined
     reason: entrypoint receives no observed waveforms or experiment callback and can only guess one fixed hidden velocity model
 
+  Spectroscopy/NMRSpectrumFitting:
+    status: quarantined
+    reason: non-finite peak parameters receive full score, and one fixed spectrum measures reconstruction without peak matching or held-out lineshape validation
+  BayesianInference/OptimalExperimentDesign:
+    status: quarantined
+    reason: non-finite designs receive full score and the reference is an unsourced random-search log-determinant multiplier; rebuild as a procedural multi-model design-policy task
+  QuantumControl/GateSynthesis:
+    status: quarantined
+    reason: non-finite pulses receive full score and one nominal Hamiltonian has no robustness, fluence or slew-rate validation
+  PowerSystems/OptimalPowerFlow:
+    status: quarantined
+    reason: non-finite dispatch receives full score, the candidate lacks required network parameters, and the declared equal-dispatch baseline violates line limits
+  StructuralEngineering/TrussWeightMinimization:
+    status: quarantined
+    reason: the purported canonical 10-bar topology duplicates one member, so its FEM objective and cited 5060-lb reference are different problems
+  Electromagnetics/AntennaArraySynthesis:
+    status: quarantined
+    reason: zero excitation normalizes 0/0 and receives full score, while the actual uniform-array PSLL disagrees with the score anchor by more than 3 dB
+
   CrystalGrowth/CzochralskiProcess:
     status: quarantined
     reason: claimed Stefan model is a generic eight-variable trigonometric objective
