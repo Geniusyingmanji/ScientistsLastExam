@@ -24,8 +24,8 @@ physical validation, and auditable claim–evidence provenance.
 |---|---|---|---|
 | Candidate/oracle isolation | Implemented | Clean-revision report `f48b101`; 15/15 security/regression tests; Bubblewrap, no network, read-only mounts, resource/seccomp limits, typed RPC | Reproduce in clean Linux CI; document portability/non-Linux behavior |
 | Fail-closed trusted metrics | Implemented | Clean-revision 50×2 run: 50 deterministic, 49 valid, 50 fail-closed; non-finite Climate oracle rejected | Repair or quarantine every invalid candidate oracle before certification |
-| Task admission policy | Implemented, narrow | Current manifest: 7 certified / 11 candidate / 33 quarantined; Pendulum, OED, GateSynthesis, OPF and Truss are rebuilt and ActiveLawDiscovery adds a science-specific candidate | Independent domain + evaluator reviews are still declarations, not completed external review |
-| Scientific validity of inventory | Audited, sparse | All original 50 packages passed through adversarial admission waves; ActiveLawDiscovery brings inventory to 51, while Gate/OPF/Truss rebuilds yield seven certified, eleven candidates and 33 quarantines | Rebuild high-value families and add approximately 32 net admissible tasks to reach about 50; hidden/generated instances and shortcut analysis remain mandatory |
+| Task admission policy | Implemented, narrow | Current manifest: 7 certified / 12 candidate / 32 quarantined; Pendulum, OED, GateSynthesis, OPF, Truss and Antenna are rebuilt and ActiveLawDiscovery adds a science-specific candidate | Independent domain + evaluator reviews are still declarations, not completed external review |
+| Scientific validity of inventory | Audited, sparse | All original 50 packages passed through adversarial admission waves; ActiveLawDiscovery brings inventory to 51, while Gate/OPF/Truss/Antenna rebuilds yield seven certified, twelve candidates and 32 quarantines | Rebuild high-value families and add approximately 31 net admissible tasks to reach about 50; hidden/generated instances and shortcut analysis remain mandatory |
 | Unified trajectory/accounting | Implemented, protocol-smoked | Clean-revision two-seed baseline smoke; trajectory schema v2, hashes, AUC over `budget_units`, separate `oracle_calls`, wall/token/cost, seed, checkpoint/resume | Validate nonzero-budget schema-v2 artifact replay in CI and version future changes |
 | Prompt-metric none/shuffled controls | Implemented, unrun | Code and unit smoke; summaries disclose that selection still uses true scores | Add selection-blind controls, then run ≥5 paired seeds with preregistered budgets |
 | Evaluator-only metric sealing | Implemented and integration-verified | Closed search-visible allowlist; search-state redaction/hash-keyed sidecars; 65-test suite; clean pinned OpenEvolve/TreeQuest/Shinka no-leak report `aff026d` | Extend from baseline smoke to nonzero-budget upstream runs before comparative claims |
@@ -140,8 +140,8 @@ Accordingly, “P0–P2 implemented and recorded” must not be shortened to “
 
 - [x] Trusted oracle / isolated candidate architecture and adversarial regression suite.
 - [x] Current 51-package deterministic secure baseline and certification audit; invalid Climate oracle fails closed.
-- [x] Seven-task certified core, eleven candidates and 33 quarantined packages after all admission
-  waves, with Pendulum-v2, OED-v2, GateSynthesis-v2, OPF-v2 and Truss-v2 rebuilt and re-admitted.
+- [x] Seven-task certified core, twelve candidates and 32 quarantined packages after all admission
+  waves, with Pendulum-v2, OED-v2, GateSynthesis-v2, OPF-v2, Truss-v2 and Antenna-v2 rebuilt and re-admitted.
 - [x] Task-card/citation/invariant audit and dated machine-readable evidence.
 - [ ] Add Linux CI reproduction of all dated audits (local clean-revision reproduction is done).
 - [x] Quarantine `ClimateScience/EnergyBalanceModel`; replace its unstable, untraceable,

@@ -818,3 +818,27 @@ but worse held-out robustness. It also uses 19,659 versus 12,637 tokens, and the
 has no server-side seed. The contrast is evidence of task headroom and motivates a token-matched
 paired study; it is not a causal feedback claim. All three reports bind clean task source
 revision `4c31f5d`; a derived analyzer validates raw trajectory hashes and parent lineage.
+
+## 2026-07-21 — antenna array synthesis v2 rebuild
+
+The fail-open two-ULA package with incorrect fixed `-13.3 dB` anchors was replaced by a policy
+task over four development and two interleaved held-out arrays. Instances span 12--24 elements,
+broadside and scanned beams, uniform and mildly nonuniform positions, and two interference
+neighborhoods. Overall complex excitation scale is quotient-normalized by nominal target
+response; zero/non-finite response, wrong length, excessive normalized L2 norm and excessive
+per-element amplitude all fail closed. Nominal score uses measured sidelobe/null quality rather
+than a prose constant.
+
+Evaluator-only validation exhaustively covers every single-element failure plus `+/-4%`
+frequency offsets, bounded position errors and bounded gain/phase calibration errors. An
+independent enumeration of 750 Kaiser-taper/regularized-null-projection policies per instance
+reproduces every declared reference parameter. Nominal witnesses reach development/held-out
+nominal score **1.0/1.0** but only **0.465990/0.302317** robustness. Robust witnesses reach
+robustness **1.0/1.0** while retaining nominal **0.384375/0.507933**, establishing a real
+pattern-quality/hardware-robustness tradeoff without claiming global optimality.
+
+Citation metadata was checked through Crossref and DOI resolution. Dolph's article is
+*Proceedings of the IRE* 34(6), 335--348, DOI `10.1109/JRPROC.1946.225956`; Ramsdale and
+Howerton's element-failure/error study is *JASA* 68(3), 901--906, DOI `10.1121/1.384777`.
+Antenna-v2 is re-admitted as a candidate pending GPT-5.5 headroom calibration, server-held
+arrays, full-wave or measured-pattern replication and independent antenna-domain review.

@@ -482,6 +482,67 @@ def select_designs(candidate_points, feature_matrix, n_measurements):
                 not row["valid"] for row in metrics["per_instance"]
             ))
 
+    def test_antenna_v2_reference_tradeoff_invariance_and_metric_sealing(self):
+        oracle = load_oracle("Electromagnetics/AntennaArraySynthesis")
+        self.assertEqual(len(oracle.DEVELOPMENT_INSTANCES), 4)
+        self.assertEqual(len(oracle.HELDOUT_INSTANCES), 2)
+        for instance in oracle.INSTANCES:
+            self.assertEqual(
+                sum(row["name"].startswith("element_failure_")
+                    for row in instance["shift_scenarios"]),
+                len(instance["positions_lambda"]),
+            )
+            self.assertGreater(
+                instance["nominal_reference_metrics"]["quality_db"],
+                instance["baseline_nominal_metrics"]["quality_db"],
+            )
+            self.assertGreater(
+                instance["robust_reference_quality_db"],
+                instance["baseline_robust_quality_db"],
+            )
+            translated = instance["positions_lambda"] + 3.17
+            angles = instance["sidelobe_angles_deg"]
+            original = abs(oracle._steering_matrix(
+                instance["positions_lambda"], angles
+            ) @ instance["nominal_reference_weights"])
+            shifted = abs(oracle._steering_matrix(
+                translated, angles
+            ) @ instance["nominal_reference_weights"])
+            self.assertTrue(np.allclose(original, shifted, atol=1e-12, rtol=0.0))
+
+        def uniform(positions, steering, *_args):
+            target = oracle._steering_matrix(positions, [steering])[0]
+            return np.conj(target) / len(positions)
+
+        baseline = oracle.evaluate(uniform)
+        self.assertEqual(baseline["valid"], 1.0)
+        self.assertEqual(baseline["combined_score"], 0.0)
+        shown = search_visible_metrics(baseline)
+        self.assertNotIn("robustness_score", shown)
+        self.assertNotIn("heldout_policy_score", shown)
+        self.assertNotIn("per_instance", shown)
+
+    def test_antenna_v2_zero_nonfinite_shape_and_excitation_fail_closed(self):
+        oracle = load_oracle("Electromagnetics/AntennaArraySynthesis")
+        zero = oracle.evaluate(
+            lambda positions, *_args: np.zeros(len(positions), dtype=complex)
+        )
+        nonfinite = oracle.evaluate(
+            lambda positions, *_args: np.full(len(positions), np.nan + 0j)
+        )
+        wrong = oracle.evaluate(lambda *_args: np.ones(1, dtype=complex))
+        excessive = oracle.evaluate(
+            lambda positions, *_args: np.eye(
+                1, len(positions), dtype=complex
+            )[0]
+        )
+        for metrics in (zero, nonfinite, wrong, excessive):
+            self.assertEqual(metrics["valid"], 0.0)
+            self.assertEqual(metrics["combined_score"], 0.0)
+            self.assertTrue(all(
+                not row["valid"] for row in metrics["per_instance"]
+            ))
+
     def test_lyapunov_oracle_measures_closed_loop_feedback(self):
         oracle = load_oracle("DynamicalSystems/LyapunovControl")
         # Cancellation plus damping makes the sampled closed loop locally stable. Its exact

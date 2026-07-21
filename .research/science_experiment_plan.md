@@ -67,6 +67,7 @@ extra compute.
 | Poisson solver | hidden spectra, resolutions, boundary conditions and coefficient fields; measured convergence order | numerical-law and solver generalization |
 | Multilayer thin film | hidden angles, polarization, dispersion tables, material tolerances and fabrication noise; later high-fidelity/physical replication | strongest current multifidelity/robustness case |
 | Truss sizing | held-out topology/material families; load, stiffness, strength and manufacturing shifts; later nonlinear FEM replication | structural optimization versus physical robustness |
+| Antenna synthesis | held-out scanned/nonuniform arrays; frequency, position, calibration and exhaustive single-element failures; later full-wave/measured replication | nominal pattern synthesis versus hardware robustness |
 | Matrix multiplication | held-out dimensions/fields, exact tensor identity and independent proof/checker | machine-verifiable mathematical discovery |
 | Cap Set | held-out dimensions or fields and exact construction verification; contamination audit against known constructions | machine-verifiable mathematical discovery |
 | Circle packing | unseen `N`, interval/independent geometric verification and perturbation robustness | machine-verifiable construction |
@@ -135,7 +136,7 @@ aggregate best-so-far curve is not, by itself, evidence of learning or mechanism
 ### Stage B — science-distinctive evidence
 
 - F1 on at least four tasks with strict selection-blind controls.
-- V1 on Lennard-Jones, spin glass, Poisson, thin film and Truss-v2 using evaluator-only hidden shifts.
+- V1 on Lennard-Jones, spin glass, Poisson, thin film, Truss-v2 and Antenna-v2 using evaluator-only hidden shifts.
 - V2 on at least thin film and one additional proxy/exact task.
 - M1 on the two new mechanism families.
 - R1 null/misspecification cases and R2 independent replay.

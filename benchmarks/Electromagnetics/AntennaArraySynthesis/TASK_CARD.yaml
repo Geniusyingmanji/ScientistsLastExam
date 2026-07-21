@@ -1,0 +1,28 @@
+schema_version: 1
+scientific_question: Can one array-synthesis policy suppress sidelobes and interference directions across varying scanned/nonuniform arrays while retaining target gain and suppression under frequency, calibration, position and element-failure shifts?
+artifact: One complex excitation per supplied linear-array element position.
+oracle:
+  model: deterministic sampled far-field array factor with unit nominal target-response quotient, peak sidelobe/null quality, excitation constraints and exhaustive single-element-failure plus bounded frequency/calibration/position shifts
+  feasibility: exact finite element count, finite nonzero target response, normalized L2 limit and normalized per-element amplitude limit
+  deterministic: true
+normalization:
+  baseline: uniform-amplitude steering evaluated by the same nominal and shifted pattern oracle
+  reference: independently calibrated Kaiser-taper plus regularized-null-projection nominal and robust local family witnesses
+  score: nominal development quality controls search; held-out geometry and shifted robustness remain separate
+citations:
+  - id: doi:10.1109/JRPROC.1946.225956
+    title: A Current Distribution for Broadside Arrays Which Optimizes the Relationship between Beam Width and Side-Lobe Level
+  - id: doi:10.1121/1.384777
+    title: Effect of element failure and random errors in amplitude and phase on the sidelobe level attainable with a linear array
+invariants:
+  - overall nonzero complex scaling and phase of excitations do not change normalized metrics
+  - translating all element positions changes array-factor phase but not its magnitude pattern
+  - uniform steering has unit nominal target response and satisfies excitation limits
+  - nominal and robust reference policies improve their corresponding quality above uniform steering
+  - reference parameters reproduce the optimum of their declared finite Kaiser/null-projection grid, without claiming a global optimum
+  - zero, non-finite, wrong-length and excessive normalized excitations fail closed
+  - held-out and shifted metrics remain evaluator-only
+known_shortcuts: The scalar isotropic-element far-field model omits mutual coupling, polarization, platform scattering, wideband waveform effects and nonlinear hardware. Deterministic public instances require future server-held arrays; engineering claims require full-wave or measured-pattern replication. The sampled grid and two-parameter references are reproducible benchmark anchors, not continuous-angle or global-optimality certificates.
+review:
+  domain: pending_external
+  evaluator_security: automated_invariant_sandbox_and_metric_sealing_tests

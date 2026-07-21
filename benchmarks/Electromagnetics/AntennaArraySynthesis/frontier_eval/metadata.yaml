@@ -1,7 +1,12 @@
 domain: Electromagnetics
 task: AntennaArraySynthesis
 difficulty: hard
-oracle_type: physical_sim
+tier: T2
+oracle_type: analytical
 score_mode: clipped
 gpu_required: false
-eval_time_seconds: 10
+eval_time_seconds: 30
+science_metric: nominal sidelobe/null suppression with sealed frequency, position, gain/phase and single-element-failure robustness
+reference_baseline: normalized uniform-amplitude steering for every supplied geometry
+reference_sota: independently calibrated feasible Kaiser-taper and regularized-null-projection nominal/robust witnesses; no global-optimality claim
+citation: "Dolph, A Current Distribution for Broadside Arrays, DOI 10.1109/JRPROC.1946.225956"

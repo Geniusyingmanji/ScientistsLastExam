@@ -106,8 +106,11 @@ The first review tranche contains real scientific topics but several narrow eval
 - Truss-v2 now supplies six procedural structures, finite-output checks, independently reproduced
   nominal/robust local witnesses and sealed topology/physical-shift metrics. Its non-saturated
   GPT-5.5 trajectory makes it a useful optimization/validation candidate, pending server-held
-  structures, paired controls and independent review. Antenna synthesis and NMR fitting still
-  require corresponding substantive rebuilds before they can support model evidence.
+  structures, paired controls and independent review. Antenna-v2 now likewise supplies six
+  scanned uniform/nonuniform arrays, measured normalization, finite-grid nominal/robust domain
+  witnesses, and sealed frequency/calibration/position/exhaustive element-failure metrics;
+  it still needs model calibration, server-held arrays, full-wave replication and independent
+  review. NMR fitting still requires a substantive rebuild before it can support model evidence.
 - OED-v2 now meets those internal evaluator criteria: six development and four shifted model
   families, finite integer allocations, numerically whitened Fisher sensitivities, and
   Kiefer-Wolfowitz-certified references. GPT-5.5 then reaches 0.991 development and 0.994
@@ -136,8 +139,8 @@ The target is approximately 50 **admissible** open scientific optimization tasks
 5. run frontier-model budget-one screening before expensive budget 30/100/300 studies.
 
 After complete original-inventory triage, adding ActiveLawDiscovery and rebuilding Gate-v2,
-OPF-v2 and Truss-v2, the net expansion gap is approximately 32 admissible tasks: 51 folders
-minus 33 quarantines leaves 18 internally admissible certified or candidate packages, while the target
+OPF-v2, Truss-v2 and Antenna-v2, the net expansion gap is approximately 31 admissible tasks:
+51 folders minus 32 quarantines leaves 19 internally admissible certified or candidate packages, while the target
 is about 50. New
 work should emphasize procedural task families and independent regimes,
 not one-off fixed instances or scientific names around hand-written scalar objectives.

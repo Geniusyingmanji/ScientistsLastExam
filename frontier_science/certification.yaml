@@ -207,8 +207,11 @@ tasks:
       - doi:10.2514/3.49321
       - doi:10.1007/BF01376857
   Electromagnetics/AntennaArraySynthesis:
-    status: quarantined
-    reason: zero excitation normalizes 0/0 and receives full score, while the actual uniform-array PSLL disagrees with the score anchor by more than 3 dB
+    status: candidate
+    reason: v2 has six scanned/uniform/nonuniform arrays, measured normalization, finite-grid nominal/robust domain references and sealed frequency/calibration/position/exhaustive single-element-failure metrics; awaiting GPT-5.5 headroom calibration, server-held arrays, full-wave replication and independent review
+    citation_ids:
+      - doi:10.1109/JRPROC.1946.225956
+      - doi:10.1121/1.384777
 
   CrystalGrowth/CzochralskiProcess:
     status: quarantined

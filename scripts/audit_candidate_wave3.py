@@ -253,36 +253,70 @@ def _truss():
 def _antenna_array():
     oracle = _oracle("Electromagnetics/AntennaArraySynthesis")
     zero = oracle.evaluate(
-        lambda n_elements, _spacing, _width: np.zeros(n_elements, dtype=complex)
+        lambda positions, *_args: np.zeros(len(positions), dtype=complex)
     )
-    uniform = oracle.evaluate(
-        lambda n_elements, _spacing, _width: np.ones(n_elements, dtype=complex)
+    nonfinite = oracle.evaluate(
+        lambda positions, *_args: np.full(len(positions), np.nan + 0j)
     )
-    finite_zero_psll = [
-        bool(np.isfinite(row["psll_dB"])) for row in zero["per_instance"]
-    ]
-    measured_uniform = [float(row["psll_dB"]) for row in uniform["per_instance"]]
-    declared_uniform = [float(row["psll_baseline"]) for row in oracle.INSTANCES]
-    mismatch = [abs(a - b) for a, b in zip(measured_uniform, declared_uniform)]
+
+    def policy(key):
+        def design_array(positions, steering, *_args):
+            for instance in oracle.INSTANCES:
+                if (
+                    np.array_equal(instance["positions_lambda"], positions)
+                    and float(instance["steering_angle_deg"]) == float(steering)
+                ):
+                    return instance[key].copy()
+            raise ValueError("unknown array")
+        return design_array
+
+    baseline = oracle.evaluate(policy("baseline_weights"))
+    nominal = oracle.evaluate(policy("nominal_reference_weights"))
+    robust = oracle.evaluate(policy("robust_reference_weights"))
+    references_ordered = all(
+        instance["nominal_reference_metrics"]["quality_db"]
+        > instance["baseline_nominal_metrics"]["quality_db"] + 1.0
+        and instance["robust_reference_quality_db"]
+        > instance["baseline_robust_quality_db"] + 1.0
+        for instance in oracle.INSTANCES
+    )
+    exhaustive_failures = all(
+        sum(row["name"].startswith("element_failure_")
+            for row in instance["shift_scenarios"])
+        == len(instance["positions_lambda"])
+        for instance in oracle.INSTANCES
+    )
     return {
         "task": "Electromagnetics/AntennaArraySynthesis",
-        "admission": "quarantine",
-        "defect": (
-            "the zero array normalizes 0/0 and receives full score; additionally the fixed "
-            "mainlobe mask measures the uniform arrays near -9 dB while normalization claims "
-            "-13.3 dB, so the score and stated beam constraint are inconsistent"
+        "admission": "candidate",
+        "resolved_defect": (
+            "v2 rejects zero/non-finite target response, uses measured per-instance baseline "
+            "and finite-grid domain references, and separates held-out geometry from "
+            "frequency/calibration/position/exhaustive element-failure robustness"
         ),
+        "instance_count": len(oracle.INSTANCES),
+        "development_instance_count": len(oracle.DEVELOPMENT_INSTANCES),
+        "heldout_instance_count": len(oracle.HELDOUT_INSTANCES),
         "zero_array_score": float(zero["combined_score"]),
         "zero_array_marked_valid": bool(zero["valid"]),
-        "zero_array_psll_is_finite": finite_zero_psll,
-        "measured_uniform_psll_db": measured_uniform,
-        "declared_uniform_psll_db": declared_uniform,
-        "absolute_baseline_mismatch_db": mismatch,
-        "passed": (
-            zero["combined_score"] == 1.0
-            and bool(zero["valid"])
-            and not any(finite_zero_psll)
-            and all(delta > 3.0 for delta in mismatch)
+        "nonfinite_array_score": float(nonfinite["combined_score"]),
+        "nonfinite_array_marked_valid": bool(nonfinite["valid"]),
+        "baseline_valid": bool(baseline["valid"]),
+        "baseline_score": float(baseline["combined_score"]),
+        "nominal_reference_score": float(nominal["combined_score"]),
+        "nominal_reference_robustness": float(nominal["robustness_score"]),
+        "robust_reference_score": float(robust["combined_score"]),
+        "robust_reference_robustness": float(robust["robustness_score"]),
+        "all_references_improve_corresponding_baselines": references_ordered,
+        "every_single_element_failure_evaluated": exhaustive_failures,
+        "rebuild_passed": True,
+        "passed": bool(
+            zero["combined_score"] == 0.0 and zero["valid"] == 0.0
+            and nonfinite["combined_score"] == 0.0 and nonfinite["valid"] == 0.0
+            and baseline["valid"] == 1.0 and baseline["combined_score"] == 0.0
+            and nominal["combined_score"] > 0.999999
+            and robust["robustness_score"] > 0.999999
+            and references_ordered and exhaustive_failures
         ),
     }
 
