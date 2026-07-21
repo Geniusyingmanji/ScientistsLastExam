@@ -44,6 +44,7 @@ remain baseline-only and must not be promoted to model-performance evidence.
 | `secure_baseline_determinism_2026-07-21_v5.json` | `TRUSTED_SECURE_EVAL` | On clean source `f64aeeb`, all 51 baselines are deterministic/fail-closed, 50 are valid, and infrastructure failures are zero. |
 | `gpt55_opf_v2_b1_2026-07-21.json` | `TRUSTED_SECURE_EVAL / CALIBRATION_ONLY` | Budget-one GPT-5.5 reaches nominal development/held-out score 1.0 but sealed N-1 robustness 0.031378/0.0000007 and development outage feasibility 0.113997; clean source `f64aeeb`. |
 | `gpt55_opf_v2_b3_2026-07-21.json` | `TRUSTED_SECURE_EVAL / CALIBRATION_ONLY` | Independent budget-three run on clean source `f64aeeb`; both valid nominal-score-one proposals retain the same N-1 robustness and outage-feasibility failure. |
+| `science_calibration_summary_2026-07-21.json` | `TRUSTED_DERIVED_EVIDENCE / CALIBRATION_ONLY` | On clean source `9b6b190`, validates and freezes compact scalar trajectories plus raw-trajectory hashes for nine OED/Pendulum/Gate/ActiveLaw/OPF budget-one or budget-three conditions; explicitly not causal or population evidence. |
 
 Raw `.out`/`.log` files predating the trusted evaluator inherit
 `UNTRUSTED_PRE_SANDBOX` unless a dated trusted report explicitly incorporates them.
