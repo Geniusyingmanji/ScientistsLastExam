@@ -167,6 +167,11 @@ def analyze(paths: list[Path]) -> dict[str, Any]:
             "selected_candidate_sha256": event["candidate_sha256"],
             "best_visible_score": float(run["best"]),
             "best_so_far_auc": float(run["summary"]["best_so_far_auc"]),
+            "valid_rate": float(run["summary"]["valid_rate"]),
+            "invalid_proposals": sum(
+                event.get("valid") is not True
+                for event in (run.get("trajectory_snapshot") or {}).get("events", [])[1:]
+            ),
             "oracle_calls": int(run["summary"]["oracle_calls"]),
             "total_tokens": run["summary"]["llm"]["total_tokens"],
             "wall_seconds": float(run["summary"]["wall_seconds"]),
@@ -187,6 +192,11 @@ def analyze(paths: list[Path]) -> dict[str, Any]:
             differences = {
                 "best_visible_score": normal["best_visible_score"] - blind["best_visible_score"],
                 "best_so_far_auc": normal["best_so_far_auc"] - blind["best_so_far_auc"],
+                "valid_rate": normal["valid_rate"] - blind["valid_rate"],
+                "invalid_proposals": normal["invalid_proposals"] - blind["invalid_proposals"],
+                "oracle_calls": normal["oracle_calls"] - blind["oracle_calls"],
+                "total_tokens": normal["total_tokens"] - blind["total_tokens"],
+                "wall_seconds": normal["wall_seconds"] - blind["wall_seconds"],
                 **{
                     metric: (
                         float(normal["science_metrics"][metric])
@@ -198,7 +208,16 @@ def analyze(paths: list[Path]) -> dict[str, Any]:
             row = {"task": task, "replicate_id": seed, "normal_minus_blind": differences}
             paired.append(row)
             task_pairs.append(row)
-        fields = ("best_visible_score", "best_so_far_auc", *TASK_METRICS[task])
+        fields = (
+            "best_visible_score",
+            "best_so_far_auc",
+            "valid_rate",
+            "invalid_proposals",
+            "oracle_calls",
+            "total_tokens",
+            "wall_seconds",
+            *TASK_METRICS[task],
+        )
         task_summaries[task] = {
             field: _paired_summary([
                 pair["normal_minus_blind"][field] for pair in task_pairs

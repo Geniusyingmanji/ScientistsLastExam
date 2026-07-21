@@ -41,6 +41,13 @@ class FeedbackPilotAnalysisTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "frozen baseline"):
             MODULE._verify_blind_lineage(run)
 
+    def test_paired_summary_retains_small_sample_diagnostic_interval(self):
+        result = MODULE._paired_summary([1.0, 2.0, 3.0])
+        self.assertEqual(result["n"], 3)
+        self.assertEqual(result["mean"], 2.0)
+        self.assertLess(result["ci95_low"], 0.0)
+        self.assertGreater(result["ci95_high"], 4.0)
+
 
 if __name__ == "__main__":
     unittest.main()
