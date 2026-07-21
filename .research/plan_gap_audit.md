@@ -35,7 +35,7 @@ physical validation, and auditable claim–evidence provenance.
 | Classical/domain baselines | Missing | None | Random/quasi-random plus BO/CMA-ES/DE and one domain heuristic where meaningful |
 | Multi-seed benchmark evidence | Missing | Keyless GPT-5.5 Responses path passes smoke; trusted one-seed candidate calibrations now include OED, Pendulum, GateSynthesis, ActiveLawDiscovery and OPF | Certified-core and science-subset reports with paired uncertainty and portable raw trajectories |
 | Multifidelity/Pareto | Missing | Plan text only | At least one certified proxy/exact task with rank-correlation calibration; objective vectors/hypervolume |
-| Feedback learning claim | Missing | Controls exist but no causal result | Structured feedback must beat shuffled/no-feedback under paired repeated runs |
+| Feedback learning claim | Negative pilot only | A strict open-loop control and three-replicate four-task pilot are complete; no direction-stable visible or sealed lift, and normal uses more tokens | Token-matched preregistered ≥10-replicate study with delayed/replayed and score-only controls |
 | Mechanistic discovery | Missing | Outcome scores only | Separate equation/causal artifact score and intervention generalization |
 | Validation/distribution shift | Calibration-level | Pendulum-v2 budget-three diagnostic: visible development 0.691→0.854 while shifted robustness 0.641→0.639; single seed and non-sealed adapter feedback | Paired repeated hidden-shift studies plus independent high-fidelity or physical confirmation and abstention cases |
 | Research-integrity track | Partial | Immutable candidate/parent hashes and artifacts | Hypothesis–test–evidence records, failed branches, claim links and calibrated refusal |
@@ -177,6 +177,9 @@ Accordingly, “P0–P2 implemented and recorded” must not be shortened to “
   offline-only best selection, explicit parent-hash tests and machine-readable feedback scope.
 - [ ] Add a narrower score-information-only control with matched parent programs and feedback
   message lengths; selection-blind currently tests the full value of iterative feedback.
+- [x] Run a preregistered three-replicate strict-control implementation pilot on Pendulum,
+  GateSynthesis, ActiveLawDiscovery and OPF; retain the negative/inconclusive result and token
+  imbalance rather than promoting it to a Track F claim.
 - [ ] Evaluate persistent scientific memory/world-model quality over long horizons, beyond
   checkpoint/resume correctness.
 

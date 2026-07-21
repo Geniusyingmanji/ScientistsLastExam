@@ -45,6 +45,11 @@ remain baseline-only and must not be promoted to model-performance evidence.
 | `gpt55_opf_v2_b1_2026-07-21.json` | `TRUSTED_SECURE_EVAL / CALIBRATION_ONLY` | Budget-one GPT-5.5 reaches nominal development/held-out score 1.0 but sealed N-1 robustness 0.031378/0.0000007 and development outage feasibility 0.113997; clean source `f64aeeb`. |
 | `gpt55_opf_v2_b3_2026-07-21.json` | `TRUSTED_SECURE_EVAL / CALIBRATION_ONLY` | Independent budget-three run on clean source `f64aeeb`; both valid nominal-score-one proposals retain the same N-1 robustness and outage-feasibility failure. |
 | `science_calibration_summary_2026-07-21.json` | `TRUSTED_DERIVED_EVIDENCE / CALIBRATION_ONLY` | On clean source `9b6b190`, validates and freezes compact scalar trajectories plus raw-trajectory hashes for nine OED/Pendulum/Gate/ActiveLaw/OPF budget-one or budget-three conditions; explicitly not causal or population evidence. |
+| `feedback_pilot_pendulum_2026-07-21.json` | `TRUSTED_SECURE_EVAL / FEEDBACK_PILOT_ONLY` | Three normal and three strict open-loop runs on clean source `e59612b`; all complete with compact scalar trajectories and no failed condition. |
+| `feedback_pilot_gate_2026-07-21.json` | `TRUSTED_SECURE_EVAL / FEEDBACK_PILOT_ONLY` | Three normal and three strict open-loop gate-synthesis runs on clean source `e59612b`; nominal scores saturate in both conditions and hardware differences remain unresolved. |
+| `feedback_pilot_active_law_2026-07-21.json` | `TRUSTED_SECURE_EVAL / FEEDBACK_PILOT_ONLY` | Three normal and three strict open-loop active-law runs on clean source `e59612b`; every selected condition retains one false discovery in each split. |
+| `feedback_pilot_opf_2026-07-21.json` | `TRUSTED_SECURE_EVAL / FEEDBACK_PILOT_ONLY` | Three normal and three strict open-loop OPF runs on clean source `e59612b`; both conditions retain nominal saturation and the same N-1 feasibility failure. |
+| `feedback_pilot_analysis_2026-07-21.json` | `TRUSTED_DERIVED_EVIDENCE / FEEDBACK_PILOT_ONLY` | Preregistered analysis on clean source `ea43a49` validates 24 runs, 12 pairs and blind lineage. All n=3 intervals span zero; normal is not token-matched and no Track F claim is supported. |
 
 Raw `.out`/`.log` files predating the trusted evaluator inherit
 `UNTRUSTED_PRE_SANDBOX` unless a dated trusted report explicitly incorporates them.

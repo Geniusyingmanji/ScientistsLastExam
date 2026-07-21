@@ -113,6 +113,19 @@ hold proposal budget, actual oracle calls, tool access and feedback-message shap
 metrics may be evaluated periodically for curves but cannot affect search or stopping in the
 nominal-only condition.
 
+### Strict-control pilot update
+
+A preregistered three-replicate implementation pilot has now compared normal iteration with a
+strict open-loop `selection_blind` control on Pendulum, GateSynthesis, ActiveLawDiscovery and
+OPF. All 24 conditions completed with trusted provenance and correct blind lineage. No task shows
+a direction-stable visible or sealed feedback advantage; every preregistered performance or
+science-outcome paired interval spans zero. ActiveLawDiscovery retains one development and one validation false discovery in every
+selected condition, while OPF retains identical N-1 feasibility under normal and blind search.
+Normal runs use more tokens on all four tasks, so the pilot is not compute-matched. These results
+leave hypotheses 1--3 open for a larger, token-matched study and prohibit a positive Track F
+claim from the current evidence. Exact paired estimates and limitations are recorded in
+`feedback_pilot_results.md` and `experiments/feedback_pilot_analysis_2026-07-21.json`.
+
 ## Consequences for expansion to approximately 50 tasks
 
 Every new or rebuilt task must pass the following gate before it counts toward the target:

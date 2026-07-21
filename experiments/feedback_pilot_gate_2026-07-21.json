@@ -1,0 +1,1203 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_SECURE_EVAL",
+  "evidence_scope": "MODEL_PERFORMANCE",
+  "created_at": "2026-07-21T21:33:03.610184+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "e59612b169762f7217d5ea4967a3cd2b32803e39",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/home/azureuser/.local/bin/python3.10",
+      "/home/azureuser/workspace-gzy/zyf/frontier-science/scripts/batch_evolve.py",
+      "--all",
+      "--tasks",
+      "QuantumControl/GateSynthesis",
+      "--algorithms",
+      "greedy_rewrite",
+      "--feedback-modes",
+      "normal,selection_blind",
+      "--seeds",
+      "0,1,2",
+      "--budget",
+      "3",
+      "--timeout",
+      "180",
+      "--workdir",
+      "runs/feedback_pilot_gate_20260721",
+      "--output",
+      "experiments/feedback_pilot_gate_2026-07-21.json"
+    ]
+  },
+  "environment": {
+    "python": "3.10.20 (main, Apr  7 2026, 20:44:18) [Clang 22.1.1 ]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.31"
+  },
+  "config": {
+    "tasks": [
+      "QuantumControl/GateSynthesis"
+    ],
+    "algorithms": [
+      "greedy_rewrite"
+    ],
+    "feedback_modes": [
+      "normal",
+      "selection_blind"
+    ],
+    "condition_order": "as_listed_for_even_seeds_reversed_for_odd_seeds",
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "budget": 3,
+    "timeout_s": 180.0,
+    "work_root": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/feedback_pilot_gate_20260721",
+    "llm_condition_sha256": "5b0df4671481f6b3505155bc6c5654a64c4da5591422fb806904e7d0f44fc4d2",
+    "llm": {
+      "wire": "responses",
+      "endpoint_sha256": "b22995a1fcaf8ad713ac37716f006c717313dfdebd357ac02a077a5582650bb6",
+      "model": "gpt-5.5",
+      "max_output_tokens": 16000,
+      "temperature": null,
+      "reasoning_effort": "low",
+      "input_cost_per_million": null,
+      "output_cost_per_million": null,
+      "server_side_seed_control": false
+    }
+  },
+  "runs": [
+    {
+      "task": "QuantumControl/GateSynthesis",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 0,
+      "baseline": 0.0,
+      "best": 0.9999999999999801,
+      "accepted": 3,
+      "evaluated": 4,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/feedback_pilot_gate_20260721/QuantumControl__GateSynthesis/greedy_rewrite/normal/seed_0",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 4,
+        "budget_units": 4,
+        "best_score": 0.9999999999999801,
+        "best_so_far_auc": 0.7499999992385772,
+        "valid_rate": 1.0,
+        "accepted": 3,
+        "wall_seconds": 275.25463424809277,
+        "llm": {
+          "calls": 3,
+          "provider_usage_records": 3,
+          "input_tokens": 7231,
+          "output_tokens": 8947,
+          "total_tokens": 16178,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "QuantumControl/GateSynthesis",
+        "seed": 0,
+        "baseline_score": 0.0,
+        "budget": 3,
+        "feedback_mode": "normal",
+        "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "online_incumbent"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 1,
+        "trajectory_sha256": "0b9176c074d4005a119b29df53eb5c93d845298386412857f369204aecb83b3e",
+        "events": [
+          {
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "695aae6af13b7a6af67ba66c7c1d0967f640827b5485bba3c72988b0f54ef94b",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.0,
+              "robustness_score": 0.0,
+              "development_validation_gap": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "heldout_feasibility_rate": 1.0,
+              "mean_nominal_process_fidelity": 0.18560263808702554,
+              "mean_worst_shifted_process_fidelity": 0.16622687071756456,
+              "raw_score": 0.0
+            },
+            "algorithm_metadata": {},
+            "error": null
+          },
+          {
+            "step": 1,
+            "oracle_calls": 2,
+            "budget_units": 2,
+            "score": 0.9999999969543489,
+            "best_score": 0.9999999969543489,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "8504cf7c7c83b59097949c9d7448598ef9e5934fce1ff28539d8cf2ac271f03c",
+            "parent_sha256": "695aae6af13b7a6af67ba66c7c1d0967f640827b5485bba3c72988b0f54ef94b",
+            "metrics": {
+              "combined_score": 0.9999999969543489,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.9999999969543489,
+              "robustness_score": 0.9584044943810468,
+              "development_validation_gap": 0.041595502573302134,
+              "heldout_policy_score": 0.9999997692571405,
+              "heldout_robustness_score": 0.9852333849201551,
+              "heldout_feasibility_rate": 1.0,
+              "mean_nominal_process_fidelity": 0.9999999976221468,
+              "mean_worst_shifted_process_fidelity": 0.9664604244119006,
+              "raw_score": 0.9999999969543489
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 1
+            },
+            "error": null
+          },
+          {
+            "step": 2,
+            "oracle_calls": 3,
+            "budget_units": 3,
+            "score": 0.9999999999999799,
+            "best_score": 0.9999999999999799,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "2291097872633204023b328fb90e668d46c3b971ed63677696ab36e7b9cc45e0",
+            "parent_sha256": "8504cf7c7c83b59097949c9d7448598ef9e5934fce1ff28539d8cf2ac271f03c",
+            "metrics": {
+              "combined_score": 0.9999999999999799,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.9999999999999799,
+              "robustness_score": 0.9761670927741517,
+              "development_validation_gap": 0.023832907225828204,
+              "heldout_policy_score": 0.9999999999998397,
+              "heldout_robustness_score": 0.9847021502167086,
+              "heldout_feasibility_rate": 1.0,
+              "mean_nominal_process_fidelity": 0.9999999999999836,
+              "mean_worst_shifted_process_fidelity": 0.9817494365619375,
+              "raw_score": 0.9999999999999799
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 2
+            },
+            "error": null
+          },
+          {
+            "step": 3,
+            "oracle_calls": 4,
+            "budget_units": 4,
+            "score": 0.9999999999999801,
+            "best_score": 0.9999999999999801,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "7cc3b7f195cc1a8ab011ac419688025659911fe56f30328312811ed59fcaa9a1",
+            "parent_sha256": "2291097872633204023b328fb90e668d46c3b971ed63677696ab36e7b9cc45e0",
+            "metrics": {
+              "combined_score": 0.9999999999999801,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.9999999999999801,
+              "robustness_score": 0.9761670929081874,
+              "development_validation_gap": 0.023832907091792754,
+              "heldout_policy_score": 0.9999999999999841,
+              "heldout_robustness_score": 0.9846692977196294,
+              "heldout_feasibility_rate": 1.0,
+              "mean_nominal_process_fidelity": 0.9999999999999838,
+              "mean_worst_shifted_process_fidelity": 0.9817494366648127,
+              "raw_score": 0.9999999999999801
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 3
+            },
+            "error": null
+          }
+        ]
+      }
+    },
+    {
+      "task": "QuantumControl/GateSynthesis",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "selection_blind",
+      "seed": 0,
+      "baseline": 0.0,
+      "best": 0.9999944150518771,
+      "accepted": 2,
+      "evaluated": 4,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/feedback_pilot_gate_20260721/QuantumControl__GateSynthesis/greedy_rewrite/selection_blind/seed_0",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 4,
+        "budget_units": 4,
+        "best_score": 0.9999944150518771,
+        "best_so_far_auc": 0.6874972075058332,
+        "valid_rate": 1.0,
+        "accepted": 2,
+        "wall_seconds": 110.73461083136499,
+        "llm": {
+          "calls": 3,
+          "provider_usage_records": 3,
+          "input_tokens": 2697,
+          "output_tokens": 8064,
+          "total_tokens": 10761,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "QuantumControl/GateSynthesis",
+        "seed": 0,
+        "baseline_score": 0.0,
+        "budget": 3,
+        "feedback_mode": "selection_blind",
+        "feedback_scope": "open-loop proposal batch: every proposal sees the frozen baseline program and its allowlisted baseline metrics; evaluated scores are retained only for offline best-of-batch analysis and never change a later parent or prompt; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "offline_best_of_open_loop_batch"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 1,
+        "trajectory_sha256": "8b445f7a6709b30629f919412581a6431aaaa26423924fff3bf4848ef4847c20",
+        "events": [
+          {
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "695aae6af13b7a6af67ba66c7c1d0967f640827b5485bba3c72988b0f54ef94b",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.0,
+              "robustness_score": 0.0,
+              "development_validation_gap": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "heldout_feasibility_rate": 1.0,
+              "mean_nominal_process_fidelity": 0.18560263808702554,
+              "mean_worst_shifted_process_fidelity": 0.16622687071756456,
+              "raw_score": 0.0
+            },
+            "algorithm_metadata": {},
+            "error": null
+          },
+          {
+            "step": 1,
+            "oracle_calls": 2,
+            "budget_units": 2,
+            "score": 0.7499999999195789,
+            "best_score": 0.7499999999195789,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "28c823ea24c9929d0dd55ff1a2865adcf7b864de432826ca6392c08d03e9ae95",
+            "parent_sha256": "695aae6af13b7a6af67ba66c7c1d0967f640827b5485bba3c72988b0f54ef94b",
+            "metrics": {
+              "combined_score": 0.7499999999195789,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.7499999999195789,
+              "robustness_score": 0.7347782887104809,
+              "development_validation_gap": 0.015221711209097988,
+              "heldout_policy_score": 0.9954690558749384,
+              "heldout_robustness_score": 0.9540343670912859,
+              "heldout_feasibility_rate": 1.0,
+              "mean_nominal_process_fidelity": 0.8055292897971447,
+              "mean_worst_shifted_process_fidelity": 0.7873379621322453,
+              "raw_score": 0.7499999999195789
+            },
+            "algorithm_metadata": {
+              "selection_policy": "offline_best_of_open_loop_batch",
+              "accepted_semantics": "offline_best_update",
+              "proposal_slot": 1
+            },
+            "error": null
+          },
+          {
+            "step": 2,
+            "oracle_calls": 3,
+            "budget_units": 3,
+            "score": 0.9999944150518771,
+            "best_score": 0.9999944150518771,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "ca8097e90e9dc74610346b3553415c7dbfb53da824666d74e4b2a751635ce36d",
+            "parent_sha256": "695aae6af13b7a6af67ba66c7c1d0967f640827b5485bba3c72988b0f54ef94b",
+            "metrics": {
+              "combined_score": 0.9999944150518771,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.9999944150518771,
+              "robustness_score": 0.9452966226391641,
+              "development_validation_gap": 0.054697792412713,
+              "heldout_policy_score": 0.9930728483207047,
+              "heldout_robustness_score": 0.953404983040717,
+              "heldout_feasibility_rate": 1.0,
+              "mean_nominal_process_fidelity": 0.9999956555613593,
+              "mean_worst_shifted_process_fidelity": 0.9559108562951102,
+              "raw_score": 0.9999944150518771
+            },
+            "algorithm_metadata": {
+              "selection_policy": "offline_best_of_open_loop_batch",
+              "accepted_semantics": "offline_best_update",
+              "proposal_slot": 2
+            },
+            "error": null
+          },
+          {
+            "step": 3,
+            "oracle_calls": 4,
+            "budget_units": 4,
+            "score": 0.9191759043779603,
+            "best_score": 0.9999944150518771,
+            "valid": true,
+            "accepted": false,
+            "candidate_sha256": "dea6e79ddd34434618acdfb8433a88c050e417f4df403af8ebf9aa5a0b96fafd",
+            "parent_sha256": "695aae6af13b7a6af67ba66c7c1d0967f640827b5485bba3c72988b0f54ef94b",
+            "metrics": {
+              "combined_score": 0.9191759043779603,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.9191759043779603,
+              "robustness_score": 0.8717133210170789,
+              "development_validation_gap": 0.04746258336088138,
+              "heldout_policy_score": 0.9999991614927822,
+              "heldout_robustness_score": 0.9811111116446507,
+              "heldout_feasibility_rate": 1.0,
+              "mean_nominal_process_fidelity": 0.921829018814083,
+              "mean_worst_shifted_process_fidelity": 0.8802207235468226,
+              "raw_score": 0.9191759043779603
+            },
+            "algorithm_metadata": {
+              "selection_policy": "offline_best_of_open_loop_batch",
+              "accepted_semantics": "offline_best_update",
+              "proposal_slot": 3
+            },
+            "error": null
+          }
+        ]
+      }
+    },
+    {
+      "task": "QuantumControl/GateSynthesis",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "selection_blind",
+      "seed": 1,
+      "baseline": 0.0,
+      "best": 0.9999999999492337,
+      "accepted": 3,
+      "evaluated": 4,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/feedback_pilot_gate_20260721/QuantumControl__GateSynthesis/greedy_rewrite/selection_blind/seed_1",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 4,
+        "budget_units": 4,
+        "best_score": 0.9999999999492337,
+        "best_so_far_auc": 0.749999999882464,
+        "valid_rate": 1.0,
+        "accepted": 3,
+        "wall_seconds": 111.66394357196987,
+        "llm": {
+          "calls": 3,
+          "provider_usage_records": 3,
+          "input_tokens": 2697,
+          "output_tokens": 8696,
+          "total_tokens": 11393,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "QuantumControl/GateSynthesis",
+        "seed": 1,
+        "baseline_score": 0.0,
+        "budget": 3,
+        "feedback_mode": "selection_blind",
+        "feedback_scope": "open-loop proposal batch: every proposal sees the frozen baseline program and its allowlisted baseline metrics; evaluated scores are retained only for offline best-of-batch analysis and never change a later parent or prompt; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "offline_best_of_open_loop_batch"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 1,
+        "trajectory_sha256": "c8b940fd01255569ba6190bf9a4fa116a1df12b5e32876efc3abe7284ab1a541",
+        "events": [
+          {
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "695aae6af13b7a6af67ba66c7c1d0967f640827b5485bba3c72988b0f54ef94b",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.0,
+              "robustness_score": 0.0,
+              "development_validation_gap": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "heldout_feasibility_rate": 1.0,
+              "mean_nominal_process_fidelity": 0.18560263808702554,
+              "mean_worst_shifted_process_fidelity": 0.16622687071756456,
+              "raw_score": 0.0
+            },
+            "algorithm_metadata": {},
+            "error": null
+          },
+          {
+            "step": 1,
+            "oracle_calls": 2,
+            "budget_units": 2,
+            "score": 0.9999999996360616,
+            "best_score": 0.9999999996360616,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "b51d58c49fd6e7d8945b1566aac4f2be40c9defd5ac5e549609aaa20ca220d35",
+            "parent_sha256": "695aae6af13b7a6af67ba66c7c1d0967f640827b5485bba3c72988b0f54ef94b",
+            "metrics": {
+              "combined_score": 0.9999999996360616,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.9999999996360616,
+              "robustness_score": 0.9712665910051929,
+              "development_validation_gap": 0.028733408630868706,
+              "heldout_policy_score": 0.9999999927824412,
+              "heldout_robustness_score": 0.9844322756579544,
+              "heldout_feasibility_rate": 1.0,
+              "mean_nominal_process_fidelity": 0.9999999996811205,
+              "mean_worst_shifted_process_fidelity": 0.9780975343329814,
+              "raw_score": 0.9999999996360616
+            },
+            "algorithm_metadata": {
+              "selection_policy": "offline_best_of_open_loop_batch",
+              "accepted_semantics": "offline_best_update",
+              "proposal_slot": 1
+            },
+            "error": null
+          },
+          {
+            "step": 2,
+            "oracle_calls": 3,
+            "budget_units": 3,
+            "score": 0.9999999999445611,
+            "best_score": 0.9999999999445611,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "24a18b4c2dfbfdc7348edcef47379666efaee28b46fb7ce336d988ae0e50d811",
+            "parent_sha256": "695aae6af13b7a6af67ba66c7c1d0967f640827b5485bba3c72988b0f54ef94b",
+            "metrics": {
+              "combined_score": 0.9999999999445611,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.9999999999445611,
+              "robustness_score": 0.9709026966574023,
+              "development_validation_gap": 0.02909730328715887,
+              "heldout_policy_score": 0.9999999997222729,
+              "heldout_robustness_score": 0.9819618388714648,
+              "heldout_feasibility_rate": 1.0,
+              "mean_nominal_process_fidelity": 0.9999999999522593,
+              "mean_worst_shifted_process_fidelity": 0.9768833268318118,
+              "raw_score": 0.9999999999445611
+            },
+            "algorithm_metadata": {
+              "selection_policy": "offline_best_of_open_loop_batch",
+              "accepted_semantics": "offline_best_update",
+              "proposal_slot": 2
+            },
+            "error": null
+          },
+          {
+            "step": 3,
+            "oracle_calls": 4,
+            "budget_units": 4,
+            "score": 0.9999999999492337,
+            "best_score": 0.9999999999492337,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "5f05f21d899175698c780dcb4303104ce797c633ad565a6a573fcf7707a3f2db",
+            "parent_sha256": "695aae6af13b7a6af67ba66c7c1d0967f640827b5485bba3c72988b0f54ef94b",
+            "metrics": {
+              "combined_score": 0.9999999999492337,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.9999999999492337,
+              "robustness_score": 0.9735313209183303,
+              "development_validation_gap": 0.02646867903090344,
+              "heldout_policy_score": 0.9999999955383361,
+              "heldout_robustness_score": 0.9845558309935011,
+              "heldout_feasibility_rate": 1.0,
+              "mean_nominal_process_fidelity": 0.999999999957253,
+              "mean_worst_shifted_process_fidelity": 0.979793662367707,
+              "raw_score": 0.9999999999492337
+            },
+            "algorithm_metadata": {
+              "selection_policy": "offline_best_of_open_loop_batch",
+              "accepted_semantics": "offline_best_update",
+              "proposal_slot": 3
+            },
+            "error": null
+          }
+        ]
+      }
+    },
+    {
+      "task": "QuantumControl/GateSynthesis",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 1,
+      "baseline": 0.0,
+      "best": 0.9999999999999983,
+      "accepted": 3,
+      "evaluated": 4,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/feedback_pilot_gate_20260721/QuantumControl__GateSynthesis/greedy_rewrite/normal/seed_1",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 4,
+        "budget_units": 4,
+        "best_score": 0.9999999999999983,
+        "best_so_far_auc": 0.749999984501217,
+        "valid_rate": 1.0,
+        "accepted": 3,
+        "wall_seconds": 142.5937024001032,
+        "llm": {
+          "calls": 3,
+          "provider_usage_records": 3,
+          "input_tokens": 8418,
+          "output_tokens": 9954,
+          "total_tokens": 18372,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "QuantumControl/GateSynthesis",
+        "seed": 1,
+        "baseline_score": 0.0,
+        "budget": 3,
+        "feedback_mode": "normal",
+        "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "online_incumbent"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 1,
+        "trajectory_sha256": "4ad47ff38b2d2c8018554dc7e8b6b70d423d2bda8bc767cd87147989c6536caf",
+        "events": [
+          {
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "695aae6af13b7a6af67ba66c7c1d0967f640827b5485bba3c72988b0f54ef94b",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.0,
+              "robustness_score": 0.0,
+              "development_validation_gap": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "heldout_feasibility_rate": 1.0,
+              "mean_nominal_process_fidelity": 0.18560263808702554,
+              "mean_worst_shifted_process_fidelity": 0.16622687071756456,
+              "raw_score": 0.0
+            },
+            "algorithm_metadata": {},
+            "error": null
+          },
+          {
+            "step": 1,
+            "oracle_calls": 2,
+            "budget_units": 2,
+            "score": 0.9999999380050748,
+            "best_score": 0.9999999380050748,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "a3804cf82be80868adbf82f650dc3541d00eb25805e83eab14650ed44addbbeb",
+            "parent_sha256": "695aae6af13b7a6af67ba66c7c1d0967f640827b5485bba3c72988b0f54ef94b",
+            "metrics": {
+              "combined_score": 0.9999999380050748,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.9999999380050748,
+              "robustness_score": 0.973899816029865,
+              "development_validation_gap": 0.026100121975209833,
+              "heldout_policy_score": 0.9999999536121489,
+              "heldout_robustness_score": 0.9843824265744378,
+              "heldout_feasibility_rate": 1.0,
+              "mean_nominal_process_fidelity": 0.9999999501948518,
+              "mean_worst_shifted_process_fidelity": 0.9801355863005152,
+              "raw_score": 0.9999999380050748
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 1
+            },
+            "error": null
+          },
+          {
+            "step": 2,
+            "oracle_calls": 3,
+            "budget_units": 3,
+            "score": 0.9999999999997948,
+            "best_score": 0.9999999999997948,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "78a35e07c20b33aa36e1a76a3c4556b99aa02aeb1ea1315ef4d97e9048f20fd8",
+            "parent_sha256": "a3804cf82be80868adbf82f650dc3541d00eb25805e83eab14650ed44addbbeb",
+            "metrics": {
+              "combined_score": 0.9999999999997948,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.9999999999997948,
+              "robustness_score": 0.9712946103556631,
+              "development_validation_gap": 0.028705389644131718,
+              "heldout_policy_score": 0.9999999999998817,
+              "heldout_robustness_score": 0.9848539855605869,
+              "heldout_feasibility_rate": 1.0,
+              "mean_nominal_process_fidelity": 0.9999999999998391,
+              "mean_worst_shifted_process_fidelity": 0.9781496412929959,
+              "raw_score": 0.9999999999997948
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 2
+            },
+            "error": null
+          },
+          {
+            "step": 3,
+            "oracle_calls": 4,
+            "budget_units": 4,
+            "score": 0.9999999999999983,
+            "best_score": 0.9999999999999983,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "2f551d360af84ed470e97073a2f8c70f7533f478b99c73bcc6d0a67d35df69ae",
+            "parent_sha256": "78a35e07c20b33aa36e1a76a3c4556b99aa02aeb1ea1315ef4d97e9048f20fd8",
+            "metrics": {
+              "combined_score": 0.9999999999999983,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.9999999999999983,
+              "robustness_score": 0.9738514963477557,
+              "development_validation_gap": 0.02614850365224264,
+              "heldout_policy_score": 0.9999999999999991,
+              "heldout_robustness_score": 0.9692785973608918,
+              "heldout_feasibility_rate": 1.0,
+              "mean_nominal_process_fidelity": 0.9999999999999987,
+              "mean_worst_shifted_process_fidelity": 0.9812698080015403,
+              "raw_score": 0.9999999999999983
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 3
+            },
+            "error": null
+          }
+        ]
+      }
+    },
+    {
+      "task": "QuantumControl/GateSynthesis",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 2,
+      "baseline": 0.0,
+      "best": 0.9999999999999969,
+      "accepted": 3,
+      "evaluated": 4,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/feedback_pilot_gate_20260721/QuantumControl__GateSynthesis/greedy_rewrite/normal/seed_2",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 4,
+        "budget_units": 4,
+        "best_score": 0.9999999999999969,
+        "best_so_far_auc": 0.7499999994942363,
+        "valid_rate": 1.0,
+        "accepted": 3,
+        "wall_seconds": 124.57468296866864,
+        "llm": {
+          "calls": 3,
+          "provider_usage_records": 3,
+          "input_tokens": 8095,
+          "output_tokens": 9502,
+          "total_tokens": 17597,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "QuantumControl/GateSynthesis",
+        "seed": 2,
+        "baseline_score": 0.0,
+        "budget": 3,
+        "feedback_mode": "normal",
+        "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "online_incumbent"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 1,
+        "trajectory_sha256": "bb1ae8aaa0037a1b7649f01529b464930863d6d09273924a30dc8df7dfe48dc8",
+        "events": [
+          {
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "695aae6af13b7a6af67ba66c7c1d0967f640827b5485bba3c72988b0f54ef94b",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.0,
+              "robustness_score": 0.0,
+              "development_validation_gap": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "heldout_feasibility_rate": 1.0,
+              "mean_nominal_process_fidelity": 0.18560263808702554,
+              "mean_worst_shifted_process_fidelity": 0.16622687071756456,
+              "raw_score": 0.0
+            },
+            "algorithm_metadata": {},
+            "error": null
+          },
+          {
+            "step": 1,
+            "oracle_calls": 2,
+            "budget_units": 2,
+            "score": 0.9999999979769614,
+            "best_score": 0.9999999979769614,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "7694b912d342e61934d8218c3f8a1fe4679ed70e5c03120b8f5afc2b31efc8f0",
+            "parent_sha256": "695aae6af13b7a6af67ba66c7c1d0967f640827b5485bba3c72988b0f54ef94b",
+            "metrics": {
+              "combined_score": 0.9999999979769614,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.9999999979769614,
+              "robustness_score": 0.9662862500851095,
+              "development_validation_gap": 0.033713747891851886,
+              "heldout_policy_score": 0.9999999509987652,
+              "heldout_robustness_score": 0.9846140024755051,
+              "heldout_feasibility_rate": 1.0,
+              "mean_nominal_process_fidelity": 0.9999999980621741,
+              "mean_worst_shifted_process_fidelity": 0.9734134220495743,
+              "raw_score": 0.9999999979769614
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 1
+            },
+            "error": null
+          },
+          {
+            "step": 2,
+            "oracle_calls": 3,
+            "budget_units": 3,
+            "score": 0.9999999999999872,
+            "best_score": 0.9999999999999872,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "d3685b249035bd8ca0343d0b0f93c5329e79fce9b84e9ead846c587528873cbb",
+            "parent_sha256": "7694b912d342e61934d8218c3f8a1fe4679ed70e5c03120b8f5afc2b31efc8f0",
+            "metrics": {
+              "combined_score": 0.9999999999999872,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.9999999999999872,
+              "robustness_score": 0.9652712478162709,
+              "development_validation_gap": 0.034728752183716294,
+              "heldout_policy_score": 0.9999999999991189,
+              "heldout_robustness_score": 0.9847955120483061,
+              "heldout_feasibility_rate": 1.0,
+              "mean_nominal_process_fidelity": 0.999999999999988,
+              "mean_worst_shifted_process_fidelity": 0.9726248880972994,
+              "raw_score": 0.9999999999999872
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 2
+            },
+            "error": null
+          },
+          {
+            "step": 3,
+            "oracle_calls": 4,
+            "budget_units": 4,
+            "score": 0.9999999999999969,
+            "best_score": 0.9999999999999969,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "a6630c3d52046775cdc93ed7352ee4ab8131356aad28be9de0708f4601708c39",
+            "parent_sha256": "d3685b249035bd8ca0343d0b0f93c5329e79fce9b84e9ead846c587528873cbb",
+            "metrics": {
+              "combined_score": 0.9999999999999969,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.9999999999999969,
+              "robustness_score": 0.9726303953792508,
+              "development_validation_gap": 0.027369604620746113,
+              "heldout_policy_score": 0.9999999999999878,
+              "heldout_robustness_score": 0.9847236393603689,
+              "heldout_feasibility_rate": 1.0,
+              "mean_nominal_process_fidelity": 0.9999999999999971,
+              "mean_worst_shifted_process_fidelity": 0.978258137587347,
+              "raw_score": 0.9999999999999969
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 3
+            },
+            "error": null
+          }
+        ]
+      }
+    },
+    {
+      "task": "QuantumControl/GateSynthesis",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "selection_blind",
+      "seed": 2,
+      "baseline": 0.0,
+      "best": 0.9999999996552749,
+      "accepted": 1,
+      "evaluated": 4,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/feedback_pilot_gate_20260721/QuantumControl__GateSynthesis/greedy_rewrite/selection_blind/seed_2",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 4,
+        "budget_units": 4,
+        "best_score": 0.9999999996552749,
+        "best_so_far_auc": 0.7499999997414561,
+        "valid_rate": 1.0,
+        "accepted": 1,
+        "wall_seconds": 117.82468443922698,
+        "llm": {
+          "calls": 3,
+          "provider_usage_records": 3,
+          "input_tokens": 2697,
+          "output_tokens": 8490,
+          "total_tokens": 11187,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "QuantumControl/GateSynthesis",
+        "seed": 2,
+        "baseline_score": 0.0,
+        "budget": 3,
+        "feedback_mode": "selection_blind",
+        "feedback_scope": "open-loop proposal batch: every proposal sees the frozen baseline program and its allowlisted baseline metrics; evaluated scores are retained only for offline best-of-batch analysis and never change a later parent or prompt; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "offline_best_of_open_loop_batch"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 1,
+        "trajectory_sha256": "16210f4716cf404370161e1a8bf4678a5c88747c91e4a7ef0654b1a7faaf1a94",
+        "events": [
+          {
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "695aae6af13b7a6af67ba66c7c1d0967f640827b5485bba3c72988b0f54ef94b",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.0,
+              "robustness_score": 0.0,
+              "development_validation_gap": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "heldout_feasibility_rate": 1.0,
+              "mean_nominal_process_fidelity": 0.18560263808702554,
+              "mean_worst_shifted_process_fidelity": 0.16622687071756456,
+              "raw_score": 0.0
+            },
+            "algorithm_metadata": {},
+            "error": null
+          },
+          {
+            "step": 1,
+            "oracle_calls": 2,
+            "budget_units": 2,
+            "score": 0.9999999996552749,
+            "best_score": 0.9999999996552749,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "b266639dd9dc386af9cd19af8381e0ddd9091f0adc57eafdbfae80f9c5b93bfd",
+            "parent_sha256": "695aae6af13b7a6af67ba66c7c1d0967f640827b5485bba3c72988b0f54ef94b",
+            "metrics": {
+              "combined_score": 0.9999999996552749,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.9999999996552749,
+              "robustness_score": 0.9685699686665467,
+              "development_validation_gap": 0.03143003098872821,
+              "heldout_policy_score": 0.9999999996150576,
+              "heldout_robustness_score": 0.9817297502697037,
+              "heldout_feasibility_rate": 1.0,
+              "mean_nominal_process_fidelity": 0.99999999970916,
+              "mean_worst_shifted_process_fidelity": 0.9750935690388962,
+              "raw_score": 0.9999999996552749
+            },
+            "algorithm_metadata": {
+              "selection_policy": "offline_best_of_open_loop_batch",
+              "accepted_semantics": "offline_best_update",
+              "proposal_slot": 1
+            },
+            "error": null
+          },
+          {
+            "step": 2,
+            "oracle_calls": 3,
+            "budget_units": 3,
+            "score": 0.9977790826102644,
+            "best_score": 0.9999999996552749,
+            "valid": true,
+            "accepted": false,
+            "candidate_sha256": "94855e9e96b2a1e74c34c9a37111c3e89e815afba4e8a2cf597c23006d162a2c",
+            "parent_sha256": "695aae6af13b7a6af67ba66c7c1d0967f640827b5485bba3c72988b0f54ef94b",
+            "metrics": {
+              "combined_score": 0.9977790826102644,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.9977790826102644,
+              "robustness_score": 0.9502639679732278,
+              "development_validation_gap": 0.047515114637036615,
+              "heldout_policy_score": 0.9952194067503962,
+              "heldout_robustness_score": 0.9647926570146836,
+              "heldout_feasibility_rate": 1.0,
+              "mean_nominal_process_fidelity": 0.998272385974253,
+              "mean_worst_shifted_process_fidelity": 0.9599497194232284,
+              "raw_score": 0.9977790826102644
+            },
+            "algorithm_metadata": {
+              "selection_policy": "offline_best_of_open_loop_batch",
+              "accepted_semantics": "offline_best_update",
+              "proposal_slot": 2
+            },
+            "error": null
+          },
+          {
+            "step": 3,
+            "oracle_calls": 4,
+            "budget_units": 4,
+            "score": 0.7499999859620536,
+            "best_score": 0.9999999996552749,
+            "valid": true,
+            "accepted": false,
+            "candidate_sha256": "f09a100cfc7b3b487a0dee5be176ec9f339a43699396656df705d04a00bd5655",
+            "parent_sha256": "695aae6af13b7a6af67ba66c7c1d0967f640827b5485bba3c72988b0f54ef94b",
+            "metrics": {
+              "combined_score": 0.7499999859620536,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.7499999859620536,
+              "robustness_score": 0.7386973027662895,
+              "development_validation_gap": 0.011302683195764107,
+              "heldout_policy_score": 0.9999968315675603,
+              "heldout_robustness_score": 0.983763191928128,
+              "heldout_feasibility_rate": 1.0,
+              "mean_nominal_process_fidelity": 0.8055292762977964,
+              "mean_worst_shifted_process_fidelity": 0.7909493198064621,
+              "raw_score": 0.7499999859620536
+            },
+            "algorithm_metadata": {
+              "selection_policy": "offline_best_of_open_loop_batch",
+              "accepted_semantics": "offline_best_update",
+              "proposal_slot": 3
+            },
+            "error": null
+          }
+        ]
+      }
+    }
+  ],
+  "aggregate": {
+    "attempt_count": 6,
+    "superseded_attempts": 0,
+    "successful_runs": 6,
+    "failed_runs": 0,
+    "by_condition": {
+      "QuantumControl/GateSynthesis|greedy_rewrite|normal": {
+        "n": 3,
+        "best_score": {
+          "n": 3,
+          "mean": 0.9999999999999917,
+          "ci95_low": 0.9999999999999665,
+          "ci95_high": 1.0000000000000169
+        },
+        "best_so_far_auc": {
+          "n": 3,
+          "mean": 0.7499999944113435,
+          "ci95_low": 0.7499999730873413,
+          "ci95_high": 0.7500000157353456
+        },
+        "budget_units": {
+          "n": 3,
+          "mean": 4.0,
+          "ci95_low": 4.0,
+          "ci95_high": 4.0
+        },
+        "oracle_calls": {
+          "n": 3,
+          "mean": 4.0,
+          "ci95_low": 4.0,
+          "ci95_high": 4.0
+        },
+        "wall_seconds": {
+          "n": 3,
+          "mean": 180.80767320562154,
+          "ci95_low": -23.623966802743098,
+          "ci95_high": 385.2393132139862
+        },
+        "total_tokens": {
+          "n": 3,
+          "mean": 17382.333333333332,
+          "ci95_low": 14618.15640703343,
+          "ci95_high": 20146.510259633236
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      },
+      "QuantumControl/GateSynthesis|greedy_rewrite|selection_blind": {
+        "n": 3,
+        "best_score": {
+          "n": 3,
+          "mean": 0.9999981382187952,
+          "ci95_low": 0.9999901278251626,
+          "ci95_high": 1.0000061486124279
+        },
+        "best_so_far_auc": {
+          "n": 3,
+          "mean": 0.7291657357099178,
+          "ci95_low": 0.6395158972788298,
+          "ci95_high": 0.8188155741410058
+        },
+        "budget_units": {
+          "n": 3,
+          "mean": 4.0,
+          "ci95_low": 4.0,
+          "ci95_high": 4.0
+        },
+        "oracle_calls": {
+          "n": 3,
+          "mean": 4.0,
+          "ci95_low": 4.0,
+          "ci95_high": 4.0
+        },
+        "wall_seconds": {
+          "n": 3,
+          "mean": 113.40774628085394,
+          "ci95_low": 103.83484555104161,
+          "ci95_high": 122.98064701066627
+        },
+        "total_tokens": {
+          "n": 3,
+          "mean": 11113.666666666666,
+          "ci95_low": 10312.918047532185,
+          "ci95_high": 11914.415285801148
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      }
+    },
+    "overall": {
+      "best_score": {
+        "n": 6,
+        "mean": 0.9999990691093935,
+        "ci95_low": 0.9999966759930144,
+        "ci95_high": 1.0000014622257727
+      },
+      "best_so_far_auc": {
+        "n": 6,
+        "mean": 0.7395828650606306,
+        "ci95_low": 0.712800419945953,
+        "ci95_high": 0.7663653101753083
+      },
+      "budget_units": {
+        "n": 6,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "oracle_calls": {
+        "n": 6,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "wall_seconds": {
+        "n": 6,
+        "mean": 147.10770974323773,
+        "ci95_low": 80.08640907037785,
+        "ci95_high": 214.12901041609763
+      },
+      "total_tokens": {
+        "n": 6,
+        "mean": 14248.0,
+        "ci95_low": 10563.059684483018,
+        "ci95_high": 17932.940315516982
+      },
+      "estimated_cost_usd": {
+        "n": 0,
+        "mean": null,
+        "ci95_low": null,
+        "ci95_high": null
+      }
+    }
+  },
+  "completed_at": "2026-07-21T21:47:46.297833+00:00",
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}

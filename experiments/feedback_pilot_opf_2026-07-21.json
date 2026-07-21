@@ -1,0 +1,1167 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_SECURE_EVAL",
+  "evidence_scope": "MODEL_PERFORMANCE",
+  "created_at": "2026-07-21T21:33:03.704171+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "e59612b169762f7217d5ea4967a3cd2b32803e39",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/home/azureuser/.local/bin/python3.10",
+      "/home/azureuser/workspace-gzy/zyf/frontier-science/scripts/batch_evolve.py",
+      "--all",
+      "--tasks",
+      "PowerSystems/OptimalPowerFlow",
+      "--algorithms",
+      "greedy_rewrite",
+      "--feedback-modes",
+      "normal,selection_blind",
+      "--seeds",
+      "0,1,2",
+      "--budget",
+      "3",
+      "--timeout",
+      "180",
+      "--workdir",
+      "runs/feedback_pilot_opf_20260721",
+      "--output",
+      "experiments/feedback_pilot_opf_2026-07-21.json"
+    ]
+  },
+  "environment": {
+    "python": "3.10.20 (main, Apr  7 2026, 20:44:18) [Clang 22.1.1 ]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.31"
+  },
+  "config": {
+    "tasks": [
+      "PowerSystems/OptimalPowerFlow"
+    ],
+    "algorithms": [
+      "greedy_rewrite"
+    ],
+    "feedback_modes": [
+      "normal",
+      "selection_blind"
+    ],
+    "condition_order": "as_listed_for_even_seeds_reversed_for_odd_seeds",
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "budget": 3,
+    "timeout_s": 180.0,
+    "work_root": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/feedback_pilot_opf_20260721",
+    "llm_condition_sha256": "5b0df4671481f6b3505155bc6c5654a64c4da5591422fb806904e7d0f44fc4d2",
+    "llm": {
+      "wire": "responses",
+      "endpoint_sha256": "b22995a1fcaf8ad713ac37716f006c717313dfdebd357ac02a077a5582650bb6",
+      "model": "gpt-5.5",
+      "max_output_tokens": 16000,
+      "temperature": null,
+      "reasoning_effort": "low",
+      "input_cost_per_million": null,
+      "output_cost_per_million": null,
+      "server_side_seed_control": false
+    }
+  },
+  "runs": [
+    {
+      "task": "PowerSystems/OptimalPowerFlow",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 0,
+      "baseline": 0.0,
+      "best": 1.0,
+      "accepted": 3,
+      "evaluated": 4,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/feedback_pilot_opf_20260721/PowerSystems__OptimalPowerFlow/greedy_rewrite/normal/seed_0",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 4,
+        "budget_units": 4,
+        "best_score": 1.0,
+        "best_so_far_auc": 0.7499999999999687,
+        "valid_rate": 1.0,
+        "accepted": 3,
+        "wall_seconds": 222.51193981524557,
+        "llm": {
+          "calls": 3,
+          "provider_usage_records": 3,
+          "input_tokens": 8143,
+          "output_tokens": 10660,
+          "total_tokens": 18803,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "PowerSystems/OptimalPowerFlow",
+        "seed": 0,
+        "baseline_score": 0.0,
+        "budget": 3,
+        "feedback_mode": "normal",
+        "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "online_incumbent"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 1,
+        "trajectory_sha256": "02eab5e28341870de4f7eb9a437619048ce85fe1160d9523ab23155d66a6e933",
+        "events": [
+          {
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "e8e6f3d08c3a205d5e2ff308321131e4d5c7aa359fb677167322377a383bb8f5",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.0,
+              "robustness_score": 0.0,
+              "development_validation_gap": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "heldout_feasibility_rate": 1.0,
+              "mean_contingency_constraint_feasibility": 1.0,
+              "mean_contingency_feasibility_rate": 1.0,
+              "raw_score": 0.0
+            },
+            "algorithm_metadata": {},
+            "error": null
+          },
+          {
+            "step": 1,
+            "oracle_calls": 2,
+            "budget_units": 2,
+            "score": 0.9999999999998757,
+            "best_score": 0.9999999999998757,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "bdc37a8cb98f89c4242fb2b383bddf8cc81e8bc10ddcacb8a59ee3fdabc8518e",
+            "parent_sha256": "e8e6f3d08c3a205d5e2ff308321131e4d5c7aa359fb677167322377a383bb8f5",
+            "metrics": {
+              "combined_score": 0.9999999999998757,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.9999999999998757,
+              "robustness_score": 0.0313783162442345,
+              "development_validation_gap": 0.9686216837556412,
+              "heldout_policy_score": 0.9999999999999865,
+              "heldout_robustness_score": 7.329642967195609e-07,
+              "heldout_feasibility_rate": 1.0,
+              "mean_contingency_constraint_feasibility": 0.7791666666666667,
+              "mean_contingency_feasibility_rate": 0.11399711399711399,
+              "raw_score": 0.9999999999998757
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 1
+            },
+            "error": null
+          },
+          {
+            "step": 2,
+            "oracle_calls": 3,
+            "budget_units": 3,
+            "score": 0.9999999999999989,
+            "best_score": 0.9999999999999989,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "cab8deaf7d28aa4aa1f3b4b84d4a795f9586b15efcce342a87af60a3c285c419",
+            "parent_sha256": "bdc37a8cb98f89c4242fb2b383bddf8cc81e8bc10ddcacb8a59ee3fdabc8518e",
+            "metrics": {
+              "combined_score": 0.9999999999999989,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.9999999999999989,
+              "robustness_score": 0.031378316244234435,
+              "development_validation_gap": 0.9686216837557644,
+              "heldout_policy_score": 1.0,
+              "heldout_robustness_score": 7.329642967164794e-07,
+              "heldout_feasibility_rate": 1.0,
+              "mean_contingency_constraint_feasibility": 0.7791666666666667,
+              "mean_contingency_feasibility_rate": 0.11399711399711399,
+              "raw_score": 0.9999999999999989
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 2
+            },
+            "error": null
+          },
+          {
+            "step": 3,
+            "oracle_calls": 4,
+            "budget_units": 4,
+            "score": 1.0,
+            "best_score": 1.0,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "c0e7464e57e65af949ed29b6db81d159eaca8f0fb795a66de3da27e3b92dfbc3",
+            "parent_sha256": "cab8deaf7d28aa4aa1f3b4b84d4a795f9586b15efcce342a87af60a3c285c419",
+            "metrics": {
+              "combined_score": 1.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 1.0,
+              "robustness_score": 0.03137831624422907,
+              "development_validation_gap": 0.968621683755771,
+              "heldout_policy_score": 1.0,
+              "heldout_robustness_score": 7.329642967146761e-07,
+              "heldout_feasibility_rate": 1.0,
+              "mean_contingency_constraint_feasibility": 0.7791666666666667,
+              "mean_contingency_feasibility_rate": 0.11399711399711399,
+              "raw_score": 1.0
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 3
+            },
+            "error": null
+          }
+        ]
+      }
+    },
+    {
+      "task": "PowerSystems/OptimalPowerFlow",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "selection_blind",
+      "seed": 0,
+      "baseline": 0.0,
+      "best": 0.9999999999999961,
+      "accepted": 1,
+      "evaluated": 4,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/feedback_pilot_opf_20260721/PowerSystems__OptimalPowerFlow/greedy_rewrite/selection_blind/seed_0",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 4,
+        "budget_units": 4,
+        "best_score": 0.9999999999999961,
+        "best_so_far_auc": 0.49999999999999806,
+        "valid_rate": 0.5,
+        "accepted": 1,
+        "wall_seconds": 117.36650388408452,
+        "llm": {
+          "calls": 3,
+          "provider_usage_records": 3,
+          "input_tokens": 2922,
+          "output_tokens": 8962,
+          "total_tokens": 11884,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "PowerSystems/OptimalPowerFlow",
+        "seed": 0,
+        "baseline_score": 0.0,
+        "budget": 3,
+        "feedback_mode": "selection_blind",
+        "feedback_scope": "open-loop proposal batch: every proposal sees the frozen baseline program and its allowlisted baseline metrics; evaluated scores are retained only for offline best-of-batch analysis and never change a later parent or prompt; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "offline_best_of_open_loop_batch"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 1,
+        "trajectory_sha256": "0335b2e41a9647ec8a02e7aa932062d070d0f319a4aa6bd564a6e9b0a1643157",
+        "events": [
+          {
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "e8e6f3d08c3a205d5e2ff308321131e4d5c7aa359fb677167322377a383bb8f5",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.0,
+              "robustness_score": 0.0,
+              "development_validation_gap": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "heldout_feasibility_rate": 1.0,
+              "mean_contingency_constraint_feasibility": 1.0,
+              "mean_contingency_feasibility_rate": 1.0,
+              "raw_score": 0.0
+            },
+            "algorithm_metadata": {},
+            "error": null
+          },
+          {
+            "step": 1,
+            "oracle_calls": 2,
+            "budget_units": 2,
+            "score": -1e+18,
+            "best_score": 0.0,
+            "valid": false,
+            "accepted": false,
+            "candidate_sha256": "2ed1cd0ee3473975b17cf28a687881e501c0097728c474266d09268241258956",
+            "parent_sha256": "e8e6f3d08c3a205d5e2ff308321131e4d5c7aa359fb677167322377a383bb8f5",
+            "metrics": {
+              "combined_score": -1e+18,
+              "valid": 0.0,
+              "error_message": "frontier_science.secure_eval.CandidateError: candidate worker exited:"
+            },
+            "algorithm_metadata": {
+              "selection_policy": "offline_best_of_open_loop_batch",
+              "accepted_semantics": "offline_best_update",
+              "proposal_slot": 1
+            },
+            "error": "frontier_science.secure_eval.CandidateError: candidate worker exited:"
+          },
+          {
+            "step": 2,
+            "oracle_calls": 3,
+            "budget_units": 3,
+            "score": 0.9999999999999961,
+            "best_score": 0.9999999999999961,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "124d509090c103c28afae8e4271895ff019878b7959fdde50c8c18ef13ad186c",
+            "parent_sha256": "e8e6f3d08c3a205d5e2ff308321131e4d5c7aa359fb677167322377a383bb8f5",
+            "metrics": {
+              "combined_score": 0.9999999999999961,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.9999999999999961,
+              "robustness_score": 0.03137831624421683,
+              "development_validation_gap": 0.9686216837557793,
+              "heldout_policy_score": 0.9999999999999472,
+              "heldout_robustness_score": 7.329642968172314e-07,
+              "heldout_feasibility_rate": 1.0,
+              "mean_contingency_constraint_feasibility": 0.7791666666666667,
+              "mean_contingency_feasibility_rate": 0.11399711399711399,
+              "raw_score": 0.9999999999999961
+            },
+            "algorithm_metadata": {
+              "selection_policy": "offline_best_of_open_loop_batch",
+              "accepted_semantics": "offline_best_update",
+              "proposal_slot": 2
+            },
+            "error": null
+          },
+          {
+            "step": 3,
+            "oracle_calls": 4,
+            "budget_units": 4,
+            "score": -1e+18,
+            "best_score": 0.9999999999999961,
+            "valid": false,
+            "accepted": false,
+            "candidate_sha256": "7aa3c7713beb6fbf38a3183012eb74b1fdb77fe2b884910ed3e803be44ff86f6",
+            "parent_sha256": "e8e6f3d08c3a205d5e2ff308321131e4d5c7aa359fb677167322377a383bb8f5",
+            "metrics": {
+              "combined_score": -1e+18,
+              "valid": 0.0,
+              "error_message": "frontier_science.secure_eval.CandidateError: candidate worker exited:"
+            },
+            "algorithm_metadata": {
+              "selection_policy": "offline_best_of_open_loop_batch",
+              "accepted_semantics": "offline_best_update",
+              "proposal_slot": 3
+            },
+            "error": "frontier_science.secure_eval.CandidateError: candidate worker exited:"
+          }
+        ]
+      }
+    },
+    {
+      "task": "PowerSystems/OptimalPowerFlow",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "selection_blind",
+      "seed": 1,
+      "baseline": 0.0,
+      "best": 0.9999999999998722,
+      "accepted": 1,
+      "evaluated": 4,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/feedback_pilot_opf_20260721/PowerSystems__OptimalPowerFlow/greedy_rewrite/selection_blind/seed_1",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 4,
+        "budget_units": 4,
+        "best_score": 0.9999999999998722,
+        "best_so_far_auc": 0.7499999999999042,
+        "valid_rate": 1.0,
+        "accepted": 1,
+        "wall_seconds": 113.43870097864419,
+        "llm": {
+          "calls": 3,
+          "provider_usage_records": 3,
+          "input_tokens": 2922,
+          "output_tokens": 9536,
+          "total_tokens": 12458,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "PowerSystems/OptimalPowerFlow",
+        "seed": 1,
+        "baseline_score": 0.0,
+        "budget": 3,
+        "feedback_mode": "selection_blind",
+        "feedback_scope": "open-loop proposal batch: every proposal sees the frozen baseline program and its allowlisted baseline metrics; evaluated scores are retained only for offline best-of-batch analysis and never change a later parent or prompt; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "offline_best_of_open_loop_batch"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 1,
+        "trajectory_sha256": "5d3563c998fdbbaed38539771092f6cbbd00afa92fbe8e13ef3844a0244bd6db",
+        "events": [
+          {
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "e8e6f3d08c3a205d5e2ff308321131e4d5c7aa359fb677167322377a383bb8f5",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.0,
+              "robustness_score": 0.0,
+              "development_validation_gap": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "heldout_feasibility_rate": 1.0,
+              "mean_contingency_constraint_feasibility": 1.0,
+              "mean_contingency_feasibility_rate": 1.0,
+              "raw_score": 0.0
+            },
+            "algorithm_metadata": {},
+            "error": null
+          },
+          {
+            "step": 1,
+            "oracle_calls": 2,
+            "budget_units": 2,
+            "score": 0.9999999999998722,
+            "best_score": 0.9999999999998722,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "6ba010e4cf24aa6a16b18c1f2543cf288ab8442d40f412ba8c5d6b155f2f1a93",
+            "parent_sha256": "e8e6f3d08c3a205d5e2ff308321131e4d5c7aa359fb677167322377a383bb8f5",
+            "metrics": {
+              "combined_score": 0.9999999999998722,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.9999999999998722,
+              "robustness_score": 0.03137831624423376,
+              "development_validation_gap": 0.9686216837556385,
+              "heldout_policy_score": 0.9999999999999978,
+              "heldout_robustness_score": 7.32964296817126e-07,
+              "heldout_feasibility_rate": 1.0,
+              "mean_contingency_constraint_feasibility": 0.7791666666666667,
+              "mean_contingency_feasibility_rate": 0.11399711399711399,
+              "raw_score": 0.9999999999998722
+            },
+            "algorithm_metadata": {
+              "selection_policy": "offline_best_of_open_loop_batch",
+              "accepted_semantics": "offline_best_update",
+              "proposal_slot": 1
+            },
+            "error": null
+          },
+          {
+            "step": 2,
+            "oracle_calls": 3,
+            "budget_units": 3,
+            "score": 0.9999999999998717,
+            "best_score": 0.9999999999998722,
+            "valid": true,
+            "accepted": false,
+            "candidate_sha256": "d8bf30642a6df46cd4d9f4901546810fecaf4130304b8a9a301eb7e36c2dc71e",
+            "parent_sha256": "e8e6f3d08c3a205d5e2ff308321131e4d5c7aa359fb677167322377a383bb8f5",
+            "metrics": {
+              "combined_score": 0.9999999999998717,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.9999999999998717,
+              "robustness_score": 0.0313783162442339,
+              "development_validation_gap": 0.9686216837556377,
+              "heldout_policy_score": 1.0,
+              "heldout_robustness_score": 7.32964296816706e-07,
+              "heldout_feasibility_rate": 1.0,
+              "mean_contingency_constraint_feasibility": 0.7791666666666667,
+              "mean_contingency_feasibility_rate": 0.11399711399711399,
+              "raw_score": 0.9999999999998717
+            },
+            "algorithm_metadata": {
+              "selection_policy": "offline_best_of_open_loop_batch",
+              "accepted_semantics": "offline_best_update",
+              "proposal_slot": 2
+            },
+            "error": null
+          },
+          {
+            "step": 3,
+            "oracle_calls": 4,
+            "budget_units": 4,
+            "score": 0.9999999906419436,
+            "best_score": 0.9999999999998722,
+            "valid": true,
+            "accepted": false,
+            "candidate_sha256": "4193f6f0c7e9eaa3c82b29f10ab8a4c673f653d4fa3517ff85542a99b05b4081",
+            "parent_sha256": "e8e6f3d08c3a205d5e2ff308321131e4d5c7aa359fb677167322377a383bb8f5",
+            "metrics": {
+              "combined_score": 0.9999999906419436,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.9999999906419436,
+              "robustness_score": 0.03137831631257433,
+              "development_validation_gap": 0.9686216743293692,
+              "heldout_policy_score": 0.999999996375661,
+              "heldout_robustness_score": 7.329643089664785e-07,
+              "heldout_feasibility_rate": 1.0,
+              "mean_contingency_constraint_feasibility": 0.7791666666666667,
+              "mean_contingency_feasibility_rate": 0.11399711399711399,
+              "raw_score": 0.9999999906419436
+            },
+            "algorithm_metadata": {
+              "selection_policy": "offline_best_of_open_loop_batch",
+              "accepted_semantics": "offline_best_update",
+              "proposal_slot": 3
+            },
+            "error": null
+          }
+        ]
+      }
+    },
+    {
+      "task": "PowerSystems/OptimalPowerFlow",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 1,
+      "baseline": 0.0,
+      "best": 0.9999999999998935,
+      "accepted": 3,
+      "evaluated": 4,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/feedback_pilot_opf_20260721/PowerSystems__OptimalPowerFlow/greedy_rewrite/normal/seed_1",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 4,
+        "budget_units": 4,
+        "best_score": 0.9999999999998935,
+        "best_so_far_auc": 0.7499999956864083,
+        "valid_rate": 1.0,
+        "accepted": 3,
+        "wall_seconds": 83.32974560651928,
+        "llm": {
+          "calls": 3,
+          "provider_usage_records": 3,
+          "input_tokens": 8463,
+          "output_tokens": 9632,
+          "total_tokens": 18095,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "PowerSystems/OptimalPowerFlow",
+        "seed": 1,
+        "baseline_score": 0.0,
+        "budget": 3,
+        "feedback_mode": "normal",
+        "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "online_incumbent"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 1,
+        "trajectory_sha256": "8a8e828c4942593bab41d79b537903fed6dffeff4f700282233d7c573ea7c88c",
+        "events": [
+          {
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "e8e6f3d08c3a205d5e2ff308321131e4d5c7aa359fb677167322377a383bb8f5",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.0,
+              "robustness_score": 0.0,
+              "development_validation_gap": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "heldout_feasibility_rate": 1.0,
+              "mean_contingency_constraint_feasibility": 1.0,
+              "mean_contingency_feasibility_rate": 1.0,
+              "raw_score": 0.0
+            },
+            "algorithm_metadata": {},
+            "error": null
+          },
+          {
+            "step": 1,
+            "oracle_calls": 2,
+            "budget_units": 2,
+            "score": 0.9999999827629618,
+            "best_score": 0.9999999827629618,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "263b9ffdd7e3e7603da236b3d363eda26b085efc2c1ff2754b7f0cf3abf04881",
+            "parent_sha256": "e8e6f3d08c3a205d5e2ff308321131e4d5c7aa359fb677167322377a383bb8f5",
+            "metrics": {
+              "combined_score": 0.9999999827629618,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.9999999827629618,
+              "robustness_score": 0.03137831644606927,
+              "development_validation_gap": 0.9686216663168925,
+              "heldout_policy_score": 0.9999999816912966,
+              "heldout_robustness_score": 7.329643581909288e-07,
+              "heldout_feasibility_rate": 1.0,
+              "mean_contingency_constraint_feasibility": 0.7791666666666667,
+              "mean_contingency_feasibility_rate": 0.11399711399711399,
+              "raw_score": 0.9999999827629618
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 1
+            },
+            "error": null
+          },
+          {
+            "step": 2,
+            "oracle_calls": 3,
+            "budget_units": 3,
+            "score": 0.9999999999827779,
+            "best_score": 0.9999999999827779,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "d08087a24838fc6a68204d5e306653a6c6ce6448be7427597ca8a08ef8c3d716",
+            "parent_sha256": "263b9ffdd7e3e7603da236b3d363eda26b085efc2c1ff2754b7f0cf3abf04881",
+            "metrics": {
+              "combined_score": 0.9999999999827779,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.9999999999827779,
+              "robustness_score": 0.031378316244435635,
+              "development_validation_gap": 0.9686216837383422,
+              "heldout_policy_score": 0.9999999999817062,
+              "heldout_robustness_score": 7.329642968785331e-07,
+              "heldout_feasibility_rate": 1.0,
+              "mean_contingency_constraint_feasibility": 0.7791666666666667,
+              "mean_contingency_feasibility_rate": 0.11399711399711399,
+              "raw_score": 0.9999999999827779
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 2
+            },
+            "error": null
+          },
+          {
+            "step": 3,
+            "oracle_calls": 4,
+            "budget_units": 4,
+            "score": 0.9999999999998935,
+            "best_score": 0.9999999999998935,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "45c51222e48390460f5403f0c0c5fcacd2236847d614a18539dbcd6b82a98e08",
+            "parent_sha256": "d08087a24838fc6a68204d5e306653a6c6ce6448be7427597ca8a08ef8c3d716",
+            "metrics": {
+              "combined_score": 0.9999999999998935,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.9999999999998935,
+              "robustness_score": 0.03137831624423378,
+              "development_validation_gap": 0.9686216837556597,
+              "heldout_policy_score": 1.0,
+              "heldout_robustness_score": 7.329642968169274e-07,
+              "heldout_feasibility_rate": 1.0,
+              "mean_contingency_constraint_feasibility": 0.7791666666666667,
+              "mean_contingency_feasibility_rate": 0.11399711399711399,
+              "raw_score": 0.9999999999998935
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 3
+            },
+            "error": null
+          }
+        ]
+      }
+    },
+    {
+      "task": "PowerSystems/OptimalPowerFlow",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 2,
+      "baseline": 0.0,
+      "best": 0.9999999999999967,
+      "accepted": 1,
+      "evaluated": 4,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/feedback_pilot_opf_20260721/PowerSystems__OptimalPowerFlow/greedy_rewrite/normal/seed_2",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 4,
+        "budget_units": 4,
+        "best_score": 0.9999999999999967,
+        "best_so_far_auc": 0.7499999999999976,
+        "valid_rate": 1.0,
+        "accepted": 1,
+        "wall_seconds": 111.75117669440806,
+        "llm": {
+          "calls": 3,
+          "provider_usage_records": 3,
+          "input_tokens": 7934,
+          "output_tokens": 11362,
+          "total_tokens": 19296,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "PowerSystems/OptimalPowerFlow",
+        "seed": 2,
+        "baseline_score": 0.0,
+        "budget": 3,
+        "feedback_mode": "normal",
+        "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "online_incumbent"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 1,
+        "trajectory_sha256": "53e7ec0a9a10d687c89945a4fbd8a219819da860c6d01f29b8abb43cf16ac1c3",
+        "events": [
+          {
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "e8e6f3d08c3a205d5e2ff308321131e4d5c7aa359fb677167322377a383bb8f5",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.0,
+              "robustness_score": 0.0,
+              "development_validation_gap": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "heldout_feasibility_rate": 1.0,
+              "mean_contingency_constraint_feasibility": 1.0,
+              "mean_contingency_feasibility_rate": 1.0,
+              "raw_score": 0.0
+            },
+            "algorithm_metadata": {},
+            "error": null
+          },
+          {
+            "step": 1,
+            "oracle_calls": 2,
+            "budget_units": 2,
+            "score": 0.9999999999999967,
+            "best_score": 0.9999999999999967,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "4f6153d9f5d59c0cae38763116b59d1332a8c87711000663c218569935d96042",
+            "parent_sha256": "e8e6f3d08c3a205d5e2ff308321131e4d5c7aa359fb677167322377a383bb8f5",
+            "metrics": {
+              "combined_score": 0.9999999999999967,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.9999999999999967,
+              "robustness_score": 0.03137831624421683,
+              "development_validation_gap": 0.9686216837557798,
+              "heldout_policy_score": 0.9999999999999751,
+              "heldout_robustness_score": 7.329642968170158e-07,
+              "heldout_feasibility_rate": 1.0,
+              "mean_contingency_constraint_feasibility": 0.7791666666666667,
+              "mean_contingency_feasibility_rate": 0.11399711399711399,
+              "raw_score": 0.9999999999999967
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 1
+            },
+            "error": null
+          },
+          {
+            "step": 2,
+            "oracle_calls": 3,
+            "budget_units": 3,
+            "score": 0.9999999999998673,
+            "best_score": 0.9999999999999967,
+            "valid": true,
+            "accepted": false,
+            "candidate_sha256": "1f0da3aad841450e4e77336c236509cefc6de5db2e1e59bbb628db3ea55ace99",
+            "parent_sha256": "4f6153d9f5d59c0cae38763116b59d1332a8c87711000663c218569935d96042",
+            "metrics": {
+              "combined_score": 0.9999999999998673,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.9999999999998673,
+              "robustness_score": 0.03137831624423398,
+              "development_validation_gap": 0.9686216837556334,
+              "heldout_policy_score": 0.9999999999999931,
+              "heldout_robustness_score": 7.329642968171802e-07,
+              "heldout_feasibility_rate": 1.0,
+              "mean_contingency_constraint_feasibility": 0.7791666666666667,
+              "mean_contingency_feasibility_rate": 0.11399711399711399,
+              "raw_score": 0.9999999999998673
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 2
+            },
+            "error": null
+          },
+          {
+            "step": 3,
+            "oracle_calls": 4,
+            "budget_units": 4,
+            "score": 0.9999999999998714,
+            "best_score": 0.9999999999999967,
+            "valid": true,
+            "accepted": false,
+            "candidate_sha256": "32cc337d63de69a8f11c48df92497ec9eb97dc0477329fef3251c78d74e27b83",
+            "parent_sha256": "4f6153d9f5d59c0cae38763116b59d1332a8c87711000663c218569935d96042",
+            "metrics": {
+              "combined_score": 0.9999999999998714,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.9999999999998714,
+              "robustness_score": 0.03137831624423396,
+              "development_validation_gap": 0.9686216837556375,
+              "heldout_policy_score": 1.0,
+              "heldout_robustness_score": 7.329642968167169e-07,
+              "heldout_feasibility_rate": 1.0,
+              "mean_contingency_constraint_feasibility": 0.7791666666666667,
+              "mean_contingency_feasibility_rate": 0.11399711399711399,
+              "raw_score": 0.9999999999998714
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 3
+            },
+            "error": null
+          }
+        ]
+      }
+    },
+    {
+      "task": "PowerSystems/OptimalPowerFlow",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "selection_blind",
+      "seed": 2,
+      "baseline": 0.0,
+      "best": 0.9999999064177593,
+      "accepted": 1,
+      "evaluated": 4,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/feedback_pilot_opf_20260721/PowerSystems__OptimalPowerFlow/greedy_rewrite/selection_blind/seed_2",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 4,
+        "budget_units": 4,
+        "best_score": 0.9999999064177593,
+        "best_so_far_auc": 0.7499999298133194,
+        "valid_rate": 0.5,
+        "accepted": 1,
+        "wall_seconds": 126.05114228185266,
+        "llm": {
+          "calls": 3,
+          "provider_usage_records": 3,
+          "input_tokens": 2922,
+          "output_tokens": 8901,
+          "total_tokens": 11823,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "PowerSystems/OptimalPowerFlow",
+        "seed": 2,
+        "baseline_score": 0.0,
+        "budget": 3,
+        "feedback_mode": "selection_blind",
+        "feedback_scope": "open-loop proposal batch: every proposal sees the frozen baseline program and its allowlisted baseline metrics; evaluated scores are retained only for offline best-of-batch analysis and never change a later parent or prompt; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "offline_best_of_open_loop_batch"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 1,
+        "trajectory_sha256": "41396e3dbec6ca36e2d85ccaecc29c52d013e5c43ac861065433989d16eb66d9",
+        "events": [
+          {
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "e8e6f3d08c3a205d5e2ff308321131e4d5c7aa359fb677167322377a383bb8f5",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.0,
+              "robustness_score": 0.0,
+              "development_validation_gap": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "heldout_feasibility_rate": 1.0,
+              "mean_contingency_constraint_feasibility": 1.0,
+              "mean_contingency_feasibility_rate": 1.0,
+              "raw_score": 0.0
+            },
+            "algorithm_metadata": {},
+            "error": null
+          },
+          {
+            "step": 1,
+            "oracle_calls": 2,
+            "budget_units": 2,
+            "score": 0.9999999064177593,
+            "best_score": 0.9999999064177593,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "d9b66b582eb961b23b29b5c4db51e5b9354feb5bc805b985149f541c6fdb8ad0",
+            "parent_sha256": "e8e6f3d08c3a205d5e2ff308321131e4d5c7aa359fb677167322377a383bb8f5",
+            "metrics": {
+              "combined_score": 0.9999999064177593,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.9999999064177593,
+              "robustness_score": 0.031378316927792464,
+              "development_validation_gap": 0.9686215894899668,
+              "heldout_policy_score": 0.999999963756254,
+              "heldout_robustness_score": 7.329644183117563e-07,
+              "heldout_feasibility_rate": 1.0,
+              "mean_contingency_constraint_feasibility": 0.7791666666666667,
+              "mean_contingency_feasibility_rate": 0.11399711399711399,
+              "raw_score": 0.9999999064177593
+            },
+            "algorithm_metadata": {
+              "selection_policy": "offline_best_of_open_loop_batch",
+              "accepted_semantics": "offline_best_update",
+              "proposal_slot": 1
+            },
+            "error": null
+          },
+          {
+            "step": 2,
+            "oracle_calls": 3,
+            "budget_units": 3,
+            "score": -1e+18,
+            "best_score": 0.9999999064177593,
+            "valid": false,
+            "accepted": false,
+            "candidate_sha256": "cbb7fed5582ae4306c5f9d284c081f79d65ecde40779412e28db6059edc903cb",
+            "parent_sha256": "e8e6f3d08c3a205d5e2ff308321131e4d5c7aa359fb677167322377a383bb8f5",
+            "metrics": {
+              "combined_score": -1e+18,
+              "valid": 0.0,
+              "error_message": "frontier_science.secure_eval.CandidateError: candidate worker exited:"
+            },
+            "algorithm_metadata": {
+              "selection_policy": "offline_best_of_open_loop_batch",
+              "accepted_semantics": "offline_best_update",
+              "proposal_slot": 2
+            },
+            "error": "frontier_science.secure_eval.CandidateError: candidate worker exited:"
+          },
+          {
+            "step": 3,
+            "oracle_calls": 4,
+            "budget_units": 4,
+            "score": -1e+18,
+            "best_score": 0.9999999064177593,
+            "valid": false,
+            "accepted": false,
+            "candidate_sha256": "70fff52ef41d8ee2d7ed547d62f1084078e04dab238c9e54396df2512435f152",
+            "parent_sha256": "e8e6f3d08c3a205d5e2ff308321131e4d5c7aa359fb677167322377a383bb8f5",
+            "metrics": {
+              "combined_score": -1e+18,
+              "valid": 0.0,
+              "error_message": "frontier_science.secure_eval.CandidateError: candidate worker exited:"
+            },
+            "algorithm_metadata": {
+              "selection_policy": "offline_best_of_open_loop_batch",
+              "accepted_semantics": "offline_best_update",
+              "proposal_slot": 3
+            },
+            "error": "frontier_science.secure_eval.CandidateError: candidate worker exited:"
+          }
+        ]
+      }
+    }
+  ],
+  "aggregate": {
+    "attempt_count": 6,
+    "superseded_attempts": 0,
+    "successful_runs": 6,
+    "failed_runs": 0,
+    "by_condition": {
+      "PowerSystems/OptimalPowerFlow|greedy_rewrite|normal": {
+        "n": 3,
+        "best_score": {
+          "n": 3,
+          "mean": 0.9999999999999633,
+          "ci95_low": 0.9999999999998128,
+          "ci95_high": 1.0000000000001137
+        },
+        "best_so_far_auc": {
+          "n": 3,
+          "mean": 0.7499999985621248,
+          "ci95_low": 0.7499999923750207,
+          "ci95_high": 0.750000004749229
+        },
+        "budget_units": {
+          "n": 3,
+          "mean": 4.0,
+          "ci95_low": 4.0,
+          "ci95_high": 4.0
+        },
+        "oracle_calls": {
+          "n": 3,
+          "mean": 4.0,
+          "ci95_low": 4.0,
+          "ci95_high": 4.0
+        },
+        "wall_seconds": {
+          "n": 3,
+          "mean": 139.19762070539096,
+          "ci95_low": -43.49672045247934,
+          "ci95_high": 321.89196186326126
+        },
+        "total_tokens": {
+          "n": 3,
+          "mean": 18731.333333333332,
+          "ci95_low": 17231.541148439668,
+          "ci95_high": 20231.125518226996
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      },
+      "PowerSystems/OptimalPowerFlow|greedy_rewrite|selection_blind": {
+        "n": 3,
+        "best_score": {
+          "n": 3,
+          "mean": 0.9999999688058758,
+          "ci95_low": 0.9999998345778429,
+          "ci95_high": 1.0000001030339087
+        },
+        "best_so_far_auc": {
+          "n": 3,
+          "mean": 0.6666666432710739,
+          "ci95_low": 0.30808336027334365,
+          "ci95_high": 1.0252499262688042
+        },
+        "budget_units": {
+          "n": 3,
+          "mean": 4.0,
+          "ci95_low": 4.0,
+          "ci95_high": 4.0
+        },
+        "oracle_calls": {
+          "n": 3,
+          "mean": 4.0,
+          "ci95_low": 4.0,
+          "ci95_high": 4.0
+        },
+        "wall_seconds": {
+          "n": 3,
+          "mean": 118.95211571486045,
+          "ci95_low": 102.91821105199014,
+          "ci95_high": 134.98602037773077
+        },
+        "total_tokens": {
+          "n": 3,
+          "mean": 12055.0,
+          "ci95_low": 11184.640907587947,
+          "ci95_high": 12925.359092412053
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      }
+    },
+    "overall": {
+      "best_score": {
+        "n": 6,
+        "mean": 0.9999999844029196,
+        "ci95_low": 0.9999999443029501,
+        "ci95_high": 1.000000024502889
+      },
+      "best_so_far_auc": {
+        "n": 6,
+        "mean": 0.7083333209165993,
+        "ci95_low": 0.6012083273012789,
+        "ci95_high": 0.8154583145319196
+      },
+      "budget_units": {
+        "n": 6,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "oracle_calls": {
+        "n": 6,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "wall_seconds": {
+        "n": 6,
+        "mean": 129.07486821012571,
+        "ci95_low": 78.70703519092277,
+        "ci95_high": 179.44270122932866
+      },
+      "total_tokens": {
+        "n": 6,
+        "mean": 15393.166666666666,
+        "ci95_low": 11527.12238901194,
+        "ci95_high": 19259.210944321392
+      },
+      "estimated_cost_usd": {
+        "n": 0,
+        "mean": null,
+        "ci95_low": null,
+        "ci95_high": null
+      }
+    }
+  },
+  "completed_at": "2026-07-21T21:45:58.225201+00:00",
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}

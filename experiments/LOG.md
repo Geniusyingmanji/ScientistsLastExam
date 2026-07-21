@@ -752,3 +752,30 @@ the full raw trajectory. This snapshot is written only after a backend returns a
 placed in agent or search state. A derived evidence builder backfills the nine trusted OED,
 Pendulum, GateSynthesis, ActiveLawDiscovery and OPF calibration conditions; their cross-task
 claim audit is recorded in `.research/science_common_findings.md`.
+
+## 2026-07-21 — strict iterative-feedback implementation pilot
+
+The preregistered pilot compares normal greedy iteration with a strict `selection_blind`
+open-loop batch on Pendulum-v2, GateSynthesis-v2, ActiveLawDiscovery and OPF-v2. Each task uses
+three replicate identifiers, three proposal slots per condition and counterbalanced within-task
+condition order. Every blind proposal sees the frozen baseline program and public baseline
+metrics; evaluated scores affect only offline best-of-batch reporting. The Azure Responses
+endpoint does not expose a server-side seed.
+
+All **24/24 conditions** completed with clean trusted provenance, **72 proposal slots**, **96
+actual oracle calls**, **352,881 tokens** and no condition-level infrastructure failures. The
+derived analysis validates every blind parent hash and selected-candidate metric. No task has a
+direction-stable normal-over-blind advantage, and every preregistered performance or
+science-outcome n=3 interval spans zero.
+Pendulum's mean paired visible/shifted-robustness differences are -0.2479/-0.0068; Gate's are
+0.0000019/0.0118; ActiveLaw's visible/validation-mechanism differences are -0.0493/-0.0466; and
+OPF's visible/N-1 differences are approximately zero. ActiveLaw retains one false discovery in
+each split for every selected condition, and OPF retains complete-outage feasibility 0.113997 in
+both conditions.
+
+Normal runs use 3,070--6,676 more tokens per three-proposal run on average, so the pilot is
+call-matched but not token-matched. These results establish that the strict control and portable
+analysis workflow run end to end. They do not establish that iterative feedback is beneficial or
+ineffective. A confirmatory Track F study requires at least ten replicates, matched token/context
+budgets and delayed/replayed plus score-information-only controls. Full interpretation is in
+`.research/feedback_pilot_results.md`.

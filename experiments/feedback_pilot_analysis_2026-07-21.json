@@ -1,0 +1,1046 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_DERIVED_EVIDENCE",
+  "evidence_scope": "THREE_REPLICATE_IMPLEMENTATION_PILOT_NOT_CONFIRMATORY_CAUSAL_EVIDENCE",
+  "created_at": "2026-07-21T21:50:56.831709+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "ea43a496252d1df25934afd051a4d85b2988b2c2",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/home/azureuser/.local/bin/python3.10",
+      "scripts/analyze_feedback_pilot.py",
+      "--output",
+      "experiments/feedback_pilot_analysis_2026-07-21.json"
+    ]
+  },
+  "environment": {
+    "python": "3.10.20 (main, Apr  7 2026, 20:44:18) [Clang 22.1.1 ]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.31"
+  },
+  "design": {
+    "tasks": [
+      "ControlTheory/InvertedPendulumSwingUp",
+      "DynamicalSystems/ActiveLawDiscovery",
+      "PowerSystems/OptimalPowerFlow",
+      "QuantumControl/GateSynthesis"
+    ],
+    "conditions": [
+      "normal",
+      "selection_blind"
+    ],
+    "replicate_ids": [
+      0,
+      1,
+      2
+    ],
+    "proposal_budget": 3,
+    "server_side_seed_control": false,
+    "paired_difference_direction": "normal_minus_selection_blind"
+  },
+  "inputs": [
+    {
+      "report": "experiments/feedback_pilot_pendulum_2026-07-21.json",
+      "sha256": "801d7ef27532decbc6f86c4d5c6c0bd582881d88dae5d027732c9a6ce6c81bb5",
+      "source_revision": "e59612b169762f7217d5ea4967a3cd2b32803e39",
+      "task": "ControlTheory/InvertedPendulumSwingUp"
+    },
+    {
+      "report": "experiments/feedback_pilot_gate_2026-07-21.json",
+      "sha256": "df43b7c6ea4dcee9a3c1904d8d1f8d560860d620511e902f67b56ae04442d176",
+      "source_revision": "e59612b169762f7217d5ea4967a3cd2b32803e39",
+      "task": "QuantumControl/GateSynthesis"
+    },
+    {
+      "report": "experiments/feedback_pilot_active_law_2026-07-21.json",
+      "sha256": "8903f0e38aadca61fd69d9beb3b4d5fcf69a3788639c9a4ac89ea778410f3f11",
+      "source_revision": "e59612b169762f7217d5ea4967a3cd2b32803e39",
+      "task": "DynamicalSystems/ActiveLawDiscovery"
+    },
+    {
+      "report": "experiments/feedback_pilot_opf_2026-07-21.json",
+      "sha256": "f56d49a86e3a26f7f05de0a94331abfc5125ecc9290323f7513fa1ec2bf1deb8",
+      "source_revision": "e59612b169762f7217d5ea4967a3cd2b32803e39",
+      "task": "PowerSystems/OptimalPowerFlow"
+    }
+  ],
+  "selected_candidates": [
+    {
+      "task": "ControlTheory/InvertedPendulumSwingUp",
+      "replicate_id": 0,
+      "condition": "normal",
+      "selected_step": 3,
+      "selected_candidate_sha256": "124142d963163ea4cdf1c5ea5d736cdfed3feee21d548d43f40dc88c5331006a",
+      "best_visible_score": 0.7141189042147027,
+      "best_so_far_auc": 0.46308900774419887,
+      "valid_rate": 1.0,
+      "invalid_proposals": 0,
+      "oracle_calls": 4,
+      "total_tokens": 12743,
+      "wall_seconds": 95.24426716193557,
+      "science_metrics": {
+        "robustness_score": 0.4011177289510693,
+        "development_robustness_gap": 0.3130011752636334
+      }
+    },
+    {
+      "task": "ControlTheory/InvertedPendulumSwingUp",
+      "replicate_id": 0,
+      "condition": "selection_blind",
+      "selected_step": 1,
+      "selected_candidate_sha256": "ff060a5796e4fc147252c05091a39740056c7dc19c9034a40951310447d8d0c5",
+      "best_visible_score": 0.7785126462161523,
+      "best_so_far_auc": 0.5838897538368893,
+      "valid_rate": 1.0,
+      "invalid_proposals": 0,
+      "oracle_calls": 4,
+      "total_tokens": 9352,
+      "wall_seconds": 103.19213274214417,
+      "science_metrics": {
+        "robustness_score": 0.372707424433233,
+        "development_robustness_gap": 0.40580522178291933
+      }
+    },
+    {
+      "task": "ControlTheory/InvertedPendulumSwingUp",
+      "replicate_id": 1,
+      "condition": "selection_blind",
+      "selected_step": 3,
+      "selected_candidate_sha256": "266115a2324eba2aa56f0ff812a6612c6f632f030bb873f3109615f521696b7f",
+      "best_visible_score": 0.8809712472983152,
+      "best_so_far_auc": 0.6256347537797607,
+      "valid_rate": 1.0,
+      "invalid_proposals": 0,
+      "oracle_calls": 4,
+      "total_tokens": 9761,
+      "wall_seconds": 103.95124719664454,
+      "science_metrics": {
+        "robustness_score": 0.4474816208739335,
+        "development_robustness_gap": 0.4334896264243817
+      }
+    },
+    {
+      "task": "ControlTheory/InvertedPendulumSwingUp",
+      "replicate_id": 1,
+      "condition": "normal",
+      "selected_step": 2,
+      "selected_candidate_sha256": "8308f8de8fb95588f48be8c0fc64b6f4855d1a7434212aa1478fe53c17668c29",
+      "best_visible_score": 0.15475447371391265,
+      "best_so_far_auc": 0.07746207142746371,
+      "valid_rate": 1.0,
+      "invalid_proposals": 0,
+      "oracle_calls": 4,
+      "total_tokens": 12314,
+      "wall_seconds": 87.59543577861041,
+      "science_metrics": {
+        "robustness_score": 0.3964387819177775,
+        "development_robustness_gap": -0.24168430820386483
+      }
+    },
+    {
+      "task": "ControlTheory/InvertedPendulumSwingUp",
+      "replicate_id": 2,
+      "condition": "normal",
+      "selected_step": 2,
+      "selected_candidate_sha256": "9a5f4f1cfc3777f1c77e99fcda86fa1b7300109630e5d7b6e398fe39efc55b03",
+      "best_visible_score": 0.8091046328687274,
+      "best_so_far_auc": 0.5984916573094919,
+      "valid_rate": 1.0,
+      "invalid_proposals": 0,
+      "oracle_calls": 4,
+      "total_tokens": 12736,
+      "wall_seconds": 94.15090912766755,
+      "science_metrics": {
+        "robustness_score": 0.5456271547768424,
+        "development_robustness_gap": 0.26347747809188493
+      }
+    },
+    {
+      "task": "ControlTheory/InvertedPendulumSwingUp",
+      "replicate_id": 2,
+      "condition": "selection_blind",
+      "selected_step": 3,
+      "selected_candidate_sha256": "f79a218c895bbc539fb9c66630330cc5f955308c63c0915480e306f94818a858",
+      "best_visible_score": 0.7621829432220224,
+      "best_so_far_auc": 0.4052910738945404,
+      "valid_rate": 1.0,
+      "invalid_proposals": 0,
+      "oracle_calls": 4,
+      "total_tokens": 9469,
+      "wall_seconds": 102.88429960235953,
+      "science_metrics": {
+        "robustness_score": 0.5434420705624186,
+        "development_robustness_gap": 0.21874087265960385
+      }
+    },
+    {
+      "task": "QuantumControl/GateSynthesis",
+      "replicate_id": 0,
+      "condition": "normal",
+      "selected_step": 3,
+      "selected_candidate_sha256": "7cc3b7f195cc1a8ab011ac419688025659911fe56f30328312811ed59fcaa9a1",
+      "best_visible_score": 0.9999999999999801,
+      "best_so_far_auc": 0.7499999992385772,
+      "valid_rate": 1.0,
+      "invalid_proposals": 0,
+      "oracle_calls": 4,
+      "total_tokens": 16178,
+      "wall_seconds": 275.25463424809277,
+      "science_metrics": {
+        "robustness_score": 0.9761670929081874,
+        "heldout_policy_score": 0.9999999999999841,
+        "heldout_robustness_score": 0.9846692977196294
+      }
+    },
+    {
+      "task": "QuantumControl/GateSynthesis",
+      "replicate_id": 0,
+      "condition": "selection_blind",
+      "selected_step": 2,
+      "selected_candidate_sha256": "ca8097e90e9dc74610346b3553415c7dbfb53da824666d74e4b2a751635ce36d",
+      "best_visible_score": 0.9999944150518771,
+      "best_so_far_auc": 0.6874972075058332,
+      "valid_rate": 1.0,
+      "invalid_proposals": 0,
+      "oracle_calls": 4,
+      "total_tokens": 10761,
+      "wall_seconds": 110.73461083136499,
+      "science_metrics": {
+        "robustness_score": 0.9452966226391641,
+        "heldout_policy_score": 0.9930728483207047,
+        "heldout_robustness_score": 0.953404983040717
+      }
+    },
+    {
+      "task": "QuantumControl/GateSynthesis",
+      "replicate_id": 1,
+      "condition": "selection_blind",
+      "selected_step": 3,
+      "selected_candidate_sha256": "5f05f21d899175698c780dcb4303104ce797c633ad565a6a573fcf7707a3f2db",
+      "best_visible_score": 0.9999999999492337,
+      "best_so_far_auc": 0.749999999882464,
+      "valid_rate": 1.0,
+      "invalid_proposals": 0,
+      "oracle_calls": 4,
+      "total_tokens": 11393,
+      "wall_seconds": 111.66394357196987,
+      "science_metrics": {
+        "robustness_score": 0.9735313209183303,
+        "heldout_policy_score": 0.9999999955383361,
+        "heldout_robustness_score": 0.9845558309935011
+      }
+    },
+    {
+      "task": "QuantumControl/GateSynthesis",
+      "replicate_id": 1,
+      "condition": "normal",
+      "selected_step": 3,
+      "selected_candidate_sha256": "2f551d360af84ed470e97073a2f8c70f7533f478b99c73bcc6d0a67d35df69ae",
+      "best_visible_score": 0.9999999999999983,
+      "best_so_far_auc": 0.749999984501217,
+      "valid_rate": 1.0,
+      "invalid_proposals": 0,
+      "oracle_calls": 4,
+      "total_tokens": 18372,
+      "wall_seconds": 142.5937024001032,
+      "science_metrics": {
+        "robustness_score": 0.9738514963477557,
+        "heldout_policy_score": 0.9999999999999991,
+        "heldout_robustness_score": 0.9692785973608918
+      }
+    },
+    {
+      "task": "QuantumControl/GateSynthesis",
+      "replicate_id": 2,
+      "condition": "normal",
+      "selected_step": 3,
+      "selected_candidate_sha256": "a6630c3d52046775cdc93ed7352ee4ab8131356aad28be9de0708f4601708c39",
+      "best_visible_score": 0.9999999999999969,
+      "best_so_far_auc": 0.7499999994942363,
+      "valid_rate": 1.0,
+      "invalid_proposals": 0,
+      "oracle_calls": 4,
+      "total_tokens": 17597,
+      "wall_seconds": 124.57468296866864,
+      "science_metrics": {
+        "robustness_score": 0.9726303953792508,
+        "heldout_policy_score": 0.9999999999999878,
+        "heldout_robustness_score": 0.9847236393603689
+      }
+    },
+    {
+      "task": "QuantumControl/GateSynthesis",
+      "replicate_id": 2,
+      "condition": "selection_blind",
+      "selected_step": 1,
+      "selected_candidate_sha256": "b266639dd9dc386af9cd19af8381e0ddd9091f0adc57eafdbfae80f9c5b93bfd",
+      "best_visible_score": 0.9999999996552749,
+      "best_so_far_auc": 0.7499999997414561,
+      "valid_rate": 1.0,
+      "invalid_proposals": 0,
+      "oracle_calls": 4,
+      "total_tokens": 11187,
+      "wall_seconds": 117.82468443922698,
+      "science_metrics": {
+        "robustness_score": 0.9685699686665467,
+        "heldout_policy_score": 0.9999999996150576,
+        "heldout_robustness_score": 0.9817297502697037
+      }
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 0,
+      "condition": "normal",
+      "selected_step": 3,
+      "selected_candidate_sha256": "fae79d2490c632d2fac2fa99c852abf4ffbc4516e088437d349f1a61ce944659",
+      "best_visible_score": 0.7978455999999999,
+      "best_so_far_auc": 0.59794905,
+      "valid_rate": 1.0,
+      "invalid_proposals": 0,
+      "oracle_calls": 4,
+      "total_tokens": 22309,
+      "wall_seconds": 130.35130432713777,
+      "science_metrics": {
+        "mechanism_score": 0.8556039999999999,
+        "development_prediction_score": 0.9987265,
+        "robustness_score": 0.743659,
+        "validation_prediction_score": 0.9948136,
+        "development_false_discoveries": 1,
+        "validation_false_discoveries": 1
+      }
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 0,
+      "condition": "selection_blind",
+      "selected_step": 1,
+      "selected_candidate_sha256": "f42606e2d1272a26c39f03ab983173b2ce66b61351299000178e2a0701cf7968",
+      "best_visible_score": 0.7967582,
+      "best_so_far_auc": 0.5975686499999999,
+      "valid_rate": 1.0,
+      "invalid_proposals": 0,
+      "oracle_calls": 4,
+      "total_tokens": 15201,
+      "wall_seconds": 143.20404279511422,
+      "science_metrics": {
+        "mechanism_score": 0.8548272857142857,
+        "development_prediction_score": 0.9981346666666666,
+        "robustness_score": 0.7456115000000001,
+        "validation_prediction_score": 0.9964907999999999,
+        "development_false_discoveries": 1,
+        "validation_false_discoveries": 1
+      }
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 1,
+      "condition": "selection_blind",
+      "selected_step": 1,
+      "selected_candidate_sha256": "6790c2293c166a08840726b8ee161925c2a7df74569e67d427f382e2f155a2c9",
+      "best_visible_score": 0.7969006000000001,
+      "best_so_far_auc": 0.5976754500000001,
+      "valid_rate": 1.0,
+      "invalid_proposals": 0,
+      "oracle_calls": 4,
+      "total_tokens": 15129,
+      "wall_seconds": 129.48801846429706,
+      "science_metrics": {
+        "mechanism_score": 0.854929,
+        "development_prediction_score": 0.9972878333333334,
+        "robustness_score": 0.74534375,
+        "validation_prediction_score": 0.9952192,
+        "development_false_discoveries": 1,
+        "validation_false_discoveries": 1
+      }
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 1,
+      "condition": "normal",
+      "selected_step": 3,
+      "selected_candidate_sha256": "3bfcea55b73c477388d508215de3444e79ac2a88448288508d9860efb620e51e",
+      "best_visible_score": 0.6394812,
+      "best_so_far_auc": 0.46234949999999997,
+      "valid_rate": 1.0,
+      "invalid_proposals": 0,
+      "oracle_calls": 4,
+      "total_tokens": 20993,
+      "wall_seconds": 117.24158382229507,
+      "science_metrics": {
+        "mechanism_score": 0.7424865714285714,
+        "development_prediction_score": 0.9076883333333333,
+        "robustness_score": 0.6020327499999999,
+        "validation_prediction_score": 0.8981306,
+        "development_false_discoveries": 1,
+        "validation_false_discoveries": 1
+      }
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 2,
+      "condition": "normal",
+      "selected_step": 3,
+      "selected_candidate_sha256": "8bcc01b3ad6f9ed458d5150a5f6e2deb14f85d6ef67587ac3019257c80f60983",
+      "best_visible_score": 0.7979688,
+      "best_so_far_auc": 0.5979678,
+      "valid_rate": 1.0,
+      "invalid_proposals": 0,
+      "oracle_calls": 4,
+      "total_tokens": 20837,
+      "wall_seconds": 104.37453993875533,
+      "science_metrics": {
+        "mechanism_score": 0.855692,
+        "development_prediction_score": 0.9986506666666667,
+        "robustness_score": 0.7460939999999999,
+        "validation_prediction_score": 0.9970554,
+        "development_false_discoveries": 1,
+        "validation_false_discoveries": 1
+      }
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 2,
+      "condition": "selection_blind",
+      "selected_step": 1,
+      "selected_candidate_sha256": "d08cd6c07c22f322327ee6a5315e16e0e1ffc8fb4a9ed5b4baff9c1fcca0ff47",
+      "best_visible_score": 0.7894624,
+      "best_so_far_auc": 0.5920968,
+      "valid_rate": 1.0,
+      "invalid_proposals": 0,
+      "oracle_calls": 4,
+      "total_tokens": 14190,
+      "wall_seconds": 148.16735493857414,
+      "science_metrics": {
+        "mechanism_score": 0.849616,
+        "development_prediction_score": 0.9893710000000001,
+        "robustness_score": 0.7405507500000001,
+        "validation_prediction_score": 0.9915182,
+        "development_false_discoveries": 1,
+        "validation_false_discoveries": 1
+      }
+    },
+    {
+      "task": "PowerSystems/OptimalPowerFlow",
+      "replicate_id": 0,
+      "condition": "normal",
+      "selected_step": 3,
+      "selected_candidate_sha256": "c0e7464e57e65af949ed29b6db81d159eaca8f0fb795a66de3da27e3b92dfbc3",
+      "best_visible_score": 1.0,
+      "best_so_far_auc": 0.7499999999999687,
+      "valid_rate": 1.0,
+      "invalid_proposals": 0,
+      "oracle_calls": 4,
+      "total_tokens": 18803,
+      "wall_seconds": 222.51193981524557,
+      "science_metrics": {
+        "robustness_score": 0.03137831624422907,
+        "heldout_policy_score": 1.0,
+        "heldout_robustness_score": 7.329642967146761e-07,
+        "mean_contingency_constraint_feasibility": 0.7791666666666667,
+        "mean_contingency_feasibility_rate": 0.11399711399711399
+      }
+    },
+    {
+      "task": "PowerSystems/OptimalPowerFlow",
+      "replicate_id": 0,
+      "condition": "selection_blind",
+      "selected_step": 2,
+      "selected_candidate_sha256": "124d509090c103c28afae8e4271895ff019878b7959fdde50c8c18ef13ad186c",
+      "best_visible_score": 0.9999999999999961,
+      "best_so_far_auc": 0.49999999999999806,
+      "valid_rate": 0.5,
+      "invalid_proposals": 2,
+      "oracle_calls": 4,
+      "total_tokens": 11884,
+      "wall_seconds": 117.36650388408452,
+      "science_metrics": {
+        "robustness_score": 0.03137831624421683,
+        "heldout_policy_score": 0.9999999999999472,
+        "heldout_robustness_score": 7.329642968172314e-07,
+        "mean_contingency_constraint_feasibility": 0.7791666666666667,
+        "mean_contingency_feasibility_rate": 0.11399711399711399
+      }
+    },
+    {
+      "task": "PowerSystems/OptimalPowerFlow",
+      "replicate_id": 1,
+      "condition": "selection_blind",
+      "selected_step": 1,
+      "selected_candidate_sha256": "6ba010e4cf24aa6a16b18c1f2543cf288ab8442d40f412ba8c5d6b155f2f1a93",
+      "best_visible_score": 0.9999999999998722,
+      "best_so_far_auc": 0.7499999999999042,
+      "valid_rate": 1.0,
+      "invalid_proposals": 0,
+      "oracle_calls": 4,
+      "total_tokens": 12458,
+      "wall_seconds": 113.43870097864419,
+      "science_metrics": {
+        "robustness_score": 0.03137831624423376,
+        "heldout_policy_score": 0.9999999999999978,
+        "heldout_robustness_score": 7.32964296817126e-07,
+        "mean_contingency_constraint_feasibility": 0.7791666666666667,
+        "mean_contingency_feasibility_rate": 0.11399711399711399
+      }
+    },
+    {
+      "task": "PowerSystems/OptimalPowerFlow",
+      "replicate_id": 1,
+      "condition": "normal",
+      "selected_step": 3,
+      "selected_candidate_sha256": "45c51222e48390460f5403f0c0c5fcacd2236847d614a18539dbcd6b82a98e08",
+      "best_visible_score": 0.9999999999998935,
+      "best_so_far_auc": 0.7499999956864083,
+      "valid_rate": 1.0,
+      "invalid_proposals": 0,
+      "oracle_calls": 4,
+      "total_tokens": 18095,
+      "wall_seconds": 83.32974560651928,
+      "science_metrics": {
+        "robustness_score": 0.03137831624423378,
+        "heldout_policy_score": 1.0,
+        "heldout_robustness_score": 7.329642968169274e-07,
+        "mean_contingency_constraint_feasibility": 0.7791666666666667,
+        "mean_contingency_feasibility_rate": 0.11399711399711399
+      }
+    },
+    {
+      "task": "PowerSystems/OptimalPowerFlow",
+      "replicate_id": 2,
+      "condition": "normal",
+      "selected_step": 1,
+      "selected_candidate_sha256": "4f6153d9f5d59c0cae38763116b59d1332a8c87711000663c218569935d96042",
+      "best_visible_score": 0.9999999999999967,
+      "best_so_far_auc": 0.7499999999999976,
+      "valid_rate": 1.0,
+      "invalid_proposals": 0,
+      "oracle_calls": 4,
+      "total_tokens": 19296,
+      "wall_seconds": 111.75117669440806,
+      "science_metrics": {
+        "robustness_score": 0.03137831624421683,
+        "heldout_policy_score": 0.9999999999999751,
+        "heldout_robustness_score": 7.329642968170158e-07,
+        "mean_contingency_constraint_feasibility": 0.7791666666666667,
+        "mean_contingency_feasibility_rate": 0.11399711399711399
+      }
+    },
+    {
+      "task": "PowerSystems/OptimalPowerFlow",
+      "replicate_id": 2,
+      "condition": "selection_blind",
+      "selected_step": 1,
+      "selected_candidate_sha256": "d9b66b582eb961b23b29b5c4db51e5b9354feb5bc805b985149f541c6fdb8ad0",
+      "best_visible_score": 0.9999999064177593,
+      "best_so_far_auc": 0.7499999298133194,
+      "valid_rate": 0.5,
+      "invalid_proposals": 2,
+      "oracle_calls": 4,
+      "total_tokens": 11823,
+      "wall_seconds": 126.05114228185266,
+      "science_metrics": {
+        "robustness_score": 0.031378316927792464,
+        "heldout_policy_score": 0.999999963756254,
+        "heldout_robustness_score": 7.329644183117563e-07,
+        "mean_contingency_constraint_feasibility": 0.7791666666666667,
+        "mean_contingency_feasibility_rate": 0.11399711399711399
+      }
+    }
+  ],
+  "paired_differences": [
+    {
+      "task": "ControlTheory/InvertedPendulumSwingUp",
+      "replicate_id": 0,
+      "normal_minus_blind": {
+        "best_visible_score": -0.06439374200144965,
+        "best_so_far_auc": -0.12080074609269048,
+        "valid_rate": 0.0,
+        "invalid_proposals": 0,
+        "oracle_calls": 0,
+        "total_tokens": 3391,
+        "wall_seconds": -7.9478655802086,
+        "robustness_score": 0.02841030451783627,
+        "development_robustness_gap": -0.09280404651928592
+      }
+    },
+    {
+      "task": "ControlTheory/InvertedPendulumSwingUp",
+      "replicate_id": 1,
+      "normal_minus_blind": {
+        "best_visible_score": -0.7262167735844025,
+        "best_so_far_auc": -0.548172682352297,
+        "valid_rate": 0.0,
+        "invalid_proposals": 0,
+        "oracle_calls": 0,
+        "total_tokens": 2553,
+        "wall_seconds": -16.355811418034136,
+        "robustness_score": -0.05104283895615602,
+        "development_robustness_gap": -0.6751739346282466
+      }
+    },
+    {
+      "task": "ControlTheory/InvertedPendulumSwingUp",
+      "replicate_id": 2,
+      "normal_minus_blind": {
+        "best_visible_score": 0.046921689646704956,
+        "best_so_far_auc": 0.19320058341495155,
+        "valid_rate": 0.0,
+        "invalid_proposals": 0,
+        "oracle_calls": 0,
+        "total_tokens": 3267,
+        "wall_seconds": -8.733390474691987,
+        "robustness_score": 0.0021850842144238714,
+        "development_robustness_gap": 0.044736605432281085
+      }
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 0,
+      "normal_minus_blind": {
+        "best_visible_score": 0.0010873999999999606,
+        "best_so_far_auc": 0.00038040000000005847,
+        "valid_rate": 0.0,
+        "invalid_proposals": 0,
+        "oracle_calls": 0,
+        "total_tokens": 7108,
+        "wall_seconds": -12.852738467976451,
+        "mechanism_score": 0.0007767142857142417,
+        "development_prediction_score": 0.000591833333333347,
+        "robustness_score": -0.0019525000000001347,
+        "validation_prediction_score": -0.0016771999999999343,
+        "development_false_discoveries": 0.0,
+        "validation_false_discoveries": 0.0
+      }
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 1,
+      "normal_minus_blind": {
+        "best_visible_score": -0.1574194000000001,
+        "best_so_far_auc": -0.13532595000000014,
+        "valid_rate": 0.0,
+        "invalid_proposals": 0,
+        "oracle_calls": 0,
+        "total_tokens": 5864,
+        "wall_seconds": -12.246434642001987,
+        "mechanism_score": -0.11244242857142861,
+        "development_prediction_score": -0.08959950000000005,
+        "robustness_score": -0.14331100000000008,
+        "validation_prediction_score": -0.09708859999999997,
+        "development_false_discoveries": 0.0,
+        "validation_false_discoveries": 0.0
+      }
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 2,
+      "normal_minus_blind": {
+        "best_visible_score": 0.008506400000000025,
+        "best_so_far_auc": 0.005871000000000071,
+        "valid_rate": 0.0,
+        "invalid_proposals": 0,
+        "oracle_calls": 0,
+        "total_tokens": 6647,
+        "wall_seconds": -43.7928149998188,
+        "mechanism_score": 0.00607599999999997,
+        "development_prediction_score": 0.009279666666666575,
+        "robustness_score": 0.0055432499999997775,
+        "validation_prediction_score": 0.00553720000000002,
+        "development_false_discoveries": 0.0,
+        "validation_false_discoveries": 0.0
+      }
+    },
+    {
+      "task": "PowerSystems/OptimalPowerFlow",
+      "replicate_id": 0,
+      "normal_minus_blind": {
+        "best_visible_score": 3.885780586188048e-15,
+        "best_so_far_auc": 0.24999999999997063,
+        "valid_rate": 0.5,
+        "invalid_proposals": -2,
+        "oracle_calls": 0,
+        "total_tokens": 6919,
+        "wall_seconds": 105.14543593116105,
+        "robustness_score": 1.2240208846492351e-14,
+        "heldout_policy_score": 5.284661597215745e-14,
+        "heldout_robustness_score": -1.0255525524264326e-16,
+        "mean_contingency_constraint_feasibility": 0.0,
+        "mean_contingency_feasibility_rate": 0.0
+      }
+    },
+    {
+      "task": "PowerSystems/OptimalPowerFlow",
+      "replicate_id": 1,
+      "normal_minus_blind": {
+        "best_visible_score": 2.1316282072803006e-14,
+        "best_so_far_auc": -4.313495893804031e-09,
+        "valid_rate": 0.0,
+        "invalid_proposals": 0,
+        "oracle_calls": 0,
+        "total_tokens": 5637,
+        "wall_seconds": -30.10895537212491,
+        "robustness_score": 2.0816681711721685e-17,
+        "heldout_policy_score": 2.220446049250313e-15,
+        "heldout_robustness_score": -1.9862922613113343e-19,
+        "mean_contingency_constraint_feasibility": 0.0,
+        "mean_contingency_feasibility_rate": 0.0
+      }
+    },
+    {
+      "task": "PowerSystems/OptimalPowerFlow",
+      "replicate_id": 2,
+      "normal_minus_blind": {
+        "best_visible_score": 9.358223740374427e-08,
+        "best_so_far_auc": 7.018667813607493e-08,
+        "valid_rate": 0.5,
+        "invalid_proposals": -2,
+        "oracle_calls": 0,
+        "total_tokens": 7473,
+        "wall_seconds": -14.299965587444603,
+        "robustness_score": -6.835756335976662e-10,
+        "heldout_policy_score": 3.6243721135420515e-08,
+        "heldout_robustness_score": -1.2149474052495672e-13,
+        "mean_contingency_constraint_feasibility": 0.0,
+        "mean_contingency_feasibility_rate": 0.0
+      }
+    },
+    {
+      "task": "QuantumControl/GateSynthesis",
+      "replicate_id": 0,
+      "normal_minus_blind": {
+        "best_visible_score": 5.58494810298793e-06,
+        "best_so_far_auc": 0.06250279173274398,
+        "valid_rate": 0.0,
+        "invalid_proposals": 0,
+        "oracle_calls": 0,
+        "total_tokens": 5417,
+        "wall_seconds": 164.52002341672778,
+        "robustness_score": 0.03087047026902323,
+        "heldout_policy_score": 0.006927151679279375,
+        "heldout_robustness_score": 0.03126431467891244
+      }
+    },
+    {
+      "task": "QuantumControl/GateSynthesis",
+      "replicate_id": 1,
+      "normal_minus_blind": {
+        "best_visible_score": 5.0764614734077895e-11,
+        "best_so_far_auc": -1.5381247053802838e-08,
+        "valid_rate": 0.0,
+        "invalid_proposals": 0,
+        "oracle_calls": 0,
+        "total_tokens": 6979,
+        "wall_seconds": 30.929758828133345,
+        "robustness_score": 0.00032017542942541777,
+        "heldout_policy_score": 4.461663039023733e-09,
+        "heldout_robustness_score": -0.015277233632609244
+      }
+    },
+    {
+      "task": "QuantumControl/GateSynthesis",
+      "replicate_id": 2,
+      "normal_minus_blind": {
+        "best_visible_score": 3.4472202870006186e-10,
+        "best_so_far_auc": -2.4721980018682643e-10,
+        "valid_rate": 0.0,
+        "invalid_proposals": 0,
+        "oracle_calls": 0,
+        "total_tokens": 6410,
+        "wall_seconds": 6.749998529441655,
+        "robustness_score": 0.004060426712704124,
+        "heldout_policy_score": 3.849301988267939e-10,
+        "heldout_robustness_score": 0.002993889090665225
+      }
+    }
+  ],
+  "task_summaries": {
+    "ControlTheory/InvertedPendulumSwingUp": {
+      "best_visible_score": {
+        "n": 3,
+        "mean": -0.24789627531304906,
+        "ci95_low": -1.2862505523210255,
+        "ci95_high": 0.7904580016949273
+      },
+      "best_so_far_auc": {
+        "n": 3,
+        "mean": -0.15859094834334533,
+        "ci95_low": -1.0830841122106756,
+        "ci95_high": 0.765902215523985
+      },
+      "valid_rate": {
+        "n": 3,
+        "mean": 0.0,
+        "ci95_low": 0.0,
+        "ci95_high": 0.0
+      },
+      "invalid_proposals": {
+        "n": 3,
+        "mean": 0.0,
+        "ci95_low": 0.0,
+        "ci95_high": 0.0
+      },
+      "oracle_calls": {
+        "n": 3,
+        "mean": 0.0,
+        "ci95_low": 0.0,
+        "ci95_high": 0.0
+      },
+      "total_tokens": {
+        "n": 3,
+        "mean": 3070.3333333333335,
+        "ci95_low": 1946.6835208535833,
+        "ci95_high": 4193.983145813084
+      },
+      "wall_seconds": {
+        "n": 3,
+        "mean": -11.012355824311575,
+        "ci95_low": -22.550134566709794,
+        "ci95_high": 0.5254229180866457
+      },
+      "robustness_score": {
+        "n": 3,
+        "mean": -0.006815816741298626,
+        "ci95_low": -0.10739202279466056,
+        "ci95_high": 0.09376038931206332
+      },
+      "development_robustness_gap": {
+        "n": 3,
+        "mean": -0.24108045857175045,
+        "ci95_low": -1.1905307445730469,
+        "ci95_high": 0.7083698274295459
+      }
+    },
+    "DynamicalSystems/ActiveLawDiscovery": {
+      "best_visible_score": {
+        "n": 3,
+        "mean": -0.04927520000000004,
+        "ci95_low": -0.2821298809725601,
+        "ci95_high": 0.18357948097256002
+      },
+      "best_so_far_auc": {
+        "n": 3,
+        "mean": -0.04302485,
+        "ci95_low": -0.2417277499155579,
+        "ci95_high": 0.1556780499155579
+      },
+      "valid_rate": {
+        "n": 3,
+        "mean": 0.0,
+        "ci95_low": 0.0,
+        "ci95_high": 0.0
+      },
+      "invalid_proposals": {
+        "n": 3,
+        "mean": 0.0,
+        "ci95_low": 0.0,
+        "ci95_high": 0.0
+      },
+      "oracle_calls": {
+        "n": 3,
+        "mean": 0.0,
+        "ci95_low": 0.0,
+        "ci95_high": 0.0
+      },
+      "total_tokens": {
+        "n": 3,
+        "mean": 6539.666666666667,
+        "ci95_low": 4977.248347644055,
+        "ci95_high": 8102.084985689279
+      },
+      "wall_seconds": {
+        "n": 3,
+        "mean": -22.96399603659908,
+        "ci95_low": -67.78352816621995,
+        "ci95_high": 21.855536093021794
+      },
+      "mechanism_score": {
+        "n": 3,
+        "mean": -0.035196571428571466,
+        "ci95_low": -0.2015213435518286,
+        "ci95_high": 0.13112820069468567
+      },
+      "development_prediction_score": {
+        "n": 3,
+        "mean": -0.026576000000000044,
+        "ci95_low": -0.1625998302950726,
+        "ci95_high": 0.10944783029507252
+      },
+      "robustness_score": {
+        "n": 3,
+        "mean": -0.04657341666666681,
+        "ci95_low": -0.25491249231073687,
+        "ci95_high": 0.16176565897740322
+      },
+      "validation_prediction_score": {
+        "n": 3,
+        "mean": -0.03107619999999996,
+        "ci95_low": -0.17338432327412373,
+        "ci95_high": 0.1112319232741238
+      },
+      "development_false_discoveries": {
+        "n": 3,
+        "mean": 0.0,
+        "ci95_low": 0.0,
+        "ci95_high": 0.0
+      },
+      "validation_false_discoveries": {
+        "n": 3,
+        "mean": 0.0,
+        "ci95_low": 0.0,
+        "ci95_high": 0.0
+      }
+    },
+    "PowerSystems/OptimalPowerFlow": {
+      "best_visible_score": {
+        "n": 3,
+        "mean": 3.119408753526898e-08,
+        "ci95_low": -1.0303401690675735e-07,
+        "ci95_high": 1.654221919772953e-07
+      },
+      "best_so_far_auc": {
+        "n": 3,
+        "mean": 0.08333335529105096,
+        "ci95_low": -0.27524993080020166,
+        "ci95_high": 0.4419166413823036
+      },
+      "valid_rate": {
+        "n": 3,
+        "mean": 0.3333333333333333,
+        "ci95_low": -0.3838333333333334,
+        "ci95_high": 1.0505
+      },
+      "invalid_proposals": {
+        "n": 3,
+        "mean": -1.3333333333333333,
+        "ci95_low": -4.202,
+        "ci95_high": 1.5353333333333337
+      },
+      "oracle_calls": {
+        "n": 3,
+        "mean": 0.0,
+        "ci95_low": 0.0,
+        "ci95_high": 0.0
+      },
+      "total_tokens": {
+        "n": 3,
+        "mean": 6676.333333333333,
+        "ci95_low": 4336.7127444245725,
+        "ci95_high": 9015.953922242094
+      },
+      "wall_seconds": {
+        "n": 3,
+        "mean": 20.24550499053051,
+        "ci95_low": -163.4692435328345,
+        "ci95_high": 203.96025351389554
+      },
+      "robustness_score": {
+        "n": 3,
+        "mean": -2.2785445752404598e-10,
+        "ci95_low": -1.2083385679639268e-09,
+        "ci95_high": 7.526296529158348e-10
+      },
+      "heldout_policy_score": {
+        "n": 3,
+        "mean": 1.2081258734160846e-08,
+        "ci95_low": -3.9904279122187365e-08,
+        "ci95_high": 6.406679659050906e-08
+      },
+      "heldout_robustness_score": {
+        "n": 3,
+        "mean": -4.053249813647516e-14,
+        "ci95_low": -2.1472280903758574e-13,
+        "ci95_high": 1.3365781276463543e-13
+      },
+      "mean_contingency_constraint_feasibility": {
+        "n": 3,
+        "mean": 0.0,
+        "ci95_low": 0.0,
+        "ci95_high": 0.0
+      },
+      "mean_contingency_feasibility_rate": {
+        "n": 3,
+        "mean": 0.0,
+        "ci95_low": 0.0,
+        "ci95_high": 0.0
+      }
+    },
+    "QuantumControl/GateSynthesis": {
+      "best_visible_score": {
+        "n": 3,
+        "mean": 1.861781196543788e-06,
+        "ci95_low": -6.1486124109931425e-06,
+        "ci95_high": 9.872174804080719e-06
+      },
+      "best_so_far_auc": {
+        "n": 3,
+        "mean": 0.020834258701425707,
+        "ci95_low": -0.06881559011545753,
+        "ci95_high": 0.11048410751830894
+      },
+      "valid_rate": {
+        "n": 3,
+        "mean": 0.0,
+        "ci95_low": 0.0,
+        "ci95_high": 0.0
+      },
+      "invalid_proposals": {
+        "n": 3,
+        "mean": 0.0,
+        "ci95_low": 0.0,
+        "ci95_high": 0.0
+      },
+      "oracle_calls": {
+        "n": 3,
+        "mean": 0.0,
+        "ci95_low": 0.0,
+        "ci95_high": 0.0
+      },
+      "total_tokens": {
+        "n": 3,
+        "mean": 6268.666666666667,
+        "ci95_low": 4304.715472431405,
+        "ci95_high": 8232.617860901928
+      },
+      "wall_seconds": {
+        "n": 3,
+        "mean": 67.3999269247676,
+        "ci95_low": -143.7015876724251,
+        "ci95_high": 278.50144152196026
+      },
+      "robustness_score": {
+        "n": 3,
+        "mean": 0.011750357470384257,
+        "ci95_low": -0.029648096033931412,
+        "ci95_high": 0.05314881097469992
+      },
+      "heldout_policy_score": {
+        "n": 3,
+        "mean": 0.002309052175290871,
+        "ci95_low": -0.007626788907541685,
+        "ci95_high": 0.012244893258123427
+      },
+      "heldout_robustness_score": {
+        "n": 3,
+        "mean": 0.0063269900456561405,
+        "ci95_low": -0.051928547968697586,
+        "ci95_high": 0.06458252806000987
+      }
+    }
+  },
+  "limitations": [
+    "Three replicate identifiers provide diagnostic intervals only.",
+    "The endpoint exposes no server-side random seed, so pairs do not share random draws.",
+    "Selection blindness changes both parent-program adaptation and access to prior scores.",
+    "Task-specific science metrics are not averaged across tasks."
+  ],
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}
