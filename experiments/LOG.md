@@ -372,3 +372,22 @@ Clean-revision reports bound to `dbbd063` subsequently closed the local inventor
   `ClimateScience/EnergyBalanceModel`; the new SCM baseline is valid and deterministic.
 
 Both reports set `execution_passed=true`, `trusted_evidence=true` and `passed=true`.
+
+### GPT-5.5 mechanism-task calibration
+
+`gpt55_scm_pilot_b1_2026-07-21.json` was run from clean revision `4b9364d` with one
+`greedy_rewrite` proposal. GPT-5.5 improved the normalized mechanism target from 0.0 to
+**0.9830** using 4,088 tokens. Its submitted program performed paired interventions on every
+variable, estimated the total-effect matrix, inverted it to obtain direct structural
+coefficients, thresholded/enforced acyclicity, and used the remaining budget for observational
+refinement.
+
+The result used exactly 28/28 laboratory budget units in every world, achieved raw mechanism
+score **0.9858**, sealed intervention-prediction score **0.9594**, and correctly abstained on the
+null world. Thus the mechanism and validation curves did not meaningfully diverge in this
+pilot. This is a useful negative calibration result: adding an intervention API and mechanism
+metric does not automatically make a discovery task hard. A fully observed linear SCM with
+every variable directly intervenable admits a standard total-effect inversion that GPT-5.5 can
+implement in one proposal. The next version needs hidden/latent variables, partial intervention
+access, mixed nonlinear mechanisms, model-misspecified/null cases or a tighter adaptive budget;
+the current package remains a candidate/on-ramp rather than an open-frontier headline task.

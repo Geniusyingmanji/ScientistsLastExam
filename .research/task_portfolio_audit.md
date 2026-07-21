@@ -28,7 +28,9 @@ meaning.
   Their certification establishes oracle integrity, not sufficient long-horizon headroom.
 - **1 new mechanism candidate.** `CausalDiscovery/InterventionalSCM` supplies budgeted
   interventions, a null world, separate mechanism/prediction metrics and deterministic hidden
-  worlds. It still needs external review, a server-held split and frontier-model calibration.
+  worlds. GPT-5.5 nevertheless reaches 0.983 in one proposal through textbook total-effect
+  inversion, so it needs latent/partial/nonlinear/misspecified regimes in addition to external
+  review and a server-held split.
 - **11 earlier candidates with complete metadata fields.** These are the fastest next review
   tranche: RoomImpulseResponse, LowThrustTransfer, InvertedPendulumSwingUp, LyapunovControl,
   LidDrivenCavity, SeismicInversion, AlloyHardnessOptimization, NeutronDiffusionCriticality,
