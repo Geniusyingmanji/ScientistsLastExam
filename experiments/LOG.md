@@ -480,3 +480,13 @@ diffusion, albedo, ice-threshold and solar-scaling parameters. A stable linear s
 not cure those scientific defects. The replacement must use documented data extraction,
 multiple forcing/climate regimes, uncertainty, held-out years and parameter/prediction
 separation.
+
+### Post-repair full-inventory audit
+
+Clean revision `47c3613` was re-audited after the Lyapunov, neutron, seismic and Climate
+decisions. `task_certification_audit_2026-07-21_v2.json` records 50 packages: **7 certified,
+37 candidate and 6 quarantined**. `secure_baseline_determinism_2026-07-21_v2.json` records
+**50/50 deterministic, 49/50 valid, 50/50 fail-closed and zero infrastructure failures** over
+two repetitions. The sole invalid baseline is the explicitly quarantined Climate EBM; it is
+deterministically rejected at the non-finite metric boundary. Both reports set
+`execution_passed=true`, `trusted_evidence=true` and `passed=true`.

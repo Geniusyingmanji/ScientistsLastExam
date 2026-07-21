@@ -1,0 +1,2478 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_SECURE_EVAL",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "47c3613a14a9d203c78e7eef5d8fb8daefb55354",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/home/azureuser/.local/bin/python3.10",
+      "scripts/run_secure_baseline.py",
+      "--repeats",
+      "2",
+      "--timeout",
+      "180",
+      "--output",
+      "experiments/secure_baseline_determinism_2026-07-21_v2.json"
+    ]
+  },
+  "created_at": "2026-07-21T18:19:27.298245+00:00",
+  "environment": {
+    "python": "3.10.20 (main, Apr  7 2026, 20:44:18) [Clang 22.1.1 ]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.31"
+  },
+  "config": {
+    "repeats": 2,
+    "timeout_s": 180.0
+  },
+  "tasks": [
+    {
+      "task": "AcousticMetamaterials/BroadbandAbsorber",
+      "candidate_sha256": "3cdc0bf60e7afea08b49af5aba8a9544cc55343206ac5c2e80134e19066d9774",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.4437582390382886,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "mean_absorption": 0.0002,
+            "baseline_absorption": 0.0002,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.4459060672670603,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "mean_absorption": 0.0002,
+            "baseline_absorption": 0.0002,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "Acoustics/RoomImpulseResponse",
+      "candidate_sha256": "4c3f8535b7be01064288c97f14b7281596b91304a8574e472a342f47b6f0a731",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 1.8412558156996965,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_scenario": [
+              {
+                "valid": true,
+                "snr": 0.5,
+                "score": 0.0
+              },
+              {
+                "valid": true,
+                "snr": 0.38,
+                "score": 0.0
+              }
+            ],
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 1.845654608681798,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_scenario": [
+              {
+                "valid": true,
+                "snr": 0.5,
+                "score": 0.0
+              },
+              {
+                "valid": true,
+                "snr": 0.38,
+                "score": 0.0
+              }
+            ],
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "Algorithm/MatrixMultiplicationRank",
+      "candidate_sha256": "cb394c23be55857134a630cbef1cf12bb0eb2b295d56ffcf5b85504d0132db6f",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.4407608322799206,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "beat_sota": false,
+            "per_size": [
+              {
+                "mnp": [
+                  2,
+                  2,
+                  2
+                ],
+                "valid": true,
+                "R": 8,
+                "sota_ref": 7,
+                "score": 0.0
+              },
+              {
+                "mnp": [
+                  3,
+                  3,
+                  3
+                ],
+                "valid": true,
+                "R": 27,
+                "sota_ref": 23,
+                "score": 0.0
+              },
+              {
+                "mnp": [
+                  4,
+                  4,
+                  4
+                ],
+                "valid": true,
+                "R": 64,
+                "sota_ref": 48,
+                "score": 0.0
+              }
+            ],
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.4410682115703821,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "beat_sota": false,
+            "per_size": [
+              {
+                "mnp": [
+                  2,
+                  2,
+                  2
+                ],
+                "valid": true,
+                "R": 8,
+                "sota_ref": 7,
+                "score": 0.0
+              },
+              {
+                "mnp": [
+                  3,
+                  3,
+                  3
+                ],
+                "valid": true,
+                "R": 27,
+                "sota_ref": 23,
+                "score": 0.0
+              },
+              {
+                "mnp": [
+                  4,
+                  4,
+                  4
+                ],
+                "valid": true,
+                "R": 64,
+                "sota_ref": 48,
+                "score": 0.0
+              }
+            ],
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "Astrodynamics/LowThrustTransfer",
+      "candidate_sha256": "9186009dad17aeaf4e1dbd4c91b7a6ff52cd1628227849292965bb6da62f93e1",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.4580119475722313,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_scenario": [
+              {
+                "valid": true,
+                "fuel": 7776.0,
+                "pos_err": 1117.758258,
+                "score": 0.0
+              }
+            ],
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.4539218796417117,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_scenario": [
+              {
+                "valid": true,
+                "fuel": 7776.0,
+                "pos_err": 1117.758258,
+                "score": 0.0
+              }
+            ],
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "AtmosphericScience/RadiativeTransferFit",
+      "candidate_sha256": "a61f78744a143a9674e0b1b6011f4bef15f6d14eb15c8995c633c68af973bca2",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.43899588473141193,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "rmse_K": 24.275,
+            "rmse_baseline_K": 24.275,
+            "spectral_residual": 0.517649,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.44009045138955116,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "rmse_K": 24.275,
+            "rmse_baseline_K": 24.275,
+            "spectral_residual": 0.517649,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "BayesianInference/OptimalExperimentDesign",
+      "candidate_sha256": "37f251f8cab0032ea8a0200150ea9504986df45041211a58841030a72901a066",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.4491502372547984,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_instance": [
+              {
+                "valid": true,
+                "eig": 9.9533,
+                "score": 0.0
+              },
+              {
+                "valid": true,
+                "eig": 19.7323,
+                "score": 0.0
+              }
+            ],
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.46085412334650755,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_instance": [
+              {
+                "valid": true,
+                "eig": 9.9533,
+                "score": 0.0
+              },
+              {
+                "valid": true,
+                "eig": 19.7323,
+                "score": 0.0
+              }
+            ],
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "Biomechanics/ProstheticJointDesign",
+      "candidate_sha256": "662179c82d164da3a8fb9b338c01e38096f8ce5a13682fbc1ec91db18d6ecf97",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.4351901225745678,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "joint_quality": 0.2348,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.439783520065248,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "joint_quality": 0.2348,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "CausalDiscovery/InterventionalSCM",
+      "candidate_sha256": "e00399f59ccd3e7845f64ec861e043f22bef6804ddc8fcefaf43b40a4ea657fe",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.4608207931742072,
+          "metrics": {
+            "combined_score": 0.0,
+            "raw_score": 0.16666666666666666,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "mechanism_score": 0.16666666666666666,
+            "intervention_prediction_score": 0.16666666666666666,
+            "null_abstention_correct": true,
+            "mean_experiment_calls": 1.0,
+            "mean_experiment_budget_units": 1.0,
+            "per_world": [
+              {
+                "valid": true,
+                "edge_f1": 0.0,
+                "coefficient_score": 0.0,
+                "mechanism_score": 0.0,
+                "intervention_prediction_score": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1,
+                "abstained": true,
+                "confidence": 0.0,
+                "null_world": false
+              },
+              {
+                "valid": true,
+                "edge_f1": 0.0,
+                "coefficient_score": 0.0,
+                "mechanism_score": 0.0,
+                "intervention_prediction_score": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1,
+                "abstained": true,
+                "confidence": 0.0,
+                "null_world": false
+              },
+              {
+                "valid": true,
+                "edge_f1": 0.0,
+                "coefficient_score": 0.0,
+                "mechanism_score": 0.0,
+                "intervention_prediction_score": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1,
+                "abstained": true,
+                "confidence": 0.0,
+                "null_world": false
+              },
+              {
+                "valid": true,
+                "edge_f1": 0.0,
+                "coefficient_score": 0.0,
+                "mechanism_score": 0.0,
+                "intervention_prediction_score": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1,
+                "abstained": true,
+                "confidence": 0.0,
+                "null_world": false
+              },
+              {
+                "valid": true,
+                "edge_f1": 0.0,
+                "coefficient_score": 0.0,
+                "mechanism_score": 0.0,
+                "intervention_prediction_score": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1,
+                "abstained": true,
+                "confidence": 0.0,
+                "null_world": false
+              },
+              {
+                "valid": true,
+                "edge_f1": 1.0,
+                "coefficient_score": 1.0,
+                "mechanism_score": 1.0,
+                "intervention_prediction_score": 1.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1,
+                "abstained": true,
+                "confidence": 0.0,
+                "null_world": true
+              }
+            ]
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.4546145237982273,
+          "metrics": {
+            "combined_score": 0.0,
+            "raw_score": 0.16666666666666666,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "mechanism_score": 0.16666666666666666,
+            "intervention_prediction_score": 0.16666666666666666,
+            "null_abstention_correct": true,
+            "mean_experiment_calls": 1.0,
+            "mean_experiment_budget_units": 1.0,
+            "per_world": [
+              {
+                "valid": true,
+                "edge_f1": 0.0,
+                "coefficient_score": 0.0,
+                "mechanism_score": 0.0,
+                "intervention_prediction_score": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1,
+                "abstained": true,
+                "confidence": 0.0,
+                "null_world": false
+              },
+              {
+                "valid": true,
+                "edge_f1": 0.0,
+                "coefficient_score": 0.0,
+                "mechanism_score": 0.0,
+                "intervention_prediction_score": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1,
+                "abstained": true,
+                "confidence": 0.0,
+                "null_world": false
+              },
+              {
+                "valid": true,
+                "edge_f1": 0.0,
+                "coefficient_score": 0.0,
+                "mechanism_score": 0.0,
+                "intervention_prediction_score": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1,
+                "abstained": true,
+                "confidence": 0.0,
+                "null_world": false
+              },
+              {
+                "valid": true,
+                "edge_f1": 0.0,
+                "coefficient_score": 0.0,
+                "mechanism_score": 0.0,
+                "intervention_prediction_score": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1,
+                "abstained": true,
+                "confidence": 0.0,
+                "null_world": false
+              },
+              {
+                "valid": true,
+                "edge_f1": 0.0,
+                "coefficient_score": 0.0,
+                "mechanism_score": 0.0,
+                "intervention_prediction_score": 0.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1,
+                "abstained": true,
+                "confidence": 0.0,
+                "null_world": false
+              },
+              {
+                "valid": true,
+                "edge_f1": 1.0,
+                "coefficient_score": 1.0,
+                "mechanism_score": 1.0,
+                "intervention_prediction_score": 1.0,
+                "experiment_calls": 1,
+                "experiment_budget_units": 1,
+                "abstained": true,
+                "confidence": 0.0,
+                "null_world": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "task": "ChemicalKinetics/ReactionMechanismFitting",
+      "candidate_sha256": "60f6092b9d61e4b3393bc66aac63c8591a3ed47ff9846aab550ef886d91660d5",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 1.2788753993809223,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "r2": 0.680889,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 1.255312005057931,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "r2": 0.680889,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "ChemicalProcess/DistillationColumnDesign",
+      "candidate_sha256": "b3dd53bd52a3956ceacde7fa804e1d0a65261e0ba83ce0e0b708cf62b500a1c9",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.43634570576250553,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "x_distillate": 0.99,
+            "x_bottoms": 0.1468,
+            "duty_kJ_mol": 180.0,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.4336939910426736,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "x_distillate": 0.99,
+            "x_bottoms": 0.1468,
+            "duty_kJ_mol": 180.0,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "Chemistry/LennardJonesCluster",
+      "candidate_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.4395524049177766,
+          "metrics": {
+            "combined_score": 0.041930443440283925,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_size": [
+              {
+                "n": 13,
+                "valid": true,
+                "energy": -1.6608566740915731,
+                "e_min": -44.326801,
+                "score": 0.03746845331995812
+              },
+              {
+                "n": 19,
+                "valid": true,
+                "energy": -3.2668830121309282,
+                "e_min": -72.659782,
+                "score": 0.04496136545153587
+              },
+              {
+                "n": 38,
+                "valid": true,
+                "energy": -7.541799496122128,
+                "e_min": -173.928427,
+                "score": 0.04336151154935776
+              }
+            ],
+            "raw_score": 0.041930443440283925
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.44153011310845613,
+          "metrics": {
+            "combined_score": 0.041930443440283925,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_size": [
+              {
+                "n": 13,
+                "valid": true,
+                "energy": -1.6608566740915731,
+                "e_min": -44.326801,
+                "score": 0.03746845331995812
+              },
+              {
+                "n": 19,
+                "valid": true,
+                "energy": -3.2668830121309282,
+                "e_min": -72.659782,
+                "score": 0.04496136545153587
+              },
+              {
+                "n": 38,
+                "valid": true,
+                "energy": -7.541799496122128,
+                "e_min": -173.928427,
+                "score": 0.04336151154935776
+              }
+            ],
+            "raw_score": 0.041930443440283925
+          }
+        }
+      ]
+    },
+    {
+      "task": "ClimateScience/EnergyBalanceModel",
+      "candidate_sha256": "4510b8e248a37ec7a191e0e9c937f121b8382a20d37e9cd30c51269a36922a1f",
+      "deterministic": true,
+      "valid_all": false,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.5966530805453658,
+          "metrics": {
+            "combined_score": -1e+18,
+            "valid": 0.0,
+            "error_message": "ValueError: metrics contain non-finite or non-JSON values"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.5892291534692049,
+          "metrics": {
+            "combined_score": -1e+18,
+            "valid": 0.0,
+            "error_message": "ValueError: metrics contain non-finite or non-JSON values"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Combustion/FlameSpeedOptimization",
+      "candidate_sha256": "43294827e6840fe6247a1166dcc854691025f7032ca1a280c8e44acbc78c5a11",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.5980807757005095,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "flame_speed_m_s": 5.0,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.5978170596063137,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "flame_speed_m_s": 5.0,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "ControlTheory/InvertedPendulumSwingUp",
+      "candidate_sha256": "a7d1ac5eef05fc9b8d14c4054581cd5e100c9aa3eeed7c5eeab64c4038728aa2",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.5032083597034216,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "frac_balanced": 0.0,
+            "avg_force": 5.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.5086020091548562,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "frac_balanced": 0.0,
+            "avg_force": 5.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "CrystalGrowth/CzochralskiProcess",
+      "candidate_sha256": "745dec8685e7b19a8384215bb90dee44aa8d9f0f01692445f5c1b6c19be3d0b8",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.5952085042372346,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "objective": -3.426759,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.628682741895318,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "objective": -3.426759,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "DynamicalSystems/LyapunovControl",
+      "candidate_sha256": "6198243820b96ba9e1a44aaaca59c104eed6f83026b298758c4190b6741d59ea",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 4.835480159148574,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.9134483259132644,
+            "mle": 0.9134,
+            "mle_uncontrolled": 0.9134,
+            "avg_control_energy": 0.0,
+            "mle_method": "two_trajectory_benettin_sampled_feedback"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 4.770984937436879,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.9134483259132644,
+            "mle": 0.9134,
+            "mle_uncontrolled": 0.9134,
+            "avg_control_energy": 0.0,
+            "mle_method": "two_trajectory_benettin_sampled_feedback"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Electromagnetics/AntennaArraySynthesis",
+      "candidate_sha256": "c966a9bce65758104107aec3535de112f904f7f4db24095ad6c8dabec2ae56c4",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.44740989804267883,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_instance": [
+              {
+                "valid": true,
+                "psll_dB": -9.02,
+                "n": 16,
+                "score": 0.0
+              },
+              {
+                "valid": true,
+                "psll_dB": -9.55,
+                "n": 32,
+                "score": 0.0
+              }
+            ],
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.4523425120860338,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_instance": [
+              {
+                "valid": true,
+                "psll_dB": -9.02,
+                "n": 16,
+                "score": 0.0
+              },
+              {
+                "valid": true,
+                "psll_dB": -9.55,
+                "n": 32,
+                "score": 0.0
+              }
+            ],
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "Electromagnetics/WaveguideModeSolver",
+      "candidate_sha256": "8c90e42c53eb21433423604b629354956cfbe4b182e86b80113b624305c8d9de",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.5921543017029762,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "objective": -3.426759,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.6072238869965076,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "objective": -3.426759,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "FluidDynamics/LidDrivenCavity",
+      "candidate_sha256": "95c613c7ddfbb67d0bad8dafed63e4a0d02f0783fcbc04acda7be2624c732efa",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.4374179318547249,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_instance": [
+              {
+                "valid": true,
+                "err_u": 1.5637,
+                "err_v": 0.5453,
+                "score": 0.0
+              }
+            ],
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.4360010167583823,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_instance": [
+              {
+                "valid": true,
+                "err_u": 1.5637,
+                "err_v": 0.5453,
+                "score": 0.0
+              }
+            ],
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "FluidMechanics/StokesShapeDrag",
+      "candidate_sha256": "cf6e67327ced658342cc56d2ea5a7eac13c72575671906698b455abaf2302f15",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.43755919858813286,
+          "metrics": {
+            "combined_score": 0.002645609099382421,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "drag_coefficient": 0.999603,
+            "area": 3.1416,
+            "raw_score": 0.002645609099382421
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.43569886963814497,
+          "metrics": {
+            "combined_score": 0.002645609099382421,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "drag_coefficient": 0.999603,
+            "area": 3.1416,
+            "raw_score": 0.002645609099382421
+          }
+        }
+      ]
+    },
+    {
+      "task": "Geomechanics/TunnelSupportDesign",
+      "candidate_sha256": "f7d1f17f1b80857eda90943c30e4652217ad84de7e0e25fbc2272e6749efdabb",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.6146672749891877,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "objective": -3.426759,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.5891106659546494,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "objective": -3.426759,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "Geophysics/GravityInversion",
+      "candidate_sha256": "d72ddc1c0c2c38b8fe01e066a7bc3dea1a0e9c9061a2654e9a4b9d566baacd30",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.45644807163625956,
+          "metrics": {
+            "combined_score": 3.822260582853762e-14,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_instance": [
+              {
+                "valid": true,
+                "chi2": 17.26,
+                "ssim": 0.0,
+                "score": 3.822260582853762e-14
+              },
+              {
+                "valid": true,
+                "chi2": 25.64,
+                "ssim": 0.0,
+                "score": 3.822260582853762e-14
+              }
+            ],
+            "raw_score": 3.822260582853762e-14
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.45695737935602665,
+          "metrics": {
+            "combined_score": 3.822260582853762e-14,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_instance": [
+              {
+                "valid": true,
+                "chi2": 17.26,
+                "ssim": 0.0,
+                "score": 3.822260582853762e-14
+              },
+              {
+                "valid": true,
+                "chi2": 25.64,
+                "ssim": 0.0,
+                "score": 3.822260582853762e-14
+              }
+            ],
+            "raw_score": 3.822260582853762e-14
+          }
+        }
+      ]
+    },
+    {
+      "task": "Geophysics/SeismicInversion",
+      "candidate_sha256": "ac82d112d46a0fff331a74c0a2afbc5ffa75cbdd8aeebc8eb7b40b17068aac17",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.45116325467824936,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": -397.32018150814474,
+            "development_score": 0.0,
+            "mechanism_score": 0.0,
+            "holdout_prediction_score": 0.0,
+            "mean_development_rmse_ms": 397.32018150814474,
+            "mean_holdout_rmse_ms": 799.2025826899277,
+            "per_scenario": [
+              {
+                "development_score": 0.0,
+                "mechanism_score": 0.0,
+                "holdout_prediction_score": 0.0,
+                "development_rmse_ms": 309.52122522577514,
+                "velocity_relative_error": 0.2812967653598652,
+                "holdout_rmse_ms": 612.7626849973203,
+                "valid": true,
+                "n_layers": 4
+              },
+              {
+                "development_score": 0.0,
+                "mechanism_score": 0.0,
+                "holdout_prediction_score": 0.0,
+                "development_rmse_ms": 377.998373033445,
+                "velocity_relative_error": 0.3205553902996688,
+                "holdout_rmse_ms": 763.970908019104,
+                "valid": true,
+                "n_layers": 5
+              },
+              {
+                "development_score": 0.0,
+                "mechanism_score": 0.0,
+                "holdout_prediction_score": 0.0,
+                "development_rmse_ms": 482.6551927980141,
+                "velocity_relative_error": 0.397695395923585,
+                "holdout_rmse_ms": 976.3746400986648,
+                "valid": true,
+                "n_layers": 6
+              },
+              {
+                "development_score": 0.0,
+                "mechanism_score": 0.0,
+                "holdout_prediction_score": 0.0,
+                "development_rmse_ms": 371.6576523532586,
+                "velocity_relative_error": 0.27848389076310154,
+                "holdout_rmse_ms": 735.7603100312037,
+                "valid": true,
+                "n_layers": 4
+              },
+              {
+                "development_score": 0.0,
+                "mechanism_score": 0.0,
+                "holdout_prediction_score": 0.0,
+                "development_rmse_ms": 343.10797288378075,
+                "velocity_relative_error": 0.30540320567415336,
+                "holdout_rmse_ms": 698.717645542126,
+                "valid": true,
+                "n_layers": 5
+              },
+              {
+                "development_score": 0.0,
+                "mechanism_score": 0.0,
+                "holdout_prediction_score": 0.0,
+                "development_rmse_ms": 498.98067275459493,
+                "velocity_relative_error": 0.4018530563168533,
+                "holdout_rmse_ms": 1007.629307451148,
+                "valid": true,
+                "n_layers": 6
+              }
+            ]
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.4457126669585705,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": -397.32018150814474,
+            "development_score": 0.0,
+            "mechanism_score": 0.0,
+            "holdout_prediction_score": 0.0,
+            "mean_development_rmse_ms": 397.32018150814474,
+            "mean_holdout_rmse_ms": 799.2025826899277,
+            "per_scenario": [
+              {
+                "development_score": 0.0,
+                "mechanism_score": 0.0,
+                "holdout_prediction_score": 0.0,
+                "development_rmse_ms": 309.52122522577514,
+                "velocity_relative_error": 0.2812967653598652,
+                "holdout_rmse_ms": 612.7626849973203,
+                "valid": true,
+                "n_layers": 4
+              },
+              {
+                "development_score": 0.0,
+                "mechanism_score": 0.0,
+                "holdout_prediction_score": 0.0,
+                "development_rmse_ms": 377.998373033445,
+                "velocity_relative_error": 0.3205553902996688,
+                "holdout_rmse_ms": 763.970908019104,
+                "valid": true,
+                "n_layers": 5
+              },
+              {
+                "development_score": 0.0,
+                "mechanism_score": 0.0,
+                "holdout_prediction_score": 0.0,
+                "development_rmse_ms": 482.6551927980141,
+                "velocity_relative_error": 0.397695395923585,
+                "holdout_rmse_ms": 976.3746400986648,
+                "valid": true,
+                "n_layers": 6
+              },
+              {
+                "development_score": 0.0,
+                "mechanism_score": 0.0,
+                "holdout_prediction_score": 0.0,
+                "development_rmse_ms": 371.6576523532586,
+                "velocity_relative_error": 0.27848389076310154,
+                "holdout_rmse_ms": 735.7603100312037,
+                "valid": true,
+                "n_layers": 4
+              },
+              {
+                "development_score": 0.0,
+                "mechanism_score": 0.0,
+                "holdout_prediction_score": 0.0,
+                "development_rmse_ms": 343.10797288378075,
+                "velocity_relative_error": 0.30540320567415336,
+                "holdout_rmse_ms": 698.717645542126,
+                "valid": true,
+                "n_layers": 5
+              },
+              {
+                "development_score": 0.0,
+                "mechanism_score": 0.0,
+                "holdout_prediction_score": 0.0,
+                "development_rmse_ms": 498.98067275459493,
+                "velocity_relative_error": 0.4018530563168533,
+                "holdout_rmse_ms": 1007.629307451148,
+                "valid": true,
+                "n_layers": 6
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "task": "HeatTransfer/ConvectionDiffusionOpt",
+      "candidate_sha256": "29a91794c53d6d5d8441d8bf6a52b3cfb726a5bd835a5eb691b8bab60e76b903",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.5148573406040668,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "temperature_rmse": 0.308013,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.514964984729886,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "temperature_rmse": 0.308013,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "InventoryManagement/MultiEchelonStock",
+      "candidate_sha256": "b1c2676be52c68698aa700c7e1d9ebda2a08e449b130ea44d80927e832370bc3",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.44636313058435917,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "avg_cost_per_period": 176.5,
+            "service_level": 0.995,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.4434928437694907,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "avg_cost_per_period": 176.5,
+            "service_level": 0.995,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "MaterialsScience/AlloyHardnessOptimization",
+      "candidate_sha256": "b1353bfba701db2409aaa4e81e21130fc0f35b0caf788c5dbbb61a3ccf59cc92",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.436281974427402,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "best_hardness": 357.12,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.4351015267893672,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "best_hardness": 357.12,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "Mathematics/CapSet",
+      "candidate_sha256": "a52d292c05a65500e8fb3d527233b6762408a4d1200877921cfe6ae0705cd55c",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.43580187391489744,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "beat_sota": false,
+            "per_dim": [
+              {
+                "n": 4,
+                "valid": true,
+                "size": 16,
+                "sota_ref": 20,
+                "score": 0.0
+              },
+              {
+                "n": 5,
+                "valid": true,
+                "size": 32,
+                "sota_ref": 45,
+                "score": 0.0
+              },
+              {
+                "n": 6,
+                "valid": true,
+                "size": 64,
+                "sota_ref": 112,
+                "score": 0.0
+              }
+            ],
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.44470868073403835,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "beat_sota": false,
+            "per_dim": [
+              {
+                "n": 4,
+                "valid": true,
+                "size": 16,
+                "sota_ref": 20,
+                "score": 0.0
+              },
+              {
+                "n": 5,
+                "valid": true,
+                "size": 32,
+                "sota_ref": 45,
+                "score": 0.0
+              },
+              {
+                "n": 6,
+                "valid": true,
+                "size": 64,
+                "sota_ref": 112,
+                "score": 0.0
+              }
+            ],
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "MolecularDynamics/ForceFieldCalibration",
+      "candidate_sha256": "b44f351bdc9898715d009707391c5bae8df4cfd37275a2253a1347eb1f9b37f9",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.5965718980878592,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "objective": -3.426759,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.6010023485869169,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "objective": -3.426759,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "NuclearEngineering/NeutronDiffusionCriticality",
+      "candidate_sha256": "5257d7dabbfc42e0b7175f1e45945079cb57ae91a602c1096dc0944a0ea99500",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.5392312481999397,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.9841790542199828,
+            "k_eff": 0.984179,
+            "k_baseline": 0.984179,
+            "k_reference": 1.059182,
+            "avg_enrichment": 0.05
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.5522894700989127,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.9841790542199828,
+            "k_eff": 0.984179,
+            "k_baseline": 0.984179,
+            "k_reference": 1.059182,
+            "avg_enrichment": 0.05
+          }
+        }
+      ]
+    },
+    {
+      "task": "Oceanography/OceanCurrentInversion",
+      "candidate_sha256": "38458be3a748ee15bd39ebd0a5890c28d3f8777b909c792edc777f1467a19510",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.6072489740327001,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "trajectory_rmse_m": 1007.0,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.6332380464300513,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "trajectory_rmse_m": 1007.0,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "candidate_sha256": "da2301e307e380c369674203557fdaa01d647c786343a9d1a98429d27536cb3e",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.4361649760976434,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_scenario": [
+              {
+                "valid": true,
+                "efficiency": 0.0,
+                "score": 0.0
+              },
+              {
+                "valid": true,
+                "efficiency": 0.0,
+                "score": 0.0
+              },
+              {
+                "valid": true,
+                "efficiency": 0.0,
+                "score": 0.0
+              }
+            ],
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.4339736057445407,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_scenario": [
+              {
+                "valid": true,
+                "efficiency": 0.0,
+                "score": 0.0
+              },
+              {
+                "valid": true,
+                "efficiency": 0.0,
+                "score": 0.0
+              },
+              {
+                "valid": true,
+                "efficiency": 0.0,
+                "score": 0.0
+              }
+            ],
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "Optimization/CirclePacking",
+      "candidate_sha256": "4189f1c26472a29105d61e3f6475c6de6555f254e73fe68eb504a830b75f6b7a",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.43643026519566774,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_instance": [
+              {
+                "n": 7,
+                "valid": true,
+                "side": 6.0,
+                "best_known": 5.7321,
+                "baseline_side": 6.0,
+                "score": 0.0
+              },
+              {
+                "n": 10,
+                "valid": true,
+                "side": 8.0,
+                "best_known": 6.7474,
+                "baseline_side": 8.0,
+                "score": 0.0
+              },
+              {
+                "n": 13,
+                "valid": true,
+                "side": 8.0,
+                "best_known": 7.6274,
+                "baseline_side": 8.0,
+                "score": 0.0
+              }
+            ],
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.43243088386952877,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_instance": [
+              {
+                "n": 7,
+                "valid": true,
+                "side": 6.0,
+                "best_known": 5.7321,
+                "baseline_side": 6.0,
+                "score": 0.0
+              },
+              {
+                "n": 10,
+                "valid": true,
+                "side": 8.0,
+                "best_known": 6.7474,
+                "baseline_side": 8.0,
+                "score": 0.0
+              },
+              {
+                "n": 13,
+                "valid": true,
+                "side": 8.0,
+                "best_known": 7.6274,
+                "baseline_side": 8.0,
+                "score": 0.0
+              }
+            ],
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "Optoelectronics/LaserCavityDesign",
+      "candidate_sha256": "b9c33ed8aef5de4acdf071e3a2fba494728025c61bef0567566c8f579a4cb028",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.5872111674398184,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "objective": -3.426759,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.5967174721881747,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "objective": -3.426759,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "ParticlePhysics/CalorimeterDesign",
+      "candidate_sha256": "6400a49a7e41037332a1a801fc60e25e12f532cfda9dd72162bb52a28fe89fb0",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.521297269500792,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "sigma_over_E_percent": 100.0,
+            "sampling_fraction": 0.0,
+            "total_length_mm": 180.0,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.5024916315451264,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "sigma_over_E_percent": 100.0,
+            "sampling_fraction": 0.0,
+            "total_length_mm": 180.0,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "Photonics/MultilayerThinFilm",
+      "candidate_sha256": "d6d43007ed7eadd9f999f7010a716fc40ce9714a916c827c2efea239063c1904",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.4415733041241765,
+          "metrics": {
+            "combined_score": 0.5908038368710128,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "mean_reflectance": 0.017264,
+            "n_layers": 1,
+            "raw_score": 0.5908038368710128
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.4413726320490241,
+          "metrics": {
+            "combined_score": 0.5908038368710128,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "mean_reflectance": 0.017264,
+            "n_layers": 1,
+            "raw_score": 0.5908038368710128
+          }
+        }
+      ]
+    },
+    {
+      "task": "Physics/SpinGlassGroundState",
+      "candidate_sha256": "e0ad7fd64918dac10b3c2e560d3b2eab9980077a16d64085b77e0e6548987f75",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.4428233942016959,
+          "metrics": {
+            "combined_score": 0.19577848761593986,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_instance": [
+              {
+                "n": 32,
+                "seed": 0,
+                "valid": true,
+                "energy": -0.24510697562788353,
+                "e_best": -14.486503,
+                "score": 0.2275933857683759
+              },
+              {
+                "n": 48,
+                "seed": 1,
+                "valid": true,
+                "energy": -1.4177937632373216,
+                "e_best": -25.261139,
+                "score": 0.11636882257386556
+              },
+              {
+                "n": 64,
+                "seed": 2,
+                "valid": true,
+                "energy": -5.526034437068936,
+                "e_best": -33.076214,
+                "score": 0.24337325450557815
+              }
+            ],
+            "raw_score": 0.19577848761593986
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.439453492872417,
+          "metrics": {
+            "combined_score": 0.19577848761593986,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_instance": [
+              {
+                "n": 32,
+                "seed": 0,
+                "valid": true,
+                "energy": -0.24510697562788353,
+                "e_best": -14.486503,
+                "score": 0.2275933857683759
+              },
+              {
+                "n": 48,
+                "seed": 1,
+                "valid": true,
+                "energy": -1.4177937632373216,
+                "e_best": -25.261139,
+                "score": 0.11636882257386556
+              },
+              {
+                "n": 64,
+                "seed": 2,
+                "valid": true,
+                "energy": -5.526034437068936,
+                "e_best": -33.076214,
+                "score": 0.24337325450557815
+              }
+            ],
+            "raw_score": 0.19577848761593986
+          }
+        }
+      ]
+    },
+    {
+      "task": "PopulationGenetics/DemographicSFS",
+      "candidate_sha256": "5210ae1fe0f782985977038cf995cc0c08b774262d30d77250452e117316993b",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.4337824657559395,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "chi2": 4237.48,
+            "chi2_baseline": 4237.48,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.43715693056583405,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "chi2": 4237.48,
+            "chi2_baseline": 4237.48,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "PowerSystems/OptimalPowerFlow",
+      "candidate_sha256": "5a923cd5f646e960ea7e0f4086c9af52b3848971c3bc29bb56ea4bc88c59b1b2",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.43905749451369047,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 0.0,
+            "cost": 2490.0,
+            "cost_baseline": 2490.0,
+            "line_violations_mw": 65.0,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.4295502630993724,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 0.0,
+            "cost": 2490.0,
+            "cost_baseline": 2490.0,
+            "line_violations_mw": 65.0,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "QuantumChemistry/HartreeFockSCF",
+      "candidate_sha256": "9aabfe8205c562e02dec4bee2f380cdd6a940180a8b7c52e4de49019fd90ca8d",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.43601599521934986,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "energy_hartree": 0.444915,
+            "exact_hf": -1.1167,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.43593982700258493,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "energy_hartree": 0.444915,
+            "exact_hf": -1.1167,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "QuantumControl/GateSynthesis",
+      "candidate_sha256": "61169902868a9925c383f1b703f66626eef0153e05a6e38880168dca22727668",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.5106116682291031,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "gate_fidelity": 0.192538,
+            "baseline_fidelity": 0.192538,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.5138549264520407,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "gate_fidelity": 0.192538,
+            "baseline_fidelity": 0.192538,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "ScientificComputing/PoissonSolver2D",
+      "candidate_sha256": "378f2e69a6836cb02588d13e311cf0802bdc3cb8f1d1b7b24ccb11aa495e30d0",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.45529157761484385,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "rel_l2_error": 0.8981737822457003,
+            "e_baseline": 0.8981737822457003,
+            "e_reference": 1e-10,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.4538569301366806,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "rel_l2_error": 0.8981737822457003,
+            "e_baseline": 0.8981737822457003,
+            "e_reference": 1e-10,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "Semiconductor/MOSFETDoping",
+      "candidate_sha256": "d6d0918d1514b5a6d486dd518765e0803cba31106e998811b0f829565e38ff73",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.5270762834697962,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "ion_ioff_ratio_log10": 0.0,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.5452590826898813,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "ion_ioff_ratio_log10": 0.0,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "SignalProcessing/SparseRecovery",
+      "candidate_sha256": "d4ae359138bd6dc62ab465f60d5221f496e0b36287dde2f3a5e3d0fb0be120bc",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.48019614163786173,
+          "metrics": {
+            "combined_score": 6.588598725280577e-18,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_instance": [
+              {
+                "valid": true,
+                "snr": 1.64,
+                "score": 0.0
+              },
+              {
+                "valid": true,
+                "snr": 1.59,
+                "score": 0.0
+              },
+              {
+                "valid": true,
+                "snr": 1.39,
+                "score": 0.0
+              },
+              {
+                "valid": true,
+                "snr": 1.96,
+                "score": 3.2942993626402884e-17
+              },
+              {
+                "valid": true,
+                "snr": 1.28,
+                "score": 0.0
+              }
+            ],
+            "raw_score": 6.588598725280577e-18
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.473308140411973,
+          "metrics": {
+            "combined_score": 6.588598725280577e-18,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_instance": [
+              {
+                "valid": true,
+                "snr": 1.64,
+                "score": 0.0
+              },
+              {
+                "valid": true,
+                "snr": 1.59,
+                "score": 0.0
+              },
+              {
+                "valid": true,
+                "snr": 1.39,
+                "score": 0.0
+              },
+              {
+                "valid": true,
+                "snr": 1.96,
+                "score": 3.2942993626402884e-17
+              },
+              {
+                "valid": true,
+                "snr": 1.28,
+                "score": 0.0
+              }
+            ],
+            "raw_score": 6.588598725280577e-18
+          }
+        }
+      ]
+    },
+    {
+      "task": "Spectroscopy/NMRSpectrumFitting",
+      "candidate_sha256": "5d5703d757523fb0da96b63545102883ae3f35f946602924985be96f186d7a73",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.44179597310721874,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "residual_rms": 0.758325,
+            "n_peaks_found": 1,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.4504407364875078,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "residual_rms": 0.758325,
+            "n_peaks_found": 1,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "StructuralEngineering/TrussWeightMinimization",
+      "candidate_sha256": "6a3fd70d896d63c5218165d55e3fd3a6afd253f999056d338fba72dba75e9c96",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.4549764636904001,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "weight_lbs": 13643.8,
+            "max_stress_psi": 8571.0,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.45044186618179083,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "weight_lbs": 13643.8,
+            "max_stress_psi": 8571.0,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "Thermodynamics/HeatExchangerDesign",
+      "candidate_sha256": "28c17acfc230885f91f347922e8eb4edf8dd02edb0e22c27f78a46f02838d3bc",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.44510641507804394,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_scenario": [
+              {
+                "valid": true,
+                "effectiveness": 0.511,
+                "score": 0.0
+              },
+              {
+                "valid": true,
+                "effectiveness": 0.3991,
+                "score": 0.0
+              }
+            ],
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.4420447377488017,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "per_scenario": [
+              {
+                "valid": true,
+                "effectiveness": 0.511,
+                "score": 0.0
+              },
+              {
+                "valid": true,
+                "effectiveness": 0.3991,
+                "score": 0.0
+              }
+            ],
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "Thermodynamics/RankineCycleOpt",
+      "candidate_sha256": "2d8c57f0fc1f99dbec0779139f33f4fca8872c7841fc49d271efb5cb75c07306",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.4434807589277625,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "thermal_efficiency": 0.0,
+            "baseline_efficiency": 0.0,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.44199216831475496,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "thermal_efficiency": 0.0,
+            "baseline_efficiency": 0.0,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "Transportation/TrafficSignalTiming",
+      "candidate_sha256": "3b7e4664b57f2d25f4aac46a9cb8e230e1da4f20454898023782433c1f0df9ce",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.44293059408664703,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "total_delay": 54679.0,
+            "baseline_delay": 54679.0,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.4421533225104213,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "total_delay": 54679.0,
+            "baseline_delay": 54679.0,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "Turbulence/RANSCalibration",
+      "candidate_sha256": "6ce5e0b09891a52c1070892f4f1d3fc186db1e95fcf8a44157c59898b004eaa9",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.43449187744408846,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "relative_error": 0.844077,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.4340991694480181,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "relative_error": 0.844077,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "task": "WavePropagation/SeismicWaveInversion",
+      "candidate_sha256": "2dd3ef7780589cbd1ff87c76e2648f28f2774b2a4e7844c6f1b8588810f19433",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 0.5821314146742225,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "waveform_misfit_norm": 0.02977,
+            "velocity_rmse": 620.8,
+            "raw_score": 0.0
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 0.5878558168187737,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "waveform_misfit_norm": 0.02977,
+            "velocity_rmse": 620.8,
+            "raw_score": 0.0
+          }
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "inventory_count": 50,
+    "deterministic_count": 50,
+    "valid_count": 49,
+    "fail_closed_count": 50,
+    "infrastructure_failure_count": 0
+  },
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}
