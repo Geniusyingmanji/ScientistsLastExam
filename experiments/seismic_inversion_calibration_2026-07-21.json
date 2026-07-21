@@ -1,0 +1,143 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_TASK_CALIBRATION",
+  "created_at": "2026-07-21T18:13:46.945924+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "7d1add3ebc7aa2044e37ac55cda7d9318ccd533e",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/home/azureuser/.local/bin/python3.10",
+      "scripts/calibrate_seismic_inversion.py",
+      "--output",
+      "experiments/seismic_inversion_calibration_2026-07-21.json"
+    ]
+  },
+  "environment": {
+    "python": "3.10.20 (main, Apr  7 2026, 20:44:18) [Clang 22.1.1 ]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.31"
+  },
+  "reference_solver": "public-input multistart nonlinear least squares",
+  "metrics": {
+    "combined_score": 0.9981442464356256,
+    "valid": 1.0,
+    "feasibility_rate": 1.0,
+    "raw_score": -0.7245631011506434,
+    "development_score": 0.9981442464356256,
+    "mechanism_score": 0.9988004511193873,
+    "holdout_prediction_score": 0.999685599551523,
+    "mean_development_rmse_ms": 0.7245631011506434,
+    "mean_holdout_rmse_ms": 0.23675150605983572,
+    "per_scenario": [
+      {
+        "development_score": 0.9978436824615778,
+        "mechanism_score": 0.9991216739253062,
+        "holdout_prediction_score": 0.9995694726311196,
+        "development_rmse_ms": 0.667426046468223,
+        "velocity_relative_error": 0.00024707028374261643,
+        "holdout_rmse_ms": 0.2638111065199786,
+        "valid": true,
+        "n_layers": 4
+      },
+      {
+        "development_score": 0.9982997118505602,
+        "mechanism_score": 0.9984871828893689,
+        "holdout_prediction_score": 0.9996839585315959,
+        "development_rmse_ms": 0.6427061541762633,
+        "velocity_relative_error": 0.0004849416793503659,
+        "holdout_rmse_ms": 0.24144648758837794,
+        "valid": true,
+        "n_layers": 5
+      },
+      {
+        "development_score": 0.998377957618408,
+        "mechanism_score": 0.9990304341969034,
+        "holdout_prediction_score": 0.99987011655195,
+        "development_rmse_ms": 0.7828871784138621,
+        "velocity_relative_error": 0.00038559185593644793,
+        "holdout_rmse_ms": 0.1268149048445562,
+        "valid": true,
+        "n_layers": 6
+      },
+      {
+        "development_score": 0.9980160563015206,
+        "mechanism_score": 0.9986455294361505,
+        "holdout_prediction_score": 0.999514871262757,
+        "development_rmse_ms": 0.7373478573778766,
+        "velocity_relative_error": 0.000377198232544897,
+        "holdout_rmse_ms": 0.35693847011899393,
+        "valid": true,
+        "n_layers": 4
+      },
+      {
+        "development_score": 0.9979777694166657,
+        "mechanism_score": 0.9988770501499598,
+        "holdout_prediction_score": 0.9996849337889668,
+        "development_rmse_ms": 0.6938434361514327,
+        "velocity_relative_error": 0.0003429524840136152,
+        "holdout_rmse_ms": 0.22014232116299368,
+        "valid": true,
+        "n_layers": 5
+      },
+      {
+        "development_score": 0.9983503009650214,
+        "mechanism_score": 0.9986408361186345,
+        "holdout_prediction_score": 0.9997902445427489,
+        "development_rmse_ms": 0.8231679343162032,
+        "velocity_relative_error": 0.0005461841597622298,
+        "holdout_rmse_ms": 0.211355746124114,
+        "valid": true,
+        "n_layers": 6
+      }
+    ]
+  },
+  "identifiability": [
+    {
+      "seed": 701,
+      "n_layers": 4,
+      "jacobian_rank": 4,
+      "condition_number": 8.387473153928731
+    },
+    {
+      "seed": 719,
+      "n_layers": 5,
+      "jacobian_rank": 5,
+      "condition_number": 12.888144791206134
+    },
+    {
+      "seed": 733,
+      "n_layers": 6,
+      "jacobian_rank": 6,
+      "condition_number": 18.65582046459142
+    },
+    {
+      "seed": 751,
+      "n_layers": 4,
+      "jacobian_rank": 4,
+      "condition_number": 8.435210930263352
+    },
+    {
+      "seed": 769,
+      "n_layers": 5,
+      "jacobian_rank": 5,
+      "condition_number": 10.81051217618525
+    },
+    {
+      "seed": 787,
+      "n_layers": 6,
+      "jacobian_rank": 6,
+      "condition_number": 20.815255847270276
+    }
+  ],
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}

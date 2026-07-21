@@ -455,3 +455,6 @@ development score **0.9981**, velocity-mechanism score **0.9988**, and unobserve
 prediction score **0.9997**. The task now measures a genuine, identifiable inverse problem;
 these high reference values also warn that it may remain a textbook-template task, which the
 next GPT-5.5 budget-one calibration must test.
+
+`seismic_inversion_calibration_2026-07-21.json` records the reference and rank checks from clean
+revision `7d1add3`; it sets `execution_passed=true`, `trusted_evidence=true` and `passed=true`.
