@@ -1,0 +1,322 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_SECURE_EVAL",
+  "evidence_scope": "MODEL_PERFORMANCE",
+  "created_at": "2026-07-22T09:04:25.932500+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "b09657e27882417c3e4c98d57f1469eba0853dbf",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "/home/azureuser/workspace-gzy/zyf/frontier-science/scripts/batch_evolve.py",
+      "--all",
+      "--tasks",
+      "AtmosphericScience/RadiativeTransferFit",
+      "--algorithms",
+      "greedy_rewrite",
+      "--feedback-modes",
+      "normal",
+      "--seeds",
+      "0",
+      "--budget",
+      "1",
+      "--timeout",
+      "180",
+      "--workdir",
+      "runs/radiative_v2_b1",
+      "--output",
+      "experiments/gpt55_radiative_v2_b1_2026-07-22.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "config": {
+    "tasks": [
+      "AtmosphericScience/RadiativeTransferFit"
+    ],
+    "algorithms": [
+      "greedy_rewrite"
+    ],
+    "feedback_modes": [
+      "normal"
+    ],
+    "condition_order": "as_listed_for_even_seeds_reversed_for_odd_seeds",
+    "seeds": [
+      0
+    ],
+    "budget": 1,
+    "timeout_s": 180.0,
+    "work_root": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/radiative_v2_b1",
+    "llm_condition_sha256": "5b0df4671481f6b3505155bc6c5654a64c4da5591422fb806904e7d0f44fc4d2",
+    "llm": {
+      "wire": "responses",
+      "endpoint_sha256": "b22995a1fcaf8ad713ac37716f006c717313dfdebd357ac02a077a5582650bb6",
+      "model": "gpt-5.5",
+      "max_output_tokens": 16000,
+      "temperature": null,
+      "reasoning_effort": "low",
+      "input_cost_per_million": null,
+      "output_cost_per_million": null,
+      "server_side_seed_control": false
+    }
+  },
+  "runs": [
+    {
+      "task": "AtmosphericScience/RadiativeTransferFit",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 0,
+      "baseline": 0.0,
+      "best": 0.0,
+      "accepted": 0,
+      "evaluated": 2,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/radiative_v2_b1/AtmosphericScience__RadiativeTransferFit/greedy_rewrite/normal/seed_0",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 2,
+        "budget_units": 2,
+        "best_score": 0.0,
+        "best_so_far_auc": 0.0,
+        "valid_rate": 1.0,
+        "accepted": 0,
+        "wall_seconds": 57.42536272853613,
+        "llm": {
+          "calls": 1,
+          "provider_usage_records": 1,
+          "input_tokens": 1439,
+          "output_tokens": 3870,
+          "total_tokens": 5309,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "AtmosphericScience/RadiativeTransferFit",
+        "seed": 0,
+        "baseline_score": 0.0,
+        "budget": 1,
+        "feedback_mode": "normal",
+        "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "online_incumbent"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 1,
+        "trajectory_sha256": "bdddfd08d1b29ce97e793c4d53e747f4f16b121b881638a22694ad5734cfb639",
+        "events": [
+          {
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "dbacb6ca73f4d5e908aa771cb314061975f3cabf42fddd95f9f60d650421b540",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "mechanism_score": 0.3333333333333333,
+              "development_supported_mechanism_score": 0.0,
+              "development_discovery_coverage": 0.0,
+              "development_support_f1": 0.0,
+              "development_parameter_score": 0.0,
+              "development_profile_score": 0.0,
+              "development_optical_depth_score": 0.0,
+              "development_radiance_prediction_score": 0.01388825,
+              "development_radiance_view_shift_score": 0.010059,
+              "development_misspecified_radiance_score": 0.0,
+              "development_confidence_calibration_score": 1.0,
+              "development_false_discovery_rate": 0.0,
+              "development_correct_refusal_rate": 1.0,
+              "robustness_score": 0.0,
+              "heldout_mechanism_score": 0.4,
+              "heldout_supported_mechanism_score": 0.0,
+              "heldout_discovery_coverage": 0.0,
+              "heldout_support_f1": 0.0,
+              "heldout_parameter_score": 0.0,
+              "heldout_profile_score": 0.0,
+              "heldout_optical_depth_score": 0.0,
+              "heldout_radiance_prediction_score": 0.0,
+              "heldout_radiance_view_shift_score": 0.0,
+              "heldout_misspecified_radiance_score": 0.0,
+              "heldout_confidence_calibration_score": 1.0,
+              "heldout_false_discovery_rate": 0.0,
+              "heldout_correct_refusal_rate": 1.0,
+              "heldout_feasibility_rate": 1.0,
+              "mean_experiment_calls": 1.0,
+              "mean_experiment_budget_units": 4.0,
+              "raw_score": 0.0
+            },
+            "algorithm_metadata": {},
+            "error": null
+          },
+          {
+            "step": 1,
+            "oracle_calls": 2,
+            "budget_units": 2,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": false,
+            "candidate_sha256": "8824504df5da0456a816f86663d1f806e49a4f35d147b934cb66f94b4cb4f344",
+            "parent_sha256": "dbacb6ca73f4d5e908aa771cb314061975f3cabf42fddd95f9f60d650421b540",
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "mechanism_score": 0.3333333333333333,
+              "development_supported_mechanism_score": 0.0,
+              "development_discovery_coverage": 0.0,
+              "development_support_f1": 0.0,
+              "development_parameter_score": 0.0,
+              "development_profile_score": 0.0,
+              "development_optical_depth_score": 0.0,
+              "development_radiance_prediction_score": 0.01388825,
+              "development_radiance_view_shift_score": 0.010059,
+              "development_misspecified_radiance_score": 0.0,
+              "development_confidence_calibration_score": 0.9975000000000002,
+              "development_false_discovery_rate": 0.0,
+              "development_correct_refusal_rate": 1.0,
+              "robustness_score": 0.0,
+              "heldout_mechanism_score": 0.4,
+              "heldout_supported_mechanism_score": 0.0,
+              "heldout_discovery_coverage": 0.0,
+              "heldout_support_f1": 0.0,
+              "heldout_parameter_score": 0.0,
+              "heldout_profile_score": 0.0,
+              "heldout_optical_depth_score": 0.0,
+              "heldout_radiance_prediction_score": 0.0,
+              "heldout_radiance_view_shift_score": 0.0,
+              "heldout_misspecified_radiance_score": 0.0,
+              "heldout_confidence_calibration_score": 0.9975000000000002,
+              "heldout_false_discovery_rate": 0.0,
+              "heldout_correct_refusal_rate": 1.0,
+              "heldout_feasibility_rate": 1.0,
+              "mean_experiment_calls": 2.0,
+              "mean_experiment_budget_units": 18.0,
+              "raw_score": 0.0
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 1
+            },
+            "error": null
+          }
+        ]
+      }
+    }
+  ],
+  "aggregate": {
+    "attempt_count": 1,
+    "superseded_attempts": 0,
+    "successful_runs": 1,
+    "failed_runs": 0,
+    "by_condition": {
+      "AtmosphericScience/RadiativeTransferFit|greedy_rewrite|normal": {
+        "n": 1,
+        "best_score": {
+          "n": 1,
+          "mean": 0.0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.0
+        },
+        "best_so_far_auc": {
+          "n": 1,
+          "mean": 0.0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.0
+        },
+        "budget_units": {
+          "n": 1,
+          "mean": 2.0,
+          "ci95_low": 2.0,
+          "ci95_high": 2.0
+        },
+        "oracle_calls": {
+          "n": 1,
+          "mean": 2.0,
+          "ci95_low": 2.0,
+          "ci95_high": 2.0
+        },
+        "wall_seconds": {
+          "n": 1,
+          "mean": 57.42536272853613,
+          "ci95_low": 57.42536272853613,
+          "ci95_high": 57.42536272853613
+        },
+        "total_tokens": {
+          "n": 1,
+          "mean": 5309.0,
+          "ci95_low": 5309.0,
+          "ci95_high": 5309.0
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      }
+    },
+    "overall": {
+      "best_score": {
+        "n": 1,
+        "mean": 0.0,
+        "ci95_low": 0.0,
+        "ci95_high": 0.0
+      },
+      "best_so_far_auc": {
+        "n": 1,
+        "mean": 0.0,
+        "ci95_low": 0.0,
+        "ci95_high": 0.0
+      },
+      "budget_units": {
+        "n": 1,
+        "mean": 2.0,
+        "ci95_low": 2.0,
+        "ci95_high": 2.0
+      },
+      "oracle_calls": {
+        "n": 1,
+        "mean": 2.0,
+        "ci95_low": 2.0,
+        "ci95_high": 2.0
+      },
+      "wall_seconds": {
+        "n": 1,
+        "mean": 57.42536272853613,
+        "ci95_low": 57.42536272853613,
+        "ci95_high": 57.42536272853613
+      },
+      "total_tokens": {
+        "n": 1,
+        "mean": 5309.0,
+        "ci95_low": 5309.0,
+        "ci95_high": 5309.0
+      },
+      "estimated_cost_usd": {
+        "n": 0,
+        "mean": null,
+        "ci95_low": null,
+        "ci95_high": null
+      }
+    }
+  },
+  "completed_at": "2026-07-22T09:05:23.364425+00:00",
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}
