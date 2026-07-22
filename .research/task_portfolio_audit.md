@@ -49,13 +49,15 @@ meaning.
   restored as a candidate: GPT-5.5 reaches 0.797 development and 0.631 shifted robustness at
   budget one. At budget three, visible development rises from 0.691 to 0.854 while shifted
   robustness stays near 0.64, making it the first useful development–validation gap task. The
-  other six remain quarantined after reproducible adversarial review: RIR
+  the other five remain quarantined after reproducible adversarial review: RIR
   length failure, unstable low-thrust propagation, centerline-spoofable cavity scoring,
-  pseudo-data alloy hardness, scalar-FFT pseudo-RCWA and a degenerate heat-exchanger objective.
-- **No original unscreened candidates remain after wave 4; sixteen candidates remain in total.** They include
+  pseudo-data alloy hardness and scalar-FFT pseudo-RCWA. HeatExchanger-v2 was subsequently
+  rebuilt as a multifidelity Pareto candidate.
+- **No original unscreened candidates remain after wave 4; seventeen candidates remain in total.** They include
   SCM, Lyapunov control, neutron criticality, seismic refraction, pendulum control, sparse
   recovery, OED-v2, GateSynthesis-v2, OPF-v2, Truss-v2, Antenna-v2, NMR-v2,
-  HeatExchanger-v2, ReactionMechanismFitting-v2, GravityInversion-v2 and the new
+  HeatExchanger-v2, ReactionMechanismFitting-v2, GravityInversion-v2,
+  OceanCurrentInversion-v2 and the new
   ActiveLawDiscovery laboratory. All are
   currently on-ramps or repair/calibration candidates rather than externally reviewed
   open-frontier tasks.
@@ -65,15 +67,15 @@ meaning.
   independent budget-three run, all three proposals retain the same two false discoveries;
   score feedback does not fix model-inadequacy detection and later proposals reduce mechanism
   recovery. This is a reliability/refusal frontier rather than an ordinary prediction frontier.
-- **28 quarantined packages.** Five generic-objective clones must be replaced with real domain
+- **27 quarantined packages.** Five generic-objective clones must be replaced with real domain
   oracles; metadata completion alone cannot rehabilitate them. The sixth,
   `ClimateScience/EnergyBalanceModel`, uses an unstable explicit diffusion iteration, an
   unverified ERA5 attribution and a structurally underdetermined seven-parameter fit to one
   steady profile. It requires replacement with documented multi-regime data, not a numerical
-  patch. Six wave-2 and seven inverse-track tasks remain blocked by concrete oracle failures;
+  patch. Five wave-2 and four inverse-track tasks remain blocked by concrete oracle failures;
   none may contribute model-performance evidence until rebuilt and re-admitted. The inverse
-  failures include rank-deficient hidden-truth retrieval, gravity and
-  ocean signal/noise inversions, a rank-two demographic surrogate, underidentified pseudo-DNS
+  failures include rank-deficient hidden-truth retrieval, a rank-two demographic surrogate,
+  underidentified pseudo-DNS
   RANS fitting and an FWI interface with no observations.
   Wave 3 additionally isolates six scientifically promising topics whose current evaluators are
   unusable: fail-open NMR/OED/gate/OPF/antenna scores and a non-canonical duplicated-member
@@ -132,6 +134,14 @@ The first review tranche contains real scientific topics but several narrow eval
   reaching development/held-out nominal score 1.0 but N-1 robustness 0.031/0.000001. An
   independent budget-three run leaves the same security failure unchanged. This candidate still
   needs paired controls, server-held networks, AC replication and independent review.
+- OceanCurrentInversion-v2 supplies charged active drifter releases, thirty public
+  divergence-free modes, seven identifiable in-library worlds, null and resolvable
+  misspecification cases, and separate mechanism, field and trajectory metrics. A truth-blind
+  sparse fit scores 0.707/0.406 development/held-out mechanism with zero false discovery.
+  GPT-5.5 budget one and normal budget three remain at zero; its only valid non-baseline
+  proposal spends the full budget but refuses every in-library world, while the other proposals
+  fail the public release/callback protocol. It remains a useful active-inference and
+  protocol-following candidate pending paired runs, server-held currents and independent review.
 
 ## Expansion rule
 
@@ -146,8 +156,8 @@ The target is approximately 50 **admissible** open scientific optimization tasks
 
 After complete original-inventory triage, adding ActiveLawDiscovery and rebuilding Gate-v2,
 OPF-v2, Truss-v2, Antenna-v2, NMR-v2, HeatExchanger-v2, ReactionMechanismFitting-v2 and
-GravityInversion-v2, the net expansion gap is approximately 27 admissible tasks:
-51 folders minus 28 quarantines leaves 23 internally admissible certified or candidate packages, while the target
+GravityInversion-v2 and OceanCurrentInversion-v2, the net expansion gap is approximately 26 admissible tasks:
+51 folders minus 27 quarantines leaves 24 internally admissible certified or candidate packages, while the target
 is about 50. New
 work should emphasize procedural task families and independent regimes,
 not one-off fixed instances or scientific names around hand-written scalar objectives.

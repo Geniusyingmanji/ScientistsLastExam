@@ -2,14 +2,15 @@
 
 Date: 2026-07-22 (UTC). These findings use trusted GPT-5.5 `greedy_rewrite` calibrations on
 OED-v2, Pendulum-v2, GateSynthesis-v2, ActiveLawDiscovery, OPF-v2, Truss-v2, Antenna-v2,
-NMR-v2, HeatExchanger-v2, ReactionMechanismFitting-v2 and GravityInversion-v2. The 21 normal-feedback model
+NMR-v2, HeatExchanger-v2, ReactionMechanismFitting-v2, GravityInversion-v2 and
+OceanCurrentInversion-v2. The 23 normal-feedback model
 conditions each contain one seed and proposal budget one
 or three. They calibrate tasks and motivate experiments; they are not a model leaderboard, a causal
 feedback study or population evidence.
 
-The portable machine record is `experiments/science_calibration_summary_2026-07-22_v4.json`. It
+The portable machine record is `experiments/science_calibration_summary_2026-07-22_v5.json`. It
 retains every top-level scalar metric, candidate lineage hash and raw trajectory SHA-256 for all
-21 normal conditions. Strict selection-blind diagnostics remain in task-specific
+23 normal conditions. Strict selection-blind diagnostics remain in task-specific
 analysis because it is not a normal-feedback calibration. The underlying reports bind the
 task-specific source revision. Pendulum's initial budget-one run on revision `57c0e1b` is
 excluded because the public task omitted the exact plant equations and was explicitly superseded
@@ -40,6 +41,8 @@ by the corrected-contract run on `2557adb`.
 | ReactionMechanism-v2, budget 3 | all three proposals remain at 0.0 and are rejected | each performs one assay and abstains everywhere | More rewrite budget does not help when scalar zero feedback cannot localize whether experiment design, inference or refusal caused failure. |
 | GravityInversion-v2, budget 1 | invalid callback unpacking; development remains 0.0 | no validated improvement | A physically sophisticated implementation can still fail the executable laboratory protocol. |
 | GravityInversion-v2, budget 3 | development mechanism 0.000 → 0.994; field prediction 0.992 | held-out mechanism 0.767; held-out field prediction 0.988 | Known parametric inversion nearly saturates development, but field transfer does not establish the same internal geology. |
+| OceanCurrentInversion-v2, budget 1 | invalid release geometry; development remains 0.0 | no validated improvement | The proposal places at least one initial drifter outside the documented public interior and fails closed. |
+| OceanCurrentInversion-v2, budget 3 | one valid proposal uses two releases and the full 12-unit budget but scores 0.0; two later proposals misread the callback schema | zero in-library mechanism recovery and discovery coverage; correct refusal on all four unsupported worlds | Correct refusal does not compensate for refusing all seven supported worlds. The aggregate mechanism field alone would obscure this zero discovery coverage. |
 
 OPF's `robustness_score` combines security-constrained economic quality with overload penalties.
 It is not a pure safety probability. The proportional baseline is feasible for every tested
@@ -96,6 +99,14 @@ one proposal reaches 0.711 interpolation and 0.747 extrapolation but only 0.259 
 mechanism, again with a 0.5 false-discovery rate. This strengthens the cross-domain conclusion
 without turning two synthetic tasks into evidence about wet-lab discovery.
 
+OceanCurrentInversion-v2 exposes the complementary over-refusal failure. Its truth-blind
+classical fit claims a mechanism in all seven in-library worlds, with mean in-library mechanism
+quality 0.578, and correctly refuses all four unsupported worlds. GPT-5.5's only valid
+non-baseline proposal instead spends the full observation budget and refuses every world. It
+therefore has perfect unsupported-world refusal but zero in-library mechanism recovery and zero
+discovery coverage. Because the aggregate `mechanism_score` includes credit for correct refusal,
+discovery tasks must report in-library recovery and risk–coverage alongside the aggregate score.
+
 ### 5. Feedback cannot optimize information that selection never receives
 
 In the OPF budget-three run, later proposals receive only nominal score and reproduce the same
@@ -116,6 +127,14 @@ curves or set an overly conservative refusal threshold. A same-identifier open-l
 a nonzero candidate by proposal diversity alone. Because the endpoint has no server-side seed
 and the runs are not token-matched, this is evidence of sparse credit assignment and high
 proposal variance—not evidence that removing feedback helps.
+
+OceanCurrentInversion-v2 adds an interface-level bottleneck. Five of six model proposals fail
+the public experiment or callback contract, and the only valid proposal receives the same zero
+selection score as always abstaining. Normal and selection-blind budget-three conditions both
+select the baseline, so their zero score contrast contains no information about a feedback
+effect. The useful next treatment is factorized, label-blind feedback that distinguishes invalid
+experiment geometry, callback parsing, in-library coverage and model-check residuals without
+revealing held-out mechanisms or world labels.
 
 ### 6. Contract completeness must precede headroom claims
 
@@ -228,7 +247,7 @@ Every new or rebuilt task must pass the following gate before it counts toward t
 - classical and domain baselines, followed by GPT-5.5 budget-one headroom screening; and
 - retention as an on-ramp, not a headline task, if a standard method reliably saturates it.
 
-The present inventory contains 23 internally admissible certified or candidate packages. The
-remaining gap is approximately 27 tasks. Expansion should use procedural families spanning
+The present inventory contains 24 internally admissible certified or candidate packages. The
+remaining gap is approximately 26 tasks. Expansion should use procedural families spanning
 design, inverse problems, control, multifidelity validation, mechanism discovery and exact
 mathematical construction rather than cloning one scalar optimization template across domains.

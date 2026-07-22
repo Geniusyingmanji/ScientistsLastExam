@@ -37,7 +37,7 @@ oracle and validates metrics. Multi-world evaluators can explicitly reset the ca
 session at scientific-world boundaries; Ocean-v2 does so to prevent module, imported-package
 or private-tmpfs state from revealing hidden world order. The current audit reports:
 
-- 119/119 unit, security, protocol and scientific-invariant tests passed.
+- 121/121 unit, security, protocol and scientific-invariant tests passed.
 - The latest 51×2 secure-baseline audit reports 51/51 deterministic, 50/51 valid, 51/51
   fail-closed and zero infrastructure failures. The sole invalid baseline is the explicitly
   quarantined `ClimateScience/EnergyBalanceModel`.
@@ -76,8 +76,13 @@ or private-tmpfs state from revealing hidden world order. The current audit repo
   in-library trajectory Jacobians are full rank, and the weakest best-of-four-start bounded
   nonlinear public-library fit to an out-of-library world has reduced chi-square 10.53 versus
   the refusal threshold 3.0; all four starts converge to the same score within `4e-10`.
-  Field/drifter prediction and mechanism remain separate. It is still a controlled simulator task pending GPT-5.5 calibration,
-  server-held currents and physical-oceanography review.
+  Field/drifter prediction and mechanism remain separate. GPT-5.5 budget one and normal budget
+  three both remain at zero. The only valid non-baseline proposal spends the full 12-unit budget
+  but refuses every in-library world, giving zero in-library discovery coverage and mechanism
+  recovery; the other normal proposals fail the public experiment/callback protocol. A
+  same-seed-label selection-blind batch also remains at zero, with all proposals failing the
+  callback schema. These single runs diagnose protocol following and sparse credit assignment,
+  not a causal feedback effect or field-oceanography capability.
   GPT-5.5 reaches nominal OPF score 1.0
   at budget one while sealed N-1 robustness is only 0.031 on development and approximately
   zero on held-out networks. On Truss-v2, a separate budget-three run improves development
