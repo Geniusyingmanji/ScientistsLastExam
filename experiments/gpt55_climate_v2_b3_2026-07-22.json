@@ -1,0 +1,399 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_SECURE_EVAL",
+  "evidence_scope": "MODEL_PERFORMANCE",
+  "created_at": "2026-07-22T20:58:55.373784+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "51246d58632372e7508d0f181375f8a83e9a6a14",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "/home/azureuser/workspace-gzy/zyf/frontier-science/scripts/batch_evolve.py",
+      "--tasks",
+      "ClimateScience/EnergyBalanceModel",
+      "--all",
+      "--algorithms",
+      "greedy_rewrite",
+      "--feedback-modes",
+      "normal",
+      "--seeds",
+      "1",
+      "--budget",
+      "3",
+      "--timeout",
+      "180",
+      "--workdir",
+      "runs/climate_v2_b3",
+      "--output",
+      "experiments/gpt55_climate_v2_b3_2026-07-22.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "config": {
+    "tasks": [
+      "ClimateScience/EnergyBalanceModel"
+    ],
+    "algorithms": [
+      "greedy_rewrite"
+    ],
+    "feedback_modes": [
+      "normal"
+    ],
+    "condition_order": "as_listed_for_even_seeds_reversed_for_odd_seeds",
+    "seeds": [
+      1
+    ],
+    "budget": 3,
+    "timeout_s": 180.0,
+    "work_root": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/climate_v2_b3",
+    "llm_condition_sha256": "5b0df4671481f6b3505155bc6c5654a64c4da5591422fb806904e7d0f44fc4d2",
+    "llm": {
+      "wire": "responses",
+      "endpoint_sha256": "b22995a1fcaf8ad713ac37716f006c717313dfdebd357ac02a077a5582650bb6",
+      "model": "gpt-5.5",
+      "max_output_tokens": 16000,
+      "temperature": null,
+      "reasoning_effort": "low",
+      "input_cost_per_million": null,
+      "output_cost_per_million": null,
+      "server_side_seed_control": false
+    }
+  },
+  "runs": [
+    {
+      "task": "ClimateScience/EnergyBalanceModel",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 1,
+      "baseline": 0.0,
+      "best": 0.0,
+      "accepted": 0,
+      "evaluated": 4,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/climate_v2_b3/ClimateScience__EnergyBalanceModel/greedy_rewrite/normal/seed_1",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 4,
+        "budget_units": 4,
+        "best_score": 0.0,
+        "best_so_far_auc": 0.0,
+        "valid_rate": 0.25,
+        "accepted": 0,
+        "wall_seconds": 153.63896457944065,
+        "llm": {
+          "calls": 3,
+          "provider_usage_records": 3,
+          "input_tokens": 4095,
+          "output_tokens": 10086,
+          "total_tokens": 14181,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "ClimateScience/EnergyBalanceModel",
+        "seed": 1,
+        "baseline_score": 0.0,
+        "budget": 3,
+        "feedback_mode": "normal",
+        "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "online_incumbent"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 1,
+        "trajectory_sha256": "e9eb47619f9af67a003b858e9b1338a265cb5dabfe8f36ffee7da7fbe46a86ab",
+        "events": [
+          {
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "9b4ff24deeaa96eba6a4cf31bed96d72e0a3fbf4a82f936883e11545adc92794",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.0,
+              "development_mechanism_score": 0.0,
+              "robustness_score": 0.0,
+              "development_validation_gap": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "development_prediction_score": 0.0,
+              "heldout_prediction_score": 0.0,
+              "development_supported_claim_coverage": 0.0,
+              "heldout_supported_claim_coverage": 0.0,
+              "development_false_discovery_rate": 0.0,
+              "heldout_false_discovery_rate": 0.0,
+              "development_unsupported_refusal_rate": 1.0,
+              "heldout_unsupported_refusal_rate": 1.0,
+              "development_confidence_score": 0.6666666666666666,
+              "heldout_confidence_score": 0.6,
+              "development_mean_budget_used": 0.0,
+              "heldout_mean_budget_used": 0.0,
+              "development_mean_experiment_calls": 0.0,
+              "heldout_mean_experiment_calls": 0.0,
+              "heldout_feasibility_rate": 1.0,
+              "candidate_world_call_count": 11,
+              "candidate_world_valid_rate": 1.0
+            },
+            "algorithm_metadata": {},
+            "error": null
+          },
+          {
+            "step": 1,
+            "oracle_calls": 2,
+            "budget_units": 2,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": false,
+            "accepted": false,
+            "candidate_sha256": "6e2fa30c73a07378f17c27e219258384686a7fd7049ba610d05ff01c1cab2daa",
+            "parent_sha256": "9b4ff24deeaa96eba6a4cf31bed96d72e0a3fbf4a82f936883e11545adc92794",
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 0.0,
+              "feasibility_rate": 0.16666666666666666,
+              "raw_score": 0.0,
+              "development_mechanism_score": 0.0,
+              "robustness_score": 0.0,
+              "development_validation_gap": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "development_prediction_score": 0.0,
+              "heldout_prediction_score": 0.0,
+              "development_supported_claim_coverage": 0.0,
+              "heldout_supported_claim_coverage": 0.0,
+              "development_false_discovery_rate": 0.0,
+              "heldout_false_discovery_rate": 0.0,
+              "development_unsupported_refusal_rate": 0.5,
+              "heldout_unsupported_refusal_rate": 0.5,
+              "development_confidence_score": 0.1666,
+              "heldout_confidence_score": 0.19992000000000001,
+              "development_mean_budget_used": 1.3333333333333333,
+              "heldout_mean_budget_used": 1.6,
+              "development_mean_experiment_calls": 0.3333333333333333,
+              "heldout_mean_experiment_calls": 0.4,
+              "heldout_feasibility_rate": 0.2,
+              "candidate_world_call_count": 11,
+              "candidate_world_valid_rate": 0.18181818181818182,
+              "error_message": "candidate invalid: invalid_return_artifact"
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 1
+            },
+            "error": "candidate invalid: invalid_return_artifact"
+          },
+          {
+            "step": 2,
+            "oracle_calls": 3,
+            "budget_units": 3,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": false,
+            "accepted": false,
+            "candidate_sha256": "61f14f810df4eab771c87c8358bf21e97510813e3acf034fa638c48822aa5651",
+            "parent_sha256": "9b4ff24deeaa96eba6a4cf31bed96d72e0a3fbf4a82f936883e11545adc92794",
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 0.0,
+              "feasibility_rate": 0.16666666666666666,
+              "raw_score": 0.0,
+              "development_mechanism_score": 0.0,
+              "robustness_score": 0.0,
+              "development_validation_gap": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "development_prediction_score": 0.0,
+              "heldout_prediction_score": 0.0,
+              "development_supported_claim_coverage": 0.0,
+              "heldout_supported_claim_coverage": 0.0,
+              "development_false_discovery_rate": 0.0,
+              "heldout_false_discovery_rate": 0.0,
+              "development_unsupported_refusal_rate": 0.5,
+              "heldout_unsupported_refusal_rate": 0.5,
+              "development_confidence_score": 0.165,
+              "heldout_confidence_score": 0.198,
+              "development_mean_budget_used": 1.3333333333333333,
+              "heldout_mean_budget_used": 1.6,
+              "development_mean_experiment_calls": 0.3333333333333333,
+              "heldout_mean_experiment_calls": 0.4,
+              "heldout_feasibility_rate": 0.2,
+              "candidate_world_call_count": 11,
+              "candidate_world_valid_rate": 0.18181818181818182,
+              "error_message": "candidate invalid: invalid_return_artifact"
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 2
+            },
+            "error": "candidate invalid: invalid_return_artifact"
+          },
+          {
+            "step": 3,
+            "oracle_calls": 4,
+            "budget_units": 4,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": false,
+            "accepted": false,
+            "candidate_sha256": "81f602b1d41f6590bd5c72d253e386ac7be247362f5846d2257ef7df88cc60f0",
+            "parent_sha256": "9b4ff24deeaa96eba6a4cf31bed96d72e0a3fbf4a82f936883e11545adc92794",
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 0.0,
+              "feasibility_rate": 0.3333333333333333,
+              "raw_score": 0.0,
+              "development_mechanism_score": 0.0,
+              "robustness_score": 0.0,
+              "development_validation_gap": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "development_prediction_score": 0.0,
+              "heldout_prediction_score": 0.0,
+              "development_supported_claim_coverage": 0.0,
+              "heldout_supported_claim_coverage": 0.0,
+              "development_false_discovery_rate": 0.0,
+              "heldout_false_discovery_rate": 0.0,
+              "development_unsupported_refusal_rate": 1.0,
+              "heldout_unsupported_refusal_rate": 0.5,
+              "development_confidence_score": 0.23583333333333334,
+              "heldout_confidence_score": 0.1955,
+              "development_mean_budget_used": 2.6666666666666665,
+              "heldout_mean_budget_used": 1.6,
+              "development_mean_experiment_calls": 1.0,
+              "heldout_mean_experiment_calls": 0.6,
+              "heldout_feasibility_rate": 0.2,
+              "candidate_world_call_count": 11,
+              "candidate_world_valid_rate": 0.2727272727272727,
+              "error_message": "candidate invalid: invalid_return_artifact"
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 3
+            },
+            "error": "candidate invalid: invalid_return_artifact"
+          }
+        ]
+      }
+    }
+  ],
+  "aggregate": {
+    "attempt_count": 1,
+    "superseded_attempts": 0,
+    "successful_runs": 1,
+    "failed_runs": 0,
+    "by_condition": {
+      "ClimateScience/EnergyBalanceModel|greedy_rewrite|normal": {
+        "n": 1,
+        "best_score": {
+          "n": 1,
+          "mean": 0.0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.0
+        },
+        "best_so_far_auc": {
+          "n": 1,
+          "mean": 0.0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.0
+        },
+        "budget_units": {
+          "n": 1,
+          "mean": 4.0,
+          "ci95_low": 4.0,
+          "ci95_high": 4.0
+        },
+        "oracle_calls": {
+          "n": 1,
+          "mean": 4.0,
+          "ci95_low": 4.0,
+          "ci95_high": 4.0
+        },
+        "wall_seconds": {
+          "n": 1,
+          "mean": 153.63896457944065,
+          "ci95_low": 153.63896457944065,
+          "ci95_high": 153.63896457944065
+        },
+        "total_tokens": {
+          "n": 1,
+          "mean": 14181.0,
+          "ci95_low": 14181.0,
+          "ci95_high": 14181.0
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      }
+    },
+    "overall": {
+      "best_score": {
+        "n": 1,
+        "mean": 0.0,
+        "ci95_low": 0.0,
+        "ci95_high": 0.0
+      },
+      "best_so_far_auc": {
+        "n": 1,
+        "mean": 0.0,
+        "ci95_low": 0.0,
+        "ci95_high": 0.0
+      },
+      "budget_units": {
+        "n": 1,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "oracle_calls": {
+        "n": 1,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "wall_seconds": {
+        "n": 1,
+        "mean": 153.63896457944065,
+        "ci95_low": 153.63896457944065,
+        "ci95_high": 153.63896457944065
+      },
+      "total_tokens": {
+        "n": 1,
+        "mean": 14181.0,
+        "ci95_low": 14181.0,
+        "ci95_high": 14181.0
+      },
+      "estimated_cost_usd": {
+        "n": 0,
+        "mean": null,
+        "ci95_low": null,
+        "ci95_high": null
+      }
+    }
+  },
+  "completed_at": "2026-07-22T21:01:29.020132+00:00",
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}
