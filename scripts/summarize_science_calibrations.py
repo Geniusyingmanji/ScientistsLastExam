@@ -40,6 +40,8 @@ DEFAULT_REPORTS = (
     "experiments/gpt55_antenna_v2_b3_2026-07-21.json",
     "experiments/gpt55_nmr_v2_b1_2026-07-22.json",
     "experiments/gpt55_nmr_v2_b3_2026-07-22.json",
+    "experiments/gpt55_heat_exchanger_v2_b1_2026-07-22.json",
+    "experiments/gpt55_heat_exchanger_v2_b3_2026-07-22.json",
 )
 
 

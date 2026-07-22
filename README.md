@@ -35,7 +35,7 @@ All candidate code runs in a networkless Bubblewrap sandbox with read-only mount
 and process limits, and a typed JSON RPC boundary. The trusted parent alone imports the
 oracle and validates metrics. The current audit reports:
 
-- 98/98 unit, security, protocol and scientific-invariant tests passed.
+- 100/100 unit, security, protocol and scientific-invariant tests passed.
 - The latest 51×2 secure-baseline audit reports 51/51 deterministic, 50/51 valid, 51/51
   fail-closed and zero infrastructure failures. The sole invalid baseline is the explicitly
   quarantined `ClimateScience/EnergyBalanceModel`.
@@ -45,7 +45,12 @@ oracle and validates metrics. The current audit reports:
   separates a public constant-property proxy from a sealed segmented temperature-dependent
   oracle and scores cost-versus-duty Pareto archives, held-out fluids, false promotion and
   fouling/manufacturing/blockage shifts. It remains a correlation-based optimization task, not
-  experimental validation. GPT-5.5 reaches nominal OPF score 1.0
+  experimental validation. A proxy-only classical archive reaches 0.997 development exact
+  hypervolume but has only 0.948 exact feasibility, 0.094 false-promotion rate and 0.942 sealed
+  robustness. An independent GPT-5.5 budget-three trajectory improves 0.000→0.008→0.126 while
+  its final proxy score is 0.173 and two of four development regimes remain at zero; a strict
+  open-loop diagnostic reaches 0.294 but has 0.174 false promotion and is not token- or
+  model-randomness-matched. GPT-5.5 reaches nominal OPF score 1.0
   at budget one while sealed N-1 robustness is only 0.031 on development and approximately
   zero on held-out networks. On Truss-v2, a separate budget-three run improves development
   `0.000 -> 0.416 -> 0.548 -> 0.611`, while its final accepted step increases held-out nominal
