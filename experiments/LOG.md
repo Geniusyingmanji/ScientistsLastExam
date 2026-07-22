@@ -933,3 +933,22 @@ normalized mechanism, giving a direct prediction-versus-mechanism/refusal counte
 Normal and open-loop use 16,104 and 15,826 tokens respectively; the endpoint provides no
 server-side model seed. These single-run conditions are task calibration, not a causal feedback
 estimate, population result or wet-lab discovery claim.
+## 2026-07-22 — active gravity inversion v2
+
+Rebuilt `Geophysics/GravityInversion` from two duplicate density grids whose signal RMS was only
+0.033 times the declared noise into an active multi-height source-discovery laboratory. Seven
+procedural signed rectangular-body topologies, null worlds and smooth seven-lobe out-of-library
+fields are split across six development and five held-out worlds. The candidate spends a
+24-unit budget on station positions and observation heights, then returns up to four bodies or
+refuses the source family. Scoring is permutation invariant and compares individual external
+field signatures plus signed mass and centroids rather than raw hidden pixels.
+
+The analytic rectangular-body field agrees with independent 40-point Gauss-Legendre area
+integration to **2.1e-13 mGal**. A fixed 18-unit multi-height design has full-rank local
+sensitivity in all seven in-library worlds, with worst condition number **7.59e4**. In-library
+signal-to-noise ratios range from **22.8 to 78.4**. A truth-blind multi-start BIC fit reaches
+**0.785947/0.774867** development/held-out normalized mechanism and approximately **0.99**
+sealed field prediction while correctly refusing both null and both resolvable misspecified
+worlds. One development topology has only 0.226 body-mechanism quality despite 0.984 observed
+fit, preserving a scientifically relevant external-field-versus-internal-geology gap. These are
+synthetic task-calibration results, not field validation or autonomous geological discovery.

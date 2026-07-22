@@ -1,3 +1,4 @@
-1) Only edit solution.py. Keep the invert_gravity() signature.
-2) numpy/scipy only. CPU, seconds. No network.
-3) Do not read verification/ or frontier_eval/.
+1) Only edit solution.py. Keep discover_bodies(profile_bounds_m, depth_bounds_m, measure, budget_units).
+2) Return finite bodies with shape (0-4,5), confidence in [0,1], and a boolean abstain; abstention requires no bodies.
+3) Each survey contains 4-24 strictly increasing stations in [0,10000] m at height [0,1500] m. Do not exceed budget_units.
+4) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read verification/ or frontier_eval/.

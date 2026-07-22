@@ -155,8 +155,11 @@ tasks:
       - doi:10.1093/bioinformatics/btq074
       - doi:10.3390/bioengineering10091056
   Geophysics/GravityInversion:
-    status: quarantined
-    reason: synthetic gravity signal RMS is only 0.033 times the declared noise and both instances reuse one hidden body geometry
+    status: candidate
+    reason: v2 replaces two noise-dominated duplicate grids with charged multi-height survey design, seven procedural signed rectangular-body topologies, null and observationally resolvable out-of-library worlds, external-field-equivalent mechanism matching and held-out noise shifts; a truth-blind BIC fit reaches 0.786/0.775 development/held-out mechanism and approximately 0.99 field prediction while one development topology remains mechanistically weak, pending GPT-5.5 calibration, server-held geology and independent geophysics review
+    citation_ids:
+      - doi:10.1029/JZ064i001p00049
+      - doi:10.1190/1.1444302
   Oceanography/OceanCurrentInversion:
     status: quarantined
     reason: true-current displacement is sub-metre while injected trajectory noise is about 1 km, so even the true field scores approximately zero

@@ -52,10 +52,11 @@ meaning.
   other six remain quarantined after reproducible adversarial review: RIR
   length failure, unstable low-thrust propagation, centerline-spoofable cavity scoring,
   pseudo-data alloy hardness, scalar-FFT pseudo-RCWA and a degenerate heat-exchanger objective.
-- **No original unscreened candidates remain after wave 4; fifteen candidates remain in total.** They include
+- **No original unscreened candidates remain after wave 4; sixteen candidates remain in total.** They include
   SCM, Lyapunov control, neutron criticality, seismic refraction, pendulum control, sparse
   recovery, OED-v2, GateSynthesis-v2, OPF-v2, Truss-v2, Antenna-v2, NMR-v2,
-  HeatExchanger-v2, ReactionMechanismFitting-v2 and the new ActiveLawDiscovery laboratory. All are
+  HeatExchanger-v2, ReactionMechanismFitting-v2, GravityInversion-v2 and the new
+  ActiveLawDiscovery laboratory. All are
   currently on-ramps or repair/calibration candidates rather than externally reviewed
   open-frontier tasks.
 - **ActiveLawDiscovery preserves science-specific headroom.** GPT-5.5 budget one attains 0.796
@@ -64,7 +65,7 @@ meaning.
   independent budget-three run, all three proposals retain the same two false discoveries;
   score feedback does not fix model-inadequacy detection and later proposals reduce mechanism
   recovery. This is a reliability/refusal frontier rather than an ordinary prediction frontier.
-- **29 quarantined packages.** Five generic-objective clones must be replaced with real domain
+- **28 quarantined packages.** Five generic-objective clones must be replaced with real domain
   oracles; metadata completion alone cannot rehabilitate them. The sixth,
   `ClimateScience/EnergyBalanceModel`, uses an unstable explicit diffusion iteration, an
   unverified ERA5 attribution and a structurally underdetermined seven-parameter fit to one
@@ -144,9 +145,9 @@ The target is approximately 50 **admissible** open scientific optimization tasks
 5. run frontier-model budget-one screening before expensive budget 30/100/300 studies.
 
 After complete original-inventory triage, adding ActiveLawDiscovery and rebuilding Gate-v2,
-OPF-v2, Truss-v2, Antenna-v2, NMR-v2, HeatExchanger-v2 and ReactionMechanismFitting-v2, the net
-expansion gap is approximately 28 admissible tasks:
-51 folders minus 29 quarantines leaves 22 internally admissible certified or candidate packages, while the target
+OPF-v2, Truss-v2, Antenna-v2, NMR-v2, HeatExchanger-v2, ReactionMechanismFitting-v2 and
+GravityInversion-v2, the net expansion gap is approximately 27 admissible tasks:
+51 folders minus 28 quarantines leaves 23 internally admissible certified or candidate packages, while the target
 is about 50. New
 work should emphasize procedural task families and independent regimes,
 not one-off fixed instances or scientific names around hand-written scalar objectives.

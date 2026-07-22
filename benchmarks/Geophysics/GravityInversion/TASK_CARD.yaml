@@ -1,0 +1,27 @@
+schema_version: 1
+scientific_question: Recover interpretable signed density bodies by actively selecting a multi-height gravity survey, and refuse when the public body library is unsupported.
+artifact: A permutation-invariant list of rectangular density bodies, confidence, and optional null or model-inadequacy abstention.
+oracle:
+  model: analytic infinite-strike rectangular-body gravity plus procedural null and smooth seven-lobe out-of-library worlds
+  feasibility: finite bounded bodies and charged station/height surveys under a strict budget
+  deterministic: true
+normalization:
+  baseline: one valid reconnaissance survey followed by abstention on every world
+  reference: exact rectangular bodies on in-library worlds and correct refusal on null or misspecified worlds
+  score: development body/external-field/mass-moment recovery normalized above always-abstain; held-out mechanism, field prediction, extrapolation and refusal remain separate
+citations:
+  - id: doi:10.1029/JZ064i001p00049
+    title: Rapid gravity computations for two-dimensional bodies with application to the Mendocino submarine fracture zone
+  - id: doi:10.1190/1.1444302
+    title: 3-D inversion of gravity data
+invariants:
+  - analytic rectangular-body fields agree with independent Gauss-Legendre area integration
+  - exact bodies attain perfect mechanism and sealed field-prediction scores
+  - a fixed public-budget multi-height survey has full-rank local sensitivity for every in-library world
+  - null and observationally resolvable out-of-library worlds reward refusal rather than fabricated bodies
+  - survey stations and heights consume budget and fail closed on overspend
+  - held-out mechanism, prediction, extrapolation and per-world diagnostics remain evaluator-only
+known_shortcuts: The 2-D infinite-strike geometry and synthetic Gaussian noise are controlled research abstractions. Public seeds require a future server-held split, and field-equivalent gravity models remain non-unique. Real discovery claims require independent geological constraints and field validation.
+review:
+  domain: pending_external
+  evaluator_security: automated_invariant_sandbox_callback_and_metric_sealing_tests

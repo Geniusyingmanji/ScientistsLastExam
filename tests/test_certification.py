@@ -371,6 +371,128 @@ def discover_mechanism(species, pairs, experiment, budget_units):
             self.assertEqual(metrics["combined_score"], 0.0)
             self.assertTrue(all(not row["valid"] for row in metrics["per_world"]))
 
+    def test_gravity_v2_exact_sources_refusal_physics_and_metric_sealing(self):
+        oracle = load_oracle("Geophysics/GravityInversion")
+        self.assertEqual(len(oracle.DEVELOPMENT_SPECS), 6)
+        self.assertEqual(len(oracle.HELDOUT_SPECS), 5)
+        for specs in (oracle.DEVELOPMENT_SPECS, oracle.HELDOUT_SPECS):
+            for spec in specs:
+                world = oracle._world(spec)
+                if world["kind"] == "in_library":
+                    mechanism = oracle._body_matching_metrics(
+                        world, world["bodies"], False
+                    )
+                    self.assertAlmostEqual(mechanism["mechanism_score"], 1.0)
+                    self.assertAlmostEqual(
+                        oracle._prediction_score(world, world["bodies"], False),
+                        1.0,
+                    )
+                    self.assertAlmostEqual(
+                        oracle._prediction_score(world, world["bodies"], True),
+                        1.0,
+                    )
+                else:
+                    mechanism = oracle._body_matching_metrics(
+                        world, np.empty((0, 5)), True
+                    )
+                    self.assertAlmostEqual(mechanism["mechanism_score"], 1.0)
+                    self.assertTrue(mechanism["correct_refusal"])
+
+        # The field is linear in density and odd under density-sign reversal.
+        body = np.asarray((4300.0, 1400.0, 1200.0, 600.0, 350.0))
+        stations = np.linspace(-500.0, 10500.0, 41)
+        positive = oracle.rectangle_field([body], stations, 300.0)
+        negative = oracle.rectangle_field(
+            [body * np.asarray((1.0, 1.0, 1.0, 1.0, -1.0))],
+            stations,
+            300.0,
+        )
+        self.assertTrue(np.allclose(positive, -negative, atol=1e-12))
+
+        def always_abstain(profile, depth, measure, _budget):
+            del depth
+            measure(np.linspace(profile[0], profile[1], 8), 500.0)
+            return {"bodies": [], "confidence": 0.0, "abstain": True}
+
+        baseline = oracle.evaluate(always_abstain)
+        self.assertEqual(baseline["valid"], 1.0)
+        self.assertAlmostEqual(baseline["combined_score"], 0.0)
+        self.assertAlmostEqual(baseline["robustness_score"], 0.0)
+        shown = search_visible_metrics(baseline)
+        self.assertNotIn("mechanism_score", shown)
+        self.assertNotIn("robustness_score", shown)
+        self.assertNotIn("development_prediction_score", shown)
+        self.assertNotIn("per_world", shown)
+
+    def test_gravity_v2_surveys_are_deterministic_and_charged(self):
+        oracle = load_oracle("Geophysics/GravityInversion")
+        world = oracle._world(oracle.DEVELOPMENT_SPECS[0])
+        stations = np.linspace(0.0, 10000.0, 20)
+        first = oracle._Survey(world)
+        second = oracle._Survey(world)
+        one = first.measure(stations, 800.0)
+        repeated = second.measure(stations, 800.0)
+        self.assertEqual(one["gravity_mgal"].shape, (20,))
+        self.assertEqual(one["budget_cost"], 6)
+        self.assertTrue(np.array_equal(
+            one["gravity_mgal"], repeated["gravity_mgal"]
+        ))
+        two = first.measure(np.linspace(0.0, 10000.0, 8), 0.0)
+        self.assertEqual(two["budget_cost"], 3)
+        self.assertEqual(first.used, 9)
+        self.assertGreater(
+            float(np.sqrt(np.mean(one["gravity_mgal"] ** 2))),
+            10.0 * float(np.mean(one["noise_std_mgal"])),
+        )
+
+    def test_gravity_v2_budget_violation_fails_closed(self):
+        spec = find_task("Geophysics/GravityInversion", include_uncertified=True)
+        source = """
+import numpy as np
+def discover_bodies(profile, depth, measure, budget_units):
+    del profile, depth, budget_units
+    try:
+        for _ in range(5):
+            measure(np.linspace(0.0, 10000.0, 20), 500.0)
+    except Exception:
+        pass
+    return {"bodies": [], "confidence": 0.0, "abstain": True}
+"""
+        with tempfile.TemporaryDirectory() as tmp:
+            candidate = Path(tmp) / "candidate.py"
+            candidate.write_text(source, encoding="utf-8")
+            metrics = evaluate_candidate(spec, candidate, timeout_s=90)
+        self.assertEqual(metrics["valid"], 0.0)
+        self.assertEqual(metrics["combined_score"], 0.0)
+        self.assertTrue(all(not row["valid"] for row in metrics["per_world"]))
+        self.assertTrue(all(
+            "budget exceeded" in row["reason"] for row in metrics["per_world"]
+        ))
+
+    def test_gravity_v2_nonfinite_shape_bounds_and_abstention_fail_closed(self):
+        oracle = load_oracle("Geophysics/GravityInversion")
+        common = {"bodies": [], "confidence": 0.0, "abstain": True}
+        candidates = []
+        for update in (
+            {"confidence": np.nan},
+            {"bodies": [[1.0, 2.0]]},
+            {"bodies": [[4000.0, 1200.0, 800.0, 400.0, np.nan]]},
+            {"bodies": [[100.0, 1200.0, 800.0, 400.0, 300.0]]},
+            {"bodies": [[4000.0, 1200.0, 800.0, 400.0, 20.0]]},
+            {"bodies": [[4000.0, 1200.0, 800.0, 400.0, 300.0]]},
+            {"abstain": False},
+        ):
+            result = dict(common)
+            result.update(update)
+            candidates.append(result)
+        for result in candidates:
+            metrics = oracle.evaluate(
+                lambda *_args, result=result: result
+            )
+            self.assertEqual(metrics["valid"], 0.0)
+            self.assertEqual(metrics["combined_score"], 0.0)
+            self.assertTrue(all(not row["valid"] for row in metrics["per_world"]))
+
     def test_optimal_experiment_design_reference_and_sealed_shift(self):
         oracle = load_oracle("BayesianInference/OptimalExperimentDesign")
         self.assertEqual(len(oracle.DEVELOPMENT_INSTANCES), 6)

@@ -20,11 +20,11 @@ The repository contains **51 task packages in 47 metadata domains**:
 
 - **7 certified core tasks**: Lennard–Jones clusters, spin glass, Poisson solver,
   matrix-multiplication rank, Cap Set, circle packing, and multilayer thin films.
-- **15 candidate tasks** pending scientific certification, including intervention-based causal
+- **16 candidate tasks** pending scientific certification, including intervention-based causal
   and active dynamical-law laboratories whose prediction and mechanism metrics are reported
   separately, a multi-spectrum NMR peak-mechanism/refusal task, and a multi-fidelity
   heat-exchanger Pareto-design task.
-- **29 quarantined tasks** with reproduced scientific-oracle, identifiability, provenance or
+- **28 quarantined tasks** with reproduced scientific-oracle, identifiability, provenance or
   shortcut defects; these remain inventory packages but are not admissible benchmark tasks.
 
 The default CLI exposes only the certified core. `--all` explicitly shows the full
@@ -35,11 +35,11 @@ All candidate code runs in a networkless Bubblewrap sandbox with read-only mount
 and process limits, and a typed JSON RPC boundary. The trusted parent alone imports the
 oracle and validates metrics. The current audit reports:
 
-- 106/106 unit, security, protocol and scientific-invariant tests passed.
+- 110/110 unit, security, protocol and scientific-invariant tests passed.
 - The latest 51×2 secure-baseline audit reports 51/51 deterministic, 50/51 valid, 51/51
   fail-closed and zero infrastructure failures. The sole invalid baseline is the explicitly
   quarantined `ClimateScience/EnergyBalanceModel`.
-- Current manifest: 7 certified / 15 candidate / 29 quarantined. D-optimal design, quantum
+- Current manifest: 7 certified / 16 candidate / 28 quarantined. D-optimal design, quantum
   gate synthesis, DC optimal power flow, truss sizing, antenna synthesis and NMR peak fitting have been rebuilt with separate sealed
   validation or robustness metrics and re-admitted as candidates. HeatExchanger-v2 additionally
   separates a public constant-property proxy from a sealed segmented temperature-dependent
@@ -59,6 +59,11 @@ oracle and validates metrics. The current audit reports:
   contains a 0.343 development/0.363 held-out mechanism solution, but still falsely claims a
   mechanism in half of unsupported worlds. The single-run, non-token-matched conditions have no
   server-side random seed and support no causal feedback conclusion.
+  GravityInversion-v2 replaces two duplicate noise-dominated grids with active multi-height
+  surveys and seven procedural signed-body topologies. Its truth-blind BIC fit reaches
+  0.786/0.775 development/held-out mechanism and approximately 0.99 sealed field prediction;
+  the gap on one topology illustrates that external-field fit does not uniquely establish an
+  internal geological mechanism.
   GPT-5.5 reaches nominal OPF score 1.0
   at budget one while sealed N-1 robustness is only 0.031 on development and approximately
   zero on held-out networks. On Truss-v2, a separate budget-three run improves development

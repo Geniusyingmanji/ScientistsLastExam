@@ -1,7 +1,12 @@
 domain: Geophysics
 task: GravityInversion
 difficulty: hard
+tier: T2
 oracle_type: physical_sim
 score_mode: clipped
 gpu_required: false
-eval_time_seconds: 10
+eval_time_seconds: 90
+science_metric: active_gravity_source_recovery_with_external_field_validation_and_refusal
+reference_baseline: one reconnaissance survey followed by abstention on every world
+reference_sota: exact rectangular bodies plus correct null and model-inadequacy refusal
+citation: "Li & Oldenburg, Geophysics 1998, DOI 10.1190/1.1444302"

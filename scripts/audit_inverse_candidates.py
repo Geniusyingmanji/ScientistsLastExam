@@ -18,6 +18,11 @@ from calibrate_reaction_mechanism_v2 import (
     _identifiability_record as reaction_identifiability_record,
     classical_discover_mechanism,
 )
+from calibrate_gravity_v2 import (
+    _always_abstain as gravity_always_abstain,
+    _identifiability_record as gravity_identifiability_record,
+    classical_discover_bodies,
+)
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
@@ -106,22 +111,49 @@ def _chemical_kinetics():
 
 def _gravity():
     oracle = _oracle("Geophysics/GravityInversion")
-    kernel, observation, truth = oracle.INSTANCES[0]
-    signal = kernel @ truth
-    signal_rms = float(np.sqrt(np.mean(signal**2)))
-    ratio = signal_rms / oracle.NOISE_STD
-    same_truth = bool(np.array_equal(oracle.INSTANCES[0][2], oracle.INSTANCES[1][2]))
+    baseline = oracle.evaluate(gravity_always_abstain)
+    classical = oracle.evaluate(classical_discover_bodies)
+    rank_checks = []
+    signals = []
+    for split, specs in (
+        ("development", oracle.DEVELOPMENT_SPECS),
+        ("heldout", oracle.HELDOUT_SPECS),
+    ):
+        for index, spec in enumerate(specs):
+            world = oracle._world(spec)
+            if world["kind"] == "in_library":
+                rank_checks.append(gravity_identifiability_record(
+                    oracle, world, split, index
+                ))
+                field = oracle._world_field(
+                    world, np.linspace(0.0, 10000.0, 101), 0.0
+                )
+                signals.append(float(np.sqrt(np.mean(field**2))) / world["noise"])
+    passed = bool(
+        baseline["combined_score"] == 0.0
+        and 0.3 <= classical["combined_score"] <= 0.85
+        and classical["development_prediction_score"]
+        > classical["combined_score"] + 0.10
+        and classical["development_false_discovery_rate"] == 0.0
+        and all(row["passed"] for row in rank_checks)
+        and min(signals) > 10.0
+    )
     return {
         "task": "Geophysics/GravityInversion",
-        "admission": "quarantine",
-        "defect": "the synthetic gravity signal is far below declared noise and both instances reuse one fixed hidden body geometry",
-        "kernel_shape": list(kernel.shape),
-        "kernel_rank": int(np.linalg.matrix_rank(kernel)),
-        "signal_rms": signal_rms,
-        "noise_std": float(oracle.NOISE_STD),
-        "signal_to_noise_ratio": ratio,
-        "instances_share_exact_truth": same_truth,
-        "passed": ratio < 0.1 and same_truth,
+        "admission": "candidate",
+        "resolved_defect": "v2 replaces two noise-dominated duplicate grids with charged multi-height survey design, seven procedural rectangular-body topologies, null and observationally resolvable out-of-library worlds, external-field-equivalent matching and held-out noise shifts",
+        "always_abstain_score": float(baseline["combined_score"]),
+        "classical_mechanism_score": float(classical["combined_score"]),
+        "classical_prediction_score": float(
+            classical["development_prediction_score"]
+        ),
+        "classical_false_discovery_rate": float(
+            classical["development_false_discovery_rate"]
+        ),
+        "minimum_in_library_signal_to_noise_ratio": min(signals),
+        "full_rank_in_library_worlds": sum(row["passed"] for row in rank_checks),
+        "in_library_world_count": len(rank_checks),
+        "passed": passed,
     }
 
 

@@ -226,7 +226,7 @@ Every new or rebuilt task must pass the following gate before it counts toward t
 - classical and domain baselines, followed by GPT-5.5 budget-one headroom screening; and
 - retention as an on-ramp, not a headline task, if a standard method reliably saturates it.
 
-The present inventory contains 22 internally admissible certified or candidate packages. The
-remaining gap is approximately 28 tasks. Expansion should use procedural families spanning
+The present inventory contains 23 internally admissible certified or candidate packages. The
+remaining gap is approximately 27 tasks. Expansion should use procedural families spanning
 design, inverse problems, control, multifidelity validation, mechanism discovery and exact
 mathematical construction rather than cloning one scalar optimization template across domains.
