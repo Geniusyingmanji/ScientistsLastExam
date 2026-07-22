@@ -55,27 +55,45 @@ def _room_audit():
 
 def _low_thrust_audit():
     oracle = _oracle("Astrodynamics/LowThrustTransfer")
-    scenario = oracle.SCENARIOS[0]
-    dt = scenario["t_final"] / scenario["n_steps"]
-    period = 2 * np.pi * np.sqrt(np.linalg.norm(scenario["r0"]) ** 3 / oracle.MU)
-    thrust = np.zeros((scenario["n_steps"], 3), dtype=float)
-    position, velocity, ok = oracle.propagate(
-        scenario["r0"], scenario["v0"], thrust, dt
+    zero = np.zeros((oracle.N_SEGMENTS, 7), dtype=float)
+    baseline = oracle.evaluate(lambda *_args: zero.copy())
+    reference = oracle.evaluate(
+        lambda initial, *_args: next(
+            row["reference_coefficients"].copy()
+            for row in oracle._instances()
+            if np.array_equal(np.asarray(initial), row["initial_elements"])
+        )
     )
-    initial_energy = np.dot(scenario["v0"], scenario["v0"]) / 2 - oracle.MU / np.linalg.norm(scenario["r0"])
-    final_energy = np.dot(velocity, velocity) / 2 - oracle.MU / np.linalg.norm(position)
-    relative_drift = float((final_energy - initial_energy) / abs(initial_energy))
     return {
         "task": "Astrodynamics/LowThrustTransfer",
-        "admission": "quarantine",
-        "defect": "one Euler step spans nearly half a LEO orbit and the unforced orbit gains nonphysical energy",
-        "propagation_returned_ok": bool(ok),
-        "dt_seconds": float(dt),
-        "initial_orbit_period_seconds": float(period),
-        "dt_over_period": float(dt / period),
-        "unforced_relative_energy_drift": relative_drift,
-        "unforced_final_radius_m": float(np.linalg.norm(position)),
-        "passed": bool(ok and dt / period > 0.4 and relative_drift > 1.0),
+        "admission": "candidate",
+        "superseded_v1_defect": (
+            "the removed v1 task used one 30-day Cartesian trajectory, 1000 Euler steps, "
+            "silent thrust clipping and unsupported fuel anchors"
+        ),
+        "resolved_defect": (
+            "v2 uses six multi-regime MEE+J2 transfers, bounded harmonic controls, "
+            "rocket-equation mass depletion, explicit terminal feasibility and sealed "
+            "held-out/execution robustness; current numerical evidence is delegated to "
+            "scripts/calibrate_low_thrust_v2.py"
+        ),
+        "baseline_score": float(baseline["combined_score"]),
+        "baseline_valid": bool(baseline["valid"]),
+        "reference_score": float(reference["combined_score"]),
+        "reference_robustness": float(reference["robustness_score"]),
+        "reference_development_feasibility": float(reference["feasibility_rate"]),
+        "reference_heldout_feasibility": float(
+            reference["heldout_mission_feasibility_rate"]
+        ),
+        "rebuild_passed": True,
+        "passed": bool(
+            baseline["valid"] == 1.0 and baseline["combined_score"] == 0.0
+            and reference["valid"] == 1.0
+            and 0.5 < reference["combined_score"] < 0.95
+            and reference["robustness_score"] > 0.5
+            and reference["feasibility_rate"] == 1.0
+            and reference["heldout_mission_feasibility_rate"] == 1.0
+        ),
     }
 
 

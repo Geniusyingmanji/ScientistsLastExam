@@ -1,11 +1,11 @@
 domain: Astrodynamics
 task: LowThrustTransfer
-difficulty: hard
+difficulty: flagship
 oracle_type: physical_sim
 score_mode: clipped
 gpu_required: false
-eval_time_seconds: 10
-science_metric: fuel_efficiency_normalized
-reference_baseline: "hohmann_impulsive_transfer"
-reference_sota: "optimal_low_thrust_trajectory"
-citation: "Betts 1998; Conway 2010"
+eval_time_seconds: 30
+science_metric: nominal_transfer_utility_with_separate_heldout_phase_and_execution_robustness
+reference_baseline: "zero-thrust coast policy"
+reference_sota: "bounded direct finite-thrust trajectory optimization"
+citation: "Betts 1998 doi:10.2514/2.4231; Walker et al. 1985 doi:10.1007/BF01227493; Conway 2010 doi:10.1017/CBO9780511778025; Edelbaum 1961 doi:10.2514/8.5723"

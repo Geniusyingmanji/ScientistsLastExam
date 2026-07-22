@@ -1,3 +1,4 @@
-1) Only edit solution.py. Keep the design_trajectory() signature.
-2) numpy/scipy/stdlib only. CPU, seconds. No network.
-3) Do not read verification/ or frontier_eval/.
+1) Only edit solution.py. Keep the design_guidance() signature.
+2) Return shape (n_segments, 7), finite coefficients in [-1.25,1.25], with resultant normalized thrust <=1 at every longitude.
+3) Python/NumPy/SciPy/stdlib only. Deterministic CPU code. No network or process creation.
+4) Do not read verification/ or frontier_eval/.

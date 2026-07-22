@@ -118,8 +118,13 @@ tasks:
     status: quarantined
     reason: reference-length candidates crash against a shorter baseline and the fixed simplified image-source proxy lacks robust hidden-scene validation
   Astrodynamics/LowThrustTransfer:
-    status: quarantined
-    reason: the 30-day trajectory uses 1000 Euler steps, causing catastrophic unforced orbital-energy drift; fuel anchors are unsupported
+    status: candidate
+    reason: v2 replaces the unstable single 30-day Euler trajectory and unsupported fuel anchors with six raising/lowering/eccentricity/plane-change MEE+J2 transfers, continuous bounded harmonic guidance, rocket-equation mass depletion, public terminal feasibility and separate phase/held-out/execution robustness; an input-only finite-difference Gauss-Newton policy attains approximately 0.71 development and 0.72 held-out utility with full nominal feasibility, pending GPT-5.5 calibration, server-held missions, independent domain review and higher-fidelity mission-tool replication
+    citation_ids:
+      - doi:10.2514/2.4231
+      - doi:10.1007/BF01227493
+      - doi:10.1017/CBO9780511778025
+      - doi:10.2514/8.5723
   ControlTheory/InvertedPendulumSwingUp:
     status: candidate
     reason: rebuilt and calibrated with correct dynamics; GPT-5.5 reaches 0.797 development but only 0.631 shifted robustness at budget one, leaving a measurable nominal-to-robust control gap
