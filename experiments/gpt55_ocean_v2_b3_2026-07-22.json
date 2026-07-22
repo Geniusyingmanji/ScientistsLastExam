@@ -1,0 +1,364 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_SECURE_EVAL",
+  "evidence_scope": "MODEL_PERFORMANCE",
+  "created_at": "2026-07-22T07:29:21.567883+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "627143446df18c65cfedfda5a604a751cb65b774",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "/home/azureuser/workspace-gzy/zyf/frontier-science/scripts/batch_evolve.py",
+      "--all",
+      "--tasks",
+      "Oceanography/OceanCurrentInversion",
+      "--algorithms",
+      "greedy_rewrite",
+      "--feedback-modes",
+      "normal",
+      "--seeds",
+      "1",
+      "--budget",
+      "3",
+      "--timeout",
+      "300",
+      "--llm-config",
+      "frontier_science/conf/llm/local.yaml",
+      "--workdir",
+      "runs/gpt55_ocean_v2_b3_20260722",
+      "--output",
+      "experiments/gpt55_ocean_v2_b3_2026-07-22.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "config": {
+    "tasks": [
+      "Oceanography/OceanCurrentInversion"
+    ],
+    "algorithms": [
+      "greedy_rewrite"
+    ],
+    "feedback_modes": [
+      "normal"
+    ],
+    "condition_order": "as_listed_for_even_seeds_reversed_for_odd_seeds",
+    "seeds": [
+      1
+    ],
+    "budget": 3,
+    "timeout_s": 300.0,
+    "work_root": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/gpt55_ocean_v2_b3_20260722",
+    "llm_condition_sha256": "5b0df4671481f6b3505155bc6c5654a64c4da5591422fb806904e7d0f44fc4d2",
+    "llm": {
+      "wire": "responses",
+      "endpoint_sha256": "b22995a1fcaf8ad713ac37716f006c717313dfdebd357ac02a077a5582650bb6",
+      "model": "gpt-5.5",
+      "max_output_tokens": 16000,
+      "temperature": null,
+      "reasoning_effort": "low",
+      "input_cost_per_million": null,
+      "output_cost_per_million": null,
+      "server_side_seed_control": false
+    }
+  },
+  "runs": [
+    {
+      "task": "Oceanography/OceanCurrentInversion",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 1,
+      "baseline": 0.0,
+      "best": 0.0,
+      "accepted": 0,
+      "evaluated": 4,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/gpt55_ocean_v2_b3_20260722/Oceanography__OceanCurrentInversion/greedy_rewrite/normal/seed_1",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 4,
+        "budget_units": 4,
+        "best_score": 0.0,
+        "best_so_far_auc": 0.0,
+        "valid_rate": 0.5,
+        "accepted": 0,
+        "wall_seconds": 170.47512469161302,
+        "llm": {
+          "calls": 3,
+          "provider_usage_records": 3,
+          "input_tokens": 4362,
+          "output_tokens": 12232,
+          "total_tokens": 16594,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "Oceanography/OceanCurrentInversion",
+        "seed": 1,
+        "baseline_score": 0.0,
+        "budget": 3,
+        "feedback_mode": "normal",
+        "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "online_incumbent"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 1,
+        "trajectory_sha256": "c2015f8f745e3e153f273129531f36018769f457e6dd9b5c9bd9323eb69232c2",
+        "events": [
+          {
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "52eb9601a1cc718285f4c026261c75b6b7da66a3c38fff5b1dcfbf8832f1b705",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "mechanism_score": 0.3333333333333333,
+              "development_support_f1": 0.0,
+              "development_velocity_mode_score": 0.0,
+              "development_vorticity_score": 0.0,
+              "development_field_prediction_score": 0.0,
+              "development_field_extrapolation_score": 0.0,
+              "development_trajectory_prediction_score": 0.0,
+              "development_trajectory_extrapolation_score": 0.0,
+              "development_misspecified_trajectory_score": 0.0,
+              "development_confidence_calibration_score": 1.0,
+              "development_false_discovery_rate": 0.0,
+              "development_correct_refusal_rate": 1.0,
+              "robustness_score": 0.0,
+              "heldout_mechanism_score": 0.4,
+              "heldout_support_f1": 0.0,
+              "heldout_velocity_mode_score": 0.0,
+              "heldout_vorticity_score": 0.0,
+              "heldout_field_prediction_score": 0.0,
+              "heldout_field_extrapolation_score": 0.0,
+              "heldout_trajectory_prediction_score": 0.0,
+              "heldout_trajectory_extrapolation_score": 0.0,
+              "heldout_misspecified_trajectory_score": 0.0,
+              "heldout_confidence_calibration_score": 1.0,
+              "heldout_false_discovery_rate": 0.0,
+              "heldout_correct_refusal_rate": 1.0,
+              "heldout_feasibility_rate": 1.0,
+              "mean_experiment_calls": 1.0,
+              "mean_experiment_budget_units": 3.0,
+              "raw_score": 0.0
+            },
+            "algorithm_metadata": {},
+            "error": null
+          },
+          {
+            "step": 1,
+            "oracle_calls": 2,
+            "budget_units": 2,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": false,
+            "candidate_sha256": "ec3e34608563a7e68c91fb444920a97ebc16f78450e17fc4702702ca15138c62",
+            "parent_sha256": "52eb9601a1cc718285f4c026261c75b6b7da66a3c38fff5b1dcfbf8832f1b705",
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "mechanism_score": 0.3333333333333333,
+              "development_support_f1": 0.0,
+              "development_velocity_mode_score": 0.0,
+              "development_vorticity_score": 0.0,
+              "development_field_prediction_score": 0.0,
+              "development_field_extrapolation_score": 0.0,
+              "development_trajectory_prediction_score": 0.0,
+              "development_trajectory_extrapolation_score": 0.0,
+              "development_misspecified_trajectory_score": 0.0,
+              "development_confidence_calibration_score": 1.0,
+              "development_false_discovery_rate": 0.0,
+              "development_correct_refusal_rate": 1.0,
+              "robustness_score": 0.0,
+              "heldout_mechanism_score": 0.4,
+              "heldout_support_f1": 0.0,
+              "heldout_velocity_mode_score": 0.0,
+              "heldout_vorticity_score": 0.0,
+              "heldout_field_prediction_score": 0.0,
+              "heldout_field_extrapolation_score": 0.0,
+              "heldout_trajectory_prediction_score": 0.0,
+              "heldout_trajectory_extrapolation_score": 0.0,
+              "heldout_misspecified_trajectory_score": 0.0,
+              "heldout_confidence_calibration_score": 1.0,
+              "heldout_false_discovery_rate": 0.0,
+              "heldout_correct_refusal_rate": 1.0,
+              "heldout_feasibility_rate": 1.0,
+              "mean_experiment_calls": 2.0,
+              "mean_experiment_budget_units": 12.0,
+              "raw_score": 0.0
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 1
+            },
+            "error": null
+          },
+          {
+            "step": 2,
+            "oracle_calls": 3,
+            "budget_units": 3,
+            "score": -1e+18,
+            "best_score": 0.0,
+            "valid": false,
+            "accepted": false,
+            "candidate_sha256": "aab81276d4abc82fdcc5924b171eb4a3b22ecc23952703233e1eb206f2a7724c",
+            "parent_sha256": "52eb9601a1cc718285f4c026261c75b6b7da66a3c38fff5b1dcfbf8832f1b705",
+            "metrics": {
+              "combined_score": -1e+18,
+              "valid": 0.0,
+              "error_message": "frontier_science.secure_eval.CandidateError: ValueError: could not convert string to float: 'initial_positions_m'"
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 2
+            },
+            "error": "frontier_science.secure_eval.CandidateError: ValueError: could not convert string to float: 'initial_positions_m'"
+          },
+          {
+            "step": 3,
+            "oracle_calls": 4,
+            "budget_units": 4,
+            "score": -1e+18,
+            "best_score": 0.0,
+            "valid": false,
+            "accepted": false,
+            "candidate_sha256": "7f4ae408070d31ad6ce7293348bb8abfa42eede0a64eadcaa3fd04e1b85710e9",
+            "parent_sha256": "52eb9601a1cc718285f4c026261c75b6b7da66a3c38fff5b1dcfbf8832f1b705",
+            "metrics": {
+              "combined_score": -1e+18,
+              "valid": 0.0,
+              "error_message": "frontier_science.secure_eval.CandidateError: ValueError: could not convert string to float: 'time_s'"
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 3
+            },
+            "error": "frontier_science.secure_eval.CandidateError: ValueError: could not convert string to float: 'time_s'"
+          }
+        ]
+      }
+    }
+  ],
+  "aggregate": {
+    "attempt_count": 1,
+    "superseded_attempts": 0,
+    "successful_runs": 1,
+    "failed_runs": 0,
+    "by_condition": {
+      "Oceanography/OceanCurrentInversion|greedy_rewrite|normal": {
+        "n": 1,
+        "best_score": {
+          "n": 1,
+          "mean": 0.0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.0
+        },
+        "best_so_far_auc": {
+          "n": 1,
+          "mean": 0.0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.0
+        },
+        "budget_units": {
+          "n": 1,
+          "mean": 4.0,
+          "ci95_low": 4.0,
+          "ci95_high": 4.0
+        },
+        "oracle_calls": {
+          "n": 1,
+          "mean": 4.0,
+          "ci95_low": 4.0,
+          "ci95_high": 4.0
+        },
+        "wall_seconds": {
+          "n": 1,
+          "mean": 170.47512469161302,
+          "ci95_low": 170.47512469161302,
+          "ci95_high": 170.47512469161302
+        },
+        "total_tokens": {
+          "n": 1,
+          "mean": 16594.0,
+          "ci95_low": 16594.0,
+          "ci95_high": 16594.0
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      }
+    },
+    "overall": {
+      "best_score": {
+        "n": 1,
+        "mean": 0.0,
+        "ci95_low": 0.0,
+        "ci95_high": 0.0
+      },
+      "best_so_far_auc": {
+        "n": 1,
+        "mean": 0.0,
+        "ci95_low": 0.0,
+        "ci95_high": 0.0
+      },
+      "budget_units": {
+        "n": 1,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "oracle_calls": {
+        "n": 1,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "wall_seconds": {
+        "n": 1,
+        "mean": 170.47512469161302,
+        "ci95_low": 170.47512469161302,
+        "ci95_high": 170.47512469161302
+      },
+      "total_tokens": {
+        "n": 1,
+        "mean": 16594.0,
+        "ci95_low": 16594.0,
+        "ci95_high": 16594.0
+      },
+      "estimated_cost_usd": {
+        "n": 0,
+        "mean": null,
+        "ci95_low": null,
+        "ci95_high": null
+      }
+    }
+  },
+  "completed_at": "2026-07-22T07:32:12.049976+00:00",
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}
