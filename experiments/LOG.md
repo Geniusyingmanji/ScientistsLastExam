@@ -1071,3 +1071,35 @@ source-scope equivalence and every coverage/refusal decomposition. Certification
 25-condition, 13-task cross-task summary v6 bind clean source `b1e081c`. The current portfolio is
 seven certified, eighteen candidate and twenty-six quarantined packages: **25 internally
 admissible tasks**, leaving an approximate gap of 25 to the portfolio target.
+
+## 2026-07-22 — low-thrust orbital-transfer optimization v2
+
+Rebuilt `Astrodynamics/LowThrustTransfer` from one unstable 30-day Cartesian Euler trajectory,
+silent thrust clipping and unsupported fuel anchors into six orbit-raising, lowering,
+eccentricity, plane-change and combined transfers. Candidates return four-segment harmonic RTN
+guidance with 28 coefficients. The trusted evaluator propagates modified equinoctial elements
+with Earth J2 and rocket-equation mass depletion, analytically checks the continuous all-
+longitude thrust bound, and separately retains nominal utility, terminal feasibility, phase,
+two held-out missions and three sealed thrust/ISP/J2/pointing/navigation/cutoff shifts. Candidate
+processes restart at every mission boundary.
+
+A public-input-only Gauss--Newton policy reaches development/held-out utility
+**0.711433/0.719404**, sealed robustness **0.681712/0.659987**, and nominal feasibility **1/1**
+on both splits. A separate reachability witness reaches **0.734751/0.715759** nominal and
+**0.704309/0.668409** robust utility. The zero-thrust coast baseline remains valid but scores
+zero with zero terminal feasibility. Wrong-shape, non-finite, coefficient-bound and continuous-
+thrust-bound violations all fail closed.
+
+The 1800 s production RK4 propagation differs from a 900 s refinement by at most **0.042274**
+of a public terminal tolerance. The refined MEE propagation differs from an independently coded
+Cartesian DOP853 path by at most **0.002876** tolerances and **0.000222 kg**. These checks bound
+production discretization and coordinate/formulation disagreement separately; they are not
+flight validation. The task still omits third bodies, drag, eclipse, power, thermal and attitude
+constraints and needs server-held missions plus independent mission-tool/domain review.
+
+`low_thrust_v2_calibration_2026-07-22.json` binds clean source `43dd780`. Wave-2 admission v3,
+certification v20, security v5 and the 51x2 baseline v11 bind clean source `5bf6e0c` and record
+seven certified, nineteen candidate and twenty-five quarantined packages. The resulting **26
+internally admissible tasks** leave an approximate gap of 24 to the portfolio target. GPT-5.5
+headroom calibration is still pending, so none of these results is a model-performance,
+feedback-learning, global-optimality or autonomous-discovery claim.

@@ -49,15 +49,16 @@ meaning.
   restored as a candidate: GPT-5.5 reaches 0.797 development and 0.631 shifted robustness at
   budget one. At budget three, visible development rises from 0.691 to 0.854 while shifted
   robustness stays near 0.64, making it the first useful development–validation gap task. The
-  other five remain quarantined after reproducible adversarial review: RIR
-  length failure, unstable low-thrust propagation, centerline-spoofable cavity scoring,
-  pseudo-data alloy hardness and scalar-FFT pseudo-RCWA. HeatExchanger-v2 was subsequently
-  rebuilt as a multifidelity Pareto candidate.
-- **No original unscreened candidates remain after wave 4; eighteen candidates remain in total.** They include
+  original five failed reproducible adversarial review: RIR length failure, unstable
+  low-thrust propagation, centerline-spoofable cavity scoring, pseudo-data alloy hardness and
+  scalar-FFT pseudo-RCWA. HeatExchanger-v2 and LowThrustTransfer-v2 were subsequently rebuilt
+  as multifidelity Pareto and long-horizon trajectory-optimization candidates, respectively;
+  the other four remain quarantined.
+- **No original unscreened candidates remain after wave 4; nineteen candidates remain in total.** They include
   SCM, Lyapunov control, neutron criticality, seismic refraction, pendulum control, sparse
   recovery, OED-v2, GateSynthesis-v2, OPF-v2, Truss-v2, Antenna-v2, NMR-v2,
   HeatExchanger-v2, ReactionMechanismFitting-v2, GravityInversion-v2,
-  OceanCurrentInversion-v2, RadiativeTransferFit-v2 and the new
+  OceanCurrentInversion-v2, RadiativeTransferFit-v2, LowThrustTransfer-v2 and the new
   ActiveLawDiscovery laboratory. All are
   currently on-ramps or repair/calibration candidates rather than externally reviewed
   open-frontier tasks.
@@ -67,12 +68,12 @@ meaning.
   independent budget-three run, all three proposals retain the same two false discoveries;
   score feedback does not fix model-inadequacy detection and later proposals reduce mechanism
   recovery. This is a reliability/refusal frontier rather than an ordinary prediction frontier.
-- **26 quarantined packages.** Five generic-objective clones must be replaced with real domain
+- **25 quarantined packages.** Five generic-objective clones must be replaced with real domain
   oracles; metadata completion alone cannot rehabilitate them. The sixth,
   `ClimateScience/EnergyBalanceModel`, uses an unstable explicit diffusion iteration, an
   unverified ERA5 attribution and a structurally underdetermined seven-parameter fit to one
   steady profile. It requires replacement with documented multi-regime data, not a numerical
-  patch. Five wave-2 and four inverse-track tasks remain blocked by concrete oracle failures;
+  patch. Four wave-2 and three inverse-track tasks remain blocked by concrete oracle failures;
   none may contribute model-performance evidence until rebuilt and re-admitted. The inverse
   failures include rank-deficient hidden-truth retrieval, a rank-two demographic surrogate,
   underidentified pseudo-DNS
@@ -91,8 +92,15 @@ The first review tranche contains real scientific topics but several narrow eval
 
 - Room acoustics uses two fixed scenarios and a simplified image-source implementation; add
   procedural room/source/microphone configurations and independent acoustic invariants.
-- Low-thrust transfer has one scenario and a low-order propagation scheme; add multiple orbital
-  regimes and a higher-fidelity integrator before scientific claims.
+- LowThrustTransfer-v2 now spans six raising, lowering, eccentricity, plane-change and combined
+  transfers with MEE+J2 propagation, rocket-equation mass loss, continuous harmonic-control
+  bounds, two held-out missions and three sealed execution shifts. A public-input Gauss--Newton
+  policy is nominally feasible on all missions and reaches 0.711/0.719 development/held-out
+  utility and 0.682/0.660 shifted robustness. Its 1800 s production propagation differs from a
+  900 s refinement by at most 0.0423 terminal tolerances; the refined MEE path differs from an
+  independent Cartesian DOP853 path by at most 0.00288 tolerances and 0.000223 kg. It remains a
+  candidate pending GPT-5.5 headroom calibration, server-held missions, higher-fidelity mission-
+  tool replication and independent astrodynamics review.
 - Pendulum, Lorenz control and heat-exchanger tasks are likely to admit short analytic/template
   solutions; retain only if hidden parameter regimes and robustness/cost tradeoffs preserve
   headroom.
@@ -104,8 +112,9 @@ The first review tranche contains real scientific topics but several narrow eval
   material data. It should be replaced with a documented dataset/model split or quarantined.
 - Diffraction grating uses a scalar FFT phase model, not the claimed rigorous coupled-wave
   analysis. Rename the fidelity or replace it with a validated RCWA oracle.
-- Neutron diffusion has a substantive PDE/eigenvalue oracle but only one geometry/loading
-  regime and an unsupported fixed normalization increment; validate anchors and add shifts.
+- Neutron diffusion now has a conservative symmetric PDE/eigenvalue oracle and a reproducible
+  optimization/eigenvalue witness, but still exposes only one geometry/loading regime; add
+  hidden material/geometry shifts before treating it as more than an on-ramp.
 - Truss-v2 now supplies six procedural structures, finite-output checks, independently reproduced
   nominal/robust local witnesses and sealed topology/physical-shift metrics. Its non-saturated
   GPT-5.5 trajectory makes it a useful optimization/validation candidate, pending server-held
@@ -165,9 +174,9 @@ The target is approximately 50 **admissible** open scientific optimization tasks
 
 After complete original-inventory triage, adding ActiveLawDiscovery and rebuilding Gate-v2,
 OPF-v2, Truss-v2, Antenna-v2, NMR-v2, HeatExchanger-v2, ReactionMechanismFitting-v2 and
-GravityInversion-v2, OceanCurrentInversion-v2 and RadiativeTransferFit-v2, the net expansion gap is approximately 25 admissible tasks:
-51 folders minus 26 quarantines leaves 25 internally admissible certified or candidate packages, while the target
-is about 50. New
+GravityInversion-v2, OceanCurrentInversion-v2, RadiativeTransferFit-v2 and LowThrustTransfer-v2,
+the net expansion gap is approximately 24 admissible tasks: 51 folders minus 25 quarantines
+leaves 26 internally admissible certified or candidate packages, while the target is about 50. New
 work should emphasize procedural task families and independent regimes,
 not one-off fixed instances or scientific names around hand-written scalar objectives.
 

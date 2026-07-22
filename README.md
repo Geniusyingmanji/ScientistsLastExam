@@ -20,16 +20,16 @@ The repository contains **51 task packages in 47 metadata domains**:
 
 - **7 certified core tasks**: Lennard–Jones clusters, spin glass, Poisson solver,
   matrix-multiplication rank, Cap Set, circle packing, and multilayer thin films.
-- **18 candidate tasks** pending scientific certification, including intervention-based causal
+- **19 candidate tasks** pending scientific certification, including intervention-based causal
   and active dynamical-law laboratories whose prediction and mechanism metrics are reported
   separately, a multi-spectrum NMR peak-mechanism/refusal task, and a multi-fidelity
   heat-exchanger Pareto-design task.
-- **26 quarantined tasks** with reproduced scientific-oracle, identifiability, provenance or
+- **25 quarantined tasks** with reproduced scientific-oracle, identifiability, provenance or
   shortcut defects; these remain inventory packages but are not admissible benchmark tasks.
 
 The default CLI exposes only the certified core. `--all` explicitly shows the full
 inventory. Certification status is not a difficulty claim: the inventory metadata contains
-48 `hard` and 3 `flagship` packages, but only certified tasks are benchmark-admissible.
+47 `hard` and 4 `flagship` packages, but only certified tasks are benchmark-admissible.
 
 All candidate code runs in a networkless Bubblewrap sandbox with read-only mounts, resource
 and process limits, and a typed JSON RPC boundary. The trusted parent alone imports the
@@ -40,11 +40,11 @@ controlled exception text is reduced to a fixed label-blind failure taxonomy bef
 search feedback, preventing observations from being carried between worlds through exceptions.
 The current audit reports:
 
-- 130/130 unit, security, protocol and scientific-invariant tests passed.
+- 135/135 unit, security, protocol and scientific-invariant tests passed.
 - The latest 51×2 secure-baseline audit reports 51/51 deterministic, 50/51 valid, 51/51
   fail-closed and zero infrastructure failures. The sole invalid baseline is the explicitly
   quarantined `ClimateScience/EnergyBalanceModel`.
-- Current manifest: 7 certified / 18 candidate / 26 quarantined. D-optimal design, quantum
+- Current manifest: 7 certified / 19 candidate / 25 quarantined. D-optimal design, quantum
   gate synthesis, DC optimal power flow, truss sizing, antenna synthesis and NMR peak fitting have been rebuilt with separate sealed
   validation or robustness metrics and re-admitted as candidates. HeatExchanger-v2 additionally
   separates a public constant-property proxy from a sealed segmented temperature-dependent
@@ -96,6 +96,15 @@ The current audit reports:
   Their perfect unsupported-world refusal and zero false-discovery rate therefore coexist with
   zero discovery coverage and zero supported-world mechanism recovery. These single runs are
   synthetic task calibration, not a causal feedback, satellite-retrieval or discovery claim.
+  LowThrustTransfer-v2 replaces a single unstable 30-day Euler trajectory and unsupported fuel
+  anchors with six raising, lowering, eccentricity and plane-change MEE+J2 transfers. A compact
+  28-parameter harmonic guidance artifact is checked against a continuous thrust bound,
+  rocket-equation mass depletion, terminal feasibility, held-out missions and sealed execution
+  shifts. A public-input-only Gauss--Newton calibration reaches `0.711/0.719`
+  development/held-out utility and `0.682/0.660` shifted robustness with full nominal terminal
+  feasibility. The production propagator agrees with an independent Cartesian DOP853 path
+  within `0.00288` of a public terminal tolerance. These are controlled task-calibration
+  results; GPT-5.5 calibration, server-held missions and independent review remain pending.
   GPT-5.5 reaches nominal OPF score 1.0
   at budget one while sealed N-1 robustness is only 0.031 on development and approximately
   zero on held-out networks. On Truss-v2, a separate budget-three run improves development
@@ -116,6 +125,9 @@ the post-repair 50-package audits bind revision `47c3613`; the subsequent wave-2
 audit quarantines seven additional defective candidates. The two P2 smokes are baseline-only; the repository does not yet contain
 credible multi-seed model-performance evidence. A clean-revision GPT-5.5 budget-one core pilot
 is recorded as task calibration, not a benchmark leaderboard.
+The latest LowThrust-v2 certification/security/baseline audits are v20/v5/v11 and bind clean
+source `5bf6e0c`; the current 7/19/25 manifest contains 26 internally admissible tasks, leaving
+an approximate gap of 24 to the roughly 50-task target.
 
 ## Quickstart
 

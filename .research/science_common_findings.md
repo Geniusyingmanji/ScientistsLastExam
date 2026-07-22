@@ -37,6 +37,7 @@ by the corrected-contract run on `2557adb`.
 | NMR-v2, budget 3 | development proposals 0.375440 → 0.212692 → 0.161475; only step 1 accepted | held-out mechanism/refusal remains 0.0; rejected steps retain development reconstruction 0.819/0.783 while false-discovery is 1.0 on both splits | Aggregate score feedback does not repair model-inadequacy detection in this trajectory; residual quality alone remains misleading. |
 | HeatExchanger-v2, budget 1 | the only proposal is invalid; development remains 0.0 | no validated improvement | Valid code generation and scientific feasibility remain separate gates. |
 | HeatExchanger-v2, budget 3 | development exact 0.000 → 0.008 → 0.126; final proxy 0.173 | held-out exact 0.280; robustness 0.130; two of four development regimes remain zero | Aggregate improvement can be concentrated in one regime and need not transfer to physical shifts. |
+| LowThrustTransfer-v2, public Gauss--Newton | development/held-out utility 0.711/0.719; nominal feasibility 1.0/1.0 | shifted robustness 0.682/0.660; held-out shifted feasibility 0.833; production/refinement discrepancy 0.0423 tolerance | Long-horizon optimization must separate numerical error, terminal feasibility, nominal utility, held-out transfer and execution robustness. |
 | ReactionMechanism-v2, budget 1 | valid proposal remains at normalized mechanism 0.0 | held-out normalized mechanism 0.0 | A complex fitter spends the assay budget on an under-informative design and abstains everywhere. |
 | ReactionMechanism-v2, budget 3 | all three proposals remain at 0.0 and are rejected | each performs one assay and abstains everywhere | More rewrite budget does not help when scalar zero feedback cannot localize whether experiment design, inference or refusal caused failure. |
 | GravityInversion-v2, budget 1 | invalid callback unpacking; development remains 0.0 | no validated improvement | A physically sophisticated implementation can still fail the executable laboratory protocol. |
@@ -254,6 +255,29 @@ feedback comparison or population result: there is one run, robustness stayed se
 robustness-aware treatment was tested. Report and trajectory hashes plus accepted parent lineage
 are validated by `analyze_antenna_v2_calibrations.py`.
 
+### LowThrustTransfer-v2 numerical-versus-scientific diagnostic
+
+LowThrustTransfer-v2 makes numerical fidelity an explicit axis rather than silently folding it
+into an optimization score. Its six missions cover orbit raising, lowering, eccentricity,
+plane-change and combined transfers. A public-input-only 28-parameter Gauss--Newton guidance
+policy reaches development/held-out utility `0.711433/0.719404`, shifted robustness
+`0.681712/0.659987`, and full nominal terminal feasibility. One of six held-out shifted cases
+misses the terminal-feasibility gate, even though aggregate held-out utility remains high.
+
+The 1800 s production RK4 trajectory differs from a 900 s refinement by at most `0.042274` of a
+public terminal tolerance. The refined MEE+J2 propagation differs from an independently coded
+Cartesian DOP853 path by at most `0.002876` terminal tolerances and `0.000223 kg`. These checks
+bound two different threats: discretization error inside the production model and disagreement
+between coordinate/formulation implementations. Neither proves real mission fidelity; third
+bodies, drag, eclipse, power, thermal and attitude constraints remain absent.
+
+The resulting reporting rule is five-way: integration/model-consistency error, nominal utility,
+terminal feasibility, held-out mission transfer and physical execution robustness must remain
+separate. Otherwise an apparent optimization frontier can be an integrator frontier, and a high
+fuel/accuracy aggregate can conceal an infeasible shifted mission. The present numbers are a
+classical controlled-task calibration, not GPT-5.5 performance, global optimality, flight
+validation or autonomous discovery.
+
 ## Consequences for expansion to approximately 50 tasks
 
 Every new or rebuilt task must pass the following gate before it counts toward the target:
@@ -270,7 +294,7 @@ Every new or rebuilt task must pass the following gate before it counts toward t
 - classical and domain baselines, followed by GPT-5.5 budget-one headroom screening; and
 - retention as an on-ramp, not a headline task, if a standard method reliably saturates it.
 
-The present inventory contains 25 internally admissible certified or candidate packages. The
-remaining gap is approximately 25 tasks. Expansion should use procedural families spanning
+The present inventory contains 26 internally admissible certified or candidate packages. The
+remaining gap is approximately 24 tasks. Expansion should use procedural families spanning
 design, inverse problems, control, multifidelity validation, mechanism discovery and exact
 mathematical construction rather than cloning one scalar optimization template across domains.
