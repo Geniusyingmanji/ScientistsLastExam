@@ -135,8 +135,14 @@ tasks:
     status: quarantined
     reason: claimed RCWA is a scalar phase FFT with an analytic unit-efficiency phase-ramp shortcut
   Thermodynamics/HeatExchangerDesign:
-    status: quarantined
-    reason: objective is monotone in unconstrained area and the implemented multipass formula is pass-count invariant
+    status: candidate
+    reason: v2 replaces the monotone single-point objective with six fluid/operating regimes and bounded cost-versus-duty Pareto archives, separates a public constant-property proxy from a sealed temperature-dependent segmented oracle, and evaluates proxy false promotion, held-out transfer plus fouling/manufacturing/blockage robustness; awaiting GPT-5.5 calibration, server-held regimes, independent thermal-engineering review and CFD or experimental replication
+    citation_ids:
+      - doi:10.1002/9780470172605
+      - doi:10.1007/978-3-540-77877-6_34
+      - doi:10.1115/1.3240948
+      - doi:10.1016/j.applthermaleng.2010.04.018
+      - doi:10.1109/4235.797969
 
   AtmosphericScience/RadiativeTransferFit:
     status: quarantined

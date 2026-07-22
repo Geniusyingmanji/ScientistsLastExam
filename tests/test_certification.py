@@ -543,6 +543,109 @@ def select_designs(candidate_points, feature_matrix, n_measurements):
                 not row["valid"] for row in metrics["per_instance"]
             ))
 
+    def test_heat_exchanger_v2_references_physics_and_metric_sealing(self):
+        oracle = load_oracle("Thermodynamics/HeatExchangerDesign")
+        self.assertEqual(len(oracle.DEVELOPMENT_INSTANCES), 4)
+        self.assertEqual(len(oracle.HELDOUT_INSTANCES), 2)
+        for instance in oracle.INSTANCES:
+            baseline = oracle._baseline_archive(instance["problem"])
+            nominal = oracle.REFERENCE_ARCHIVES[instance["name"]]
+            robust = oracle.ROBUST_REFERENCE_ARCHIVES[instance["name"]]
+            self.assertEqual(nominal.shape, (oracle.MAX_ARCHIVE_SIZE, 5))
+            self.assertEqual(robust.shape, (oracle.MAX_ARCHIVE_SIZE, 5))
+            self.assertTrue(np.array_equal(
+                nominal,
+                oracle._reference_archive(instance, "nominal"),
+            ))
+            anchors = oracle.CALIBRATED_ANCHORS[instance["name"]]
+            self.assertGreater(
+                anchors["reference_exact_hypervolume"],
+                anchors["baseline_exact_hypervolume"],
+            )
+            self.assertGreater(
+                anchors["reference_proxy_hypervolume"],
+                anchors["baseline_proxy_hypervolume"],
+            )
+            _, baseline_exact, baseline_shifts = oracle._evaluate_archive(
+                instance, baseline
+            )
+            _, nominal_exact, _ = oracle._evaluate_archive(instance, nominal)
+            _, robust_exact, robust_shifts = oracle._evaluate_archive(instance, robust)
+            self.assertTrue(all(row["feasible"] for row in baseline_exact))
+            self.assertTrue(all(row["feasible"] for row in nominal_exact))
+            self.assertTrue(all(row["feasible"] for row in robust_exact))
+            self.assertTrue(all(
+                all(row["feasible"] for row in records)
+                for records in baseline_shifts + robust_shifts
+            ))
+            self.assertLessEqual(max(
+                row["boundary_residual_k"]
+                for records in (baseline_exact, nominal_exact, robust_exact)
+                for row in records
+            ), 1e-5)
+
+            # Adding a dominated duplicate cannot improve two-objective hypervolume.
+            records = list(nominal_exact)
+            dominated = dict(records[0])
+            dominated["heat_duty_w"] = 0.5 * records[0]["heat_duty_w"]
+            dominated["annualized_cost_usd"] = 2.0 * records[0]["annualized_cost_usd"]
+            augmented = records + [dominated, dict(records[0])]
+            self.assertAlmostEqual(
+                oracle._hypervolume(instance, records),
+                oracle._hypervolume(instance, augmented),
+                places=12,
+            )
+
+        def baseline_policy(problem):
+            return oracle._baseline_archive(problem)
+
+        metrics = oracle.evaluate(baseline_policy)
+        self.assertEqual(metrics["valid"], 1.0)
+        self.assertEqual(metrics["combined_score"], 0.0)
+        self.assertEqual(metrics["feasibility_rate"], 1.0)
+        shown = search_visible_metrics(metrics)
+        for key in (
+            "development_proxy_score", "heldout_exact_score",
+            "robustness_score", "development_false_promotion_rate",
+            "development_proxy_exact_rank_correlation", "per_instance",
+        ):
+            self.assertNotIn(key, shown)
+
+    def test_heat_exchanger_v2_malformed_archives_fail_closed(self):
+        oracle = load_oracle("Thermodynamics/HeatExchangerDesign")
+
+        def invalid_policy(kind):
+            def policy(problem):
+                archive = oracle._baseline_archive(problem).copy()
+                if kind == "nonfinite":
+                    archive[0, 0] = np.nan
+                elif kind == "wrong_shape":
+                    return archive[:, :4]
+                elif kind == "too_short":
+                    return archive[:3]
+                elif kind == "out_of_bounds":
+                    archive[:, 0] = -1.0
+                elif kind == "nonintegral":
+                    archive[:, 2] += 0.5
+                elif kind == "not_divisible":
+                    archive[:, 4] = 4.0
+                    archive[:, 2] = 25.0
+                else:
+                    raise AssertionError(kind)
+                return archive
+            return policy
+
+        for kind in (
+            "nonfinite", "wrong_shape", "too_short", "out_of_bounds",
+            "nonintegral", "not_divisible",
+        ):
+            metrics = oracle.evaluate(invalid_policy(kind))
+            self.assertEqual(metrics["valid"], 0.0, kind)
+            self.assertEqual(metrics["combined_score"], 0.0, kind)
+            self.assertTrue(all(
+                not row["valid"] for row in metrics["per_instance"]
+            ), kind)
+
     def test_nmr_v2_exact_reference_refusal_and_metric_sealing(self):
         oracle = load_oracle("Spectroscopy/NMRSpectrumFitting")
         self.assertEqual(len(oracle.DEVELOPMENT_INSTANCES), 6)

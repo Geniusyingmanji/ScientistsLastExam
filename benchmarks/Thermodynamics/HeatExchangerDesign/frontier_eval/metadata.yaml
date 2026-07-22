@@ -1,11 +1,12 @@
 domain: Thermodynamics
 task: HeatExchangerDesign
-difficulty: hard
+difficulty: flagship
+tier: T2
 oracle_type: physical_sim
 score_mode: clipped
 gpu_required: false
-eval_time_seconds: 5
-science_metric: effectiveness
-reference_baseline: "single_pass"
-reference_sota: "optimized_multipass"
-citation: "Incropera & DeWitt 2006; Shah & Sekulic 2003"
+eval_time_seconds: 30
+science_metric: development exact cost-versus-duty Pareto hypervolume with sealed proxy agreement, held-out transfer and fouling/manufacturing/blockage robustness
+reference_baseline: conservative public one-pass archive feasible under nominal and shifted conditions
+reference_sota: fixed-seed scrambled-Sobol proxy screen plus exact-model Pareto witnesses; no global-optimality claim
+citation: "Sanaye and Hajabdollahi, Multi-objective optimization of shell and tube heat exchangers, DOI 10.1016/j.applthermaleng.2010.04.018"

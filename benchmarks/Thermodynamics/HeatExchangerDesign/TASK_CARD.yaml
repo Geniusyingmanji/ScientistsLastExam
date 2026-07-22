@@ -1,0 +1,36 @@
+schema_version: 1
+scientific_question: Can one policy discover cost-versus-duty Pareto archives across varying fluids and operating regimes while avoiding cheap-proxy false promotion and retaining performance under fouling, manufacturing and blockage shifts?
+artifact: A bounded archive of shell-and-tube geometries containing inner diameter, length, tube count, baffle spacing and tube-pass count.
+oracle:
+  proxy: public constant-property epsilon-NTU model with simplified tube/shell heat-transfer and pressure-drop correlations
+  exact: sealed ten-segment counter-flow energy balance with temperature-dependent properties, Gnielinski/Haaland-style tube transport, shell-side correction, fouling and hydraulic constraints
+  feasibility: finite exact archive shape, public variable bounds, integral tube/pass counts, divisible tube allocation, bundle diameter, baffle count and nominal pressure-drop limits
+  deterministic: true
+normalization:
+  baseline: public conservative one-pass sweep, feasible in nominal and every sealed shift
+  reference: fixed-seed 4096-point scrambled Sobol proxy screen followed by exact-model shortlist selection and greedy two-objective hypervolume archives
+  score: development exact Pareto hypervolume controls search; proxy agreement, held-out transfer and physical robustness remain separate and sealed
+citations:
+  - id: doi:10.1002/9780470172605
+    title: Fundamentals of Heat Exchanger Design
+  - id: doi:10.1007/978-3-540-77877-6_34
+    title: G1 Heat Transfer in Pipe Flow
+  - id: doi:10.1115/1.3240948
+    title: Simple and Explicit Formulas for the Friction Factor in Turbulent Pipe Flow
+  - id: doi:10.1016/j.applthermaleng.2010.04.018
+    title: Multi-objective optimization of shell and tube heat exchangers
+  - id: doi:10.1109/4235.797969
+    title: Multiobjective evolutionary algorithms - a comparative case study and the strength Pareto approach
+invariants:
+  - every weak-baseline design is nominally feasible and feasible under all three physical shifts
+  - heat duty is nonnegative, outlet temperatures do not cross their inlet bounds and the segmented boundary residual is below 1e-5 K
+  - reference archives reconstruct exactly from committed Sobol seeds and indices
+  - nominal reference archives are 24-of-24 exact feasible and robust references are 24-of-24 feasible under nominal and every shift
+  - every reference hypervolume exceeds its corresponding weak-baseline hypervolume
+  - dominated or duplicate points do not increase two-dimensional hypervolume
+  - non-finite, malformed, out-of-bound, non-integral and entirely exact-infeasible archives fail closed
+  - proxy, held-out, rank-correlation, false-promotion and shifted metrics remain evaluator-only
+known_shortcuts: The exact oracle remains a correlation-based steady-state model. It omits vibration, detailed shell leakage/bypass networks, phase change, corrosion, thermal stress, fabrication standards and experimental uncertainty. Public deterministic instances require future server-held regimes. Engineering claims require independent process simulation, CFD and experimental replication. Reference fronts are strong feasible witnesses, not global-optimality proofs.
+review:
+  domain: pending_external
+  evaluator_security: automated_invariant_sandbox_and_metric_sealing_tests

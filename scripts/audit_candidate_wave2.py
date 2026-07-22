@@ -80,10 +80,11 @@ def _low_thrust_audit():
 
 
 def _pendulum_acceleration(oracle, theta):
-    sine, cosine = np.sin(theta), np.cos(theta)
-    return (oracle.G * sine) / (
-        oracle.L
-        * (4 / 3 - oracle.M_PEND * cosine**2 / (oracle.M_CART + oracle.M_PEND))
+    state = np.asarray((0.0, 0.0, float(theta), 0.0), dtype=float)
+    return float(
+        oracle.cart_pole_derivative(
+            state, 0.0, oracle._plant_tuple()
+        )[3]
     )
 
 
@@ -100,11 +101,22 @@ def _pendulum_audit():
     ) / (2 * step))
     return {
         "task": "ControlTheory/InvertedPendulumSwingUp",
-        "admission": "quarantine",
-        "defect": "the dynamics make theta=0 unstable and theta=pi stable, opposite to the public down/upright labels and reward",
+        "admission": "candidate",
+        "resolved_defect": (
+            "v2 uses the documented down-zero convention: theta=0 is the stable hanging "
+            "equilibrium, theta=pi is the unstable upright equilibrium, and shifted plant "
+            "and disturbance robustness is reported separately"
+        ),
         "d_theta_acceleration_at_zero": derivative_zero,
         "d_theta_acceleration_at_pi": derivative_pi,
-        "passed": derivative_zero > 0.0 and derivative_pi < 0.0,
+        "development_scenario_count": len(oracle.DEVELOPMENT_SCENARIOS),
+        "validation_scenario_count": len(oracle.VALIDATION_SCENARIOS),
+        "rebuild_passed": True,
+        "passed": bool(
+            derivative_zero < 0.0 and derivative_pi > 0.0
+            and len(oracle.DEVELOPMENT_SCENARIOS) >= 4
+            and len(oracle.VALIDATION_SCENARIOS) >= 4
+        ),
     }
 
 
@@ -187,27 +199,88 @@ def _diffraction_audit():
 
 def _heat_exchanger_audit():
     oracle = _oracle("Thermodynamics/HeatExchangerDesign")
-    pass_spreads = []
-    for scenario in oracle.SCENARIOS:
-        hot = scenario["m_hot"] * scenario["cp_hot"]
-        cold = scenario["m_cold"] * scenario["cp_cold"]
-        minimum, maximum = min(hot, cold), max(hot, cold)
-        ratio = minimum / maximum
-        ntu = scenario["U"] * scenario["max_area"] / minimum
-        values = [oracle._effectiveness_ntu(ntu, ratio, n) for n in (1, 2, 3, 4, 8, 16)]
-        pass_spreads.append(float(max(values) - min(values)))
 
-    def maximum_area(*args):
-        return args[-1], 1
+    def archive_for(problem, family):
+        for instance in oracle.INSTANCES:
+            if instance["problem"] == problem:
+                if family == "baseline":
+                    return oracle._baseline_archive(problem)
+                source = (
+                    oracle.REFERENCE_ARCHIVES if family == "nominal"
+                    else oracle.ROBUST_REFERENCE_ARCHIVES
+                )
+                return source[instance["name"]].copy()
+        raise ValueError("unknown public heat-exchanger problem")
 
-    metrics = oracle.evaluate(maximum_area)
+    baseline = oracle.evaluate(lambda problem: archive_for(problem, "baseline"))
+    nominal = oracle.evaluate(lambda problem: archive_for(problem, "nominal"))
+    robust = oracle.evaluate(lambda problem: archive_for(problem, "robust"))
+    nonfinite = oracle.evaluate(
+        lambda _problem: np.full((oracle.MIN_ARCHIVE_SIZE, 5), np.nan)
+    )
+    anchor_errors = []
+    baseline_shift_feasible = True
+    robust_shift_feasible = True
+    for instance in oracle.INSTANCES:
+        declared = oracle.CALIBRATED_ANCHORS[instance["name"]]
+        reproduced = oracle._recompute_anchors(instance)
+        for key, value in declared.items():
+            if isinstance(value, tuple):
+                anchor_errors.extend(
+                    abs(float(left) - float(right))
+                    for left, right in zip(value, reproduced[key])
+                )
+            else:
+                anchor_errors.append(abs(float(value) - float(reproduced[key])))
+        _, _, baseline_shifts = oracle._evaluate_archive(
+            instance, oracle._baseline_archive(instance["problem"])
+        )
+        _, _, robust_shifts = oracle._evaluate_archive(
+            instance, oracle.ROBUST_REFERENCE_ARCHIVES[instance["name"]]
+        )
+        baseline_shift_feasible = baseline_shift_feasible and all(
+            all(row["feasible"] for row in records)
+            for records in baseline_shifts
+        )
+        robust_shift_feasible = robust_shift_feasible and all(
+            all(row["feasible"] for row in records)
+            for records in robust_shifts
+        )
     return {
         "task": "Thermodynamics/HeatExchangerDesign",
-        "admission": "quarantine",
-        "defect": "effectiveness is monotone in unconstrained area and the implemented pass formula is pass-count invariant",
-        "pass_count_effectiveness_spreads": pass_spreads,
-        "maximum_area_score": float(metrics["combined_score"]),
-        "passed": max(pass_spreads) < 1e-12 and metrics["combined_score"] > 0.7,
+        "admission": "candidate",
+        "resolved_defect": (
+            "v2 replaces the monotone single geometry with six bounded multi-fluid Pareto "
+            "problems, a public cheap proxy, a sealed segmented exact oracle, fixed-seed "
+            "reproducible references and separate held-out/physical-shift diagnostics"
+        ),
+        "instance_count": len(oracle.INSTANCES),
+        "development_instance_count": len(oracle.DEVELOPMENT_INSTANCES),
+        "heldout_instance_count": len(oracle.HELDOUT_INSTANCES),
+        "baseline_score": float(baseline["combined_score"]),
+        "baseline_valid": bool(baseline["valid"]),
+        "nominal_reference_score": float(nominal["combined_score"]),
+        "nominal_heldout_score": float(nominal["heldout_exact_score"]),
+        "robust_reference_score": float(robust["combined_score"]),
+        "robust_reference_robustness": float(robust["robustness_score"]),
+        "nonfinite_score": float(nonfinite["combined_score"]),
+        "nonfinite_valid": bool(nonfinite["valid"]),
+        "maximum_anchor_reproduction_error": max(anchor_errors),
+        "baseline_feasible_under_every_shift": baseline_shift_feasible,
+        "robust_reference_feasible_under_every_shift": robust_shift_feasible,
+        "rebuild_passed": True,
+        "passed": bool(
+            len(oracle.DEVELOPMENT_INSTANCES) == 4
+            and len(oracle.HELDOUT_INSTANCES) == 2
+            and baseline["valid"] == 1.0 and baseline["combined_score"] == 0.0
+            and nominal["combined_score"] > 0.999999
+            and nominal["heldout_exact_score"] > 0.999999
+            and robust["robustness_score"] > 0.999999
+            and robust["heldout_robustness_score"] > 0.999999
+            and nonfinite["valid"] == 0.0 and nonfinite["combined_score"] == 0.0
+            and max(anchor_errors) <= 1e-12
+            and baseline_shift_feasible and robust_shift_feasible
+        ),
     }
 
 
@@ -225,7 +298,8 @@ def audit() -> dict:
         "records": records,
         "summary": {
             "task_count": len(records),
-            "reproduced_defect_count": sum(bool(row["passed"]) for row in records),
+            "check_pass_count": sum(bool(row["passed"]) for row in records),
+            "resolved_rebuild_count": sum(bool(row.get("rebuild_passed")) for row in records),
             "recommended_quarantine_count": sum(row["admission"] == "quarantine" for row in records),
         },
     }

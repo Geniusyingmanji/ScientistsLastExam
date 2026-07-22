@@ -20,10 +20,11 @@ The repository contains **51 task packages in 47 metadata domains**:
 
 - **7 certified core tasks**: Lennard–Jones clusters, spin glass, Poisson solver,
   matrix-multiplication rank, Cap Set, circle packing, and multilayer thin films.
-- **13 candidate tasks** pending scientific certification, including intervention-based causal
+- **14 candidate tasks** pending scientific certification, including intervention-based causal
   and active dynamical-law laboratories whose prediction and mechanism metrics are reported
-  separately, plus a multi-spectrum NMR peak-mechanism/refusal task.
-- **31 quarantined tasks** with reproduced scientific-oracle, identifiability, provenance or
+  separately, a multi-spectrum NMR peak-mechanism/refusal task, and a multi-fidelity
+  heat-exchanger Pareto-design task.
+- **30 quarantined tasks** with reproduced scientific-oracle, identifiability, provenance or
   shortcut defects; these remain inventory packages but are not admissible benchmark tasks.
 
 The default CLI exposes only the certified core. `--all` explicitly shows the full
@@ -34,13 +35,17 @@ All candidate code runs in a networkless Bubblewrap sandbox with read-only mount
 and process limits, and a typed JSON RPC boundary. The trusted parent alone imports the
 oracle and validates metrics. The current audit reports:
 
-- 96/96 unit, security, protocol and scientific-invariant tests passed.
+- 98/98 unit, security, protocol and scientific-invariant tests passed.
 - The latest 51×2 secure-baseline audit reports 51/51 deterministic, 50/51 valid, 51/51
   fail-closed and zero infrastructure failures. The sole invalid baseline is the explicitly
   quarantined `ClimateScience/EnergyBalanceModel`.
-- Current manifest: 7 certified / 13 candidate / 31 quarantined. D-optimal design, quantum
+- Current manifest: 7 certified / 14 candidate / 30 quarantined. D-optimal design, quantum
   gate synthesis, DC optimal power flow, truss sizing, antenna synthesis and NMR peak fitting have been rebuilt with separate sealed
-  validation or robustness metrics and re-admitted as candidates. GPT-5.5 reaches nominal OPF score 1.0
+  validation or robustness metrics and re-admitted as candidates. HeatExchanger-v2 additionally
+  separates a public constant-property proxy from a sealed segmented temperature-dependent
+  oracle and scores cost-versus-duty Pareto archives, held-out fluids, false promotion and
+  fouling/manufacturing/blockage shifts. It remains a correlation-based optimization task, not
+  experimental validation. GPT-5.5 reaches nominal OPF score 1.0
   at budget one while sealed N-1 robustness is only 0.031 on development and approximately
   zero on held-out networks. On Truss-v2, a separate budget-three run improves development
   `0.000 -> 0.416 -> 0.548 -> 0.611`, while its final accepted step increases held-out nominal

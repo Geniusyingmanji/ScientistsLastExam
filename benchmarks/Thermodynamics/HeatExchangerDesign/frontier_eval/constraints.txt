@@ -1,3 +1,6 @@
-1) Only edit solution.py. Keep the design_exchanger() signature.
-2) numpy/scipy/stdlib only. CPU, seconds. No network.
-3) Do not read verification/ or frontier_eval/.
+1) Only edit solution.py. Keep design_exchanger(problem).
+2) Return 4-24 finite rows with columns [inner diameter, length, tube count, baffle spacing, passes].
+3) Tube count and passes are integers; tube count must be divisible by passes. Respect every public bound and hydraulic constraint.
+4) Use the supplied problem mapping; do not hard-code one fluid or inlet condition.
+5) numpy/scipy/stdlib only. Deterministic CPU. No network or process creation.
+6) Do not read verification/ or frontier_eval/.
