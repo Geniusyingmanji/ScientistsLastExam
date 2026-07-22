@@ -52,10 +52,10 @@ meaning.
   other six remain quarantined after reproducible adversarial review: RIR
   length failure, unstable low-thrust propagation, centerline-spoofable cavity scoring,
   pseudo-data alloy hardness, scalar-FFT pseudo-RCWA and a degenerate heat-exchanger objective.
-- **No original unscreened candidates remain after wave 4; thirteen candidates remain in total.** They include
+- **No original unscreened candidates remain after wave 4; fifteen candidates remain in total.** They include
   SCM, Lyapunov control, neutron criticality, seismic refraction, pendulum control, sparse
-  recovery, OED-v2, GateSynthesis-v2, OPF-v2, Truss-v2, Antenna-v2, NMR-v2 and the new
-  ActiveLawDiscovery laboratory. All are
+  recovery, OED-v2, GateSynthesis-v2, OPF-v2, Truss-v2, Antenna-v2, NMR-v2,
+  HeatExchanger-v2, ReactionMechanismFitting-v2 and the new ActiveLawDiscovery laboratory. All are
   currently on-ramps or repair/calibration candidates rather than externally reviewed
   open-frontier tasks.
 - **ActiveLawDiscovery preserves science-specific headroom.** GPT-5.5 budget one attains 0.796
@@ -64,14 +64,14 @@ meaning.
   independent budget-three run, all three proposals retain the same two false discoveries;
   score feedback does not fix model-inadequacy detection and later proposals reduce mechanism
   recovery. This is a reliability/refusal frontier rather than an ordinary prediction frontier.
-- **31 quarantined packages.** Five generic-objective clones must be replaced with real domain
+- **29 quarantined packages.** Five generic-objective clones must be replaced with real domain
   oracles; metadata completion alone cannot rehabilitate them. The sixth,
   `ClimateScience/EnergyBalanceModel`, uses an unstable explicit diffusion iteration, an
   unverified ERA5 attribution and a structurally underdetermined seven-parameter fit to one
   steady profile. It requires replacement with documented multi-regime data, not a numerical
   patch. Six wave-2 and seven inverse-track tasks remain blocked by concrete oracle failures;
   none may contribute model-performance evidence until rebuilt and re-admitted. The inverse
-  failures include rank-deficient hidden-truth retrieval, saturated reaction data, gravity and
+  failures include rank-deficient hidden-truth retrieval, gravity and
   ocean signal/noise inversions, a rank-two demographic surrogate, underidentified pseudo-DNS
   RANS fitting and an FWI interface with no observations.
   Wave 3 additionally isolates six scientifically promising topics whose current evaluators are
@@ -144,8 +144,9 @@ The target is approximately 50 **admissible** open scientific optimization tasks
 5. run frontier-model budget-one screening before expensive budget 30/100/300 studies.
 
 After complete original-inventory triage, adding ActiveLawDiscovery and rebuilding Gate-v2,
-OPF-v2, Truss-v2, Antenna-v2 and NMR-v2, the net expansion gap is approximately 30 admissible tasks:
-51 folders minus 31 quarantines leaves 20 internally admissible certified or candidate packages, while the target
+OPF-v2, Truss-v2, Antenna-v2, NMR-v2, HeatExchanger-v2 and ReactionMechanismFitting-v2, the net
+expansion gap is approximately 28 admissible tasks:
+51 folders minus 29 quarantines leaves 22 internally admissible certified or candidate packages, while the target
 is about 50. New
 work should emphasize procedural task families and independent regimes,
 not one-off fixed instances or scientific names around hand-written scalar objectives.

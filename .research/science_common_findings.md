@@ -1,14 +1,15 @@
 # Cross-task science calibration findings
 
 Date: 2026-07-22 (UTC). These findings use trusted GPT-5.5 `greedy_rewrite` calibrations on
-OED-v2, Pendulum-v2, GateSynthesis-v2, ActiveLawDiscovery, OPF-v2, Truss-v2, Antenna-v2 and
-NMR-v2. The 15 normal-feedback model conditions each contain one seed and proposal budget one
+OED-v2, Pendulum-v2, GateSynthesis-v2, ActiveLawDiscovery, OPF-v2, Truss-v2, Antenna-v2,
+NMR-v2, HeatExchanger-v2 and ReactionMechanismFitting-v2. The 19 normal-feedback model
+conditions each contain one seed and proposal budget one
 or three. They calibrate tasks and motivate experiments; they are not a model leaderboard, a causal
 feedback study or population evidence.
 
-The portable machine record is `experiments/science_calibration_summary_2026-07-22.json`. It
+The portable machine record is `experiments/science_calibration_summary_2026-07-22_v3.json`. It
 retains every top-level scalar metric, candidate lineage hash and raw trajectory SHA-256 for all
-15 normal conditions. Truss's strict selection-blind diagnostic remains in its task-specific
+19 normal conditions. Strict selection-blind diagnostics remain in task-specific
 analysis because it is not a normal-feedback calibration. The underlying reports bind the
 task-specific source revision. Pendulum's initial budget-one run on revision `57c0e1b` is
 excluded because the public task omitted the exact plant equations and was explicitly superseded
@@ -33,6 +34,10 @@ by the corrected-contract run on `2557adb`.
 | Antenna-v2, budget 3 | development 0.845170 → 0.993267 → 1.0 | development robustness 0.704823 → 0.635511 → 0.576348 | Every accepted nominal improvement lowers sealed robustness and mean worst-shift quality within this trajectory. |
 | NMR-v2, budget 1 | development mechanism/refusal 0.427998; reconstruction 0.874116 | held-out mechanism/refusal 0.176186; reconstruction 0.878353; false-discovery 0.5/0.5 | GPT-5.5 beats the classical mechanism baseline without saturating, but high reconstruction coexists with false discovery and weak shifted mechanism validity. |
 | NMR-v2, budget 3 | development proposals 0.375440 → 0.212692 → 0.161475; only step 1 accepted | held-out mechanism/refusal remains 0.0; rejected steps retain development reconstruction 0.819/0.783 while false-discovery is 1.0 on both splits | Aggregate score feedback does not repair model-inadequacy detection in this trajectory; residual quality alone remains misleading. |
+| HeatExchanger-v2, budget 1 | the only proposal is invalid; development remains 0.0 | no validated improvement | Valid code generation and scientific feasibility remain separate gates. |
+| HeatExchanger-v2, budget 3 | development exact 0.000 → 0.008 → 0.126; final proxy 0.173 | held-out exact 0.280; robustness 0.130; two of four development regimes remain zero | Aggregate improvement can be concentrated in one regime and need not transfer to physical shifts. |
+| ReactionMechanism-v2, budget 1 | valid proposal remains at normalized mechanism 0.0 | held-out normalized mechanism 0.0 | A complex fitter spends the assay budget on an under-informative design and abstains everywhere. |
+| ReactionMechanism-v2, budget 3 | all three proposals remain at 0.0 and are rejected | each performs one assay and abstains everywhere | More rewrite budget does not help when scalar zero feedback cannot localize whether experiment design, inference or refusal caused failure. |
 
 OPF's `robustness_score` combines security-constrained economic quality with overload penalties.
 It is not a pure safety probability. The proportional baseline is feasible for every tested
@@ -82,6 +87,13 @@ artifact and detect when the candidate model class is inadequate. Discovery task
 need explicit mechanism artifacts, null and misspecified worlds, confidence, abstention and
 false-discovery metrics.
 
+ReactionMechanism-v2 provides a second dynamical inverse example. Its truth-blind classical
+fit reaches 0.860 development interpolation but only 0.482 normalized mechanism/refusal and
+falsely claims a mechanism in half of unsupported worlds. In a strict open-loop diagnostic,
+one proposal reaches 0.711 interpolation and 0.747 extrapolation but only 0.259 normalized
+mechanism, again with a 0.5 false-discovery rate. This strengthens the cross-domain conclusion
+without turning two synthetic tasks into evidence about wet-lab discovery.
+
 ### 5. Feedback cannot optimize information that selection never receives
 
 In the OPF budget-three run, later proposals receive only nominal score and reproduce the same
@@ -94,6 +106,14 @@ a counterpoint: sealed robustness changes slightly even without being exposed, s
 correlated movement can occur by chance or through shared structure. These runs motivate, but do not prove, the
 hypothesis that objective-aligned structured feedback is required for reliable improvement on a
 sealed scientific property.
+
+ReactionMechanism-v2 exposes an additional feedback bottleneck: all three normal proposals
+score exactly zero and are rejected, so the parent and visible feedback remain unchanged. The
+agent cannot tell from the scalar whether it chose uninformative assays, estimated poor rate
+curves or set an overly conservative refusal threshold. A same-identifier open-loop batch finds
+a nonzero candidate by proposal diversity alone. Because the endpoint has no server-side seed
+and the runs are not token-matched, this is evidence of sparse credit assignment and high
+proposal variance—not evidence that removing feedback helps.
 
 ### 6. Contract completeness must precede headroom claims
 
@@ -126,6 +146,9 @@ The observations above define hypotheses rather than assumed conclusions:
 5. One-step saturation will predict limited long-horizon headroom on tasks whose solution is a
    standard algorithm, but not on tasks requiring model discrimination, multifidelity promotion
    or calibrated refusal.
+6. Factorized but label-blind feedback about experiment coverage, feasibility and residual
+   diagnostics will escape zero-score plateaus more reliably than an aggregate scalar alone,
+   without leaking held-out mechanisms or evaluator-only world types.
 
 Tests 1--3 require at least ten paired seeds on the focused science subset. All comparisons must
 hold proposal budget, actual oracle calls, tool access and feedback-message shape fixed. Hidden
@@ -203,7 +226,7 @@ Every new or rebuilt task must pass the following gate before it counts toward t
 - classical and domain baselines, followed by GPT-5.5 budget-one headroom screening; and
 - retention as an on-ramp, not a headline task, if a standard method reliably saturates it.
 
-The present inventory contains 20 internally admissible certified or candidate packages. The
-remaining gap is approximately 30 tasks. Expansion should use procedural families spanning
+The present inventory contains 22 internally admissible certified or candidate packages. The
+remaining gap is approximately 28 tasks. Expansion should use procedural families spanning
 design, inverse problems, control, multifidelity validation, mechanism discovery and exact
 mathematical construction rather than cloning one scalar optimization template across domains.
