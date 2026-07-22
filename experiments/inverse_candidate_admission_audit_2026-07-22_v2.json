@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_ADMISSION_AUDIT",
+  "created_at": "2026-07-22T02:46:19.681314+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "eb04e442e4f9cec22ae0897379dc5c5406c076b1",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/audit_inverse_candidates.py",
+      "--output",
+      "experiments/inverse_candidate_admission_audit_2026-07-22_v2.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "records": [
+    {
+      "task": "AtmosphericScience/RadiativeTransferFit",
+      "admission": "quarantine",
+      "defect": "ten radiances cannot identify a twenty-layer profile, yet selection directly rewards hidden fixed-profile RMSE rather than retrieval evidence",
+      "jacobian_shape": [
+        10,
+        20
+      ],
+      "jacobian_rank": 10,
+      "condition_number_nonzero_block": 822397682.3442069,
+      "observation_count": 10,
+      "unknown_count": 20,
+      "passed": true
+    },
+    {
+      "task": "ChemicalKinetics/ReactionMechanismFitting",
+      "admission": "candidate",
+      "resolved_defect": "v2 replaces effectively complete full-state trajectories with charged partial-species active assays, sparse topology and Arrhenius rate-curve recovery, null/model-inadequacy refusal and held-out topologies",
+      "always_abstain_score": 0.0,
+      "classical_mechanism_score": 0.4818354999999999,
+      "classical_prediction_score": 0.86042925,
+      "classical_false_discovery_rate": 0.5,
+      "full_rank_in_library_worlds": 7,
+      "in_library_world_count": 7,
+      "passed": true
+    },
+    {
+      "task": "Geophysics/GravityInversion",
+      "admission": "quarantine",
+      "defect": "the synthetic gravity signal is far below declared noise and both instances reuse one fixed hidden body geometry",
+      "kernel_shape": [
+        30,
+        200
+      ],
+      "kernel_rank": 30,
+      "signal_rms": 0.0016341703462682342,
+      "noise_std": 0.05,
+      "signal_to_noise_ratio": 0.032683406925364686,
+      "instances_share_exact_truth": true,
+      "passed": true
+    },
+    {
+      "task": "Oceanography/OceanCurrentInversion",
+      "admission": "quarantine",
+      "defect": "streamfunction units make drifter displacement sub-metre while 1 km noise dominates, so even the true current scores approximately zero",
+      "clean_signal_displacement_rms_m": 0.5733084040371011,
+      "noise_rms_m": 1007.3577857010296,
+      "noise_to_signal_ratio": 1757.09579452779,
+      "true_field_score": 1.969569187340888e-05,
+      "passed": true
+    },
+    {
+      "task": "PopulationGenetics/DemographicSFS",
+      "admission": "quarantine",
+      "defect": "the five-parameter surrogate has only two locally active columns and radically different current-size/time parameters produce identical SFS",
+      "jacobian_rank": 2,
+      "parameter_count": 5,
+      "column_norms": [
+        39.04644535823588,
+        5002.9718184919375,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "alternative_sfs_exactly_identical": true,
+      "passed": true
+    },
+    {
+      "task": "Turbulence/RANSCalibration",
+      "admission": "quarantine",
+      "defect": "the claimed DNS is an analytic log-law/TKE fit and the algebraic surrogate identifies at most three combinations of five constants",
+      "jacobian_rank": 3,
+      "parameter_count": 5,
+      "singular_values": [
+        174.76054592673452,
+        5.342307369456442,
+        0.010826896914752722,
+        4.7248655869865514e-11,
+        3.4065689373295584e-11
+      ],
+      "passed": true
+    },
+    {
+      "task": "WavePropagation/SeismicWaveInversion",
+      "admission": "quarantine",
+      "defect": "the design function receives only grid dimensions, not observed waveforms or an experiment callback, so it can only guess one fixed hidden model",
+      "entrypoint_receives_observations": false,
+      "fixed_truth_score": 1.0,
+      "passed": true
+    }
+  ],
+  "summary": {
+    "task_count": 7,
+    "passed_check_count": 7,
+    "recommended_quarantine_count": 6,
+    "recommended_candidate_count": 1
+  },
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}
