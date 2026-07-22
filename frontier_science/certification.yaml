@@ -111,8 +111,12 @@ tasks:
       - doi:10.1109/TIT.2006.871582
 
   ClimateScience/EnergyBalanceModel:
-    status: quarantined
-    reason: explicit diffusion iteration is numerically unstable, embedded ERA5 attribution is not provenance-backed, and one steady profile cannot identify the seven claimed parameters; replace with a documented multi-regime inverse task
+    status: candidate
+    reason: v2 removes the unstable untraceable fixed climatology and replaces it with an active five-parameter two-layer climate-response identification task; an eight-unit budget forces a choice between one 160-year or multiple shorter forcing experiments, and candidates must distinguish supported responses from null, benchmark-strength state-dependent-feedback and three-layer-ocean worlds; mechanism, forcing transfer, held-out recovery, confidence, coverage, false discovery and refusal remain separate, pending independent climate-domain review, server-held worlds, clean-tree truth-blind calibration and GPT-5.5 headroom testing
+    citation_ids:
+      - doi:10.1029/RG019i001p00091
+      - doi:10.1175/JCLI-D-12-00195.1
+      - doi:10.1029/2003GL018747
 
   Acoustics/RoomImpulseResponse:
     status: quarantined

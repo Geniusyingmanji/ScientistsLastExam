@@ -1,3 +1,4 @@
-1) Only edit solution.py. Keep the calibrate_ebm() signature.
-2) numpy/scipy only. CPU, seconds. No network.
-3) Do not read verification/ or frontier_eval/.
+1) Only edit solution.py and keep identify_climate_response(parameter_names, parameter_bounds, experiment, budget_units).
+2) Return five finite parameters, confidence in [0,1], and a boolean abstain decision.
+3) Use only bounded experiment(forcing_w_m2) calls within the supplied budget; caught invalid calls still invalidate the world.
+4) Python/NumPy/SciPy/stdlib only; deterministic CPU code, no network/process creation, and no reading verification/ or frontier_eval/.

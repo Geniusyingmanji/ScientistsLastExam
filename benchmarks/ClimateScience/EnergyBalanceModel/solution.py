@@ -1,5 +1,14 @@
-"""Baseline: textbook North & Coakley (1979) parameters."""
+"""Valid weak baseline: make no experiments and abstain on every world."""
+
 import numpy as np
-def calibrate_ebm(T_obs):
-    # [A, B, D, alpha_ice, alpha_ocean, T_ice, S_mult]
-    return np.array([203.3, 2.09, 0.44, 0.62, 0.30, -10.0, 1.0])
+
+
+def identify_climate_response(
+    parameter_names, parameter_bounds, experiment, budget_units
+):
+    del parameter_bounds, experiment, budget_units
+    return {
+        "parameters": np.zeros(len(parameter_names), dtype=float),
+        "confidence": 0.0,
+        "abstain": True,
+    }
