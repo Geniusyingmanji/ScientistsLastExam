@@ -1,4 +1,4 @@
-"""Persistent worker loaded inside the candidate sandbox."""
+"""Worker for one top-level task-instance session inside the candidate sandbox."""
 
 from __future__ import annotations
 

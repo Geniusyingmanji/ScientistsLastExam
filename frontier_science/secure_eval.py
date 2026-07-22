@@ -126,17 +126,34 @@ class CandidateProxy:
                  memory_mb: int = 4096):
         self.deadline = time.monotonic() + timeout_s
         self.failure: Exception | None = None
+        self.candidate = Path(candidate)
+        self.entrypoint = str(entrypoint)
+        self.memory_mb = int(memory_mb)
+        self.proc = None
+        self._stdout_buffer = b""
+        self._start_worker()
+
+    def _start_worker(self) -> None:
+        """Start a fresh sandbox session for one top-level task instance.
+
+        Remote callables returned by that instance continue to use this worker.  An explicit
+        ``reset_session`` replaces it at the next scientific instance boundary, preventing
+        module globals, imported-module attributes and the private tmpfs from leaking order.
+        """
+        remaining = self.deadline - time.monotonic()
+        if remaining <= 0:
+            raise TimeoutError("candidate timeout")
         self._stdout_buffer = b""
         seccomp_fd = _seccomp_no_processes()
         try:
             self.proc = subprocess.Popen(
-                _sandbox_command(candidate, entrypoint, seccomp_fd),
+                _sandbox_command(self.candidate, self.entrypoint, seccomp_fd),
                 stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 text=True, bufsize=1, pass_fds=(seccomp_fd,), env={
                     "OPENBLAS_NUM_THREADS": "1", "OMP_NUM_THREADS": "1",
                     "MKL_NUM_THREADS": "1", "NUMEXPR_NUM_THREADS": "1",
-                }, preexec_fn=_limits(max(1, int(math.ceil(timeout_s))),
-                                      memory_mb * 1024 * 1024),
+                }, preexec_fn=_limits(max(1, int(math.ceil(remaining))),
+                                      self.memory_mb * 1024 * 1024),
             )
         finally:
             os.close(seccomp_fd)
@@ -190,6 +207,18 @@ class CandidateProxy:
 
     def __call__(self, *args: Any, **kwargs: Any) -> Any:
         return self._invoke("entrypoint", *args, **kwargs)
+
+    def reset_session(self) -> None:
+        """Give the next oracle instance a new process, imports and private tmpfs.
+
+        Evaluators call this only at scientific instance/world boundaries.  Calls within an
+        instance (for example controller time steps or returned remote callables) deliberately
+        remain in one session.
+        """
+        if self.failure is not None:
+            raise self.failure
+        self.close()
+        self._start_worker()
 
     def _decode_result(self, value: Any) -> Any:
         if isinstance(value, list):
@@ -277,7 +306,7 @@ class CandidateProxy:
             raise self.failure
 
     def close(self, kill: bool = False) -> None:
-        if not hasattr(self, "proc"):
+        if self.proc is None:
             return
         if self.proc.poll() is None:
             try:
@@ -292,6 +321,7 @@ class CandidateProxy:
         for stream in (self.proc.stdin, self.proc.stdout, self.proc.stderr):
             if stream is not None and not stream.closed:
                 stream.close()
+        self.proc = None
 
     def __enter__(self) -> "CandidateProxy":
         return self

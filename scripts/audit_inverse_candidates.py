@@ -23,6 +23,14 @@ from calibrate_gravity_v2 import (
     _identifiability_record as gravity_identifiability_record,
     classical_discover_bodies,
 )
+from calibrate_ocean_current_v2 import (
+    _always_abstain as ocean_always_abstain,
+    _clean_plan_records as ocean_clean_plan_records,
+    _fit_observations as ocean_fit_observations,
+    _nonlinear_library_fit as ocean_nonlinear_library_fit,
+    _trajectory_identifiability as ocean_identifiability_record,
+    classical_discover_currents,
+)
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
@@ -159,26 +167,112 @@ def _gravity():
 
 def _ocean():
     oracle = _oracle("Oceanography/OceanCurrentInversion")
-    clean = oracle._advect_drifters(oracle._U_TRUE, oracle._V_TRUE, oracle._INIT_POS)
-    zero = oracle._advect_drifters(
-        np.zeros((oracle.NX, oracle.NY)),
-        np.zeros((oracle.NX, oracle.NY)),
-        oracle._INIT_POS,
-    )
-    signal = float(np.sqrt(np.mean((clean - zero) ** 2)))
-    noise = float(np.sqrt(np.mean((oracle._OBS_TRAJ - clean) ** 2)))
-    truth_metrics = oracle.evaluate(
-        lambda *_: {"u": oracle._U_TRUE, "v": oracle._V_TRUE}
+    baseline = oracle.evaluate(ocean_always_abstain)
+    classical = oracle.evaluate(classical_discover_currents)
+    rank_checks = []
+    misspecified_checks = []
+    noise_label_blind_checks = []
+    for split, specs in (
+        ("development", oracle.DEVELOPMENT_SPECS),
+        ("heldout", oracle.HELDOUT_SPECS),
+    ):
+        supported_noise = {
+            float(spec[2]) for spec in specs if spec[3] == "in_library"
+        }
+        unsupported_noise = {
+            float(spec[2]) for spec in specs if spec[3] != "in_library"
+        }
+        noise_label_blind_checks.append({
+            "split": split,
+            "supported_noise_std_m": sorted(supported_noise),
+            "unsupported_noise_std_m": sorted(unsupported_noise),
+            "passed": unsupported_noise.issubset(supported_noise),
+        })
+        for index, spec in enumerate(specs):
+            world = oracle._world(spec)
+            if world["kind"] == "in_library":
+                rank_checks.append(ocean_identifiability_record(
+                    oracle, world, split, index
+                ))
+            elif world["kind"] == "misspecified":
+                linear_fit = ocean_fit_observations(
+                    oracle.MODE_SPECIFICATIONS,
+                    ocean_clean_plan_records(oracle, world),
+                )
+                nonlinear_best, _start_fits = ocean_nonlinear_library_fit(
+                    oracle, world
+                )
+                nonlinear_values = [
+                    item["reduced_chi2"] for item in _start_fits
+                ]
+                nonlinear_spread = max(nonlinear_values) - min(
+                    nonlinear_values
+                )
+                misspecified_checks.append({
+                    "split": split,
+                    "approximate_velocity_residual_per_dof": (
+                        linear_fit["approximate_velocity_residual_per_dof"]
+                    ),
+                    "nonlinear_trajectory_reduced_chi2": (
+                        nonlinear_best["reduced_chi2"]
+                    ),
+                    "passed": bool(
+                        linear_fit[
+                            "approximate_velocity_residual_per_dof"
+                        ] > 3.0
+                        and nonlinear_best["reduced_chi2"] > 3.0
+                        and nonlinear_spread < 1e-5
+                        and all(item["success"] for item in _start_fits)
+                        and all(
+                            item["minimum_boundary_margin_m"] > 0.0
+                            for item in _start_fits
+                        )
+                    ),
+                })
+    passed = bool(
+        oracle.N_MODES == 30
+        and baseline["combined_score"] == 0.0
+        and baseline["robustness_score"] == 0.0
+        and 0.35 <= classical["combined_score"] <= 0.85
+        and 0.20 <= classical["robustness_score"] <= 0.75
+        and classical["combined_score"]
+        > classical["robustness_score"] + 0.15
+        and classical["development_false_discovery_rate"] == 0.0
+        and classical["heldout_false_discovery_rate"] == 0.0
+        and all(row["passed"] for row in rank_checks)
+        and all(row["passed"] for row in misspecified_checks)
+        and all(row["passed"] for row in noise_label_blind_checks)
     )
     return {
         "task": "Oceanography/OceanCurrentInversion",
-        "admission": "quarantine",
-        "defect": "streamfunction units make drifter displacement sub-metre while 1 km noise dominates, so even the true current scores approximately zero",
-        "clean_signal_displacement_rms_m": signal,
-        "noise_rms_m": noise,
-        "noise_to_signal_ratio": noise / max(signal, 1e-30),
-        "true_field_score": float(truth_metrics["combined_score"]),
-        "passed": noise / max(signal, 1e-30) > 1000 and truth_metrics["combined_score"] < 1e-3,
+        "admission": "candidate",
+        "resolved_defect": "v2 replaces the sub-metre fixed-field inversion with charged release-position/phase/time design, a thirty-mode divergence-free current library, null and resolvable out-of-library refusal, trajectory/field extrapolation and shifted-noise held-out worlds",
+        "public_mode_count": oracle.N_MODES,
+        "always_abstain_score": float(baseline["combined_score"]),
+        "classical_mechanism_score": float(classical["combined_score"]),
+        "classical_heldout_mechanism_score": float(
+            classical["robustness_score"]
+        ),
+        "classical_development_false_discovery_rate": float(
+            classical["development_false_discovery_rate"]
+        ),
+        "classical_heldout_false_discovery_rate": float(
+            classical["heldout_false_discovery_rate"]
+        ),
+        "full_rank_in_library_worlds": sum(
+            row["passed"] for row in rank_checks
+        ),
+        "in_library_world_count": len(rank_checks),
+        "noise_label_blind_checks": noise_label_blind_checks,
+        "minimum_misspecified_approximate_velocity_residual_per_dof": min(
+            row["approximate_velocity_residual_per_dof"]
+            for row in misspecified_checks
+        ),
+        "minimum_misspecified_nonlinear_trajectory_reduced_chi2": min(
+            row["nonlinear_trajectory_reduced_chi2"]
+            for row in misspecified_checks
+        ),
+        "passed": passed,
     }
 
 

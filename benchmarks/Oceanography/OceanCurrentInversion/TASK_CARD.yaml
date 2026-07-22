@@ -1,0 +1,35 @@
+schema_version: 1
+scientific_question: Can an active Lagrangian survey recover a sparse, time-dependent, divergence-free current mechanism across unseen mode combinations and positioning noise, while refusing null or out-of-library flows?
+artifact: A length-30 sparse streamfunction coefficient vector with support, confidence and optional model-inadequacy abstention.
+oracle:
+  model: deterministic RK4 advection in procedural sparse streamfunction currents, plus null and spatial-temporal out-of-library worlds
+  feasibility: finite bounded coefficients and exact support labels after charged drifter-position/release-phase/sample-time experiments under a strict budget
+  deterministic: true
+normalization:
+  baseline: one valid drifter deployment followed by abstention on every world
+  reference: exact sparse mode coefficients on in-library currents and correct abstention on null or misspecified currents
+  score: development support/velocity-mode/vorticity mechanism quality normalized above always-abstain; sealed field and drifter prediction, extrapolation, confidence, refusal and held-out metrics remain separate
+citations:
+  - id: doi:10.1016/j.pocean.2008.02.002
+    title: Statistics from Lagrangian observations
+  - id: doi:10.1016/j.physd.2005.10.007
+    title: Definition and properties of Lagrangian coherent structures from finite-time Lyapunov exponents in two-dimensional aperiodic flows
+invariants:
+  - every public mode is divergence free and has zero normal boundary velocity by construction
+  - an independent implementation of the Task.md velocity equations agrees with the evaluator
+  - analytic trajectory sensitivities agree with finite differences and identify all public coefficients under the fixed two-phase survey
+  - exact coefficients attain perfect mechanism and sealed field/drifter prediction on supported worlds
+  - correct null and out-of-library abstention attains perfect refusal without fabricating modes
+  - null and out-of-library categories cannot be identified from the stated position-noise level alone
+  - each world receives a fresh candidate process and private tmpfs, preventing hidden-world order leakage through mutable state
+  - a fixed public-budget two-phase survey has full-rank trajectory sensitivity for all in-library worlds
+  - out-of-library worlds remain observationally distinguishable after bounded nonlinear fitting of the full public library under stated noise
+  - 1800-second RK4 integration agrees with an independently written 300-second RK4 refinement and boundary clipping does not dominate calibration trajectories
+  - sealed interpolation and five-day extrapolation rollouts do not touch the clipped basin boundary
+  - observation calls are deterministic, charged and fail closed on overspend
+  - non-finite, inconsistent, out-of-range or empty non-abstaining artifacts fail closed
+  - held-out mechanism, prediction, confidence, refusal and per-world metrics remain evaluator-only
+known_shortcuts: The current worlds are deterministic simulations in a finite public Fourier library. A release requires server-held currents, independent physical-oceanography review and replication with realistic coastlines, forcing, unresolved scales and drifter errors; no simulator score alone establishes an oceanographic discovery.
+review:
+  domain: pending_external
+  evaluator_security: automated_fail_closed_reference_refusal_budget_identifiability_and_metric_sealing_tests

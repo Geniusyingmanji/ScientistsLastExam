@@ -11,7 +11,9 @@ import numpy as np
 
 from frontier_science.evaluate import INVALID_SCORE, evaluate_candidate
 from frontier_science.rpc_codec import CodecError, decode, encode
-from frontier_science.secure_eval import _seccomp_no_processes, validate_metrics
+from frontier_science.secure_eval import (
+    CandidateProxy, _seccomp_no_processes, validate_metrics,
+)
 from frontier_science.spec import load_task_spec
 
 
@@ -152,6 +154,39 @@ class SecureEvaluationTests(unittest.TestCase):
             link.symlink_to(target)
             result = evaluate_candidate(self.spec, link, timeout_s=5)
             self.assertNotEqual(result["combined_score"], INVALID_SCORE, result)
+
+    def test_top_level_instances_get_fresh_process_and_tmpfs_state(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            candidate = Path(tmp) / "candidate.py"
+            candidate.write_text(textwrap.dedent("""
+                import os
+                import numpy as np
+
+                module_counter = 0
+
+                def solve(value):
+                    global module_counter
+                    module_counter += 1
+                    tmp_seen = os.path.exists("/tmp/candidate-instance-state")
+                    with open("/tmp/candidate-instance-state", "w") as handle:
+                        handle.write(str(module_counter))
+                    imported_counter = getattr(np, "_frontier_instance_counter", 0)
+                    np._frontier_instance_counter = imported_counter + 1
+
+                    def controller(increment):
+                        return [module_counter, tmp_seen, imported_counter,
+                                value + increment]
+
+                    return controller
+            """), encoding="utf-8")
+            with CandidateProxy(candidate, "solve", timeout_s=10) as proxy:
+                first_controller = proxy(10)
+                self.assertEqual(first_controller(2), [1, False, 0, 12])
+                same_session_controller = proxy(15)
+                self.assertEqual(same_session_controller(2), [2, True, 1, 17])
+                proxy.reset_session()
+                second_controller = proxy(20)
+                self.assertEqual(second_controller(3), [1, False, 0, 23])
 
 
 class CodecTests(unittest.TestCase):

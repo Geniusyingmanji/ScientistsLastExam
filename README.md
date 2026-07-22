@@ -20,11 +20,11 @@ The repository contains **51 task packages in 47 metadata domains**:
 
 - **7 certified core tasks**: Lennard–Jones clusters, spin glass, Poisson solver,
   matrix-multiplication rank, Cap Set, circle packing, and multilayer thin films.
-- **16 candidate tasks** pending scientific certification, including intervention-based causal
+- **17 candidate tasks** pending scientific certification, including intervention-based causal
   and active dynamical-law laboratories whose prediction and mechanism metrics are reported
   separately, a multi-spectrum NMR peak-mechanism/refusal task, and a multi-fidelity
   heat-exchanger Pareto-design task.
-- **28 quarantined tasks** with reproduced scientific-oracle, identifiability, provenance or
+- **27 quarantined tasks** with reproduced scientific-oracle, identifiability, provenance or
   shortcut defects; these remain inventory packages but are not admissible benchmark tasks.
 
 The default CLI exposes only the certified core. `--all` explicitly shows the full
@@ -33,13 +33,15 @@ inventory. Certification status is not a difficulty claim: the inventory metadat
 
 All candidate code runs in a networkless Bubblewrap sandbox with read-only mounts, resource
 and process limits, and a typed JSON RPC boundary. The trusted parent alone imports the
-oracle and validates metrics. The current audit reports:
+oracle and validates metrics. Multi-world evaluators can explicitly reset the candidate
+session at scientific-world boundaries; Ocean-v2 does so to prevent module, imported-package
+or private-tmpfs state from revealing hidden world order. The current audit reports:
 
-- 112/112 unit, security, protocol and scientific-invariant tests passed.
+- 119/119 unit, security, protocol and scientific-invariant tests passed.
 - The latest 51×2 secure-baseline audit reports 51/51 deterministic, 50/51 valid, 51/51
   fail-closed and zero infrastructure failures. The sole invalid baseline is the explicitly
   quarantined `ClimateScience/EnergyBalanceModel`.
-- Current manifest: 7 certified / 16 candidate / 28 quarantined. D-optimal design, quantum
+- Current manifest: 7 certified / 17 candidate / 27 quarantined. D-optimal design, quantum
   gate synthesis, DC optimal power flow, truss sizing, antenna synthesis and NMR peak fitting have been rebuilt with separate sealed
   validation or robustness metrics and re-admitted as candidates. HeatExchanger-v2 additionally
   separates a public constant-property proxy from a sealed segmented temperature-dependent
@@ -67,6 +69,15 @@ oracle and validates metrics. The current audit reports:
   an independent budget-three run instead reaches 0.994 development and 0.767 held-out
   mechanism, with one topology at 0.975 field prediction but only 0.346 body mechanism. It is
   therefore a valid algorithm-synthesis on-ramp, not a long-horizon headline task.
+  OceanCurrentInversion-v2 replaces a sub-metre-signal fixed raster with charged active
+  drifter deployment over thirty public divergence-free, time-dependent streamfunction modes,
+  plus null and out-of-library refusal. Its truth-blind two-release sparse fit scores
+  0.707/0.406 on development/held-out mechanism quality with zero false discovery; all seven
+  in-library trajectory Jacobians are full rank, and the weakest best-of-four-start bounded
+  nonlinear public-library fit to an out-of-library world has reduced chi-square 10.53 versus
+  the refusal threshold 3.0; all four starts converge to the same score within `4e-10`.
+  Field/drifter prediction and mechanism remain separate. It is still a controlled simulator task pending GPT-5.5 calibration,
+  server-held currents and physical-oceanography review.
   GPT-5.5 reaches nominal OPF score 1.0
   at budget one while sealed N-1 robustness is only 0.031 on development and approximately
   zero on held-out networks. On Truss-v2, a separate budget-three run improves development

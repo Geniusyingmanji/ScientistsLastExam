@@ -1,4 +1,19 @@
-"""Baseline: zero current field."""
+"""Weak valid baseline: make one drifter observation and no mechanism claim."""
+
 import numpy as np
-def invert_currents(obs_traj, init_pos, nx, ny, domain):
-    return {"u": np.zeros((nx, ny)), "v": np.zeros((nx, ny))}
+
+
+def discover_currents(domain_m, mode_specifications, observe, budget_units):
+    del domain_m, budget_units
+    day_s = 86400.0
+    observe(
+        np.asarray(((30000.0, 30000.0),)),
+        0.0,
+        np.linspace(0.0, day_s, 7),
+    )
+    return {
+        "coefficients_m_s": np.zeros(len(mode_specifications)),
+        "support": np.zeros(len(mode_specifications), dtype=int),
+        "confidence": 0.0,
+        "abstain": True,
+    }

@@ -1,1 +1,1 @@
-invert_currents
+discover_currents

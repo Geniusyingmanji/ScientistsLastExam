@@ -1,7 +1,12 @@
 domain: Oceanography
 task: OceanCurrentInversion
 difficulty: hard
+tier: T2
 oracle_type: physical_sim
 score_mode: clipped
 gpu_required: false
-eval_time_seconds: 30
+eval_time_seconds: 45
+science_metric: active_divergence_free_current_mechanism_recovery_with_refusal_and_extrapolation
+reference_baseline: one valid drifter deployment followed by abstention on every world
+reference_sota: exact sparse streamfunction coefficients plus correct null and model-inadequacy refusal
+citation: "LaCasce, Progress in Oceanography 2008, DOI 10.1016/j.pocean.2008.02.002"

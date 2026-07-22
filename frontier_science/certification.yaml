@@ -161,8 +161,11 @@ tasks:
       - doi:10.1029/JZ064i001p00049
       - doi:10.1190/1.1444302
   Oceanography/OceanCurrentInversion:
-    status: quarantined
-    reason: true-current displacement is sub-metre while injected trajectory noise is about 1 km, so even the true field scores approximately zero
+    status: candidate
+    reason: v2 replaces the sub-metre fixed-field inversion with charged release-position/phase/time design, thirty public divergence-free streamfunction modes, procedural null and observationally resolvable out-of-library currents, separate mode/vorticity/field/drifter metrics and held-out noise shifts; a truth-blind two-phase sparse fit scores 0.707/0.406 development/held-out mechanism with zero false discovery, all seven in-library trajectory Jacobians have full rank, unsupported-world noise levels overlap supported worlds, and the weakest best-of-four-start bounded nonlinear public-library trajectory fit has reduced chi-square 10.53 versus a 3.0 refusal threshold with converged-start score spread below 4e-10; retain pending GPT-5.5 feedback calibration, server-held currents and independent physical-oceanography review
+    citation_ids:
+      - doi:10.1016/j.pocean.2008.02.002
+      - doi:10.1016/j.physd.2005.10.007
   PopulationGenetics/DemographicSFS:
     status: quarantined
     reason: five-parameter surrogate has rank-two local sensitivity and radically different demographic parameters produce identical SFS
