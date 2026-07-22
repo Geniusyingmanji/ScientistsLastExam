@@ -543,6 +543,83 @@ def select_designs(candidate_points, feature_matrix, n_measurements):
                 not row["valid"] for row in metrics["per_instance"]
             ))
 
+    def test_nmr_v2_exact_reference_refusal_and_metric_sealing(self):
+        oracle = load_oracle("Spectroscopy/NMRSpectrumFitting")
+        self.assertEqual(len(oracle.DEVELOPMENT_INSTANCES), 6)
+        self.assertEqual(len(oracle.HELDOUT_INSTANCES), 4)
+        self.assertEqual(
+            sum(row["kind"] == "in_library" for row in oracle.INSTANCES), 6
+        )
+
+        def exact(x, spectrum):
+            matches = [
+                instance for instance in oracle.INSTANCES
+                if np.array_equal(x, instance["x"])
+                and np.array_equal(spectrum, instance["spectrum"])
+            ]
+            self.assertEqual(len(matches), 1)
+            return oracle._reference_result(matches[0])
+
+        reference = oracle.evaluate(exact)
+        self.assertEqual(reference["valid"], 1.0)
+        self.assertAlmostEqual(reference["combined_score"], 1.0)
+        self.assertAlmostEqual(reference["robustness_score"], 1.0)
+        self.assertAlmostEqual(reference["development_reconstruction_score"], 1.0)
+        self.assertAlmostEqual(reference["heldout_reconstruction_score"], 1.0)
+        self.assertEqual(reference["development_false_discovery_rate"], 0.0)
+        self.assertEqual(reference["heldout_false_discovery_rate"], 0.0)
+
+        def always_abstain(_x, _spectrum):
+            return {
+                "centers": [], "lorentzian_hwhm": [], "gaussian_sigma": [],
+                "amplitudes": [], "lineshapes": [], "confidence": 0.0,
+                "abstain": True,
+            }
+
+        baseline = oracle.evaluate(always_abstain)
+        self.assertEqual(baseline["valid"], 1.0)
+        self.assertAlmostEqual(baseline["combined_score"], 0.0)
+        self.assertAlmostEqual(baseline["robustness_score"], 0.0)
+        self.assertEqual(baseline["development_false_discovery_rate"], 0.0)
+        shown = search_visible_metrics(reference)
+        self.assertNotIn("mechanism_score", shown)
+        self.assertNotIn("robustness_score", shown)
+        self.assertNotIn("development_reconstruction_score", shown)
+        self.assertNotIn("per_instance", shown)
+
+    def test_nmr_v2_nonfinite_shape_bounds_and_labels_fail_closed(self):
+        oracle = load_oracle("Spectroscopy/NMRSpectrumFitting")
+        common = {
+            "centers": [5.0], "lorentzian_hwhm": [0.05],
+            "gaussian_sigma": [0.0], "amplitudes": [1.0],
+            "lineshapes": ["lorentzian"], "confidence": 1.0,
+            "abstain": False,
+        }
+        candidates = []
+        for updates in (
+            {"centers": [np.nan]},
+            {"amplitudes": []},
+            {"amplitudes": [-1.0]},
+            {"lorentzian_hwhm": [1.0]},
+            {"lorentzian_hwhm": [0.0], "gaussian_sigma": [0.0]},
+            {"lorentzian_hwhm": [0.05], "gaussian_sigma": [0.001]},
+            {"lineshapes": ["voigt"]},
+            {"confidence": np.nan},
+            {"abstain": True},
+        ):
+            result = dict(common)
+            result.update(updates)
+            candidates.append(result)
+        for candidate in candidates:
+            metrics = oracle.evaluate(
+                lambda _x, _spectrum, result=candidate: result
+            )
+            self.assertEqual(metrics["valid"], 0.0)
+            self.assertEqual(metrics["combined_score"], 0.0)
+            self.assertTrue(all(
+                not row["valid"] for row in metrics["per_instance"]
+            ))
+
     def test_lyapunov_oracle_measures_closed_loop_feedback(self):
         oracle = load_oracle("DynamicalSystems/LyapunovControl")
         # Cancellation plus damping makes the sampled closed loop locally stable. Its exact

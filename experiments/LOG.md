@@ -749,8 +749,8 @@ Historical batch reports retained run summaries while their full per-step scienc
 under git-ignored `runs/`. The batch runner now writes a post-search compact trajectory snapshot
 containing scalar visible and sealed metrics, candidate lineage hashes and a SHA-256 binding to
 the full raw trajectory. This snapshot is written only after a backend returns and is never
-placed in agent or search state. A derived evidence builder backfills the nine trusted OED,
-Pendulum, GateSynthesis, ActiveLawDiscovery and OPF calibration conditions; their cross-task
+placed in agent or search state. A derived evidence builder backfills 13 trusted OED,
+Pendulum, GateSynthesis, ActiveLawDiscovery, OPF, Truss and Antenna normal calibration conditions; their cross-task
 claim audit is recorded in `.research/science_common_findings.md`.
 
 ## 2026-07-21 — strict iterative-feedback implementation pilot
@@ -863,3 +863,28 @@ robustness-aware treatment was run.
 The task calibration, wave-3 admission, 51-package certification, 51x2 secure baseline and both
 GPT-5.5 reports bind clean task revision `8c1373a`. A dedicated analyzer validates report and
 raw-trajectory hashes, accepted-parent lineage and every accepted nominal/robustness contrast.
+
+## 2026-07-22 — NMR spectrum fitting v2 rebuild
+
+The fail-open fixed eight-peak reconstruction task was replaced with ten procedural spectra:
+six development and four held-out cases spanning resolved and overlapping Lorentzian,
+Gaussian/Voigt, low-SNR, variable-axis, smooth-baseline and phase-distorted regimes. Candidates
+now return a bounded peak count, center, Lorentzian HWHM, Gaussian sigma, amplitude, line-shape
+label, confidence and optional abstention. Non-finite, inconsistent, out-of-range, nonpositive
+and contradictory peak artifacts fail closed.
+
+Peak count and parameters are scored by order-invariant optimal assignment. Clean-signal
+reconstruction, confidence calibration, false discoveries, correct refusals and held-out
+mechanism quality remain separate; only normalized development mechanism/refusal quality drives
+selection. The valid always-abstain baseline scores zero, while exact simulator parameters plus
+correct null/phase-distortion refusals score one on both splits. Independent Voigt profile checks
+match the Olivero–Longbothum FWHM approximation within `1e-4` relative error.
+
+A truth-blind asymmetric-baseline/peak-finding/Lorentzian least-squares policy scores
+**0.271110** development and **0.146229** held-out normalized mechanism/refusal quality, despite
+clean-signal reconstruction **0.887314/0.851059**. It falsely fits the development
+phase-distorted spectrum and one of two held-out unsupported spectra. This establishes useful
+headroom and directly demonstrates why residual reconstruction cannot serve as a discovery
+metric. BATMAN, ASICS and Voigt-line-width citation metadata and DOI resolution were checked
+before the task card was written. NMR-v2 is re-admitted as a candidate pending clean-revision
+calibration/audits, GPT-5.5 headroom screening, server-held spectra and independent review.

@@ -1,3 +1,4 @@
-1) Only edit solution.py. Keep the fit_spectrum() signature.
+1) Only edit solution.py. Keep the fit_spectrum(x, spectrum) signature and return the documented peak/refusal dictionary.
 2) numpy/scipy only. CPU, seconds. No network.
-3) Do not read verification/ or frontier_eval/.
+3) Deterministic code; do not assume a fixed axis, sample count, peak count or hidden-instance order.
+4) Do not read verification/ or frontier_eval/.

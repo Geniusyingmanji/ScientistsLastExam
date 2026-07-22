@@ -1,4 +1,14 @@
-"""Baseline: single broad peak at center."""
-import numpy as np
+"""Weak valid baseline: make no peak claim without supporting analysis."""
+
+
 def fit_spectrum(x, spectrum):
-    return {"centers": [5.0], "widths": [2.0], "amplitudes": [1.0]}
+    del x, spectrum
+    return {
+        "centers": [],
+        "lorentzian_hwhm": [],
+        "gaussian_sigma": [],
+        "amplitudes": [],
+        "lineshapes": [],
+        "confidence": 0.0,
+        "abstain": True,
+    }

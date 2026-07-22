@@ -1,7 +1,12 @@
 domain: Spectroscopy
 task: NMRSpectrumFitting
 difficulty: hard
+tier: T2
 oracle_type: physical_sim
 score_mode: clipped
 gpu_required: false
 eval_time_seconds: 30
+science_metric: peak_mechanism_recovery_with_shifted_reconstruction_and_model_inadequacy_refusal
+reference_baseline: abstain on every spectrum with zero confidence
+reference_sota: exact simulator peak mechanisms plus correct null and phase-distortion abstention
+citation: "Hao et al., Bioinformatics 2012, DOI 10.1093/bioinformatics/bts308"

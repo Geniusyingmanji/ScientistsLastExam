@@ -198,8 +198,12 @@ tasks:
     reason: no conflicting phase or shared green constraint makes all-maximum greens plus travel-time offsets a trivial full-score corner; non-finite timing receives full score
 
   Spectroscopy/NMRSpectrumFitting:
-    status: quarantined
-    reason: non-finite peak parameters receive full score, and one fixed spectrum measures reconstruction without peak matching or held-out lineshape validation
+    status: candidate
+    reason: v2 has ten procedural multi-regime spectra, finite bounded Voigt peak artifacts, order-invariant peak-mechanism matching, separate reconstruction/confidence/false-discovery/refusal metrics and held-out overlap/noise/baseline/axis/model-inadequacy shifts; a truth-blind classical fit scores 0.271 development and 0.146 held-out mechanism while retaining high reconstruction but failing misspecification refusal, leaving meaningful science-specific headroom pending GPT-5.5 calibration, server-held spectra and independent spectroscopist review
+    citation_ids:
+      - doi:10.1093/bioinformatics/bts308
+      - doi:10.1007/s11306-017-1244-5
+      - doi:10.1016/0022-4073(77)90161-3
   StructuralEngineering/TrussWeightMinimization:
     status: candidate
     reason: v2 has six unique procedural structures, complete stress/displacement/Euler-buckling FEM, multistart feasible references and sealed physical shifts; GPT-5.5 improves development 0.0 to 0.611 across three accepted proposals while final held-out robustness falls from 0.206 to 0.078, leaving useful non-saturated optimization/validation headroom pending paired controls, server-held structures and independent domain review

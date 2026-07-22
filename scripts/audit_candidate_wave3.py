@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Reproduce admission failures in six high-priority candidate tasks.
+"""Audit six high-priority scientific task rebuilds and remaining failures.
 
 These checks deliberately exercise evaluator behavior directly.  They are not model
 performance measurements: their purpose is to prevent scientifically invalid or fail-open
-tasks from consuming search/model budget before the task family is rebuilt.
+tasks from consuming search/model budget and to verify substantive v2 rebuilds before
+re-admission.
 """
 
 from __future__ import annotations
@@ -38,27 +39,62 @@ def _oracle(task_id: str):
 
 def _nmr_spectrum():
     oracle = _oracle("Spectroscopy/NMRSpectrumFitting")
-    metrics = oracle.evaluate(
+    invalid = oracle.evaluate(
         lambda _x, _spectrum: {
-            "centers": [np.nan], "widths": [np.nan], "amplitudes": [np.nan]
+            "centers": [np.nan], "lorentzian_hwhm": [0.04],
+            "gaussian_sigma": [0.0], "amplitudes": [1.0],
+            "lineshapes": ["lorentzian"], "confidence": 1.0,
+            "abstain": False,
         }
     )
-    residual_is_finite = bool(np.isfinite(metrics["residual_rms"]))
+    def always_abstain(_x, _spectrum):
+        return {
+            "centers": [], "lorentzian_hwhm": [], "gaussian_sigma": [],
+            "amplitudes": [], "lineshapes": [], "confidence": 0.0,
+            "abstain": True,
+        }
+    baseline = oracle.evaluate(always_abstain)
+
+    def exact(x, spectrum):
+        matches = [
+            instance for instance in oracle.INSTANCES
+            if np.array_equal(np.asarray(x), instance["x"])
+            and np.array_equal(np.asarray(spectrum), instance["spectrum"])
+        ]
+        if len(matches) != 1:
+            raise ValueError("unknown public NMR instance")
+        return oracle._reference_result(matches[0])
+    reference = oracle.evaluate(exact)
     return {
         "task": "Spectroscopy/NMRSpectrumFitting",
-        "admission": "quarantine",
-        "defect": (
-            "non-finite peak parameters pass validation and receive full score; the fixed "
-            "single spectrum also scores reconstruction only, not peak/mechanism recovery"
+        "admission": "candidate",
+        "resolved_defect": (
+            "v2 replaces one fail-open fixed spectrum with ten procedural multi-regime "
+            "spectra, finite structured peak artifacts, order-invariant mechanism matching, "
+            "separate reconstruction/confidence metrics and null/model-inadequacy refusal"
         ),
-        "nonfinite_candidate_score": float(metrics["combined_score"]),
-        "nonfinite_candidate_marked_valid": bool(metrics["valid"]),
-        "reported_residual_is_finite": residual_is_finite,
-        "instance_count": 1,
-        "passed": (
-            metrics["combined_score"] == 1.0
-            and bool(metrics["valid"])
-            and not residual_is_finite
+        "instance_count": len(oracle.INSTANCES),
+        "development_instance_count": len(oracle.DEVELOPMENT_INSTANCES),
+        "heldout_instance_count": len(oracle.HELDOUT_INSTANCES),
+        "nonfinite_candidate_score": float(invalid["combined_score"]),
+        "nonfinite_candidate_marked_valid": bool(invalid["valid"]),
+        "always_abstain_score": float(baseline["combined_score"]),
+        "always_abstain_valid": bool(baseline["valid"]),
+        "exact_reference_score": float(reference["combined_score"]),
+        "exact_reference_heldout_score": float(reference["robustness_score"]),
+        "exact_reference_false_discovery_rate": float(
+            reference["development_false_discovery_rate"]
+        ),
+        "rebuild_passed": True,
+        "passed": bool(
+            len(oracle.DEVELOPMENT_INSTANCES) == 6
+            and len(oracle.HELDOUT_INSTANCES) == 4
+            and invalid["combined_score"] == 0.0 and invalid["valid"] == 0.0
+            and baseline["combined_score"] == 0.0 and baseline["valid"] == 1.0
+            and reference["combined_score"] > 0.999999
+            and reference["robustness_score"] > 0.999999
+            and reference["development_false_discovery_rate"] == 0.0
+            and reference["heldout_false_discovery_rate"] == 0.0
         ),
     }
 

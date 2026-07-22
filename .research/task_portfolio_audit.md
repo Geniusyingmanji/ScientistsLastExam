@@ -1,6 +1,6 @@
 # Scientific task portfolio audit
 
-Audit date: 2026-07-21 (UTC). The original inventory contained 50 discoverable task packages;
+Audit date: 2026-07-22 (UTC). The original inventory contained 50 discoverable task packages;
 the new ActiveLawDiscovery candidate brings the current inventory to 51. This count is an
 inventory fact, not evidence that all packages are benchmark-admissible.
 
@@ -52,9 +52,10 @@ meaning.
   other six remain quarantined after reproducible adversarial review: RIR
   length failure, unstable low-thrust propagation, centerline-spoofable cavity scoring,
   pseudo-data alloy hardness, scalar-FFT pseudo-RCWA and a degenerate heat-exchanger objective.
-- **No original unscreened candidates remain after wave 4; ten candidates remain in total.** They are
+- **No original unscreened candidates remain after wave 4; thirteen candidates remain in total.** They include
   SCM, Lyapunov control, neutron criticality, seismic refraction, pendulum control, sparse
-  recovery, OED-v2, GateSynthesis-v2, OPF-v2 and the new ActiveLawDiscovery laboratory. All are
+  recovery, OED-v2, GateSynthesis-v2, OPF-v2, Truss-v2, Antenna-v2, NMR-v2 and the new
+  ActiveLawDiscovery laboratory. All are
   currently on-ramps or repair/calibration candidates rather than externally reviewed
   open-frontier tasks.
 - **ActiveLawDiscovery preserves science-specific headroom.** GPT-5.5 budget one attains 0.796
@@ -63,7 +64,7 @@ meaning.
   independent budget-three run, all three proposals retain the same two false discoveries;
   score feedback does not fix model-inadequacy detection and later proposals reduce mechanism
   recovery. This is a reliability/refusal frontier rather than an ordinary prediction frontier.
-- **34 quarantined packages.** Five generic-objective clones must be replaced with real domain
+- **31 quarantined packages.** Five generic-objective clones must be replaced with real domain
   oracles; metadata completion alone cannot rehabilitate them. The sixth,
   `ClimateScience/EnergyBalanceModel`, uses an unstable explicit diffusion iteration, an
   unverified ERA5 attribution and a structurally underdetermined seven-parameter fit to one
@@ -75,9 +76,8 @@ meaning.
   RANS fitting and an FWI interface with no observations.
   Wave 3 additionally isolates six scientifically promising topics whose current evaluators are
   unusable: fail-open NMR/OED/gate/OPF/antenna scores and a non-canonical duplicated-member
-  truss topology. OED-v2, GateSynthesis-v2 and OPF-v2 have since been substantively rebuilt and
-  re-admitted; the other three
-  task families should be rebuilt rather than cosmetically patched.
+  truss topology. All six have since been substantively rebuilt and re-admitted; their candidate
+  status records internal scientific validity, not external validation or headline difficulty.
   Wave 4 quarantines the final 12 unscreened packages after reproducing fail-open paths,
   unreachable anchors, missing observations, uncoupled systems, degenerate corners and models
   that do not implement the claimed science.
@@ -110,7 +110,9 @@ The first review tranche contains real scientific topics but several narrow eval
   scanned uniform/nonuniform arrays, measured normalization, finite-grid nominal/robust domain
   witnesses, and sealed frequency/calibration/position/exhaustive element-failure metrics;
   it still needs model calibration, server-held arrays, full-wave replication and independent
-  review. NMR fitting still requires a substantive rebuild before it can support model evidence.
+  review. NMR-v2 now has ten procedural spectra, order-invariant peak-mechanism matching,
+  held-out line-shape/noise/baseline shifts and explicit null/model-inadequacy refusal; it still
+  requires GPT-5.5 headroom calibration and independent spectroscopist review.
 - OED-v2 now meets those internal evaluator criteria: six development and four shifted model
   families, finite integer allocations, numerically whitened Fisher sensitivities, and
   Kiefer-Wolfowitz-certified references. GPT-5.5 then reaches 0.991 development and 0.994
@@ -139,8 +141,8 @@ The target is approximately 50 **admissible** open scientific optimization tasks
 5. run frontier-model budget-one screening before expensive budget 30/100/300 studies.
 
 After complete original-inventory triage, adding ActiveLawDiscovery and rebuilding Gate-v2,
-OPF-v2, Truss-v2 and Antenna-v2, the net expansion gap is approximately 31 admissible tasks:
-51 folders minus 32 quarantines leaves 19 internally admissible certified or candidate packages, while the target
+OPF-v2, Truss-v2, Antenna-v2 and NMR-v2, the net expansion gap is approximately 30 admissible tasks:
+51 folders minus 31 quarantines leaves 20 internally admissible certified or candidate packages, while the target
 is about 50. New
 work should emphasize procedural task families and independent regimes,
 not one-off fixed instances or scientific names around hand-written scalar objectives.

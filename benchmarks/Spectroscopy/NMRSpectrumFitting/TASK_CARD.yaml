@@ -1,0 +1,27 @@
+schema_version: 1
+scientific_question: Can one spectral-analysis policy recover the number, centers, amplitudes and Lorentzian/Gaussian broadening of overlapping one-dimensional NMR peaks across baseline/noise shifts, while refusing null or phase-distorted spectra outside its line-shape library?
+artifact: A variable-length positive Voigt peak list with explicit line-shape components, confidence and optional model-inadequacy abstention.
+oracle:
+  model: deterministic procedural one-dimensional spectra with Lorentzian/Gaussian/Voigt peaks, smooth baseline drift, additive noise, overlap, variable axes, and null or dispersive phase-distorted worlds
+  feasibility: finite consistent arrays, at most sixteen on-axis peaks, bounded positive amplitudes and widths, consistent line-shape labels, and empty artifacts on abstention
+  deterministic: true
+normalization:
+  baseline: abstain on every spectrum with zero confidence
+  reference: exact simulator peak parameters on supported spectra and correct abstention on null or phase-distorted spectra
+  score: development peak-mechanism/refusal quality above always-abstain; reconstruction, confidence calibration, false discovery and held-out shifted metrics remain separate
+citations:
+  - id: doi:10.1093/bioinformatics/bts308
+    title: BATMAN—an R package for the automated quantification of metabolites from nuclear magnetic resonance spectra using a Bayesian model
+  - id: doi:10.1007/s11306-017-1244-5
+    title: "ASICS: an automatic method for identification and quantification of metabolites in complex 1D 1H NMR spectra"
+  - id: doi:10.1016/0022-4073(77)90161-3
+    title: "Empirical fits to the Voigt line width: A brief review"
+invariants:
+  - exact peak parameters attain perfect mechanism and clean-signal reconstruction on every supported instance
+  - correct null and phase-distortion abstentions attain perfect refusal scores without fabricating peaks
+  - non-finite, inconsistent, out-of-range, nonpositive or excessive peak artifacts fail closed
+  - held-out mechanism, reconstruction, confidence, refusal and per-instance metrics remain evaluator-only
+known_shortcuts: The current spectra are deterministic simulations with public code and finite-grid truth. A release requires server-held mixtures and independent spectroscopist review; experimental discovery claims additionally require instrument data, chemical assignment and orthogonal validation.
+review:
+  domain: pending_external
+  evaluator_security: automated_fail_closed_reference_refusal_metric_sealing_tests
