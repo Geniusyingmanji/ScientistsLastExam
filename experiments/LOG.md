@@ -1103,3 +1103,38 @@ seven certified, nineteen candidate and twenty-five quarantined packages. The re
 internally admissible tasks** leave an approximate gap of 24 to the portfolio target. GPT-5.5
 headroom calibration is still pending, so none of these results is a model-performance,
 feedback-learning, global-optimality or autonomous-discovery claim.
+
+### GPT-5.5 LowThrust-v2 calibration
+
+The independent budget-one proposal is a valid bounded guidance artifact and improves
+development utility from zero to **0.007736**, but held-out utility is only **5.78e-9**. It
+spends mean development/held-out delta-v **737/833 m/s**, yet none of the six nominal missions or
+eighteen shifted cases enters its terminal tolerance set.
+
+In the independent normal budget-three run, the first proposal scores **0.005079** and is the
+only accepted update. Two rewrites score **0.004750** and **2.14e-6**. The selected policy has
+held-out utility **1.34e-11** and development/held-out robustness **0.003580/3.33e-12**; all
+three proposals remain nominally and shift terminal-infeasible. Scalar score feedback therefore
+does not localize the long-horizon boundary-value error in this one trajectory.
+
+A same-local-seed-label strict `selection_blind` run keeps all three proposal parents fixed at
+the baseline and selects an offline best of **0.005491**, slightly above normal. It too has zero
+nominal and shifted feasibility. Normal uses **18,491** tokens versus **13,366** open-loop, both
+use four oracle calls, and Azure exposes no server-side sampling seed. The difference is neither
+paired nor token-matched and supports no causal feedback conclusion.
+
+Across all seven nonbaseline proposals, executable artifact validity is **7/7** while nominal
+terminal-feasible proposal count and shift-feasible proposal count are both **0/7**. The maximum
+held-out score is only **5.78e-9**, despite a public-input Gauss--Newton policy reaching
+0.711/0.719 development/held-out utility with full nominal feasibility. Budget-one also has a
+sealed phase diagnostic nearly equal to the Gauss--Newton policy, even though it misses every
+first-five-MEE terminal tolerance. Phase, valid code, nonzero delta-v and graded utility are thus
+not substitutes for terminal-state validity or held-out transfer.
+
+All three model reports bind clean source `ba07529`. The dedicated analysis on clean source
+`7852a85` verifies report/raw hashes, online/frozen-parent lineage, source-scope equivalence and
+the numerical/utility/feasibility/phase/held-out/robustness decomposition. The 27-condition,
+14-task cross-task summary v7 and certification v21 bind clean source `71bb7d7`; security v6 and
+the 51x2 baseline v12 bind clean source `a3de314`. The full suite now passes **139/139** tests.
+These are controlled single-run calibrations, not population model performance, feedback
+learning, global optimality, flight validation or autonomous scientific discovery.

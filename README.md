@@ -40,7 +40,7 @@ controlled exception text is reduced to a fixed label-blind failure taxonomy bef
 search feedback, preventing observations from being carried between worlds through exceptions.
 The current audit reports:
 
-- 135/135 unit, security, protocol and scientific-invariant tests passed.
+- 139/139 unit, security, protocol and scientific-invariant tests passed.
 - The latest 51×2 secure-baseline audit reports 51/51 deterministic, 50/51 valid, 51/51
   fail-closed and zero infrastructure failures. The sole invalid baseline is the explicitly
   quarantined `ClimateScience/EnergyBalanceModel`.
@@ -103,8 +103,13 @@ The current audit reports:
   shifts. A public-input-only Gauss--Newton calibration reaches `0.711/0.719`
   development/held-out utility and `0.682/0.660` shifted robustness with full nominal terminal
   feasibility. The production propagator agrees with an independent Cartesian DOP853 path
-  within `0.00288` of a public terminal tolerance. These are controlled task-calibration
-  results; GPT-5.5 calibration, server-held missions and independent review remain pending.
+  within `0.00288` of a public terminal tolerance. Across budget-one, normal budget-three and
+  strict open-loop budget-three GPT-5.5 calibrations, all seven generated artifacts are valid,
+  but none reaches nominal or shifted terminal feasibility. Their development scores span
+  `2.1e-6–0.00774`, and the maximum held-out score is only `5.8e-9`, versus `0.711/0.719` for
+  the public Gauss--Newton policy. The normal and open-loop best scores are `0.00508/0.00549`;
+  this one-run, non-token-matched contrast is not a feedback effect. Server-held missions and
+  independent review remain pending.
   GPT-5.5 reaches nominal OPF score 1.0
   at budget one while sealed N-1 robustness is only 0.031 on development and approximately
   zero on held-out networks. On Truss-v2, a separate budget-three run improves development
@@ -125,9 +130,10 @@ the post-repair 50-package audits bind revision `47c3613`; the subsequent wave-2
 audit quarantines seven additional defective candidates. The two P2 smokes are baseline-only; the repository does not yet contain
 credible multi-seed model-performance evidence. A clean-revision GPT-5.5 budget-one core pilot
 is recorded as task calibration, not a benchmark leaderboard.
-The latest LowThrust-v2 certification/security/baseline audits are v20/v5/v11 and bind clean
-source `5bf6e0c`; the current 7/19/25 manifest contains 26 internally admissible tasks, leaving
-an approximate gap of 24 to the roughly 50-task target.
+The latest certification/security/baseline audits are v21/v6/v12. The current 7/19/25 manifest
+contains 26 internally admissible tasks, leaving an approximate gap of 24 to the roughly
+50-task target. The hash-bound cross-task summary v7 contains 27 normal single-run conditions
+over 14 tasks; it is calibration evidence, not a leaderboard or population result.
 
 ## Quickstart
 

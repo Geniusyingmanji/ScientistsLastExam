@@ -98,9 +98,14 @@ The first review tranche contains real scientific topics but several narrow eval
   policy is nominally feasible on all missions and reaches 0.711/0.719 development/held-out
   utility and 0.682/0.660 shifted robustness. Its 1800 s production propagation differs from a
   900 s refinement by at most 0.0423 terminal tolerances; the refined MEE path differs from an
-  independent Cartesian DOP853 path by at most 0.00288 tolerances and 0.000223 kg. It remains a
-  candidate pending GPT-5.5 headroom calibration, server-held missions, higher-fidelity mission-
-  tool replication and independent astrodynamics review.
+  independent Cartesian DOP853 path by at most 0.00288 tolerances and 0.000223 kg. GPT-5.5
+  preserves substantial headroom: all seven proposals across budget-one, normal budget-three
+  and strict open-loop budget-three are executable but terminal-infeasible, development scores
+  never exceed 0.00774 and held-out utility never exceeds `5.8e-9`. The normal/open-loop
+  selected scores are 0.00508/0.00549, but the single-run conditions are not randomness- or
+  token-matched and support no feedback claim. The candidate still needs server-held missions,
+  paired repetitions, higher-fidelity mission-tool replication and independent astrodynamics
+  review.
 - Pendulum, Lorenz control and heat-exchanger tasks are likely to admit short analytic/template
   solutions; retain only if hidden parameter regimes and robustness/cost tradeoffs preserve
   headroom.

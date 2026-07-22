@@ -3,14 +3,14 @@
 Date: 2026-07-22 (UTC). These findings use trusted GPT-5.5 `greedy_rewrite` calibrations on
 OED-v2, Pendulum-v2, GateSynthesis-v2, ActiveLawDiscovery, OPF-v2, Truss-v2, Antenna-v2,
 NMR-v2, HeatExchanger-v2, ReactionMechanismFitting-v2, GravityInversion-v2 and
-OceanCurrentInversion-v2 and RadiativeTransferFit-v2. The 25 normal-feedback model
+OceanCurrentInversion-v2, RadiativeTransferFit-v2 and LowThrustTransfer-v2. The 27 normal-feedback model
 conditions each contain one seed and proposal budget one
 or three. They calibrate tasks and motivate experiments; they are not a model leaderboard, a causal
 feedback study or population evidence.
 
-The portable machine record is `experiments/science_calibration_summary_2026-07-22_v6.json`. It
+The portable machine record is `experiments/science_calibration_summary_2026-07-22_v7.json`. It
 retains every top-level scalar metric, candidate lineage hash and raw trajectory SHA-256 for all
-25 normal conditions. Strict selection-blind diagnostics remain in task-specific
+27 normal conditions. Strict selection-blind diagnostics remain in task-specific
 analysis because it is not a normal-feedback calibration. The underlying reports bind the
 task-specific source revision. Pendulum's initial budget-one run on revision `57c0e1b` is
 excluded because the public task omitted the exact plant equations and was explicitly superseded
@@ -38,6 +38,8 @@ by the corrected-contract run on `2557adb`.
 | HeatExchanger-v2, budget 1 | the only proposal is invalid; development remains 0.0 | no validated improvement | Valid code generation and scientific feasibility remain separate gates. |
 | HeatExchanger-v2, budget 3 | development exact 0.000 → 0.008 → 0.126; final proxy 0.173 | held-out exact 0.280; robustness 0.130; two of four development regimes remain zero | Aggregate improvement can be concentrated in one regime and need not transfer to physical shifts. |
 | LowThrustTransfer-v2, public Gauss--Newton | development/held-out utility 0.711/0.719; nominal feasibility 1.0/1.0 | shifted robustness 0.682/0.660; held-out shifted feasibility 0.833; production/refinement discrepancy 0.0423 tolerance | Long-horizon optimization must separate numerical error, terminal feasibility, nominal utility, held-out transfer and execution robustness. |
+| LowThrustTransfer-v2, budget 1 | development 0.007736; valid artifact; mean development delta-v 737 m/s | held-out `5.8e-9`; nominal and shifted terminal feasibility 0 on both splits | A plausible finite guidance law and nonzero graded score do not establish arrival in the terminal tolerance set. |
+| LowThrustTransfer-v2, budget 3 | proposal scores 0.005079 → 0.004750 → `2.1e-6`; only step 1 accepted | selected held-out `1.3e-11`; all three proposals nominally and shift infeasible | More scalar feedback did not localize the long-horizon boundary-value error in this trajectory. |
 | ReactionMechanism-v2, budget 1 | valid proposal remains at normalized mechanism 0.0 | held-out normalized mechanism 0.0 | A complex fitter spends the assay budget on an under-informative design and abstains everywhere. |
 | ReactionMechanism-v2, budget 3 | all three proposals remain at 0.0 and are rejected | each performs one assay and abstains everywhere | More rewrite budget does not help when scalar zero feedback cannot localize whether experiment design, inference or refusal caused failure. |
 | GravityInversion-v2, budget 1 | invalid callback unpacking; development remains 0.0 | no validated improvement | A physically sophisticated implementation can still fail the executable laboratory protocol. |
@@ -271,12 +273,25 @@ bound two different threats: discretization error inside the production model an
 between coordinate/formulation implementations. Neither proves real mission fidelity; third
 bodies, drag, eclipse, power, thermal and attitude constraints remain absent.
 
+Across the three GPT-5.5 conditions, all seven proposed programs are valid artifacts and spend
+mean development delta-v between 737 and 958 m/s, but no proposal makes any nominal or shifted
+mission terminal-feasible. Development utility ranges from `2.1e-6` to `0.007736`, while the
+largest held-out utility is `5.8e-9`. Budget-one happens to match the Gauss--Newton policy's tiny
+sealed phase diagnostic (`8.49e-7` versus `8.55e-7`) while missing every first-five-MEE terminal
+tolerance; phase is not part of that scored terminal state and cannot substitute for it.
+
+The normal budget-three run accepts only its first proposal and selects 0.005079. The same-local-
+seed-label strict open-loop batch has offline best 0.005491, with every parent frozen at the
+baseline. Normal uses 18,491 tokens versus 13,366, and the endpoint supplies no server-side seed,
+so the difference is not a feedback-effect estimate. It instead confirms that proposal diversity
+alone can exceed one short iterative trajectory while both remain scientifically infeasible.
+
 The resulting reporting rule is five-way: integration/model-consistency error, nominal utility,
 terminal feasibility, held-out mission transfer and physical execution robustness must remain
 separate. Otherwise an apparent optimization frontier can be an integrator frontier, and a high
-fuel/accuracy aggregate can conceal an infeasible shifted mission. The present numbers are a
-classical controlled-task calibration, not GPT-5.5 performance, global optimality, flight
-validation or autonomous discovery.
+fuel/accuracy aggregate can conceal an infeasible shifted mission. These are single-run
+controlled-task calibrations, not population performance, causal feedback, global optimality,
+flight validation or autonomous discovery.
 
 ## Consequences for expansion to approximately 50 tasks
 
