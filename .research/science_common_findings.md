@@ -7,7 +7,7 @@ conditions each contain one seed and proposal budget one
 or three. They calibrate tasks and motivate experiments; they are not a model leaderboard, a causal
 feedback study or population evidence.
 
-The portable machine record is `experiments/science_calibration_summary_2026-07-22_v3.json`. It
+The portable machine record is `experiments/science_calibration_summary_2026-07-22_v4.json`. It
 retains every top-level scalar metric, candidate lineage hash and raw trajectory SHA-256 for all
 21 normal conditions. Strict selection-blind diagnostics remain in task-specific
 analysis because it is not a normal-feedback calibration. The underlying reports bind the
