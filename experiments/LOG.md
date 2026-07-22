@@ -1138,3 +1138,46 @@ the numerical/utility/feasibility/phase/held-out/robustness decomposition. The 2
 the 51x2 baseline v12 bind clean source `a3de314`. The full suite now passes **139/139** tests.
 These are controlled single-run calibrations, not population model performance, feedback
 learning, global optimality, flight validation or autonomous scientific discovery.
+
+## 2026-07-22 — full-field lid-driven-cavity solver v2
+
+Rebuilt `FluidDynamics/LidDrivenCavity` from one Re=100 sparse-centerline comparison into six
+steady laminar Reynolds/grid cases and two refinement calls. Candidates return complete
+streamfunction and vorticity fields. Trusted code derives velocity and separately checks the
+Poisson equation, vorticity transport, Thom wall vorticity, held-out Reynolds transfer, grid
+refinement and corrected Ghia Re=100 profiles. Each of the eight candidate calls receives a fresh
+process and private temporary filesystem.
+
+The weak zero-interior-flow baseline is valid but has zero score and zero physics feasibility.
+The Newton--Krylov continuation reference scores **0.999999998** on development,
+**0.999999991** on held-out Reynolds cases, **0.999999997** on development refinement and
+**0.999999996** on held-out refinement. Independent equation checks reproduce the oracle
+relative residuals exactly; discrete divergence is below `4e-15`. Ghia horizontal/vertical
+centerline RMSE is **0.009789/0.012070**. A nonphysical stripe injection scores zero. A 95%
+attenuated near-reference field has ungated development utility **0.857026**, but the hard
+physics gate reduces its public score to zero because transport feasibility fails.
+
+The independent GPT-5.5 budget-one proposal implements a DST Poisson solve, continuation and
+Krylov polish and reaches **0.999999990**. Its held-out and refinement scores are also above
+0.99999995. In a separate normal budget-three run, all three proposals are accepted and score
+**0.869915 → 0.894913 → 0.898062**. A strict open-loop batch with the same local seed label keeps
+every parent fixed at the baseline and produces a **0.999999990** solver at step two.
+Normal and open-loop use four oracle calls and **19,483/14,288** tokens. The endpoint exposes no
+server-side seed, so the open-loop advantage is neither paired nor a causal feedback estimate.
+
+Three post-hoc combinations absent from the benchmark calls, `(Re,N)=(137,27),(245,39),(375,45)`,
+were evaluated after the runs. The budget-one and open-loop programs pass every physics gate and
+retain minimum full-field similarity **0.999999951** against the same discrete reference. The
+normal selected program also passes all nine public probe gates, with minimum similarity
+**0.844965**. Because these probes were selected post hoc and use the same second-order model,
+they diagnose general solver behavior but do not provide preregistered hidden, high-order or
+experimental validation.
+
+The task and wave-2 v4 calibration bind clean source `678e79a`. Certification v22 records
+**7 certified / 20 candidate / 24 quarantined**; security v7 passes **18/18**, and the 51x2
+baseline v13 records **51 deterministic, 50 valid, 51 fail-closed and zero infrastructure
+failures**, all on the same revision. The three model reports also bind `678e79a`. Their dedicated
+analysis on clean source `5f63176` verifies report/raw hashes, online and frozen-parent lineage,
+sealed metrics and post-hoc probe results. The full suite passes **147/147** tests. The one-step
+and open-loop ceiling make this a CFD algorithm synthesis on-ramp, not evidence of feedback
+learning, continuum CFD validity, a new flow mechanism or autonomous scientific discovery.

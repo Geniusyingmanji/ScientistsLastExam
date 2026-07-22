@@ -2,15 +2,15 @@
 
 Date: 2026-07-22 (UTC). These findings use trusted GPT-5.5 `greedy_rewrite` calibrations on
 OED-v2, Pendulum-v2, GateSynthesis-v2, ActiveLawDiscovery, OPF-v2, Truss-v2, Antenna-v2,
-NMR-v2, HeatExchanger-v2, ReactionMechanismFitting-v2, GravityInversion-v2 and
-OceanCurrentInversion-v2, RadiativeTransferFit-v2 and LowThrustTransfer-v2. The 27 normal-feedback model
-conditions each contain one seed and proposal budget one
+NMR-v2, HeatExchanger-v2, ReactionMechanismFitting-v2, GravityInversion-v2,
+OceanCurrentInversion-v2, RadiativeTransferFit-v2, LowThrustTransfer-v2 and
+LidDrivenCavity-v2. The 29 normal-feedback model conditions each contain one seed and proposal budget one
 or three. They calibrate tasks and motivate experiments; they are not a model leaderboard, a causal
 feedback study or population evidence.
 
-The portable machine record is `experiments/science_calibration_summary_2026-07-22_v7.json`. It
+The portable machine record is `experiments/science_calibration_summary_2026-07-22_v8.json`. It
 retains every top-level scalar metric, candidate lineage hash and raw trajectory SHA-256 for all
-27 normal conditions. Strict selection-blind diagnostics remain in task-specific
+29 normal conditions. Strict selection-blind diagnostics remain in task-specific
 analysis because it is not a normal-feedback calibration. The underlying reports bind the
 task-specific source revision. Pendulum's initial budget-one run on revision `57c0e1b` is
 excluded because the public task omitted the exact plant equations and was explicitly superseded
@@ -40,6 +40,8 @@ by the corrected-contract run on `2557adb`.
 | LowThrustTransfer-v2, public Gauss--Newton | development/held-out utility 0.711/0.719; nominal feasibility 1.0/1.0 | shifted robustness 0.682/0.660; held-out shifted feasibility 0.833; production/refinement discrepancy 0.0423 tolerance | Long-horizon optimization must separate numerical error, terminal feasibility, nominal utility, held-out transfer and execution robustness. |
 | LowThrustTransfer-v2, budget 1 | development 0.007736; valid artifact; mean development delta-v 737 m/s | held-out `5.8e-9`; nominal and shifted terminal feasibility 0 on both splits | A plausible finite guidance law and nonzero graded score do not establish arrival in the terminal tolerance set. |
 | LowThrustTransfer-v2, budget 3 | proposal scores 0.005079 → 0.004750 → `2.1e-6`; only step 1 accepted | selected held-out `1.3e-11`; all three proposals nominally and shift infeasible | More scalar feedback did not localize the long-horizon boundary-value error in this trajectory. |
+| LidDrivenCavity-v2, budget 1 | development `0.999999990`; PDE feasibility 1.0 | held-out `0.999999957`; both grid-refinement scores above `0.99999998` | One proposal synthesizes a numerical solver that nearly matches the same discrete reference on development, held-out and refinement cases. This is solver synthesis, not a new flow result. |
+| LidDrivenCavity-v2, budget 3 | normal accepted `0.869915 → 0.894913 → 0.898062` | selected held-out `0.843732`; all nominal and grid physics gates pass | Iterative rewrites improve this normal trajectory but remain below independent one-shot and open-loop near-ceiling solvers. One run cannot assign the difference to feedback. |
 | ReactionMechanism-v2, budget 1 | valid proposal remains at normalized mechanism 0.0 | held-out normalized mechanism 0.0 | A complex fitter spends the assay budget on an under-informative design and abstains everywhere. |
 | ReactionMechanism-v2, budget 3 | all three proposals remain at 0.0 and are rejected | each performs one assay and abstains everywhere | More rewrite budget does not help when scalar zero feedback cannot localize whether experiment design, inference or refusal caused failure. |
 | GravityInversion-v2, budget 1 | invalid callback unpacking; development remains 0.0 | no validated improvement | A physically sophisticated implementation can still fail the executable laboratory protocol. |
@@ -293,6 +295,41 @@ fuel/accuracy aggregate can conceal an infeasible shifted mission. These are sin
 controlled-task calibrations, not population performance, causal feedback, global optimality,
 flight validation or autonomous discovery.
 
+### LidDrivenCavity-v2 solver synthesis and ceiling diagnostic
+
+LidDrivenCavity-v2 replaces a single sparse profile score with full streamfunction and vorticity
+fields over six Reynolds/grid cases and two refinement calls. Public feasibility requires
+relative Poisson, transport and wall residuals below `0.03`, `0.05` and `0.05`. The trusted
+continuation fields score above 0.99999999 on development and held-out cases. Their Ghia Re=100
+centerline RMSE is `0.009789` for horizontal velocity and `0.012070` for vertical velocity. An
+attenuated reference has ungated development utility 0.857026 but scores zero because its
+transport residual violates the public gate. This shortcut test is why field similarity alone
+cannot determine CFD validity.
+
+The budget-one proposal implements a DST Poisson solver, continuation and Krylov correction and
+scores 0.999999990. Its held-out and two grid-refinement scores exceed 0.99999995. The independent
+normal budget-three run accepts all three proposals and rises from 0.869915 to 0.898062. A strict
+open-loop batch with every parent fixed at the weak baseline produces a
+0.999999990 solver at step two. Normal and open-loop use the same four oracle calls, while normal
+uses 19,483 tokens and open-loop 14,288. The endpoint has no server-side seed, so the
+`-0.101938` normal-minus-open-loop score difference is not a feedback-effect estimate.
+
+Three post-hoc probes at `(Re,N)=(137,27),(245,39),(375,45)` test combinations absent from the
+eight benchmark calls. The budget-one and open-loop programs are physics-feasible on all three
+and retain minimum full-field similarity 0.999999951 to the same discrete reference. The normal
+selected program also passes all three public physics gates, with minimum similarity 0.844965.
+These probes were selected after the model runs and use the same second-order model, so they
+support general solver behavior within that model but are not preregistered hidden, higher-order
+or experimental validation.
+
+The scientific implication is about benchmark placement. A model that reaches the numerical
+ceiling from the public equations in one proposal leaves little room to measure iterative
+optimization. Cavity-v2 is useful as a CFD algorithm synthesis on-ramp and as a test of full-field
+physics gates. A headline task requires procedurally held-out geometries or boundary conditions,
+higher Reynolds regimes, independent high-order references, solver-cost tradeoffs or
+multifidelity validation. None of these runs supports a new fluid mechanism or autonomous
+scientific discovery.
+
 ## Consequences for expansion to approximately 50 tasks
 
 Every new or rebuilt task must pass the following gate before it counts toward the target:
@@ -309,7 +346,7 @@ Every new or rebuilt task must pass the following gate before it counts toward t
 - classical and domain baselines, followed by GPT-5.5 budget-one headroom screening; and
 - retention as an on-ramp, not a headline task, if a standard method reliably saturates it.
 
-The present inventory contains 26 internally admissible certified or candidate packages. The
-remaining gap is approximately 24 tasks. Expansion should use procedural families spanning
+The present inventory contains 27 internally admissible certified or candidate packages. The
+remaining gap is approximately 23 tasks. Expansion should use procedural families spanning
 design, inverse problems, control, multifidelity validation, mechanism discovery and exact
 mathematical construction rather than cloning one scalar optimization template across domains.
