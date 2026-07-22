@@ -35,7 +35,7 @@ All candidate code runs in a networkless Bubblewrap sandbox with read-only mount
 and process limits, and a typed JSON RPC boundary. The trusted parent alone imports the
 oracle and validates metrics. The current audit reports:
 
-- 104/104 unit, security, protocol and scientific-invariant tests passed.
+- 106/106 unit, security, protocol and scientific-invariant tests passed.
 - The latest 51×2 secure-baseline audit reports 51/51 deterministic, 50/51 valid, 51/51
   fail-closed and zero infrastructure failures. The sole invalid baseline is the explicitly
   quarantined `ClimateScience/EnergyBalanceModel`.
@@ -53,8 +53,12 @@ oracle and validates metrics. The current audit reports:
   model-randomness-matched. ReactionMechanismFitting-v2 adds active partial-species assays, twelve possible
   reactions, null/model-mismatch refusal and held-out topologies: its truth-blind classical fit
   reaches 0.482/0.404 development/held-out mechanism quality and 0.860 development interpolation,
-  but falsely reports an in-library mechanism in half of unsupported worlds. GPT-5.5 has not yet
-  been calibrated on this task, so these are task-admission rather than model-performance results.
+  but falsely reports an in-library mechanism in half of unsupported worlds. Independent GPT-5.5
+  budget-one and normal budget-three runs remain at zero because every proposal performs only one
+  or two under-informative assays and abstains. A same-local-identifier strict open-loop batch
+  contains a 0.343 development/0.363 held-out mechanism solution, but still falsely claims a
+  mechanism in half of unsupported worlds. The single-run, non-token-matched conditions have no
+  server-side random seed and support no causal feedback conclusion.
   GPT-5.5 reaches nominal OPF score 1.0
   at budget one while sealed N-1 robustness is only 0.031 on development and approximately
   zero on held-out networks. On Truss-v2, a separate budget-three run improves development

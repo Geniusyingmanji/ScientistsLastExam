@@ -149,7 +149,7 @@ tasks:
     reason: ten radiances cannot identify twenty temperatures, while selection rewards hidden fixed-profile RMSE instead of evidence-supported retrieval
   ChemicalKinetics/ReactionMechanismFitting:
     status: candidate
-    reason: v2 is an active partial-species assay task with twelve candidate reactions, charged temperature/initial-condition/sensor design, sparse Arrhenius rate-curve recovery, held-out topologies and separate null/model-inadequacy refusal; a truth-blind classical fit scores 0.482/0.404 development/held-out mechanism while reaching 0.860 development interpolation and falsely claiming a mechanism in half of unsupported worlds, leaving science-specific headroom pending GPT-5.5 calibration, server-held reactors and independent kinetics review
+    reason: v2 is an active partial-species assay task with twelve candidate reactions, charged temperature/initial-condition/sensor design, sparse Arrhenius rate-curve recovery, held-out topologies and separate null/model-inadequacy refusal; a truth-blind classical fit scores 0.482/0.404 development/held-out mechanism while reaching 0.860 development interpolation and falsely claiming a mechanism in half of unsupported worlds; GPT-5.5 budget-one and normal budget-three runs remain at zero while a strict open-loop batch finds 0.343/0.363 development/held-out mechanism but retains the same false-discovery failure, leaving science-specific headroom pending paired controls, server-held reactors and independent kinetics review
     citation_ids:
       - doi:10.1007/978-3-662-44562-4
       - doi:10.1093/bioinformatics/btq074

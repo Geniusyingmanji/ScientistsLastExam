@@ -910,3 +910,26 @@ The task calibration, wave-3 admission, 51-package certification, 51x2 secure ba
 GPT-5.5 reports bind clean source `bbb7787`. A dedicated analyzer validates their report and raw
 trajectory hashes, accepted-parent lineage, classical/model contrasts and rejected-proposal
 failure modes.
+## 2026-07-22 — active reaction-mechanism discovery v2
+
+Rebuilt `ChemicalKinetics/ReactionMechanismFitting` from a saturated three-species curve fit into
+an active four-species mechanism-discovery laboratory. Candidates choose temperature, initial
+mixture, sampling schedule and one or two assayed species under twelve charged budget units,
+then return a sparse support, Arrhenius rate curves, confidence or an explicit refusal. Six
+development and five held-out worlds include novel topologies, null kinetics and a saturating
+out-of-library mechanism. Four single-channel assays provide full-rank active-parameter
+sensitivities for all seven in-library worlds, with worst condition number about 6.9e3; mass is
+conserved to 5.2e-15. Always-abstain scores zero. A truth-blind classical two-temperature fit
+scores **0.481835/0.404269** development/held-out mechanism and **0.860429** development
+interpolation, while falsely claiming an in-library mechanism in half of unsupported worlds.
+
+GPT-5.5 budget one and an independent normal budget-three run remain at zero: their proposals
+are valid, but use only one or two under-informative assays and abstain on every world. A strict
+selection-blind budget-three batch with the same local identifier samples a nonzero policy:
+offline best development/held-out mechanism is **0.342579/0.363296**, development support F1 is
+**0.645292**, and false-discovery rates remain **0.5/0.5**. Another open-loop proposal reaches
+**0.710894** development interpolation and **0.746865** extrapolation but only **0.258952**
+normalized mechanism, giving a direct prediction-versus-mechanism/refusal counterexample.
+Normal and open-loop use 16,104 and 15,826 tokens respectively; the endpoint provides no
+server-side model seed. These single-run conditions are task calibration, not a causal feedback
+estimate, population result or wet-lab discovery claim.
