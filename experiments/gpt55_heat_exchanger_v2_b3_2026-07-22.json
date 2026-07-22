@@ -1,0 +1,358 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_SECURE_EVAL",
+  "evidence_scope": "MODEL_PERFORMANCE",
+  "created_at": "2026-07-22T01:41:56.209857+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "504be6b76d9c4a1130b668a1ee852ab2eda2d576",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "/home/azureuser/workspace-gzy/zyf/frontier-science/scripts/batch_evolve.py",
+      "--all",
+      "--tasks",
+      "Thermodynamics/HeatExchangerDesign",
+      "--algorithms",
+      "greedy_rewrite",
+      "--feedback-modes",
+      "normal",
+      "--seeds",
+      "1",
+      "--budget",
+      "3",
+      "--timeout",
+      "300",
+      "--llm-config",
+      "frontier_science/conf/llm/local.yaml",
+      "--workdir",
+      "runs/gpt55_heat_exchanger_v2_b3_20260722",
+      "--output",
+      "experiments/gpt55_heat_exchanger_v2_b3_2026-07-22.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "config": {
+    "tasks": [
+      "Thermodynamics/HeatExchangerDesign"
+    ],
+    "algorithms": [
+      "greedy_rewrite"
+    ],
+    "feedback_modes": [
+      "normal"
+    ],
+    "condition_order": "as_listed_for_even_seeds_reversed_for_odd_seeds",
+    "seeds": [
+      1
+    ],
+    "budget": 3,
+    "timeout_s": 300.0,
+    "work_root": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/gpt55_heat_exchanger_v2_b3_20260722",
+    "llm_condition_sha256": "5b0df4671481f6b3505155bc6c5654a64c4da5591422fb806904e7d0f44fc4d2",
+    "llm": {
+      "wire": "responses",
+      "endpoint_sha256": "b22995a1fcaf8ad713ac37716f006c717313dfdebd357ac02a077a5582650bb6",
+      "model": "gpt-5.5",
+      "max_output_tokens": 16000,
+      "temperature": null,
+      "reasoning_effort": "low",
+      "input_cost_per_million": null,
+      "output_cost_per_million": null,
+      "server_side_seed_control": false
+    }
+  },
+  "runs": [
+    {
+      "task": "Thermodynamics/HeatExchangerDesign",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 1,
+      "baseline": 0.0,
+      "best": 0.12605369117948312,
+      "accepted": 2,
+      "evaluated": 4,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/gpt55_heat_exchanger_v2_b3_20260722/Thermodynamics__HeatExchangerDesign/greedy_rewrite/normal/seed_1",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 4,
+        "budget_units": 4,
+        "best_score": 0.12605369117948312,
+        "best_so_far_auc": 0.03361163031322781,
+        "valid_rate": 0.75,
+        "accepted": 2,
+        "wall_seconds": 142.71736545488238,
+        "llm": {
+          "calls": 3,
+          "provider_usage_records": 3,
+          "input_tokens": 10060,
+          "output_tokens": 15116,
+          "total_tokens": 25176,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "Thermodynamics/HeatExchangerDesign",
+        "seed": 1,
+        "baseline_score": 0.0,
+        "budget": 3,
+        "feedback_mode": "normal",
+        "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "online_incumbent"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 1,
+        "trajectory_sha256": "5df0b2bcfc60585d8e97009b092ff74796c570e81f3a653cc9eaa8f6cc6c039f",
+        "events": [
+          {
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "104eaeb22cc15acfb50eda224ceb260e5fbb567cae918729cdb78ee5632ca4c4",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_exact_score": 0.0,
+              "heldout_exact_score": 0.0,
+              "robustness_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "development_proxy_score": 0.0,
+              "heldout_proxy_score": 0.0,
+              "development_proxy_exact_rank_correlation": 0.9807692307692308,
+              "heldout_proxy_exact_rank_correlation": 0.9965034965034965,
+              "development_false_promotion_rate": 0.0,
+              "heldout_false_promotion_rate": 0.25,
+              "heldout_feasibility_rate": 1.0,
+              "heldout_structural_validity_rate": 1.0,
+              "raw_score": 0.0
+            },
+            "algorithm_metadata": {},
+            "error": null
+          },
+          {
+            "step": 1,
+            "oracle_calls": 2,
+            "budget_units": 2,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": false,
+            "accepted": false,
+            "candidate_sha256": "6953c169cddc4864fc21569b7491987132ec8e9525df8521b8e7b909b450e735",
+            "parent_sha256": "104eaeb22cc15acfb50eda224ceb260e5fbb567cae918729cdb78ee5632ca4c4",
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 0.0,
+              "feasibility_rate": 0.0,
+              "development_exact_score": 0.0,
+              "heldout_exact_score": 0.0,
+              "robustness_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "development_proxy_score": 0.0,
+              "heldout_proxy_score": 0.0,
+              "development_proxy_exact_rank_correlation": 0.0,
+              "heldout_proxy_exact_rank_correlation": 0.0,
+              "development_false_promotion_rate": 0.0,
+              "heldout_false_promotion_rate": 0.0,
+              "heldout_feasibility_rate": 0.0,
+              "heldout_structural_validity_rate": 0.0,
+              "raw_score": 0.0
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 1
+            },
+            "error": null
+          },
+          {
+            "step": 2,
+            "oracle_calls": 3,
+            "budget_units": 3,
+            "score": 0.008392830073428118,
+            "best_score": 0.008392830073428118,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "5e2cb6ddfd6f58427ced9a75ccb51122f96e439da08428ee6e8c1e70d59ff3a2",
+            "parent_sha256": "104eaeb22cc15acfb50eda224ceb260e5fbb567cae918729cdb78ee5632ca4c4",
+            "metrics": {
+              "combined_score": 0.008392830073428118,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_exact_score": 0.008392830073428118,
+              "heldout_exact_score": 0.0040689829470745556,
+              "robustness_score": 0.003115256122713445,
+              "heldout_robustness_score": 0.004734989198689245,
+              "development_proxy_score": 0.0012106831894313525,
+              "heldout_proxy_score": 0.0,
+              "development_proxy_exact_rank_correlation": 0.9821428571428572,
+              "heldout_proxy_exact_rank_correlation": 1.0,
+              "development_false_promotion_rate": 0.0,
+              "heldout_false_promotion_rate": 0.1875,
+              "heldout_feasibility_rate": 1.0,
+              "heldout_structural_validity_rate": 1.0,
+              "raw_score": 0.008392830073428118
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 2
+            },
+            "error": null
+          },
+          {
+            "step": 3,
+            "oracle_calls": 4,
+            "budget_units": 4,
+            "score": 0.12605369117948312,
+            "best_score": 0.12605369117948312,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "5ef7f3122546589af264e52a00abb2cf5538aeac991ddcc051ce6198d562dfd8",
+            "parent_sha256": "5e2cb6ddfd6f58427ced9a75ccb51122f96e439da08428ee6e8c1e70d59ff3a2",
+            "metrics": {
+              "combined_score": 0.12605369117948312,
+              "valid": 1.0,
+              "feasibility_rate": 0.96875,
+              "development_exact_score": 0.12605369117948312,
+              "heldout_exact_score": 0.2799105449467131,
+              "robustness_score": 0.12965473087328608,
+              "heldout_robustness_score": 0.2535595138166759,
+              "development_proxy_score": 0.17278642948803255,
+              "heldout_proxy_score": 0.28856627015973413,
+              "development_proxy_exact_rank_correlation": 0.9702380952380952,
+              "heldout_proxy_exact_rank_correlation": 1.0,
+              "development_false_promotion_rate": 0.041666666666666664,
+              "heldout_false_promotion_rate": 0.125,
+              "heldout_feasibility_rate": 1.0,
+              "heldout_structural_validity_rate": 1.0,
+              "raw_score": 0.12605369117948312
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 3
+            },
+            "error": null
+          }
+        ]
+      }
+    }
+  ],
+  "aggregate": {
+    "attempt_count": 1,
+    "superseded_attempts": 0,
+    "successful_runs": 1,
+    "failed_runs": 0,
+    "by_condition": {
+      "Thermodynamics/HeatExchangerDesign|greedy_rewrite|normal": {
+        "n": 1,
+        "best_score": {
+          "n": 1,
+          "mean": 0.12605369117948312,
+          "ci95_low": 0.12605369117948312,
+          "ci95_high": 0.12605369117948312
+        },
+        "best_so_far_auc": {
+          "n": 1,
+          "mean": 0.03361163031322781,
+          "ci95_low": 0.03361163031322781,
+          "ci95_high": 0.03361163031322781
+        },
+        "budget_units": {
+          "n": 1,
+          "mean": 4.0,
+          "ci95_low": 4.0,
+          "ci95_high": 4.0
+        },
+        "oracle_calls": {
+          "n": 1,
+          "mean": 4.0,
+          "ci95_low": 4.0,
+          "ci95_high": 4.0
+        },
+        "wall_seconds": {
+          "n": 1,
+          "mean": 142.71736545488238,
+          "ci95_low": 142.71736545488238,
+          "ci95_high": 142.71736545488238
+        },
+        "total_tokens": {
+          "n": 1,
+          "mean": 25176.0,
+          "ci95_low": 25176.0,
+          "ci95_high": 25176.0
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      }
+    },
+    "overall": {
+      "best_score": {
+        "n": 1,
+        "mean": 0.12605369117948312,
+        "ci95_low": 0.12605369117948312,
+        "ci95_high": 0.12605369117948312
+      },
+      "best_so_far_auc": {
+        "n": 1,
+        "mean": 0.03361163031322781,
+        "ci95_low": 0.03361163031322781,
+        "ci95_high": 0.03361163031322781
+      },
+      "budget_units": {
+        "n": 1,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "oracle_calls": {
+        "n": 1,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "wall_seconds": {
+        "n": 1,
+        "mean": 142.71736545488238,
+        "ci95_low": 142.71736545488238,
+        "ci95_high": 142.71736545488238
+      },
+      "total_tokens": {
+        "n": 1,
+        "mean": 25176.0,
+        "ci95_low": 25176.0,
+        "ci95_high": 25176.0
+      },
+      "estimated_cost_usd": {
+        "n": 0,
+        "mean": null,
+        "ci95_low": null,
+        "ci95_high": null
+      }
+    }
+  },
+  "completed_at": "2026-07-22T01:44:18.934763+00:00",
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}
