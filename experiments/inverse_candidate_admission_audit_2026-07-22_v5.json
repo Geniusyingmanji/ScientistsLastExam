@@ -1,0 +1,196 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_ADMISSION_AUDIT",
+  "created_at": "2026-07-22T09:03:12.040621+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "bcccfc3a7a2c7778496a5a69c307968d8fc85c94",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/audit_inverse_candidates.py",
+      "--output",
+      "experiments/inverse_candidate_admission_audit_2026-07-22_v5.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "records": [
+    {
+      "task": "AtmosphericScience/RadiativeTransferFit",
+      "admission": "candidate",
+      "resolved_defect": "v2 replaces hidden-profile scoring with charged channel/view selection, five evidence-supported temperature/optical-depth parameters, null/absorber/cloud refusal and held-out noise plus viewing shifts",
+      "public_layer_count": 16,
+      "public_channel_count": 24,
+      "supported_parameter_count": 5,
+      "always_abstain_score": 0.0,
+      "classical_mechanism_score": 0.6143947499999999,
+      "classical_heldout_mechanism_score": 0.4909076666666666,
+      "classical_radiance_prediction_score": 0.85460325,
+      "classical_development_false_discovery_rate": 0.0,
+      "classical_heldout_false_discovery_rate": 0.0,
+      "full_rank_in_library_worlds": 7,
+      "in_library_world_count": 7,
+      "maximum_identifiability_condition_number": 27.9953166136132,
+      "minimum_misspecified_reduced_chi2": 4.651871892501017,
+      "noise_label_blind_checks": [
+        {
+          "split": "development",
+          "supported_noise_std": [
+            0.0006,
+            0.000672,
+            0.000744,
+            0.000816
+          ],
+          "unsupported_noise_std": [
+            0.0006,
+            0.000816
+          ],
+          "passed": true
+        },
+        {
+          "split": "heldout",
+          "supported_noise_std": [
+            0.0012,
+            0.001344,
+            0.001488
+          ],
+          "unsupported_noise_std": [
+            0.0012,
+            0.001488
+          ],
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "task": "ChemicalKinetics/ReactionMechanismFitting",
+      "admission": "candidate",
+      "resolved_defect": "v2 replaces effectively complete full-state trajectories with charged partial-species active assays, sparse topology and Arrhenius rate-curve recovery, null/model-inadequacy refusal and held-out topologies",
+      "always_abstain_score": 0.0,
+      "classical_mechanism_score": 0.4818354999999999,
+      "classical_prediction_score": 0.86042925,
+      "classical_false_discovery_rate": 0.5,
+      "full_rank_in_library_worlds": 7,
+      "in_library_world_count": 7,
+      "passed": true
+    },
+    {
+      "task": "Geophysics/GravityInversion",
+      "admission": "candidate",
+      "resolved_defect": "v2 replaces two noise-dominated duplicate grids with charged multi-height survey design, seven procedural rectangular-body topologies, null and observationally resolvable out-of-library worlds, external-field-equivalent matching and held-out noise shifts",
+      "always_abstain_score": 0.0,
+      "classical_mechanism_score": 0.7859467499999998,
+      "classical_prediction_score": 0.9907127499999999,
+      "classical_false_discovery_rate": 0.0,
+      "minimum_in_library_signal_to_noise_ratio": 22.771987295053908,
+      "full_rank_in_library_worlds": 7,
+      "in_library_world_count": 7,
+      "passed": true
+    },
+    {
+      "task": "Oceanography/OceanCurrentInversion",
+      "admission": "candidate",
+      "resolved_defect": "v2 replaces the sub-metre fixed-field inversion with charged release-position/phase/time design, a thirty-mode divergence-free current library, null and resolvable out-of-library refusal, trajectory/field extrapolation and shifted-noise held-out worlds",
+      "public_mode_count": 30,
+      "always_abstain_score": 0.0,
+      "classical_mechanism_score": 0.7067505000000001,
+      "classical_heldout_mechanism_score": 0.4056166666666666,
+      "classical_development_false_discovery_rate": 0.0,
+      "classical_heldout_false_discovery_rate": 0.0,
+      "full_rank_in_library_worlds": 7,
+      "in_library_world_count": 7,
+      "noise_label_blind_checks": [
+        {
+          "split": "development",
+          "supported_noise_std_m": [
+            125.0,
+            150.0,
+            162.5,
+            175.0
+          ],
+          "unsupported_noise_std_m": [
+            125.0,
+            175.0
+          ],
+          "passed": true
+        },
+        {
+          "split": "heldout",
+          "supported_noise_std_m": [
+            250.0,
+            300.0,
+            350.0
+          ],
+          "unsupported_noise_std_m": [
+            250.0,
+            350.0
+          ],
+          "passed": true
+        }
+      ],
+      "minimum_misspecified_approximate_velocity_residual_per_dof": 6.744173548974388,
+      "minimum_misspecified_nonlinear_trajectory_reduced_chi2": 10.527894872565367,
+      "passed": true
+    },
+    {
+      "task": "PopulationGenetics/DemographicSFS",
+      "admission": "quarantine",
+      "defect": "the five-parameter surrogate has only two locally active columns and radically different current-size/time parameters produce identical SFS",
+      "jacobian_rank": 2,
+      "parameter_count": 5,
+      "column_norms": [
+        39.04644535823588,
+        5002.9718184919375,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "alternative_sfs_exactly_identical": true,
+      "passed": true
+    },
+    {
+      "task": "Turbulence/RANSCalibration",
+      "admission": "quarantine",
+      "defect": "the claimed DNS is an analytic log-law/TKE fit and the algebraic surrogate identifies at most three combinations of five constants",
+      "jacobian_rank": 3,
+      "parameter_count": 5,
+      "singular_values": [
+        174.76054592673452,
+        5.342307369456442,
+        0.010826896914752722,
+        4.7248655869865514e-11,
+        3.4065689373295584e-11
+      ],
+      "passed": true
+    },
+    {
+      "task": "WavePropagation/SeismicWaveInversion",
+      "admission": "quarantine",
+      "defect": "the design function receives only grid dimensions, not observed waveforms or an experiment callback, so it can only guess one fixed hidden model",
+      "entrypoint_receives_observations": false,
+      "fixed_truth_score": 1.0,
+      "passed": true
+    }
+  ],
+  "summary": {
+    "task_count": 7,
+    "passed_check_count": 7,
+    "recommended_quarantine_count": 3,
+    "recommended_candidate_count": 4
+  },
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}
