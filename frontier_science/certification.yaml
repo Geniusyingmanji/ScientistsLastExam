@@ -131,8 +131,12 @@ tasks:
     citation_ids:
       - doi:10.1016/S0005-1098(99)00140-5
   FluidDynamics/LidDrivenCavity:
-    status: quarantined
-    reason: fixed centerline-only scoring accepts nonphysical field injection without boundary, divergence, momentum or pressure checks
+    status: candidate
+    reason: v2 replaces the single-Re sparse-centerline score with six steady laminar Reynolds/grid cases and two independent refinement calls; candidates return full streamfunction-vorticity fields, trusted code derives velocity and separately checks Poisson/transport/wall residuals, held-out Reynolds transfer, grid convergence and corrected Ghia Re=100 profiles; public utility is hard-gated by all PDE/wall tolerances, a valid weak baseline and a near-reference but transport-infeasible shortcut score zero, and converged continuation witnesses score approximately one, pending GPT-5.5 calibration, server-held cases, independent CFD review and higher-order replication
+    citation_ids:
+      - doi:10.1016/0021-9991(82)90058-4
+      - doi:10.1016/S0045-7930(98)00002-4
+      - doi:10.1002/fld.953
   MaterialsScience/AlloyHardnessOptimization:
     status: quarantined
     reason: claimed experimental-data surrogate is a hand-written pseudo-physical polynomial with no dataset provenance

@@ -1,0 +1,34 @@
+schema_version: 1
+scientific_question: Can one numerical program construct full steady incompressible lid-driven-cavity solutions across Reynolds numbers and grids while satisfying the governing equations, wall conditions, held-out transfer and grid convergence?
+artifact: Uniform-grid streamfunction and vorticity fields whose trusted finite differences define the complete velocity field.
+oracle:
+  model: deterministic second-order streamfunction-vorticity discretization of the steady two-dimensional incompressible Navier-Stokes equations, with Newton-Krylov Reynolds continuation references
+  feasibility: public relative Poisson, vorticity-transport and Thom wall-vorticity residual gates
+  deterministic: true
+normalization:
+  baseline: finite zero-interior-flow fields with the public moving-lid wall vorticity; executable but not a steady finite-Re solution
+  reference: converged Reynolds-continuation fields checked by independently recomputed equations, grid refinement and Ghia et al. Re=100 centerlines
+  score: development full-field velocity/streamfunction agreement times physics-residual quality, normalized above the weak baseline and hard-gated to zero unless every public PDE/wall tolerance passes; held-out Reynolds numbers, grid refinement and literature profiles remain separate
+citations:
+  - id: doi:10.1016/0021-9991(82)90058-4
+    title: High-Re solutions for incompressible flow using the Navier-Stokes equations and a multigrid method
+  - id: doi:10.1016/S0045-7930(98)00002-4
+    title: Benchmark spectral results on the lid-driven cavity flow
+  - id: doi:10.1002/fld.953
+    title: Numerical solutions of 2-D steady incompressible driven cavity flow at high Reynolds numbers
+invariants:
+  - velocity is derived independently from streamfunction and is discretely divergence-free in the interior
+  - streamfunction satisfies impermeable-wall values and vorticity satisfies the public Thom moving/stationary-wall formulas
+  - reference fields satisfy independently recomputed discrete Poisson and steady vorticity-transport equations
+  - Re=100 trusted centerlines agree with the Ghia et al. tables within a documented coarse-grid tolerance
+  - refinement references converge on a common physical grid rather than comparing array indices
+  - a centerline or stripe injection that does not solve the full field receives no useful score
+  - high similarity to a trusted field cannot bypass the public PDE feasibility gates
+  - finite weak baseline fields are valid but have zero normalized utility and zero physics feasibility
+  - wrong shape, non-finite values, field-bound violations and candidate resource failures fail closed
+  - development selection is separated from held-out Reynolds-number and grid-refinement validation
+  - each Reynolds/grid case receives a fresh candidate process and private tmpfs
+known_shortcuts: The task covers a controlled two-dimensional steady laminar square cavity on second-order uniform grids. It omits three-dimensionality, transition, turbulence, thermal coupling, moving geometry and experimental uncertainty. Public deterministic cases permit Reynolds/grid-specific branching and require future server-held procedural cases. The trusted continuation reference is a numerical witness, not a proof of exact continuum truth; broader CFD claims require independent high-order, manufactured-solution and experimental validation.
+review:
+  domain: pending_external
+  evaluator_security: automated_full_field_residual_boundary_literature_grid_refinement_metric_sealing_and_fresh_session_tests

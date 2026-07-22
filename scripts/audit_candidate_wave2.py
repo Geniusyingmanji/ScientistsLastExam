@@ -138,47 +138,110 @@ def _pendulum_audit():
     }
 
 
-def _interpolation_matrix(points, grid):
-    matrix = np.zeros((len(points), len(grid)), dtype=float)
-    for row, value in enumerate(points):
-        if value <= grid[0]:
-            matrix[row, 0] = 1.0
-        elif value >= grid[-1]:
-            matrix[row, -1] = 1.0
-        else:
-            left = int(np.searchsorted(grid, value) - 1)
-            weight = (value - grid[left]) / (grid[left + 1] - grid[left])
-            matrix[row, left] = 1.0 - weight
-            matrix[row, left + 1] = weight
-    return matrix
-
-
 def _cavity_audit():
     oracle = _oracle("FluidDynamics/LidDrivenCavity")
-    size = oracle.INSTANCES[0]["N"]
-    grid = np.linspace(0.0, 1.0, size)
-    u_map = _interpolation_matrix(oracle.GHIA_RE100_U[:, 0], grid)
-    v_map = _interpolation_matrix(oracle.GHIA_RE100_V[:, 0], grid)
-    u_profile = np.linalg.lstsq(u_map, oracle.GHIA_RE100_U[:, 1], rcond=None)[0]
-    v_profile = np.linalg.lstsq(v_map, oracle.GHIA_RE100_V[:, 1], rcond=None)[0]
+    baseline = oracle.evaluate(
+        lambda _reynolds, n: oracle._weak_baseline_fields(int(n))
+    )
+    reference = oracle.evaluate(
+        lambda reynolds, n: tuple(
+            field.copy()
+            for field in oracle._reference_solution(float(reynolds), int(n))
+        )
+    )
 
-    def profile_injection(_reynolds, n):
-        u = np.zeros((n, n), dtype=float)
-        v = np.zeros((n, n), dtype=float)
-        pressure = np.zeros((n, n), dtype=float)
-        u[:, n // 2] = u_profile
-        v[n // 2, :] = v_profile
-        return u, v, pressure
+    def nonphysical_injection(_reynolds, n):
+        streamfunction, vorticity = oracle._weak_baseline_fields(int(n))
+        streamfunction[:, int(n) // 2] = np.linspace(0.0, -0.05, int(n))
+        return streamfunction, vorticity
 
-    metrics = oracle.evaluate(profile_injection)
+    injection = oracle.evaluate(nonphysical_injection)
+
+    def attenuated_reference(reynolds, n):
+        streamfunction, vorticity = oracle._reference_solution(
+            float(reynolds), int(n)
+        )
+        _, baseline_vorticity = oracle._weak_baseline_fields(int(n))
+        attenuation = 0.95
+        return (
+            attenuation * streamfunction,
+            attenuation * vorticity
+            + (1.0 - attenuation) * baseline_vorticity,
+        )
+
+    attenuation_shortcut = oracle.evaluate(attenuated_reference)
+    reference_grid_differences = [
+        float(row["reference_grid_difference"])
+        for row in reference["grid_refinement"]
+    ]
     return {
         "task": "FluidDynamics/LidDrivenCavity",
-        "admission": "quarantine",
-        "defect": "centerline-only scoring accepts fields that violate boundary conditions and never solve Navier-Stokes",
-        "profile_injection_score": float(metrics["combined_score"]),
-        "top_wall_max_error": 1.0,
-        "pressure_is_unchecked": True,
-        "passed": metrics["combined_score"] > 0.99,
+        "admission": "candidate",
+        "superseded_v1_defect": (
+            "the removed v1 task used one Re/grid and scored only two sparse centerlines, "
+            "so injected nonphysical velocity stripes could score above 0.99 while boundary, "
+            "continuity, momentum and pressure were unchecked"
+        ),
+        "resolved_defect": (
+            "v2 returns streamfunction/vorticity, spans six Reynolds/grid cases plus two "
+            "independent refinement calls, derives velocity in trusted code, and separately "
+            "checks full-field agreement, Poisson/transport/wall residuals, held-out transfer, "
+            "grid convergence and corrected Ghia Re=100 profiles"
+        ),
+        "baseline_score": float(baseline["combined_score"]),
+        "baseline_valid": bool(baseline["valid"]),
+        "baseline_physics_feasibility": float(baseline["feasibility_rate"]),
+        "reference_score": float(reference["combined_score"]),
+        "reference_heldout_score": float(reference["heldout_policy_score"]),
+        "reference_grid_score": float(reference["robustness_score"]),
+        "reference_heldout_grid_score": float(reference["heldout_robustness_score"]),
+        "reference_development_physics_feasibility": float(
+            reference["development_physics_feasibility_rate"]
+        ),
+        "reference_heldout_physics_feasibility": float(
+            reference["heldout_physics_feasibility_rate"]
+        ),
+        "maximum_reference_grid_difference": max(reference_grid_differences),
+        "reference_ghia_re100": reference["ghia_re100"],
+        "nonphysical_injection_score": float(injection["combined_score"]),
+        "nonphysical_injection_physics_feasibility": float(
+            injection["feasibility_rate"]
+        ),
+        "attenuated_reference_ungated_score": float(
+            attenuation_shortcut["ungated_development_score"]
+        ),
+        "attenuated_reference_gated_score": float(
+            attenuation_shortcut["combined_score"]
+        ),
+        "attenuated_reference_physics_feasibility": float(
+            attenuation_shortcut["feasibility_rate"]
+        ),
+        "instance_count": len(oracle.INSTANCES),
+        "refinement_pair_count": len(oracle.GRID_REFINEMENT_SPECS),
+        "rebuild_passed": True,
+        "passed": bool(
+            oracle.CAVITY_V2
+            and len(oracle.INSTANCES) == 6
+            and len(oracle.GRID_REFINEMENT_SPECS) == 2
+            and baseline["valid"] == 1.0
+            and baseline["combined_score"] == 0.0
+            and baseline["feasibility_rate"] == 0.0
+            and reference["combined_score"] > 0.999
+            and reference["heldout_policy_score"] > 0.999
+            and reference["robustness_score"] > 0.999
+            and reference["heldout_robustness_score"] > 0.999
+            and reference["development_physics_feasibility_rate"] == 1.0
+            and reference["heldout_physics_feasibility_rate"] == 1.0
+            and max(reference_grid_differences) < 0.08
+            and reference["ghia_re100"]["u_centerline_rmse"] < 0.012
+            and reference["ghia_re100"]["v_centerline_rmse"] < 0.015
+            and injection["valid"] == 1.0
+            and injection["combined_score"] == 0.0
+            and injection["feasibility_rate"] == 0.0
+            and attenuation_shortcut["ungated_development_score"] > 0.80
+            and attenuation_shortcut["combined_score"] == 0.0
+            and attenuation_shortcut["feasibility_rate"] == 0.0
+        ),
     }
 
 
