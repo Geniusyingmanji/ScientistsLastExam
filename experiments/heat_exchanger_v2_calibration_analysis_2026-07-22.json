@@ -1,0 +1,1367 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_DERIVED_EVIDENCE",
+  "evidence_scope": "HEAT_EXCHANGER_MULTIFIDELITY_DIAGNOSTIC_NOT_CAUSAL_POPULATION_OR_EXPERIMENTAL_EVIDENCE",
+  "created_at": "2026-07-22T01:57:34.077613+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "249e2f4912a6abf295f5ff419d91352264043d38",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/analyze_heat_exchanger_v2_calibrations.py",
+      "--output",
+      "experiments/heat_exchanger_v2_calibration_analysis_2026-07-22.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "input_task_source_revision": "453f757d95d78c15770d88982314e70909b08a0d",
+  "input_model_source_revision": "504be6b76d9c4a1130b668a1ee852ab2eda2d576",
+  "input_source_scope_equivalent": true,
+  "task_calibration": {
+    "report": "experiments/heat_exchanger_v2_calibration_2026-07-22.json",
+    "report_sha256": "b60f135066b341515c9ec3e53cc43937d8bfdfa840a7bf427e7a908e47859859",
+    "source_revision": "453f757d95d78c15770d88982314e70909b08a0d",
+    "policies": {
+      "baseline": {
+        "metrics": {
+          "combined_score": 0.0,
+          "development_proxy_score": 0.0,
+          "heldout_exact_score": 0.0,
+          "heldout_proxy_score": 0.0,
+          "robustness_score": 0.0,
+          "heldout_robustness_score": 0.0,
+          "feasibility_rate": 1.0,
+          "heldout_feasibility_rate": 1.0,
+          "development_false_promotion_rate": 0.0,
+          "heldout_false_promotion_rate": 0.25,
+          "development_proxy_exact_rank_correlation": 0.9807692307692308,
+          "heldout_proxy_exact_rank_correlation": 0.9965034965034965,
+          "valid": 1.0
+        },
+        "per_instance": [
+          {
+            "name": "dev_water_process",
+            "split": "development",
+            "score": 0.0,
+            "proxy_score": 0.0,
+            "robustness_score": 0.0,
+            "exact_feasibility_rate": 1.0,
+            "proxy_feasibility_rate": 1.0,
+            "false_promotion_rate": 0.0,
+            "proxy_exact_rank_correlation": 0.951048951048951,
+            "raw_exact_hypervolume": 0.5155380893203289,
+            "raw_proxy_hypervolume": 0.5613297828149204,
+            "raw_shifted_hypervolumes": [
+              0.5089424554158373,
+              0.5274285147480914,
+              0.462127633354297
+            ]
+          },
+          {
+            "name": "heldout_viscous_oil",
+            "split": "heldout",
+            "score": 0.0,
+            "proxy_score": 0.0,
+            "robustness_score": 0.0,
+            "exact_feasibility_rate": 1.0,
+            "proxy_feasibility_rate": 1.0,
+            "false_promotion_rate": 0.0,
+            "proxy_exact_rank_correlation": 1.0,
+            "raw_exact_hypervolume": 0.19244291487448495,
+            "raw_proxy_hypervolume": 0.19482205964049332,
+            "raw_shifted_hypervolumes": [
+              0.1910711918396159,
+              0.1922473061994921,
+              0.14489199620831408
+            ]
+          },
+          {
+            "name": "dev_oil_cooler",
+            "split": "development",
+            "score": 0.0,
+            "proxy_score": 0.0,
+            "robustness_score": 0.0,
+            "exact_feasibility_rate": 1.0,
+            "proxy_feasibility_rate": 1.0,
+            "false_promotion_rate": 0.0,
+            "proxy_exact_rank_correlation": 1.0,
+            "raw_exact_hypervolume": 0.15710452408747197,
+            "raw_proxy_hypervolume": 0.15928153495380198,
+            "raw_shifted_hypervolumes": [
+              0.1560047020978782,
+              0.15693803536203385,
+              0.11760906109480519
+            ]
+          },
+          {
+            "name": "dev_glycol_recovery",
+            "split": "development",
+            "score": 0.0,
+            "proxy_score": 0.0,
+            "robustness_score": 0.0,
+            "exact_feasibility_rate": 1.0,
+            "proxy_feasibility_rate": 1.0,
+            "false_promotion_rate": 0.0,
+            "proxy_exact_rank_correlation": 0.986013986013986,
+            "raw_exact_hypervolume": 0.4763163767993251,
+            "raw_proxy_hypervolume": 0.5203986027428213,
+            "raw_shifted_hypervolumes": [
+              0.4651006585351168,
+              0.4857900076360162,
+              0.48253254043594024
+            ]
+          },
+          {
+            "name": "heldout_brine_recovery",
+            "split": "heldout",
+            "score": 0.0,
+            "proxy_score": 0.0,
+            "robustness_score": 0.0,
+            "exact_feasibility_rate": 1.0,
+            "proxy_feasibility_rate": 1.0,
+            "false_promotion_rate": 0.5,
+            "proxy_exact_rank_correlation": 0.993006993006993,
+            "raw_exact_hypervolume": 0.3371605828497717,
+            "raw_proxy_hypervolume": 0.2903850094653687,
+            "raw_shifted_hypervolumes": [
+              0.3290613555448279,
+              0.3495274468714834,
+              0.36286976693473305
+            ]
+          },
+          {
+            "name": "dev_high_flow_water",
+            "split": "development",
+            "score": 0.0,
+            "proxy_score": 0.0,
+            "robustness_score": 0.0,
+            "exact_feasibility_rate": 1.0,
+            "proxy_feasibility_rate": 1.0,
+            "false_promotion_rate": 0.0,
+            "proxy_exact_rank_correlation": 0.986013986013986,
+            "raw_exact_hypervolume": 0.5454820913651016,
+            "raw_proxy_hypervolume": 0.551302911501287,
+            "raw_shifted_hypervolumes": [
+              0.5399825682965803,
+              0.5507266039661676,
+              0.5684517654762477
+            ]
+          }
+        ]
+      },
+      "proxy_only_classical_policy": {
+        "metrics": {
+          "combined_score": 0.996768090229897,
+          "development_proxy_score": 1.0,
+          "heldout_exact_score": 0.9996946795321742,
+          "heldout_proxy_score": 1.0,
+          "robustness_score": 0.9419903892965057,
+          "heldout_robustness_score": 0.9682112649143426,
+          "feasibility_rate": 0.9479166666666666,
+          "heldout_feasibility_rate": 1.0,
+          "development_false_promotion_rate": 0.09375,
+          "heldout_false_promotion_rate": 0.020833333333333332,
+          "development_proxy_exact_rank_correlation": 0.8218124057475416,
+          "heldout_proxy_exact_rank_correlation": 0.9939130434782608,
+          "valid": 1.0
+        },
+        "per_instance": [
+          {
+            "name": "dev_water_process",
+            "split": "development",
+            "score": 0.9969389478314281,
+            "proxy_score": 1.0,
+            "robustness_score": 0.936501248867644,
+            "exact_feasibility_rate": 0.9166666666666666,
+            "proxy_feasibility_rate": 1.0,
+            "false_promotion_rate": 0.16666666666666666,
+            "proxy_exact_rank_correlation": 0.6175255636305587,
+            "raw_exact_hypervolume": 0.8235537656227877,
+            "raw_proxy_hypervolume": 0.8403226745579672,
+            "raw_shifted_hypervolumes": [
+              0.781516089755652,
+              0.8165601386518292,
+              0.6761467663578383
+            ]
+          },
+          {
+            "name": "heldout_viscous_oil",
+            "split": "heldout",
+            "score": 0.9999709102960264,
+            "proxy_score": 1.0,
+            "robustness_score": 1.0,
+            "exact_feasibility_rate": 1.0,
+            "proxy_feasibility_rate": 1.0,
+            "false_promotion_rate": 0.0,
+            "proxy_exact_rank_correlation": 0.9973913043478261,
+            "raw_exact_hypervolume": 0.3568030341592046,
+            "raw_proxy_hypervolume": 0.35813097716949993,
+            "raw_shifted_hypervolumes": [
+              0.35343320973019504,
+              0.3564061212021855,
+              0.2758176200856486
+            ]
+          },
+          {
+            "name": "dev_oil_cooler",
+            "split": "development",
+            "score": 0.9964195219266834,
+            "proxy_score": 1.0,
+            "robustness_score": 0.998764680191068,
+            "exact_feasibility_rate": 1.0,
+            "proxy_feasibility_rate": 1.0,
+            "false_promotion_rate": 0.0,
+            "proxy_exact_rank_correlation": 0.9982608695652174,
+            "raw_exact_hypervolume": 0.29741724892606264,
+            "raw_proxy_hypervolume": 0.2993086554902557,
+            "raw_shifted_hypervolumes": [
+              0.29455829094005576,
+              0.2970456817668658,
+              0.22737398377008775
+            ]
+          },
+          {
+            "name": "dev_glycol_recovery",
+            "split": "development",
+            "score": 0.9972462455853031,
+            "proxy_score": 1.0,
+            "robustness_score": 0.8733369189089156,
+            "exact_feasibility_rate": 0.9583333333333334,
+            "proxy_feasibility_rate": 1.0,
+            "false_promotion_rate": 0.08333333333333333,
+            "proxy_exact_rank_correlation": 0.9408695652173913,
+            "raw_exact_hypervolume": 0.778139878012352,
+            "raw_proxy_hypervolume": 0.8004603835444539,
+            "raw_shifted_hypervolumes": [
+              0.7378821905904842,
+              0.7726488387387418,
+              0.7197571703360638
+            ]
+          },
+          {
+            "name": "heldout_brine_recovery",
+            "split": "heldout",
+            "score": 0.999418448768322,
+            "proxy_score": 1.0,
+            "robustness_score": 0.9364225298286851,
+            "exact_feasibility_rate": 1.0,
+            "proxy_feasibility_rate": 1.0,
+            "false_promotion_rate": 0.041666666666666664,
+            "proxy_exact_rank_correlation": 0.9904347826086957,
+            "raw_exact_hypervolume": 0.841377843627583,
+            "raw_proxy_hypervolume": 0.8322589045473181,
+            "raw_shifted_hypervolumes": [
+              0.791300360007417,
+              0.8400475362364497,
+              0.7719448427908521
+            ]
+          },
+          {
+            "name": "dev_high_flow_water",
+            "split": "development",
+            "score": 0.9964676455761734,
+            "proxy_score": 1.0,
+            "robustness_score": 0.9593587092183952,
+            "exact_feasibility_rate": 0.9166666666666666,
+            "proxy_feasibility_rate": 1.0,
+            "false_promotion_rate": 0.125,
+            "proxy_exact_rank_correlation": 0.7305936245769991,
+            "raw_exact_hypervolume": 0.8144346904762112,
+            "raw_proxy_hypervolume": 0.8220000310127936,
+            "raw_shifted_hypervolumes": [
+              0.7840263556819003,
+              0.8098071909417753,
+              0.8120581285774344
+            ]
+          }
+        ]
+      },
+      "nominal_reference_policy": {
+        "metrics": {
+          "combined_score": 1.0,
+          "development_proxy_score": 1.0,
+          "heldout_exact_score": 1.0,
+          "heldout_proxy_score": 1.0,
+          "robustness_score": 0.9817449197666842,
+          "heldout_robustness_score": 0.9700962394066586,
+          "feasibility_rate": 1.0,
+          "heldout_feasibility_rate": 1.0,
+          "development_false_promotion_rate": 0.0,
+          "heldout_false_promotion_rate": 0.0,
+          "development_proxy_exact_rank_correlation": 0.9719565217391304,
+          "heldout_proxy_exact_rank_correlation": 0.9934782608695651,
+          "valid": 1.0
+        },
+        "per_instance": [
+          {
+            "name": "dev_water_process",
+            "split": "development",
+            "score": 1.0,
+            "proxy_score": 1.0,
+            "robustness_score": 0.9767655242680804,
+            "exact_feasibility_rate": 1.0,
+            "proxy_feasibility_rate": 1.0,
+            "false_promotion_rate": 0.0,
+            "proxy_exact_rank_correlation": 0.9895652173913043,
+            "raw_exact_hypervolume": 0.8244995126576996,
+            "raw_proxy_hypervolume": 0.8395404150196933,
+            "raw_shifted_hypervolumes": [
+              0.7849993120919496,
+              0.8198160611063242,
+              0.6853483828240595
+            ]
+          },
+          {
+            "name": "heldout_viscous_oil",
+            "split": "heldout",
+            "score": 1.0,
+            "proxy_score": 1.0,
+            "robustness_score": 0.9999727017244876,
+            "exact_feasibility_rate": 1.0,
+            "proxy_feasibility_rate": 1.0,
+            "false_promotion_rate": 0.0,
+            "proxy_exact_rank_correlation": 0.9965217391304347,
+            "raw_exact_hypervolume": 0.35680781548550705,
+            "raw_proxy_hypervolume": 0.35812094595737265,
+            "raw_shifted_hypervolumes": [
+              0.35343880835024605,
+              0.35640831513373805,
+              0.27581404604189635
+            ]
+          },
+          {
+            "name": "dev_oil_cooler",
+            "split": "development",
+            "score": 1.0,
+            "proxy_score": 1.0,
+            "robustness_score": 0.9936630231299204,
+            "exact_feasibility_rate": 1.0,
+            "proxy_feasibility_rate": 1.0,
+            "false_promotion_rate": 0.0,
+            "proxy_exact_rank_correlation": 0.9043478260869565,
+            "raw_exact_hypervolume": 0.29792144080873517,
+            "raw_proxy_hypervolume": 0.2984978661661053,
+            "raw_shifted_hypervolumes": [
+              0.2950824203162122,
+              0.298125011872319,
+              0.22681330816357195
+            ]
+          },
+          {
+            "name": "dev_glycol_recovery",
+            "split": "development",
+            "score": 1.0,
+            "proxy_score": 1.0,
+            "robustness_score": 0.9802273945950785,
+            "exact_feasibility_rate": 1.0,
+            "proxy_feasibility_rate": 1.0,
+            "false_promotion_rate": 0.0,
+            "proxy_exact_rank_correlation": 0.9982608695652174,
+            "raw_exact_hypervolume": 0.7789733209083308,
+            "raw_proxy_hypervolume": 0.7996489628111664,
+            "raw_shifted_hypervolumes": [
+              0.7397316674451118,
+              0.7771597779645371,
+              0.7487918452541669
+            ]
+          },
+          {
+            "name": "heldout_brine_recovery",
+            "split": "heldout",
+            "score": 1.0,
+            "proxy_score": 1.0,
+            "robustness_score": 0.9402197770888294,
+            "exact_feasibility_rate": 1.0,
+            "proxy_feasibility_rate": 1.0,
+            "false_promotion_rate": 0.0,
+            "proxy_exact_rank_correlation": 0.9904347826086957,
+            "raw_exact_hypervolume": 0.8416712424230526,
+            "raw_proxy_hypervolume": 0.832002157204826,
+            "raw_shifted_hypervolumes": [
+              0.7921172028699947,
+              0.8405764879304147,
+              0.7736036657703378
+            ]
+          },
+          {
+            "name": "dev_high_flow_water",
+            "split": "development",
+            "score": 1.0,
+            "proxy_score": 1.0,
+            "robustness_score": 0.9763237370736574,
+            "exact_feasibility_rate": 1.0,
+            "proxy_feasibility_rate": 1.0,
+            "false_promotion_rate": 0.0,
+            "proxy_exact_rank_correlation": 0.9956521739130435,
+            "raw_exact_hypervolume": 0.8153880941391274,
+            "raw_proxy_hypervolume": 0.8205154693658888,
+            "raw_shifted_hypervolumes": [
+              0.7822841007345908,
+              0.8124860222589406,
+              0.816365994546669
+            ]
+          }
+        ]
+      },
+      "robust_reference_policy": {
+        "metrics": {
+          "combined_score": 0.9915646658885515,
+          "development_proxy_score": 0.9916927926703982,
+          "heldout_exact_score": 0.9781533886814857,
+          "heldout_proxy_score": 0.9860501359041642,
+          "robustness_score": 1.0,
+          "heldout_robustness_score": 1.0,
+          "feasibility_rate": 1.0,
+          "heldout_feasibility_rate": 1.0,
+          "development_false_promotion_rate": 0.010416666666666666,
+          "heldout_false_promotion_rate": 0.023809523809523808,
+          "development_proxy_exact_rank_correlation": 0.9928260869565217,
+          "heldout_proxy_exact_rank_correlation": 0.9960869565217392,
+          "valid": 1.0
+        },
+        "per_instance": [
+          {
+            "name": "dev_water_process",
+            "split": "development",
+            "score": 0.9862237385501083,
+            "proxy_score": 0.9818638954161373,
+            "robustness_score": 1.0,
+            "exact_feasibility_rate": 1.0,
+            "proxy_feasibility_rate": 1.0,
+            "false_promotion_rate": 0.0,
+            "proxy_exact_rank_correlation": 0.991304347826087,
+            "raw_exact_hypervolume": 0.8202431793118733,
+            "raw_proxy_hypervolume": 0.834494757897685,
+            "raw_shifted_hypervolumes": [
+              0.7846261730573458,
+              0.8193674873916849,
+              0.6906581700325121
+            ]
+          },
+          {
+            "name": "heldout_viscous_oil",
+            "split": "heldout",
+            "score": 0.9999709102960264,
+            "proxy_score": 1.0,
+            "robustness_score": 1.0,
+            "exact_feasibility_rate": 1.0,
+            "proxy_feasibility_rate": 1.0,
+            "false_promotion_rate": 0.0,
+            "proxy_exact_rank_correlation": 0.9973913043478261,
+            "raw_exact_hypervolume": 0.3568030341592046,
+            "raw_proxy_hypervolume": 0.35813097716949993,
+            "raw_shifted_hypervolumes": [
+              0.35343320973019504,
+              0.3564061212021855,
+              0.2758176200856486
+            ]
+          },
+          {
+            "name": "dev_oil_cooler",
+            "split": "development",
+            "score": 0.9951951639314632,
+            "proxy_score": 1.0,
+            "robustness_score": 1.0,
+            "exact_feasibility_rate": 1.0,
+            "proxy_feasibility_rate": 1.0,
+            "false_promotion_rate": 0.0,
+            "proxy_exact_rank_correlation": 0.991304347826087,
+            "raw_exact_hypervolume": 0.2972448386082127,
+            "raw_proxy_hypervolume": 0.29905395683597097,
+            "raw_shifted_hypervolumes": [
+              0.29439238972540543,
+              0.2971160230111221,
+              0.22750974626349182
+            ]
+          },
+          {
+            "name": "dev_glycol_recovery",
+            "split": "development",
+            "score": 0.9883674422220868,
+            "proxy_score": 0.9884957612045616,
+            "robustness_score": 1.0,
+            "exact_feasibility_rate": 1.0,
+            "proxy_feasibility_rate": 1.0,
+            "false_promotion_rate": 0.0,
+            "proxy_exact_rank_correlation": 0.9939130434782608,
+            "raw_exact_hypervolume": 0.7754526465190962,
+            "raw_proxy_hypervolume": 0.796436399985228,
+            "raw_shifted_hypervolumes": [
+              0.7387662894181951,
+              0.7758253114610241,
+              0.7541626808363884
+            ]
+          },
+          {
+            "name": "heldout_brine_recovery",
+            "split": "heldout",
+            "score": 0.9563358670669451,
+            "proxy_score": 0.9721002718083284,
+            "robustness_score": 1.0,
+            "exact_feasibility_rate": 1.0,
+            "proxy_feasibility_rate": 1.0,
+            "false_promotion_rate": 0.047619047619047616,
+            "proxy_exact_rank_correlation": 0.9947826086956522,
+            "raw_exact_hypervolume": 0.8196422219173016,
+            "raw_proxy_hypervolume": 0.8168911859989466,
+            "raw_shifted_hypervolumes": [
+              0.7763333293620885,
+              0.8212632217260447,
+              0.7997185855240911
+            ]
+          },
+          {
+            "name": "dev_high_flow_water",
+            "split": "development",
+            "score": 0.9964723188505479,
+            "proxy_score": 0.9964115140608938,
+            "robustness_score": 1.0,
+            "exact_feasibility_rate": 1.0,
+            "proxy_feasibility_rate": 1.0,
+            "false_promotion_rate": 0.041666666666666664,
+            "proxy_exact_rank_correlation": 0.9947826086956522,
+            "raw_exact_hypervolume": 0.8144359518210175,
+            "raw_proxy_hypervolume": 0.8195494038873609,
+            "raw_shifted_hypervolumes": [
+              0.7862955413777916,
+              0.8136009504768174,
+              0.8223780192960068
+            ]
+          }
+        ]
+      }
+    },
+    "maximum_independent_proxy_error": 1.1641532182693481e-10,
+    "maximum_anchor_error": 0.0,
+    "maximum_10_vs_40_heat_duty_relative_error": 0.006001280192422767
+  },
+  "records": {
+    "budget_one": {
+      "label": "budget_one",
+      "report": "experiments/gpt55_heat_exchanger_v2_b1_2026-07-22.json",
+      "report_sha256": "33a9abf7af26deee0c6fe558bf6674ac47e52cc6ff9cd11d2229c43bf2a2d46d",
+      "trajectory_sha256": "dec6b8833fba443f238deb249bc1975bc85efbb9d85c0dd307b4f458687e1741",
+      "source_revision": "504be6b76d9c4a1130b668a1ee852ab2eda2d576",
+      "feedback_mode": "normal",
+      "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+      "selection_policy": "online_incumbent",
+      "seed": 0,
+      "proposal_budget": 1,
+      "server_side_seed_control": false,
+      "oracle_calls": 2,
+      "total_tokens": 6476,
+      "best_score": 0.0,
+      "selected_step": 0,
+      "selected_candidate_sha256": "104eaeb22cc15acfb50eda224ceb260e5fbb567cae918729cdb78ee5632ca4c4",
+      "selected_metrics": {
+        "combined_score": 0.0,
+        "development_proxy_score": 0.0,
+        "heldout_exact_score": 0.0,
+        "heldout_proxy_score": 0.0,
+        "robustness_score": 0.0,
+        "heldout_robustness_score": 0.0,
+        "feasibility_rate": 1.0,
+        "heldout_feasibility_rate": 1.0,
+        "development_false_promotion_rate": 0.0,
+        "heldout_false_promotion_rate": 0.25,
+        "development_proxy_exact_rank_correlation": 0.9807692307692308,
+        "heldout_proxy_exact_rank_correlation": 0.9965034965034965,
+        "valid": 1.0
+      },
+      "selected_per_instance": [
+        {
+          "name": "dev_water_process",
+          "split": "development",
+          "score": 0.0,
+          "proxy_score": 0.0,
+          "robustness_score": 0.0,
+          "exact_feasibility_rate": 1.0,
+          "proxy_feasibility_rate": 1.0,
+          "false_promotion_rate": 0.0,
+          "proxy_exact_rank_correlation": 0.951048951048951,
+          "raw_exact_hypervolume": 0.5155380893203289,
+          "raw_proxy_hypervolume": 0.5613297828149204,
+          "raw_shifted_hypervolumes": [
+            0.5089424554158373,
+            0.5274285147480914,
+            0.462127633354297
+          ]
+        },
+        {
+          "name": "heldout_viscous_oil",
+          "split": "heldout",
+          "score": 0.0,
+          "proxy_score": 0.0,
+          "robustness_score": 0.0,
+          "exact_feasibility_rate": 1.0,
+          "proxy_feasibility_rate": 1.0,
+          "false_promotion_rate": 0.0,
+          "proxy_exact_rank_correlation": 1.0,
+          "raw_exact_hypervolume": 0.19244291487448495,
+          "raw_proxy_hypervolume": 0.19482205964049332,
+          "raw_shifted_hypervolumes": [
+            0.1910711918396159,
+            0.1922473061994921,
+            0.14489199620831408
+          ]
+        },
+        {
+          "name": "dev_oil_cooler",
+          "split": "development",
+          "score": 0.0,
+          "proxy_score": 0.0,
+          "robustness_score": 0.0,
+          "exact_feasibility_rate": 1.0,
+          "proxy_feasibility_rate": 1.0,
+          "false_promotion_rate": 0.0,
+          "proxy_exact_rank_correlation": 1.0,
+          "raw_exact_hypervolume": 0.15710452408747197,
+          "raw_proxy_hypervolume": 0.15928153495380198,
+          "raw_shifted_hypervolumes": [
+            0.1560047020978782,
+            0.15693803536203385,
+            0.11760906109480519
+          ]
+        },
+        {
+          "name": "dev_glycol_recovery",
+          "split": "development",
+          "score": 0.0,
+          "proxy_score": 0.0,
+          "robustness_score": 0.0,
+          "exact_feasibility_rate": 1.0,
+          "proxy_feasibility_rate": 1.0,
+          "false_promotion_rate": 0.0,
+          "proxy_exact_rank_correlation": 0.986013986013986,
+          "raw_exact_hypervolume": 0.4763163767993251,
+          "raw_proxy_hypervolume": 0.5203986027428213,
+          "raw_shifted_hypervolumes": [
+            0.4651006585351168,
+            0.4857900076360162,
+            0.48253254043594024
+          ]
+        },
+        {
+          "name": "heldout_brine_recovery",
+          "split": "heldout",
+          "score": 0.0,
+          "proxy_score": 0.0,
+          "robustness_score": 0.0,
+          "exact_feasibility_rate": 1.0,
+          "proxy_feasibility_rate": 1.0,
+          "false_promotion_rate": 0.5,
+          "proxy_exact_rank_correlation": 0.993006993006993,
+          "raw_exact_hypervolume": 0.3371605828497717,
+          "raw_proxy_hypervolume": 0.2903850094653687,
+          "raw_shifted_hypervolumes": [
+            0.3290613555448279,
+            0.3495274468714834,
+            0.36286976693473305
+          ]
+        },
+        {
+          "name": "dev_high_flow_water",
+          "split": "development",
+          "score": 0.0,
+          "proxy_score": 0.0,
+          "robustness_score": 0.0,
+          "exact_feasibility_rate": 1.0,
+          "proxy_feasibility_rate": 1.0,
+          "false_promotion_rate": 0.0,
+          "proxy_exact_rank_correlation": 0.986013986013986,
+          "raw_exact_hypervolume": 0.5454820913651016,
+          "raw_proxy_hypervolume": 0.551302911501287,
+          "raw_shifted_hypervolumes": [
+            0.5399825682965803,
+            0.5507266039661676,
+            0.5684517654762477
+          ]
+        }
+      ],
+      "invalid_proposals": [
+        {
+          "step": 1,
+          "reasons": [
+            "ValueError: design variable outside public bounds"
+          ]
+        }
+      ],
+      "trajectory": [
+        {
+          "step": 0,
+          "accepted": true,
+          "candidate_sha256": "104eaeb22cc15acfb50eda224ceb260e5fbb567cae918729cdb78ee5632ca4c4",
+          "parent_sha256": null,
+          "combined_score": 0.0,
+          "development_proxy_score": 0.0,
+          "heldout_exact_score": 0.0,
+          "heldout_proxy_score": 0.0,
+          "robustness_score": 0.0,
+          "heldout_robustness_score": 0.0,
+          "feasibility_rate": 1.0,
+          "heldout_feasibility_rate": 1.0,
+          "development_false_promotion_rate": 0.0,
+          "heldout_false_promotion_rate": 0.25,
+          "development_proxy_exact_rank_correlation": 0.9807692307692308,
+          "heldout_proxy_exact_rank_correlation": 0.9965034965034965,
+          "valid": 1.0
+        },
+        {
+          "step": 1,
+          "accepted": false,
+          "candidate_sha256": "b858fd078d658023b887a80a452f30b2105ac746e928c109d76fb8130ebab1aa",
+          "parent_sha256": "104eaeb22cc15acfb50eda224ceb260e5fbb567cae918729cdb78ee5632ca4c4",
+          "combined_score": 0.0,
+          "development_proxy_score": 0.0,
+          "heldout_exact_score": 0.0,
+          "heldout_proxy_score": 0.0,
+          "robustness_score": 0.0,
+          "heldout_robustness_score": 0.0,
+          "feasibility_rate": 0.0,
+          "heldout_feasibility_rate": 0.0,
+          "development_false_promotion_rate": 0.0,
+          "heldout_false_promotion_rate": 0.0,
+          "development_proxy_exact_rank_correlation": 0.0,
+          "heldout_proxy_exact_rank_correlation": 0.0,
+          "valid": 0.0
+        }
+      ]
+    },
+    "normal_budget_three": {
+      "label": "normal_budget_three",
+      "report": "experiments/gpt55_heat_exchanger_v2_b3_2026-07-22.json",
+      "report_sha256": "40b771030f82b80c643445475214e509b9f271c4f05427a97925656ce1db2fb7",
+      "trajectory_sha256": "5df0b2bcfc60585d8e97009b092ff74796c570e81f3a653cc9eaa8f6cc6c039f",
+      "source_revision": "504be6b76d9c4a1130b668a1ee852ab2eda2d576",
+      "feedback_mode": "normal",
+      "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+      "selection_policy": "online_incumbent",
+      "seed": 1,
+      "proposal_budget": 3,
+      "server_side_seed_control": false,
+      "oracle_calls": 4,
+      "total_tokens": 25176,
+      "best_score": 0.12605369117948312,
+      "selected_step": 3,
+      "selected_candidate_sha256": "5ef7f3122546589af264e52a00abb2cf5538aeac991ddcc051ce6198d562dfd8",
+      "selected_metrics": {
+        "combined_score": 0.12605369117948312,
+        "development_proxy_score": 0.17278642948803255,
+        "heldout_exact_score": 0.2799105449467131,
+        "heldout_proxy_score": 0.28856627015973413,
+        "robustness_score": 0.12965473087328608,
+        "heldout_robustness_score": 0.2535595138166759,
+        "feasibility_rate": 0.96875,
+        "heldout_feasibility_rate": 1.0,
+        "development_false_promotion_rate": 0.041666666666666664,
+        "heldout_false_promotion_rate": 0.125,
+        "development_proxy_exact_rank_correlation": 0.9702380952380952,
+        "heldout_proxy_exact_rank_correlation": 1.0,
+        "valid": 1.0
+      },
+      "selected_per_instance": [
+        {
+          "name": "dev_water_process",
+          "split": "development",
+          "score": 0.0,
+          "proxy_score": 0.09667768111029199,
+          "robustness_score": 0.0,
+          "exact_feasibility_rate": 1.0,
+          "proxy_feasibility_rate": 1.0,
+          "false_promotion_rate": 0.0,
+          "proxy_exact_rank_correlation": 0.9523809523809523,
+          "raw_exact_hypervolume": 0.512117816353665,
+          "raw_proxy_hypervolume": 0.5882265415967062,
+          "raw_shifted_hypervolumes": [
+            0.5055400605638098,
+            0.5236094266968532,
+            0.4699054809917932
+          ]
+        },
+        {
+          "name": "heldout_viscous_oil",
+          "split": "heldout",
+          "score": 0.43815074445229635,
+          "proxy_score": 0.439191966795248,
+          "robustness_score": 0.438344120693831,
+          "exact_feasibility_rate": 1.0,
+          "proxy_feasibility_rate": 1.0,
+          "false_promotion_rate": 0.0,
+          "proxy_exact_rank_correlation": 1.0,
+          "raw_exact_hypervolume": 0.264459518439032,
+          "raw_proxy_hypervolume": 0.26654161869747717,
+          "raw_shifted_hypervolumes": [
+            0.26250512931765835,
+            0.264205357615989,
+            0.20266240478499375
+          ]
+        },
+        {
+          "name": "dev_oil_cooler",
+          "split": "development",
+          "score": 0.42899000496690204,
+          "proxy_score": 0.434689048027165,
+          "robustness_score": 0.4305585068561013,
+          "exact_feasibility_rate": 1.0,
+          "proxy_feasibility_rate": 1.0,
+          "false_promotion_rate": 0.0,
+          "proxy_exact_rank_correlation": 1.0,
+          "raw_exact_hypervolume": 0.2175135738911505,
+          "raw_proxy_hypervolume": 0.2197973494383126,
+          "raw_shifted_hypervolumes": [
+            0.21591665590731493,
+            0.2172928604183183,
+            0.16520095317208852
+          ]
+        },
+        {
+          "name": "dev_glycol_recovery",
+          "split": "development",
+          "score": 0.0,
+          "proxy_score": 0.0204789575318935,
+          "robustness_score": 0.001260174392222852,
+          "exact_feasibility_rate": 0.875,
+          "proxy_feasibility_rate": 1.0,
+          "false_promotion_rate": 0.16666666666666666,
+          "proxy_exact_rank_correlation": 0.9285714285714286,
+          "raw_exact_hypervolume": 0.4754021465765823,
+          "raw_proxy_hypervolume": 0.526117359007427,
+          "raw_shifted_hypervolumes": [
+            0.46544552495518715,
+            0.4898999351936324,
+            0.5082925479590059
+          ]
+        },
+        {
+          "name": "heldout_brine_recovery",
+          "split": "heldout",
+          "score": 0.12167034544112977,
+          "proxy_score": 0.1379405735242203,
+          "robustness_score": 0.06877490693952078,
+          "exact_feasibility_rate": 1.0,
+          "proxy_feasibility_rate": 1.0,
+          "false_promotion_rate": 0.25,
+          "proxy_exact_rank_correlation": 1.0,
+          "raw_exact_hypervolume": 0.398544569078785,
+          "raw_proxy_hypervolume": 0.3650959894551018,
+          "raw_shifted_hypervolumes": [
+            0.3886635286178168,
+            0.4030508379273299,
+            0.39291400377985575
+          ]
+        },
+        {
+          "name": "dev_high_flow_water",
+          "split": "development",
+          "score": 0.0752247597510304,
+          "proxy_score": 0.1393000312827797,
+          "robustness_score": 0.08680024224482016,
+          "exact_feasibility_rate": 1.0,
+          "proxy_feasibility_rate": 1.0,
+          "false_promotion_rate": 0.0,
+          "proxy_exact_rank_correlation": 1.0,
+          "raw_exact_hypervolume": 0.5657857055791387,
+          "raw_proxy_hypervolume": 0.5888042292335431,
+          "raw_shifted_hypervolumes": [
+            0.5613625940280713,
+            0.5750766117048318,
+            0.6095412180252133
+          ]
+        }
+      ],
+      "invalid_proposals": [
+        {
+          "step": 1,
+          "reasons": [
+            "ValueError: design variable outside public bounds"
+          ]
+        }
+      ],
+      "trajectory": [
+        {
+          "step": 0,
+          "accepted": true,
+          "candidate_sha256": "104eaeb22cc15acfb50eda224ceb260e5fbb567cae918729cdb78ee5632ca4c4",
+          "parent_sha256": null,
+          "combined_score": 0.0,
+          "development_proxy_score": 0.0,
+          "heldout_exact_score": 0.0,
+          "heldout_proxy_score": 0.0,
+          "robustness_score": 0.0,
+          "heldout_robustness_score": 0.0,
+          "feasibility_rate": 1.0,
+          "heldout_feasibility_rate": 1.0,
+          "development_false_promotion_rate": 0.0,
+          "heldout_false_promotion_rate": 0.25,
+          "development_proxy_exact_rank_correlation": 0.9807692307692308,
+          "heldout_proxy_exact_rank_correlation": 0.9965034965034965,
+          "valid": 1.0
+        },
+        {
+          "step": 1,
+          "accepted": false,
+          "candidate_sha256": "6953c169cddc4864fc21569b7491987132ec8e9525df8521b8e7b909b450e735",
+          "parent_sha256": "104eaeb22cc15acfb50eda224ceb260e5fbb567cae918729cdb78ee5632ca4c4",
+          "combined_score": 0.0,
+          "development_proxy_score": 0.0,
+          "heldout_exact_score": 0.0,
+          "heldout_proxy_score": 0.0,
+          "robustness_score": 0.0,
+          "heldout_robustness_score": 0.0,
+          "feasibility_rate": 0.0,
+          "heldout_feasibility_rate": 0.0,
+          "development_false_promotion_rate": 0.0,
+          "heldout_false_promotion_rate": 0.0,
+          "development_proxy_exact_rank_correlation": 0.0,
+          "heldout_proxy_exact_rank_correlation": 0.0,
+          "valid": 0.0
+        },
+        {
+          "step": 2,
+          "accepted": true,
+          "candidate_sha256": "5e2cb6ddfd6f58427ced9a75ccb51122f96e439da08428ee6e8c1e70d59ff3a2",
+          "parent_sha256": "104eaeb22cc15acfb50eda224ceb260e5fbb567cae918729cdb78ee5632ca4c4",
+          "combined_score": 0.008392830073428118,
+          "development_proxy_score": 0.0012106831894313525,
+          "heldout_exact_score": 0.0040689829470745556,
+          "heldout_proxy_score": 0.0,
+          "robustness_score": 0.003115256122713445,
+          "heldout_robustness_score": 0.004734989198689245,
+          "feasibility_rate": 1.0,
+          "heldout_feasibility_rate": 1.0,
+          "development_false_promotion_rate": 0.0,
+          "heldout_false_promotion_rate": 0.1875,
+          "development_proxy_exact_rank_correlation": 0.9821428571428572,
+          "heldout_proxy_exact_rank_correlation": 1.0,
+          "valid": 1.0
+        },
+        {
+          "step": 3,
+          "accepted": true,
+          "candidate_sha256": "5ef7f3122546589af264e52a00abb2cf5538aeac991ddcc051ce6198d562dfd8",
+          "parent_sha256": "5e2cb6ddfd6f58427ced9a75ccb51122f96e439da08428ee6e8c1e70d59ff3a2",
+          "combined_score": 0.12605369117948312,
+          "development_proxy_score": 0.17278642948803255,
+          "heldout_exact_score": 0.2799105449467131,
+          "heldout_proxy_score": 0.28856627015973413,
+          "robustness_score": 0.12965473087328608,
+          "heldout_robustness_score": 0.2535595138166759,
+          "feasibility_rate": 0.96875,
+          "heldout_feasibility_rate": 1.0,
+          "development_false_promotion_rate": 0.041666666666666664,
+          "heldout_false_promotion_rate": 0.125,
+          "development_proxy_exact_rank_correlation": 0.9702380952380952,
+          "heldout_proxy_exact_rank_correlation": 1.0,
+          "valid": 1.0
+        }
+      ]
+    },
+    "blind_budget_three": {
+      "label": "blind_budget_three",
+      "report": "experiments/gpt55_heat_exchanger_v2_blind_b3_2026-07-22.json",
+      "report_sha256": "15c8ed4f4eddd579e59e61690d1be330bfaa1df5ffe6ca37c45ccba09f3c1a82",
+      "trajectory_sha256": "42c2c1061484c6070c72603dc23e5fa17a6a60c8296429bbcbf4bcfe82603321",
+      "source_revision": "504be6b76d9c4a1130b668a1ee852ab2eda2d576",
+      "feedback_mode": "selection_blind",
+      "feedback_scope": "open-loop proposal batch: every proposal sees the frozen baseline program and its allowlisted baseline metrics; evaluated scores are retained only for offline best-of-batch analysis and never change a later parent or prompt; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+      "selection_policy": "offline_best_of_open_loop_batch",
+      "seed": 1,
+      "proposal_budget": 3,
+      "server_side_seed_control": false,
+      "oracle_calls": 4,
+      "total_tokens": 20122,
+      "best_score": 0.2937046033170183,
+      "selected_step": 1,
+      "selected_candidate_sha256": "0a8c9c870e0bb2fcf18789a0d23ad0c0e0dff90ca36dda44a0f11ed7810bd5aa",
+      "selected_metrics": {
+        "combined_score": 0.2937046033170183,
+        "development_proxy_score": 0.28375370716833337,
+        "heldout_exact_score": 0.39255915404343855,
+        "heldout_proxy_score": 0.34214549925892707,
+        "robustness_score": 0.24017631296672246,
+        "heldout_robustness_score": 0.38774876840683536,
+        "feasibility_rate": 1.0,
+        "heldout_feasibility_rate": 1.0,
+        "development_false_promotion_rate": 0.17430555555555555,
+        "heldout_false_promotion_rate": 0.25,
+        "development_proxy_exact_rank_correlation": 0.9895652173913044,
+        "heldout_proxy_exact_rank_correlation": 0.8543478260869566,
+        "valid": 1.0
+      },
+      "selected_per_instance": [
+        {
+          "name": "dev_water_process",
+          "split": "development",
+          "score": 0.3049001774446315,
+          "proxy_score": 0.2502026026028681,
+          "robustness_score": 0.17140911739177578,
+          "exact_feasibility_rate": 1.0,
+          "proxy_feasibility_rate": 1.0,
+          "false_promotion_rate": 0.25,
+          "proxy_exact_rank_correlation": 0.9730434782608696,
+          "raw_exact_hypervolume": 0.6097404821194391,
+          "raw_proxy_hypervolume": 0.6309388070643439,
+          "raw_shifted_hypervolumes": [
+            0.5881053711109725,
+            0.6131660310580991,
+            0.5012998509433787
+          ]
+        },
+        {
+          "name": "heldout_viscous_oil",
+          "split": "heldout",
+          "score": 0.39088630078866293,
+          "proxy_score": 0.3786022828377965,
+          "robustness_score": 0.37807879041638354,
+          "exact_feasibility_rate": 1.0,
+          "proxy_feasibility_rate": 0.9583333333333334,
+          "false_promotion_rate": 0.0,
+          "proxy_exact_rank_correlation": 0.76,
+          "raw_exact_hypervolume": 0.2566909028538236,
+          "raw_proxy_hypervolume": 0.25664739078493365,
+          "raw_shifted_hypervolumes": [
+            0.2549521918541256,
+            0.2543122724118973,
+            0.19455472680787728
+          ]
+        },
+        {
+          "name": "dev_oil_cooler",
+          "split": "development",
+          "score": 0.47096115829783436,
+          "proxy_score": 0.4087194580237323,
+          "robustness_score": 0.4002502193619456,
+          "exact_feasibility_rate": 1.0,
+          "proxy_feasibility_rate": 1.0,
+          "false_promotion_rate": 0.2222222222222222,
+          "proxy_exact_rank_correlation": 1.0,
+          "raw_exact_hypervolume": 0.22342382229444777,
+          "raw_proxy_hypervolume": 0.216181958394947,
+          "raw_shifted_hypervolumes": [
+            0.22183650906909202,
+            0.2270186089429854,
+            0.16159683444160014
+          ]
+        },
+        {
+          "name": "dev_glycol_recovery",
+          "split": "development",
+          "score": 0.15833747933888243,
+          "proxy_score": 0.17192543880398875,
+          "robustness_score": 0.14558335746598441,
+          "exact_feasibility_rate": 1.0,
+          "proxy_feasibility_rate": 1.0,
+          "false_promotion_rate": 0.125,
+          "proxy_exact_rank_correlation": 0.9921739130434782,
+          "raw_exact_hypervolume": 0.5242383144339541,
+          "raw_proxy_hypervolume": 0.5684088434337434,
+          "raw_shifted_hypervolumes": [
+            0.5058323969284496,
+            0.5322737616093078,
+            0.5220773682643942
+          ]
+        },
+        {
+          "name": "heldout_brine_recovery",
+          "split": "heldout",
+          "score": 0.39423200729821417,
+          "proxy_score": 0.3056887156800576,
+          "robustness_score": 0.39741874639728725,
+          "exact_feasibility_rate": 1.0,
+          "proxy_feasibility_rate": 1.0,
+          "false_promotion_rate": 0.5,
+          "proxy_exact_rank_correlation": 0.948695652173913,
+          "raw_exact_hypervolume": 0.5360548328766922,
+          "raw_proxy_hypervolume": 0.45595125974813944,
+          "raw_shifted_hypervolumes": [
+            0.5068156226779239,
+            0.5453746453217563,
+            0.5449645883023135
+          ]
+        },
+        {
+          "name": "dev_high_flow_water",
+          "split": "development",
+          "score": 0.240619598186725,
+          "proxy_score": 0.3041673292427443,
+          "robustness_score": 0.24346255764718405,
+          "exact_feasibility_rate": 1.0,
+          "proxy_feasibility_rate": 1.0,
+          "false_promotion_rate": 0.1,
+          "proxy_exact_rank_correlation": 0.9930434782608696,
+          "raw_exact_hypervolume": 0.6104267653007728,
+          "raw_proxy_hypervolume": 0.6331885762255707,
+          "raw_shifted_hypervolumes": [
+            0.599950554704614,
+            0.617928044823599,
+            0.6381313584548819
+          ]
+        }
+      ],
+      "invalid_proposals": [
+        {
+          "step": 2,
+          "reasons": [
+            "ValueError: design variable outside public bounds"
+          ]
+        }
+      ],
+      "trajectory": [
+        {
+          "step": 0,
+          "accepted": true,
+          "candidate_sha256": "104eaeb22cc15acfb50eda224ceb260e5fbb567cae918729cdb78ee5632ca4c4",
+          "parent_sha256": null,
+          "combined_score": 0.0,
+          "development_proxy_score": 0.0,
+          "heldout_exact_score": 0.0,
+          "heldout_proxy_score": 0.0,
+          "robustness_score": 0.0,
+          "heldout_robustness_score": 0.0,
+          "feasibility_rate": 1.0,
+          "heldout_feasibility_rate": 1.0,
+          "development_false_promotion_rate": 0.0,
+          "heldout_false_promotion_rate": 0.25,
+          "development_proxy_exact_rank_correlation": 0.9807692307692308,
+          "heldout_proxy_exact_rank_correlation": 0.9965034965034965,
+          "valid": 1.0
+        },
+        {
+          "step": 1,
+          "accepted": true,
+          "candidate_sha256": "0a8c9c870e0bb2fcf18789a0d23ad0c0e0dff90ca36dda44a0f11ed7810bd5aa",
+          "parent_sha256": "104eaeb22cc15acfb50eda224ceb260e5fbb567cae918729cdb78ee5632ca4c4",
+          "combined_score": 0.2937046033170183,
+          "development_proxy_score": 0.28375370716833337,
+          "heldout_exact_score": 0.39255915404343855,
+          "heldout_proxy_score": 0.34214549925892707,
+          "robustness_score": 0.24017631296672246,
+          "heldout_robustness_score": 0.38774876840683536,
+          "feasibility_rate": 1.0,
+          "heldout_feasibility_rate": 1.0,
+          "development_false_promotion_rate": 0.17430555555555555,
+          "heldout_false_promotion_rate": 0.25,
+          "development_proxy_exact_rank_correlation": 0.9895652173913044,
+          "heldout_proxy_exact_rank_correlation": 0.8543478260869566,
+          "valid": 1.0
+        },
+        {
+          "step": 2,
+          "accepted": false,
+          "candidate_sha256": "ea9ad735a3b97eb422fa44e3548190a8a30993313eac3ad2a879098b23ff926d",
+          "parent_sha256": "104eaeb22cc15acfb50eda224ceb260e5fbb567cae918729cdb78ee5632ca4c4",
+          "combined_score": 0.0,
+          "development_proxy_score": 0.0,
+          "heldout_exact_score": 0.0,
+          "heldout_proxy_score": 0.0,
+          "robustness_score": 0.0,
+          "heldout_robustness_score": 0.0,
+          "feasibility_rate": 0.0,
+          "heldout_feasibility_rate": 0.0,
+          "development_false_promotion_rate": 0.0,
+          "heldout_false_promotion_rate": 0.0,
+          "development_proxy_exact_rank_correlation": 0.0,
+          "heldout_proxy_exact_rank_correlation": 0.0,
+          "valid": 0.0
+        },
+        {
+          "step": 3,
+          "accepted": false,
+          "candidate_sha256": "1a5fd3dfd27e25bc9bec52357201858d21d0558694b1ef70789d77e7819cc4e3",
+          "parent_sha256": "104eaeb22cc15acfb50eda224ceb260e5fbb567cae918729cdb78ee5632ca4c4",
+          "combined_score": 0.016017558095311267,
+          "development_proxy_score": 0.014507712600152437,
+          "heldout_exact_score": 0.014011400185704438,
+          "heldout_proxy_score": 0.01147239872668953,
+          "robustness_score": 0.015568422665897388,
+          "heldout_robustness_score": 0.014540349686623015,
+          "feasibility_rate": 1.0,
+          "heldout_feasibility_rate": 1.0,
+          "development_false_promotion_rate": 0.0,
+          "heldout_false_promotion_rate": 0.25,
+          "development_proxy_exact_rank_correlation": 0.9860139860139859,
+          "heldout_proxy_exact_rank_correlation": 1.0,
+          "valid": 1.0
+        }
+      ]
+    }
+  },
+  "normal_minus_blind_selected_contrast": {
+    "combined_score": -0.1676509121375352,
+    "development_proxy_score": -0.11096727768030082,
+    "heldout_exact_score": -0.11264860909672547,
+    "heldout_proxy_score": -0.05357922909919294,
+    "robustness_score": -0.11052158209343638,
+    "heldout_robustness_score": -0.13418925459015946,
+    "feasibility_rate": -0.03125,
+    "heldout_feasibility_rate": 0.0,
+    "development_false_promotion_rate": -0.1326388888888889,
+    "heldout_false_promotion_rate": -0.125,
+    "development_proxy_exact_rank_correlation": -0.019327122153209197,
+    "heldout_proxy_exact_rank_correlation": 0.14565217391304341,
+    "total_tokens": 5054,
+    "oracle_calls": 0
+  },
+  "within_normal_accepted_step_changes": [
+    {
+      "from_step": 0,
+      "to_step": 2,
+      "combined_score": 0.008392830073428118,
+      "development_proxy_score": 0.0012106831894313525,
+      "heldout_exact_score": 0.0040689829470745556,
+      "heldout_proxy_score": 0.0,
+      "robustness_score": 0.003115256122713445,
+      "heldout_robustness_score": 0.004734989198689245,
+      "feasibility_rate": 0.0,
+      "heldout_feasibility_rate": 0.0,
+      "development_false_promotion_rate": 0.0,
+      "heldout_false_promotion_rate": -0.0625,
+      "development_proxy_exact_rank_correlation": 0.0013736263736263687,
+      "heldout_proxy_exact_rank_correlation": 0.0034965034965035446
+    },
+    {
+      "from_step": 2,
+      "to_step": 3,
+      "combined_score": 0.117660861106055,
+      "development_proxy_score": 0.1715757462986012,
+      "heldout_exact_score": 0.27584156199963855,
+      "heldout_proxy_score": 0.28856627015973413,
+      "robustness_score": 0.12653947475057264,
+      "heldout_robustness_score": 0.24882452461798665,
+      "feasibility_rate": -0.03125,
+      "heldout_feasibility_rate": 0.0,
+      "development_false_promotion_rate": 0.041666666666666664,
+      "heldout_false_promotion_rate": -0.0625,
+      "development_proxy_exact_rank_correlation": -0.011904761904761973,
+      "heldout_proxy_exact_rank_correlation": 0.0
+    }
+  ],
+  "selected_regime_concentration": {
+    "normal_budget_three": {
+      "development_regime_count": 4,
+      "near_zero_regime_count": 2,
+      "maximum_regime_score": 0.42899000496690204,
+      "minimum_regime_score": 0.0,
+      "score_range": 0.42899000496690204,
+      "leading_regime": "dev_oil_cooler",
+      "leading_regime_share_of_score_sum": 0.8508080980272115,
+      "per_regime": [
+        {
+          "name": "dev_water_process",
+          "score": 0.0,
+          "proxy_score": 0.09667768111029199,
+          "robustness_score": 0.0,
+          "exact_feasibility_rate": 1.0,
+          "false_promotion_rate": 0.0
+        },
+        {
+          "name": "dev_oil_cooler",
+          "score": 0.42899000496690204,
+          "proxy_score": 0.434689048027165,
+          "robustness_score": 0.4305585068561013,
+          "exact_feasibility_rate": 1.0,
+          "false_promotion_rate": 0.0
+        },
+        {
+          "name": "dev_glycol_recovery",
+          "score": 0.0,
+          "proxy_score": 0.0204789575318935,
+          "robustness_score": 0.001260174392222852,
+          "exact_feasibility_rate": 0.875,
+          "false_promotion_rate": 0.16666666666666666
+        },
+        {
+          "name": "dev_high_flow_water",
+          "score": 0.0752247597510304,
+          "proxy_score": 0.1393000312827797,
+          "robustness_score": 0.08680024224482016,
+          "exact_feasibility_rate": 1.0,
+          "false_promotion_rate": 0.0
+        }
+      ]
+    },
+    "blind_budget_three": {
+      "development_regime_count": 4,
+      "near_zero_regime_count": 0,
+      "maximum_regime_score": 0.47096115829783436,
+      "minimum_regime_score": 0.15833747933888243,
+      "score_range": 0.31262367895895193,
+      "leading_regime": "dev_oil_cooler",
+      "leading_regime_share_of_score_sum": 0.40087995981245245,
+      "per_regime": [
+        {
+          "name": "dev_water_process",
+          "score": 0.3049001774446315,
+          "proxy_score": 0.2502026026028681,
+          "robustness_score": 0.17140911739177578,
+          "exact_feasibility_rate": 1.0,
+          "false_promotion_rate": 0.25
+        },
+        {
+          "name": "dev_oil_cooler",
+          "score": 0.47096115829783436,
+          "proxy_score": 0.4087194580237323,
+          "robustness_score": 0.4002502193619456,
+          "exact_feasibility_rate": 1.0,
+          "false_promotion_rate": 0.2222222222222222
+        },
+        {
+          "name": "dev_glycol_recovery",
+          "score": 0.15833747933888243,
+          "proxy_score": 0.17192543880398875,
+          "robustness_score": 0.14558335746598441,
+          "exact_feasibility_rate": 1.0,
+          "false_promotion_rate": 0.125
+        },
+        {
+          "name": "dev_high_flow_water",
+          "score": 0.240619598186725,
+          "proxy_score": 0.3041673292427443,
+          "robustness_score": 0.24346255764718405,
+          "exact_feasibility_rate": 1.0,
+          "false_promotion_rate": 0.1
+        }
+      ]
+    }
+  },
+  "selected_proxy_minus_exact": {
+    "normal_budget_three": 0.04673273830854943,
+    "blind_budget_three": -0.00995089614868494,
+    "proxy_only_classical": 0.003231909770103014
+  },
+  "aggregate_score_blind_spots": {
+    "proxy_only_classical_exact_score": 0.996768090229897,
+    "proxy_only_classical_exact_feasibility_rate": 0.9479166666666666,
+    "proxy_only_classical_false_promotion_rate": 0.09375,
+    "proxy_only_classical_robustness_score": 0.9419903892965057,
+    "normal_selected_exact_score": 0.12605369117948312,
+    "normal_selected_proxy_score": 0.17278642948803255,
+    "normal_selected_exact_feasibility_rate": 0.96875,
+    "normal_selected_false_promotion_rate": 0.041666666666666664
+  },
+  "limitations": [
+    "Budget-one, normal budget-three and selection-blind budget-three each have one run; no confidence interval, model ranking or causal feedback estimate is supported.",
+    "The Azure endpoint exposes no server-side random seed, so equal local identifiers do not pair generation randomness.",
+    "Normal and selection-blind are oracle-call matched but not token- or context-matched; normal used more tokens.",
+    "The selection-blind score is an offline best-of-open-loop batch, whereas normal uses online incumbent updates.",
+    "Proxy, held-out, false-promotion, per-regime and physical-shift metrics were sealed from proposal and selection state.",
+    "The exact evaluator is a correlation-based engineering simulator, not CFD, process-plant or experimental truth; no autonomous scientific-discovery claim is supported.",
+    "Near-unity aggregate hypervolume can coexist with infeasible or falsely promoted archive points, so aggregate score must be read with the fidelity and validity vector."
+  ],
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true,
+  "input_source_scope_changes": []
+}
