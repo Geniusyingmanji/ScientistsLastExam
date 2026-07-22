@@ -146,7 +146,7 @@ tasks:
 
   AtmosphericScience/RadiativeTransferFit:
     status: candidate
-    reason: v2 replaces a fixed underdetermined 10-radiance/20-temperature hidden-profile score with charged selection over 24 channels and viewing angles, a public five-parameter temperature/optical-depth family, seven full-rank supported worlds, separate radiance/view-shift prediction and null/absorber/cloud refusal; a truth-blind two-view fit scores 0.614/0.491 development/held-out mechanism and 0.855/0.812 radiance prediction with zero false discovery, leaving prediction-versus-mechanism and higher-noise headroom pending GPT-5.5 calibration, server-held atmospheres, line-by-line or real-data replication and independent atmospheric-science review
+    reason: v2 replaces a fixed underdetermined 10-radiance/20-temperature hidden-profile score with charged selection over 24 channels and viewing angles, a public five-parameter temperature/optical-depth family, seven full-rank supported worlds, separate radiance/view-shift prediction and null/absorber/cloud refusal; a truth-blind two-view fit scores 0.614/0.491 development/held-out mechanism and 0.855/0.812 radiance prediction with zero false discovery, while all seven protocol-valid GPT-5.5 proposals at budgets one or three refuse every supported atmosphere despite correct unsupported-world refusal; retain as an active-sounding and calibrated-refusal challenge pending paired factorized-feedback controls, server-held atmospheres, line-by-line or real-data replication and independent atmospheric-science review
     citation_ids:
       - doi:10.1029/RG014i004p00609
       - doi:10.1142/3171

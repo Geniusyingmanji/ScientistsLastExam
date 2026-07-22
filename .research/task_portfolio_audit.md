@@ -49,15 +49,15 @@ meaning.
   restored as a candidate: GPT-5.5 reaches 0.797 development and 0.631 shifted robustness at
   budget one. At budget three, visible development rises from 0.691 to 0.854 while shifted
   robustness stays near 0.64, making it the first useful development–validation gap task. The
-  the other five remain quarantined after reproducible adversarial review: RIR
+  other five remain quarantined after reproducible adversarial review: RIR
   length failure, unstable low-thrust propagation, centerline-spoofable cavity scoring,
   pseudo-data alloy hardness and scalar-FFT pseudo-RCWA. HeatExchanger-v2 was subsequently
   rebuilt as a multifidelity Pareto candidate.
-- **No original unscreened candidates remain after wave 4; seventeen candidates remain in total.** They include
+- **No original unscreened candidates remain after wave 4; eighteen candidates remain in total.** They include
   SCM, Lyapunov control, neutron criticality, seismic refraction, pendulum control, sparse
   recovery, OED-v2, GateSynthesis-v2, OPF-v2, Truss-v2, Antenna-v2, NMR-v2,
   HeatExchanger-v2, ReactionMechanismFitting-v2, GravityInversion-v2,
-  OceanCurrentInversion-v2 and the new
+  OceanCurrentInversion-v2, RadiativeTransferFit-v2 and the new
   ActiveLawDiscovery laboratory. All are
   currently on-ramps or repair/calibration candidates rather than externally reviewed
   open-frontier tasks.
@@ -67,7 +67,7 @@ meaning.
   independent budget-three run, all three proposals retain the same two false discoveries;
   score feedback does not fix model-inadequacy detection and later proposals reduce mechanism
   recovery. This is a reliability/refusal frontier rather than an ordinary prediction frontier.
-- **27 quarantined packages.** Five generic-objective clones must be replaced with real domain
+- **26 quarantined packages.** Five generic-objective clones must be replaced with real domain
   oracles; metadata completion alone cannot rehabilitate them. The sixth,
   `ClimateScience/EnergyBalanceModel`, uses an unstable explicit diffusion iteration, an
   unverified ERA5 attribution and a structurally underdetermined seven-parameter fit to one
@@ -142,6 +142,15 @@ The first review tranche contains real scientific topics but several narrow eval
   proposal spends the full budget but refuses every in-library world, while the other proposals
   fail the public release/callback protocol. It remains a useful active-inference and
   protocol-following candidate pending paired runs, server-held currents and independent review.
+- RadiativeTransferFit-v2 replaces a fixed 10-observation/20-unknown profile score with charged
+  selection over 24 thermal channels and view angles, a public five-parameter temperature and
+  optical-depth family, seven full-rank supported worlds, and null/absorber/cloud refusal. Its
+  truth-blind two-view fit reaches 0.614/0.491 development/held-out mechanism and 0.855/0.812
+  radiance prediction with zero false discovery. All seven GPT-5.5 proposals across budget-one,
+  normal budget-three and strict open-loop budget-three are protocol-valid but refuse every
+  supported atmosphere. It is therefore useful for active sounding, calibrated refusal and
+  risk–coverage studies, pending factorized paired controls, server-held atmospheres,
+  line-by-line or real-data replication and independent atmospheric-science review.
 
 ## Expansion rule
 
@@ -156,8 +165,8 @@ The target is approximately 50 **admissible** open scientific optimization tasks
 
 After complete original-inventory triage, adding ActiveLawDiscovery and rebuilding Gate-v2,
 OPF-v2, Truss-v2, Antenna-v2, NMR-v2, HeatExchanger-v2, ReactionMechanismFitting-v2 and
-GravityInversion-v2 and OceanCurrentInversion-v2, the net expansion gap is approximately 26 admissible tasks:
-51 folders minus 27 quarantines leaves 24 internally admissible certified or candidate packages, while the target
+GravityInversion-v2, OceanCurrentInversion-v2 and RadiativeTransferFit-v2, the net expansion gap is approximately 25 admissible tasks:
+51 folders minus 26 quarantines leaves 25 internally admissible certified or candidate packages, while the target
 is about 50. New
 work should emphasize procedural task families and independent regimes,
 not one-off fixed instances or scientific names around hand-written scalar objectives.

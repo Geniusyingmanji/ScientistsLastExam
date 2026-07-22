@@ -1,7 +1,8 @@
 # Frontier-Science plan gap audit
 
 Audit date: 2026-07-19 (UTC), with the experiment roadmap extended on 2026-07-21 after a
-full-text EdgeBench comparison and the task inventory updated on 2026-07-22 after NMR-v2.
+full-text EdgeBench comparison and the task inventory updated on 2026-07-22 through
+RadiativeTransferFit-v2.
 Evidence base: `literature_matrix.md`,
 `science_experiment_plan.md`, current source/tests, and the dated artifacts in `experiments/`.
 
@@ -21,24 +22,24 @@ physical validation, and auditable claim–evidence provenance.
 
 ## As-built matrix
 
-| Capability | Status on 2026-07-19 | Evidence | Remaining acceptance criterion |
+| Capability | Current status | Evidence | Remaining acceptance criterion |
 |---|---|---|---|
-| Candidate/oracle isolation | Implemented | Clean-revision report `f48b101`; 15/15 security/regression tests; Bubblewrap, no network, read-only mounts, resource/seccomp limits, typed RPC | Reproduce in clean Linux CI; document portability/non-Linux behavior |
-| Fail-closed trusted metrics | Implemented | Clean-revision 50×2 run: 50 deterministic, 49 valid, 50 fail-closed; non-finite Climate oracle rejected | Repair or quarantine every invalid candidate oracle before certification |
-| Task admission policy | Implemented, narrow | Current manifest: 7 certified / 13 candidate / 31 quarantined; Pendulum, OED, GateSynthesis, OPF, Truss, Antenna and NMR are rebuilt and ActiveLawDiscovery adds a science-specific candidate | Independent domain + evaluator reviews are still declarations, not completed external review |
-| Scientific validity of inventory | Audited, sparse | All original 50 packages passed through adversarial admission waves; ActiveLawDiscovery brings inventory to 51, while Gate/OPF/Truss/Antenna/NMR rebuilds yield seven certified, thirteen candidates and 31 quarantines | Rebuild high-value families and add approximately 30 net admissible tasks to reach about 50; hidden/generated instances and shortcut analysis remain mandatory |
+| Candidate/oracle isolation | Implemented | Clean-revision security v4: 18/18 adversarial tests; Bubblewrap, no network, read-only mounts, resource/seccomp limits, typed RPC, fresh multi-world sessions and candidate-exception sanitization | Reproduce in clean Linux CI; document portability/non-Linux behavior |
+| Fail-closed trusted metrics | Implemented | Clean-revision 51×2 v10: 51 deterministic, 50 valid, 51 fail-closed and zero infrastructure failures; quarantined Climate baseline is the sole invalid result | Repair or quarantine every invalid candidate oracle before certification |
+| Task admission policy | Implemented, narrow | Current manifest: 7 certified / 18 candidate / 26 quarantined; the latest inverse rebuilds add Reaction, Gravity, Ocean and Radiative active-discovery candidates | Independent domain + evaluator reviews are still declarations, not completed external review |
+| Scientific validity of inventory | Audited, sparse | All original 50 packages passed adversarial admission; ActiveLawDiscovery brings inventory to 51 and substantive rebuilds now leave 25 internally admissible packages | Rebuild high-value families and add approximately 25 net admissible tasks to reach about 50; hidden/generated instances and shortcut analysis remain mandatory |
 | Unified trajectory/accounting | Implemented, protocol-smoked | Clean-revision two-seed baseline smoke; trajectory schema v2, hashes, AUC over `budget_units`, separate `oracle_calls`, wall/token/cost, seed, checkpoint/resume | Validate nonzero-budget schema-v2 artifact replay in CI and version future changes |
-| Prompt-metric none/shuffled controls | Implemented, unrun | Code and unit smoke; summaries disclose that selection still uses true scores | Add selection-blind controls, then run ≥5 paired seeds with preregistered budgets |
-| Evaluator-only metric sealing | Implemented and integration-verified | Closed search-visible allowlist; search-state redaction/hash-keyed sidecars; 65-test suite; clean pinned OpenEvolve/TreeQuest/Shinka no-leak report `aff026d` | Extend from baseline smoke to nonzero-budget upstream runs before comparative claims |
+| Feedback controls | Implemented; strict pilot run | None/shuffled prompt-metric modes disclose true-score selection; strict selection-blind freezes parent/metrics; four-task n=3 pilot has no direction-stable lift and is not token-matched | Run token-matched ≥10 paired seeds with score-only, delayed/replayed and strict open-loop controls |
+| Evaluator-only metric sealing | Implemented and integration-verified | Closed search-visible allowlist; search-state redaction/hash-keyed sidecars; candidate-controlled exception text mapped to a finite label-blind taxonomy; 130-test suite; clean pinned OpenEvolve/TreeQuest/Shinka no-leak report `aff026d` | Extend from baseline smoke to nonzero-budget upstream runs before comparative claims |
 | Official OpenEvolve adapter | Implemented, trusted baseline smoke | Explicit 0.2.26 adapter; clean-revision secure baseline passed under Python 3.10 | Run nonzero-budget/checkpoint integration and multi-seed study |
 | TreeQuest AB-MCTS | Implemented, trusted baseline smoke | Real TreeQuest AB-MCTS-A ask/tell adapter; clean-revision secure baseline passed under Python 3.12 | Run nonzero-budget/checkpoint integration and multi-seed study |
 | ShinkaEvolve | Implemented, trusted baseline smoke | Official runner/database adapter at pinned commit; clean-revision secure baseline passed under Python 3.10 | Run nonzero-budget/resume integration and token accounting audit |
-| Classical/domain baselines | Partial | NMR-v2 has a truth-blind AsLS/peak-finding/Lorentzian least-squares baseline that exposes a reconstruction-versus-mechanism/refusal gap | Add random/quasi-random plus BO/CMA-ES/DE and one domain heuristic for each meaningful task family |
-| Multi-seed benchmark evidence | Missing | Keyless GPT-5.5 Responses path passes smoke; trusted one-seed candidate calibrations now include OED, Pendulum, GateSynthesis, ActiveLawDiscovery, OPF, Truss, Antenna and NMR | Certified-core and science-subset reports with paired uncertainty and portable raw trajectories |
-| Multifidelity/Pareto | Missing | Plan text only | At least one certified proxy/exact task with rank-correlation calibration; objective vectors/hypervolume |
+| Classical/domain baselines | Partial | NMR, HeatExchanger, Reaction, Gravity, Ocean and Radiative rebuilds have truth-blind domain baselines exposing reconstruction/proxy/prediction versus mechanism/refusal gaps | Add random/quasi-random plus BO/CMA-ES/DE and one domain heuristic for each meaningful task family |
+| Multi-seed benchmark evidence | Missing | Keyless GPT-5.5 Responses path is operational; 25 trusted normal single-run calibrations cover 13 tasks and a separate four-task n=3 control pilot is negative/inconclusive | Certified-core and science-subset reports with paired uncertainty and portable raw trajectories |
+| Multifidelity/Pareto | Candidate-level | HeatExchanger-v2 implements proxy/exact Pareto archives, measured false promotion and physical shifts | Add independent high-fidelity review/replication and at least one certified multifidelity task |
 | Feedback learning claim | Negative pilot only | A strict open-loop control and three-replicate four-task pilot are complete; no direction-stable visible or sealed lift, and normal uses more tokens | Token-matched preregistered ≥10-replicate study with delayed/replayed and score-only controls |
-| Mechanistic discovery | Candidate-level | ActiveLawDiscovery and NMR-v2 separately score mechanism artifacts, prediction/reconstruction, hidden shifts, false discovery and refusal | Add paired repeated studies, harder regimes and independent scientific validation |
-| Validation/distribution shift | Calibration-level | Pendulum leaves robustness flat; Truss final nominal improvement lowers held-out robustness 0.206→0.078; Antenna nominal improvement lowers hardware robustness; NMR budget-one development/held-out mechanism-refusal is 0.428/0.176 despite 0.874/0.878 reconstruction; all are single-run diagnostics | Paired repeated hidden-shift studies plus independent high-fidelity or physical confirmation and abstention cases |
+| Mechanistic discovery | Candidate-level | ActiveLaw, NMR, Reaction, Gravity, Ocean and Radiative tasks separately score mechanisms, prediction, coverage, hidden shifts, false discovery and refusal | Add paired repeated studies, harder regimes and independent scientific validation |
+| Validation/distribution shift | Calibration-level | Nominal/robustness and prediction/mechanism gaps recur across control, design and inverse tasks; Radiative adds a protocol-valid perfect-refusal/zero-coverage case | Paired repeated hidden-shift studies plus independent high-fidelity or physical confirmation and abstention cases |
 | Research-integrity track | Partial | Immutable candidate/parent hashes and artifacts | Hypothesis–test–evidence records, failed branches, claim links and calibrated refusal |
 
 ## What the latest literature changes
@@ -84,8 +85,8 @@ or make the executable-optimization qualifier unavoidable.
 
 ### 1. Only calibration-level empirical P2 evidence exists
 
-The keyless GPT-5.5 Responses path was restored and trusted budget-one pilots now cover the
-seven-task core, the SCM mechanism candidate and four additional candidates. They expose
+The keyless GPT-5.5 Responses path was restored and 25 trusted normal single-run conditions now
+cover 13 tasks, with task-specific strict open-loop diagnostics on a subset. They expose
 one-step saturation and multiple oracle defects, but there are still no valid five-seed
 certified-core trajectories, no paired feedback-control result, and no nonzero-budget official-
 backend search run. The project must distinguish “calibrated at budget one” from
@@ -123,8 +124,9 @@ implementations. Create an explicit capability ladder:
 - **Track V — Validation:** proxy/exact generalization, hidden shifts, optional physical tests.
 - **Track R — Integrity:** hypotheses, tests, evidence, failed branches, provenance and refusal.
 
-Track O is the only track close to runnable benchmark status. Track F has unrun control
-infrastructure and Track R has partial lineage artifacts; none has sufficient empirical evidence.
+Track O is the only track close to runnable benchmark status. Track F has a negative/inconclusive
+implementation pilot rather than positive evidence, and Track R has partial lineage artifacts;
+none has sufficient empirical evidence.
 Do not aggregate these tracks into one “science” score.
 
 ### 6. P0–P2 completion is infrastructural, not a release claim
@@ -141,8 +143,8 @@ Accordingly, “P0–P2 implemented and recorded” must not be shortened to “
 
 - [x] Trusted oracle / isolated candidate architecture and adversarial regression suite.
 - [x] Current 51-package deterministic secure baseline and certification audit; invalid Climate oracle fails closed.
-- [x] Seven-task certified core, thirteen candidates and 31 quarantined packages after all admission
-  waves, with Pendulum-v2, OED-v2, GateSynthesis-v2, OPF-v2, Truss-v2, Antenna-v2 and NMR-v2 rebuilt and re-admitted.
+- [x] Seven-task certified core, eighteen candidates and 26 quarantined packages after all
+  admission waves and the current substantive rebuilds.
 - [x] Task-card/citation/invariant audit and dated machine-readable evidence.
 - [ ] Add Linux CI reproduction of all dated audits (local clean-revision reproduction is done).
 - [x] Quarantine `ClimateScience/EnergyBalanceModel`; replace its unstable, untraceable,
@@ -197,7 +199,8 @@ Accordingly, “P0–P2 implemented and recorded” must not be shortened to “
   on-ramp: GPT-5.5 reaches 0.983 at budget one, so harder regimes remain required).
 - [x] Add an active dynamical-law candidate with budgeted experiments, sparse mechanism
   recovery, sealed rollout/shift validation, and null/misspecified refusal cases.
-- [x] Add misspecification/refusal cases and false-discovery penalties to active-law and NMR discovery candidates.
+- [x] Add misspecification/refusal cases, false-discovery penalties and supported-world
+  discovery coverage to the active-law, NMR, Reaction, Ocean and Radiative discovery candidates.
 - [ ] Add calibrated confidence, active stopping, and unnecessary-experiment metrics.
 - [ ] Add hypothesis–test–evidence/belief-update artifacts, explicit exploration DAGs,
   failed branches, falsification metrics, and replay checks.

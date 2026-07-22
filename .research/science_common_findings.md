@@ -3,14 +3,14 @@
 Date: 2026-07-22 (UTC). These findings use trusted GPT-5.5 `greedy_rewrite` calibrations on
 OED-v2, Pendulum-v2, GateSynthesis-v2, ActiveLawDiscovery, OPF-v2, Truss-v2, Antenna-v2,
 NMR-v2, HeatExchanger-v2, ReactionMechanismFitting-v2, GravityInversion-v2 and
-OceanCurrentInversion-v2. The 23 normal-feedback model
+OceanCurrentInversion-v2 and RadiativeTransferFit-v2. The 25 normal-feedback model
 conditions each contain one seed and proposal budget one
 or three. They calibrate tasks and motivate experiments; they are not a model leaderboard, a causal
 feedback study or population evidence.
 
-The portable machine record is `experiments/science_calibration_summary_2026-07-22_v5.json`. It
+The portable machine record is `experiments/science_calibration_summary_2026-07-22_v6.json`. It
 retains every top-level scalar metric, candidate lineage hash and raw trajectory SHA-256 for all
-23 normal conditions. Strict selection-blind diagnostics remain in task-specific
+25 normal conditions. Strict selection-blind diagnostics remain in task-specific
 analysis because it is not a normal-feedback calibration. The underlying reports bind the
 task-specific source revision. Pendulum's initial budget-one run on revision `57c0e1b` is
 excluded because the public task omitted the exact plant equations and was explicitly superseded
@@ -43,6 +43,8 @@ by the corrected-contract run on `2557adb`.
 | GravityInversion-v2, budget 3 | development mechanism 0.000 → 0.994; field prediction 0.992 | held-out mechanism 0.767; held-out field prediction 0.988 | Known parametric inversion nearly saturates development, but field transfer does not establish the same internal geology. |
 | OceanCurrentInversion-v2, budget 1 | invalid release geometry; development remains 0.0 | no validated improvement | The proposal places at least one initial drifter outside the documented public interior and fails closed. |
 | OceanCurrentInversion-v2, budget 3 | one valid proposal uses two releases and the full 12-unit budget but scores 0.0; two later proposals misread the callback schema | zero in-library mechanism recovery and discovery coverage; correct refusal on all four unsupported worlds | Correct refusal does not compensate for refusing all seven supported worlds. The aggregate mechanism field alone would obscure this zero discovery coverage. |
+| RadiativeTransferFit-v2, budget 1 | the valid proposal uses two views and all 18 measurement units but scores 0.0 | zero supported-world coverage/mechanism; correct refusal on all four unsupported worlds | A physically plausible full-budget policy can still be an always-refuse policy rather than a discovery policy. |
+| RadiativeTransferFit-v2, budget 3 | all three proposals are valid and remain at 0.0; two use the full budget and one performs no experiment | every proposal has zero supported-world coverage/mechanism and zero false discovery | Protocol validity and conservative refusal do not establish scientific discovery; active measurement use must be reported alongside risk–coverage. |
 
 OPF's `robustness_score` combines security-constrained economic quality with overload penalties.
 It is not a pure safety probability. The proportional baseline is feasible for every tested
@@ -107,6 +109,16 @@ therefore has perfect unsupported-world refusal but zero in-library mechanism re
 discovery coverage. Because the aggregate `mechanism_score` includes credit for correct refusal,
 discovery tasks must report in-library recovery and risk–coverage alongside the aggregate score.
 
+RadiativeTransferFit-v2 reproduces this failure without a protocol confound. Its truth-blind
+two-view nonlinear fit claims all seven supported atmospheres, reaches mean supported mechanism
+quality 0.561 and held-out radiance prediction 0.812, and correctly refuses all four unsupported
+worlds. By contrast, every one of seven GPT-5.5 proposals across budget-one, normal budget-three
+and strict open-loop budget-three is executable and schema-valid, yet all seven refuse every
+supported atmosphere. Five proposals use the full 18-unit measurement budget and two perform no
+experiment, but both strategies yield zero discovery coverage and zero supported-world mechanism
+recovery. Thus protocol validity, experiment-budget use, refusal specificity and discovery
+coverage are four distinct quantities; none can stand in for the others.
+
 ### 5. Feedback cannot optimize information that selection never receives
 
 In the OPF budget-three run, later proposals receive only nominal score and reproduce the same
@@ -135,6 +147,15 @@ select the baseline, so their zero score contrast contains no information about 
 effect. The useful next treatment is factorized, label-blind feedback that distinguishes invalid
 experiment geometry, callback parsing, in-library coverage and model-check residuals without
 revealing held-out mechanisms or world labels.
+
+RadiativeTransferFit-v2 provides the cleaner zero-plateau control: all seven proposals satisfy
+the executable protocol, but each returns the canonical refusal on all supported worlds. Normal
+and strict open-loop budget-three conditions use the same oracle-call budget and both stay at
+zero; normal uses 1,122 more tokens, neither condition changes its parent, and the endpoint has
+no server-side seed. The result therefore contains no feedback-effect estimate. It does show
+that factorized label-blind feedback must distinguish experiment coverage, supported-world claim
+coverage, residual/model-check evidence and false-discovery risk. A single zero cannot tell the
+agent whether to measure more, fit differently, or lower an over-conservative abstention threshold.
 
 ### 6. Contract completeness must precede headroom claims
 
@@ -244,10 +265,12 @@ Every new or rebuilt task must pass the following gate before it counts toward t
 - separate nominal, held-out and shifted/high-fidelity metrics where applicable;
 - explicit mechanism and refusal outputs for discovery tasks;
 - finite-output rejection, secure isolation, deterministic replay and metric sealing;
+- a fixed label-blind failure taxonomy so candidate exception text cannot carry observations
+  between hidden worlds or into later proposal prompts;
 - classical and domain baselines, followed by GPT-5.5 budget-one headroom screening; and
 - retention as an on-ramp, not a headline task, if a standard method reliably saturates it.
 
-The present inventory contains 24 internally admissible certified or candidate packages. The
-remaining gap is approximately 26 tasks. Expansion should use procedural families spanning
+The present inventory contains 25 internally admissible certified or candidate packages. The
+remaining gap is approximately 25 tasks. Expansion should use procedural families spanning
 design, inverse problems, control, multifidelity validation, mechanism discovery and exact
 mathematical construction rather than cloning one scalar optimization template across domains.

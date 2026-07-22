@@ -20,28 +20,31 @@ The repository contains **51 task packages in 47 metadata domains**:
 
 - **7 certified core tasks**: Lennard–Jones clusters, spin glass, Poisson solver,
   matrix-multiplication rank, Cap Set, circle packing, and multilayer thin films.
-- **17 candidate tasks** pending scientific certification, including intervention-based causal
+- **18 candidate tasks** pending scientific certification, including intervention-based causal
   and active dynamical-law laboratories whose prediction and mechanism metrics are reported
   separately, a multi-spectrum NMR peak-mechanism/refusal task, and a multi-fidelity
   heat-exchanger Pareto-design task.
-- **27 quarantined tasks** with reproduced scientific-oracle, identifiability, provenance or
+- **26 quarantined tasks** with reproduced scientific-oracle, identifiability, provenance or
   shortcut defects; these remain inventory packages but are not admissible benchmark tasks.
 
 The default CLI exposes only the certified core. `--all` explicitly shows the full
 inventory. Certification status is not a difficulty claim: the inventory metadata contains
-47 `hard` and 2 `flagship` packages, but only certified tasks are benchmark-admissible.
+48 `hard` and 3 `flagship` packages, but only certified tasks are benchmark-admissible.
 
 All candidate code runs in a networkless Bubblewrap sandbox with read-only mounts, resource
 and process limits, and a typed JSON RPC boundary. The trusted parent alone imports the
 oracle and validates metrics. Multi-world evaluators can explicitly reset the candidate
-session at scientific-world boundaries; Ocean-v2 does so to prevent module, imported-package
-or private-tmpfs state from revealing hidden world order. The current audit reports:
+session at scientific-world boundaries; the active multi-world inverse tasks do so to prevent
+module, imported-package or private-tmpfs state from revealing hidden world order. Candidate-
+controlled exception text is reduced to a fixed label-blind failure taxonomy before it can enter
+search feedback, preventing observations from being carried between worlds through exceptions.
+The current audit reports:
 
-- 121/121 unit, security, protocol and scientific-invariant tests passed.
+- 130/130 unit, security, protocol and scientific-invariant tests passed.
 - The latest 51×2 secure-baseline audit reports 51/51 deterministic, 50/51 valid, 51/51
   fail-closed and zero infrastructure failures. The sole invalid baseline is the explicitly
   quarantined `ClimateScience/EnergyBalanceModel`.
-- Current manifest: 7 certified / 17 candidate / 27 quarantined. D-optimal design, quantum
+- Current manifest: 7 certified / 18 candidate / 26 quarantined. D-optimal design, quantum
   gate synthesis, DC optimal power flow, truss sizing, antenna synthesis and NMR peak fitting have been rebuilt with separate sealed
   validation or robustness metrics and re-admitted as candidates. HeatExchanger-v2 additionally
   separates a public constant-property proxy from a sealed segmented temperature-dependent
@@ -83,6 +86,16 @@ or private-tmpfs state from revealing hidden world order. The current audit repo
   same-seed-label selection-blind batch also remains at zero, with all proposals failing the
   callback schema. These single runs diagnose protocol following and sparse credit assignment,
   not a causal feedback effect or field-oceanography capability.
+  RadiativeTransferFit-v2 replaces an underdetermined fixed-profile retrieval with charged
+  channel/view selection over a public five-parameter thermal-emission family. All seven
+  supported worlds have full-rank sounding sensitivities with worst condition number 28; a
+  truth-blind two-view fit reaches 0.614/0.491 development/held-out mechanism and 0.855/0.812
+  radiance prediction while correctly refusing null, extra-absorber and cloud worlds. Across
+  budget-one, normal budget-three and strict open-loop budget-three calibrations, all seven
+  GPT-5.5 proposals are protocol-valid, but every proposal refuses every supported atmosphere.
+  Their perfect unsupported-world refusal and zero false-discovery rate therefore coexist with
+  zero discovery coverage and zero supported-world mechanism recovery. These single runs are
+  synthetic task calibration, not a causal feedback, satellite-retrieval or discovery claim.
   GPT-5.5 reaches nominal OPF score 1.0
   at budget one while sealed N-1 robustness is only 0.031 on development and approximately
   zero on held-out networks. On Truss-v2, a separate budget-three run improves development
