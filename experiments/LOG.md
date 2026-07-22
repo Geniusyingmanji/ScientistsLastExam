@@ -964,3 +964,51 @@ candidate has slightly lower visible development score but higher held-out mecha
 **0.777301**, showing that visible selection and internal-geology transfer are not identical.
 This near-one-step synthesis makes Gravity-v2 a valid on-ramp rather than a long-horizon
 headline task; both model conditions are single runs and support no population claim.
+
+## 2026-07-22 — active ocean-current inversion v2
+
+Rebuilt `Oceanography/OceanCurrentInversion` from two duplicate, noise-dominated velocity
+rasters into an active drifter laboratory. Candidates choose release positions, phases and
+sampling times under a 12-unit budget, then return a sparse set of coefficients over thirty
+public divergence-free, time-dependent streamfunction modes, confidence or an explicit refusal.
+Six development and five held-out worlds include seven in-library currents, two null currents
+and two smooth out-of-library currents. Mode support, velocity coefficients, vorticity, field
+prediction and drifter prediction are scored separately, including extrapolation and shifted
+held-out noise.
+
+The public equations agree with an independent implementation, finite-difference divergence and
+normal boundary flow are at numerical zero, and a finer-step RK4 check agrees within 0.0005 m.
+All seven in-library trajectory Jacobians have rank 30/30 under the fixed public-budget design;
+the worst condition number is 352. The weakest best-of-four-start bounded nonlinear fit of the
+public mode library to an out-of-library trajectory has reduced chi-square **10.5279**, above the
+refusal threshold 3.0, and all four starts agree within `4e-10`. Unsupported noise levels are a
+subset of supported noise levels, so the declared noise metadata cannot identify the world
+class. A truth-blind two-release sparse fit reaches **0.706751/0.405617** development/held-out
+mechanism quality, claims a mechanism in all seven in-library worlds and correctly refuses all
+four unsupported worlds.
+
+### GPT-5.5 Ocean-v2 calibration
+
+The independent budget-one proposal places an initial drifter outside the documented public
+interior and fails closed. In the normal budget-three run, the first proposal is valid and uses
+two releases plus the full 12-unit observation budget, but returns no modes for any world. It
+therefore correctly refuses all four unsupported worlds while also refusing all seven
+in-library worlds, giving zero in-library discovery coverage and zero mean in-library mechanism
+recovery. The next two proposals incorrectly treat callback dictionary keys as numeric records
+and fail closed. No normal proposal is accepted.
+
+A same-local-seed-label strict `selection_blind` run keeps every proposal parent fixed at the
+baseline. All three proposals misread the callback schema, so offline best also remains zero.
+Normal and open-loop conditions use **16,594** and **16,175** tokens respectively. Azure exposes
+no server-side model seed, and each condition contains one run; the equal terminal scores provide
+no causal feedback estimate. The useful task-level observation is instead a decomposition: an
+aggregate mechanism field can include credit for correct refusal even when supported-world
+discovery coverage is zero. Future discovery reports must therefore pair mechanism quality and
+false-discovery rate with in-library coverage or a risk–coverage curve.
+
+The task calibration, inverse admission v4, certification v16, security v3 and all three model
+reports bind clean source `6271434`. The dedicated analysis on clean source `49041fe` validates
+report and raw-trajectory hashes, online and frozen-parent lineage, failure categories and the
+classical/model discovery-coverage contrast. Certification v17 and the 23-condition cross-task
+summary v5 bind clean source `0be15db`. These are controlled simulator calibrations, not field
+oceanography, population model evidence or autonomous scientific discovery.
