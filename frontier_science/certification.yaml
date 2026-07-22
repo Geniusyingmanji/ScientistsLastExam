@@ -199,7 +199,7 @@ tasks:
 
   Spectroscopy/NMRSpectrumFitting:
     status: candidate
-    reason: v2 has ten procedural multi-regime spectra, finite bounded Voigt peak artifacts, order-invariant peak-mechanism matching, separate reconstruction/confidence/false-discovery/refusal metrics and held-out overlap/noise/baseline/axis/model-inadequacy shifts; a truth-blind classical fit scores 0.271 development and 0.146 held-out mechanism while retaining high reconstruction but failing misspecification refusal, leaving meaningful science-specific headroom pending GPT-5.5 calibration, server-held spectra and independent spectroscopist review
+    reason: v2 has ten procedural multi-regime spectra, finite bounded Voigt peak artifacts, order-invariant peak-mechanism matching, separate reconstruction/confidence/false-discovery/refusal metrics and held-out overlap/noise/baseline/axis/model-inadequacy shifts; a truth-blind classical fit scores 0.271/0.146 development/held-out mechanism-refusal despite high reconstruction, while GPT-5.5 reaches 0.428/0.176 at budget one and its budget-three feedback rewrites do not repair false discoveries, leaving meaningful science-specific headroom pending paired controls, server-held spectra and independent spectroscopist review
     citation_ids:
       - doi:10.1093/bioinformatics/bts308
       - doi:10.1007/s11306-017-1244-5

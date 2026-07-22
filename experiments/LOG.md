@@ -749,8 +749,8 @@ Historical batch reports retained run summaries while their full per-step scienc
 under git-ignored `runs/`. The batch runner now writes a post-search compact trajectory snapshot
 containing scalar visible and sealed metrics, candidate lineage hashes and a SHA-256 binding to
 the full raw trajectory. This snapshot is written only after a backend returns and is never
-placed in agent or search state. A derived evidence builder backfills 13 trusted OED,
-Pendulum, GateSynthesis, ActiveLawDiscovery, OPF, Truss and Antenna normal calibration conditions; their cross-task
+placed in agent or search state. The current derived evidence builder backfills 15 trusted OED,
+Pendulum, GateSynthesis, ActiveLawDiscovery, OPF, Truss, Antenna and NMR normal calibration conditions; their cross-task
 claim audit is recorded in `.research/science_common_findings.md`.
 
 ## 2026-07-21 — strict iterative-feedback implementation pilot
@@ -886,5 +886,27 @@ clean-signal reconstruction **0.887314/0.851059**. It falsely fits the developme
 phase-distorted spectrum and one of two held-out unsupported spectra. This establishes useful
 headroom and directly demonstrates why residual reconstruction cannot serve as a discovery
 metric. BATMAN, ASICS and Voigt-line-width citation metadata and DOI resolution were checked
-before the task card was written. NMR-v2 is re-admitted as a candidate pending clean-revision
-calibration/audits, GPT-5.5 headroom screening, server-held spectra and independent review.
+before the task card was written. NMR-v2 is re-admitted as a candidate pending paired controls,
+server-held spectra and independent review.
+
+### GPT-5.5 NMR-v2 calibration
+
+At budget one, GPT-5.5 improves normalized development mechanism/refusal from zero to
+**0.427998**, above the truth-blind classical baseline **0.271110** without saturating the exact
+reference. Its held-out mechanism/refusal is only **0.176186**, while development/held-out
+reconstruction is high at **0.874116/0.878353**. It correctly abstains on each null spectrum but
+falsely fits both phase-distorted spectra, yielding false-discovery and correct-refusal rates
+**0.5/0.5** on each split.
+
+An independent budget-three normal trajectory scores **0.375440 -> 0.212692 -> 0.161475**;
+only the first proposal is accepted. Its selected held-out mechanism/refusal is zero because it
+falsely fits both unsupported held-out spectra. Both feedback-conditioned rewrites falsely fit
+every unsupported spectrum on both splits, even though development reconstruction remains
+**0.819033/0.782865**. The run therefore exposes a residual-versus-mechanism/refusal failure,
+not evidence that iterative feedback caused it: each condition has one run, different local
+identifiers, no server-side model seed and no matched control.
+
+The task calibration, wave-3 admission, 51-package certification, 51x2 secure baseline and both
+GPT-5.5 reports bind clean source `bbb7787`. A dedicated analyzer validates their report and raw
+trajectory hashes, accepted-parent lineage, classical/model contrasts and rejected-proposal
+failure modes.

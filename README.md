@@ -34,7 +34,7 @@ All candidate code runs in a networkless Bubblewrap sandbox with read-only mount
 and process limits, and a typed JSON RPC boundary. The trusted parent alone imports the
 oracle and validates metrics. The current audit reports:
 
-- 94/94 unit, security, protocol and scientific-invariant tests passed.
+- 96/96 unit, security, protocol and scientific-invariant tests passed.
 - The latest 51×2 secure-baseline audit reports 51/51 deterministic, 50/51 valid, 51/51
   fail-closed and zero infrastructure failures. The sole invalid baseline is the explicitly
   quarantined `ClimateScience/EnergyBalanceModel`.
@@ -50,7 +50,9 @@ oracle and validates metrics. The current audit reports:
   hardware robustness `0.705 -> 0.636 -> 0.576`. NMR-v2 separates peak-mechanism recovery from
   reconstruction and refusal: a truth-blind classical fit reconstructs clean signals at
   `0.887/0.851` on development/held-out spectra, but scores only `0.271/0.146` on normalized
-  mechanism/refusal quality and falsely fits the development phase-distorted spectrum.
+  mechanism/refusal quality and falsely fits the development phase-distorted spectrum. GPT-5.5
+  reaches `0.428/0.176` development/held-out mechanism/refusal at budget one; at budget three,
+  the two later rewrites score lower and falsely fit every unsupported spectrum.
 
 Machine-readable evidence lives in [`experiments/`](experiments/).
 The original five dated P0–P2 reports were regenerated from clean source revision `f48b101`;

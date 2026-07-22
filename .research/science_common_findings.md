@@ -1,14 +1,14 @@
 # Cross-task science calibration findings
 
-Date: 2026-07-21 (UTC). These findings use trusted GPT-5.5 `greedy_rewrite` calibrations on
-OED-v2, Pendulum-v2, GateSynthesis-v2, ActiveLawDiscovery, OPF-v2, Truss-v2 and Antenna-v2.
-The 13 normal-feedback model conditions each contain one seed and proposal budget one or three.
-They calibrate tasks and motivate experiments; they are not a model leaderboard, a causal
+Date: 2026-07-22 (UTC). These findings use trusted GPT-5.5 `greedy_rewrite` calibrations on
+OED-v2, Pendulum-v2, GateSynthesis-v2, ActiveLawDiscovery, OPF-v2, Truss-v2, Antenna-v2 and
+NMR-v2. The 15 normal-feedback model conditions each contain one seed and proposal budget one
+or three. They calibrate tasks and motivate experiments; they are not a model leaderboard, a causal
 feedback study or population evidence.
 
-The portable machine record is `experiments/science_calibration_summary_2026-07-21.json`. It
+The portable machine record is `experiments/science_calibration_summary_2026-07-22.json`. It
 retains every top-level scalar metric, candidate lineage hash and raw trajectory SHA-256 for all
-13 normal conditions. Truss's strict selection-blind diagnostic remains in its task-specific
+15 normal conditions. Truss's strict selection-blind diagnostic remains in its task-specific
 analysis because it is not a normal-feedback calibration. The underlying reports bind the
 task-specific source revision. Pendulum's initial budget-one run on revision `57c0e1b` is
 excluded because the public task omitted the exact plant equations and was explicitly superseded
@@ -31,6 +31,8 @@ by the corrected-contract run on `2557adb`.
 | Truss-v2, budget 3 | development 0.000000 → 0.415579 → 0.548497 → 0.611494 | final held-out robustness 0.206438 → 0.077881 while held-out nominal rises 0.251321 → 0.422348 | The task retains optimization headroom, but the final nominally accepted update worsens sealed transfer robustness. |
 | Antenna-v2, budget 1 | development 0.999263; held-out nominal 0.995115 | hardware/failure robustness 0.624204/0.394718 | A general window/null-synthesis policy nearly saturates nominal pattern quality in one proposal but not shifted hardware performance. |
 | Antenna-v2, budget 3 | development 0.845170 → 0.993267 → 1.0 | development robustness 0.704823 → 0.635511 → 0.576348 | Every accepted nominal improvement lowers sealed robustness and mean worst-shift quality within this trajectory. |
+| NMR-v2, budget 1 | development mechanism/refusal 0.427998; reconstruction 0.874116 | held-out mechanism/refusal 0.176186; reconstruction 0.878353; false-discovery 0.5/0.5 | GPT-5.5 beats the classical mechanism baseline without saturating, but high reconstruction coexists with false discovery and weak shifted mechanism validity. |
+| NMR-v2, budget 3 | development proposals 0.375440 → 0.212692 → 0.161475; only step 1 accepted | held-out mechanism/refusal remains 0.0; rejected steps retain development reconstruction 0.819/0.783 while false-discovery is 1.0 on both splits | Aggregate score feedback does not repair model-inadequacy detection in this trajectory; residual quality alone remains misleading. |
 
 OPF's `robustness_score` combines security-constrained economic quality with overload penalties.
 It is not a pure safety probability. The proportional baseline is feasible for every tested
@@ -51,10 +53,12 @@ weak evidence for long-horizon autonomous research.
 
 ### 2. Visible optimization and scientific validity are different trajectories
 
-Pendulum, gate synthesis, OPF, Truss and Antenna all separate a visible nominal objective from an evaluator-only
-shift or contingency metric. OPF has the largest numeric gap among these task-normalized
-calibrations: nominal optimization reaches its reference while most complete line-outage
-scenarios fail. The current observations indicate
+Pendulum, gate synthesis, OPF, Truss, Antenna and NMR all separate a visible development
+objective from an evaluator-only shift, contingency or held-out mechanism metric. OPF has the
+largest numeric gap among the nominal-design calibrations, while NMR budget one falls from
+0.428 development to 0.176 held-out mechanism/refusal despite similar reconstruction. In OPF,
+nominal optimization reaches its reference while most complete line-outage scenarios fail. The
+current observations indicate
 that terminal best-score curves alone can hide a task-relevant validation loss. A general claim
 requires repeated paired runs and hidden server-side instances.
 
@@ -69,18 +73,25 @@ field.
 ### 4. Prediction does not imply mechanism recovery or warranted belief
 
 ActiveLawDiscovery predicts in-library trajectories with approximately 0.99 accuracy while
-assigning high confidence to unsupported polynomial mechanisms in misspecified worlds. The
-error is not primarily rollout prediction. It is failure to detect that the candidate model
-class is inadequate. Discovery tasks therefore need explicit mechanism artifacts, null and
-misspecified worlds, confidence, abstention and false-discovery metrics.
+assigning high confidence to unsupported polynomial mechanisms in misspecified worlds. NMR-v2
+shows the same distinction in an inverse problem: the truth-blind classical policy reconstructs
+clean spectra at 0.887/0.851 but scores only 0.271/0.146 on normalized mechanism/refusal, while
+GPT-5.5 budget one reconstructs at 0.874/0.878 but retains false discoveries on both splits.
+The error is not primarily prediction or residual fit. It is failure to recover the right
+artifact and detect when the candidate model class is inadequate. Discovery tasks therefore
+need explicit mechanism artifacts, null and misspecified worlds, confidence, abstention and
+false-discovery metrics.
 
 ### 5. Feedback cannot optimize information that selection never receives
 
 In the OPF budget-three run, later proposals receive only nominal score and reproduce the same
 N-1 failure. Pendulum's visible improvement is accompanied by flat shifted robustness, while
-ActiveLawDiscovery retains its misspecification errors. Gate synthesis provides a counterpoint:
-sealed robustness changes slightly even without being exposed, showing that correlated movement
-can occur by chance or through shared structure. These runs motivate, but do not prove, the
+ActiveLawDiscovery retains its misspecification errors. NMR selection does include a normalized
+mechanism/refusal aggregate, but does not expose its decomposition: after the first accepted
+proposal, both rewrites make false discoveries on every unsupported development and held-out
+spectrum and score lower despite retaining substantial reconstruction. Gate synthesis provides
+a counterpoint: sealed robustness changes slightly even without being exposed, showing that
+correlated movement can occur by chance or through shared structure. These runs motivate, but do not prove, the
 hypothesis that objective-aligned structured feedback is required for reliable improvement on a
 sealed scientific property.
 
@@ -108,8 +119,8 @@ The observations above define hypotheses rather than assumed conclusions:
    strict selection-blind feedback under paired seeds.
 2. Robustness-aware selection will move the Pendulum, Gate and OPF Pareto frontier, whereas
    nominal-only selection will primarily improve the visible objective.
-3. Explicit model-checking and abstention feedback will reduce ActiveLawDiscovery false
-   discoveries without an unacceptable loss of correct in-library mechanisms.
+3. Explicit model-checking and abstention feedback will reduce ActiveLawDiscovery and NMR-v2
+   false discoveries without an unacceptable loss of correct in-library mechanisms.
 4. Continuous scientific memory will outperform equal-budget restarts only when it stores
    falsified hypotheses and experiment evidence, not merely the incumbent program.
 5. One-step saturation will predict limited long-horizon headroom on tasks whose solution is a

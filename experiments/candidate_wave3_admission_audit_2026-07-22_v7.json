@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_ADMISSION_AUDIT",
+  "created_at": "2026-07-22T00:15:39.221061+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "bbb77871325071795dd79dc7e53c6fe8b3e9c7a5",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/audit_candidate_wave3.py",
+      "--output",
+      "experiments/candidate_wave3_admission_audit_2026-07-22_v7.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "records": [
+    {
+      "task": "Spectroscopy/NMRSpectrumFitting",
+      "admission": "candidate",
+      "resolved_defect": "v2 replaces one fail-open fixed spectrum with ten procedural multi-regime spectra, finite structured peak artifacts, order-invariant mechanism matching, separate reconstruction/confidence metrics and null/model-inadequacy refusal",
+      "instance_count": 10,
+      "development_instance_count": 6,
+      "heldout_instance_count": 4,
+      "nonfinite_candidate_score": 0.0,
+      "nonfinite_candidate_marked_valid": false,
+      "always_abstain_score": 0.0,
+      "always_abstain_valid": true,
+      "exact_reference_score": 1.0,
+      "exact_reference_heldout_score": 1.0,
+      "exact_reference_false_discovery_rate": 0.0,
+      "rebuild_passed": true,
+      "passed": true
+    },
+    {
+      "task": "BayesianInference/OptimalExperimentDesign",
+      "admission": "candidate",
+      "resolved_defect": "v2 rejects non-finite indices, replaces the random-search multiplier with Kiefer-Wolfowitz-certified references, and separates procedural development from shifted-family validation",
+      "nonfinite_candidate_score": 0.0,
+      "nonfinite_candidate_marked_valid": false,
+      "all_nonfinite_instances_failed_closed": true,
+      "reference_count": 10,
+      "all_references_converged": true,
+      "development_instance_count": 6,
+      "validation_instance_count": 4,
+      "rebuild_passed": true,
+      "passed": true
+    },
+    {
+      "task": "QuantumControl/GateSynthesis",
+      "admission": "candidate",
+      "resolved_defect": "v2 rejects non-finite and out-of-bound pulses, exposes each nominal Hamiltonian and target, and retains hardware-shift and held-out-target metrics separately",
+      "nonfinite_candidate_score": 0.0,
+      "nonfinite_candidate_marked_valid": false,
+      "all_nonfinite_instances_failed_closed": true,
+      "instance_count": 6,
+      "development_instance_count": 4,
+      "heldout_instance_count": 2,
+      "instance_shapes_valid": true,
+      "rebuild_passed": true,
+      "passed": true
+    },
+    {
+      "task": "PowerSystems/OptimalPowerFlow",
+      "admission": "candidate",
+      "resolved_defect": "v2 supplies complete procedural network data, rejects invalid dispatches, uses independent convex nominal/security QP witnesses and seals exhaustive N-1 metrics",
+      "nonfinite_candidate_score": 0.0,
+      "nonfinite_candidate_marked_valid": false,
+      "all_nonfinite_instances_failed_closed": true,
+      "instance_count": 6,
+      "development_instance_count": 4,
+      "heldout_instance_count": 2,
+      "all_baselines_n_minus_1_safe": true,
+      "all_reference_costs_ordered": true,
+      "rebuild_passed": true,
+      "passed": true
+    },
+    {
+      "task": "StructuralEngineering/TrussWeightMinimization",
+      "admission": "candidate",
+      "resolved_defect": "v2 replaces the duplicate-member fixed topology with six fully supplied unique procedural structures, complete stress/displacement/Euler-buckling FEM, multistart feasible references and sealed physical shifts",
+      "instance_count": 6,
+      "development_instance_count": 4,
+      "heldout_instance_count": 2,
+      "all_topologies_have_unique_members": true,
+      "all_max_baseline_valid": true,
+      "all_max_baseline_shift_safe": true,
+      "nonfinite_candidate_score": 0.0,
+      "nonfinite_candidate_marked_valid": false,
+      "nominal_references_feasible": true,
+      "robust_references_feasible": true,
+      "nominal_references_fail_at_least_one_shift": true,
+      "rebuild_passed": true,
+      "passed": true
+    },
+    {
+      "task": "Electromagnetics/AntennaArraySynthesis",
+      "admission": "candidate",
+      "resolved_defect": "v2 rejects zero/non-finite target response, uses measured per-instance baseline and finite-grid domain references, and separates held-out geometry from frequency/calibration/position/exhaustive element-failure robustness",
+      "instance_count": 6,
+      "development_instance_count": 4,
+      "heldout_instance_count": 2,
+      "zero_array_score": 0.0,
+      "zero_array_marked_valid": false,
+      "nonfinite_array_score": 0.0,
+      "nonfinite_array_marked_valid": false,
+      "baseline_valid": true,
+      "baseline_score": 0.0,
+      "nominal_reference_score": 1.0,
+      "nominal_reference_robustness": 0.4659902703974701,
+      "robust_reference_score": 0.3843748949384173,
+      "robust_reference_robustness": 1.0,
+      "all_references_improve_corresponding_baselines": true,
+      "every_single_element_failure_evaluated": true,
+      "rebuild_passed": true,
+      "passed": true
+    }
+  ],
+  "summary": {
+    "task_count": 6,
+    "check_pass_count": 6,
+    "resolved_rebuild_count": 6,
+    "remaining_quarantine_count": 0
+  },
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}

@@ -112,7 +112,10 @@ The first review tranche contains real scientific topics but several narrow eval
   it still needs model calibration, server-held arrays, full-wave replication and independent
   review. NMR-v2 now has ten procedural spectra, order-invariant peak-mechanism matching,
   held-out line-shape/noise/baseline shifts and explicit null/model-inadequacy refusal; it still
-  requires GPT-5.5 headroom calibration and independent spectroscopist review.
+  requires independent spectroscopist review and server-held spectra. GPT-5.5 preserves
+  headroom at budget one (0.428 development versus 0.176 held-out mechanism/refusal), while
+  high 0.874/0.878 reconstruction coexists with false discovery. Two later budget-three
+  rewrites score lower and falsely fit every unsupported spectrum.
 - OED-v2 now meets those internal evaluator criteria: six development and four shifted model
   families, finite integer allocations, numerically whitened Fisher sensitivities, and
   Kiefer-Wolfowitz-certified references. GPT-5.5 then reaches 0.991 development and 0.994
