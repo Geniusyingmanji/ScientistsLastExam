@@ -2,15 +2,16 @@
 
 Audit date: 2026-07-19 (UTC), with the experiment roadmap extended on 2026-07-21 after a
 full-text EdgeBench comparison and the task inventory updated on 2026-07-22 through
-LidDrivenCavity-v2.
+EnergyBalanceModel-v2.
 Evidence base: `literature_matrix.md`,
 `science_experiment_plan.md`, current source/tests, and the dated artifacts in `experiments/`.
 
 ## Executive decision
 
-Keep the expansion freeze. P0 integrity and a narrow P1 certification gate are now
-implemented, but the project has not passed the empirical evidence gate needed for a benchmark
-release. The defensible current description is:
+Keep the breadth-first expansion freeze: improve the admissible count by rebuilding high-value
+quarantined packages one at a time, not by adding unchecked directories. P0 integrity and a
+narrow P1 certification gate are now implemented, but the project has not passed the empirical
+evidence gate needed for a benchmark release. The defensible current description is:
 
 > A research prototype for cross-domain, executable, budget-constrained scientific generative
 > optimization, with a seven-task internally certified core and a larger
@@ -24,22 +25,22 @@ physical validation, and auditable claim–evidence provenance.
 
 | Capability | Current status | Evidence | Remaining acceptance criterion |
 |---|---|---|---|
-| Candidate/oracle isolation | Implemented | Clean-revision security v7: 18/18 adversarial tests; Bubblewrap, no network, read-only mounts, resource/seccomp limits, typed RPC, fresh multi-world sessions and candidate-exception sanitization | Reproduce in clean Linux CI; document portability/non-Linux behavior |
-| Fail-closed trusted metrics | Implemented | Clean-revision 51×2 v13: 51 deterministic, 50 valid, 51 fail-closed and zero infrastructure failures; quarantined Climate baseline is the sole invalid result | Repair or quarantine every invalid candidate oracle before certification |
-| Task admission policy | Implemented, narrow | Current manifest: 7 certified / 20 candidate / 24 quarantined; the latest rebuilds add active inverse/discovery candidates, LowThrustTransfer-v2 and full-field LidDrivenCavity-v2 | Independent domain + evaluator reviews are still declarations, not completed external review |
-| Scientific validity of inventory | Audited, sparse | All original 50 packages passed adversarial admission; ActiveLawDiscovery brings inventory to 51 and substantive rebuilds now leave 27 internally admissible packages | Rebuild high-value families and add approximately 23 net admissible tasks to reach about 50; hidden/generated instances and shortcut analysis remain mandatory |
+| Candidate/oracle isolation | Implemented | Clean-revision security v8: 18/18 adversarial tests; Bubblewrap, no network, read-only mounts, resource/seccomp limits, typed RPC, fresh multi-world sessions and candidate-exception sanitization | Reproduce in clean Linux CI; document portability/non-Linux behavior |
+| Fail-closed trusted metrics | Implemented | Clean-revision 51×2 v14: 51 deterministic, 51 valid, 51 fail-closed and zero infrastructure failures after the Climate-v2 rebuild | Repair or quarantine every future invalid candidate oracle before certification |
+| Task admission policy | Implemented, narrow | Current manifest: 7 certified / 21 candidate / 23 quarantined; the latest rebuilds add active inverse/discovery candidates, LowThrustTransfer-v2, full-field LidDrivenCavity-v2 and active Climate-v2 | Independent domain + evaluator reviews are still declarations, not completed external review |
+| Scientific validity of inventory | Audited, sparse | All original 50 packages passed adversarial admission; ActiveLawDiscovery brings inventory to 51 and substantive rebuilds now leave 28 internally admissible packages | Rebuild high-value families and add approximately 22 net admissible tasks to reach about 50; hidden/generated instances and shortcut analysis remain mandatory |
 | Unified trajectory/accounting | Implemented, protocol-smoked | Clean-revision two-seed baseline smoke; trajectory schema v2, hashes, AUC over `budget_units`, separate `oracle_calls`, wall/token/cost, seed, checkpoint/resume | Validate nonzero-budget schema-v2 artifact replay in CI and version future changes |
 | Feedback controls | Implemented; strict pilot run | None/shuffled prompt-metric modes disclose true-score selection; strict selection-blind freezes parent/metrics; four-task n=3 pilot has no direction-stable lift and is not token-matched | Run token-matched ≥10 paired seeds with score-only, delayed/replayed and strict open-loop controls |
-| Evaluator-only metric sealing | Implemented and integration-verified | Closed search-visible allowlist; search-state redaction/hash-keyed sidecars; candidate-controlled exception text mapped to a finite label-blind taxonomy; 147-test suite; clean pinned OpenEvolve/TreeQuest/Shinka no-leak report `aff026d` | Extend from baseline smoke to nonzero-budget upstream runs before comparative claims |
+| Evaluator-only metric sealing | Implemented and integration-verified | Closed search-visible allowlist; search-state redaction/hash-keyed sidecars; candidate-controlled exception text mapped to a finite label-blind taxonomy; 157-test suite; clean pinned OpenEvolve/TreeQuest/Shinka no-leak report `aff026d` | Extend from baseline smoke to nonzero-budget upstream runs before comparative claims |
 | Official OpenEvolve adapter | Implemented, trusted baseline smoke | Explicit 0.2.26 adapter; clean-revision secure baseline passed under Python 3.10 | Run nonzero-budget/checkpoint integration and multi-seed study |
 | TreeQuest AB-MCTS | Implemented, trusted baseline smoke | Real TreeQuest AB-MCTS-A ask/tell adapter; clean-revision secure baseline passed under Python 3.12 | Run nonzero-budget/checkpoint integration and multi-seed study |
 | ShinkaEvolve | Implemented, trusted baseline smoke | Official runner/database adapter at pinned commit; clean-revision secure baseline passed under Python 3.10 | Run nonzero-budget/resume integration and token accounting audit |
-| Classical/domain baselines | Partial | NMR, HeatExchanger, Reaction, Gravity, Ocean, Radiative and LowThrust rebuilds have truth-blind domain baselines exposing reconstruction/proxy/prediction, terminal-feasibility or mechanism/refusal gaps | Add random/quasi-random plus BO/CMA-ES/DE and one domain heuristic for each meaningful task family |
-| Multi-seed benchmark evidence | Missing | Keyless GPT-5.5 Responses path is operational; 29 trusted normal single-run calibrations cover 15 tasks and a separate four-task n=3 control pilot is negative/inconclusive | Certified-core and science-subset reports with paired uncertainty and portable raw trajectories |
+| Classical/domain baselines | Partial | NMR, HeatExchanger, Reaction, Gravity, Ocean, Radiative, LowThrust and Climate rebuilds have truth-blind domain baselines exposing reconstruction/proxy/prediction, terminal-feasibility, experiment-design or mechanism/refusal gaps | Add random/quasi-random plus BO/CMA-ES/DE and one domain heuristic for each meaningful task family |
+| Multi-seed benchmark evidence | Missing | Keyless GPT-5.5 Responses path is operational; 31 trusted normal single-run calibrations cover 16 tasks and a separate four-task n=3 control pilot is negative/inconclusive | Certified-core and science-subset reports with paired uncertainty and portable raw trajectories |
 | Multifidelity/Pareto | Candidate-level | HeatExchanger-v2 implements proxy/exact Pareto archives, measured false promotion and physical shifts | Add independent high-fidelity review/replication and at least one certified multifidelity task |
 | Feedback learning claim | Negative pilot only | A strict open-loop control and three-replicate four-task pilot are complete; no direction-stable visible or sealed lift, and normal uses more tokens | Token-matched preregistered ≥10-replicate study with delayed/replayed and score-only controls |
-| Mechanistic discovery | Candidate-level | ActiveLaw, NMR, Reaction, Gravity, Ocean and Radiative tasks separately score mechanisms, prediction, coverage, hidden shifts, false discovery and refusal | Add paired repeated studies, harder regimes and independent scientific validation |
-| Validation/distribution shift | Calibration-level | Nominal/robustness and prediction/mechanism gaps recur across control, design and inverse tasks; Radiative adds a protocol-valid perfect-refusal/zero-coverage case, while LowThrust separates numerical integration error from terminal feasibility and execution shifts | Paired repeated hidden-shift studies plus independent high-fidelity or physical confirmation and abstention cases |
+| Mechanistic discovery | Candidate-level | ActiveLaw, NMR, Reaction, Gravity, Ocean, Radiative and Climate tasks separately score mechanisms, prediction, coverage, hidden shifts, false discovery and refusal | Add paired repeated studies, harder regimes and independent scientific validation |
+| Validation/distribution shift | Calibration-level | Nominal/robustness and prediction/mechanism gaps recur across control, design and inverse tasks; Radiative adds a protocol-valid perfect-refusal/zero-coverage case, Climate adds near-unit prediction with weak mechanism and false model claims, and LowThrust separates numerical integration error from terminal feasibility and execution shifts | Paired repeated hidden-shift studies plus independent high-fidelity or physical confirmation and abstention cases |
 | Research-integrity track | Partial | Immutable candidate/parent hashes and artifacts | Hypothesis–test–evidence records, failed branches, claim links and calibrated refusal |
 
 ## What the latest literature changes
@@ -85,8 +86,8 @@ or make the executable-optimization qualifier unavoidable.
 
 ### 1. Only calibration-level empirical P2 evidence exists
 
-The keyless GPT-5.5 Responses path was restored and 29 trusted normal single-run conditions now
-cover 15 tasks, with task-specific strict open-loop diagnostics on a subset. They expose
+The keyless GPT-5.5 Responses path was restored and 31 trusted normal single-run conditions now
+cover 16 tasks, with task-specific strict open-loop diagnostics on a subset. They expose
 one-step saturation and multiple oracle defects, but there are still no valid five-seed
 certified-core trajectories, no paired feedback-control result, and no nonzero-budget official-
 backend search run. The project must distinguish “calibrated at budget one” from
@@ -142,13 +143,13 @@ Accordingly, “P0–P2 implemented and recorded” must not be shortened to “
 ### P0/P1 closeout — completed locally, reproduce in CI
 
 - [x] Trusted oracle / isolated candidate architecture and adversarial regression suite.
-- [x] Current 51-package deterministic secure baseline and certification audit; invalid Climate oracle fails closed.
-- [x] Seven-task certified core, twenty candidates and 24 quarantined packages after all
+- [x] Current 51-package deterministic secure baseline and certification audit; all 51 weak baselines are valid, deterministic and fail closed.
+- [x] Seven-task certified core, 21 candidates and 23 quarantined packages after all
   admission waves and the current substantive rebuilds.
 - [x] Task-card/citation/invariant audit and dated machine-readable evidence.
 - [ ] Add Linux CI reproduction of all dated audits (local clean-revision reproduction is done).
-- [x] Quarantine `ClimateScience/EnergyBalanceModel`; replace its unstable, untraceable,
-  underidentified formulation rather than patching it into an admissible task.
+- [x] Replace the quarantined `ClimateScience/EnergyBalanceModel` with an active, identifiable
+  response task containing long/short experiment-design contrast and explicit model mismatch.
 
 ### P2a — reproducible protocol release
 
@@ -200,7 +201,7 @@ Accordingly, “P0–P2 implemented and recorded” must not be shortened to “
 - [x] Add an active dynamical-law candidate with budgeted experiments, sparse mechanism
   recovery, sealed rollout/shift validation, and null/misspecified refusal cases.
 - [x] Add misspecification/refusal cases, false-discovery penalties and supported-world
-  discovery coverage to the active-law, NMR, Reaction, Ocean and Radiative discovery candidates.
+  discovery coverage to the active-law, NMR, Reaction, Ocean, Radiative and Climate discovery candidates.
 - [x] Replace sparse cavity centerline scoring with full-field equations, held-out Reynolds
   transfer, refinement checks and hard physics gates; budget-one/open-loop ceiling results keep
   the current task as an on-ramp pending harder procedural or multifidelity regimes.

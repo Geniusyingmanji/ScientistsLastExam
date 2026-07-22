@@ -3,14 +3,14 @@
 Date: 2026-07-22 (UTC). These findings use trusted GPT-5.5 `greedy_rewrite` calibrations on
 OED-v2, Pendulum-v2, GateSynthesis-v2, ActiveLawDiscovery, OPF-v2, Truss-v2, Antenna-v2,
 NMR-v2, HeatExchanger-v2, ReactionMechanismFitting-v2, GravityInversion-v2,
-OceanCurrentInversion-v2, RadiativeTransferFit-v2, LowThrustTransfer-v2 and
-LidDrivenCavity-v2. The 29 normal-feedback model conditions each contain one seed and proposal budget one
+OceanCurrentInversion-v2, RadiativeTransferFit-v2, LowThrustTransfer-v2,
+LidDrivenCavity-v2 and EnergyBalanceModel-v2. The 31 normal-feedback model conditions each contain one seed and proposal budget one
 or three. They calibrate tasks and motivate experiments; they are not a model leaderboard, a causal
 feedback study or population evidence.
 
-The portable machine record is `experiments/science_calibration_summary_2026-07-22_v8.json`. It
+The portable machine record is `experiments/science_calibration_summary_2026-07-22_v9.json`. It
 retains every top-level scalar metric, candidate lineage hash and raw trajectory SHA-256 for all
-29 normal conditions. Strict selection-blind diagnostics remain in task-specific
+31 normal conditions. Strict selection-blind diagnostics remain in task-specific
 analysis because it is not a normal-feedback calibration. The underlying reports bind the
 task-specific source revision. Pendulum's initial budget-one run on revision `57c0e1b` is
 excluded because the public task omitted the exact plant equations and was explicitly superseded
@@ -42,6 +42,9 @@ by the corrected-contract run on `2557adb`.
 | LowThrustTransfer-v2, budget 3 | proposal scores 0.005079 → 0.004750 → `2.1e-6`; only step 1 accepted | selected held-out `1.3e-11`; all three proposals nominally and shift infeasible | More scalar feedback did not localize the long-horizon boundary-value error in this trajectory. |
 | LidDrivenCavity-v2, budget 1 | development `0.999999990`; PDE feasibility 1.0 | held-out `0.999999957`; both grid-refinement scores above `0.99999998` | One proposal synthesizes a numerical solver that nearly matches the same discrete reference on development, held-out and refinement cases. This is solver synthesis, not a new flow result. |
 | LidDrivenCavity-v2, budget 3 | normal accepted `0.869915 → 0.894913 → 0.898062` | selected held-out `0.843732`; all nominal and grid physics gates pass | Iterative rewrites improve this normal trajectory but remain below independent one-shot and open-loop near-ceiling solvers. One run cannot assign the difference to feedback. |
+| EnergyBalanceModel-v2, long versus short classical design | long/short development mechanism `0.809/0.0039` | held-out mechanism `0.942/0.0`; held-out prediction `0.999/0.990`; short false discovery `0.20/0.25` | Accurate response prediction can survive an under-informative experiment even when parameter recovery and model-class discrimination collapse. |
+| EnergyBalanceModel-v2, budget 1 and normal budget 3 | all four proposals are invalid return artifacts and remain at 0.0 | no supported mechanism, prediction or refusal claim is validated | Scientific sophistication in generated code does not compensate for failure to return the documented artifact. |
+| EnergyBalanceModel-v2, strict open-loop budget 3 | offline best development mechanism `0.618`; prediction `0.977` | held-out mechanism `0.282`; prediction `0.994`; false discovery `0.20/0.25` | Near-unit prediction coexists with weak held-out mechanism and high-confidence feedback-drift/three-layer false claims. The one-run contrast is not a feedback estimate. |
 | ReactionMechanism-v2, budget 1 | valid proposal remains at normalized mechanism 0.0 | held-out normalized mechanism 0.0 | A complex fitter spends the assay budget on an under-informative design and abstains everywhere. |
 | ReactionMechanism-v2, budget 3 | all three proposals remain at 0.0 and are rejected | each performs one assay and abstains everywhere | More rewrite budget does not help when scalar zero feedback cannot localize whether experiment design, inference or refusal caused failure. |
 | GravityInversion-v2, budget 1 | invalid callback unpacking; development remains 0.0 | no validated improvement | A physically sophisticated implementation can still fail the executable laboratory protocol. |
@@ -124,6 +127,17 @@ experiment, but both strategies yield zero discovery coverage and zero supported
 recovery. Thus protocol validity, experiment-budget use, refusal specificity and discovery
 coverage are four distinct quantities; none can stand in for the others.
 
+EnergyBalanceModel-v2 supplies the sharpest prediction-versus-mechanism counterexample so far.
+The under-informative short classical design reaches development/held-out prediction
+`0.968/0.990` while mechanism quality is only `0.0039/0.0` and false-discovery rates are
+`0.20/0.25`. The selected strict open-loop model program improves fixed-world prediction to
+`0.977/0.994`, but held-out mechanism remains 0.282 and it confidently assigns the public
+two-layer model to state-dependent-feedback and three-layer-ocean worlds. On twelve post-hoc
+procedural worlds it predicts supported responses at 0.995 while supported mechanism quality is
+0.370 and unsupported false discovery is 2/3. Those probes were selected after the runs and are
+not preregistered hidden validation, but they show why response fit, parameter recovery,
+model-class adequacy and refusal must be separate curves.
+
 ### 5. Feedback cannot optimize information that selection never receives
 
 In the OPF budget-three run, later proposals receive only nominal score and reproduce the same
@@ -162,6 +176,16 @@ that factorized label-blind feedback must distinguish experiment coverage, suppo
 coverage, residual/model-check evidence and false-discovery risk. A single zero cannot tell the
 agent whether to measure more, fit differently, or lower an over-conservative abstention threshold.
 
+EnergyBalanceModel-v2 adds both an interface plateau and an experiment-design bottleneck. All
+four normal proposals fail the return-artifact contract, whereas a strict open-loop batch happens
+to contain two valid programs and one nonzero selection. Normal uses 14,181 tokens and open-loop
+15,297, both use four oracle calls, and the endpoint exposes no server-side generation seed. The
+`0.000` versus `0.618` contrast therefore cannot identify a feedback effect. The scientifically
+useful observation is that the nonzero program still combines high predictive fit with false
+model claims, while a truth-blind long multiscale forcing design avoids those errors. Future
+treatments must factor protocol repair, temporal experiment design, parameter estimation and
+model checking instead of interpreting one aggregate score as the source of failure.
+
 ### 6. Contract completeness must precede headroom claims
 
 The superseded Pendulum diagnostic failed because the public contract omitted the evaluator's
@@ -196,8 +220,11 @@ The observations above define hypotheses rather than assumed conclusions:
 6. Factorized but label-blind feedback about experiment coverage, feasibility and residual
    diagnostics will escape zero-score plateaus more reliably than an aggregate scalar alone,
    without leaking held-out mechanisms or evaluator-only world types.
+7. At equal charged budget, temporally multiscale or adaptive experiments will improve mechanism
+   recovery and model-mismatch refusal more than short experiments even when their response-
+   prediction scores are similar.
 
-Tests 1--3 require at least ten paired seeds on the focused science subset. All comparisons must
+Tests 1--3 and 7 require at least ten paired seeds on the focused science subset. All comparisons must
 hold proposal budget, actual oracle calls, tool access and feedback-message shape fixed. Hidden
 metrics may be evaluated periodically for curves but cannot affect search or stopping in the
 nominal-only condition.
@@ -330,6 +357,44 @@ higher Reynolds regimes, independent high-order references, solver-cost tradeoff
 multifidelity validation. None of these runs supports a new fluid mechanism or autonomous
 scientific discovery.
 
+### EnergyBalanceModel-v2 experiment-design and mechanism diagnostic
+
+EnergyBalanceModel-v2 replaces the quarantined unstable diffusion implementation with a public
+five-parameter two-layer energy-balance model, charged forcing experiments and surface-
+temperature plus top-of-atmosphere observations. The eleven fixed worlds contain seven
+in-library climates, two null responses, state-dependent feedback and a third ocean reservoir.
+A fixed eight-unit, 160-year multiscale forcing design has rank-five sensitivity in every
+supported world, with condition numbers 11.5--17.7. Independent RK4 and matrix-exponential
+checks agree, and all four unsupported worlds are resolvably outside the public family under the
+benchmark noise model.
+
+The truth-blind long-design fit reaches development/held-out mechanism `0.808913/0.941773`,
+prediction `0.998981/0.999242`, full supported coverage and zero false discovery. A short-design
+fit reaches prediction `0.9676/0.9897` but mechanism only `0.003909/0.0` and falsely promotes one
+misspecified world in each split. This is a task-calibration result: it shows that the benchmark
+can distinguish informative experiment design from mere response interpolation, not that the
+particular long forcing is optimal or realistic for an Earth-system experiment.
+
+The GPT-5.5 budget-one proposal and all three normal budget-three proposals fail the return-
+artifact contract and remain at zero. In the same-local-seed-label strict open-loop diagnostic,
+the third proposal reaches development/held-out mechanism `0.617931/0.282383` and prediction
+`0.976686/0.994285`, with full supported coverage but unsupported refusal only 0.5 in each split.
+It makes high-confidence public-model claims for both feedback drift and the third ocean layer.
+Normal and open-loop use 14,181/15,297 tokens; Azure supplies no server-side seed, so the result
+supports no claim that removing feedback helps.
+
+Twelve new procedural worlds were evaluated only after the model runs. On six supported worlds,
+the open-loop program retains mean prediction 0.994882 but mean mechanism quality falls to
+0.370445, with a minimum of 0.075278. It refuses both nulls but falsely claims mechanisms in all
+four feedback-drift and three-layer worlds, for unsupported false discovery 2/3. These are useful
+post-hoc transfer probes, not preregistered hidden tests or independent climate validation.
+
+The reporting consequence is explicit: a climate-response discovery plot needs separate
+experiment cost/horizon, prediction, parameter/mechanism, supported coverage, model-check
+residual, confidence and false-discovery/refusal curves. A response curve alone would rate the
+short design and the misspecified model claims as successful. This synthetic global-mean task
+does not estimate Earth's climate sensitivity or establish autonomous scientific discovery.
+
 ## Consequences for expansion to approximately 50 tasks
 
 Every new or rebuilt task must pass the following gate before it counts toward the target:
@@ -346,7 +411,7 @@ Every new or rebuilt task must pass the following gate before it counts toward t
 - classical and domain baselines, followed by GPT-5.5 budget-one headroom screening; and
 - retention as an on-ramp, not a headline task, if a standard method reliably saturates it.
 
-The present inventory contains 27 internally admissible certified or candidate packages. The
-remaining gap is approximately 23 tasks. Expansion should use procedural families spanning
+The present inventory contains 28 internally admissible certified or candidate packages. The
+remaining gap is approximately 22 tasks. Expansion should use procedural families spanning
 design, inverse problems, control, multifidelity validation, mechanism discovery and exact
 mathematical construction rather than cloning one scalar optimization template across domains.

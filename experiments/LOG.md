@@ -1181,3 +1181,63 @@ analysis on clean source `5f63176` verifies report/raw hashes, online and frozen
 sealed metrics and post-hoc probe results. The full suite passes **147/147** tests. The one-step
 and open-loop ceiling make this a CFD algorithm synthesis on-ramp, not evidence of feedback
 learning, continuum CFD validity, a new flow mechanism or autonomous scientific discovery.
+
+## 2026-07-22 — active climate-response identification v2
+
+Rebuilt `ClimateScience/EnergyBalanceModel` from the quarantined unstable explicit-diffusion
+implementation into a five-parameter two-layer energy-balance identification task. Candidates
+choose one 160-year forcing experiment or several shorter experiments under eight charged units,
+observe surface temperature and top-of-atmosphere imbalance, then return response parameters,
+confidence and a public-model claim or explicit refusal. Six development and five held-out
+worlds contain seven supported two-layer climates, two null responses, state-dependent feedback
+and an additional deep-ocean reservoir.
+
+The public recurrence agrees with independent RK4 and matrix-exponential implementations. A
+fixed long multiscale forcing design has rank-five sensitivity in all seven supported worlds,
+with scaled condition numbers from **11.47 to 17.65**. Fits of the public family to all four
+unsupported worlds exceed the refusal threshold by the required margin under the benchmark
+noise model. The truth-blind long-design fit reaches development/held-out mechanism
+**0.808913/0.941773**, prediction **0.998981/0.999242**, full supported claim coverage and zero
+false discovery. By contrast, a short under-informative design reaches prediction
+**0.9676/0.9897** but mechanism only **0.003909/0.0**, and falsely promotes one misspecified
+world in each split. Accurate response interpolation is therefore not sufficient evidence of
+parameter recovery or model-class validity.
+
+### GPT-5.5 Climate-v2 calibration
+
+The independent budget-one proposal and all three independent normal budget-three proposals
+fail the documented return-artifact contract and remain at zero; this is a model protocol
+failure, not an infrastructure failure. A same-local-seed-label strict `selection_blind` batch
+keeps every parent fixed at the baseline and finds a valid proposal at step three. Its
+development/held-out mechanism is **0.617931/0.282383**, while prediction is
+**0.976686/0.994285** and supported-world coverage is one. Unsupported-world refusal is only
+0.5 on both splits, with false-discovery rates **0.20/0.25** and high-confidence false public-
+model claims for state-dependent feedback and the third ocean layer.
+
+Normal and strict open-loop budget-three runs use **14,181/15,297** tokens and four oracle calls.
+The endpoint exposes no server-side generation seed, the conditions are not token matched, and
+normal never accepts a valid proposal. Their `0.000/0.618` contrast therefore supports no causal
+feedback conclusion.
+
+Twelve procedural worlds selected only after the model runs contain six supported, two null,
+two feedback-drift and two three-layer cases. The selected open-loop program is valid on all
+twelve. Supported prediction remains **0.994882**, but supported mechanism averages
+**0.370445** and falls as low as **0.075278**. It refuses both nulls yet makes high-confidence
+false claims in all four feedback-drift/three-layer worlds, for unsupported false discovery
+**2/3**. These are post-hoc transfer probes using the same synthetic family, not preregistered
+hidden tests, independent GCM validation or observations.
+
+The task rebuild, task calibration, certification v23, security v8 and 51x2 baseline v14 bind
+clean source `1755ff0`; the three model reports bind clean source `51246d5`. The dedicated
+analysis on clean source `28a63d0` validates task/model report and raw-trajectory hashes, online
+and frozen-parent lineage, source-scope equivalence, fixed-world decomposition and all post-hoc
+probe records. Certification v23 records **7 certified / 21 candidate / 23 quarantined**;
+security v8 passes **18/18**, baseline v14 records **51/51 deterministic, valid and fail-closed**
+with zero infrastructure failures, and the full suite passes **157/157** tests.
+
+The portable cross-task summary v9 was generated from clean source `1541116` and freezes **31
+normal single-run conditions over 16 tasks**. Strict open-loop diagnostics remain task-specific.
+The portfolio now contains **28 internally admissible tasks**, leaving an approximate gap of 22
+to the roughly 50-task target. These results are synthetic single-run calibrations, not an
+estimate of Earth's climate sensitivity, population model performance, feedback learning or
+autonomous scientific discovery.
