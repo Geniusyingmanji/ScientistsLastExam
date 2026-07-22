@@ -71,6 +71,8 @@ remain baseline-only and must not be promoted to model-performance evidence.
 | `secure_baseline_determinism_2026-07-22_v8.json` | `TRUSTED_SECURE_EVAL` | On clean source `bbb7787`, all 51 baselines are deterministic/fail-closed, 50 are valid, and infrastructure failures are zero. |
 | `gpt55_nmr_v2_b1_2026-07-22.json` | `TRUSTED_SECURE_EVAL / CALIBRATION_ONLY` | Budget-one GPT-5.5 reaches 0.427998 development and 0.176186 held-out mechanism/refusal with 0.874/0.878 reconstruction, but falsely fits both phase-distorted spectra; clean source `bbb7787`. |
 | `gpt55_nmr_v2_b3_2026-07-22.json` | `TRUSTED_SECURE_EVAL / CALIBRATION_ONLY` | Independent budget-three run on clean source `bbb7787`; only the first proposal at 0.375440 is accepted, held-out mechanism/refusal is zero, and both later rewrites falsely fit every unsupported spectrum. |
+| `nmr_v2_calibration_analysis_2026-07-22.json` | `TRUSTED_DERIVED_EVIDENCE / CALIBRATION_ONLY` | On clean source `4360b6c`, validates NMR task/model report and raw-trajectory hashes, accepted-parent lineage, classical/model contrasts and the reconstruction-versus-false-discovery pattern in rejected rewrites; explicitly non-causal and non-population evidence. |
+| `science_calibration_summary_2026-07-22.json` | `TRUSTED_DERIVED_EVIDENCE / CALIBRATION_ONLY` | On clean source `4360b6c`, validates and freezes compact scalar trajectories plus raw-trajectory hashes for 15 normal-feedback OED/Pendulum/Gate/ActiveLaw/OPF/Truss/Antenna/NMR budget-one or budget-three conditions; explicitly not causal or population evidence. |
 
 Raw `.out`/`.log` files predating the trusted evaluator inherit
 `UNTRUSTED_PRE_SANDBOX` unless a dated trusted report explicitly incorporates them.
