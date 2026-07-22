@@ -156,7 +156,7 @@ tasks:
       - doi:10.3390/bioengineering10091056
   Geophysics/GravityInversion:
     status: candidate
-    reason: v2 replaces two noise-dominated duplicate grids with charged multi-height survey design, seven procedural signed rectangular-body topologies, null and observationally resolvable out-of-library worlds, external-field-equivalent mechanism matching and held-out noise shifts; a truth-blind BIC fit reaches 0.786/0.775 development/held-out mechanism and approximately 0.99 field prediction while one development topology remains mechanistically weak, pending GPT-5.5 calibration, server-held geology and independent geophysics review
+    reason: v2 replaces two noise-dominated duplicate grids with charged multi-height survey design, seven procedural signed rectangular-body topologies, null and observationally resolvable out-of-library worlds, external-field-equivalent mechanism matching and held-out noise shifts; a truth-blind BIC fit reaches 0.786/0.775 development/held-out mechanism, while GPT-5.5 budget three reaches 0.994 development but only 0.767 held-out mechanism and one topology has 0.975 field prediction versus 0.346 body mechanism; retain as an algorithm-synthesis and field-versus-geology on-ramp pending server-held geology and independent review
     citation_ids:
       - doi:10.1029/JZ064i001p00049
       - doi:10.1190/1.1444302

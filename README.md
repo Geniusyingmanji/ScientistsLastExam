@@ -35,7 +35,7 @@ All candidate code runs in a networkless Bubblewrap sandbox with read-only mount
 and process limits, and a typed JSON RPC boundary. The trusted parent alone imports the
 oracle and validates metrics. The current audit reports:
 
-- 110/110 unit, security, protocol and scientific-invariant tests passed.
+- 112/112 unit, security, protocol and scientific-invariant tests passed.
 - The latest 51×2 secure-baseline audit reports 51/51 deterministic, 50/51 valid, 51/51
   fail-closed and zero infrastructure failures. The sole invalid baseline is the explicitly
   quarantined `ClimateScience/EnergyBalanceModel`.
@@ -63,7 +63,10 @@ oracle and validates metrics. The current audit reports:
   surveys and seven procedural signed-body topologies. Its truth-blind BIC fit reaches
   0.786/0.775 development/held-out mechanism and approximately 0.99 sealed field prediction;
   the gap on one topology illustrates that external-field fit does not uniquely establish an
-  internal geological mechanism.
+  internal geological mechanism. GPT-5.5 budget one fails the callback dictionary protocol;
+  an independent budget-three run instead reaches 0.994 development and 0.767 held-out
+  mechanism, with one topology at 0.975 field prediction but only 0.346 body mechanism. It is
+  therefore a valid algorithm-synthesis on-ramp, not a long-horizon headline task.
   GPT-5.5 reaches nominal OPF score 1.0
   at budget one while sealed N-1 robustness is only 0.031 on development and approximately
   zero on held-out networks. On Truss-v2, a separate budget-three run improves development

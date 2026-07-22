@@ -1,0 +1,426 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_SECURE_EVAL",
+  "evidence_scope": "MODEL_PERFORMANCE",
+  "created_at": "2026-07-22T04:08:59.693208+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "5421f579073a5c0f717a6cccf5e936d36aae2a31",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "/home/azureuser/workspace-gzy/zyf/frontier-science/scripts/batch_evolve.py",
+      "--all",
+      "--tasks",
+      "Geophysics/GravityInversion",
+      "--algorithms",
+      "greedy_rewrite",
+      "--feedback-modes",
+      "normal",
+      "--seeds",
+      "1",
+      "--budget",
+      "3",
+      "--timeout",
+      "300",
+      "--llm-config",
+      "frontier_science/conf/llm/local.yaml",
+      "--workdir",
+      "runs/gpt55_gravity_v2_b3_20260722",
+      "--output",
+      "experiments/gpt55_gravity_v2_b3_2026-07-22.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "config": {
+    "tasks": [
+      "Geophysics/GravityInversion"
+    ],
+    "algorithms": [
+      "greedy_rewrite"
+    ],
+    "feedback_modes": [
+      "normal"
+    ],
+    "condition_order": "as_listed_for_even_seeds_reversed_for_odd_seeds",
+    "seeds": [
+      1
+    ],
+    "budget": 3,
+    "timeout_s": 300.0,
+    "work_root": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/gpt55_gravity_v2_b3_20260722",
+    "llm_condition_sha256": "5b0df4671481f6b3505155bc6c5654a64c4da5591422fb806904e7d0f44fc4d2",
+    "llm": {
+      "wire": "responses",
+      "endpoint_sha256": "b22995a1fcaf8ad713ac37716f006c717313dfdebd357ac02a077a5582650bb6",
+      "model": "gpt-5.5",
+      "max_output_tokens": 16000,
+      "temperature": null,
+      "reasoning_effort": "low",
+      "input_cost_per_million": null,
+      "output_cost_per_million": null,
+      "server_side_seed_control": false
+    }
+  },
+  "runs": [
+    {
+      "task": "Geophysics/GravityInversion",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 1,
+      "baseline": 0.0,
+      "best": 0.9942257499999999,
+      "accepted": 2,
+      "evaluated": 4,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/gpt55_gravity_v2_b3_20260722/Geophysics__GravityInversion/greedy_rewrite/normal/seed_1",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 4,
+        "budget_units": 4,
+        "best_score": 0.9942257499999999,
+        "best_so_far_auc": 0.7455405624999999,
+        "valid_rate": 1.0,
+        "accepted": 2,
+        "wall_seconds": 706.7178413784131,
+        "llm": {
+          "calls": 3,
+          "provider_usage_records": 3,
+          "input_tokens": 9503,
+          "output_tokens": 10221,
+          "total_tokens": 19724,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "Geophysics/GravityInversion",
+        "seed": 1,
+        "baseline_score": 0.0,
+        "budget": 3,
+        "feedback_mode": "normal",
+        "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "online_incumbent"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 1,
+        "trajectory_sha256": "f8e8472de1b5ca72ec29470616608a96bf37537493149eb7f450ddab62622326",
+        "events": [
+          {
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "d16e06ab8b4d30a01b74a1830e8c5bb95d245ffa04f8f34adda6331fc3b7082a",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "mechanism_score": 0.3333333333333333,
+              "development_body_support_f1": 0.0,
+              "development_field_component_score": 0.0,
+              "development_mass_moment_score": 0.0,
+              "development_observed_fit_score": 0.0,
+              "development_prediction_score": 0.0,
+              "development_extrapolation_score": 0.0,
+              "development_misspecified_prediction_score": 0.0,
+              "development_null_prediction_score": 1.0,
+              "development_confidence_calibration_score": 1.0,
+              "development_false_discovery_rate": 0.0,
+              "development_correct_refusal_rate": 1.0,
+              "robustness_score": 0.0,
+              "heldout_mechanism_score": 0.4,
+              "heldout_body_support_f1": 0.0,
+              "heldout_field_component_score": 0.0,
+              "heldout_mass_moment_score": 0.0,
+              "heldout_observed_fit_score": 0.0,
+              "heldout_prediction_score": 0.0,
+              "heldout_extrapolation_score": 0.0,
+              "heldout_misspecified_prediction_score": 0.0,
+              "heldout_null_prediction_score": 1.0,
+              "heldout_confidence_calibration_score": 1.0,
+              "heldout_false_discovery_rate": 0.0,
+              "heldout_correct_refusal_rate": 1.0,
+              "heldout_feasibility_rate": 1.0,
+              "mean_survey_calls": 1.0,
+              "mean_survey_budget_units": 3.0,
+              "mean_survey_points": 8.0,
+              "raw_score": 0.0
+            },
+            "algorithm_metadata": {},
+            "error": null
+          },
+          {
+            "step": 1,
+            "oracle_calls": 2,
+            "budget_units": 2,
+            "score": 0.9939682499999999,
+            "best_score": 0.9939682499999999,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "2d4cc0738d3f020cb649c216b98dee3234b4b9dfb2c56ec4ecce4232d8ae70dc",
+            "parent_sha256": "d16e06ab8b4d30a01b74a1830e8c5bb95d245ffa04f8f34adda6331fc3b7082a",
+            "metrics": {
+              "combined_score": 0.9939682499999999,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "mechanism_score": 0.9959788333333334,
+              "development_body_support_f1": 0.997522,
+              "development_field_component_score": 0.997522,
+              "development_mass_moment_score": 0.98330675,
+              "development_observed_fit_score": 0.97211875,
+              "development_prediction_score": 0.99031625,
+              "development_extrapolation_score": 0.9860615,
+              "development_misspecified_prediction_score": 0.0,
+              "development_null_prediction_score": 1.0,
+              "development_confidence_calibration_score": 0.9762263333333333,
+              "development_false_discovery_rate": 0.0,
+              "development_correct_refusal_rate": 1.0,
+              "robustness_score": 0.7542993333333333,
+              "heldout_mechanism_score": 0.8525796,
+              "heldout_body_support_f1": 0.7593596666666667,
+              "heldout_field_component_score": 0.7593596666666667,
+              "heldout_mass_moment_score": 0.7391173333333333,
+              "heldout_observed_fit_score": 0.9613233333333334,
+              "heldout_prediction_score": 0.9862313333333333,
+              "heldout_extrapolation_score": 0.9765573333333334,
+              "heldout_misspecified_prediction_score": 0.0,
+              "heldout_null_prediction_score": 1.0,
+              "heldout_confidence_calibration_score": 0.8898754,
+              "heldout_false_discovery_rate": 0.0,
+              "heldout_correct_refusal_rate": 1.0,
+              "heldout_feasibility_rate": 1.0,
+              "mean_survey_calls": 3.0,
+              "mean_survey_budget_units": 21.0,
+              "mean_survey_points": 72.0,
+              "raw_score": 0.9939682499999999
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 1
+            },
+            "error": null
+          },
+          {
+            "step": 2,
+            "oracle_calls": 3,
+            "budget_units": 3,
+            "score": 0.99372125,
+            "best_score": 0.9939682499999999,
+            "valid": true,
+            "accepted": false,
+            "candidate_sha256": "1a43d311d12430b6519929e95cd3b7588c58e9518fc01d9461e0a08c06de0e72",
+            "parent_sha256": "2d4cc0738d3f020cb649c216b98dee3234b4b9dfb2c56ec4ecce4232d8ae70dc",
+            "metrics": {
+              "combined_score": 0.99372125,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "mechanism_score": 0.9958141666666668,
+              "development_body_support_f1": 0.99701375,
+              "development_field_component_score": 0.99701375,
+              "development_mass_moment_score": 0.98384475,
+              "development_observed_fit_score": 0.9735895,
+              "development_prediction_score": 0.99077475,
+              "development_extrapolation_score": 0.986583,
+              "development_misspecified_prediction_score": 0.0,
+              "development_null_prediction_score": 1.0,
+              "development_confidence_calibration_score": 0.9764721666666665,
+              "development_false_discovery_rate": 0.0,
+              "development_correct_refusal_rate": 1.0,
+              "robustness_score": 0.7773006666666665,
+              "heldout_mechanism_score": 0.8663803999999999,
+              "heldout_body_support_f1": 0.773324,
+              "heldout_field_component_score": 0.773324,
+              "heldout_mass_moment_score": 0.789231,
+              "heldout_observed_fit_score": 0.9628326666666668,
+              "heldout_prediction_score": 0.9886476666666667,
+              "heldout_extrapolation_score": 0.9759140000000001,
+              "heldout_misspecified_prediction_score": 0.0,
+              "heldout_null_prediction_score": 1.0,
+              "heldout_confidence_calibration_score": 0.9038208000000001,
+              "heldout_false_discovery_rate": 0.0,
+              "heldout_correct_refusal_rate": 1.0,
+              "heldout_feasibility_rate": 1.0,
+              "mean_survey_calls": 4.0,
+              "mean_survey_budget_units": 24.0,
+              "mean_survey_points": 80.0,
+              "raw_score": 0.99372125
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 2
+            },
+            "error": null
+          },
+          {
+            "step": 3,
+            "oracle_calls": 4,
+            "budget_units": 4,
+            "score": 0.9942257499999999,
+            "best_score": 0.9942257499999999,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "1fe8f79dbbd684058fe5105156a24148d022d948367c8a3d020a2117b73e40c0",
+            "parent_sha256": "2d4cc0738d3f020cb649c216b98dee3234b4b9dfb2c56ec4ecce4232d8ae70dc",
+            "metrics": {
+              "combined_score": 0.9942257499999999,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "mechanism_score": 0.9961505,
+              "development_body_support_f1": 0.99766175,
+              "development_field_component_score": 0.99766175,
+              "development_mass_moment_score": 0.9839182500000001,
+              "development_observed_fit_score": 0.9727855000000001,
+              "development_prediction_score": 0.9918945,
+              "development_extrapolation_score": 0.9856164999999999,
+              "development_misspecified_prediction_score": 0.0,
+              "development_null_prediction_score": 1.0,
+              "development_confidence_calibration_score": 0.9764444999999998,
+              "development_false_discovery_rate": 0.0,
+              "development_correct_refusal_rate": 1.0,
+              "robustness_score": 0.7672669999999998,
+              "heldout_mechanism_score": 0.8603601999999999,
+              "heldout_body_support_f1": 0.7670816666666666,
+              "heldout_field_component_score": 0.7670816666666666,
+              "heldout_mass_moment_score": 0.7678220000000001,
+              "heldout_observed_fit_score": 0.9628776666666666,
+              "heldout_prediction_score": 0.9878126666666667,
+              "heldout_extrapolation_score": 0.9703029999999999,
+              "heldout_misspecified_prediction_score": 0.0,
+              "heldout_null_prediction_score": 1.0,
+              "heldout_confidence_calibration_score": 0.9008990000000001,
+              "heldout_false_discovery_rate": 0.0,
+              "heldout_correct_refusal_rate": 1.0,
+              "heldout_feasibility_rate": 1.0,
+              "mean_survey_calls": 4.0,
+              "mean_survey_budget_units": 24.0,
+              "mean_survey_points": 80.0,
+              "raw_score": 0.9942257499999999
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 3
+            },
+            "error": null
+          }
+        ]
+      }
+    }
+  ],
+  "aggregate": {
+    "attempt_count": 1,
+    "superseded_attempts": 0,
+    "successful_runs": 1,
+    "failed_runs": 0,
+    "by_condition": {
+      "Geophysics/GravityInversion|greedy_rewrite|normal": {
+        "n": 1,
+        "best_score": {
+          "n": 1,
+          "mean": 0.9942257499999999,
+          "ci95_low": 0.9942257499999999,
+          "ci95_high": 0.9942257499999999
+        },
+        "best_so_far_auc": {
+          "n": 1,
+          "mean": 0.7455405624999999,
+          "ci95_low": 0.7455405624999999,
+          "ci95_high": 0.7455405624999999
+        },
+        "budget_units": {
+          "n": 1,
+          "mean": 4.0,
+          "ci95_low": 4.0,
+          "ci95_high": 4.0
+        },
+        "oracle_calls": {
+          "n": 1,
+          "mean": 4.0,
+          "ci95_low": 4.0,
+          "ci95_high": 4.0
+        },
+        "wall_seconds": {
+          "n": 1,
+          "mean": 706.7178413784131,
+          "ci95_low": 706.7178413784131,
+          "ci95_high": 706.7178413784131
+        },
+        "total_tokens": {
+          "n": 1,
+          "mean": 19724.0,
+          "ci95_low": 19724.0,
+          "ci95_high": 19724.0
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      }
+    },
+    "overall": {
+      "best_score": {
+        "n": 1,
+        "mean": 0.9942257499999999,
+        "ci95_low": 0.9942257499999999,
+        "ci95_high": 0.9942257499999999
+      },
+      "best_so_far_auc": {
+        "n": 1,
+        "mean": 0.7455405624999999,
+        "ci95_low": 0.7455405624999999,
+        "ci95_high": 0.7455405624999999
+      },
+      "budget_units": {
+        "n": 1,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "oracle_calls": {
+        "n": 1,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "wall_seconds": {
+        "n": 1,
+        "mean": 706.7178413784131,
+        "ci95_low": 706.7178413784131,
+        "ci95_high": 706.7178413784131
+      },
+      "total_tokens": {
+        "n": 1,
+        "mean": 19724.0,
+        "ci95_low": 19724.0,
+        "ci95_high": 19724.0
+      },
+      "estimated_cost_usd": {
+        "n": 0,
+        "mean": null,
+        "ci95_low": null,
+        "ci95_high": null
+      }
+    }
+  },
+  "completed_at": "2026-07-22T04:20:46.418388+00:00",
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}

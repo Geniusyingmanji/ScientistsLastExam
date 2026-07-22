@@ -952,3 +952,15 @@ sealed field prediction while correctly refusing both null and both resolvable m
 worlds. One development topology has only 0.226 body-mechanism quality despite 0.984 observed
 fit, preserving a scientifically relevant external-field-versus-internal-geology gap. These are
 synthetic task-calibration results, not field validation or autonomous geological discovery.
+
+GPT-5.5 budget one generates a sophisticated parametric inversion but incorrectly treats the
+documented callback dictionary as a positional tuple, producing a candidate protocol error and
+no accepted improvement. An independent budget-three run uses the callback correctly and
+reaches **0.993968** development mechanism in its first proposal, then **0.994226** at step
+three. The final selected policy has **0.767267** held-out mechanism, **0.987813** held-out field
+prediction and correct refusal in all unsupported worlds. On one held-out three-body topology,
+field prediction is **0.975280** while body mechanism is only **0.345642**. The rejected step-two
+candidate has slightly lower visible development score but higher held-out mechanism
+**0.777301**, showing that visible selection and internal-geology transfer are not identical.
+This near-one-step synthesis makes Gravity-v2 a valid on-ramp rather than a long-horizon
+headline task; both model conditions are single runs and support no population claim.
