@@ -1,7 +1,12 @@
 domain: ChemicalKinetics
 task: ReactionMechanismFitting
 difficulty: hard
-oracle_type: analytical
+tier: T2
+oracle_type: physical_sim
 score_mode: clipped
 gpu_required: false
-eval_time_seconds: 10
+eval_time_seconds: 45
+science_metric: active_arrhenius_mechanism_recovery_with_refusal_and_extrapolation
+reference_baseline: one partial-species assay followed by abstention on every world
+reference_sota: exact sparse rate curves plus correct null and model-inadequacy refusal
+citation: "Turanyi & Tomlin, 2014, DOI 10.1007/978-3-662-44562-4"

@@ -226,6 +226,151 @@ def discover_law(n_states, term_names, experiment, budget_units):
             "budget exceeded" in row["reason"] for row in metrics["per_world"]
         ))
 
+    def test_reaction_v2_exact_mechanisms_refusal_and_metric_sealing(self):
+        oracle = load_oracle("ChemicalKinetics/ReactionMechanismFitting")
+        self.assertEqual(oracle.N_SPECIES, 4)
+        self.assertEqual(oracle.N_REACTIONS, 12)
+        self.assertEqual(len(oracle.DEVELOPMENT_SPECS), 6)
+        self.assertEqual(len(oracle.HELDOUT_SPECS), 5)
+        for specs in (oracle.DEVELOPMENT_SPECS, oracle.HELDOUT_SPECS):
+            for spec in specs:
+                world = oracle._world(spec)
+                if world["kind"] == "in_library":
+                    metrics = oracle._mechanism_metrics(
+                        world,
+                        world["log_a"],
+                        world["activation_energy"],
+                        world["support"],
+                        False,
+                    )
+                    self.assertAlmostEqual(metrics["mechanism_score"], 1.0)
+                    self.assertAlmostEqual(oracle._prediction_score(
+                        world,
+                        world["log_a"],
+                        world["activation_energy"],
+                        world["support"],
+                        False,
+                    ), 1.0)
+                    self.assertAlmostEqual(oracle._prediction_score(
+                        world,
+                        world["log_a"],
+                        world["activation_energy"],
+                        world["support"],
+                        True,
+                    ), 1.0)
+                else:
+                    zeros = np.zeros(oracle.N_REACTIONS)
+                    metrics = oracle._mechanism_metrics(
+                        world, zeros, zeros,
+                        np.zeros(oracle.N_REACTIONS, dtype=bool), True,
+                    )
+                    self.assertAlmostEqual(metrics["mechanism_score"], 1.0)
+                    self.assertTrue(metrics["correct_refusal"])
+
+        def always_abstain(species, pairs, experiment, _budget):
+            experiment(
+                405.0, np.full(len(species), 1.0 / len(species)),
+                np.asarray((0.0, 0.02, 0.08, 0.3, 1.0, 4.0)), [0],
+            )
+            return {
+                "support": np.zeros(len(pairs)),
+                "log_pre_exponential": np.zeros(len(pairs)),
+                "activation_energy_j_mol": np.zeros(len(pairs)),
+                "confidence": 0.0,
+                "abstain": True,
+            }
+
+        baseline = oracle.evaluate(always_abstain)
+        self.assertEqual(baseline["valid"], 1.0)
+        self.assertAlmostEqual(baseline["combined_score"], 0.0)
+        self.assertAlmostEqual(baseline["robustness_score"], 0.0)
+        self.assertEqual(baseline["development_false_discovery_rate"], 0.0)
+        shown = search_visible_metrics(baseline)
+        self.assertNotIn("mechanism_score", shown)
+        self.assertNotIn("robustness_score", shown)
+        self.assertNotIn("development_prediction_score", shown)
+        self.assertNotIn("per_world", shown)
+
+    def test_reaction_v2_partial_assays_are_deterministic_and_charged(self):
+        oracle = load_oracle("ChemicalKinetics/ReactionMechanismFitting")
+        world = oracle._world(oracle.DEVELOPMENT_SPECS[0])
+        initial = np.asarray((0.52, 0.27, 0.14, 0.07))
+        times = np.asarray((0.0, 0.005, 0.015, 0.05, 0.15, 0.5, 2.0, 10.0))
+        first = oracle._Laboratory(world)
+        second = oracle._Laboratory(world)
+        one = first.experiment(345.0, initial, times, [1])
+        repeated = second.experiment(345.0, initial, times, [1])
+        self.assertEqual(one["concentrations"].shape, (8, 1))
+        self.assertEqual(one["budget_cost"], 3)
+        self.assertTrue(np.array_equal(one["concentrations"], repeated["concentrations"]))
+        two = first.experiment(465.0, initial, times, [2, 3])
+        self.assertEqual(two["concentrations"].shape, (8, 2))
+        self.assertEqual(two["budget_cost"], 5)
+        self.assertEqual(first.used, 8)
+        self.assertTrue(np.allclose(
+            np.sum(oracle._simulate(world, 405.0, initial, times), axis=1),
+            1.0,
+            atol=1e-12,
+        ))
+
+    def test_reaction_v2_budget_violation_fails_closed(self):
+        spec = find_task(
+            "ChemicalKinetics/ReactionMechanismFitting", include_uncertified=True
+        )
+        source = """
+import numpy as np
+def discover_mechanism(species, pairs, experiment, budget_units):
+    times = np.linspace(0.0, 10.0, 8)
+    initial = np.full(len(species), 1.0 / len(species))
+    try:
+        for _ in range(3):
+            experiment(405.0, initial, times, [0, 1])
+    except Exception:
+        pass
+    return {"support": np.zeros(len(pairs)),
+            "log_pre_exponential": np.zeros(len(pairs)),
+            "activation_energy_j_mol": np.zeros(len(pairs)),
+            "confidence": 0.0, "abstain": True}
+"""
+        with tempfile.TemporaryDirectory() as tmp:
+            candidate = Path(tmp) / "candidate.py"
+            candidate.write_text(source, encoding="utf-8")
+            metrics = evaluate_candidate(spec, candidate, timeout_s=60)
+        self.assertEqual(metrics["valid"], 0.0)
+        self.assertEqual(metrics["combined_score"], 0.0)
+        self.assertTrue(all(not row["valid"] for row in metrics["per_world"]))
+        self.assertTrue(all(
+            "budget exceeded" in row["reason"] for row in metrics["per_world"]
+        ))
+
+    def test_reaction_v2_nonfinite_and_inconsistent_claims_fail_closed(self):
+        oracle = load_oracle("ChemicalKinetics/ReactionMechanismFitting")
+        common = {
+            "support": np.zeros(oracle.N_REACTIONS),
+            "log_pre_exponential": np.zeros(oracle.N_REACTIONS),
+            "activation_energy_j_mol": np.zeros(oracle.N_REACTIONS),
+            "confidence": 0.0,
+            "abstain": True,
+        }
+        candidates = []
+        for update in (
+            {"confidence": np.nan},
+            {"support": np.zeros(oracle.N_REACTIONS - 1)},
+            {"support": np.full(oracle.N_REACTIONS, 0.5)},
+            {"support": np.r_[1.0, np.zeros(oracle.N_REACTIONS - 1)]},
+            {"abstain": False},
+        ):
+            result = dict(common)
+            result.update(update)
+            candidates.append(result)
+        for result in candidates:
+            metrics = oracle.evaluate(
+                lambda *_args, result=result: result
+            )
+            self.assertEqual(metrics["valid"], 0.0)
+            self.assertEqual(metrics["combined_score"], 0.0)
+            self.assertTrue(all(not row["valid"] for row in metrics["per_world"]))
+
     def test_optimal_experiment_design_reference_and_sealed_shift(self):
         oracle = load_oracle("BayesianInference/OptimalExperimentDesign")
         self.assertEqual(len(oracle.DEVELOPMENT_INSTANCES), 6)

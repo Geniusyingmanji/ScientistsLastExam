@@ -1,3 +1,4 @@
-1) Only edit solution.py. Keep the fit_kinetics() signature.
-2) numpy/scipy only. CPU, seconds. No network.
-3) Do not read verification/ or frontier_eval/.
+1) Only edit solution.py. Keep discover_mechanism(species_names, reaction_pairs, experiment, budget_units).
+2) Return finite length-n_reactions parameter/support arrays, exact 0/1 support, confidence in [0,1], and a boolean abstain.
+3) Each experiment assays one or two species with 6-24 times; temperatures are in [330,480] K, times in [0,20] s, and initial concentrations sum to one. Do not exceed budget_units.
+4) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read verification/ or frontier_eval/.

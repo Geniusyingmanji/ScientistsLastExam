@@ -1,0 +1,28 @@
+schema_version: 1
+scientific_question: Recover sparse Arrhenius reaction mechanisms by actively choosing partial-species assays, and refuse when the public kinetic library is unsupported.
+artifact: A reaction-support vector, Arrhenius rate curves, confidence, and optional null or model-inadequacy abstention.
+oracle:
+  model: procedurally parameterized four-species batch reactors with sparse first-order, null, and concentration-saturating worlds
+  feasibility: finite bounded parameters, exact binary support, calibrated abstention, and charged partial-observation experiments
+  deterministic: true
+normalization:
+  baseline: one valid assay followed by abstention on every hidden world
+  reference: exact sparse rate curves on in-library worlds and correct refusal on null or misspecified worlds
+  score: development mechanism recovery normalized above always-abstain; held-out mechanism, prediction, extrapolation, confidence and false discovery remain separate
+citations:
+  - id: doi:10.1007/978-3-662-44562-4
+    title: Analysis of Kinetic Reaction Mechanisms
+  - id: doi:10.1093/bioinformatics/btq074
+    title: Structural identifiability of systems biology models - a critical comparison of methods
+  - id: doi:10.3390/bioengineering10091056
+    title: Systematic Review of Computational Methods for Kinetic Parameter Estimation
+invariants:
+  - exact rate curves attain perfect support, parameter and sealed-prediction scores
+  - four single-channel assays within the public budget admit a full-rank local sensitivity matrix for every in-library world
+  - assay channels and sampling density consume budget and fail closed on overspend
+  - null and out-of-library worlds reward supported refusal rather than fabricated mechanisms
+  - held-out mechanism, prediction, extrapolation and per-world diagnostics remain evaluator-only
+known_shortcuts: The public unimolecular reaction library and synthetic observation model are controlled research abstractions. Public seeds require a future server-held split, and autonomous-discovery claims require independent wet-lab or higher-fidelity replication.
+review:
+  domain: pending_external
+  evaluator_security: automated_invariant_sandbox_callback_and_metric_sealing_tests

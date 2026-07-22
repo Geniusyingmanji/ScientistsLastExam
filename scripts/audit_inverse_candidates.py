@@ -13,6 +13,12 @@ from pathlib import Path
 
 import numpy as np
 
+from calibrate_reaction_mechanism_v2 import (
+    _always_abstain as reaction_always_abstain,
+    _identifiability_record as reaction_identifiability_record,
+    classical_discover_mechanism,
+)
+
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
@@ -59,19 +65,42 @@ def _radiative_transfer():
 
 def _chemical_kinetics():
     oracle = _oracle("ChemicalKinetics/ReactionMechanismFitting")
-    oracle._gen_data()
-    instant = {"A1": 1e20, "E1": 0.0, "A2": 1e20, "E2": 0.0}
-    true_metrics = oracle.evaluate(lambda *_: dict(oracle._TRUE))
-    instant_metrics = oracle.evaluate(lambda *_: instant)
-    score_gap = abs(true_metrics["combined_score"] - instant_metrics["combined_score"])
+    baseline = oracle.evaluate(reaction_always_abstain)
+    classical = oracle.evaluate(classical_discover_mechanism)
+    rank_checks = []
+    for split, specs in (
+        ("development", oracle.DEVELOPMENT_SPECS),
+        ("heldout", oracle.HELDOUT_SPECS),
+    ):
+        for index, spec in enumerate(specs):
+            world = oracle._world(spec)
+            if world["kind"] == "in_library":
+                rank_checks.append(reaction_identifiability_record(
+                    oracle, world, split, index
+                ))
+    passed = bool(
+        baseline["combined_score"] == 0.0
+        and 0.3 <= classical["combined_score"] <= 0.8
+        and classical["development_prediction_score"]
+        > classical["combined_score"] + 0.15
+        and classical["development_false_discovery_rate"] >= 0.5
+        and all(row["passed"] for row in rank_checks)
+    )
     return {
         "task": "ChemicalKinetics/ReactionMechanismFitting",
-        "admission": "quarantine",
-        "defect": "all sampled reactions are effectively complete, so true Arrhenius parameters and an infinite-rate mechanism receive the same score",
-        "true_parameter_score": float(true_metrics["combined_score"]),
-        "infinite_rate_score": float(instant_metrics["combined_score"]),
-        "absolute_score_gap": float(score_gap),
-        "passed": score_gap < 1e-9,
+        "admission": "candidate",
+        "resolved_defect": "v2 replaces effectively complete full-state trajectories with charged partial-species active assays, sparse topology and Arrhenius rate-curve recovery, null/model-inadequacy refusal and held-out topologies",
+        "always_abstain_score": float(baseline["combined_score"]),
+        "classical_mechanism_score": float(classical["combined_score"]),
+        "classical_prediction_score": float(
+            classical["development_prediction_score"]
+        ),
+        "classical_false_discovery_rate": float(
+            classical["development_false_discovery_rate"]
+        ),
+        "full_rank_in_library_worlds": sum(row["passed"] for row in rank_checks),
+        "in_library_world_count": len(rank_checks),
+        "passed": passed,
     }
 
 
@@ -207,8 +236,9 @@ def audit() -> dict:
         "records": records,
         "summary": {
             "task_count": len(records),
-            "reproduced_defect_count": sum(bool(row["passed"]) for row in records),
+            "passed_check_count": sum(bool(row["passed"]) for row in records),
             "recommended_quarantine_count": sum(row["admission"] == "quarantine" for row in records),
+            "recommended_candidate_count": sum(row["admission"] == "candidate" for row in records),
         },
     }
     finalize_report_trust(report, all(row["passed"] for row in records))
