@@ -61,13 +61,13 @@ def evaluate_candidate(spec: TaskSpec, candidate_path: Path, timeout_s: float = 
             return {"combined_score": INVALID_SCORE, "valid": 0.0, "timeout": 1.0,
                     "error_message": "eval timeout > %ss" % timeout_s}
         if proc.returncode != 0 or not result_path.is_file():
-            detail = (stderr or "").strip().splitlines()
-            tail = detail[-1] if detail else "trusted evaluator failed"
             if "candidate timeout" in (stderr or ""):
                 return {"combined_score": INVALID_SCORE, "valid": 0.0, "timeout": 1.0,
-                        "error_message": "eval timeout > %ss" % timeout_s}
+                        "error_message": "candidate invalid: candidate_timeout",
+                        "candidate_failure_kind": "candidate_timeout"}
             return {"combined_score": INVALID_SCORE, "valid": 0.0,
-                    "error_message": tail[-2000:]}
+                    "error_message": "trusted evaluator process failure",
+                    "infrastructure_failure": 1.0}
         try:
             raw = json.loads(result_path.read_text(encoding="utf-8"))
             return validate_metrics(raw, score_mode)

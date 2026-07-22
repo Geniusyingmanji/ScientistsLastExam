@@ -145,8 +145,12 @@ tasks:
       - doi:10.1109/4235.797969
 
   AtmosphericScience/RadiativeTransferFit:
-    status: quarantined
-    reason: ten radiances cannot identify twenty temperatures, while selection rewards hidden fixed-profile RMSE instead of evidence-supported retrieval
+    status: candidate
+    reason: v2 replaces a fixed underdetermined 10-radiance/20-temperature hidden-profile score with charged selection over 24 channels and viewing angles, a public five-parameter temperature/optical-depth family, seven full-rank supported worlds, separate radiance/view-shift prediction and null/absorber/cloud refusal; a truth-blind two-view fit scores 0.614/0.491 development/held-out mechanism and 0.855/0.812 radiance prediction with zero false discovery, leaving prediction-versus-mechanism and higher-noise headroom pending GPT-5.5 calibration, server-held atmospheres, line-by-line or real-data replication and independent atmospheric-science review
+    citation_ids:
+      - doi:10.1029/RG014i004p00609
+      - doi:10.1142/3171
+      - doi:10.1016/j.jqsrt.2004.05.058
   ChemicalKinetics/ReactionMechanismFitting:
     status: candidate
     reason: v2 is an active partial-species assay task with twelve candidate reactions, charged temperature/initial-condition/sensor design, sparse Arrhenius rate-curve recovery, held-out topologies and separate null/model-inadequacy refusal; a truth-blind classical fit scores 0.482/0.404 development/held-out mechanism while reaching 0.860 development interpolation and falsely claiming a mechanism in half of unsupported worlds; GPT-5.5 budget-one and normal budget-three runs remain at zero while a strict open-loop batch finds 0.343/0.363 development/held-out mechanism but retains the same false-discovery failure, leaving science-specific headroom pending paired controls, server-held reactors and independent kinetics review

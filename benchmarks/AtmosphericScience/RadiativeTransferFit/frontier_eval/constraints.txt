@@ -1,3 +1,5 @@
-1) Only edit solution.py. Keep the retrieve_profile() signature.
-2) numpy/scipy only. CPU, seconds. No network.
-3) Do not read verification/ or frontier_eval/.
+1) Only edit solution.py. Keep the discover_atmosphere() signature.
+2) Deterministic Python standard-library/NumPy/SciPy CPU code only. No network or process creation.
+3) Respect the charged 18-channel measurement budget and four-call limit; invalid or over-budget calls fail closed.
+4) Return finite, shape-consistent temperature-knot/optical-scale/support/confidence/abstain fields.
+5) Do not read verification/ or frontier_eval/ or assume hidden world order.

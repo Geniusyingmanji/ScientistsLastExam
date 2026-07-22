@@ -1,0 +1,35 @@
+schema_version: 1
+scientific_question: Can an active thermal-infrared sounding plan recover low-dimensional temperature and optical-depth mechanisms under unseen noise, while refusing atmospheres outside a public clear-sky model family?
+artifact: Four temperature-anomaly knot values, one global optical-depth scale, exact support labels, confidence and optional model-inadequacy abstention.
+oracle:
+  model: deterministic 16-layer plane-parallel non-scattering LTE thermal-emission emulator with procedural supported, null, extra-absorber and cloud worlds
+  feasibility: finite bounded mechanism artifacts after charged channel and viewing-geometry measurements under an 18-unit and four-call budget
+  deterministic: true
+normalization:
+  baseline: one legal four-channel sounding followed by abstention on every world
+  reference: exact supported parameters and correct abstention on null or model-misspecified atmospheres
+  score: development support/parameter/profile/optical-depth mechanism quality normalized above always-abstain; sealed radiance prediction, viewing shift, confidence, refusal, coverage and held-out metrics remain separate
+citations:
+  - id: doi:10.1029/RG014i004p00609
+    title: Retrieval of atmospheric temperature and composition from remote measurements of thermal radiation
+  - id: doi:10.1142/3171
+    title: Inverse Methods for Atmospheric Sounding
+  - id: doi:10.1016/j.jqsrt.2004.05.058
+    title: "Atmospheric radiative transfer modeling: a summary of the AER codes"
+invariants:
+  - the public Planck function and layer recurrence agree with an independent implementation
+  - an isothermal black-surface atmosphere emits the same Planck radiance after every layer
+  - exact parameters attain perfect mechanism and sealed radiance prediction on supported worlds
+  - correct null and model-inadequacy abstention attains perfect refusal without fabricating parameters
+  - unsupported categories cannot be identified from declared radiance noise alone
+  - a fixed two-view public-budget sounding has full-rank, well-conditioned sensitivity for all five supported parameters
+  - out-of-library absorber and cloud worlds remain distinguishable after bounded nonlinear fitting of the full public parameter family under stated noise
+  - observation calls are deterministic, charged and fail closed on overspend or an invalid request
+  - non-finite, contradictory, out-of-range or empty non-abstaining artifacts fail closed
+  - each world receives a fresh candidate process and private tmpfs to prevent hidden-world order leakage
+  - mechanism, radiance prediction, viewing shift, discovery coverage, false discovery, refusal and held-out metrics remain separately auditable
+  - held-out scientific metrics and per-world records remain evaluator-only
+known_shortcuts: The oracle is a low-dimensional clear-sky thermal-emission emulator with synthetic noise. Release requires server-held atmospheres, independent atmospheric-science review and replication with a validated line-by-line model or real sounding data, clouds, spectroscopy and calibration errors; no emulator score establishes an atmospheric retrieval discovery.
+review:
+  domain: pending_external
+  evaluator_security: automated_fail_closed_reference_refusal_budget_identifiability_physics_and_metric_sealing_tests

@@ -1,7 +1,12 @@
 domain: AtmosphericScience
 task: RadiativeTransferFit
 difficulty: hard
+tier: T2
 oracle_type: physical_sim
 score_mode: clipped
 gpu_required: false
-eval_time_seconds: 10
+eval_time_seconds: 45
+science_metric: active_temperature_and_optical_depth_mechanism_recovery_with_model_inadequacy_refusal
+reference_baseline: one legal four-channel sounding followed by abstention on every world
+reference_sota: exact temperature anomalies and optical-depth scale plus correct null and model-inadequacy refusal
+citation: "Rodgers, Reviews of Geophysics 1976, DOI 10.1029/RG014i004p00609"

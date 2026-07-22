@@ -42,7 +42,7 @@ class SecureEvaluationTests(unittest.TestCase):
                 return evaluator._forward_model()
         """)
         self.assert_rejected(result)
-        self.assertIn("ModuleNotFoundError", result["error_message"])
+        self.assertEqual(result["candidate_failure_kind"], "blocked_or_missing_import")
 
     def test_metrics_path_and_argv_are_not_exposed(self):
         result = self.evaluate_source("""
@@ -63,7 +63,7 @@ class SecureEvaluationTests(unittest.TestCase):
                 return [0] * n
         """)
         self.assert_rejected(result)
-        self.assertIn("FileNotFoundError", result["error_message"])
+        self.assertEqual(result["candidate_failure_kind"], "blocked_or_missing_file")
 
     def test_network_namespace_is_disconnected(self):
         result = self.evaluate_source("""
@@ -84,7 +84,7 @@ class SecureEvaluationTests(unittest.TestCase):
                 return [0] * n
         """)
         self.assert_rejected(result)
-        self.assertIn("Operation not permitted", result["error_message"])
+        self.assertEqual(result["candidate_failure_kind"], "blocked_operation")
 
     def test_timeout_kills_worker(self):
         result = self.evaluate_source("""
@@ -125,7 +125,19 @@ class SecureEvaluationTests(unittest.TestCase):
         for value in ("float('nan')", "float('inf')"):
             result = self.evaluate_source("def design_cavity(n): return [%s] * n" % value)
             self.assert_rejected(result)
-            self.assertIn("non-finite", result["error_message"])
+            self.assertEqual(
+                result["candidate_failure_kind"], "non_finite_candidate_value"
+            )
+
+    def test_candidate_exception_text_is_not_returned_as_feedback(self):
+        marker = "EXFILTRATE_SECRET_OBSERVATION_12345"
+        result = self.evaluate_source("""
+            def design_cavity(n):
+                raise RuntimeError(%r)
+        """ % marker)
+        self.assert_rejected(result)
+        self.assertEqual(result["candidate_failure_kind"], "candidate_runtime_error")
+        self.assertNotIn(marker, json.dumps(result, sort_keys=True))
 
     def test_candidate_stdout_cannot_forge_rpc(self):
         result = self.evaluate_source("""

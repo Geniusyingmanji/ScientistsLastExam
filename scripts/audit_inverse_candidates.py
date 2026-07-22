@@ -13,6 +13,12 @@ from pathlib import Path
 
 import numpy as np
 
+from calibrate_radiative_transfer_v2 import (
+    _always_abstain as radiative_always_abstain,
+    _identifiability_record as radiative_identifiability_record,
+    _misspecified_fit_record as radiative_misspecified_fit_record,
+    classical_discover_atmosphere,
+)
 from calibrate_reaction_mechanism_v2 import (
     _always_abstain as reaction_always_abstain,
     _identifiability_record as reaction_identifiability_record,
@@ -52,27 +58,84 @@ def _oracle(task_id: str):
 
 def _radiative_transfer():
     oracle = _oracle("AtmosphericScience/RadiativeTransferFit")
-    truth = oracle._T_TRUE.copy()
-    jacobian = np.zeros((oracle.N_CHANNELS, oracle.N_LAYERS), dtype=float)
-    for layer in range(oracle.N_LAYERS):
-        step = 0.1
-        upper, lower = truth.copy(), truth.copy()
-        upper[layer] += step
-        lower[layer] -= step
-        jacobian[:, layer] = (
-            oracle._forward_model(upper) - oracle._forward_model(lower)
-        ) / (2 * step)
-    singular = np.linalg.svd(jacobian, compute_uv=False)
+    baseline = oracle.evaluate(radiative_always_abstain)
+    classical = oracle.evaluate(classical_discover_atmosphere)
+    rank_checks = []
+    misspecified_checks = []
+    noise_label_blind_checks = []
+    for split, specs in (
+        ("development", oracle.DEVELOPMENT_SPECS),
+        ("heldout", oracle.HELDOUT_SPECS),
+    ):
+        supported_noise = {
+            float(spec[2]) for spec in specs if spec[3] == "in_library"
+        }
+        unsupported_noise = {
+            float(spec[2]) for spec in specs if spec[3] != "in_library"
+        }
+        noise_label_blind_checks.append({
+            "split": split,
+            "supported_noise_std": sorted(supported_noise),
+            "unsupported_noise_std": sorted(unsupported_noise),
+            "passed": unsupported_noise.issubset(supported_noise),
+        })
+        for index, spec in enumerate(specs):
+            world = oracle._world(spec)
+            if world["kind"] == "in_library":
+                rank_checks.append(radiative_identifiability_record(
+                    oracle, world, split, index
+                ))
+            elif world["kind"] in {"absorber", "cloud"}:
+                misspecified_checks.append(radiative_misspecified_fit_record(
+                    oracle, world, split, index
+                ))
+    passed = bool(
+        oracle.N_PARAMETERS == 5
+        and baseline["combined_score"] == 0.0
+        and baseline["robustness_score"] == 0.0
+        and 0.30 <= classical["combined_score"] <= 0.80
+        and 0.20 <= classical["robustness_score"] <= 0.75
+        and classical["combined_score"]
+        > classical["robustness_score"] + 0.05
+        and classical["development_radiance_prediction_score"]
+        > classical["combined_score"] + 0.15
+        and classical["development_false_discovery_rate"] == 0.0
+        and classical["heldout_false_discovery_rate"] == 0.0
+        and all(row["passed"] for row in rank_checks)
+        and all(row["passed"] for row in misspecified_checks)
+        and all(row["passed"] for row in noise_label_blind_checks)
+    )
     return {
         "task": "AtmosphericScience/RadiativeTransferFit",
-        "admission": "quarantine",
-        "defect": "ten radiances cannot identify a twenty-layer profile, yet selection directly rewards hidden fixed-profile RMSE rather than retrieval evidence",
-        "jacobian_shape": list(jacobian.shape),
-        "jacobian_rank": int(np.linalg.matrix_rank(jacobian, tol=singular[0] * 1e-10)),
-        "condition_number_nonzero_block": float(singular[0] / singular[-1]),
-        "observation_count": oracle.N_CHANNELS,
-        "unknown_count": oracle.N_LAYERS,
-        "passed": oracle.N_CHANNELS < oracle.N_LAYERS,
+        "admission": "candidate",
+        "resolved_defect": "v2 replaces hidden-profile scoring with charged channel/view selection, five evidence-supported temperature/optical-depth parameters, null/absorber/cloud refusal and held-out noise plus viewing shifts",
+        "public_layer_count": oracle.N_LAYERS,
+        "public_channel_count": oracle.N_CHANNELS,
+        "supported_parameter_count": oracle.N_PARAMETERS,
+        "always_abstain_score": float(baseline["combined_score"]),
+        "classical_mechanism_score": float(classical["combined_score"]),
+        "classical_heldout_mechanism_score": float(classical["robustness_score"]),
+        "classical_radiance_prediction_score": float(
+            classical["development_radiance_prediction_score"]
+        ),
+        "classical_development_false_discovery_rate": float(
+            classical["development_false_discovery_rate"]
+        ),
+        "classical_heldout_false_discovery_rate": float(
+            classical["heldout_false_discovery_rate"]
+        ),
+        "full_rank_in_library_worlds": sum(
+            row["passed"] for row in rank_checks
+        ),
+        "in_library_world_count": len(rank_checks),
+        "maximum_identifiability_condition_number": max(
+            row["condition_number"] for row in rank_checks
+        ),
+        "minimum_misspecified_reduced_chi2": min(
+            row["reduced_chi2"] for row in misspecified_checks
+        ),
+        "noise_label_blind_checks": noise_label_blind_checks,
+        "passed": passed,
     }
 
 

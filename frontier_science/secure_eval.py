@@ -48,6 +48,49 @@ class CandidateError(RuntimeError):
     pass
 
 
+def sanitized_candidate_failure(error: BaseException | str) -> dict[str, Any]:
+    """Map candidate-controlled failures to a finite, label-blind taxonomy.
+
+    Candidate exceptions can contain arbitrary text, including values observed through a
+    trusted callback.  Returning that text as iterative feedback would create a high-bandwidth
+    channel around metric sealing.  Classification happens in trusted code and only the fixed
+    category is persisted or exposed to search.
+    """
+    message = str(error)
+    if isinstance(error, TimeoutError) or "candidate timeout" in message:
+        kind = "candidate_timeout"
+    elif "ModuleNotFoundError" in message or "ImportError" in message:
+        kind = "blocked_or_missing_import"
+    elif "Operation not permitted" in message:
+        kind = "blocked_operation"
+    elif "FileNotFoundError" in message or "PermissionError" in message:
+        kind = "blocked_or_missing_file"
+    elif "non-finite" in message or "NaN" in message or "infinity" in message:
+        kind = "non_finite_candidate_value"
+    elif (
+        "could not convert string to" in message
+        or "invalid literal for int" in message
+        or "not enough values to unpack" in message
+        or "too many values to unpack" in message
+    ):
+        kind = "candidate_callback_schema_error"
+    elif "response too large" in message:
+        kind = "candidate_response_too_large"
+    elif "candidate worker exited" in message:
+        kind = "candidate_worker_exit"
+    else:
+        kind = "candidate_runtime_error"
+    result: dict[str, Any] = {
+        "combined_score": INVALID_SCORE,
+        "valid": 0.0,
+        "error_message": "candidate invalid: " + kind,
+        "candidate_failure_kind": kind,
+    }
+    if kind == "candidate_timeout":
+        result["timeout"] = 1.0
+    return result
+
+
 def _limits(cpu_seconds: int, memory_bytes: int):
     def apply() -> None:
         resource.setrlimit(resource.RLIMIT_CORE, (0, 0))

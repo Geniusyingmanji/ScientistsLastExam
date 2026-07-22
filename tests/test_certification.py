@@ -8,7 +8,7 @@ from pathlib import Path
 import numpy as np
 
 from frontier_science.certification import certification_status, load_certification
-from frontier_science.evaluate import evaluate_candidate
+from frontier_science.evaluate import INVALID_SCORE, evaluate_candidate
 from frontier_science.metric_visibility import search_visible_metrics
 from frontier_science.registry import find_task, list_tasks
 
@@ -370,6 +370,244 @@ def discover_mechanism(species, pairs, experiment, budget_units):
             self.assertEqual(metrics["valid"], 0.0)
             self.assertEqual(metrics["combined_score"], 0.0)
             self.assertTrue(all(not row["valid"] for row in metrics["per_world"]))
+
+    def test_radiative_v2_exact_refusal_physics_and_metric_sealing(self):
+        oracle = load_oracle("AtmosphericScience/RadiativeTransferFit")
+        self.assertEqual(oracle.N_LAYERS, 16)
+        self.assertEqual(oracle.N_CHANNELS, 24)
+        self.assertEqual(oracle.N_PARAMETERS, 5)
+        self.assertTrue(np.allclose(
+            np.sum(oracle.TEMPERATURE_BASIS, axis=1), 1.0, atol=1e-14
+        ))
+        for specs in (oracle.DEVELOPMENT_SPECS, oracle.HELDOUT_SPECS):
+            supported_noise = {
+                spec[2] for spec in specs if spec[3] == "in_library"
+            }
+            unsupported_noise = {
+                spec[2] for spec in specs if spec[3] != "in_library"
+            }
+            self.assertTrue(unsupported_noise.issubset(supported_noise))
+            for spec in specs:
+                world = oracle._world(spec)
+                submission = oracle._reference_submission(world)
+                parameters, support, _confidence, abstain = (
+                    oracle._validate_submission(submission)
+                )
+                mechanism = oracle._mechanism_metrics(
+                    world, parameters, support, abstain
+                )
+                self.assertAlmostEqual(mechanism["mechanism_score"], 1.0)
+                if world["kind"] == "in_library":
+                    self.assertAlmostEqual(
+                        oracle._radiance_prediction_score(
+                            world, parameters, False
+                        ), 1.0,
+                    )
+                else:
+                    self.assertTrue(mechanism["correct_refusal"])
+
+        # An isothermal black-surface atmosphere stays at its Planck radiance under
+        # each layer recurrence, independently of optical depth and view angle.
+        for temperature in (200.0, 250.0, 300.0):
+            for channel in (0, 12, 23):
+                expected = float(oracle.planck_radiance(
+                    temperature, oracle.CHANNEL_WAVENUMBERS_CM[channel]
+                ))
+                for view in (0.45, 1.0):
+                    radiance = expected
+                    for depth in oracle.BASE_LAYER_OPTICAL_DEPTHS[channel]:
+                        transmittance = np.exp(-depth / view)
+                        radiance = (
+                            radiance * transmittance
+                            + expected * (1.0 - transmittance)
+                        )
+                    self.assertAlmostEqual(radiance, expected, places=14)
+
+        def always_abstain(_public, observe, _budget):
+            observe(np.asarray((0, 6, 12, 18)), 1.0)
+            return {
+                "temperature_anomaly_knots_K": np.zeros(4),
+                "optical_depth_scale": 1.0,
+                "support": np.zeros(5),
+                "confidence": 0.0,
+                "abstain": True,
+            }
+
+        baseline = oracle.evaluate(always_abstain)
+        self.assertEqual(baseline["valid"], 1.0)
+        self.assertAlmostEqual(baseline["combined_score"], 0.0)
+        self.assertAlmostEqual(baseline["robustness_score"], 0.0)
+        self.assertEqual(baseline["development_discovery_coverage"], 0.0)
+        shown = search_visible_metrics(baseline)
+        self.assertNotIn("mechanism_score", shown)
+        self.assertNotIn("robustness_score", shown)
+        self.assertNotIn("development_radiance_prediction_score", shown)
+        self.assertNotIn("per_world", shown)
+
+    def test_radiative_v2_soundings_are_deterministic_and_charged(self):
+        oracle = load_oracle("AtmosphericScience/RadiativeTransferFit")
+        world = oracle._world(oracle.DEVELOPMENT_SPECS[0])
+        channels = np.asarray((0, 4, 8, 12, 16, 20))
+        first = oracle._SoundingLaboratory(world)
+        second = oracle._SoundingLaboratory(world)
+        one = first.observe(channels, 1.0)
+        repeated = second.observe(channels, 1.0)
+        self.assertEqual(one["radiances"].shape, (6,))
+        self.assertEqual(one["budget_cost"], 6)
+        self.assertTrue(np.array_equal(
+            one["radiances"], repeated["radiances"]
+        ))
+        two = first.observe(channels, 0.45)
+        self.assertFalse(np.array_equal(one["radiances"], two["radiances"]))
+        self.assertEqual(first.used, 12)
+
+    def test_radiative_v2_budget_and_invalid_query_fail_closed(self):
+        spec = find_task(
+            "AtmosphericScience/RadiativeTransferFit", include_uncertified=True
+        )
+        sources = (
+            """
+import numpy as np
+def discover_atmosphere(public_model, observe, budget_units):
+    del public_model, budget_units
+    try:
+        observe(np.arange(12), 1.0)
+        observe(np.arange(12), 0.45)
+    except Exception:
+        pass
+    return {"temperature_anomaly_knots_K": np.zeros(4),
+            "optical_depth_scale": 1.0, "support": np.zeros(5),
+            "confidence": 0.0, "abstain": True}
+""",
+            """
+import numpy as np
+def discover_atmosphere(public_model, observe, budget_units):
+    del public_model, budget_units
+    try:
+        observe([0, 0, 1], 1.0)
+    except Exception:
+        pass
+    return {"temperature_anomaly_knots_K": np.zeros(4),
+            "optical_depth_scale": 1.0, "support": np.zeros(5),
+            "confidence": 0.0, "abstain": True}
+""",
+        )
+        for source in sources:
+            with tempfile.TemporaryDirectory() as tmp:
+                candidate = Path(tmp) / "candidate.py"
+                candidate.write_text(source, encoding="utf-8")
+                metrics = evaluate_candidate(spec, candidate, timeout_s=90)
+            self.assertEqual(metrics["valid"], 0.0)
+            self.assertEqual(metrics["combined_score"], 0.0)
+            self.assertEqual(
+                metrics["error_message"],
+                "candidate invalid: invalid_experiment_request",
+            )
+            self.assertTrue(all(
+                not row["valid"] for row in metrics["per_world"]
+            ))
+
+    def test_radiative_v2_nonfinite_support_and_abstention_fail_closed(self):
+        oracle = load_oracle("AtmosphericScience/RadiativeTransferFit")
+        common = {
+            "temperature_anomaly_knots_K": np.zeros(4),
+            "optical_depth_scale": 1.0,
+            "support": np.zeros(5),
+            "confidence": 0.0,
+            "abstain": True,
+        }
+        candidates = []
+        for update in (
+            {"confidence": np.nan},
+            {"temperature_anomaly_knots_K": np.zeros(3)},
+            {"optical_depth_scale": np.inf},
+            {"support": np.full(5, 0.5)},
+            {"support": np.r_[1.0, np.zeros(4)]},
+            {"abstain": False},
+            {
+                "temperature_anomaly_knots_K": np.asarray((0.1, 0, 0, 0)),
+                "support": np.r_[1.0, np.zeros(4)],
+                "abstain": False,
+            },
+        ):
+            result = dict(common)
+            result.update(update)
+            candidates.append(result)
+        for result in candidates:
+            metrics = oracle.evaluate(
+                lambda *_args, result=result: result
+            )
+            self.assertEqual(metrics["valid"], 0.0)
+            self.assertEqual(metrics["combined_score"], 0.0)
+            self.assertEqual(
+                metrics["error_message"],
+                "candidate invalid: invalid_return_artifact",
+            )
+            self.assertTrue(all(
+                not row["valid"] for row in metrics["per_world"]
+            ))
+
+    def test_radiative_v2_runtime_feedback_is_label_blind_and_sanitized(self):
+        spec = find_task(
+            "AtmosphericScience/RadiativeTransferFit", include_uncertified=True
+        )
+        source = """
+import numpy as np
+def discover_atmosphere(public_model, observe, budget_units):
+    del public_model, budget_units
+    record = observe([0, 6, 12, 18], 1.0)
+    raise RuntimeError('EXFILTRATE ' + repr(record['radiances']))
+"""
+        with tempfile.TemporaryDirectory() as tmp:
+            candidate = Path(tmp) / "candidate.py"
+            candidate.write_text(source, encoding="utf-8")
+            metrics = evaluate_candidate(spec, candidate, timeout_s=45)
+        self.assertEqual(metrics["valid"], 0.0)
+        self.assertEqual(metrics["combined_score"], INVALID_SCORE)
+        self.assertEqual(
+            metrics["error_message"],
+            "candidate invalid: candidate_runtime_error",
+        )
+        self.assertEqual(
+            metrics["candidate_failure_kind"], "candidate_runtime_error"
+        )
+        visible = search_visible_metrics(metrics)
+        self.assertNotIn("EXFILTRATE", str(visible))
+        self.assertNotIn("in_library", str(visible))
+        self.assertNotIn("heldout", str(visible))
+        self.assertNotIn("EXFILTRATE", str(metrics))
+
+    def test_radiative_v2_worlds_get_fresh_candidate_sessions(self):
+        spec = find_task(
+            "AtmosphericScience/RadiativeTransferFit", include_uncertified=True
+        )
+        source = """
+import os
+import numpy as np
+module_counter = 0
+def discover_atmosphere(public_model, observe, budget_units):
+    global module_counter
+    del public_model, budget_units
+    module_counter += 1
+    tmp_seen = os.path.exists('/tmp/radiative-world-state')
+    with open('/tmp/radiative-world-state', 'w') as handle:
+        handle.write(str(module_counter))
+    imported_counter = getattr(np, '_radiative_world_counter', 0)
+    np._radiative_world_counter = imported_counter + 1
+    observe([0, 6, 12, 18], 1.0)
+    confidence = 0.1 * module_counter + 0.2 * int(tmp_seen) + 0.3 * imported_counter
+    return {"temperature_anomaly_knots_K": np.zeros(4),
+            "optical_depth_scale": 1.0, "support": np.zeros(5),
+            "confidence": confidence, "abstain": True}
+"""
+        with tempfile.TemporaryDirectory() as tmp:
+            candidate = Path(tmp) / "candidate.py"
+            candidate.write_text(source, encoding="utf-8")
+            metrics = evaluate_candidate(spec, candidate, timeout_s=45)
+        self.assertEqual(metrics["valid"], 1.0)
+        self.assertTrue(all(
+            row["confidence"] == 0.1 for row in metrics["per_world"]
+        ))
 
     def test_gravity_v2_exact_sources_refusal_physics_and_metric_sealing(self):
         oracle = load_oracle("Geophysics/GravityInversion")
