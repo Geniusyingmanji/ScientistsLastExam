@@ -1,0 +1,372 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_SECURE_EVAL",
+  "evidence_scope": "MODEL_PERFORMANCE",
+  "created_at": "2026-07-22T13:47:04.361047+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "ba075296853da5ad0890fca99d2469816224a9e3",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "/home/azureuser/workspace-gzy/zyf/frontier-science/scripts/batch_evolve.py",
+      "--all",
+      "--tasks",
+      "Astrodynamics/LowThrustTransfer",
+      "--algorithms",
+      "greedy_rewrite",
+      "--feedback-modes",
+      "selection_blind",
+      "--seeds",
+      "1",
+      "--budget",
+      "3",
+      "--timeout",
+      "180",
+      "--workdir",
+      "runs/low_thrust_v2_blind_b3",
+      "--output",
+      "experiments/gpt55_low_thrust_v2_blind_b3_2026-07-22.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "config": {
+    "tasks": [
+      "Astrodynamics/LowThrustTransfer"
+    ],
+    "algorithms": [
+      "greedy_rewrite"
+    ],
+    "feedback_modes": [
+      "selection_blind"
+    ],
+    "condition_order": "as_listed_for_even_seeds_reversed_for_odd_seeds",
+    "seeds": [
+      1
+    ],
+    "budget": 3,
+    "timeout_s": 180.0,
+    "work_root": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/low_thrust_v2_blind_b3",
+    "llm_condition_sha256": "5b0df4671481f6b3505155bc6c5654a64c4da5591422fb806904e7d0f44fc4d2",
+    "llm": {
+      "wire": "responses",
+      "endpoint_sha256": "b22995a1fcaf8ad713ac37716f006c717313dfdebd357ac02a077a5582650bb6",
+      "model": "gpt-5.5",
+      "max_output_tokens": 16000,
+      "temperature": null,
+      "reasoning_effort": "low",
+      "input_cost_per_million": null,
+      "output_cost_per_million": null,
+      "server_side_seed_control": false
+    }
+  },
+  "runs": [
+    {
+      "task": "Astrodynamics/LowThrustTransfer",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "selection_blind",
+      "seed": 1,
+      "baseline": 0.0,
+      "best": 0.005490986746310112,
+      "accepted": 2,
+      "evaluated": 4,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/low_thrust_v2_blind_b3/Astrodynamics__LowThrustTransfer/greedy_rewrite/selection_blind/seed_1",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 4,
+        "budget_units": 4,
+        "best_score": 0.005490986746310112,
+        "best_so_far_auc": 0.0038349420987733194,
+        "valid_rate": 1.0,
+        "accepted": 2,
+        "wall_seconds": 167.3936482090503,
+        "llm": {
+          "calls": 3,
+          "provider_usage_records": 3,
+          "input_tokens": 4806,
+          "output_tokens": 8560,
+          "total_tokens": 13366,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "Astrodynamics/LowThrustTransfer",
+        "seed": 1,
+        "baseline_score": 0.0,
+        "budget": 3,
+        "feedback_mode": "selection_blind",
+        "feedback_scope": "open-loop proposal batch: every proposal sees the frozen baseline program and its allowlisted baseline metrics; evaluated scores are retained only for offline best-of-batch analysis and never change a later parent or prompt; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "offline_best_of_open_loop_batch"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 1,
+        "trajectory_sha256": "8d0f413473cfe6c430ab76fa7271eaefde575447389c53b94cb43167d739b2db",
+        "events": [
+          {
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "ef95244e9f991d565bbb2ba8cff687af39f587d4a739e0295983673e2b68fc99",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 0.0,
+              "raw_score": 0.0,
+              "development_score": 0.0,
+              "robustness_score": 0.0,
+              "development_validation_gap": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "heldout_artifact_valid_rate": 1.0,
+              "development_mission_feasibility_rate": 0.0,
+              "heldout_mission_feasibility_rate": 0.0,
+              "development_shift_feasibility_rate": 0.0,
+              "heldout_shift_feasibility_rate": 0.0,
+              "mean_development_terminal_accuracy": 8.650191346916387e-15,
+              "mean_heldout_terminal_accuracy": 2.8053906014821304e-35,
+              "mean_development_phase_score": 2.698137888625602e-11,
+              "mean_heldout_phase_score": 0.326273469153061,
+              "mean_development_delta_v_m_s": 0.0,
+              "mean_heldout_delta_v_m_s": 0.0
+            },
+            "algorithm_metadata": {},
+            "error": null
+          },
+          {
+            "step": 1,
+            "oracle_calls": 2,
+            "budget_units": 2,
+            "score": 0.004924390824391583,
+            "best_score": 0.004924390824391583,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "99170e196210cd007dda161b3b7d0ebfa37db3913aa6593e1ed04b41e819fd43",
+            "parent_sha256": "ef95244e9f991d565bbb2ba8cff687af39f587d4a739e0295983673e2b68fc99",
+            "metrics": {
+              "combined_score": 0.004924390824391583,
+              "valid": 1.0,
+              "feasibility_rate": 0.0,
+              "raw_score": 0.004924390824391583,
+              "development_score": 0.004924390824391583,
+              "robustness_score": 0.003509388663102532,
+              "development_validation_gap": 0.0014150021612890505,
+              "heldout_policy_score": 2.1514794353966207e-11,
+              "heldout_robustness_score": 6.716454341560994e-12,
+              "heldout_artifact_valid_rate": 1.0,
+              "development_mission_feasibility_rate": 0.0,
+              "heldout_mission_feasibility_rate": 0.0,
+              "development_shift_feasibility_rate": 0.0,
+              "heldout_shift_feasibility_rate": 0.0,
+              "mean_development_terminal_accuracy": 0.007344034266613948,
+              "mean_heldout_terminal_accuracy": 3.3200376466688286e-11,
+              "mean_development_phase_score": 3.096897443327531e-08,
+              "mean_heldout_phase_score": 0.5754896284320213,
+              "mean_development_delta_v_m_s": 888.4228034247357,
+              "mean_heldout_delta_v_m_s": 1077.904137361491
+            },
+            "algorithm_metadata": {
+              "selection_policy": "offline_best_of_open_loop_batch",
+              "accepted_semantics": "offline_best_update",
+              "proposal_slot": 1
+            },
+            "error": null
+          },
+          {
+            "step": 2,
+            "oracle_calls": 3,
+            "budget_units": 3,
+            "score": 0.0037523298733904975,
+            "best_score": 0.004924390824391583,
+            "valid": true,
+            "accepted": false,
+            "candidate_sha256": "c85398e786b1a567d1958b776f5638b1e38288c91828cbaae3bf91713d00b637",
+            "parent_sha256": "ef95244e9f991d565bbb2ba8cff687af39f587d4a739e0295983673e2b68fc99",
+            "metrics": {
+              "combined_score": 0.0037523298733904975,
+              "valid": 1.0,
+              "feasibility_rate": 0.0,
+              "raw_score": 0.0037523298733904975,
+              "development_score": 0.0037523298733904975,
+              "robustness_score": 0.002587377700703295,
+              "development_validation_gap": 0.0011649521726872026,
+              "heldout_policy_score": 4.897988290052042e-11,
+              "heldout_robustness_score": 1.420410254121192e-11,
+              "heldout_artifact_valid_rate": 1.0,
+              "development_mission_feasibility_rate": 0.0,
+              "heldout_mission_feasibility_rate": 0.0,
+              "development_shift_feasibility_rate": 0.0,
+              "heldout_shift_feasibility_rate": 0.0,
+              "mean_development_terminal_accuracy": 0.005640507680645975,
+              "mean_heldout_terminal_accuracy": 7.624315712807793e-11,
+              "mean_development_phase_score": 0.3614632898053894,
+              "mean_heldout_phase_score": 2.333790502678722e-05,
+              "mean_development_delta_v_m_s": 903.747219705165,
+              "mean_heldout_delta_v_m_s": 1096.0942673786335
+            },
+            "algorithm_metadata": {
+              "selection_policy": "offline_best_of_open_loop_batch",
+              "accepted_semantics": "offline_best_update",
+              "proposal_slot": 2
+            },
+            "error": null
+          },
+          {
+            "step": 3,
+            "oracle_calls": 4,
+            "budget_units": 4,
+            "score": 0.005490986746310112,
+            "best_score": 0.005490986746310112,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "248bc57d3228a91c93e47ea93bde8ed32d42a7767a937366506b77d6086f749f",
+            "parent_sha256": "ef95244e9f991d565bbb2ba8cff687af39f587d4a739e0295983673e2b68fc99",
+            "metrics": {
+              "combined_score": 0.005490986746310112,
+              "valid": 1.0,
+              "feasibility_rate": 0.0,
+              "raw_score": 0.005490986746310112,
+              "development_score": 0.005490986746310112,
+              "robustness_score": 0.0050610769363385625,
+              "development_validation_gap": 0.00042990980997154905,
+              "heldout_policy_score": 5.2891593764358726e-11,
+              "heldout_robustness_score": 9.858094988562857e-12,
+              "heldout_artifact_valid_rate": 1.0,
+              "development_mission_feasibility_rate": 0.0,
+              "heldout_mission_feasibility_rate": 0.0,
+              "development_shift_feasibility_rate": 0.0,
+              "heldout_shift_feasibility_rate": 0.0,
+              "mean_development_terminal_accuracy": 0.007924081237692575,
+              "mean_heldout_terminal_accuracy": 8.473108462875192e-11,
+              "mean_development_phase_score": 0.00014916759563850964,
+              "mean_heldout_phase_score": 4.339819030307383e-22,
+              "mean_development_delta_v_m_s": 874.8986868123604,
+              "mean_heldout_delta_v_m_s": 1114.060649355164
+            },
+            "algorithm_metadata": {
+              "selection_policy": "offline_best_of_open_loop_batch",
+              "accepted_semantics": "offline_best_update",
+              "proposal_slot": 3
+            },
+            "error": null
+          }
+        ]
+      }
+    }
+  ],
+  "aggregate": {
+    "attempt_count": 1,
+    "superseded_attempts": 0,
+    "successful_runs": 1,
+    "failed_runs": 0,
+    "by_condition": {
+      "Astrodynamics/LowThrustTransfer|greedy_rewrite|selection_blind": {
+        "n": 1,
+        "best_score": {
+          "n": 1,
+          "mean": 0.005490986746310112,
+          "ci95_low": 0.005490986746310112,
+          "ci95_high": 0.005490986746310112
+        },
+        "best_so_far_auc": {
+          "n": 1,
+          "mean": 0.0038349420987733194,
+          "ci95_low": 0.0038349420987733194,
+          "ci95_high": 0.0038349420987733194
+        },
+        "budget_units": {
+          "n": 1,
+          "mean": 4.0,
+          "ci95_low": 4.0,
+          "ci95_high": 4.0
+        },
+        "oracle_calls": {
+          "n": 1,
+          "mean": 4.0,
+          "ci95_low": 4.0,
+          "ci95_high": 4.0
+        },
+        "wall_seconds": {
+          "n": 1,
+          "mean": 167.3936482090503,
+          "ci95_low": 167.3936482090503,
+          "ci95_high": 167.3936482090503
+        },
+        "total_tokens": {
+          "n": 1,
+          "mean": 13366.0,
+          "ci95_low": 13366.0,
+          "ci95_high": 13366.0
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      }
+    },
+    "overall": {
+      "best_score": {
+        "n": 1,
+        "mean": 0.005490986746310112,
+        "ci95_low": 0.005490986746310112,
+        "ci95_high": 0.005490986746310112
+      },
+      "best_so_far_auc": {
+        "n": 1,
+        "mean": 0.0038349420987733194,
+        "ci95_low": 0.0038349420987733194,
+        "ci95_high": 0.0038349420987733194
+      },
+      "budget_units": {
+        "n": 1,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "oracle_calls": {
+        "n": 1,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "wall_seconds": {
+        "n": 1,
+        "mean": 167.3936482090503,
+        "ci95_low": 167.3936482090503,
+        "ci95_high": 167.3936482090503
+      },
+      "total_tokens": {
+        "n": 1,
+        "mean": 13366.0,
+        "ci95_low": 13366.0,
+        "ci95_high": 13366.0
+      },
+      "estimated_cost_usd": {
+        "n": 0,
+        "mean": null,
+        "ci95_low": null,
+        "ci95_high": null
+      }
+    }
+  },
+  "completed_at": "2026-07-22T13:49:51.762829+00:00",
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}
