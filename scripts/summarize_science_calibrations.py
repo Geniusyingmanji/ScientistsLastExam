@@ -54,6 +54,8 @@ DEFAULT_REPORTS = (
     "experiments/gpt55_low_thrust_v2_b3_2026-07-22.json",
     "experiments/gpt55_cavity_v2_b1_2026-07-22.json",
     "experiments/gpt55_cavity_v2_b3_2026-07-22.json",
+    "experiments/gpt55_climate_v2_b1_2026-07-22.json",
+    "experiments/gpt55_climate_v2_b3_2026-07-22.json",
 )
 
 
