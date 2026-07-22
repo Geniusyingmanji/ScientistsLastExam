@@ -1012,3 +1012,62 @@ report and raw-trajectory hashes, online and frozen-parent lineage, failure cate
 classical/model discovery-coverage contrast. Certification v17 and the 23-condition cross-task
 summary v5 bind clean source `0be15db`. These are controlled simulator calibrations, not field
 oceanography, population model evidence or autonomous scientific discovery.
+
+## 2026-07-22 — active thermal-infrared sounding and retrieval v2
+
+Rebuilt `AtmosphericScience/RadiativeTransferFit` from a fixed ten-radiance/twenty-temperature
+hidden-profile score into an active, budgeted atmospheric-mechanism task. Candidates select up
+to four channel/view experiments over 24 thermal channels under 18 charged units, then return
+four temperature-anomaly knots, one optical-depth scale, exact support, confidence or an explicit
+refusal. Six development and five held-out worlds contain seven supported atmospheres, two null
+atmospheres, an extra absorber and a cloud outside the public clear-sky family. Mechanism,
+radiance prediction, viewing shift, confidence, false discovery, refusal and supported-world
+coverage remain separately auditable.
+
+The public recurrence agrees exactly with an independent implementation; the maximum isothermal
+recurrence error is **1.39e-17**. A fixed public-budget two-view sounding has full-rank 18-by-5
+sensitivity on all seven supported worlds, with worst scaled condition number **27.995**. Bounded
+fits of the complete public family to clean absorber and cloud observations have reduced
+chi-square **4.652** and **49.673**, both above the refusal threshold 3. A truth-blind nonlinear
+fit reaches development/held-out mechanism **0.614395/0.490908**, radiance prediction
+**0.854603/0.811647**, viewing-shift prediction **0.853833/0.809226**, full supported-world
+coverage and zero false discovery. These are synthetic task-calibration results, not line-by-line
+or satellite-retrieval validation.
+
+### Candidate-exception feedback hardening
+
+The pre-v2 audit found that the trusted driver could return a candidate-controlled exception
+string as search-visible `error_message`. A malicious candidate could therefore embed callback
+observations in an exception and carry them into a later proposal, bypassing the intended finite
+metric allowlist. The driver now maps candidate failures to a fixed label-blind taxonomy such as
+`candidate_callback_schema_error`, `invalid_return_artifact` or `candidate_runtime_error`; raw
+candidate exception text is not returned. A dedicated regression embeds a sentinel in a candidate
+exception and verifies its absence from the complete returned metrics. Security v4 records 18/18
+passing tests. Historical reports remain immutable and are not promoted beyond their existing
+calibration-only scope; future feedback-learning claims require this hardened protocol.
+
+### GPT-5.5 Radiative-v2 calibration
+
+The independent budget-one proposal is protocol-valid, uses two views and the full 18-unit
+measurement budget, but returns the canonical refusal for every atmosphere. In an independent
+normal budget-three run, all three proposals are valid; their mean per-world measurement use is
+18, 0 and 18 units. A same-local-seed-label strict `selection_blind` run also has three valid
+proposals, using 0, 18 and 18 units, with every parent fixed at the baseline. Across all seven
+nonbaseline proposals, supported-world discovery coverage and mean supported mechanism recovery
+are exactly zero, while unsupported-world correct refusal is one and false discovery is zero.
+No proposal is accepted in any condition.
+
+Normal and strict open-loop budget-three runs use **17,083** and **15,961** tokens and four oracle
+calls each. The endpoint exposes no server-side sampling seed, normal never changes its incumbent,
+and both terminal scores are zero. This provides no causal feedback estimate. The task-level
+finding is instead a four-way separation: executable validity, measurement-budget use,
+unsupported-world refusal and supported-world discovery coverage are distinct. Perfect refusal
+and zero false discovery do not establish discovery when coverage is zero.
+
+The task calibration, inverse admission v5, certification v18, security v4 and 51x2 baseline v10
+bind clean source `bcccfc3`; all three model reports bind clean source `b09657e`. The dedicated
+analysis on clean source `8e8bf9c` validates report/raw hashes, normal and frozen-parent lineage,
+source-scope equivalence and every coverage/refusal decomposition. Certification v19 and the
+25-condition, 13-task cross-task summary v6 bind clean source `b1e081c`. The current portfolio is
+seven certified, eighteen candidate and twenty-six quarantined packages: **25 internally
+admissible tasks**, leaving an approximate gap of 25 to the portfolio target.
