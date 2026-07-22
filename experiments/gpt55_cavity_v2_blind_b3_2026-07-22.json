@@ -1,0 +1,398 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_SECURE_EVAL",
+  "evidence_scope": "MODEL_PERFORMANCE",
+  "created_at": "2026-07-22T16:56:47.693786+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "678e79a6acf8b72ed6177c72f2a7834d32e3da62",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "/home/azureuser/workspace-gzy/zyf/frontier-science/scripts/batch_evolve.py",
+      "--tasks",
+      "FluidDynamics/LidDrivenCavity",
+      "--all",
+      "--algorithms",
+      "greedy_rewrite",
+      "--feedback-modes",
+      "selection_blind",
+      "--seeds",
+      "1",
+      "--budget",
+      "3",
+      "--timeout",
+      "180",
+      "--llm-config",
+      "frontier_science/conf/llm/local.yaml",
+      "--workdir",
+      "runs/cavity_v2_blind_b3",
+      "--output",
+      "experiments/gpt55_cavity_v2_blind_b3_2026-07-22.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "config": {
+    "tasks": [
+      "FluidDynamics/LidDrivenCavity"
+    ],
+    "algorithms": [
+      "greedy_rewrite"
+    ],
+    "feedback_modes": [
+      "selection_blind"
+    ],
+    "condition_order": "as_listed_for_even_seeds_reversed_for_odd_seeds",
+    "seeds": [
+      1
+    ],
+    "budget": 3,
+    "timeout_s": 180.0,
+    "work_root": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/cavity_v2_blind_b3",
+    "llm_condition_sha256": "5b0df4671481f6b3505155bc6c5654a64c4da5591422fb806904e7d0f44fc4d2",
+    "llm": {
+      "wire": "responses",
+      "endpoint_sha256": "b22995a1fcaf8ad713ac37716f006c717313dfdebd357ac02a077a5582650bb6",
+      "model": "gpt-5.5",
+      "max_output_tokens": 16000,
+      "temperature": null,
+      "reasoning_effort": "low",
+      "input_cost_per_million": null,
+      "output_cost_per_million": null,
+      "server_side_seed_control": false
+    }
+  },
+  "runs": [
+    {
+      "task": "FluidDynamics/LidDrivenCavity",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "selection_blind",
+      "seed": 1,
+      "baseline": 0.0,
+      "best": 0.9999999902972876,
+      "accepted": 1,
+      "evaluated": 4,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/cavity_v2_blind_b3/FluidDynamics__LidDrivenCavity/greedy_rewrite/selection_blind/seed_1",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 4,
+        "budget_units": 4,
+        "best_score": 0.9999999902972876,
+        "best_so_far_auc": 0.4999999951486438,
+        "valid_rate": 1.0,
+        "accepted": 1,
+        "wall_seconds": 250.06008940096945,
+        "llm": {
+          "calls": 3,
+          "provider_usage_records": 3,
+          "input_tokens": 4659,
+          "output_tokens": 9629,
+          "total_tokens": 14288,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "FluidDynamics/LidDrivenCavity",
+        "seed": 1,
+        "baseline_score": 0.0,
+        "budget": 3,
+        "feedback_mode": "selection_blind",
+        "feedback_scope": "open-loop proposal batch: every proposal sees the frozen baseline program and its allowlisted baseline metrics; evaluated scores are retained only for offline best-of-batch analysis and never change a later parent or prompt; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "offline_best_of_open_loop_batch"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 1,
+        "trajectory_sha256": "859df3222ea31e3fa0799cb7f65e2b6325bdf0bbf27c172f65c2f2ca7c07a642",
+        "events": [
+          {
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "56bd7eacda7e622f64c9f3d646f7def0ca6614cfb4ec70482be0f0407b6ae9d7",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 0.0,
+              "raw_score": 0.0,
+              "development_score": 0.0,
+              "ungated_development_score": 0.0,
+              "robustness_score": 0.0,
+              "ungated_robustness_score": 0.0,
+              "development_validation_gap": 0.0,
+              "heldout_policy_score": 0.0,
+              "ungated_heldout_policy_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "ungated_heldout_robustness_score": 0.0,
+              "heldout_artifact_valid_rate": 1.0,
+              "development_physics_feasibility_rate": 0.0,
+              "heldout_physics_feasibility_rate": 0.0,
+              "development_grid_feasibility_rate": 0.0,
+              "heldout_grid_feasibility_rate": 0.0,
+              "mean_development_field_similarity": 8.94967433495708e-12,
+              "mean_heldout_field_similarity": 8.609057911002083e-12,
+              "mean_development_poisson_relative_residual": 0.0,
+              "mean_heldout_poisson_relative_residual": 0.0,
+              "mean_development_transport_relative_residual": 0.999999999999909,
+              "mean_heldout_transport_relative_residual": 0.9999999999999161,
+              "candidate_call_count": 8,
+              "candidate_call_valid_rate": 1.0
+            },
+            "algorithm_metadata": {},
+            "error": null
+          },
+          {
+            "step": 1,
+            "oracle_calls": 2,
+            "budget_units": 2,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": false,
+            "candidate_sha256": "983e3510af441d1b3c2f796421bd2a4ec8a7fbd6b5f2db43967c407acdd89542",
+            "parent_sha256": "56bd7eacda7e622f64c9f3d646f7def0ca6614cfb4ec70482be0f0407b6ae9d7",
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 0.0,
+              "raw_score": 0.0,
+              "development_score": 0.0,
+              "ungated_development_score": 1.923488405336164e-12,
+              "robustness_score": 0.0,
+              "ungated_robustness_score": 1.3638814717384433e-06,
+              "development_validation_gap": 0.0,
+              "heldout_policy_score": 0.0,
+              "ungated_heldout_policy_score": 1.8502821949617977e-12,
+              "heldout_robustness_score": 0.0,
+              "ungated_heldout_robustness_score": 1.3085870849494727e-06,
+              "heldout_artifact_valid_rate": 1.0,
+              "development_physics_feasibility_rate": 0.0,
+              "heldout_physics_feasibility_rate": 0.0,
+              "development_grid_feasibility_rate": 0.0,
+              "heldout_grid_feasibility_rate": 0.0,
+              "mean_development_field_similarity": 8.94967433495708e-12,
+              "mean_heldout_field_similarity": 8.609057911002083e-12,
+              "mean_development_poisson_relative_residual": 0.0,
+              "mean_heldout_poisson_relative_residual": 0.0,
+              "mean_development_transport_relative_residual": 0.0,
+              "mean_heldout_transport_relative_residual": 0.0,
+              "candidate_call_count": 8,
+              "candidate_call_valid_rate": 1.0
+            },
+            "algorithm_metadata": {
+              "selection_policy": "offline_best_of_open_loop_batch",
+              "accepted_semantics": "offline_best_update",
+              "proposal_slot": 1
+            },
+            "error": null
+          },
+          {
+            "step": 2,
+            "oracle_calls": 3,
+            "budget_units": 3,
+            "score": 0.9999999902972876,
+            "best_score": 0.9999999902972876,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "667baa779d52791ef73d4fb13ba6e53aef88ad019abc28fe9d18517b3c100b6a",
+            "parent_sha256": "56bd7eacda7e622f64c9f3d646f7def0ca6614cfb4ec70482be0f0407b6ae9d7",
+            "metrics": {
+              "combined_score": 0.9999999902972876,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.9999999902972876,
+              "development_score": 0.9999999902972876,
+              "ungated_development_score": 0.9999999902972876,
+              "robustness_score": 0.999999990137108,
+              "ungated_robustness_score": 0.999999990137108,
+              "development_validation_gap": 1.6017953630154125e-10,
+              "heldout_policy_score": 0.9999999577297307,
+              "ungated_heldout_policy_score": 0.9999999577297307,
+              "heldout_robustness_score": 0.9999999582029774,
+              "ungated_heldout_robustness_score": 0.9999999582029774,
+              "heldout_artifact_valid_rate": 1.0,
+              "development_physics_feasibility_rate": 1.0,
+              "heldout_physics_feasibility_rate": 1.0,
+              "development_grid_feasibility_rate": 1.0,
+              "heldout_grid_feasibility_rate": 1.0,
+              "mean_development_field_similarity": 0.9999999902972938,
+              "mean_heldout_field_similarity": 0.9999999577319569,
+              "mean_development_poisson_relative_residual": 6.861617779178352e-15,
+              "mean_heldout_poisson_relative_residual": 9.702718925438756e-15,
+              "mean_development_transport_relative_residual": 1.2788683636052783e-15,
+              "mean_heldout_transport_relative_residual": 2.958607629864024e-12,
+              "candidate_call_count": 8,
+              "candidate_call_valid_rate": 1.0
+            },
+            "algorithm_metadata": {
+              "selection_policy": "offline_best_of_open_loop_batch",
+              "accepted_semantics": "offline_best_update",
+              "proposal_slot": 2
+            },
+            "error": null
+          },
+          {
+            "step": 3,
+            "oracle_calls": 4,
+            "budget_units": 4,
+            "score": 0.0,
+            "best_score": 0.9999999902972876,
+            "valid": true,
+            "accepted": false,
+            "candidate_sha256": "5d4908d64c47dea60560b4ef6d1527b57063ad2da749ad2f73a6ef279d31d0b8",
+            "parent_sha256": "56bd7eacda7e622f64c9f3d646f7def0ca6614cfb4ec70482be0f0407b6ae9d7",
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 0.0,
+              "raw_score": 0.0,
+              "development_score": 0.0,
+              "ungated_development_score": 0.0,
+              "robustness_score": 0.0,
+              "ungated_robustness_score": 0.0,
+              "development_validation_gap": 0.0,
+              "heldout_policy_score": 0.0,
+              "ungated_heldout_policy_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "ungated_heldout_robustness_score": 0.0,
+              "heldout_artifact_valid_rate": 1.0,
+              "development_physics_feasibility_rate": 0.0,
+              "heldout_physics_feasibility_rate": 0.0,
+              "development_grid_feasibility_rate": 0.0,
+              "heldout_grid_feasibility_rate": 0.0,
+              "mean_development_field_similarity": 8.94967433495708e-12,
+              "mean_heldout_field_similarity": 8.609057911002083e-12,
+              "mean_development_poisson_relative_residual": 0.0,
+              "mean_heldout_poisson_relative_residual": 0.0,
+              "mean_development_transport_relative_residual": 0.999999999999909,
+              "mean_heldout_transport_relative_residual": 0.9999999999999161,
+              "candidate_call_count": 8,
+              "candidate_call_valid_rate": 1.0
+            },
+            "algorithm_metadata": {
+              "selection_policy": "offline_best_of_open_loop_batch",
+              "accepted_semantics": "offline_best_update",
+              "proposal_slot": 3
+            },
+            "error": null
+          }
+        ]
+      }
+    }
+  ],
+  "aggregate": {
+    "attempt_count": 1,
+    "superseded_attempts": 0,
+    "successful_runs": 1,
+    "failed_runs": 0,
+    "by_condition": {
+      "FluidDynamics/LidDrivenCavity|greedy_rewrite|selection_blind": {
+        "n": 1,
+        "best_score": {
+          "n": 1,
+          "mean": 0.9999999902972876,
+          "ci95_low": 0.9999999902972876,
+          "ci95_high": 0.9999999902972876
+        },
+        "best_so_far_auc": {
+          "n": 1,
+          "mean": 0.4999999951486438,
+          "ci95_low": 0.4999999951486438,
+          "ci95_high": 0.4999999951486438
+        },
+        "budget_units": {
+          "n": 1,
+          "mean": 4.0,
+          "ci95_low": 4.0,
+          "ci95_high": 4.0
+        },
+        "oracle_calls": {
+          "n": 1,
+          "mean": 4.0,
+          "ci95_low": 4.0,
+          "ci95_high": 4.0
+        },
+        "wall_seconds": {
+          "n": 1,
+          "mean": 250.06008940096945,
+          "ci95_low": 250.06008940096945,
+          "ci95_high": 250.06008940096945
+        },
+        "total_tokens": {
+          "n": 1,
+          "mean": 14288.0,
+          "ci95_low": 14288.0,
+          "ci95_high": 14288.0
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      }
+    },
+    "overall": {
+      "best_score": {
+        "n": 1,
+        "mean": 0.9999999902972876,
+        "ci95_low": 0.9999999902972876,
+        "ci95_high": 0.9999999902972876
+      },
+      "best_so_far_auc": {
+        "n": 1,
+        "mean": 0.4999999951486438,
+        "ci95_low": 0.4999999951486438,
+        "ci95_high": 0.4999999951486438
+      },
+      "budget_units": {
+        "n": 1,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "oracle_calls": {
+        "n": 1,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "wall_seconds": {
+        "n": 1,
+        "mean": 250.06008940096945,
+        "ci95_low": 250.06008940096945,
+        "ci95_high": 250.06008940096945
+      },
+      "total_tokens": {
+        "n": 1,
+        "mean": 14288.0,
+        "ci95_low": 14288.0,
+        "ci95_high": 14288.0
+      },
+      "estimated_cost_usd": {
+        "n": 0,
+        "mean": null,
+        "ci95_low": null,
+        "ci95_high": null
+      }
+    }
+  },
+  "completed_at": "2026-07-22T17:00:57.760885+00:00",
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}

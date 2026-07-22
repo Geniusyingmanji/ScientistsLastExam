@@ -1,0 +1,329 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_TASK_CALIBRATION",
+  "evidence_scope": "CONTROLLED_STEADY_LAMINAR_CFD_TASK_CALIBRATION_NOT_TURBULENCE_EXPERIMENTAL_VALIDATION_OR_AUTONOMOUS_DISCOVERY_EVIDENCE",
+  "created_at": "2026-07-22T16:31:19.813675+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "678e79a6acf8b72ed6177c72f2a7834d32e3da62",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/calibrate_cavity_v2.py",
+      "--output",
+      "experiments/cavity_v2_calibration_2026-07-22.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "task_dimensions": {
+    "development_case_count": 4,
+    "heldout_case_count": 2,
+    "refinement_call_count": 2,
+    "total_candidate_call_count": 8,
+    "reynolds_range": [
+      100.0,
+      400.0
+    ]
+  },
+  "public_feasibility_tolerances": {
+    "poisson_relative_residual": 0.03,
+    "transport_relative_residual": 0.05,
+    "boundary_relative_error": 0.05
+  },
+  "weak_baseline": {
+    "combined_score": 0.0,
+    "valid": 1.0,
+    "feasibility_rate": 0.0,
+    "robustness_score": 0.0,
+    "ungated_development_score": 0.0,
+    "ungated_robustness_score": 0.0,
+    "heldout_policy_score": 0.0,
+    "heldout_robustness_score": 0.0,
+    "ungated_heldout_policy_score": 0.0,
+    "ungated_heldout_robustness_score": 0.0,
+    "heldout_artifact_valid_rate": 1.0,
+    "development_physics_feasibility_rate": 0.0,
+    "heldout_physics_feasibility_rate": 0.0,
+    "development_grid_feasibility_rate": 0.0,
+    "heldout_grid_feasibility_rate": 0.0,
+    "candidate_call_count": 8,
+    "candidate_call_valid_rate": 1.0
+  },
+  "trusted_reference_policy": {
+    "combined_score": 0.9999999978178575,
+    "valid": 1.0,
+    "feasibility_rate": 1.0,
+    "robustness_score": 0.9999999973746342,
+    "ungated_development_score": 0.9999999978178575,
+    "ungated_robustness_score": 0.9999999973746342,
+    "heldout_policy_score": 0.9999999909968893,
+    "heldout_robustness_score": 0.9999999955969529,
+    "ungated_heldout_policy_score": 0.9999999909968893,
+    "ungated_heldout_robustness_score": 0.9999999955969529,
+    "heldout_artifact_valid_rate": 1.0,
+    "development_physics_feasibility_rate": 1.0,
+    "heldout_physics_feasibility_rate": 1.0,
+    "development_grid_feasibility_rate": 1.0,
+    "heldout_grid_feasibility_rate": 1.0,
+    "candidate_call_count": 8,
+    "candidate_call_valid_rate": 1.0
+  },
+  "nonphysical_stripe_injection": {
+    "combined_score": 0.0,
+    "valid": 1.0,
+    "feasibility_rate": 0.0,
+    "robustness_score": 0.0,
+    "ungated_development_score": 0.0,
+    "ungated_robustness_score": 0.0,
+    "heldout_policy_score": 0.0,
+    "heldout_robustness_score": 0.0,
+    "ungated_heldout_policy_score": 0.0,
+    "ungated_heldout_robustness_score": 0.0,
+    "heldout_artifact_valid_rate": 1.0,
+    "development_physics_feasibility_rate": 0.0,
+    "heldout_physics_feasibility_rate": 0.0,
+    "development_grid_feasibility_rate": 0.0,
+    "heldout_grid_feasibility_rate": 0.0,
+    "candidate_call_count": 8,
+    "candidate_call_valid_rate": 1.0
+  },
+  "attenuated_near_reference_shortcut": {
+    "combined_score": 0.0,
+    "valid": 1.0,
+    "feasibility_rate": 0.0,
+    "robustness_score": 0.0,
+    "ungated_development_score": 0.8570262397348241,
+    "ungated_robustness_score": 0.9048442150739077,
+    "heldout_policy_score": 0.0,
+    "heldout_robustness_score": 0.0,
+    "ungated_heldout_policy_score": 0.867914783661106,
+    "ungated_heldout_robustness_score": 0.9237231601757507,
+    "heldout_artifact_valid_rate": 1.0,
+    "development_physics_feasibility_rate": 0.0,
+    "heldout_physics_feasibility_rate": 0.0,
+    "development_grid_feasibility_rate": 0.0,
+    "heldout_grid_feasibility_rate": 0.0,
+    "candidate_call_count": 8,
+    "candidate_call_valid_rate": 1.0
+  },
+  "invalid_artifact_checks": {
+    "wrong_shape": {
+      "combined_score": 0.0,
+      "valid": 0.0,
+      "feasibility_rate": 0.0,
+      "candidate_call_valid_rate": 0.0
+    },
+    "nonfinite": {
+      "combined_score": 0.0,
+      "valid": 0.0,
+      "feasibility_rate": 0.0,
+      "candidate_call_valid_rate": 0.0
+    },
+    "streamfunction_bound": {
+      "combined_score": 0.0,
+      "valid": 0.0,
+      "feasibility_rate": 0.0,
+      "candidate_call_valid_rate": 0.0
+    },
+    "vorticity_bound": {
+      "combined_score": 0.0,
+      "valid": 0.0,
+      "feasibility_rate": 0.0,
+      "candidate_call_valid_rate": 0.0
+    },
+    "wrong_container": {
+      "combined_score": 0.0,
+      "valid": 0.0,
+      "feasibility_rate": 0.0,
+      "candidate_call_valid_rate": 0.0
+    }
+  },
+  "independent_equation_checks": [
+    {
+      "name": "dev_re100",
+      "split": "development",
+      "Re": 100.0,
+      "N": 25,
+      "poisson_relative_residual": 1.5244148773651722e-09,
+      "transport_relative_residual": 1.4945614116113872e-10,
+      "boundary_relative_error": 0.0,
+      "maximum_absolute_scaled_poisson_residual": 3.006139000921726e-11,
+      "maximum_absolute_scaled_transport_residual": 1.1015969247907265e-09,
+      "maximum_absolute_discrete_divergence": 9.992007221626409e-16,
+      "finite": true,
+      "maximum_absolute_streamfunction": 0.09794090003607799,
+      "maximum_absolute_vorticity": 39.325485234347845
+    },
+    {
+      "name": "dev_re180",
+      "split": "development",
+      "Re": 180.0,
+      "N": 29,
+      "poisson_relative_residual": 6.781565445749678e-10,
+      "transport_relative_residual": 7.536421039180109e-11,
+      "boundary_relative_error": 0.0,
+      "maximum_absolute_scaled_poisson_residual": 1.1407418629497124e-11,
+      "maximum_absolute_scaled_transport_residual": 9.799119814191126e-10,
+      "maximum_absolute_discrete_divergence": 1.457167719820518e-15,
+      "finite": true,
+      "maximum_absolute_streamfunction": 0.0978193724792196,
+      "maximum_absolute_vorticity": 47.59461726884969
+    },
+    {
+      "name": "heldout_re220",
+      "split": "heldout",
+      "Re": 220.0,
+      "N": 31,
+      "poisson_relative_residual": 9.935150536357249e-09,
+      "transport_relative_residual": 5.478497128522303e-10,
+      "boundary_relative_error": 0.0,
+      "maximum_absolute_scaled_poisson_residual": 1.2627116344719747e-10,
+      "maximum_absolute_scaled_transport_residual": 6.376678613959075e-09,
+      "maximum_absolute_discrete_divergence": 2.237793284010081e-15,
+      "finite": true,
+      "maximum_absolute_streamfunction": 0.09816275429002953,
+      "maximum_absolute_vorticity": 51.56940705221237
+    },
+    {
+      "name": "dev_re280",
+      "split": "development",
+      "Re": 280.0,
+      "N": 33,
+      "poisson_relative_residual": 2.608173785251142e-09,
+      "transport_relative_residual": 1.970320076839784e-10,
+      "boundary_relative_error": 0.0,
+      "maximum_absolute_scaled_poisson_residual": 2.8858691234227504e-11,
+      "maximum_absolute_scaled_transport_residual": 3.2554011153429485e-09,
+      "maximum_absolute_discrete_divergence": 1.7763568394002505e-15,
+      "finite": true,
+      "maximum_absolute_streamfunction": 0.09824102885326781,
+      "maximum_absolute_vorticity": 55.82958436637281
+    },
+    {
+      "name": "dev_re350",
+      "split": "development",
+      "Re": 350.0,
+      "N": 35,
+      "poisson_relative_residual": 6.185454869986052e-09,
+      "transport_relative_residual": 2.200407089350298e-10,
+      "boundary_relative_error": 0.0,
+      "maximum_absolute_scaled_poisson_residual": 7.087471777002252e-11,
+      "maximum_absolute_scaled_transport_residual": 5.708161721074134e-09,
+      "maximum_absolute_discrete_divergence": 1.4155343563970746e-15,
+      "finite": true,
+      "maximum_absolute_streamfunction": 0.09780096496135894,
+      "maximum_absolute_vorticity": 60.105703444827164
+    },
+    {
+      "name": "heldout_re400",
+      "split": "heldout",
+      "Re": 400.0,
+      "N": 41,
+      "poisson_relative_residual": 1.3187975189344935e-08,
+      "transport_relative_residual": 3.3732005760744934e-10,
+      "boundary_relative_error": 0.0,
+      "maximum_absolute_scaled_poisson_residual": 1.3942410550735196e-10,
+      "maximum_absolute_scaled_transport_residual": 8.883768887191223e-09,
+      "maximum_absolute_discrete_divergence": 1.942890293094024e-15,
+      "finite": true,
+      "maximum_absolute_streamfunction": 0.10119445563608438,
+      "maximum_absolute_vorticity": 70.52221090574012
+    },
+    {
+      "name": "development_re180_refinement_fine",
+      "split": "development",
+      "Re": 180.0,
+      "N": 37,
+      "poisson_relative_residual": 6.683320483646302e-09,
+      "transport_relative_residual": 3.176550756997689e-10,
+      "boundary_relative_error": 0.0,
+      "maximum_absolute_scaled_poisson_residual": 7.748571489302192e-11,
+      "maximum_absolute_scaled_transport_residual": 4.242921909647368e-09,
+      "maximum_absolute_discrete_divergence": 3.747002708109903e-15,
+      "finite": true,
+      "maximum_absolute_streamfunction": 0.1018834897910876,
+      "maximum_absolute_vorticity": 59.85080188522042
+    },
+    {
+      "name": "heldout_re400_refinement_fine",
+      "split": "heldout",
+      "Re": 400.0,
+      "N": 49,
+      "poisson_relative_residual": 1.1412460640656163e-08,
+      "transport_relative_residual": 3.2899853711926283e-10,
+      "boundary_relative_error": 0.0,
+      "maximum_absolute_scaled_poisson_residual": 5.4744971359974026e-11,
+      "maximum_absolute_scaled_transport_residual": 8.114052318930476e-09,
+      "maximum_absolute_discrete_divergence": 2.9976021664879227e-15,
+      "finite": true,
+      "maximum_absolute_streamfunction": 0.10510206486533903,
+      "maximum_absolute_vorticity": 83.3356775445548
+    }
+  ],
+  "maximum_oracle_diagnostic_reproduction_error": 0.0,
+  "independent_grid_refinement_checks": [
+    {
+      "name": "development_re180_refinement",
+      "split": "development",
+      "coarse_N": 29,
+      "fine_N": 37,
+      "independent_relative_velocity_difference_21": 0.042681560167764865,
+      "independent_relative_velocity_difference_65": 0.05325060902406261,
+      "evaluator_reported_difference": 0.042681560167764865,
+      "absolute_reproduction_error": 0.0
+    },
+    {
+      "name": "heldout_re400_refinement",
+      "split": "heldout",
+      "coarse_N": 41,
+      "fine_N": 49,
+      "independent_relative_velocity_difference_21": 0.036047800102439666,
+      "independent_relative_velocity_difference_65": 0.04561739867415567,
+      "evaluator_reported_difference": 0.036047800102439666,
+      "absolute_reproduction_error": 0.0
+    }
+  ],
+  "independent_ghia_re100_check": {
+    "u_centerline_rmse": 0.009788573607718645,
+    "v_centerline_rmse": 0.012070035100907534,
+    "u_centerline_max_error": 0.016567478944382125,
+    "v_centerline_max_error": 0.02188802011065963
+  },
+  "difficulty_and_integrity_gate": {
+    "weak_baseline_valid_but_zero": true,
+    "reference_full_and_heldout_scores_above_0_999": true,
+    "nonphysical_injection_zero": true,
+    "near_reference_similarity_cannot_bypass_physics_gate": true,
+    "invalid_artifacts_fail_closed": true,
+    "independent_equations_passed": true,
+    "independent_grid_refinement_passed": true,
+    "literature_profile_passed": true,
+    "passed": true
+  },
+  "reference_method": {
+    "description": "Deterministic second-order streamfunction-vorticity Newton-Krylov Reynolds continuation, checked here by separately implemented equations, discrete incompressibility, grid transfer and published Re=100 profiles.",
+    "continuum_exactness_claimed": false,
+    "global_solver_optimality_claimed": false,
+    "experimental_truth_claimed": false
+  },
+  "limitations": [
+    "The model is a two-dimensional steady laminar square cavity on modest second-order uniform grids.",
+    "Public deterministic Reynolds/grid inputs permit case-specific branching; server-held procedural cases are still required before certification.",
+    "The Ghia comparison is sparse literature validation, not an independent high-order full-field solution or experiment.",
+    "Task-calibration scores do not measure GPT-5.5, feedback causality, population capability or autonomous scientific discovery."
+  ],
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}
