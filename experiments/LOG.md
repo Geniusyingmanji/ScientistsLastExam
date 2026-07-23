@@ -1284,3 +1284,38 @@ freezes **33 normal single-run conditions over 17 tasks**. The portfolio contain
 internally admissible tasks, leaving an approximate gap of **21** to the roughly 50-task target.
 These are reduced-order, single-run calibrations, not thermoviscous/experimental validation,
 population performance, feedback learning or autonomous scientific discovery.
+
+## 2026-07-23 — robust equilibrium-stage distillation v2
+
+Rebuilt `ChemicalProcess/DistillationColumnDesign` from a fixed-0.99-purity toy into a policy
+task over six binary separations. The artifact jointly selects integer tray count and feed
+stage, reflux ratio, distillate fraction and a feed-forward split gain. The deterministic
+constant-relative-volatility/constant-molar-overflow oracle explicitly closes the total
+condenser return, every rectifying/stripping tray, the feed stage, the partial reboiler and the
+overall feed-product component balance. Product purity and light/heavy recovery remain hard
+constraints rather than requested values assigned by the simulator.
+
+Four development and two interleaved held-out regimes cover close-boiling, high-purity, rich,
+lean and partly vaporized feeds. Five sealed conditions vary relative volatility, feed
+composition, feed liquid fraction, available reflux and a combined operating shift. Nominal
+development cost alone controls proposal selection; shift failures are isolated from nominal
+validity and all held-out, per-instance and robustness diagnostics remain sealed.
+
+The conservative maximum-stage/high-reflux policy is feasible in every nominal and shifted
+condition. Fixed-seed nominal witnesses use 12--17 trays and cost **35--47%** of baseline, but
+their sealed shift-feasibility rate is only **0.20/0.10** on development/held-out instances.
+Robust witnesses use 12--21 trays, cost **37--52%** of baseline and retain all five shifts,
+scoring nominal **0.963386/0.902777** and robustness **1.0/1.0**. A separate bounded
+least-squares MESH implementation reproduces all nominal/robust reference conditions with
+maximum product-composition discrepancy about `1.1e-11`; analytic tridiagonal Jacobians also
+match finite differences at the top-feed boundary. Malformed, non-finite, boolean,
+non-integral and out-of-range artifacts fail closed, and sandbox tests verify a fresh process,
+imports and tmpfs for all six candidate calls.
+
+Dirty-tree dry runs reproduce all twelve fixed-seed reference searches and pass the rebuilt
+wave-4 and certification audits, but are not trusted evidence. Clean-source distillation,
+wave-4 v3, certification v25, security v10 and baseline v16 reports will be appended after the
+source commit. Re-admission changes the current manifest to **7/23/21**, for **30** internally
+admissible tasks and an approximate gap of **20** to the roughly 50-task target. This is
+reduced-order task calibration, not a global-optimality proof, rate-based process simulation,
+pilot-column/plant validation, model-population estimate or autonomous-discovery result.

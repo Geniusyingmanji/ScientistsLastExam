@@ -1,0 +1,34 @@
+schema_version: 1
+scientific_question: Can one mixed-integer column-design policy trade equilibrium stages against reflux cost across varying binary separations while retaining product purity and recovery under off-design operation?
+artifact: Tray count, feed-stage index, reflux ratio, nominal distillate-to-feed fraction and feed-forward split gain for a total-condenser/partial-reboiler binary column.
+oracle:
+  nominal: deterministic constant-molar-overflow equilibrium-stage light-component balances with total condenser, feed stage and partial reboiler
+  feasibility: finite exact design contract, converged per-stage and overall balances, product specifications and light/heavy recovery requirements
+  deterministic: true
+normalization:
+  baseline: conservative maximum-stage high-reflux policy using public Fenske-style section difficulty only to place the feed
+  reference: separately calibrated fixed-seed nominal-cost and off-design-robust mixed-integer witnesses
+  score: development nominal annualized reduced-order cost controls search; held-out separations and operating shifts remain separate
+citations:
+  - id: doi:10.1021/ie50186a023
+    title: Graphical Design of Fractionating Columns
+  - id: doi:10.1002/aic.690170130
+    title: Multicomponent separation calculations by linearization
+  - id: doi:10.1002/cjce.5450520108
+    title: A new class of solution methods for multicomponent, multistage separation processes
+  - id: doi:10.1021/ie0001974
+    title: Optimal Design of Complex Distillation Columns Using Rigorous Tray-by-Tray Disjunctive Programming Models
+invariants:
+  - every accepted design is finite, in public bounds and has exact integral tray and feed-stage variables
+  - every feasible design closes each light-component stage balance and the overall feed-product balance
+  - total-condenser and partial-reboiler boundary equations are checked explicitly
+  - weak-baseline designs are nominally feasible in every instance
+  - nominal and robust reference witnesses improve their corresponding weak-baseline cost anchors
+  - product purity and component recovery remain separate from structural artifact validity
+  - non-finite, malformed, out-of-bound, non-integral and nonconverged artifacts fail closed
+  - every scientific instance receives a fresh candidate process and private temporary-filesystem state
+  - held-out, off-design, per-stage and per-instance metrics remain evaluator-only
+known_shortcuts: The deterministic model assumes binary constant relative volatility, equilibrium stages and constant molar overflow. It omits non-ideal and multicomponent thermodynamics, pressure drop, tray efficiency, hydraulics, heat integration, detailed equipment sizing and control. Fixed procedural instances require future server-held mixtures and specifications. Engineering claims require independent process-simulator and experimental or plant-data replication. Reference designs are feasible witnesses, not global optima.
+review:
+  domain: pending_external
+  evaluator_security: automated_invariant_sandbox_and_metric_sealing_tests

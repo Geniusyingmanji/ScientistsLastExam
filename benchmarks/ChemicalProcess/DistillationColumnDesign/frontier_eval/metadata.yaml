@@ -1,7 +1,12 @@
 domain: ChemicalProcess
 task: DistillationColumnDesign
 difficulty: hard
-oracle_type: physical_sim
+tier: T2
+oracle_type: equilibrium_stage_process_sim
 score_mode: clipped
 gpu_required: false
 eval_time_seconds: 30
+science_metric: nominal annualized reduced-order column cost subject to equilibrium-stage purity and recovery constraints, with separate held-out transfer and sealed off-design feasibility
+reference_baseline: maximum-stage high-reflux public Fenske-style feed-location policy
+reference_sota: fixed-seed mixed-integer nominal-cost and all-shift-feasible witnesses with a one-percent reflux guard; no global-optimality or engineering-validation claim
+citation: "McCabe and Thiele, graphical fractionation design, DOI 10.1021/ie50186a023; Naphtali and Sandholm, stage-equation linearization, DOI 10.1002/aic.690170130; Yeomans and Grossmann, rigorous tray-by-tray disjunctive design, DOI 10.1021/ie0001974"

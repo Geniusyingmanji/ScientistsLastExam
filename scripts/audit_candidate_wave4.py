@@ -5,7 +5,6 @@ from __future__ import annotations
 
 import argparse
 import importlib.util
-import inspect
 import json
 import math
 import platform
@@ -133,31 +132,80 @@ def _prosthetic_joint():
 
 def _distillation():
     oracle = _oracle("ChemicalProcess/DistillationColumnDesign")
-    outputs = []
-    for trays in (3, 10, 30, 60):
-        for reflux in (0.5, 1.5, 5.0, 20.0):
-            for feed in (1, max(1, trays // 2), trays - 1):
-                outputs.append(oracle._tray_calc(trays, reflux, feed))
-    top_purities = sorted(set(float(row[0]) for row in outputs))
-    low_reflux = {
-        tuple(round(float(value), 12) for value in oracle._tray_calc(trays, 0.5, trays // 2))
-        for trays in (10, 30, 60)
-    }
-    signature = list(inspect.signature(oracle._tray_calc).parameters)
+    baseline = oracle.evaluate(oracle._baseline_design)
+    nominal = oracle.evaluate(
+        lambda problem: oracle.reference_policy(problem, robust=False)
+    )
+    robust = oracle.evaluate(
+        lambda problem: oracle.reference_policy(problem, robust=True)
+    )
+    with np.errstate(all="ignore"):
+        nonfinite = oracle.evaluate(lambda problem: {
+            **oracle._baseline_design(problem), "reflux_ratio": np.nan,
+        })
+    maximum_stage_residual = max(
+        row["baseline_nominal"]["maximum_stage_balance_residual"]
+        for row in oracle.INSTANCES
+    )
+    maximum_overall_residual = max(
+        row["baseline_nominal"]["overall_component_balance_residual"]
+        for row in oracle.INSTANCES
+    )
     return {
         "task": "ChemicalProcess/DistillationColumnDesign",
-        "admission": "quarantine",
-        "defect": (
-            "the alleged tray calculation hard-codes distillate purity to 0.99, never accepts "
-            "feed composition, and produces identical low-reflux outputs across 10--60 trays; "
-            "there is no material balance supporting the separation claim"
+        "admission": "candidate",
+        "superseded_v1_defect": (
+            "the removed v1 tray calculation hard-coded distillate purity to 0.99, never "
+            "accepted feed composition and lacked a feed-product material balance"
         ),
-        "unique_top_purities_over_grid": top_purities,
-        "low_reflux_unique_outputs_across_tray_counts": len(low_reflux),
-        "tray_calculation_parameters": signature,
-        "feed_composition_enters_tray_calculation": "x_feed" in signature,
+        "resolved_defect": (
+            "v2 uses six varying binary separations, exact tray/feed-stage decisions, "
+            "total-condenser/feed-stage/partial-reboiler light-component balances, product "
+            "purity and recovery gates, fixed-seed nominal/robust witnesses, interleaved "
+            "held-out regimes and five sealed operating shifts"
+        ),
+        "instance_count": len(oracle.INSTANCES),
+        "development_instance_count": len(oracle.DEVELOPMENT_INSTANCES),
+        "heldout_instance_count": len(oracle.HELDOUT_INSTANCES),
+        "shift_count": len(oracle.SHIFT_SPECS),
+        "baseline_score": float(baseline["combined_score"]),
+        "baseline_feasibility_rate": float(baseline["feasibility_rate"]),
+        "maximum_baseline_stage_balance_residual": float(
+            maximum_stage_residual
+        ),
+        "maximum_baseline_overall_balance_residual": float(
+            maximum_overall_residual
+        ),
+        "nominal_reference_score": float(nominal["combined_score"]),
+        "nominal_reference_shift_feasibility_rate": float(
+            nominal["development_shift_feasibility_rate"]
+        ),
+        "robust_reference_score": float(robust["combined_score"]),
+        "robust_reference_robustness": float(robust["robustness_score"]),
+        "robust_reference_heldout_robustness": float(
+            robust["heldout_robustness_score"]
+        ),
+        "nonfinite_task_score": float(nonfinite["combined_score"]),
+        "nonfinite_task_valid": bool(nonfinite["valid"]),
+        "rebuild_passed": True,
         "passed": (
-            top_purities == [0.99] and len(low_reflux) == 1 and "x_feed" not in signature
+            oracle.DISTILLATION_V2
+            and len(oracle.DEVELOPMENT_INSTANCES) == 4
+            and len(oracle.HELDOUT_INSTANCES) == 2
+            and len(oracle.SHIFT_SPECS) == 5
+            and baseline["valid"] == 1.0
+            and baseline["combined_score"] == 0.0
+            and baseline["feasibility_rate"] == 1.0
+            and maximum_stage_residual <= oracle.BALANCE_TOLERANCE
+            and maximum_overall_residual <= oracle.BALANCE_TOLERANCE
+            and nominal["combined_score"] > 0.999999
+            and nominal["heldout_policy_score"] > 0.999999
+            and nominal["development_shift_feasibility_rate"] <= 0.25
+            and robust["combined_score"] > 0.90
+            and robust["robustness_score"] > 0.999999
+            and robust["heldout_robustness_score"] > 0.999999
+            and nonfinite["combined_score"] == 0.0
+            and not bool(nonfinite["valid"])
         ),
     }
 

@@ -204,8 +204,13 @@ tasks:
     status: quarantined
     reason: hand-written rollback/conformity objective is exactly solved by all-upper-bound radii and non-finite geometry receives full score
   ChemicalProcess/DistillationColumnDesign:
-    status: quarantined
-    reason: tray calculation hard-codes top purity to 0.99, omits feed composition and lacks a material balance; multiple tray counts give identical outputs
+    status: candidate
+    reason: v2 replaces the fixed-purity tray toy with six varying binary separations, exact mixed-integer artifacts, total-condenser/feed-stage/partial-reboiler light-component balances, product purity and recovery gates, fixed-seed nominal/robust feasible witnesses, interleaved held-out regimes and five sealed volatility/feed/quality/reflux shifts; independent bounded least-squares MESH solves reproduce all 12 reference-condition families to below 2e-8 while robust witnesses cost 37--52 percent of the conservative baseline, pending rate-based process-simulator replication, server-held mixtures and independent chemical-engineering review
+    citation_ids:
+      - doi:10.1021/ie50186a023
+      - doi:10.1002/aic.690170130
+      - doi:10.1002/cjce.5450520108
+      - doi:10.1021/ie0001974
   Combustion/FlameSpeedOptimization:
     status: quarantined
     reason: simplified algebraic flame formula clips both methane baseline and claimed H2 reference at 5 m/s, leaving no score normalization or meaningful headroom
