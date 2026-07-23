@@ -1469,3 +1469,8 @@ every nominal, held-out, proxy and robustness axis. This is reduced-order image-
 task calibration, not measured-room validation, causal feedback evidence, population capability
 or autonomous acoustic discovery. Server-held rooms, hybrid wave/ray or measured-RIR replication
 and independent acoustics review remain required.
+
+Cross-task summary v13 on clean source `6489a07` validates and freezes **39 normal single-run
+conditions across 20 tasks**, adding RoomImpulseResponse-v2 budgets one and three. Strict open-
+loop diagnostics remain task-specific; heterogeneous science axes are not averaged into one
+score.

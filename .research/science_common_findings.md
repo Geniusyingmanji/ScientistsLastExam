@@ -9,8 +9,8 @@ DistillationColumnDesign-v2, HartreeFockSCF-v2 and RoomImpulseResponse-v2. The 3
 contain one seed and proposal budget one or three. They calibrate tasks and motivate experiments;
 they are not a model leaderboard, a causal feedback study or population evidence.
 
-The next portable machine record extends
-`experiments/science_calibration_summary_2026-07-23_v12.json` and retains every top-level
+The portable machine record
+`experiments/science_calibration_summary_2026-07-23_v13.json` extends v12 and retains every top-level
 scalar metric, candidate lineage hash and raw trajectory SHA-256 for all 39 normal conditions.
 Additional strict diagnostics for Distillation-v2, Hartree--Fock and room acoustics are bound
 separately by `experiments/distillation_v2_calibration_analysis_2026-07-23.json`,
