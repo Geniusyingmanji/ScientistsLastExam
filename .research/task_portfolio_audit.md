@@ -1,6 +1,6 @@
 # Scientific task portfolio audit
 
-Audit date: 2026-07-22 (UTC). The original inventory contained 50 discoverable task packages;
+Audit date: 2026-07-23 (UTC). The original inventory contained 50 discoverable task packages;
 the new ActiveLawDiscovery candidate brings the current inventory to 51. This count is an
 inventory fact, not evidence that all packages are benchmark-admissible.
 
@@ -54,11 +54,12 @@ meaning.
   scalar-FFT pseudo-RCWA. HeatExchanger-v2 and LowThrustTransfer-v2 were subsequently rebuilt
   as multifidelity Pareto and long-horizon trajectory-optimization candidates, respectively;
   the other four remain quarantined.
-- **No original unscreened candidates remain after wave 4; nineteen candidates remain in total.** They include
+- **No original unscreened candidates remain after wave 4; 22 candidates remain in total.** They include
   SCM, Lyapunov control, neutron criticality, seismic refraction, pendulum control, sparse
   recovery, OED-v2, GateSynthesis-v2, OPF-v2, Truss-v2, Antenna-v2, NMR-v2,
   HeatExchanger-v2, ReactionMechanismFitting-v2, GravityInversion-v2,
-  OceanCurrentInversion-v2, RadiativeTransferFit-v2, LowThrustTransfer-v2 and the new
+  OceanCurrentInversion-v2, RadiativeTransferFit-v2, LowThrustTransfer-v2,
+  LidDrivenCavity-v2, EnergyBalanceModel-v2, BroadbandAbsorber-v2 and the
   ActiveLawDiscovery laboratory. All are
   currently on-ramps or repair/calibration candidates rather than externally reviewed
   open-frontier tasks.
@@ -68,12 +69,10 @@ meaning.
   independent budget-three run, all three proposals retain the same two false discoveries;
   score feedback does not fix model-inadequacy detection and later proposals reduce mechanism
   recovery. This is a reliability/refusal frontier rather than an ordinary prediction frontier.
-- **25 quarantined packages.** Five generic-objective clones must be replaced with real domain
-  oracles; metadata completion alone cannot rehabilitate them. The sixth,
-  `ClimateScience/EnergyBalanceModel`, uses an unstable explicit diffusion iteration, an
-  unverified ERA5 attribution and a structurally underdetermined seven-parameter fit to one
-  steady profile. It requires replacement with documented multi-regime data, not a numerical
-  patch. Four wave-2 and three inverse-track tasks remain blocked by concrete oracle failures;
+- **22 quarantined packages.** Five generic-objective clones must be replaced with real domain
+  oracles; metadata completion alone cannot rehabilitate them. The former Climate, cavity and
+  broadband-absorber defects have been resolved by substantive v2 rebuilds rather than local
+  numerical patches. The remaining wave-2 and inverse-track tasks are still blocked by concrete oracle failures;
   none may contribute model-performance evidence until rebuilt and re-admitted. The inverse
   failures include rank-deficient hidden-truth retrieval, a rank-two demographic surrogate,
   underidentified pseudo-DNS
@@ -84,7 +83,8 @@ meaning.
   status records internal scientific validity, not external validation or headline difficulty.
   Wave 4 quarantines the final 12 unscreened packages after reproducing fail-open paths,
   unreachable anchors, missing observations, uncoupled systems, degenerate corners and models
-  that do not implement the claimed science.
+  that do not implement the claimed science. BroadbandAbsorber-v2 resolves one of those twelve;
+  the other eleven retain their reproduced defects.
 
 ## Priority review findings
 
@@ -165,6 +165,17 @@ The first review tranche contains real scientific topics but several narrow eval
   supported atmosphere. It is therefore useful for active sounding, calibrated refusal and
   risk–coverage studies, pending factorized paired controls, server-held atmospheres,
   line-by-line or real-data replication and independent atmospheric-science review.
+- BroadbandAbsorber-v2 replaces a fail-open single-resonator proxy with six variable-band,
+  6--10-cell panels, a Stinson circular-tube dynamic-density model, finite rigid cavities,
+  parallel surface admittance and five sealed angle/air/manufacturing shifts. Independent
+  complex-valued equations agree to approximately `1e-14`, references retain nominal and robust
+  headroom, and the public proxy differs from the distributed model by `0.34--0.59` utility on
+  the reference family. GPT-5.5 normal budget three reaches nominal `0.915/0.859` and robust
+  `0.912/0.858` development/held-out scores; a one-run strict open-loop artifact has similar or
+  higher nominal scores but robust `0.452/0.449` because manufacturing errors exceed the hard
+  panel envelope. The contrast is not randomness- or token-matched and supports no feedback
+  claim. The candidate still needs server-held geometries, thermoviscous/full-wave replication,
+  impedance-tube data and independent acoustics review.
 
 ## Expansion rule
 
@@ -179,9 +190,10 @@ The target is approximately 50 **admissible** open scientific optimization tasks
 
 After complete original-inventory triage, adding ActiveLawDiscovery and rebuilding Gate-v2,
 OPF-v2, Truss-v2, Antenna-v2, NMR-v2, HeatExchanger-v2, ReactionMechanismFitting-v2 and
-GravityInversion-v2, OceanCurrentInversion-v2, RadiativeTransferFit-v2 and LowThrustTransfer-v2,
-the net expansion gap is approximately 24 admissible tasks: 51 folders minus 25 quarantines
-leaves 26 internally admissible certified or candidate packages, while the target is about 50. New
+GravityInversion-v2, OceanCurrentInversion-v2, RadiativeTransferFit-v2, LowThrustTransfer-v2,
+LidDrivenCavity-v2, EnergyBalanceModel-v2 and BroadbandAbsorber-v2,
+the net expansion gap is approximately 21 admissible tasks: 51 folders minus 22 quarantines
+leaves 29 internally admissible certified or candidate packages, while the target is about 50. New
 work should emphasize procedural task families and independent regimes,
 not one-off fixed instances or scientific names around hand-written scalar objectives.
 

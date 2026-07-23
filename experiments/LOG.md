@@ -1241,3 +1241,46 @@ The portfolio now contains **28 internally admissible tasks**, leaving an approx
 to the roughly 50-task target. These results are synthetic single-run calibrations, not an
 estimate of Earth's climate sensitivity, population model performance, feedback learning or
 autonomous scientific discovery.
+
+## 2026-07-23 — robust broadband acoustic absorber v2
+
+Rebuilt `AcousticMetamaterials/BroadbandAbsorber` as a six-instance, variable-policy design
+task spanning 6--10 Helmholtz cells, 180--1800 Hz bands and 65--120 mm panel envelopes. The
+nominal oracle uses Stinson circular-tube dynamic density, finite rigid cavities, radiation
+resistance and parallel surface admittance. A low-frequency lumped public proxy is reported
+separately. Five sealed shifts cover incidence angle, warm/light and cold/dense air, two
+manufacturing patterns and a combined operating/manufacturing condition.
+
+The weak baseline exact utility is **0.079323/0.067049** on development/held-out instances.
+Fixed-seed nominal references reach normalized **1.0/1.0** and robustness
+**0.989789/0.939664**; robust references reach nominal **0.993517/0.987409** and robustness
+**1.0/1.0**. An independent scalar complex-valued implementation agrees with the production
+absorption model to roughly `4e-15` and impedance to `1.2e-14`; all checked impedances are
+passive. The public proxy undershoots the distributed reference utility by roughly 0.34--0.59.
+
+### GPT-5.5 absorber calibration
+
+The budget-one proposal times out and leaves the zero-score baseline unchanged. In the
+independent normal budget-three run, step one reaches nominal development/held-out
+**0.914758/0.858789**, exact utility **0.467799/0.447581**, and sealed robustness
+**0.911826/0.858329**. Both later rewrites use the selected incumbent as parent but time out.
+
+In the same-local-seed-label strict open-loop run, all proposal parents remain the frozen
+baseline. Offline step two reaches nominal **0.917261/0.957363**, but sealed robustness is only
+**0.451869/0.449052**. Its nominal artifact is valid, yet one manufacturing pattern leaves the
+hard panel envelope on two development instances and one held-out instance; manufacturing
+geometry feasibility is **0.75/0.75**, versus **1.0/1.0** for the normal selected artifact.
+Normal/open-loop use the same four oracle calls but **24,179/15,152** tokens. Azure exposes no
+server-side generation seed, so the contrast is descriptive and supports no causal feedback
+claim.
+
+The task calibration and v24/v9/v15 audits bind clean source `befd90a`; the three model reports
+bind clean source `3e4333a`. The dedicated analysis on clean source `9a3fc27` verifies
+report/raw hashes, incumbent/frozen-parent lineage, selected artifacts, source scope and
+LLM-condition identity. Certification v24 records **7/22/22**, security v9
+passes **18/18**, baseline v15 records **51/51 deterministic, valid and fail-closed** with zero
+infrastructure failures, and the full suite passes **167/167** tests. Cross-task summary v10
+freezes **33 normal single-run conditions over 17 tasks**. The portfolio contains **29**
+internally admissible tasks, leaving an approximate gap of **21** to the roughly 50-task target.
+These are reduced-order, single-run calibrations, not thermoviscous/experimental validation,
+population performance, feedback learning or autonomous scientific discovery.

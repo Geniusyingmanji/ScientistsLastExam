@@ -1,16 +1,16 @@
 # Cross-task science calibration findings
 
-Date: 2026-07-22 (UTC). These findings use trusted GPT-5.5 `greedy_rewrite` calibrations on
+Date: 2026-07-23 (UTC). These findings use trusted GPT-5.5 `greedy_rewrite` calibrations on
 OED-v2, Pendulum-v2, GateSynthesis-v2, ActiveLawDiscovery, OPF-v2, Truss-v2, Antenna-v2,
 NMR-v2, HeatExchanger-v2, ReactionMechanismFitting-v2, GravityInversion-v2,
 OceanCurrentInversion-v2, RadiativeTransferFit-v2, LowThrustTransfer-v2,
-LidDrivenCavity-v2 and EnergyBalanceModel-v2. The 31 normal-feedback model conditions each contain one seed and proposal budget one
+LidDrivenCavity-v2, EnergyBalanceModel-v2 and BroadbandAbsorber-v2. The 33 normal-feedback model conditions each contain one seed and proposal budget one
 or three. They calibrate tasks and motivate experiments; they are not a model leaderboard, a causal
 feedback study or population evidence.
 
-The portable machine record is `experiments/science_calibration_summary_2026-07-22_v9.json`. It
+The portable machine record is `experiments/science_calibration_summary_2026-07-23_v10.json`. It
 retains every top-level scalar metric, candidate lineage hash and raw trajectory SHA-256 for all
-31 normal conditions. Strict selection-blind diagnostics remain in task-specific
+33 normal conditions. Strict selection-blind diagnostics remain in task-specific
 analysis because it is not a normal-feedback calibration. The underlying reports bind the
 task-specific source revision. Pendulum's initial budget-one run on revision `57c0e1b` is
 excluded because the public task omitted the exact plant equations and was explicitly superseded
@@ -45,6 +45,9 @@ by the corrected-contract run on `2557adb`.
 | EnergyBalanceModel-v2, long versus short classical design | long/short development mechanism `0.809/0.0039` | held-out mechanism `0.942/0.0`; held-out prediction `0.999/0.990`; short false discovery `0.20/0.25` | Accurate response prediction can survive an under-informative experiment even when parameter recovery and model-class discrimination collapse. |
 | EnergyBalanceModel-v2, budget 1 and normal budget 3 | all four proposals are invalid return artifacts and remain at 0.0 | no supported mechanism, prediction or refusal claim is validated | Scientific sophistication in generated code does not compensate for failure to return the documented artifact. |
 | EnergyBalanceModel-v2, strict open-loop budget 3 | offline best development mechanism `0.618`; prediction `0.977` | held-out mechanism `0.282`; prediction `0.994`; false discovery `0.20/0.25` | Near-unit prediction coexists with weak held-out mechanism and high-confidence feedback-drift/three-layer false claims. The one-run contrast is not a feedback estimate. |
+| BroadbandAbsorber-v2, budget 1 | the only proposal times out; development remains 0.0 | no validated improvement | Candidate compute boundedness is a separate gate from acoustic design quality. |
+| BroadbandAbsorber-v2, normal budget 3 | selected development/held-out nominal `0.9148/0.8588`; exact utility `0.4678/0.4476` | sealed robustness `0.9118/0.8583`; manufacturing geometry feasibility `1.0/1.0` | One valid log-spaced design transfers across bands and physical shifts; two later rewrites time out, so more rewrite budget is not monotone progress. |
+| BroadbandAbsorber-v2, strict open-loop budget 3 | offline-best development/held-out nominal `0.9173/0.9574` | sealed robustness `0.4519/0.4491`; manufacturing geometry feasibility `0.75/0.75` | Nearly equal development score and higher held-out nominal transfer coexist with roughly half the robustness retention because manufacturing errors cross the panel envelope. The one-run contrast is not a feedback estimate. |
 | ReactionMechanism-v2, budget 1 | valid proposal remains at normalized mechanism 0.0 | held-out normalized mechanism 0.0 | A complex fitter spends the assay budget on an under-informative design and abstains everywhere. |
 | ReactionMechanism-v2, budget 3 | all three proposals remain at 0.0 and are rejected | each performs one assay and abstains everywhere | More rewrite budget does not help when scalar zero feedback cannot localize whether experiment design, inference or refusal caused failure. |
 | GravityInversion-v2, budget 1 | invalid callback unpacking; development remains 0.0 | no validated improvement | A physically sophisticated implementation can still fail the executable laboratory protocol. |
@@ -73,7 +76,7 @@ weak evidence for long-horizon autonomous research.
 
 ### 2. Visible optimization and scientific validity are different trajectories
 
-Pendulum, gate synthesis, OPF, Truss, Antenna and NMR all separate a visible development
+Pendulum, gate synthesis, OPF, Truss, Antenna, NMR and BroadbandAbsorber all separate a visible development
 objective from an evaluator-only shift, contingency or held-out mechanism metric. OPF has the
 largest numeric gap among the nominal-design calibrations, while NMR budget one falls from
 0.428 development to 0.176 held-out mechanism/refusal despite similar reconstruction. In OPF,
@@ -84,11 +87,19 @@ requires repeated paired runs and hidden server-side instances.
 
 ### 3. Held-out nominal transfer does not imply robustness
 
-Gate synthesis, OPF and Antenna reach near-perfect nominal scores on interleaved held-out instances.
+Gate synthesis, OPF, Antenna and the absorber calibration reach strong nominal scores on
+interleaved held-out instances.
 Their sealed perturbation or contingency scores remain lower. Procedural held-out networks or
 targets test policy transfer, whereas altered physics, hardware error and component failure test
 robustness. Future task cards must specify both axes instead of using one generic validation
 field.
+
+BroadbandAbsorber-v2 makes this distinction especially concrete. The strict open-loop selected
+artifact has higher held-out nominal score than the normal selected artifact (`0.957/0.859`),
+yet only `0.449` held-out robustness versus `0.858`. Its nominal geometry is valid, but one
+manufacturing pattern leaves the hard panel envelope on two development instances and one
+held-out instance. A transfer curve over nominal bands would therefore reverse the engineering
+conclusion supplied by the manufacturing-shift curve.
 
 ### 4. Prediction does not imply mechanism recovery or warranted belief
 
@@ -411,7 +422,7 @@ Every new or rebuilt task must pass the following gate before it counts toward t
 - classical and domain baselines, followed by GPT-5.5 budget-one headroom screening; and
 - retention as an on-ramp, not a headline task, if a standard method reliably saturates it.
 
-The present inventory contains 28 internally admissible certified or candidate packages. The
-remaining gap is approximately 22 tasks. Expansion should use procedural families spanning
+The present inventory contains 29 internally admissible certified or candidate packages. The
+remaining gap is approximately 21 tasks. Expansion should use procedural families spanning
 design, inverse problems, control, multifidelity validation, mechanism discovery and exact
 mathematical construction rather than cloning one scalar optimization template across domains.

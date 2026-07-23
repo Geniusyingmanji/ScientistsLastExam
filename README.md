@@ -20,12 +20,13 @@ The repository contains **51 task packages in 47 metadata domains**:
 
 - **7 certified core tasks**: Lennard–Jones clusters, spin glass, Poisson solver,
   matrix-multiplication rank, Cap Set, circle packing, and multilayer thin films.
-- **21 candidate tasks** pending scientific certification, including intervention-based causal
+- **22 candidate tasks** pending scientific certification, including intervention-based causal
   and active dynamical-law laboratories whose prediction and mechanism metrics are reported
   separately, a multi-spectrum NMR peak-mechanism/refusal task, and a multi-fidelity
-  heat-exchanger Pareto-design task, a full-field lid-driven-cavity solver, and active
-  climate-response identification with explicit model-mismatch refusal.
-- **23 quarantined tasks** with reproduced scientific-oracle, identifiability, provenance or
+  heat-exchanger Pareto-design task, a full-field lid-driven-cavity solver, active
+  climate-response identification with explicit model-mismatch refusal, and a robust
+  broadband acoustic-absorber design task.
+- **22 quarantined tasks** with reproduced scientific-oracle, identifiability, provenance or
   shortcut defects; these remain inventory packages but are not admissible benchmark tasks.
 
 The default CLI exposes only the certified core. `--all` explicitly shows the full
@@ -41,10 +42,10 @@ controlled exception text is reduced to a fixed label-blind failure taxonomy bef
 search feedback, preventing observations from being carried between worlds through exceptions.
 The current audit reports:
 
-- 157/157 unit, security, protocol and scientific-invariant tests passed.
+- 167/167 unit, security, protocol and scientific-invariant tests passed.
 - The latest 51×2 secure-baseline audit reports 51/51 deterministic, 51/51 valid, 51/51
   fail-closed and zero infrastructure failures.
-- Current manifest: 7 certified / 21 candidate / 23 quarantined. D-optimal design, quantum
+- Current manifest: 7 certified / 22 candidate / 22 quarantined. D-optimal design, quantum
   gate synthesis, DC optimal power flow, truss sizing, antenna synthesis and NMR peak fitting have been rebuilt with separate sealed
   validation or robustness metrics and re-admitted as candidates. HeatExchanger-v2 additionally
   separates a public constant-property proxy from a sealed segmented temperature-dependent
@@ -135,6 +136,16 @@ The current audit reports:
   0.995 while mechanism quality falls to 0.370 and it falsely claims the public model in four of
   six unsupported worlds. Those post-hoc worlds are neither preregistered hidden tests nor
   independent Earth-system validation, and the one-run conditions support no feedback claim.
+  BroadbandAbsorber-v2 replaces a fail-open single-resonator proxy with six variable-band,
+  variable-cell-count panel instances, a Stinson dynamic-density/finite-cavity distributed
+  model, a separately reported low-order public proxy, and sealed angle, air-property and
+  manufacturing shifts. The budget-one GPT-5.5 proposal times out and leaves score zero. In an
+  independent normal budget-three run, the first proposal reaches development/held-out nominal
+  scores `0.9148/0.8588` and sealed robustness `0.9118/0.8583`; two later rewrites time out. A
+  same-local-seed-label strict open-loop batch reaches nominal `0.9173/0.9574` but robustness
+  only `0.4519/0.4491`, because manufacturing perturbations leave the hard panel envelope in
+  three split-instance cases. Normal/open-loop use 24,179/15,152 tokens and Azure exposes no
+  server-side generation seed, so this one-run contrast is descriptive, not a feedback effect.
   GPT-5.5 reaches nominal OPF score 1.0
   at budget one while sealed N-1 robustness is only 0.031 on development and approximately
   zero on held-out networks. On Truss-v2, a separate budget-three run improves development
@@ -155,10 +166,10 @@ the post-repair 50-package audits bind revision `47c3613`; the subsequent wave-2
 audit quarantines seven additional defective candidates. The two P2 smokes are baseline-only; the repository does not yet contain
 credible multi-seed model-performance evidence. A clean-revision GPT-5.5 budget-one core pilot
 is recorded as task calibration, not a benchmark leaderboard.
-The latest certification/security/baseline audits are v23/v8/v14. The current 7/21/23 manifest
-contains 28 internally admissible tasks, leaving an approximate gap of 22 to the roughly
-50-task target. The hash-bound cross-task summary v9 contains 31 normal single-run conditions
-over 16 tasks; it is calibration evidence, not a leaderboard or population result.
+The latest certification/security/baseline audits are v24/v9/v15. The current 7/22/22 manifest
+contains 29 internally admissible tasks, leaving an approximate gap of 21 to the roughly
+50-task target. The hash-bound cross-task summary v10 contains 33 normal single-run conditions
+over 17 tasks; it is calibration evidence, not a leaderboard or population result.
 
 ## Quickstart
 
