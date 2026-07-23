@@ -47,12 +47,14 @@ Report its visible, sealed and mechanism advantage over `committed` as an
 | O1 | Which model–framework combinations optimize best? | Models × greedy/OpenEvolve/AB-MCTS/ShinkaEvolve × random/quasi-random/BO/CMA-ES or DE/domain heuristics | committed terminal feasible score, observer-side best/AUC, within-task rank, performance profile, oracle calls, tokens/cost/time | Budgeted generative optimization |
 | O2 | How does performance scale with budget? | Budgets 30/100/300; a deeper subset beyond 300 if justified | raw and best-so-far task curves, improvement frequency/magnitude, regression/rollback rate, plateau and active-learning span, marginal gain per call | Empirical budget-response, not yet a universal scaling law |
 | O3 | Is depth better than width? | Equal total budget split across 1/2/4/8 restarts or branches | best score, AUC, diversity, time to last improvement | Search-allocation result |
+| O4 | Can artifact bootstrapping be separated from scientific improvement? | Preregister valid/feasible states and analyze time to first valid artifact separately from gain after the one-shot or first-valid baseline | cause-specific first-valid time, validity probability by budget, conditional quality gain and joint sealed-plus-mechanism success | Protocol competence separated from scientific optimization and validation |
 | F1 | Is the system using experimental feedback causally? | Normal feedback vs shuffled feedback vs delayed feedback vs strict selection-blind/no-feedback, using paired seeds and identical budgets | paired AUC lift, terminal lift, proposal divergence after feedback, validated discoveries per call | Feedback learning |
 | F2 | Does persistent experience help beyond repeated sampling? | One continuous run vs equal-budget independent restarts; full memory vs summarized/frozen/no memory; identical submission/feedback schedules | score/AUC, effective submissions and sealed-validation lift | Value of accumulated scientific state |
 | F3 | Does gain come from more evaluator information rather than better learning? | Matched submission budget/cooldown with scalar-only, aggregated, diagnostic and evaluator-silent periodic snapshots | terminal/AUC lift per revealed bit, oracle call and visible judge event | Value and risk of feedback bandwidth |
 | F4 | Does a diagnostic teach scientific structure or merely reveal the score decomposition? | Equal-length/equal-bit meaningful component labels vs label-permuted components vs unlabeled values vs scalar feedback | sealed/mechanism lift, proposal targeting, causal attribution and hidden-target reconstruction risk | Value of semantic scientific feedback beyond numeric bandwidth |
 | F5 | Which retained state actually carries scientific learning? | Factor incumbent artifact, local-result cache, judge-feedback ledger, hypothesis/evidence memory, conversational context and full workspace | sealed/mechanism lift, evidence-use accuracy, contradiction/failed-branch retention, transfer to a new instance | Mechanism of stateful improvement rather than a bundled continuous-run effect |
 | F6 | Which loop causes improvement? | 2×2 local simulator/test feedback × agent-visible trusted-judge feedback, with matched calls and information accounting | visible/sealed/mechanism gain per local tool call, trusted call and revealed bit | Local experimentation separated from authoritative-judge learning |
+| F7 | Does retained experience transfer, or anchor a stale hypothesis? | Same-regime continuation vs related-instance transfer or a preregistered regime change; artifact-only, evidence-memory, full-state and clean-restart conditions | positive/negative transfer, adaptation delay, stale-claim persistence, calibrated revision and false discovery | Scientific memory quality rather than same-task score persistence |
 | V1 | Does optimization generalize beyond the visible oracle? | Visible development oracle vs evaluator-only hidden instances/shifts | sealed score, development–validation gap, rank correlation, replication rate | Generalizable result |
 | V2 | Does a cheap proxy survive higher-fidelity evaluation? | Proxy-only search; scheduled promotion; adaptive multifidelity; exact-only reference where affordable | proxy/exact rank correlation, false-promotion rate, exact-call efficiency, high-fidelity regret | Multifidelity validation |
 | M1 | Did the system recover a mechanism rather than a predictor? | Observational-only vs intervention access; prediction-only vs explicit mechanism submission | graph F1, equation/term recovery, parameter error, intervention and shift prediction | Mechanism recovery |
@@ -64,6 +66,7 @@ Report its visible, sealed and mechanism advantage over `committed` as an
 | B1 | How does the trajectory compare with domain experts under the same interface? | Expert one-shot and iterative runs on a stratified subset with matched feedback, experiment and wall/compute budgets | validated utility, sample efficiency, mechanism/refusal calibration, stopping and failed-hypothesis coverage | Human-calibrated capability and task difficulty |
 | I1 | Does hidden trajectory measurement alter the trajectory? | Stable committed head plus scratch workspace; fixed disclosed snapshots vs jittered undisclosed snapshots vs post-run event replay | branching/edit cadence, transient invalidity, throughput, visible-feedback latency and final science outcomes | Observer effect of evaluator-only measurement |
 | I2 | How much performance comes from continuation scaffolding? | Fixed model/context/tools crossed with continuous session, goal state and fresh-context file-backed loop | active duty cycle, state-loss incidents, evidence retention and committed/sealed outcomes | Model capability separated from continuation harness |
+| S1 | Is an aggregate scaling curve predictively and mechanistically supported? | Preregistered log-sigmoid and alternatives, whole-trajectory validation across held-out suffixes/runs/tasks/families, and fixed-grid material-improvement events | held-out error/log score, interval coverage, parameter stability and improvement hazard versus normalized progress | A bounded empirical regularity; never feedback learning or discovery by itself |
 
 ## Controls that must be strict
 
@@ -86,6 +89,12 @@ both limitations must be stated in paired-result reports.
 Normal and control runs should use paired task instances, seeds, call budgets, tool access, and
 feedback-message lengths. The treatment contrast is the information content of feedback, not
 extra compute.
+
+Cross-system submission efficiency should be computed primarily on a common evaluator-only time
+or charged-budget grid. Agent-chosen submissions are an endogenous behavioral outcome: systems
+that submit at different thresholds or bundle edits differently do not expose comparable
+Bernoulli trials. Retain their cadence and success rate, but do not use them as the sole learning-
+efficiency denominator.
 
 The evaluator interface must also constrain adaptive information leakage. Predeclare an
 agent-visible submission budget and cooldown, log the feedback payload class/size, and run a
@@ -193,6 +202,12 @@ server-held procedural worlds, multi-seed feedback controls and independent revi
     Pareto/constraint-aware acceptance, including selection reversals and sealed regret.
 20. Two-loop attribution table crossing local simulator/test feedback with trusted-judge feedback;
     report calls, information and scientific experiment cost for both channels.
+21. A hurdle/multistate panel: cumulative incidence of first valid/feasible artifacts, conditional
+    post-valid quality, and jointly validated mechanism success, with reason-coded invalid states.
+22. Prospective curve forecast audit with last-value, monotone, per-task plateau and repeated-
+    sampling baselines; report held-out interval coverage and whole-trajectory bootstrap error.
+23. Scientific-memory transfer and regime-change panel showing beneficial transfer, adaptation
+    latency and stale-hypothesis/negative-transfer failures.
 
 Avoid presenting a radar chart or a single “science score”; small multiples preserve the
 important capability dissociations.
@@ -202,6 +217,8 @@ important capability dissociations.
 - Use at least five seeds for the broad O1/O2 matrix. Use at least ten paired seeds on a smaller
   preregistered F1/M1/V1 subset when making causal or reliability claims.
 - Treat task/instance and seed as the experimental units, not every trajectory checkpoint.
+- Bootstrap or hierarchically resample complete task-instance/run trajectories; the dense,
+  serially dependent points of a best-so-far curve are not independent experimental units.
 - Treat independently randomized restart pools as experimental units; subset combinations from
   one fixed pool are dependent summaries, not extra replicates.
 - Report task-level results and hierarchical/bootstrap uncertainty across tasks and seeds;
@@ -233,6 +250,9 @@ important capability dissociations.
 - Distinguish artifact creation/submission before the cutoff from judge completion after it.
   Post-cutoff scores may enter a preregistered observer-side endpoint, but their feedback cannot
   be credited with causing an in-horizon descendant.
+- Analyze protocol/runtime validity as a separate transition before conditional optimization.
+  Never let a high rate of first-valid artifacts silently substitute for post-valid sealed or
+  mechanism improvement, and never discard invalid attempts from the operational estimand.
 
 ## Scaling-law caution
 
@@ -246,6 +266,15 @@ aggregate best-so-far curve is not, by itself, evidence of learning or mechanism
 The fit must also survive alternative score transforms, family-balanced weights, task/family
 deletion, missing-run policies and active-time rather than wall-time axes. Do not estimate a
 universal curve only from tasks admitted because current agents had visible headroom.
+
+Because absolute scientific-task scores often have a nonzero one-shot baseline and a separate
+invalid-to-valid transition, also compare gain curves with an explicit baseline and a
+hurdle/multistate model. Evaluate prospective forecasts against last-value-carried-forward,
+monotone interpolation and empirical plateau baselines, with uncertainty coverage. Test the
+logistic frontier account through its material-event prediction—improvement intensity near
+`y(1-y)` with an inflection near `y=0.5`—and allow multiple phases or moving attainable support.
+Any model-generation speed trend must use a panel and analysis frozen before the evaluated model
+releases, or be labeled retrospective/exploratory.
 
 ## Minimum publishable sequence
 

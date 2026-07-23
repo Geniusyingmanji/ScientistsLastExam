@@ -1425,3 +1425,47 @@ Cross-task summary v12 on clean source `f26bb16` validates and freezes **37** no
 conditions across **19** tasks, adding Hartree--Fock budgets one and three. Strict open-loop and
 materiality diagnostics remain in the task-specific analysis; heterogeneous science axes are
 not averaged into one score.
+
+## 2026-07-23 — room acoustics placement and treatment optimization v2
+
+Rebuilt `Acoustics/RoomImpulseResponse` from fixed target-RIR reconstruction into an open policy
+task over four development and two interleaved held-out rooms. The artifact chooses a three-
+dimensional source position and treatment area on each of six room surfaces. The nominal oracle
+uses an order-10 energy image-source model together with Eyring reverberation time; it separately
+scores clarity, target reverberation time, receiver-field uniformity, material cost and geometry.
+Sealed evaluation covers installation error, audience-position changes, geometry/sound-speed
+shift, material ageing and a combined order-14 condition. A first-order public proxy remains
+separate from exact nominal and robust utility.
+
+Independent wall-reflection counts, path energies, surface absorption and reverberation-time
+equations reproduce the production oracle. A deterministic public-input search recalibrates the
+nominal reference family with maximum residual development gap **4.40e-4**. Malformed, non-finite,
+out-of-range and geometry-infeasible artifacts fail closed. The clean v2 task calibration binds
+revision `4bd362e`; wave-2 admission v6 re-admits the task, certification v29 records
+**7 certified / 25 candidate / 19 quarantined**, security v13 passes **18/18**, and baseline v19
+records **51/51 deterministic, valid and fail-closed** with zero infrastructure failures.
+
+### GPT-5.5 room-acoustics calibration
+
+At budget one, the selected development score remains zero. The single proposal is valid but
+lowers development nominal utility from **0.608060** to **0.581330**, so online development
+selection rejects it; the same proposal improves held-out utility from **0.668935** to
+**0.699032** and reaches held-out normalized score **0.419181**. This is one example of a
+development/transfer rank reversal, not a population conclusion.
+
+In the independent normal budget-three run, all three proposals access nonexistent absorption
+keys and fail closed with `candidate_runtime_error`; the valid baseline remains selected. A
+same-local-seed-label strict selection-blind batch keeps every parent frozen at the baseline.
+Its step-two artifact reaches development score **0.116213**, and step three reaches development
+**0.753684**, held-out nominal **0.742208**, development robustness **0.639263** and held-out
+robustness **0.803334**. Normal and open-loop conditions use four oracle calls and
+**16,592/16,676** tokens with **167.3/173.8 s** wall time, but Azure exposes no server-side
+generation seed. These single-run conditions therefore do not show that feedback hurts or that
+open-loop sampling is generally superior.
+
+The dedicated derived analysis on clean revision `8ec7ecf` binds task/model report hashes, all
+three raw trajectories, online/frozen-parent lineage, selected artifacts, source equivalence and
+every nominal, held-out, proxy and robustness axis. This is reduced-order image-source/Eyring
+task calibration, not measured-room validation, causal feedback evidence, population capability
+or autonomous acoustic discovery. Server-held rooms, hybrid wave/ray or measured-RIR replication
+and independent acoustics review remain required.

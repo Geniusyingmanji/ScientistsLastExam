@@ -2,7 +2,7 @@
 
 Audit date: 2026-07-19 (UTC), with the experiment roadmap extended after a full-text
 EdgeBench comparison and the task inventory updated on 2026-07-23 through
-HartreeFockSCF-v2.
+RoomImpulseResponse-v2.
 Evidence base: `literature_matrix.md`,
 `science_experiment_plan.md`, current source/tests, and the dated artifacts in `experiments/`.
 
@@ -25,10 +25,10 @@ physical validation, and auditable claim–evidence provenance.
 
 | Capability | Current status | Evidence | Remaining acceptance criterion |
 |---|---|---|---|
-| Candidate/oracle isolation | Implemented | Clean-revision security v11: 18/18 adversarial tests; Bubblewrap, no network, read-only mounts, resource/seccomp limits, typed RPC, fresh multi-world sessions and candidate-exception sanitization | Reproduce in clean Linux CI; document portability/non-Linux behavior |
-| Fail-closed trusted metrics | Implemented | Clean-revision 51×2 v17: 51 deterministic, 51 valid, 51 fail-closed and zero infrastructure failures after the HartreeFockSCF-v2 rebuild | Repair or quarantine every future invalid candidate oracle before certification |
-| Task admission policy | Implemented, narrow | Current manifest: 7 certified / 24 candidate / 20 quarantined; the latest rebuilds add active inverse/discovery candidates, LowThrustTransfer-v2, full-field LidDrivenCavity-v2, Climate-v2, BroadbandAbsorber-v2, Distillation-v2 and HartreeFockSCF-v2 | Independent domain + evaluator reviews are still declarations, not completed external review |
-| Scientific validity of inventory | Audited, sparse | All original 50 packages passed adversarial admission; ActiveLawDiscovery brings inventory to 51 and substantive rebuilds now leave 31 internally admissible packages | Rebuild high-value families and add approximately 19 net admissible tasks to reach about 50; hidden/generated instances and shortcut analysis remain mandatory |
+| Candidate/oracle isolation | Implemented | Clean-revision security v13: 18/18 adversarial tests; Bubblewrap, no network, read-only mounts, resource/seccomp limits, typed RPC, fresh multi-world sessions and candidate-exception sanitization | Reproduce in clean Linux CI; document portability/non-Linux behavior |
+| Fail-closed trusted metrics | Implemented | Clean-revision 51×2 v19: 51 deterministic, 51 valid, 51 fail-closed and zero infrastructure failures after the RoomImpulseResponse-v2 rebuild | Repair or quarantine every future invalid candidate oracle before certification |
+| Task admission policy | Implemented, narrow | Current manifest: 7 certified / 25 candidate / 19 quarantined; the latest rebuilds add active inverse/discovery candidates, LowThrustTransfer-v2, full-field LidDrivenCavity-v2, Climate-v2, BroadbandAbsorber-v2, Distillation-v2, HartreeFockSCF-v2 and RoomImpulseResponse-v2 | Independent domain + evaluator reviews are still declarations, not completed external review |
+| Scientific validity of inventory | Audited, sparse | All original 50 packages passed adversarial admission; ActiveLawDiscovery brings inventory to 51 and substantive rebuilds now leave 32 internally admissible packages | Rebuild high-value families and add approximately 18 net admissible tasks to reach about 50; hidden/generated instances and shortcut analysis remain mandatory |
 | Unified trajectory/accounting | Implemented, protocol-smoked | Clean-revision two-seed baseline smoke; trajectory schema v2, hashes, AUC over `budget_units`, separate `oracle_calls`, wall/token/cost, seed, checkpoint/resume | Validate nonzero-budget schema-v2 artifact replay in CI and version future changes |
 | Feedback controls | Implemented; strict pilot run | None/shuffled prompt-metric modes disclose true-score selection; strict selection-blind freezes parent/metrics; four-task n=3 pilot has no direction-stable lift and is not token-matched | Run token-matched ≥10 paired seeds with score-only, delayed/replayed and strict open-loop controls |
 | Evaluator-only metric sealing | Implemented and integration-verified | Closed search-visible allowlist; search-state redaction/hash-keyed sidecars; candidate-controlled exception text mapped to a finite label-blind taxonomy; 167-test suite; clean pinned OpenEvolve/TreeQuest/Shinka no-leak report `aff026d` | Extend from baseline smoke to nonzero-budget upstream runs before comparative claims |
@@ -36,7 +36,7 @@ physical validation, and auditable claim–evidence provenance.
 | TreeQuest AB-MCTS | Implemented, trusted baseline smoke | Real TreeQuest AB-MCTS-A ask/tell adapter; clean-revision secure baseline passed under Python 3.12 | Run nonzero-budget/checkpoint integration and multi-seed study |
 | ShinkaEvolve | Implemented, trusted baseline smoke | Official runner/database adapter at pinned commit; clean-revision secure baseline passed under Python 3.10 | Run nonzero-budget/resume integration and token accounting audit |
 | Classical/domain baselines | Partial | NMR, HeatExchanger, Reaction, Gravity, Ocean, Radiative, LowThrust and Climate rebuilds have truth-blind domain baselines exposing reconstruction/proxy/prediction, terminal-feasibility, experiment-design or mechanism/refusal gaps | Add random/quasi-random plus BO/CMA-ES/DE and one domain heuristic for each meaningful task family |
-| Multi-seed benchmark evidence | Missing | Keyless GPT-5.5 Responses path is operational; 37 trusted normal single-run conditions cover 19 tasks and a separate four-task n=3 control pilot is negative/inconclusive | Certified-core and science-subset reports with paired uncertainty and portable raw trajectories |
+| Multi-seed benchmark evidence | Missing | Keyless GPT-5.5 Responses path is operational; 39 trusted normal single-run conditions cover 20 tasks and a separate four-task n=3 control pilot is negative/inconclusive | Certified-core and science-subset reports with paired uncertainty and portable raw trajectories |
 | Multifidelity/Pareto | Candidate-level | HeatExchanger-v2 implements proxy/exact Pareto archives, measured false promotion and physical shifts | Add independent high-fidelity review/replication and at least one certified multifidelity task |
 | Feedback learning claim | Negative pilot only | A strict open-loop control and three-replicate four-task pilot are complete; no direction-stable visible or sealed lift, and normal uses more tokens | Token-matched preregistered ≥10-replicate study with delayed/replayed and score-only controls |
 | Mechanistic discovery | Candidate-level | ActiveLaw, NMR, Reaction, Gravity, Ocean, Radiative and Climate tasks separately score mechanisms, prediction, coverage, hidden shifts, false discovery and refusal | Add paired repeated studies, harder regimes and independent scientific validation |
@@ -109,8 +109,8 @@ or make the executable-optimization qualifier unavoidable.
 
 ### 1. Only calibration-level empirical P2 evidence exists
 
-The keyless GPT-5.5 Responses path was restored and 37 trusted normal single-run conditions now
-cover 19 tasks, with task-specific strict open-loop diagnostics on a subset. They expose
+The keyless GPT-5.5 Responses path was restored and 39 trusted normal single-run conditions now
+cover 20 tasks, with task-specific strict open-loop diagnostics on a subset. They expose
 one-step saturation and multiple oracle defects, but there are still no valid five-seed
 certified-core trajectories, no paired feedback-control result, and no nonzero-budget official-
 backend search run. The project must distinguish “calibrated at budget one” from
@@ -227,13 +227,33 @@ optimization and mechanism discovery. EdgeBench intentionally excludes vision-do
 this project must either declare a structured-observation scope or create a separate calibrated
 instrument/perception track rather than silently claiming all of science.
 
+### 14. Curve smoothness can hide distinct scientific transitions
+
+EdgeBench's absolute best-so-far curve combines a nonzero first attempt, becoming scoreable and
+later quality improvements. That is especially unsafe here because many early artifacts are
+protocol-invalid, runtime-invalid or scientifically infeasible. Add a hurdle/multistate analysis:
+first-valid cumulative incidence, validity probability by budget, post-valid conditional quality,
+and jointly sealed/mechanism-valid success. Dense monotone checkpoints are not independent data;
+curve uncertainty must resample whole task-instance/run trajectories. Any scaling fit needs
+prospective held-out forecasts against last-value, monotone, per-task plateau and repeated-sampling
+baselines, not only aggregate `R²`.
+
+EdgeBench's own candidate S-curves have nearly indistinguishable full-window RMSE, and its theory
+assumes cut mixing, stable attainable support, concentrated midpoints/speeds, self-similar search
+geometry and linear effort in wall time. Treat this as a falsifiable mechanism: test whether
+material improvement intensity tracks `y(1-y)` and peaks near `y=0.5`; compare change-point,
+multistage and mixture models. Scientific workflows may instead have separate validity,
+optimization, validation and mechanism bottlenecks. A model-generation doubling claim additionally
+requires a prospectively frozen task/scaffold panel rather than a retrospective rolling-frontier
+fit.
+
 ## Revised TODO plan
 
 ### P0/P1 closeout — completed locally, reproduce in CI
 
 - [x] Trusted oracle / isolated candidate architecture and adversarial regression suite.
 - [x] Current 51-package deterministic secure baseline and certification audit; all 51 weak baselines are valid, deterministic and fail closed.
-- [x] Seven-task certified core, 24 candidates and 20 quarantined packages after all
+- [x] Seven-task certified core, 25 candidates and 19 quarantined packages after all
   admission waves and the current substantive rebuilds.
 - [x] Task-card/citation/invariant audit and dated machine-readable evidence.
 - [ ] Add Linux CI reproduction of all dated audits (local clean-revision reproduction is done).
@@ -245,6 +265,9 @@ instrument/perception track rather than silently claiming all of science.
 - [x] Replace the inconsistent two-coefficient `QuantumChemistry/HartreeFockSCF` toy with seven
   finite-basis systems, stable multistart references, a different-size held-out hard ring,
   physical geometry shifts, AO representation checks and occupied-virtual stability.
+- [x] Replace fixed-scene `Acoustics/RoomImpulseResponse` reconstruction and its length crash
+  with source-placement/six-surface treatment optimization over six rooms, independently
+  checked image paths and Eyring decay, held-out transfer and five sealed shifts.
 
 ### P2a — reproducible protocol release
 
@@ -289,6 +312,9 @@ instrument/perception track rather than silently claiming all of science.
   charged scientific experiment time; publish scheduled/started/completed/recovered/valid counts.
 - [ ] Add an O0 one-shot/no-environment and first-valid baseline so pretrained competence is not
   counted as within-run learning.
+- [ ] Add a hurdle/multistate trajectory analysis: reason-coded invalid states, first-valid
+  cumulative incidence, validity probability by budget, conditional post-valid quality and joint
+  sealed-plus-mechanism success.
 - [ ] Add structural/behavioral diversity and genealogy-collapse diagnostics.
 - [ ] Add adaptive allocation/stopping baselines (for example, SMC-style convergence control).
 - [ ] Add a task-contract linter for prompt versus actual horizon, checkpoint schedule,
@@ -308,6 +334,9 @@ instrument/perception track rather than silently claiming all of science.
 - [ ] Factor retained state into incumbent artifact, local result/cache, trusted-feedback ledger,
   hypothesis/evidence memory, conversation context and full workspace; use independently
   repeated restart pools rather than dependent subsets of one pool as replicates.
+- [ ] Test memory on related-instance transfer and preregistered regime changes, measuring both
+  useful transfer and stale-hypothesis/negative-transfer failures rather than same-task retention
+  alone.
 - [ ] Cross continuous-session, Goal and fresh-context file-backed continuation under a fixed
   model/context/tool condition; always report the model--scaffold--context bundle.
 - [ ] Run a 2×2 local simulator/test feedback × trusted-judge feedback ablation and account for
@@ -318,6 +347,13 @@ instrument/perception track rather than silently claiming all of science.
   Pareto/constraint-aware rules; report selection reversals and sealed/mechanism regret.
 - [ ] Add a curve-construction audit over raw within-task gain, anchors, ranks, family-balanced
   weights, leave-one-task/family-out samples, missing-run policies and plausible score transforms.
+- [ ] Validate curve forecasts on held-out suffixes, runs, tasks and families against last-value,
+  monotone, per-task plateau and repeated-sampling baselines; resample whole trajectories and
+  report interval coverage rather than treating checkpoints as replicates.
+- [ ] Test the proposed frontier mechanism using fixed-grid material-improvement hazards versus
+  normalized progress, and compare single-sigmoid, change-point, multistage and mixture models.
+- [ ] Freeze a prospective task/scaffold/weight panel before making any model-generation learning-
+  speed or doubling-time claim; retain all scheduled systems and adjust for initial capability.
 - [ ] Add equal-bit meaningful-label, permuted-label, unlabeled-component and scalar feedback
   conditions to distinguish scientific diagnostics from score-decomposition leakage.
 
@@ -355,6 +391,8 @@ instrument/perception track rather than silently claiming all of science.
 
 - [ ] Resolve the FrontierScience naming collision before public release.
 - [ ] Freeze license, data/model redistribution, contamination cutoff and refresh policy.
+- [ ] Release privacy-reviewed raw event logs, an immutable derived analysis table and a one-command
+  figure/table rebuild; task/harness release alone is insufficient to replay empirical claims.
 - [ ] Freeze a dated literature corpus and cross no-literature/frozen-corpus/open-Web access with
   public, time-held-out and family-held-out tasks; label recovered known results as reproduction.
 - [ ] Add matched expert one-shot and iterative trajectories on a stratified optimization and

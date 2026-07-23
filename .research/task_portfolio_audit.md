@@ -53,14 +53,16 @@ meaning.
   low-thrust propagation, centerline-spoofable cavity scoring, pseudo-data alloy hardness and
   scalar-FFT pseudo-RCWA. HeatExchanger-v2 and LowThrustTransfer-v2 were subsequently rebuilt
   as multifidelity Pareto and long-horizon trajectory-optimization candidates, respectively;
-  the other four remain quarantined.
-- **No original unscreened candidates remain after wave 4; 24 candidates remain in total.** They include
+  RoomImpulseResponse-v2 has now also been substantively rebuilt; the remaining three stay
+  quarantined.
+- **No original unscreened candidates remain after wave 4; 25 candidates remain in total.** They include
   SCM, Lyapunov control, neutron criticality, seismic refraction, pendulum control, sparse
   recovery, OED-v2, GateSynthesis-v2, OPF-v2, Truss-v2, Antenna-v2, NMR-v2,
   HeatExchanger-v2, ReactionMechanismFitting-v2, GravityInversion-v2,
   OceanCurrentInversion-v2, RadiativeTransferFit-v2, LowThrustTransfer-v2,
   LidDrivenCavity-v2, EnergyBalanceModel-v2, BroadbandAbsorber-v2,
-  DistillationColumnDesign-v2, HartreeFockSCF-v2 and the ActiveLawDiscovery laboratory. All are
+  DistillationColumnDesign-v2, HartreeFockSCF-v2, RoomImpulseResponse-v2 and the
+  ActiveLawDiscovery laboratory. All are
   currently on-ramps or repair/calibration candidates rather than externally reviewed
   open-frontier tasks.
 - **ActiveLawDiscovery preserves science-specific headroom.** GPT-5.5 budget one attains 0.796
@@ -69,7 +71,7 @@ meaning.
   independent budget-three run, all three proposals retain the same two false discoveries;
   score feedback does not fix model-inadequacy detection and later proposals reduce mechanism
   recovery. This is a reliability/refusal frontier rather than an ordinary prediction frontier.
-- **20 quarantined packages.** Five generic-objective clones must be replaced with real domain
+- **19 quarantined packages.** Five generic-objective clones must be replaced with real domain
   oracles; metadata completion alone cannot rehabilitate them. The former Climate, cavity and
   broadband-absorber defects have been resolved by substantive v2 rebuilds rather than local
   numerical patches. The remaining wave-2 and inverse-track tasks are still blocked by concrete oracle failures;
@@ -91,8 +93,15 @@ meaning.
 
 The first review tranche contains real scientific topics but several narrow evaluators:
 
-- Room acoustics uses two fixed scenarios and a simplified image-source implementation; add
-  procedural room/source/microphone configurations and independent acoustic invariants.
+- RoomImpulseResponse-v2 now replaces two fixed reconstruction scenes with source placement and
+  six-surface treatment over four development and two held-out rooms. Independent wall-hit,
+  path-energy, absorption and Eyring checks reproduce the order-10 oracle; first-order proxy,
+  order-14 horizon, installation, audience, material and geometry axes remain separate. GPT-5.5
+  budget one stays at development zero while a valid rejected proposal reaches held-out 0.419.
+  Normal budget three makes three contract-key runtime errors; a frozen-parent open-loop batch
+  finds 0.754 development, 0.742 held-out nominal and 0.803 held-out robustness. This preserves
+  headroom and transfer, but the single token-mismatched runs support no feedback claim. Retain
+  pending server-held rooms, hybrid wave/ray and measured-RIR replication and independent review.
 - LowThrustTransfer-v2 now spans six raising, lowering, eccentricity, plane-change and combined
   transfers with MEE+J2 propagation, rocket-equation mass loss, continuous harmonic-control
   bounds, two held-out missions and three sealed execution shifts. A public-input Gauss--Newton
@@ -220,9 +229,10 @@ The target is approximately 50 **admissible** open scientific optimization tasks
 After complete original-inventory triage, adding ActiveLawDiscovery and rebuilding Gate-v2,
 OPF-v2, Truss-v2, Antenna-v2, NMR-v2, HeatExchanger-v2, ReactionMechanismFitting-v2 and
 GravityInversion-v2, OceanCurrentInversion-v2, RadiativeTransferFit-v2, LowThrustTransfer-v2,
-LidDrivenCavity-v2, EnergyBalanceModel-v2, BroadbandAbsorber-v2, Distillation-v2 and
-HartreeFockSCF-v2, the net expansion gap is approximately 19 admissible tasks: 51 folders minus
-20 quarantines leaves 31 internally admissible certified or candidate packages, while the target
+LidDrivenCavity-v2, EnergyBalanceModel-v2, BroadbandAbsorber-v2, Distillation-v2,
+HartreeFockSCF-v2 and RoomImpulseResponse-v2, the net expansion gap is approximately 18
+admissible tasks: 51 folders minus 19 quarantines leaves 32 internally admissible certified or
+candidate packages, while the target
 is about 50. New
 work should emphasize procedural task families and independent regimes,
 not one-off fixed instances or scientific names around hand-written scalar objectives.

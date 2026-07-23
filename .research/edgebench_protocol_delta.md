@@ -194,6 +194,65 @@ task contracts, not additional empirical claims by the EdgeBench authors.
     separate instrument/perception track that propagates calibration, segmentation and extraction
     uncertainty into mechanism and validation scores instead of silently mixing it into them.
 
+## Third-pass curve and claim findings
+
+These deductions come from re-reading the scaling-law, learning-speed and case-study sections
+against the current science calibrations. They are not additional empirical results from the
+EdgeBench authors.
+
+1. **A single absolute-score curve conflates bootstrapping with optimization.** EdgeBench fits
+   absolute best-so-far performance with a three-parameter curve whose lower asymptote is zero,
+   even though its learning-speed slice has nonzero first-attempt performance and its
+   gravitational-wave case begins with the qualitatively distinct event of creating a scoreable
+   pipeline. Frontier-Science has many protocol-invalid, runtime-invalid or scientifically
+   infeasible early proposals, so one smooth mean would mix interface competence with scientific
+   progress. Use a hurdle/multistate analysis: cause-specific time to first valid artifact,
+   probability of validity by budget, quality conditional on validity, and probability of a
+   jointly sealed-and-mechanism-valid result. Fit gain from a preregistered first-valid or one-shot
+   baseline rather than forcing all prior competence into the same learning curve.
+2. **Dense checkpoints do not create independent evidence for a curve.** A best-so-far trajectory
+   is monotone and serially dependent, and cross-task averaging makes it smoother by construction.
+   Resample whole task-instance/run trajectories, not timepoints. Forecast tests should freeze the
+   model before the held-out suffix and include held-out runs, tasks/families and eventually model
+   generations. Compare against last-value-carried-forward, monotone interpolation, empirical
+   per-task plateaus and repeated-sampling baselines; report interval coverage and held-out error,
+   not only in-sample or level-dominated `R²`.
+3. **The proposed mechanism is testable rather than implied by fit.** EdgeBench reports RMSEs of
+   `0.390`, `0.398`, `0.402` and `0.404` for four three-parameter S-curve families and explicitly
+   says the data cannot empirically separate the symmetric families. Its frontier account assumes
+   cut mixing, concentrated task midpoints/speeds, stable attainable support, self-similar search
+   geometry and effort approximately linear in elapsed time. Test its distinctive prediction on
+   fixed-grid, materially thresholded events: the improvement hazard should track
+   `y(1-y)` and peak near normalized progress `y=0.5`. Compare change-point, multistage and
+   mixture-of-sigmoids alternatives. Scientific workflows with validity, optimization,
+   validation and mechanism bottlenecks are a principled place to expect multiple phases.
+4. **Submission efficiency is endogenous.** EdgeBench's effective-submission rate depends on
+   when an agent chooses to submit, task score granularity, evaluator noise and a strict-positive
+   incumbent rule. Use hash-deduplicated evaluator-only fixed-grid snapshots for the primary
+   cross-system improvement-rate comparison, with numerical and domain-material thresholds.
+   Treat voluntary submission cadence, bundled edit size and rollback behavior as secondary
+   behavioral outcomes rather than interchangeable measures of learning efficiency.
+5. **A retrospective model-speed trend needs prospective replication.** EdgeBench forms an
+   18-task slice with similar observed first-attempt scores, evaluates different model--scaffold--
+   context bundles, and fits rolling top-two frontier systems by release date. That is useful
+   exploratory evidence but can inherit task-selection, regression-to-the-mean, frontier-selection
+   and harness confounding. Freeze a task panel, weights, scaffold and analysis before evaluating
+   future models; retain all scheduled systems; model initial capability as a covariate rather
+   than selecting tasks on the same observed baseline; and require prospective replication before
+   claiming a temporal doubling rate.
+6. **The science case study is closer to reproduction than discovery.** Its milestones include
+   digitizing published reference traces and fitting directly to them. That can demonstrate
+   persistent engineering progress, but it does not establish recovery of a novel mechanism.
+   Every science task therefore needs a target-access audit: determine whether visible papers,
+   figures, baselines or repeated diagnostics can reconstruct evaluator targets, and require
+   predictions on new observations, interventions or regimes before calling the result discovery.
+7. **Protocol release and claim replay are different deliverables.** As rechecked on 2026-07-23,
+   the public GitHub/Hugging Face release provides the SForge harness and 51 of 134 task contracts,
+   but not the raw 38,000-hour trajectory corpus or figure-analysis code. The headline fits are
+   therefore not independently replayable from the public release alone. Frontier-Science should
+   publish an immutable analysis table derived from raw event logs plus a one-command figure/table
+   rebuild, while separately protecting server-held oracle assets.
+
 ## Minimum next experiments
 
 1. **HartreeFockSCF-v2 calibration:** GPT-5.5 budget 1, normal budget 3 and strict
@@ -212,7 +271,7 @@ task contracts, not additional empirical claims by the EdgeBench authors.
    only science curves; no causal claim unless compute/information balance and run coverage pass.
 6. **Population budget curves:** primary long trajectories with preregistered checkpoints at
    30/100/300 proposal units; independent fixed-horizon runs on a smaller subset to test whether
-   horizon knowledge changes behavior. Do not fit a scaling law to the present 31 admissible
+   horizon knowledge changes behavior. Do not fit a scaling law to the present 32 admissible
    tasks or single calibrations.
 7. **Endpoint-policy audit:** replay existing trajectories and compare committed, terminal and
    evaluator-only oracle-best artifacts on visible, sealed and mechanism metrics; add atomic

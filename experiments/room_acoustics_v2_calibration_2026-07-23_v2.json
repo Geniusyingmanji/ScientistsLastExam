@@ -1,0 +1,2433 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_TASK_CALIBRATION",
+  "evidence_scope": "REDUCED_ORDER_ROOM_ACOUSTICS_OPTIMIZATION_TASK_CALIBRATION_NOT_WAVE_SOLVER_MEASUREMENT_BUILDING_DESIGN_OR_DISCOVERY_VALIDATION",
+  "created_at": "2026-07-23T17:48:20.225198+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "4bd362e6b96217389176fcc0da216596cde41eaf",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/calibrate_room_acoustics_v2.py",
+      "--output",
+      "experiments/room_acoustics_v2_calibration_2026-07-23_v2.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "task_dimensions": {
+    "development_instance_count": 4,
+    "heldout_instance_count": 2,
+    "shift_count": 5,
+    "octave_band_count": 6,
+    "nominal_image_order": 10,
+    "proxy_image_order": 1,
+    "higher_order_shift": 14,
+    "receiver_count_range": [
+      9,
+      12
+    ],
+    "room_volume_range_m3": [
+      78.56799999999998,
+      630.0
+    ]
+  },
+  "reference_method": {
+    "family": "three normalized source coordinates, treatment-budget utilization, and six capped nonnegative surface-allocation weights",
+    "optimizer": "SciPy deterministic bounded Powell search with best-visited tracking",
+    "maximum_iterations": 10,
+    "maximum_function_evaluations": 800,
+    "x_tolerance": 0.0005,
+    "function_tolerance": 1e-06,
+    "maximum_recalibrated_minus_declared_utility": 0.002,
+    "terminal_point_used_as_reference": false,
+    "best_visited_point_retained_when_terminal_point_regresses": true,
+    "global_optimality_claimed": false,
+    "normalization_clips_better_feasible_candidates": true
+  },
+  "weak_baseline": {
+    "combined_score": 0.0,
+    "valid": 1.0,
+    "feasibility_rate": 1.0,
+    "raw_score": 0.0,
+    "robustness_score": 0.0,
+    "development_validation_gap": 0.0,
+    "heldout_policy_score": 0.0,
+    "heldout_robustness_score": 0.0,
+    "heldout_feasibility_rate": 1.0,
+    "development_nominal_utility": 0.6080603314599177,
+    "heldout_nominal_utility": 0.6689347859940169,
+    "development_robust_utility": 0.5706657896900912,
+    "heldout_robust_utility": 0.6002627646636001,
+    "development_proxy_utility": 0.7117667173308738,
+    "heldout_proxy_utility": 0.7591028769735115,
+    "development_proxy_exact_gap": 0.10370638587095612,
+    "heldout_proxy_exact_gap": 0.09016809097949452,
+    "candidate_instance_call_count": 6,
+    "candidate_instance_valid_rate": 1.0
+  },
+  "nominal_reference_policy": {
+    "combined_score": 1.0,
+    "valid": 1.0,
+    "feasibility_rate": 1.0,
+    "raw_score": 1.0,
+    "robustness_score": 0.9333968646917099,
+    "development_validation_gap": 0.0666031353082901,
+    "heldout_policy_score": 1.0,
+    "heldout_robustness_score": 0.6262229948735509,
+    "heldout_feasibility_rate": 1.0,
+    "development_nominal_utility": 0.6656495663436505,
+    "heldout_nominal_utility": 0.7333076287866136,
+    "development_robust_utility": 0.6281949039938031,
+    "heldout_robust_utility": 0.6853443263650792,
+    "development_proxy_utility": 0.7077200872180405,
+    "heldout_proxy_utility": 0.8002310520305572,
+    "development_proxy_exact_gap": 0.04207052087438998,
+    "heldout_proxy_exact_gap": 0.06692342324394368,
+    "candidate_instance_call_count": 6,
+    "candidate_instance_valid_rate": 1.0
+  },
+  "robust_reference_policy": {
+    "combined_score": 0.9739869872961406,
+    "valid": 1.0,
+    "feasibility_rate": 1.0,
+    "raw_score": 0.9739869872961406,
+    "robustness_score": 1.0,
+    "development_validation_gap": -0.02601301270385936,
+    "heldout_policy_score": 0.7317354343298066,
+    "heldout_robustness_score": 1.0,
+    "heldout_feasibility_rate": 1.0,
+    "development_nominal_utility": 0.6647475254609978,
+    "heldout_nominal_utility": 0.7167672162102436,
+    "development_robust_utility": 0.6321755894197739,
+    "heldout_robust_utility": 0.7098687534672332,
+    "development_proxy_utility": 0.7019278645320906,
+    "heldout_proxy_utility": 0.7756010162776028,
+    "development_proxy_exact_gap": 0.03718033907109275,
+    "heldout_proxy_exact_gap": 0.058833800067359165,
+    "candidate_instance_call_count": 6,
+    "candidate_instance_valid_rate": 1.0
+  },
+  "invalid_artifact_checks": {
+    "wrong_shape": {
+      "combined_score": 0.0,
+      "valid": 0.0,
+      "feasibility_rate": 0.0,
+      "raw_score": 0.0,
+      "robustness_score": 0.0,
+      "development_validation_gap": 0.0,
+      "heldout_policy_score": 0.0,
+      "heldout_robustness_score": 0.0,
+      "heldout_feasibility_rate": 0.0,
+      "development_nominal_utility": 0.0,
+      "heldout_nominal_utility": 0.0,
+      "development_robust_utility": 0.0,
+      "heldout_robust_utility": 0.0,
+      "development_proxy_utility": 0.0,
+      "heldout_proxy_utility": 0.0,
+      "development_proxy_exact_gap": 0.0,
+      "heldout_proxy_exact_gap": 0.0,
+      "candidate_instance_call_count": 6,
+      "candidate_instance_valid_rate": 0.0,
+      "error_message": "candidate invalid on a development room instance"
+    },
+    "nonfinite": {
+      "combined_score": 0.0,
+      "valid": 0.0,
+      "feasibility_rate": 0.0,
+      "raw_score": 0.0,
+      "robustness_score": 0.0,
+      "development_validation_gap": 0.0,
+      "heldout_policy_score": 0.0,
+      "heldout_robustness_score": 0.0,
+      "heldout_feasibility_rate": 0.0,
+      "development_nominal_utility": 0.0,
+      "heldout_nominal_utility": 0.0,
+      "development_robust_utility": 0.0,
+      "heldout_robust_utility": 0.0,
+      "development_proxy_utility": 0.0,
+      "heldout_proxy_utility": 0.0,
+      "development_proxy_exact_gap": 0.0,
+      "heldout_proxy_exact_gap": 0.0,
+      "candidate_instance_call_count": 6,
+      "candidate_instance_valid_rate": 0.0,
+      "error_message": "candidate invalid on a development room instance"
+    },
+    "complex": {
+      "combined_score": 0.0,
+      "valid": 0.0,
+      "feasibility_rate": 0.0,
+      "raw_score": 0.0,
+      "robustness_score": 0.0,
+      "development_validation_gap": 0.0,
+      "heldout_policy_score": 0.0,
+      "heldout_robustness_score": 0.0,
+      "heldout_feasibility_rate": 0.0,
+      "development_nominal_utility": 0.0,
+      "heldout_nominal_utility": 0.0,
+      "development_robust_utility": 0.0,
+      "heldout_robust_utility": 0.0,
+      "development_proxy_utility": 0.0,
+      "heldout_proxy_utility": 0.0,
+      "development_proxy_exact_gap": 0.0,
+      "heldout_proxy_exact_gap": 0.0,
+      "candidate_instance_call_count": 6,
+      "candidate_instance_valid_rate": 0.0,
+      "error_message": "candidate invalid on a development room instance"
+    },
+    "negative": {
+      "combined_score": 0.0,
+      "valid": 0.0,
+      "feasibility_rate": 0.0,
+      "raw_score": 0.0,
+      "robustness_score": 0.0,
+      "development_validation_gap": 0.0,
+      "heldout_policy_score": 0.0,
+      "heldout_robustness_score": 0.0,
+      "heldout_feasibility_rate": 0.0,
+      "development_nominal_utility": 0.0,
+      "heldout_nominal_utility": 0.0,
+      "development_robust_utility": 0.0,
+      "heldout_robust_utility": 0.0,
+      "development_proxy_utility": 0.0,
+      "heldout_proxy_utility": 0.0,
+      "development_proxy_exact_gap": 0.0,
+      "heldout_proxy_exact_gap": 0.0,
+      "candidate_instance_call_count": 6,
+      "candidate_instance_valid_rate": 0.0,
+      "error_message": "candidate invalid on a development room instance"
+    },
+    "over_budget": {
+      "combined_score": 0.0,
+      "valid": 0.0,
+      "feasibility_rate": 0.0,
+      "raw_score": 0.0,
+      "robustness_score": 0.0,
+      "development_validation_gap": 0.0,
+      "heldout_policy_score": 0.0,
+      "heldout_robustness_score": 0.0,
+      "heldout_feasibility_rate": 0.0,
+      "development_nominal_utility": 0.0,
+      "heldout_nominal_utility": 0.0,
+      "development_robust_utility": 0.0,
+      "heldout_robust_utility": 0.0,
+      "development_proxy_utility": 0.0,
+      "heldout_proxy_utility": 0.0,
+      "development_proxy_exact_gap": 0.0,
+      "heldout_proxy_exact_gap": 0.0,
+      "candidate_instance_call_count": 6,
+      "candidate_instance_valid_rate": 0.0,
+      "error_message": "candidate invalid on a development room instance"
+    }
+  },
+  "independent_equation_and_reference_checks": [
+    {
+      "name": "dev_seminar_room",
+      "split": "development",
+      "receiver_count": 9,
+      "room_dimensions_m": [
+        7.2,
+        5.4,
+        3.1
+      ],
+      "maximum_treatment_area_m2": 27.0,
+      "baseline_nominal_utility": 0.6686551704659217,
+      "nominal_reference_utility": 0.7069778005002213,
+      "nominal_reference_headroom": 0.03832263003429959,
+      "baseline_robust_utility": 0.6181964618551965,
+      "robust_reference_utility": 0.667398463337833,
+      "robust_reference_headroom": 0.04920200148263654,
+      "nominal_reference_design": [
+        0.6648094333192347,
+        4.691252244468608,
+        2.3238547423389435,
+        5.671286222845865,
+        8.071112574081985,
+        5.112653662007831e-07,
+        3.687985799388713,
+        0.0,
+        0.0015681428229668024
+      ],
+      "robust_reference_design": [
+        0.6618685541505739,
+        4.635134192906904,
+        2.3173588764901067,
+        7.6621530100633315,
+        9.345945865100738,
+        0.003825094544073446,
+        7.223285450124334,
+        0.0,
+        0.6324394217472018
+      ],
+      "nominal_reference_family": [
+        0.0102134022891274,
+        0.9856712791386848,
+        0.9806331424732915,
+        0.6456278981631443,
+        0.702569824716925,
+        0.9998649201658294,
+        6.33365350647514e-08,
+        0.4568747608253904,
+        0.9998057354591443,
+        0.00019426454334551987
+      ],
+      "robust_reference_family": [
+        0.008185209759016442,
+        0.9719839494894887,
+        0.9758213899926714,
+        0.9210240311696176,
+        0.8008586126484865,
+        0.9768509229171045,
+        0.0003998040636610355,
+        0.7549875807430213,
+        0.9996001961652123,
+        0.06610342513644069
+      ],
+      "nominal_reference_axes": {
+        "clarity_utility": 0.9053790225534537,
+        "reverberation_utility": 0.2783711833948663,
+        "uniformity_utility": 0.9792862388568903,
+        "mean_c50_db": 8.12847527218427,
+        "twentieth_percentile_c50_db": 5.946577461804055,
+        "mean_absolute_log_rt_error": 0.5813457441176818,
+        "mean_spatial_level_std_db": 0.6941440089602792
+      },
+      "first_order_proxy_utility": 0.7313610868850946,
+      "proxy_minus_nominal_utility": 0.024383286384873304,
+      "order14_utility": 0.6724155171727824,
+      "order14_minus_order10_utility": -0.034562283327438936,
+      "independent_equation_checks": {
+        "baseline": {
+          "maximum_absolute_absorption_error": 0.0,
+          "maximum_absolute_reverberation_time_error_s": 0.0,
+          "maximum_absolute_path_energy_error": 1.3877787807814457e-17,
+          "maximum_absolute_c50_error_db": 2.220446049250313e-14,
+          "maximum_absolute_direct_distance_error_m": 0.0,
+          "path_counts_exact": true,
+          "minimum_path_count": 1561,
+          "maximum_path_count": 1561
+        },
+        "nominal_reference": {
+          "maximum_absolute_absorption_error": 0.0,
+          "maximum_absolute_reverberation_time_error_s": 0.0,
+          "maximum_absolute_path_energy_error": 1.0408340855860843e-17,
+          "maximum_absolute_c50_error_db": 1.7763568394002505e-14,
+          "maximum_absolute_direct_distance_error_m": 0.0,
+          "path_counts_exact": true,
+          "minimum_path_count": 1561,
+          "maximum_path_count": 1561
+        },
+        "robust_reference": {
+          "maximum_absolute_absorption_error": 0.0,
+          "maximum_absolute_reverberation_time_error_s": 0.0,
+          "maximum_absolute_path_energy_error": 2.0816681711721685e-17,
+          "maximum_absolute_c50_error_db": 1.2434497875801753e-14,
+          "maximum_absolute_direct_distance_error_m": 0.0,
+          "path_counts_exact": true,
+          "minimum_path_count": 1561,
+          "maximum_path_count": 1561
+        }
+      },
+      "independent_shifted_utility_checks": [
+        {
+          "design": "baseline",
+          "shift": "nominal",
+          "independent_utility": 0.6686551704659216,
+          "evaluator_utility": 0.6686551704659217,
+          "absolute_utility_error": 1.1102230246251565e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "baseline",
+          "shift": "source_installation_offset",
+          "independent_utility": 0.667407829563483,
+          "evaluator_utility": 0.6674078295634831,
+          "absolute_utility_error": 1.1102230246251565e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "baseline",
+          "shift": "audience_layout_shift",
+          "independent_utility": 0.6695764177137951,
+          "evaluator_utility": 0.669576417713795,
+          "absolute_utility_error": 1.1102230246251565e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "baseline",
+          "shift": "cool_geometry_survey_shift",
+          "independent_utility": 0.661306706371424,
+          "evaluator_utility": 0.661306706371424,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "baseline",
+          "shift": "material_ageing",
+          "independent_utility": 0.6787571447257,
+          "evaluator_utility": 0.6787571447256999,
+          "absolute_utility_error": 1.1102230246251565e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "baseline",
+          "shift": "higher_order_combined_shift",
+          "independent_utility": 0.6181964618551964,
+          "evaluator_utility": 0.6181964618551965,
+          "absolute_utility_error": 1.1102230246251565e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "nominal",
+          "independent_utility": 0.7069778005002213,
+          "evaluator_utility": 0.7069778005002213,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "source_installation_offset",
+          "independent_utility": 0.7056903400088488,
+          "evaluator_utility": 0.705690340008849,
+          "absolute_utility_error": 2.220446049250313e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "audience_layout_shift",
+          "independent_utility": 0.7070485132519118,
+          "evaluator_utility": 0.7070485132519118,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "cool_geometry_survey_shift",
+          "independent_utility": 0.7030601343460489,
+          "evaluator_utility": 0.7030601343460489,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "material_ageing",
+          "independent_utility": 0.7147045651367763,
+          "evaluator_utility": 0.7147045651367763,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "higher_order_combined_shift",
+          "independent_utility": 0.662725787151827,
+          "evaluator_utility": 0.6627257871518268,
+          "absolute_utility_error": 1.1102230246251565e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "nominal",
+          "independent_utility": 0.7053651153501109,
+          "evaluator_utility": 0.7053651153501109,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "source_installation_offset",
+          "independent_utility": 0.7040521284717588,
+          "evaluator_utility": 0.7040521284717587,
+          "absolute_utility_error": 1.1102230246251565e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "audience_layout_shift",
+          "independent_utility": 0.7054818249461565,
+          "evaluator_utility": 0.7054818249461564,
+          "absolute_utility_error": 1.1102230246251565e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "cool_geometry_survey_shift",
+          "independent_utility": 0.7001121906851145,
+          "evaluator_utility": 0.7001121906851147,
+          "absolute_utility_error": 1.1102230246251565e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "material_ageing",
+          "independent_utility": 0.7085084266600086,
+          "evaluator_utility": 0.7085084266600086,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "higher_order_combined_shift",
+          "independent_utility": 0.6673984633378331,
+          "evaluator_utility": 0.667398463337833,
+          "absolute_utility_error": 1.1102230246251565e-16,
+          "geometry_feasibility_exact": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "dev_classroom",
+      "split": "development",
+      "receiver_count": 12,
+      "room_dimensions_m": [
+        9.0,
+        7.0,
+        3.2
+      ],
+      "maximum_treatment_area_m2": 39.0,
+      "baseline_nominal_utility": 0.612143521077178,
+      "nominal_reference_utility": 0.6691685033196179,
+      "nominal_reference_headroom": 0.0570249822424399,
+      "baseline_robust_utility": 0.572109541024546,
+      "robust_reference_utility": 0.6389330916222733,
+      "robust_reference_headroom": 0.06682355059772727,
+      "nominal_reference_design": [
+        0.7167332859677277,
+        4.131850446684615,
+        2.4305015243082595,
+        12.307836276050367,
+        11.689639835631256,
+        0.0037443388718339183,
+        10.4510435908216,
+        0.0,
+        0.0037443388718339183
+      ],
+      "robust_reference_design": [
+        0.726931402417285,
+        6.030445771289968,
+        2.255468582731386,
+        12.61943656714889,
+        13.689841162019507,
+        1.5619876664323188e-06,
+        12.659525054320817,
+        0.0,
+        0.00547749011692429
+      ],
+      "nominal_reference_family": [
+        0.010141385434986527,
+        0.6192170654121913,
+        0.9860725173630424,
+        0.883487394365305,
+        0.9204849234858842,
+        0.8742509234231991,
+        0.0002800335820725831,
+        0.781618136955927,
+        0.9997199664179274,
+        0.0002800335820725831
+      ],
+      "robust_reference_family": [
+        0.016322062071081875,
+        0.9774425983565976,
+        0.8610489876652755,
+        0.9993405598870205,
+        0.9210975144371898,
+        0.9992267563039864,
+        1.1401007877623578e-07,
+        0.9240235884893178,
+        0.9996001958858799,
+        0.00039980410418538376
+      ],
+      "nominal_reference_axes": {
+        "clarity_utility": 0.8713079125431515,
+        "reverberation_utility": 0.22628757496267957,
+        "uniformity_utility": 0.9571454403122854,
+        "mean_c50_db": 7.9497517757919445,
+        "twentieth_percentile_c50_db": 5.259755288442395,
+        "mean_absolute_log_rt_error": 0.6646641197112015,
+        "mean_spatial_level_std_db": 0.9946264501745471
+      },
+      "first_order_proxy_utility": 0.6998070433719763,
+      "proxy_minus_nominal_utility": 0.030638540052358443,
+      "order14_utility": 0.6426428142645506,
+      "order14_minus_order10_utility": -0.026525689055067248,
+      "independent_equation_checks": {
+        "baseline": {
+          "maximum_absolute_absorption_error": 0.0,
+          "maximum_absolute_reverberation_time_error_s": 0.0,
+          "maximum_absolute_path_energy_error": 1.0408340855860843e-17,
+          "maximum_absolute_c50_error_db": 1.2434497875801753e-14,
+          "maximum_absolute_direct_distance_error_m": 0.0,
+          "path_counts_exact": true,
+          "minimum_path_count": 1561,
+          "maximum_path_count": 1561
+        },
+        "nominal_reference": {
+          "maximum_absolute_absorption_error": 0.0,
+          "maximum_absolute_reverberation_time_error_s": 0.0,
+          "maximum_absolute_path_energy_error": 9.540979117872439e-18,
+          "maximum_absolute_c50_error_db": 1.5987211554602254e-14,
+          "maximum_absolute_direct_distance_error_m": 0.0,
+          "path_counts_exact": true,
+          "minimum_path_count": 1561,
+          "maximum_path_count": 1561
+        },
+        "robust_reference": {
+          "maximum_absolute_absorption_error": 0.0,
+          "maximum_absolute_reverberation_time_error_s": 0.0,
+          "maximum_absolute_path_energy_error": 1.1275702593849246e-17,
+          "maximum_absolute_c50_error_db": 1.5987211554602254e-14,
+          "maximum_absolute_direct_distance_error_m": 0.0,
+          "path_counts_exact": true,
+          "minimum_path_count": 1561,
+          "maximum_path_count": 1561
+        }
+      },
+      "independent_shifted_utility_checks": [
+        {
+          "design": "baseline",
+          "shift": "nominal",
+          "independent_utility": 0.612143521077178,
+          "evaluator_utility": 0.612143521077178,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "baseline",
+          "shift": "source_installation_offset",
+          "independent_utility": 0.6124237006424345,
+          "evaluator_utility": 0.6124237006424345,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "baseline",
+          "shift": "audience_layout_shift",
+          "independent_utility": 0.6124844032593827,
+          "evaluator_utility": 0.6124844032593827,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "baseline",
+          "shift": "cool_geometry_survey_shift",
+          "independent_utility": 0.6092911242656953,
+          "evaluator_utility": 0.6092911242656953,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "baseline",
+          "shift": "material_ageing",
+          "independent_utility": 0.6232130409511392,
+          "evaluator_utility": 0.6232130409511389,
+          "absolute_utility_error": 2.220446049250313e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "baseline",
+          "shift": "higher_order_combined_shift",
+          "independent_utility": 0.5721095410245461,
+          "evaluator_utility": 0.572109541024546,
+          "absolute_utility_error": 1.1102230246251565e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "nominal",
+          "independent_utility": 0.6691685033196179,
+          "evaluator_utility": 0.6691685033196179,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "source_installation_offset",
+          "independent_utility": 0.6678077089021243,
+          "evaluator_utility": 0.6678077089021243,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "audience_layout_shift",
+          "independent_utility": 0.6690685044218683,
+          "evaluator_utility": 0.6690685044218683,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "cool_geometry_survey_shift",
+          "independent_utility": 0.6652941054790558,
+          "evaluator_utility": 0.6652941054790557,
+          "absolute_utility_error": 1.1102230246251565e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "material_ageing",
+          "independent_utility": 0.6706414838949111,
+          "evaluator_utility": 0.670641483894911,
+          "absolute_utility_error": 1.1102230246251565e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "higher_order_combined_shift",
+          "independent_utility": 0.6329987576281296,
+          "evaluator_utility": 0.6329987576281297,
+          "absolute_utility_error": 1.1102230246251565e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "nominal",
+          "independent_utility": 0.6710762719650923,
+          "evaluator_utility": 0.6710762719650923,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "source_installation_offset",
+          "independent_utility": 0.6703499194416954,
+          "evaluator_utility": 0.6703499194416954,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "audience_layout_shift",
+          "independent_utility": 0.6717714816739826,
+          "evaluator_utility": 0.6717714816739826,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "cool_geometry_survey_shift",
+          "independent_utility": 0.6669335147819933,
+          "evaluator_utility": 0.6669335147819933,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "material_ageing",
+          "independent_utility": 0.6751104568308026,
+          "evaluator_utility": 0.6751104568308026,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "higher_order_combined_shift",
+          "independent_utility": 0.6389330916222733,
+          "evaluator_utility": 0.6389330916222733,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "dev_project_studio",
+      "split": "development",
+      "receiver_count": 12,
+      "room_dimensions_m": [
+        10.2,
+        8.0,
+        3.8
+      ],
+      "maximum_treatment_area_m2": 48.0,
+      "baseline_nominal_utility": 0.5996053068964045,
+      "nominal_reference_utility": 0.6605054536957107,
+      "nominal_reference_headroom": 0.06090014679930622,
+      "baseline_robust_utility": 0.5663780851247753,
+      "robust_reference_utility": 0.6285541953369017,
+      "robust_reference_headroom": 0.062176110212126434,
+      "nominal_reference_design": [
+        0.8283115646212237,
+        6.592975212985294,
+        2.7075779882080746,
+        2.32950813639796,
+        19.759999999999998,
+        9.700749255090207e-06,
+        21.575734555509623,
+        0.0,
+        0.019332580026533323
+      ],
+      "robust_reference_design": [
+        0.8884200204060448,
+        4.495008131720153,
+        2.749660506069076,
+        3.0273930482759304,
+        19.759999999999998,
+        0.007251477554219169,
+        25.194,
+        0.0,
+        6.459270473903931e-07
+      ],
+      "nominal_reference_family": [
+        0.01490082348485456,
+        0.9182218085460152,
+        0.9742896898230755,
+        0.9100955202642369,
+        0.04817489183518992,
+        0.7645251431450314,
+        2.0061425791235505e-07,
+        0.44619233658640406,
+        0.9996001958884442,
+        0.0003998032619510414
+      ],
+      "robust_reference_family": [
+        0.046536852845286754,
+        0.5798400212451861,
+        0.9997942461024703,
+        0.9997634410782749,
+        0.11699605681942633,
+        0.8844152245642988,
+        0.00028023922445133854,
+        0.9790159026822222,
+        0.9997200543763927,
+        2.4962374007143733e-08
+      ],
+      "nominal_reference_axes": {
+        "clarity_utility": 0.8392243038159461,
+        "reverberation_utility": 0.24872216039037795,
+        "uniformity_utility": 0.9494836970382344,
+        "mean_c50_db": 7.41899190531364,
+        "twentieth_percentile_c50_db": 4.410628710209192,
+        "mean_absolute_log_rt_error": 0.6481751449654355,
+        "mean_spatial_level_std_db": 1.0867795429544689
+      },
+      "first_order_proxy_utility": 0.7061115040856438,
+      "proxy_minus_nominal_utility": 0.04560605038993315,
+      "order14_utility": 0.636983772067462,
+      "order14_minus_order10_utility": -0.023521681628248636,
+      "independent_equation_checks": {
+        "baseline": {
+          "maximum_absolute_absorption_error": 0.0,
+          "maximum_absolute_reverberation_time_error_s": 0.0,
+          "maximum_absolute_path_energy_error": 6.938893903907228e-18,
+          "maximum_absolute_c50_error_db": 1.509903313490213e-14,
+          "maximum_absolute_direct_distance_error_m": 0.0,
+          "path_counts_exact": true,
+          "minimum_path_count": 1561,
+          "maximum_path_count": 1561
+        },
+        "nominal_reference": {
+          "maximum_absolute_absorption_error": 0.0,
+          "maximum_absolute_reverberation_time_error_s": 0.0,
+          "maximum_absolute_path_energy_error": 4.7704895589362195e-18,
+          "maximum_absolute_c50_error_db": 1.687538997430238e-14,
+          "maximum_absolute_direct_distance_error_m": 0.0,
+          "path_counts_exact": true,
+          "minimum_path_count": 1561,
+          "maximum_path_count": 1561
+        },
+        "robust_reference": {
+          "maximum_absolute_absorption_error": 0.0,
+          "maximum_absolute_reverberation_time_error_s": 0.0,
+          "maximum_absolute_path_energy_error": 6.938893903907228e-18,
+          "maximum_absolute_c50_error_db": 1.7763568394002505e-14,
+          "maximum_absolute_direct_distance_error_m": 0.0,
+          "path_counts_exact": true,
+          "minimum_path_count": 1561,
+          "maximum_path_count": 1561
+        }
+      },
+      "independent_shifted_utility_checks": [
+        {
+          "design": "baseline",
+          "shift": "nominal",
+          "independent_utility": 0.5996053068964045,
+          "evaluator_utility": 0.5996053068964045,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "baseline",
+          "shift": "source_installation_offset",
+          "independent_utility": 0.5990406744079959,
+          "evaluator_utility": 0.5990406744079959,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "baseline",
+          "shift": "audience_layout_shift",
+          "independent_utility": 0.6001083795382374,
+          "evaluator_utility": 0.6001083795382374,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "baseline",
+          "shift": "cool_geometry_survey_shift",
+          "independent_utility": 0.5965246720592351,
+          "evaluator_utility": 0.5965246720592351,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "baseline",
+          "shift": "material_ageing",
+          "independent_utility": 0.6137636228958769,
+          "evaluator_utility": 0.6137636228958768,
+          "absolute_utility_error": 1.1102230246251565e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "baseline",
+          "shift": "higher_order_combined_shift",
+          "independent_utility": 0.5663780851247749,
+          "evaluator_utility": 0.5663780851247753,
+          "absolute_utility_error": 3.3306690738754696e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "nominal",
+          "independent_utility": 0.6605054536957105,
+          "evaluator_utility": 0.6605054536957107,
+          "absolute_utility_error": 2.220446049250313e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "source_installation_offset",
+          "independent_utility": 0.6592935992667227,
+          "evaluator_utility": 0.6592935992667227,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "audience_layout_shift",
+          "independent_utility": 0.6605961964881897,
+          "evaluator_utility": 0.6605961964881897,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "cool_geometry_survey_shift",
+          "independent_utility": 0.6549828852769602,
+          "evaluator_utility": 0.6549828852769601,
+          "absolute_utility_error": 1.1102230246251565e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "material_ageing",
+          "independent_utility": 0.6579639487831173,
+          "evaluator_utility": 0.6579639487831173,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "higher_order_combined_shift",
+          "independent_utility": 0.6253673377306984,
+          "evaluator_utility": 0.6253673377306985,
+          "absolute_utility_error": 1.1102230246251565e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "nominal",
+          "independent_utility": 0.6573273599338658,
+          "evaluator_utility": 0.6573273599338659,
+          "absolute_utility_error": 1.1102230246251565e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "source_installation_offset",
+          "independent_utility": 0.6572384075702463,
+          "evaluator_utility": 0.6572384075702464,
+          "absolute_utility_error": 1.1102230246251565e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "audience_layout_shift",
+          "independent_utility": 0.6576989510443823,
+          "evaluator_utility": 0.6576989510443824,
+          "absolute_utility_error": 1.1102230246251565e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "cool_geometry_survey_shift",
+          "independent_utility": 0.6531871109941194,
+          "evaluator_utility": 0.6531871109941194,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "material_ageing",
+          "independent_utility": 0.6569821006497526,
+          "evaluator_utility": 0.6569821006497527,
+          "absolute_utility_error": 1.1102230246251565e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "higher_order_combined_shift",
+          "independent_utility": 0.6285541953369018,
+          "evaluator_utility": 0.6285541953369017,
+          "absolute_utility_error": 1.1102230246251565e-16,
+          "geometry_feasibility_exact": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "dev_lecture_room",
+      "split": "development",
+      "receiver_count": 12,
+      "room_dimensions_m": [
+        14.0,
+        10.0,
+        4.5
+      ],
+      "maximum_treatment_area_m2": 78.0,
+      "baseline_nominal_utility": 0.5518373274001667,
+      "nominal_reference_utility": 0.6259465078590521,
+      "nominal_reference_headroom": 0.07410918045888548,
+      "baseline_robust_utility": 0.5259790707558469,
+      "robust_reference_utility": 0.5938166073820875,
+      "robust_reference_headroom": 0.06783753662624059,
+      "nominal_reference_design": [
+        0.9202058171517915,
+        5.963668141164973,
+        3.0378412593762363,
+        0.06902174007443258,
+        29.25,
+        1.967374161452932e-05,
+        40.95,
+        0.0,
+        7.6471589649703215
+      ],
+      "robust_reference_design": [
+        0.9862110015958443,
+        5.959860102426184,
+        3.1987637569262035,
+        7.7737535069187835,
+        29.25,
+        0.011478143644487552,
+        40.95,
+        0.0,
+        0.011851738651809435
+      ],
+      "nominal_reference_family": [
+        0.009184462341723421,
+        0.6235471975852529,
+        0.920898175305481,
+        0.9989256458818765,
+        0.0003697119139308147,
+        0.9996001986596291,
+        1.0538153136452561e-07,
+        0.6180713305947814,
+        0.9996001958808053,
+        0.04096167054066563
+      ],
+      "robust_reference_family": [
+        0.039186818907201944,
+        0.6230589874905362,
+        0.999396954598148,
+        0.9999626075540397,
+        0.18965715259516266,
+        0.8218934774413257,
+        0.0002800335820725831,
+        0.9999301242439145,
+        0.9997199664179274,
+        0.00028914822215595794
+      ],
+      "nominal_reference_axes": {
+        "clarity_utility": 0.780283637894984,
+        "reverberation_utility": 0.2388172545131666,
+        "uniformity_utility": 0.9290908394644143,
+        "mean_c50_db": 6.510583071227003,
+        "twentieth_percentile_c50_db": 3.0674125423884933,
+        "mean_absolute_log_rt_error": 0.6575353410476157,
+        "mean_spatial_level_std_db": 1.2904610072872886
+      },
+      "first_order_proxy_utility": 0.6936007145294472,
+      "proxy_minus_nominal_utility": 0.06765420667039501,
+      "order14_utility": 0.6085982136414827,
+      "order14_minus_order10_utility": -0.01734829421756945,
+      "independent_equation_checks": {
+        "baseline": {
+          "maximum_absolute_absorption_error": 0.0,
+          "maximum_absolute_reverberation_time_error_s": 0.0,
+          "maximum_absolute_path_energy_error": 5.204170427930421e-18,
+          "maximum_absolute_c50_error_db": 1.3322676295501878e-14,
+          "maximum_absolute_direct_distance_error_m": 0.0,
+          "path_counts_exact": true,
+          "minimum_path_count": 1561,
+          "maximum_path_count": 1561
+        },
+        "nominal_reference": {
+          "maximum_absolute_absorption_error": 0.0,
+          "maximum_absolute_reverberation_time_error_s": 0.0,
+          "maximum_absolute_path_energy_error": 3.469446951953614e-18,
+          "maximum_absolute_c50_error_db": 1.3322676295501878e-14,
+          "maximum_absolute_direct_distance_error_m": 0.0,
+          "path_counts_exact": true,
+          "minimum_path_count": 1561,
+          "maximum_path_count": 1561
+        },
+        "robust_reference": {
+          "maximum_absolute_absorption_error": 0.0,
+          "maximum_absolute_reverberation_time_error_s": 0.0,
+          "maximum_absolute_path_energy_error": 3.0357660829594124e-18,
+          "maximum_absolute_c50_error_db": 1.7763568394002505e-14,
+          "maximum_absolute_direct_distance_error_m": 0.0,
+          "path_counts_exact": true,
+          "minimum_path_count": 1561,
+          "maximum_path_count": 1561
+        }
+      },
+      "independent_shifted_utility_checks": [
+        {
+          "design": "baseline",
+          "shift": "nominal",
+          "independent_utility": 0.5518373274001667,
+          "evaluator_utility": 0.5518373274001667,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "baseline",
+          "shift": "source_installation_offset",
+          "independent_utility": 0.5512069897017488,
+          "evaluator_utility": 0.5512069897017486,
+          "absolute_utility_error": 1.1102230246251565e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "baseline",
+          "shift": "audience_layout_shift",
+          "independent_utility": 0.5527851444458377,
+          "evaluator_utility": 0.5527851444458377,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "baseline",
+          "shift": "cool_geometry_survey_shift",
+          "independent_utility": 0.5508135790011697,
+          "evaluator_utility": 0.5508135790011697,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "baseline",
+          "shift": "material_ageing",
+          "independent_utility": 0.5708650302079451,
+          "evaluator_utility": 0.5708650302079452,
+          "absolute_utility_error": 1.1102230246251565e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "baseline",
+          "shift": "higher_order_combined_shift",
+          "independent_utility": 0.525979070755847,
+          "evaluator_utility": 0.5259790707558469,
+          "absolute_utility_error": 1.1102230246251565e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "nominal",
+          "independent_utility": 0.6259465078590521,
+          "evaluator_utility": 0.6259465078590521,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "source_installation_offset",
+          "independent_utility": 0.6252582631199768,
+          "evaluator_utility": 0.6252582631199766,
+          "absolute_utility_error": 2.220446049250313e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "audience_layout_shift",
+          "independent_utility": 0.6255174701739744,
+          "evaluator_utility": 0.6255174701739745,
+          "absolute_utility_error": 1.1102230246251565e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "cool_geometry_survey_shift",
+          "independent_utility": 0.6170765711044631,
+          "evaluator_utility": 0.6170765711044631,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "material_ageing",
+          "independent_utility": 0.6165568635298235,
+          "evaluator_utility": 0.6165568635298236,
+          "absolute_utility_error": 1.1102230246251565e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "higher_order_combined_shift",
+          "independent_utility": 0.5916877334645572,
+          "evaluator_utility": 0.5916877334645569,
+          "absolute_utility_error": 2.220446049250313e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "nominal",
+          "independent_utility": 0.6252213545949219,
+          "evaluator_utility": 0.6252213545949219,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "source_installation_offset",
+          "independent_utility": 0.6251689696884806,
+          "evaluator_utility": 0.6251689696884806,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "audience_layout_shift",
+          "independent_utility": 0.62531264251048,
+          "evaluator_utility": 0.6253126425104801,
+          "absolute_utility_error": 1.1102230246251565e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "cool_geometry_survey_shift",
+          "independent_utility": 0.6174698892679799,
+          "evaluator_utility": 0.6174698892679799,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "material_ageing",
+          "independent_utility": 0.6189102890164918,
+          "evaluator_utility": 0.6189102890164919,
+          "absolute_utility_error": 1.1102230246251565e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "higher_order_combined_shift",
+          "independent_utility": 0.5938166073820875,
+          "evaluator_utility": 0.5938166073820875,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "heldout_meeting_room",
+      "split": "heldout",
+      "receiver_count": 9,
+      "room_dimensions_m": [
+        6.1,
+        4.6,
+        2.8
+      ],
+      "maximum_treatment_area_m2": 17.0,
+      "baseline_nominal_utility": 0.6544942329996405,
+      "nominal_reference_utility": 0.6694315812807985,
+      "nominal_reference_headroom": 0.014937348281158003,
+      "baseline_robust_utility": 0.6236907899928779,
+      "robust_reference_utility": 0.6648764863500418,
+      "robust_reference_headroom": 0.04118569635716396,
+      "nominal_reference_design": [
+        0.5505586611755351,
+        3.968966822778861,
+        2.1433102099398065,
+        1.2101416328580454,
+        5.828249388856862,
+        0.004702059671155501,
+        0.004708299848607134,
+        0.0,
+        9.94484931437902
+      ],
+      "robust_reference_design": [
+        0.5501748268236919,
+        4.0,
+        2.149643892044799,
+        4.389986629342583,
+        7.573523772129234,
+        4.779709806774042,
+        0.0021673366536498284,
+        0.0,
+        0.0035068243706688792
+      ],
+      "nominal_reference_family": [
+        0.00044692894042804195,
+        0.9908725949349592,
+        0.9944251749498387,
+        0.9995676879772759,
+        0.07197509888044507,
+        0.3466444048141214,
+        0.00027966247965032165,
+        0.00028003362413202347,
+        0.9997199663758679,
+        0.5914857346598871
+      ],
+      "robust_reference_family": [
+        0.00013986145895348494,
+        1.0,
+        0.999703243370666,
+        0.9852290805453047,
+        0.5672139946488309,
+        0.9785470970786576,
+        0.6175686902191081,
+        0.0002800335820725831,
+        0.9997199664179274,
+        0.0004531038537848225
+      ],
+      "nominal_reference_axes": {
+        "clarity_utility": 0.9909403142881649,
+        "reverberation_utility": 0.05381468942252151,
+        "uniformity_utility": 0.9765102115229265,
+        "mean_c50_db": 8.885916824270724,
+        "twentieth_percentile_c50_db": 8.049110937193914,
+        "mean_absolute_log_rt_error": 0.9466999977849132,
+        "mean_spatial_level_std_db": 0.7555112418870386
+      },
+      "first_order_proxy_utility": 0.6538620511163535,
+      "proxy_minus_nominal_utility": -0.015569530164444956,
+      "order14_utility": 0.6464854364566395,
+      "order14_minus_order10_utility": -0.02294614482415902,
+      "independent_equation_checks": {
+        "baseline": {
+          "maximum_absolute_absorption_error": 0.0,
+          "maximum_absolute_reverberation_time_error_s": 0.0,
+          "maximum_absolute_path_energy_error": 1.3877787807814457e-17,
+          "maximum_absolute_c50_error_db": 1.5987211554602254e-14,
+          "maximum_absolute_direct_distance_error_m": 0.0,
+          "path_counts_exact": true,
+          "minimum_path_count": 1561,
+          "maximum_path_count": 1561
+        },
+        "nominal_reference": {
+          "maximum_absolute_absorption_error": 0.0,
+          "maximum_absolute_reverberation_time_error_s": 0.0,
+          "maximum_absolute_path_energy_error": 1.0408340855860843e-17,
+          "maximum_absolute_c50_error_db": 1.5987211554602254e-14,
+          "maximum_absolute_direct_distance_error_m": 0.0,
+          "path_counts_exact": true,
+          "minimum_path_count": 1561,
+          "maximum_path_count": 1561
+        },
+        "robust_reference": {
+          "maximum_absolute_absorption_error": 0.0,
+          "maximum_absolute_reverberation_time_error_s": 0.0,
+          "maximum_absolute_path_energy_error": 1.214306433183765e-17,
+          "maximum_absolute_c50_error_db": 1.5987211554602254e-14,
+          "maximum_absolute_direct_distance_error_m": 0.0,
+          "path_counts_exact": true,
+          "minimum_path_count": 1561,
+          "maximum_path_count": 1561
+        }
+      },
+      "independent_shifted_utility_checks": [
+        {
+          "design": "baseline",
+          "shift": "nominal",
+          "independent_utility": 0.6544942329996405,
+          "evaluator_utility": 0.6544942329996405,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "baseline",
+          "shift": "source_installation_offset",
+          "independent_utility": 0.6526257517142544,
+          "evaluator_utility": 0.6526257517142546,
+          "absolute_utility_error": 2.220446049250313e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "baseline",
+          "shift": "audience_layout_shift",
+          "independent_utility": 0.6559586406203705,
+          "evaluator_utility": 0.6559586406203706,
+          "absolute_utility_error": 1.1102230246251565e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "baseline",
+          "shift": "cool_geometry_survey_shift",
+          "independent_utility": 0.6522650180642064,
+          "evaluator_utility": 0.6522650180642062,
+          "absolute_utility_error": 2.220446049250313e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "baseline",
+          "shift": "material_ageing",
+          "independent_utility": 0.6784262745951695,
+          "evaluator_utility": 0.6784262745951695,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "baseline",
+          "shift": "higher_order_combined_shift",
+          "independent_utility": 0.6236907899928779,
+          "evaluator_utility": 0.6236907899928779,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "nominal",
+          "independent_utility": 0.6694315812807985,
+          "evaluator_utility": 0.6694315812807985,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "source_installation_offset",
+          "independent_utility": 0.66873704152861,
+          "evaluator_utility": 0.6687370415286101,
+          "absolute_utility_error": 1.1102230246251565e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "audience_layout_shift",
+          "independent_utility": 0.6694978285405498,
+          "evaluator_utility": 0.6694978285405498,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "cool_geometry_survey_shift",
+          "independent_utility": 0.6685471834461043,
+          "evaluator_utility": 0.6685471834461042,
+          "absolute_utility_error": 1.1102230246251565e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "material_ageing",
+          "independent_utility": 0.6845366025153141,
+          "evaluator_utility": 0.6845366025153141,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "higher_order_combined_shift",
+          "independent_utility": 0.639583867725347,
+          "evaluator_utility": 0.639583867725347,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "nominal",
+          "independent_utility": 0.6652042855341789,
+          "evaluator_utility": 0.6652042855341789,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "source_installation_offset",
+          "independent_utility": 0.6648771523928872,
+          "evaluator_utility": 0.6648771523928871,
+          "absolute_utility_error": 1.1102230246251565e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "audience_layout_shift",
+          "independent_utility": 0.6658683112409035,
+          "evaluator_utility": 0.6658683112409035,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "cool_geometry_survey_shift",
+          "independent_utility": 0.6697984019044325,
+          "evaluator_utility": 0.6697984019044325,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "material_ageing",
+          "independent_utility": 0.6835324857935449,
+          "evaluator_utility": 0.6835324857935449,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "higher_order_combined_shift",
+          "independent_utility": 0.6648764863500418,
+          "evaluator_utility": 0.6648764863500418,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "heldout_rehearsal_room",
+      "split": "heldout",
+      "receiver_count": 12,
+      "room_dimensions_m": [
+        12.0,
+        9.0,
+        5.2
+      ],
+      "maximum_treatment_area_m2": 70.0,
+      "baseline_nominal_utility": 0.6833753389883934,
+      "nominal_reference_utility": 0.7971836762924286,
+      "nominal_reference_headroom": 0.11380833730403517,
+      "baseline_robust_utility": 0.5768347393343224,
+      "robust_reference_utility": 0.7548610205844246,
+      "robust_reference_headroom": 0.17802628125010223,
+      "nominal_reference_design": [
+        0.8806360692909669,
+        7.593250952502536,
+        1.1931075640857363,
+        0.012381053119078523,
+        26.485572606080225,
+        12.59890022274933,
+        6.650666784462574,
+        0.0,
+        6.869491174660882
+      ],
+      "robust_reference_design": [
+        0.8845040954114345,
+        1.2455809658770782,
+        1.2368131794484656,
+        0.09332832684855863,
+        25.83053662592367,
+        0.07483376251722035,
+        21.350030991272746,
+        0.0,
+        18.686995973520794
+      ],
+      "nominal_reference_family": [
+        0.01494442404437412,
+        0.9418929932146479,
+        0.040481549602494005,
+        0.7516715977296015,
+        0.0002800335820725766,
+        0.599048376482207,
+        0.2849608289067791,
+        0.150424202603112,
+        0.9997199664179274,
+        0.15537355361895192
+      ],
+      "robust_reference_family": [
+        0.0168312660543583,
+        0.0350829951252969,
+        0.0594839910645502,
+        0.9433675097154712,
+        0.0015622183982892215,
+        0.4323761168480089,
+        0.0012526387707272337,
+        0.3573771473770556,
+        0.9923165587230501,
+        0.31280073161454786
+      ],
+      "nominal_reference_axes": {
+        "clarity_utility": 0.585215826664235,
+        "reverberation_utility": 0.9846905157374103,
+        "uniformity_utility": 0.9659481033808048,
+        "mean_c50_db": 2.8738175150683025,
+        "twentieth_percentile_c50_db": 1.9237754849495605,
+        "mean_absolute_log_rt_error": 0.03710439123716263,
+        "mean_spatial_level_std_db": 0.9141451760111625
+      },
+      "first_order_proxy_utility": 0.9466000529447609,
+      "proxy_minus_nominal_utility": 0.14941637665233232,
+      "order14_utility": 0.7615334074919894,
+      "order14_minus_order10_utility": -0.0356502688004392,
+      "independent_equation_checks": {
+        "baseline": {
+          "maximum_absolute_absorption_error": 0.0,
+          "maximum_absolute_reverberation_time_error_s": 0.0,
+          "maximum_absolute_path_energy_error": 4.7704895589362195e-18,
+          "maximum_absolute_c50_error_db": 1.7319479184152442e-14,
+          "maximum_absolute_direct_distance_error_m": 0.0,
+          "path_counts_exact": true,
+          "minimum_path_count": 1561,
+          "maximum_path_count": 1561
+        },
+        "nominal_reference": {
+          "maximum_absolute_absorption_error": 0.0,
+          "maximum_absolute_reverberation_time_error_s": 0.0,
+          "maximum_absolute_path_energy_error": 5.204170427930421e-18,
+          "maximum_absolute_c50_error_db": 1.509903313490213e-14,
+          "maximum_absolute_direct_distance_error_m": 0.0,
+          "path_counts_exact": true,
+          "minimum_path_count": 1561,
+          "maximum_path_count": 1561
+        },
+        "robust_reference": {
+          "maximum_absolute_absorption_error": 0.0,
+          "maximum_absolute_reverberation_time_error_s": 0.0,
+          "maximum_absolute_path_energy_error": 3.0357660829594124e-18,
+          "maximum_absolute_c50_error_db": 2.1316282072803006e-14,
+          "maximum_absolute_direct_distance_error_m": 0.0,
+          "path_counts_exact": true,
+          "minimum_path_count": 1561,
+          "maximum_path_count": 1561
+        }
+      },
+      "independent_shifted_utility_checks": [
+        {
+          "design": "baseline",
+          "shift": "nominal",
+          "independent_utility": 0.6833753389883935,
+          "evaluator_utility": 0.6833753389883934,
+          "absolute_utility_error": 1.1102230246251565e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "baseline",
+          "shift": "source_installation_offset",
+          "independent_utility": 0.6836046822894292,
+          "evaluator_utility": 0.6836046822894293,
+          "absolute_utility_error": 1.1102230246251565e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "baseline",
+          "shift": "audience_layout_shift",
+          "independent_utility": 0.6838666987570214,
+          "evaluator_utility": 0.6838666987570213,
+          "absolute_utility_error": 1.1102230246251565e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "baseline",
+          "shift": "cool_geometry_survey_shift",
+          "independent_utility": 0.6427538893292352,
+          "evaluator_utility": 0.6427538893292353,
+          "absolute_utility_error": 1.1102230246251565e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "baseline",
+          "shift": "material_ageing",
+          "independent_utility": 0.59088545103378,
+          "evaluator_utility": 0.59088545103378,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "baseline",
+          "shift": "higher_order_combined_shift",
+          "independent_utility": 0.5768347393343223,
+          "evaluator_utility": 0.5768347393343224,
+          "absolute_utility_error": 1.1102230246251565e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "nominal",
+          "independent_utility": 0.7971836762924285,
+          "evaluator_utility": 0.7971836762924286,
+          "absolute_utility_error": 1.1102230246251565e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "source_installation_offset",
+          "independent_utility": 0.7963634653281688,
+          "evaluator_utility": 0.7963634653281688,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "audience_layout_shift",
+          "independent_utility": 0.7973612347754853,
+          "evaluator_utility": 0.7973612347754853,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "cool_geometry_survey_shift",
+          "independent_utility": 0.7837492776885173,
+          "evaluator_utility": 0.7837492776885173,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "material_ageing",
+          "independent_utility": 0.7503181866661444,
+          "evaluator_utility": 0.7503181866661441,
+          "absolute_utility_error": 2.220446049250313e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "higher_order_combined_shift",
+          "independent_utility": 0.7311047850048115,
+          "evaluator_utility": 0.7311047850048115,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "nominal",
+          "independent_utility": 0.7683301468863085,
+          "evaluator_utility": 0.7683301468863085,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "source_installation_offset",
+          "independent_utility": 0.7663178013679504,
+          "evaluator_utility": 0.7663178013679504,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "audience_layout_shift",
+          "independent_utility": 0.7679130002718599,
+          "evaluator_utility": 0.7679130002718598,
+          "absolute_utility_error": 1.1102230246251565e-16,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "cool_geometry_survey_shift",
+          "independent_utility": 0.7790212722749366,
+          "evaluator_utility": 0.7790212722749366,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "material_ageing",
+          "independent_utility": 0.7928902331427387,
+          "evaluator_utility": 0.7928902331427387,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "higher_order_combined_shift",
+          "independent_utility": 0.7548610205844246,
+          "evaluator_utility": 0.7548610205844246,
+          "absolute_utility_error": 0.0,
+          "geometry_feasibility_exact": true
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "reference_recalibration": {
+    "performed": true,
+    "records": [
+      {
+        "name": "dev_seminar_room",
+        "split": "development",
+        "nominal": {
+          "objective": "nominal utility",
+          "deterministic": true,
+          "starting_parameters": [
+            0.0102134022891274,
+            0.9856712791386848,
+            0.9806331424732915,
+            0.6456278981631443,
+            0.702569824716925,
+            0.9998649201658294,
+            6.33365350647514e-08,
+            0.4568747608253904,
+            0.9998057354591443,
+            0.00019426454334551987
+          ],
+          "starting_utility": 0.7069778005002213,
+          "best_visited_parameters": [
+            0.010204245303301268,
+            0.9856700494024648,
+            0.9806331424732915,
+            0.6454353899043189,
+            0.6988736701311893,
+            0.9998649201658294,
+            6.33365350647514e-08,
+            0.4568747608253904,
+            0.9998057354591443,
+            0.00019426454334551987
+          ],
+          "best_visited_utility": 0.7069781217395105,
+          "best_visited_minus_declared_utility": 3.212392891693838e-07,
+          "terminal_parameters": [
+            0.010204245303301268,
+            0.9856700494024648,
+            0.9806331424732915,
+            0.6454353899043189,
+            0.6988736701311893,
+            0.9997486684405584,
+            0.00028003358207258307,
+            0.45622652787603285,
+            0.9997199664179274,
+            0.0002800335820725831
+          ],
+          "terminal_utility": 0.7069758659262879,
+          "terminal_minus_best_visited_utility": -2.255813222551417e-06,
+          "optimizer_success": true,
+          "optimizer_message": "Optimization terminated successfully.",
+          "optimizer_iterations": 1,
+          "optimizer_reported_function_evaluations": 151,
+          "tracked_function_evaluations": 151,
+          "passed": true
+        },
+        "robust": {
+          "objective": "minimum utility over five sealed shifts",
+          "deterministic": true,
+          "starting_parameters": [
+            0.008185209759016442,
+            0.9719839494894887,
+            0.9758213899926714,
+            0.9210240311696176,
+            0.8008586126484865,
+            0.9768509229171045,
+            0.0003998040636610355,
+            0.7549875807430213,
+            0.9996001961652123,
+            0.06610342513644069
+          ],
+          "starting_utility": 0.6673984633378331,
+          "best_visited_parameters": [
+            0.008185209759016442,
+            0.9719839494894887,
+            0.9758213899926714,
+            0.9210240311696176,
+            0.8008586126484865,
+            0.9768509229171045,
+            0.0003998040636610355,
+            0.7549875807430213,
+            0.9996001961652123,
+            0.06610342513644069
+          ],
+          "best_visited_utility": 0.6673984633378331,
+          "best_visited_minus_declared_utility": 0.0,
+          "terminal_parameters": [
+            0.06221936361319752,
+            0.9401798937410829,
+            0.9996851832790841,
+            0.8795783045481207,
+            0.8000864577220489,
+            0.9962426452034788,
+            0.0002800335820725831,
+            0.7588690611988349,
+            0.9997199664179274,
+            0.00028003358207258355
+          ],
+          "terminal_utility": 0.6669932463622019,
+          "terminal_minus_best_visited_utility": -0.0004052169756312285,
+          "optimizer_success": true,
+          "optimizer_message": "Optimization terminated successfully.",
+          "optimizer_iterations": 1,
+          "optimizer_reported_function_evaluations": 150,
+          "tracked_function_evaluations": 150,
+          "passed": true
+        }
+      },
+      {
+        "name": "dev_classroom",
+        "split": "development",
+        "nominal": {
+          "objective": "nominal utility",
+          "deterministic": true,
+          "starting_parameters": [
+            0.010141385434986527,
+            0.6192170654121913,
+            0.9860725173630424,
+            0.883487394365305,
+            0.9204849234858842,
+            0.8742509234231991,
+            0.0002800335820725831,
+            0.781618136955927,
+            0.9997199664179274,
+            0.0002800335820725831
+          ],
+          "starting_utility": 0.6691685033196179,
+          "best_visited_parameters": [
+            0.01006257118083564,
+            0.6191611253900658,
+            0.9863672376290836,
+            0.883487394365305,
+            0.9204849234858842,
+            0.8742509234231991,
+            0.0002800335820725831,
+            0.781618136955927,
+            0.9997199664179274,
+            0.0002800335820725831
+          ],
+          "best_visited_utility": 0.669168835200809,
+          "best_visited_minus_declared_utility": 3.3188119119564874e-07,
+          "terminal_parameters": [
+            0.01006257118083564,
+            0.6191611253900658,
+            0.9863672376290836,
+            0.8834155258230894,
+            0.9200964989354476,
+            0.8702976993231262,
+            0.0002800335820725831,
+            0.7818210225112989,
+            0.9997199664179274,
+            0.0002800335820725831
+          ],
+          "terminal_utility": 0.6691688195547536,
+          "terminal_minus_best_visited_utility": -1.5646055451234986e-08,
+          "optimizer_success": true,
+          "optimizer_message": "Optimization terminated successfully.",
+          "optimizer_iterations": 1,
+          "optimizer_reported_function_evaluations": 151,
+          "tracked_function_evaluations": 151,
+          "passed": true
+        },
+        "robust": {
+          "objective": "minimum utility over five sealed shifts",
+          "deterministic": true,
+          "starting_parameters": [
+            0.016322062071081875,
+            0.9774425983565976,
+            0.8610489876652755,
+            0.9993405598870205,
+            0.9210975144371898,
+            0.9992267563039864,
+            1.1401007877623578e-07,
+            0.9240235884893178,
+            0.9996001958858799,
+            0.00039980410418538376
+          ],
+          "starting_utility": 0.6389330916222733,
+          "best_visited_parameters": [
+            0.016322062071081875,
+            0.9774425983565976,
+            0.8610489876652755,
+            0.9993405598870205,
+            0.9210975144371898,
+            0.9992267563039864,
+            1.1401007877623578e-07,
+            0.9240235884893178,
+            0.9996001958858799,
+            0.00039980410418538376
+          ],
+          "best_visited_utility": 0.6389330916222733,
+          "best_visited_minus_declared_utility": 0.0,
+          "terminal_parameters": [
+            0.09126757625391133,
+            0.9671400586888877,
+            0.9112159766280722,
+            0.9997833188787667,
+            0.8770487571570128,
+            0.9991512957445904,
+            0.00028003358207258307,
+            0.9286909023977205,
+            0.9997199664179274,
+            0.0002800335820725831
+          ],
+          "terminal_utility": 0.6383591601621854,
+          "terminal_minus_best_visited_utility": -0.0005739314600878842,
+          "optimizer_success": true,
+          "optimizer_message": "Optimization terminated successfully.",
+          "optimizer_iterations": 1,
+          "optimizer_reported_function_evaluations": 152,
+          "tracked_function_evaluations": 152,
+          "passed": true
+        }
+      },
+      {
+        "name": "dev_project_studio",
+        "split": "development",
+        "nominal": {
+          "objective": "nominal utility",
+          "deterministic": true,
+          "starting_parameters": [
+            0.01490082348485456,
+            0.9182218085460152,
+            0.9742896898230755,
+            0.9100955202642369,
+            0.04817489183518992,
+            0.7645251431450314,
+            2.0061425791235505e-07,
+            0.44619233658640406,
+            0.9996001958884442,
+            0.0003998032619510414
+          ],
+          "starting_utility": 0.6605054536957105,
+          "best_visited_parameters": [
+            0.01490082348485456,
+            0.9182218085460152,
+            0.9742896898230755,
+            0.9100955202642369,
+            0.04817489183518992,
+            0.7645251431450314,
+            2.0061425791235505e-07,
+            0.44619233658640406,
+            0.9996001958884442,
+            0.0003998032619510414
+          ],
+          "best_visited_utility": 0.6605054536957105,
+          "best_visited_minus_declared_utility": 0.0,
+          "terminal_parameters": [
+            0.01488518102226515,
+            0.7158418565310346,
+            0.9385495313229963,
+            0.9188409049007776,
+            0.03021747569983036,
+            0.6182338886337789,
+            0.000280033582072583,
+            0.4611596089392587,
+            0.9997199664179274,
+            0.00021725063195188174
+          ],
+          "terminal_utility": 0.6586837267146191,
+          "terminal_minus_best_visited_utility": -0.0018217269810913983,
+          "optimizer_success": true,
+          "optimizer_message": "Optimization terminated successfully.",
+          "optimizer_iterations": 1,
+          "optimizer_reported_function_evaluations": 150,
+          "tracked_function_evaluations": 150,
+          "passed": true
+        },
+        "robust": {
+          "objective": "minimum utility over five sealed shifts",
+          "deterministic": true,
+          "starting_parameters": [
+            0.046536852845286754,
+            0.5798400212451861,
+            0.9997942461024703,
+            0.9997634410782749,
+            0.11699605681942633,
+            0.8844152245642988,
+            0.00028023922445133854,
+            0.9790159026822222,
+            0.9997200543763927,
+            2.4962374007143733e-08
+          ],
+          "starting_utility": 0.6285541953369018,
+          "best_visited_parameters": [
+            0.011641281723011453,
+            0.5782676068741696,
+            0.9996798535227909,
+            0.9997634410805595,
+            0.11820889592384233,
+            0.7742607714895683,
+            0.00027982793969382727,
+            0.9790537559324312,
+            0.9997198784594621,
+            0.0005926460989954175
+          ],
+          "best_visited_utility": 0.6286062853564505,
+          "best_visited_minus_declared_utility": 5.209001954864512e-05,
+          "terminal_parameters": [
+            0.03016335616180946,
+            0.5793641457763846,
+            0.9997526420874868,
+            0.9997634410793805,
+            0.11740160620202533,
+            0.8309707005767855,
+            0.0002800401759844491,
+            0.9789844307797841,
+            0.9997199692383109,
+            0.000162984838069055
+          ],
+          "terminal_utility": 0.6285779540601004,
+          "terminal_minus_best_visited_utility": -2.8331296350048163e-05,
+          "optimizer_success": true,
+          "optimizer_message": "Optimization terminated successfully.",
+          "optimizer_iterations": 2,
+          "optimizer_reported_function_evaluations": 372,
+          "tracked_function_evaluations": 372,
+          "passed": true
+        }
+      },
+      {
+        "name": "dev_lecture_room",
+        "split": "development",
+        "nominal": {
+          "objective": "nominal utility",
+          "deterministic": true,
+          "starting_parameters": [
+            0.009184462341723421,
+            0.6235471975852529,
+            0.920898175305481,
+            0.9989256458818765,
+            0.0003697119139308147,
+            0.9996001986596291,
+            1.0538153136452561e-07,
+            0.6180713305947814,
+            0.9996001958808053,
+            0.04096167054066563
+          ],
+          "starting_utility": 0.6259465078590521,
+          "best_visited_parameters": [
+            0.009184462341723421,
+            0.6235471975852529,
+            0.920898175305481,
+            0.9989256458818765,
+            0.0003697119139308147,
+            0.9996001986596291,
+            1.0538153136452561e-07,
+            0.6180713305947814,
+            0.9996001958808053,
+            0.04096167054066563
+          ],
+          "best_visited_utility": 0.6259465078590521,
+          "best_visited_minus_declared_utility": 0.0,
+          "terminal_parameters": [
+            0.036534302745844904,
+            0.41890353124728696,
+            0.9218408842897471,
+            0.9997599337876831,
+            0.0020740076598060797,
+            0.9997199664179274,
+            0.00028003358207258307,
+            0.9997199664179275,
+            0.9997199664179274,
+            0.18748683040969805
+          ],
+          "terminal_utility": 0.6257820322270476,
+          "terminal_minus_best_visited_utility": -0.00016447563200450155,
+          "optimizer_success": true,
+          "optimizer_message": "Optimization terminated successfully.",
+          "optimizer_iterations": 1,
+          "optimizer_reported_function_evaluations": 168,
+          "tracked_function_evaluations": 168,
+          "passed": true
+        },
+        "robust": {
+          "objective": "minimum utility over five sealed shifts",
+          "deterministic": true,
+          "starting_parameters": [
+            0.039186818907201944,
+            0.6230589874905362,
+            0.999396954598148,
+            0.9999626075540397,
+            0.18965715259516266,
+            0.8218934774413257,
+            0.0002800335820725831,
+            0.9999301242439145,
+            0.9997199664179274,
+            0.00028914822215595794
+          ],
+          "starting_utility": 0.5938166073820875,
+          "best_visited_parameters": [
+            0.039186818907201944,
+            0.6230589874905362,
+            0.999396954598148,
+            0.9999626075540397,
+            0.18965715259516266,
+            0.8218934774413257,
+            0.0002800335820725831,
+            0.9999301242439145,
+            0.9997199664179274,
+            0.00028914822215595794
+          ],
+          "best_visited_utility": 0.5938166073820875,
+          "best_visited_minus_declared_utility": 0.0,
+          "terminal_parameters": [
+            0.039186818907201944,
+            0.6230589874905362,
+            0.999396936273368,
+            0.9997634410823713,
+            0.18936811454460784,
+            0.7641511211078315,
+            0.0002800335820725831,
+            0.9997003947911929,
+            0.9997199664179274,
+            0.000280033582072583
+          ],
+          "terminal_utility": 0.5938110005859734,
+          "terminal_minus_best_visited_utility": -5.606796114165924e-06,
+          "optimizer_success": true,
+          "optimizer_message": "Optimization terminated successfully.",
+          "optimizer_iterations": 1,
+          "optimizer_reported_function_evaluations": 175,
+          "tracked_function_evaluations": 175,
+          "passed": true
+        }
+      },
+      {
+        "name": "heldout_meeting_room",
+        "split": "heldout",
+        "nominal": {
+          "objective": "nominal utility",
+          "deterministic": true,
+          "starting_parameters": [
+            0.00044692894042804195,
+            0.9908725949349592,
+            0.9944251749498387,
+            0.9995676879772759,
+            0.07197509888044507,
+            0.3466444048141214,
+            0.00027966247965032165,
+            0.00028003362413202347,
+            0.9997199663758679,
+            0.5914857346598871
+          ],
+          "starting_utility": 0.6694315812807985,
+          "best_visited_parameters": [
+            0.00044692894042804195,
+            0.9908725949349592,
+            0.9944251749498387,
+            0.9995676879772759,
+            0.07197509888044507,
+            0.3466444048141214,
+            0.00027966247965032165,
+            0.00028003362413202347,
+            0.9997199663758679,
+            0.5914857346598871
+          ],
+          "best_visited_utility": 0.6694315812807985,
+          "best_visited_minus_declared_utility": 0.0,
+          "terminal_parameters": [
+            0.0004469289404280427,
+            0.9829224020490434,
+            0.9987968385741643,
+            0.9997231008920197,
+            0.07263991386778502,
+            0.346663582777576,
+            0.0002800335820725831,
+            0.000280033582072583,
+            0.9997199664179274,
+            0.5915700197368663
+          ],
+          "terminal_utility": 0.6693769148611652,
+          "terminal_minus_best_visited_utility": -5.466641963325358e-05,
+          "optimizer_success": true,
+          "optimizer_message": "Optimization terminated successfully.",
+          "optimizer_iterations": 1,
+          "optimizer_reported_function_evaluations": 162,
+          "tracked_function_evaluations": 162,
+          "passed": true
+        },
+        "robust": {
+          "objective": "minimum utility over five sealed shifts",
+          "deterministic": true,
+          "starting_parameters": [
+            0.00013986145895348494,
+            1.0,
+            0.999703243370666,
+            0.9852290805453047,
+            0.5672139946488309,
+            0.9785470970786576,
+            0.6175686902191081,
+            0.0002800335820725831,
+            0.9997199664179274,
+            0.0004531038537848225
+          ],
+          "starting_utility": 0.6648764863500418,
+          "best_visited_parameters": [
+            0.00013986145895348494,
+            1.0,
+            0.999703243370666,
+            0.9852290805453047,
+            0.5672139946488309,
+            0.9785470970786576,
+            0.6175686902191081,
+            0.0002800335820725831,
+            0.9997199664179274,
+            0.0004531038537848225
+          ],
+          "best_visited_utility": 0.6648764863500418,
+          "best_visited_minus_declared_utility": 0.0,
+          "terminal_parameters": [
+            0.0003204262670581088,
+            0.7782078896091151,
+            0.964698816243444,
+            0.9997634412900525,
+            0.5143416025819787,
+            0.9785470970786531,
+            0.617523116980379,
+            0.0002800335820725831,
+            0.9997199664179274,
+            0.0004531038537848225
+          ],
+          "terminal_utility": 0.6640154246089526,
+          "terminal_minus_best_visited_utility": -0.0008610617410892418,
+          "optimizer_success": true,
+          "optimizer_message": "Optimization terminated successfully.",
+          "optimizer_iterations": 1,
+          "optimizer_reported_function_evaluations": 166,
+          "tracked_function_evaluations": 166,
+          "passed": true
+        }
+      },
+      {
+        "name": "heldout_rehearsal_room",
+        "split": "heldout",
+        "nominal": {
+          "objective": "nominal utility",
+          "deterministic": true,
+          "starting_parameters": [
+            0.01494442404437412,
+            0.9418929932146479,
+            0.040481549602494005,
+            0.7516715977296015,
+            0.0002800335820725766,
+            0.599048376482207,
+            0.2849608289067791,
+            0.150424202603112,
+            0.9997199664179274,
+            0.15537355361895192
+          ],
+          "starting_utility": 0.7971836762924285,
+          "best_visited_parameters": [
+            0.015045589988727254,
+            0.9863289387099766,
+            0.040481549602494005,
+            0.7516715977296015,
+            0.0002800335820725766,
+            0.599048376482207,
+            0.2849608289067791,
+            0.150424202603112,
+            0.9997199664179274,
+            0.15537355361895192
+          ],
+          "best_visited_utility": 0.7976231852485823,
+          "best_visited_minus_declared_utility": 0.00043950895615385566,
+          "terminal_parameters": [
+            0.015045589988727254,
+            0.9863289387099766,
+            0.5420233463974329,
+            0.7463851165870202,
+            0.000280033582072583,
+            0.610473321535428,
+            0.304701600216083,
+            0.11723850059387297,
+            0.9997199664179274,
+            0.16141764081247587
+          ],
+          "terminal_utility": 0.7967210247411063,
+          "terminal_minus_best_visited_utility": -0.0009021605074760464,
+          "optimizer_success": true,
+          "optimizer_message": "Optimization terminated successfully.",
+          "optimizer_iterations": 1,
+          "optimizer_reported_function_evaluations": 126,
+          "tracked_function_evaluations": 126,
+          "passed": true
+        },
+        "robust": {
+          "objective": "minimum utility over five sealed shifts",
+          "deterministic": true,
+          "starting_parameters": [
+            0.0168312660543583,
+            0.0350829951252969,
+            0.0594839910645502,
+            0.9433675097154712,
+            0.0015622183982892215,
+            0.4323761168480089,
+            0.0012526387707272337,
+            0.3573771473770556,
+            0.9923165587230501,
+            0.31280073161454786
+          ],
+          "starting_utility": 0.7548610205844246,
+          "best_visited_parameters": [
+            0.0168312660543583,
+            0.0350829951252969,
+            0.0594839910645502,
+            0.9433675097154712,
+            0.0015622183982892215,
+            0.4323761168480089,
+            0.0012526387707272337,
+            0.3573771473770556,
+            0.9923165587230501,
+            0.31280073161454786
+          ],
+          "best_visited_utility": 0.7548610205844246,
+          "best_visited_minus_declared_utility": 0.0,
+          "terminal_parameters": [
+            0.022427594979973764,
+            0.5329041243598891,
+            0.11294103397760692,
+            0.9304812975671477,
+            0.0002800335820725831,
+            0.4668534396397029,
+            0.015038391809320482,
+            0.32069197828929347,
+            0.9997199664179274,
+            0.32282478147929766
+          ],
+          "terminal_utility": 0.752503004343565,
+          "terminal_minus_best_visited_utility": -0.0023580162408596284,
+          "optimizer_success": true,
+          "optimizer_message": "Optimization terminated successfully.",
+          "optimizer_iterations": 1,
+          "optimizer_reported_function_evaluations": 136,
+          "tracked_function_evaluations": 136,
+          "passed": true
+        }
+      }
+    ],
+    "passed": true
+  },
+  "preflight_passed": true,
+  "determinism_check": {
+    "exact_json_replay": true,
+    "passed": true
+  },
+  "difficulty_gate": {
+    "nominal_reference_score": 1.0,
+    "nominal_reference_cross_robustness": 0.9333968646917099,
+    "nominal_reference_heldout_robustness": 0.6262229948735509,
+    "robust_reference_score": 0.9739869872961406,
+    "robust_reference_heldout_nominal_score": 0.7317354343298066,
+    "baseline_development_proxy_exact_gap": 0.10370638587095612,
+    "passed": true
+  },
+  "limitations": [
+    "The oracle assumes rectangular rooms, frequency-banded energy image sources and locally mixed absorption; it omits phase interference, diffraction, diffuse scattering and structural coupling.",
+    "The first-order proxy and order-10/order-14 models are computational models, not experimental truth.",
+    "The deterministic repository-visible rooms require server-held procedural rooms before population or leakage-resistant generalization claims.",
+    "The frozen nominal and robust witnesses are reproducible members of a ten-parameter family, not certificates of global optimality.",
+    "Architectural or product claims require hybrid wave/ray simulation and measured room impulse responses under an applicable measurement protocol.",
+    "Task calibration does not measure GPT-5.5, feedback causality, model-population performance or autonomous scientific discovery."
+  ],
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}

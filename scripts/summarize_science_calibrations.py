@@ -62,6 +62,8 @@ DEFAULT_REPORTS = (
     "experiments/gpt55_distillation_v2_b3_2026-07-23.json",
     "experiments/gpt55_hartree_fock_v2_b1_2026-07-23.json",
     "experiments/gpt55_hartree_fock_v2_b3_2026-07-23.json",
+    "experiments/gpt55_room_acoustics_v2_b1_2026-07-23.json",
+    "experiments/gpt55_room_acoustics_v2_b3_2026-07-23.json",
 )
 
 

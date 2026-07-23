@@ -4,16 +4,18 @@ Date: 2026-07-23 (UTC). These findings use trusted GPT-5.5 `greedy_rewrite` cali
 OED-v2, Pendulum-v2, GateSynthesis-v2, ActiveLawDiscovery, OPF-v2, Truss-v2, Antenna-v2,
 NMR-v2, HeatExchanger-v2, ReactionMechanismFitting-v2, GravityInversion-v2,
 OceanCurrentInversion-v2, RadiativeTransferFit-v2, LowThrustTransfer-v2,
-LidDrivenCavity-v2, EnergyBalanceModel-v2, BroadbandAbsorber-v2 and
-DistillationColumnDesign-v2 and HartreeFockSCF-v2. The 37 normal-feedback model conditions across these 19 tasks each
+LidDrivenCavity-v2, EnergyBalanceModel-v2, BroadbandAbsorber-v2,
+DistillationColumnDesign-v2, HartreeFockSCF-v2 and RoomImpulseResponse-v2. The 39 normal-feedback model conditions across these 20 tasks each
 contain one seed and proposal budget one or three. They calibrate tasks and motivate experiments;
 they are not a model leaderboard, a causal feedback study or population evidence.
 
-The portable machine record `experiments/science_calibration_summary_2026-07-23_v12.json`
-retains every top-level scalar metric, candidate lineage hash and raw trajectory SHA-256 for all
-37 normal conditions. Distillation-v2 and Hartree--Fock's additional strict diagnostics are bound
-separately by `experiments/distillation_v2_calibration_analysis_2026-07-23.json` and
-`experiments/hartree_fock_v2_calibration_analysis_2026-07-23.json`. Strict selection-blind
+The next portable machine record extends
+`experiments/science_calibration_summary_2026-07-23_v12.json` and retains every top-level
+scalar metric, candidate lineage hash and raw trajectory SHA-256 for all 39 normal conditions.
+Additional strict diagnostics for Distillation-v2, Hartree--Fock and room acoustics are bound
+separately by `experiments/distillation_v2_calibration_analysis_2026-07-23.json`,
+`experiments/hartree_fock_v2_calibration_analysis_2026-07-23.json` and
+`experiments/room_acoustics_v2_calibration_analysis_2026-07-23.json`. Strict selection-blind
 diagnostics remain in task-specific analysis because they are not normal-feedback calibrations.
 The underlying reports bind the task-specific source revision. Pendulum's initial budget-one
 run on revision `57c0e1b` is
@@ -57,6 +59,9 @@ by the corrected-contract run on `2557adb`.
 | HartreeFockSCF-v2, budget 1 | development score approximately 1.0 from one valid proposal | development/held-out robustness approximately 1.0; geometry, representation and stability axes pass | One proposal synthesizes deterministic multistart/stability search for public finite-basis systems. This is known-algorithm synthesis, not feedback learning or new chemistry. |
 | HartreeFockSCF-v2, normal budget 3 | step two/three selection scores differ by only `9.1e-15` | development robustness `1.000→0.707`, held-out robustness `0.902→1.000`; representation axes trade off | Strict positive-score incumbent replacement selects a scientifically different, non-dominating artifact below numerical materiality. Science search needs epsilon/tie and Pareto commit policies. |
 | HartreeFockSCF-v2, strict open-loop budget 3 | every proposal uses the frozen baseline parent; offline best is approximately 1.0 | selected development/held-out robustness `0.707/0.902` | Open-loop near-ceiling success shows feedback was not necessary in this one calibration, but normal/blind are single-run, token/wall-time mismatched and Azure lacks a server-side seed. |
+| RoomImpulseResponse-v2, budget 1 | selected development remains 0.0; valid rejected proposal lowers development utility `0.608→0.581` | the same proposal reaches held-out nominal score 0.419 and utility `0.669→0.699` | Development selection can reject a policy that transfers better to held-out rooms; one proposal does not establish a general tradeoff. |
+| RoomImpulseResponse-v2, normal budget 3 | all three proposals fail at runtime by reading undocumented absorption keys | no validated improvement | Contract adherence remains a distinct bottleneck from scientific sophistication; repeated aggregate zero/failure feedback does not localize the wrong key. |
+| RoomImpulseResponse-v2, strict open-loop budget 3 | frozen-parent offline best reaches development 0.754 | held-out nominal 0.742; development/held-out robustness `0.639/0.803`; all shifts remain geometry-feasible | The task retains graded headroom and transfer. The normal/open-loop contrast is single-run, Azure-random and slightly token/wall-time mismatched, so it is not evidence that removing feedback helps. |
 | ReactionMechanism-v2, budget 1 | valid proposal remains at normalized mechanism 0.0 | held-out normalized mechanism 0.0 | A complex fitter spends the assay budget on an under-informative design and abstains everywhere. |
 | ReactionMechanism-v2, budget 3 | all three proposals remain at 0.0 and are rejected | each performs one assay and abstains everywhere | More rewrite budget does not help when scalar zero feedback cannot localize whether experiment design, inference or refusal caused failure. |
 | GravityInversion-v2, budget 1 | invalid callback unpacking; development remains 0.0 | no validated improvement | A physically sophisticated implementation can still fail the executable laboratory protocol. |
@@ -457,8 +462,8 @@ Every new or rebuilt task must pass the following gate before it counts toward t
 - classical and domain baselines, followed by GPT-5.5 budget-one headroom screening; and
 - retention as an on-ramp, not a headline task, if a standard method reliably saturates it.
 
-The present inventory contains 31 internally admissible certified or candidate packages: seven
-certified and 24 candidate, with 20 quarantined. The remaining gap is approximately 19 tasks.
+The present inventory contains 32 internally admissible certified or candidate packages: seven
+certified and 25 candidate, with 19 quarantined. The remaining gap is approximately 18 tasks.
 Expansion should use procedural families spanning
 design, inverse problems, control, multifidelity validation, mechanism discovery and exact
 mathematical construction rather than cloning one scalar optimization template across domains.

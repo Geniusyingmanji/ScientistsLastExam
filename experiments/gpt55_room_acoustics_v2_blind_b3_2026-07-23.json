@@ -1,0 +1,354 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_SECURE_EVAL",
+  "evidence_scope": "MODEL_PERFORMANCE",
+  "created_at": "2026-07-23T17:58:58.372283+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "4bd362e6b96217389176fcc0da216596cde41eaf",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "/home/azureuser/workspace-gzy/zyf/frontier-science/scripts/batch_evolve.py",
+      "--tasks",
+      "Acoustics/RoomImpulseResponse",
+      "--all",
+      "--algorithms",
+      "greedy_rewrite",
+      "--feedback-modes",
+      "selection_blind",
+      "--seeds",
+      "1",
+      "--budget",
+      "3",
+      "--timeout",
+      "240",
+      "--workdir",
+      "runs/room_acoustics_v2_blind_b3",
+      "--output",
+      "experiments/gpt55_room_acoustics_v2_blind_b3_2026-07-23.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "config": {
+    "tasks": [
+      "Acoustics/RoomImpulseResponse"
+    ],
+    "algorithms": [
+      "greedy_rewrite"
+    ],
+    "feedback_modes": [
+      "selection_blind"
+    ],
+    "condition_order": "as_listed_for_even_seeds_reversed_for_odd_seeds",
+    "seeds": [
+      1
+    ],
+    "budget": 3,
+    "timeout_s": 240.0,
+    "work_root": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/room_acoustics_v2_blind_b3",
+    "llm_condition_sha256": "5b0df4671481f6b3505155bc6c5654a64c4da5591422fb806904e7d0f44fc4d2",
+    "llm": {
+      "wire": "responses",
+      "endpoint_sha256": "b22995a1fcaf8ad713ac37716f006c717313dfdebd357ac02a077a5582650bb6",
+      "model": "gpt-5.5",
+      "max_output_tokens": 16000,
+      "temperature": null,
+      "reasoning_effort": "low",
+      "input_cost_per_million": null,
+      "output_cost_per_million": null,
+      "server_side_seed_control": false
+    }
+  },
+  "runs": [
+    {
+      "task": "Acoustics/RoomImpulseResponse",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "selection_blind",
+      "seed": 1,
+      "baseline": 0.0,
+      "best": 0.7536835650077495,
+      "accepted": 2,
+      "evaluated": 4,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/room_acoustics_v2_blind_b3/Acoustics__RoomImpulseResponse/greedy_rewrite/selection_blind/seed_1",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 4,
+        "budget_units": 4,
+        "best_score": 0.7536835650077495,
+        "best_so_far_auc": 0.21747420689110852,
+        "valid_rate": 0.75,
+        "accepted": 2,
+        "wall_seconds": 173.77971770241857,
+        "llm": {
+          "calls": 3,
+          "provider_usage_records": 3,
+          "input_tokens": 4500,
+          "output_tokens": 12176,
+          "total_tokens": 16676,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "Acoustics/RoomImpulseResponse",
+        "seed": 1,
+        "baseline_score": 0.0,
+        "budget": 3,
+        "feedback_mode": "selection_blind",
+        "feedback_scope": "open-loop proposal batch: every proposal sees the frozen baseline program and its allowlisted baseline metrics; evaluated scores are retained only for offline best-of-batch analysis and never change a later parent or prompt; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "offline_best_of_open_loop_batch"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 1,
+        "trajectory_sha256": "83886f54ef7522aff65ee9f885e57644a6976f388f9fed353b1774bb4aa28b7e",
+        "events": [
+          {
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "657b90622f24ad4362ed9d8500dbbf98d116a054c1ada457a22f560c2f913611",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.0,
+              "robustness_score": 0.0,
+              "development_validation_gap": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "heldout_feasibility_rate": 1.0,
+              "development_nominal_utility": 0.6080603314599177,
+              "heldout_nominal_utility": 0.6689347859940169,
+              "development_robust_utility": 0.5706657896900912,
+              "heldout_robust_utility": 0.6002627646636001,
+              "development_proxy_utility": 0.7117667173308738,
+              "heldout_proxy_utility": 0.7591028769735115,
+              "development_proxy_exact_gap": 0.10370638587095612,
+              "heldout_proxy_exact_gap": 0.09016809097949452,
+              "candidate_instance_call_count": 6,
+              "candidate_instance_valid_rate": 1.0
+            },
+            "algorithm_metadata": {},
+            "error": null
+          },
+          {
+            "step": 1,
+            "oracle_calls": 2,
+            "budget_units": 2,
+            "score": -1e+18,
+            "best_score": 0.0,
+            "valid": false,
+            "accepted": false,
+            "candidate_sha256": "5bcd1c8f74a8b6c473397ba30e9cbd380c84c11daa734795995718b85ea6395b",
+            "parent_sha256": "657b90622f24ad4362ed9d8500dbbf98d116a054c1ada457a22f560c2f913611",
+            "metrics": {
+              "combined_score": -1e+18,
+              "valid": 0.0,
+              "error_message": "candidate invalid: candidate_runtime_error",
+              "candidate_failure_kind": "candidate_runtime_error",
+              "raw_score": -1e+18
+            },
+            "algorithm_metadata": {
+              "selection_policy": "offline_best_of_open_loop_batch",
+              "accepted_semantics": "offline_best_update",
+              "proposal_slot": 1
+            },
+            "error": "candidate invalid: candidate_runtime_error"
+          },
+          {
+            "step": 2,
+            "oracle_calls": 3,
+            "budget_units": 3,
+            "score": 0.11621326255668465,
+            "best_score": 0.11621326255668465,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "3b19fd67ceb4ec08ba38a2a582f6b608d39290d7e1cbfacac532bfcd32a70cc0",
+            "parent_sha256": "657b90622f24ad4362ed9d8500dbbf98d116a054c1ada457a22f560c2f913611",
+            "metrics": {
+              "combined_score": 0.11621326255668465,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.11621326255668465,
+              "robustness_score": 0.08527967024921995,
+              "development_validation_gap": 0.030933592307464702,
+              "heldout_policy_score": 0.35089383147572695,
+              "heldout_robustness_score": 0.294889285647245,
+              "heldout_feasibility_rate": 1.0,
+              "development_nominal_utility": 0.6144031509918101,
+              "heldout_nominal_utility": 0.7017347228919164,
+              "development_robust_utility": 0.5757189570291417,
+              "heldout_robust_utility": 0.6394310271988988,
+              "development_proxy_utility": 0.7035532271246894,
+              "heldout_proxy_utility": 0.778080214478036,
+              "development_proxy_exact_gap": 0.08915007613287934,
+              "heldout_proxy_exact_gap": 0.07634549158611958,
+              "candidate_instance_call_count": 6,
+              "candidate_instance_valid_rate": 1.0
+            },
+            "algorithm_metadata": {
+              "selection_policy": "offline_best_of_open_loop_batch",
+              "accepted_semantics": "offline_best_update",
+              "proposal_slot": 2
+            },
+            "error": null
+          },
+          {
+            "step": 3,
+            "oracle_calls": 4,
+            "budget_units": 4,
+            "score": 0.7536835650077495,
+            "best_score": 0.7536835650077495,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "ae14bac445fb1f5912222d13805b35f2207ceb874204fd763dba06fb1a5262cc",
+            "parent_sha256": "657b90622f24ad4362ed9d8500dbbf98d116a054c1ada457a22f560c2f913611",
+            "metrics": {
+              "combined_score": 0.7536835650077495,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.7536835650077495,
+              "robustness_score": 0.6392625202446929,
+              "development_validation_gap": 0.11442104476305659,
+              "heldout_policy_score": 0.7422078698392232,
+              "heldout_robustness_score": 0.8033340420951821,
+              "heldout_feasibility_rate": 1.0,
+              "development_nominal_utility": 0.652294123731366,
+              "heldout_nominal_utility": 0.7219510503868287,
+              "development_robust_utility": 0.6101902230487297,
+              "heldout_robust_utility": 0.6852917911065575,
+              "development_proxy_utility": 0.6990905326489351,
+              "heldout_proxy_utility": 0.7961816005086291,
+              "development_proxy_exact_gap": 0.04679640891756903,
+              "heldout_proxy_exact_gap": 0.0742305501218003,
+              "candidate_instance_call_count": 6,
+              "candidate_instance_valid_rate": 1.0
+            },
+            "algorithm_metadata": {
+              "selection_policy": "offline_best_of_open_loop_batch",
+              "accepted_semantics": "offline_best_update",
+              "proposal_slot": 3
+            },
+            "error": null
+          }
+        ]
+      }
+    }
+  ],
+  "aggregate": {
+    "attempt_count": 1,
+    "superseded_attempts": 0,
+    "successful_runs": 1,
+    "failed_runs": 0,
+    "by_condition": {
+      "Acoustics/RoomImpulseResponse|greedy_rewrite|selection_blind": {
+        "n": 1,
+        "best_score": {
+          "n": 1,
+          "mean": 0.7536835650077495,
+          "ci95_low": 0.7536835650077495,
+          "ci95_high": 0.7536835650077495
+        },
+        "best_so_far_auc": {
+          "n": 1,
+          "mean": 0.21747420689110852,
+          "ci95_low": 0.21747420689110852,
+          "ci95_high": 0.21747420689110852
+        },
+        "budget_units": {
+          "n": 1,
+          "mean": 4.0,
+          "ci95_low": 4.0,
+          "ci95_high": 4.0
+        },
+        "oracle_calls": {
+          "n": 1,
+          "mean": 4.0,
+          "ci95_low": 4.0,
+          "ci95_high": 4.0
+        },
+        "wall_seconds": {
+          "n": 1,
+          "mean": 173.77971770241857,
+          "ci95_low": 173.77971770241857,
+          "ci95_high": 173.77971770241857
+        },
+        "total_tokens": {
+          "n": 1,
+          "mean": 16676.0,
+          "ci95_low": 16676.0,
+          "ci95_high": 16676.0
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      }
+    },
+    "overall": {
+      "best_score": {
+        "n": 1,
+        "mean": 0.7536835650077495,
+        "ci95_low": 0.7536835650077495,
+        "ci95_high": 0.7536835650077495
+      },
+      "best_so_far_auc": {
+        "n": 1,
+        "mean": 0.21747420689110852,
+        "ci95_low": 0.21747420689110852,
+        "ci95_high": 0.21747420689110852
+      },
+      "budget_units": {
+        "n": 1,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "oracle_calls": {
+        "n": 1,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "wall_seconds": {
+        "n": 1,
+        "mean": 173.77971770241857,
+        "ci95_low": 173.77971770241857,
+        "ci95_high": 173.77971770241857
+      },
+      "total_tokens": {
+        "n": 1,
+        "mean": 16676.0,
+        "ci95_low": 16676.0,
+        "ci95_high": 16676.0
+      },
+      "estimated_cost_usd": {
+        "n": 0,
+        "mean": null,
+        "ci95_low": null,
+        "ci95_high": null
+      }
+    }
+  },
+  "completed_at": "2026-07-23T18:01:52.166676+00:00",
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}
