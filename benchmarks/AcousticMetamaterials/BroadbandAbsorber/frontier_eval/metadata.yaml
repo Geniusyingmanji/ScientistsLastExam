@@ -1,7 +1,12 @@
 domain: AcousticMetamaterials
 task: BroadbandAbsorber
 difficulty: hard
-oracle_type: physical_sim
+tier: T2
+oracle_type: analytical
 score_mode: clipped
 gpu_required: false
-eval_time_seconds: 10
+eval_time_seconds: 45
+science_metric: broadband normal-incidence absorption with separate public-proxy agreement, held-out bands and sealed angle, air-property and manufacturing robustness
+reference_baseline: identical equal-area Helmholtz cells tuned near each public frequency band's geometric center
+reference_sota: fixed-seed nominal and worst-shift witnesses in a replayable four-parameter log-spaced-resonance family; no global-optimality or experimental claim
+citation: "Stinson, plane sound waves in circular tubes, DOI 10.1121/1.400379; Jimenez et al., ultra-thin sound absorption, DOI 10.1063/1.4962328"

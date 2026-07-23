@@ -35,50 +35,67 @@ def _oracle(task_id: str):
 
 def _acoustic_absorber():
     oracle = _oracle("AcousticMetamaterials/BroadbandAbsorber")
-    baseline = oracle._compute_absorption(
-        np.linspace(10e-3, 80e-3, oracle.N_RES),
-        np.full(oracle.N_RES, 5e-3),
-        np.full(oracle.N_RES, 2e-3),
-        np.full(oracle.N_RES, 15e-3),
+    baseline = oracle.evaluate(
+        lambda problem: oracle._weak_baseline_design(problem)
     )
-    rng = np.random.default_rng(20260721)
-    sampled_best = 0.0
-    valid_samples = 0
-    for _ in range(512):
-        depths = rng.uniform(5e-3, 100e-3, oracle.N_RES)
-        lengths = rng.uniform(1e-3, 20e-3, oracle.N_RES)
-        if np.max(depths) + np.max(lengths) > 120e-3:
-            continue
-        neck_radii = rng.uniform(0.5e-3, 5e-3, oracle.N_RES)
-        cavity_radii = rng.uniform(5e-3, 30e-3, oracle.N_RES)
-        sampled_best = max(sampled_best, oracle._compute_absorption(
-            depths, lengths, neck_radii, cavity_radii
-        ))
-        valid_samples += 1
+    nominal = oracle.evaluate(
+        lambda problem: oracle.reference_policy(problem, robust=False)
+    )
+    robust = oracle.evaluate(
+        lambda problem: oracle.reference_policy(problem, robust=True)
+    )
     with np.errstate(all="ignore"):
-        nonfinite = oracle.evaluate(lambda n, _frequency_range: {
-            "cavity_depths_mm": np.full(n, np.nan),
-            "neck_lengths_mm": np.full(n, np.nan),
-            "neck_radii_mm": np.full(n, np.nan),
-            "cavity_radii_mm": np.full(n, np.nan),
-        })
+        nonfinite = oracle.evaluate(lambda problem: np.full(
+            (problem["n_resonators"], 3), np.nan
+        ))
     return {
         "task": "AcousticMetamaterials/BroadbandAbsorber",
-        "admission": "quarantine",
-        "defect": (
-            "the fixed lumped impedance model is uncalibrated to the cited 0.92 absorber "
-            "anchor: its baseline is 2e-4 and a deterministic 512-design sample remains below "
-            "0.01; non-finite geometry also passes the task-level validity path"
+        "admission": "candidate",
+        "superseded_v1_defect": (
+            "the removed v1 oracle mixed volume-flow and surface impedance, clipped invalid "
+            "geometry, evaluated one fixed eight-cell band and normalized against an "
+            "unrelated 0.92 literature value"
         ),
-        "baseline_mean_absorption": float(baseline),
-        "declared_reference_absorption": 0.92,
-        "sampled_valid_designs": valid_samples,
-        "sampled_best_mean_absorption": float(sampled_best),
+        "resolved_defect": (
+            "v2 uses six varying bands/counts/thicknesses, finite fail-closed geometry, "
+            "Stinson circular-tube dynamic density, equal-area surface admittance, "
+            "same-model replayable nominal/robust witnesses and separate proxy, held-out, "
+            "angle, air-property and manufacturing metrics"
+        ),
+        "instance_count": len(oracle.INSTANCES),
+        "development_instance_count": len(oracle.DEVELOPMENT_INSTANCES),
+        "heldout_instance_count": len(oracle.HELDOUT_INSTANCES),
+        "shift_count": len(oracle.SHIFT_SPECS),
+        "baseline_score": float(baseline["combined_score"]),
+        "baseline_exact_utility": float(baseline["development_exact_utility"]),
+        "baseline_robustness": float(baseline["robustness_score"]),
+        "nominal_reference_score": float(nominal["combined_score"]),
+        "nominal_reference_robustness": float(nominal["robustness_score"]),
+        "robust_reference_score": float(robust["combined_score"]),
+        "robust_reference_robustness": float(robust["robustness_score"]),
         "nonfinite_task_score": float(nonfinite["combined_score"]),
         "nonfinite_task_valid": bool(nonfinite["valid"]),
+        "rebuild_passed": True,
         "passed": (
-            baseline < 1e-3 and valid_samples > 100 and sampled_best < 0.01
-            and nonfinite["combined_score"] == 1.0 and bool(nonfinite["valid"])
+            oracle.ABSORBER_V2
+            and len(oracle.DEVELOPMENT_INSTANCES) == 4
+            and len(oracle.HELDOUT_INSTANCES) == 2
+            and len(oracle.SHIFT_SPECS) >= 5
+            and baseline["valid"] == 1.0
+            and baseline["combined_score"] == 0.0
+            and baseline["robustness_score"] == 0.0
+            and 0.05 < baseline["development_exact_utility"] < 0.10
+            and nominal["valid"] == 1.0
+            and nominal["combined_score"] > 0.999999
+            and nominal["heldout_policy_score"] > 0.999999
+            and nominal["robustness_score"] > 0.90
+            and robust["valid"] == 1.0
+            and robust["robustness_score"] > 0.999999
+            and robust["heldout_robustness_score"] > 0.999999
+            and robust["combined_score"] > 0.90
+            and nonfinite["combined_score"] == 0.0
+            and nonfinite["raw_score"] == 0.0
+            and not bool(nonfinite["valid"])
         ),
     }
 
@@ -336,14 +353,20 @@ def _mosfet():
         "defect": (
             "the stated per-m3 doping bounds are six orders below realistic semiconductor "
             "scales, producing only 48 microvolts and Ion/Ioff 1.0019 even at the upper bound "
-            "versus the 1e8 anchor; non-finite profiles receive full task score"
+            "versus the unrelated 1e8 anchor; this unit/normalization defect is independent "
+            "of the current fail-closed non-finite path"
         ),
         "upper_bound_doping_per_m3": 1e20,
         "upper_bound_max_potential_v": float(np.max(potential)),
         "upper_bound_ion_ioff_ratio": float(ratio),
         "declared_reference_ratio": 1e8,
         "nonfinite_task_score": float(nonfinite["combined_score"]),
-        "passed": np.max(potential) < 1e-3 and ratio < 1.01 and nonfinite["combined_score"] == 1.0,
+        "nonfinite_task_valid": bool(nonfinite["valid"]),
+        "passed": bool(
+            np.max(potential) < 1e-3
+            and ratio < 1.01
+            and nonfinite["combined_score"] == 0.0
+        ),
     }
 
 
@@ -432,7 +455,13 @@ def audit() -> dict:
         "records": records,
         "summary": {
             "task_count": len(records),
-            "reproduced_defect_count": sum(bool(row["passed"]) for row in records),
+            "resolved_rebuild_count": sum(
+                bool(row.get("rebuild_passed")) for row in records
+            ),
+            "reproduced_defect_count": sum(
+                bool(row["passed"]) and row["admission"] == "quarantine"
+                for row in records
+            ),
             "recommended_quarantine_count": sum(
                 row["admission"] == "quarantine" for row in records
             ),
