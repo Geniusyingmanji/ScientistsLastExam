@@ -1,7 +1,12 @@
 domain: QuantumChemistry
 task: HartreeFockSCF
 difficulty: hard
-oracle_type: physical_sim
+tier: T2
+oracle_type: finite_basis_quantum_chemistry
 score_mode: clipped
 gpu_required: false
-eval_time_seconds: 10
+eval_time_seconds: 30
+science_metric: stable restricted Hartree-Fock energy improvement across finite-basis closed-shell molecular Hamiltonians
+reference_baseline: conventional single core-Hamiltonian start with Pulay DIIS and no multistart or stability repair
+reference_sota: fixed-seed lowest internally stable multistart finite-basis RHF witnesses, independently replayed but not claimed globally optimal
+citation: "Roothaan, Rev. Mod. Phys. 23, 69 (1951), DOI 10.1103/RevModPhys.23.69; Pulay, Chem. Phys. Lett. 73, 393 (1980), DOI 10.1016/0009-2614(80)80396-4; Seeger and Pople, J. Chem. Phys. 66, 3045 (1977), DOI 10.1063/1.434318"

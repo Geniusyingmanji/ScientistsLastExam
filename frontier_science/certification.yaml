@@ -227,8 +227,16 @@ tasks:
     status: quarantined
     reason: documented uniform baseline has only 10.7 radiation lengths and scores 100 percent resolution rather than claimed 3.8 percent; non-finite layers receive full score
   QuantumChemistry/HartreeFockSCF:
-    status: quarantined
-    reason: complete two-coefficient scan finds the oracle minimum is the baseline at +0.444915 Ha, while normalization claims unreachable -1.1167 Ha; non-finite orbitals receive full score
+    status: candidate
+    reason: v2 replaces the inconsistent two-coefficient H2 toy with seven closed-shell finite-basis Hamiltonians, a valid zero-score single-start DIIS policy, fixed-seed stable multistart witnesses, fail-closed RHF equations and separate held-out molecule, physical geometry, AO-representation and occupied-virtual stability axes; development H8 and held-out H4 rings retain lower stable solutions beyond the baseline, pending GPT-5.5 calibration, server-held procedural molecules and independent quantum-chemistry review
+    citation_ids:
+      - doi:10.1103/RevModPhys.23.69
+      - doi:10.1016/0009-2614(80)80396-4
+      - doi:10.1063/1.434318
+      - doi:10.1063/1.1672392
+      - doi:10.1063/1.438955
+      - doi:10.1002/wcms.1340
+      - doi:10.1063/5.0006074
   Semiconductor/MOSFETDoping:
     status: quarantined
     reason: stated per-m3 doping scale yields at most 48 microvolts and Ion/Ioff 1.0019 versus an unrelated 1e8 anchor; the present non-finite path fails closed but does not repair the six-order unit and normalization defect

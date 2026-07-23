@@ -32,6 +32,18 @@ def _oracle(task_id: str):
     return module
 
 
+def _candidate_module(task_id: str):
+    path = ROOT / "benchmarks" / task_id / "solution.py"
+    spec = importlib.util.spec_from_file_location(
+        "wave4_candidate_" + task_id.replace("/", "_"), path
+    )
+    if spec is None or spec.loader is None:
+        raise ImportError("cannot load %s" % task_id)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
 def _acoustic_absorber():
     oracle = _oracle("AcousticMetamaterials/BroadbandAbsorber")
     baseline = oracle.evaluate(
@@ -359,30 +371,107 @@ def _calorimeter():
 
 def _hartree_fock():
     oracle = _oracle("QuantumChemistry/HartreeFockSCF")
-    angles = np.linspace(0.0, 2.0 * math.pi, 20001)
-    energies = np.asarray([
-        oracle._hf_energy(np.array([math.cos(angle), math.sin(angle)]))
-        for angle in angles
-    ])
-    grid_minimum = float(np.min(energies))
-    baseline = float(oracle._hf_energy(np.array([1.0, 1.0])))
+    baseline_module = _candidate_module("QuantumChemistry/HartreeFockSCF")
+    baseline = oracle.evaluate(baseline_module.solve_restricted_hf)
+    reference = oracle.evaluate(oracle.reference_policy)
     with np.errstate(all="ignore"):
-        nonfinite = oracle.evaluate(lambda *_args: np.array([np.nan, np.nan]))
+        nonfinite = oracle.evaluate(lambda problem: np.full(
+            (
+                len(problem["overlap"]),
+                int(problem["occupied_orbital_count"]),
+            ),
+            np.nan,
+        ))
+    baseline_rows = {row["name"]: row for row in baseline["per_instance"]}
+    reference_rows = {row["name"]: row for row in reference["per_instance"]}
+    development_hard = baseline_rows[
+        "dev_h8_ring_symmetry_breaking_sto3g"
+    ]
+    heldout_hard = baseline_rows[
+        "heldout_h4_ring_symmetry_breaking_sto3g"
+    ]
     return {
         "task": "QuantumChemistry/HartreeFockSCF",
-        "admission": "quarantine",
-        "defect": (
-            "a dense scan of the complete two-coefficient projective orbital space finds the "
-            "baseline is already the oracle minimum at +0.444915 Ha, while normalization "
-            "claims an unreachable -1.1167 Ha H2/STO-3G energy; non-finite orbitals score one"
+        "admission": "candidate",
+        "superseded_v1_defect": (
+            "the removed two-coefficient H2 toy used inconsistent hand-entered integrals, "
+            "placed its baseline at the complete grid minimum, normalized against an "
+            "unreachable energy and awarded full score to non-finite orbitals"
         ),
-        "projective_grid_size": len(angles),
-        "oracle_grid_minimum_hartree": grid_minimum,
-        "oracle_baseline_hartree": baseline,
-        "declared_exact_hf_hartree": float(oracle.E_HF_EXACT),
-        "minimum_minus_baseline_hartree": grid_minimum - baseline,
+        "resolved_defect": (
+            "v2 uses seven reproducible finite-basis closed-shell Hamiltonians, a finite "
+            "occupied-space artifact, independently recomputed RHF equations, a valid "
+            "single-start DIIS zero point, internally stable multistart witnesses, a "
+            "different-size held-out symmetry-breaking ring and separate physical-shift, "
+            "representation-invariance and occupied-virtual stability axes"
+        ),
+        "instance_count": len(oracle.INSTANCES),
+        "development_instance_count": len(oracle.DEVELOPMENT_INSTANCES),
+        "heldout_instance_count": len(oracle.HELDOUT_INSTANCES),
+        "baseline_score": float(baseline["combined_score"]),
+        "baseline_raw_score": float(baseline["raw_score"]),
+        "baseline_robustness": float(baseline["robustness_score"]),
+        "baseline_development_stability_rate": float(
+            baseline["development_stability_rate"]
+        ),
+        "baseline_heldout_stability_rate": float(
+            baseline["heldout_stability_rate"]
+        ),
+        "reference_score": float(reference["combined_score"]),
+        "reference_robustness": float(reference["robustness_score"]),
+        "reference_heldout_score": float(reference["heldout_policy_score"]),
+        "reference_heldout_robustness": float(
+            reference["heldout_robustness_score"]
+        ),
+        "development_hard_energy_gap_hartree": float(
+            development_hard["energy_error_hartree"]
+        ),
+        "development_hard_baseline_minimum_curvature": float(
+            development_hard["minimum_stability_curvature"]
+        ),
+        "development_hard_reference_minimum_curvature": float(
+            reference_rows["dev_h8_ring_symmetry_breaking_sto3g"][
+                "minimum_stability_curvature"
+            ]
+        ),
+        "heldout_hard_energy_gap_hartree": float(
+            heldout_hard["energy_error_hartree"]
+        ),
+        "heldout_hard_baseline_minimum_curvature": float(
+            heldout_hard["minimum_stability_curvature"]
+        ),
+        "heldout_hard_reference_minimum_curvature": float(
+            reference_rows["heldout_h4_ring_symmetry_breaking_sto3g"][
+                "minimum_stability_curvature"
+            ]
+        ),
         "nonfinite_task_score": float(nonfinite["combined_score"]),
-        "passed": abs(grid_minimum - baseline) < 1e-10 and oracle.E_HF_EXACT < baseline - 1.0 and nonfinite["combined_score"] == 1.0,
+        "nonfinite_task_valid": bool(nonfinite["valid"]),
+        "rebuild_passed": True,
+        "passed": bool(
+            oracle.HARTREE_FOCK_V2
+            and len(oracle.DEVELOPMENT_INSTANCES) == 4
+            and len(oracle.HELDOUT_INSTANCES) == 3
+            and baseline["valid"] == 1.0
+            and baseline["combined_score"] == 0.0
+            and baseline["robustness_score"] == 0.0
+            and baseline["development_stability_rate"] == 0.75
+            and baseline["heldout_stability_rate"] < 1.0
+            and development_hard["energy_error_hartree"] > 0.03
+            and development_hard["minimum_stability_curvature"] < -0.20
+            and heldout_hard["energy_error_hartree"] > 0.05
+            and heldout_hard["minimum_stability_curvature"] < -0.20
+            and reference["valid"] == 1.0
+            and reference["combined_score"] > 0.999
+            and reference["robustness_score"] > 0.999
+            and reference["heldout_policy_score"] > 0.99
+            and reference["heldout_robustness_score"] > 0.99
+            and reference["development_stability_rate"] == 1.0
+            and reference["heldout_stability_rate"] == 1.0
+            and nonfinite["combined_score"] == 0.0
+            and nonfinite["raw_score"] == 0.0
+            and not bool(nonfinite["valid"])
+        ),
     }
 
 

@@ -1,1 +1,1 @@
-optimize_orbitals
+solve_restricted_hf

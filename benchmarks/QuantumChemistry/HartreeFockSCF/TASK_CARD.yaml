@@ -1,0 +1,44 @@
+schema_version: 1
+scientific_question: Can one deterministic numerical policy find low-energy internally stable closed-shell finite-basis Hartree-Fock occupied spaces across equilibrium, stretched, chain, ring, heteronuclear and polyatomic molecular regimes?
+artifact: A finite real n_ao by n_occupied matrix of overlap-orthonormal occupied spatial-orbital coefficients.
+oracle:
+  model: deterministic restricted closed-shell Hartree-Fock energy and Fock matrix reconstructed from public AO overlap, one-electron and chemist-order two-electron integrals
+  feasibility: exact artifact shape and finiteness, overlap orthonormality, electron count, density idempotency and normalized Roothaan-Hall residual; reference energy is never an exclusion threshold
+  deterministic: true
+normalization:
+  baseline: conventional single core-Hamiltonian guess followed by Pulay DIIS, without multistart or stability repair
+  reference: lowest internally stable fixed-seed multistart PySCF RHF witness among 97 starts for each frozen finite-basis Hamiltonian; independently replayed with NumPy/SciPy equations and not claimed globally optimal
+  score: mean nominal development energy/residual utility is rescaled above the conventional policy; held-out molecules, physical geometry shifts, AO representation changes and occupied-virtual stability remain separate evaluator-only axes
+citations:
+  - id: doi:10.1103/RevModPhys.23.69
+    title: New Developments in Molecular Orbital Theory
+  - id: doi:10.1016/0009-2614(80)80396-4
+    title: Convergence acceleration of iterative sequences. The case of SCF iteration
+  - id: doi:10.1063/1.434318
+    title: Self-consistent molecular orbital methods. XVIII. Constraints and stability in Hartree-Fock theory
+  - id: doi:10.1063/1.1672392
+    title: Self-Consistent Molecular-Orbital Methods. I. Use of Gaussian Expansions of Slater-Type Atomic Orbitals
+  - id: doi:10.1063/1.438955
+    title: Self-consistent molecular orbital methods. XX. A basis set for correlated wave functions
+  - id: doi:10.1002/wcms.1340
+    title: PySCF, the Python-based simulations of chemistry framework
+  - id: doi:10.1063/5.0006074
+    title: Recent developments in the PySCF program package
+invariants:
+  - every accepted occupied space is finite, real, has the exact public dimensions and is orthonormal in the supplied AO overlap metric
+  - every accepted density has the public closed-shell electron count and is idempotent in an orthonormal representation
+  - every nominal score is recomputed from the public integrals and gated by the Roothaan-Hall commutator residual
+  - frozen reference energies and coefficients are reproduced by independent NumPy/SciPy density, Fock, energy and residual calculations
+  - fixed-seed multistart references are internally stable under occupied-virtual rotations; no global or correlated-energy claim is made
+  - a feasible solution below a stored reference is accepted and clips at full score rather than being rejected
+  - the conventional baseline is valid and deterministic but retains a lower-energy internally stable symmetry-broken solution on the hard ring regime
+  - transformed-problem energy and the AO-mapped occupied density are invariant under permutations and dense nonsingular changes of basis
+  - nearby physical shifts use freshly generated molecular overlap, one-electron, two-electron and nuclear-repulsion integrals rather than arbitrary tensor noise
+  - failure on evaluator-only shifts or representation checks cannot change nominal validity or the search-visible score
+  - wrong-shape, non-finite, non-real, nonorthonormal and non-self-consistent nominal artifacts fail closed
+  - every molecular problem and validation transformation receives a fresh candidate process and private temporary-filesystem state
+  - development selection metrics are separated from held-out transfer, physical-shift, representation-invariance and stability diagnostics
+known_shortcuts: The seven frozen small closed-shell systems use STO-3G or 6-31G bases and expose their complete finite-basis Hamiltonians. Programs can branch on these public matrices, so future release work needs server-held procedural molecules, geometries and basis families. RHF omits electron correlation and may be qualitatively wrong under bond stretching; only internal real-RHF stability is scored. Multistart witnesses are reproducible stationary points, not proofs of the global RHF minimum. Chemical claims require larger-basis and correlated-method replication plus independent domain review.
+review:
+  domain: pending_external
+  evaluator_security: automated_equation_reference_stability_representation_physical_shift_fail_closed_metric_sealing_and_fresh_session_tests
