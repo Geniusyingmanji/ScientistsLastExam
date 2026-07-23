@@ -1,0 +1,404 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_SECURE_EVAL",
+  "evidence_scope": "MODEL_PERFORMANCE",
+  "created_at": "2026-07-23T21:50:44.159808+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "01ce0456c35656d285cede873ff46256bdba75ef",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "/home/azureuser/workspace-gzy/zyf/frontier-science/scripts/batch_evolve.py",
+      "--tasks",
+      "HeatTransfer/ConvectionDiffusionOpt",
+      "--all",
+      "--algorithms",
+      "greedy_rewrite",
+      "--feedback-modes",
+      "selection_blind",
+      "--seeds",
+      "1",
+      "--budget",
+      "3",
+      "--timeout",
+      "900",
+      "--llm-config",
+      "frontier_science/conf/llm/local.yaml",
+      "--workdir",
+      "runs/convection_diffusion_v2_blind_b3",
+      "--output",
+      "experiments/gpt55_convection_diffusion_v2_blind_b3_2026-07-23.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "config": {
+    "tasks": [
+      "HeatTransfer/ConvectionDiffusionOpt"
+    ],
+    "algorithms": [
+      "greedy_rewrite"
+    ],
+    "feedback_modes": [
+      "selection_blind"
+    ],
+    "condition_order": "as_listed_for_even_seeds_reversed_for_odd_seeds",
+    "seeds": [
+      1
+    ],
+    "budget": 3,
+    "timeout_s": 900.0,
+    "work_root": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/convection_diffusion_v2_blind_b3",
+    "llm_condition_sha256": "5b0df4671481f6b3505155bc6c5654a64c4da5591422fb806904e7d0f44fc4d2",
+    "llm": {
+      "wire": "responses",
+      "endpoint_sha256": "b22995a1fcaf8ad713ac37716f006c717313dfdebd357ac02a077a5582650bb6",
+      "model": "gpt-5.5",
+      "max_output_tokens": 16000,
+      "temperature": null,
+      "reasoning_effort": "low",
+      "input_cost_per_million": null,
+      "output_cost_per_million": null,
+      "server_side_seed_control": false
+    }
+  },
+  "runs": [
+    {
+      "task": "HeatTransfer/ConvectionDiffusionOpt",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "selection_blind",
+      "seed": 1,
+      "baseline": 0.0,
+      "best": 0.0,
+      "accepted": 0,
+      "evaluated": 4,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/convection_diffusion_v2_blind_b3/HeatTransfer__ConvectionDiffusionOpt/greedy_rewrite/selection_blind/seed_1",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 4,
+        "budget_units": 4,
+        "best_score": 0.0,
+        "best_so_far_auc": 0.0,
+        "valid_rate": 0.75,
+        "accepted": 0,
+        "wall_seconds": 141.42764637432992,
+        "llm": {
+          "calls": 3,
+          "provider_usage_records": 3,
+          "input_tokens": 3621,
+          "output_tokens": 13361,
+          "total_tokens": 16982,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "HeatTransfer/ConvectionDiffusionOpt",
+        "seed": 1,
+        "baseline_score": 0.0,
+        "budget": 3,
+        "feedback_mode": "selection_blind",
+        "feedback_scope": "open-loop proposal batch: every proposal sees the frozen baseline program and its allowlisted baseline metrics; evaluated scores are retained only for offline best-of-batch analysis and never change a later parent or prompt; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "offline_best_of_open_loop_batch"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 1,
+        "trajectory_sha256": "159718c162f765a0b75ca96099ac10f25a7105cdd68a49c89ae799f8d17e9c3f",
+        "events": [
+          {
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "2f1758be1dfd4f024c95374adeb392013cf9adb7aadbd2da7ea89b066ef15991",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.0,
+              "mechanism_score": 0.0,
+              "development_prediction_score": 0.0,
+              "development_design_score": 0.0,
+              "development_robust_design_score": 0.0,
+              "development_design_utility": 0.0,
+              "development_robust_design_utility": 0.0,
+              "robustness_score": 0.0,
+              "development_validation_gap": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_mechanism_score": 0.0,
+              "heldout_prediction_score": 0.0,
+              "heldout_design_score": 0.0,
+              "heldout_robust_design_score": 0.0,
+              "heldout_design_utility": 0.0,
+              "heldout_robust_design_utility": 0.0,
+              "heldout_robustness_score": 0.0,
+              "development_supported_claim_coverage": 0.0,
+              "heldout_supported_claim_coverage": 0.0,
+              "development_false_discovery_rate": 0.0,
+              "heldout_false_discovery_rate": 0.0,
+              "development_correct_refusal_rate": 1.0,
+              "heldout_correct_refusal_rate": 1.0,
+              "development_confidence_calibration_score": 0.6666666666666666,
+              "heldout_confidence_calibration_score": 0.6,
+              "development_mean_experiment_calls": 1.0,
+              "heldout_mean_experiment_calls": 1.0,
+              "development_mean_budget_units": 3.0,
+              "heldout_mean_budget_units": 3.0,
+              "heldout_feasibility_rate": 1.0,
+              "candidate_world_call_count": 11,
+              "candidate_world_valid_rate": 1.0
+            },
+            "algorithm_metadata": {},
+            "error": null
+          },
+          {
+            "step": 1,
+            "oracle_calls": 2,
+            "budget_units": 2,
+            "score": -1e+18,
+            "best_score": 0.0,
+            "valid": false,
+            "accepted": false,
+            "candidate_sha256": "767df3cc0feef1c15b8c5639768fb78c1de4b6a171080065430ef8904dd43249",
+            "parent_sha256": "2f1758be1dfd4f024c95374adeb392013cf9adb7aadbd2da7ea89b066ef15991",
+            "metrics": {
+              "combined_score": -1e+18,
+              "valid": 0.0,
+              "error_message": "candidate invalid: candidate_runtime_error",
+              "candidate_failure_kind": "candidate_runtime_error",
+              "raw_score": -1e+18
+            },
+            "algorithm_metadata": {
+              "selection_policy": "offline_best_of_open_loop_batch",
+              "accepted_semantics": "offline_best_update",
+              "proposal_slot": 1
+            },
+            "error": "candidate invalid: candidate_runtime_error"
+          },
+          {
+            "step": 2,
+            "oracle_calls": 3,
+            "budget_units": 3,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": false,
+            "candidate_sha256": "117186f761c28826b90004838a06193695917ab1d586f5dcf5a68db6403a2510",
+            "parent_sha256": "2f1758be1dfd4f024c95374adeb392013cf9adb7aadbd2da7ea89b066ef15991",
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.0,
+              "mechanism_score": 0.0,
+              "development_prediction_score": 0.0,
+              "development_design_score": 0.0,
+              "development_robust_design_score": 0.0,
+              "development_design_utility": 0.0,
+              "development_robust_design_utility": 0.0,
+              "robustness_score": 0.0,
+              "development_validation_gap": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_mechanism_score": 0.0,
+              "heldout_prediction_score": 0.0,
+              "heldout_design_score": 0.0,
+              "heldout_robust_design_score": 0.0,
+              "heldout_design_utility": 0.0,
+              "heldout_robust_design_utility": 0.0,
+              "heldout_robustness_score": 0.0,
+              "development_supported_claim_coverage": 0.0,
+              "heldout_supported_claim_coverage": 0.0,
+              "development_false_discovery_rate": 0.0,
+              "heldout_false_discovery_rate": 0.0,
+              "development_correct_refusal_rate": 1.0,
+              "heldout_correct_refusal_rate": 1.0,
+              "development_confidence_calibration_score": 0.6666666666666666,
+              "heldout_confidence_calibration_score": 0.6,
+              "development_mean_experiment_calls": 2.0,
+              "heldout_mean_experiment_calls": 2.0,
+              "development_mean_budget_units": 12.0,
+              "heldout_mean_budget_units": 12.0,
+              "heldout_feasibility_rate": 1.0,
+              "candidate_world_call_count": 11,
+              "candidate_world_valid_rate": 1.0
+            },
+            "algorithm_metadata": {
+              "selection_policy": "offline_best_of_open_loop_batch",
+              "accepted_semantics": "offline_best_update",
+              "proposal_slot": 2
+            },
+            "error": null
+          },
+          {
+            "step": 3,
+            "oracle_calls": 4,
+            "budget_units": 4,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": false,
+            "candidate_sha256": "f316807ab89e61f4c91e9e40d86efbd62ca99e2a75cb809a6093a4cb8a059ee3",
+            "parent_sha256": "2f1758be1dfd4f024c95374adeb392013cf9adb7aadbd2da7ea89b066ef15991",
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.0,
+              "mechanism_score": 0.0,
+              "development_prediction_score": 0.0,
+              "development_design_score": 0.0,
+              "development_robust_design_score": 0.0,
+              "development_design_utility": 0.0,
+              "development_robust_design_utility": 0.0,
+              "robustness_score": 0.0,
+              "development_validation_gap": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_mechanism_score": 0.0,
+              "heldout_prediction_score": 0.0,
+              "heldout_design_score": 0.0,
+              "heldout_robust_design_score": 0.0,
+              "heldout_design_utility": 0.0,
+              "heldout_robust_design_utility": 0.0,
+              "heldout_robustness_score": 0.0,
+              "development_supported_claim_coverage": 0.0,
+              "heldout_supported_claim_coverage": 0.0,
+              "development_false_discovery_rate": 0.0,
+              "heldout_false_discovery_rate": 0.0,
+              "development_correct_refusal_rate": 1.0,
+              "heldout_correct_refusal_rate": 1.0,
+              "development_confidence_calibration_score": 0.6666666666666666,
+              "heldout_confidence_calibration_score": 0.6,
+              "development_mean_experiment_calls": 1.0,
+              "heldout_mean_experiment_calls": 1.0,
+              "development_mean_budget_units": 4.0,
+              "heldout_mean_budget_units": 4.0,
+              "heldout_feasibility_rate": 1.0,
+              "candidate_world_call_count": 11,
+              "candidate_world_valid_rate": 1.0
+            },
+            "algorithm_metadata": {
+              "selection_policy": "offline_best_of_open_loop_batch",
+              "accepted_semantics": "offline_best_update",
+              "proposal_slot": 3
+            },
+            "error": null
+          }
+        ]
+      }
+    }
+  ],
+  "aggregate": {
+    "attempt_count": 1,
+    "superseded_attempts": 0,
+    "successful_runs": 1,
+    "failed_runs": 0,
+    "by_condition": {
+      "HeatTransfer/ConvectionDiffusionOpt|greedy_rewrite|selection_blind": {
+        "n": 1,
+        "best_score": {
+          "n": 1,
+          "mean": 0.0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.0
+        },
+        "best_so_far_auc": {
+          "n": 1,
+          "mean": 0.0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.0
+        },
+        "budget_units": {
+          "n": 1,
+          "mean": 4.0,
+          "ci95_low": 4.0,
+          "ci95_high": 4.0
+        },
+        "oracle_calls": {
+          "n": 1,
+          "mean": 4.0,
+          "ci95_low": 4.0,
+          "ci95_high": 4.0
+        },
+        "wall_seconds": {
+          "n": 1,
+          "mean": 141.42764637432992,
+          "ci95_low": 141.42764637432992,
+          "ci95_high": 141.42764637432992
+        },
+        "total_tokens": {
+          "n": 1,
+          "mean": 16982.0,
+          "ci95_low": 16982.0,
+          "ci95_high": 16982.0
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      }
+    },
+    "overall": {
+      "best_score": {
+        "n": 1,
+        "mean": 0.0,
+        "ci95_low": 0.0,
+        "ci95_high": 0.0
+      },
+      "best_so_far_auc": {
+        "n": 1,
+        "mean": 0.0,
+        "ci95_low": 0.0,
+        "ci95_high": 0.0
+      },
+      "budget_units": {
+        "n": 1,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "oracle_calls": {
+        "n": 1,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "wall_seconds": {
+        "n": 1,
+        "mean": 141.42764637432992,
+        "ci95_low": 141.42764637432992,
+        "ci95_high": 141.42764637432992
+      },
+      "total_tokens": {
+        "n": 1,
+        "mean": 16982.0,
+        "ci95_low": 16982.0,
+        "ci95_high": 16982.0
+      },
+      "estimated_cost_usd": {
+        "n": 0,
+        "mean": null,
+        "ci95_low": null,
+        "ci95_high": null
+      }
+    }
+  },
+  "completed_at": "2026-07-23T21:53:05.594423+00:00",
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}
