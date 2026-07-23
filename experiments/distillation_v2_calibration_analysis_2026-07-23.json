@@ -1,0 +1,1388 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_DERIVED_EVIDENCE",
+  "evidence_scope": "DISTILLATION_SINGLE_RUN_CALIBRATION_NOT_CAUSAL_POPULATION_GLOBAL_OPTIMALITY_PLANT_OR_AUTONOMOUS_DISCOVERY_EVIDENCE",
+  "created_at": "2026-07-23T07:20:20.734461+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "964ac5af306956ebee342173b042cfcb0b41f2d1",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/analyze_distillation_v2_calibrations.py",
+      "--output",
+      "experiments/distillation_v2_calibration_analysis_2026-07-23.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "input_task_source_revision": "469224cfeece19ccf202f9731b63ab36c2b8f36b",
+  "input_model_source_revision": "c76767cdfa86c3a1c155b83618b3688daa363515",
+  "input_source_scope_equivalent": true,
+  "input_llm_condition_equivalent": true,
+  "task_calibration": {
+    "report": "experiments/distillation_v2_calibration_2026-07-23.json",
+    "report_sha256": "5ab04f6c2328684e59489c206aebc4c06f7877d809e94e3232077b280b6e7ae1",
+    "source_revision": "469224cfeece19ccf202f9731b63ab36c2b8f36b",
+    "task_dimensions": {
+      "development_instance_count": 4,
+      "heldout_instance_count": 2,
+      "shift_count": 5,
+      "tray_count_range": [
+        8,
+        50
+      ]
+    },
+    "weak_baseline": {
+      "combined_score": 0.0,
+      "valid": 1.0,
+      "feasibility_rate": 1.0,
+      "raw_score": 0.0,
+      "robustness_score": 0.0,
+      "heldout_policy_score": 0.0,
+      "heldout_robustness_score": 0.0,
+      "heldout_feasibility_rate": 1.0,
+      "development_shift_feasibility_rate": 1.0,
+      "heldout_shift_feasibility_rate": 1.0,
+      "development_mean_annualized_cost": 2115772.0854298444,
+      "heldout_mean_annualized_cost": 2488377.2193024363,
+      "candidate_instance_call_count": 6,
+      "candidate_instance_valid_rate": 1.0
+    },
+    "nominal_reference_policy": {
+      "combined_score": 1.0,
+      "valid": 1.0,
+      "feasibility_rate": 1.0,
+      "raw_score": 1.0,
+      "robustness_score": 0.0,
+      "heldout_policy_score": 1.0,
+      "heldout_robustness_score": 0.0,
+      "heldout_feasibility_rate": 1.0,
+      "development_shift_feasibility_rate": 0.2,
+      "heldout_shift_feasibility_rate": 0.1,
+      "development_mean_annualized_cost": 783119.7433163499,
+      "heldout_mean_annualized_cost": 1158942.6447733454,
+      "candidate_instance_call_count": 6,
+      "candidate_instance_valid_rate": 1.0
+    },
+    "robust_reference_policy": {
+      "combined_score": 0.9633855229865582,
+      "valid": 1.0,
+      "feasibility_rate": 1.0,
+      "raw_score": 0.9633855229865582,
+      "robustness_score": 1.0,
+      "heldout_policy_score": 0.9027774248669511,
+      "heldout_robustness_score": 1.0,
+      "heldout_feasibility_rate": 1.0,
+      "development_shift_feasibility_rate": 1.0,
+      "heldout_shift_feasibility_rate": 1.0,
+      "development_mean_annualized_cost": 830823.7037680321,
+      "heldout_mean_annualized_cost": 1288667.6483978014,
+      "candidate_instance_call_count": 6,
+      "candidate_instance_valid_rate": 1.0
+    },
+    "maximum_independent_product_composition_error": 1.0725198507088862e-11
+  },
+  "records": {
+    "budget_one": {
+      "label": "budget_one",
+      "report": "experiments/gpt55_distillation_v2_b1_2026-07-23.json",
+      "report_sha256": "3e9ce82cc5fdb7acf3685bed8a9d209bb90cd51a9d0d96d6ea381f79af52470d",
+      "trajectory_sha256": "d6e895df7cbcd4e3fae2dd104480074a0790b300095850649e7c6fae8727e610",
+      "source_revision": "c76767cdfa86c3a1c155b83618b3688daa363515",
+      "source_scope": [
+        "frontier_science",
+        "scripts",
+        "tests",
+        "benchmarks",
+        "requirements-upstream.txt"
+      ],
+      "llm_condition_sha256": "5b0df4671481f6b3505155bc6c5654a64c4da5591422fb806904e7d0f44fc4d2",
+      "model": "gpt-5.5",
+      "server_side_seed_control": false,
+      "feedback_mode": "normal",
+      "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+      "selection_policy": "online_incumbent",
+      "seed": 0,
+      "proposal_budget": 1,
+      "oracle_calls": 2,
+      "total_tokens": 6034,
+      "best_score": 0.0,
+      "selected_step": 0,
+      "selected_candidate_sha256": "05026baf28092bc8b53caaf3330a0e5571bf2584eac97d43cadd83ce2dc4edda",
+      "selected_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0,
+        "robustness_score": 0.0,
+        "heldout_policy_score": 0.0,
+        "heldout_robustness_score": 0.0,
+        "heldout_feasibility_rate": 1.0,
+        "development_shift_feasibility_rate": 1.0,
+        "heldout_shift_feasibility_rate": 1.0,
+        "development_mean_annualized_cost": 2115772.0854298444,
+        "heldout_mean_annualized_cost": 2488377.2193024363,
+        "candidate_instance_call_count": 6,
+        "candidate_instance_valid_rate": 1.0
+      },
+      "selected_axes": {
+        "development": {
+          "instance_count": 4,
+          "nominal_visible_score": 0.0,
+          "sealed_robustness_score": 0.0,
+          "nominal_feasibility_rate": 1.0,
+          "sealed_shift_feasibility_rate": 1.0,
+          "mean_nominal_annualized_cost": 2115772.0854298444,
+          "minimum_nominal_constraint_margin": 0.013211382065236362,
+          "designs": [
+            {
+              "name": "dev_balanced_aromatic",
+              "tray_count": 42,
+              "feed_stage": 21,
+              "reflux_ratio": 6.88,
+              "distillate_fraction": 0.5000000000000001,
+              "feed_split_gain": 1.1111111111111112
+            },
+            {
+              "name": "dev_high_purity_light",
+              "tray_count": 44,
+              "feed_stage": 27,
+              "reflux_ratio": 6.88,
+              "distillate_fraction": 0.3457446808510638,
+              "feed_split_gain": 1.0638297872340425
+            },
+            {
+              "name": "dev_rich_partially_vaporized",
+              "tray_count": 46,
+              "feed_stage": 20,
+              "reflux_ratio": 6.88,
+              "distillate_fraction": 0.6497297297297298,
+              "feed_split_gain": 1.1560693641618498
+            },
+            {
+              "name": "dev_lean_warm_feed",
+              "tray_count": 44,
+              "feed_stage": 30,
+              "reflux_ratio": 6.88,
+              "distillate_fraction": 0.25312500000000004,
+              "feed_split_gain": 1.098901098901099
+            }
+          ],
+          "shift_diagnostics": {
+            "lower_relative_volatility": {
+              "case_count": 4,
+              "feasible_count": 4,
+              "invalid_solver_count": 0,
+              "constraint_violation_counts": {
+                "distillate_purity": 0,
+                "bottoms_purity": 0,
+                "light_recovery": 0,
+                "heavy_recovery": 0
+              },
+              "minimum_constraint_margins": {
+                "distillate_purity": 0.024999999963316255,
+                "bottoms_purity": 0.013211382082777352,
+                "light_recovery": 0.03749999995771314,
+                "heavy_recovery": 0.03999999998436121
+              },
+              "feasibility_rate": 1.0
+            },
+            "richer_feed": {
+              "case_count": 4,
+              "feasible_count": 4,
+              "invalid_solver_count": 0,
+              "constraint_violation_counts": {
+                "distillate_purity": 0,
+                "bottoms_purity": 0,
+                "light_recovery": 0,
+                "heavy_recovery": 0
+              },
+              "minimum_constraint_margins": {
+                "distillate_purity": 0.024999999965517272,
+                "bottoms_purity": 0.01483050842426625,
+                "light_recovery": 0.04711798836123504,
+                "heavy_recovery": 0.03999999994167647
+              },
+              "feasibility_rate": 1.0
+            },
+            "leaner_feed_quality_shift": {
+              "case_count": 4,
+              "feasible_count": 4,
+              "invalid_solver_count": 0,
+              "constraint_violation_counts": {
+                "distillate_purity": 0,
+                "bottoms_purity": 0,
+                "light_recovery": 0,
+                "heavy_recovery": 0
+              },
+              "minimum_constraint_margins": {
+                "distillate_purity": 0.024999999965517272,
+                "bottoms_purity": 0.012007873968823177,
+                "light_recovery": 0.024587912053412486,
+                "heavy_recovery": 0.039999999949733134
+              },
+              "feasibility_rate": 1.0
+            },
+            "reflux_derating": {
+              "case_count": 4,
+              "feasible_count": 4,
+              "invalid_solver_count": 0,
+              "constraint_violation_counts": {
+                "distillate_purity": 0,
+                "bottoms_purity": 0,
+                "light_recovery": 0,
+                "heavy_recovery": 0
+              },
+              "minimum_constraint_margins": {
+                "distillate_purity": 0.024999999965517272,
+                "bottoms_purity": 0.0132113820671169,
+                "light_recovery": 0.03749999996501863,
+                "heavy_recovery": 0.0399999999502354
+              },
+              "feasibility_rate": 1.0
+            },
+            "combined_operating_shift": {
+              "case_count": 4,
+              "feasible_count": 4,
+              "invalid_solver_count": 0,
+              "constraint_violation_counts": {
+                "distillate_purity": 0,
+                "bottoms_purity": 0,
+                "light_recovery": 0,
+                "heavy_recovery": 0
+              },
+              "minimum_constraint_margins": {
+                "distillate_purity": 0.024999999964080533,
+                "bottoms_purity": 0.014495798279923297,
+                "light_recovery": 0.04584546469095119,
+                "heavy_recovery": 0.039999999967342936
+              },
+              "feasibility_rate": 1.0
+            }
+          }
+        },
+        "heldout": {
+          "instance_count": 2,
+          "nominal_visible_score": 0.0,
+          "sealed_robustness_score": 0.0,
+          "nominal_feasibility_rate": 1.0,
+          "sealed_shift_feasibility_rate": 1.0,
+          "mean_nominal_annualized_cost": 2488377.2193024363,
+          "minimum_nominal_constraint_margin": 0.06320407965730525,
+          "designs": [
+            {
+              "name": "heldout_close_boiling",
+              "tray_count": 48,
+              "feed_stage": 27,
+              "reflux_ratio": 6.88,
+              "distillate_fraction": 0.43043478260869567,
+              "feed_split_gain": 1.1904761904761905
+            },
+            {
+              "name": "heldout_difficult_split",
+              "tray_count": 50,
+              "feed_stage": 23,
+              "reflux_ratio": 6.88,
+              "distillate_fraction": 0.5648351648351648,
+              "feed_split_gain": 1.2195121951219512
+            }
+          ],
+          "shift_diagnostics": {
+            "lower_relative_volatility": {
+              "case_count": 2,
+              "feasible_count": 2,
+              "invalid_solver_count": 0,
+              "constraint_violation_counts": {
+                "distillate_purity": 0,
+                "bottoms_purity": 0,
+                "light_recovery": 0,
+                "heavy_recovery": 0
+              },
+              "minimum_constraint_margins": {
+                "distillate_purity": 0.07998325018394248,
+                "bottoms_purity": 0.06319344861229553,
+                "light_recovery": 0.07824448387559602,
+                "heavy_recovery": 0.08898885754719421
+              },
+              "feasibility_rate": 1.0
+            },
+            "richer_feed": {
+              "case_count": 2,
+              "feasible_count": 2,
+              "invalid_solver_count": 0,
+              "constraint_violation_counts": {
+                "distillate_purity": 0,
+                "bottoms_purity": 0,
+                "light_recovery": 0,
+                "heavy_recovery": 0
+              },
+              "minimum_constraint_margins": {
+                "distillate_purity": 0.07265853263506572,
+                "bottoms_purity": 0.0710997641075815,
+                "light_recovery": 0.08966800684320253,
+                "heavy_recovery": 0.07512343650391096
+              },
+              "feasibility_rate": 1.0
+            },
+            "leaner_feed_quality_shift": {
+              "case_count": 2,
+              "feasible_count": 2,
+              "invalid_solver_count": 0,
+              "constraint_violation_counts": {
+                "distillate_purity": 0,
+                "bottoms_purity": 0,
+                "light_recovery": 0,
+                "heavy_recovery": 0
+              },
+              "minimum_constraint_margins": {
+                "distillate_purity": 0.07999679223621647,
+                "bottoms_purity": 0.0574576761869916,
+                "light_recovery": 0.06815227247950761,
+                "heavy_recovery": 0.08999775110727415
+              },
+              "feasibility_rate": 1.0
+            },
+            "reflux_derating": {
+              "case_count": 2,
+              "feasible_count": 2,
+              "invalid_solver_count": 0,
+              "constraint_violation_counts": {
+                "distillate_purity": 0,
+                "bottoms_purity": 0,
+                "light_recovery": 0,
+                "heavy_recovery": 0
+              },
+              "minimum_constraint_margins": {
+                "distillate_purity": 0.07999603757398066,
+                "bottoms_purity": 0.06320311236507174,
+                "light_recovery": 0.07825699327889413,
+                "heavy_recovery": 0.08900713823978912
+              },
+              "feasibility_rate": 1.0
+            },
+            "combined_operating_shift": {
+              "case_count": 2,
+              "feasible_count": 2,
+              "invalid_solver_count": 0,
+              "constraint_violation_counts": {
+                "distillate_purity": 0,
+                "bottoms_purity": 0,
+                "light_recovery": 0,
+                "heavy_recovery": 0
+              },
+              "minimum_constraint_margins": {
+                "distillate_purity": 0.0743365579775691,
+                "bottoms_purity": 0.06944525829680842,
+                "light_recovery": 0.08747758613304446,
+                "heavy_recovery": 0.07802548088593575
+              },
+              "feasibility_rate": 1.0
+            }
+          }
+        }
+      },
+      "proposal_valid_count": 0.0,
+      "proposal_failure_counts": {
+        "candidate_timeout": 1
+      },
+      "best_program": "runs/distillation_v2_b1/ChemicalProcess__DistillationColumnDesign/greedy_rewrite/normal/seed_0/best_program.py",
+      "trajectory": [
+        {
+          "step": 0,
+          "accepted": true,
+          "valid": 1.0,
+          "score": 0.0,
+          "best_score": 0.0,
+          "candidate_sha256": "05026baf28092bc8b53caaf3330a0e5571bf2584eac97d43cadd83ce2dc4edda",
+          "parent_sha256": null,
+          "candidate_failure_kind": null,
+          "combined_score": 0.0,
+          "feasibility_rate": 1.0,
+          "raw_score": 0.0,
+          "robustness_score": 0.0,
+          "heldout_policy_score": 0.0,
+          "heldout_robustness_score": 0.0,
+          "heldout_feasibility_rate": 1.0,
+          "development_shift_feasibility_rate": 1.0,
+          "heldout_shift_feasibility_rate": 1.0,
+          "development_mean_annualized_cost": 2115772.0854298444,
+          "heldout_mean_annualized_cost": 2488377.2193024363,
+          "candidate_instance_call_count": 6,
+          "candidate_instance_valid_rate": 1.0
+        },
+        {
+          "step": 1,
+          "accepted": false,
+          "valid": 0.0,
+          "score": -1e+18,
+          "best_score": 0.0,
+          "candidate_sha256": "b9ae332902088ca110006035a71c6854c2b7c03b9ef4f3b49762101296cdca6a",
+          "parent_sha256": "05026baf28092bc8b53caaf3330a0e5571bf2584eac97d43cadd83ce2dc4edda",
+          "candidate_failure_kind": "candidate_timeout",
+          "combined_score": -1e+18,
+          "feasibility_rate": null,
+          "raw_score": -1e+18,
+          "robustness_score": null,
+          "heldout_policy_score": null,
+          "heldout_robustness_score": null,
+          "heldout_feasibility_rate": null,
+          "development_shift_feasibility_rate": null,
+          "heldout_shift_feasibility_rate": null,
+          "development_mean_annualized_cost": null,
+          "heldout_mean_annualized_cost": null,
+          "candidate_instance_call_count": null,
+          "candidate_instance_valid_rate": null
+        }
+      ]
+    },
+    "normal_budget_three": {
+      "label": "normal_budget_three",
+      "report": "experiments/gpt55_distillation_v2_b3_2026-07-23.json",
+      "report_sha256": "6a11da34d2cb3024a3a6a610ed2021e0afb6d49a8b1b1d8e8d8f364b797c4155",
+      "trajectory_sha256": "d40071c70b0b2862685e02f7ff7500010e1adb360e54491c118debc8fe2d3f0a",
+      "source_revision": "c76767cdfa86c3a1c155b83618b3688daa363515",
+      "source_scope": [
+        "frontier_science",
+        "scripts",
+        "tests",
+        "benchmarks",
+        "requirements-upstream.txt"
+      ],
+      "llm_condition_sha256": "5b0df4671481f6b3505155bc6c5654a64c4da5591422fb806904e7d0f44fc4d2",
+      "model": "gpt-5.5",
+      "server_side_seed_control": false,
+      "feedback_mode": "normal",
+      "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+      "selection_policy": "online_incumbent",
+      "seed": 1,
+      "proposal_budget": 3,
+      "oracle_calls": 4,
+      "total_tokens": 21738,
+      "best_score": 0.6130902025625943,
+      "selected_step": 2,
+      "selected_candidate_sha256": "14ec4bb9fb394c0367c0a37fe5683e95991d37801e37b6e10b6fe776625bf11b",
+      "selected_metrics": {
+        "combined_score": 0.6130902025625943,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.6130902025625943,
+        "robustness_score": 0.0,
+        "heldout_policy_score": 0.5406920942512126,
+        "heldout_robustness_score": 0.0,
+        "heldout_feasibility_rate": 1.0,
+        "development_shift_feasibility_rate": 0.2,
+        "heldout_shift_feasibility_rate": 0.2,
+        "development_mean_annualized_cost": 1314155.5002074596,
+        "heldout_mean_annualized_cost": 1775599.1455,
+        "candidate_instance_call_count": 6,
+        "candidate_instance_valid_rate": 1.0
+      },
+      "selected_axes": {
+        "development": {
+          "instance_count": 4,
+          "nominal_visible_score": 0.6130902025625943,
+          "sealed_robustness_score": 0.0,
+          "nominal_feasibility_rate": 1.0,
+          "sealed_shift_feasibility_rate": 0.2,
+          "mean_nominal_annualized_cost": 1314155.5002074596,
+          "minimum_nominal_constraint_margin": 0.00031852427651674065,
+          "designs": [
+            {
+              "name": "dev_balanced_aromatic",
+              "tray_count": 8,
+              "feed_stage": 5,
+              "reflux_ratio": 6.1375,
+              "distillate_fraction": 0.4848158,
+              "feed_split_gain": 1.1111111111111112
+            },
+            {
+              "name": "dev_high_purity_light",
+              "tray_count": 8,
+              "feed_stage": 6,
+              "reflux_ratio": 8.0,
+              "distillate_fraction": 0.339399,
+              "feed_split_gain": 1.0638297872340425
+            },
+            {
+              "name": "dev_rich_partially_vaporized",
+              "tray_count": 9,
+              "feed_stage": 5,
+              "reflux_ratio": 5.5166667,
+              "distillate_fraction": 0.6279838,
+              "feed_split_gain": 1.1560693641618498
+            },
+            {
+              "name": "dev_lean_warm_feed",
+              "tray_count": 8,
+              "feed_stage": 5,
+              "reflux_ratio": 6.1375,
+              "distillate_fraction": 0.253125,
+              "feed_split_gain": 1.098901098901099
+            }
+          ],
+          "shift_diagnostics": {
+            "lower_relative_volatility": {
+              "case_count": 4,
+              "feasible_count": 0,
+              "invalid_solver_count": 0,
+              "constraint_violation_counts": {
+                "distillate_purity": 1,
+                "bottoms_purity": 3,
+                "light_recovery": 1,
+                "heavy_recovery": 0
+              },
+              "minimum_constraint_margins": {
+                "distillate_purity": -0.013582840351331726,
+                "bottoms_purity": -0.014105672663991473,
+                "light_recovery": -0.01273391282937364,
+                "heavy_recovery": 0.021420333611053888
+              },
+              "feasibility_rate": 0.0
+            },
+            "richer_feed": {
+              "case_count": 4,
+              "feasible_count": 4,
+              "invalid_solver_count": 0,
+              "constraint_violation_counts": {
+                "distillate_purity": 0,
+                "bottoms_purity": 0,
+                "light_recovery": 0,
+                "heavy_recovery": 0
+              },
+              "minimum_constraint_margins": {
+                "distillate_purity": 0.006405260468681284,
+                "bottoms_purity": 0.0012273207784715898,
+                "light_recovery": 0.019223480081206223,
+                "heavy_recovery": 0.026628934966565487
+              },
+              "feasibility_rate": 1.0
+            },
+            "leaner_feed_quality_shift": {
+              "case_count": 4,
+              "feasible_count": 0,
+              "invalid_solver_count": 0,
+              "constraint_violation_counts": {
+                "distillate_purity": 1,
+                "bottoms_purity": 3,
+                "light_recovery": 1,
+                "heavy_recovery": 0
+              },
+              "minimum_constraint_margins": {
+                "distillate_purity": -0.005359969356252603,
+                "bottoms_purity": -0.0012085664801536194,
+                "light_recovery": -0.017351367271557394,
+                "heavy_recovery": 0.026020240213510237
+              },
+              "feasibility_rate": 0.0
+            },
+            "reflux_derating": {
+              "case_count": 4,
+              "feasible_count": 0,
+              "invalid_solver_count": 0,
+              "constraint_violation_counts": {
+                "distillate_purity": 1,
+                "bottoms_purity": 3,
+                "light_recovery": 1,
+                "heavy_recovery": 0
+              },
+              "minimum_constraint_margins": {
+                "distillate_purity": -0.002459112951231357,
+                "bottoms_purity": -0.0005526271382692086,
+                "light_recovery": -0.0023054183917795568,
+                "heavy_recovery": 0.02527744799208098
+              },
+              "feasibility_rate": 0.0
+            },
+            "combined_operating_shift": {
+              "case_count": 4,
+              "feasible_count": 0,
+              "invalid_solver_count": 0,
+              "constraint_violation_counts": {
+                "distillate_purity": 1,
+                "bottoms_purity": 3,
+                "light_recovery": 0,
+                "heavy_recovery": 0
+              },
+              "minimum_constraint_margins": {
+                "distillate_purity": -0.005096635472796818,
+                "bottoms_purity": -0.006961808467652944,
+                "light_recovery": 0.005851038891083737,
+                "heavy_recovery": 0.02252644971886275
+              },
+              "feasibility_rate": 0.0
+            }
+          }
+        },
+        "heldout": {
+          "instance_count": 2,
+          "nominal_visible_score": 0.5406920942512126,
+          "sealed_robustness_score": 0.0,
+          "nominal_feasibility_rate": 1.0,
+          "sealed_shift_feasibility_rate": 0.2,
+          "mean_nominal_annualized_cost": 1775599.1455,
+          "minimum_nominal_constraint_margin": 0.00017322395635911703,
+          "designs": [
+            {
+              "name": "heldout_close_boiling",
+              "tray_count": 10,
+              "feed_stage": 6,
+              "reflux_ratio": 8.0,
+              "distillate_fraction": 0.4273957,
+              "feed_split_gain": 1.1904761904761905
+            },
+            {
+              "name": "heldout_difficult_split",
+              "tray_count": 12,
+              "feed_stage": 7,
+              "reflux_ratio": 8.0,
+              "distillate_fraction": 0.5443626,
+              "feed_split_gain": 1.2195121951219512
+            }
+          ],
+          "shift_diagnostics": {
+            "lower_relative_volatility": {
+              "case_count": 2,
+              "feasible_count": 0,
+              "invalid_solver_count": 0,
+              "constraint_violation_counts": {
+                "distillate_purity": 1,
+                "bottoms_purity": 2,
+                "light_recovery": 1,
+                "heavy_recovery": 0
+              },
+              "minimum_constraint_margins": {
+                "distillate_purity": -0.019348749992625702,
+                "bottoms_purity": -0.027790806509911906,
+                "light_recovery": -0.02514892851641648,
+                "heavy_recovery": 0.013562507222546927
+              },
+              "feasibility_rate": 0.0
+            },
+            "richer_feed": {
+              "case_count": 2,
+              "feasible_count": 2,
+              "invalid_solver_count": 0,
+              "constraint_violation_counts": {
+                "distillate_purity": 0,
+                "bottoms_purity": 0,
+                "light_recovery": 0,
+                "heavy_recovery": 0
+              },
+              "minimum_constraint_margins": {
+                "distillate_purity": 0.010466641479322969,
+                "bottoms_purity": 0.004297500892317577,
+                "light_recovery": 0.0147739809237446,
+                "heavy_recovery": 0.030583731528292857
+              },
+              "feasibility_rate": 1.0
+            },
+            "leaner_feed_quality_shift": {
+              "case_count": 2,
+              "feasible_count": 0,
+              "invalid_solver_count": 0,
+              "constraint_violation_counts": {
+                "distillate_purity": 0,
+                "bottoms_purity": 1,
+                "light_recovery": 1,
+                "heavy_recovery": 0
+              },
+              "minimum_constraint_margins": {
+                "distillate_purity": 0.005030617301893248,
+                "bottoms_purity": -0.0034475452408651436,
+                "light_recovery": -0.011120072152412397,
+                "heavy_recovery": 0.037833437078465426
+              },
+              "feasibility_rate": 0.0
+            },
+            "reflux_derating": {
+              "case_count": 2,
+              "feasible_count": 0,
+              "invalid_solver_count": 0,
+              "constraint_violation_counts": {
+                "distillate_purity": 0,
+                "bottoms_purity": 1,
+                "light_recovery": 1,
+                "heavy_recovery": 0
+              },
+              "minimum_constraint_margins": {
+                "distillate_purity": 0.004366647790667644,
+                "bottoms_purity": -0.002989218338409358,
+                "light_recovery": -0.002112885251941199,
+                "heavy_recovery": 0.032276125873473505
+              },
+              "feasibility_rate": 0.0
+            },
+            "combined_operating_shift": {
+              "case_count": 2,
+              "feasible_count": 0,
+              "invalid_solver_count": 0,
+              "constraint_violation_counts": {
+                "distillate_purity": 1,
+                "bottoms_purity": 2,
+                "light_recovery": 1,
+                "heavy_recovery": 0
+              },
+              "minimum_constraint_margins": {
+                "distillate_purity": -0.008679356781700842,
+                "bottoms_purity": -0.017175079978054508,
+                "light_recovery": -0.006102967857495978,
+                "heavy_recovery": 0.015902612918572312
+              },
+              "feasibility_rate": 0.0
+            }
+          }
+        }
+      },
+      "proposal_valid_count": 1.0,
+      "proposal_failure_counts": {
+        "candidate_timeout": 2
+      },
+      "best_program": "runs/distillation_v2_b3/ChemicalProcess__DistillationColumnDesign/greedy_rewrite/normal/seed_1/best_program.py",
+      "trajectory": [
+        {
+          "step": 0,
+          "accepted": true,
+          "valid": 1.0,
+          "score": 0.0,
+          "best_score": 0.0,
+          "candidate_sha256": "05026baf28092bc8b53caaf3330a0e5571bf2584eac97d43cadd83ce2dc4edda",
+          "parent_sha256": null,
+          "candidate_failure_kind": null,
+          "combined_score": 0.0,
+          "feasibility_rate": 1.0,
+          "raw_score": 0.0,
+          "robustness_score": 0.0,
+          "heldout_policy_score": 0.0,
+          "heldout_robustness_score": 0.0,
+          "heldout_feasibility_rate": 1.0,
+          "development_shift_feasibility_rate": 1.0,
+          "heldout_shift_feasibility_rate": 1.0,
+          "development_mean_annualized_cost": 2115772.0854298444,
+          "heldout_mean_annualized_cost": 2488377.2193024363,
+          "candidate_instance_call_count": 6,
+          "candidate_instance_valid_rate": 1.0
+        },
+        {
+          "step": 1,
+          "accepted": false,
+          "valid": 0.0,
+          "score": -1e+18,
+          "best_score": 0.0,
+          "candidate_sha256": "56df5625f4cedcd6e5e7cb85aca89e258ed232b21b697d4ad8fc532a29007184",
+          "parent_sha256": "05026baf28092bc8b53caaf3330a0e5571bf2584eac97d43cadd83ce2dc4edda",
+          "candidate_failure_kind": "candidate_timeout",
+          "combined_score": -1e+18,
+          "feasibility_rate": null,
+          "raw_score": -1e+18,
+          "robustness_score": null,
+          "heldout_policy_score": null,
+          "heldout_robustness_score": null,
+          "heldout_feasibility_rate": null,
+          "development_shift_feasibility_rate": null,
+          "heldout_shift_feasibility_rate": null,
+          "development_mean_annualized_cost": null,
+          "heldout_mean_annualized_cost": null,
+          "candidate_instance_call_count": null,
+          "candidate_instance_valid_rate": null
+        },
+        {
+          "step": 2,
+          "accepted": true,
+          "valid": 1.0,
+          "score": 0.6130902025625943,
+          "best_score": 0.6130902025625943,
+          "candidate_sha256": "14ec4bb9fb394c0367c0a37fe5683e95991d37801e37b6e10b6fe776625bf11b",
+          "parent_sha256": "05026baf28092bc8b53caaf3330a0e5571bf2584eac97d43cadd83ce2dc4edda",
+          "candidate_failure_kind": null,
+          "combined_score": 0.6130902025625943,
+          "feasibility_rate": 1.0,
+          "raw_score": 0.6130902025625943,
+          "robustness_score": 0.0,
+          "heldout_policy_score": 0.5406920942512126,
+          "heldout_robustness_score": 0.0,
+          "heldout_feasibility_rate": 1.0,
+          "development_shift_feasibility_rate": 0.2,
+          "heldout_shift_feasibility_rate": 0.2,
+          "development_mean_annualized_cost": 1314155.5002074596,
+          "heldout_mean_annualized_cost": 1775599.1455,
+          "candidate_instance_call_count": 6,
+          "candidate_instance_valid_rate": 1.0
+        },
+        {
+          "step": 3,
+          "accepted": false,
+          "valid": 0.0,
+          "score": -1e+18,
+          "best_score": 0.6130902025625943,
+          "candidate_sha256": "23bb479dcd5a2c9b5222271d7fd93cf91d0f40348d62182afe7af122a5694ae4",
+          "parent_sha256": "14ec4bb9fb394c0367c0a37fe5683e95991d37801e37b6e10b6fe776625bf11b",
+          "candidate_failure_kind": "candidate_timeout",
+          "combined_score": -1e+18,
+          "feasibility_rate": null,
+          "raw_score": -1e+18,
+          "robustness_score": null,
+          "heldout_policy_score": null,
+          "heldout_robustness_score": null,
+          "heldout_feasibility_rate": null,
+          "development_shift_feasibility_rate": null,
+          "heldout_shift_feasibility_rate": null,
+          "development_mean_annualized_cost": null,
+          "heldout_mean_annualized_cost": null,
+          "candidate_instance_call_count": null,
+          "candidate_instance_valid_rate": null
+        }
+      ]
+    },
+    "blind_budget_three": {
+      "label": "blind_budget_three",
+      "report": "experiments/gpt55_distillation_v2_blind_b3_2026-07-23.json",
+      "report_sha256": "0401cb2b328c45d246d358d57d4bad35a73afde462449585321def96e9d0732f",
+      "trajectory_sha256": "cc66c7a73a39155c70960e9d25f1ff61480db630e1a377d69a5f1fbc4069d968",
+      "source_revision": "c76767cdfa86c3a1c155b83618b3688daa363515",
+      "source_scope": [
+        "frontier_science",
+        "scripts",
+        "tests",
+        "benchmarks",
+        "requirements-upstream.txt"
+      ],
+      "llm_condition_sha256": "5b0df4671481f6b3505155bc6c5654a64c4da5591422fb806904e7d0f44fc4d2",
+      "model": "gpt-5.5",
+      "server_side_seed_control": false,
+      "feedback_mode": "selection_blind",
+      "feedback_scope": "open-loop proposal batch: every proposal sees the frozen baseline program and its allowlisted baseline metrics; evaluated scores are retained only for offline best-of-batch analysis and never change a later parent or prompt; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+      "selection_policy": "offline_best_of_open_loop_batch",
+      "seed": 1,
+      "proposal_budget": 3,
+      "oracle_calls": 4,
+      "total_tokens": 17926,
+      "best_score": 0.0,
+      "selected_step": 0,
+      "selected_candidate_sha256": "05026baf28092bc8b53caaf3330a0e5571bf2584eac97d43cadd83ce2dc4edda",
+      "selected_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0,
+        "robustness_score": 0.0,
+        "heldout_policy_score": 0.0,
+        "heldout_robustness_score": 0.0,
+        "heldout_feasibility_rate": 1.0,
+        "development_shift_feasibility_rate": 1.0,
+        "heldout_shift_feasibility_rate": 1.0,
+        "development_mean_annualized_cost": 2115772.0854298444,
+        "heldout_mean_annualized_cost": 2488377.2193024363,
+        "candidate_instance_call_count": 6,
+        "candidate_instance_valid_rate": 1.0
+      },
+      "selected_axes": {
+        "development": {
+          "instance_count": 4,
+          "nominal_visible_score": 0.0,
+          "sealed_robustness_score": 0.0,
+          "nominal_feasibility_rate": 1.0,
+          "sealed_shift_feasibility_rate": 1.0,
+          "mean_nominal_annualized_cost": 2115772.0854298444,
+          "minimum_nominal_constraint_margin": 0.013211382065236362,
+          "designs": [
+            {
+              "name": "dev_balanced_aromatic",
+              "tray_count": 42,
+              "feed_stage": 21,
+              "reflux_ratio": 6.88,
+              "distillate_fraction": 0.5000000000000001,
+              "feed_split_gain": 1.1111111111111112
+            },
+            {
+              "name": "dev_high_purity_light",
+              "tray_count": 44,
+              "feed_stage": 27,
+              "reflux_ratio": 6.88,
+              "distillate_fraction": 0.3457446808510638,
+              "feed_split_gain": 1.0638297872340425
+            },
+            {
+              "name": "dev_rich_partially_vaporized",
+              "tray_count": 46,
+              "feed_stage": 20,
+              "reflux_ratio": 6.88,
+              "distillate_fraction": 0.6497297297297298,
+              "feed_split_gain": 1.1560693641618498
+            },
+            {
+              "name": "dev_lean_warm_feed",
+              "tray_count": 44,
+              "feed_stage": 30,
+              "reflux_ratio": 6.88,
+              "distillate_fraction": 0.25312500000000004,
+              "feed_split_gain": 1.098901098901099
+            }
+          ],
+          "shift_diagnostics": {
+            "lower_relative_volatility": {
+              "case_count": 4,
+              "feasible_count": 4,
+              "invalid_solver_count": 0,
+              "constraint_violation_counts": {
+                "distillate_purity": 0,
+                "bottoms_purity": 0,
+                "light_recovery": 0,
+                "heavy_recovery": 0
+              },
+              "minimum_constraint_margins": {
+                "distillate_purity": 0.024999999963316255,
+                "bottoms_purity": 0.013211382082777352,
+                "light_recovery": 0.03749999995771314,
+                "heavy_recovery": 0.03999999998436121
+              },
+              "feasibility_rate": 1.0
+            },
+            "richer_feed": {
+              "case_count": 4,
+              "feasible_count": 4,
+              "invalid_solver_count": 0,
+              "constraint_violation_counts": {
+                "distillate_purity": 0,
+                "bottoms_purity": 0,
+                "light_recovery": 0,
+                "heavy_recovery": 0
+              },
+              "minimum_constraint_margins": {
+                "distillate_purity": 0.024999999965517272,
+                "bottoms_purity": 0.01483050842426625,
+                "light_recovery": 0.04711798836123504,
+                "heavy_recovery": 0.03999999994167647
+              },
+              "feasibility_rate": 1.0
+            },
+            "leaner_feed_quality_shift": {
+              "case_count": 4,
+              "feasible_count": 4,
+              "invalid_solver_count": 0,
+              "constraint_violation_counts": {
+                "distillate_purity": 0,
+                "bottoms_purity": 0,
+                "light_recovery": 0,
+                "heavy_recovery": 0
+              },
+              "minimum_constraint_margins": {
+                "distillate_purity": 0.024999999965517272,
+                "bottoms_purity": 0.012007873968823177,
+                "light_recovery": 0.024587912053412486,
+                "heavy_recovery": 0.039999999949733134
+              },
+              "feasibility_rate": 1.0
+            },
+            "reflux_derating": {
+              "case_count": 4,
+              "feasible_count": 4,
+              "invalid_solver_count": 0,
+              "constraint_violation_counts": {
+                "distillate_purity": 0,
+                "bottoms_purity": 0,
+                "light_recovery": 0,
+                "heavy_recovery": 0
+              },
+              "minimum_constraint_margins": {
+                "distillate_purity": 0.024999999965517272,
+                "bottoms_purity": 0.0132113820671169,
+                "light_recovery": 0.03749999996501863,
+                "heavy_recovery": 0.0399999999502354
+              },
+              "feasibility_rate": 1.0
+            },
+            "combined_operating_shift": {
+              "case_count": 4,
+              "feasible_count": 4,
+              "invalid_solver_count": 0,
+              "constraint_violation_counts": {
+                "distillate_purity": 0,
+                "bottoms_purity": 0,
+                "light_recovery": 0,
+                "heavy_recovery": 0
+              },
+              "minimum_constraint_margins": {
+                "distillate_purity": 0.024999999964080533,
+                "bottoms_purity": 0.014495798279923297,
+                "light_recovery": 0.04584546469095119,
+                "heavy_recovery": 0.039999999967342936
+              },
+              "feasibility_rate": 1.0
+            }
+          }
+        },
+        "heldout": {
+          "instance_count": 2,
+          "nominal_visible_score": 0.0,
+          "sealed_robustness_score": 0.0,
+          "nominal_feasibility_rate": 1.0,
+          "sealed_shift_feasibility_rate": 1.0,
+          "mean_nominal_annualized_cost": 2488377.2193024363,
+          "minimum_nominal_constraint_margin": 0.06320407965730525,
+          "designs": [
+            {
+              "name": "heldout_close_boiling",
+              "tray_count": 48,
+              "feed_stage": 27,
+              "reflux_ratio": 6.88,
+              "distillate_fraction": 0.43043478260869567,
+              "feed_split_gain": 1.1904761904761905
+            },
+            {
+              "name": "heldout_difficult_split",
+              "tray_count": 50,
+              "feed_stage": 23,
+              "reflux_ratio": 6.88,
+              "distillate_fraction": 0.5648351648351648,
+              "feed_split_gain": 1.2195121951219512
+            }
+          ],
+          "shift_diagnostics": {
+            "lower_relative_volatility": {
+              "case_count": 2,
+              "feasible_count": 2,
+              "invalid_solver_count": 0,
+              "constraint_violation_counts": {
+                "distillate_purity": 0,
+                "bottoms_purity": 0,
+                "light_recovery": 0,
+                "heavy_recovery": 0
+              },
+              "minimum_constraint_margins": {
+                "distillate_purity": 0.07998325018394248,
+                "bottoms_purity": 0.06319344861229553,
+                "light_recovery": 0.07824448387559602,
+                "heavy_recovery": 0.08898885754719421
+              },
+              "feasibility_rate": 1.0
+            },
+            "richer_feed": {
+              "case_count": 2,
+              "feasible_count": 2,
+              "invalid_solver_count": 0,
+              "constraint_violation_counts": {
+                "distillate_purity": 0,
+                "bottoms_purity": 0,
+                "light_recovery": 0,
+                "heavy_recovery": 0
+              },
+              "minimum_constraint_margins": {
+                "distillate_purity": 0.07265853263506572,
+                "bottoms_purity": 0.0710997641075815,
+                "light_recovery": 0.08966800684320253,
+                "heavy_recovery": 0.07512343650391096
+              },
+              "feasibility_rate": 1.0
+            },
+            "leaner_feed_quality_shift": {
+              "case_count": 2,
+              "feasible_count": 2,
+              "invalid_solver_count": 0,
+              "constraint_violation_counts": {
+                "distillate_purity": 0,
+                "bottoms_purity": 0,
+                "light_recovery": 0,
+                "heavy_recovery": 0
+              },
+              "minimum_constraint_margins": {
+                "distillate_purity": 0.07999679223621647,
+                "bottoms_purity": 0.0574576761869916,
+                "light_recovery": 0.06815227247950761,
+                "heavy_recovery": 0.08999775110727415
+              },
+              "feasibility_rate": 1.0
+            },
+            "reflux_derating": {
+              "case_count": 2,
+              "feasible_count": 2,
+              "invalid_solver_count": 0,
+              "constraint_violation_counts": {
+                "distillate_purity": 0,
+                "bottoms_purity": 0,
+                "light_recovery": 0,
+                "heavy_recovery": 0
+              },
+              "minimum_constraint_margins": {
+                "distillate_purity": 0.07999603757398066,
+                "bottoms_purity": 0.06320311236507174,
+                "light_recovery": 0.07825699327889413,
+                "heavy_recovery": 0.08900713823978912
+              },
+              "feasibility_rate": 1.0
+            },
+            "combined_operating_shift": {
+              "case_count": 2,
+              "feasible_count": 2,
+              "invalid_solver_count": 0,
+              "constraint_violation_counts": {
+                "distillate_purity": 0,
+                "bottoms_purity": 0,
+                "light_recovery": 0,
+                "heavy_recovery": 0
+              },
+              "minimum_constraint_margins": {
+                "distillate_purity": 0.0743365579775691,
+                "bottoms_purity": 0.06944525829680842,
+                "light_recovery": 0.08747758613304446,
+                "heavy_recovery": 0.07802548088593575
+              },
+              "feasibility_rate": 1.0
+            }
+          }
+        }
+      },
+      "proposal_valid_count": 0.0,
+      "proposal_failure_counts": {
+        "candidate_timeout": 3
+      },
+      "best_program": "runs/distillation_v2_blind_b3/ChemicalProcess__DistillationColumnDesign/greedy_rewrite/selection_blind/seed_1/best_program.py",
+      "trajectory": [
+        {
+          "step": 0,
+          "accepted": true,
+          "valid": 1.0,
+          "score": 0.0,
+          "best_score": 0.0,
+          "candidate_sha256": "05026baf28092bc8b53caaf3330a0e5571bf2584eac97d43cadd83ce2dc4edda",
+          "parent_sha256": null,
+          "candidate_failure_kind": null,
+          "combined_score": 0.0,
+          "feasibility_rate": 1.0,
+          "raw_score": 0.0,
+          "robustness_score": 0.0,
+          "heldout_policy_score": 0.0,
+          "heldout_robustness_score": 0.0,
+          "heldout_feasibility_rate": 1.0,
+          "development_shift_feasibility_rate": 1.0,
+          "heldout_shift_feasibility_rate": 1.0,
+          "development_mean_annualized_cost": 2115772.0854298444,
+          "heldout_mean_annualized_cost": 2488377.2193024363,
+          "candidate_instance_call_count": 6,
+          "candidate_instance_valid_rate": 1.0
+        },
+        {
+          "step": 1,
+          "accepted": false,
+          "valid": 0.0,
+          "score": -1e+18,
+          "best_score": 0.0,
+          "candidate_sha256": "f2c0c3cfbdc48822111aecbdc610bd13aba00efbaedd8831044fbb06aee30a3d",
+          "parent_sha256": "05026baf28092bc8b53caaf3330a0e5571bf2584eac97d43cadd83ce2dc4edda",
+          "candidate_failure_kind": "candidate_timeout",
+          "combined_score": -1e+18,
+          "feasibility_rate": null,
+          "raw_score": -1e+18,
+          "robustness_score": null,
+          "heldout_policy_score": null,
+          "heldout_robustness_score": null,
+          "heldout_feasibility_rate": null,
+          "development_shift_feasibility_rate": null,
+          "heldout_shift_feasibility_rate": null,
+          "development_mean_annualized_cost": null,
+          "heldout_mean_annualized_cost": null,
+          "candidate_instance_call_count": null,
+          "candidate_instance_valid_rate": null
+        },
+        {
+          "step": 2,
+          "accepted": false,
+          "valid": 0.0,
+          "score": -1e+18,
+          "best_score": 0.0,
+          "candidate_sha256": "3879932c41129200356b092bf92e288073e81ecf0112fd0617233af22b64ac70",
+          "parent_sha256": "05026baf28092bc8b53caaf3330a0e5571bf2584eac97d43cadd83ce2dc4edda",
+          "candidate_failure_kind": "candidate_timeout",
+          "combined_score": -1e+18,
+          "feasibility_rate": null,
+          "raw_score": -1e+18,
+          "robustness_score": null,
+          "heldout_policy_score": null,
+          "heldout_robustness_score": null,
+          "heldout_feasibility_rate": null,
+          "development_shift_feasibility_rate": null,
+          "heldout_shift_feasibility_rate": null,
+          "development_mean_annualized_cost": null,
+          "heldout_mean_annualized_cost": null,
+          "candidate_instance_call_count": null,
+          "candidate_instance_valid_rate": null
+        },
+        {
+          "step": 3,
+          "accepted": false,
+          "valid": 0.0,
+          "score": -1e+18,
+          "best_score": 0.0,
+          "candidate_sha256": "cbc7deb3eeaa39f0de389eaf5412cb5eb3a56b81e5f0c607e0549a09c46408d7",
+          "parent_sha256": "05026baf28092bc8b53caaf3330a0e5571bf2584eac97d43cadd83ce2dc4edda",
+          "candidate_failure_kind": "candidate_timeout",
+          "combined_score": -1e+18,
+          "feasibility_rate": null,
+          "raw_score": -1e+18,
+          "robustness_score": null,
+          "heldout_policy_score": null,
+          "heldout_robustness_score": null,
+          "heldout_feasibility_rate": null,
+          "development_shift_feasibility_rate": null,
+          "heldout_shift_feasibility_rate": null,
+          "development_mean_annualized_cost": null,
+          "heldout_mean_annualized_cost": null,
+          "candidate_instance_call_count": null,
+          "candidate_instance_valid_rate": null
+        }
+      ]
+    }
+  },
+  "observed_proposal_pattern": {
+    "proposal_count": 7,
+    "valid_proposal_count": 1.0,
+    "candidate_timeout_count": 6,
+    "normal_selected_nominal_development_score": 0.6130902025625943,
+    "normal_selected_nominal_heldout_score": 0.5406920942512126,
+    "normal_selected_development_shift_feasibility_rate": 0.2,
+    "normal_selected_heldout_shift_feasibility_rate": 0.2,
+    "normal_selected_development_robustness_score": 0.0,
+    "normal_selected_heldout_robustness_score": 0.0
+  },
+  "science_axis_separation": {
+    "nominal_cost_optimization": {
+      "development_score": 0.6130902025625943,
+      "heldout_score": 0.5406920942512126,
+      "development_feasibility_rate": 1.0,
+      "heldout_feasibility_rate": 1.0
+    },
+    "sealed_operating_robustness": {
+      "development_score": 0.0,
+      "heldout_score": 0.0,
+      "development_shift_feasibility_rate": 0.2,
+      "heldout_shift_feasibility_rate": 0.2
+    },
+    "public_cost_model_responsiveness": {
+      "post_hoc": true,
+      "selection_state_accessed": false,
+      "probe_instance": "dev_balanced_aromatic",
+      "candidate_sha256": "14ec4bb9fb394c0367c0a37fe5683e95991d37801e37b6e10b6fe776625bf11b",
+      "source_mentions_public_tray_cost_field": false,
+      "source_mentions_public_vapour_cost_field": false,
+      "candidate_design_identical_across_cost_regimes": true,
+      "candidate_reference_cost_ranking_reverses": true,
+      "all_candidate_and_reference_designs_feasible": true,
+      "regimes": [
+        {
+          "name": "capital_heavy_energy_light",
+          "annualized_cost_per_tray": 200000.0,
+          "annualized_cost_per_vapour_flow": 50000.0,
+          "candidate_design": {
+            "tray_count": 8,
+            "feed_stage": 5,
+            "reflux_ratio": 6.1375,
+            "distillate_fraction": 0.4848158,
+            "feed_split_gain": 1.1111111111111112
+          },
+          "candidate_metrics": {
+            "process_feasible": true,
+            "distillate_light_mole_fraction": 0.978987603187702,
+            "bottoms_light_mole_fraction": 0.04924712747493494,
+            "light_recovery": 0.9492573160590566,
+            "heavy_recovery": 0.9796257160590551,
+            "annualized_cost": 1893018.6386250001
+          },
+          "reference_design": {
+            "tray_count": 13,
+            "feed_stage": 7,
+            "reflux_ratio": 1.4580089137506798,
+            "distillate_fraction": 0.5005830512874706,
+            "feed_split_gain": 1.1111111111111112
+          },
+          "reference_metrics": {
+            "process_feasible": true,
+            "distillate_light_mole_fraction": 0.9514580705435944,
+            "bottoms_light_mole_fraction": 0.04748780740488922,
+            "light_recovery": 0.9525675682496039,
+            "heavy_recovery": 0.9514014656746628,
+            "annualized_cost": 2781521.8801068556
+          },
+          "candidate_minus_reference_annualized_cost": -888503.2414818555
+        },
+        {
+          "name": "capital_light_energy_heavy",
+          "annualized_cost_per_tray": 5000.0,
+          "annualized_cost_per_vapour_flow": 700000.0,
+          "candidate_design": {
+            "tray_count": 8,
+            "feed_stage": 5,
+            "reflux_ratio": 6.1375,
+            "distillate_fraction": 0.4848158,
+            "feed_split_gain": 1.1111111111111112
+          },
+          "candidate_metrics": {
+            "process_feasible": true,
+            "distillate_light_mole_fraction": 0.978987603187702,
+            "bottoms_light_mole_fraction": 0.04924712747493494,
+            "light_recovery": 0.9492573160590566,
+            "heavy_recovery": 0.9796257160590551,
+            "annualized_cost": 2582260.94075
+          },
+          "reference_design": {
+            "tray_count": 13,
+            "feed_stage": 7,
+            "reflux_ratio": 1.4580089137506798,
+            "distillate_fraction": 0.5005830512874706,
+            "feed_split_gain": 1.1111111111111112
+          },
+          "reference_metrics": {
+            "process_feasible": true,
+            "distillate_light_mole_fraction": 0.9514580705435944,
+            "bottoms_light_mole_fraction": 0.04748780740488922,
+            "light_recovery": 0.9525675682496039,
+            "heavy_recovery": 0.9514014656746628,
+            "annualized_cost": 1046306.3214959817
+          },
+          "candidate_minus_reference_annualized_cost": 1535954.6192540184
+        }
+      ],
+      "interpretation": "The selected policy returns the same artifact even though the public capital-versus-energy cost change reverses its ordering against a feasible lower-reflux witness. This diagnoses missing cost responsiveness, not an invalid nominal benchmark score."
+    }
+  },
+  "normal_minus_blind_diagnostic": {
+    "development_nominal_visible_score": 0.6130902025625943,
+    "heldout_nominal_visible_score": 0.5406920942512126,
+    "development_sealed_robustness_score": 0.0,
+    "development_sealed_shift_feasibility_rate": -0.8,
+    "proposal_valid_count": 1.0,
+    "total_tokens": 3812,
+    "oracle_calls": 0
+  },
+  "descriptive_findings": {
+    "one_valid_proposal_improves_nominal_cost": true,
+    "nominally_feasible_selected_design_has_zero_robustness": true,
+    "only_richer_feed_shift_is_feasible": true,
+    "selected_program_is_not_cost_responsive_in_post_hoc_probe": true,
+    "normal_and_blind_are_oracle_call_matched": true,
+    "normal_and_blind_are_not_token_matched": true
+  },
+  "limitations": [
+    "Each condition has one run; no confidence interval, population estimate, leaderboard or scaling law is supported.",
+    "The Azure endpoint exposes no server-side generation seed, so equal local seed labels do not pair model randomness.",
+    "Normal and selection-blind are oracle-call matched but not token- or context-matched; their contrast is descriptive, not causal.",
+    "Budget one uses a different local seed label and is an independent calibration, not a prefix of budget three.",
+    "Held-out, per-instance and shifted robustness metrics were sealed from proposal and selection state.",
+    "The cost-regime counterfactual is a post-hoc mechanism probe, not a preregistered hidden benchmark or model-performance estimate.",
+    "Fixed repository-visible binary separations still require server-held mixtures and specifications.",
+    "The constant-relative-volatility equilibrium-stage model is not rate-based process simulation, plant validation or autonomous scientific discovery evidence."
+  ],
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true,
+  "input_source_scope_changes": []
+}

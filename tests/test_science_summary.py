@@ -18,7 +18,7 @@ def load_summary_module():
 class ScienceCalibrationSummaryTests(unittest.TestCase):
     def test_default_reports_cover_all_normal_science_calibrations(self):
         module = load_summary_module()
-        self.assertEqual(len(module.DEFAULT_REPORTS), 33)
+        self.assertEqual(len(module.DEFAULT_REPORTS), 35)
         self.assertTrue(any("truss_v2_b3" in path for path in module.DEFAULT_REPORTS))
         self.assertTrue(any("antenna_v2_b3" in path for path in module.DEFAULT_REPORTS))
         self.assertTrue(any("nmr_v2_b3" in path for path in module.DEFAULT_REPORTS))
@@ -66,6 +66,12 @@ class ScienceCalibrationSummaryTests(unittest.TestCase):
         ))
         self.assertTrue(any(
             "absorber_v2_b3" in path for path in module.DEFAULT_REPORTS
+        ))
+        self.assertTrue(any(
+            "distillation_v2_b1" in path for path in module.DEFAULT_REPORTS
+        ))
+        self.assertTrue(any(
+            "distillation_v2_b3" in path for path in module.DEFAULT_REPORTS
         ))
         self.assertFalse(any("blind" in path for path in module.DEFAULT_REPORTS))
 

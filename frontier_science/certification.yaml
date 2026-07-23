@@ -205,7 +205,7 @@ tasks:
     reason: hand-written rollback/conformity objective is exactly solved by all-upper-bound radii and non-finite geometry receives full score
   ChemicalProcess/DistillationColumnDesign:
     status: candidate
-    reason: v2 replaces the fixed-purity tray toy with six varying binary separations, exact mixed-integer artifacts, total-condenser/feed-stage/partial-reboiler light-component balances, product purity and recovery gates, fixed-seed nominal/robust feasible witnesses, interleaved held-out regimes and five sealed volatility/feed/quality/reflux shifts; independent bounded least-squares MESH solves reproduce all 12 reference-condition families to below 2e-8 while robust witnesses cost 37--52 percent of the conservative baseline, pending rate-based process-simulator replication, server-held mixtures and independent chemical-engineering review
+    reason: v2 replaces the fixed-purity tray toy with six varying binary separations, exact mixed-integer artifacts, closed equilibrium-stage balances, purity/recovery gates, fixed-seed nominal/robust witnesses, held-out regimes and five sealed operating shifts; independent least-squares MESH solves agree below 2e-8, while one GPT-5.5 normal budget-three proposal reaches 0.613/0.541 development/held-out nominal score but only 0.20/0.20 shift feasibility and zero robustness, six of seven proposals time out, and a post-hoc public-cost counterfactual exposes no capital-versus-energy responsiveness; retain pending repeated paired calibration, server-held mixtures, rate-based process-simulator replication and independent chemical-engineering review
     citation_ids:
       - doi:10.1021/ie50186a023
       - doi:10.1002/aic.690170130
