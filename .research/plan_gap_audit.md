@@ -247,6 +247,56 @@ optimization, validation and mechanism bottlenecks. A model-generation doubling 
 requires a prospectively frozen task/scaffold panel rather than a retrospective rolling-frontier
 fit.
 
+### 15. Scientific conclusions are reversible but the trajectory schema is monotone
+
+EdgeBench's theoretical frontier treats unlocked score units as irreversible, and this project's
+schema likewise requires `best_score` to be monotone. That is appropriate for observer-side
+optimization potential, not for the mechanism the system currently endorses. A later
+intervention, regime shift or independent replication can invalidate an earlier claim. Add a
+separate current-claim/event stream with evidence hashes and explicit propose/confirm/revise/
+retract/abstain transitions. Score unsupported-claim exposure, retraction delay, confidence
+revision and recovery under contradictory or misspecified evidence; never forward-fill the
+historical maximum mechanism score as the current scientific belief.
+
+### 16. Nominal task count, curve parameters and replicate floors can overstate evidence
+
+Related procedural instances, shared simulators/data and common task templates reduce the
+effective number of independent scientific worlds. At the same time, a three-parameter saturating
+curve can obtain high level-fit `R²` while `Smax`, `tmid` and `beta` trade off outside a weakly
+observed plateau. EdgeBench's full score tables also show that three-run task variance can be
+large. Register task ancestry, hold out and resample whole lineages, report effective independent-
+world count, require profile/bootstrap parameter intervals and post-inflection support, and size
+confirmatory repeats from pilot variance plus a material-effect target rather than treating five
+or ten seeds as universally sufficient.
+
+### 17. Long-run calendar effects and milestone narratives need stronger designs
+
+Serving stability varies through long runs, and staggered or sequential condition launches can
+confound model/feedback contrasts with calendar day, service load or endpoint updates. Randomize
+or rotate treatment order in task-instance blocks, pair conditions concurrently when possible,
+and log the endpoint snapshot and UTC batch. Separately, a large score jump after bundled edits
+does not identify which edit or scientific idea caused it. For selected milestones, replay the
+parent, full child, component-only patches and rollback on the same sealed panel before making a
+causal case-study attribution.
+
+### 18. Task calibration and confirmatory estimates are not yet separated
+
+Model trajectories currently help decide whether candidate tasks have headroom and scientific
+value. Reusing the same worlds/runs to set thresholds, admit tasks and estimate headline curves
+would create adaptive selection bias. Freeze admission using a declared pilot model/seed/world
+panel, then evaluate fresh confirmatory seeds, procedural worlds and preferably later model
+snapshots. Retain excluded, saturated and failed tasks in a public sampling-frame ledger; reused
+pilot evidence remains exploratory.
+
+### 19. Repeated sealed evaluation is validation, not fresh confirmation
+
+Periodic evaluator-only snapshots protect the online search state, but analysts can still use
+their trajectories to choose tasks, curve families, milestones and claims. Repeatedly inspected
+sealed worlds therefore become adaptive validation evidence. Reserve a one-shot post-commit
+world/seed panel or independent high-fidelity replication that is never used for search,
+admission, fitting, stopping or interpretation; count all evaluator looks and refresh any
+confirmation set that has influenced a decision.
+
 ## Revised TODO plan
 
 ### P0/P1 closeout — completed locally, reproduce in CI
@@ -352,6 +402,20 @@ fit.
   report interval coverage rather than treating checkpoints as replicates.
 - [ ] Test the proposed frontier mechanism using fixed-grid material-improvement hazards versus
   normalized progress, and compare single-sigmoid, change-point, multistage and mixture models.
+- [ ] Gate `Smax`/`tmid`/`beta` and curve-derived speed interpretations on profile or whole-
+  trajectory bootstrap intervals, parameter correlations, rolling-window stability and adequate
+  post-inflection data; otherwise report observed-window gain/AUC/time-to-material-event only.
+- [ ] Register task/data/oracle/template lineage, report nominal and effective independent-world
+  counts, and hold out/resample complete lineages rather than sibling instances.
+- [ ] Separate pilot admission/calibration worlds and runs from fresh confirmatory seeds/worlds;
+  retain excluded and saturated tasks in the sampling-frame ledger.
+- [ ] Partition exploratory, periodically monitored validation and one-shot post-commit
+  confirmation evidence; log adaptive hypothesis/evaluator looks and refresh any confirmation
+  panel used for task, curve, milestone, stopping or claim selection.
+- [ ] Randomize/rotate long-run treatment order within calendar blocks, concurrently pair task
+  conditions where possible, and record UTC start, endpoint/model snapshot and service incidents.
+- [ ] Determine confirmatory replicate allocation from pilot variance and a preregistered material
+  effect/interval-width target; treat fixed seed counts as minimum screens, not proof of power.
 - [ ] Freeze a prospective task/scaffold/weight panel before making any model-generation learning-
   speed or doubling-time claim; retain all scheduled systems and adjust for initial capability.
 - [ ] Add equal-bit meaningful-label, permuted-label, unlabeled-component and scalar feedback
@@ -378,8 +442,13 @@ fit.
 - [ ] Add calibrated confidence, active stopping, and unnecessary-experiment metrics.
 - [ ] Add explicit `commit`/`abstain`/`continue` artifacts and a forced-continuation ablation on
   supported, null and misspecified worlds; report commitment regret and post-commit degradation.
+- [ ] Add a non-monotone current-claim ledger with propose/confirm/revise/retract/abstain events,
+  confidence and evidence hashes; test contradictory evidence and score unsupported-claim
+  exposure, revision/retraction delay and correct-mechanism recovery.
 - [ ] Add hypothesis–test–evidence/belief-update artifacts, explicit exploration DAGs,
   failed branches, falsification metrics, and replay checks.
+- [ ] For selected large trajectory jumps, replay parent, full child, component-only patches and
+  rollback on an identical sealed evaluator panel before attributing a milestone to an insight.
 - [ ] Add sequential-vs-parallel, tool-access, novelty, ensemble, and component ablations where
   the corresponding scaffold capability is claimed.
 - [ ] Tag tasks as method-prescriptive reproduction, method-neutral inference, optimization or

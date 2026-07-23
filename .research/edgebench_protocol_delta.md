@@ -253,6 +253,71 @@ EdgeBench authors.
    publish an immutable analysis table derived from raw event logs plus a one-command figure/table
    rebuild, while separately protecting server-held oracle assets.
 
+## Fourth-pass science and estimand findings
+
+These are further protocol deductions from EdgeBench's theoretical assumptions, full score
+tables and long-run operations. They are not additional empirical claims by the EdgeBench
+authors.
+
+1. **Scientific claims are reversible, unlike unlocked score units.** EdgeBench's frontier model
+   assumes that an unlocked score unit never locks again, matching a monotone best-so-far
+   optimization envelope. A scientific mechanism can instead lose support after an intervention,
+   regime shift or independent replication. In addition to observer-side best curves, retain a
+   time-indexed current claim, confidence, evidence set and explicit `confirm`, `revise`, `retract`
+   or `abstain` transition. Inject preregistered contradictory and misspecification evidence and
+   measure retraction delay, unsupported-claim exposure, oscillation and recovery of the correct
+   mechanism. Never carry an earlier high mechanism score forward after the agent has abandoned
+   that mechanism.
+2. **A fitted learning speed is not identified when the ceiling is weakly observed.** The three-
+   parameter curve jointly estimates `Smax`, `tmid` and `beta`; the paper's 28-hour GPT-5.5 fit,
+   for example, has `tmid=14.4h` inside a 28-hour window and a shallow `beta=0.25`. A high level-fit
+   `R²` does not show that these parameters, or a frontier-speed reading of `beta`, are stable.
+   Require profile-likelihood or trajectory-bootstrap intervals, parameter correlations,
+   rolling-window stability, and a minimum amount of post-inflection support. If the ceiling or
+   midpoint is not identified, report bounded observed-window gain or time-to-material-event
+   rather than a point learning speed.
+3. **Task count is not effective sample size.** The suite contains progressive tasks, shared
+   domain/data families and related construction templates, so 134 rows need not represent 134
+   independent scientific environments. Register a task-lineage graph, cluster near-duplicate
+   instances and shared oracle/data ancestry, resample at the lineage/family level, and report an
+   effective independent-world count. Hold out complete lineages, not random sibling instances,
+   for transfer and scaling forecasts.
+4. **Long runs need calendar-time blocking.** Appendix B shows serving reliability changing over
+   elapsed time, while SForge's official multi-task launcher staggers starts. Model, feedback and
+   scaffold conditions run on different calendar days can therefore inherit service-load or
+   endpoint-version effects. Randomize or rotate treatment order within task-instance blocks,
+   launch paired conditions concurrently where quotas permit, log endpoint/model snapshots and
+   calendar timestamps, and include calendar batch as a design factor. A calendar-imbalanced
+   contrast is operational evidence, not a clean algorithmic or feedback effect.
+5. **Milestones need counterfactual edit tests.** The gravitational-wave narrative assigns score
+   jumps to phases and components, but a chronological trace alone does not establish which edit
+   caused a gain, especially when edits are bundled. At selected breakthroughs, replay the parent,
+   full child, component-only patches and rollback on the same sealed evaluator panel. Report
+   causal-edit retention and interaction effects; label an unablated milestone as an interpreted
+   case study rather than a discovered mechanism.
+6. **Task admission and confirmatory evaluation must use separate evidence.** EdgeBench selects for
+   unsaturated headroom, and this project also uses model runs to calibrate candidate difficulty.
+   If the same trajectories set thresholds, choose tasks and support headline curves, the final
+   estimate is adaptively selected. Freeze admission on a pilot model/seed/world panel, then use
+   fresh confirmatory seeds, procedural worlds and preferably later models; publish excluded and
+   saturated tasks in the sampling-frame ledger. Any reused admission data remains exploratory.
+7. **Replicate counts should follow the intended claim, not a universal constant.** EdgeBench's
+   full tables show large task-specific run variation, including standard deviations near the
+   score range on some science tasks, so three runs can be descriptive but severely underpowered
+   for feedback, mechanism or model-ranking contrasts. Use pilot variance and a preregistered
+   material effect to simulate hierarchical power/precision, then allocate independent runs by
+   lineage and task. Keep the broad five-seed screen exploratory when the confirmatory precision
+   target is not met.
+8. **Adaptive exploration can spend the same evidence twice.** A long-running science agent may
+   inspect many hypotheses, experiments and diagnostics before selecting one conclusion. Even if
+   the evaluator is hidden from source code, repeatedly using the same sealed worlds for
+   snapshots, milestone interpretation or task calibration turns them into an adaptive
+   development set. Partition exploratory, commit and one-shot confirmation budgets; after a
+   signed claim, evaluate it on a fresh server-held world or high-fidelity replication that was
+   never used for search, curve fitting, admission or stopping. Report the number of hypothesis
+   and validation looks, and refresh a contaminated confirmation panel rather than calling it
+   sealed.
+
 ## Minimum next experiments
 
 1. **HartreeFockSCF-v2 calibration:** GPT-5.5 budget 1, normal budget 3 and strict
@@ -300,6 +365,22 @@ EdgeBench authors.
 15. **Dual-loop attribution and transfer pilot:** cross local simulator feedback with trusted
     judge feedback, then test whether a provenance-clean evidence ledger transfers to new
     procedural instances or related held-out tasks better than artifact inheritance alone.
+16. **Reversible-claim pilot:** on ActiveLaw, SCM and one inverse task, introduce a supported
+    world followed by contradictory or model-misspecified evidence; score the current claim,
+    confidence, retraction/revision delay and unsupported-claim exposure rather than a monotone
+    maximum mechanism score.
+17. **Curve-identifiability gate:** before reporting `Smax`, `tmid`, `beta` or a curve-derived speed
+    trend, require whole-trajectory parameter intervals, parameter-correlation and rolling-window
+    checks plus adequate post-inflection observations; otherwise report observed-window gains.
+18. **Lineage-blocked confirmatory design:** freeze task admission on pilot data, assign task-
+    lineage clusters, randomize/concurrently pair calendar blocks, and size confirmatory repeats
+    from pilot variance and a material-effect target.
+19. **Milestone edit ablation:** for a small set of large trajectory jumps, replay parent, full
+    child, component-only patches and rollback on an identical sealed evaluator panel before
+    attributing the gain to a scientific insight.
+20. **Fresh-confirmation gate:** reserve a one-shot post-commit world/replication budget that is
+    never used by search, periodic snapshots, task admission or stopping; report adaptive looks
+    and invalidate/refresh any confirmation panel exposed through repeated analysis.
 
 ## Claim boundary
 

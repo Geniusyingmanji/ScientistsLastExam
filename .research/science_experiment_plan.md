@@ -57,16 +57,20 @@ Report its visible, sealed and mechanism advantage over `committed` as an
 | F7 | Does retained experience transfer, or anchor a stale hypothesis? | Same-regime continuation vs related-instance transfer or a preregistered regime change; artifact-only, evidence-memory, full-state and clean-restart conditions | positive/negative transfer, adaptation delay, stale-claim persistence, calibrated revision and false discovery | Scientific memory quality rather than same-task score persistence |
 | V1 | Does optimization generalize beyond the visible oracle? | Visible development oracle vs evaluator-only hidden instances/shifts | sealed score, development–validation gap, rank correlation, replication rate | Generalizable result |
 | V2 | Does a cheap proxy survive higher-fidelity evaluation? | Proxy-only search; scheduled promotion; adaptive multifidelity; exact-only reference where affordable | proxy/exact rank correlation, false-promotion rate, exact-call efficiency, high-fidelity regret | Multifidelity validation |
+| V3 | Does an adaptively selected claim survive genuinely fresh confirmation? | Exploration/development worlds and periodic sealed monitoring vs a single post-commit server-held world or independent high-fidelity replication never used for search, admission, fitting or stopping | confirmation success, replication effect/interval, adaptive-look count and confirmation regret | Confirmatory evidence separated from adaptive discovery |
 | M1 | Did the system recover a mechanism rather than a predictor? | Observational-only vs intervention access; prediction-only vs explicit mechanism submission | graph F1, equation/term recovery, parameter error, intervention and shift prediction | Mechanism recovery |
 | R1 | Can the system detect when no supported discovery exists? | Well-specified worlds vs null, noisy, confounded, biased-oracle and model-misspecified worlds | false-discovery rate, calibration, correct abstention, detection delay, unnecessary experiments | Calibrated refusal and reliability |
 | R2 | Is the claimed result reproducible and traceable? | Original evaluator vs independent implementation/reviewer; replay from immutable artifact | replay success, independent replication rate, claim–evidence consistency, failed-branch coverage | Research integrity |
 | R3 | Can the system select and stop on a deployable scientific conclusion? | Agent-controlled stop/commit vs forced fixed-horizon continuation; compare committed, terminal and hidden oracle-best artifacts | stopping utility net of experiment cost, commitment regret, oracle-selection gap, post-commit degradation | Autonomous selection/stopping rather than retrospective oracle selection |
+| R4 | Does the system revise or retract a scientific claim when later evidence contradicts it? | Supported evidence followed by preregistered intervention, regime-shift, misspecification or replication evidence; current-claim ledger vs score-only memory | unsupported-claim exposure, retraction/revision delay, confidence calibration, oscillation and correct-mechanism recovery | Self-correction rather than monotone claim accumulation |
 | K1 | Is an apparent discovery retrieval, reproduction or task-local inference? | Frozen dated corpus vs no literature vs open Web, crossed with public, time-held-out and family-held-out tasks | citation provenance, novelty/reproduction label, sealed transfer and contamination sensitivity | Knowledge-use attribution, not discovery by retrieval |
 | K2 | Did the system discover a method or execute one supplied by the task? | Method-prescriptive vs method-neutral contracts and workflow-hint ablations on matched procedural worlds | algorithm-family novelty, mechanism/validation lift, literature overlap and independent transfer | Prescribed reproduction separated from task-local method discovery |
 | B1 | How does the trajectory compare with domain experts under the same interface? | Expert one-shot and iterative runs on a stratified subset with matched feedback, experiment and wall/compute budgets | validated utility, sample efficiency, mechanism/refusal calibration, stopping and failed-hypothesis coverage | Human-calibrated capability and task difficulty |
 | I1 | Does hidden trajectory measurement alter the trajectory? | Stable committed head plus scratch workspace; fixed disclosed snapshots vs jittered undisclosed snapshots vs post-run event replay | branching/edit cadence, transient invalidity, throughput, visible-feedback latency and final science outcomes | Observer effect of evaluator-only measurement |
 | I2 | How much performance comes from continuation scaffolding? | Fixed model/context/tools crossed with continuous session, goal state and fresh-context file-backed loop | active duty cycle, state-loss incidents, evidence retention and committed/sealed outcomes | Model capability separated from continuation harness |
 | S1 | Is an aggregate scaling curve predictively and mechanistically supported? | Preregistered log-sigmoid and alternatives, whole-trajectory validation across held-out suffixes/runs/tasks/families, and fixed-grid material-improvement events | held-out error/log score, interval coverage, parameter stability and improvement hazard versus normalized progress | A bounded empirical regularity; never feedback learning or discovery by itself |
+| S2 | Are the fitted ceiling, midpoint and speed actually identifiable in the observed horizon? | Profile/trajectory-bootstrap fits across rolling windows and longer horizons, with constrained or nonparametric alternatives | parameter intervals/correlation, post-inflection support, window stability and coverage | Curve-parameter interpretation only when identified; otherwise observed-window gain |
+| I3 | Is a narrated breakthrough caused by the attributed edit? | Parent, full child, component-only patch and rollback replay on one frozen sealed evaluator panel | retained effect, interaction, regression and component-specific science metrics | Causal edit attribution for selected milestones, not from chronology alone |
 
 ## Controls that must be strict
 
@@ -132,6 +136,21 @@ Forced continuation and autonomous stopping answer different questions. Fixed ho
 useful for comparable capability curves, but discovery/reliability experiments must also permit
 a signed `commit`, `abstain` or `continue` decision. Continuing after a warranted stop consumes
 scientific budget and can introduce false discoveries; that cost is part of the outcome.
+
+Scientific claim state must not be reduced to a monotone best-ever mechanism score. Each
+claim-bearing event should record a stable `claim_id`, current mechanism/equation, confidence,
+supporting and contradicting evidence hashes, and one of `propose`, `confirm`, `revise`,
+`retract` or `abstain`. The score at budget `b` is the claim the system would defend at `b`, not
+the best historical claim selected with future evidence. On contradictory-evidence trials,
+measure both how quickly a false claim is withdrawn and whether the agent recovers a supported
+replacement rather than merely refusing forever.
+
+Evaluator-only monitoring is still adaptive evidence for the research team even when the agent
+cannot see it. Do not reuse a repeatedly inspected sealed panel as the final confirmation set.
+Log every hypothesis/evaluator look and reserve a post-commit confirmation world, seed panel or
+higher-fidelity replication that influences neither search, task admission, curve-model choice,
+stopping nor milestone selection. If analysts inspect or tune against that panel, mark it
+contaminated and refresh it before a confirmatory claim.
 
 Science tasks often need literature access, so blanket network isolation is not a sufficient
 contamination protocol. Build a dated, frozen and logged literature corpus for the primary
@@ -208,6 +227,16 @@ server-held procedural worlds, multi-seed feedback controls and independent revi
     sampling baselines; report held-out interval coverage and whole-trajectory bootstrap error.
 23. Scientific-memory transfer and regime-change panel showing beneficial transfer, adaptation
     latency and stale-hypothesis/negative-transfer failures.
+24. Current-claim state plot showing proposal, confirmation, revision/retraction and abstention
+    events, with confidence and unsupported-claim exposure under contradictory evidence.
+25. Curve-parameter identifiability panel with joint/profile intervals for `Smax`, `tmid` and
+    `beta`, rolling-window estimates and the observed fraction of the post-inflection regime.
+26. Task-lineage and calendar-block table: shared data/oracle/template ancestry, independent-
+    world count, admission versus confirmation split, treatment order and endpoint snapshot.
+27. Selected milestone edit-ablation table comparing parent, full child, component-only patches
+    and rollback on the same sealed panel.
+28. Exploration-to-confirmation flow showing hypothesis/evaluator look counts, signed commit,
+    fresh post-commit world/replication and any confirmation-set refresh after contamination.
 
 Avoid presenting a radar chart or a single “science score”; small multiples preserve the
 important capability dissociations.
@@ -216,7 +245,14 @@ important capability dissociations.
 
 - Use at least five seeds for the broad O1/O2 matrix. Use at least ten paired seeds on a smaller
   preregistered F1/M1/V1 subset when making causal or reliability claims.
+- Treat those counts as screening floors, not automatic adequacy. Before the confirmatory run,
+  use pilot task/seed variance and a preregistered scientifically material effect to simulate
+  hierarchical precision or power; increase independent lineages/runs or weaken the claim when
+  the target interval width or power cannot be met.
 - Treat task/instance and seed as the experimental units, not every trajectory checkpoint.
+- Register task lineage—shared source data, simulator/oracle, procedural generator, starter code
+  and construction template—and cluster or resample at the highest shared ancestry relevant to
+  the claim. Report both nominal task count and effective independent-world/lineage count.
 - Bootstrap or hierarchically resample complete task-instance/run trajectories; the dense,
   serially dependent points of a best-so-far curve are not independent experimental units.
 - Treat independently randomized restart pools as experimental units; subset combinations from
@@ -238,6 +274,9 @@ important capability dissociations.
   long-horizon survivors.
 - Report end-to-end wall time for deployment and active model/tool/oracle time for algorithmic
   efficiency. Queueing, rate limits, serving incidents and resume count are outcomes, not tokens.
+- Block and randomize treatment order over calendar time. Prefer concurrently paired conditions
+  on the same task instance when endpoint quotas permit; otherwise rotate order, log UTC start,
+  endpoint/model snapshot and service incidents, and include calendar batch in the analysis.
 - Predeclare task weights, normalization anchors and endpoint-selection policy. Repeat aggregate
   claims under rank/family-balanced aggregation, raw within-task gain, plausible anchor
   perturbations and leave-one-task/family-out analyses.
@@ -253,6 +292,15 @@ important capability dissociations.
 - Analyze protocol/runtime validity as a separate transition before conditional optimization.
   Never let a high rate of first-valid artifacts silently substitute for post-valid sealed or
   mechanism improvement, and never discard invalid attempts from the operational estimand.
+- Separate task admission/calibration data from confirmatory evaluation. Freeze thresholds,
+  task weights and inclusion using a declared pilot model/seed/world panel; headline estimates
+  use fresh seeds and procedural worlds, with reused pilot data labeled exploratory.
+- Within each claim-bearing run, separate exploratory/development evaluations, evaluator-only
+  monitoring and a one-shot fresh post-commit confirmation panel. Count adaptive looks; a panel
+  used to choose a claim, curve, milestone or stopping point is validation, not confirmation.
+- For interpreted breakthrough milestones, archive the parent and patch decomposition and replay
+  parent/full-child/component-only/rollback artifacts on one frozen sealed panel. Chronological
+  score coincidence without this edit ablation is descriptive, not causal attribution.
 
 ## Scaling-law caution
 
@@ -276,6 +324,13 @@ logistic frontier account through its material-event prediction—improvement in
 Any model-generation speed trend must use a panel and analysis frozen before the evaluated model
 releases, or be labeled retrospective/exploratory.
 
+Do not interpret fitted `Smax`, `tmid` or `beta` merely because the aggregate level curve has a
+high `R²`. The parameters trade off when the plateau or post-inflection region is weakly observed.
+Require joint/profile or whole-trajectory bootstrap intervals, parameter-correlation and rolling-
+window stability checks, plus a preregistered minimum of post-inflection observations. When this
+gate fails, report observed-window gain, AUC and time-to-material-event without a point ceiling,
+midpoint, speed or doubling-time claim.
+
 ## Minimum publishable sequence
 
 ### Stage A — optimization paper core
@@ -292,9 +347,13 @@ releases, or be labeled retrospective/exploratory.
 - F1 on at least four tasks with strict selection-blind controls.
 - V1 on Lennard-Jones, spin glass, Poisson, thin film, Truss-v2 and Antenna-v2 using evaluator-only hidden shifts.
 - V2 on at least thin film and one additional proxy/exact task.
+- V3 fresh post-commit confirmation on at least one mechanism family and one optimization/
+  multifidelity family; the confirmation worlds cannot have contributed snapshots or admission.
 - M1 on the hardened SCM and ActiveLaw mechanism families.
 - R1 null/misspecification cases and R2 independent replay.
 - R3 autonomous commit/stop decisions; F4 semantic-feedback control; K1 frozen-corpus audit.
+- R4 reversible-claim trials with contradictory/misspecified evidence; the mechanism curve must
+  represent the current defended claim rather than a historical maximum.
 - A small B1 expert-trajectory calibration before making claims relative to scientific work.
 
 Only Stage B can support claims about feedback-driven scientific discovery. A real-world
@@ -318,6 +377,8 @@ domain-expert review.
   explicit commit/stop training reduces this deployability gap without increasing false discovery.
 - H8: some apparent gains on public tasks disappear under frozen-corpus time/family-held-out
   evaluation, distinguishing retrieval/reproduction from task-local discovery.
+- H9: a structured claim/evidence ledger reduces unsupported-claim exposure and revision delay
+  after contradictory evidence relative to score-only or artifact-only memory.
 
 These are hypotheses to test. The paper should report failed hypotheses and negative results
 rather than selecting only curves that resemble Frontier-Eng or EdgeBench.
