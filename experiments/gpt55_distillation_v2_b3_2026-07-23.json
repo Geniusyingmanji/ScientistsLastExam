@@ -1,0 +1,332 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_SECURE_EVAL",
+  "evidence_scope": "MODEL_PERFORMANCE",
+  "created_at": "2026-07-23T06:34:18.551369+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "c76767cdfa86c3a1c155b83618b3688daa363515",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "/home/azureuser/workspace-gzy/zyf/frontier-science/scripts/batch_evolve.py",
+      "--tasks",
+      "ChemicalProcess/DistillationColumnDesign",
+      "--all",
+      "--algorithms",
+      "greedy_rewrite",
+      "--feedback-modes",
+      "normal",
+      "--seeds",
+      "1",
+      "--budget",
+      "3",
+      "--timeout",
+      "180",
+      "--workdir",
+      "runs/distillation_v2_b3",
+      "--output",
+      "experiments/gpt55_distillation_v2_b3_2026-07-23.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "config": {
+    "tasks": [
+      "ChemicalProcess/DistillationColumnDesign"
+    ],
+    "algorithms": [
+      "greedy_rewrite"
+    ],
+    "feedback_modes": [
+      "normal"
+    ],
+    "condition_order": "as_listed_for_even_seeds_reversed_for_odd_seeds",
+    "seeds": [
+      1
+    ],
+    "budget": 3,
+    "timeout_s": 180.0,
+    "work_root": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/distillation_v2_b3",
+    "llm_condition_sha256": "5b0df4671481f6b3505155bc6c5654a64c4da5591422fb806904e7d0f44fc4d2",
+    "llm": {
+      "wire": "responses",
+      "endpoint_sha256": "b22995a1fcaf8ad713ac37716f006c717313dfdebd357ac02a077a5582650bb6",
+      "model": "gpt-5.5",
+      "max_output_tokens": 16000,
+      "temperature": null,
+      "reasoning_effort": "low",
+      "input_cost_per_million": null,
+      "output_cost_per_million": null,
+      "server_side_seed_control": false
+    }
+  },
+  "runs": [
+    {
+      "task": "ChemicalProcess/DistillationColumnDesign",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 1,
+      "baseline": 0.0,
+      "best": 0.6130902025625943,
+      "accepted": 1,
+      "evaluated": 4,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/distillation_v2_b3/ChemicalProcess__DistillationColumnDesign/greedy_rewrite/normal/seed_1",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 4,
+        "budget_units": 4,
+        "best_score": 0.6130902025625943,
+        "best_so_far_auc": 0.30654510128129714,
+        "valid_rate": 0.5,
+        "accepted": 1,
+        "wall_seconds": 592.8796420339495,
+        "llm": {
+          "calls": 3,
+          "provider_usage_records": 3,
+          "input_tokens": 8808,
+          "output_tokens": 12930,
+          "total_tokens": 21738,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "ChemicalProcess/DistillationColumnDesign",
+        "seed": 1,
+        "baseline_score": 0.0,
+        "budget": 3,
+        "feedback_mode": "normal",
+        "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "online_incumbent"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 1,
+        "trajectory_sha256": "d40071c70b0b2862685e02f7ff7500010e1adb360e54491c118debc8fe2d3f0a",
+        "events": [
+          {
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "05026baf28092bc8b53caaf3330a0e5571bf2584eac97d43cadd83ce2dc4edda",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.0,
+              "robustness_score": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "heldout_feasibility_rate": 1.0,
+              "development_shift_feasibility_rate": 1.0,
+              "heldout_shift_feasibility_rate": 1.0,
+              "development_mean_annualized_cost": 2115772.0854298444,
+              "heldout_mean_annualized_cost": 2488377.2193024363,
+              "candidate_instance_call_count": 6,
+              "candidate_instance_valid_rate": 1.0
+            },
+            "algorithm_metadata": {},
+            "error": null
+          },
+          {
+            "step": 1,
+            "oracle_calls": 2,
+            "budget_units": 2,
+            "score": -1e+18,
+            "best_score": 0.0,
+            "valid": false,
+            "accepted": false,
+            "candidate_sha256": "56df5625f4cedcd6e5e7cb85aca89e258ed232b21b697d4ad8fc532a29007184",
+            "parent_sha256": "05026baf28092bc8b53caaf3330a0e5571bf2584eac97d43cadd83ce2dc4edda",
+            "metrics": {
+              "combined_score": -1e+18,
+              "valid": 0.0,
+              "error_message": "candidate invalid: candidate_timeout",
+              "candidate_failure_kind": "candidate_timeout",
+              "timeout": 1.0,
+              "raw_score": -1e+18
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 1
+            },
+            "error": "candidate invalid: candidate_timeout"
+          },
+          {
+            "step": 2,
+            "oracle_calls": 3,
+            "budget_units": 3,
+            "score": 0.6130902025625943,
+            "best_score": 0.6130902025625943,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "14ec4bb9fb394c0367c0a37fe5683e95991d37801e37b6e10b6fe776625bf11b",
+            "parent_sha256": "05026baf28092bc8b53caaf3330a0e5571bf2584eac97d43cadd83ce2dc4edda",
+            "metrics": {
+              "combined_score": 0.6130902025625943,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.6130902025625943,
+              "robustness_score": 0.0,
+              "heldout_policy_score": 0.5406920942512126,
+              "heldout_robustness_score": 0.0,
+              "heldout_feasibility_rate": 1.0,
+              "development_shift_feasibility_rate": 0.2,
+              "heldout_shift_feasibility_rate": 0.2,
+              "development_mean_annualized_cost": 1314155.5002074596,
+              "heldout_mean_annualized_cost": 1775599.1455,
+              "candidate_instance_call_count": 6,
+              "candidate_instance_valid_rate": 1.0
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 2
+            },
+            "error": null
+          },
+          {
+            "step": 3,
+            "oracle_calls": 4,
+            "budget_units": 4,
+            "score": -1e+18,
+            "best_score": 0.6130902025625943,
+            "valid": false,
+            "accepted": false,
+            "candidate_sha256": "23bb479dcd5a2c9b5222271d7fd93cf91d0f40348d62182afe7af122a5694ae4",
+            "parent_sha256": "14ec4bb9fb394c0367c0a37fe5683e95991d37801e37b6e10b6fe776625bf11b",
+            "metrics": {
+              "combined_score": -1e+18,
+              "valid": 0.0,
+              "error_message": "candidate invalid: candidate_timeout",
+              "candidate_failure_kind": "candidate_timeout",
+              "timeout": 1.0,
+              "raw_score": -1e+18
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 3
+            },
+            "error": "candidate invalid: candidate_timeout"
+          }
+        ]
+      }
+    }
+  ],
+  "aggregate": {
+    "attempt_count": 1,
+    "superseded_attempts": 0,
+    "successful_runs": 1,
+    "failed_runs": 0,
+    "by_condition": {
+      "ChemicalProcess/DistillationColumnDesign|greedy_rewrite|normal": {
+        "n": 1,
+        "best_score": {
+          "n": 1,
+          "mean": 0.6130902025625943,
+          "ci95_low": 0.6130902025625943,
+          "ci95_high": 0.6130902025625943
+        },
+        "best_so_far_auc": {
+          "n": 1,
+          "mean": 0.30654510128129714,
+          "ci95_low": 0.30654510128129714,
+          "ci95_high": 0.30654510128129714
+        },
+        "budget_units": {
+          "n": 1,
+          "mean": 4.0,
+          "ci95_low": 4.0,
+          "ci95_high": 4.0
+        },
+        "oracle_calls": {
+          "n": 1,
+          "mean": 4.0,
+          "ci95_low": 4.0,
+          "ci95_high": 4.0
+        },
+        "wall_seconds": {
+          "n": 1,
+          "mean": 592.8796420339495,
+          "ci95_low": 592.8796420339495,
+          "ci95_high": 592.8796420339495
+        },
+        "total_tokens": {
+          "n": 1,
+          "mean": 21738.0,
+          "ci95_low": 21738.0,
+          "ci95_high": 21738.0
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      }
+    },
+    "overall": {
+      "best_score": {
+        "n": 1,
+        "mean": 0.6130902025625943,
+        "ci95_low": 0.6130902025625943,
+        "ci95_high": 0.6130902025625943
+      },
+      "best_so_far_auc": {
+        "n": 1,
+        "mean": 0.30654510128129714,
+        "ci95_low": 0.30654510128129714,
+        "ci95_high": 0.30654510128129714
+      },
+      "budget_units": {
+        "n": 1,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "oracle_calls": {
+        "n": 1,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "wall_seconds": {
+        "n": 1,
+        "mean": 592.8796420339495,
+        "ci95_low": 592.8796420339495,
+        "ci95_high": 592.8796420339495
+      },
+      "total_tokens": {
+        "n": 1,
+        "mean": 21738.0,
+        "ci95_low": 21738.0,
+        "ci95_high": 21738.0
+      },
+      "estimated_cost_usd": {
+        "n": 0,
+        "mean": null,
+        "ci95_low": null,
+        "ci95_high": null
+      }
+    }
+  },
+  "completed_at": "2026-07-23T06:44:11.438335+00:00",
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}
