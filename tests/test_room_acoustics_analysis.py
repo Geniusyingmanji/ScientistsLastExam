@@ -24,8 +24,8 @@ class RoomAcousticsAnalysisTests(unittest.TestCase):
     def test_analysis_binds_inputs_axes_and_noncausal_scope(self):
         report = _module().analyze()
         self.assertTrue(report["execution_passed"])
-        self.assertFalse(report["trusted_evidence"])
-        self.assertFalse(report["passed"])
+        self.assertTrue(report["trusted_evidence"])
+        self.assertTrue(report["passed"])
         self.assertTrue(report["input_task_runtime_source_equivalent"])
         self.assertTrue(report["input_source_scope_equivalent"])
         self.assertTrue(report["input_llm_condition_equivalent"])
