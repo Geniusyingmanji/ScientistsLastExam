@@ -94,6 +94,47 @@ class HartreeFockV2Tests(unittest.TestCase):
         ):
             self.assertNotIn(key, visible)
 
+    def test_secure_direct_axis_gate_includes_sealed_metrics(self):
+        calibration = self.calibration
+        oracle = self.oracle
+        direct = oracle.evaluate(self.baseline.solve_restricted_hf)
+        secure_like = dict(direct)
+        secure_like["heldout_shifted_score"] = (
+            direct["heldout_shifted_score"] - 0.25
+        )
+        comparison = calibration._compare_scalar_axes(direct, secure_like)
+        self.assertFalse(comparison["passed"])
+        self.assertFalse(
+            comparison["axes"]["heldout_shifted_score"]["passed"]
+        )
+        self.assertTrue(comparison["axes"]["valid"]["passed"])
+
+    def test_thread_sensitivity_marks_material_basin_change(self):
+        calibration = self.calibration
+        oracle = self.oracle
+        baseline = oracle.evaluate(self.baseline.solve_restricted_hf)
+        one_thread = calibration._compact(baseline)
+        one_thread["heldout_shifted_score"] = 2.0 / 3.0
+        multi_thread = dict(one_thread)
+        multi_thread["heldout_shifted_score"] = 1.0
+        probes = {
+            "1": {"scalar_metrics": one_thread},
+            "2": {"scalar_metrics": multi_thread},
+            "4": {"scalar_metrics": multi_thread},
+            "8": {"scalar_metrics": multi_thread},
+        }
+        sensitivity = calibration._thread_sensitivity(probes)
+        self.assertTrue(sensitivity["material_sensitivity_detected"])
+        self.assertIn(
+            "heldout_shifted_score", sensitivity["materially_sensitive_axes"]
+        )
+        self.assertGreater(
+            sensitivity["materially_sensitive_axes"][
+                "heldout_shifted_score"
+            ]["span"],
+            0.30,
+        )
+
     def test_independent_equations_reproduce_all_reference_conditions(self):
         oracle = self.oracle
         calibration = self.calibration

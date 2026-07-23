@@ -14,7 +14,9 @@ import hashlib
 import importlib.util
 import json
 import math
+import os
 import platform
+import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -34,6 +36,33 @@ from frontier_science.provenance import (  # noqa: E402
     source_provenance,
 )
 from frontier_science.registry import find_task  # noqa: E402
+
+
+THREAD_ENVIRONMENT_KEYS = (
+    "OPENBLAS_NUM_THREADS", "OMP_NUM_THREADS", "MKL_NUM_THREADS",
+    "NUMEXPR_NUM_THREADS",
+)
+THREAD_PROBE_COUNTS = (1, 2, 4, 8)
+EXACT_AXIS_FIELDS = (
+    "valid", "feasibility_rate", "heldout_feasibility_rate",
+    "development_stability_rate", "heldout_stability_rate",
+    "candidate_problem_call_count", "candidate_instance_valid_rate",
+)
+SCORE_AXIS_FIELDS = (
+    "combined_score", "raw_score", "robustness_score",
+    "heldout_policy_score", "heldout_robustness_score",
+    "development_shifted_score", "heldout_shifted_score",
+    "development_representation_invariance_score",
+    "heldout_representation_invariance_score",
+)
+ENERGY_AXIS_FIELDS = (
+    "development_mean_energy_error_hartree",
+    "heldout_mean_energy_error_hartree",
+)
+RESIDUAL_AXIS_FIELDS = (
+    "development_maximum_scf_residual",
+    "heldout_maximum_scf_residual",
+)
 
 
 def _load(path, name):
@@ -108,6 +137,120 @@ def _compact(metrics):
     return {key: metrics[key] for key in keys if key in metrics}
 
 
+def _axis_tolerance(field):
+    if field in EXACT_AXIS_FIELDS:
+        return 0.0
+    if field in SCORE_AXIS_FIELDS:
+        return 1.0e-7
+    if field in ENERGY_AXIS_FIELDS:
+        return 1.0e-10
+    if field in RESIDUAL_AXIS_FIELDS:
+        return 1.0e-7
+    raise KeyError("unknown Hartree--Fock scalar axis: %s" % field)
+
+
+def _compare_scalar_axes(left, right):
+    fields = (
+        *EXACT_AXIS_FIELDS, *SCORE_AXIS_FIELDS,
+        *ENERGY_AXIS_FIELDS, *RESIDUAL_AXIS_FIELDS,
+    )
+    comparisons = {}
+    for field in fields:
+        left_value = float(left[field])
+        right_value = float(right[field])
+        difference = abs(left_value - right_value)
+        tolerance = _axis_tolerance(field)
+        comparisons[field] = {
+            "left": left[field],
+            "right": right[field],
+            "absolute_difference": difference,
+            "tolerance": tolerance,
+            "passed": difference <= tolerance,
+        }
+    return {
+        "passed": all(row["passed"] for row in comparisons.values()),
+        "maximum_absolute_difference": max(
+            row["absolute_difference"] for row in comparisons.values()
+        ),
+        "axes": comparisons,
+    }
+
+
+def _baseline_thread_probe():
+    oracle = _load(
+        TASK / "verification/evaluator.py",
+        "hartree_fock_v2_thread_probe_oracle",
+    )
+    baseline = _load(
+        TASK / "solution.py", "hartree_fock_v2_thread_probe_baseline"
+    )
+    return oracle.evaluate(baseline.solve_restricted_hf)
+
+
+def _run_baseline_thread_probe(thread_count):
+    environment = os.environ.copy()
+    for key in THREAD_ENVIRONMENT_KEYS:
+        environment[key] = str(thread_count)
+    output = subprocess.check_output(
+        [sys.executable, str(Path(__file__).resolve()), "--baseline-thread-probe"],
+        cwd=str(ROOT), env=environment, text=True,
+    )
+    metrics = json.loads(output)
+    return {
+        "thread_count": int(thread_count),
+        "thread_environment": {
+            key: environment[key] for key in THREAD_ENVIRONMENT_KEYS
+        },
+        "metrics": metrics,
+        "scalar_metrics": _compact(metrics),
+        "per_instance_execution": [
+            {
+                "name": row["name"],
+                "split": row["split"],
+                "valid": row["valid"],
+                "shifted_valid": row["shifted_valid"],
+                "shifted_score": row["shifted_score"],
+                "representation_invariance_score": row[
+                    "representation_invariance_score"
+                ],
+                "internally_stable": row["internally_stable"],
+            }
+            for row in metrics["per_instance"]
+        ],
+    }
+
+
+def _thread_sensitivity(probes):
+    authoritative = probes["1"]["scalar_metrics"]
+    comparisons = {
+        key: _compare_scalar_axes(authoritative, record["scalar_metrics"])
+        for key, record in probes.items() if key != "1"
+    }
+    material_fields = {}
+    for field in SCORE_AXIS_FIELDS:
+        values = {
+            key: float(record["scalar_metrics"][field])
+            for key, record in probes.items()
+        }
+        span = max(values.values()) - min(values.values())
+        if span > 1.0e-4:
+            material_fields[field] = {
+                "values_by_thread_count": values,
+                "span": span,
+            }
+    return {
+        "authoritative_thread_count": 1,
+        "secure_runner_thread_environment": {
+            key: "1" for key in THREAD_ENVIRONMENT_KEYS
+        },
+        "material_score_axis_threshold": 1.0e-4,
+        "material_sensitivity_detected": bool(material_fields),
+        "materially_sensitive_axes": material_fields,
+        "one_thread_vs_other_thread_axis_comparisons": comparisons,
+        "probes": probes,
+    }
+
+
 def _invalid_checks(oracle, baseline):
     def nominal(problem):
         return baseline.solve_restricted_hf(problem)
@@ -148,6 +291,15 @@ def calibrate():
         ),
         TASK / "solution.py",
         timeout_s=60,
+    )
+    thread_probes = {
+        str(thread_count): _run_baseline_thread_probe(thread_count)
+        for thread_count in THREAD_PROBE_COUNTS
+    }
+    thread_sensitivity = _thread_sensitivity(thread_probes)
+    authoritative_direct_baseline = thread_probes["1"]["metrics"]
+    secure_direct_axis_comparison = _compare_scalar_axes(
+        authoritative_direct_baseline, secure_baseline
     )
     reference = oracle.evaluate(oracle.reference_policy)
     reference_replay = oracle.evaluate(oracle.reference_policy)
@@ -278,18 +430,31 @@ def calibrate():
         and secure_baseline["valid"] == 1.0
         and secure_baseline["combined_score"] == 0.0
         and secure_baseline["candidate_problem_call_count"] == 28
-        and abs(
-            secure_baseline["raw_score"] - baseline["raw_score"]
-        ) <= 1.0e-7
+        and secure_direct_axis_comparison["passed"]
+        and thread_sensitivity["material_sensitivity_detected"]
+        and "heldout_shifted_score" in thread_sensitivity[
+            "materially_sensitive_axes"
+        ]
     )
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "trust_status": "TRUSTED_TASK_CALIBRATION",
         "task": "QuantumChemistry/HartreeFockSCF",
         "dataset_sha256": archive_sha256,
         "dataset_manifest": oracle.DATA_MANIFEST,
         "baseline": _compact(baseline),
+        "ambient_process_baseline": _compact(baseline),
+        "authoritative_one_thread_direct_baseline": _compact(
+            authoritative_direct_baseline
+        ),
         "secure_sandbox_baseline": _compact(secure_baseline),
+        "secure_vs_authoritative_direct_axis_comparison": (
+            secure_direct_axis_comparison
+        ),
+        "baseline_thread_sensitivity": thread_sensitivity,
+        "ambient_thread_environment": {
+            key: os.environ.get(key) for key in THREAD_ENVIRONMENT_KEYS
+        },
         "reference": _compact(reference),
         "hard_cases": {
             "development_baseline": {
@@ -329,6 +494,7 @@ def calibrate():
             "The frozen references are internally stable finite-basis RHF witnesses, not proofs of the global determinant minimum or correlated exact energies.",
             "The seven public small systems permit matrix-specific branching; future release work requires server-held procedural molecules, geometries and basis families.",
             "Only internal real-RHF stability is scored; external unrestricted instabilities, basis-set convergence and correlated-method accuracy remain outside scope.",
+            "The public single-start DIIS baseline is BLAS-thread sensitive on a hard shifted ring; the secure one-thread path is authoritative and the multi-thread probes diagnose execution sensitivity rather than alternative benchmark scores.",
         ],
     }
 
@@ -336,7 +502,11 @@ def calibrate():
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path)
+    parser.add_argument("--baseline-thread-probe", action="store_true")
     args = parser.parse_args()
+    if args.baseline_thread_probe:
+        print(json.dumps(_baseline_thread_probe(), allow_nan=False))
+        return 0
     report = calibrate()
     execution_passed = bool(report.pop("passed"))
     report.update({
