@@ -1,0 +1,1753 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_TASK_CALIBRATION",
+  "evidence_scope": "REDUCED_ORDER_ACOUSTIC_ABSORBER_TASK_CALIBRATION_NOT_THERMOVISCOUS_FEA_IMPEDANCE_TUBE_OR_PRODUCT_VALIDATION",
+  "created_at": "2026-07-23T01:11:16.345595+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "befd90ac6030dadd4ebe428af117661a95c6e617",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/calibrate_absorber_v2.py",
+      "--output",
+      "experiments/broadband_absorber_v2_calibration_2026-07-23.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "task_dimensions": {
+    "development_instance_count": 4,
+    "heldout_instance_count": 2,
+    "shift_count": 5,
+    "frequency_samples_per_instance": 160,
+    "resonator_count_range": [
+      6,
+      10
+    ],
+    "frequency_range_hz": [
+      180.0,
+      1800.0
+    ],
+    "maximum_total_depth_range_m": [
+      0.065,
+      0.12
+    ]
+  },
+  "reference_method": {
+    "family": "log-spaced target frequencies with common neck radius and length; cavity depths follow the public low-frequency resonance relation",
+    "parameter_bounds": {
+      "low_frequency_multiplier": [
+        0.6,
+        1.4
+      ],
+      "high_frequency_multiplier": [
+        0.65,
+        1.5
+      ],
+      "neck_radius_m": "instance public bounds",
+      "neck_length_m": "instance public bounds"
+    },
+    "optimizer": "SciPy differential_evolution plus polish",
+    "nominal_seeds": [
+      100,
+      101,
+      102,
+      103,
+      104,
+      105
+    ],
+    "robust_seeds": [
+      200,
+      201,
+      202,
+      203,
+      204,
+      205
+    ],
+    "population_size_multiplier": 12,
+    "nominal_maximum_iterations": 45,
+    "robust_maximum_iterations": 55,
+    "tolerance": 2e-07,
+    "global_optimality_claimed": false,
+    "normalization_clips_better_feasible_candidates": true
+  },
+  "weak_baseline": {
+    "combined_score": 0.0,
+    "valid": 1.0,
+    "feasibility_rate": 1.0,
+    "raw_score": 0.0,
+    "robustness_score": 0.0,
+    "development_validation_gap": 0.0,
+    "heldout_policy_score": 0.0,
+    "heldout_robustness_score": 0.0,
+    "heldout_feasibility_rate": 1.0,
+    "development_proxy_utility": 0.0093697498880841,
+    "heldout_proxy_utility": 0.00676365528158745,
+    "development_exact_utility": 0.07932335686021577,
+    "heldout_exact_utility": 0.06704859398352928,
+    "development_mean_absorption": 0.11738328806974854,
+    "heldout_mean_absorption": 0.10018713617692132,
+    "development_twentieth_percentile_absorption": 0.015614744739513598,
+    "heldout_twentieth_percentile_absorption": 0.011693896954075167,
+    "development_coverage_above_half": 0.0671875,
+    "heldout_coverage_above_half": 0.05625,
+    "candidate_instance_call_count": 6,
+    "candidate_instance_valid_rate": 1.0
+  },
+  "nominal_reference_policy": {
+    "combined_score": 1.0,
+    "valid": 1.0,
+    "feasibility_rate": 1.0,
+    "raw_score": 1.0,
+    "robustness_score": 0.9897886282060804,
+    "development_validation_gap": 0.010211371793919621,
+    "heldout_policy_score": 1.0,
+    "heldout_robustness_score": 0.9396637503186642,
+    "heldout_feasibility_rate": 1.0,
+    "development_proxy_utility": 0.06002215919423864,
+    "heldout_proxy_utility": 0.02050048326601079,
+    "development_exact_utility": 0.5052800998063047,
+    "heldout_exact_utility": 0.5136853197507978,
+    "development_mean_absorption": 0.5452901166659404,
+    "heldout_mean_absorption": 0.5602458663909613,
+    "development_twentieth_percentile_absorption": 0.3720684521334585,
+    "heldout_twentieth_percentile_absorption": 0.35391697745256345,
+    "development_coverage_above_half": 0.625,
+    "heldout_coverage_above_half": 0.6625000000000001,
+    "candidate_instance_call_count": 6,
+    "candidate_instance_valid_rate": 1.0
+  },
+  "robust_reference_policy": {
+    "combined_score": 0.993516844936159,
+    "valid": 1.0,
+    "feasibility_rate": 1.0,
+    "raw_score": 0.993516844936159,
+    "robustness_score": 1.0,
+    "development_validation_gap": -0.006483155063841006,
+    "heldout_policy_score": 0.9874087012505913,
+    "heldout_robustness_score": 1.0,
+    "heldout_feasibility_rate": 1.0,
+    "development_proxy_utility": 0.06393345536736979,
+    "heldout_proxy_utility": 0.02237933713401658,
+    "development_exact_utility": 0.5024654816752832,
+    "heldout_exact_utility": 0.507662929465094,
+    "development_mean_absorption": 0.5451291345141662,
+    "heldout_mean_absorption": 0.5621220683235888,
+    "development_twentieth_percentile_absorption": 0.366106525641639,
+    "heldout_twentieth_percentile_absorption": 0.33196513962373364,
+    "development_coverage_above_half": 0.61875,
+    "heldout_coverage_above_half": 0.659375,
+    "candidate_instance_call_count": 6,
+    "candidate_instance_valid_rate": 1.0
+  },
+  "invalid_artifact_checks": {
+    "nonfinite": {
+      "combined_score": 0.0,
+      "valid": 0.0,
+      "feasibility_rate": 0.0,
+      "raw_score": 0.0,
+      "robustness_score": 0.0,
+      "development_validation_gap": 0.0,
+      "heldout_policy_score": 0.0,
+      "heldout_robustness_score": 0.0,
+      "heldout_feasibility_rate": 0.0,
+      "development_proxy_utility": 0.0,
+      "heldout_proxy_utility": 0.0,
+      "development_exact_utility": 0.0,
+      "heldout_exact_utility": 0.0,
+      "development_mean_absorption": 0.0,
+      "heldout_mean_absorption": 0.0,
+      "development_twentieth_percentile_absorption": 0.0,
+      "heldout_twentieth_percentile_absorption": 0.0,
+      "development_coverage_above_half": 0.0,
+      "heldout_coverage_above_half": 0.0,
+      "candidate_instance_call_count": 6,
+      "candidate_instance_valid_rate": 0.0,
+      "error_message": "candidate invalid on a development absorber instance"
+    },
+    "wrong_shape": {
+      "combined_score": 0.0,
+      "valid": 0.0,
+      "feasibility_rate": 0.0,
+      "raw_score": 0.0,
+      "robustness_score": 0.0,
+      "development_validation_gap": 0.0,
+      "heldout_policy_score": 0.0,
+      "heldout_robustness_score": 0.0,
+      "heldout_feasibility_rate": 0.0,
+      "development_proxy_utility": 0.0,
+      "heldout_proxy_utility": 0.0,
+      "development_exact_utility": 0.0,
+      "heldout_exact_utility": 0.0,
+      "development_mean_absorption": 0.0,
+      "heldout_mean_absorption": 0.0,
+      "development_twentieth_percentile_absorption": 0.0,
+      "heldout_twentieth_percentile_absorption": 0.0,
+      "development_coverage_above_half": 0.0,
+      "heldout_coverage_above_half": 0.0,
+      "candidate_instance_call_count": 6,
+      "candidate_instance_valid_rate": 0.0,
+      "error_message": "candidate invalid on a development absorber instance"
+    },
+    "out_of_bounds": {
+      "combined_score": 0.0,
+      "valid": 0.0,
+      "feasibility_rate": 0.0,
+      "raw_score": 0.0,
+      "robustness_score": 0.0,
+      "development_validation_gap": 0.0,
+      "heldout_policy_score": 0.0,
+      "heldout_robustness_score": 0.0,
+      "heldout_feasibility_rate": 0.0,
+      "development_proxy_utility": 0.0,
+      "heldout_proxy_utility": 0.0,
+      "development_exact_utility": 0.0,
+      "heldout_exact_utility": 0.0,
+      "development_mean_absorption": 0.0,
+      "heldout_mean_absorption": 0.0,
+      "development_twentieth_percentile_absorption": 0.0,
+      "heldout_twentieth_percentile_absorption": 0.0,
+      "development_coverage_above_half": 0.0,
+      "heldout_coverage_above_half": 0.0,
+      "candidate_instance_call_count": 6,
+      "candidate_instance_valid_rate": 0.0,
+      "error_message": "candidate invalid on a development absorber instance"
+    },
+    "depth_violation": {
+      "combined_score": 0.0,
+      "valid": 0.0,
+      "feasibility_rate": 0.0,
+      "raw_score": 0.0,
+      "robustness_score": 0.0,
+      "development_validation_gap": 0.0,
+      "heldout_policy_score": 0.0,
+      "heldout_robustness_score": 0.0,
+      "heldout_feasibility_rate": 0.0,
+      "development_proxy_utility": 0.0,
+      "heldout_proxy_utility": 0.0,
+      "development_exact_utility": 0.0,
+      "heldout_exact_utility": 0.0,
+      "development_mean_absorption": 0.0,
+      "heldout_mean_absorption": 0.0,
+      "development_twentieth_percentile_absorption": 0.0,
+      "heldout_twentieth_percentile_absorption": 0.0,
+      "development_coverage_above_half": 0.0,
+      "heldout_coverage_above_half": 0.0,
+      "candidate_instance_call_count": 6,
+      "candidate_instance_valid_rate": 0.0,
+      "error_message": "candidate invalid on a development absorber instance"
+    }
+  },
+  "independent_equation_and_reference_checks": [
+    {
+      "name": "dev_low_octaves",
+      "split": "development",
+      "n_resonators": 8,
+      "frequency_band_hz": [
+        250.0,
+        1000.0
+      ],
+      "maximum_total_depth_m": 0.1,
+      "baseline_nominal_utility": 0.08025449520459119,
+      "baseline_robust_utility": 0.07721003392551347,
+      "declared_nominal_parameters": [
+        1.1515347570520218,
+        0.788338272509079,
+        0.00316949138616944,
+        0.002
+      ],
+      "declared_nominal_utility": 0.49567577670822854,
+      "recalibrated_nominal": {
+        "seed": 100,
+        "maximum_iterations": 45,
+        "success": false,
+        "message": "Maximum number of iterations has been exceeded.",
+        "function_evaluations": 3103,
+        "parameters": [
+          1.1515347570520218,
+          0.788338272509079,
+          0.00316949138616944,
+          0.002
+        ],
+        "utility": 0.49567577670822854
+      },
+      "recalibrated_minus_declared_nominal_utility": 0.0,
+      "declared_robust_parameters": [
+        1.150136204484,
+        0.78512909821,
+        0.003170886926,
+        0.002005766199
+      ],
+      "declared_robust_utility": 0.4931684259556699,
+      "recalibrated_robust": {
+        "seed": 200,
+        "maximum_iterations": 55,
+        "success": false,
+        "message": "Maximum number of iterations has been exceeded.",
+        "function_evaluations": 2883,
+        "parameters": [
+          1.1487006557948825,
+          0.7858325651913032,
+          0.0031663960849675253,
+          0.0020007872162243496
+        ],
+        "utility": 0.4931394029437388
+      },
+      "recalibrated_minus_declared_robust_utility": -2.902301193108414e-05,
+      "nominal_reference_proxy_utility": 0.08183992658047358,
+      "nominal_reference_proxy_minus_distributed_utility": -0.413835850127755,
+      "maximum_absorption_error": 3.9968028886505635e-15,
+      "maximum_cell_impedance_relative_error": 8.50287646833537e-15,
+      "minimum_cell_resistance_pa_s_m": 33.610929047918766,
+      "minimum_panel_resistance_pa_s_m": 81.54244368454243,
+      "equation_checks": [
+        {
+          "design": "baseline",
+          "shift": "nominal",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 4.440892098500626e-16,
+          "maximum_cell_impedance_relative_error": 3.4958340625719395e-16,
+          "minimum_cell_resistance_pa_s_m": 82.3886855172882,
+          "minimum_panel_resistance_pa_s_m": 82.3886855172882,
+          "geometry_feasible": true
+        },
+        {
+          "design": "baseline",
+          "shift": "oblique_30deg",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 4.440892098500626e-16,
+          "maximum_cell_impedance_relative_error": 3.4958340625719395e-16,
+          "minimum_cell_resistance_pa_s_m": 82.3886855172882,
+          "minimum_panel_resistance_pa_s_m": 82.3886855172882,
+          "geometry_feasible": true
+        },
+        {
+          "design": "baseline",
+          "shift": "cold_dense_air_oblique",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 6.661338147750939e-16,
+          "maximum_cell_impedance_relative_error": 2.5204820159899687e-15,
+          "minimum_cell_resistance_pa_s_m": 82.88774067882309,
+          "minimum_panel_resistance_pa_s_m": 82.8877406788231,
+          "geometry_feasible": true
+        },
+        {
+          "design": "baseline",
+          "shift": "warm_light_air_oblique",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 4.440892098500626e-16,
+          "maximum_cell_impedance_relative_error": 3.407005835734646e-15,
+          "minimum_cell_resistance_pa_s_m": 81.54244368454245,
+          "minimum_panel_resistance_pa_s_m": 81.54244368454243,
+          "geometry_feasible": true
+        },
+        {
+          "design": "baseline",
+          "shift": "manufacturing_pattern_a",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 5.551115123125783e-16,
+          "maximum_cell_impedance_relative_error": 7.482781979326437e-15,
+          "minimum_cell_resistance_pa_s_m": 77.21110355400334,
+          "minimum_panel_resistance_pa_s_m": 82.52026975878333,
+          "geometry_feasible": true
+        },
+        {
+          "design": "baseline",
+          "shift": "manufacturing_pattern_b_operating_shift",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 3.3306690738754696e-16,
+          "maximum_cell_impedance_relative_error": 3.295146386831649e-15,
+          "minimum_cell_resistance_pa_s_m": 77.86349920435963,
+          "minimum_panel_resistance_pa_s_m": 83.20455843085293,
+          "geometry_feasible": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "nominal",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 3.1086244689504383e-15,
+          "maximum_cell_impedance_relative_error": 8.50287646833537e-15,
+          "minimum_cell_resistance_pa_s_m": 35.3524219325304,
+          "minimum_panel_resistance_pa_s_m": 108.95563697171704,
+          "geometry_feasible": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "oblique_30deg",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 2.6645352591003757e-15,
+          "maximum_cell_impedance_relative_error": 8.50287646833537e-15,
+          "minimum_cell_resistance_pa_s_m": 35.3524219325304,
+          "minimum_panel_resistance_pa_s_m": 108.95563697171704,
+          "geometry_feasible": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "cold_dense_air_oblique",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 8.881784197001252e-16,
+          "maximum_cell_impedance_relative_error": 3.4755457368569007e-15,
+          "minimum_cell_resistance_pa_s_m": 35.720984587432575,
+          "minimum_panel_resistance_pa_s_m": 110.54392272169025,
+          "geometry_feasible": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "warm_light_air_oblique",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 1.3322676295501878e-15,
+          "maximum_cell_impedance_relative_error": 6.767430177178853e-15,
+          "minimum_cell_resistance_pa_s_m": 34.85011369129288,
+          "minimum_panel_resistance_pa_s_m": 91.88570640218121,
+          "geometry_feasible": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "manufacturing_pattern_a",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 2.9976021664879227e-15,
+          "maximum_cell_impedance_relative_error": 6.392627306139867e-15,
+          "minimum_cell_resistance_pa_s_m": 33.619178683677674,
+          "minimum_panel_resistance_pa_s_m": 103.84413776404523,
+          "geometry_feasible": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "manufacturing_pattern_b_operating_shift",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 1.3322676295501878e-15,
+          "maximum_cell_impedance_relative_error": 3.1482866029247542e-15,
+          "minimum_cell_resistance_pa_s_m": 33.98793385775157,
+          "minimum_panel_resistance_pa_s_m": 110.76023761547451,
+          "geometry_feasible": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "nominal",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 1.9984014443252818e-15,
+          "maximum_cell_impedance_relative_error": 5.637939368088984e-15,
+          "minimum_cell_resistance_pa_s_m": 35.34419466549037,
+          "minimum_panel_resistance_pa_s_m": 108.45010295435408,
+          "geometry_feasible": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "oblique_30deg",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 1.9984014443252818e-15,
+          "maximum_cell_impedance_relative_error": 5.637939368088984e-15,
+          "minimum_cell_resistance_pa_s_m": 35.34419466549037,
+          "minimum_panel_resistance_pa_s_m": 108.45010295435408,
+          "geometry_feasible": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "cold_dense_air_oblique",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 1.3322676295501878e-15,
+          "maximum_cell_impedance_relative_error": 5.835152349988205e-15,
+          "minimum_cell_resistance_pa_s_m": 35.712794037612205,
+          "minimum_panel_resistance_pa_s_m": 110.02981652472009,
+          "geometry_feasible": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "warm_light_air_oblique",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 9.992007221626409e-16,
+          "maximum_cell_impedance_relative_error": 2.7177983254350785e-15,
+          "minimum_cell_resistance_pa_s_m": 34.841882262183425,
+          "minimum_panel_resistance_pa_s_m": 91.46578545863332,
+          "geometry_feasible": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "manufacturing_pattern_a",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 1.2212453270876722e-15,
+          "maximum_cell_impedance_relative_error": 3.274901008595817e-15,
+          "minimum_cell_resistance_pa_s_m": 33.610929047918766,
+          "minimum_panel_resistance_pa_s_m": 103.34584845463347,
+          "geometry_feasible": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "manufacturing_pattern_b_operating_shift",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 3.9968028886505635e-15,
+          "maximum_cell_impedance_relative_error": 6.94567496990056e-15,
+          "minimum_cell_resistance_pa_s_m": 33.979662614033096,
+          "minimum_panel_resistance_pa_s_m": 110.2474840088645,
+          "geometry_feasible": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "heldout_mid_octaves",
+      "split": "heldout",
+      "n_resonators": 10,
+      "frequency_band_hz": [
+        400.0,
+        1600.0
+      ],
+      "maximum_total_depth_m": 0.075,
+      "baseline_nominal_utility": 0.07117971346857556,
+      "baseline_robust_utility": 0.06811627996165873,
+      "declared_nominal_parameters": [
+        1.3962499104266386,
+        1.0310352154483788,
+        0.005536502809408399,
+        0.0020096979026370046
+      ],
+      "declared_nominal_utility": 0.606190392674812,
+      "recalibrated_nominal": {
+        "seed": 101,
+        "maximum_iterations": 45,
+        "success": false,
+        "message": "Maximum number of iterations has been exceeded.",
+        "function_evaluations": 2418,
+        "parameters": [
+          1.3962499104266386,
+          1.0310352154483788,
+          0.005536502809408399,
+          0.0020096979026370046
+        ],
+        "utility": 0.606190392674812
+      },
+      "recalibrated_minus_declared_nominal_utility": 0.0,
+      "declared_robust_parameters": [
+        1.3999877448130125,
+        0.9933024343090622,
+        0.005263978004604066,
+        0.002
+      ],
+      "declared_robust_utility": 0.6014110308377673,
+      "recalibrated_robust": {
+        "seed": 201,
+        "maximum_iterations": 55,
+        "success": false,
+        "message": "Maximum number of iterations has been exceeded.",
+        "function_evaluations": 2763,
+        "parameters": [
+          1.3999690948540677,
+          0.9920476514977186,
+          0.0052641714409689035,
+          0.00200049999095186
+        ],
+        "utility": 0.6013883177437143
+      },
+      "recalibrated_minus_declared_robust_utility": -2.2713094052995153e-05,
+      "nominal_reference_proxy_utility": 0.01787615749154802,
+      "nominal_reference_proxy_minus_distributed_utility": -0.588314235183264,
+      "maximum_absorption_error": 2.4424906541753444e-15,
+      "maximum_cell_impedance_relative_error": 7.276307149939487e-15,
+      "minimum_cell_resistance_pa_s_m": 10.64454508241554,
+      "minimum_panel_resistance_pa_s_m": 18.715220752877205,
+      "equation_checks": [
+        {
+          "design": "baseline",
+          "shift": "nominal",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 5.551115123125783e-16,
+          "maximum_cell_impedance_relative_error": 2.4680080856593004e-15,
+          "minimum_cell_resistance_pa_s_m": 67.5983203125037,
+          "minimum_panel_resistance_pa_s_m": 67.5983203125037,
+          "geometry_feasible": true
+        },
+        {
+          "design": "baseline",
+          "shift": "oblique_30deg",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 5.551115123125783e-16,
+          "maximum_cell_impedance_relative_error": 2.4680080856593004e-15,
+          "minimum_cell_resistance_pa_s_m": 67.5983203125037,
+          "minimum_panel_resistance_pa_s_m": 67.5983203125037,
+          "geometry_feasible": true
+        },
+        {
+          "design": "baseline",
+          "shift": "cold_dense_air_oblique",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 5.551115123125783e-16,
+          "maximum_cell_impedance_relative_error": 3.323272805339607e-16,
+          "minimum_cell_resistance_pa_s_m": 68.27866756179978,
+          "minimum_panel_resistance_pa_s_m": 68.27866756179975,
+          "geometry_feasible": true
+        },
+        {
+          "design": "baseline",
+          "shift": "warm_light_air_oblique",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 4.440892098500626e-16,
+          "maximum_cell_impedance_relative_error": 4.6639233629701115e-15,
+          "minimum_cell_resistance_pa_s_m": 66.6509733486007,
+          "minimum_panel_resistance_pa_s_m": 66.65097334860073,
+          "geometry_feasible": true
+        },
+        {
+          "design": "baseline",
+          "shift": "manufacturing_pattern_a",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 5.551115123125783e-16,
+          "maximum_cell_impedance_relative_error": 3.211382135356486e-15,
+          "minimum_cell_resistance_pa_s_m": 63.316909286128144,
+          "minimum_panel_resistance_pa_s_m": 67.71435763752612,
+          "geometry_feasible": true
+        },
+        {
+          "design": "baseline",
+          "shift": "manufacturing_pattern_b_operating_shift",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 4.440892098500626e-16,
+          "maximum_cell_impedance_relative_error": 5.0893752768937986e-15,
+          "minimum_cell_resistance_pa_s_m": 64.00097356765261,
+          "minimum_panel_resistance_pa_s_m": 68.42962069321975,
+          "geometry_feasible": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "nominal",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 4.440892098500626e-16,
+          "maximum_cell_impedance_relative_error": 3.5999352479944283e-16,
+          "minimum_cell_resistance_pa_s_m": 11.123631854274112,
+          "minimum_panel_resistance_pa_s_m": 20.150441088212908,
+          "geometry_feasible": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "oblique_30deg",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 5.551115123125783e-16,
+          "maximum_cell_impedance_relative_error": 3.5999352479944283e-16,
+          "minimum_cell_resistance_pa_s_m": 11.123631854274112,
+          "minimum_panel_resistance_pa_s_m": 20.150441088212908,
+          "geometry_feasible": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "cold_dense_air_oblique",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 5.551115123125783e-16,
+          "maximum_cell_impedance_relative_error": 1.75138342456966e-15,
+          "minimum_cell_resistance_pa_s_m": 11.596112125944684,
+          "minimum_panel_resistance_pa_s_m": 21.807433516621334,
+          "geometry_feasible": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "warm_light_air_oblique",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 8.881784197001252e-16,
+          "maximum_cell_impedance_relative_error": 3.554964829665833e-15,
+          "minimum_cell_resistance_pa_s_m": 10.64454508241554,
+          "minimum_panel_resistance_pa_s_m": 18.715220752877205,
+          "geometry_feasible": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "manufacturing_pattern_a",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 5.551115123125783e-16,
+          "maximum_cell_impedance_relative_error": 2.2014750216174017e-15,
+          "minimum_cell_resistance_pa_s_m": 10.730315562346593,
+          "minimum_panel_resistance_pa_s_m": 19.65083059466545,
+          "geometry_feasible": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "manufacturing_pattern_b_operating_shift",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 2.1094237467877974e-15,
+          "maximum_cell_impedance_relative_error": 4.628490517155262e-15,
+          "minimum_cell_resistance_pa_s_m": 11.045919415643434,
+          "minimum_panel_resistance_pa_s_m": 21.741424189257426,
+          "geometry_feasible": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "nominal",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 1.4432899320127035e-15,
+          "maximum_cell_impedance_relative_error": 7.276307149939487e-15,
+          "minimum_cell_resistance_pa_s_m": 12.00248639818455,
+          "minimum_panel_resistance_pa_s_m": 22.49298361558427,
+          "geometry_feasible": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "oblique_30deg",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 1.1102230246251565e-15,
+          "maximum_cell_impedance_relative_error": 7.276307149939487e-15,
+          "minimum_cell_resistance_pa_s_m": 12.00248639818455,
+          "minimum_panel_resistance_pa_s_m": 22.49298361558427,
+          "geometry_feasible": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "cold_dense_air_oblique",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 8.881784197001252e-16,
+          "maximum_cell_impedance_relative_error": 3.339287149522914e-15,
+          "minimum_cell_resistance_pa_s_m": 12.47900196963333,
+          "minimum_panel_resistance_pa_s_m": 24.499693171501693,
+          "geometry_feasible": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "warm_light_air_oblique",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 3.3306690738754696e-16,
+          "maximum_cell_impedance_relative_error": 4.141803762015551e-16,
+          "minimum_cell_resistance_pa_s_m": 11.515248769309197,
+          "minimum_panel_resistance_pa_s_m": 20.810002160383505,
+          "geometry_feasible": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "manufacturing_pattern_a",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 2.4424906541753444e-15,
+          "maximum_cell_impedance_relative_error": 6.332837443226866e-15,
+          "minimum_cell_resistance_pa_s_m": 11.563604421493446,
+          "minimum_panel_resistance_pa_s_m": 21.86007892651625,
+          "geometry_feasible": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "manufacturing_pattern_b_operating_shift",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 4.440892098500626e-16,
+          "maximum_cell_impedance_relative_error": 5.051382301042151e-16,
+          "minimum_cell_resistance_pa_s_m": 11.885478300501552,
+          "minimum_panel_resistance_pa_s_m": 24.4386472989762,
+          "geometry_feasible": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "dev_bass_band",
+      "split": "development",
+      "n_resonators": 8,
+      "frequency_band_hz": [
+        180.0,
+        800.0
+      ],
+      "maximum_total_depth_m": 0.12,
+      "baseline_nominal_utility": 0.08186282689947146,
+      "baseline_robust_utility": 0.07977753846415797,
+      "declared_nominal_parameters": [
+        1.19106522604,
+        0.794793918418,
+        0.002801455301,
+        0.002044658502
+      ],
+      "declared_nominal_utility": 0.46707251902257174,
+      "recalibrated_nominal": {
+        "seed": 102,
+        "maximum_iterations": 45,
+        "success": false,
+        "message": "Maximum number of iterations has been exceeded.",
+        "function_evaluations": 2403,
+        "parameters": [
+          1.1910652260404253,
+          0.7947939184183228,
+          0.00280145530094682,
+          0.0020446585019564967
+        ],
+        "utility": 0.4670725190222758
+      },
+      "recalibrated_minus_declared_nominal_utility": -2.959299472138355e-13,
+      "declared_robust_parameters": [
+        1.1659964186156468,
+        0.7658142047719123,
+        0.002698099966403592,
+        0.002
+      ],
+      "declared_robust_utility": 0.46765105611781194,
+      "recalibrated_robust": {
+        "seed": 202,
+        "maximum_iterations": 55,
+        "success": false,
+        "message": "Maximum number of iterations has been exceeded.",
+        "function_evaluations": 3143,
+        "parameters": [
+          1.1659964186156468,
+          0.7658142047719123,
+          0.002698099966403592,
+          0.002
+        ],
+        "utility": 0.46765105611781194
+      },
+      "recalibrated_minus_declared_robust_utility": 0.0,
+      "nominal_reference_proxy_utility": 0.1266035671967703,
+      "nominal_reference_proxy_minus_distributed_utility": -0.34046895182580145,
+      "maximum_absorption_error": 2.9976021664879227e-15,
+      "maximum_cell_impedance_relative_error": 9.904862589924785e-15,
+      "minimum_cell_resistance_pa_s_m": 47.398785764471484,
+      "minimum_panel_resistance_pa_s_m": 87.8785003194108,
+      "equation_checks": [
+        {
+          "design": "baseline",
+          "shift": "nominal",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 4.440892098500626e-16,
+          "maximum_cell_impedance_relative_error": 2.5172647710678405e-15,
+          "minimum_cell_resistance_pa_s_m": 88.6164807289375,
+          "minimum_panel_resistance_pa_s_m": 88.6164807289375,
+          "geometry_feasible": true
+        },
+        {
+          "design": "baseline",
+          "shift": "oblique_30deg",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 6.661338147750939e-16,
+          "maximum_cell_impedance_relative_error": 2.5172647710678405e-15,
+          "minimum_cell_resistance_pa_s_m": 88.6164807289375,
+          "minimum_panel_resistance_pa_s_m": 88.6164807289375,
+          "geometry_feasible": true
+        },
+        {
+          "design": "baseline",
+          "shift": "cold_dense_air_oblique",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 6.661338147750939e-16,
+          "maximum_cell_impedance_relative_error": 5.194552336710343e-16,
+          "minimum_cell_resistance_pa_s_m": 88.97510535528629,
+          "minimum_panel_resistance_pa_s_m": 88.97510535528627,
+          "geometry_feasible": true
+        },
+        {
+          "design": "baseline",
+          "shift": "warm_light_air_oblique",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 4.440892098500626e-16,
+          "maximum_cell_impedance_relative_error": 5.054721161198722e-15,
+          "minimum_cell_resistance_pa_s_m": 87.8785003194108,
+          "minimum_panel_resistance_pa_s_m": 87.8785003194108,
+          "geometry_feasible": true
+        },
+        {
+          "design": "baseline",
+          "shift": "manufacturing_pattern_a",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 4.440892098500626e-16,
+          "maximum_cell_impedance_relative_error": 3.760369289920121e-15,
+          "minimum_cell_resistance_pa_s_m": 82.95963569905,
+          "minimum_panel_resistance_pa_s_m": 88.75283774659884,
+          "geometry_feasible": true
+        },
+        {
+          "design": "baseline",
+          "shift": "manufacturing_pattern_b_operating_shift",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 6.661338147750939e-16,
+          "maximum_cell_impedance_relative_error": 9.593480587671782e-15,
+          "minimum_cell_resistance_pa_s_m": 83.56346510402973,
+          "minimum_panel_resistance_pa_s_m": 89.38700777379456,
+          "geometry_feasible": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "nominal",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 1.1102230246251565e-15,
+          "maximum_cell_impedance_relative_error": 3.727715176730419e-15,
+          "minimum_cell_resistance_pa_s_m": 49.98079826874345,
+          "minimum_panel_resistance_pa_s_m": 138.12204480029632,
+          "geometry_feasible": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "oblique_30deg",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 7.771561172376096e-16,
+          "maximum_cell_impedance_relative_error": 3.727715176730419e-15,
+          "minimum_cell_resistance_pa_s_m": 49.98079826874345,
+          "minimum_panel_resistance_pa_s_m": 138.12204480029632,
+          "geometry_feasible": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "cold_dense_air_oblique",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 2.9976021664879227e-15,
+          "maximum_cell_impedance_relative_error": 9.904862589924785e-15,
+          "minimum_cell_resistance_pa_s_m": 50.23858964592345,
+          "minimum_panel_resistance_pa_s_m": 141.25701922387947,
+          "geometry_feasible": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "warm_light_air_oblique",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 2.3314683517128287e-15,
+          "maximum_cell_impedance_relative_error": 8.65882980970328e-15,
+          "minimum_cell_resistance_pa_s_m": 49.518467068903355,
+          "minimum_panel_resistance_pa_s_m": 123.0913707916364,
+          "geometry_feasible": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "manufacturing_pattern_a",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 1.2212453270876722e-15,
+          "maximum_cell_impedance_relative_error": 4.3596164664729235e-15,
+          "minimum_cell_resistance_pa_s_m": 47.398785764471484,
+          "minimum_panel_resistance_pa_s_m": 132.09215650765043,
+          "geometry_feasible": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "manufacturing_pattern_b_operating_shift",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 8.881784197001252e-16,
+          "maximum_cell_impedance_relative_error": 8.89237469548603e-15,
+          "minimum_cell_resistance_pa_s_m": 47.773778493122066,
+          "minimum_panel_resistance_pa_s_m": 142.10127842359512,
+          "geometry_feasible": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "nominal",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 6.661338147750939e-16,
+          "maximum_cell_impedance_relative_error": 4.070921301304876e-15,
+          "minimum_cell_resistance_pa_s_m": 54.189829686963904,
+          "minimum_panel_resistance_pa_s_m": 145.7732124628702,
+          "geometry_feasible": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "oblique_30deg",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 6.661338147750939e-16,
+          "maximum_cell_impedance_relative_error": 4.070921301304876e-15,
+          "minimum_cell_resistance_pa_s_m": 54.189829686963904,
+          "minimum_panel_resistance_pa_s_m": 145.7732124628702,
+          "geometry_feasible": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "cold_dense_air_oblique",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 1.3322676295501878e-15,
+          "maximum_cell_impedance_relative_error": 5.078131486608529e-15,
+          "minimum_cell_resistance_pa_s_m": 54.44352971830869,
+          "minimum_panel_resistance_pa_s_m": 145.66461295586805,
+          "geometry_feasible": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "warm_light_air_oblique",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 9.992007221626409e-16,
+          "maximum_cell_impedance_relative_error": 2.9032138306558087e-15,
+          "minimum_cell_resistance_pa_s_m": 53.71379073850682,
+          "minimum_panel_resistance_pa_s_m": 140.67231843479738,
+          "geometry_feasible": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "manufacturing_pattern_a",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 9.992007221626409e-16,
+          "maximum_cell_impedance_relative_error": 2.82022445697337e-15,
+          "minimum_cell_resistance_pa_s_m": 51.381742826636504,
+          "minimum_panel_resistance_pa_s_m": 145.61538218918878,
+          "geometry_feasible": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "manufacturing_pattern_b_operating_shift",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 1.887379141862766e-15,
+          "maximum_cell_impedance_relative_error": 9.432745797575406e-15,
+          "minimum_cell_resistance_pa_s_m": 51.77410002683161,
+          "minimum_panel_resistance_pa_s_m": 146.69949832364085,
+          "geometry_feasible": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "dev_high_band",
+      "split": "development",
+      "n_resonators": 6,
+      "frequency_band_hz": [
+        500.0,
+        1800.0
+      ],
+      "maximum_total_depth_m": 0.065,
+      "baseline_nominal_utility": 0.07591480648112911,
+      "baseline_robust_utility": 0.07134904894153325,
+      "declared_nominal_parameters": [
+        1.398573291489,
+        0.947451992017,
+        0.00599463418,
+        0.002008942264
+      ],
+      "declared_nominal_utility": 0.5435798159309785,
+      "recalibrated_nominal": {
+        "seed": 103,
+        "maximum_iterations": 45,
+        "success": false,
+        "message": "Maximum number of iterations has been exceeded.",
+        "function_evaluations": 2453,
+        "parameters": [
+          1.3986197232503401,
+          0.9474683401901318,
+          0.005994630902053757,
+          0.0020089450329627296
+        ],
+        "utility": 0.5435575609530341
+      },
+      "recalibrated_minus_declared_nominal_utility": -2.2254977944391463e-05,
+      "declared_robust_parameters": [
+        1.3932096367157734,
+        0.9414675665002129,
+        0.0059609611482720985,
+        0.0020073609448848072
+      ],
+      "declared_robust_utility": 0.5387686105301368,
+      "recalibrated_robust": {
+        "seed": 203,
+        "maximum_iterations": 55,
+        "success": false,
+        "message": "Maximum number of iterations has been exceeded.",
+        "function_evaluations": 2793,
+        "parameters": [
+          1.3932096367157734,
+          0.9414675665002129,
+          0.0059609611482720985,
+          0.0020073609448848072
+        ],
+        "utility": 0.5387686105301368
+      },
+      "recalibrated_minus_declared_robust_utility": 0.0,
+      "nominal_reference_proxy_utility": 0.009067847229451385,
+      "nominal_reference_proxy_minus_distributed_utility": -0.5345119687015271,
+      "maximum_absorption_error": 1.2212453270876722e-15,
+      "maximum_cell_impedance_relative_error": 1.1683584001460326e-14,
+      "minimum_cell_resistance_pa_s_m": 10.522895476926253,
+      "minimum_panel_resistance_pa_s_m": 18.49150005162268,
+      "equation_checks": [
+        {
+          "design": "baseline",
+          "shift": "nominal",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 4.440892098500626e-16,
+          "maximum_cell_impedance_relative_error": 5.7345832596675e-16,
+          "minimum_cell_resistance_pa_s_m": 67.47682126937781,
+          "minimum_panel_resistance_pa_s_m": 67.47682126937782,
+          "geometry_feasible": true
+        },
+        {
+          "design": "baseline",
+          "shift": "oblique_30deg",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 4.440892098500626e-16,
+          "maximum_cell_impedance_relative_error": 5.7345832596675e-16,
+          "minimum_cell_resistance_pa_s_m": 67.47682126937781,
+          "minimum_panel_resistance_pa_s_m": 67.47682126937782,
+          "geometry_feasible": true
+        },
+        {
+          "design": "baseline",
+          "shift": "cold_dense_air_oblique",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 6.661338147750939e-16,
+          "maximum_cell_impedance_relative_error": 2.8256479215947377e-16,
+          "minimum_cell_resistance_pa_s_m": 68.33613079506256,
+          "minimum_panel_resistance_pa_s_m": 68.33613079506256,
+          "geometry_feasible": true
+        },
+        {
+          "design": "baseline",
+          "shift": "warm_light_air_oblique",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 4.440892098500626e-16,
+          "maximum_cell_impedance_relative_error": 3.206158708445018e-16,
+          "minimum_cell_resistance_pa_s_m": 66.36630252205225,
+          "minimum_panel_resistance_pa_s_m": 66.36630252205227,
+          "geometry_feasible": true
+        },
+        {
+          "design": "baseline",
+          "shift": "manufacturing_pattern_a",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 6.661338147750939e-16,
+          "maximum_cell_impedance_relative_error": 1.1683584001460326e-14,
+          "minimum_cell_resistance_pa_s_m": 63.353124646960815,
+          "minimum_panel_resistance_pa_s_m": 67.63025265055427,
+          "geometry_feasible": true
+        },
+        {
+          "design": "baseline",
+          "shift": "manufacturing_pattern_b_operating_shift",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 5.551115123125783e-16,
+          "maximum_cell_impedance_relative_error": 3.394875300968944e-15,
+          "minimum_cell_resistance_pa_s_m": 64.13705015398943,
+          "minimum_panel_resistance_pa_s_m": 68.45004218380505,
+          "geometry_feasible": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "nominal",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 1.2212453270876722e-15,
+          "maximum_cell_impedance_relative_error": 8.809785895208105e-15,
+          "minimum_cell_resistance_pa_s_m": 11.140397193918448,
+          "minimum_panel_resistance_pa_s_m": 20.375398626570878,
+          "geometry_feasible": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "oblique_30deg",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 7.771561172376096e-16,
+          "maximum_cell_impedance_relative_error": 8.809785895208105e-15,
+          "minimum_cell_resistance_pa_s_m": 11.140397193918448,
+          "minimum_panel_resistance_pa_s_m": 20.375398626570878,
+          "geometry_feasible": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "cold_dense_air_oblique",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 3.3306690738754696e-16,
+          "maximum_cell_impedance_relative_error": 2.1279454925544238e-16,
+          "minimum_cell_resistance_pa_s_m": 11.768340120980426,
+          "minimum_panel_resistance_pa_s_m": 22.66089763471984,
+          "geometry_feasible": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "warm_light_air_oblique",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 6.661338147750939e-16,
+          "maximum_cell_impedance_relative_error": 5.52005399111221e-15,
+          "minimum_cell_resistance_pa_s_m": 10.522895476926253,
+          "minimum_panel_resistance_pa_s_m": 18.49150005162268,
+          "geometry_feasible": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "manufacturing_pattern_a",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 5.551115123125783e-16,
+          "maximum_cell_impedance_relative_error": 1.6133987490797367e-15,
+          "minimum_cell_resistance_pa_s_m": 10.836695790250717,
+          "minimum_panel_resistance_pa_s_m": 19.948691151604063,
+          "geometry_feasible": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "manufacturing_pattern_b_operating_shift",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 6.661338147750939e-16,
+          "maximum_cell_impedance_relative_error": 1.6918334634302972e-15,
+          "minimum_cell_resistance_pa_s_m": 11.239771100829527,
+          "minimum_panel_resistance_pa_s_m": 22.22382597748196,
+          "geometry_feasible": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "nominal",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 5.551115123125783e-16,
+          "maximum_cell_impedance_relative_error": 1.6569889093747815e-15,
+          "minimum_cell_resistance_pa_s_m": 11.216254128309913,
+          "minimum_panel_resistance_pa_s_m": 20.52903132653607,
+          "geometry_feasible": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "oblique_30deg",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 6.661338147750939e-16,
+          "maximum_cell_impedance_relative_error": 1.6569889093747815e-15,
+          "minimum_cell_resistance_pa_s_m": 11.216254128309913,
+          "minimum_panel_resistance_pa_s_m": 20.52903132653607,
+          "geometry_feasible": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "cold_dense_air_oblique",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 7.771561172376096e-16,
+          "maximum_cell_impedance_relative_error": 4.427576528367019e-15,
+          "minimum_cell_resistance_pa_s_m": 11.844587930956177,
+          "minimum_panel_resistance_pa_s_m": 22.842206243868247,
+          "geometry_feasible": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "warm_light_air_oblique",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 4.440892098500626e-16,
+          "maximum_cell_impedance_relative_error": 3.0055521945989203e-15,
+          "minimum_cell_resistance_pa_s_m": 10.5980030289741,
+          "minimum_panel_resistance_pa_s_m": 18.62711199924704,
+          "geometry_feasible": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "manufacturing_pattern_a",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 3.3306690738754696e-16,
+          "maximum_cell_impedance_relative_error": 4.1499330818033836e-15,
+          "minimum_cell_resistance_pa_s_m": 10.909086554445889,
+          "minimum_panel_resistance_pa_s_m": 20.09556620741817,
+          "geometry_feasible": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "manufacturing_pattern_b_operating_shift",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 6.661338147750939e-16,
+          "maximum_cell_impedance_relative_error": 1.4831663966952095e-15,
+          "minimum_cell_resistance_pa_s_m": 11.312729828566685,
+          "minimum_panel_resistance_pa_s_m": 22.400863825456874,
+          "geometry_feasible": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "heldout_wide_band",
+      "split": "heldout",
+      "n_resonators": 9,
+      "frequency_band_hz": [
+        300.0,
+        1500.0
+      ],
+      "maximum_total_depth_m": 0.09,
+      "baseline_nominal_utility": 0.062917474498483,
+      "baseline_robust_utility": 0.061098981841679424,
+      "declared_nominal_parameters": [
+        1.394602461249,
+        0.894786126596,
+        0.004813772129,
+        0.002006646679
+      ],
+      "declared_nominal_utility": 0.4211802468267834,
+      "recalibrated_nominal": {
+        "seed": 104,
+        "maximum_iterations": 45,
+        "success": false,
+        "message": "Maximum number of iterations has been exceeded.",
+        "function_evaluations": 2428,
+        "parameters": [
+          1.3946023558198286,
+          0.8947863277776174,
+          0.004813827089392882,
+          0.002006334284175829
+        ],
+        "utility": 0.42117194642785105
+      },
+      "recalibrated_minus_declared_nominal_utility": -8.30039893234824e-06,
+      "declared_robust_parameters": [
+        1.397497286695,
+        0.883941023884,
+        0.004707132077,
+        0.002003458606
+      ],
+      "declared_robust_utility": 0.42046406800719116,
+      "recalibrated_robust": {
+        "seed": 204,
+        "maximum_iterations": 55,
+        "success": false,
+        "message": "Maximum number of iterations has been exceeded.",
+        "function_evaluations": 2873,
+        "parameters": [
+          1.3901885010872348,
+          0.8861079008415196,
+          0.0047843012686542615,
+          0.0020041019773417972
+        ],
+        "utility": 0.4191531438344499
+      },
+      "recalibrated_minus_declared_robust_utility": -0.0013109241727412568,
+      "nominal_reference_proxy_utility": 0.023124809040473558,
+      "nominal_reference_proxy_minus_distributed_utility": -0.39805543778630986,
+      "maximum_absorption_error": 2.3314683517128287e-15,
+      "maximum_cell_impedance_relative_error": 7.036357186671132e-15,
+      "minimum_cell_resistance_pa_s_m": 13.268039546028357,
+      "minimum_panel_resistance_pa_s_m": 25.085836808706915,
+      "equation_checks": [
+        {
+          "design": "baseline",
+          "shift": "nominal",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 6.661338147750939e-16,
+          "maximum_cell_impedance_relative_error": 1.5171418287128416e-15,
+          "minimum_cell_resistance_pa_s_m": 73.29579301361987,
+          "minimum_panel_resistance_pa_s_m": 73.29579301361986,
+          "geometry_feasible": true
+        },
+        {
+          "design": "baseline",
+          "shift": "oblique_30deg",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 4.440892098500626e-16,
+          "maximum_cell_impedance_relative_error": 1.5171418287128416e-15,
+          "minimum_cell_resistance_pa_s_m": 73.29579301361987,
+          "minimum_panel_resistance_pa_s_m": 73.29579301361986,
+          "geometry_feasible": true
+        },
+        {
+          "design": "baseline",
+          "shift": "cold_dense_air_oblique",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 4.440892098500626e-16,
+          "maximum_cell_impedance_relative_error": 7.227231806424359e-16,
+          "minimum_cell_resistance_pa_s_m": 73.83880872996153,
+          "minimum_panel_resistance_pa_s_m": 73.83880872996153,
+          "geometry_feasible": true
+        },
+        {
+          "design": "baseline",
+          "shift": "warm_light_air_oblique",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 6.661338147750939e-16,
+          "maximum_cell_impedance_relative_error": 4.1254449615961017e-16,
+          "minimum_cell_resistance_pa_s_m": 72.4493493034533,
+          "minimum_panel_resistance_pa_s_m": 72.44934930345329,
+          "geometry_feasible": true
+        },
+        {
+          "design": "baseline",
+          "shift": "manufacturing_pattern_a",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 5.551115123125783e-16,
+          "maximum_cell_impedance_relative_error": 5.864792129636573e-15,
+          "minimum_cell_resistance_pa_s_m": 68.66161726316281,
+          "minimum_panel_resistance_pa_s_m": 73.40077778090442,
+          "geometry_feasible": true
+        },
+        {
+          "design": "baseline",
+          "shift": "manufacturing_pattern_b_operating_shift",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 4.440892098500626e-16,
+          "maximum_cell_impedance_relative_error": 2.9364740622110914e-15,
+          "minimum_cell_resistance_pa_s_m": 69.08390131931672,
+          "minimum_panel_resistance_pa_s_m": 74.06467290977824,
+          "geometry_feasible": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "nominal",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 1.2212453270876722e-15,
+          "maximum_cell_impedance_relative_error": 7.036357186671132e-15,
+          "minimum_cell_resistance_pa_s_m": 13.854600334073242,
+          "minimum_panel_resistance_pa_s_m": 26.62071920304788,
+          "geometry_feasible": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "oblique_30deg",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 8.881784197001252e-16,
+          "maximum_cell_impedance_relative_error": 7.036357186671132e-15,
+          "minimum_cell_resistance_pa_s_m": 13.854600334073242,
+          "minimum_panel_resistance_pa_s_m": 26.62071920304788,
+          "geometry_feasible": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "cold_dense_air_oblique",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 4.440892098500626e-16,
+          "maximum_cell_impedance_relative_error": 6.056263681958562e-16,
+          "minimum_cell_resistance_pa_s_m": 14.216707175922894,
+          "minimum_panel_resistance_pa_s_m": 28.378044966938635,
+          "geometry_feasible": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "warm_light_air_oblique",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 2.3314683517128287e-15,
+          "maximum_cell_impedance_relative_error": 5.117068988949007e-15,
+          "minimum_cell_resistance_pa_s_m": 13.460113814896431,
+          "minimum_panel_resistance_pa_s_m": 25.085836808706915,
+          "geometry_feasible": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "manufacturing_pattern_a",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 6.661338147750939e-16,
+          "maximum_cell_impedance_relative_error": 1.5665466727860713e-15,
+          "minimum_cell_resistance_pa_s_m": 13.268039546028357,
+          "minimum_panel_resistance_pa_s_m": 25.752674070668338,
+          "geometry_feasible": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "manufacturing_pattern_b_operating_shift",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 3.3306690738754696e-16,
+          "maximum_cell_impedance_relative_error": 1.0971598390036954e-15,
+          "minimum_cell_resistance_pa_s_m": 13.541837277482184,
+          "minimum_panel_resistance_pa_s_m": 28.70482801832006,
+          "geometry_feasible": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "nominal",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 1.7763568394002505e-15,
+          "maximum_cell_impedance_relative_error": 5.85031832138967e-15,
+          "minimum_cell_resistance_pa_s_m": 14.430982078431164,
+          "minimum_panel_resistance_pa_s_m": 28.31626139821316,
+          "geometry_feasible": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "oblique_30deg",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 1.3322676295501878e-15,
+          "maximum_cell_impedance_relative_error": 5.85031832138967e-15,
+          "minimum_cell_resistance_pa_s_m": 14.430982078431164,
+          "minimum_panel_resistance_pa_s_m": 28.31626139821316,
+          "geometry_feasible": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "cold_dense_air_oblique",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 5.551115123125783e-16,
+          "maximum_cell_impedance_relative_error": 3.2609678232715547e-15,
+          "minimum_cell_resistance_pa_s_m": 14.795220708797977,
+          "minimum_panel_resistance_pa_s_m": 30.283632328590425,
+          "geometry_feasible": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "warm_light_air_oblique",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 1.4432899320127035e-15,
+          "maximum_cell_impedance_relative_error": 4.192660147066213e-15,
+          "minimum_cell_resistance_pa_s_m": 14.031704881128974,
+          "minimum_panel_resistance_pa_s_m": 26.625153021173578,
+          "geometry_feasible": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "manufacturing_pattern_a",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 9.992007221626409e-16,
+          "maximum_cell_impedance_relative_error": 2.6158933253593216e-15,
+          "minimum_cell_resistance_pa_s_m": 13.81428990932782,
+          "minimum_panel_resistance_pa_s_m": 27.356280940934944,
+          "geometry_feasible": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "manufacturing_pattern_b_operating_shift",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 7.771561172376096e-16,
+          "maximum_cell_impedance_relative_error": 1.2602989417916565e-15,
+          "minimum_cell_resistance_pa_s_m": 14.093751389967844,
+          "minimum_panel_resistance_pa_s_m": 30.62706153634927,
+          "geometry_feasible": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "dev_mid_band",
+      "split": "development",
+      "n_resonators": 7,
+      "frequency_band_hz": [
+        350.0,
+        1250.0
+      ],
+      "maximum_total_depth_m": 0.08,
+      "baseline_nominal_utility": 0.07926129885567135,
+      "baseline_robust_utility": 0.07702522885208204,
+      "declared_nominal_parameters": [
+        1.398897853777,
+        0.958974581481,
+        0.004862153186,
+        0.00200398661
+      ],
+      "declared_nominal_utility": 0.5147922875634402,
+      "recalibrated_nominal": {
+        "seed": 105,
+        "maximum_iterations": 45,
+        "success": false,
+        "message": "Maximum number of iterations has been exceeded.",
+        "function_evaluations": 2488,
+        "parameters": [
+          1.3988978537771521,
+          0.9589745814812475,
+          0.0048621531857291535,
+          0.002003986609920719
+        ],
+        "utility": 0.5147922875624897
+      },
+      "recalibrated_minus_declared_nominal_utility": -9.504619313815965e-13,
+      "declared_robust_parameters": [
+        1.396077000938,
+        0.950232845429,
+        0.004794534238,
+        0.002
+      ],
+      "declared_robust_utility": 0.5109320363443209,
+      "recalibrated_robust": {
+        "seed": 205,
+        "maximum_iterations": 55,
+        "success": false,
+        "message": "Maximum number of iterations has been exceeded.",
+        "function_evaluations": 2868,
+        "parameters": [
+          1.3975357269171673,
+          0.9734592790611336,
+          0.004819619888673814,
+          0.0020040795560365126
+        ],
+        "utility": 0.510112875751936
+      },
+      "recalibrated_minus_declared_robust_utility": -0.0008191605923849599,
+      "nominal_reference_proxy_utility": 0.022577295770259295,
+      "nominal_reference_proxy_minus_distributed_utility": -0.4922149917931809,
+      "maximum_absorption_error": 1.4432899320127035e-15,
+      "maximum_cell_impedance_relative_error": 8.74659570011092e-15,
+      "minimum_cell_resistance_pa_s_m": 13.208443001950771,
+      "minimum_panel_resistance_pa_s_m": 22.62192455797529,
+      "equation_checks": [
+        {
+          "design": "baseline",
+          "shift": "nominal",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 3.3306690738754696e-16,
+          "maximum_cell_impedance_relative_error": 5.423895018358904e-16,
+          "minimum_cell_resistance_pa_s_m": 70.9449015154396,
+          "minimum_panel_resistance_pa_s_m": 70.94490151543957,
+          "geometry_feasible": true
+        },
+        {
+          "design": "baseline",
+          "shift": "oblique_30deg",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 6.661338147750939e-16,
+          "maximum_cell_impedance_relative_error": 5.423895018358904e-16,
+          "minimum_cell_resistance_pa_s_m": 70.9449015154396,
+          "minimum_panel_resistance_pa_s_m": 70.94490151543957,
+          "geometry_feasible": true
+        },
+        {
+          "design": "baseline",
+          "shift": "cold_dense_air_oblique",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 5.551115123125783e-16,
+          "maximum_cell_impedance_relative_error": 6.214361168100364e-16,
+          "minimum_cell_resistance_pa_s_m": 71.56483912051698,
+          "minimum_panel_resistance_pa_s_m": 71.56483912051702,
+          "geometry_feasible": true
+        },
+        {
+          "design": "baseline",
+          "shift": "warm_light_air_oblique",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 5.551115123125783e-16,
+          "maximum_cell_impedance_relative_error": 8.74659570011092e-15,
+          "minimum_cell_resistance_pa_s_m": 70.0375998759999,
+          "minimum_panel_resistance_pa_s_m": 70.03759987599989,
+          "geometry_feasible": true
+        },
+        {
+          "design": "baseline",
+          "shift": "manufacturing_pattern_a",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 5.551115123125783e-16,
+          "maximum_cell_impedance_relative_error": 5.568638174922667e-15,
+          "minimum_cell_resistance_pa_s_m": 66.52370272382538,
+          "minimum_panel_resistance_pa_s_m": 71.06387746132617,
+          "geometry_feasible": true
+        },
+        {
+          "design": "baseline",
+          "shift": "manufacturing_pattern_b_operating_shift",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 5.551115123125783e-16,
+          "maximum_cell_impedance_relative_error": 1.5952805937084602e-15,
+          "minimum_cell_resistance_pa_s_m": 67.00587698317437,
+          "minimum_panel_resistance_pa_s_m": 71.76123018163692,
+          "geometry_feasible": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "nominal",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 4.440892098500626e-16,
+          "maximum_cell_impedance_relative_error": 4.074534115739377e-16,
+          "minimum_cell_resistance_pa_s_m": 13.719271627510457,
+          "minimum_panel_resistance_pa_s_m": 24.23506446605367,
+          "geometry_feasible": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "oblique_30deg",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 4.440892098500626e-16,
+          "maximum_cell_impedance_relative_error": 4.074534115739377e-16,
+          "minimum_cell_resistance_pa_s_m": 13.719271627510457,
+          "minimum_panel_resistance_pa_s_m": 24.23506446605367,
+          "geometry_feasible": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "cold_dense_air_oblique",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 5.551115123125783e-16,
+          "maximum_cell_impedance_relative_error": 2.1306030326766924e-15,
+          "minimum_cell_resistance_pa_s_m": 14.14595373546542,
+          "minimum_panel_resistance_pa_s_m": 26.147794789367833,
+          "geometry_feasible": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "warm_light_air_oblique",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 4.440892098500626e-16,
+          "maximum_cell_impedance_relative_error": 2.5645899372843544e-15,
+          "minimum_cell_resistance_pa_s_m": 13.26769914241572,
+          "minimum_panel_resistance_pa_s_m": 22.62192455797529,
+          "geometry_feasible": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "manufacturing_pattern_a",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 1.4432899320127035e-15,
+          "maximum_cell_impedance_relative_error": 3.826536616663872e-15,
+          "minimum_cell_resistance_pa_s_m": 13.208443001950771,
+          "minimum_panel_resistance_pa_s_m": 23.55284599672112,
+          "geometry_feasible": true
+        },
+        {
+          "design": "nominal_reference",
+          "shift": "manufacturing_pattern_b_operating_shift",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 5.551115123125783e-16,
+          "maximum_cell_impedance_relative_error": 3.660604534197664e-15,
+          "minimum_cell_resistance_pa_s_m": 13.466369437847959,
+          "minimum_panel_resistance_pa_s_m": 26.184422714561844,
+          "geometry_feasible": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "nominal",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 7.771561172376096e-16,
+          "maximum_cell_impedance_relative_error": 6.140842594150228e-15,
+          "minimum_cell_resistance_pa_s_m": 14.051503130067646,
+          "minimum_panel_resistance_pa_s_m": 25.119912719264665,
+          "geometry_feasible": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "oblique_30deg",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 4.440892098500626e-16,
+          "maximum_cell_impedance_relative_error": 6.140842594150228e-15,
+          "minimum_cell_resistance_pa_s_m": 14.051503130067646,
+          "minimum_panel_resistance_pa_s_m": 25.119912719264665,
+          "geometry_feasible": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "cold_dense_air_oblique",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 8.881784197001252e-16,
+          "maximum_cell_impedance_relative_error": 5.385981940668681e-15,
+          "minimum_cell_resistance_pa_s_m": 14.479521930697025,
+          "minimum_panel_resistance_pa_s_m": 27.16086203102991,
+          "geometry_feasible": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "warm_light_air_oblique",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 5.551115123125783e-16,
+          "maximum_cell_impedance_relative_error": 2.5692145879681493e-15,
+          "minimum_cell_resistance_pa_s_m": 13.597052860475294,
+          "minimum_panel_resistance_pa_s_m": 23.415050049484222,
+          "geometry_feasible": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "manufacturing_pattern_a",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 8.881784197001252e-16,
+          "maximum_cell_impedance_relative_error": 2.0683676754727377e-15,
+          "minimum_cell_resistance_pa_s_m": 13.523952182432676,
+          "minimum_panel_resistance_pa_s_m": 24.394997012411597,
+          "geometry_feasible": true
+        },
+        {
+          "design": "robust_reference",
+          "shift": "manufacturing_pattern_b_operating_shift",
+          "frequency_grid_exact": true,
+          "maximum_absorption_error": 5.551115123125783e-16,
+          "maximum_cell_impedance_relative_error": 5.239235920151534e-15,
+          "minimum_cell_resistance_pa_s_m": 13.783880652329529,
+          "minimum_panel_resistance_pa_s_m": 27.191122732332936,
+          "geometry_feasible": true
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "determinism_check": {
+    "exact_json_replay": true,
+    "passed": true
+  },
+  "difficulty_gate": {
+    "baseline_development_exact_utility_interval": [
+      0.05,
+      0.1
+    ],
+    "baseline_heldout_exact_utility_interval": [
+      0.05,
+      0.1
+    ],
+    "required_nominal_reference_score": 0.999999,
+    "minimum_cross_robustness_score": 0.9,
+    "minimum_distributed_minus_proxy_gap": 0.25,
+    "passed": true
+  },
+  "limitations": [
+    "The locally reacting reduced-order model omits thermal boundary-layer loss, inter-cell coupling, structural elasticity, grazing flow, nonlinear response and detailed fabrication constraints.",
+    "The public low-frequency proxy is intentionally cheaper and disagrees strongly with the distributed dynamic-density model; it is a diagnostic, not experimental truth.",
+    "The fixed nominal and robust witnesses are strong reproducible members of a four-parameter family, not certificates of global optimality.",
+    "The deterministic development and held-out instances are repository-visible; server-held procedural bands and independent domain review remain pending.",
+    "Engineering or product claims require thermoviscous finite-element and impedance-tube replication.",
+    "Task calibration does not measure GPT-5.5, feedback causality, population performance or autonomous scientific discovery."
+  ],
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}
