@@ -1420,3 +1420,8 @@ The dedicated derived analysis binds all three report hashes, raw-trajectory has
 normal/frozen-parent lineage, final program hashes, v2 task calibration, science axes and the
 materiality replay. It explicitly supports no causal, population, scaling, chemistry-discovery
 or real-world scientific-discovery claim.
+
+Cross-task summary v12 on clean source `f26bb16` validates and freezes **37** normal single-run
+conditions across **19** tasks, adding Hartree--Fock budgets one and three. Strict open-loop and
+materiality diagnostics remain in the task-specific analysis; heterogeneous science axes are
+not averaged into one score.
