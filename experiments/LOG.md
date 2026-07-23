@@ -1387,5 +1387,36 @@ baseline v17 bind revision `40931fb`. The full suite passes **186/186** tests. R
 **7 certified / 24 candidate / 20 quarantined**, or **31** internally admissible tasks, leaving
 an approximate gap of **19** to the roughly 50-task target. The task is finite-basis numerical
 RHF optimization, not correlated electronic structure, global-minimum proof or chemistry
-discovery; GPT-5.5 calibration, server-held procedural molecules and independent domain review
-remain pending.
+discovery; server-held procedural molecules and independent domain review remain pending.
+
+### GPT-5.5 Hartree--Fock calibration and material-selection audit
+
+Three independent clean-source reports on revision `746dff0` complete the initial GPT-5.5
+calibration. Budget one produces a valid deterministic multistart/stability solver with
+development and held-out nominal/robust scores approximately one in **5,272 tokens** and
+**103.3 s**. This is a one-proposal synthesis of a known numerical strategy, not feedback
+learning or new chemistry. The strict selection-blind budget-three run keeps every proposal
+parent fixed at the baseline and obtains an offline-best score approximately one at step two;
+feedback is therefore not shown necessary by this calibration.
+
+The normal budget-three trajectory has one fail-closed infrastructure error followed by two
+valid accepted proposals. Step two reaches selection score `0.9999999999998133`, development
+robustness approximately 1.0 and held-out robustness 0.902. Step three gains only
+`9.10e-15` selection score, while development robustness falls to 0.707 and held-out robustness
+rises to approximately 1.0. Development/held-out representation invariance similarly move by
+-0.125/+0.167. A post-run endpoint replay with selection epsilon `1e-12` retains step two;
+neither artifact Pareto-dominates the other. This demonstrates an acceptance/commit-policy
+failure, not a feedback-effect estimate. Normal/blind use the same four oracle calls but
+20,281/17,159 tokens and 454.7/262.6 seconds; Azure exposes no server-side generation seed.
+
+The v2 calibration on clean source `399ebf2` additionally compares every scalar/sealed baseline
+axis between the secure runner and an explicit one-thread direct execution; all registered
+tolerances pass. It records a real BLAS-thread basin sensitivity: held-out shifted score is
+approximately **0.667** at one thread but approximately **1.0** at 2/4/8 threads. The secure
+runner's fixed one-thread environment is authoritative. The earlier calibration report remains
+historical evidence of the narrower nominal-only gate and is not overwritten.
+
+The dedicated derived analysis binds all three report hashes, raw-trajectory hashes,
+normal/frozen-parent lineage, final program hashes, v2 task calibration, science axes and the
+materiality replay. It explicitly supports no causal, population, scaling, chemistry-discovery
+or real-world scientific-discovery claim.

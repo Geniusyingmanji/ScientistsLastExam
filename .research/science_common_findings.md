@@ -5,14 +5,15 @@ OED-v2, Pendulum-v2, GateSynthesis-v2, ActiveLawDiscovery, OPF-v2, Truss-v2, Ant
 NMR-v2, HeatExchanger-v2, ReactionMechanismFitting-v2, GravityInversion-v2,
 OceanCurrentInversion-v2, RadiativeTransferFit-v2, LowThrustTransfer-v2,
 LidDrivenCavity-v2, EnergyBalanceModel-v2, BroadbandAbsorber-v2 and
-DistillationColumnDesign-v2. The 35 normal-feedback model conditions across these 18 tasks each
+DistillationColumnDesign-v2 and HartreeFockSCF-v2. The 37 normal-feedback model conditions across these 19 tasks each
 contain one seed and proposal budget one or three. They calibrate tasks and motivate experiments;
 they are not a model leaderboard, a causal feedback study or population evidence.
 
-The portable machine record `experiments/science_calibration_summary_2026-07-23_v11.json`
+The portable machine record `experiments/science_calibration_summary_2026-07-23_v12.json`
 retains every top-level scalar metric, candidate lineage hash and raw trajectory SHA-256 for all
-35 normal conditions. Distillation-v2's additional strict diagnostic is bound separately by
-`experiments/distillation_v2_calibration_analysis_2026-07-23.json`. Strict selection-blind
+37 normal conditions. Distillation-v2 and Hartree--Fock's additional strict diagnostics are bound
+separately by `experiments/distillation_v2_calibration_analysis_2026-07-23.json` and
+`experiments/hartree_fock_v2_calibration_analysis_2026-07-23.json`. Strict selection-blind
 diagnostics remain in task-specific analysis because they are not normal-feedback calibrations.
 The underlying reports bind the task-specific source revision. Pendulum's initial budget-one
 run on revision `57c0e1b` is
@@ -53,6 +54,9 @@ by the corrected-contract run on `2557adb`.
 | BroadbandAbsorber-v2, strict open-loop budget 3 | offline-best development/held-out nominal `0.9173/0.9574` | sealed robustness `0.4519/0.4491`; manufacturing geometry feasibility `0.75/0.75` | Nearly equal development score and higher held-out nominal transfer coexist with roughly half the robustness retention because manufacturing errors cross the panel envelope. The one-run contrast is not a feedback estimate. |
 | Distillation-v2, budget 1 | the only proposal times out; development remains at the valid zero-score baseline | no validated improvement | Process-equation sophistication is irrelevant if the candidate cannot finish within the evaluator budget. |
 | Distillation-v2, normal budget 3 | one of three proposals is valid; selected development/held-out nominal `0.613/0.541` | robustness `0.0/0.0`; only `0.20/0.20` of shifted cases remain feasible | Nominal MESH feasibility and cost improvement do not transfer to operating shifts; two later rewrites time out. A post-hoc public-cost probe also finds that the selected design is unchanged when the capital/energy ranking reverses. |
+| HartreeFockSCF-v2, budget 1 | development score approximately 1.0 from one valid proposal | development/held-out robustness approximately 1.0; geometry, representation and stability axes pass | One proposal synthesizes deterministic multistart/stability search for public finite-basis systems. This is known-algorithm synthesis, not feedback learning or new chemistry. |
+| HartreeFockSCF-v2, normal budget 3 | step two/three selection scores differ by only `9.1e-15` | development robustness `1.000→0.707`, held-out robustness `0.902→1.000`; representation axes trade off | Strict positive-score incumbent replacement selects a scientifically different, non-dominating artifact below numerical materiality. Science search needs epsilon/tie and Pareto commit policies. |
+| HartreeFockSCF-v2, strict open-loop budget 3 | every proposal uses the frozen baseline parent; offline best is approximately 1.0 | selected development/held-out robustness `0.707/0.902` | Open-loop near-ceiling success shows feedback was not necessary in this one calibration, but normal/blind are single-run, token/wall-time mismatched and Azure lacks a server-side seed. |
 | ReactionMechanism-v2, budget 1 | valid proposal remains at normalized mechanism 0.0 | held-out normalized mechanism 0.0 | A complex fitter spends the assay budget on an under-informative design and abstains everywhere. |
 | ReactionMechanism-v2, budget 3 | all three proposals remain at 0.0 and are rejected | each performs one assay and abstains everywhere | More rewrite budget does not help when scalar zero feedback cannot localize whether experiment design, inference or refusal caused failure. |
 | GravityInversion-v2, budget 1 | invalid callback unpacking; development remains 0.0 | no validated improvement | A physically sophisticated implementation can still fail the executable laboratory protocol. |
@@ -72,8 +76,8 @@ cost separately.
 
 ### 1. One-step success often measures algorithm synthesis, not scientific learning
 
-GPT-5.5 writes recognizable multiplicative/Fedorov design, GRAPE, convex DC-OPF and window/null-
-synthesis procedures
+GPT-5.5 writes recognizable multiplicative/Fedorov design, GRAPE, convex DC-OPF, window/null-
+synthesis and deterministic multistart SCF procedures
 in one proposal. These results directly measure whether a model can instantiate a known method
 inside a new executable contract. They do not establish that score feedback produced a new
 scientific strategy. Budget-one saturation is therefore useful as an on-ramp calibration but
@@ -140,6 +144,24 @@ and held-out H4 rings, stable multistart witnesses lower the energy by `0.0375/0
 change the minimum occupied--virtual curvature from `-0.294/-0.511` to `+0.299/+0.095`.
 Scientific optimization curves must therefore retain validity, objective value, physical or
 variational stability and representation/geometry transfer as separate axes.
+
+The model calibration sharpens this point. A budget-one proposal reaches approximately unit
+nominal and sealed scores by synthesizing a known deterministic multistart method. In the normal
+budget-three trajectory, the accepted step-two and step-three selection scores differ by only
+`9.10e-15`, but development robustness falls by 0.293 while held-out robustness rises by 0.098;
+development representation invariance falls by 0.125 while held-out invariance rises by 0.167.
+Neither artifact dominates the other. Replaying endpoint selection with `epsilon=1e-12` keeps
+step two instead of step three. This replay does not reconstruct the counterfactual proposal
+trajectory, but it proves that strict floating-point `>` is an inadequate commit rule for this
+science vector.
+
+The conventional single-start baseline also exposes an execution-environment issue. Under the
+authoritative secure one-thread BLAS environment its held-out shifted score is about 0.667;
+under explicit 2/4/8-thread direct execution it is approximately 1.0 because the hard shifted H4
+case enters a different SCF basin. Secure and explicit one-thread direct execution agree across
+all scalar/sealed axes within the registered tolerances. The secure path remains authoritative,
+while thread sensitivity must be retained as a numerical-stability diagnostic rather than hidden
+by checking nominal raw score alone.
 
 RadiativeTransferFit-v2 reproduces this failure without a protocol confound. Its truth-blind
 two-view nonlinear fit claims all seven supported atmospheres, reaches mean supported mechanism

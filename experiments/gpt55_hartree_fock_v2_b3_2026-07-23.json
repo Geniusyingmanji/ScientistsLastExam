@@ -1,0 +1,357 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_SECURE_EVAL",
+  "evidence_scope": "MODEL_PERFORMANCE",
+  "created_at": "2026-07-23T11:04:17.146576+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "746dff077a58e4c9a4afea821b5a3015d70cc378",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "/home/azureuser/workspace-gzy/zyf/frontier-science/scripts/batch_evolve.py",
+      "--tasks",
+      "QuantumChemistry/HartreeFockSCF",
+      "--all",
+      "--algorithms",
+      "greedy_rewrite",
+      "--feedback-modes",
+      "normal",
+      "--seeds",
+      "1",
+      "--budget",
+      "3",
+      "--timeout",
+      "180",
+      "--workdir",
+      "runs/hartree_fock_v2_b3",
+      "--output",
+      "experiments/gpt55_hartree_fock_v2_b3_2026-07-23.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "config": {
+    "tasks": [
+      "QuantumChemistry/HartreeFockSCF"
+    ],
+    "algorithms": [
+      "greedy_rewrite"
+    ],
+    "feedback_modes": [
+      "normal"
+    ],
+    "condition_order": "as_listed_for_even_seeds_reversed_for_odd_seeds",
+    "seeds": [
+      1
+    ],
+    "budget": 3,
+    "timeout_s": 180.0,
+    "work_root": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/hartree_fock_v2_b3",
+    "llm_condition_sha256": "5b0df4671481f6b3505155bc6c5654a64c4da5591422fb806904e7d0f44fc4d2",
+    "llm": {
+      "wire": "responses",
+      "endpoint_sha256": "b22995a1fcaf8ad713ac37716f006c717313dfdebd357ac02a077a5582650bb6",
+      "model": "gpt-5.5",
+      "max_output_tokens": 16000,
+      "temperature": null,
+      "reasoning_effort": "low",
+      "input_cost_per_million": null,
+      "output_cost_per_million": null,
+      "server_side_seed_control": false
+    }
+  },
+  "runs": [
+    {
+      "task": "QuantumChemistry/HartreeFockSCF",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 1,
+      "baseline": 0.0,
+      "best": 0.9999999999998224,
+      "accepted": 2,
+      "evaluated": 4,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/hartree_fock_v2_b3/QuantumChemistry__HartreeFockSCF/greedy_rewrite/normal/seed_1",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 4,
+        "budget_units": 4,
+        "best_score": 0.9999999999998224,
+        "best_so_far_auc": 0.4999999999999089,
+        "valid_rate": 0.75,
+        "accepted": 2,
+        "wall_seconds": 454.7222600542009,
+        "llm": {
+          "calls": 3,
+          "provider_usage_records": 3,
+          "input_tokens": 9016,
+          "output_tokens": 11265,
+          "total_tokens": 20281,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "QuantumChemistry/HartreeFockSCF",
+        "seed": 1,
+        "baseline_score": 0.0,
+        "budget": 3,
+        "feedback_mode": "normal",
+        "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "online_incumbent"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 1,
+        "trajectory_sha256": "863743954ba712a3110bc44c75e9aeded4ccbe127650fd6dfd8644686c7668d1",
+        "events": [
+          {
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "55d5ddfbde8a635a08f7962b792b5c0951bc57e62a4de16eaeddcba10e79b392",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.7544181867230845,
+              "robustness_score": 0.0,
+              "heldout_policy_score": 0.8485280756008166,
+              "heldout_robustness_score": 0.6666666666664264,
+              "heldout_feasibility_rate": 1.0,
+              "development_shifted_score": 0.7553887889218306,
+              "heldout_shifted_score": 0.6666666666666416,
+              "development_representation_invariance_score": 0.7544181888241921,
+              "heldout_representation_invariance_score": 0.666666666666211,
+              "development_stability_rate": 0.75,
+              "heldout_stability_rate": 0.6666666666666666,
+              "development_mean_energy_error_hartree": 0.009379114798362342,
+              "heldout_mean_energy_error_hartree": 0.020644207797051894,
+              "development_maximum_scf_residual": 1.5465329642246618e-13,
+              "heldout_maximum_scf_residual": 4.76870766003359e-13,
+              "candidate_problem_call_count": 28,
+              "candidate_instance_valid_rate": 1.0
+            },
+            "algorithm_metadata": {},
+            "error": null
+          },
+          {
+            "step": 1,
+            "oracle_calls": 2,
+            "budget_units": 2,
+            "score": -1e+18,
+            "best_score": 0.0,
+            "valid": false,
+            "accepted": false,
+            "candidate_sha256": "a7d3eb4f81793474ff919611af7499e86ee41d51475baed4769ff665bf495dc1",
+            "parent_sha256": "55d5ddfbde8a635a08f7962b792b5c0951bc57e62a4de16eaeddcba10e79b392",
+            "metrics": {
+              "combined_score": -1e+18,
+              "valid": 0.0,
+              "error_message": "trusted evaluator internal failure",
+              "infrastructure_failure": 1.0,
+              "raw_score": -1e+18
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 1
+            },
+            "error": "trusted evaluator internal failure"
+          },
+          {
+            "step": 2,
+            "oracle_calls": 3,
+            "budget_units": 3,
+            "score": 0.9999999999998133,
+            "best_score": 0.9999999999998133,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "e76d4fdbeab57d15c75c8ac88dd6d6b8c4aa482230b045edfce762bee5348d00",
+            "parent_sha256": "55d5ddfbde8a635a08f7962b792b5c0951bc57e62a4de16eaeddcba10e79b392",
+            "metrics": {
+              "combined_score": 0.9999999999998133,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.9999999999999541,
+              "robustness_score": 0.9999999999998224,
+              "heldout_policy_score": 0.999999999999501,
+              "heldout_robustness_score": 0.9023689270601761,
+              "heldout_feasibility_rate": 1.0,
+              "development_shifted_score": 0.9999999999999508,
+              "heldout_shifted_score": 0.999999999995452,
+              "development_representation_invariance_score": 0.9999999999999603,
+              "heldout_representation_invariance_score": 0.8333333333327411,
+              "development_stability_rate": 1.0,
+              "heldout_stability_rate": 1.0,
+              "development_mean_energy_error_hartree": 3.7192471324942744e-15,
+              "heldout_mean_energy_error_hartree": 2.5461114698070258e-14,
+              "development_maximum_scf_residual": 1.2153820174739686e-15,
+              "heldout_maximum_scf_residual": 4.730674978604146e-13,
+              "candidate_problem_call_count": 28,
+              "candidate_instance_valid_rate": 1.0
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 2
+            },
+            "error": null
+          },
+          {
+            "step": 3,
+            "oracle_calls": 4,
+            "budget_units": 4,
+            "score": 0.9999999999998224,
+            "best_score": 0.9999999999998224,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "a05d98b8cdfea470caab3a406304d5b4eb8d489f3fc11d9a10f1c657db269cdd",
+            "parent_sha256": "e76d4fdbeab57d15c75c8ac88dd6d6b8c4aa482230b045edfce762bee5348d00",
+            "metrics": {
+              "combined_score": 0.9999999999998224,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.9999999999999564,
+              "robustness_score": 0.7071067811863951,
+              "heldout_policy_score": 0.9999999999998131,
+              "heldout_robustness_score": 0.999999999999475,
+              "heldout_feasibility_rate": 1.0,
+              "development_shifted_score": 0.9999999999999526,
+              "heldout_shifted_score": 0.9999999999999805,
+              "development_representation_invariance_score": 0.874999999999968,
+              "heldout_representation_invariance_score": 0.9999999999989694,
+              "development_stability_rate": 1.0,
+              "heldout_stability_rate": 1.0,
+              "development_mean_energy_error_hartree": 2.886579864025407e-15,
+              "heldout_mean_energy_error_hartree": 2.5017025488220195e-14,
+              "development_maximum_scf_residual": 1.3965982049894107e-14,
+              "heldout_maximum_scf_residual": 2.7516347087633576e-13,
+              "candidate_problem_call_count": 28,
+              "candidate_instance_valid_rate": 1.0
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 3
+            },
+            "error": null
+          }
+        ]
+      }
+    }
+  ],
+  "aggregate": {
+    "attempt_count": 1,
+    "superseded_attempts": 0,
+    "successful_runs": 1,
+    "failed_runs": 0,
+    "by_condition": {
+      "QuantumChemistry/HartreeFockSCF|greedy_rewrite|normal": {
+        "n": 1,
+        "best_score": {
+          "n": 1,
+          "mean": 0.9999999999998224,
+          "ci95_low": 0.9999999999998224,
+          "ci95_high": 0.9999999999998224
+        },
+        "best_so_far_auc": {
+          "n": 1,
+          "mean": 0.4999999999999089,
+          "ci95_low": 0.4999999999999089,
+          "ci95_high": 0.4999999999999089
+        },
+        "budget_units": {
+          "n": 1,
+          "mean": 4.0,
+          "ci95_low": 4.0,
+          "ci95_high": 4.0
+        },
+        "oracle_calls": {
+          "n": 1,
+          "mean": 4.0,
+          "ci95_low": 4.0,
+          "ci95_high": 4.0
+        },
+        "wall_seconds": {
+          "n": 1,
+          "mean": 454.7222600542009,
+          "ci95_low": 454.7222600542009,
+          "ci95_high": 454.7222600542009
+        },
+        "total_tokens": {
+          "n": 1,
+          "mean": 20281.0,
+          "ci95_low": 20281.0,
+          "ci95_high": 20281.0
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      }
+    },
+    "overall": {
+      "best_score": {
+        "n": 1,
+        "mean": 0.9999999999998224,
+        "ci95_low": 0.9999999999998224,
+        "ci95_high": 0.9999999999998224
+      },
+      "best_so_far_auc": {
+        "n": 1,
+        "mean": 0.4999999999999089,
+        "ci95_low": 0.4999999999999089,
+        "ci95_high": 0.4999999999999089
+      },
+      "budget_units": {
+        "n": 1,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "oracle_calls": {
+        "n": 1,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "wall_seconds": {
+        "n": 1,
+        "mean": 454.7222600542009,
+        "ci95_low": 454.7222600542009,
+        "ci95_high": 454.7222600542009
+      },
+      "total_tokens": {
+        "n": 1,
+        "mean": 20281.0,
+        "ci95_low": 20281.0,
+        "ci95_high": 20281.0
+      },
+      "estimated_cost_usd": {
+        "n": 0,
+        "mean": null,
+        "ci95_low": null,
+        "ci95_high": null
+      }
+    }
+  },
+  "completed_at": "2026-07-23T11:11:51.877726+00:00",
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}

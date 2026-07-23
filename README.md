@@ -170,7 +170,15 @@ The current audit reports:
   The conventional policy is self-consistent but internally unstable on development H8 and
   held-out H4 rings, lying 0.0375 and 0.0619 Ha above stable witnesses. Independent NumPy/SciPy
   equations reproduce all frozen energies within `4.3e-14` Ha, and the data archive is
-  byte-reproducible. GPT-5.5 calibration and independent quantum-chemistry review remain pending.
+  byte-reproducible. GPT-5.5 reaches approximately unit nominal and sealed scores in one proposal
+  through deterministic multistart/stability search. In a normal budget-three trajectory, a
+  `9.1e-15` selection-score increase changes development/held-out robustness from
+  `1.000/0.902` to `0.707/1.000`; a `1e-12` materiality replay keeps the earlier non-dominated
+  artifact. A strict open-loop batch also reaches approximately unit score, so these single,
+  token-mismatched runs do not show feedback necessity. The weak single-start baseline's held-out
+  geometry score is BLAS-thread sensitive (`0.667` in the authoritative secure one-thread path
+  versus approximately `1.0` at 2/4/8 threads), while secure and explicit one-thread execution
+  agree across all scalar/sealed axes. Independent quantum-chemistry review remains pending.
   GPT-5.5 reaches nominal OPF score 1.0
   at budget one while sealed N-1 robustness is only 0.031 on development and approximately
   zero on held-out networks. On Truss-v2, a separate budget-three run improves development
@@ -193,8 +201,8 @@ credible multi-seed model-performance evidence. A clean-revision GPT-5.5 budget-
 is recorded as task calibration, not a benchmark leaderboard.
 The latest trusted certification/security/baseline audits are v27/v11/v17. The current 7/24/20 manifest contains 31 internally
 admissible tasks, leaving an approximate gap of 19 to the roughly
-50-task target. The hash-bound cross-task summary v11 contains 35 normal single-run conditions
-over 18 tasks; it is calibration evidence, not a leaderboard or population result.
+50-task target. The hash-bound cross-task summary v12 contains 37 normal single-run conditions
+over 19 tasks; it is calibration evidence, not a leaderboard or population result.
 
 ## Quickstart
 

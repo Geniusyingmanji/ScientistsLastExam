@@ -194,9 +194,17 @@ The first review tranche contains real scientific topics but several narrow eval
   stability `0.75/0.667`; stable multistart witnesses lower the hard H8/H4 energies by
   `0.0375/0.0619 Ha` and reverse their minimum stability curvatures from negative to positive.
   The reference reaches approximately `0.99997` development and `0.99813` held-out nominal
-  score with approximately unit robustness. It remains a task calibration, not model evidence,
-  pending GPT-5.5 runs, server-held procedural molecules/basis families, external-instability and
-  correlated-method checks, and independent quantum-chemistry review.
+  score with approximately unit robustness. GPT-5.5 then reaches approximately unit nominal and
+  sealed scores in one proposal by synthesizing deterministic multistart/stability search, so the
+  current fixed task is an algorithm-synthesis on-ramp. In the normal budget-three trajectory, a
+  `9.1e-15` selection-score increase trades development robustness `1.000→0.707` for held-out
+  robustness `0.902→1.000`; a `1e-12` acceptance epsilon retains the earlier artifact. A strict
+  open-loop batch also reaches approximately unit nominal score, so feedback is not shown
+  necessary by these single, token-mismatched runs. The public single-start baseline is BLAS-
+  thread sensitive on the held-out geometry shift (`0.667` at the authoritative secure one-
+  thread setting versus approximately `1.0` at 2/4/8 threads). It remains a candidate pending
+  server-held procedural molecules/basis families, external-instability and correlated-method
+  checks, repeated controls and independent quantum-chemistry review.
 
 ## Expansion rule
 
