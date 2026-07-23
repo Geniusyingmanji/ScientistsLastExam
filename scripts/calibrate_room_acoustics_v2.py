@@ -14,6 +14,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import numpy as np
+from scipy.optimize import minimize
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -24,6 +25,13 @@ from frontier_science.provenance import (  # noqa: E402
     finalize_report_trust,
     source_provenance,
 )
+
+
+REFERENCE_MAXIMUM_ITERATIONS = 10
+REFERENCE_MAXIMUM_FUNCTION_EVALUATIONS = 800
+REFERENCE_X_TOLERANCE = 5.0e-4
+REFERENCE_FUNCTION_TOLERANCE = 1.0e-6
+REFERENCE_UTILITY_GAP_TOLERANCE = 2.0e-3
 
 
 def _load_oracle():
@@ -112,6 +120,50 @@ def _independent_rt(oracle, room, absorption):
     return 0.161 * volume / denominator
 
 
+def _independent_shifted_geometry(problem, design, shift=None):
+    nominal_room = np.asarray(problem["room_dimensions_m"], dtype=float)
+    scale = (
+        np.ones(3, dtype=float)
+        if shift is None
+        else np.asarray(shift["room_scale"], dtype=float)
+    )
+    room = nominal_room * scale
+    source = np.asarray(design[:3], dtype=float) * scale
+    receivers = (
+        np.asarray(problem["receiver_positions_m"], dtype=float)
+        * scale[None, :]
+    )
+    sound_speed = float(problem["speed_of_sound_m_s"])
+    if shift is not None:
+        source += np.asarray(shift["source_offset_m"], dtype=float)
+        amplitude = float(shift["receiver_jitter_m"])
+        if amplitude:
+            index = np.arange(len(receivers), dtype=float)
+            receivers[:, 0] += amplitude * np.sin(1.19 * index + 0.31)
+            receivers[:, 1] += amplitude * np.cos(0.83 * index + 0.47)
+            receivers[:, 2] += (
+                0.25 * amplitude * np.sin(1.67 * index + 0.11)
+            )
+        sound_speed *= float(shift["sound_speed_scale"])
+    return room, source, receivers, sound_speed
+
+
+def _independent_geometry_feasible(oracle, room, source, receivers):
+    room = np.asarray(room, dtype=float)
+    source = np.asarray(source, dtype=float)
+    receivers = np.asarray(receivers, dtype=float)
+    return bool(
+        np.all(room > 0.0)
+        and np.all(source >= oracle.MINIMUM_SOURCE_CLEARANCE_M)
+        and np.all(source <= room - oracle.MINIMUM_SOURCE_CLEARANCE_M)
+        and np.all(receivers >= 0.10)
+        and np.all(receivers <= room[None, :] - 0.10)
+        and float(np.min(np.linalg.norm(
+            receivers - source[None, :], axis=1
+        ))) >= 0.30
+    )
+
+
 def _independent_receiver(oracle, room, source, receiver, sound_speed,
                           absorption, maximum_order):
     paths = _independent_paths(room, source, receiver, maximum_order)
@@ -143,6 +195,200 @@ def _independent_receiver(oracle, room, source, receiver, sound_speed,
         ),
         "path_count": int(len(paths)),
         "direct_distance_m": direct_distance,
+    }
+
+
+def _independent_metrics(oracle, problem, design, shift=None,
+                         image_order=None):
+    room, source, receivers, sound_speed = _independent_shifted_geometry(
+        problem, design, shift=shift
+    )
+    if image_order is None:
+        image_order = (
+            oracle.NOMINAL_IMAGE_ORDER
+            if shift is None else int(shift["image_order"])
+        )
+    absorption = _independent_absorption(
+        problem, design[3:], room, shift=shift
+    )
+    if not _independent_geometry_feasible(
+        oracle, room, source, receivers
+    ):
+        return {
+            "utility": 0.0,
+            "geometry_feasible": False,
+            "image_order": int(image_order),
+        }
+    rows = tuple(
+        _independent_receiver(
+            oracle, room, source, receiver, sound_speed, absorption,
+            int(image_order),
+        )
+        for receiver in receivers
+    )
+    c50 = np.asarray([row["c50_db"] for row in rows], dtype=float)
+    total_energy = np.asarray(
+        [row["total_energy"] for row in rows], dtype=float
+    )
+    level_db = 10.0 * np.log10(np.maximum(total_energy, 1.0e-300))
+    spatial_level_std_db = np.std(level_db, axis=0)
+    reverberation_time = _independent_rt(oracle, room, absorption)
+    target_rt = np.asarray(
+        problem["target_reverberation_time_s"], dtype=float
+    )
+    clarity_value = np.clip((c50 + 5.0) / 13.0, 0.0, 1.0)
+    clarity_utility = float(
+        0.72 * np.mean(clarity_value)
+        + 0.28 * np.quantile(clarity_value, 0.20)
+    )
+    rt_log_error = np.log(reverberation_time / target_rt)
+    reverberation_utility = float(np.mean(
+        np.exp(-0.5 * (rt_log_error / 0.30) ** 2)
+    ))
+    uniformity_utility = float(np.mean(
+        np.exp(-0.5 * (spatial_level_std_db / 3.5) ** 2)
+    ))
+    utility = (
+        0.46 * clarity_utility
+        + 0.34 * reverberation_utility
+        + 0.20 * uniformity_utility
+    )
+    return {
+        "utility": float(utility),
+        "geometry_feasible": True,
+        "image_order": int(image_order),
+        "clarity_utility": clarity_utility,
+        "reverberation_utility": reverberation_utility,
+        "uniformity_utility": uniformity_utility,
+        "mean_c50_db": float(np.mean(c50)),
+        "twentieth_percentile_c50_db": float(np.quantile(c50, 0.20)),
+        "reverberation_time_s": reverberation_time.tolist(),
+        "mean_absolute_log_rt_error": float(np.mean(np.abs(rt_log_error))),
+        "mean_spatial_level_std_db": float(np.mean(spatial_level_std_db)),
+        "minimum_path_count": min(row["path_count"] for row in rows),
+        "maximum_path_count": max(row["path_count"] for row in rows),
+    }
+
+
+def _independent_allocate_area(total_area, weights, maximum_areas):
+    total_area = min(float(total_area), float(np.sum(maximum_areas)))
+    weights = np.maximum(np.asarray(weights, dtype=float), 0.0)
+    maximum_areas = np.asarray(maximum_areas, dtype=float)
+    allocation = np.zeros_like(maximum_areas)
+    active = maximum_areas > 0.0
+    for _ in range(len(allocation) + 1):
+        remaining = total_area - float(np.sum(allocation))
+        if remaining <= 1.0e-12 or not np.any(active):
+            break
+        active_weights = weights * active
+        if float(np.sum(active_weights)) <= 1.0e-12:
+            active_weights = active.astype(float)
+        proposal = remaining * active_weights / float(np.sum(active_weights))
+        capacity = np.maximum(maximum_areas - allocation, 0.0)
+        addition = np.minimum(proposal, capacity)
+        allocation += addition
+        active = capacity - addition > 1.0e-12
+    return allocation
+
+
+def _independent_family_design(problem, parameters):
+    values = np.asarray(parameters, dtype=float)
+    bounds = np.asarray(problem["source_position_bounds_m"], dtype=float)
+    fractions = np.clip(values[:3], 0.0, 1.0)
+    source = bounds[:, 0] + fractions * (bounds[:, 1] - bounds[:, 0])
+    maximum_areas = (
+        np.asarray(problem["surface_areas_m2"], dtype=float)
+        * np.asarray(
+            problem["maximum_treatment_fraction_by_surface"], dtype=float
+        )
+    )
+    treatment = _independent_allocate_area(
+        float(np.clip(values[3], 0.0, 1.0))
+        * float(problem["maximum_treatment_area_m2"]),
+        np.maximum(values[4:], 0.0),
+        maximum_areas,
+    )
+    return np.concatenate((source, treatment))
+
+
+def _recalibrate_family(oracle, instance, robust):
+    problem = instance["problem"]
+    key = (
+        "robust_reference_family" if robust
+        else "nominal_reference_family"
+    )
+    start = np.asarray(instance[key], dtype=float)
+    best_parameters = start.copy()
+    best_utility = -math.inf
+    evaluations = 0
+
+    def utility(parameters):
+        design = _independent_family_design(problem, parameters)
+        if robust:
+            return min(
+                _independent_metrics(
+                    oracle, problem, design, shift=shift
+                )["utility"]
+                for shift in oracle.SHIFT_SPECS
+            )
+        return _independent_metrics(
+            oracle, problem, design
+        )["utility"]
+
+    def objective(parameters):
+        nonlocal best_parameters, best_utility, evaluations
+        observed = float(utility(parameters))
+        evaluations += 1
+        if observed > best_utility:
+            best_utility = observed
+            best_parameters = np.asarray(parameters, dtype=float).copy()
+        return -observed
+
+    start_utility = float(utility(start))
+    best_utility = start_utility
+    result = minimize(
+        objective,
+        start,
+        method="Powell",
+        bounds=((0.0, 1.0),) * 3
+        + ((0.45, 1.0),)
+        + ((0.0, 1.0),) * 6,
+        options={
+            "maxiter": REFERENCE_MAXIMUM_ITERATIONS,
+            "maxfev": REFERENCE_MAXIMUM_FUNCTION_EVALUATIONS,
+            "xtol": REFERENCE_X_TOLERANCE,
+            "ftol": REFERENCE_FUNCTION_TOLERANCE,
+        },
+    )
+    terminal_utility = float(-result.fun)
+    return {
+        "objective": (
+            "minimum utility over five sealed shifts"
+            if robust else "nominal utility"
+        ),
+        "deterministic": True,
+        "starting_parameters": start.tolist(),
+        "starting_utility": start_utility,
+        "best_visited_parameters": best_parameters.tolist(),
+        "best_visited_utility": float(best_utility),
+        "best_visited_minus_declared_utility": float(
+            best_utility - start_utility
+        ),
+        "terminal_parameters": np.asarray(result.x, dtype=float).tolist(),
+        "terminal_utility": terminal_utility,
+        "terminal_minus_best_visited_utility": float(
+            terminal_utility - best_utility
+        ),
+        "optimizer_success": bool(result.success),
+        "optimizer_message": str(result.message),
+        "optimizer_iterations": int(result.nit),
+        "optimizer_reported_function_evaluations": int(result.nfev),
+        "tracked_function_evaluations": int(evaluations),
+        "passed": bool(
+            best_utility >= start_utility - 1.0e-12
+            and best_utility - start_utility
+            <= REFERENCE_UTILITY_GAP_TOLERANCE
+        ),
     }
 
 
@@ -220,7 +466,7 @@ def _compact(metrics):
     return {key: metrics.get(key) for key in keys if key in metrics}
 
 
-def calibrate():
+def calibrate(recalibrate_references=True):
     oracle = _load_oracle()
     baseline = oracle.evaluate(
         lambda problem: oracle._weak_baseline_design(problem)
@@ -254,6 +500,7 @@ def calibrate():
     )
 
     instance_checks = []
+    reference_recalibrations = []
     for instance in oracle.INSTANCES:
         equation_checks = {
             name: _independent_nominal_check(oracle, instance, design)
@@ -271,6 +518,33 @@ def calibrate():
             instance["nominal_reference_design"], instance["problem"],
             image_order=14,
         )
+        shifted_utility_checks = []
+        for design_name, design in (
+            ("baseline", instance["baseline_design"]),
+            ("nominal_reference", instance["nominal_reference_design"]),
+            ("robust_reference", instance["robust_reference_design"]),
+        ):
+            for shift in (None,) + tuple(oracle.SHIFT_SPECS):
+                independent_metrics = _independent_metrics(
+                    oracle, instance["problem"], design, shift=shift
+                )
+                evaluator_metrics = oracle._acoustic_metrics(
+                    design, instance["problem"], shift=shift
+                )
+                shifted_utility_checks.append({
+                    "design": design_name,
+                    "shift": "nominal" if shift is None else shift["name"],
+                    "independent_utility": independent_metrics["utility"],
+                    "evaluator_utility": evaluator_metrics["utility"],
+                    "absolute_utility_error": abs(
+                        independent_metrics["utility"]
+                        - evaluator_metrics["utility"]
+                    ),
+                    "geometry_feasibility_exact": (
+                        independent_metrics["geometry_feasible"]
+                        == evaluator_metrics["geometry_feasible"]
+                    ),
+                })
         all_equations_pass = all(
             row["maximum_absolute_absorption_error"] <= 1.0e-15
             and row["maximum_absolute_reverberation_time_error_s"] <= 1.0e-13
@@ -279,6 +553,10 @@ def calibrate():
             and row["maximum_absolute_direct_distance_error_m"] <= 1.0e-13
             and row["path_counts_exact"]
             for row in equation_checks.values()
+        ) and all(
+            row["absolute_utility_error"] <= 2.0e-12
+            and row["geometry_feasibility_exact"]
+            for row in shifted_utility_checks
         )
         nominal_headroom = (
             instance["nominal_reference"]["utility"]
@@ -325,6 +603,7 @@ def calibrate():
                 - instance["nominal_reference"]["utility"]
             ),
             "independent_equation_checks": equation_checks,
+            "independent_shifted_utility_checks": shifted_utility_checks,
             "passed": bool(
                 nominal_headroom > 1.0e-4
                 and robust_headroom > 1.0e-4
@@ -333,6 +612,17 @@ def calibrate():
                 and all_equations_pass
             ),
         })
+        if recalibrate_references:
+            reference_recalibrations.append({
+                "name": instance["name"],
+                "split": instance["split"],
+                "nominal": _recalibrate_family(
+                    oracle, instance, robust=False
+                ),
+                "robust": _recalibrate_family(
+                    oracle, instance, robust=True
+                ),
+            })
 
     invalid_passed = all(
         row["valid"] == 0.0
@@ -351,7 +641,7 @@ def calibrate():
         and robust["heldout_policy_score"] > 0.50
         and baseline["development_proxy_exact_gap"] > 0.05
     )
-    execution_passed = bool(
+    preflight_passed = bool(
         oracle.ROOM_ACOUSTICS_V2
         and len(oracle.DEVELOPMENT_INSTANCES) == 4
         and len(oracle.HELDOUT_INSTANCES) == 2
@@ -365,6 +655,17 @@ def calibrate():
         and invalid_passed
         and all(row["passed"] for row in instance_checks)
         and difficulty_passed
+    )
+    reference_recalibration_passed = bool(
+        recalibrate_references
+        and len(reference_recalibrations) == len(oracle.INSTANCES)
+        and all(
+            row["nominal"]["passed"] and row["robust"]["passed"]
+            for row in reference_recalibrations
+        )
+    )
+    execution_passed = bool(
+        preflight_passed and reference_recalibration_passed
     )
     report = {
         "schema_version": 1,
@@ -398,7 +699,14 @@ def calibrate():
                 "three normalized source coordinates, treatment-budget utilization, "
                 "and six capped nonnegative surface-allocation weights"
             ),
-            "optimizer": "deterministic bounded Powell search used during v2 construction",
+            "optimizer": "SciPy deterministic bounded Powell search with best-visited tracking",
+            "maximum_iterations": REFERENCE_MAXIMUM_ITERATIONS,
+            "maximum_function_evaluations": REFERENCE_MAXIMUM_FUNCTION_EVALUATIONS,
+            "x_tolerance": REFERENCE_X_TOLERANCE,
+            "function_tolerance": REFERENCE_FUNCTION_TOLERANCE,
+            "maximum_recalibrated_minus_declared_utility": REFERENCE_UTILITY_GAP_TOLERANCE,
+            "terminal_point_used_as_reference": False,
+            "best_visited_point_retained_when_terminal_point_regresses": True,
             "global_optimality_claimed": False,
             "normalization_clips_better_feasible_candidates": True,
         },
@@ -409,6 +717,12 @@ def calibrate():
             key: _compact(value) for key, value in invalid.items()
         },
         "independent_equation_and_reference_checks": instance_checks,
+        "reference_recalibration": {
+            "performed": bool(recalibrate_references),
+            "records": reference_recalibrations,
+            "passed": reference_recalibration_passed,
+        },
+        "preflight_passed": preflight_passed,
         "determinism_check": {
             "exact_json_replay": deterministic,
             "passed": deterministic,
@@ -438,8 +752,14 @@ def calibrate():
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path)
+    parser.add_argument(
+        "--skip-reference-recalibration", action="store_true",
+        help="run fast equation preflight only; output cannot be trusted calibration evidence",
+    )
     args = parser.parse_args()
-    report = calibrate()
+    report = calibrate(
+        recalibrate_references=not args.skip_reference_recalibration
+    )
     rendered = json.dumps(report, indent=2, allow_nan=False) + "\n"
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)

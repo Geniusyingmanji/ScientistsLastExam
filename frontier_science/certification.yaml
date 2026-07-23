@@ -120,7 +120,7 @@ tasks:
 
   Acoustics/RoomImpulseResponse:
     status: candidate
-    reason: v2 replaces fixed-RIR reconstruction and its length crash with source-placement plus six-surface treatment optimization over four development and two held-out rooms; the order-10 energy image-source and Eyring oracle separates C50 clarity, target reverberation and spatial uniformity, while first-order proxy error and five sealed installation/material/geometry/order-14 shifts remain evaluator-only; pending clean calibration, GPT-5.5 headroom testing, server-held rooms, hybrid wave/ray replication, measured-RIR validation and independent acoustics review
+    reason: v2 replaces fixed-RIR reconstruction and its length crash with source-placement plus six-surface treatment optimization over four development and two held-out rooms; the order-10 energy image-source and Eyring oracle separates C50 clarity, target reverberation and spatial uniformity, while first-order proxy error and five sealed installation/material/geometry/order-14 shifts remain evaluator-only; independent path, absorption, decay, utility and deterministic reference-search calibration passes internally, pending GPT-5.5 headroom testing, server-held rooms, hybrid wave/ray replication, measured-RIR validation and independent acoustics review
     citation_ids:
       - doi:10.1121/1.382599
       - doi:10.1109/TASL.2008.917341

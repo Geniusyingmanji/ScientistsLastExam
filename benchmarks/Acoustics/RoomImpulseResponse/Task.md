@@ -51,7 +51,7 @@ Eyring reverberation time from the treated surface coefficients. The nominal uti
 ```
 
 `combined_score` is the mean development utility improvement over a valid weak policy,
-normalized by independently optimized fixed-seed family witnesses. The same policy is called
+normalized by independently and deterministically optimized family witnesses. The same policy is called
 on interleaved held-out rooms. The evaluator separately retains:
 
 - clarity, reverberation-time error and level-uniformity axes;

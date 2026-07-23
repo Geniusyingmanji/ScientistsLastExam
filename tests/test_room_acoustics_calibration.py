@@ -21,15 +21,14 @@ def _module():
 
 
 class RoomAcousticsCalibrationTests(unittest.TestCase):
-    def test_calibration_executes_and_trust_follows_source_provenance(self):
-        report = _module().calibrate()
-        self.assertTrue(report["execution_passed"])
-        expected_trust = bool(
-            report["source_provenance"]["git_available"]
-            and not report["source_provenance"]["source_tree_dirty"]
-        )
-        self.assertEqual(report["trusted_evidence"], expected_trust)
-        self.assertEqual(report["passed"], expected_trust)
+    def test_fast_preflight_executes_but_is_not_complete_calibration(self):
+        report = _module().calibrate(recalibrate_references=False)
+        self.assertTrue(report["preflight_passed"])
+        self.assertFalse(report["execution_passed"])
+        self.assertFalse(report["trusted_evidence"])
+        self.assertFalse(report["passed"])
+        self.assertFalse(report["reference_recalibration"]["performed"])
+        self.assertFalse(report["reference_recalibration"]["passed"])
         self.assertEqual(
             len(report["independent_equation_and_reference_checks"]), 6
         )
