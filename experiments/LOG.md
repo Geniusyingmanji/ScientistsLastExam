@@ -1312,10 +1312,12 @@ match finite differences at the top-feed boundary. Malformed, non-finite, boolea
 non-integral and out-of-range artifacts fail closed, and sandbox tests verify a fresh process,
 imports and tmpfs for all six candidate calls.
 
-Dirty-tree dry runs reproduce all twelve fixed-seed reference searches and pass the rebuilt
-wave-4 and certification audits, but are not trusted evidence. Clean-source distillation,
-wave-4 v3, certification v25, security v10 and baseline v16 reports will be appended after the
-source commit. Re-admission changes the current manifest to **7/23/21**, for **30** internally
+Clean-source `distillation_v2_calibration_2026-07-23.json` reproduces all twelve fixed-seed
+reference searches and passes every equation, reference, invalid-artifact and difficulty gate
+on revision `469224c`. Wave-4 v3 records two resolved rebuilds and ten retained quarantines;
+certification v25 records **7/23/21** with no missing/orphaned records or task issues; security
+v10 passes **18/18**; and baseline v16 records **51/51 deterministic, valid and fail-closed**
+with zero infrastructure failures. Re-admission yields **30** internally
 admissible tasks and an approximate gap of **20** to the roughly 50-task target. This is
 reduced-order task calibration, not a global-optimality proof, rate-based process simulation,
 pilot-column/plant validation, model-population estimate or autonomous-discovery result.
