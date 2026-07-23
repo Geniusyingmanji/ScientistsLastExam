@@ -1,7 +1,12 @@
 domain: HeatTransfer
 task: ConvectionDiffusionOpt
 difficulty: hard
-oracle_type: physical_sim
+tier: T2
+oracle_type: active_pde_identification_and_robust_design
 score_mode: clipped
 gpu_required: false
-eval_time_seconds: 30
+eval_time_seconds: 240
+science_metric: budgeted anisotropic convection-diffusion mechanism recovery, target-field heater design, physical-shift robustness and model-inadequacy refusal
+reference_baseline: one valid calibration experiment followed by abstention on every world
+reference_sota: exact homogeneous parameters and generating four-source design with correct refusal on zero-response and spatially heterogeneous worlds; no continuum or device claim
+citation: "Hinze et al. 2009, DOI 10.1007/978-1-4020-8839-1"

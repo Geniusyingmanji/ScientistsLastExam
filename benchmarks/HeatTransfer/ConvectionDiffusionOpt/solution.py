@@ -1,7 +1,22 @@
-"""Baseline: all sources at center (poor coverage of target field)."""
+"""Weak valid baseline: exercise the active laboratory and make no scientific claim."""
+
 import numpy as np
-def place_sources(nx, ny, n_sources):
+
+
+def design_thermal_policy(
+    grid_shape, parameter_names, parameter_bounds, design_specification,
+    experiment, budget_units,
+):
+    del grid_shape, parameter_bounds, design_specification, budget_units
+    experiment(
+        np.asarray(((0.25, 0.25),)),
+        np.asarray((1.0,)),
+        np.asarray(((0.25, 0.25), (0.25, 0.75), (0.75, 0.25), (0.75, 0.75))),
+    )
     return {
-        "positions": np.full((n_sources, 2), 0.5),
-        "strengths": np.ones(n_sources),
+        "parameters": np.zeros(len(parameter_names)),
+        "source_positions": np.zeros((4, 2)),
+        "source_strengths": np.zeros(4),
+        "confidence": 0.0,
+        "abstain": True,
     }

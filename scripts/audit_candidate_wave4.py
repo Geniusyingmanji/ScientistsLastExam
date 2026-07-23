@@ -287,25 +287,83 @@ def _stokes_drag():
 
 def _convection_diffusion():
     oracle = _oracle("HeatTransfer/ConvectionDiffusionOpt")
+    calibration_path = ROOT / "scripts/calibrate_convection_diffusion_v2.py"
+    spec = importlib.util.spec_from_file_location(
+        "wave4_convection_diffusion_calibration", calibration_path
+    )
+    if spec is None or spec.loader is None:
+        raise ImportError("cannot load ConvectionDiffusionOpt-v2 calibration")
+    calibration = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(calibration)
+    baseline = oracle.evaluate(calibration._always_abstain)
+    classical = oracle.evaluate(calibration._classical_policy(oracle, True))
+    one_experiment = oracle.evaluate(
+        calibration._classical_policy(oracle, False)
+    )
+    reference = oracle.evaluate(calibration._ReferencePolicy(oracle))
     with np.errstate(all="ignore"):
-        nonfinite = oracle.evaluate(lambda _nx, _ny, n_sources: {
-            "positions": np.full((n_sources, 2), np.nan),
-            "strengths": np.full(n_sources, np.nan),
+        nonfinite = oracle.evaluate(lambda *_args: {
+            "parameters": np.full(5, np.nan),
+            "source_positions": np.full((4, 2), np.nan),
+            "source_strengths": np.full(4, np.nan),
+            "confidence": np.nan,
+            "abstain": False,
         })
     return {
         "task": "HeatTransfer/ConvectionDiffusionOpt",
-        "admission": "quarantine",
-        "defect": (
-            "the program receives only grid dimensions and source count, not the fixed hidden "
-            "target field or an experiment callback, so the inverse-design claim requires "
-            "guessing one embedded answer; non-finite sources pass task-level validity"
+        "admission": "candidate",
+        "superseded_v1_defect": (
+            "the removed v1 interface exposed neither target observations nor an experiment "
+            "callback, forcing candidates to guess one embedded field, while non-finite "
+            "sources received full score"
         ),
-        "entrypoint_arguments": ["nx", "ny", "n_sources"],
-        "entrypoint_receives_target_or_experiment": False,
-        "hidden_target_instance_count": 1,
+        "resolved_defect": (
+            "v2 supplies a visible target plus a charged calibration callback over eleven "
+            "development/held-out homogeneous, null and heterogeneous worlds; it separately "
+            "scores five-parameter mechanism recovery, diagnostic prediction, four-source "
+            "design, four physical shifts, transfer, refusal and false discovery"
+        ),
+        "development_world_count": len(oracle.DEVELOPMENT_SPECS),
+        "heldout_world_count": len(oracle.HELDOUT_SPECS),
+        "shift_count": len(oracle.SHIFT_SPECS),
+        "experiment_budget_units": oracle.EXPERIMENT_BUDGET_UNITS,
+        "baseline_score": float(baseline["combined_score"]),
+        "classical_score": float(classical["combined_score"]),
+        "classical_heldout_score": float(classical["heldout_policy_score"]),
+        "classical_robustness": float(classical["robustness_score"]),
+        "one_experiment_score": float(one_experiment["combined_score"]),
+        "one_experiment_heldout_score": float(
+            one_experiment["heldout_policy_score"]
+        ),
+        "reference_score": float(reference["combined_score"]),
+        "reference_robustness": float(reference["robustness_score"]),
         "nonfinite_task_score": float(nonfinite["combined_score"]),
         "nonfinite_task_valid": bool(nonfinite["valid"]),
-        "passed": nonfinite["combined_score"] == 1.0 and bool(nonfinite["valid"]),
+        "rebuild_passed": True,
+        "passed": bool(
+            oracle.CONVECTION_DIFFUSION_V2
+            and len(oracle.DEVELOPMENT_SPECS) == 6
+            and len(oracle.HELDOUT_SPECS) == 5
+            and len(oracle.SHIFT_SPECS) == 4
+            and baseline["valid"] == 1.0
+            and baseline["combined_score"] == 0.0
+            and 0.80 < classical["combined_score"] < 0.97
+            and 0.80 < classical["heldout_policy_score"] < 0.97
+            and classical["robustness_score"] > 0.80
+            and classical["development_mean_budget_units"]
+            == oracle.EXPERIMENT_BUDGET_UNITS
+            and classical["development_false_discovery_rate"] == 0.0
+            and classical["heldout_false_discovery_rate"] == 0.0
+            and one_experiment["combined_score"] < 1.0e-8
+            and one_experiment["heldout_policy_score"] < 1.0e-8
+            and reference["combined_score"] == 1.0
+            and reference["robustness_score"] == 1.0
+            and reference["heldout_policy_score"] == 1.0
+            and reference["heldout_robustness_score"] == 1.0
+            and nonfinite["combined_score"] == 0.0
+            and nonfinite["raw_score"] == 0.0
+            and not bool(nonfinite["valid"])
+        ),
     }
 
 

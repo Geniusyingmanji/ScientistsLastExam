@@ -20,14 +20,15 @@ The repository contains **51 task packages in 47 metadata domains**:
 
 - **7 certified core tasks**: Lennard–Jones clusters, spin glass, Poisson solver,
   matrix-multiplication rank, Cap Set, circle packing, and multilayer thin films.
-- **24 candidate tasks** pending scientific certification, including intervention-based causal
+- **26 candidate tasks** pending scientific certification, including intervention-based causal
   and active dynamical-law laboratories whose prediction and mechanism metrics are reported
   separately, a multi-spectrum NMR peak-mechanism/refusal task, and a multi-fidelity
   heat-exchanger Pareto-design task, a full-field lid-driven-cavity solver, active
   climate-response identification with explicit model-mismatch refusal, and a robust
   broadband acoustic-absorber design task, and a robust mixed-integer equilibrium-stage
-  distillation design task, and a multi-system stable finite-basis Hartree–Fock task.
-- **20 quarantined tasks** with reproduced scientific-oracle, identifiability, provenance or
+  distillation design task, a multi-system stable finite-basis Hartree–Fock task, robust room
+  acoustics design and active convection--diffusion identification/design.
+- **18 quarantined tasks** with reproduced scientific-oracle, identifiability, provenance or
   shortcut defects; these remain inventory packages but are not admissible benchmark tasks.
 
 The default CLI exposes only the certified core. `--all` explicitly shows the full
@@ -46,7 +47,7 @@ The current audit reports:
 - 186/186 unit, security, protocol and scientific-invariant tests passed.
 - The latest 51×2 secure-baseline audit reports 51/51 deterministic, 51/51 valid, 51/51
   fail-closed and zero infrastructure failures.
-- Current manifest: 7 certified / 24 candidate / 20 quarantined. D-optimal design, quantum
+- Current source manifest: 7 certified / 26 candidate / 18 quarantined. D-optimal design, quantum
   gate synthesis, DC optimal power flow, truss sizing, antenna synthesis and NMR peak fitting have been rebuilt with separate sealed
   validation or robustness metrics and re-admitted as candidates. HeatExchanger-v2 additionally
   separates a public constant-property proxy from a sealed segmented temperature-dependent
@@ -199,10 +200,12 @@ the post-repair 50-package audits bind revision `47c3613`; the subsequent wave-2
 audit quarantines seven additional defective candidates. The two P2 smokes are baseline-only; the repository does not yet contain
 credible multi-seed model-performance evidence. A clean-revision GPT-5.5 budget-one core pilot
 is recorded as task calibration, not a benchmark leaderboard.
-The latest trusted certification/security/baseline audits are v27/v11/v17. The current 7/24/20 manifest contains 31 internally
-admissible tasks, leaving an approximate gap of 19 to the roughly
-50-task target. The hash-bound cross-task summary v12 contains 37 normal single-run conditions
-over 19 tasks; it is calibration evidence, not a leaderboard or population result.
+The latest trusted clean-revision certification/security/baseline audits are v29/v13/v19. The
+current source manifest is 7/26/18 and contains 33 internally admissible tasks, leaving an
+approximate gap of 17 to the roughly 50-task target. ConvectionDiffusionOpt-v2 still requires a
+new clean-revision audit before that source count becomes trusted release evidence. The hash-bound
+cross-task summary v13 contains 39 normal single-run conditions over 20 tasks; it is calibration
+evidence, not a leaderboard or population result.
 
 ## Quickstart
 

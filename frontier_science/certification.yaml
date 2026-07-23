@@ -222,8 +222,10 @@ tasks:
     status: quarantined
     reason: oracle uses perimeter rather than Stokes flow, making the circle optimal by the isoperimetric inequality and contradicting its 0.85 shape anchor
   HeatTransfer/ConvectionDiffusionOpt:
-    status: quarantined
-    reason: candidate receives no target observations or experiment callback and can only guess one fixed hidden field; non-finite sources receive full score
+    status: candidate
+    reason: v2 replaces the fixed hidden-field guessing task and fail-open non-finite path with a charged active laboratory over six development and five held-out homogeneous, null and heterogeneous worlds; candidates infer five anisotropic transport/loss parameters and design four heaters against a visible target, with separate mechanism, diagnostic prediction, nominal design, four physical-shift robustness, transfer, refusal and false-discovery axes; a truth-blind complementary two-experiment policy spends all 12 units and reaches approximately 0.896/0.892 development/held-out joint quality with zero false discovery, while a symmetric one-experiment policy is near-unidentifiable and scores approximately zero; retain pending GPT-5.5 calibration, server-held procedural apparatuses, continuum/high-fidelity replication and independent heat-transfer review
+    citation_ids:
+      - doi:10.1007/978-1-4020-8839-1
   InventoryManagement/MultiEchelonStock:
     status: quarantined
     reason: stages receive their own prior orders without upstream fulfillment, so retailer service is exactly independent of factory and warehouse stocks

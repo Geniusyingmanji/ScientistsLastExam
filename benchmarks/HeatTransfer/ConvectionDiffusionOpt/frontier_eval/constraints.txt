@@ -1,3 +1,4 @@
-1) Only edit solution.py. Keep the place_sources() signature.
-2) numpy/scipy only. CPU, seconds. No network.
-3) Do not read verification/ or frontier_eval/.
+1) Only edit solution.py and keep design_thermal_policy(grid_shape, parameter_names, parameter_bounds, design_specification, experiment, budget_units).
+2) Return finite shape-consistent parameters/source positions/source strengths, confidence in [0,1], and a boolean abstain decision.
+3) Respect the charged 12-unit experiment budget; caught invalid or over-budget calls still invalidate the world.
+4) Deterministic Python/NumPy/SciPy/stdlib CPU code only; no network/process creation and no reading verification/ or frontier_eval/.
