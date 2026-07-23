@@ -1474,3 +1474,40 @@ Cross-task summary v13 on clean source `6489a07` validates and freezes **39 norm
 conditions across 20 tasks**, adding RoomImpulseResponse-v2 budgets one and three. Strict open-
 loop diagnostics remain task-specific; heterogeneous science axes are not averaged into one
 score.
+
+## 2026-07-23 — convection--diffusion active laboratory calibration
+
+ConvectionDiffusionOpt-v2 is now bound to clean source `84fcbe8`. The task contains six
+development and five held-out homogeneous/null/spatially heterogeneous apparatuses, five hidden
+anisotropic transport/loss coefficients, a 12-unit heater/sensor experiment budget, four-source
+target-field design and four sealed physical shifts. A truth-blind complementary two-experiment
+policy reaches development/held-out joint quality **0.895605/0.891509**, mechanism
+**0.649464/0.659574** and shifted robustness **0.893876/0.890417**, with zero false discovery.
+The symmetric one-experiment policy is numerically rank five but has condition numbers from
+**1.0e5 to 4.0e8** and scores approximately zero.
+
+Certification v30 records **7 certified / 26 candidate / 18 quarantined**, wave-4 admission v5
+records four substantive rebuilds, security v14 passes **18/18**, and secure baseline v20 records
+**51/51 deterministic, valid and fail-closed** over two repetitions with zero infrastructure
+failures.
+
+### GPT-5.5 convection--diffusion calibration
+
+The independent budget-one proposal makes an invalid experiment request. In the normal
+budget-three run, two proposals fail at runtime and the only valid proposal spends four units
+then abstains on all eleven worlds. The same-local-seed-label strict open-loop batch has one
+runtime failure and two valid proposals; one spends the full 12 units on two experiments, but
+both abstain on every supported and unsupported world. Consequently all conditions select the
+zero baseline, supported discovery coverage is zero, and correct unsupported refusal is one.
+
+Normal/open-loop use four oracle calls and **16,833/16,982** tokens. Azure exposes no server-side
+generation seed, no condition changes its incumbent, and each condition has one run, so the equal
+zero score contains no feedback-effect estimate. The clean derived analysis on `fa8bcfe` binds
+all three reports, raw trajectories, frozen/online lineage, selected artifacts, experiment usage
+and every mechanism/prediction/design/robustness/refusal axis. This is finite-difference task
+calibration, not physical heat-transfer validation or autonomous scientific discovery.
+
+Cross-task summary v14 on clean source `fa8bcfe` validates and freezes **41 normal single-run
+conditions across 21 tasks**, adding ConvectionDiffusionOpt-v2 budgets one and three. Strict
+open-loop diagnostics remain task-specific and heterogeneous science axes are not averaged into
+one score.

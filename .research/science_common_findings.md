@@ -5,17 +5,19 @@ OED-v2, Pendulum-v2, GateSynthesis-v2, ActiveLawDiscovery, OPF-v2, Truss-v2, Ant
 NMR-v2, HeatExchanger-v2, ReactionMechanismFitting-v2, GravityInversion-v2,
 OceanCurrentInversion-v2, RadiativeTransferFit-v2, LowThrustTransfer-v2,
 LidDrivenCavity-v2, EnergyBalanceModel-v2, BroadbandAbsorber-v2,
-DistillationColumnDesign-v2, HartreeFockSCF-v2 and RoomImpulseResponse-v2. The 39 normal-feedback model conditions across these 20 tasks each
+DistillationColumnDesign-v2, HartreeFockSCF-v2, RoomImpulseResponse-v2 and
+ConvectionDiffusionOpt-v2. The 41 normal-feedback model conditions across these 21 tasks each
 contain one seed and proposal budget one or three. They calibrate tasks and motivate experiments;
 they are not a model leaderboard, a causal feedback study or population evidence.
 
 The portable machine record
-`experiments/science_calibration_summary_2026-07-23_v13.json` extends v12 and retains every top-level
-scalar metric, candidate lineage hash and raw trajectory SHA-256 for all 39 normal conditions.
+`experiments/science_calibration_summary_2026-07-23_v14.json` extends v13 and retains every top-level
+scalar metric, candidate lineage hash and raw trajectory SHA-256 for all 41 normal conditions.
 Additional strict diagnostics for Distillation-v2, Hartree--Fock and room acoustics are bound
 separately by `experiments/distillation_v2_calibration_analysis_2026-07-23.json`,
 `experiments/hartree_fock_v2_calibration_analysis_2026-07-23.json` and
-`experiments/room_acoustics_v2_calibration_analysis_2026-07-23.json`. Strict selection-blind
+`experiments/room_acoustics_v2_calibration_analysis_2026-07-23.json` and
+`experiments/convection_diffusion_v2_calibration_analysis_2026-07-23.json`. Strict selection-blind
 diagnostics remain in task-specific analysis because they are not normal-feedback calibrations.
 The underlying reports bind the task-specific source revision. Pendulum's initial budget-one
 run on revision `57c0e1b` is
@@ -70,6 +72,8 @@ by the corrected-contract run on `2557adb`.
 | OceanCurrentInversion-v2, budget 3 | one valid proposal uses two releases and the full 12-unit budget but scores 0.0; two later proposals misread the callback schema | zero in-library mechanism recovery and discovery coverage; correct refusal on all four unsupported worlds | Correct refusal does not compensate for refusing all seven supported worlds. The aggregate mechanism field alone would obscure this zero discovery coverage. |
 | RadiativeTransferFit-v2, budget 1 | the valid proposal uses two views and all 18 measurement units but scores 0.0 | zero supported-world coverage/mechanism; correct refusal on all four unsupported worlds | A physically plausible full-budget policy can still be an always-refuse policy rather than a discovery policy. |
 | RadiativeTransferFit-v2, budget 3 | all three proposals are valid and remain at 0.0; two use the full budget and one performs no experiment | every proposal has zero supported-world coverage/mechanism and zero false discovery | Protocol validity and conservative refusal do not establish scientific discovery; active measurement use must be reported alongside risk–coverage. |
+| ConvectionDiffusionOpt-v2, truth-blind designs | one symmetric experiment scores 0.0; complementary two-experiment design scores 0.895605 | held-out joint 0.891509; held-out mechanism 0.659574; shifted robustness 0.890417; zero false discovery | Numerical rank alone is insufficient: a nearly singular midline experiment cannot identify the five coefficients, while a second off-axis intervention resolves the ambiguity. |
+| ConvectionDiffusionOpt-v2, GPT-5.5 three conditions | all seven proposals fail to improve the zero baseline; four are invalid and three are valid | every valid proposal abstains on all seven supported worlds and all four unsupported worlds; supported discovery coverage is zero | Spending up to the full 12-unit experimental budget does not imply informative experiment design or mechanism recovery. The normal/open-loop contrast is single-run and non-causal. |
 
 OPF's `robustness_score` combines security-constrained economic quality with overload penalties.
 It is not a pure safety probability. The proportional baseline is feasible for every tested
@@ -178,6 +182,16 @@ experiment, but both strategies yield zero discovery coverage and zero supported
 recovery. Thus protocol validity, experiment-budget use, refusal specificity and discovery
 coverage are four distinct quantities; none can stand in for the others.
 
+ConvectionDiffusionOpt-v2 adds a controlled identifiability counterexample. A symmetric midline
+experiment is numerically rank five, yet its Jacobian condition number ranges from `1.0e5` to
+`4.0e8` and the truth-blind one-experiment mechanism score is effectively zero. Adding one
+off-axis experiment raises development/held-out joint quality to `0.896/0.892`, with
+held-out mechanism `0.660`, shifted robustness `0.890`, full supported coverage and zero false
+discovery. By contrast, the three valid GPT-5.5 proposals across the budget-one, normal
+budget-three and strict open-loop conditions abstain on all eleven worlds. One of them spends the
+full 12-unit budget on two experiments. Thus experiment count, spend, numerical rank,
+conditioning, supported-world coverage and recovered mechanism must all be reported separately.
+
 EnergyBalanceModel-v2 supplies the sharpest prediction-versus-mechanism counterexample so far.
 The under-informative short classical design reaches development/held-out prediction
 `0.968/0.990` while mechanism quality is only `0.0039/0.0` and false-discovery rates are
@@ -227,6 +241,15 @@ that factorized label-blind feedback must distinguish experiment coverage, suppo
 coverage, residual/model-check evidence and false-discovery risk. A single zero cannot tell the
 agent whether to measure more, fit differently, or lower an over-conservative abstention threshold.
 
+ConvectionDiffusionOpt-v2 combines both failure types. Four of seven proposals fail the callback
+or runtime contract. The other three are valid, including a full-budget two-experiment policy,
+but all retain the always-abstain scientific outcome. Normal and strict open-loop budget-three
+conditions use four oracle calls and `16,833/16,982` tokens, neither changes its parent, and Azure
+has no server-side generation seed. Their equal zero score therefore contains no feedback-effect
+information. A useful feedback treatment must distinguish experiment validity, conditioning or
+information content, supported-world claim coverage and model-inadequacy evidence without
+revealing hidden parameters or world labels.
+
 EnergyBalanceModel-v2 adds both an interface plateau and an experiment-design bottleneck. All
 four normal proposals fail the return-artifact contract, whereas a strict open-loop batch happens
 to contain two valid programs and one nonzero selection. Normal uses 14,181 tokens and open-loop
@@ -274,8 +297,11 @@ The observations above define hypotheses rather than assumed conclusions:
 7. At equal charged budget, temporally multiscale or adaptive experiments will improve mechanism
    recovery and model-mismatch refusal more than short experiments even when their response-
    prediction scores are similar.
+8. At equal experiment count and cost, complementary off-axis or intervention-rich designs will
+   improve mechanism recovery over merely full-rank but ill-conditioned designs; budget use and
+   numerical rank alone will not predict discovery success.
 
-Tests 1--3 and 7 require at least ten paired seeds on the focused science subset. All comparisons must
+Tests 1--3, 7 and 8 require at least ten paired seeds on the focused science subset. All comparisons must
 hold proposal budget, actual oracle calls, tool access and feedback-message shape fixed. Hidden
 metrics may be evaluated periodically for curves but cannot affect search or stopping in the
 nominal-only condition.

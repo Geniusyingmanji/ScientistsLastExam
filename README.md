@@ -193,6 +193,14 @@ The current audit reports:
   mechanism/refusal quality and falsely fits the development phase-distorted spectrum. GPT-5.5
   reaches `0.428/0.176` development/held-out mechanism/refusal at budget one; at budget three,
   the two later rewrites score lower and falsely fit every unsupported spectrum.
+  ConvectionDiffusionOpt-v2 adds a charged anisotropic transport laboratory: a truth-blind
+  complementary two-experiment policy reaches development/held-out joint quality
+  `0.896/0.892` and shifted robustness `0.894/0.890`, whereas one nearly singular symmetric
+  experiment scores approximately zero. Across budget-one, normal budget-three and strict
+  open-loop GPT-5.5 calibration, four proposals fail the executable contract and all three valid
+  proposals abstain on every supported world—even one that spends all 12 units on two
+  experiments. This separates experiment spend, identifiability, mechanism recovery and
+  conservative refusal; the single-run normal/open-loop contrast is not causal evidence.
 
 Machine-readable evidence lives in [`experiments/`](experiments/).
 The original five dated P0–P2 reports were regenerated from clean source revision `f48b101`;
@@ -200,11 +208,10 @@ the post-repair 50-package audits bind revision `47c3613`; the subsequent wave-2
 audit quarantines seven additional defective candidates. The two P2 smokes are baseline-only; the repository does not yet contain
 credible multi-seed model-performance evidence. A clean-revision GPT-5.5 budget-one core pilot
 is recorded as task calibration, not a benchmark leaderboard.
-The latest trusted clean-revision certification/security/baseline audits are v29/v13/v19. The
+The latest trusted clean-revision certification/security/baseline audits are v30/v14/v20. The
 current source manifest is 7/26/18 and contains 33 internally admissible tasks, leaving an
-approximate gap of 17 to the roughly 50-task target. ConvectionDiffusionOpt-v2 still requires a
-new clean-revision audit before that source count becomes trusted release evidence. The hash-bound
-cross-task summary v13 contains 39 normal single-run conditions over 20 tasks; it is calibration
+approximate gap of 17 to the roughly 50-task target. The hash-bound cross-task summary v14
+contains 41 normal single-run conditions over 21 tasks; it is calibration
 evidence, not a leaderboard or population result.
 
 ## Quickstart

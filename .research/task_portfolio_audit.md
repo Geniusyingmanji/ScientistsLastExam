@@ -226,7 +226,10 @@ The first review tranche contains real scientific topics but several narrow eval
   numerically rank five but has condition numbers above `7.8e4` and scores approximately zero,
   while the off-axis second experiment resolves the ambiguity. This validates active experiment
   design inside the finite-difference benchmark, not continuum heat transfer or a physical
-  device. Retain pending GPT-5.5 controls, server-held apparatuses and independent review.
+  device. GPT-5.5 calibration finds four invalid proposals and three valid all-world abstention
+  policies, including one full-budget two-experiment design, so the task retains experiment-design
+  and supported-discovery headroom. Retain pending repeated paired controls, server-held
+  apparatuses and independent review.
 
 ## Expansion rule
 

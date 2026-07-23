@@ -120,14 +120,14 @@ tasks:
 
   Acoustics/RoomImpulseResponse:
     status: candidate
-    reason: v2 replaces fixed-RIR reconstruction and its length crash with source-placement plus six-surface treatment optimization over four development and two held-out rooms; the order-10 energy image-source and Eyring oracle separates C50 clarity, target reverberation and spatial uniformity, while first-order proxy error and five sealed installation/material/geometry/order-14 shifts remain evaluator-only; independent path, absorption, decay, utility and deterministic reference-search calibration passes internally, pending GPT-5.5 headroom testing, server-held rooms, hybrid wave/ray replication, measured-RIR validation and independent acoustics review
+    reason: v2 replaces fixed-RIR reconstruction and its length crash with source-placement plus six-surface treatment optimization over four development and two held-out rooms; the order-10 energy image-source and Eyring oracle separates C50 clarity, target reverberation and spatial uniformity, while first-order proxy error and five sealed installation/material/geometry/order-14 shifts remain evaluator-only; independent path, absorption, decay, utility and deterministic reference-search calibration passes internally; GPT-5.5 budget one exposes a development/held-out selection conflict, normal budget three has three contract failures and a strict open-loop batch reaches 0.754/0.742 development/held-out nominal quality, leaving graded headroom pending repeated paired controls, server-held rooms, hybrid wave/ray replication, measured-RIR validation and independent acoustics review
     citation_ids:
       - doi:10.1121/1.382599
       - doi:10.1109/TASL.2008.917341
       - standard:ISO-3382-1:2009
   Astrodynamics/LowThrustTransfer:
     status: candidate
-    reason: v2 replaces the unstable single 30-day Euler trajectory and unsupported fuel anchors with six raising/lowering/eccentricity/plane-change MEE+J2 transfers, continuous bounded harmonic guidance, rocket-equation mass depletion, public terminal feasibility and separate phase/held-out/execution robustness; an input-only finite-difference Gauss-Newton policy attains approximately 0.71 development and 0.72 held-out utility with full nominal feasibility, pending GPT-5.5 calibration, server-held missions, independent domain review and higher-fidelity mission-tool replication
+    reason: v2 replaces the unstable single 30-day Euler trajectory and unsupported fuel anchors with six raising/lowering/eccentricity/plane-change MEE+J2 transfers, continuous bounded harmonic guidance, rocket-equation mass depletion, public terminal feasibility and separate phase/held-out/execution robustness; an input-only finite-difference Gauss-Newton policy attains approximately 0.71 development and 0.72 held-out utility with full nominal feasibility, whereas GPT-5.5 budget-one and budget-three proposals retain zero terminal feasibility and near-zero held-out utility, leaving substantive long-horizon boundary-value headroom pending repeated paired controls, server-held missions, independent domain review and higher-fidelity mission-tool replication
     citation_ids:
       - doi:10.2514/2.4231
       - doi:10.1007/BF01227493
@@ -140,7 +140,7 @@ tasks:
       - doi:10.1016/S0005-1098(99)00140-5
   FluidDynamics/LidDrivenCavity:
     status: candidate
-    reason: v2 replaces the single-Re sparse-centerline score with six steady laminar Reynolds/grid cases and two independent refinement calls; candidates return full streamfunction-vorticity fields, trusted code derives velocity and separately checks Poisson/transport/wall residuals, held-out Reynolds transfer, grid convergence and corrected Ghia Re=100 profiles; public utility is hard-gated by all PDE/wall tolerances, a valid weak baseline and a near-reference but transport-infeasible shortcut score zero, and converged continuation witnesses score approximately one, pending GPT-5.5 calibration, server-held cases, independent CFD review and higher-order replication
+    reason: v2 replaces the single-Re sparse-centerline score with six steady laminar Reynolds/grid cases and two independent refinement calls; candidates return full streamfunction-vorticity fields, trusted code derives velocity and separately checks Poisson/transport/wall residuals, held-out Reynolds transfer, grid convergence and corrected Ghia Re=100 profiles; public utility is hard-gated by all PDE/wall tolerances, a valid weak baseline and a near-reference but transport-infeasible shortcut score zero, and converged continuation witnesses score approximately one; GPT-5.5 budget-one and strict open-loop proposals already reach approximately unit similarity while a normal budget-three trajectory reaches 0.898, making the fixed task an algorithm-synthesis on-ramp pending harder procedural cases, repeated controls, independent CFD review and higher-order replication
     citation_ids:
       - doi:10.1016/0021-9991(82)90058-4
       - doi:10.1016/S0045-7930(98)00002-4
@@ -153,7 +153,7 @@ tasks:
     reason: claimed RCWA is a scalar phase FFT with an analytic unit-efficiency phase-ramp shortcut
   Thermodynamics/HeatExchangerDesign:
     status: candidate
-    reason: v2 replaces the monotone single-point objective with six fluid/operating regimes and bounded cost-versus-duty Pareto archives, separates a public constant-property proxy from a sealed temperature-dependent segmented oracle, and evaluates proxy false promotion, held-out transfer plus fouling/manufacturing/blockage robustness; awaiting GPT-5.5 calibration, server-held regimes, independent thermal-engineering review and CFD or experimental replication
+    reason: v2 replaces the monotone single-point objective with six fluid/operating regimes and bounded cost-versus-duty Pareto archives, separates a public constant-property proxy from a sealed temperature-dependent segmented oracle, and evaluates proxy false promotion, held-out transfer plus fouling/manufacturing/blockage robustness; GPT-5.5 budget three reaches only 0.126 development exact quality and 0.130 robustness with improvement concentrated in a subset of regimes, leaving graded multifidelity headroom pending repeated controls, server-held regimes, independent thermal-engineering review and CFD or experimental replication
     citation_ids:
       - doi:10.1002/9780470172605
       - doi:10.1007/978-3-540-77877-6_34
@@ -223,7 +223,7 @@ tasks:
     reason: oracle uses perimeter rather than Stokes flow, making the circle optimal by the isoperimetric inequality and contradicting its 0.85 shape anchor
   HeatTransfer/ConvectionDiffusionOpt:
     status: candidate
-    reason: v2 replaces the fixed hidden-field guessing task and fail-open non-finite path with a charged active laboratory over six development and five held-out homogeneous, null and heterogeneous worlds; candidates infer five anisotropic transport/loss parameters and design four heaters against a visible target, with separate mechanism, diagnostic prediction, nominal design, four physical-shift robustness, transfer, refusal and false-discovery axes; a truth-blind complementary two-experiment policy spends all 12 units and reaches approximately 0.896/0.892 development/held-out joint quality with zero false discovery, while a symmetric one-experiment policy is near-unidentifiable and scores approximately zero; retain pending GPT-5.5 calibration, server-held procedural apparatuses, continuum/high-fidelity replication and independent heat-transfer review
+    reason: v2 replaces the fixed hidden-field guessing task and fail-open non-finite path with a charged active laboratory over six development and five held-out homogeneous, null and heterogeneous worlds; candidates infer five anisotropic transport/loss parameters and design four heaters against a visible target, with separate mechanism, diagnostic prediction, nominal design, four physical-shift robustness, transfer, refusal and false-discovery axes; a truth-blind complementary two-experiment policy spends all 12 units and reaches approximately 0.896/0.892 development/held-out joint quality with zero false discovery, while a symmetric one-experiment policy is near-unidentifiable and scores approximately zero; across budget-one, normal budget-three and strict open-loop GPT-5.5 calibration, four proposals fail the executable contract and all three valid proposals abstain on every supported world, including one full-budget two-experiment policy, leaving meaningful experiment-design and supported-discovery headroom; retain pending repeated paired controls, server-held procedural apparatuses, continuum/high-fidelity replication and independent heat-transfer review
     citation_ids:
       - doi:10.1007/978-1-4020-8839-1
   InventoryManagement/MultiEchelonStock:
@@ -234,7 +234,7 @@ tasks:
     reason: documented uniform baseline has only 10.7 radiation lengths and scores 100 percent resolution rather than claimed 3.8 percent; non-finite layers receive full score
   QuantumChemistry/HartreeFockSCF:
     status: candidate
-    reason: v2 replaces the inconsistent two-coefficient H2 toy with seven closed-shell finite-basis Hamiltonians, a valid zero-score single-start DIIS policy, fixed-seed stable multistart witnesses, fail-closed RHF equations and separate held-out molecule, physical geometry, AO-representation and occupied-virtual stability axes; development H8 and held-out H4 rings retain lower stable solutions beyond the baseline, pending GPT-5.5 calibration, server-held procedural molecules and independent quantum-chemistry review
+    reason: v2 replaces the inconsistent two-coefficient H2 toy with seven closed-shell finite-basis Hamiltonians, a valid zero-score single-start DIIS policy, fixed-seed stable multistart witnesses, fail-closed RHF equations and separate held-out molecule, physical geometry, AO-representation and occupied-virtual stability axes; development H8 and held-out H4 rings retain lower stable solutions beyond the baseline, while GPT-5.5 reaches approximately unit score in one proposal and a 9e-15 online selection change reverses development/held-out robustness tradeoffs, making the fixed task a known-algorithm/materiality on-ramp pending procedural molecules, repeated controls, external-instability and correlated-method checks and independent quantum-chemistry review
     citation_ids:
       - doi:10.1103/RevModPhys.23.69
       - doi:10.1016/0009-2614(80)80396-4
