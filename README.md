@@ -208,7 +208,7 @@ the post-repair 50-package audits bind revision `47c3613`; the subsequent wave-2
 audit quarantines seven additional defective candidates. The two P2 smokes are baseline-only; the repository does not yet contain
 credible multi-seed model-performance evidence. A clean-revision GPT-5.5 budget-one core pilot
 is recorded as task calibration, not a benchmark leaderboard.
-The latest trusted clean-revision certification/security/baseline audits are v30/v14/v20. The
+The latest trusted clean-revision certification/security/baseline audits are v31/v15/v21. The
 current source manifest is 7/26/18 and contains 33 internally admissible tasks, leaving an
 approximate gap of 17 to the roughly 50-task target. The hash-bound cross-task summary v14
 contains 41 normal single-run conditions over 21 tasks; it is calibration

@@ -1511,3 +1511,13 @@ Cross-task summary v14 on clean source `fa8bcfe` validates and freezes **41 norm
 conditions across 21 tasks**, adding ConvectionDiffusionOpt-v2 budgets one and three. Strict
 open-loop diagnostics remain task-specific and heterogeneous science axes are not averaged into
 one score.
+
+## 2026-07-23 — post-findings clean-revision audit refresh
+
+After recording the ConvectionDiffusionOpt-v2 derived analysis and cross-task findings, clean
+source `e10da7d` was independently re-audited. Certification v31 retains **7 certified / 26
+candidate / 18 quarantined** across all 51 packages with no missing or orphaned manifest records;
+security v15 passes **18/18** adversarial regressions; and secure baseline v21 records **51/51
+deterministic, 51/51 valid and 51/51 fail-closed** over two repetitions with zero infrastructure
+failures. These reports refresh provenance only; they do not add model-performance or discovery
+evidence.
