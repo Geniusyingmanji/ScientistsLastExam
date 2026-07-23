@@ -1354,3 +1354,38 @@ v11 and certification v26 bind clean source `f9176df`: **35 normal single-run co
 18 tasks** and a **7/23/21** manifest. These are single-run reduced-order calibrations, not
 population performance, causal feedback learning, global optimality, plant design or
 autonomous scientific discovery.
+
+## 2026-07-23 — stable multi-system Hartree--Fock SCF v2
+
+Replaced the quarantined two-coefficient H2 toy, whose hand-entered integral tensor made the
+documented baseline the complete grid minimum and its `-1.1167 Ha` anchor unreachable, with a
+finite-basis restricted closed-shell SCF policy task. Four development and three interleaved
+held-out systems span H2/HeH+ 6-31G, stretched LiH/H2O, an H6 chain, a symmetry-breaking H8 ring
+and a different-size held-out H4 ring. The artifact is an overlap-orthonormal occupied-orbital
+matrix; the trusted evaluator reconstructs density, Coulomb/exchange, RHF energy, electron
+count, idempotency and the Roothaan--Hall commutator.
+
+The weak policy is a conventional single core-Hamiltonian start with Pulay DIIS. It is valid and
+defines task score zero, but converges to internally unstable stationary points on H8 and H4:
+their fixed-seed stable multistart witnesses lie **0.037516** and **0.061933 Ha** lower, and the
+minimum occupied--virtual curvatures change from **-0.294/-0.511** to **+0.299/+0.095**. Mean
+development stability therefore rises from **0.75** to **1.0** and held-out stability from
+**2/3** to **1.0**. Reference nominal/robustness scores exceed 0.999 on development and 0.998 on
+held-out systems.
+
+Sealed checks use 3% molecular contractions/expansions with freshly generated overlap,
+one-electron, two-electron and nuclear-repulsion integrals, plus AO permutations and dense
+well-conditioned basis transformations. They never alter nominal validity or search selection.
+An independent NumPy/SciPy implementation reproduces all nominal/shifted stored energies within
+`4.3e-14 Ha`; malformed, non-finite, complex, nonorthonormal and nonstationary nominal artifacts
+fail closed. Every one of the 28 problem/validation calls receives a fresh sandbox session. The
+offline PySCF 2.6.2 generator is byte reproducible: two independent generation passes produce
+SHA-256 `230fa7bf2ee359dcdcc9f06e62629f5f827d14f5331e5359dd8903f8e21d7bd5`.
+
+Clean-source task calibration, wave-4 admission v4, certification v27, security v11 and 51x2
+baseline v17 bind revision `40931fb`. The full suite passes **186/186** tests. Re-admission yields
+**7 certified / 24 candidate / 20 quarantined**, or **31** internally admissible tasks, leaving
+an approximate gap of **19** to the roughly 50-task target. The task is finite-basis numerical
+RHF optimization, not correlated electronic structure, global-minimum proof or chemistry
+discovery; GPT-5.5 calibration, server-held procedural molecules and independent domain review
+remain pending.

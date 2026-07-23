@@ -1,0 +1,248 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_ADMISSION_AUDIT",
+  "created_at": "2026-07-23T10:10:13.459539+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "40931fb03f7e809cd48dd6c32b956640fd66f920",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/audit_candidate_wave4.py",
+      "--output",
+      "experiments/candidate_wave4_admission_audit_2026-07-23_v4.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "records": [
+    {
+      "task": "AcousticMetamaterials/BroadbandAbsorber",
+      "admission": "candidate",
+      "superseded_v1_defect": "the removed v1 oracle mixed volume-flow and surface impedance, clipped invalid geometry, evaluated one fixed eight-cell band and normalized against an unrelated 0.92 literature value",
+      "resolved_defect": "v2 uses six varying bands/counts/thicknesses, finite fail-closed geometry, Stinson circular-tube dynamic density, equal-area surface admittance, same-model replayable nominal/robust witnesses and separate proxy, held-out, angle, air-property and manufacturing metrics",
+      "instance_count": 6,
+      "development_instance_count": 4,
+      "heldout_instance_count": 2,
+      "shift_count": 5,
+      "baseline_score": 0.0,
+      "baseline_exact_utility": 0.07932335686021577,
+      "baseline_robustness": 0.0,
+      "nominal_reference_score": 1.0,
+      "nominal_reference_robustness": 0.9897886282060804,
+      "robust_reference_score": 0.993516844936159,
+      "robust_reference_robustness": 1.0,
+      "nonfinite_task_score": 0.0,
+      "nonfinite_task_valid": false,
+      "rebuild_passed": true,
+      "passed": true
+    },
+    {
+      "task": "Biomechanics/ProstheticJointDesign",
+      "admission": "quarantine",
+      "defect": "the hand-written rollback/conformity product is solved exactly by setting all radii to their upper bounds, which is defined to be twice baseline and full score; non-finite geometry also passes task-level validation",
+      "baseline_joint_quality": 0.23481115817620826,
+      "upper_corner_joint_quality": 0.4696223163524165,
+      "upper_to_baseline_ratio": 2.0,
+      "upper_corner_score": 1.0,
+      "nonfinite_task_score": 1.0,
+      "nonfinite_task_valid": true,
+      "passed": true
+    },
+    {
+      "task": "ChemicalProcess/DistillationColumnDesign",
+      "admission": "candidate",
+      "superseded_v1_defect": "the removed v1 tray calculation hard-coded distillate purity to 0.99, never accepted feed composition and lacked a feed-product material balance",
+      "resolved_defect": "v2 uses six varying binary separations, exact tray/feed-stage decisions, total-condenser/feed-stage/partial-reboiler light-component balances, product purity and recovery gates, fixed-seed nominal/robust witnesses, interleaved held-out regimes and five sealed operating shifts",
+      "instance_count": 6,
+      "development_instance_count": 4,
+      "heldout_instance_count": 2,
+      "shift_count": 5,
+      "baseline_score": 0.0,
+      "baseline_feasibility_rate": 1.0,
+      "maximum_baseline_stage_balance_residual": 2.1539618526300597e-10,
+      "maximum_baseline_overall_balance_residual": 3.0399752160015225e-11,
+      "nominal_reference_score": 1.0,
+      "nominal_reference_shift_feasibility_rate": 0.2,
+      "robust_reference_score": 0.9633855229865582,
+      "robust_reference_robustness": 1.0,
+      "robust_reference_heldout_robustness": 1.0,
+      "nonfinite_task_score": 0.0,
+      "nonfinite_task_valid": false,
+      "rebuild_passed": true,
+      "passed": true
+    },
+    {
+      "task": "Combustion/FlameSpeedOptimization",
+      "admission": "quarantine",
+      "defect": "the simplified algebraic formula clips both methane baseline and claimed H2-enriched reference at 5 m/s, leaving a zero normalization denominator; most random feasible mixtures also hit the same cap",
+      "methane_baseline_speed_m_s": 5.0,
+      "claimed_reference_speed_m_s": 5.0,
+      "normalization_denominator": 0.0,
+      "sampled_cap_fraction": 0.8828125,
+      "passed": true
+    },
+    {
+      "task": "FluidMechanics/StokesShapeDrag",
+      "admission": "quarantine",
+      "defect": "the oracle does not solve Stokes flow: drag is only normalized perimeter. At fixed area the isoperimetric inequality makes the circle optimal, contradicting the declared 0.85 non-circular reference; non-finite shapes pass task validation",
+      "oracle_explicitly_uses_perimeter_proxy": true,
+      "circle_area": 3.141592653589793,
+      "circle_drag": 0.9996031586350926,
+      "declared_reference_drag": 0.85,
+      "nonfinite_task_score": 1.0,
+      "nonfinite_task_valid": true,
+      "passed": true
+    },
+    {
+      "task": "HeatTransfer/ConvectionDiffusionOpt",
+      "admission": "quarantine",
+      "defect": "the program receives only grid dimensions and source count, not the fixed hidden target field or an experiment callback, so the inverse-design claim requires guessing one embedded answer; non-finite sources pass task-level validity",
+      "entrypoint_arguments": [
+        "nx",
+        "ny",
+        "n_sources"
+      ],
+      "entrypoint_receives_target_or_experiment": false,
+      "hidden_target_instance_count": 1,
+      "nonfinite_task_score": 1.0,
+      "nonfinite_task_valid": true,
+      "passed": true
+    },
+    {
+      "task": "InventoryManagement/MultiEchelonStock",
+      "admission": "quarantine",
+      "defect": "each stage receives its own previous orders without upstream fulfillment, so retailer service is exactly invariant to factory and warehouse stocks; the model does not implement a coupled multi-echelon supply chain",
+      "upstream_stock_pairs": [
+        [
+          0,
+          0
+        ],
+        [
+          200,
+          0
+        ],
+        [
+          0,
+          200
+        ],
+        [
+          200,
+          200
+        ]
+      ],
+      "service_levels_at_fixed_retailer_stock": [
+        0.995,
+        0.995,
+        0.995,
+        0.995
+      ],
+      "costs_at_fixed_retailer_stock": [
+        506.675,
+        899.675,
+        636.085,
+        583.685
+      ],
+      "service_level_range": 0.0,
+      "passed": true
+    },
+    {
+      "task": "ParticlePhysics/CalorimeterDesign",
+      "admission": "quarantine",
+      "defect": "the documented uniform baseline is claimed to have 3.8% resolution but contains only 10.7 radiation lengths, triggers the oracle's containment failure, and is actually scored as 100%; non-finite layers also receive full task score",
+      "baseline_total_radiation_lengths": 10.714285714285715,
+      "minimum_required_radiation_lengths": 20.0,
+      "documented_baseline_sigma": 0.038,
+      "oracle_baseline_sigma": 1.0,
+      "oracle_baseline_sampling_fraction": 0.0,
+      "baseline_marked_valid": true,
+      "nonfinite_task_score": 1.0,
+      "passed": true
+    },
+    {
+      "task": "QuantumChemistry/HartreeFockSCF",
+      "admission": "candidate",
+      "superseded_v1_defect": "the removed two-coefficient H2 toy used inconsistent hand-entered integrals, placed its baseline at the complete grid minimum, normalized against an unreachable energy and awarded full score to non-finite orbitals",
+      "resolved_defect": "v2 uses seven reproducible finite-basis closed-shell Hamiltonians, a finite occupied-space artifact, independently recomputed RHF equations, a valid single-start DIIS zero point, internally stable multistart witnesses, a different-size held-out symmetry-breaking ring and separate physical-shift, representation-invariance and occupied-virtual stability axes",
+      "instance_count": 7,
+      "development_instance_count": 4,
+      "heldout_instance_count": 3,
+      "baseline_score": 0.0,
+      "baseline_raw_score": 0.7544181838180334,
+      "baseline_robustness": 0.0,
+      "baseline_development_stability_rate": 0.75,
+      "baseline_heldout_stability_rate": 0.6666666666666666,
+      "reference_score": 0.9999726939370603,
+      "reference_robustness": 0.9999040676856361,
+      "reference_heldout_score": 0.9981298379176522,
+      "reference_heldout_robustness": 0.9988989790306061,
+      "development_hard_energy_gap_hartree": 0.037516459193438934,
+      "development_hard_baseline_minimum_curvature": -0.29445927266789224,
+      "development_hard_reference_minimum_curvature": 0.2994726126507055,
+      "heldout_hard_energy_gap_hartree": 0.06193262339106642,
+      "heldout_hard_baseline_minimum_curvature": -0.5108081713192782,
+      "heldout_hard_reference_minimum_curvature": 0.09479658548477407,
+      "nonfinite_task_score": 0.0,
+      "nonfinite_task_valid": false,
+      "rebuild_passed": true,
+      "passed": true
+    },
+    {
+      "task": "Semiconductor/MOSFETDoping",
+      "admission": "quarantine",
+      "defect": "the stated per-m3 doping bounds are six orders below realistic semiconductor scales, producing only 48 microvolts and Ion/Ioff 1.0019 even at the upper bound versus the unrelated 1e8 anchor; this unit/normalization defect is independent of the current fail-closed non-finite path",
+      "upper_bound_doping_per_m3": 1e+20,
+      "upper_bound_max_potential_v": 4.8241432997645254e-05,
+      "upper_bound_ion_ioff_ratio": 1.0018571621240768,
+      "declared_reference_ratio": 100000000.0,
+      "nonfinite_task_score": 0.0,
+      "nonfinite_task_valid": true,
+      "passed": true
+    },
+    {
+      "task": "Thermodynamics/RankineCycleOpt",
+      "admission": "quarantine",
+      "defect": "the polynomial steam surrogate assigns zero efficiency to its public baseline; a 2,772-point feasible grid reaches only 6.55%, far below the unrelated 46% ultra-supercritical anchor",
+      "baseline_efficiency": 0.0,
+      "coarse_grid_size": 2772,
+      "coarse_grid_max_efficiency": 0.06548986430607387,
+      "coarse_grid_best_parameters": [
+        30.0,
+        400.0,
+        15.0,
+        1.0
+      ],
+      "declared_reference_efficiency": 0.46,
+      "passed": true
+    },
+    {
+      "task": "Transportation/TrafficSignalTiming",
+      "admission": "quarantine",
+      "defect": "the model has only one traffic direction and no conflicting phase or shared green-time constraint, so setting every signal to maximum green with travel-time offsets trivially clips to full score; non-finite timing also scores one",
+      "all_max_green_ideal_offset_score": 1.0,
+      "all_max_green_total_delay": 5415.0,
+      "nonfinite_task_score": 1.0,
+      "nonfinite_task_valid": true,
+      "passed": true
+    }
+  ],
+  "summary": {
+    "task_count": 12,
+    "resolved_rebuild_count": 3,
+    "reproduced_defect_count": 9,
+    "recommended_quarantine_count": 9
+  },
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}

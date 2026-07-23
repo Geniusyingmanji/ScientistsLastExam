@@ -4,15 +4,18 @@ Date: 2026-07-23 (UTC). These findings use trusted GPT-5.5 `greedy_rewrite` cali
 OED-v2, Pendulum-v2, GateSynthesis-v2, ActiveLawDiscovery, OPF-v2, Truss-v2, Antenna-v2,
 NMR-v2, HeatExchanger-v2, ReactionMechanismFitting-v2, GravityInversion-v2,
 OceanCurrentInversion-v2, RadiativeTransferFit-v2, LowThrustTransfer-v2,
-LidDrivenCavity-v2, EnergyBalanceModel-v2 and BroadbandAbsorber-v2. The 33 normal-feedback model conditions each contain one seed and proposal budget one
-or three. They calibrate tasks and motivate experiments; they are not a model leaderboard, a causal
-feedback study or population evidence.
+LidDrivenCavity-v2, EnergyBalanceModel-v2, BroadbandAbsorber-v2 and
+DistillationColumnDesign-v2. The 35 normal-feedback model conditions across these 18 tasks each
+contain one seed and proposal budget one or three. They calibrate tasks and motivate experiments;
+they are not a model leaderboard, a causal feedback study or population evidence.
 
-The portable machine record is `experiments/science_calibration_summary_2026-07-23_v10.json`. It
+The portable machine record `experiments/science_calibration_summary_2026-07-23_v11.json`
 retains every top-level scalar metric, candidate lineage hash and raw trajectory SHA-256 for all
-33 normal conditions. Strict selection-blind diagnostics remain in task-specific
-analysis because it is not a normal-feedback calibration. The underlying reports bind the
-task-specific source revision. Pendulum's initial budget-one run on revision `57c0e1b` is
+35 normal conditions. Distillation-v2's additional strict diagnostic is bound separately by
+`experiments/distillation_v2_calibration_analysis_2026-07-23.json`. Strict selection-blind
+diagnostics remain in task-specific analysis because they are not normal-feedback calibrations.
+The underlying reports bind the task-specific source revision. Pendulum's initial budget-one
+run on revision `57c0e1b` is
 excluded because the public task omitted the exact plant equations and was explicitly superseded
 by the corrected-contract run on `2557adb`.
 
@@ -48,6 +51,8 @@ by the corrected-contract run on `2557adb`.
 | BroadbandAbsorber-v2, budget 1 | the only proposal times out; development remains 0.0 | no validated improvement | Candidate compute boundedness is a separate gate from acoustic design quality. |
 | BroadbandAbsorber-v2, normal budget 3 | selected development/held-out nominal `0.9148/0.8588`; exact utility `0.4678/0.4476` | sealed robustness `0.9118/0.8583`; manufacturing geometry feasibility `1.0/1.0` | One valid log-spaced design transfers across bands and physical shifts; two later rewrites time out, so more rewrite budget is not monotone progress. |
 | BroadbandAbsorber-v2, strict open-loop budget 3 | offline-best development/held-out nominal `0.9173/0.9574` | sealed robustness `0.4519/0.4491`; manufacturing geometry feasibility `0.75/0.75` | Nearly equal development score and higher held-out nominal transfer coexist with roughly half the robustness retention because manufacturing errors cross the panel envelope. The one-run contrast is not a feedback estimate. |
+| Distillation-v2, budget 1 | the only proposal times out; development remains at the valid zero-score baseline | no validated improvement | Process-equation sophistication is irrelevant if the candidate cannot finish within the evaluator budget. |
+| Distillation-v2, normal budget 3 | one of three proposals is valid; selected development/held-out nominal `0.613/0.541` | robustness `0.0/0.0`; only `0.20/0.20` of shifted cases remain feasible | Nominal MESH feasibility and cost improvement do not transfer to operating shifts; two later rewrites time out. A post-hoc public-cost probe also finds that the selected design is unchanged when the capital/energy ranking reverses. |
 | ReactionMechanism-v2, budget 1 | valid proposal remains at normalized mechanism 0.0 | held-out normalized mechanism 0.0 | A complex fitter spends the assay budget on an under-informative design and abstains everywhere. |
 | ReactionMechanism-v2, budget 3 | all three proposals remain at 0.0 and are rejected | each performs one assay and abstains everywhere | More rewrite budget does not help when scalar zero feedback cannot localize whether experiment design, inference or refusal caused failure. |
 | GravityInversion-v2, budget 1 | invalid callback unpacking; development remains 0.0 | no validated improvement | A physically sophisticated implementation can still fail the executable laboratory protocol. |
@@ -127,6 +132,14 @@ non-baseline proposal instead spends the full observation budget and refuses eve
 therefore has perfect unsupported-world refusal but zero in-library mechanism recovery and zero
 discovery coverage. Because the aggregate `mechanism_score` includes credit for correct refusal,
 discovery tasks must report in-library recovery and risk–coverage alongside the aggregate score.
+
+HartreeFockSCF-v2 adds a complementary distinction even before model calibration: satisfying
+the RHF equations is not enough if the stationary determinant is internally unstable. Its valid
+single-start DIIS baseline has development/held-out stability rates `0.75/0.667`; on the hard H8
+and held-out H4 rings, stable multistart witnesses lower the energy by `0.0375/0.0619 Ha` and
+change the minimum occupied--virtual curvature from `-0.294/-0.511` to `+0.299/+0.095`.
+Scientific optimization curves must therefore retain validity, objective value, physical or
+variational stability and representation/geometry transfer as separate axes.
 
 RadiativeTransferFit-v2 reproduces this failure without a protocol confound. Its truth-blind
 two-view nonlinear fit claims all seven supported atmospheres, reaches mean supported mechanism
@@ -422,7 +435,8 @@ Every new or rebuilt task must pass the following gate before it counts toward t
 - classical and domain baselines, followed by GPT-5.5 budget-one headroom screening; and
 - retention as an on-ramp, not a headline task, if a standard method reliably saturates it.
 
-The present inventory contains 29 internally admissible certified or candidate packages. The
-remaining gap is approximately 21 tasks. Expansion should use procedural families spanning
+The present inventory contains 31 internally admissible certified or candidate packages: seven
+certified and 24 candidate, with 20 quarantined. The remaining gap is approximately 19 tasks.
+Expansion should use procedural families spanning
 design, inverse problems, control, multifidelity validation, mechanism discovery and exact
 mathematical construction rather than cloning one scalar optimization template across domains.

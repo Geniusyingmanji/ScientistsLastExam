@@ -1,8 +1,8 @@
 # Frontier-Science plan gap audit
 
-Audit date: 2026-07-19 (UTC), with the experiment roadmap extended on 2026-07-21 after a
-full-text EdgeBench comparison and the task inventory updated on 2026-07-23 through
-BroadbandAbsorber-v2.
+Audit date: 2026-07-19 (UTC), with the experiment roadmap extended after a full-text
+EdgeBench comparison and the task inventory updated on 2026-07-23 through
+HartreeFockSCF-v2.
 Evidence base: `literature_matrix.md`,
 `science_experiment_plan.md`, current source/tests, and the dated artifacts in `experiments/`.
 
@@ -25,10 +25,10 @@ physical validation, and auditable claim–evidence provenance.
 
 | Capability | Current status | Evidence | Remaining acceptance criterion |
 |---|---|---|---|
-| Candidate/oracle isolation | Implemented | Clean-revision security v9: 18/18 adversarial tests; Bubblewrap, no network, read-only mounts, resource/seccomp limits, typed RPC, fresh multi-world sessions and candidate-exception sanitization | Reproduce in clean Linux CI; document portability/non-Linux behavior |
-| Fail-closed trusted metrics | Implemented | Clean-revision 51×2 v15: 51 deterministic, 51 valid, 51 fail-closed and zero infrastructure failures after the BroadbandAbsorber-v2 rebuild | Repair or quarantine every future invalid candidate oracle before certification |
-| Task admission policy | Implemented, narrow | Current manifest: 7 certified / 22 candidate / 22 quarantined; the latest rebuilds add active inverse/discovery candidates, LowThrustTransfer-v2, full-field LidDrivenCavity-v2, active Climate-v2 and BroadbandAbsorber-v2 | Independent domain + evaluator reviews are still declarations, not completed external review |
-| Scientific validity of inventory | Audited, sparse | All original 50 packages passed adversarial admission; ActiveLawDiscovery brings inventory to 51 and substantive rebuilds now leave 29 internally admissible packages | Rebuild high-value families and add approximately 21 net admissible tasks to reach about 50; hidden/generated instances and shortcut analysis remain mandatory |
+| Candidate/oracle isolation | Implemented | Clean-revision security v11: 18/18 adversarial tests; Bubblewrap, no network, read-only mounts, resource/seccomp limits, typed RPC, fresh multi-world sessions and candidate-exception sanitization | Reproduce in clean Linux CI; document portability/non-Linux behavior |
+| Fail-closed trusted metrics | Implemented | Clean-revision 51×2 v17: 51 deterministic, 51 valid, 51 fail-closed and zero infrastructure failures after the HartreeFockSCF-v2 rebuild | Repair or quarantine every future invalid candidate oracle before certification |
+| Task admission policy | Implemented, narrow | Current manifest: 7 certified / 24 candidate / 20 quarantined; the latest rebuilds add active inverse/discovery candidates, LowThrustTransfer-v2, full-field LidDrivenCavity-v2, Climate-v2, BroadbandAbsorber-v2, Distillation-v2 and HartreeFockSCF-v2 | Independent domain + evaluator reviews are still declarations, not completed external review |
+| Scientific validity of inventory | Audited, sparse | All original 50 packages passed adversarial admission; ActiveLawDiscovery brings inventory to 51 and substantive rebuilds now leave 31 internally admissible packages | Rebuild high-value families and add approximately 19 net admissible tasks to reach about 50; hidden/generated instances and shortcut analysis remain mandatory |
 | Unified trajectory/accounting | Implemented, protocol-smoked | Clean-revision two-seed baseline smoke; trajectory schema v2, hashes, AUC over `budget_units`, separate `oracle_calls`, wall/token/cost, seed, checkpoint/resume | Validate nonzero-budget schema-v2 artifact replay in CI and version future changes |
 | Feedback controls | Implemented; strict pilot run | None/shuffled prompt-metric modes disclose true-score selection; strict selection-blind freezes parent/metrics; four-task n=3 pilot has no direction-stable lift and is not token-matched | Run token-matched ≥10 paired seeds with score-only, delayed/replayed and strict open-loop controls |
 | Evaluator-only metric sealing | Implemented and integration-verified | Closed search-visible allowlist; search-state redaction/hash-keyed sidecars; candidate-controlled exception text mapped to a finite label-blind taxonomy; 167-test suite; clean pinned OpenEvolve/TreeQuest/Shinka no-leak report `aff026d` | Extend from baseline smoke to nonzero-budget upstream runs before comparative claims |
@@ -36,7 +36,7 @@ physical validation, and auditable claim–evidence provenance.
 | TreeQuest AB-MCTS | Implemented, trusted baseline smoke | Real TreeQuest AB-MCTS-A ask/tell adapter; clean-revision secure baseline passed under Python 3.12 | Run nonzero-budget/checkpoint integration and multi-seed study |
 | ShinkaEvolve | Implemented, trusted baseline smoke | Official runner/database adapter at pinned commit; clean-revision secure baseline passed under Python 3.10 | Run nonzero-budget/resume integration and token accounting audit |
 | Classical/domain baselines | Partial | NMR, HeatExchanger, Reaction, Gravity, Ocean, Radiative, LowThrust and Climate rebuilds have truth-blind domain baselines exposing reconstruction/proxy/prediction, terminal-feasibility, experiment-design or mechanism/refusal gaps | Add random/quasi-random plus BO/CMA-ES/DE and one domain heuristic for each meaningful task family |
-| Multi-seed benchmark evidence | Missing | Keyless GPT-5.5 Responses path is operational; 33 trusted normal single-run calibrations cover 17 tasks and a separate four-task n=3 control pilot is negative/inconclusive | Certified-core and science-subset reports with paired uncertainty and portable raw trajectories |
+| Multi-seed benchmark evidence | Missing | Keyless GPT-5.5 Responses path is operational; 35 trusted normal single-run conditions cover 18 tasks and a separate four-task n=3 control pilot is negative/inconclusive | Certified-core and science-subset reports with paired uncertainty and portable raw trajectories |
 | Multifidelity/Pareto | Candidate-level | HeatExchanger-v2 implements proxy/exact Pareto archives, measured false promotion and physical shifts | Add independent high-fidelity review/replication and at least one certified multifidelity task |
 | Feedback learning claim | Negative pilot only | A strict open-loop control and three-replicate four-task pilot are complete; no direction-stable visible or sealed lift, and normal uses more tokens | Token-matched preregistered ≥10-replicate study with delayed/replayed and score-only controls |
 | Mechanistic discovery | Candidate-level | ActiveLaw, NMR, Reaction, Gravity, Ocean, Radiative and Climate tasks separately score mechanisms, prediction, coverage, hidden shifts, false discovery and refusal | Add paired repeated studies, harder regimes and independent scientific validation |
@@ -59,10 +59,19 @@ The literature matrix separates four capabilities that the old plan collapsed:
 
 EdgeBench adds a strong long-horizon comparator: its 134-task study motivates dual local/judge
 feedback loops, evaluator-only trajectory snapshots, continuous-run versus restart controls,
-context/memory ablations, and explicit curve forecasting. It does not replace shuffled or
-strict selection-blind controls, and its aggregate best-so-far curves do not establish mechanism
-recovery or independent scientific validation. The science-specific experiment matrix and
-minimum publishable sequence are specified in `science_experiment_plan.md`.
+context/memory ablations, submission-efficiency diagnostics and explicit curve forecasting.
+Its official Codex setting also makes the feedback channel part of the treatment (12 hours,
+30-minute evaluator-only auto-eval and a default 120-second agent submission cooldown). It does
+not replace shuffled or strict selection-blind controls, and its aggregate best-so-far curves do
+not establish mechanism recovery or independent scientific validation. Its public 51-task subset
+contains only four tasks labeled Scientific Problems & ML. A deeper implementation audit adds
+four cautions: invisible auto-eval snapshots participate in SForge's final-best selection;
+stop-hooks/auto-resume, asynchronous judges and service incidents affect elapsed-time curves;
+headroom-based task curation conditions the sampling frame; and nonlinear per-task score
+transforms affect aggregate curve shape. The science-specific experiment matrix therefore now
+separates committed, terminal and oracle-best artifacts, active and wall time, run attrition,
+autonomous stopping, normalization sensitivity and knowledge access. Its minimum publishable
+sequence is specified in `science_experiment_plan.md`.
 
 `arXiv:2601.21165` also creates a direct naming collision: *FrontierScience* already denotes an
 expert-authored Olympiad/Research question benchmark. Public release should rename this project
@@ -86,8 +95,8 @@ or make the executable-optimization qualifier unavoidable.
 
 ### 1. Only calibration-level empirical P2 evidence exists
 
-The keyless GPT-5.5 Responses path was restored and 33 trusted normal single-run conditions now
-cover 17 tasks, with task-specific strict open-loop diagnostics on a subset. They expose
+The keyless GPT-5.5 Responses path was restored and 35 trusted normal single-run conditions now
+cover 18 tasks, with task-specific strict open-loop diagnostics on a subset. They expose
 one-step saturation and multiple oracle defects, but there are still no valid five-seed
 certified-core trajectories, no paired feedback-control result, and no nonzero-budget official-
 backend search run. The project must distinguish “calibrated at budget one” from
@@ -132,11 +141,54 @@ Do not aggregate these tracks into one “science” score.
 
 ### 6. P0–P2 completion is infrastructural, not a release claim
 
-The five dated reports were regenerated from clean source revision `f48b101`: all report
+The five latest dated reports were regenerated from clean source revision `40931fb`: all report
 `execution_passed=true`, `trusted_evidence=true`, and `passed=true`. This closes the local
 implementation/evidence work scheduled for P0–P2, but the P2 performance gate remains open:
 the protocol smoke has budget zero, and each official-backend smoke evaluates only one baseline.
 Accordingly, “P0–P2 implemented and recorded” must not be shortened to “benchmark validated.”
+
+### 7. Submission feedback is both a learning channel and an attack surface
+
+EdgeBench's stress tests recovered four concrete failure modes: reconstructing hidden targets
+from 400+ detailed submissions, optimizing stochastic upper tails (best 1501 versus mean 484
+over 311 trials), overfitting a reused evaluator seed, and writing across a trusted path. The
+current project seals metrics and isolates candidate code, but the experiment plan still needs
+an explicit agent-visible submission budget/cooldown, feedback-payload accounting, hidden seed
+sets for stochastic tasks and evaluator-only periodic snapshots. Without these controls, a
+longer curve may measure feedback bandwidth or best-of-N exploitation rather than science.
+
+### 8. Observer-side best is not an autonomous scientific conclusion
+
+SForge's public protocol chooses the final best across both agent submissions and invisible
+auto-eval snapshots. That is defensible for measuring trajectory potential, but the agent could
+not know which hidden snapshot to deploy or defend. Frontier-Science currently retains selected
+candidate hashes, but long-horizon instrumentation must additionally preserve the explicit
+agent/search commitment, the terminal workspace artifact and an evaluator-only snapshot best.
+Discovery claims must use the committed artifact and report the hidden `oracle_selection_gap`.
+
+### 9. Elapsed-time and aggregate curves need construction audits
+
+Long runs conflate active reasoning, simulator work, judge queues, serving incidents, idle time
+and resume scaffolds. Aggregating task-specific normalized scores then adds anchor, weighting and
+headroom-selection assumptions. Before any scaling-law or learning-speed claim, report both
+end-to-end and active-time estimands, full run attrition, initial/first-valid performance, and
+sensitivity to score transforms, task/family weights, missing-run policies and task deletion.
+
+### 10. Forced continuation conflicts with scientific stopping
+
+A stop hook is useful for a fixed-horizon capability curve, but a scientist should stop or
+abstain when evidence is sufficient, the model class is inadequate or another experiment has
+negative value. Add an explicit signed commit/abstain/continue action and compare autonomous
+stopping with forced continuation on supported, null and misspecified worlds. Score experiment
+cost, false discoveries, commitment regret and whether continued work degrades a valid result.
+
+### 11. Scientific knowledge access and human calibration remain unspecified
+
+Disabling the Web prevents some leakage but also removes a normal scientific tool. The primary
+science condition needs a dated frozen literature corpus with citation provenance, plus separate
+no-literature and open-Web treatments and time/family-held-out novelty checks. EdgeBench's human
+number is task-construction effort, not a matched expert baseline; collect a small stratified set
+of expert one-shot and iterative trajectories under the same interface and budgets.
 
 ## Revised TODO plan
 
@@ -144,7 +196,7 @@ Accordingly, “P0–P2 implemented and recorded” must not be shortened to “
 
 - [x] Trusted oracle / isolated candidate architecture and adversarial regression suite.
 - [x] Current 51-package deterministic secure baseline and certification audit; all 51 weak baselines are valid, deterministic and fail closed.
-- [x] Seven-task certified core, 22 candidates and 22 quarantined packages after all
+- [x] Seven-task certified core, 24 candidates and 20 quarantined packages after all
   admission waves and the current substantive rebuilds.
 - [x] Task-card/citation/invariant audit and dated machine-readable evidence.
 - [ ] Add Linux CI reproduction of all dated audits (local clean-revision reproduction is done).
@@ -153,6 +205,9 @@ Accordingly, “P0–P2 implemented and recorded” must not be shortened to “
 - [x] Replace the fail-open `AcousticMetamaterials/BroadbandAbsorber` proxy with a
   distributed acoustic model, variable bands/geometries, held-out transfer and sealed
   angle/air/manufacturing shifts.
+- [x] Replace the inconsistent two-coefficient `QuantumChemistry/HartreeFockSCF` toy with seven
+  finite-basis systems, stable multistart references, a different-size held-out hard ring,
+  physical geometry shifts, AO representation checks and occupied-virtual stability.
 
 ### P2a — reproducible protocol release
 
@@ -177,6 +232,19 @@ Accordingly, “P0–P2 implemented and recorded” must not be shortened to “
 - [ ] Add at least one strong domain heuristic per certified task family.
 - [ ] Audit upstream token/cost accounting and represent unavailable values as `null`/missing.
 - [ ] Add direct one-shot LLM and restart-vs-depth allocation ablations.
+- [ ] Add EdgeBench-style continuous-state versus six equal-budget independent restarts, with
+  identical evaluator feedback schedules and both visible and sealed curves.
+- [ ] Add agent-visible submission budgets/cooldowns, feedback-payload accounting and a
+  scalar/aggregated/diagnostic feedback-bandwidth ablation.
+- [ ] Add fixed-interval evaluator-only snapshots that never affect online selection or stopping.
+- [ ] Make every snapshot an atomic content-addressed bundle and report three endpoint policies:
+  agent/search committed, fixed-horizon terminal and evaluator-only snapshot oracle-best.
+- [ ] Instrument asynchronous feedback lineage with submission hash, feedback-ready/read times
+  and first descendant hash; do not attribute stale feedback to unrelated edits.
+- [ ] Split wall time into active model, local tool/simulator, judge/queue, idle/resume and
+  charged scientific experiment time; publish scheduled/started/completed/recovered/valid counts.
+- [ ] Add an O0 one-shot/no-environment and first-valid baseline so pretrained competence is not
+  counted as within-run learning.
 - [ ] Add structural/behavioral diversity and genealogy-collapse diagnostics.
 - [ ] Add adaptive allocation/stopping baselines (for example, SMC-style convergence control).
 - [ ] Implement delayed-feedback controls and preregister paired Track F contrasts.
@@ -189,6 +257,12 @@ Accordingly, “P0–P2 implemented and recorded” must not be shortened to “
   imbalance rather than promoting it to a Track F claim.
 - [ ] Evaluate persistent scientific memory/world-model quality over long horizons, beyond
   checkpoint/resume correctness.
+- [ ] Report raw regressions, effective-submission rate, improvement magnitude, rollback latency
+  and active-learning span rather than only the monotone best-so-far envelope.
+- [ ] Add a curve-construction audit over raw within-task gain, anchors, ranks, family-balanced
+  weights, leave-one-task/family-out samples, missing-run policies and plausible score transforms.
+- [ ] Add equal-bit meaningful-label, permuted-label, unlabeled-component and scalar feedback
+  conditions to distinguish scientific diagnostics from score-decomposition leakage.
 
 ### P3 — scientific validity and distinctiveness
 
@@ -209,6 +283,8 @@ Accordingly, “P0–P2 implemented and recorded” must not be shortened to “
   transfer, refinement checks and hard physics gates; budget-one/open-loop ceiling results keep
   the current task as an on-ramp pending harder procedural or multifidelity regimes.
 - [ ] Add calibrated confidence, active stopping, and unnecessary-experiment metrics.
+- [ ] Add explicit `commit`/`abstain`/`continue` artifacts and a forced-continuation ablation on
+  supported, null and misspecified worlds; report commitment regret and post-commit degradation.
 - [ ] Add hypothesis–test–evidence/belief-update artifacts, explicit exploration DAGs,
   failed branches, falsification metrics, and replay checks.
 - [ ] Add sequential-vs-parallel, tool-access, novelty, ensemble, and component ablations where
@@ -218,7 +294,10 @@ Accordingly, “P0–P2 implemented and recorded” must not be shortened to “
 
 - [ ] Resolve the FrontierScience naming collision before public release.
 - [ ] Freeze license, data/model redistribution, contamination cutoff and refresh policy.
-- [ ] Add human/domain-expert baselines and independent reproduction.
+- [ ] Freeze a dated literature corpus and cross no-literature/frozen-corpus/open-Web access with
+  public, time-held-out and family-held-out tasks; label recovered known results as reproduction.
+- [ ] Add matched expert one-shot and iterative trajectories on a stratified optimization and
+  mechanism/refusal subset, plus independent reproduction.
 - [ ] Require high-fidelity or physical replication for every “discovery” claim.
 
 ## Go/no-go gates

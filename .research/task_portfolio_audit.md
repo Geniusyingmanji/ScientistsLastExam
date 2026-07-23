@@ -54,13 +54,13 @@ meaning.
   scalar-FFT pseudo-RCWA. HeatExchanger-v2 and LowThrustTransfer-v2 were subsequently rebuilt
   as multifidelity Pareto and long-horizon trajectory-optimization candidates, respectively;
   the other four remain quarantined.
-- **No original unscreened candidates remain after wave 4; 22 candidates remain in total.** They include
+- **No original unscreened candidates remain after wave 4; 24 candidates remain in total.** They include
   SCM, Lyapunov control, neutron criticality, seismic refraction, pendulum control, sparse
   recovery, OED-v2, GateSynthesis-v2, OPF-v2, Truss-v2, Antenna-v2, NMR-v2,
   HeatExchanger-v2, ReactionMechanismFitting-v2, GravityInversion-v2,
   OceanCurrentInversion-v2, RadiativeTransferFit-v2, LowThrustTransfer-v2,
-  LidDrivenCavity-v2, EnergyBalanceModel-v2, BroadbandAbsorber-v2 and the
-  ActiveLawDiscovery laboratory. All are
+  LidDrivenCavity-v2, EnergyBalanceModel-v2, BroadbandAbsorber-v2,
+  DistillationColumnDesign-v2, HartreeFockSCF-v2 and the ActiveLawDiscovery laboratory. All are
   currently on-ramps or repair/calibration candidates rather than externally reviewed
   open-frontier tasks.
 - **ActiveLawDiscovery preserves science-specific headroom.** GPT-5.5 budget one attains 0.796
@@ -69,7 +69,7 @@ meaning.
   independent budget-three run, all three proposals retain the same two false discoveries;
   score feedback does not fix model-inadequacy detection and later proposals reduce mechanism
   recovery. This is a reliability/refusal frontier rather than an ordinary prediction frontier.
-- **22 quarantined packages.** Five generic-objective clones must be replaced with real domain
+- **20 quarantined packages.** Five generic-objective clones must be replaced with real domain
   oracles; metadata completion alone cannot rehabilitate them. The former Climate, cavity and
   broadband-absorber defects have been resolved by substantive v2 rebuilds rather than local
   numerical patches. The remaining wave-2 and inverse-track tasks are still blocked by concrete oracle failures;
@@ -81,10 +81,11 @@ meaning.
   unusable: fail-open NMR/OED/gate/OPF/antenna scores and a non-canonical duplicated-member
   truss topology. All six have since been substantively rebuilt and re-admitted; their candidate
   status records internal scientific validity, not external validation or headline difficulty.
-  Wave 4 quarantines the final 12 unscreened packages after reproducing fail-open paths,
+  Wave 4 initially quarantined the final 12 unscreened packages after reproducing fail-open paths,
   unreachable anchors, missing observations, uncoupled systems, degenerate corners and models
-  that do not implement the claimed science. BroadbandAbsorber-v2 resolves one of those twelve;
-  the other eleven retain their reproduced defects.
+  that do not implement the claimed science. BroadbandAbsorber-v2, Distillation-v2 and
+  HartreeFockSCF-v2 now resolve three of those twelve; the other nine retain their reproduced
+  defects.
 
 ## Priority review findings
 
@@ -176,6 +177,26 @@ The first review tranche contains real scientific topics but several narrow eval
   panel envelope. The contrast is not randomness- or token-matched and supports no feedback
   claim. The candidate still needs server-held geometries, thermoviscous/full-wave replication,
   impedance-tube data and independent acoustics review.
+- Distillation-v2 replaces a fixed-purity tray toy with six varying binary separations, exact
+  tray/feed-stage artifacts, closed equilibrium-stage material balances, product purity and
+  recovery gates, interleaved held-out mixtures and five sealed operating shifts. Independent
+  least-squares MESH solves agree below `2e-8`; nominal and robust references expose a real
+  cost-versus-shift tradeoff. GPT-5.5 normal budget three produces one valid nominally feasible
+  improvement at development/held-out `0.613/0.541`, but only `0.20/0.20` shifted feasibility
+  and zero robustness; six of seven proposals across the three calibration conditions time out.
+  A post-hoc public-cost probe also shows the selected design does not respond when the
+  capital-versus-energy ranking reverses. Retain pending repeated calibration, server-held
+  mixtures, rate-based process-simulator replication and independent chemical-engineering review.
+- HartreeFockSCF-v2 replaces an inconsistent two-coefficient H2 toy with seven reproducible
+  closed-shell finite-basis Hamiltonians, finite occupied-orbital artifacts, independently
+  recomputed RHF equations, physical geometry shifts, AO representation checks and internal
+  occupied--virtual stability. The valid single-start DIIS baseline has development/held-out
+  stability `0.75/0.667`; stable multistart witnesses lower the hard H8/H4 energies by
+  `0.0375/0.0619 Ha` and reverse their minimum stability curvatures from negative to positive.
+  The reference reaches approximately `0.99997` development and `0.99813` held-out nominal
+  score with approximately unit robustness. It remains a task calibration, not model evidence,
+  pending GPT-5.5 runs, server-held procedural molecules/basis families, external-instability and
+  correlated-method checks, and independent quantum-chemistry review.
 
 ## Expansion rule
 
@@ -191,9 +212,10 @@ The target is approximately 50 **admissible** open scientific optimization tasks
 After complete original-inventory triage, adding ActiveLawDiscovery and rebuilding Gate-v2,
 OPF-v2, Truss-v2, Antenna-v2, NMR-v2, HeatExchanger-v2, ReactionMechanismFitting-v2 and
 GravityInversion-v2, OceanCurrentInversion-v2, RadiativeTransferFit-v2, LowThrustTransfer-v2,
-LidDrivenCavity-v2, EnergyBalanceModel-v2 and BroadbandAbsorber-v2,
-the net expansion gap is approximately 21 admissible tasks: 51 folders minus 22 quarantines
-leaves 29 internally admissible certified or candidate packages, while the target is about 50. New
+LidDrivenCavity-v2, EnergyBalanceModel-v2, BroadbandAbsorber-v2, Distillation-v2 and
+HartreeFockSCF-v2, the net expansion gap is approximately 19 admissible tasks: 51 folders minus
+20 quarantines leaves 31 internally admissible certified or candidate packages, while the target
+is about 50. New
 work should emphasize procedural task families and independent regimes,
 not one-off fixed instances or scientific names around hand-written scalar objectives.
 

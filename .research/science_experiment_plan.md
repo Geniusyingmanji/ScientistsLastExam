@@ -1,6 +1,6 @@
 # Science-specific experiment plan
 
-Date: 2026-07-21 (UTC). This plan complements the Frontier-Eng-style optimization study and
+Date: 2026-07-23 (UTC). This plan complements the Frontier-Eng-style optimization study and
 the EdgeBench-style long-horizon trajectory study. It does not assume that optimization,
 feedback learning, mechanism recovery, and scientific validation are interchangeable.
 
@@ -8,7 +8,7 @@ feedback learning, mechanism recovery, and scientific validation are interchange
 
 The benchmark should measure three trajectories from the same run:
 
-1. `development_score(b)`: best feasible score visible to the search system at budget `b`;
+1. `development_score(b)`: raw submitted and best-feasible score visible to the search system at budget `b`;
 2. `sealed_validation_score(b)`: evaluator-only score on hidden shifts, interventions, or a
    higher-fidelity oracle, computed from periodic snapshots and never returned to the agent;
 3. `mechanism_score(b)`: correctness of a separately submitted equation, causal graph,
@@ -21,20 +21,44 @@ a low mechanism score is evidence that task success did not recover the underlyi
 
 Do not combine the three curves into one benchmark score.
 
+Periodic evaluator snapshots should follow EdgeBench's auto-eval semantics: snapshot the current
+artifact on a fixed host schedule, score it through the trusted evaluator, and never reveal that
+snapshot's result to the agent or use it for online selection or stopping. Keep these snapshots
+distinct from agent-requested evaluations in both accounting and plots. Unlike SForge's default
+final-best policy, the primary science result must not be retrospectively selected by hidden
+snapshot scores.
+
+Every curve must therefore retain three artifact-selection policies:
+
+1. `committed`: the artifact and scientific claim explicitly chosen by the agent or online search
+   policy using only allowed information;
+2. `terminal`: the atomic workspace artifact at the preregistered horizon; and
+3. `snapshot_oracle_best`: the post-hoc best among evaluator-only snapshots.
+
+The third policy measures latent trajectory potential. It is not a deployable autonomous result.
+Report its visible, sealed and mechanism advantage over `committed` as an
+`oracle_selection_gap`, rather than silently using it as the headline endpoint.
+
 ## Experiment matrix
 
 | ID | Question | Required comparison | Primary outcomes | Claim enabled |
 |---|---|---|---|---|
-| O1 | Which model–framework combinations optimize best? | Models × greedy/OpenEvolve/AB-MCTS/ShinkaEvolve × random/quasi-random/BO/CMA-ES or DE/domain heuristics | terminal best feasible score, best-so-far AUC, within-task rank, performance profile, oracle calls, tokens/cost/time | Budgeted generative optimization |
-| O2 | How does performance scale with budget? | Budgets 30/100/300; a deeper subset beyond 300 if justified | task-level and aggregate trajectories, improvement frequency/magnitude, plateau length, marginal gain per call | Empirical budget-response, not yet a universal scaling law |
+| O0 | How much performance existed before environmental learning? | Direct one-shot/no-environment artifact vs first valid artifact vs the iterative trajectory, with matched model/tool access | initial score, gain from first valid artifact, time/calls to first valid result and first validated mechanism | Prior task competence separated from within-run improvement |
+| O1 | Which model–framework combinations optimize best? | Models × greedy/OpenEvolve/AB-MCTS/ShinkaEvolve × random/quasi-random/BO/CMA-ES or DE/domain heuristics | committed terminal feasible score, observer-side best/AUC, within-task rank, performance profile, oracle calls, tokens/cost/time | Budgeted generative optimization |
+| O2 | How does performance scale with budget? | Budgets 30/100/300; a deeper subset beyond 300 if justified | raw and best-so-far task curves, improvement frequency/magnitude, regression/rollback rate, plateau and active-learning span, marginal gain per call | Empirical budget-response, not yet a universal scaling law |
 | O3 | Is depth better than width? | Equal total budget split across 1/2/4/8 restarts or branches | best score, AUC, diversity, time to last improvement | Search-allocation result |
 | F1 | Is the system using experimental feedback causally? | Normal feedback vs shuffled feedback vs delayed feedback vs strict selection-blind/no-feedback, using paired seeds and identical budgets | paired AUC lift, terminal lift, proposal divergence after feedback, validated discoveries per call | Feedback learning |
-| F2 | Does persistent experience help beyond repeated sampling? | One continuous run vs equal-budget independent restarts; full memory vs summarized/frozen/no memory | score/AUC and sealed-validation lift | Value of accumulated scientific state |
+| F2 | Does persistent experience help beyond repeated sampling? | One continuous run vs equal-budget independent restarts; full memory vs summarized/frozen/no memory; identical submission/feedback schedules | score/AUC, effective submissions and sealed-validation lift | Value of accumulated scientific state |
+| F3 | Does gain come from more evaluator information rather than better learning? | Matched submission budget/cooldown with scalar-only, aggregated, diagnostic and evaluator-silent periodic snapshots | terminal/AUC lift per revealed bit, oracle call and visible judge event | Value and risk of feedback bandwidth |
+| F4 | Does a diagnostic teach scientific structure or merely reveal the score decomposition? | Equal-length/equal-bit meaningful component labels vs label-permuted components vs unlabeled values vs scalar feedback | sealed/mechanism lift, proposal targeting, causal attribution and hidden-target reconstruction risk | Value of semantic scientific feedback beyond numeric bandwidth |
 | V1 | Does optimization generalize beyond the visible oracle? | Visible development oracle vs evaluator-only hidden instances/shifts | sealed score, development–validation gap, rank correlation, replication rate | Generalizable result |
 | V2 | Does a cheap proxy survive higher-fidelity evaluation? | Proxy-only search; scheduled promotion; adaptive multifidelity; exact-only reference where affordable | proxy/exact rank correlation, false-promotion rate, exact-call efficiency, high-fidelity regret | Multifidelity validation |
 | M1 | Did the system recover a mechanism rather than a predictor? | Observational-only vs intervention access; prediction-only vs explicit mechanism submission | graph F1, equation/term recovery, parameter error, intervention and shift prediction | Mechanism recovery |
 | R1 | Can the system detect when no supported discovery exists? | Well-specified worlds vs null, noisy, confounded, biased-oracle and model-misspecified worlds | false-discovery rate, calibration, correct abstention, detection delay, unnecessary experiments | Calibrated refusal and reliability |
 | R2 | Is the claimed result reproducible and traceable? | Original evaluator vs independent implementation/reviewer; replay from immutable artifact | replay success, independent replication rate, claim–evidence consistency, failed-branch coverage | Research integrity |
+| R3 | Can the system select and stop on a deployable scientific conclusion? | Agent-controlled stop/commit vs forced fixed-horizon continuation; compare committed, terminal and hidden oracle-best artifacts | stopping utility net of experiment cost, commitment regret, oracle-selection gap, post-commit degradation | Autonomous selection/stopping rather than retrospective oracle selection |
+| K1 | Is an apparent discovery retrieval, reproduction or task-local inference? | Frozen dated corpus vs no literature vs open Web, crossed with public, time-held-out and family-held-out tasks | citation provenance, novelty/reproduction label, sealed transfer and contamination sensitivity | Knowledge-use attribution, not discovery by retrieval |
+| B1 | How does the trajectory compare with domain experts under the same interface? | Expert one-shot and iterative runs on a stratified subset with matched feedback, experiment and wall/compute budgets | validated utility, sample efficiency, mechanism/refusal calibration, stopping and failed-hypothesis coverage | Human-calibrated capability and task difficulty |
 
 ## Controls that must be strict
 
@@ -58,6 +82,28 @@ Normal and control runs should use paired task instances, seeds, call budgets, t
 feedback-message lengths. The treatment contrast is the information content of feedback, not
 extra compute.
 
+The evaluator interface must also constrain adaptive information leakage. Predeclare an
+agent-visible submission budget and cooldown, log the feedback payload class/size, and run a
+feedback-resolution audit: repeated scalar or component feedback must not identify hidden
+targets more easily than the scientific inverse problem itself. Evaluator-only snapshots are
+exempt from the agent submission limit because their outputs are never returned, but remain
+charged as trusted evaluation calls.
+
+All evaluator-only snapshots must be atomic, content-addressed bundles rather than live directory
+copies. For asynchronous judging, log `submitted_at`, `feedback_ready_at`, `feedback_read_at`, the
+submitted artifact hash and the first descendant proposal hash. A score can be credited as
+feedback used only by descendants produced after it was actually read.
+
+Forced continuation and autonomous stopping answer different questions. Fixed horizons remain
+useful for comparable capability curves, but discovery/reliability experiments must also permit
+a signed `commit`, `abstain` or `continue` decision. Continuing after a warranted stop consumes
+scientific budget and can introduce false discoveries; that cost is part of the outcome.
+
+Science tasks often need literature access, so blanket network isolation is not a sufficient
+contamination protocol. Build a dated, frozen and logged literature corpus for the primary
+condition, keep open-Web access as a separate treatment, and label recovered public results as
+reproduction unless novelty survives the preregistered cutoff and independent search.
+
 ## Science-specific task extensions
 
 | Current task | Useful sealed or shifted evaluation | Best role |
@@ -68,12 +114,15 @@ extra compute.
 | Multilayer thin film | hidden angles, polarization, dispersion tables, material tolerances and fabrication noise; later high-fidelity/physical replication | strongest current multifidelity/robustness case |
 | Truss sizing | held-out topology/material families; load, stiffness, strength and manufacturing shifts; later nonlinear FEM replication | structural optimization versus physical robustness |
 | Antenna synthesis | held-out scanned/nonuniform arrays; frequency, position, calibration and exhaustive single-element failures; later full-wave/measured replication | nominal pattern synthesis versus hardware robustness |
+| Distillation design | server-held mixtures and cost regimes; volatility/feed/reflux shifts; rate-based simulator replication | nominal economics versus operating robustness and mechanism responsiveness |
+| Hartree--Fock SCF | server-held molecules/geometries/bases; AO transformations; internal/external stability; higher-basis and correlated-method comparison | self-consistency/objective value versus variational stability and model fidelity |
 | Matrix multiplication | held-out dimensions/fields, exact tensor identity and independent proof/checker | machine-verifiable mathematical discovery |
 | Cap Set | held-out dimensions or fields and exact construction verification; contamination audit against known constructions | machine-verifiable mathematical discovery |
 | Circle packing | unseen `N`, interval/independent geometric verification and perturbation robustness | machine-verifiable construction |
 
 The seven certified tasks do not currently contain a clean mechanism-identification benchmark.
-Do not force a mechanism claim onto them. Add at least two procedurally generated task families:
+Do not force a mechanism claim onto them. Two candidate families now provide the intended
+starting point and should be hardened rather than duplicated:
 
 1. a hidden structural-causal-model laboratory with observation and intervention actions,
    separately scored prediction, graph, equations, and intervention transfer; and
@@ -81,7 +130,9 @@ Do not force a mechanism claim onto them. Add at least two procedurally generate
    symbolic equation and parameter recovery, plus extrapolation to sealed regimes.
 
 Include null and misspecified instances in both families so that always producing a mechanism
-is penalized.
+is penalized. `InterventionalSCM` and `ActiveLawDiscovery` implement the basic versions, but both
+still require harder latent/nonlinear/partial-observation or model-mismatch regimes,
+server-held procedural worlds, multi-seed feedback controls and independent review before M1.
 
 ## Recommended figures and tables
 
@@ -89,12 +140,26 @@ is penalized.
 2. Model × framework within-task ranks and Dolan–Moré performance profiles.
 3. Best-so-far score and AUC against proposal budget, actual oracle calls, wall time, and cost.
 4. Equal-budget depth–width heatmap and continuous-run versus restart curves.
-5. Paired normal/shuffled/delayed/selection-blind feedback curves.
+5. Paired normal/shuffled/delayed/selection-blind feedback curves, plus scalar/aggregated versus
+   diagnostic feedback at a matched submission schedule.
 6. The main science figure: development, sealed-validation, and mechanism curves against the
    same budget, with their generalization gaps.
 7. Proxy-versus-high-fidelity scatter/calibration curve and false-promotion rate.
 8. Risk–coverage or calibration plot on null/misspecified cases, including false discoveries.
 9. One successful and one failed hypothesis–experiment–evidence DAG with replayable artifacts.
+10. Raw submission/regression plot with effective-submission rate, improvement magnitude,
+    rollback latency and active-learning span; mark evaluator-only snapshots distinctly.
+11. For stochastic tasks, expected/median performance and uncertainty beside best-of-N, with
+    hidden-seed reuse and seed-overfitting diagnostics.
+12. Initial/first-valid-to-final improvement curves, so high pretrained one-shot competence is
+    not plotted as learning from feedback.
+13. Committed versus terminal versus hidden-snapshot oracle-best small multiples, including the
+    sealed/mechanism `oracle_selection_gap`.
+14. Wall-time decomposition into active model time, local tool/simulator time, judge/queue wait,
+    resume/idle time and charged scientific experiment cost.
+15. Stopping risk–utility curves and post-commit degradation under forced continuation.
+16. Curve/leaderboard sensitivity under alternative task weights, score transforms, anchor
+    perturbations and leave-one-task/family-out aggregation.
 
 Avoid presenting a radar chart or a single “science score”; small multiples preserve the
 important capability dissociations.
@@ -109,11 +174,24 @@ important capability dissociations.
 - Preregister primary outcomes, budgets, exclusions, and stopping rules. Correct for multiple
   model/framework comparisons where inferential claims are made.
 - Report missing token/cost data as missing, never zero. Report proposal budget and real trusted
-  oracle calls separately.
+  oracle calls separately; additionally report agent-visible submissions, evaluator-only
+  snapshots, cooldown, feedback payload class and infrastructure incidents.
 - Keep development feedback sealed from validation results. Periodic hidden auto-evaluation may
   measure the validation curve but must not influence search or stopping.
 - Release all valid and failed trajectories, source/environment hashes, candidate lineage,
   feedback messages, evaluator versions and replay instructions.
+- Report scheduled, started, completed, recovered and valid run counts with reason-coded
+  exclusions. Give both a scientific estimand over preregistered valid executions and an
+  operational estimand that retains model/infrastructure failures; never silently analyze only
+  long-horizon survivors.
+- Report end-to-end wall time for deployment and active model/tool/oracle time for algorithmic
+  efficiency. Queueing, rate limits, serving incidents and resume count are outcomes, not tokens.
+- Predeclare task weights, normalization anchors and endpoint-selection policy. Repeat aggregate
+  claims under rank/family-balanced aggregation, raw within-task gain, plausible anchor
+  perturbations and leave-one-task/family-out analyses.
+- Treat the task sampling frame as part of the estimand. Headroom-screened headline tasks measure
+  improvement conditional on improvability; retain saturated on-ramps, null/misspecified and
+  unsolvable cases for refusal, calibration and unconditional reliability analyses.
 
 ## Scaling-law caution
 
@@ -121,8 +199,12 @@ Seven heterogeneous tasks are enough for initial budget-response curves but not 
 cross-domain scaling-law claim. A scaling-law analysis should require substantially more
 independent tasks or procedurally generated task instances, compare log-sigmoid, power-law,
 log-linear and alternative saturating curves, and test forecasts on held-out time windows and
-held-out tasks. Report bootstrap uncertainty for curve parameters. High in-sample `R²` on an
+held-out tasks. Include Weibull/extreme-value repeated-sampling baselines and continuous-versus-
+restart controls. Report bootstrap uncertainty for curve parameters. High in-sample `R²` on an
 aggregate best-so-far curve is not, by itself, evidence of learning or mechanism discovery.
+The fit must also survive alternative score transforms, family-balanced weights, task/family
+deletion, missing-run policies and active-time rather than wall-time axes. Do not estimate a
+universal curve only from tasks admitted because current agents had visible headroom.
 
 ## Minimum publishable sequence
 
@@ -131,6 +213,8 @@ aggregate best-so-far curve is not, by itself, evidence of learning or mechanism
 - Seven certified tasks × at least five seeds × budgets 30/100/300.
 - Greedy, the three official search backends, and applicable classical/domain baselines.
 - O1–O3 figures, raw trajectories, paired uncertainty and cost/oracle accounting.
+- O0 one-shot/first-valid baselines; committed, terminal and evaluator-only endpoints reported
+  separately; complete run-coverage and time-decomposition tables.
 - Claim only cross-domain executable scientific generative optimization.
 
 ### Stage B — science-distinctive evidence
@@ -138,8 +222,10 @@ aggregate best-so-far curve is not, by itself, evidence of learning or mechanism
 - F1 on at least four tasks with strict selection-blind controls.
 - V1 on Lennard-Jones, spin glass, Poisson, thin film, Truss-v2 and Antenna-v2 using evaluator-only hidden shifts.
 - V2 on at least thin film and one additional proxy/exact task.
-- M1 on the two new mechanism families.
+- M1 on the hardened SCM and ActiveLaw mechanism families.
 - R1 null/misspecification cases and R2 independent replay.
+- R3 autonomous commit/stop decisions; F4 semantic-feedback control; K1 frozen-corpus audit.
+- A small B1 expert-trajectory calibration before making claims relative to scientific work.
 
 Only Stage B can support claims about feedback-driven scientific discovery. A real-world
 discovery claim additionally requires independent high-fidelity or physical confirmation and
@@ -156,6 +242,12 @@ domain-expert review.
   interventions.
 - H5: calibrated stopping/refusal reduces false discoveries on null or misspecified instances
   without an unacceptable loss of validated discoveries.
+- H6: meaningful diagnostic labels improve sealed mechanism recovery beyond equal-bit
+  label-permuted feedback, rather than merely accelerating optimization of known score weights.
+- H7: agent-committed scientific artifacts underperform hidden-snapshot oracle selection, and
+  explicit commit/stop training reduces this deployability gap without increasing false discovery.
+- H8: some apparent gains on public tasks disappear under frozen-corpus time/family-held-out
+  evaluation, distinguishing retrieval/reproduction from task-local discovery.
 
 These are hypotheses to test. The paper should report failed hypotheses and negative results
 rather than selecting only curves that resemble Frontier-Eng or EdgeBench.

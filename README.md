@@ -20,14 +20,14 @@ The repository contains **51 task packages in 47 metadata domains**:
 
 - **7 certified core tasks**: Lennard–Jones clusters, spin glass, Poisson solver,
   matrix-multiplication rank, Cap Set, circle packing, and multilayer thin films.
-- **23 candidate tasks** pending scientific certification, including intervention-based causal
+- **24 candidate tasks** pending scientific certification, including intervention-based causal
   and active dynamical-law laboratories whose prediction and mechanism metrics are reported
   separately, a multi-spectrum NMR peak-mechanism/refusal task, and a multi-fidelity
   heat-exchanger Pareto-design task, a full-field lid-driven-cavity solver, active
   climate-response identification with explicit model-mismatch refusal, and a robust
   broadband acoustic-absorber design task, and a robust mixed-integer equilibrium-stage
-  distillation design task.
-- **21 quarantined tasks** with reproduced scientific-oracle, identifiability, provenance or
+  distillation design task, and a multi-system stable finite-basis Hartree–Fock task.
+- **20 quarantined tasks** with reproduced scientific-oracle, identifiability, provenance or
   shortcut defects; these remain inventory packages but are not admissible benchmark tasks.
 
 The default CLI exposes only the certified core. `--all` explicitly shows the full
@@ -43,10 +43,10 @@ controlled exception text is reduced to a fixed label-blind failure taxonomy bef
 search feedback, preventing observations from being carried between worlds through exceptions.
 The current audit reports:
 
-- 179/179 unit, security, protocol and scientific-invariant tests passed.
+- 186/186 unit, security, protocol and scientific-invariant tests passed.
 - The latest 51×2 secure-baseline audit reports 51/51 deterministic, 51/51 valid, 51/51
   fail-closed and zero infrastructure failures.
-- Current manifest: 7 certified / 23 candidate / 21 quarantined. D-optimal design, quantum
+- Current manifest: 7 certified / 24 candidate / 20 quarantined. D-optimal design, quantum
   gate synthesis, DC optimal power flow, truss sizing, antenna synthesis and NMR peak fitting have been rebuilt with separate sealed
   validation or robustness metrics and re-admitted as candidates. HeatExchanger-v2 additionally
   separates a public constant-property proxy from a sealed segmented temperature-dependent
@@ -163,6 +163,14 @@ The current audit reports:
   selected program returns the same design because it does not read the public tray/vapour cost
   fields. Thus the observed success is nominal feasibility/cost reduction, not demonstrated
   mastery of the capital--energy tradeoff or robust process design.
+  HartreeFockSCF-v2 replaces an inconsistent two-coefficient H2 toy with seven reproducible
+  STO-3G/6-31G finite-basis Hamiltonians, a valid zero-score single-start DIIS policy, stable
+  fixed-seed multistart witnesses, a different-size held-out symmetry-breaking ring, freshly
+  generated 3% geometry shifts, AO-representation invariance and occupied--virtual stability.
+  The conventional policy is self-consistent but internally unstable on development H8 and
+  held-out H4 rings, lying 0.0375 and 0.0619 Ha above stable witnesses. Independent NumPy/SciPy
+  equations reproduce all frozen energies within `4.3e-14` Ha, and the data archive is
+  byte-reproducible. GPT-5.5 calibration and independent quantum-chemistry review remain pending.
   GPT-5.5 reaches nominal OPF score 1.0
   at budget one while sealed N-1 robustness is only 0.031 on development and approximately
   zero on held-out networks. On Truss-v2, a separate budget-three run improves development
@@ -183,8 +191,8 @@ the post-repair 50-package audits bind revision `47c3613`; the subsequent wave-2
 audit quarantines seven additional defective candidates. The two P2 smokes are baseline-only; the repository does not yet contain
 credible multi-seed model-performance evidence. A clean-revision GPT-5.5 budget-one core pilot
 is recorded as task calibration, not a benchmark leaderboard.
-The latest trusted certification/security/baseline audits are v26/v10/v16. The current 7/23/21 manifest contains 30 internally
-admissible tasks, leaving an approximate gap of 20 to the roughly
+The latest trusted certification/security/baseline audits are v27/v11/v17. The current 7/24/20 manifest contains 31 internally
+admissible tasks, leaving an approximate gap of 19 to the roughly
 50-task target. The hash-bound cross-task summary v11 contains 35 normal single-run conditions
 over 18 tasks; it is calibration evidence, not a leaderboard or population result.
 

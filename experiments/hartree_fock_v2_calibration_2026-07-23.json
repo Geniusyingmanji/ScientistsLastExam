@@ -1,0 +1,698 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_TASK_CALIBRATION",
+  "task": "QuantumChemistry/HartreeFockSCF",
+  "dataset_sha256": "230fa7bf2ee359dcdcc9f06e62629f5f827d14f5331e5359dd8903f8e21d7bd5",
+  "dataset_manifest": {
+    "cases": [
+      {
+        "ao_count": 4,
+        "basis": "6-31g",
+        "charge": 0,
+        "dense_transform_condition_number": 1.5641025641025637,
+        "description": "H2 at 0.74 Angstrom",
+        "electron_count": 2,
+        "geometry_angstrom": "H 0 0 -0.37; H 0 0 0.37",
+        "geometry_shift_scale": 1.03,
+        "index": 0,
+        "name": "dev_h2_equilibrium_631g",
+        "occupied_orbital_count": 1,
+        "reference": {
+          "converged_start_count": 97,
+          "energy": -1.1267553171969742,
+          "externally_stable": true,
+          "internally_stable": true,
+          "internally_stable_start_count": 97,
+          "start_count": 97
+        },
+        "shifted_reference": {
+          "converged_start_count": 97,
+          "energy": -1.1261144894468773,
+          "externally_stable": true,
+          "internally_stable": true,
+          "internally_stable_start_count": 97,
+          "start_count": 97
+        },
+        "spin": 0,
+        "split": "development"
+      },
+      {
+        "ao_count": 4,
+        "basis": "6-31g",
+        "charge": 1,
+        "dense_transform_condition_number": 1.5641025641025645,
+        "description": "heteronuclear HeH+ at 0.80 Angstrom",
+        "electron_count": 2,
+        "geometry_angstrom": "He 0 0 0; H 0 0 0.80",
+        "geometry_shift_scale": 0.97,
+        "index": 1,
+        "name": "heldout_heh_plus_631g",
+        "occupied_orbital_count": 1,
+        "reference": {
+          "converged_start_count": 97,
+          "energy": -2.9093206576940975,
+          "externally_stable": true,
+          "internally_stable": true,
+          "internally_stable_start_count": 97,
+          "start_count": 97
+        },
+        "shifted_reference": {
+          "converged_start_count": 97,
+          "energy": -2.909824664489984,
+          "externally_stable": true,
+          "internally_stable": true,
+          "internally_stable_start_count": 97,
+          "start_count": 97
+        },
+        "spin": 0,
+        "split": "heldout"
+      },
+      {
+        "ao_count": 6,
+        "basis": "sto-3g",
+        "charge": 0,
+        "dense_transform_condition_number": 1.5641025641025643,
+        "description": "stretched LiH at 3.0 Angstrom",
+        "electron_count": 4,
+        "geometry_angstrom": "Li 0 0 0; H 0 0 3.0",
+        "geometry_shift_scale": 1.03,
+        "index": 2,
+        "name": "dev_lih_stretched_sto3g",
+        "occupied_orbital_count": 2,
+        "reference": {
+          "converged_start_count": 97,
+          "energy": -7.710829900217231,
+          "externally_stable": false,
+          "internally_stable": true,
+          "internally_stable_start_count": 97,
+          "start_count": 97
+        },
+        "shifted_reference": {
+          "converged_start_count": 97,
+          "energy": -7.700954673206531,
+          "externally_stable": false,
+          "internally_stable": true,
+          "internally_stable_start_count": 97,
+          "start_count": 97
+        },
+        "spin": 0,
+        "split": "development"
+      },
+      {
+        "ao_count": 6,
+        "basis": "sto-3g",
+        "charge": 0,
+        "dense_transform_condition_number": 1.564102564102564,
+        "description": "six-hydrogen chain at 2.2 Angstrom spacing",
+        "electron_count": 6,
+        "geometry_angstrom": "H 0 0 -5.50000000; H 0 0 -3.30000000; H 0 0 -1.10000000; H 0 0 1.10000000; H 0 0 3.30000000; H 0 0 5.50000000",
+        "geometry_shift_scale": 0.97,
+        "index": 3,
+        "name": "dev_h6_chain_multisolution_sto3g",
+        "occupied_orbital_count": 3,
+        "reference": {
+          "converged_start_count": 97,
+          "energy": -2.2524669201633354,
+          "externally_stable": false,
+          "internally_stable": true,
+          "internally_stable_start_count": 96,
+          "start_count": 97
+        },
+        "shifted_reference": {
+          "converged_start_count": 96,
+          "energy": -2.28833218354505,
+          "externally_stable": false,
+          "internally_stable": true,
+          "internally_stable_start_count": 96,
+          "start_count": 97
+        },
+        "spin": 0,
+        "split": "development"
+      },
+      {
+        "ao_count": 7,
+        "basis": "sto-3g",
+        "charge": 0,
+        "dense_transform_condition_number": 1.5641025641025637,
+        "description": "symmetrically stretched water near 104.5 degrees",
+        "electron_count": 10,
+        "geometry_angstrom": "O 0 0 0; H 1.6 0 0; H -0.4 1.549193338 0",
+        "geometry_shift_scale": 1.03,
+        "index": 4,
+        "name": "heldout_water_stretched_sto3g",
+        "occupied_orbital_count": 5,
+        "reference": {
+          "converged_start_count": 97,
+          "energy": -74.63747242091112,
+          "externally_stable": false,
+          "internally_stable": true,
+          "internally_stable_start_count": 95,
+          "start_count": 97
+        },
+        "shifted_reference": {
+          "converged_start_count": 97,
+          "energy": -74.60606582786413,
+          "externally_stable": false,
+          "internally_stable": true,
+          "internally_stable_start_count": 95,
+          "start_count": 97
+        },
+        "spin": 0,
+        "split": "heldout"
+      },
+      {
+        "ao_count": 8,
+        "basis": "sto-3g",
+        "charge": 0,
+        "dense_transform_condition_number": 1.564102564102564,
+        "description": "regular H8 ring of radius 1.5 Angstrom",
+        "electron_count": 8,
+        "geometry_angstrom": "H 1.5000000000 0.0000000000 0; H 1.0606601718 1.0606601718 0; H 0.0000000000 1.5000000000 0; H -1.0606601718 1.0606601718 0; H -1.5000000000 0.0000000000 0; H -1.0606601718 -1.0606601718 0; H -0.0000000000 -1.5000000000 0; H 1.0606601718 -1.0606601718 0",
+        "geometry_shift_scale": 0.97,
+        "index": 5,
+        "name": "dev_h8_ring_symmetry_breaking_sto3g",
+        "occupied_orbital_count": 4,
+        "reference": {
+          "converged_start_count": 97,
+          "energy": -3.955947217232552,
+          "externally_stable": false,
+          "internally_stable": true,
+          "internally_stable_start_count": 85,
+          "start_count": 97
+        },
+        "shifted_reference": {
+          "converged_start_count": 97,
+          "energy": -3.9741587439737067,
+          "externally_stable": false,
+          "internally_stable": true,
+          "internally_stable_start_count": 83,
+          "start_count": 97
+        },
+        "spin": 0,
+        "split": "development"
+      },
+      {
+        "ao_count": 4,
+        "basis": "sto-3g",
+        "charge": 0,
+        "dense_transform_condition_number": 1.5641025641025645,
+        "description": "held-out stretched square H4 ring of radius 2.1 Angstrom",
+        "electron_count": 4,
+        "geometry_angstrom": "H 2.1000000000 0.0000000000 0; H 0.0000000000 2.1000000000 0; H -2.1000000000 0.0000000000 0; H -0.0000000000 -2.1000000000 0",
+        "geometry_shift_scale": 1.03,
+        "index": 6,
+        "name": "heldout_h4_ring_symmetry_breaking_sto3g",
+        "occupied_orbital_count": 2,
+        "reference": {
+          "converged_start_count": 97,
+          "energy": -1.3154934617448695,
+          "externally_stable": false,
+          "internally_stable": true,
+          "internally_stable_start_count": 93,
+          "start_count": 97
+        },
+        "shifted_reference": {
+          "converged_start_count": 91,
+          "energy": -1.3035971937129907,
+          "externally_stable": false,
+          "internally_stable": true,
+          "internally_stable_start_count": 82,
+          "start_count": 97
+        },
+        "spin": 0,
+        "split": "heldout"
+      }
+    ],
+    "citations": [
+      "doi:10.1103/RevModPhys.23.69",
+      "doi:10.1016/0009-2614(80)80396-4",
+      "doi:10.1063/1.434318",
+      "doi:10.1063/1.1672392",
+      "doi:10.1063/1.438955",
+      "doi:10.1002/wcms.1340",
+      "doi:10.1063/5.0006074"
+    ],
+    "dataset": "HartreeFockSCF-v2 finite-basis AO Hamiltonians",
+    "generation_date": "2026-07-23",
+    "generation_seed": 20260723,
+    "integral_convention": "chemist pqrs = (pq|rs), real AO basis",
+    "numpy_version": "1.24.4",
+    "pyscf_version": "2.6.2",
+    "reference_method": "fixed-seed multistart restricted closed-shell Hartree-Fock; lowest internally stable converged witness",
+    "reference_scope": "finite-basis RHF witness, not an exact correlated energy or global proof",
+    "schema_version": 2,
+    "sealed_geometry_shift": "charge-center radial coordinate scale of 1.03/0.97, followed by fresh PySCF overlap, one-electron, two-electron and nuclear-repulsion integrals"
+  },
+  "baseline": {
+    "combined_score": 0.0,
+    "valid": 1.0,
+    "feasibility_rate": 1.0,
+    "raw_score": 0.7544181838180334,
+    "robustness_score": 0.0,
+    "heldout_policy_score": 0.8485280755846073,
+    "heldout_robustness_score": 0.6666666666662132,
+    "heldout_feasibility_rate": 1.0,
+    "development_shifted_score": 0.7553887889416708,
+    "heldout_shifted_score": 0.9999999999625743,
+    "development_representation_invariance_score": 0.7544181888645658,
+    "heldout_representation_invariance_score": 0.666666666665784,
+    "development_stability_rate": 0.75,
+    "heldout_stability_rate": 0.6666666666666666,
+    "development_mean_energy_error_hartree": 0.009379114798361787,
+    "heldout_mean_energy_error_hartree": 0.02064420779705145,
+    "development_maximum_scf_residual": 4.3101312033419234e-11,
+    "heldout_maximum_scf_residual": 3.806783644202776e-12,
+    "candidate_problem_call_count": 28,
+    "candidate_instance_valid_rate": 1.0
+  },
+  "secure_sandbox_baseline": {
+    "combined_score": 0.0,
+    "valid": 1.0,
+    "feasibility_rate": 1.0,
+    "raw_score": 0.7544181867230845,
+    "robustness_score": 0.0,
+    "heldout_policy_score": 0.8485280756008166,
+    "heldout_robustness_score": 0.6666666666664264,
+    "heldout_feasibility_rate": 1.0,
+    "development_shifted_score": 0.7553887889218306,
+    "heldout_shifted_score": 0.6666666666666416,
+    "development_representation_invariance_score": 0.7544181888241921,
+    "heldout_representation_invariance_score": 0.666666666666211,
+    "development_stability_rate": 0.75,
+    "heldout_stability_rate": 0.6666666666666666,
+    "development_mean_energy_error_hartree": 0.009379114798362342,
+    "heldout_mean_energy_error_hartree": 0.020644207797051894,
+    "development_maximum_scf_residual": 1.5465329642246618e-13,
+    "heldout_maximum_scf_residual": 4.76870766003359e-13,
+    "candidate_problem_call_count": 28,
+    "candidate_instance_valid_rate": 1.0
+  },
+  "reference": {
+    "combined_score": 0.9999726939370603,
+    "valid": 1.0,
+    "feasibility_rate": 1.0,
+    "raw_score": 0.9999932941274705,
+    "robustness_score": 0.9999040676856361,
+    "heldout_policy_score": 0.9981298379176522,
+    "heldout_robustness_score": 0.9988989790306061,
+    "heldout_feasibility_rate": 1.0,
+    "development_shifted_score": 0.9999578523138782,
+    "heldout_shifted_score": 0.9993758157069177,
+    "development_representation_invariance_score": 0.9999941831620864,
+    "heldout_representation_invariance_score": 0.9984228257536379,
+    "development_stability_rate": 1.0,
+    "heldout_stability_rate": 1.0,
+    "development_mean_energy_error_hartree": 2.7755575615628914e-15,
+    "heldout_mean_energy_error_hartree": 9.917992353318065e-15,
+    "development_maximum_scf_residual": 1.7005238281403933e-09,
+    "heldout_maximum_scf_residual": 3.000340973293553e-08,
+    "candidate_problem_call_count": 28,
+    "candidate_instance_valid_rate": 1.0
+  },
+  "hard_cases": {
+    "development_baseline": {
+      "score": 0.017672746882950816,
+      "energy_hartree": -3.918430758039113,
+      "reference_energy_hartree": -3.955947217232552,
+      "energy_error_hartree": 0.037516459193438934,
+      "minimum_stability_curvature": -0.29445927266789224,
+      "internally_stable": false,
+      "robustness_score": 0.0
+    },
+    "heldout_baseline": {
+      "score": 0.5455842267539112,
+      "energy_hartree": -1.253560838353803,
+      "reference_energy_hartree": -1.3154934617448695,
+      "energy_error_hartree": 0.06193262339106642,
+      "minimum_stability_curvature": -0.5108081713192782,
+      "internally_stable": false,
+      "robustness_score": 0.0
+    }
+  },
+  "independent_reference_checks": [
+    {
+      "name": "dev_h2_equilibrium_631g",
+      "split": "development",
+      "basis": "6-31g",
+      "ao_count": 4,
+      "electron_count": 2,
+      "conditions": [
+        {
+          "condition": "nominal",
+          "stored_energy_hartree": -1.1267553171969742,
+          "energy_error_hartree": 4.440892098500626e-16,
+          "energy_hartree": -1.1267553171969737,
+          "overlap_orthonormality_error": 2.220446049250313e-16,
+          "electron_count_error": 8.881784197001252e-16,
+          "density_idempotency_error": 3.756755865433588e-15,
+          "scf_residual": 5.091426132216646e-10
+        },
+        {
+          "condition": "geometry_shift",
+          "stored_energy_hartree": -1.1261144894468773,
+          "energy_error_hartree": 0.0,
+          "energy_hartree": -1.1261144894468773,
+          "overlap_orthonormality_error": 1.1102230246251565e-15,
+          "electron_count_error": 2.220446049250313e-15,
+          "density_idempotency_error": 1.4130832128153975e-15,
+          "scf_residual": 5.334864620701103e-10
+        }
+      ]
+    },
+    {
+      "name": "heldout_heh_plus_631g",
+      "split": "heldout",
+      "basis": "6-31g",
+      "ao_count": 4,
+      "electron_count": 2,
+      "conditions": [
+        {
+          "condition": "nominal",
+          "stored_energy_hartree": -2.9093206576940975,
+          "energy_error_hartree": 8.881784197001252e-16,
+          "energy_hartree": -2.9093206576940966,
+          "overlap_orthonormality_error": 8.881784197001252e-16,
+          "electron_count_error": 1.3322676295501878e-15,
+          "density_idempotency_error": 1.2928736606696957e-14,
+          "scf_residual": 2.812389012388108e-11
+        },
+        {
+          "condition": "geometry_shift",
+          "stored_energy_hartree": -2.909824664489984,
+          "energy_error_hartree": 0.0,
+          "energy_hartree": -2.909824664489984,
+          "overlap_orthonormality_error": 1.1102230246251565e-15,
+          "electron_count_error": 1.7763568394002505e-15,
+          "density_idempotency_error": 3.805652793121308e-16,
+          "scf_residual": 6.838033138776519e-13
+        }
+      ]
+    },
+    {
+      "name": "dev_lih_stretched_sto3g",
+      "split": "development",
+      "basis": "sto-3g",
+      "ao_count": 6,
+      "electron_count": 4,
+      "conditions": [
+        {
+          "condition": "nominal",
+          "stored_energy_hartree": -7.710829900217231,
+          "energy_error_hartree": 3.552713678800501e-15,
+          "energy_hartree": -7.710829900217227,
+          "overlap_orthonormality_error": 8.883597560274516e-16,
+          "electron_count_error": 8.881784197001252e-16,
+          "density_idempotency_error": 9.013385471513902e-15,
+          "scf_residual": 8.880280035297866e-10
+        },
+        {
+          "condition": "geometry_shift",
+          "stored_energy_hartree": -7.700954673206531,
+          "energy_error_hartree": 1.7763568394002505e-15,
+          "energy_hartree": -7.700954673206529,
+          "overlap_orthonormality_error": 1.2952546581593235e-15,
+          "electron_count_error": 3.552713678800501e-15,
+          "density_idempotency_error": 7.481504981468459e-15,
+          "scf_residual": 5.446302819525875e-10
+        }
+      ]
+    },
+    {
+      "name": "dev_h6_chain_multisolution_sto3g",
+      "split": "development",
+      "basis": "sto-3g",
+      "ao_count": 6,
+      "electron_count": 6,
+      "conditions": [
+        {
+          "condition": "nominal",
+          "stored_energy_hartree": -2.2524669201633354,
+          "energy_error_hartree": 1.7763568394002505e-15,
+          "energy_hartree": -2.2524669201633336,
+          "overlap_orthonormality_error": 1.6345702985380627e-15,
+          "electron_count_error": 4.440892098500626e-15,
+          "density_idempotency_error": 5.57472576455484e-15,
+          "scf_residual": 5.934524749712497e-10
+        },
+        {
+          "condition": "geometry_shift",
+          "stored_energy_hartree": -2.28833218354505,
+          "energy_error_hartree": 1.7763568394002505e-15,
+          "energy_hartree": -2.288332183545048,
+          "overlap_orthonormality_error": 1.3664844523889385e-15,
+          "electron_count_error": 3.552713678800501e-15,
+          "density_idempotency_error": 9.328502748293465e-15,
+          "scf_residual": 5.1060377440991805e-09
+        }
+      ]
+    },
+    {
+      "name": "heldout_water_stretched_sto3g",
+      "split": "heldout",
+      "basis": "sto-3g",
+      "ao_count": 7,
+      "electron_count": 10,
+      "conditions": [
+        {
+          "condition": "nominal",
+          "stored_energy_hartree": -74.63747242091112,
+          "energy_error_hartree": 2.842170943040401e-14,
+          "energy_hartree": -74.6374724209111,
+          "overlap_orthonormality_error": 7.78407849678219e-16,
+          "electron_count_error": 1.7763568394002505e-15,
+          "density_idempotency_error": 1.2524983707128539e-14,
+          "scf_residual": 8.443270745694491e-12
+        },
+        {
+          "condition": "geometry_shift",
+          "stored_energy_hartree": -74.60606582786413,
+          "energy_error_hartree": 4.263256414560601e-14,
+          "energy_hartree": -74.60606582786409,
+          "overlap_orthonormality_error": 1.4100098703619762e-15,
+          "electron_count_error": 1.7763568394002505e-15,
+          "density_idempotency_error": 1.2088754450590293e-14,
+          "scf_residual": 2.4408986812809828e-11
+        }
+      ]
+    },
+    {
+      "name": "dev_h8_ring_symmetry_breaking_sto3g",
+      "split": "development",
+      "basis": "sto-3g",
+      "ao_count": 8,
+      "electron_count": 8,
+      "conditions": [
+        {
+          "condition": "nominal",
+          "stored_energy_hartree": -3.955947217232552,
+          "energy_error_hartree": 5.329070518200751e-15,
+          "energy_hartree": -3.9559472172325467,
+          "overlap_orthonormality_error": 1.0773452929227568e-15,
+          "electron_count_error": 1.7763568394002505e-15,
+          "density_idempotency_error": 6.6450641292263625e-15,
+          "scf_residual": 1.7005238281403933e-09
+        },
+        {
+          "condition": "geometry_shift",
+          "stored_energy_hartree": -3.9741587439737067,
+          "energy_error_hartree": 5.329070518200751e-15,
+          "energy_hartree": -3.9741587439737014,
+          "overlap_orthonormality_error": 9.483689401992496e-16,
+          "electron_count_error": 0.0,
+          "density_idempotency_error": 1.0267909432304008e-14,
+          "scf_residual": 5.690277628031876e-10
+        }
+      ]
+    },
+    {
+      "name": "heldout_h4_ring_symmetry_breaking_sto3g",
+      "split": "heldout",
+      "basis": "sto-3g",
+      "ao_count": 4,
+      "electron_count": 4,
+      "conditions": [
+        {
+          "condition": "nominal",
+          "stored_energy_hartree": -1.3154934617448695,
+          "energy_error_hartree": 4.440892098500626e-16,
+          "energy_hartree": -1.315493461744869,
+          "overlap_orthonormality_error": 1.8490860758711763e-15,
+          "electron_count_error": 4.440892098500626e-15,
+          "density_idempotency_error": 3.697863918397721e-15,
+          "scf_residual": 3.000340973293553e-08
+        },
+        {
+          "condition": "geometry_shift",
+          "stored_energy_hartree": -1.3035971937129907,
+          "energy_error_hartree": 8.881784197001252e-16,
+          "energy_hartree": -1.3035971937129898,
+          "overlap_orthonormality_error": 9.298002186154008e-16,
+          "electron_count_error": 1.7763568394002505e-15,
+          "density_idempotency_error": 2.8745439002873758e-15,
+          "scf_residual": 1.7317295698565922e-08
+        }
+      ]
+    }
+  ],
+  "independent_maximum_energy_error_hartree": 4.263256414560601e-14,
+  "independent_maximum_overlap_orthonormality_error": 1.8490860758711763e-15,
+  "independent_maximum_electron_count_error": 4.440892098500626e-15,
+  "independent_maximum_density_idempotency_error": 1.2928736606696957e-14,
+  "independent_maximum_scf_residual": 3.000340973293553e-08,
+  "invalid_artifact_checks": {
+    "wrong_shape": {
+      "combined_score": 0.0,
+      "valid": 0.0,
+      "feasibility_rate": 0.0,
+      "raw_score": 0.0,
+      "robustness_score": 0.0,
+      "heldout_policy_score": 0.0,
+      "heldout_robustness_score": 0.0,
+      "heldout_feasibility_rate": 0.0,
+      "development_shifted_score": 0.0,
+      "heldout_shifted_score": 0.0,
+      "development_representation_invariance_score": 0.0,
+      "heldout_representation_invariance_score": 0.0,
+      "development_stability_rate": 0.0,
+      "heldout_stability_rate": 0.0,
+      "development_mean_energy_error_hartree": 0.0,
+      "heldout_mean_energy_error_hartree": 0.0,
+      "development_maximum_scf_residual": 1.0,
+      "heldout_maximum_scf_residual": 1.0,
+      "candidate_problem_call_count": 7,
+      "candidate_instance_valid_rate": 0.0,
+      "error_message": "candidate invalid on a development RHF instance"
+    },
+    "nonfinite": {
+      "combined_score": 0.0,
+      "valid": 0.0,
+      "feasibility_rate": 0.0,
+      "raw_score": 0.0,
+      "robustness_score": 0.0,
+      "heldout_policy_score": 0.0,
+      "heldout_robustness_score": 0.0,
+      "heldout_feasibility_rate": 0.0,
+      "development_shifted_score": 0.0,
+      "heldout_shifted_score": 0.0,
+      "development_representation_invariance_score": 0.0,
+      "heldout_representation_invariance_score": 0.0,
+      "development_stability_rate": 0.0,
+      "heldout_stability_rate": 0.0,
+      "development_mean_energy_error_hartree": 0.0,
+      "heldout_mean_energy_error_hartree": 0.0,
+      "development_maximum_scf_residual": 1.0,
+      "heldout_maximum_scf_residual": 1.0,
+      "candidate_problem_call_count": 7,
+      "candidate_instance_valid_rate": 0.0,
+      "error_message": "candidate invalid on a development RHF instance"
+    },
+    "complex": {
+      "combined_score": 0.0,
+      "valid": 0.0,
+      "feasibility_rate": 0.0,
+      "raw_score": 0.0,
+      "robustness_score": 0.0,
+      "heldout_policy_score": 0.0,
+      "heldout_robustness_score": 0.0,
+      "heldout_feasibility_rate": 0.0,
+      "development_shifted_score": 0.0,
+      "heldout_shifted_score": 0.0,
+      "development_representation_invariance_score": 0.0,
+      "heldout_representation_invariance_score": 0.0,
+      "development_stability_rate": 0.0,
+      "heldout_stability_rate": 0.0,
+      "development_mean_energy_error_hartree": 0.0,
+      "heldout_mean_energy_error_hartree": 0.0,
+      "development_maximum_scf_residual": 1.0,
+      "heldout_maximum_scf_residual": 1.0,
+      "candidate_problem_call_count": 7,
+      "candidate_instance_valid_rate": 0.0,
+      "error_message": "candidate invalid on a development RHF instance"
+    },
+    "nonorthonormal": {
+      "combined_score": 0.0,
+      "valid": 0.0,
+      "feasibility_rate": 0.0,
+      "raw_score": 0.0,
+      "robustness_score": 0.0,
+      "heldout_policy_score": 0.0,
+      "heldout_robustness_score": 0.0,
+      "heldout_feasibility_rate": 0.0,
+      "development_shifted_score": 0.0,
+      "heldout_shifted_score": 0.0,
+      "development_representation_invariance_score": 0.0,
+      "heldout_representation_invariance_score": 0.0,
+      "development_stability_rate": 0.0,
+      "heldout_stability_rate": 0.0,
+      "development_mean_energy_error_hartree": 0.0,
+      "heldout_mean_energy_error_hartree": 0.0,
+      "development_maximum_scf_residual": 1.0,
+      "heldout_maximum_scf_residual": 1.0,
+      "candidate_problem_call_count": 7,
+      "candidate_instance_valid_rate": 0.0,
+      "error_message": "candidate invalid on a development RHF instance"
+    },
+    "nonstationary": {
+      "combined_score": 0.0,
+      "valid": 0.0,
+      "feasibility_rate": 0.0,
+      "raw_score": 0.0,
+      "robustness_score": 0.0,
+      "heldout_policy_score": 0.0,
+      "heldout_robustness_score": 0.0,
+      "heldout_feasibility_rate": 0.0,
+      "development_shifted_score": 0.0,
+      "heldout_shifted_score": 0.0,
+      "development_representation_invariance_score": 0.0,
+      "heldout_representation_invariance_score": 0.0,
+      "development_stability_rate": 0.0,
+      "heldout_stability_rate": 0.0,
+      "development_mean_energy_error_hartree": 0.0,
+      "heldout_mean_energy_error_hartree": 0.0,
+      "development_maximum_scf_residual": 1.0,
+      "heldout_maximum_scf_residual": 1.0,
+      "candidate_problem_call_count": 7,
+      "candidate_instance_valid_rate": 0.0,
+      "error_message": "candidate invalid on a development RHF instance"
+    }
+  },
+  "deterministic": true,
+  "archive_hash_passed": true,
+  "independent_equations_passed": true,
+  "difficulty_passed": true,
+  "invalid_artifacts_passed": true,
+  "metric_sealing_passed": true,
+  "limitations": [
+    "The frozen references are internally stable finite-basis RHF witnesses, not proofs of the global determinant minimum or correlated exact energies.",
+    "The seven public small systems permit matrix-specific branching; future release work requires server-held procedural molecules, geometries and basis families.",
+    "Only internal real-RHF stability is scored; external unrestricted instabilities, basis-set convergence and correlated-method accuracy remain outside scope."
+  ],
+  "created_at": "2026-07-23T10:10:25.508466+00:00",
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29",
+    "numpy": "1.24.4"
+  },
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "40931fb03f7e809cd48dd6c32b956640fd66f920",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/calibrate_hartree_fock_v2.py",
+      "--output",
+      "experiments/hartree_fock_v2_calibration_2026-07-23.json"
+    ]
+  },
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}
