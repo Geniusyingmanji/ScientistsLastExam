@@ -4,8 +4,8 @@ difficulty: hard
 oracle_type: physical_sim
 score_mode: clipped
 gpu_required: false
-eval_time_seconds: 10
-science_metric: mean_rir_reconstruction_snr
-reference_baseline: "single_reflection"
-reference_sota: "high_order_image_source"
-citation: "Allen & Berkley 1979; Lehmann & Johansson 2008"
+eval_time_seconds: 30
+science_metric: room_clarity_reverberation_and_uniformity_utility
+reference_baseline: valid center-source partial-treatment policy evaluated by the same order-10 oracle
+reference_sota: independently optimized nominal and worst-shift witnesses in a bounded source-and-surface-allocation family
+citation: Allen and Berkley 1979 doi:10.1121/1.382599; Lehmann and Johansson 2008 doi:10.1109/TASL.2008.917341; ISO 3382-1:2009

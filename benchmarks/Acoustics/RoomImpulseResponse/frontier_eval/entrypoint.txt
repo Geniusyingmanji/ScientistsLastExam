@@ -1,1 +1,1 @@
-compute_rir
+design_room

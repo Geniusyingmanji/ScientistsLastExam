@@ -1,70 +1,802 @@
-"""Oracle for RoomImpulseResponse — image-source method reference."""
+"""RoomImpulseResponse-v2 robust room-acoustic treatment oracle.
+
+Candidates place one loudspeaker and allocate a fixed area of porous treatment over
+the six surfaces of a shoebox room.  The nominal oracle combines an energy image-
+source model with Eyring reverberation time.  Development score is separated from
+held-out rooms, a first-order proxy, and deterministic geometry/material/horizon
+shifts.
+
+This is a deterministic reduced-order architectural-acoustics benchmark.  It does
+not replace wave-based simulation, diffuse-scattering models, or measurements.
+"""
+
+from __future__ import annotations
+
+import copy
+import itertools
+import math
+
 import numpy as np
 
-C = 343.0
 
-def image_source_rir(room, src, mic, fs, order, absorb):
-    Lx, Ly, Lz = room
-    max_t = (order + 1) * max(room) * 2 / C
-    n = int(fs * max_t) + 1
-    h = np.zeros(n)
-    for nx in range(-order, order + 1):
-        for ny in range(-order, order + 1):
-            for nz in range(-order, order + 1):
-                for sx_sign in [1, -1]:
-                    for sy_sign in [1, -1]:
-                        for sz_sign in [1, -1]:
-                            img = [nx * 2 * Lx + sx_sign * src[0],
-                                   ny * 2 * Ly + sy_sign * src[1],
-                                   nz * 2 * Lz + sz_sign * src[2]]
-                            d = np.sqrt(sum((img[i] - mic[i])**2 for i in range(3)))
-                            if d < 0.001: continue
-                            refl = abs(nx) + abs(ny) + abs(nz)
-                            if sx_sign < 0: refl += 1
-                            if sy_sign < 0: refl += 1
-                            if sz_sign < 0: refl += 1
-                            # Simplified: count wall hits
-                            n_walls = abs(nx) + abs(ny) + abs(nz)
-                            amp = (1 - absorb) ** n_walls / d
-                            idx = int(d / C * fs)
-                            if 0 <= idx < n:
-                                h[idx] += amp
-    return h
+ROOM_ACOUSTICS_V2 = True
+SURFACE_NAMES = ("x0", "x1", "y0", "y1", "floor", "ceiling")
+DESIGN_FIELDS = (
+    "source_x_m",
+    "source_y_m",
+    "source_z_m",
+    "treatment_area_x0_m2",
+    "treatment_area_x1_m2",
+    "treatment_area_y0_m2",
+    "treatment_area_y1_m2",
+    "treatment_area_floor_m2",
+    "treatment_area_ceiling_m2",
+)
+BAND_CENTERS_HZ = np.asarray((125.0, 250.0, 500.0, 1000.0, 2000.0, 4000.0))
+AIR_ENERGY_ATTENUATION_NP_M = np.asarray(
+    (0.00010, 0.00018, 0.00034, 0.00070, 0.00165, 0.00400)
+)
+NOMINAL_IMAGE_ORDER = 10
+PROXY_IMAGE_ORDER = 1
+EARLY_WINDOW_S = 0.050
+MINIMUM_SOURCE_CLEARANCE_M = 0.20
 
-SCENARIOS = [
-    {"room": (5.0, 4.0, 3.0), "src": (1.0, 1.0, 1.5), "mic": (3.5, 2.5, 1.2),
-     "fs": 8000, "max_order": 6, "absorb": 0.3},
-    {"room": (8.0, 6.0, 3.5), "src": (2.0, 1.5, 1.7), "mic": (6.0, 4.0, 1.5),
-     "fs": 8000, "max_order": 8, "absorb": 0.4},
-]
 
-def evaluate(compute_rir):
-    results = []
-    for sc in SCENARIOS:
-        h_ref = image_source_rir(sc["room"], sc["src"], sc["mic"], sc["fs"], 15, sc["absorb"])
-        h_base = image_source_rir(sc["room"], sc["src"], sc["mic"], sc["fs"], 0, sc["absorb"])
-        try:
-            h = np.asarray(compute_rir(sc["room"], sc["src"], sc["mic"],
-                                        sc["fs"], sc["max_order"], sc["absorb"]), dtype=float)
-        except Exception as e:
-            results.append({"valid": False, "reason": str(e), "score": 0.0}); continue
-        # Align lengths
-        L = min(len(h_ref), len(h))
-        if L < 10:
-            results.append({"valid": False, "reason": "too short", "score": 0.0}); continue
-        h_ref_t = h_ref[:L]; h_t = h[:L]; h_base_t = h_base[:L]
-        err = np.linalg.norm(h_ref_t - h_t)
-        err_base = np.linalg.norm(h_ref_t - h_base_t)
-        ref_norm = np.linalg.norm(h_ref_t)
-        if ref_norm < 1e-10:
-            results.append({"valid": True, "score": 0.0}); continue
-        snr = 20 * np.log10(ref_norm / max(err, 1e-15))
-        snr_base = 20 * np.log10(ref_norm / max(err_base, 1e-15))
-        snr_ceil = 60.0  # practical ceiling
-        score = max(0.0, min(1.0, (snr - snr_base) / (snr_ceil - snr_base))) if snr_ceil > snr_base else 0.0
-        results.append({"valid": True, "snr": round(snr, 2), "score": float(score)})
-    scores = [r["score"] for r in results]
-    return {"combined_score": float(np.mean(scores)),
-            "valid": 1.0 if all(r.get("valid") for r in results) else 0.0,
-            "feasibility_rate": sum(1 for r in results if r.get("valid")) / len(results),
-            "per_scenario": results}
+def _receivers(xs, ys, height):
+    return tuple((float(x), float(y), float(height)) for x in xs for y in ys)
+
+
+_PLASTER = (0.020, 0.030, 0.040, 0.050, 0.070, 0.090)
+_GLAZING = (0.350, 0.250, 0.180, 0.120, 0.070, 0.040)
+_CARPET = (0.080, 0.240, 0.570, 0.690, 0.710, 0.730)
+_WOOD = (0.150, 0.110, 0.100, 0.070, 0.060, 0.070)
+_ACOUSTIC_CEILING = (0.450, 0.700, 0.850, 0.900, 0.900, 0.850)
+_POROUS_TREATMENT = (0.180, 0.550, 0.850, 0.950, 0.970, 0.970)
+
+
+# Reference rows are frozen, replayable witnesses.  They are deliberately not
+# described as global optima.  The initial values are generated by the same bounded
+# policy family used by the calibration script and are replaced only through a dated
+# calibration report.
+INSTANCE_SPECS = (
+    {
+        "name": "dev_seminar_room",
+        "split": "development",
+        "room_dimensions_m": (7.2, 5.4, 3.1),
+        "receiver_positions_m": _receivers((2.8, 4.2, 5.6), (1.3, 2.7, 4.1), 1.20),
+        "source_position_bounds_m": ((0.65, 2.10), (0.65, 4.75), (1.00, 2.35)),
+        "base_absorption_coefficients": (
+            _PLASTER, _PLASTER, _GLAZING, _PLASTER, _CARPET, _PLASTER,
+        ),
+        "maximum_treatment_area_m2": 27.0,
+        "target_reverberation_time_s": (0.78, 0.70, 0.62, 0.58, 0.55, 0.53),
+        "nominal_reference_family": (
+            0.010185327062671412, 0.985655795941843, 0.9806420444184962,
+            0.6460814625162903, 0.7086332456004392, 0.9996201850766024,
+            0.00039980409826917776, 0.4607482783571491,
+            0.9996001958966312, 0.00039980409989182086,
+        ),
+        "robust_reference_family": (
+            0.008185209759016442, 0.9719839494894887, 0.9758213899926714,
+            0.9210240311696176, 0.8008586126484865, 0.9768509229171045,
+            0.0003998040636610355, 0.7549875807430213,
+            0.9996001961652123, 0.06610342513644069,
+        ),
+    },
+    {
+        "name": "dev_classroom",
+        "split": "development",
+        "room_dimensions_m": (9.0, 7.0, 3.2),
+        "receiver_positions_m": _receivers((3.0, 4.8, 6.6, 8.0), (1.5, 3.5, 5.5), 1.18),
+        "source_position_bounds_m": ((0.70, 2.35), (0.85, 6.15), (1.05, 2.45)),
+        "base_absorption_coefficients": (
+            _PLASTER, _PLASTER, _GLAZING, _PLASTER, _CARPET, _PLASTER,
+        ),
+        "maximum_treatment_area_m2": 39.0,
+        "target_reverberation_time_s": (0.82, 0.74, 0.66, 0.61, 0.58, 0.56),
+        "nominal_reference_family": (
+            0.010544823677127396, 0.6194530769325841, 0.9858007870373506,
+            0.8816535930403654, 0.9417983251740554, 0.8548858862312402,
+            0.00039980409614651346, 0.7865966720839811,
+            0.9996001959127264, 0.00039980409336082777,
+        ),
+        "robust_reference_family": (
+            0.016322062071081875, 0.9774425983565976, 0.8610489876652755,
+            0.9993405598870205, 0.9210975144371898, 0.9992267563039864,
+            1.1401007877623578e-07, 0.9240235884893178,
+            0.9996001958858799, 0.00039980410418538376,
+        ),
+    },
+    {
+        "name": "dev_project_studio",
+        "split": "development",
+        "room_dimensions_m": (10.2, 8.0, 3.8),
+        "receiver_positions_m": _receivers((3.3, 5.5, 7.7, 9.0), (1.6, 4.0, 6.4), 1.22),
+        "source_position_bounds_m": ((0.80, 2.70), (0.90, 7.10), (1.10, 2.75)),
+        "base_absorption_coefficients": (
+            _WOOD, _PLASTER, _GLAZING, _PLASTER, _CARPET, _PLASTER,
+        ),
+        "maximum_treatment_area_m2": 48.0,
+        "target_reverberation_time_s": (0.92, 0.84, 0.75, 0.70, 0.67, 0.64),
+        "nominal_reference_family": (
+            0.01490082348485456, 0.9182218085460152, 0.9742896898230755,
+            0.9100955202642369, 0.04817489183518992, 0.7645251431450314,
+            2.0061425791235505e-07, 0.44619233658640406,
+            0.9996001958884442, 0.0003998032619510414,
+        ),
+        "robust_reference_family": (
+            0.04206613374387876, 0.5790071386217382, 0.9960364244654746,
+            0.999389110003703, 0.007463951857329518, 0.7644995475746305,
+            1.6227759354488745e-08, 0.9615284669719337,
+            0.9996001958876622, 0.10805826728924287,
+        ),
+    },
+    {
+        "name": "dev_lecture_room",
+        "split": "development",
+        "room_dimensions_m": (14.0, 10.0, 4.5),
+        "receiver_positions_m": _receivers((4.0, 6.8, 9.6, 12.4), (2.0, 5.0, 8.0), 1.20),
+        "source_position_bounds_m": ((0.90, 3.10), (1.10, 8.90), (1.15, 3.20)),
+        "base_absorption_coefficients": (
+            _WOOD, _PLASTER, _GLAZING, _PLASTER, _CARPET, _PLASTER,
+        ),
+        "maximum_treatment_area_m2": 78.0,
+        "target_reverberation_time_s": (1.08, 0.98, 0.88, 0.82, 0.78, 0.75),
+        "nominal_reference_family": (
+            0.009184462341723421, 0.6235471975852529, 0.920898175305481,
+            0.9989256458818765, 0.0003697119139308147, 0.9996001986596291,
+            1.0538153136452561e-07, 0.6180713305947814,
+            0.9996001958808053, 0.04096167054066563,
+        ),
+        "robust_reference_family": (
+            0.039195258931084616, 0.6230589874905363, 0.9993966106301729,
+            0.9993475672906967, 0.10381468872591242, 0.6186271093947159,
+            0.00039980409232192465, 0.6186271093947159,
+            0.9996001959024201, 0.00038360476839239546,
+        ),
+    },
+    {
+        "name": "heldout_meeting_room",
+        "split": "heldout",
+        "room_dimensions_m": (6.1, 4.6, 2.8),
+        "receiver_positions_m": _receivers((2.3, 3.6, 4.9), (1.2, 2.3, 3.4), 1.16),
+        "source_position_bounds_m": ((0.55, 1.80), (0.60, 4.00), (0.95, 2.15)),
+        "base_absorption_coefficients": (
+            _PLASTER, _PLASTER, _GLAZING, _PLASTER, _WOOD, _ACOUSTIC_CEILING,
+        ),
+        "maximum_treatment_area_m2": 17.0,
+        "target_reverberation_time_s": (0.66, 0.59, 0.52, 0.48, 0.46, 0.45),
+        "nominal_reference_family": (
+            0.0003626493857721365, 0.9925623710780529, 0.3693094558554943,
+            0.9993475672906967, 0.0003998040991710944, 0.34653019836337956,
+            0.00039980409757991005, 0.00039980409757993976,
+            0.9996001959024201, 0.6593081379326879,
+        ),
+        "robust_reference_family": (
+            0.009300273809799938, 0.5674358331750796, 0.7508873323004714,
+            0.9993475672906967, 0.0058247116870302545, 0.8243587124247435,
+            0.8416263603306239, 0.00039980409904654296,
+            0.9996001959014654, 0.0003998032383193198,
+        ),
+    },
+    {
+        "name": "heldout_rehearsal_room",
+        "split": "heldout",
+        "room_dimensions_m": (12.0, 9.0, 5.2),
+        "receiver_positions_m": _receivers((3.7, 6.2, 8.7, 10.7), (1.8, 4.5, 7.2), 1.24),
+        "source_position_bounds_m": ((0.85, 2.90), (1.00, 8.00), (1.10, 3.40)),
+        "base_absorption_coefficients": (
+            _WOOD, _PLASTER, _GLAZING, _WOOD, _WOOD, _PLASTER,
+        ),
+        "maximum_treatment_area_m2": 70.0,
+        "target_reverberation_time_s": (1.28, 1.18, 1.06, 0.98, 0.93, 0.89),
+        "nominal_reference_family": (
+            0.02652401540920806, 0.9873899116152037, 0.3375292436470846,
+            0.7694439896580717, 0.04469483893167879, 0.6037798226830394,
+            0.2329446207227113, 0.21328961944157554,
+            0.9996001968229501, 0.14828826737189726,
+        ),
+        "robust_reference_family": (
+            0.0030061768726479298, 0.013692137832020095, 0.2261354687745534,
+            0.9589195427676449, 0.013889086599006985, 0.39575466189013686,
+            0.010603222103367803, 0.3488203103635473,
+            0.9211405240853786, 0.3068795026863851,
+        ),
+    },
+)
+
+
+SHIFT_SPECS = (
+    {
+        "name": "source_installation_offset",
+        "room_scale": (1.0, 1.0, 1.0),
+        "source_offset_m": (0.10, -0.08, 0.05),
+        "receiver_jitter_m": 0.0,
+        "sound_speed_scale": 1.0,
+        "base_absorption_scale": 1.0,
+        "treatment_effectiveness": 1.0,
+        "image_order": NOMINAL_IMAGE_ORDER,
+    },
+    {
+        "name": "audience_layout_shift",
+        "room_scale": (1.0, 1.0, 1.0),
+        "source_offset_m": (0.0, 0.0, 0.0),
+        "receiver_jitter_m": 0.16,
+        "sound_speed_scale": 1.0,
+        "base_absorption_scale": 1.0,
+        "treatment_effectiveness": 1.0,
+        "image_order": NOMINAL_IMAGE_ORDER,
+    },
+    {
+        "name": "cool_geometry_survey_shift",
+        "room_scale": (1.012, 0.986, 1.008),
+        "source_offset_m": (-0.05, 0.06, 0.0),
+        "receiver_jitter_m": 0.08,
+        "sound_speed_scale": 0.972,
+        "base_absorption_scale": 0.96,
+        "treatment_effectiveness": 0.94,
+        "image_order": NOMINAL_IMAGE_ORDER,
+    },
+    {
+        "name": "material_ageing",
+        "room_scale": (1.0, 1.0, 1.0),
+        "source_offset_m": (0.0, 0.0, 0.0),
+        "receiver_jitter_m": 0.0,
+        "sound_speed_scale": 1.018,
+        "base_absorption_scale": 0.90,
+        "treatment_effectiveness": 0.82,
+        "image_order": NOMINAL_IMAGE_ORDER,
+    },
+    {
+        "name": "higher_order_combined_shift",
+        "room_scale": (0.990, 1.014, 0.995),
+        "source_offset_m": (0.08, 0.07, -0.04),
+        "receiver_jitter_m": 0.12,
+        "sound_speed_scale": 0.982,
+        "base_absorption_scale": 0.93,
+        "treatment_effectiveness": 0.88,
+        "image_order": 14,
+    },
+)
+
+
+def _surface_areas(room_dimensions_m):
+    lx, ly, lz = map(float, room_dimensions_m)
+    return np.asarray((ly * lz, ly * lz, lx * lz, lx * lz, lx * ly, lx * ly))
+
+
+def _public_problem(spec):
+    room = tuple(map(float, spec["room_dimensions_m"]))
+    areas = _surface_areas(room)
+    maximum_fraction = np.asarray((0.65, 0.65, 0.65, 0.65, 0.0, 0.75))
+    return {
+        "room_dimensions_m": room,
+        "receiver_positions_m": tuple(
+            tuple(map(float, row)) for row in spec["receiver_positions_m"]
+        ),
+        "source_position_bounds_m": tuple(
+            tuple(map(float, row)) for row in spec["source_position_bounds_m"]
+        ),
+        "surface_names": SURFACE_NAMES,
+        "surface_areas_m2": tuple(map(float, areas)),
+        "base_absorption_coefficients": tuple(
+            tuple(map(float, row)) for row in spec["base_absorption_coefficients"]
+        ),
+        "treatment_absorption_coefficients": _POROUS_TREATMENT,
+        "maximum_treatment_area_m2": float(spec["maximum_treatment_area_m2"]),
+        "maximum_treatment_fraction_by_surface": tuple(map(float, maximum_fraction)),
+        "octave_band_center_hz": tuple(map(float, BAND_CENTERS_HZ)),
+        "target_reverberation_time_s": tuple(
+            map(float, spec["target_reverberation_time_s"])
+        ),
+        "speed_of_sound_m_s": 343.0,
+        "nominal_image_order": NOMINAL_IMAGE_ORDER,
+        "early_window_s": EARLY_WINDOW_S,
+        "design_fields": DESIGN_FIELDS,
+    }
+
+
+def _validate_design(value, problem):
+    raw = np.asarray(value)
+    if raw.shape != (len(DESIGN_FIELDS),):
+        raise ValueError("return one nine-element room design vector")
+    if raw.dtype.kind not in "iuf":
+        raise ValueError("design values must be real numeric scalars")
+    design = np.asarray(raw, dtype=float)
+    if not np.all(np.isfinite(design)):
+        raise ValueError("all design values must be finite")
+    source = design[:3]
+    bounds = np.asarray(problem["source_position_bounds_m"], dtype=float)
+    if np.any(source < bounds[:, 0]) or np.any(source > bounds[:, 1]):
+        raise ValueError("source position is outside a public bound")
+    treatment = design[3:]
+    if np.any(treatment < 0.0):
+        raise ValueError("treatment areas must be nonnegative")
+    maximum_areas = (
+        np.asarray(problem["surface_areas_m2"], dtype=float)
+        * np.asarray(problem["maximum_treatment_fraction_by_surface"], dtype=float)
+    )
+    if np.any(treatment > maximum_areas + 1.0e-10):
+        raise ValueError("a treatment area exceeds its public surface limit")
+    if float(np.sum(treatment)) > float(problem["maximum_treatment_area_m2"]) + 1.0e-10:
+        raise ValueError("total treatment area exceeds the public material budget")
+    return design
+
+
+def _bounded_area_allocation(total_area, weights, maximum_areas):
+    """Allocate area by nonnegative weights with deterministic cap redistribution."""
+    total_area = min(float(total_area), float(np.sum(maximum_areas)))
+    weights = np.maximum(np.asarray(weights, dtype=float), 0.0)
+    maximum_areas = np.asarray(maximum_areas, dtype=float)
+    allocation = np.zeros_like(maximum_areas)
+    active = maximum_areas > 0.0
+    remaining = total_area
+    for _ in range(len(allocation) + 1):
+        if remaining <= 1.0e-12 or not np.any(active):
+            break
+        active_weights = weights * active
+        if float(np.sum(active_weights)) <= 1.0e-12:
+            active_weights = active.astype(float)
+        proposal = remaining * active_weights / float(np.sum(active_weights))
+        room = np.maximum(maximum_areas - allocation, 0.0)
+        addition = np.minimum(proposal, room)
+        allocation += addition
+        remaining = total_area - float(np.sum(allocation))
+        active = room - addition > 1.0e-12
+    return allocation
+
+
+def _weak_baseline_design(problem):
+    bounds = np.asarray(problem["source_position_bounds_m"], dtype=float)
+    source = np.mean(bounds, axis=1)
+    maximum_areas = (
+        np.asarray(problem["surface_areas_m2"], dtype=float)
+        * np.asarray(problem["maximum_treatment_fraction_by_surface"], dtype=float)
+    )
+    treatment = _bounded_area_allocation(
+        0.52 * float(problem["maximum_treatment_area_m2"]),
+        np.asarray(problem["surface_areas_m2"], dtype=float),
+        maximum_areas,
+    )
+    return np.concatenate((source, treatment))
+
+
+def _family_design(problem, parameters):
+    """Map a bounded policy family to a valid physical artifact.
+
+    Parameters are three normalized source coordinates, material utilization, and
+    six nonnegative surface weights.  This family is used only to make reference
+    calibration reproducible; candidates may return any valid design.
+    """
+    values = np.asarray(parameters, dtype=float)
+    if values.shape != (10,) or not np.all(np.isfinite(values)):
+        raise ValueError("reference family requires ten finite parameters")
+    bounds = np.asarray(problem["source_position_bounds_m"], dtype=float)
+    source_fraction = np.clip(values[:3], 0.0, 1.0)
+    source = bounds[:, 0] + source_fraction * (bounds[:, 1] - bounds[:, 0])
+    utilization = float(np.clip(values[3], 0.0, 1.0))
+    weights = np.maximum(values[4:], 0.0)
+    maximum_areas = (
+        np.asarray(problem["surface_areas_m2"], dtype=float)
+        * np.asarray(problem["maximum_treatment_fraction_by_surface"], dtype=float)
+    )
+    treatment = _bounded_area_allocation(
+        utilization * float(problem["maximum_treatment_area_m2"]),
+        weights,
+        maximum_areas,
+    )
+    return np.concatenate((source, treatment))
+
+
+def _axis_images(source_coordinate, receiver_coordinate, length, maximum_order):
+    """Return unfolded image positions and left/right wall hit counts."""
+    rows = []
+    source_coordinate = float(source_coordinate)
+    receiver_coordinate = float(receiver_coordinate)
+    length = float(length)
+    for cell in range(-int(maximum_order), int(maximum_order) + 1):
+        for sign in (1.0, -1.0):
+            image = 2.0 * cell * length + sign * source_coordinate
+            low = min(receiver_coordinate, image)
+            high = max(receiver_coordinate, image)
+            first = math.floor(low / length) + 1
+            stop = math.ceil(high / length)
+            boundaries = range(first, stop)
+            low_hits = sum(int(index % 2 == 0) for index in boundaries)
+            high_hits = sum(int(index % 2 != 0) for index in boundaries)
+            order = low_hits + high_hits
+            if order <= int(maximum_order):
+                rows.append((image, low_hits, high_hits, order))
+    rows.sort(key=lambda row: (row[3], row[0]))
+    return tuple(rows)
+
+
+def _image_paths(room, source, receiver, maximum_order):
+    axes = tuple(
+        _axis_images(source[index], receiver[index], room[index], maximum_order)
+        for index in range(3)
+    )
+    images = []
+    counts = []
+    orders = []
+    for xrow, yrow, zrow in itertools.product(*axes):
+        order = xrow[3] + yrow[3] + zrow[3]
+        if order > int(maximum_order):
+            continue
+        images.append((xrow[0], yrow[0], zrow[0]))
+        counts.append((xrow[1], xrow[2], yrow[1], yrow[2], zrow[1], zrow[2]))
+        orders.append(order)
+    images = np.asarray(images, dtype=float)
+    counts = np.asarray(counts, dtype=int)
+    distance = np.linalg.norm(images - np.asarray(receiver, dtype=float)[None, :], axis=1)
+    if not np.all(np.isfinite(distance)) or float(np.min(distance)) < 1.0e-6:
+        raise ValueError("source and receiver geometry is singular")
+    return distance, counts, np.asarray(orders, dtype=int)
+
+
+def _shifted_geometry(problem, design, shift):
+    nominal_room = np.asarray(problem["room_dimensions_m"], dtype=float)
+    scale = np.ones(3) if shift is None else np.asarray(shift["room_scale"], dtype=float)
+    room = nominal_room * scale
+    source = np.asarray(design[:3], dtype=float) * scale
+    receivers = np.asarray(problem["receiver_positions_m"], dtype=float) * scale[None, :]
+    sound_speed = float(problem["speed_of_sound_m_s"])
+    if shift is not None:
+        source += np.asarray(shift["source_offset_m"], dtype=float)
+        amplitude = float(shift["receiver_jitter_m"])
+        if amplitude:
+            index = np.arange(len(receivers), dtype=float)
+            receivers[:, 0] += amplitude * np.sin(1.19 * index + 0.31)
+            receivers[:, 1] += amplitude * np.cos(0.83 * index + 0.47)
+            receivers[:, 2] += 0.25 * amplitude * np.sin(1.67 * index + 0.11)
+        sound_speed *= float(shift["sound_speed_scale"])
+    return room, source, receivers, sound_speed
+
+
+def _effective_absorption(problem, treatment_area, room, shift=None):
+    base = np.asarray(problem["base_absorption_coefficients"], dtype=float)
+    treatment = np.asarray(problem["treatment_absorption_coefficients"], dtype=float)
+    effectiveness = 1.0
+    if shift is not None:
+        base = np.clip(base * float(shift["base_absorption_scale"]), 0.005, 0.97)
+        effectiveness = float(shift["treatment_effectiveness"])
+    # Treatment is an added lining system rather than a mandatory replacement for a
+    # better existing finish.  Its effective coefficient therefore cannot be below
+    # the untreated surface at any octave band.
+    treatment_gain = np.maximum(treatment[None, :] - base, 0.0)
+    realized_treatment = base + effectiveness * treatment_gain
+    coverage = np.asarray(treatment_area, dtype=float) / _surface_areas(room)
+    if np.any(coverage < -1.0e-12) or np.any(coverage > 1.0 + 1.0e-12):
+        raise ValueError("shifted treatment coverage is physically impossible")
+    absorption = base + coverage[:, None] * (realized_treatment - base)
+    if not np.all(np.isfinite(absorption)):
+        raise ValueError("non-finite absorption coefficient")
+    if float(np.min(absorption)) <= 0.0 or float(np.max(absorption)) >= 1.0:
+        raise ValueError("absorption coefficients must lie strictly inside (0, 1)")
+    return absorption, coverage
+
+
+def _reverberation_time(room, absorption):
+    room = np.asarray(room, dtype=float)
+    surface_areas = _surface_areas(room)
+    volume = float(np.prod(room))
+    absorption = np.asarray(absorption, dtype=float)
+    eyring_absorption = np.sum(
+        -surface_areas[:, None] * np.log1p(-absorption), axis=0
+    )
+    air_loss = 4.0 * volume * AIR_ENERGY_ATTENUATION_NP_M
+    denominator = eyring_absorption + air_loss
+    if np.any(denominator <= 0.0) or not np.all(np.isfinite(denominator)):
+        raise ValueError("invalid Eyring decay denominator")
+    return 0.161 * volume / denominator
+
+
+def _receiver_band_energies(room, source, receiver, sound_speed, absorption, maximum_order):
+    distance, reflection_counts, orders = _image_paths(
+        room, source, receiver, maximum_order
+    )
+    log_reflection_energy = np.log1p(-np.asarray(absorption, dtype=float))
+    path_log_energy = reflection_counts @ log_reflection_energy
+    geometric_energy = 1.0 / (4.0 * np.pi * distance[:, None]) ** 2
+    air_energy = np.exp(
+        -2.0 * distance[:, None] * AIR_ENERGY_ATTENUATION_NP_M[None, :]
+    )
+    energy = geometric_energy * air_energy * np.exp(path_log_energy)
+    if not np.all(np.isfinite(energy)) or float(np.min(energy)) < 0.0:
+        raise ValueError("image-source energy is non-finite or negative")
+    direct_mask = orders == 0
+    if int(np.sum(direct_mask)) != 1:
+        raise ValueError("image lattice must contain exactly one direct path")
+    direct_distance = float(distance[direct_mask][0])
+    early_mask = distance / float(sound_speed) <= (
+        direct_distance / float(sound_speed) + EARLY_WINDOW_S + 1.0e-15
+    )
+    early = np.sum(energy[early_mask], axis=0)
+    late = np.sum(energy[~early_mask], axis=0)
+    total = early + late
+    c50_db = 10.0 * np.log10(np.maximum(early, 1.0e-300) / np.maximum(late, 1.0e-300))
+    return {
+        "early_energy": early,
+        "late_energy": late,
+        "total_energy": total,
+        "c50_db": c50_db,
+        "direct_distance_m": direct_distance,
+        "path_count": int(len(distance)),
+        "maximum_path_distance_m": float(np.max(distance)),
+    }
+
+
+def _geometry_feasible(room, source, receivers):
+    room = np.asarray(room, dtype=float)
+    source = np.asarray(source, dtype=float)
+    receivers = np.asarray(receivers, dtype=float)
+    return bool(
+        np.all(room > 0.0)
+        and np.all(source >= MINIMUM_SOURCE_CLEARANCE_M)
+        and np.all(source <= room - MINIMUM_SOURCE_CLEARANCE_M)
+        and np.all(receivers >= 0.10)
+        and np.all(receivers <= room[None, :] - 0.10)
+        and float(np.min(np.linalg.norm(receivers - source[None, :], axis=1))) >= 0.30
+    )
+
+
+def _acoustic_metrics(design, problem, shift=None, image_order=None):
+    room, source, receivers, sound_speed = _shifted_geometry(problem, design, shift)
+    if image_order is None:
+        image_order = (
+            NOMINAL_IMAGE_ORDER if shift is None else int(shift["image_order"])
+        )
+    absorption, coverage = _effective_absorption(
+        problem, design[3:], room, shift=shift
+    )
+    geometry_feasible = _geometry_feasible(room, source, receivers)
+    if not geometry_feasible:
+        return {
+            "utility": 0.0,
+            "geometry_feasible": False,
+            "image_order": int(image_order),
+            "maximum_treatment_fraction": float(np.max(coverage)),
+        }
+
+    receiver_rows = tuple(
+        _receiver_band_energies(
+            room, source, receiver, sound_speed, absorption, int(image_order)
+        )
+        for receiver in receivers
+    )
+    c50 = np.asarray([row["c50_db"] for row in receiver_rows])
+    total_energy = np.asarray([row["total_energy"] for row in receiver_rows])
+    level_db = 10.0 * np.log10(np.maximum(total_energy, 1.0e-300))
+    spatial_level_std_db = np.std(level_db, axis=0)
+    reverberation_time = _reverberation_time(room, absorption)
+    target_rt = np.asarray(problem["target_reverberation_time_s"], dtype=float)
+
+    clarity_value = np.clip((c50 + 5.0) / 13.0, 0.0, 1.0)
+    clarity_utility = float(
+        0.72 * np.mean(clarity_value)
+        + 0.28 * np.quantile(clarity_value, 0.20)
+    )
+    rt_log_error = np.log(reverberation_time / target_rt)
+    reverberation_utility = float(np.mean(np.exp(-0.5 * (rt_log_error / 0.30) ** 2)))
+    uniformity_utility = float(np.mean(np.exp(-0.5 * (spatial_level_std_db / 3.5) ** 2)))
+    utility = (
+        0.46 * clarity_utility
+        + 0.34 * reverberation_utility
+        + 0.20 * uniformity_utility
+    )
+    return {
+        "utility": float(utility),
+        "geometry_feasible": True,
+        "image_order": int(image_order),
+        "clarity_utility": clarity_utility,
+        "reverberation_utility": reverberation_utility,
+        "uniformity_utility": uniformity_utility,
+        "mean_c50_db": float(np.mean(c50)),
+        "twentieth_percentile_c50_db": float(np.quantile(c50, 0.20)),
+        "c50_above_zero_rate": float(np.mean(c50 >= 0.0)),
+        "reverberation_time_s": reverberation_time.tolist(),
+        "target_reverberation_time_s": target_rt.tolist(),
+        "mean_absolute_log_rt_error": float(np.mean(np.abs(rt_log_error))),
+        "mean_spatial_level_std_db": float(np.mean(spatial_level_std_db)),
+        "maximum_spatial_level_std_db": float(np.max(spatial_level_std_db)),
+        "minimum_absorption_coefficient": float(np.min(absorption)),
+        "maximum_absorption_coefficient": float(np.max(absorption)),
+        "maximum_treatment_fraction": float(np.max(coverage)),
+        "source_position_m": source.tolist(),
+        "room_dimensions_m": room.tolist(),
+        "receiver_count": int(len(receivers)),
+        "minimum_source_receiver_distance_m": float(min(
+            row["direct_distance_m"] for row in receiver_rows
+        )),
+        "maximum_source_receiver_distance_m": float(max(
+            row["direct_distance_m"] for row in receiver_rows
+        )),
+        "minimum_path_count": int(min(row["path_count"] for row in receiver_rows)),
+        "maximum_path_count": int(max(row["path_count"] for row in receiver_rows)),
+        "maximum_path_distance_m": float(max(
+            row["maximum_path_distance_m"] for row in receiver_rows
+        )),
+    }
+
+
+def _normalized_score(baseline, reference, value):
+    denominator = float(reference) - float(baseline)
+    if denominator <= 1.0e-8:
+        raise ValueError("reference witness does not improve the weak baseline")
+    return float(np.clip((float(value) - float(baseline)) / denominator, 0.0, 1.0))
+
+
+def _make_instance(spec):
+    instance = copy.deepcopy(spec)
+    problem = _public_problem(spec)
+    baseline = _weak_baseline_design(problem)
+    nominal_reference = _family_design(problem, spec["nominal_reference_family"])
+    robust_reference = _family_design(problem, spec["robust_reference_family"])
+    for design in (baseline, nominal_reference, robust_reference):
+        _validate_design(design, problem)
+    baseline_nominal = _acoustic_metrics(baseline, problem)
+    reference_nominal = _acoustic_metrics(nominal_reference, problem)
+    baseline_shifts = tuple(
+        _acoustic_metrics(baseline, problem, shift=shift) for shift in SHIFT_SPECS
+    )
+    reference_shifts = tuple(
+        _acoustic_metrics(robust_reference, problem, shift=shift) for shift in SHIFT_SPECS
+    )
+    instance.update({
+        "problem": problem,
+        "baseline_design": baseline,
+        "nominal_reference_design": nominal_reference,
+        "robust_reference_design": robust_reference,
+        "baseline_nominal": baseline_nominal,
+        "nominal_reference": reference_nominal,
+        "baseline_robust_utility": min(row["utility"] for row in baseline_shifts),
+        "robust_reference_utility": min(row["utility"] for row in reference_shifts),
+        "baseline_shift_metrics": baseline_shifts,
+        "reference_shift_metrics": reference_shifts,
+    })
+    return instance
+
+
+INSTANCES = tuple(_make_instance(spec) for spec in INSTANCE_SPECS)
+DEVELOPMENT_INSTANCES = tuple(
+    instance for instance in INSTANCES if instance["split"] == "development"
+)
+HELDOUT_INSTANCES = tuple(
+    instance for instance in INSTANCES if instance["split"] == "heldout"
+)
+
+
+def _score_instance(design_room, instance):
+    try:
+        returned = design_room(copy.deepcopy(instance["problem"]))
+        design = _validate_design(returned, instance["problem"])
+        nominal = _acoustic_metrics(design, instance["problem"])
+        proxy = _acoustic_metrics(
+            design, instance["problem"], image_order=PROXY_IMAGE_ORDER
+        )
+        shifted = tuple({
+            "name": shift["name"],
+            **_acoustic_metrics(design, instance["problem"], shift=shift),
+        } for shift in SHIFT_SPECS)
+        robust_utility = min(row["utility"] for row in shifted)
+        nominal_score = _normalized_score(
+            instance["baseline_nominal"]["utility"],
+            instance["nominal_reference"]["utility"],
+            nominal["utility"],
+        )
+        robustness_score = _normalized_score(
+            instance["baseline_robust_utility"],
+            instance["robust_reference_utility"],
+            robust_utility,
+        )
+        return {
+            "name": instance["name"],
+            "split": instance["split"],
+            "valid": True,
+            "score": nominal_score,
+            "robustness_score": robustness_score,
+            "nominal_utility": nominal["utility"],
+            "robust_utility": robust_utility,
+            "proxy_utility": proxy["utility"],
+            "proxy_exact_utility_gap": proxy["utility"] - nominal["utility"],
+            "baseline_nominal_utility": instance["baseline_nominal"]["utility"],
+            "nominal_reference_utility": instance["nominal_reference"]["utility"],
+            "baseline_robust_utility": instance["baseline_robust_utility"],
+            "robust_reference_utility": instance["robust_reference_utility"],
+            "treatment_area_m2": float(np.sum(design[3:])),
+            "design": design.tolist(),
+            "nominal": nominal,
+            "proxy": proxy,
+            "shifted": shifted,
+        }
+    except Exception as exc:
+        return {
+            "name": instance["name"],
+            "split": instance["split"],
+            "valid": False,
+            "reason": "%s: %s" % (type(exc).__name__, exc),
+            "score": 0.0,
+            "robustness_score": 0.0,
+            "nominal_utility": 0.0,
+            "robust_utility": 0.0,
+            "proxy_utility": 0.0,
+            "proxy_exact_utility_gap": 0.0,
+            "treatment_area_m2": 0.0,
+        }
+
+
+def _reset_candidate_session(design_room):
+    reset = getattr(design_room, "reset_session", None)
+    if callable(reset):
+        reset()
+
+
+def evaluate(design_room):
+    records = []
+    for index, instance in enumerate(INSTANCES):
+        if index:
+            _reset_candidate_session(design_room)
+        records.append(_score_instance(design_room, instance))
+    development = [row for row in records if row["split"] == "development"]
+    heldout = [row for row in records if row["split"] == "heldout"]
+    development_valid = sum(bool(row["valid"]) for row in development)
+    heldout_valid = sum(bool(row["valid"]) for row in heldout)
+    development_score = float(np.mean([row["score"] for row in development]))
+    development_robustness = float(np.mean([
+        row["robustness_score"] for row in development
+    ]))
+    heldout_score = float(np.mean([row["score"] for row in heldout]))
+    heldout_robustness = float(np.mean([
+        row["robustness_score"] for row in heldout
+    ]))
+    result = {
+        "combined_score": development_score if development_valid == len(development) else 0.0,
+        "valid": 1.0 if development_valid == len(development) else 0.0,
+        "feasibility_rate": development_valid / len(development),
+        "raw_score": development_score if development_valid == len(development) else 0.0,
+        "robustness_score": development_robustness,
+        "development_validation_gap": development_score - development_robustness,
+        "heldout_policy_score": heldout_score if heldout_valid == len(heldout) else 0.0,
+        "heldout_robustness_score": heldout_robustness,
+        "heldout_feasibility_rate": heldout_valid / len(heldout),
+        "development_nominal_utility": float(np.mean([
+            row["nominal_utility"] for row in development
+        ])),
+        "heldout_nominal_utility": float(np.mean([
+            row["nominal_utility"] for row in heldout
+        ])),
+        "development_robust_utility": float(np.mean([
+            row["robust_utility"] for row in development
+        ])),
+        "heldout_robust_utility": float(np.mean([
+            row["robust_utility"] for row in heldout
+        ])),
+        "development_proxy_utility": float(np.mean([
+            row["proxy_utility"] for row in development
+        ])),
+        "heldout_proxy_utility": float(np.mean([
+            row["proxy_utility"] for row in heldout
+        ])),
+        "development_proxy_exact_gap": float(np.mean([
+            row["proxy_exact_utility_gap"] for row in development
+        ])),
+        "heldout_proxy_exact_gap": float(np.mean([
+            row["proxy_exact_utility_gap"] for row in heldout
+        ])),
+        "candidate_instance_call_count": len(records),
+        "candidate_instance_valid_rate": float(np.mean([
+            row["valid"] for row in records
+        ])),
+        "per_instance": records,
+    }
+    if development_valid != len(development):
+        result["error_message"] = "candidate invalid on a development room instance"
+    return result
+
+
+def reference_policy(problem, robust=False):
+    matches = [instance for instance in INSTANCES if instance["problem"] == problem]
+    if len(matches) != 1:
+        raise ValueError("unknown room-acoustics problem")
+    key = "robust_reference_design" if robust else "nominal_reference_design"
+    return matches[0][key].copy()

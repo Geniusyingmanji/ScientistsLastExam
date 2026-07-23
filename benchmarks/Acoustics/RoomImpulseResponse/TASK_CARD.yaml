@@ -1,0 +1,33 @@
+schema_version: 1
+scientific_question: Can one source-placement and surface-treatment policy improve speech clarity, target reverberation and occupied-area uniformity across changing rooms while retaining utility under installation, material, geometry and reflection-horizon shifts?
+artifact: One loudspeaker position and six porous-treatment surface areas in square metres.
+oracle:
+  proxy: direct plus first-order energy image sources with the same octave-band material model
+  nominal: order-10 shoebox energy image sources, octave-band air loss, 50-ms clarity partition and Eyring reverberation time
+  feasibility: exact finite nine-value artifact, public source bounds, per-surface coverage limits and total treatment-area budget
+  deterministic: true
+normalization:
+  baseline: valid center-of-bounds source with partial treatment distributed by surface area
+  reference: separately optimized nominal and worst-shift witnesses in a ten-parameter bounded source-and-area family
+  score: development nominal utility controls search; proxy, held-out rooms, component axes and five physical shifts remain separate
+citations:
+  - id: doi:10.1121/1.382599
+    title: Image method for efficiently simulating small-room acoustics
+  - id: doi:10.1109/TASL.2008.917341
+    title: Prediction of energy decay in room impulse responses simulated with an image-source model
+  - id: standard:ISO-3382-1:2009
+    title: Acoustics — Measurement of room acoustic parameters — Part 1: Performance spaces
+invariants:
+  - the image lattice contains exactly one direct path and nonnegative finite energy
+  - the unfolded image-path wall counts reproduce direct and first-order analytic paths
+  - Eyring reverberation time is positive and strictly decreases when absorption increases
+  - increasing any feasible treatment area cannot reduce its effective octave-band absorption coefficient
+  - the weak baseline is valid and has normalized nominal and robust score zero by construction
+  - nominal and robust reference witnesses strictly improve their corresponding baseline utilities in every room
+  - malformed, non-finite, out-of-bound and over-budget artifacts fail closed
+  - each scientific room receives a fresh candidate process and private temporary-filesystem state
+  - held-out, proxy, component and shifted metrics remain evaluator-only
+known_shortcuts: The deterministic reduced-order oracle assumes a shoebox geometry, energy rather than phase image sources, frequency-banded locally mixed absorption, and no diffraction or diffuse scattering. The fixed procedural rooms require future server-held generation. Engineering claims require hybrid wave/ray replication and measured room impulse responses. Reference witnesses are reproducible anchors, not global optima.
+review:
+  domain: pending_external
+  evaluator_security: automated_invariant_sandbox_and_metric_sealing_tests

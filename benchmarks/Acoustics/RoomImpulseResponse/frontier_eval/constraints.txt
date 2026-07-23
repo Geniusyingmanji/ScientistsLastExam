@@ -1,3 +1,4 @@
-1) Only edit solution.py. Keep the compute_rir() signature.
-2) numpy/scipy/stdlib only. CPU, seconds. No network.
-3) Do not read verification/ or frontier_eval/.
+1) Only edit solution.py. Keep design_room(problem).
+2) Return source position followed by six finite treatment areas in the documented order.
+3) Python/NumPy/SciPy/stdlib only. CPU. No network or process creation.
+4) Do not read verification/ or frontier_eval/.

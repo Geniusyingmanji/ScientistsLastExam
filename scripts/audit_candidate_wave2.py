@@ -33,23 +33,64 @@ def _oracle(task_id: str):
 
 def _room_audit():
     oracle = _oracle("Acoustics/RoomImpulseResponse")
-
-    def high_order(room, source, mic, fs, _max_order, absorption):
-        return oracle.image_source_rir(room, source, mic, fs, 15, absorption)
-
-    crashed, error = False, None
-    try:
-        oracle.evaluate(high_order)
-    except Exception as exc:
-        crashed = True
-        error = "%s: %s" % (type(exc).__name__, exc)
+    baseline = oracle.evaluate(
+        lambda problem: oracle._weak_baseline_design(problem)
+    )
+    nominal = oracle.evaluate(
+        lambda problem: oracle.reference_policy(problem, robust=False)
+    )
+    robust = oracle.evaluate(
+        lambda problem: oracle.reference_policy(problem, robust=True)
+    )
+    nonfinite = oracle.evaluate(lambda _problem: np.full(9, np.nan))
+    reference_headroom = all(
+        instance["nominal_reference"]["utility"]
+        > instance["baseline_nominal"]["utility"] + 1.0e-4
+        and instance["robust_reference_utility"]
+        > instance["baseline_robust_utility"] + 1.0e-4
+        for instance in oracle.INSTANCES
+    )
     return {
         "task": "Acoustics/RoomImpulseResponse",
-        "admission": "quarantine",
-        "defect": "a reference-length candidate crashes when compared with the shorter order-zero baseline",
-        "exact_reference_candidate_crashed": crashed,
-        "error": error,
-        "passed": crashed and "broadcast" in str(error),
+        "admission": "candidate",
+        "superseded_v1_defect": (
+            "the removed fixed-RIR reconstruction task crashed reference-length candidates "
+            "against a shorter order-zero baseline and exposed only two fixed scenes"
+        ),
+        "resolved_defect": (
+            "v2 optimizes a physical loudspeaker position and six treatment areas over four "
+            "development and two held-out rooms; order-10 image energy, Eyring decay, C50, "
+            "spatial uniformity, a first-order proxy and five sealed shifts remain separate"
+        ),
+        "development_instance_count": len(oracle.DEVELOPMENT_INSTANCES),
+        "heldout_instance_count": len(oracle.HELDOUT_INSTANCES),
+        "shift_count": len(oracle.SHIFT_SPECS),
+        "baseline_score": float(baseline["combined_score"]),
+        "baseline_valid": bool(baseline["valid"]),
+        "nominal_reference_score": float(nominal["combined_score"]),
+        "nominal_heldout_score": float(nominal["heldout_policy_score"]),
+        "robust_reference_score": float(robust["combined_score"]),
+        "robust_reference_robustness": float(robust["robustness_score"]),
+        "robust_heldout_robustness": float(robust["heldout_robustness_score"]),
+        "nonfinite_score": float(nonfinite["combined_score"]),
+        "nonfinite_valid": bool(nonfinite["valid"]),
+        "all_reference_axes_have_headroom": reference_headroom,
+        "rebuild_passed": True,
+        "passed": bool(
+            oracle.ROOM_ACOUSTICS_V2
+            and len(oracle.DEVELOPMENT_INSTANCES) == 4
+            and len(oracle.HELDOUT_INSTANCES) == 2
+            and len(oracle.SHIFT_SPECS) == 5
+            and baseline["valid"] == 1.0
+            and baseline["combined_score"] == 0.0
+            and nominal["combined_score"] > 0.999999
+            and nominal["heldout_policy_score"] > 0.999999
+            and robust["robustness_score"] > 0.999999
+            and robust["heldout_robustness_score"] > 0.999999
+            and nonfinite["combined_score"] == 0.0
+            and not bool(nonfinite["valid"])
+            and reference_headroom
+        ),
     }
 
 
