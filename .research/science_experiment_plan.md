@@ -51,6 +51,8 @@ Report its visible, sealed and mechanism advantage over `committed` as an
 | F2 | Does persistent experience help beyond repeated sampling? | One continuous run vs equal-budget independent restarts; full memory vs summarized/frozen/no memory; identical submission/feedback schedules | score/AUC, effective submissions and sealed-validation lift | Value of accumulated scientific state |
 | F3 | Does gain come from more evaluator information rather than better learning? | Matched submission budget/cooldown with scalar-only, aggregated, diagnostic and evaluator-silent periodic snapshots | terminal/AUC lift per revealed bit, oracle call and visible judge event | Value and risk of feedback bandwidth |
 | F4 | Does a diagnostic teach scientific structure or merely reveal the score decomposition? | Equal-length/equal-bit meaningful component labels vs label-permuted components vs unlabeled values vs scalar feedback | sealed/mechanism lift, proposal targeting, causal attribution and hidden-target reconstruction risk | Value of semantic scientific feedback beyond numeric bandwidth |
+| F5 | Which retained state actually carries scientific learning? | Factor incumbent artifact, local-result cache, judge-feedback ledger, hypothesis/evidence memory, conversational context and full workspace | sealed/mechanism lift, evidence-use accuracy, contradiction/failed-branch retention, transfer to a new instance | Mechanism of stateful improvement rather than a bundled continuous-run effect |
+| F6 | Which loop causes improvement? | 2×2 local simulator/test feedback × agent-visible trusted-judge feedback, with matched calls and information accounting | visible/sealed/mechanism gain per local tool call, trusted call and revealed bit | Local experimentation separated from authoritative-judge learning |
 | V1 | Does optimization generalize beyond the visible oracle? | Visible development oracle vs evaluator-only hidden instances/shifts | sealed score, development–validation gap, rank correlation, replication rate | Generalizable result |
 | V2 | Does a cheap proxy survive higher-fidelity evaluation? | Proxy-only search; scheduled promotion; adaptive multifidelity; exact-only reference where affordable | proxy/exact rank correlation, false-promotion rate, exact-call efficiency, high-fidelity regret | Multifidelity validation |
 | M1 | Did the system recover a mechanism rather than a predictor? | Observational-only vs intervention access; prediction-only vs explicit mechanism submission | graph F1, equation/term recovery, parameter error, intervention and shift prediction | Mechanism recovery |
@@ -58,7 +60,10 @@ Report its visible, sealed and mechanism advantage over `committed` as an
 | R2 | Is the claimed result reproducible and traceable? | Original evaluator vs independent implementation/reviewer; replay from immutable artifact | replay success, independent replication rate, claim–evidence consistency, failed-branch coverage | Research integrity |
 | R3 | Can the system select and stop on a deployable scientific conclusion? | Agent-controlled stop/commit vs forced fixed-horizon continuation; compare committed, terminal and hidden oracle-best artifacts | stopping utility net of experiment cost, commitment regret, oracle-selection gap, post-commit degradation | Autonomous selection/stopping rather than retrospective oracle selection |
 | K1 | Is an apparent discovery retrieval, reproduction or task-local inference? | Frozen dated corpus vs no literature vs open Web, crossed with public, time-held-out and family-held-out tasks | citation provenance, novelty/reproduction label, sealed transfer and contamination sensitivity | Knowledge-use attribution, not discovery by retrieval |
+| K2 | Did the system discover a method or execute one supplied by the task? | Method-prescriptive vs method-neutral contracts and workflow-hint ablations on matched procedural worlds | algorithm-family novelty, mechanism/validation lift, literature overlap and independent transfer | Prescribed reproduction separated from task-local method discovery |
 | B1 | How does the trajectory compare with domain experts under the same interface? | Expert one-shot and iterative runs on a stratified subset with matched feedback, experiment and wall/compute budgets | validated utility, sample efficiency, mechanism/refusal calibration, stopping and failed-hypothesis coverage | Human-calibrated capability and task difficulty |
+| I1 | Does hidden trajectory measurement alter the trajectory? | Stable committed head plus scratch workspace; fixed disclosed snapshots vs jittered undisclosed snapshots vs post-run event replay | branching/edit cadence, transient invalidity, throughput, visible-feedback latency and final science outcomes | Observer effect of evaluator-only measurement |
+| I2 | How much performance comes from continuation scaffolding? | Fixed model/context/tools crossed with continuous session, goal state and fresh-context file-backed loop | active duty cycle, state-loss incidents, evidence retention and committed/sealed outcomes | Model capability separated from continuation harness |
 
 ## Controls that must be strict
 
@@ -93,6 +98,26 @@ All evaluator-only snapshots must be atomic, content-addressed bundles rather th
 copies. For asynchronous judging, log `submitted_at`, `feedback_ready_at`, `feedback_read_at`, the
 submitted artifact hash and the first descendant proposal hash. A score can be credited as
 feedback used only by descendants produced after it was actually read.
+
+Auto-evaluation is score-hidden but can still change behavior when its schedule and requirement
+to keep files runnable are disclosed. Keep the stable committed candidate in a separate path from
+scratch work. Prefer a resource-isolated observer queue or post-run scoring of content-addressed
+event snapshots. Deduplicate identical hashes for deterministic judges; for stochastic judges,
+combine preregistered seed replicates into an expectation and uncertainty interval rather than
+letting repeated unchanged snapshots enter best-of-N selection.
+
+Every task must pass a contract-consistency lint: the time horizon and checkpoint schedule stated
+in its prompt must match the harness timeout; evaluator timeout must fit the submission/queue
+policy; submitted paths and exclusion rules must match the claimed deliverable; and cooldown plus
+maximum submissions must leave the advertised workflow possible. Time-budget comparisons require
+independent runs told their true horizon. A prefix of a long-horizon-aware run is descriptive, not
+a counterfactual short-horizon policy.
+
+Score changes smaller than numerical noise or scientific materiality must not automatically
+replace an incumbent. Predeclare an evaluator-resolution `epsilon`, hard scientific constraints,
+domain-material effect thresholds and tie/Pareto policy. Retain both strict-score and material-
+improvement trajectories so near-ceiling floating-point changes cannot silently reverse a
+robustness or mechanism conclusion.
 
 Forced continuation and autonomous stopping answer different questions. Fixed horizons remain
 useful for comparable capability curves, but discovery/reliability experiments must also permit
@@ -160,6 +185,14 @@ server-held procedural worlds, multi-seed feedback controls and independent revi
 15. Stopping risk–utility curves and post-commit degradation under forced continuation.
 16. Curve/leaderboard sensitivity under alternative task weights, score transforms, anchor
     perturbations and leave-one-task/family-out aggregation.
+17. Snapshot observer-effect plot: stable-head versus scratch edits, transient-invalid intervals,
+    snapshot queue load and visible-feedback latency under fixed/jittered/post-run measurement.
+18. State-channel and continuation-scaffold factorial: artifact, local results, feedback ledger,
+    hypothesis/evidence memory and context, with evidence-use and held-out transfer outcomes.
+19. Material-improvement curves under strict `>`, numerical-`epsilon`, domain-threshold and
+    Pareto/constraint-aware acceptance, including selection reversals and sealed regret.
+20. Two-loop attribution table crossing local simulator/test feedback with trusted-judge feedback;
+    report calls, information and scientific experiment cost for both channels.
 
 Avoid presenting a radar chart or a single “science score”; small multiples preserve the
 important capability dissociations.
@@ -169,6 +202,8 @@ important capability dissociations.
 - Use at least five seeds for the broad O1/O2 matrix. Use at least ten paired seeds on a smaller
   preregistered F1/M1/V1 subset when making causal or reliability claims.
 - Treat task/instance and seed as the experimental units, not every trajectory checkpoint.
+- Treat independently randomized restart pools as experimental units; subset combinations from
+  one fixed pool are dependent summaries, not extra replicates.
 - Report task-level results and hierarchical/bootstrap uncertainty across tasks and seeds;
   use paired contrasts for controls.
 - Preregister primary outcomes, budgets, exclusions, and stopping rules. Correct for multiple
@@ -192,6 +227,12 @@ important capability dissociations.
 - Treat the task sampling frame as part of the estimand. Headroom-screened headline tasks measure
   improvement conditional on improvability; retain saturated on-ramps, null/misspecified and
   unsolvable cases for refusal, calibration and unconditional reliability analyses.
+- Report model, scaffold, context limit, compaction, stop/resume policy and disclosed horizon as
+  factors of the evaluated system. Do not attribute a cross-model difference to the base model
+  when these factors differ.
+- Distinguish artifact creation/submission before the cutoff from judge completion after it.
+  Post-cutoff scores may enter a preregistered observer-side endpoint, but their feedback cannot
+  be credited with causing an in-horizon descendant.
 
 ## Scaling-law caution
 

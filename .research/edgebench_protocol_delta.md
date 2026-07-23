@@ -2,8 +2,10 @@
 
 Date: 2026-07-23 UTC. Sources: EdgeBench arXiv:2607.05155v1 full text; public SForge
 repository revision `a87350ab80eeb320b13cb71d1b0c3ffcc20a670f`; official Codex experiment
-configuration; public 51-task manifest. The arXiv API and upstream `main` were rechecked on
-2026-07-23 and still resolve to v1 and this revision. EdgeBench results below are author-reported.
+configuration; and the public 51-task Hugging Face dataset at revision
+`47846a4c3669ad447e0ea984833b0d352460c5f9`. The arXiv API and upstream `main` were
+rechecked on 2026-07-23 and still resolve to v1 and this repository revision. EdgeBench results
+below are author-reported; implementation observations are labeled separately.
 
 ## What EdgeBench actually establishes
 
@@ -114,6 +116,84 @@ therefore requires:
    same feedback, experiment and wall/compute budgets, including confidence, stopping and failed
    hypotheses.
 
+## Second-pass implementation findings
+
+These are protocol deductions from the released SForge code, official configuration and public
+task contracts, not additional empirical claims by the EdgeBench authors.
+
+1. **Hidden auto-evaluation is score-blind but not behavior-blind.** SForge's generated prompt
+   tells the agent that a background process periodically evaluates its files and explicitly asks
+   it to keep submitted paths runnable and representative of its current best solution. The
+   measurement schedule can therefore change branch management, risk taking and write timing even
+   though scores remain hidden. This matters more in science, where scratch calculations and
+   partially written hypotheses are often temporarily invalid. Keep a stable, explicitly
+   committed candidate head separate from a scratch workspace; compare schedule-disclosed,
+   schedule-blind/jittered and no-online-snapshot conditions.
+2. **Evaluator-only measurement can consume the treatment's resources.** Auto-eval archives the
+   live workspace and submits to the same judge service used by agent-visible evaluations. It may
+   add CPU/I/O load or judge queue contention and is therefore not automatically a passive
+   observer. Use a separate observer queue or evaluate immutable event snapshots after the run;
+   measure any effect of snapshotting on model/tool throughput and visible-feedback latency.
+3. **Repeated identical snapshots need hash-aware semantics.** Auto-eval is exempt from agent
+   submission limits and cooldowns, and SForge's final policy can choose across auto-eval results.
+   Re-evaluating an unchanged stochastic artifact can therefore create an uncharged best-of-N
+   advantage merely because it remained in the workspace longer. Deduplicate identical hashes for
+   deterministic judges; for stochastic judges, aggregate preregistered seed replicates into an
+   expectation and uncertainty interval rather than treating them as distinct selectable
+   candidates.
+4. **The declared horizon must agree everywhere.** The official Codex YAML gives every public
+   task a 43,200-second horizon, but the released `bipedalwalker_locomotion_rl` contract tells the
+   agent it has a two-hour window, requests a submission within 30 minutes and says to work until
+   close to that limit. This concrete contract/config mismatch can alter training allocation and
+   stopping behavior. Add a machine-checked contract lint over prompt, harness timeout, checkpoint
+   schedule, evaluator timeout and cooldown; estimate horizon effects with independent runs whose
+   disclosed horizon matches the actual cutoff.
+5. **The experience ablation bundles several state channels.** A continuous run retains the
+   incumbent artifact, scratch workspace, local datasets/caches, authoritative feedback history,
+   natural-language context and any external notes, whereas a restart removes all of them. The
+   reported contrast establishes value of that bundle, not which scientific memory caused it.
+   Factor artifact-only, local-results-only, feedback-ledger-only, summarized hypothesis/evidence
+   memory and full-state retention. Test whether later proposals actually cite and correctly use
+   retained evidence rather than merely inheriting a better program.
+6. **Continuation scaffolds are part of the evaluated system.** Appendix G.3 reports highly
+   heterogeneous effects from Goal and file-backed Ralph-loop variants, including large positive
+   and negative task-level changes. Cross-model comparisons are additionally crossed with Codex
+   versus Claude Code and different context limits. Report a model--scaffold bundle unless the
+   scaffold, context, tool and continuation factors are held fixed or factorially ablated.
+7. **Restart subset enumeration is not replication.** EdgeBench estimates the no-experience curve
+   from size-`k` subsets of six two-hour terminal scores. The combinatorial subsets are dependent
+   views of one restart pool and do not create new experimental units. Frontier-Science should use
+   independently repeated restart pools paired to task instances, retain pool-level uncertainty
+   and distinguish terminal-best sampling from within-restart trajectory AUC.
+8. **Any strictly larger score is too permissive near a numerical ceiling.** Effective-submission
+   rate and online incumbent selection can count changes below evaluator resolution. The current
+   Hartree--Fock calibration gives an internal example: an approximately `9e-15` visible gain can
+   select an artifact with a qualitatively different robustness tradeoff. Predeclare an
+   evaluator-noise/resolution-based `epsilon`, scientifically material effect thresholds and a
+   Pareto/constraint-aware commit rule; report how many nominal improvements survive each rule.
+9. **Deadline eligibility and causal feedback eligibility differ.** SForge stops auto-eval at the
+   horizon and then drains pending judge jobs. An artifact submitted before the cutoff can be
+   scored after it, but feedback completed after the cutoff cannot have caused in-horizon work.
+   Record artifact creation, submission, judge start/finish and feedback-read times; predeclare
+   whether post-cutoff completions enter observer-side scoring and exclude them from feedback-use
+   attribution.
+10. **The local loop is not separately identified.** EdgeBench deliberately permits
+    unlimited local tests, simulators and agent-created validation splits while gating only the
+    authoritative judge. For scientific automation, local simulation, data analysis and physical
+    measurement have different costs and epistemic value. Instrument both loops and run a
+    two-by-two local-feedback × trusted-feedback ablation before attributing improvement to the
+    judge or to "environment learning" in general.
+11. **Task guidance spans discovery to prescribed reproduction.** Public science tasks range from
+    open source inversion to a prompt that names a 2025 D-ABIC paper and asks the agent to port its
+    method. Stratify method-prescriptive reproduction, method-neutral inference, optimization and
+    mechanism discovery; ablate workflow hints. A long trajectory on a prescribed method is not
+    evidence that the method was discovered.
+12. **Structured-data scope is not full scientific scope.** EdgeBench explicitly excludes tasks
+    whose main difficulty is visual understanding so that perception does not confound iterative
+    reasoning. Frontier-Science should either state the same structured-observation scope or add a
+    separate instrument/perception track that propagates calibration, segmentation and extraction
+    uncertainty into mechanism and validation scores instead of silently mixing it into them.
+
 ## Minimum next experiments
 
 1. **HartreeFockSCF-v2 calibration:** GPT-5.5 budget 1, normal budget 3 and strict
@@ -145,6 +225,22 @@ therefore requires:
 10. **Knowledge-access and expert pilot:** frozen literature versus no literature on two
     contamination-sensitive tasks, plus matched expert trajectories on one optimization and one
     mechanism/refusal task.
+11. **Snapshot observer-effect pilot:** stable committed candidate head plus a separate scratch
+    branch; schedule-disclosed fixed snapshots versus jittered schedule-blind snapshots versus
+    post-run event replay. Use a separate observer queue and deduplicate identical hashes.
+12. **Contract and horizon audit:** machine-check every task's prompt/config budget, evaluator
+    timeout, cooldown and submitted paths; then compare genuinely independent short- and
+    long-horizon runs rather than interpreting prefixes of a horizon-aware run as counterfactual
+    short runs.
+13. **Memory/scaffold factorization:** incumbent-only, local-result cache, feedback ledger,
+    hypothesis/evidence memory and full state, crossed on a small subset with continuous-context,
+    Goal and fresh-context file-backed continuation.
+14. **Material-improvement audit:** recompute trajectories under strict-score, numerical-`epsilon`,
+    domain-materiality and Pareto/constraint-aware acceptance; quantify acceptance reversals,
+    sealed regret and post-commit degradation.
+15. **Dual-loop attribution and transfer pilot:** cross local simulator feedback with trusted
+    judge feedback, then test whether a provenance-clean evidence ledger transfers to new
+    procedural instances or related held-out tasks better than artifact inheritance alone.
 
 ## Claim boundary
 

@@ -73,6 +73,20 @@ separates committed, terminal and oracle-best artifacts, active and wall time, r
 autonomous stopping, normalization sensitivity and knowledge access. Its minimum publishable
 sequence is specified in `science_experiment_plan.md`.
 
+A second pass through SForge and all 51 public task contracts adds a narrower set of protocol
+corrections. Hidden auto-evaluation is score-blind but not behavior-blind: the generated prompt
+tells agents when background measurement exists and asks them to keep evaluated paths runnable.
+The observer also shares extraction and judge resources with the treatment, and repeated
+unchanged stochastic snapshots can create a best-of-N advantage. The public BipedalWalker
+contract is the only public task contract that explicitly states an hour budget, but its stated
+two-hour window conflicts with the official 12-hour configuration. These are concrete reasons
+to add a stable committed head, observer-isolated or post-run snapshots, hash deduplication and a
+machine-checked prompt/config contract lint. EdgeBench's experience contrast also bundles the
+artifact, workspace, feedback ledger, context and notes; its continuation appendix shows that
+Goal/Ralph scaffolds can help or harm by task. The revised plan therefore factorizes memory and
+continuation, separates local-loop from trusted-loop feedback, and treats model plus scaffold as
+the evaluated system. These are implementation-derived deductions, not additional author claims.
+
 `arXiv:2601.21165` also creates a direct naming collision: *FrontierScience* already denotes an
 expert-authored Olympiad/Research question benchmark. Public release should rename this project
 or make the executable-optimization qualifier unavoidable.
@@ -190,6 +204,29 @@ no-literature and open-Web treatments and time/family-held-out novelty checks. E
 number is task-construction effort, not a matched expert baseline; collect a small stratified set
 of expert one-shot and iterative trajectories under the same interface and budgets.
 
+### 12. Measurement, state and acceptance policies remain bundled
+
+The current trajectory design does not yet test whether periodic hidden measurement changes the
+agent's branching/write behavior, whether observer work delays visible feedback, which retained
+state channel causes a continuous-run advantage, or whether continuation scaffolding rather than
+the model explains long-horizon differences. It also accepts every strictly positive visible
+delta even when the change is below numerical resolution. Hartree--Fock's current calibration
+shows why this matters: an approximately `9e-15` selection-score increase changes the selected
+artifact while development and held-out robustness move in different directions. Long runs need
+a stable committed head separate from scratch work, hash-aware snapshots, independent restart
+pools, a local-feedback × trusted-feedback design, model/scaffold metadata and preregistered
+numerical-`epsilon` plus scientific/Pareto acceptance policies.
+
+### 13. Task contracts and scientific scope need explicit linting
+
+A harness timeout cannot silently disagree with a prompt-stated horizon, and prefixes of a run
+that knew it had a longer horizon are not independent short-budget policies. Add contract checks
+over the disclosed/actual horizon, evaluator timeout, cooldown, submission paths and checkpoint
+schedule. Also stratify method-prescriptive reproduction, method-neutral inference,
+optimization and mechanism discovery. EdgeBench intentionally excludes vision-dominated tasks;
+this project must either declare a structured-observation scope or create a separate calibrated
+instrument/perception track rather than silently claiming all of science.
+
 ## Revised TODO plan
 
 ### P0/P1 closeout — completed locally, reproduce in CI
@@ -239,14 +276,25 @@ of expert one-shot and iterative trajectories under the same interface and budge
 - [ ] Add fixed-interval evaluator-only snapshots that never affect online selection or stopping.
 - [ ] Make every snapshot an atomic content-addressed bundle and report three endpoint policies:
   agent/search committed, fixed-horizon terminal and evaluator-only snapshot oracle-best.
+- [ ] Keep an explicit stable committed candidate head separate from scratch work; compare fixed
+  disclosed snapshots, jittered schedule-blind snapshots and post-run event-snapshot replay.
+- [ ] Isolate observer evaluation from visible judge resources, measure queue/throughput effects,
+  and deduplicate unchanged deterministic hashes; aggregate stochastic re-evaluations over a
+  preregistered seed panel rather than treating them as selectable candidates.
 - [ ] Instrument asynchronous feedback lineage with submission hash, feedback-ready/read times
   and first descendant hash; do not attribute stale feedback to unrelated edits.
+- [ ] Record artifact-created/submitted, judge-started/completed and feedback-read times, and
+  predeclare whether submissions completed after the cutoff enter observer-side endpoints.
 - [ ] Split wall time into active model, local tool/simulator, judge/queue, idle/resume and
   charged scientific experiment time; publish scheduled/started/completed/recovered/valid counts.
 - [ ] Add an O0 one-shot/no-environment and first-valid baseline so pretrained competence is not
   counted as within-run learning.
 - [ ] Add structural/behavioral diversity and genealogy-collapse diagnostics.
 - [ ] Add adaptive allocation/stopping baselines (for example, SMC-style convergence control).
+- [ ] Add a task-contract linter for prompt versus actual horizon, checkpoint schedule,
+  evaluator timeout, cooldown, maximum submissions, submitted paths and deliverables.
+- [ ] Use independent runs disclosed their true horizon for budget comparisons; do not treat a
+  horizon-aware long run's prefixes as counterfactual short-horizon executions.
 - [ ] Implement delayed-feedback controls and preregister paired Track F contrasts.
 - [x] Implement a strict selection-blind open-loop control with frozen baseline parent/metrics,
   offline-only best selection, explicit parent-hash tests and machine-readable feedback scope.
@@ -257,8 +305,17 @@ of expert one-shot and iterative trajectories under the same interface and budge
   imbalance rather than promoting it to a Track F claim.
 - [ ] Evaluate persistent scientific memory/world-model quality over long horizons, beyond
   checkpoint/resume correctness.
+- [ ] Factor retained state into incumbent artifact, local result/cache, trusted-feedback ledger,
+  hypothesis/evidence memory, conversation context and full workspace; use independently
+  repeated restart pools rather than dependent subsets of one pool as replicates.
+- [ ] Cross continuous-session, Goal and fresh-context file-backed continuation under a fixed
+  model/context/tool condition; always report the model--scaffold--context bundle.
+- [ ] Run a 2×2 local simulator/test feedback × trusted-judge feedback ablation and account for
+  calls, revealed information and scientific experiment cost in both loops.
 - [ ] Report raw regressions, effective-submission rate, improvement magnitude, rollback latency
   and active-learning span rather than only the monotone best-so-far envelope.
+- [ ] Recompute acceptance under strict-score, evaluator-noise `epsilon`, domain-materiality and
+  Pareto/constraint-aware rules; report selection reversals and sealed/mechanism regret.
 - [ ] Add a curve-construction audit over raw within-task gain, anchors, ranks, family-balanced
   weights, leave-one-task/family-out samples, missing-run policies and plausible score transforms.
 - [ ] Add equal-bit meaningful-label, permuted-label, unlabeled-component and scalar feedback
@@ -289,6 +346,10 @@ of expert one-shot and iterative trajectories under the same interface and budge
   failed branches, falsification metrics, and replay checks.
 - [ ] Add sequential-vs-parallel, tool-access, novelty, ensemble, and component ablations where
   the corresponding scaffold capability is claimed.
+- [ ] Tag tasks as method-prescriptive reproduction, method-neutral inference, optimization or
+  mechanism discovery, and run workflow-hint ablations before claiming method discovery.
+- [ ] Declare the primary benchmark's structured-observation scope or add a separate instrument/
+  perception track with calibration/extraction uncertainty propagated into scientific scores.
 
 ### P4 — release governance
 
