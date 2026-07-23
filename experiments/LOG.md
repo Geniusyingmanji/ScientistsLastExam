@@ -1321,3 +1321,36 @@ with zero infrastructure failures. Re-admission yields **30** internally
 admissible tasks and an approximate gap of **20** to the roughly 50-task target. This is
 reduced-order task calibration, not a global-optimality proof, rate-based process simulation,
 pilot-column/plant validation, model-population estimate or autonomous-discovery result.
+
+### GPT-5.5 distillation calibration
+
+The independent budget-one proposal times out after generating a large numerical search and
+leaves the valid zero-score baseline unchanged. In the normal budget-three run, steps one and
+three time out; step two is valid and accepted, raising development nominal score to
+**0.613090** with held-out nominal **0.540692** and full nominal feasibility. Its mean nominal
+cost falls from about **2.116M/2.488M** to **1.314M/1.776M** on development/held-out regimes.
+However, only the richer-feed condition remains feasible on each instance: sealed shift
+feasibility is **0.20/0.20** and robustness is **0.0/0.0**. The valid policy installs minimum
+or near-minimum tray counts at high reflux and operates close to purity/recovery limits.
+
+All three strict-open-loop proposals from the frozen baseline time out and score zero. Normal
+and selection-blind use the same four oracle calls and local seed label 1, but consume
+**21,738/17,926** tokens. The Azure endpoint exposes no server-side seed; this one-run,
+non-token-matched contrast supports no causal feedback conclusion. Across budget one and both
+budget-three conditions, exactly one of seven proposals is valid and six time out.
+
+The selected program's internal cost routine does not read the public
+`annualized_cost_per_tray` or `annualized_cost_per_vapour_flow` fields. A post-hoc sandboxed
+counterfactual therefore changes the public cost regime from capital-heavy/energy-light to
+capital-light/energy-heavy without changing its 8-stage/high-reflux artifact. Against the same
+feasible 13-stage/low-reflux witness, its cost advantage changes from **-0.889M** to a
+**+1.536M** disadvantage. The nominal score is valid under the benchmark instances, but this
+probe shows that the program did not learn the intended capital--energy tradeoff mechanism.
+
+The three model reports bind clean source `c76767c`; the dedicated analysis on clean source
+`964ac5a` verifies report/raw-trajectory hashes, online/frozen-parent lineage, selected-program
+hashes, sealed nominal/robust axes and the explicitly post-hoc cost probe. Cross-task summary
+v11 and certification v26 bind clean source `f9176df`: **35 normal single-run conditions over
+18 tasks** and a **7/23/21** manifest. These are single-run reduced-order calibrations, not
+population performance, causal feedback learning, global optimality, plant design or
+autonomous scientific discovery.

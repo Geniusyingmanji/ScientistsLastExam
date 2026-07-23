@@ -43,7 +43,7 @@ controlled exception text is reduced to a fixed label-blind failure taxonomy bef
 search feedback, preventing observations from being carried between worlds through exceptions.
 The current audit reports:
 
-- 176/176 unit, security, protocol and scientific-invariant tests passed.
+- 179/179 unit, security, protocol and scientific-invariant tests passed.
 - The latest 51×2 secure-baseline audit reports 51/51 deterministic, 51/51 valid, 51/51
   fail-closed and zero infrastructure failures.
 - Current manifest: 7 certified / 23 candidate / 21 quarantined. D-optimal design, quantum
@@ -154,7 +154,15 @@ The current audit reports:
   robust witnesses cost 37--52%, retain all five volatility/feed/quality/reflux shifts and score
   0.963/0.903 nominal development/held-out plus 1.0/1.0 robustness. Independent bounded
   least-squares MESH solves agree below `1.1e-11` on product composition. This validates the
-  reduced-order task, not a rate-based process model or plant design.
+  reduced-order task, not a rate-based process model or plant design. GPT-5.5 budget one times
+  out. In the normal budget-three run, its only valid proposal reaches nominal
+  development/held-out `0.6131/0.5407`, yet only the richer-feed shift remains feasible:
+  shift feasibility is `0.20/0.20` and robustness is zero. The other six proposals across all
+  three conditions time out. A post-hoc public-cost probe reverses the ordering between the
+  selected 8-stage/high-reflux design and a feasible 13-stage/low-reflux witness, but the
+  selected program returns the same design because it does not read the public tray/vapour cost
+  fields. Thus the observed success is nominal feasibility/cost reduction, not demonstrated
+  mastery of the capital--energy tradeoff or robust process design.
   GPT-5.5 reaches nominal OPF score 1.0
   at budget one while sealed N-1 robustness is only 0.031 on development and approximately
   zero on held-out networks. On Truss-v2, a separate budget-three run improves development
@@ -175,10 +183,10 @@ the post-repair 50-package audits bind revision `47c3613`; the subsequent wave-2
 audit quarantines seven additional defective candidates. The two P2 smokes are baseline-only; the repository does not yet contain
 credible multi-seed model-performance evidence. A clean-revision GPT-5.5 budget-one core pilot
 is recorded as task calibration, not a benchmark leaderboard.
-The latest trusted certification/security/baseline audits are v25/v10/v16. The current 7/23/21 manifest contains 30 internally
+The latest trusted certification/security/baseline audits are v26/v10/v16. The current 7/23/21 manifest contains 30 internally
 admissible tasks, leaving an approximate gap of 20 to the roughly
-50-task target. The hash-bound cross-task summary v10 contains 33 normal single-run conditions
-over 17 tasks; it is calibration evidence, not a leaderboard or population result.
+50-task target. The hash-bound cross-task summary v11 contains 35 normal single-run conditions
+over 18 tasks; it is calibration evidence, not a leaderboard or population result.
 
 ## Quickstart
 
