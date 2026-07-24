@@ -251,8 +251,10 @@ tasks:
     status: quarantined
     reason: stated per-m3 doping scale yields at most 48 microvolts and Ion/Ioff 1.0019 versus an unrelated 1e8 anchor; the present non-finite path fails closed but does not repair the six-order unit and normalization defect
   Thermodynamics/RankineCycleOpt:
-    status: quarantined
-    reason: polynomial steam surrogate gives zero efficiency at its baseline and below 6.6 percent on a broad feasible grid versus an unrelated 46 percent anchor
+    status: candidate
+    reason: v2 replaces the zero-baseline polynomial steam surrogate and unrelated 46 percent anchor with a self-contained IAPWS-IF97 Region 1/2/4 single-reheat cycle over four development and two held-out operating regimes; hard moisture, material and energy-closure gates feed efficiency-versus-specific-work Pareto hypervolume, while five sealed weather, pressure-loss, degradation and material shifts remain evaluator-only; official IAPWS verification tables and an audit-only 32-state iapws-1.5.4 implementation agree to floating-point precision, a fixed-seed 2048-point Sobol witness reaches unit nominal development/held-out score but only approximately 0.71/0.73 shift feasibility, and a robust witness trades nominal score down to approximately 0.48/0.45 while reaching unit development/held-out robustness; retain pending GPT-5.5 headroom calibration, paired controls, server-held cycles, independent thermodynamics review, process-simulator/component-map replication and plant data
+    citation_ids:
+      - iapws:R7-97-2012
   Transportation/TrafficSignalTiming:
     status: quarantined
     reason: no conflicting phase or shared green constraint makes all-maximum greens plus travel-time offsets a trivial full-score corner; non-finite timing receives full score

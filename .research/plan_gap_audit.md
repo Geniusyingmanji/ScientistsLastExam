@@ -27,8 +27,8 @@ physical validation, and auditable claim–evidence provenance.
 |---|---|---|---|
 | Candidate/oracle isolation | Implemented | Clean-revision security v16: 18/18 adversarial tests; Bubblewrap, no network, read-only mounts, resource/seccomp limits, typed RPC, fresh multi-world sessions and candidate-exception sanitization | Reproduce in clean Linux CI; document portability/non-Linux behavior |
 | Fail-closed trusted metrics | Implemented | Clean-revision 51×2 v22: 51 deterministic, 51 valid, 51 fail-closed and zero infrastructure failures after the SeismicWaveInversion-v2 rebuild | Repair or quarantine every future invalid candidate oracle before certification |
-| Task admission policy | Implemented, narrow | Current manifest: 7 certified / 27 candidate / 17 quarantined; the latest rebuilds add active inverse/discovery candidates, LowThrustTransfer-v2, full-field LidDrivenCavity-v2, Climate-v2, BroadbandAbsorber-v2, Distillation-v2, HartreeFockSCF-v2, RoomImpulseResponse-v2, ConvectionDiffusionOpt-v2 and SeismicWaveInversion-v2 | Independent domain + evaluator reviews are still declarations, not completed external review |
-| Scientific validity of inventory | Audited, sparse | All original 50 packages passed adversarial admission; ActiveLawDiscovery brings inventory to 51 and substantive rebuilds now leave 34 internally admissible packages | Rebuild high-value families and add approximately 16 net admissible tasks to reach about 50; hidden/generated instances and shortcut analysis remain mandatory |
+| Task admission policy | Implemented, narrow | Current manifest: 7 certified / 28 candidate / 16 quarantined; the latest rebuilds add active inverse/discovery candidates, LowThrustTransfer-v2, full-field LidDrivenCavity-v2, Climate-v2, BroadbandAbsorber-v2, Distillation-v2, HartreeFockSCF-v2, RoomImpulseResponse-v2, ConvectionDiffusionOpt-v2, SeismicWaveInversion-v2 and RankineCycleOpt-v2 | Independent domain + evaluator reviews are still declarations, not completed external review |
+| Scientific validity of inventory | Audited, sparse | All original 50 packages passed adversarial admission; ActiveLawDiscovery brings inventory to 51 and substantive rebuilds now leave 35 internally admissible packages | Rebuild high-value families and add approximately 15 net admissible tasks to reach about 50; hidden/generated instances and shortcut analysis remain mandatory |
 | Unified trajectory/accounting | Implemented, protocol-smoked | Clean-revision two-seed baseline smoke; trajectory schema v2, hashes, AUC over `budget_units`, separate `oracle_calls`, wall/token/cost, seed, checkpoint/resume | Validate nonzero-budget schema-v2 artifact replay in CI and version future changes |
 | Feedback controls | Implemented; strict pilot run | None/shuffled prompt-metric modes disclose true-score selection; strict selection-blind freezes parent/metrics; four-task n=3 pilot has no direction-stable lift and is not token-matched | Run token-matched ≥10 paired seeds with score-only, delayed/replayed and strict open-loop controls |
 | Evaluator-only metric sealing | Implemented and integration-verified | Closed search-visible allowlist; search-state redaction/hash-keyed sidecars; candidate-controlled exception text mapped to a finite label-blind taxonomy; current 222-test suite; clean pinned OpenEvolve/TreeQuest/Shinka no-leak report `aff026d` | Extend from baseline smoke to nonzero-budget upstream runs before comparative claims |
@@ -338,13 +338,53 @@ terminal sentinels; use artifact+evaluator+world-panel idempotency keys; and cra
 budget/evidence recovery. The source/hash-bound audit is
 `.research/edgebench_contract_runtime_audit_2026-07-24.json`.
 
+### 23. Curve shape is not yet invariant to score atoms or task order
+
+EdgeBench's theory makes vanishing score granularity an explicit condition: a result represented
+as many small score units yields smaller jumps than the same scientific outcome represented by a
+few large gates. Its task-count plot reports lower fit error as the number of tasks grows, but the
+paper and public source do not report a distribution over task permutations or subsamples; that
+figure alone cannot establish that improvement comes from sample size rather than composition.
+The present plan audits transforms and weights but not equivalent rubric partitions or the
+distribution over task orders. Replay the same raw evidence under coarse/canonical/fine partitions
+and random plus lineage-blocked task accumulation. If curve shape, parameter estimates, ranking
+or forecast changes materially, report an evaluator-construction effect rather than a scaling law.
+
+### 24. Same-task memory is not cross-task scientific learning
+
+Current restart and memory controls test persistence within one task or one regime. EdgeBench's
+aggregate theorem actually assumes tasks do not interact, so it supplies no evidence that a
+scientific notebook learned on one system helps another. Add randomized related/unrelated/
+misleading source→target curricula with answer-disjoint procedural worlds. Cross artifact-only,
+raw-evidence, audited hypothesis/evidence and full-state transfer; measure target-only early gain,
+mechanism transfer, false discovery, retraction and negative-transfer half-life.
+
+### 25. Independent per-task budgets omit research portfolio decisions
+
+Equal long budgets per task measure conditional single-task capability, not the ability to choose
+which hypotheses, samples or projects deserve scarce instrument and confirmation resources.
+Build a small blinded portfolio with a shared budget and signal/null/misspecified projects of
+different cost and value. Compare equal/random allocation, cost-aware VOI or knowledge-gradient
+baselines and agent allocation using fresh-confirmed portfolio utility, starvation, abandonment,
+unsafe/false-discovery exposure and regret. Keep every offered project in the denominator.
+
+### 26. Software-replay semantics omit drifting and irreversible laboratories
+
+Exactly-once evaluator recovery is necessary but not sufficient when an assay consumes a sample,
+an intervention changes the system, calibration drifts or parallel experiments return out of
+order. Such actions cannot be rolled back or retried under the same idempotency key. Add a
+server-stateful stress task with sample/calibration/intervention lineage, hidden drift/batches,
+destructive measurements and random completion latency. Score drift detection, recalibration,
+stale-result use, duplicate physical acts, safety and fresh-batch confirmation; use event/sample
+cost or piecewise time when fixed cycles invalidate a log-time coordinate.
+
 ## Revised TODO plan
 
 ### P0/P1 closeout — completed locally, reproduce in CI
 
 - [x] Trusted oracle / isolated candidate architecture and adversarial regression suite.
 - [x] Current 51-package deterministic secure baseline and certification audit; all 51 weak baselines are valid, deterministic and fail closed.
-- [x] Seven-task certified core, 27 candidates and 17 quarantined packages after all
+- [x] Seven-task certified core, 28 candidates and 16 quarantined packages after all
   admission waves and the current substantive rebuilds.
 - [x] Task-card/citation/invariant audit and dated machine-readable evidence.
 - [ ] Add Linux CI reproduction of all dated audits (local clean-revision reproduction is done).
@@ -446,6 +486,8 @@ budget/evidence recovery. The source/hash-bound audit is
 - [ ] Test memory on related-instance transfer and preregistered regime changes, measuring both
   useful transfer and stale-hypothesis/negative-transfer failures rather than same-task retention
   alone.
+- [ ] Randomize related/unrelated/misleading source→target curricula with answer-disjoint target
+  worlds; compare cold, artifact, raw-evidence, audited-notebook and full-state transfer.
 - [ ] Cross continuous-session, Goal and fresh-context file-backed continuation under a fixed
   model/context/tool condition; always report the model--scaffold--context bundle.
 - [ ] Run a 2×2 local simulator/test feedback × trusted-judge feedback ablation and account for
@@ -456,6 +498,8 @@ budget/evidence recovery. The source/hash-bound audit is
   Pareto/constraint-aware rules; report selection reversals and sealed/mechanism regret.
 - [ ] Add a curve-construction audit over raw within-task gain, anchors, ranks, family-balanced
   weights, leave-one-task/family-out samples, missing-run policies and plausible score transforms.
+- [ ] Replay identical raw evidence under coarse/canonical/fine score partitions and random plus
+  lineage-blocked task accumulation orders; gate curve/ranking/forecast claims on robustness.
 - [ ] Validate curve forecasts on held-out suffixes, runs, tasks and families against last-value,
   monotone, per-task plateau and repeated-sampling baselines; resample whole trajectories and
   report interval coverage rather than treating checkpoints as replicates.
@@ -477,6 +521,8 @@ budget/evidence recovery. The source/hash-bound audit is
   conditions where possible, and record UTC start, endpoint/model snapshot and service incidents.
 - [ ] Determine confirmatory replicate allocation from pilot variance and a preregistered material
   effect/interval-width target; treat fixed seed counts as minimum screens, not proof of power.
+- [ ] Add a 4--6-project shared-budget portfolio pilot with equal/random, cost-aware VOI and agent
+  allocation; report fresh-confirmed utility, allocation regret and all abandoned projects.
 - [ ] Freeze a prospective task/scaffold/weight panel before making any model-generation learning-
   speed or doubling-time claim; retain all scheduled systems and adjust for initial capability.
 - [ ] Add equal-bit meaningful-label, permuted-label, unlabeled-component and scalar feedback
@@ -516,6 +562,9 @@ budget/evidence recovery. The source/hash-bound audit is
   rollback on an identical sealed evaluator panel before attributing a milestone to an insight.
 - [ ] Add sequential-vs-parallel, tool-access, novelty, ensemble, and component ablations where
   the corresponding scaffold capability is claimed.
+- [ ] Add one stateful laboratory stress task with calibration drift, sample depletion,
+  irreversible interventions and out-of-order results; bind every observation to world/sample/
+  calibration/intervention lineage and distinguish physical acts from evaluator retries.
 - [ ] Tag tasks as method-prescriptive reproduction, method-neutral inference, optimization or
   mechanism discovery, and run workflow-hint ablations before claiming method discovery.
 - [ ] Declare the primary benchmark's structured-observation scope or add a separate instrument/

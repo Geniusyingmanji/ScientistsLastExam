@@ -567,34 +567,95 @@ def _mosfet():
 
 def _rankine():
     oracle = _oracle("Thermodynamics/RankineCycleOpt")
-    baseline = oracle._compute_efficiency(np.array([10.0, 500.0, 10.0, 0.0]))
-    efficiencies = []
-    best_parameters = None
-    best = -math.inf
-    for pressure in np.linspace(5.0, 30.0, 11):
-        for temperature in np.linspace(400.0, 620.0, 12):
-            for condenser in np.linspace(3.0, 15.0, 7):
-                for reheat in (0.0, 0.5, 1.0):
-                    parameters = [pressure, temperature, condenser, reheat]
-                    efficiency = oracle._compute_efficiency(parameters)
-                    efficiencies.append(efficiency)
-                    if efficiency > best:
-                        best = efficiency
-                        best_parameters = parameters
+
+    def policy(kind):
+        def design(problem):
+            for instance in oracle.INSTANCES:
+                if instance["problem"] == problem:
+                    if kind == "baseline":
+                        return oracle._baseline_archive(problem)
+                    return oracle._reference_archive(instance, kind)
+            raise ValueError("unknown Rankine problem")
+        return design
+
+    baseline = oracle.evaluate(policy("baseline"))
+    nominal = oracle.evaluate(policy("nominal"))
+    robust = oracle.evaluate(policy("robust"))
+    with np.errstate(all="ignore"):
+        nonfinite = oracle.evaluate(
+            lambda _problem: np.full((oracle.MIN_ARCHIVE_SIZE, 4), np.nan)
+        )
+    maximum_residual = max(
+        row.get("maximum_front_energy_balance_residual_kj_kg", 0.0)
+        for result in (baseline, nominal, robust)
+        for row in result["per_instance"]
+    )
     return {
         "task": "Thermodynamics/RankineCycleOpt",
-        "admission": "quarantine",
-        "defect": (
-            "the polynomial steam surrogate assigns zero efficiency to its public baseline; "
-            "a 2,772-point feasible grid reaches only 6.55%, far below the unrelated 46% "
-            "ultra-supercritical anchor"
+        "admission": "candidate",
+        "superseded_v1_defect": (
+            "the removed polynomial steam surrogate assigned zero efficiency to its public "
+            "baseline and below 6.6 percent on a broad feasible grid while normalizing "
+            "against an unrelated 46 percent anchor"
         ),
-        "baseline_efficiency": float(baseline),
-        "coarse_grid_size": len(efficiencies),
-        "coarse_grid_max_efficiency": float(best),
-        "coarse_grid_best_parameters": [float(value) for value in best_parameters],
-        "declared_reference_efficiency": 0.46,
-        "passed": baseline == 0.0 and best < 0.1,
+        "resolved_defect": (
+            "v2 uses self-contained IAPWS-IF97 Regions 1, 2 and 4, six varying operating "
+            "regimes, hard moisture/material/energy-balance gates, condition-aware "
+            "efficiency-versus-specific-work Pareto archives, fixed-seed Sobol witnesses "
+            "and five sealed weather/degradation/material shifts"
+        ),
+        "instance_count": len(oracle.INSTANCES),
+        "development_instance_count": len(oracle.DEVELOPMENT_INSTANCES),
+        "heldout_instance_count": len(oracle.HELDOUT_INSTANCES),
+        "shift_count": len(oracle.SHIFT_SPECS),
+        "baseline_score": float(baseline["combined_score"]),
+        "baseline_mean_front_efficiency": float(
+            baseline["development_mean_front_efficiency"]
+        ),
+        "baseline_mean_front_specific_net_work_kj_kg": float(
+            baseline["development_mean_front_specific_net_work_kj_kg"]
+        ),
+        "nominal_reference_score": float(nominal["combined_score"]),
+        "nominal_reference_heldout_score": float(nominal["heldout_policy_score"]),
+        "nominal_reference_shift_feasibility_rate": float(
+            nominal["development_shift_feasibility_rate"]
+        ),
+        "robust_reference_score": float(robust["combined_score"]),
+        "robust_reference_robustness": float(robust["robustness_score"]),
+        "robust_reference_heldout_robustness": float(
+            robust["heldout_robustness_score"]
+        ),
+        "maximum_front_energy_balance_residual_kj_kg": float(maximum_residual),
+        "nonfinite_task_score": float(nonfinite["combined_score"]),
+        "nonfinite_task_valid": bool(nonfinite["valid"]),
+        "rebuild_passed": True,
+        "passed": bool(
+            oracle.RANKINE_V2
+            and len(oracle.DEVELOPMENT_INSTANCES) == 4
+            and len(oracle.HELDOUT_INSTANCES) == 2
+            and len(oracle.SHIFT_SPECS) == 5
+            and baseline["valid"] == 1.0
+            and baseline["combined_score"] == 0.0
+            and baseline["robustness_score"] == 0.0
+            and baseline["development_shift_feasibility_rate"] == 1.0
+            and 0.35 < baseline["development_mean_front_efficiency"] < 0.43
+            and 1300.0
+            < baseline["development_mean_front_specific_net_work_kj_kg"]
+            < 1700.0
+            and nominal["valid"] == 1.0
+            and nominal["combined_score"] > 0.999999
+            and nominal["heldout_policy_score"] > 0.999999
+            and nominal["development_shift_feasibility_rate"] < 0.80
+            and robust["valid"] == 1.0
+            and 0.40 < robust["combined_score"] < 0.60
+            and robust["robustness_score"] > 0.999999
+            and robust["heldout_robustness_score"] > 0.999999
+            and robust["development_shift_feasibility_rate"] == 1.0
+            and maximum_residual <= 2.0e-8
+            and nonfinite["combined_score"] == 0.0
+            and nonfinite["raw_score"] == 0.0
+            and not bool(nonfinite["valid"])
+        ),
     }
 
 
@@ -659,6 +720,9 @@ def audit() -> dict:
             ),
             "recommended_quarantine_count": sum(
                 row["admission"] == "quarantine" for row in records
+            ),
+            "recommended_candidate_count": sum(
+                row["admission"] == "candidate" for row in records
             ),
         },
     }

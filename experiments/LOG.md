@@ -1664,3 +1664,50 @@ The source-hash-bound 11-task mapping and numerical mean check are retained in
 
 These are protocol and portfolio findings, not new Frontier-Science model results. No Rankine-v2
 source or calibration artifact was changed by this audit.
+
+## 2026-07-24 — EdgeBench theory-to-science second-order audit
+
+We rechecked EdgeBench v1, the public repository and dataset; they remain at arXiv v1, GitHub
+`a87350a` and Hugging Face `47846a4`. This pass used the full theory rather than adding another
+summary of the headline curve. Four untested boundaries now enter the Frontier-Science plan.
+
+First, the log-sigmoid derivation explicitly depends on small score units, so identical raw
+scientific evidence must be replayed under coarse/canonical/fine rubric partitions and random
+task accumulation orders before curve smoothness is treated as an agent property. Second, the
+aggregate theorem treats tasks as non-interacting; same-task persistence therefore does not show
+cross-task scientific learning, motivating randomized related/unrelated/misleading source→target
+curricula. Third, independent equal budgets omit the scientific portfolio problem of choosing
+which projects deserve scarce instruments and confirmation. Fourth, stable/replayable task
+semantics omit instrument drift, sample depletion, irreversible interventions and out-of-order
+experimental results.
+
+The resulting E29--E32 designs, experiment-matrix rows, TODOs and source hashes are recorded in
+`docs/edgebench_science_experiment_addendum.md`, `.research/science_experiment_plan.md`,
+`.research/plan_gap_audit.md` and
+`.research/edgebench_science_second_order_audit_2026-07-24.json`. These are Frontier-Science
+proposals derived from explicit EdgeBench assumptions; they are not additional EdgeBench results
+and do not change any Rankine implementation or model-performance evidence.
+
+## 2026-07-24 — RankineCycleOpt-v2 pre-commit validation
+
+The quarantined polynomial Rankine surrogate has been replaced by a six-regime, single-reheat
+cycle task using self-contained IAPWS-IF97 Regions 1, 2 and 4. Candidate artifacts are bounded
+Pareto archives over boiler pressure, main-steam temperature, reheat-pressure fraction and reheat
+temperature. Four development and two held-out regimes separate nominal efficiency/specific-work
+hypervolume from five sealed weather, pressure-loss, degradation and material-limit shifts. Hard
+gates cover moisture, materials, pressure ordering, archive diversity and energy closure.
+
+A fixed-seed power-11 Sobol calibration rebuilds all committed indices and anchors exactly. An
+audit-only `iapws==1.5.4` comparison covers 32 Region-1/2/4 states: the largest absolute enthalpy
+or internal-energy difference is about `9.1e-13`, and the largest speed-of-sound difference is
+about `4.1e-12`. The weak baseline has mean development front efficiency `0.3925913391` and
+specific work `1475.758849 kJ/kg`. The nominal witness reaches `1.0/1.0` development/held-out
+nominal score but only about `0.7125/0.73125` shift feasibility; the robust witness trades nominal
+score down to about `0.484/0.452` while reaching `1.0/1.0` robustness. Maximum observed cycle
+energy residual is about `4.55e-13 kJ/kg`.
+
+The complete pending-source suite passes **244/244** tests. Dirty-source Rankine calibration,
+candidate-wave-4 and certification audits all have `execution_passed=true`, but correctly record
+`trust_decision=source_tree_dirty_or_unknown`, `trusted_evidence=false` and `passed=false`.
+They are pre-commit validation only. Formal reports must be regenerated from the committed clean
+source before this rebuild contributes trusted evidence or GPT-5.5 calibration results.

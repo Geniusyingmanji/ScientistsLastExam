@@ -11,7 +11,7 @@ from unittest.mock import patch
 from frontier_science.algorithms.abmcts_backend import TREEQUEST_COMMIT, TREEQUEST_VERSION
 from frontier_science.algorithms.openevolve_backend import OPENEVOLVE_COMMIT, OPENEVOLVE_VERSION
 from frontier_science.algorithms.shinkaevolve_backend import SHINKA_COMMIT, SHINKA_VERSION
-from frontier_science.provenance import source_provenance
+from frontier_science.provenance import finalize_report_trust, source_provenance
 
 
 SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "merge_upstream_smokes.py"
@@ -42,6 +42,31 @@ class SourceProvenanceTests(unittest.TestCase):
             dirty = source_provenance(root)
             self.assertTrue(dirty["source_tree_dirty"])
             self.assertTrue(any("frontier_science/x.py" in row for row in dirty["source_changes"]))
+
+    def test_trust_decision_distinguishes_report_class_from_evidence_trust(self):
+        report = {
+            "trust_status": "TRUSTED_TASK_CALIBRATION",
+            "source_provenance": {
+                "git_available": True,
+                "git_revision": "abc",
+                "source_tree_dirty": True,
+            },
+        }
+        self.assertTrue(finalize_report_trust(report, True))
+        self.assertEqual(report["trust_status"], "TRUSTED_TASK_CALIBRATION")
+        self.assertEqual(report["trust_decision"], "source_tree_dirty_or_unknown")
+        self.assertFalse(report["trusted_evidence"])
+        self.assertFalse(report["passed"])
+
+        report["source_provenance"]["source_tree_dirty"] = False
+        self.assertTrue(finalize_report_trust(report, True))
+        self.assertEqual(report["trust_decision"], "trusted_clean_revision")
+        self.assertTrue(report["trusted_evidence"])
+        self.assertTrue(report["passed"])
+
+        self.assertFalse(finalize_report_trust(report, False))
+        self.assertEqual(report["trust_decision"], "execution_failed")
+        self.assertFalse(report["trusted_evidence"])
 
 
 class MergeUpstreamSmokeTests(unittest.TestCase):

@@ -54,14 +54,23 @@ def finalize_report_trust(report: dict[str, Any], execution_passed: bool) -> boo
 
     A report may be useful for debugging when its execution succeeds on a dirty tree, but it
     is benchmark evidence only when the scoped source tree is a clean, known Git revision.
+    ``trust_status`` is retained as the report/evidence class for compatibility; the
+    authoritative trust decision is ``trusted_evidence`` and its machine-readable reason is
+    ``trust_decision``.
     """
     provenance = report.get("source_provenance") or {}
     report["execution_passed"] = bool(execution_passed)
-    report["trusted_evidence"] = bool(
-        execution_passed
-        and provenance.get("git_available") is True
-        and provenance.get("git_revision") not in {None, "", "unknown"}
-        and provenance.get("source_tree_dirty") is False
-    )
+    if not execution_passed:
+        trust_decision = "execution_failed"
+    elif provenance.get("git_available") is not True:
+        trust_decision = "git_unavailable"
+    elif provenance.get("git_revision") in {None, "", "unknown"}:
+        trust_decision = "unknown_revision"
+    elif provenance.get("source_tree_dirty") is not False:
+        trust_decision = "source_tree_dirty_or_unknown"
+    else:
+        trust_decision = "trusted_clean_revision"
+    report["trust_decision"] = trust_decision
+    report["trusted_evidence"] = trust_decision == "trusted_clean_revision"
     report["passed"] = report["trusted_evidence"]
     return report["execution_passed"]

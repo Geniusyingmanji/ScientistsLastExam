@@ -1,0 +1,29 @@
+schema_version: 1
+scientific_question: Can one condition-aware policy discover efficiency-versus-specific-work Pareto archives that transfer across steam-cycle operating regimes and remain feasible under weather, degradation, pressure-loss and material-limit shifts?
+artifact: A bounded archive of single-reheat cycle designs containing boiler pressure, main-steam temperature, reheat-pressure fraction and reheat temperature.
+oracle:
+  exact: self-contained IAPWS-IF97 Regions 1, 2 and 4 equilibrium property model with single-reheat pump/turbine energy balances
+  feasibility: finite archive shape, public design bounds, minimum unique and nominal-feasible rows, pressure ordering, material limits, superheat margins, HP/LP moisture limits and energy closure
+  deterministic: true
+normalization:
+  baseline: conservative condition-aware eight-design archive feasible under nominal and every sealed shift
+  reference: fixed-seed 2048-point scrambled-Sobol screen followed by full-cycle nominal and shift-robust Pareto selection
+  score: development nominal efficiency-versus-specific-net-work hypervolume controls search; held-out and degradation robustness remain separate and sealed
+citations:
+  - id: iapws:R7-97-2012
+    title: Revised Release on the IAPWS Industrial Formulation 1997 for the Thermodynamic Properties of Water and Steam
+invariants:
+  - Region 1, Region 2 and Region 4 equations match IAPWS R7-97(2012) official verification tables 5, 15, 35 and 36
+  - a 32-state development grid agrees with independent iapws 1.5.4 to floating-point precision without making it a runtime dependency
+  - Region 3 is explicitly unsupported and the public boiler-pressure bound keeps every cycle state outside it
+  - every weak-baseline design is nominally feasible and feasible under all five sealed degradation shifts
+  - nominal and robust reference archives reconstruct exactly from committed Sobol seeds and indices
+  - every reference hypervolume exceeds its corresponding weak-baseline hypervolume
+  - every feasible cycle closes heat input minus rejection minus net work within 2e-8 kJ/kg
+  - lower turbine efficiency cannot improve efficiency or specific net work for a fixed design
+  - non-finite, malformed, duplicated-only, out-of-bound and insufficiently feasible archives fail closed
+  - held-out, robustness, moisture, detailed objective and per-instance metrics remain evaluator-only
+known_shortcuts: The equilibrium steady-state oracle omits feedwater regeneration, combustion, detailed off-design component maps, transient stress, water chemistry, capital cost and emissions. Public deterministic instances require future server-held regimes. Plant claims require independent process-simulator, manufacturer-map and field validation. Reference archives are strong feasible witnesses, not global-optimality proofs.
+review:
+  domain: pending_external
+  evaluator_security: automated_invariant_sandbox_and_metric_sealing_tests
