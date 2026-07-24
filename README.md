@@ -16,11 +16,11 @@ text-question benchmark named *FrontierScience* in
 
 ## Current status
 
-The repository contains **51 task packages in 47 metadata domains**:
+The repository contains **52 task packages in 47 metadata domains**:
 
 - **7 certified core tasks**: Lennard–Jones clusters, spin glass, Poisson solver,
   matrix-multiplication rank, Cap Set, circle packing, and multilayer thin films.
-- **30 candidate tasks** pending scientific certification, including intervention-based causal
+- **31 candidate tasks** pending scientific certification, including intervention-based causal
   and active dynamical-law laboratories whose prediction and mechanism metrics are reported
   separately, a multi-spectrum NMR peak-mechanism/refusal task, and a multi-fidelity
   heat-exchanger Pareto-design task, a full-field lid-driven-cavity solver, active
@@ -46,10 +46,10 @@ controlled exception text is reduced to a fixed label-blind failure taxonomy bef
 search feedback, preventing observations from being carried between worlds through exceptions.
 The current audit reports:
 
-- 305/305 unit, security, protocol, analysis and scientific-invariant tests pass after adding
-  GeneNetworkIntervention. The latest trusted task/security/baseline reports bind clean source
-  revision `b777889`; the current hash-bound calibration summary still contains 49 normal
-  single-run conditions over 25 tasks and predates the new model runs.
+- 307/307 unit, security, protocol, analysis and scientific-invariant tests pass after adding
+  GeneNetworkIntervention and its calibration analysis. The latest trusted task/security/baseline
+  reports bind clean source revision `b777889`; cross-task summary v19 binds revision `1af62cd`
+  and contains 51 normal single-run conditions over 26 tasks.
 - The latest trusted 52×2 secure-baseline audit reports 52/52 deterministic, 52/52 valid,
   52/52 fail-closed and zero infrastructure failures.
 - Current source manifest: 7 certified / 31 candidate / 14 quarantined. D-optimal design, quantum
@@ -240,10 +240,12 @@ cover all 52 current task directories. The current source manifest is 7/31/14 an
 38 internally admissible tasks, leaving an approximate gap of 12 to the roughly 50-task target.
 GeneNetworkIntervention adds an active nonlinear signed-network, protected-readout intervention,
 sealed-transfer and null/latent-regulator refusal candidate. Its truth-blind nonlinear reference
-scores `0.9053/0.8932` development/held-out joint quality with zero false discovery; GPT-5.5
-calibrations are still pending. The hash-bound cross-task summary v18
-contains 49 normal single-run conditions over 25 tasks; it is calibration
-evidence, not a leaderboard or population result.
+scores `0.9053/0.8932` development/held-out joint quality with zero false discovery. Across the
+budget-one, normal budget-three and selection-blind budget-three GPT-5.5 calibrations, six of
+seven proposals are invalid and the only valid proposal refuses every supported world; no valid
+nonzero scientific proposal is observed. The hash-bound cross-task summary v19 contains 51 normal
+single-run conditions over 26 tasks. These runs are calibration evidence, not a leaderboard,
+population result, real Perturb-seq result or biological discovery.
 
 The latest EdgeBench re-audit keeps its upstream facts at arXiv `2607.05155v1`, SForge
 `a87350a` and public dataset `47846a4`. In addition to E1--E36, the science plan now preregisters

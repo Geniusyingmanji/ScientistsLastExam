@@ -7,13 +7,14 @@ OceanCurrentInversion-v2, RadiativeTransferFit-v2, LowThrustTransfer-v2,
 LidDrivenCavity-v2, EnergyBalanceModel-v2, BroadbandAbsorber-v2,
 DistillationColumnDesign-v2, HartreeFockSCF-v2, RoomImpulseResponse-v2,
 ConvectionDiffusionOpt-v2, SeismicWaveInversion-v2, RankineCycleOpt-v2 and MOSFETDoping-v2. The
-47 normal-feedback model conditions across these 24 tasks each
+list now also includes RANSCalibration-v2 and GeneNetworkIntervention-v1. The 51 normal-feedback
+model conditions across these 26 tasks each
 contain one seed and proposal budget one or three. They calibrate tasks and motivate experiments;
 they are not a model leaderboard, a causal feedback study or population evidence.
 
 The portable machine record
-`experiments/science_calibration_summary_2026-07-24_v17.json` retains every top-level scalar metric,
-candidate lineage hash and raw trajectory SHA-256 for all 47 normal conditions.
+`experiments/science_calibration_summary_2026-07-24_v19.json` retains every top-level scalar metric,
+candidate lineage hash and raw trajectory SHA-256 for all 51 normal conditions.
 Additional strict diagnostics for Distillation-v2, Hartree--Fock and room acoustics are bound
 separately by `experiments/distillation_v2_calibration_analysis_2026-07-23.json`,
 `experiments/hartree_fock_v2_calibration_analysis_2026-07-23.json` and
@@ -21,7 +22,9 @@ separately by `experiments/distillation_v2_calibration_analysis_2026-07-23.json`
 `experiments/convection_diffusion_v2_calibration_analysis_2026-07-23.json`,
 `experiments/seismic_wave_v2_calibration_analysis_2026-07-24.json` and
 `experiments/rankine_v2_calibration_analysis_2026-07-24.json` and
-`experiments/mosfet_v2_calibration_analysis_2026-07-24.json`. Strict selection-blind
+`experiments/mosfet_v2_calibration_analysis_2026-07-24.json`,
+`experiments/rans_v2_calibration_analysis_2026-07-24.json` and
+`experiments/gene_network_intervention_calibration_analysis_2026-07-24.json`. Strict selection-blind
 diagnostics remain in task-specific analysis because they are not normal-feedback calibrations.
 The underlying reports bind the task-specific source revision. Pendulum's initial budget-one
 run on revision `57c0e1b` is
@@ -85,6 +88,9 @@ by the corrected-contract run on `2557adb`.
 | RankineCycleOpt-v2, budget 1 | development/held-out nominal `0.963561/0.957382`; nominal feasibility `1/1` | robustness `0/0`; shift feasibility `0.6/0.6` | One proposal synthesizes a strong nominal IF97 cycle archive but misses material-derating and combined-shift feasibility. |
 | RankineCycleOpt-v2, normal budget 3 | first proposal reaches development/held-out nominal `1/1`; all three proposals valid | robustness `0/0`; shift feasibility `0.6/0.6` | The nominal ceiling is reached at step one and later scalar feedback does not expose or repair the sealed robustness failure in this trajectory. |
 | RankineCycleOpt-v2, selection-blind budget 3 | frozen-baseline open-loop batch reaches offline-best development/held-out nominal `1/1` | robustness `0/0`; shift feasibility `0.6/0.6` | Nominal success does not require iterative score/parent feedback in this single run; unequal tokens/wall time and uncontrolled generation randomness preclude a feedback-effect claim. |
+| RANSCalibration-v2, normal budget 3 | selected development/held-out nominal `0.356/0.428` | development/held-out robustness `0.127/0.299`; later proposal regresses to zero | A four-parameter channel-flow closure improves the nominal score, but coordinate shifts reduce both split scores. The matched-oracle-call selection-blind run remains at zero, but unequal tokens and unseeded generation preclude a feedback-effect claim. |
+| GeneNetworkIntervention-v1, truth-blind reference | development/held-out joint `0.905/0.893`; supported coverage `1/1` | mechanism `0.862/0.800`; prediction `0.916/0.898`; unsupported refusal `1/1`; false discovery `0/0` | The synthetic task has recoverable mechanism, prediction and intervention headroom without requiring truth access. It is not real Perturb-seq or biological-discovery evidence. |
+| GeneNetworkIntervention-v1, three GPT-5.5 conditions | all seven proposals remain at zero; six are invalid | four invalid experiments, two callback-schema failures and one valid proposal that refuses every supported world | The same score can represent protocol failure or scientifically empty over-refusal. Validity, supported-world coverage and conditional scientific quality must be reported as separate hurdles. |
 
 OPF's `robustness_score` combines security-constrained economic quality with overload penalties.
 It is not a pure safety probability. The proportional baseline is feasible for every tested
@@ -220,7 +226,24 @@ procedural worlds it predicts supported responses at 0.995 while supported mecha
 not preregistered hidden validation, but they show why response fit, parameter recovery,
 model-class adequacy and refusal must be separate curves.
 
-### 5. Feedback cannot optimize information that selection never receives
+### 5. Protocol validity, scientific coverage and conditional quality are sequential hurdles
+
+GeneNetworkIntervention makes the hurdle structure explicit. Across budget one, normal budget
+three and selection-blind budget three, six of seven proposals fail before scientific quality can
+be interpreted: four request invalid experiments and two violate the callback schema. The only
+valid proposal refuses every supported world. It therefore passes the executable protocol and
+avoids false discoveries, but has zero supported-world coverage and no mechanism, prediction or
+intervention result to assess. A zero endpoint score alone cannot distinguish these states.
+
+The same separation appears in RadiativeTransferFit-v2 and ConvectionDiffusionOpt-v2, where valid
+full-budget programs can still refuse all supported worlds. Scientific-agent curves should first
+report protocol validity and first-valid incidence, then supported coverage and calibrated
+refusal, and finally mechanism, prediction, decision utility and transfer conditional on making a
+warranted claim. A joint success curve may be reported after these components, but it cannot
+replace them. The current evidence is task calibration from single runs and does not estimate a
+population success probability.
+
+### 6. Feedback cannot optimize information that selection never receives
 
 In the OPF budget-three run, later proposals receive only nominal score and reproduce the same
 N-1 failure. Pendulum's visible improvement is accompanied by flat shifted robustness, while
@@ -279,7 +302,7 @@ model claims, while a truth-blind long multiscale forcing design avoids those er
 treatments must factor protocol repair, temporal experiment design, parameter estimation and
 model checking instead of interpreting one aggregate score as the source of failure.
 
-### 6. Contract completeness must precede headroom claims
+### 7. Contract completeness must precede headroom claims
 
 The superseded Pendulum diagnostic failed because the public contract omitted the evaluator's
 exact equations. Disclosing the equations changed budget-one performance from no improvement to
@@ -287,7 +310,7 @@ exact equations. Disclosing the equations changed budget-one performance from no
 equations or observations required to define the stated problem. Apparent difficulty caused by
 an underspecified contract is evaluator error, not scientific headroom.
 
-### 7. A single science score would erase the observed failure modes
+### 8. A single science score would erase the observed failure modes
 
 The calibrated tasks expose different quantities: nominal utility, held-out transfer, physical
 robustness, constraint feasibility, prediction, mechanism recovery and refusal. Averaging them
@@ -518,8 +541,8 @@ far-offset prediction, model-class adequacy and geological interpretation remain
 The current synthetic primary-reflection laboratory is an active-acquisition/model-checking
 on-ramp, not field FWI or autonomous geological discovery.
 
-The present inventory contains 35 internally admissible certified or candidate packages: seven
-certified and 28 candidate, with 16 quarantined. The remaining gap is approximately 15 tasks.
+The present inventory contains 38 internally admissible certified or candidate packages: seven
+certified and 31 candidate, with 14 quarantined. The remaining gap is approximately 12 tasks.
 Expansion should use procedural families spanning
 design, inverse problems, control, multifidelity validation, mechanism discovery and exact
 mathematical construction rather than cloning one scalar optimization template across domains.

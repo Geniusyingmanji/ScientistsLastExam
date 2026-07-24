@@ -2091,3 +2091,28 @@ fail-closed tasks with zero infrastructure failures, and the full suite passes 3
 The benchmark remains a deterministic synthetic four-gene abstraction. Server-held worlds,
 measurement/batch/cell-state models, independent systems-biology review, real Perturb-seq assays
 and prospective wet-lab validation remain necessary before any biological claim.
+
+## 2026-07-24 — GeneNetworkIntervention model analysis and cross-task summary v19
+
+`experiments/gene_network_intervention_calibration_analysis_2026-07-24.json` has SHA-256
+`d616ab194464c9b142d1fc2894c99be8074f608ff71055693bab740970e7d6d3` and binds analysis
+source revision `df205bb`. It verifies task/runtime source equivalence and the three trusted
+GPT-5.5 reports. Across their seven proposals, six are invalid: four request invalid experiments
+and two violate the candidate callback schema. The only valid proposal refuses every supported
+world, so no valid nonzero scientific proposal is observed. Normal and selection-blind budget
+three use four oracle calls each, but normal uses 1,548 more tokens and 13.88 more seconds. Azure
+does not expose a server-side generation seed, so this contrast is descriptive rather than a
+feedback-effect estimate.
+
+`experiments/science_calibration_summary_2026-07-24_v19.json` has SHA-256
+`8b24eb3b7d9986556863ca4d0bf981bdd3d7fea941d7ef6f5c765ce79a934471`, binds clean source
+revision `1af62cd`, and contains 51 normal single-run conditions across 26 tasks. The strict
+selection-blind GeneNetwork condition remains in the task-specific analysis. The expanded
+cross-task finding is a reporting rule rather than a biological claim: protocol validity,
+supported-world coverage and refusal, and scientific quality conditional on a warranted claim
+form separate hurdles. The reports remain single-run synthetic-task calibration, not population,
+causal-feedback, real Perturb-seq, wet-lab or autonomous-discovery evidence.
+
+The current full suite passes 307/307 tests. This supersedes the 305/305 implementation count
+above by adding the two GeneNetwork analysis tests; the clean-revision certification, security
+and secure-baseline reports remain v38/v22/v28 on task revision `b777889`.
