@@ -82,6 +82,10 @@ Report its visible, sealed and mechanism advantage over `committed` as an
 | S5 | Does intervening on the task dependency graph change learning as the frontier mechanism predicts? | Answer-disjoint procedural twins with matched marginal node difficulty, score mass, feedback and cost but well-mixed, chain, modular-bottleneck and hierarchical dependency graphs; bridge/prerequisite intervention | material-event hazard, plateau/inflection count, module transfer, bridge treatment effect, sealed/mechanism outcome and prospective curve-family prediction | Empirical support or falsification of the latent frontier-expansion mechanism rather than fit alone |
 | Q1 | Can the agent formulate a worthwhile, falsifiable scientific question before solving it? | Fixed question vs candidate menu vs open question formation in one rich procedural laboratory; signed preregistration before new data | answerability/identifiability, predicted and realized information or decision value, fresh confirmation, trivial-question rate, false discovery and preregistration deviation | Research-question/agenda formation, distinct from solving an author-specified objective |
 | K3 | How strongly do executable starters and embedded scientific priors anchor the search? | Blank schema-only scaffold vs quality-matched neutral, development-plausible wrong, correct and diverse-choice starters on identical procedural worlds | time-to-valid and basin escape, exploration diversity, stale-hypothesis/retraction delay, sealed/mechanism/false-discovery outcome and structural distance from starter | Scaffold-conditioned adaptation separated from independent method discovery |
+| I6 | Can the system carry raw instrument observations into a valid conclusion without hiding measurement error? | Oracle-clean features vs frozen reference preprocessing vs agent-built raw-data pipeline, paired across calibration drift, missing/censoring, channel/unit faults and true anomalies | extraction/calibration error, uncertainty propagation, mechanism/confirmation, false alarm/miss and downstream decision regret | Instrument-facing science separated from reasoning over clean structured observations |
+| V4 | Is the scientific method invariant to equivalent representations while remaining sensitive to real physical changes? | Unit, coordinate, channel, grid, spectral and symmetry-equivalent metamorphic twins plus visually similar non-equivalent negative controls | physical-claim consistency, performance drop, equivariance violations, contradictions and negative-control sensitivity | Representation-robust scientific transfer rather than template or schema matching |
+| T1 | Does independent scientific review reduce correlated error under a fixed total budget? | Single continuous agent vs shared branches vs isolated investigators vs blinded evidence synthesis vs shared-context critic; team signs one claim before fresh confirmation | hypothesis diversity, pairwise error correlation, false consensus, minority correctness, synthesis calibration, confirmation and utility per cost | Multi-agent/team benefit without post-hoc oracle winner selection |
+| U1 | Does the artifact remain useful when a reasonable downstream utility is not known during search? | Public fixed scalar vs public utility family with sealed post-commit weights vs reusable Pareto/response-surface/method artifact; announced objective-shift control | sealed utility regret, worst-case/CVaR regret, Pareto coverage, safety violations and adaptation cost | Reusable scientific knowledge separated from evaluator-targeted scalar optimization |
 
 ## Controls that must be strict
 
@@ -305,6 +309,14 @@ server-held procedural worlds, multi-seed feedback controls and independent revi
     information/decision value, triviality, false discovery and fresh confirmation.
 41. Starter-prior anchoring matrix: blank/neutral/wrong/correct/diverse starters with basin
     escape, exploration diversity, mechanism retraction and sealed transfer.
+42. Raw-measurement error cascade from calibration/extraction/QC through mechanism, confidence,
+    confirmation and final decision, with oracle-clean-feature rescue.
+43. Scientific-representation metamorphic matrix over unit/coordinate/channel/grid/spectral
+    twins and non-equivalent negative controls.
+44. Independent-team panel comparing single, shared and isolated investigators plus blinded
+    synthesis on diversity, correlated error, false consensus, fresh confirmation and cost.
+45. Latent-utility robustness frontier comparing public scalar optimization with reusable
+    Pareto/method artifacts under post-commit sealed utility weights.
 
 Avoid presenting a radar chart or a single “science score”; small multiples preserve the
 important capability dissociations.
@@ -410,6 +422,18 @@ important capability dissociations.
   complete starter lineage. A wrong starter must be truth-blind, plausible on development evidence
   and falsifiable on preregistered interventions; do not count hidden-answer leakage as a helpful
   prior.
+- For raw-measurement studies, pair every preprocessing arm on the same latent world and common
+  noise draw. Preserve raw observations and typed uncertainty; never score downstream inference
+  only on features produced by the same hidden generator used as ground truth.
+- For metamorphic studies, canonicalize outputs only after candidate execution and freeze the
+  transformation group before runs. Include non-equivalent negative controls so ignoring the
+  transformed input cannot masquerade as invariance.
+- For team studies, the experimental unit is a complete budget-matched team episode. Independent
+  investigators cannot share scratch state or judge feedback, and the team must sign one claim or
+  abstention before confirmation; member-wise oracle-best is a diagnostic, not the endpoint.
+- For latent-utility studies, freeze and hash the utility family before search, reveal only
+  scientifically legitimate constraints, and draw final weights after signed commit. Report the
+  full regret distribution rather than selecting the most favorable stakeholder weight.
 
 ## Scaling-law caution
 
@@ -491,6 +515,9 @@ midpoint, speed or doubling-time claim.
   twin pilot before giving a mechanistic interpretation to any scaling curve.
 - One exploratory Q1 question-formulation laboratory and one K3 wrong-prior starter ablation before
   using the phrases autonomous research agenda or independent method discovery.
+- One I6 raw-instrument pipeline and V4 metamorphic-invariance audit before claiming scope beyond
+  structured observations; one T1 independent-team and U1 sealed-utility pilot before claiming
+  collaborative autonomous science or stakeholder-robust scientific knowledge.
 
 Only Stage B can support claims about feedback-driven scientific discovery. A real-world
 discovery claim additionally requires independent high-fidelity or physical confirmation and
@@ -530,6 +557,15 @@ domain-expert review.
   candidate menu without increasing trivial questions or false discoveries.
 - H16: a development-plausible wrong starter delays mechanism correction and reduces exploration
   diversity relative to blank/neutral starters; a successful system detects and escapes this prior.
+- H17: agent-built preprocessing preserves calibrated downstream mechanism and decision quality
+  under realistic instrument faults relative to oracle-clean features, rather than converting
+  measurement error into confident false discovery.
+- H18: physical claims and selected interventions remain equivalent under valid unit/coordinate/
+  channel transformations while responding to non-equivalent physical controls.
+- H19: blinded synthesis of genuinely independent investigators lowers correlated false discovery
+  over an equal-budget single agent or shared-context critic without relying on oracle winner selection.
+- H20: executable Pareto/method artifacts have lower post-commit sealed-utility regret than artifacts
+  optimized for one public scalar, at comparable scientific cost and safety.
 
 These are hypotheses to test. The paper should report failed hypotheses and negative results
 rather than selecting only curves that resemble Frontier-Eng or EdgeBench.

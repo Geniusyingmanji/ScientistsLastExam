@@ -75,6 +75,12 @@ optimization**, with later “discovery” claims gated on (2)–(4).
   sentinel/recovery audit are retained in
   `.research/edgebench_contract_runtime_audit_2026-07-24.json`. The identified risks are not
   evidence that any EdgeBench headline number is wrong.
+- The fourth-order scope audit checks the explicit exclusion of vision-dominated tasks against all
+  39 Science/ML design notes and the public Borden endpoint. It motivates raw-measurement error
+  propagation, scientific-representation metamorphic invariance, independent-investigator/blinded-
+  synthesis controls and sealed downstream-utility tests. These are unrun Frontier-Science designs,
+  not EdgeBench results; source hashes and claim limits are retained in
+  `.research/edgebench_science_fourth_order_audit_2026-07-24.json`.
 - The same recheck found no public raw interaction-trajectory corpus or figure-analysis source in
   the official GitHub/Hugging Face trees. This is a release-scope observation, not evidence that
   the authors did not retain or internally analyze such data.

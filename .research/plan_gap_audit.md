@@ -36,7 +36,7 @@ physical validation, and auditable claim–evidence provenance.
 | TreeQuest AB-MCTS | Implemented, trusted baseline smoke | Real TreeQuest AB-MCTS-A ask/tell adapter; clean-revision secure baseline passed under Python 3.12 | Run nonzero-budget/checkpoint integration and multi-seed study |
 | ShinkaEvolve | Implemented, trusted baseline smoke | Official runner/database adapter at pinned commit; clean-revision secure baseline passed under Python 3.10 | Run nonzero-budget/resume integration and token accounting audit |
 | Classical/domain baselines | Partial | NMR, HeatExchanger, Reaction, Gravity, Ocean, Radiative, LowThrust and Climate rebuilds have truth-blind domain baselines exposing reconstruction/proxy/prediction, terminal-feasibility, experiment-design or mechanism/refusal gaps | Add random/quasi-random plus BO/CMA-ES/DE and one domain heuristic for each meaningful task family |
-| Multi-seed benchmark evidence | Missing | Keyless GPT-5.5 Responses path is operational; 41 trusted normal single-run conditions cover 21 tasks and a separate four-task n=3 control pilot is negative/inconclusive | Certified-core and science-subset reports with paired uncertainty and portable raw trajectories |
+| Multi-seed benchmark evidence | Missing | Keyless GPT-5.5 Responses path is operational; 45 trusted normal single-run conditions cover 23 tasks and a separate four-task n=3 control pilot is negative/inconclusive | Certified-core and science-subset reports with paired uncertainty and portable raw trajectories |
 | Multifidelity/Pareto | Candidate-level | HeatExchanger-v2 implements proxy/exact Pareto archives, measured false promotion and physical shifts | Add independent high-fidelity review/replication and at least one certified multifidelity task |
 | Feedback learning claim | Negative pilot only | A strict open-loop control and three-replicate four-task pilot are complete; no direction-stable visible or sealed lift, and normal uses more tokens | Token-matched preregistered ≥10-replicate study with delayed/replayed and score-only controls |
 | Mechanistic discovery | Candidate-level | ActiveLaw, NMR, Reaction, Gravity, Ocean, Radiative and Climate tasks separately score mechanisms, prediction, coverage, hidden shifts, false discovery and refusal | Add paired repeated studies, harder regimes and independent scientific validation |
@@ -109,8 +109,8 @@ or make the executable-optimization qualifier unavoidable.
 
 ### 1. Only calibration-level empirical P2 evidence exists
 
-The keyless GPT-5.5 Responses path was restored and 41 trusted normal single-run conditions now
-cover 21 tasks, with task-specific strict open-loop diagnostics on a subset. They expose
+The keyless GPT-5.5 Responses path was restored and 45 trusted normal single-run conditions now
+cover 23 tasks, with task-specific strict open-loop diagnostics on a subset. They expose
 one-step saturation and multiple oracle defects, but there are still no valid five-seed
 certified-core trajectories, no paired feedback-control result, and no nonzero-budget official-
 backend search run. The project must distinguish “calibrated at budget one” from
@@ -420,6 +420,44 @@ basin escape, exploration diversity, stale-mechanism retraction, sealed/mechanis
 structural distance from the starter. Until this is done, describe success as scaffold-conditioned
 adaptation when the starting artifact substantially constrains the search.
 
+### 31. Clean simulator observations bypass the instrument-to-claim problem
+
+Most current tasks begin from structured arrays emitted by a trusted simulator. EdgeBench excludes
+vision-dominated tasks to avoid a perception confound, yet its full science task notes include
+sensor-fault diagnosis, dirty GNSS, ECG preprocessing, evidence extraction and image active
+learning. A linked campaign alone does not identify measurement error: randomize oracle-clean,
+reference-preprocessed and agent-built raw-data pipelines on paired latent worlds, inject realistic
+calibration/censoring/channel faults and true anomalies, and propagate typed feature uncertainty
+through mechanism, confirmation and decision regret. Until one such I6 task is run, state the
+benchmark scope as structured-observation science.
+
+### 32. Scientific transfer is not tested under equivalent representations
+
+Score-partition replay tests evaluator construction, not whether a method survives harmless changes
+of units, coordinates, channel order, grid numbering, spectral representation or symmetry gauge.
+Add V4 metamorphic twins that preserve the latent physical world, canonicalize outputs only after
+execution and pair them with non-equivalent physical controls. A task that succeeds only in one
+schema can measure template matching even when its held-out scalar score is high. Use this as a
+cheap admission gate across several task families.
+
+### 33. Parallel candidates are not independent scientific replication
+
+Neither restart/pass@k nor a shared-context critic estimates whether independent researchers reduce
+correlated scientific error. Under a fixed total budget, compare a single agent, shared branches,
+isolated investigators and blinded claim--evidence synthesis. The team must commit one conclusion
+before fresh confirmation; evaluator-selected best member remains only an oracle envelope. Measure
+hypothesis diversity, error correlation, minority correctness and false consensus before making a
+multi-agent or collaborative-science claim.
+
+### 34. Public scalar objectives do not establish reusable scientific value
+
+An agent can optimize the exact score weights without producing a method useful to another
+stakeholder. Pre-freeze a family of domain-valid utilities, reveal constraints but draw final
+weights only after signed commit, and compare fixed-scalar artifacts with executable response
+surfaces or Pareto sets. Report sealed weight-distribution regret, worst-case/CVaR regret, coverage
+and safety. This differs from score granularity and portfolio allocation: U1 asks whether one
+scientific artifact remains decision-useful when legitimate downstream preferences were unknown.
+
 ## Revised TODO plan
 
 ### P0/P1 closeout — completed locally, reproduce in CI
@@ -621,6 +659,17 @@ adaptation when the starting artifact substantially constrains the search.
   mechanism discovery, and run workflow-hint ablations before claiming method discovery.
 - [ ] Declare the primary benchmark's structured-observation scope or add a separate instrument/
   perception track with calibration/extraction uncertainty propagated into scientific scores.
+- [ ] Implement one paired raw-instrument I6 task with oracle-clean/reference/agent preprocessing,
+  realistic sensor faults and uncertainty propagation to mechanism and decision regret.
+- [ ] Add V4 unit/coordinate/channel/grid/spectral metamorphic twins plus non-equivalent physical
+  controls to 4--6 tasks and fail admission on unexplained claim contradictions.
+- [ ] Run one T1 equal-budget single/shared/isolated/blinded-synthesis pilot with a pre-confirmation
+  team commit; report correlated error and false consensus, not member-wise oracle best.
+- [ ] Run U1 on one multiobjective task with a prehashed utility family and post-commit sealed
+  weights; compare scalar-specific and reusable Pareto/method artifacts by regret and safety.
+- [ ] Add a prospective evidence-synthesis task whose executable screening/extraction/meta-analysis/
+  next-study workflow is evaluated on duplicated, heterogeneous and selectively reported studies
+  plus a fresh prospective confirmation study.
 
 ### P4 — release governance
 

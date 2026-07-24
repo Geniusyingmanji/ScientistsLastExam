@@ -1736,3 +1736,41 @@ The source facts, configuration census, designs and claim limits are machine-rec
 `.research/edgebench_science_third_order_audit_2026-07-24.json`; E33--E36 and the corresponding
 experiment-matrix/TODO changes are in the EdgeBench addendum and research plan. These deductions
 are not new EdgeBench numerical results and do not change any Frontier-Science model result.
+
+## 2026-07-24 — Trusted Rankine GPT-5.5 calibration and cross-task summary v16
+
+The clean-revision Rankine evidence chain now contains budget-one normal, budget-three normal and
+budget-three strict selection-blind GPT-5.5 reports plus raw trajectories, run manifests,
+candidate/parent hashes and a trusted derived analysis. Budget one reaches development/held-out
+nominal `0.963561/0.957382`; both budget-three conditions reach `1.0/1.0`. Every selected artifact,
+however, has development/held-out robustness `0.0/0.0` and shift feasibility `0.6/0.6`: nominal
+transfer does not survive material-derating and combined-shift envelopes. All proposals are valid.
+The normal run accepts its first proposal and the selection-blind run keeps every proposal parent
+at the frozen baseline. Both use four oracle calls, but use 14,206 versus 12,676 tokens and 100.7
+versus 134.6 seconds; Azure exposes no server-side generation seed. Therefore the result shows only
+that this single nominal success did not require iterative score/parent feedback, not a causal
+feedback null effect. It is simulator-specific IF97 cycle optimization, not plant validation or
+thermodynamic discovery.
+
+`experiments/science_calibration_summary_2026-07-24_v16.json` binds clean source `ce1cf4d` and
+contains **45 normal single-run conditions across 23 tasks**. Each condition still has one seed;
+sealed metrics remain task-specific and must not be averaged into one science score.
+
+## 2026-07-24 — EdgeBench raw-measurement, invariance, team and utility audit
+
+EdgeBench upstream remains unchanged at arXiv `2607.05155v1`, SForge `a87350a` and public dataset
+`47846a4`. Auditing all 39 Science/ML design notes against the explicit exclusion of vision-dominated
+tasks adds four distinct, unrun Frontier-Science experiments. I6/E37 randomizes oracle-clean,
+reference-preprocessed and agent-built raw instrument pipelines and propagates calibration/
+extraction uncertainty to mechanism and decisions. V4/E38 uses unit, coordinate, channel, grid,
+spectral and symmetry-equivalent metamorphic twins plus real physical negative controls. T1/E39
+compares one agent, shared branches, isolated investigators and blinded synthesis at equal total
+budget, with one team claim committed before fresh confirmation. U1/E40 freezes a legitimate
+utility family but draws stakeholder weights only after commit, comparing public-scalar artifacts
+with reusable Pareto/method artifacts on sealed regret and safety.
+
+The source hashes, experiment designs and claim boundaries are recorded in
+`.research/edgebench_science_fourth_order_audit_2026-07-24.json`. The expansion plan prioritizes
+`EvidenceSynthesis/ProspectiveMetaAnalysis`, whose executable screening, duplicate/selective-
+reporting detection, hierarchical inference and next-study design are tested by a fresh prospective
+confirmation. None of these additions is an EdgeBench numerical result or a completed experiment.

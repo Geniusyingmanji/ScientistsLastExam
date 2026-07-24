@@ -1,23 +1,26 @@
 # Cross-task science calibration findings
 
-Date: 2026-07-23 (UTC). These findings use trusted GPT-5.5 `greedy_rewrite` calibrations on
+Date: 2026-07-23 (UTC), updated 2026-07-24. These findings use trusted GPT-5.5 `greedy_rewrite` calibrations on
 OED-v2, Pendulum-v2, GateSynthesis-v2, ActiveLawDiscovery, OPF-v2, Truss-v2, Antenna-v2,
 NMR-v2, HeatExchanger-v2, ReactionMechanismFitting-v2, GravityInversion-v2,
 OceanCurrentInversion-v2, RadiativeTransferFit-v2, LowThrustTransfer-v2,
 LidDrivenCavity-v2, EnergyBalanceModel-v2, BroadbandAbsorber-v2,
-DistillationColumnDesign-v2, HartreeFockSCF-v2, RoomImpulseResponse-v2 and
-ConvectionDiffusionOpt-v2. The 41 normal-feedback model conditions across these 21 tasks each
+DistillationColumnDesign-v2, HartreeFockSCF-v2, RoomImpulseResponse-v2,
+ConvectionDiffusionOpt-v2, SeismicWaveInversion-v2 and RankineCycleOpt-v2. The 45 normal-feedback
+model conditions across these 23 tasks each
 contain one seed and proposal budget one or three. They calibrate tasks and motivate experiments;
 they are not a model leaderboard, a causal feedback study or population evidence.
 
 The portable machine record
-`experiments/science_calibration_summary_2026-07-23_v14.json` extends v13 and retains every top-level
-scalar metric, candidate lineage hash and raw trajectory SHA-256 for all 41 normal conditions.
+`experiments/science_calibration_summary_2026-07-24_v16.json` retains every top-level scalar metric,
+candidate lineage hash and raw trajectory SHA-256 for all 45 normal conditions.
 Additional strict diagnostics for Distillation-v2, Hartree--Fock and room acoustics are bound
 separately by `experiments/distillation_v2_calibration_analysis_2026-07-23.json`,
 `experiments/hartree_fock_v2_calibration_analysis_2026-07-23.json` and
 `experiments/room_acoustics_v2_calibration_analysis_2026-07-23.json` and
-`experiments/convection_diffusion_v2_calibration_analysis_2026-07-23.json`. Strict selection-blind
+`experiments/convection_diffusion_v2_calibration_analysis_2026-07-23.json`,
+`experiments/seismic_wave_v2_calibration_analysis_2026-07-24.json` and
+`experiments/rankine_v2_calibration_analysis_2026-07-24.json`. Strict selection-blind
 diagnostics remain in task-specific analysis because they are not normal-feedback calibrations.
 The underlying reports bind the task-specific source revision. Pendulum's initial budget-one
 run on revision `57c0e1b` is
@@ -74,6 +77,11 @@ by the corrected-contract run on `2557adb`.
 | RadiativeTransferFit-v2, budget 3 | all three proposals are valid and remain at 0.0; two use the full budget and one performs no experiment | every proposal has zero supported-world coverage/mechanism and zero false discovery | Protocol validity and conservative refusal do not establish scientific discovery; active measurement use must be reported alongside risk–coverage. |
 | ConvectionDiffusionOpt-v2, truth-blind designs | one symmetric experiment scores 0.0; complementary two-experiment design scores 0.895605 | held-out joint 0.891509; held-out mechanism 0.659574; shifted robustness 0.890417; zero false discovery | Numerical rank alone is insufficient: a nearly singular midline experiment cannot identify the five coefficients, while a second off-axis intervention resolves the ambiguity. |
 | ConvectionDiffusionOpt-v2, GPT-5.5 three conditions | all seven proposals fail to improve the zero baseline; four are invalid and three are valid | every valid proposal abstains on all seven supported worlds and all four unsupported worlds; supported discovery coverage is zero | Spending up to the full 12-unit experimental budget does not imply informative experiment design or mechanism recovery. The normal/open-loop contrast is single-run and non-causal. |
+| SeismicWaveInversion-v2, truth-blind reference | development/held-out joint `0.997697/0.994382`; information near 1.0 | full supported coverage, zero false discovery; centered narrow acquisition has rank 5/9 and zero information | Active acquisition can make the layered mechanism identifiable, but this ray-theoretical laboratory remains a controlled on-ramp rather than field FWI. |
+| SeismicWaveInversion-v2, GPT-5.5 formal runs | six valid proposals and one timeout; five valid proposals have information `0.974–1.0` | five valid proposals abstain on every supported world; the remaining budget-one proposal claims only one held-out supported world | High-information experiment geometry and full budget spend do not imply mechanism recovery or supported discovery coverage. |
+| RankineCycleOpt-v2, budget 1 | development/held-out nominal `0.963561/0.957382`; nominal feasibility `1/1` | robustness `0/0`; shift feasibility `0.6/0.6` | One proposal synthesizes a strong nominal IF97 cycle archive but misses material-derating and combined-shift feasibility. |
+| RankineCycleOpt-v2, normal budget 3 | first proposal reaches development/held-out nominal `1/1`; all three proposals valid | robustness `0/0`; shift feasibility `0.6/0.6` | The nominal ceiling is reached at step one and later scalar feedback does not expose or repair the sealed robustness failure in this trajectory. |
+| RankineCycleOpt-v2, selection-blind budget 3 | frozen-baseline open-loop batch reaches offline-best development/held-out nominal `1/1` | robustness `0/0`; shift feasibility `0.6/0.6` | Nominal success does not require iterative score/parent feedback in this single run; unequal tokens/wall time and uncontrolled generation randomness preclude a feedback-effect claim. |
 
 OPF's `robustness_score` combines security-constrained economic quality with overload penalties.
 It is not a pure safety probability. The proportional baseline is feasible for every tested
@@ -86,7 +94,7 @@ cost separately.
 ### 1. One-step success often measures algorithm synthesis, not scientific learning
 
 GPT-5.5 writes recognizable multiplicative/Fedorov design, GRAPE, convex DC-OPF, window/null-
-synthesis and deterministic multistart SCF procedures
+synthesis, deterministic multistart SCF and Sobol/Pareto cycle-design procedures
 in one proposal. These results directly measure whether a model can instantiate a known method
 inside a new executable contract. They do not establish that score feedback produced a new
 scientific strategy. Budget-one saturation is therefore useful as an on-ramp calibration but
@@ -94,8 +102,8 @@ weak evidence for long-horizon autonomous research.
 
 ### 2. Visible optimization and scientific validity are different trajectories
 
-Pendulum, gate synthesis, OPF, Truss, Antenna, NMR and BroadbandAbsorber all separate a visible development
-objective from an evaluator-only shift, contingency or held-out mechanism metric. OPF has the
+Pendulum, gate synthesis, OPF, Truss, Antenna, NMR, BroadbandAbsorber and Rankine all separate a visible
+development objective from an evaluator-only shift, contingency or held-out mechanism metric. OPF has the
 largest numeric gap among the nominal-design calibrations, while NMR budget one falls from
 0.428 development to 0.176 held-out mechanism/refusal despite similar reconstruction. In OPF,
 nominal optimization reaches its reference while most complete line-outage scenarios fail. The
@@ -105,12 +113,18 @@ requires repeated paired runs and hidden server-side instances.
 
 ### 3. Held-out nominal transfer does not imply robustness
 
-Gate synthesis, OPF, Antenna and the absorber calibration reach strong nominal scores on
+Gate synthesis, OPF, Antenna, the absorber and Rankine calibrations reach strong nominal scores on
 interleaved held-out instances.
 Their sealed perturbation or contingency scores remain lower. Procedural held-out networks or
 targets test policy transfer, whereas altered physics, hardware error and component failure test
 robustness. Future task cards must specify both axes instead of using one generic validation
 field.
+
+Rankine makes the logical separation exact: budget one transfers nominally at `0.9636/0.9574`,
+and both normal and selection-blind budget-three conditions reach `1.0/1.0` nominally, yet every
+selected artifact has `0.0/0.0` robustness and only `0.6/0.6` shift feasibility. The same policy
+works on unseen nominal operating regimes but fails material-derating and combined-shift envelopes.
+Nominal world transfer is therefore not robustness transfer.
 
 BroadbandAbsorber-v2 makes this distinction especially concrete. The strict open-loop selected
 artifact has higher held-out nominal score than the normal selected artifact (`0.957/0.859`),
@@ -207,7 +221,9 @@ model-class adequacy and refusal must be separate curves.
 
 In the OPF budget-three run, later proposals receive only nominal score and reproduce the same
 N-1 failure. Pendulum's visible improvement is accompanied by flat shifted robustness, while
-ActiveLawDiscovery retains its misspecification errors. NMR selection does include a normalized
+ActiveLawDiscovery retains its misspecification errors. Rankine reaches the nominal ceiling in
+the first budget-three proposal in both normal and frozen-parent open-loop conditions, while the
+sealed robustness axis remains zero throughout. NMR selection does include a normalized
 mechanism/refusal aggregate, but does not expose its decomposition: after the first accepted
 proposal, both rewrites make false discoveries on every unsupported development and held-out
 spectrum and score lower despite retaining substantial reconstruction. Gate synthesis provides

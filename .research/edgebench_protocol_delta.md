@@ -567,6 +567,18 @@ The configuration census, proposed designs and claim limits are retained in
     rich laboratory using fresh-confirmed information/decision value and false discovery.
 37. **Starter-prior anchoring:** randomize blank, neutral, plausible-wrong, correct and diverse
     starters and quantify basin escape, mechanism revision, diversity and sealed transfer.
+38. **Raw-measurement error propagation:** compare oracle-clean, reference-preprocessed and
+    agent-built instrument pipelines on paired calibration, censoring, channel-fault and true-
+    anomaly worlds; propagate uncertainty to mechanism, confirmation and decision regret.
+39. **Scientific-representation invariance:** run unit, coordinate, channel, grid, spectral and
+    symmetry-equivalent metamorphic twins plus non-equivalent physical controls; canonicalize
+    only after candidate execution.
+40. **Independent-team replication:** compare equal-budget single, shared and isolated investigators
+    with blinded evidence synthesis; require one pre-confirmation team claim and report correlated
+    error and false consensus rather than oracle-best membership.
+41. **Latent-utility robustness:** freeze a domain-valid utility family, reveal constraints but
+    draw weights after commit, and compare public-scalar artifacts against reusable Pareto/method
+    artifacts on sealed regret, coverage and safety.
 
 ## Claim boundary
 

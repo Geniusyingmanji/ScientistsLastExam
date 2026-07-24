@@ -549,6 +549,70 @@ D-ABIC 又直接指定论文、方法和比较路线。这样能降低 first-val
 在正确 starter 下成功或长期继承错误机制，应将结果解释为 scaffold-conditioned adaptation，而不是独立
 方法发现。
 
+### E37. 原始测量到科学结论的误差传播
+
+EdgeBench 明确排除主要难点来自视觉理解的任务，以避免 perception 混淆迭代推理；但其完整 Science/ML
+设计说明又包含 sensor-fault diagnosis、dirty GNSS、ECG preprocessing、PDF evidence extraction 和
+satellite-image active learning。这暴露了一个 science scope 边界：当前 Frontier-Science 多数任务直接把
+干净的 simulator 数组或结构化 observation 交给 agent，尚未测量错误校准、漏检或错误特征是否会被下游
+机制推断放大成高置信科学声明。E22 的 linked campaign 测阶段衔接；E37 单独随机化 **原始测量层**，
+估计 measurement treatment 对最终结论的因果效应。
+
+在一个可程序化复现的 instrument task 上比较四臂：oracle-clean features、冻结且质量已知的 reference
+preprocessor、agent 自主 raw-data pipeline、以及带审计提示的 agent pipeline。原始输入注入 time jitter、
+missing/censoring、baseline drift、unit/channel swaps、saturation、heteroscedastic noise 和“仪器故障 vs
+真实异常”成对 worlds；同一 latent world 和 common noise seed 跨臂配对。提交物必须保留 calibration、
+segmentation/event extraction、quality flags、feature uncertainty、mechanism/claim 和最终 decision。
+分别报告 raw-event precision/recall、calibration error、uncertainty propagation、mechanism/confirmation、
+false alarm/missed discovery、decision regret，以及 downstream success 在换回 oracle-clean features 后能否
+恢复。只有从原始观测到 fresh confirmation 的整链条成立，才支持 instrument-facing autonomous science；
+否则明确限定为 structured-observation benchmark。
+
+### E38. 科学表示和单位的 metamorphic invariance
+
+同一科学对象可用不同但等价的单位、坐标系、网格编号、传感器通道顺序、频谱表示和参数化描述。EdgeBench
+的 task/score transforms 提醒我们 evaluator 表示会改变曲线，但 E29/S3 只改变 rubric 粒度与任务顺序，
+没有检验 agent 的方法是否依赖表面编码。对真实科学方法，等价表示应给出等价的物理 claim、uncertainty
+和 decision；仅在某个单位或列顺序上成功往往意味着 brittle implementation、memorized template 或 shortcut。
+
+为 4--6 个任务生成保持 latent world 不变的 metamorphic twins：SI/CGS 或尺度换算、坐标平移/旋转/反射、
+state-variable/网格 permutation、real-imaginary 与 magnitude-phase、频率/时间轴重采样，以及物理等价的
+gauge/symmetry 参数化。Evaluator 先把 artifact 拉回 canonical physical space，再比较 feasibility、prediction、
+mechanism equivalence class、uncertainty 和 selected intervention；同时加入外观相近但实际改变边界条件、
+chirality、causal direction 或物性符号的非等价负对照，防止 invariant-by-ignoring-input。报告 pairwise
+consistency、performance drop、claim contradiction、equivariance violation 和 negative-control sensitivity。
+E38 应先作为便宜的 admission gate，再在 long-horizon pilot 中检查表示改变是否改变搜索路径和曲线结论。
+
+### E39. 独立科研复核与群体错误相关性
+
+EdgeBench 的主实验是一条 agent trajectory；它证明持续状态可能有价值，却没有检验多个独立研究者能否通过
+盲复核降低相关错误。Science 中“多生成几个候选然后由 hidden score 选最好”不是 replication：若共享
+starter、上下文和 grader，多个 agent 可能产生同一个错误机制；反之 evaluator 事后挑 winner 又引入 oracle
+selection。E39 的 estimand 是独立证据生产与审查协议对 **错误相关性和可部署共识** 的影响。
+
+固定总 token、tool、experiment、feedback 和 confirmation budget，比较：一个连续 agent；并行但共享
+notebook 的分支；互不可见、starter/seed/corpus 尽量正交的独立 investigator；独立 investigator 后由
+只见 claim--evidence bundles 的 blinded synthesizer 汇总；以及 generate--critic 共享上下文。团队必须在
+fresh confirmation 前签署一个 claim/abstain 和 disagreement report，不能让 evaluator 从成员中事后选
+最高分。报告 hypothesis/mechanism diversity、pairwise error correlation、independent convergence、minority
+correctness、false consensus、synthesis calibration、validated utility per cost 和 confirmation success。
+只有独立汇总相对等预算单 agent/共享上下文降低 false discovery，才支持“科研团队/多 agent”增益。
+
+### E40. 未知下游效用下的方法复用与目标鲁棒性
+
+EdgeBench 预先公开 objective、deliverable 和 judge；Frontier-Science 现有任务也多把一个 scalar 或固定权重
+Pareto 目标交给搜索。这样测得的是对已知 rubric 的定向优化，不知道 agent 是否产生了可供不同科学决策者
+复用的知识。S3 改写同一 rubric 的分项，P1 在已知项目价值下分配预算；E40 则把 **合理但未知的下游效用**
+作为 sealed treatment，检验提交的是 transferable scientific method/Pareto set，还是只迎合一个公开权重。
+
+在已有多目标任务上预先冻结一族 domain-valid utility functions（例如 efficiency/work/safety/cost，或
+information/coverage/risk），比较三种合同：公开一个固定 scalar；公开 utility family 与约束但隐藏最终权重；
+要求提交 calibrated response surface/Pareto archive/executable method，权重在 signed commit 后才抽取。
+另设真正改变 scientific objective 的 announced-shift arm，避免把 goal ambiguity 与突发换题混为一谈。
+主要结果是 sealed-utility regret、worst-case/CVaR regret、Pareto coverage、constraint/safety violations、
+post-weight adaptation cost 和 method replay transfer。隐藏权重不得参与搜索、admission 或 snapshot selection；
+若只有公开 scalar 臂成功，结论应是 evaluator-targeted optimization，而不是可复用科学知识。
+
 ## 5. 推荐的曲线与表格
 
 主文可沿用 Frontier-Eng/EdgeBench 的时间或 oracle-budget best-so-far 图，但 science 论文至少再加：
@@ -595,6 +659,14 @@ D-ABIC 又直接指定论文、方法和比较路线。这样能降低 first-val
     decision utility、triviality 与 false discovery；
 29. starter-prior anchoring matrix：blank/neutral/wrong/correct/diverse starters 下的 basin escape、机制撤回、
     探索多样性和 sealed transfer。
+30. raw-measurement error cascade：calibration/extraction/QC 到 mechanism、confidence、confirmation 和 decision
+    regret 的成对误差传播，并显示 oracle-clean feature rescue；
+31. scientific-representation metamorphic matrix：单位/坐标/通道/网格/频谱等价 twins 的物理 claim 一致性，
+    配合真正改变物理条件的 negative controls；
+32. independent-team consensus panel：单 agent、共享分支、盲独立 investigators 与 blinded synthesis 的
+    hypothesis diversity、错误相关性、false consensus、fresh confirmation 和 cost；
+33. latent-utility robustness frontier：公开 scalar 与 sealed utility-family 权重下的 Pareto coverage、
+    worst-case regret、post-weight adaptation cost 和安全约束。
 
 log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、Gompertz、piecewise/change-point
 和 hierarchical task-mixture 比较；必须用 held-out time forecasting、bootstrap over tasks 与跨 seed
@@ -607,6 +679,7 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
 - [x] Seismic 正式/欠定义报告分流，绑定 report/raw trajectory/candidate/parent hashes；
 - [x] 把 information、mechanism、coverage、refusal 与 protocol failure 分轴；
 - [x] clean revision `2706281` 生成 derived analysis、43-condition/22-task summary 和四类审计；
+- [x] clean revision `ce1cf4d` 生成 45-condition/23-task summary v16，并纳入可信 Rankine 正常条件；
 - [x] 当前全量回归 244/244；clean revision `ec14510` 的 certification/security/baseline 刷新为
   v34/v18/v24。
 
@@ -642,6 +715,14 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
   检验曲线究竟按 wall time、实验成本还是 feedback clock 对齐；
 - [ ] 构造一个小型 well-mixed/chain/modular/bottleneck procedural-twin family，先验证 task-graph 拓扑干预
   是否按理论改变 material-event hazard 和曲线阶段，再讨论 frontier-expansion 机制；
+- [ ] 在一个 instrument-facing task 随机化 oracle-clean/reference-preprocessed/agent-raw pipeline，配对注入
+  calibration、missing/censoring、sensor-fault 与真实异常，量化测量误差到机制和决策的传播；
+- [ ] 为 4--6 个 pilot tasks 生成单位/坐标/通道/网格等价 metamorphic twins 和非等价负对照，把表示不变性
+  作为 admission gate，并检查 long-horizon 路径是否稳定；
+- [ ] 在一个机制任务以等总预算比较 single/shared/independent investigators/blinded synthesis，final claim
+  必须在 fresh confirmation 前由团队签署，禁止 post-hoc oracle winner selection；
+- [ ] 在一个多目标任务隐藏 commit 后才抽取的 domain-valid utility weights，比较 fixed-scalar 与可复用
+  Pareto/method artifact 的 sealed regret；
 - [ ] 对 pilot cells 先跑 measurement-health gate，再决定是否分配 6h/12h；
 - [ ] pilot 可按 headroom 分配后续工程资源，但 confirmatory cohort 不得据此删任务；
 - [ ] 仅在 pilot 证明基础设施稳定且至少部分任务有 headroom 后扩展 6h/12h。
@@ -658,6 +739,9 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
   baseline 随机化版本，防止把 scaffold 锚定误写成方法发现；
 - [ ] 增加一个可机器验证的 open-question procedural laboratory，区分 fixed question、candidate menu 和
   agent-formulated preregistered question；
+- [ ] 优先新增一个 prospective evidence-synthesis task：程序化生成异质、重复、选择性报告与 publication-
+  bias 文献集合，提交可执行 screening/extraction/meta-analysis/next-study method，并用 fresh prospective
+  study confirmation；其统计 lineage 不与 source publications 重复计数；
 - [ ] 为任务卡增加 `campaign_id/workflow_stage/lineage_id`，发现/反演任务提交可在 fresh world
   端到端重放的 method artifact；
 - [ ] 为 admission、pilot、confirmatory 和每个论文 figure/table 冻结独立的 hashed cohort manifest；
@@ -703,3 +787,9 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
   modes，均来自该理论的明示假设/限制；E35--E36 来自固定任务合同与 starter/method guidance 的 scope
   差异。具体压力测试是 Frontier-Science 的推论，不是作者已做的实验或报告的结果。增量事实和 claim
   boundary 保存在 `.research/edgebench_science_third_order_audit_2026-07-24.json`。
+- EdgeBench arXiv v1 `approach.tex` 与完整 Science/ML design notes 的 SHA-256 分别为
+  `14cd29671b9cccccefc564aab1b053afbda585dd2fbfcd7c1573c053ff5eba74` 和
+  `30b8556573c739f1120f15eb8dc56bea2bd55661f8a839e07a332dc4f6657df5`。视觉主导任务的显式排除、
+  sensor-fault/dirty-GNSS/ECG/evidence-extraction/active-learning 任务范围，以及固定 objective/single-run
+  scope 支撑 E37--E40 的问题边界；具体 treatment 是 Frontier-Science 提案，机器记录见
+  `.research/edgebench_science_fourth_order_audit_2026-07-24.json`。

@@ -47,7 +47,9 @@ search feedback, preventing observations from being carried between worlds throu
 The current audit reports:
 
 - 244/244 unit, security, protocol, analysis and scientific-invariant tests passed after the
-  RankineCycleOpt-v2 rebuild. The latest trusted reports bind clean source revision `ec14510`.
+  RankineCycleOpt-v2 rebuild. The latest trusted task/security/baseline reports bind clean source
+  revision `ec14510`; the trusted Rankine model analysis and 45-condition cross-task summary bind
+  later clean evidence revisions.
 - The latest 51×2 secure-baseline audit reports 51/51 deterministic, 51/51 valid, 51/51
   fail-closed and zero infrastructure failures.
 - Current source manifest: 7 certified / 28 candidate / 16 quarantined. D-optimal design, quantum
@@ -92,6 +94,13 @@ The current audit reports:
   same-seed-label selection-blind batch also remains at zero, with all proposals failing the
   callback schema. These single runs diagnose protocol following and sparse credit assignment,
   not a causal feedback effect or field-oceanography capability.
+  RankineCycleOpt-v2 uses a self-contained IAPWS-IF97 single-reheat cycle over four development
+  and two held-out regimes. GPT-5.5 budget one reaches nominal development/held-out
+  `0.9636/0.9574`; normal and strict selection-blind budget three both reach `1.0/1.0`, yet all
+  selected artifacts retain robustness `0.0/0.0` and shift feasibility `0.6/0.6`. This is strong
+  nominal algorithm synthesis with a sealed material/combined-shift failure. Single, token/wall-
+  time-mismatched runs with no server-side generation seed support neither a feedback-effect nor
+  plant-validation claim.
   RadiativeTransferFit-v2 replaces an underdetermined fixed-profile retrieval with charged
   channel/view selection over a public five-parameter thermal-emission family. All seven
   supported worlds have full-rank sounding sensitivities with worst condition number 28; a
@@ -228,9 +237,17 @@ credible multi-seed model-performance evidence. A clean-revision GPT-5.5 budget-
 is recorded as task calibration, not a benchmark leaderboard.
 The latest trusted clean-revision certification/security/baseline audits are v34/v18/v24. The
 current source manifest is 7/28/16 and contains 35 internally admissible tasks, leaving an
-approximate gap of 15 to the roughly 50-task target. The hash-bound cross-task summary v15
-contains 43 normal single-run conditions over 22 tasks; it is calibration
+approximate gap of 15 to the roughly 50-task target. The hash-bound cross-task summary v16
+contains 45 normal single-run conditions over 23 tasks; it is calibration
 evidence, not a leaderboard or population result.
+
+The latest EdgeBench re-audit keeps its upstream facts at arXiv `2607.05155v1`, SForge
+`a87350a` and public dataset `47846a4`. In addition to E1--E36, the science plan now preregisters
+four unrun scope tests: raw instrument-to-claim error propagation (I6/E37), unit/coordinate/
+representation metamorphic invariance (V4/E38), independent investigators with blinded synthesis
+(T1/E39), and post-commit sealed downstream utilities (U1/E40). These are proposed experiments,
+not new EdgeBench or Frontier-Science performance results. The expansion plan also prioritizes one
+prospective evidence-synthesis task over another near-duplicate clean-simulator scalar task.
 
 ## Quickstart
 

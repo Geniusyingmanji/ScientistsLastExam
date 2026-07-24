@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "audit_date_utc": "2026-07-24",
+  "scope": "Fourth-order Frontier-Science deductions from the unchanged EdgeBench v1 task scope, all 39 Science/ML design notes, the public Borden contract, and the absence of a reported independent-team treatment. These are proposed experiments, not EdgeBench empirical results.",
+  "upstream_state": {
+    "arxiv_id": "2607.05155v1",
+    "arxiv_updated_utc": "2026-07-06T14:39:22Z",
+    "github_commit": "a87350ab80eeb320b13cb71d1b0c3ffcc20a670f",
+    "huggingface_revision": "47846a4c3669ad447e0ea984833b0d352460c5f9",
+    "approach_tex_sha256": "14cd29671b9cccccefc564aab1b053afbda585dd2fbfcd7c1573c053ff5eba74",
+    "task_design_notes_sha256": "30b8556573c739f1120f15eb8dc56bea2bd55661f8a839e07a332dc4f6657df5",
+    "public_borden_contract_sha256": "9218658263fb2217768ff8c75d06410e9811e5022aa387f88e3c62c3e1457195",
+    "changed_since_third_order_audit": false
+  },
+  "source_facts": [
+    "EdgeBench explicitly excludes tasks whose primary difficulty is visual understanding, to avoid confounding iterative reasoning with perception capability.",
+    "The full Science/ML design notes nevertheless include sensor-fault diagnosis, dirty GNSS processing, ECG preprocessing, PDF evidence extraction/meta-analysis, and satellite-image active learning.",
+    "The public Borden task supplies noisy censored monitoring data but its authoritative endpoint reads a fitted answer.json rather than replaying a complete raw-input method on fresh aquifers.",
+    "EdgeBench tasks predeclare objectives and judges, and the reported main experiments evaluate one agent trajectory per run rather than a randomized independent-investigator and blinded-synthesis treatment."
+  ],
+  "frontier_science_experiments": [
+    {
+      "id": "raw_measurement_error_propagation",
+      "plan_id": "I6",
+      "design": "Pair oracle-clean, frozen-reference and agent-built raw-instrument pipelines on identical latent worlds and common noise, with calibration, missingness, censoring, channel faults and true-anomaly controls.",
+      "primary_outcomes": [
+        "extraction_and_calibration_error",
+        "uncertainty_propagation",
+        "mechanism_and_confirmation",
+        "false_alarm_and_missed_discovery",
+        "decision_regret"
+      ]
+    },
+    {
+      "id": "scientific_representation_invariance",
+      "plan_id": "V4",
+      "design": "Generate unit, coordinate, channel, grid, spectral and symmetry-equivalent metamorphic twins plus non-equivalent physical negative controls; canonicalize outputs after execution.",
+      "primary_outcomes": [
+        "physical_claim_consistency",
+        "equivariance_violation",
+        "performance_drop",
+        "claim_contradiction",
+        "negative_control_sensitivity"
+      ]
+    },
+    {
+      "id": "independent_team_replication",
+      "plan_id": "T1",
+      "design": "At equal total budgets compare a single agent, shared branches, isolated investigators, blinded evidence synthesis and a shared-context critic; require one signed team conclusion before fresh confirmation.",
+      "primary_outcomes": [
+        "hypothesis_diversity",
+        "pairwise_error_correlation",
+        "false_consensus",
+        "minority_correctness",
+        "confirmation_and_utility_per_cost"
+      ]
+    },
+    {
+      "id": "latent_utility_robustness",
+      "plan_id": "U1",
+      "design": "Freeze a domain-valid utility family, reveal constraints but draw weights only after signed commit, and compare public-scalar artifacts with reusable Pareto, response-surface or executable-method artifacts.",
+      "primary_outcomes": [
+        "sealed_utility_regret",
+        "worst_case_and_cvar_regret",
+        "pareto_coverage",
+        "safety_violations",
+        "post_weight_adaptation_cost"
+      ]
+    }
+  ],
+  "portfolio_priority": {
+    "task": "EvidenceSynthesis/ProspectiveMetaAnalysis",
+    "reason": "Adds evidence synthesis, duplicate/selective-reporting detection, uncertainty, next-study design and prospective confirmation rather than another near-duplicate clean-simulator scalar optimization task."
+  },
+  "claim_boundary": [
+    "No new EdgeBench performance result is claimed.",
+    "Until I6 is run, the primary benchmark scope remains structured-observation science rather than instrument-facing autonomous science.",
+    "Until V4 is run, held-out score transfer does not establish unit, coordinate or representation robustness.",
+    "Until T1 is run, parallel candidates or shared-context critics do not establish independent scientific replication or team benefit.",
+    "Until U1 is run, optimizing a public scalar does not establish reusable value across legitimate downstream scientific utilities."
+  ]
+}
