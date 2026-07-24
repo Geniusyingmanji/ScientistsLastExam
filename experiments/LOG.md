@@ -2116,3 +2116,46 @@ causal-feedback, real Perturb-seq, wet-lab or autonomous-discovery evidence.
 The current full suite passes 307/307 tests. This supersedes the 305/305 implementation count
 above by adding the two GeneNetwork analysis tests; the clean-revision certification, security
 and secure-baseline reports remain v38/v22/v28 on task revision `b777889`.
+
+## 2026-07-24 — RNAInverseDesign admission, model analysis and cross-task summary v20
+
+`RNAEngineering/RNAInverseDesign` adds the 39th internally admissible task and raises the
+inventory to 53 directories: 7 certified, 32 candidate and 14 quarantined. Five development and
+three held-out targets span hairpin, bulge, internal-loop, tandem and multibranch families. The
+trusted evaluator computes the exact partition function, MFE structure and pair marginals for a
+declared pseudoknot-free pair-stack-loop ensemble, enforces fixed bases, GC bounds and forbidden
+motifs, and separately scores pair compatibility, target probability, ensemble defect, MFE F1,
+held-out transfer, four parameter shifts and proxy false promotion.
+
+The task calibration has SHA-256
+`015a27373c8938f9d8c77b64f7e9ae82b14b825b15bf30ba537d70356debf4c4` and binds clean task
+revision `41f5fb4`. Reference regeneration is exact, minimum nominal/shifted headroom is
+`0.355211/0.342794`, and four exhaustive structure enumerations agree with dynamic programming
+to approximately `1e-15`. A valid sequence with pair compatibility `1.0` has target probability
+`3e-9`, normalized exact and shifted quality zero, and ensemble defect `0.3347`; target-pair
+compatibility is therefore not an adequate ensemble-design objective.
+
+The trusted analysis has SHA-256
+`760e0f9b20b0deeb7d32c3fecb3c1671b324db70f3d57130ef250e1db84f79df`. GPT-5.5 budget one
+remains at zero because its proposed sequence violates constraints on three of eight targets.
+Normal budget three improves development exact utility `0.239243→0.507381→0.720397`, with
+held-out utility `0.499732`, development/held-out robustness `0.712426/0.486729` and proxy false
+promotion `0.40/0.667`. The frozen-parent selection-blind batch selects development/held-out
+`0.893523/0.986008`, robustness `0.888058/0.982162` and zero proxy false promotion. Normal and
+selection-blind both use four oracle calls but differ by 12,169 tokens and 37 seconds; Azure has
+no server-side seed, so the contrast is descriptive and not a feedback-effect estimate. The
+three input report hashes are `5db7c55d…b8b632`, `ef7c710f…2620b` and
+`66081083…18de7` respectively.
+
+Clean-revision certification v40 (`d11021ff…9585b1`) reports 53 tasks at 7/32/14; security v24
+(`2731e80c…d5e67`) passes 18/18; and secure baseline v30 (`ef06a3b4…127cf9`) reports 53/53
+deterministic, valid and fail-closed tasks with zero infrastructure failures. The full test suite
+passes 317/317 in 1019.198 seconds.
+
+`experiments/science_calibration_summary_2026-07-24_v20.json` has SHA-256
+`b433bd08fe8769bb395015849daa8db01d294d91bf7f4eee5291e047ddadf910`, binds clean source
+revision `30593bb`, and contains 53 normal single-run conditions across 27 tasks. Selection-blind
+RNA evidence remains task-specific. These artifacts calibrate a transparent simplified ensemble;
+they do not implement the complete Turner model, establish global optimality, validate
+ViennaRNA/NUPACK agreement, synthesize RNA, measure structure or function, or support population,
+feedback-causal or autonomous-discovery claims.

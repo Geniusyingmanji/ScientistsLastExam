@@ -2,7 +2,7 @@
 
 Audit date: 2026-07-19 (UTC), with the experiment roadmap extended after repeated full-text
 EdgeBench comparison and the task inventory updated on 2026-07-24 through
-GeneNetworkIntervention-v1.
+RNAInverseDesign-v1.
 Evidence base: `literature_matrix.md`,
 `science_experiment_plan.md`, current source/tests, and the dated artifacts in `experiments/`.
 
@@ -25,10 +25,10 @@ physical validation, and auditable claim–evidence provenance.
 
 | Capability | Current status | Evidence | Remaining acceptance criterion |
 |---|---|---|---|
-| Candidate/oracle isolation | Implemented | Clean-revision security v18: 18/18 adversarial tests; Bubblewrap, no network, read-only mounts, resource/seccomp limits, typed RPC, fresh multi-world sessions and candidate-exception sanitization | Reproduce in clean Linux CI; document portability/non-Linux behavior |
-| Fail-closed trusted metrics | Implemented | Clean-revision 52×2 v28: 52 deterministic, 52 valid, 52 fail-closed and zero infrastructure failures | Repair or quarantine every future invalid candidate oracle before certification |
-| Task admission policy | Implemented, narrow | Current source manifest: 7 certified / 31 candidate / 14 quarantined; GeneNetworkIntervention adds active CRISPRi/a-like acquisition, signed dynamic mechanisms, protected-readout intervention, sealed transfer and null/latent-regulator refusal | Independent domain + evaluator reviews are still declarations, not completed external review |
-| Scientific validity of inventory | Audited, sparse | All original 50 packages passed adversarial admission; ActiveLawDiscovery and GeneNetworkIntervention bring inventory to 52, and substantive rebuilds now leave 38 internally admissible packages | Rebuild high-value families and add approximately 12 net admissible tasks to reach about 50; hidden/generated instances and shortcut analysis remain mandatory |
+| Candidate/oracle isolation | Implemented | Clean-revision security v24: 18/18 adversarial tests; Bubblewrap, no network, read-only mounts, resource/seccomp limits, typed RPC, fresh multi-world sessions and candidate-exception sanitization | Reproduce in clean Linux CI; document portability/non-Linux behavior |
+| Fail-closed trusted metrics | Implemented | Clean-revision 53×2 v30: 53 deterministic, 53 valid, 53 fail-closed and zero infrastructure failures | Repair or quarantine every future invalid candidate oracle before certification |
+| Task admission policy | Implemented, narrow | Current source manifest: 7 certified / 32 candidate / 14 quarantined; RNAInverseDesign adds constrained sequence design, exact ensemble scoring, held-out structure families and proxy-false-promotion diagnostics | Independent domain + evaluator reviews are still declarations, not completed external review |
+| Scientific validity of inventory | Audited, sparse | All original 50 packages passed adversarial admission; later substantive rebuilds and additions bring inventory to 53 and leave 39 internally admissible packages | Add approximately 11 net admissible tasks to reach about 50; hidden/generated instances and shortcut analysis remain mandatory |
 | Unified trajectory/accounting | Implemented, protocol-smoked | Clean-revision two-seed baseline smoke; trajectory schema v2, hashes, AUC over `budget_units`, separate `oracle_calls`, wall/token/cost, seed, checkpoint/resume | Validate nonzero-budget schema-v2 artifact replay in CI and version future changes |
 | Feedback controls | Implemented; strict pilot run | None/shuffled prompt-metric modes disclose true-score selection; strict selection-blind freezes parent/metrics; four-task n=3 pilot has no direction-stable lift and is not token-matched | Run token-matched ≥10 paired seeds with score-only, delayed/replayed and strict open-loop controls |
 | Evaluator-only metric sealing | Implemented and integration-verified | Closed search-visible allowlist; search-state redaction/hash-keyed sidecars; candidate-controlled exception text mapped to a finite label-blind taxonomy; current 244-test suite; clean pinned OpenEvolve/TreeQuest/Shinka no-leak report `aff026d` | Extend from baseline smoke to nonzero-budget upstream runs before comparative claims |
@@ -36,7 +36,7 @@ physical validation, and auditable claim–evidence provenance.
 | TreeQuest AB-MCTS | Implemented, trusted baseline smoke | Real TreeQuest AB-MCTS-A ask/tell adapter; clean-revision secure baseline passed under Python 3.12 | Run nonzero-budget/checkpoint integration and multi-seed study |
 | ShinkaEvolve | Implemented, trusted baseline smoke | Official runner/database adapter at pinned commit; clean-revision secure baseline passed under Python 3.10 | Run nonzero-budget/resume integration and token accounting audit |
 | Classical/domain baselines | Partial | NMR, HeatExchanger, Reaction, Gravity, Ocean, Radiative, LowThrust and Climate rebuilds have truth-blind domain baselines exposing reconstruction/proxy/prediction, terminal-feasibility, experiment-design or mechanism/refusal gaps | Add random/quasi-random plus BO/CMA-ES/DE and one domain heuristic for each meaningful task family |
-| Multi-seed benchmark evidence | Missing | Keyless GPT-5.5 Responses path is operational; 51 trusted normal single-run conditions cover 26 tasks and a separate four-task n=3 control pilot is negative/inconclusive | Certified-core and science-subset reports with paired uncertainty and portable raw trajectories |
+| Multi-seed benchmark evidence | Missing | Keyless GPT-5.5 Responses path is operational; 53 trusted normal single-run conditions cover 27 tasks and a separate four-task n=3 control pilot is negative/inconclusive | Certified-core and science-subset reports with paired uncertainty and portable raw trajectories |
 | Multifidelity/Pareto | Candidate-level | HeatExchanger-v2 implements proxy/exact Pareto archives, measured false promotion and physical shifts | Add independent high-fidelity review/replication and at least one certified multifidelity task |
 | Feedback learning claim | Negative pilot only | A strict open-loop control and three-replicate four-task pilot are complete; no direction-stable visible or sealed lift, and normal uses more tokens | Token-matched preregistered ≥10-replicate study with delayed/replayed and score-only controls |
 | Mechanistic discovery | Candidate-level | ActiveLaw, NMR, Reaction, Gravity, Ocean, Radiative and Climate tasks separately score mechanisms, prediction, coverage, hidden shifts, false discovery and refusal | Add paired repeated studies, harder regimes and independent scientific validation |
@@ -118,8 +118,8 @@ or make the executable-optimization qualifier unavoidable.
 
 ### 1. Only calibration-level empirical P2 evidence exists
 
-The keyless GPT-5.5 Responses path was restored and 51 trusted normal single-run conditions now
-cover 26 tasks, with task-specific strict open-loop diagnostics on a subset. They expose
+The keyless GPT-5.5 Responses path was restored and 53 trusted normal single-run conditions now
+cover 27 tasks, with task-specific strict open-loop diagnostics on a subset. They expose
 one-step saturation and multiple oracle defects, but there are still no valid five-seed
 certified-core trajectories, no paired feedback-control result, and no nonzero-budget official-
 backend search run. The project must distinguish “calibrated at budget one” from
@@ -636,11 +636,11 @@ learns whom to trust.
 ### P0/P1 closeout — completed locally, reproduce in CI
 
 - [x] Trusted oracle / isolated candidate architecture and adversarial regression suite.
-- [x] Current 52-package deterministic secure baseline and certification audit; all 52 weak
+- [x] Current 53-package deterministic secure baseline and certification audit; all 53 weak
   baselines are valid, deterministic and fail closed.
 - [x] Re-run the deterministic secure baseline, certification and security audits on the clean
-  52-task GeneNetworkIntervention revision (v28/v38/v22).
-- [x] Seven-task certified core, 31 candidates and 14 quarantined packages after all
+  53-task RNAInverseDesign revision (v30/v40/v24).
+- [x] Seven-task certified core, 32 candidates and 14 quarantined packages after all
   admission waves and the current substantive rebuilds.
 - [x] Task-card/citation/invariant audit and dated machine-readable evidence.
 - [ ] Add Linux CI reproduction of all dated audits (local clean-revision reproduction is done).

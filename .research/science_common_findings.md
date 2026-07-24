@@ -7,14 +7,14 @@ OceanCurrentInversion-v2, RadiativeTransferFit-v2, LowThrustTransfer-v2,
 LidDrivenCavity-v2, EnergyBalanceModel-v2, BroadbandAbsorber-v2,
 DistillationColumnDesign-v2, HartreeFockSCF-v2, RoomImpulseResponse-v2,
 ConvectionDiffusionOpt-v2, SeismicWaveInversion-v2, RankineCycleOpt-v2 and MOSFETDoping-v2. The
-list now also includes RANSCalibration-v2 and GeneNetworkIntervention-v1. The 51 normal-feedback
-model conditions across these 26 tasks each
+list now also includes RANSCalibration-v2, GeneNetworkIntervention-v1 and RNAInverseDesign-v1. The
+53 normal-feedback model conditions across these 27 tasks each
 contain one seed and proposal budget one or three. They calibrate tasks and motivate experiments;
 they are not a model leaderboard, a causal feedback study or population evidence.
 
 The portable machine record
-`experiments/science_calibration_summary_2026-07-24_v19.json` retains every top-level scalar metric,
-candidate lineage hash and raw trajectory SHA-256 for all 51 normal conditions.
+`experiments/science_calibration_summary_2026-07-24_v20.json` retains every top-level scalar metric,
+candidate lineage hash and raw trajectory SHA-256 for all 53 normal conditions.
 Additional strict diagnostics for Distillation-v2, Hartree--Fock and room acoustics are bound
 separately by `experiments/distillation_v2_calibration_analysis_2026-07-23.json`,
 `experiments/hartree_fock_v2_calibration_analysis_2026-07-23.json` and
@@ -23,8 +23,9 @@ separately by `experiments/distillation_v2_calibration_analysis_2026-07-23.json`
 `experiments/seismic_wave_v2_calibration_analysis_2026-07-24.json` and
 `experiments/rankine_v2_calibration_analysis_2026-07-24.json` and
 `experiments/mosfet_v2_calibration_analysis_2026-07-24.json`,
-`experiments/rans_v2_calibration_analysis_2026-07-24.json` and
-`experiments/gene_network_intervention_calibration_analysis_2026-07-24.json`. Strict selection-blind
+`experiments/rans_v2_calibration_analysis_2026-07-24.json`,
+`experiments/gene_network_intervention_calibration_analysis_2026-07-24.json` and
+`experiments/rna_inverse_design_calibration_analysis_2026-07-24.json`. Strict selection-blind
 diagnostics remain in task-specific analysis because they are not normal-feedback calibrations.
 The underlying reports bind the task-specific source revision. Pendulum's initial budget-one
 run on revision `57c0e1b` is
@@ -91,6 +92,9 @@ by the corrected-contract run on `2557adb`.
 | RANSCalibration-v2, normal budget 3 | selected development/held-out nominal `0.356/0.428` | development/held-out robustness `0.127/0.299`; later proposal regresses to zero | A four-parameter channel-flow closure improves the nominal score, but coordinate shifts reduce both split scores. The matched-oracle-call selection-blind run remains at zero, but unequal tokens and unseeded generation preclude a feedback-effect claim. |
 | GeneNetworkIntervention-v1, truth-blind reference | development/held-out joint `0.905/0.893`; supported coverage `1/1` | mechanism `0.862/0.800`; prediction `0.916/0.898`; unsupported refusal `1/1`; false discovery `0/0` | The synthetic task has recoverable mechanism, prediction and intervention headroom without requiring truth access. It is not real Perturb-seq or biological-discovery evidence. |
 | GeneNetworkIntervention-v1, three GPT-5.5 conditions | all seven proposals remain at zero; six are invalid | four invalid experiments, two callback-schema failures and one valid proposal that refuses every supported world | The same score can represent protocol failure or scientifically empty over-refusal. Validity, supported-world coverage and conditional scientific quality must be reported as separate hurdles. |
+| RNAInverseDesign-v1, proxy counterexample | target-pair compatibility `1.0` | target probability `3e-9`; normalized exact and shifted quality `0`; ensemble defect `0.335` | Satisfying every requested pair is necessary but not sufficient for a target to dominate the complete declared ensemble. |
+| RNAInverseDesign-v1, normal budget 3 | development exact utility `0.239→0.507→0.720`; proxy compatibility remains `1.0` | held-out utility `0.500`; development/held-out robustness `0.712/0.487`; proxy false promotion `0.40/0.667` | Exact ensemble optimization can improve monotonically while a saturated pair proxy continues to over-promote sequences. |
+| RNAInverseDesign-v1, selection-blind budget 3 | frozen-parent offline best development/held-out `0.894/0.986` | robustness `0.888/0.982`; target probability `0.432/0.806`; zero proxy false promotion | A strong open-loop sample exists, but four matched oracle calls do not make the contrast causal: the conditions differ by 12,169 tokens, 37 seconds and uncontrolled endpoint randomness. |
 
 OPF's `robustness_score` combines security-constrained economic quality with overload penalties.
 It is not a pure safety probability. The proportional baseline is feasible for every tested
@@ -176,6 +180,15 @@ and held-out H4 rings, stable multistart witnesses lower the energy by `0.0375/0
 change the minimum occupied--virtual curvature from `-0.294/-0.511` to `+0.299/+0.095`.
 Scientific optimization curves must therefore retain validity, objective value, physical or
 variational stability and representation/geometry transfer as separate axes.
+
+RNAInverseDesign adds an ensemble analogue. A sequence can make all target pairs canonical and
+still assign the complete target only `3e-9` Boltzmann probability because competing structures
+dominate. In the normal budget-three trajectory, pair compatibility is saturated at every
+accepted step while exact utility rises from `0.239` to `0.720` and held-out target probability
+from `0.0010` to `0.187`. Pair compatibility is therefore a useful construction constraint, not
+an adequate success metric; target probability, ensemble defect, MFE agreement and shifted
+transfer remain separate. This result is exact only for the declared simplified pair-stack-loop
+model and is not evidence about full Turner thermodynamics or experimental RNA function.
 
 The model calibration sharpens this point. A budget-one proposal reaches approximately unit
 nominal and sealed scores by synthesizing a known deterministic multistart method. In the normal
@@ -541,8 +554,8 @@ far-offset prediction, model-class adequacy and geological interpretation remain
 The current synthetic primary-reflection laboratory is an active-acquisition/model-checking
 on-ramp, not field FWI or autonomous geological discovery.
 
-The present inventory contains 38 internally admissible certified or candidate packages: seven
-certified and 31 candidate, with 14 quarantined. The remaining gap is approximately 12 tasks.
+The present inventory contains 39 internally admissible certified or candidate packages: seven
+certified and 32 candidate, with 14 quarantined. The remaining gap is approximately 11 tasks.
 Expansion should use procedural families spanning
 design, inverse problems, control, multifidelity validation, mechanism discovery and exact
 mathematical construction rather than cloning one scalar optimization template across domains.

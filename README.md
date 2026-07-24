@@ -16,11 +16,11 @@ text-question benchmark named *FrontierScience* in
 
 ## Current status
 
-The repository contains **52 task packages in 47 metadata domains**:
+The repository contains **53 task packages in 49 metadata domains**:
 
 - **7 certified core tasks**: Lennard–Jones clusters, spin glass, Poisson solver,
   matrix-multiplication rank, Cap Set, circle packing, and multilayer thin films.
-- **31 candidate tasks** pending scientific certification, including intervention-based causal
+- **32 candidate tasks** pending scientific certification, including intervention-based causal
   and active dynamical-law laboratories whose prediction and mechanism metrics are reported
   separately, a multi-spectrum NMR peak-mechanism/refusal task, and a multi-fidelity
   heat-exchanger Pareto-design task, a full-field lid-driven-cavity solver, active
@@ -28,14 +28,15 @@ The repository contains **52 task packages in 47 metadata domains**:
   broadband acoustic-absorber design task, and a robust mixed-integer equilibrium-stage
   distillation design task, a multi-system stable finite-basis Hartree–Fock task, an IAPWS-IF97
   single-reheat Pareto-cycle task, robust room
-  acoustics design, active convection--diffusion identification/design and active layered
-  reflection acquisition/inversion with explicit model-inadequacy refusal.
+  acoustics design, active convection--diffusion identification/design, active layered
+  reflection acquisition/inversion with explicit model-inadequacy refusal, and constrained RNA
+  inverse design with exact ensemble scoring and proxy-false-promotion diagnostics.
 - **14 quarantined tasks** with reproduced scientific-oracle, identifiability, provenance or
   shortcut defects; these remain inventory packages but are not admissible benchmark tasks.
 
 The default CLI exposes only the certified core. `--all` explicitly shows the full
 inventory. Certification status is not a difficulty claim: the inventory metadata contains
-47 `hard` and 5 `flagship` packages, but only certified tasks are benchmark-admissible.
+47 `hard` and 6 `flagship` packages, but only certified tasks are benchmark-admissible.
 
 All candidate code runs in a networkless Bubblewrap sandbox with read-only mounts, resource
 and process limits, and a typed JSON RPC boundary. The trusted parent alone imports the
@@ -46,13 +47,13 @@ controlled exception text is reduced to a fixed label-blind failure taxonomy bef
 search feedback, preventing observations from being carried between worlds through exceptions.
 The current audit reports:
 
-- 307/307 unit, security, protocol, analysis and scientific-invariant tests pass after adding
-  GeneNetworkIntervention and its calibration analysis. The latest trusted task/security/baseline
-  reports bind clean source revision `b777889`; cross-task summary v19 binds revision `1af62cd`
-  and contains 51 normal single-run conditions over 26 tasks.
-- The latest trusted 52×2 secure-baseline audit reports 52/52 deterministic, 52/52 valid,
-  52/52 fail-closed and zero infrastructure failures.
-- Current source manifest: 7 certified / 31 candidate / 14 quarantined. D-optimal design, quantum
+- 317/317 unit, security, protocol, analysis and scientific-invariant tests pass after adding
+  RNAInverseDesign and its calibration analysis. The latest trusted task/security/baseline
+  reports bind clean source revision `cebd378`; cross-task summary v20 binds revision `30593bb`
+  and contains 53 normal single-run conditions over 27 tasks.
+- The latest trusted 53×2 secure-baseline audit reports 53/53 deterministic, 53/53 valid,
+  53/53 fail-closed and zero infrastructure failures.
+- Current source manifest: 7 certified / 32 candidate / 14 quarantined. D-optimal design, quantum
   gate synthesis, DC optimal power flow, truss sizing, antenna synthesis and NMR peak fitting have been rebuilt with separate sealed
   validation or robustness metrics and re-admitted as candidates. HeatExchanger-v2 additionally
   separates a public constant-property proxy from a sealed segmented temperature-dependent
@@ -235,17 +236,22 @@ the post-repair 50-package audits bind revision `47c3613`; the subsequent wave-2
 audit quarantines seven additional defective candidates. The two P2 smokes are baseline-only; the repository does not yet contain
 credible multi-seed model-performance evidence. A clean-revision GPT-5.5 budget-one core pilot
 is recorded as task calibration, not a benchmark leaderboard.
-The latest trusted clean-revision certification/security/baseline audits are v38/v22/v28 and
-cover all 52 current task directories. The current source manifest is 7/31/14 and contains
-38 internally admissible tasks, leaving an approximate gap of 12 to the roughly 50-task target.
+The latest trusted clean-revision certification/security/baseline audits are v40/v24/v30 and
+cover all 53 current task directories. The current source manifest is 7/32/14 and contains
+39 internally admissible tasks, leaving an approximate gap of 11 to the roughly 50-task target.
 GeneNetworkIntervention adds an active nonlinear signed-network, protected-readout intervention,
 sealed-transfer and null/latent-regulator refusal candidate. Its truth-blind nonlinear reference
 scores `0.9053/0.8932` development/held-out joint quality with zero false discovery. Across the
 budget-one, normal budget-three and selection-blind budget-three GPT-5.5 calibrations, six of
 seven proposals are invalid and the only valid proposal refuses every supported world; no valid
-nonzero scientific proposal is observed. The hash-bound cross-task summary v19 contains 51 normal
-single-run conditions over 26 tasks. These runs are calibration evidence, not a leaderboard,
-population result, real Perturb-seq result or biological discovery.
+nonzero scientific proposal is observed. RNAInverseDesign adds five development and three held-out
+secondary-structure families under a transparent exact pair-stack-loop ensemble. Normal budget
+three improves development exact utility `0.239→0.507→0.720`, with held-out utility `0.500`, but
+retains proxy false promotions; a pair-compatible counterexample has target probability `3e-9`.
+This is simplified computational ensemble design, not full Turner thermodynamics, a synthesized
+RNA or biological discovery. The hash-bound cross-task summary v20 contains 53 normal single-run
+conditions over 27 tasks. These runs are calibration evidence, not a leaderboard, population
+result, real Perturb-seq result or biological discovery.
 
 The latest EdgeBench re-audit keeps its upstream facts at arXiv `2607.05155v1`, SForge
 `a87350a` and public dataset `47846a4`. In addition to E1--E36, the science plan now preregisters
