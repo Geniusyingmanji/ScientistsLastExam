@@ -1,0 +1,1298 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_DERIVED_EVIDENCE",
+  "evidence_scope": "MA1_E52_ANALYZER_POSITIVE_CONTROLS_NOT_AGENT_MILESTONE_FEEDBACK_CAUSAL_POPULATION_PHYSICAL_OR_DISCOVERY_EVIDENCE",
+  "created_at": "2026-07-24T18:46:49.962174+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "c1aec3e281fa53cc2dadf2828d83e40e867b3121",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/analyze_milestone_attribution.py",
+      "--output",
+      "experiments/milestone_attribution_positive_controls_2026-07-24.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "input_provenance": {
+    "preregistration": {
+      "path": ".research/milestone_attribution_preregistration.md",
+      "sha256": "2adfdc964efbd8092dd71a0ab5e355288fe0e6119853d6bd3553ff5839849414"
+    },
+    "inputs": {
+      "experiments/reaction_mechanism_v2_calibration_2026-07-22.json": "38c04896a9beacdcb91a7b810c7a7cc53c89d293eab55d58aa630eb55edd5f1d",
+      "experiments/convection_diffusion_v2_calibration_2026-07-23.json": "7a6117ef310bb99eafdf60ebffb594c42d1eb8241e09af65292154579ed69e54",
+      "experiments/reaction_v2_calibration_analysis_2026-07-22.json": "9714297ecc8bfe0d24ab200138aaf753dbf929c17fdabf05cc1b73dde32bda93",
+      "experiments/convection_diffusion_v2_calibration_analysis_2026-07-23.json": "d8541f8a379af4ea10aa0b01f08d08f2c1653d2df1166b2460dd905dcfce692e"
+    },
+    "agent_milestone_sampling_frame": {
+      "eligible_agent_milestone_count": 0,
+      "reaction_normal_positive_descendants": 0,
+      "convection_positive_descendants": 0,
+      "reaction_blind_selected_excluded": true,
+      "reaction_blind_exclusion_reason": "offline frozen-parent proposal is not an iterative feedback descendant; development and heldout false-discovery rates are 0.5"
+    }
+  },
+  "manifest": {
+    "schema_version": 1,
+    "cohort_id": "ma1_e52_task_calibration_positive_controls_2026-07-24",
+    "evidence_class": "positive_control",
+    "preregistration": ".research/milestone_attribution_preregistration.md",
+    "preregistration_sha256": "2adfdc964efbd8092dd71a0ab5e355288fe0e6119853d6bd3553ff5839849414",
+    "outcomes": [
+      {
+        "name": "development_score",
+        "direction": "maximize",
+        "material_epsilon": 0.01
+      },
+      {
+        "name": "sealed_score",
+        "direction": "maximize",
+        "material_epsilon": 0.01
+      },
+      {
+        "name": "mechanism_score",
+        "direction": "maximize",
+        "material_epsilon": 0.01
+      },
+      {
+        "name": "prediction_score",
+        "direction": "maximize",
+        "material_epsilon": 0.01
+      },
+      {
+        "name": "false_discovery_rate",
+        "direction": "minimize",
+        "material_epsilon": 0.0
+      },
+      {
+        "name": "validity",
+        "direction": "maximize",
+        "material_epsilon": 0.0
+      },
+      {
+        "name": "experiment_cost",
+        "direction": "minimize",
+        "material_epsilon": 0.0
+      }
+    ],
+    "hard_gates": [
+      {
+        "metric": "validity",
+        "operator": ">=",
+        "threshold": 1.0
+      },
+      {
+        "metric": "false_discovery_rate",
+        "operator": "<=",
+        "threshold": 0.1
+      }
+    ],
+    "milestones": [
+      {
+        "milestone_id": "reaction_classical_bundle_control",
+        "task": "ChemicalKinetics/ReactionMechanismFitting",
+        "parent_sha256": "afdcdd62ffcf8a8e24b3b25412a0dbe2f8d4725963c9f3d007efaa659bce41b2",
+        "child_sha256": "c01905db0ebec3d00ab09f862abe0b539cdc073fad2874cf0de086ba4d216d45",
+        "eligible": true,
+        "sampled": true,
+        "factors": [
+          "D",
+          "M",
+          "I",
+          "O"
+        ],
+        "visible_outcome": "development_score",
+        "sealed_outcomes": [
+          "sealed_score",
+          "mechanism_score"
+        ],
+        "attribution_outcomes": [
+          "sealed_score",
+          "mechanism_score"
+        ],
+        "data_changed": true,
+        "method_changed": true,
+        "data_method_non_separable": true,
+        "data_method_non_separable_reason": "the historical task-calibration policy does not expose old/new data and old/new method as independently executable cells",
+        "common_replay": {
+          "evidence_access_sha256": "d85aa3a9d104d5f98be7b01f8a50131ee66a60dc54330d4bcf0e129a6e097e73",
+          "evaluator_manifest_sha256": "a7e59b5ce776aae09f99be6211b1296edb6bd28d668f974417e231493f818144",
+          "world_panel_sha256": "5e909918a984fc1c21452a4453187ffbe0b3c376be6ae498c5e7c750a7dcdc57",
+          "environment_sha256": "724fc8493f3a0cc29a32a8f9e3424e6fd9897ab82476dab96e854ce3c8720d6f"
+        },
+        "factorials": [],
+        "paired_world_effects": {
+          "rows": [
+            {
+              "split": "development",
+              "world_index": 0,
+              "kind": "in_library",
+              "favorable_effects": {
+                "mechanism_quality": 0.999247,
+                "interpolation_prediction": 0.99139,
+                "false_discovery": -0.0,
+                "validity": 0.0
+              }
+            },
+            {
+              "split": "development",
+              "world_index": 1,
+              "kind": "in_library",
+              "favorable_effects": {
+                "mechanism_quality": 0.649716,
+                "interpolation_prediction": 0.748089,
+                "false_discovery": -0.0,
+                "validity": 0.0
+              }
+            },
+            {
+              "split": "development",
+              "world_index": 2,
+              "kind": "in_library",
+              "favorable_effects": {
+                "mechanism_quality": 0.913272,
+                "interpolation_prediction": 0.951092,
+                "false_discovery": -0.0,
+                "validity": 0.0
+              }
+            },
+            {
+              "split": "development",
+              "world_index": 3,
+              "kind": "in_library",
+              "favorable_effects": {
+                "mechanism_quality": 0.365107,
+                "interpolation_prediction": 0.751146,
+                "false_discovery": -0.0,
+                "validity": 0.0
+              }
+            },
+            {
+              "split": "development",
+              "world_index": 4,
+              "kind": "null",
+              "favorable_effects": {
+                "mechanism_quality": 0.0,
+                "interpolation_prediction": 0.0,
+                "false_discovery": -0.0,
+                "validity": 0.0
+              }
+            },
+            {
+              "split": "development",
+              "world_index": 5,
+              "kind": "misspecified",
+              "favorable_effects": {
+                "mechanism_quality": -1.0,
+                "interpolation_prediction": 0.0,
+                "false_discovery": -1.0,
+                "validity": 0.0
+              }
+            },
+            {
+              "split": "heldout",
+              "world_index": 0,
+              "kind": "in_library",
+              "favorable_effects": {
+                "mechanism_quality": 0.522334,
+                "interpolation_prediction": 0.0,
+                "false_discovery": -0.0,
+                "validity": 0.0
+              }
+            },
+            {
+              "split": "heldout",
+              "world_index": 1,
+              "kind": "in_library",
+              "favorable_effects": {
+                "mechanism_quality": 0.773381,
+                "interpolation_prediction": 0.88981,
+                "false_discovery": -0.0,
+                "validity": 0.0
+              }
+            },
+            {
+              "split": "heldout",
+              "world_index": 2,
+              "kind": "in_library",
+              "favorable_effects": {
+                "mechanism_quality": 0.917091,
+                "interpolation_prediction": 0.98018,
+                "false_discovery": -0.0,
+                "validity": 0.0
+              }
+            },
+            {
+              "split": "heldout",
+              "world_index": 3,
+              "kind": "null",
+              "favorable_effects": {
+                "mechanism_quality": 0.0,
+                "interpolation_prediction": 0.0,
+                "false_discovery": -0.0,
+                "validity": 0.0
+              }
+            },
+            {
+              "split": "heldout",
+              "world_index": 4,
+              "kind": "misspecified",
+              "favorable_effects": {
+                "mechanism_quality": -1.0,
+                "interpolation_prediction": 0.31052,
+                "false_discovery": -1.0,
+                "validity": 0.0
+              }
+            }
+          ],
+          "summaries": {
+            "mechanism_quality": {
+              "paired_world_count": 11,
+              "mean_favorable_effect": 0.285468,
+              "minimum_favorable_effect": -1.0,
+              "maximum_favorable_effect": 0.999247,
+              "positive_world_count": 7,
+              "negative_world_count": 2
+            },
+            "interpolation_prediction": {
+              "paired_world_count": 11,
+              "mean_favorable_effect": 0.5111115454545455,
+              "minimum_favorable_effect": 0.0,
+              "maximum_favorable_effect": 0.99139,
+              "positive_world_count": 7,
+              "negative_world_count": 0
+            },
+            "false_discovery": {
+              "paired_world_count": 11,
+              "mean_favorable_effect": -0.18181818181818182,
+              "minimum_favorable_effect": -1.0,
+              "maximum_favorable_effect": -0.0,
+              "positive_world_count": 0,
+              "negative_world_count": 2
+            },
+            "validity": {
+              "paired_world_count": 11,
+              "mean_favorable_effect": 0.0,
+              "minimum_favorable_effect": 0.0,
+              "maximum_favorable_effect": 0.0,
+              "positive_world_count": 0,
+              "negative_world_count": 0
+            }
+          }
+        },
+        "treatments": {
+          "parent": {
+            "artifact_sha256": "afdcdd62ffcf8a8e24b3b25412a0dbe2f8d4725963c9f3d007efaa659bce41b2",
+            "executable": true,
+            "evidence_access_sha256": "d85aa3a9d104d5f98be7b01f8a50131ee66a60dc54330d4bcf0e129a6e097e73",
+            "evaluator_manifest_sha256": "a7e59b5ce776aae09f99be6211b1296edb6bd28d668f974417e231493f818144",
+            "world_panel_sha256": "5e909918a984fc1c21452a4453187ffbe0b3c376be6ae498c5e7c750a7dcdc57",
+            "environment_sha256": "724fc8493f3a0cc29a32a8f9e3424e6fd9897ab82476dab96e854ce3c8720d6f",
+            "metrics": {
+              "development_score": 0.0,
+              "sealed_score": 0.0,
+              "mechanism_score": 0.4,
+              "prediction_score": 0.0,
+              "false_discovery_rate": 0.0,
+              "validity": 1.0,
+              "experiment_cost": 3.0
+            }
+          },
+          "full_child": {
+            "artifact_sha256": "c01905db0ebec3d00ab09f862abe0b539cdc073fad2874cf0de086ba4d216d45",
+            "executable": true,
+            "evidence_access_sha256": "d85aa3a9d104d5f98be7b01f8a50131ee66a60dc54330d4bcf0e129a6e097e73",
+            "evaluator_manifest_sha256": "a7e59b5ce776aae09f99be6211b1296edb6bd28d668f974417e231493f818144",
+            "world_panel_sha256": "5e909918a984fc1c21452a4453187ffbe0b3c376be6ae498c5e7c750a7dcdc57",
+            "environment_sha256": "724fc8493f3a0cc29a32a8f9e3424e6fd9897ab82476dab96e854ce3c8720d6f",
+            "metrics": {
+              "development_score": 0.4818354999999999,
+              "sealed_score": 0.4042686666666667,
+              "mechanism_score": 0.6425612,
+              "prediction_score": 0.62333,
+              "false_discovery_rate": 0.5,
+              "validity": 1.0,
+              "experiment_cost": 10.0
+            },
+            "built_from_parent_sha256": "afdcdd62ffcf8a8e24b3b25412a0dbe2f8d4725963c9f3d007efaa659bce41b2"
+          },
+          "component_only:D": {
+            "artifact_sha256": "057e0eb6c606c77f79114d8a8e955565df45a2b34c58dcc28c804925cc9ec6bd",
+            "built_from_parent_sha256": "afdcdd62ffcf8a8e24b3b25412a0dbe2f8d4725963c9f3d007efaa659bce41b2",
+            "executable": false,
+            "non_separable": true,
+            "reason": "assay choice, support selection, parameter fitting and refusal logic are bundled in the historical classical policy"
+          },
+          "component_only:M": {
+            "artifact_sha256": "057e0eb6c606c77f79114d8a8e955565df45a2b34c58dcc28c804925cc9ec6bd",
+            "built_from_parent_sha256": "afdcdd62ffcf8a8e24b3b25412a0dbe2f8d4725963c9f3d007efaa659bce41b2",
+            "executable": false,
+            "non_separable": true,
+            "reason": "assay choice, support selection, parameter fitting and refusal logic are bundled in the historical classical policy"
+          },
+          "component_only:I": {
+            "artifact_sha256": "057e0eb6c606c77f79114d8a8e955565df45a2b34c58dcc28c804925cc9ec6bd",
+            "built_from_parent_sha256": "afdcdd62ffcf8a8e24b3b25412a0dbe2f8d4725963c9f3d007efaa659bce41b2",
+            "executable": false,
+            "non_separable": true,
+            "reason": "assay choice, support selection, parameter fitting and refusal logic are bundled in the historical classical policy"
+          },
+          "component_only:O": {
+            "artifact_sha256": "057e0eb6c606c77f79114d8a8e955565df45a2b34c58dcc28c804925cc9ec6bd",
+            "built_from_parent_sha256": "afdcdd62ffcf8a8e24b3b25412a0dbe2f8d4725963c9f3d007efaa659bce41b2",
+            "executable": false,
+            "non_separable": true,
+            "reason": "assay choice, support selection, parameter fitting and refusal logic are bundled in the historical classical policy"
+          }
+        }
+      },
+      {
+        "milestone_id": "convection_off_axis_evidence_control",
+        "task": "HeatTransfer/ConvectionDiffusionOpt",
+        "parent_sha256": "523ad94c16fbec12198b135011234f97cd13ddcee42420e74f1d211ba5e5aba5",
+        "child_sha256": "94b31484b56212b786bcdd323605c51f706c529b64dc654d0108cb39ca086195",
+        "eligible": true,
+        "sampled": true,
+        "factors": [
+          "D"
+        ],
+        "visible_outcome": "development_score",
+        "sealed_outcomes": [
+          "sealed_score",
+          "mechanism_score"
+        ],
+        "attribution_outcomes": [
+          "sealed_score",
+          "mechanism_score"
+        ],
+        "data_changed": true,
+        "method_changed": false,
+        "common_replay": {
+          "evidence_access_sha256": "a296853122d404509eb73e4d4c97e8e22e7b6a3079aa64c06bbe434eef91b22f",
+          "evaluator_manifest_sha256": "f4941a2ee808bcd00a409a69d3c8735b4fcbbb62f80012e5baf4f441e9e0746c",
+          "world_panel_sha256": "92a093a38e76af719beb9873cf2c5e998519bda6b8ff02eabad6e67a955a5fc7",
+          "environment_sha256": "9fbaee0b42efef28c0cc1ed7e4f813ac2e5cf42c8cbed276bb412d2f2f5e1822"
+        },
+        "factorials": [],
+        "paired_world_effects": {
+          "rows": [
+            {
+              "split": "development",
+              "world_index": 0,
+              "kind": "in_library",
+              "favorable_effects": {
+                "mechanism_quality": 0.7905803533449001,
+                "prediction_quality": 0.9491933396054109,
+                "design_quality": 0.3230715363951361,
+                "false_discovery": -0.0,
+                "validity": 0.0
+              }
+            },
+            {
+              "split": "development",
+              "world_index": 1,
+              "kind": "in_library",
+              "favorable_effects": {
+                "mechanism_quality": 0.6639968011340582,
+                "prediction_quality": 0.9991630791697027,
+                "design_quality": 0.932271961747728,
+                "false_discovery": -0.0,
+                "validity": 0.0
+              }
+            },
+            {
+              "split": "development",
+              "world_index": 2,
+              "kind": "in_library",
+              "favorable_effects": {
+                "mechanism_quality": 0.6322435406968775,
+                "prediction_quality": 0.9878428567856065,
+                "design_quality": 0.7274831919537699,
+                "false_discovery": -0.0,
+                "validity": 0.0
+              }
+            },
+            {
+              "split": "development",
+              "world_index": 3,
+              "kind": "in_library",
+              "favorable_effects": {
+                "mechanism_quality": 0.5110337708310078,
+                "prediction_quality": 0.9730781434901334,
+                "design_quality": 0.6799899002585861,
+                "false_discovery": -0.0,
+                "validity": 0.0
+              }
+            },
+            {
+              "split": "development",
+              "world_index": 4,
+              "kind": "null",
+              "favorable_effects": {
+                "mechanism_quality": 0.0,
+                "prediction_quality": 0.0,
+                "design_quality": 0.0,
+                "false_discovery": -0.0,
+                "validity": 0.0
+              }
+            },
+            {
+              "split": "development",
+              "world_index": 5,
+              "kind": "misspecified",
+              "favorable_effects": {
+                "mechanism_quality": 0.0,
+                "prediction_quality": 0.0,
+                "design_quality": 0.0,
+                "false_discovery": -0.0,
+                "validity": 0.0
+              }
+            },
+            {
+              "split": "heldout",
+              "world_index": 0,
+              "kind": "in_library",
+              "favorable_effects": {
+                "mechanism_quality": 0.654776414211998,
+                "prediction_quality": 0.28216418106379204,
+                "design_quality": 0.058226374365652034,
+                "false_discovery": -0.0,
+                "validity": 0.0
+              }
+            },
+            {
+              "split": "heldout",
+              "world_index": 1,
+              "kind": "in_library",
+              "favorable_effects": {
+                "mechanism_quality": 0.397499339332225,
+                "prediction_quality": 0.35376984910216114,
+                "design_quality": 0.13769403969584681,
+                "false_discovery": -0.0,
+                "validity": 0.0
+              }
+            },
+            {
+              "split": "heldout",
+              "world_index": 2,
+              "kind": "in_library",
+              "favorable_effects": {
+                "mechanism_quality": 0.926445655938439,
+                "prediction_quality": 0.12384367796925144,
+                "design_quality": 0.10553468895182871,
+                "false_discovery": -0.0,
+                "validity": 0.0
+              }
+            },
+            {
+              "split": "heldout",
+              "world_index": 3,
+              "kind": "null",
+              "favorable_effects": {
+                "mechanism_quality": 0.0,
+                "prediction_quality": 0.0,
+                "design_quality": 0.0,
+                "false_discovery": -0.0,
+                "validity": 0.0
+              }
+            },
+            {
+              "split": "heldout",
+              "world_index": 4,
+              "kind": "misspecified",
+              "favorable_effects": {
+                "mechanism_quality": 0.0,
+                "prediction_quality": 0.0,
+                "design_quality": 0.0,
+                "false_discovery": -0.0,
+                "validity": 0.0
+              }
+            }
+          ],
+          "summaries": {
+            "mechanism_quality": {
+              "paired_world_count": 11,
+              "mean_favorable_effect": 0.4160523523172278,
+              "minimum_favorable_effect": 0.0,
+              "maximum_favorable_effect": 0.926445655938439,
+              "positive_world_count": 7,
+              "negative_world_count": 0
+            },
+            "prediction_quality": {
+              "paired_world_count": 11,
+              "mean_favorable_effect": 0.4244595570169144,
+              "minimum_favorable_effect": 0.0,
+              "maximum_favorable_effect": 0.9991630791697027,
+              "positive_world_count": 7,
+              "negative_world_count": 0
+            },
+            "design_quality": {
+              "paired_world_count": 11,
+              "mean_favorable_effect": 0.2694792448516861,
+              "minimum_favorable_effect": 0.0,
+              "maximum_favorable_effect": 0.932271961747728,
+              "positive_world_count": 7,
+              "negative_world_count": 0
+            },
+            "false_discovery": {
+              "paired_world_count": 11,
+              "mean_favorable_effect": 0.0,
+              "minimum_favorable_effect": -0.0,
+              "maximum_favorable_effect": -0.0,
+              "positive_world_count": 0,
+              "negative_world_count": 0
+            },
+            "validity": {
+              "paired_world_count": 11,
+              "mean_favorable_effect": 0.0,
+              "minimum_favorable_effect": 0.0,
+              "maximum_favorable_effect": 0.0,
+              "positive_world_count": 0,
+              "negative_world_count": 0
+            }
+          }
+        },
+        "treatments": {
+          "parent": {
+            "artifact_sha256": "523ad94c16fbec12198b135011234f97cd13ddcee42420e74f1d211ba5e5aba5",
+            "executable": true,
+            "evidence_access_sha256": "a296853122d404509eb73e4d4c97e8e22e7b6a3079aa64c06bbe434eef91b22f",
+            "evaluator_manifest_sha256": "f4941a2ee808bcd00a409a69d3c8735b4fcbbb62f80012e5baf4f441e9e0746c",
+            "world_panel_sha256": "92a093a38e76af719beb9873cf2c5e998519bda6b8ff02eabad6e67a955a5fc7",
+            "environment_sha256": "9fbaee0b42efef28c0cc1ed7e4f813ac2e5cf42c8cbed276bb412d2f2f5e1822",
+            "metrics": {
+              "development_score": 0.0,
+              "sealed_score": 2.220446049250313e-15,
+              "mechanism_score": 9.358234827265949e-58,
+              "prediction_score": 0.7464267860743922,
+              "false_discovery_rate": 0.0,
+              "validity": 1.0,
+              "experiment_cost": 7.0
+            }
+          },
+          "full_child": {
+            "artifact_sha256": "94b31484b56212b786bcdd323605c51f706c529b64dc654d0108cb39ca086195",
+            "executable": true,
+            "evidence_access_sha256": "a296853122d404509eb73e4d4c97e8e22e7b6a3079aa64c06bbe434eef91b22f",
+            "evaluator_manifest_sha256": "f4941a2ee808bcd00a409a69d3c8735b4fcbbb62f80012e5baf4f441e9e0746c",
+            "world_panel_sha256": "92a093a38e76af719beb9873cf2c5e998519bda6b8ff02eabad6e67a955a5fc7",
+            "environment_sha256": "9fbaee0b42efef28c0cc1ed7e4f813ac2e5cf42c8cbed276bb412d2f2f5e1822",
+            "metrics": {
+              "development_score": 0.8956051472873855,
+              "sealed_score": 0.891508858216754,
+              "mechanism_score": 0.6595738031608872,
+              "prediction_score": 0.9996860221194602,
+              "false_discovery_rate": 0.0,
+              "validity": 1.0,
+              "experiment_cost": 12.0
+            },
+            "built_from_parent_sha256": "523ad94c16fbec12198b135011234f97cd13ddcee42420e74f1d211ba5e5aba5"
+          },
+          "component_only:D": {
+            "artifact_sha256": "94b31484b56212b786bcdd323605c51f706c529b64dc654d0108cb39ca086195",
+            "executable": true,
+            "evidence_access_sha256": "a296853122d404509eb73e4d4c97e8e22e7b6a3079aa64c06bbe434eef91b22f",
+            "evaluator_manifest_sha256": "f4941a2ee808bcd00a409a69d3c8735b4fcbbb62f80012e5baf4f441e9e0746c",
+            "world_panel_sha256": "92a093a38e76af719beb9873cf2c5e998519bda6b8ff02eabad6e67a955a5fc7",
+            "environment_sha256": "9fbaee0b42efef28c0cc1ed7e4f813ac2e5cf42c8cbed276bb412d2f2f5e1822",
+            "metrics": {
+              "development_score": 0.8956051472873855,
+              "sealed_score": 0.891508858216754,
+              "mechanism_score": 0.6595738031608872,
+              "prediction_score": 0.9996860221194602,
+              "false_discovery_rate": 0.0,
+              "validity": 1.0,
+              "experiment_cost": 12.0
+            },
+            "built_from_parent_sha256": "523ad94c16fbec12198b135011234f97cd13ddcee42420e74f1d211ba5e5aba5"
+          },
+          "leave_one_out:D": {
+            "artifact_sha256": "e064b1514c17bfa7e64ee0bea2b29c4be224d4e3375250606eaea0674d1f8eaa",
+            "executable": true,
+            "evidence_access_sha256": "a296853122d404509eb73e4d4c97e8e22e7b6a3079aa64c06bbe434eef91b22f",
+            "evaluator_manifest_sha256": "f4941a2ee808bcd00a409a69d3c8735b4fcbbb62f80012e5baf4f441e9e0746c",
+            "world_panel_sha256": "92a093a38e76af719beb9873cf2c5e998519bda6b8ff02eabad6e67a955a5fc7",
+            "environment_sha256": "9fbaee0b42efef28c0cc1ed7e4f813ac2e5cf42c8cbed276bb412d2f2f5e1822",
+            "metrics": {
+              "development_score": 0.0,
+              "sealed_score": 2.220446049250313e-15,
+              "mechanism_score": 9.358234827265949e-58,
+              "prediction_score": 0.7464267860743922,
+              "false_discovery_rate": 0.0,
+              "validity": 1.0,
+              "experiment_cost": 7.0
+            },
+            "built_from_parent_sha256": "523ad94c16fbec12198b135011234f97cd13ddcee42420e74f1d211ba5e5aba5"
+          },
+          "rollback:D": {
+            "artifact_sha256": "e064b1514c17bfa7e64ee0bea2b29c4be224d4e3375250606eaea0674d1f8eaa",
+            "executable": true,
+            "evidence_access_sha256": "a296853122d404509eb73e4d4c97e8e22e7b6a3079aa64c06bbe434eef91b22f",
+            "evaluator_manifest_sha256": "f4941a2ee808bcd00a409a69d3c8735b4fcbbb62f80012e5baf4f441e9e0746c",
+            "world_panel_sha256": "92a093a38e76af719beb9873cf2c5e998519bda6b8ff02eabad6e67a955a5fc7",
+            "environment_sha256": "9fbaee0b42efef28c0cc1ed7e4f813ac2e5cf42c8cbed276bb412d2f2f5e1822",
+            "metrics": {
+              "development_score": 0.0,
+              "sealed_score": 2.220446049250313e-15,
+              "mechanism_score": 9.358234827265949e-58,
+              "prediction_score": 0.7464267860743922,
+              "false_discovery_rate": 0.0,
+              "validity": 1.0,
+              "experiment_cost": 7.0
+            },
+            "built_from_parent_sha256": "523ad94c16fbec12198b135011234f97cd13ddcee42420e74f1d211ba5e5aba5"
+          }
+        }
+      }
+    ]
+  },
+  "analysis": {
+    "cohort_id": "ma1_e52_task_calibration_positive_controls_2026-07-24",
+    "evidence_class": "positive_control",
+    "manifest_sha256": "0de4ad2c2d011740ed8182aef7db3610c308e1adc9132eaceea7f3121b07de2b",
+    "milestone_count": 2,
+    "eligible_milestone_count": 2,
+    "sampled_milestone_count": 2,
+    "bounded_attribution_count": 1,
+    "causal_attribution_coverage": 0.5,
+    "non_separable_treatment_count": 4,
+    "decision_counts": {
+      "reliability_or_validity_gate_failed": 1,
+      "bounded_component_attribution": 1
+    },
+    "milestones": [
+      {
+        "milestone_id": "reaction_classical_bundle_control",
+        "task": "ChemicalKinetics/ReactionMechanismFitting",
+        "evidence_class": "positive_control",
+        "eligible": true,
+        "sampled": true,
+        "factors": [
+          "D",
+          "M",
+          "I",
+          "O"
+        ],
+        "treatment_status": {
+          "parent": "executable",
+          "full_child": "executable",
+          "component_only:D": "non_separable",
+          "component_only:M": "non_separable",
+          "component_only:I": "non_separable",
+          "component_only:O": "non_separable"
+        },
+        "non_separable_treatments": [
+          "component_only:D",
+          "component_only:M",
+          "component_only:I",
+          "component_only:O"
+        ],
+        "estimands": {
+          "full_child": {
+            "development_score": {
+              "raw_effect": 0.4818354999999999,
+              "favorable_effect": 0.4818354999999999
+            },
+            "sealed_score": {
+              "raw_effect": 0.4042686666666667,
+              "favorable_effect": 0.4042686666666667
+            },
+            "mechanism_score": {
+              "raw_effect": 0.24256120000000003,
+              "favorable_effect": 0.24256120000000003
+            },
+            "prediction_score": {
+              "raw_effect": 0.62333,
+              "favorable_effect": 0.62333
+            },
+            "false_discovery_rate": {
+              "raw_effect": 0.5,
+              "favorable_effect": -0.5
+            },
+            "validity": {
+              "raw_effect": 0.0,
+              "favorable_effect": 0.0
+            },
+            "experiment_cost": {
+              "raw_effect": 7.0,
+              "favorable_effect": -7.0
+            }
+          },
+          "component_only": {},
+          "leave_one_out_necessity": {},
+          "rollback": {},
+          "factor_interactions": {},
+          "data_method_interaction": {
+            "status": "non_separable",
+            "reason": "the historical task-calibration policy does not expose old/new data and old/new method as independently executable cells"
+          }
+        },
+        "gate_results": [
+          {
+            "metric": "validity",
+            "operator": ">=",
+            "threshold": 1.0,
+            "parent_passed": true,
+            "full_child_passed": true
+          },
+          {
+            "metric": "false_discovery_rate",
+            "operator": "<=",
+            "threshold": 0.1,
+            "parent_passed": true,
+            "full_child_passed": false
+          }
+        ],
+        "visible_material_improvement": true,
+        "sealed_material_improvement": true,
+        "hard_gates_passed": false,
+        "attributed_factors": [],
+        "attributed_interactions": [],
+        "paired_world_effects": {
+          "rows": [
+            {
+              "split": "development",
+              "world_index": 0,
+              "kind": "in_library",
+              "favorable_effects": {
+                "mechanism_quality": 0.999247,
+                "interpolation_prediction": 0.99139,
+                "false_discovery": -0.0,
+                "validity": 0.0
+              }
+            },
+            {
+              "split": "development",
+              "world_index": 1,
+              "kind": "in_library",
+              "favorable_effects": {
+                "mechanism_quality": 0.649716,
+                "interpolation_prediction": 0.748089,
+                "false_discovery": -0.0,
+                "validity": 0.0
+              }
+            },
+            {
+              "split": "development",
+              "world_index": 2,
+              "kind": "in_library",
+              "favorable_effects": {
+                "mechanism_quality": 0.913272,
+                "interpolation_prediction": 0.951092,
+                "false_discovery": -0.0,
+                "validity": 0.0
+              }
+            },
+            {
+              "split": "development",
+              "world_index": 3,
+              "kind": "in_library",
+              "favorable_effects": {
+                "mechanism_quality": 0.365107,
+                "interpolation_prediction": 0.751146,
+                "false_discovery": -0.0,
+                "validity": 0.0
+              }
+            },
+            {
+              "split": "development",
+              "world_index": 4,
+              "kind": "null",
+              "favorable_effects": {
+                "mechanism_quality": 0.0,
+                "interpolation_prediction": 0.0,
+                "false_discovery": -0.0,
+                "validity": 0.0
+              }
+            },
+            {
+              "split": "development",
+              "world_index": 5,
+              "kind": "misspecified",
+              "favorable_effects": {
+                "mechanism_quality": -1.0,
+                "interpolation_prediction": 0.0,
+                "false_discovery": -1.0,
+                "validity": 0.0
+              }
+            },
+            {
+              "split": "heldout",
+              "world_index": 0,
+              "kind": "in_library",
+              "favorable_effects": {
+                "mechanism_quality": 0.522334,
+                "interpolation_prediction": 0.0,
+                "false_discovery": -0.0,
+                "validity": 0.0
+              }
+            },
+            {
+              "split": "heldout",
+              "world_index": 1,
+              "kind": "in_library",
+              "favorable_effects": {
+                "mechanism_quality": 0.773381,
+                "interpolation_prediction": 0.88981,
+                "false_discovery": -0.0,
+                "validity": 0.0
+              }
+            },
+            {
+              "split": "heldout",
+              "world_index": 2,
+              "kind": "in_library",
+              "favorable_effects": {
+                "mechanism_quality": 0.917091,
+                "interpolation_prediction": 0.98018,
+                "false_discovery": -0.0,
+                "validity": 0.0
+              }
+            },
+            {
+              "split": "heldout",
+              "world_index": 3,
+              "kind": "null",
+              "favorable_effects": {
+                "mechanism_quality": 0.0,
+                "interpolation_prediction": 0.0,
+                "false_discovery": -0.0,
+                "validity": 0.0
+              }
+            },
+            {
+              "split": "heldout",
+              "world_index": 4,
+              "kind": "misspecified",
+              "favorable_effects": {
+                "mechanism_quality": -1.0,
+                "interpolation_prediction": 0.31052,
+                "false_discovery": -1.0,
+                "validity": 0.0
+              }
+            }
+          ],
+          "summaries": {
+            "mechanism_quality": {
+              "paired_world_count": 11,
+              "mean_favorable_effect": 0.285468,
+              "minimum_favorable_effect": -1.0,
+              "maximum_favorable_effect": 0.999247,
+              "positive_world_count": 7,
+              "negative_world_count": 2
+            },
+            "interpolation_prediction": {
+              "paired_world_count": 11,
+              "mean_favorable_effect": 0.5111115454545455,
+              "minimum_favorable_effect": 0.0,
+              "maximum_favorable_effect": 0.99139,
+              "positive_world_count": 7,
+              "negative_world_count": 0
+            },
+            "false_discovery": {
+              "paired_world_count": 11,
+              "mean_favorable_effect": -0.18181818181818182,
+              "minimum_favorable_effect": -1.0,
+              "maximum_favorable_effect": -0.0,
+              "positive_world_count": 0,
+              "negative_world_count": 2
+            },
+            "validity": {
+              "paired_world_count": 11,
+              "mean_favorable_effect": 0.0,
+              "minimum_favorable_effect": 0.0,
+              "maximum_favorable_effect": 0.0,
+              "positive_world_count": 0,
+              "negative_world_count": 0
+            }
+          }
+        },
+        "decision": "reliability_or_validity_gate_failed",
+        "allowed_wording": "reliability or validity gate failed"
+      },
+      {
+        "milestone_id": "convection_off_axis_evidence_control",
+        "task": "HeatTransfer/ConvectionDiffusionOpt",
+        "evidence_class": "positive_control",
+        "eligible": true,
+        "sampled": true,
+        "factors": [
+          "D"
+        ],
+        "treatment_status": {
+          "parent": "executable",
+          "full_child": "executable",
+          "component_only:D": "executable",
+          "leave_one_out:D": "executable",
+          "rollback:D": "executable"
+        },
+        "non_separable_treatments": [],
+        "estimands": {
+          "full_child": {
+            "development_score": {
+              "raw_effect": 0.8956051472873855,
+              "favorable_effect": 0.8956051472873855
+            },
+            "sealed_score": {
+              "raw_effect": 0.8915088582167517,
+              "favorable_effect": 0.8915088582167517
+            },
+            "mechanism_score": {
+              "raw_effect": 0.6595738031608872,
+              "favorable_effect": 0.6595738031608872
+            },
+            "prediction_score": {
+              "raw_effect": 0.25325923604506806,
+              "favorable_effect": 0.25325923604506806
+            },
+            "false_discovery_rate": {
+              "raw_effect": 0.0,
+              "favorable_effect": -0.0
+            },
+            "validity": {
+              "raw_effect": 0.0,
+              "favorable_effect": 0.0
+            },
+            "experiment_cost": {
+              "raw_effect": 5.0,
+              "favorable_effect": -5.0
+            }
+          },
+          "component_only": {
+            "D": {
+              "development_score": {
+                "raw_effect": 0.8956051472873855,
+                "favorable_effect": 0.8956051472873855
+              },
+              "sealed_score": {
+                "raw_effect": 0.8915088582167517,
+                "favorable_effect": 0.8915088582167517
+              },
+              "mechanism_score": {
+                "raw_effect": 0.6595738031608872,
+                "favorable_effect": 0.6595738031608872
+              },
+              "prediction_score": {
+                "raw_effect": 0.25325923604506806,
+                "favorable_effect": 0.25325923604506806
+              },
+              "false_discovery_rate": {
+                "raw_effect": 0.0,
+                "favorable_effect": -0.0
+              },
+              "validity": {
+                "raw_effect": 0.0,
+                "favorable_effect": 0.0
+              },
+              "experiment_cost": {
+                "raw_effect": 5.0,
+                "favorable_effect": -5.0
+              }
+            }
+          },
+          "leave_one_out_necessity": {
+            "D": {
+              "development_score": {
+                "raw_effect": 0.8956051472873855,
+                "favorable_effect": 0.8956051472873855
+              },
+              "sealed_score": {
+                "raw_effect": 0.8915088582167517,
+                "favorable_effect": 0.8915088582167517
+              },
+              "mechanism_score": {
+                "raw_effect": 0.6595738031608872,
+                "favorable_effect": 0.6595738031608872
+              },
+              "prediction_score": {
+                "raw_effect": 0.25325923604506806,
+                "favorable_effect": 0.25325923604506806
+              },
+              "false_discovery_rate": {
+                "raw_effect": 0.0,
+                "favorable_effect": -0.0
+              },
+              "validity": {
+                "raw_effect": 0.0,
+                "favorable_effect": 0.0
+              },
+              "experiment_cost": {
+                "raw_effect": 5.0,
+                "favorable_effect": -5.0
+              }
+            }
+          },
+          "rollback": {
+            "D": {
+              "development_score": {
+                "raw_effect": 0.8956051472873855,
+                "favorable_effect": 0.8956051472873855
+              },
+              "sealed_score": {
+                "raw_effect": 0.8915088582167517,
+                "favorable_effect": 0.8915088582167517
+              },
+              "mechanism_score": {
+                "raw_effect": 0.6595738031608872,
+                "favorable_effect": 0.6595738031608872
+              },
+              "prediction_score": {
+                "raw_effect": 0.25325923604506806,
+                "favorable_effect": 0.25325923604506806
+              },
+              "false_discovery_rate": {
+                "raw_effect": 0.0,
+                "favorable_effect": -0.0
+              },
+              "validity": {
+                "raw_effect": 0.0,
+                "favorable_effect": 0.0
+              },
+              "experiment_cost": {
+                "raw_effect": 5.0,
+                "favorable_effect": -5.0
+              }
+            }
+          },
+          "factor_interactions": {},
+          "data_method_interaction": null
+        },
+        "gate_results": [
+          {
+            "metric": "validity",
+            "operator": ">=",
+            "threshold": 1.0,
+            "parent_passed": true,
+            "full_child_passed": true
+          },
+          {
+            "metric": "false_discovery_rate",
+            "operator": "<=",
+            "threshold": 0.1,
+            "parent_passed": true,
+            "full_child_passed": true
+          }
+        ],
+        "visible_material_improvement": true,
+        "sealed_material_improvement": true,
+        "hard_gates_passed": true,
+        "attributed_factors": [
+          "D"
+        ],
+        "attributed_interactions": [],
+        "paired_world_effects": {
+          "rows": [
+            {
+              "split": "development",
+              "world_index": 0,
+              "kind": "in_library",
+              "favorable_effects": {
+                "mechanism_quality": 0.7905803533449001,
+                "prediction_quality": 0.9491933396054109,
+                "design_quality": 0.3230715363951361,
+                "false_discovery": -0.0,
+                "validity": 0.0
+              }
+            },
+            {
+              "split": "development",
+              "world_index": 1,
+              "kind": "in_library",
+              "favorable_effects": {
+                "mechanism_quality": 0.6639968011340582,
+                "prediction_quality": 0.9991630791697027,
+                "design_quality": 0.932271961747728,
+                "false_discovery": -0.0,
+                "validity": 0.0
+              }
+            },
+            {
+              "split": "development",
+              "world_index": 2,
+              "kind": "in_library",
+              "favorable_effects": {
+                "mechanism_quality": 0.6322435406968775,
+                "prediction_quality": 0.9878428567856065,
+                "design_quality": 0.7274831919537699,
+                "false_discovery": -0.0,
+                "validity": 0.0
+              }
+            },
+            {
+              "split": "development",
+              "world_index": 3,
+              "kind": "in_library",
+              "favorable_effects": {
+                "mechanism_quality": 0.5110337708310078,
+                "prediction_quality": 0.9730781434901334,
+                "design_quality": 0.6799899002585861,
+                "false_discovery": -0.0,
+                "validity": 0.0
+              }
+            },
+            {
+              "split": "development",
+              "world_index": 4,
+              "kind": "null",
+              "favorable_effects": {
+                "mechanism_quality": 0.0,
+                "prediction_quality": 0.0,
+                "design_quality": 0.0,
+                "false_discovery": -0.0,
+                "validity": 0.0
+              }
+            },
+            {
+              "split": "development",
+              "world_index": 5,
+              "kind": "misspecified",
+              "favorable_effects": {
+                "mechanism_quality": 0.0,
+                "prediction_quality": 0.0,
+                "design_quality": 0.0,
+                "false_discovery": -0.0,
+                "validity": 0.0
+              }
+            },
+            {
+              "split": "heldout",
+              "world_index": 0,
+              "kind": "in_library",
+              "favorable_effects": {
+                "mechanism_quality": 0.654776414211998,
+                "prediction_quality": 0.28216418106379204,
+                "design_quality": 0.058226374365652034,
+                "false_discovery": -0.0,
+                "validity": 0.0
+              }
+            },
+            {
+              "split": "heldout",
+              "world_index": 1,
+              "kind": "in_library",
+              "favorable_effects": {
+                "mechanism_quality": 0.397499339332225,
+                "prediction_quality": 0.35376984910216114,
+                "design_quality": 0.13769403969584681,
+                "false_discovery": -0.0,
+                "validity": 0.0
+              }
+            },
+            {
+              "split": "heldout",
+              "world_index": 2,
+              "kind": "in_library",
+              "favorable_effects": {
+                "mechanism_quality": 0.926445655938439,
+                "prediction_quality": 0.12384367796925144,
+                "design_quality": 0.10553468895182871,
+                "false_discovery": -0.0,
+                "validity": 0.0
+              }
+            },
+            {
+              "split": "heldout",
+              "world_index": 3,
+              "kind": "null",
+              "favorable_effects": {
+                "mechanism_quality": 0.0,
+                "prediction_quality": 0.0,
+                "design_quality": 0.0,
+                "false_discovery": -0.0,
+                "validity": 0.0
+              }
+            },
+            {
+              "split": "heldout",
+              "world_index": 4,
+              "kind": "misspecified",
+              "favorable_effects": {
+                "mechanism_quality": 0.0,
+                "prediction_quality": 0.0,
+                "design_quality": 0.0,
+                "false_discovery": -0.0,
+                "validity": 0.0
+              }
+            }
+          ],
+          "summaries": {
+            "mechanism_quality": {
+              "paired_world_count": 11,
+              "mean_favorable_effect": 0.4160523523172278,
+              "minimum_favorable_effect": 0.0,
+              "maximum_favorable_effect": 0.926445655938439,
+              "positive_world_count": 7,
+              "negative_world_count": 0
+            },
+            "prediction_quality": {
+              "paired_world_count": 11,
+              "mean_favorable_effect": 0.4244595570169144,
+              "minimum_favorable_effect": 0.0,
+              "maximum_favorable_effect": 0.9991630791697027,
+              "positive_world_count": 7,
+              "negative_world_count": 0
+            },
+            "design_quality": {
+              "paired_world_count": 11,
+              "mean_favorable_effect": 0.2694792448516861,
+              "minimum_favorable_effect": 0.0,
+              "maximum_favorable_effect": 0.932271961747728,
+              "positive_world_count": 7,
+              "negative_world_count": 0
+            },
+            "false_discovery": {
+              "paired_world_count": 11,
+              "mean_favorable_effect": 0.0,
+              "minimum_favorable_effect": -0.0,
+              "maximum_favorable_effect": -0.0,
+              "positive_world_count": 0,
+              "negative_world_count": 0
+            },
+            "validity": {
+              "paired_world_count": 11,
+              "mean_favorable_effect": 0.0,
+              "minimum_favorable_effect": 0.0,
+              "maximum_favorable_effect": 0.0,
+              "positive_world_count": 0,
+              "negative_world_count": 0
+            }
+          }
+        },
+        "decision": "bounded_component_attribution",
+        "allowed_wording": "positive-control component effect; not an agent scientific insight"
+      }
+    ]
+  },
+  "descriptive_findings": {
+    "reaction_bundle_improves_development": true,
+    "reaction_bundle_fails_false_discovery_gate": true,
+    "reaction_component_attribution_resolved": false,
+    "convection_second_experiment_improves_development": true,
+    "convection_evidence_effect_survives_sealed_and_mechanism_axes": true,
+    "current_agent_milestone_sampling_frame_is_empty": true
+  },
+  "limitations": [
+    "Both replay rows are deterministic task-calibration controls, not sampled agent milestones.",
+    "The Reaction control is historically bundled and has a 0.5 heldout false-discovery rate; its component attribution is intentionally unresolved.",
+    "The Convection control changes only the experiment plan while retaining the same truth-blind fitting/design pipeline; it identifies the value of an added off-axis observation in this synthetic benchmark, not a discovered transport mechanism.",
+    "No current Reaction or Convection normal GPT-5.5 trajectory contains an eligible positive adjacent milestone; the positive selection-blind Reaction candidate is an offline frozen-parent proposal and is excluded.",
+    "A future agent-milestone report still requires frozen artifact/evidence manifests, dependency-closed component construction, key factorials where applicable and unused fresh confirmation."
+  ],
+  "execution_passed": true,
+  "trust_decision": "trusted_clean_revision",
+  "trusted_evidence": true,
+  "passed": true
+}
