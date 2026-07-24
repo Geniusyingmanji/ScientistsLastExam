@@ -30,7 +30,7 @@ The repository contains **51 task packages in 47 metadata domains**:
   single-reheat Pareto-cycle task, robust room
   acoustics design, active convection--diffusion identification/design and active layered
   reflection acquisition/inversion with explicit model-inadequacy refusal.
-- **16 quarantined tasks** with reproduced scientific-oracle, identifiability, provenance or
+- **15 quarantined tasks** with reproduced scientific-oracle, identifiability, provenance or
   shortcut defects; these remain inventory packages but are not admissible benchmark tasks.
 
 The default CLI exposes only the certified core. `--all` explicitly shows the full
@@ -52,7 +52,7 @@ The current audit reports:
   later clean evidence revisions.
 - The latest 51×2 secure-baseline audit reports 51/51 deterministic, 51/51 valid, 51/51
   fail-closed and zero infrastructure failures.
-- Current source manifest: 7 certified / 28 candidate / 16 quarantined. D-optimal design, quantum
+- Current source manifest: 7 certified / 29 candidate / 15 quarantined. D-optimal design, quantum
   gate synthesis, DC optimal power flow, truss sizing, antenna synthesis and NMR peak fitting have been rebuilt with separate sealed
   validation or robustness metrics and re-admitted as candidates. HeatExchanger-v2 additionally
   separates a public constant-property proxy from a sealed segmented temperature-dependent
@@ -236,22 +236,23 @@ audit quarantines seven additional defective candidates. The two P2 smokes are b
 credible multi-seed model-performance evidence. A clean-revision GPT-5.5 budget-one core pilot
 is recorded as task calibration, not a benchmark leaderboard.
 The latest trusted clean-revision certification/security/baseline audits are v34/v18/v24. The
-current source manifest is 7/28/16 and contains 35 internally admissible tasks, leaving an
-approximate gap of 15 to the roughly 50-task target. The hash-bound cross-task summary v16
+current source manifest is 7/29/15 and contains 36 internally admissible tasks, leaving an
+approximate gap of 14 to the roughly 50-task target. The hash-bound cross-task summary v16
 contains 45 normal single-run conditions over 23 tasks; it is calibration
 evidence, not a leaderboard or population result.
 
 The latest EdgeBench re-audit keeps its upstream facts at arXiv `2607.05155v1`, SForge
 `a87350a` and public dataset `47846a4`. In addition to E1--E36, the science plan now preregisters
-eight unrun scope/protocol tests: raw instrument-to-claim error propagation (I6/E37), unit/coordinate/
+eleven unrun scope/protocol tests: raw instrument-to-claim error propagation (I6/E37), unit/coordinate/
 representation metamorphic invariance (V4/E38), independent investigators with blinded synthesis
 (T1/E39), post-commit sealed downstream utilities (U1/E40), independently disclosed research
 horizons rather than long-run prefixes (HZ1/E41), and pinned/calibrated rubric or model judges
 (J1/E42), calibrated acquisition of costly authoritative feedback (F9/E43), plus randomized
-continuation auditing to retain delayed scientific takeoff (CA1/E44). A separate M2 protocol gate
-freezes the checkpoint risk set and replays single-run best-so-far monotonicity. These are
-proposed experiments, not new EdgeBench or Frontier-Science performance results. The expansion
-plan also prioritizes one prospective evidence-synthesis task over another
+continuation auditing to retain delayed scientific takeoff (CA1/E44), rotating open/sealed/delayed-
+release cohorts (G1/E45), builder--solver cross-fitting (G2/E46), and evidence-effective-sample-size
+accounting (EVI1/E47). A separate M2 protocol gate freezes the checkpoint risk set and replays
+single-run best-so-far monotonicity. These are proposed experiments, not new EdgeBench or Frontier-
+Science performance results. The expansion plan also prioritizes one prospective evidence-synthesis task over another
 near-duplicate clean-simulator scalar task.
 
 ## Quickstart
