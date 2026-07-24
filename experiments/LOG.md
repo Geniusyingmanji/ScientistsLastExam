@@ -1521,3 +1521,35 @@ security v15 passes **18/18** adversarial regressions; and secure baseline v21 r
 deterministic, 51/51 valid and 51/51 fail-closed** over two repetitions with zero infrastructure
 failures. These reports refresh provenance only; they do not add model-performance or discovery
 evidence.
+
+## 2026-07-24 — active layered reflection-wave inversion rebuild
+
+SeismicWaveInversion-v2 replaces an evidence-free fixed velocity-model guess with a charged
+active acquisition laboratory. Candidates choose CMP positions, source--receiver offsets and
+Ricker peak frequencies under a 12-unit budget, then return nine interpretable interval-velocity
+and quadratic-interface parameters or explicitly abstain. Six development and five held-out
+worlds include supported three-layer media, null responses and resolvable four-layer
+low-velocity-zone misspecification. Acquired-waveform fit, evaluator-only waveform prediction,
+far-offset transfer, parameter recovery, experiment information, confidence and refusal remain
+separate.
+
+The clean-revision calibration on `f8c59dd` independently reproduces the exact public
+Snell-ray/Ricker forward model at general CMP/offset/frequency points to maximum absolute error
+`1.11e-16`. A truth-blind NMO/Dix initialization plus public-waveform fit reaches
+development/held-out joint quality **0.997697/0.994382** and far-offset robustness
+**0.998615/0.996791**, with full supported-world coverage and zero false discovery. All seven
+supported reference acquisitions have rank nine with worst condition number **246.34**; a
+centered narrow-offset design has rank five and zero information score on every supported world.
+Best public-model reduced chi-square is **78.06/33.10** on development/held-out misspecified
+worlds, so the classical policy refuses both.
+
+This near-ceiling classical witness makes the current task an active-acquisition and model-checking
+on-ramp, not a long-horizon headline task. The primary-reflection ray laboratory omits elastic
+conversion, attenuation, anisotropy, multiples, source uncertainty, topography and field noise;
+it supports neither field-FWI nor autonomous geological-discovery claims.
+
+The full clean-source regression passes **222/222** tests. Inverse-track admission v6 passes all
+seven checks and records five repaired candidates plus two remaining quarantines. Certification
+v32 records **7 certified / 27 candidate / 17 quarantined** across 51 packages with no task or
+manifest issues. Security v16 passes **18/18**, and secure baseline v22 records **51/51**
+deterministic, valid and fail-closed tasks over two repetitions with zero infrastructure failures.

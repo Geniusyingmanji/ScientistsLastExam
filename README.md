@@ -45,9 +45,8 @@ controlled exception text is reduced to a fixed label-blind failure taxonomy bef
 search feedback, preventing observations from being carried between worlds through exceptions.
 The current audit reports:
 
-- The pre-admission dirty-tree regression run passed 221/222 tests; the sole expected failure
-  was a provenance test that rejects trusted-evidence status while source files are uncommitted.
-  A clean-revision rerun is required before recording the new authoritative count.
+- 222/222 unit, security, protocol, analysis and scientific-invariant tests passed on the
+  clean SeismicWaveInversion-v2 source revision.
 - The latest 51×2 secure-baseline audit reports 51/51 deterministic, 51/51 valid, 51/51
   fail-closed and zero infrastructure failures.
 - Current source manifest: 7 certified / 27 candidate / 17 quarantined. D-optimal design, quantum
@@ -218,7 +217,7 @@ the post-repair 50-package audits bind revision `47c3613`; the subsequent wave-2
 audit quarantines seven additional defective candidates. The two P2 smokes are baseline-only; the repository does not yet contain
 credible multi-seed model-performance evidence. A clean-revision GPT-5.5 budget-one core pilot
 is recorded as task calibration, not a benchmark leaderboard.
-The latest trusted clean-revision certification/security/baseline audits are v31/v15/v21. The
+The latest trusted clean-revision certification/security/baseline audits are v32/v16/v22. The
 current source manifest is 7/27/17 and contains 34 internally admissible tasks, leaving an
 approximate gap of 16 to the roughly 50-task target. The hash-bound cross-task summary v14
 contains 41 normal single-run conditions over 21 tasks; it is calibration
