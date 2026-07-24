@@ -46,6 +46,7 @@ EXPECTED_MODEL_SOURCE_REVISION = (
 )
 TASK_RUNTIME_SCOPE = (
     "frontier_science",
+    ":(exclude)frontier_science/certification.yaml",
     "benchmarks/Turbulence/RANSCalibration/Task.md",
     "benchmarks/Turbulence/RANSCalibration/solution.py",
     "benchmarks/Turbulence/RANSCalibration/frontier_eval",
