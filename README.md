@@ -35,7 +35,7 @@ The repository contains **51 task packages in 47 metadata domains**:
 
 The default CLI exposes only the certified core. `--all` explicitly shows the full
 inventory. Certification status is not a difficulty claim: the inventory metadata contains
-46 `hard` and 5 `flagship` packages, but only certified tasks are benchmark-admissible.
+47 `hard` and 5 `flagship` packages, but only certified tasks are benchmark-admissible.
 
 All candidate code runs in a networkless Bubblewrap sandbox with read-only mounts, resource
 and process limits, and a typed JSON RPC boundary. The trusted parent alone imports the
@@ -50,9 +50,10 @@ The current audit reports:
   the MA1/E52 attribution analyzer. The latest trusted task/security/baseline reports bind clean
   source revision `d775e9a`; the current hash-bound calibration summary contains 49 normal
   single-run conditions over 25 tasks.
-- The latest 51×2 secure-baseline audit reports 51/51 deterministic, 51/51 valid, 51/51
-  fail-closed and zero infrastructure failures.
-- Current source manifest: 7 certified / 30 candidate / 14 quarantined. D-optimal design, quantum
+- The latest trusted 51×2 secure-baseline audit reports 51/51 deterministic, 51/51 valid,
+  51/51 fail-closed and zero infrastructure failures. It predates the new systems-biology task;
+  a 52-task clean-revision rerun is required before claiming a current trusted baseline.
+- Current source manifest: 7 certified / 31 candidate / 14 quarantined. D-optimal design, quantum
   gate synthesis, DC optimal power flow, truss sizing, antenna synthesis and NMR peak fitting have been rebuilt with separate sealed
   validation or robustness metrics and re-admitted as candidates. HeatExchanger-v2 additionally
   separates a public constant-property proxy from a sealed segmented temperature-dependent
@@ -235,9 +236,12 @@ the post-repair 50-package audits bind revision `47c3613`; the subsequent wave-2
 audit quarantines seven additional defective candidates. The two P2 smokes are baseline-only; the repository does not yet contain
 credible multi-seed model-performance evidence. A clean-revision GPT-5.5 budget-one core pilot
 is recorded as task calibration, not a benchmark leaderboard.
-The latest trusted clean-revision certification/security/baseline audits are v37/v21/v27. The
-current source manifest is 7/30/14 and contains 37 internally admissible tasks, leaving an
-approximate gap of 13 to the roughly 50-task target. The hash-bound cross-task summary v18
+The latest trusted clean-revision certification/security/baseline audits are v37/v21/v27 and
+still cover the preceding 51-task revision. The current source manifest is 7/31/14 and contains
+38 internally admissible tasks, leaving an approximate gap of 12 to the roughly 50-task target.
+GeneNetworkIntervention adds an active nonlinear signed-network, protected-readout intervention,
+sealed-transfer and null/latent-regulator refusal candidate; its clean-revision audit and model
+calibrations are still pending. The hash-bound cross-task summary v18
 contains 49 normal single-run conditions over 25 tasks; it is calibration
 evidence, not a leaderboard or population result.
 

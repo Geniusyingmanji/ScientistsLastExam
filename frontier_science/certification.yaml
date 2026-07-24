@@ -62,6 +62,15 @@ tasks:
       - doi:10.1073/pnas.0609476104
       - doi:10.1214/ss/1177009939
 
+  SystemsBiology/GeneNetworkIntervention:
+    status: candidate
+    reason: active four-gene nonlinear ODE task separates signed mechanism recovery, sealed trajectory prediction, sparse protected-readout intervention utility, intervention transfer and correct null or latent-regulator refusal; a truth-blind nonlinear reference reaches about 0.90 development and 0.88 held-out joint quality with full supported coverage, full unsupported refusal and zero false discovery, leaving graded mechanism and transfer headroom pending server-held worlds, real Perturb-seq or wet-lab replication and independent systems-biology review
+    citation_ids:
+      - doi:10.1126/science.1081900
+      - doi:10.1016/j.cell.2014.09.029
+      - doi:10.1016/j.cell.2016.11.038
+      - doi:10.1016/j.cell.2022.05.013
+
   BayesianInference/OptimalExperimentDesign:
     status: candidate
     reason: v2 is scientifically valid with procedural families and sealed shifts, but GPT-5.5 implements a generic D-optimal algorithm and reaches 0.991 development plus 0.994 validation at budget one; retain as an on-ramp pending harder sequential model-discrimination regimes and independent review

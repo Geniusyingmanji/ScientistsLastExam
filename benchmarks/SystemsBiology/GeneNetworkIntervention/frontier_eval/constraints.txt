@@ -1,0 +1,5 @@
+1) Only edit solution.py. Keep discover_gene_network(gene_names, perturb, phenotype_objective, budget_units).
+2) Return finite signed weights/support, biases, decay rates, confidence, abstention and a sparse bounded intervention.
+3) Perturbation inputs lie in [-2,2], target at most two genes, use 20-80 steps, and must not exceed budget_units.
+4) The protected phenotype readout cannot be directly perturbed; the submitted intervention targets at most two actionable genes.
+5) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read verification/ or frontier_eval/.

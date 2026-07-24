@@ -1,0 +1,12 @@
+domain: SystemsBiology
+task: GeneNetworkIntervention
+difficulty: hard
+tier: T3
+oracle_type: physical_sim
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 120
+science_metric: active_signed_network_recovery_prediction_phenotype_intervention_transfer_and_refusal
+reference_baseline: one vehicle perturbation followed by abstention on every world
+reference_sota: exact hidden mechanisms plus truth-only grid interventions and correct null or latent-regulator refusal
+citation: "Gardner et al., Science 2003, DOI 10.1126/science.1081900; Gilbert et al., Cell 2014, DOI 10.1016/j.cell.2014.09.029"

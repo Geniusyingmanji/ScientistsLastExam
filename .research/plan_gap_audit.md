@@ -2,7 +2,7 @@
 
 Audit date: 2026-07-19 (UTC), with the experiment roadmap extended after repeated full-text
 EdgeBench comparison and the task inventory updated on 2026-07-24 through
-RankineCycleOpt-v2.
+GeneNetworkIntervention-v1.
 Evidence base: `literature_matrix.md`,
 `science_experiment_plan.md`, current source/tests, and the dated artifacts in `experiments/`.
 
@@ -26,9 +26,9 @@ physical validation, and auditable claim–evidence provenance.
 | Capability | Current status | Evidence | Remaining acceptance criterion |
 |---|---|---|---|
 | Candidate/oracle isolation | Implemented | Clean-revision security v18: 18/18 adversarial tests; Bubblewrap, no network, read-only mounts, resource/seccomp limits, typed RPC, fresh multi-world sessions and candidate-exception sanitization | Reproduce in clean Linux CI; document portability/non-Linux behavior |
-| Fail-closed trusted metrics | Implemented | Clean-revision 51×2 v27: 51 deterministic, 51 valid, 51 fail-closed and zero infrastructure failures | Repair or quarantine every future invalid candidate oracle before certification |
-| Task admission policy | Implemented, narrow | Current manifest: 7 certified / 30 candidate / 14 quarantined; the latest rebuilds add active inverse/discovery candidates, LowThrustTransfer-v2, full-field LidDrivenCavity-v2, Climate-v2, BroadbandAbsorber-v2, Distillation-v2, HartreeFockSCF-v2, RoomImpulseResponse-v2, ConvectionDiffusionOpt-v2, SeismicWaveInversion-v2, RankineCycleOpt-v2, MOSFETDoping-v2 and RANSCalibration-v2 | Independent domain + evaluator reviews are still declarations, not completed external review |
-| Scientific validity of inventory | Audited, sparse | All original 50 packages passed adversarial admission; ActiveLawDiscovery brings inventory to 51 and substantive rebuilds now leave 37 internally admissible packages | Rebuild high-value families and add approximately 13 net admissible tasks to reach about 50; hidden/generated instances and shortcut analysis remain mandatory |
+| Fail-closed trusted metrics | Implemented | Clean-revision 51×2 v27: 51 deterministic, 51 valid, 51 fail-closed and zero infrastructure failures; this predates GeneNetworkIntervention | Re-run the secure baseline for all 52 tasks on its clean source revision; repair or quarantine every future invalid candidate oracle before certification |
+| Task admission policy | Implemented, narrow | Current source manifest: 7 certified / 31 candidate / 14 quarantined; GeneNetworkIntervention adds active CRISPRi/a-like acquisition, signed dynamic mechanisms, protected-readout intervention, sealed transfer and null/latent-regulator refusal | Independent domain + evaluator reviews are still declarations, not completed external review |
+| Scientific validity of inventory | Audited, sparse | All original 50 packages passed adversarial admission; ActiveLawDiscovery and GeneNetworkIntervention bring inventory to 52, and substantive rebuilds now leave 38 internally admissible packages | Rebuild high-value families and add approximately 12 net admissible tasks to reach about 50; hidden/generated instances and shortcut analysis remain mandatory |
 | Unified trajectory/accounting | Implemented, protocol-smoked | Clean-revision two-seed baseline smoke; trajectory schema v2, hashes, AUC over `budget_units`, separate `oracle_calls`, wall/token/cost, seed, checkpoint/resume | Validate nonzero-budget schema-v2 artifact replay in CI and version future changes |
 | Feedback controls | Implemented; strict pilot run | None/shuffled prompt-metric modes disclose true-score selection; strict selection-blind freezes parent/metrics; four-task n=3 pilot has no direction-stable lift and is not token-matched | Run token-matched ≥10 paired seeds with score-only, delayed/replayed and strict open-loop controls |
 | Evaluator-only metric sealing | Implemented and integration-verified | Closed search-visible allowlist; search-state redaction/hash-keyed sidecars; candidate-controlled exception text mapped to a finite label-blind taxonomy; current 244-test suite; clean pinned OpenEvolve/TreeQuest/Shinka no-leak report `aff026d` | Extend from baseline smoke to nonzero-budget upstream runs before comparative claims |
@@ -636,8 +636,10 @@ learns whom to trust.
 ### P0/P1 closeout — completed locally, reproduce in CI
 
 - [x] Trusted oracle / isolated candidate architecture and adversarial regression suite.
-- [x] Current 51-package deterministic secure baseline and certification audit; all 51 weak baselines are valid, deterministic and fail closed.
-- [x] Seven-task certified core, 30 candidates and 14 quarantined packages after all
+- [x] Last trusted 51-package deterministic secure baseline and certification audit; all 51 weak baselines are valid, deterministic and fail closed.
+- [ ] Re-run the deterministic secure baseline, certification and security audits on the clean
+  52-task GeneNetworkIntervention revision.
+- [x] Seven-task certified core, 31 candidates and 14 quarantined packages after all
   admission waves and the current substantive rebuilds.
 - [x] Task-card/citation/invariant audit and dated machine-readable evidence.
 - [ ] Add Linux CI reproduction of all dated audits (local clean-revision reproduction is done).
@@ -835,6 +837,12 @@ learns whom to trust.
   on-ramp: GPT-5.5 reaches 0.983 at budget one, so harder regimes remain required).
 - [x] Add an active dynamical-law candidate with budgeted experiments, sparse mechanism
   recovery, sealed rollout/shift validation, and null/misspecified refusal cases.
+- [x] Add a distinct active systems-biology candidate with nonlinear signed regulation,
+  CRISPRi/a-like experiment design, protected-readout intervention utility, sealed intervention
+  transfer and label-blind null/latent-regulator refusal. The truth-blind nonlinear reference
+  reaches about 0.90 development and 0.88 held-out joint quality with full supported coverage,
+  full unsupported refusal and zero false discovery on the admission panel; this is synthetic
+  task calibration, not biological discovery.
 - [x] Add misspecification/refusal cases, false-discovery penalties and supported-world
   discovery coverage to the active-law, NMR, Reaction, Ocean, Radiative and Climate discovery candidates.
 - [x] Replace sparse cavity centerline scoring with full-field equations, held-out Reynolds
