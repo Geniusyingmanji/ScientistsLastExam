@@ -1,0 +1,32 @@
+schema_version: 1
+scientific_question: Can one compact algebraic eddy-viscosity closure fit real turbulent-channel DNS at two Reynolds numbers and transfer to two higher Reynolds numbers while preserving mean momentum and resisting wall-coordinate calibration shifts?
+artifact: Four bounded interpretable closure parameters controlling the von Karman scale, van-Driest damping and two outer-layer shape corrections.
+oracle:
+  model: public Cess-style positive eddy viscosity followed by an exact algebraic channel mean-momentum solve, scored against licensed DNS mean velocity and Reynolds shear profiles
+  feasibility: exactly four finite in-bound parameters, nonnegative mean and turbulent shear, finite velocity and machine-precision total-shear balance
+  deterministic: true
+normalization:
+  baseline: standard kappa 0.41 and A-plus 26 damped mixing-length closure without outer corrections
+  reference: independently calibrated development nominal and worst-shift witnesses; separate evaluator-only held-out normalization witnesses
+  score: development nominal velocity-plus-Reynolds-shear fit controls search; coordinate-shift robustness and Re-tau 590/950 transfer remain separate and sealed
+citations:
+  - id: doi:10.5281/zenodo.5749302
+    title: Lagrangian statistics in turbulent channel flow
+  - id: doi:10.1016/S0009-2509(00)00178-4
+    title: Turbulent flow through a channel at low Reynolds number
+  - id: doi:10.1016/j.ijheatfluidflow.2004.02.008
+    title: Turbulence budgets for channel flow at Reynolds numbers up to Re-tau 2000
+invariants:
+  - the committed DNS manifest is CC-BY-4.0 and binds the Zenodo record, authors and source-file hashes
+  - development uses Re-tau 180 and 395 while Re-tau 590 and 950 are evaluator-only held-out conditions
+  - the four parameter directions have full-rank development sensitivity after public range scaling
+  - total mean plus Reynolds shear equals one minus y-over-h to machine precision
+  - eddy viscosity, mean shear and modeled Reynolds shear remain nonnegative
+  - the weak standard closure is valid and has zero score by construction
+  - nominal and worst-shift development witnesses improve their declared objectives
+  - malformed, boolean, non-finite and out-of-bound returns fail closed
+  - held-out and coordinate-shift metrics remain evaluator-only
+known_shortcuts: This is a four-parameter algebraic closure calibrated to mean channel statistics, not a transport-equation RANS model, LES/DNS solver, separated-flow benchmark or universal turbulence law. Fixed public DNS profiles require later server-held flows and independent CFD review; no score establishes a new turbulence mechanism or engineering validity.
+review:
+  domain: pending_external
+  evaluator_security: automated_provenance_identifiability_physics_fail_closed_sandbox_and_metric_sealing_tests

@@ -1,7 +1,12 @@
 domain: Turbulence
 task: RANSCalibration
 difficulty: hard
+tier: T2
 oracle_type: physical_sim
 score_mode: clipped
 gpu_required: false
-eval_time_seconds: 60
+eval_time_seconds: 20
+science_metric: development real-DNS mean-velocity-plus-Reynolds-shear closure fit with sealed higher-Re transfer and wall-coordinate robustness
+reference_baseline: standard damped mixing-length closure with kappa 0.41 and A-plus 26
+reference_sota: deterministic four-parameter development nominal and minimax-shift calibration witnesses; no universal-closure or discovery claim
+citation: "Perrone et al., Zenodo doi:10.5281/zenodo.5749302, CC-BY-4.0"

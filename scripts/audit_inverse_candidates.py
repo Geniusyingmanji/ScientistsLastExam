@@ -42,6 +42,7 @@ from calibrate_seismic_wave_v2 import (
     _fit_public_model as seismic_fit_public_model,
     truth_blind_discover as seismic_truth_blind_discover,
 )
+from calibrate_rans_v2 import _sensitivity_record as rans_sensitivity_record
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
@@ -376,30 +377,67 @@ def _population_genetics():
 
 def _rans():
     oracle = _oracle("Turbulence/RANSCalibration")
-    keys = ["C_mu", "C_e1", "C_e2", "sigma_k", "sigma_e"]
-    values = np.array([0.09, 1.44, 1.92, 1.0, 1.3])
-
-    def profiles(vector):
-        velocity, kinetic = oracle._predict_profiles(dict(zip(keys, vector)))
-        return np.concatenate((velocity, kinetic))
-
-    jacobian = np.zeros((2 * oracle.N_PTS, len(values)))
-    for index in range(len(values)):
-        step = 1e-5 * max(1.0, abs(values[index]))
-        upper, lower = values.copy(), values.copy()
-        upper[index] += step
-        lower[index] -= step
-        jacobian[:, index] = (profiles(upper) - profiles(lower)) / (2 * step)
-    singular = np.linalg.svd(jacobian, compute_uv=False)
-    rank = int(np.linalg.matrix_rank(jacobian, tol=singular[0] * 1e-9))
+    baseline = oracle.evaluate(oracle.standard_closure)
+    nominal = oracle.evaluate(oracle.reference_closure)
+    robust = oracle.evaluate(oracle.robust_reference_closure)
+    sensitivity = rans_sensitivity_record(oracle)
+    data_hash = __import__("hashlib").sha256(
+        oracle.DATA_PATH.read_bytes()
+    ).hexdigest()
+    passed = bool(
+        oracle.RANS_CALIBRATION_V2
+        and data_hash == oracle.DATA_SHA256
+        and oracle.DATA_SOURCE["doi"] == "10.5281/zenodo.5749302"
+        and oracle.DATA_SOURCE["license"] == "CC-BY-4.0"
+        and tuple(oracle.DEVELOPMENT_RE_TAU) == (180, 395)
+        and tuple(oracle.HELDOUT_RE_TAU) == (590, 950)
+        and sensitivity["passed"]
+        and baseline["valid"] == 1.0
+        and baseline["combined_score"] == 0.0
+        and nominal["combined_score"] > 0.999999
+        and 0.35 < nominal["heldout_policy_score"] < 0.70
+        and robust["robustness_score"] > 0.999999
+        and robust["combined_score"] > 0.90
+        and nominal["physics_gate_passed"]
+        and robust["physics_gate_passed"]
+    )
     return {
         "task": "Turbulence/RANSCalibration",
-        "admission": "quarantine",
-        "defect": "the claimed DNS is an analytic log-law/TKE fit and the algebraic surrogate identifies at most three combinations of five constants",
-        "jacobian_rank": rank,
-        "parameter_count": len(values),
-        "singular_values": [float(value) for value in singular],
-        "passed": rank < len(values),
+        "admission": "candidate",
+        "resolved_defect": (
+            "v2 replaces the analytic log-law/TKE pseudo-DNS and rank-three "
+            "five-constant surrogate with licensed Re_tau 180/395/590/950 "
+            "channel DNS, a four-parameter full-rank positive algebraic closure, "
+            "joint mean-velocity/Reynolds-shear scoring, exact momentum balance, "
+            "sealed higher-Re transfer and wall-coordinate shifts"
+        ),
+        "data_sha256": data_hash,
+        "data_doi": oracle.DATA_SOURCE["doi"],
+        "data_license": oracle.DATA_SOURCE["license"],
+        "development_re_tau": list(oracle.DEVELOPMENT_RE_TAU),
+        "heldout_re_tau": list(oracle.HELDOUT_RE_TAU),
+        "jacobian_rank": sensitivity["jacobian_rank"],
+        "parameter_count": sensitivity["parameter_count"],
+        "parameter_scaled_condition_number": (
+            sensitivity["parameter_scaled_condition_number"]
+        ),
+        "parameter_scaled_singular_values": (
+            sensitivity["parameter_scaled_singular_values"]
+        ),
+        "baseline_score": float(baseline["combined_score"]),
+        "nominal_development_score": float(nominal["combined_score"]),
+        "nominal_heldout_score": float(nominal["heldout_policy_score"]),
+        "nominal_robustness_score": float(nominal["robustness_score"]),
+        "nominal_heldout_robustness_score": float(
+            nominal["heldout_robustness_score"]
+        ),
+        "robust_development_score": float(robust["combined_score"]),
+        "robustness_score": float(robust["robustness_score"]),
+        "robust_heldout_score": float(robust["heldout_policy_score"]),
+        "robust_heldout_robustness_score": float(
+            robust["heldout_robustness_score"]
+        ),
+        "passed": passed,
     }
 
 
