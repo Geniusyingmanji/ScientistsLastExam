@@ -1,8 +1,8 @@
 # Frontier-Science plan gap audit
 
 Audit date: 2026-07-19 (UTC), with the experiment roadmap extended after a full-text
-EdgeBench comparison and the task inventory updated on 2026-07-23 through
-ConvectionDiffusionOpt-v2.
+EdgeBench comparison and the task inventory updated on 2026-07-24 through
+SeismicWaveInversion-v2.
 Evidence base: `literature_matrix.md`,
 `science_experiment_plan.md`, current source/tests, and the dated artifacts in `experiments/`.
 
@@ -27,8 +27,8 @@ physical validation, and auditable claim–evidence provenance.
 |---|---|---|---|
 | Candidate/oracle isolation | Implemented | Clean-revision security v15: 18/18 adversarial tests; Bubblewrap, no network, read-only mounts, resource/seccomp limits, typed RPC, fresh multi-world sessions and candidate-exception sanitization | Reproduce in clean Linux CI; document portability/non-Linux behavior |
 | Fail-closed trusted metrics | Implemented | Clean-revision 51×2 v21: 51 deterministic, 51 valid, 51 fail-closed and zero infrastructure failures after the ConvectionDiffusionOpt-v2 findings update | Repair or quarantine every future invalid candidate oracle before certification |
-| Task admission policy | Implemented, narrow | Current manifest: 7 certified / 26 candidate / 18 quarantined; the latest rebuilds add active inverse/discovery candidates, LowThrustTransfer-v2, full-field LidDrivenCavity-v2, Climate-v2, BroadbandAbsorber-v2, Distillation-v2, HartreeFockSCF-v2, RoomImpulseResponse-v2 and ConvectionDiffusionOpt-v2 | Independent domain + evaluator reviews are still declarations, not completed external review |
-| Scientific validity of inventory | Audited, sparse | All original 50 packages passed adversarial admission; ActiveLawDiscovery brings inventory to 51 and substantive rebuilds now leave 33 internally admissible packages | Rebuild high-value families and add approximately 17 net admissible tasks to reach about 50; hidden/generated instances and shortcut analysis remain mandatory |
+| Task admission policy | Implemented, narrow | Current manifest: 7 certified / 27 candidate / 17 quarantined; the latest rebuilds add active inverse/discovery candidates, LowThrustTransfer-v2, full-field LidDrivenCavity-v2, Climate-v2, BroadbandAbsorber-v2, Distillation-v2, HartreeFockSCF-v2, RoomImpulseResponse-v2, ConvectionDiffusionOpt-v2 and SeismicWaveInversion-v2 | Independent domain + evaluator reviews are still declarations, not completed external review |
+| Scientific validity of inventory | Audited, sparse | All original 50 packages passed adversarial admission; ActiveLawDiscovery brings inventory to 51 and substantive rebuilds now leave 34 internally admissible packages | Rebuild high-value families and add approximately 16 net admissible tasks to reach about 50; hidden/generated instances and shortcut analysis remain mandatory |
 | Unified trajectory/accounting | Implemented, protocol-smoked | Clean-revision two-seed baseline smoke; trajectory schema v2, hashes, AUC over `budget_units`, separate `oracle_calls`, wall/token/cost, seed, checkpoint/resume | Validate nonzero-budget schema-v2 artifact replay in CI and version future changes |
 | Feedback controls | Implemented; strict pilot run | None/shuffled prompt-metric modes disclose true-score selection; strict selection-blind freezes parent/metrics; four-task n=3 pilot has no direction-stable lift and is not token-matched | Run token-matched ≥10 paired seeds with score-only, delayed/replayed and strict open-loop controls |
 | Evaluator-only metric sealing | Implemented and integration-verified | Closed search-visible allowlist; search-state redaction/hash-keyed sidecars; candidate-controlled exception text mapped to a finite label-blind taxonomy; 212-test suite; clean pinned OpenEvolve/TreeQuest/Shinka no-leak report `aff026d` | Extend from baseline smoke to nonzero-budget upstream runs before comparative claims |
@@ -303,7 +303,7 @@ confirmation set that has influenced a decision.
 
 - [x] Trusted oracle / isolated candidate architecture and adversarial regression suite.
 - [x] Current 51-package deterministic secure baseline and certification audit; all 51 weak baselines are valid, deterministic and fail closed.
-- [x] Seven-task certified core, 26 candidates and 18 quarantined packages after all
+- [x] Seven-task certified core, 27 candidates and 17 quarantined packages after all
   admission waves and the current substantive rebuilds.
 - [x] Task-card/citation/invariant audit and dated machine-readable evidence.
 - [ ] Add Linux CI reproduction of all dated audits (local clean-revision reproduction is done).
@@ -318,6 +318,9 @@ confirmation set that has influenced a decision.
 - [x] Replace fixed-scene `Acoustics/RoomImpulseResponse` reconstruction and its length crash
   with source-placement/six-surface treatment optimization over six rooms, independently
   checked image paths and Eyring decay, held-out transfer and five sealed shifts.
+- [x] Replace evidence-free `WavePropagation/SeismicWaveInversion` with charged active
+  CMP/offset/frequency acquisition, a nine-parameter layered model, prediction/mechanism/design
+  separation, far-offset transfer and null/four-layer model-inadequacy refusal.
 
 ### P2a — reproducible protocol release
 

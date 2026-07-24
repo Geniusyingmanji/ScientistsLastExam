@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Reproduce scientific-validity failures in the inverse/discovery candidate tranche."""
+"""Reproduce resolved and unresolved validity checks in the inverse/discovery tranche."""
 
 from __future__ import annotations
 
@@ -36,6 +36,11 @@ from calibrate_ocean_current_v2 import (
     _nonlinear_library_fit as ocean_nonlinear_library_fit,
     _trajectory_identifiability as ocean_identifiability_record,
     classical_discover_currents,
+)
+from calibrate_seismic_wave_v2 import (
+    _always_abstain as seismic_always_abstain,
+    _fit_public_model as seismic_fit_public_model,
+    truth_blind_discover as seismic_truth_blind_discover,
 )
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -400,14 +405,150 @@ def _rans():
 
 def _waveform_inversion():
     oracle = _oracle("WavePropagation/SeismicWaveInversion")
-    truth = oracle.evaluate(lambda _nx, _nz: oracle._V_TRUE)
+    baseline = oracle.evaluate(seismic_always_abstain)
+    classical = oracle.evaluate(seismic_truth_blind_discover)
+    identifiability_checks = []
+    narrow_design_checks = []
+    misspecified_checks = []
+    noise_label_blind_checks = []
+    for split, specs in (
+        ("development", oracle.DEVELOPMENT_SPECS),
+        ("heldout", oracle.HELDOUT_SPECS),
+    ):
+        supported_noise = {
+            float(spec[2]) for spec in specs if spec[3] == "in_library"
+        }
+        unsupported_noise = {
+            float(spec[2]) for spec in specs if spec[3] != "in_library"
+        }
+        noise_label_blind_checks.append({
+            "split": split,
+            "supported_noise_std": sorted(supported_noise),
+            "unsupported_noise_std": sorted(unsupported_noise),
+            "passed": unsupported_noise.issubset(supported_noise),
+        })
+        for index, spec in enumerate(specs):
+            world = oracle._world(spec)
+            if world["kind"] == "in_library":
+                reference_records = [
+                    {
+                        "midpoints_m": midpoints,
+                        "offsets_m": offsets,
+                        "peak_frequency_hz": frequency,
+                    }
+                    for midpoints, offsets, frequency
+                    in oracle.REFERENCE_EXPERIMENTS
+                ]
+                information = oracle._experiment_information(
+                    world, reference_records
+                )
+                identifiability_checks.append({
+                    "split": split,
+                    "world_index": index,
+                    "jacobian_rank": information["jacobian_rank"],
+                    "parameter_count": len(oracle.PARAMETER_NAMES),
+                    "condition_number": information["condition_number"],
+                    "information_score": information["information_score"],
+                    "passed": bool(
+                        information["jacobian_rank"]
+                        == len(oracle.PARAMETER_NAMES)
+                        and information["condition_number"] is not None
+                        and information["condition_number"] < 350.0
+                        and information["information_score"] > 0.999
+                    ),
+                })
+                narrow = oracle._experiment_information(world, [{
+                    "midpoints_m": np.full(4, 5000.0),
+                    "offsets_m": np.linspace(0.0, 600.0, 4),
+                    "peak_frequency_hz": 12.0,
+                }])
+                narrow_design_checks.append({
+                    "split": split,
+                    "world_index": index,
+                    "jacobian_rank": narrow["jacobian_rank"],
+                    "parameter_count": len(oracle.PARAMETER_NAMES),
+                    "information_score": narrow["information_score"],
+                    "passed": bool(
+                        narrow["jacobian_rank"] < len(oracle.PARAMETER_NAMES)
+                        and narrow["information_score"] == 0.0
+                    ),
+                })
+            elif world["kind"] == "misspecified":
+                laboratory = oracle._SeismicLaboratory(world)
+                records = [
+                    laboratory.acquire(midpoints, offsets, frequency)
+                    for midpoints, offsets, frequency
+                    in oracle.REFERENCE_EXPERIMENTS
+                ]
+                _parameters, reduced_chi2, _diagnostics = (
+                    seismic_fit_public_model(records, oracle.PARAMETER_BOUNDS)
+                )
+                misspecified_checks.append({
+                    "split": split,
+                    "world_index": index,
+                    "best_public_model_reduced_chi_squared": reduced_chi2,
+                    "passed": bool(
+                        reduced_chi2 is not None and reduced_chi2 > 10.0
+                    ),
+                })
+    passed = bool(
+        oracle.SEISMIC_WAVE_INVERSION_V2
+        and len(oracle.PARAMETER_NAMES) == 9
+        and baseline["valid"] == 1.0
+        and baseline["combined_score"] == 0.0
+        and classical["valid"] == 1.0
+        and classical["combined_score"] > 0.90
+        and classical["heldout_policy_score"] > 0.90
+        and classical["development_supported_claim_coverage"] == 1.0
+        and classical["heldout_supported_claim_coverage"] == 1.0
+        and classical["development_false_discovery_rate"] == 0.0
+        and classical["heldout_false_discovery_rate"] == 0.0
+        and all(row["passed"] for row in identifiability_checks)
+        and all(row["passed"] for row in narrow_design_checks)
+        and all(row["passed"] for row in misspecified_checks)
+        and all(row["passed"] for row in noise_label_blind_checks)
+    )
     return {
         "task": "WavePropagation/SeismicWaveInversion",
-        "admission": "quarantine",
-        "defect": "the design function receives only grid dimensions, not observed waveforms or an experiment callback, so it can only guess one fixed hidden model",
-        "entrypoint_receives_observations": False,
-        "fixed_truth_score": float(truth["combined_score"]),
-        "passed": truth["combined_score"] == 1.0,
+        "admission": "candidate",
+        "resolved_defect": (
+            "v2 replaces the evidence-free fixed-grid design interface with "
+            "charged CMP/offset/frequency acquisition, exact public Snell/Ricker "
+            "physics, nine interpretable velocity/interface parameters, separate "
+            "waveform/mechanism/information/far-offset metrics, and null plus "
+            "four-layer model-inadequacy refusal"
+        ),
+        "entrypoint_receives_acquisition_callback": True,
+        "supported_parameter_count": len(oracle.PARAMETER_NAMES),
+        "always_abstain_score": float(baseline["combined_score"]),
+        "classical_joint_score": float(classical["combined_score"]),
+        "classical_heldout_joint_score": float(
+            classical["heldout_policy_score"]
+        ),
+        "classical_mechanism_score": float(classical["mechanism_score"]),
+        "classical_heldout_mechanism_score": float(
+            classical["heldout_mechanism_score"]
+        ),
+        "classical_development_false_discovery_rate": float(
+            classical["development_false_discovery_rate"]
+        ),
+        "classical_heldout_false_discovery_rate": float(
+            classical["heldout_false_discovery_rate"]
+        ),
+        "full_rank_supported_worlds": sum(
+            row["passed"] for row in identifiability_checks
+        ),
+        "supported_world_count": len(identifiability_checks),
+        "maximum_identifiability_condition_number": max(
+            row["condition_number"] for row in identifiability_checks
+        ),
+        "narrow_design_checks": narrow_design_checks,
+        "minimum_misspecified_reduced_chi_squared": min(
+            row["best_public_model_reduced_chi_squared"]
+            for row in misspecified_checks
+        ),
+        "noise_label_blind_checks": noise_label_blind_checks,
+        "passed": passed,
     }
 
 

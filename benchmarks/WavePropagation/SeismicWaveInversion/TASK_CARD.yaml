@@ -1,0 +1,30 @@
+schema_version: 1
+scientific_question: Recover an interpretable layered acoustic velocity model by actively choosing receiver offsets and source frequency, while refusing null or out-of-library geology.
+artifact: Nine interval-velocity and quadratic-interface parameters, calibrated confidence, an explicit abstention decision, and a charged acquisition policy.
+oracle:
+  model: exact Snell-ray primary reflection times, Gardner-style impedance amplitudes and Ricker waveforms for procedural three-layer, null and four-layer low-velocity-zone worlds
+  feasibility: finite ordered velocities and thicknesses plus charged receiver-offset/frequency acquisitions under a strict budget
+  deterministic: true
+normalization:
+  baseline: one valid near-offset acquisition followed by abstention on every world
+  reference: exact three-layer parameters with a complementary two-frequency wide-offset acquisition and correct refusal on unsupported worlds
+  score: development mechanism, evaluator-only waveform prediction and acquisition information normalized above always-abstain; far-offset, held-out, confidence and false-discovery axes remain separate
+citations:
+  - id: doi:10.1190/1.1441754
+    title: Inversion of seismic reflection data in the acoustic approximation
+  - id: doi:10.1190/1.3238367
+    title: An overview of full-waveform inversion in exploration geophysics
+  - id: doi:10.1190/1.1438126
+    title: Seismic velocities from surface measurements
+invariants:
+  - public primary-reflection traces agree with an independent exact Snell-ray/Ricker implementation at general CMP positions, offsets and frequency, plus an analytic zero-offset check
+  - exact parameters attain perfect mechanism, unobserved-waveform and far-offset scores
+  - the complementary cross-CMP wide-offset two-frequency design has full-rank nine-parameter sensitivity on every supported world
+  - narrow-offset acquisition has materially less parameter information than the complementary reference design
+  - null and resolvable four-layer low-velocity-zone worlds reward refusal rather than forced three-layer fits
+  - receiver offsets and source frequencies consume budget and fail closed on invalid or excessive acquisition
+  - held-out mechanism, waveform prediction, experiment information, refusal and per-world diagnostics remain evaluator-only
+known_shortcuts: The oracle contains only primary reflections in horizontal lossless acoustic layers; it omits multiples, anisotropy, attenuation, elastic mode conversion, source uncertainty and field acquisition artifacts. Public procedural seeds require a future server-held split. Real discovery claims require independent wave-equation inversion and field or physical-model validation.
+review:
+  domain: pending_external
+  evaluator_security: automated_invariant_sandbox_callback_and_metric_sealing_tests

@@ -1,6 +1,6 @@
 # Scientific task portfolio audit
 
-Audit date: 2026-07-23 (UTC). The original inventory contained 50 discoverable task packages;
+Audit date: 2026-07-24 (UTC). The original inventory contained 50 discoverable task packages;
 the new ActiveLawDiscovery candidate brings the current inventory to 51. This count is an
 inventory fact, not evidence that all packages are benchmark-admissible.
 
@@ -55,14 +55,14 @@ meaning.
   as multifidelity Pareto and long-horizon trajectory-optimization candidates, respectively;
   RoomImpulseResponse-v2 has now also been substantively rebuilt; the remaining three stay
   quarantined.
-- **No original unscreened candidates remain after wave 4; 26 candidates remain in total.** They include
+- **No original unscreened candidates remain after wave 4; 27 candidates remain in total.** They include
   SCM, Lyapunov control, neutron criticality, seismic refraction, pendulum control, sparse
   recovery, OED-v2, GateSynthesis-v2, OPF-v2, Truss-v2, Antenna-v2, NMR-v2,
   HeatExchanger-v2, ReactionMechanismFitting-v2, GravityInversion-v2,
   OceanCurrentInversion-v2, RadiativeTransferFit-v2, LowThrustTransfer-v2,
   LidDrivenCavity-v2, EnergyBalanceModel-v2, BroadbandAbsorber-v2,
   DistillationColumnDesign-v2, HartreeFockSCF-v2, RoomImpulseResponse-v2,
-  ConvectionDiffusionOpt-v2 and the
+  ConvectionDiffusionOpt-v2, SeismicWaveInversion-v2 and the
   ActiveLawDiscovery laboratory. All are
   currently on-ramps or repair/calibration candidates rather than externally reviewed
   open-frontier tasks.
@@ -72,14 +72,15 @@ meaning.
   independent budget-three run, all three proposals retain the same two false discoveries;
   score feedback does not fix model-inadequacy detection and later proposals reduce mechanism
   recovery. This is a reliability/refusal frontier rather than an ordinary prediction frontier.
-- **18 quarantined packages.** Five generic-objective clones must be replaced with real domain
+- **17 quarantined packages.** Five generic-objective clones must be replaced with real domain
   oracles; metadata completion alone cannot rehabilitate them. The former Climate, cavity and
   broadband-absorber defects have been resolved by substantive v2 rebuilds rather than local
   numerical patches. The remaining wave-2 and inverse-track tasks are still blocked by concrete oracle failures;
   none may contribute model-performance evidence until rebuilt and re-admitted. The inverse
   failures include rank-deficient hidden-truth retrieval, a rank-two demographic surrogate,
   underidentified pseudo-DNS
-  RANS fitting and an FWI interface with no observations.
+  RANS fitting. The former evidence-free FWI interface has been replaced by
+  SeismicWaveInversion-v2 and re-admitted as a candidate.
   Wave 3 additionally isolates six scientifically promising topics whose current evaluators are
   unusable: fail-open NMR/OED/gate/OPF/antenna scores and a non-canonical duplicated-member
   truss topology. All six have since been substantively rebuilt and re-admitted; their candidate
@@ -230,6 +231,16 @@ The first review tranche contains real scientific topics but several narrow eval
   policies, including one full-budget two-experiment design, so the task retains experiment-design
   and supported-discovery headroom. Retain pending repeated paired controls, server-held
   apparatuses and independent review.
+- SeismicWaveInversion-v2 replaces a fixed hidden velocity guess with charged CMP, offset and
+  frequency acquisition over procedural three-layer, null and four-layer low-velocity-zone
+  worlds. The public forward model uses exact Snell-ray primary travel times, Gardner-style
+  impedance and Ricker waveforms; waveform fit, nine-parameter mechanism recovery, acquisition
+  information, far-offset prediction, confidence and refusal remain separate. A truth-blind
+  NMO/Dix plus waveform policy reaches `0.998/0.994` development/held-out joint quality with
+  zero false discovery. The complementary design is rank nine with worst condition number 246,
+  while one centered narrow design is rank five and scores zero information. Retain as an
+  active-acquisition/model-checking on-ramp pending GPT-5.5 calibration, server-held worlds,
+  elastic/wave-equation replication, field evidence and independent geophysics review.
 
 ## Expansion rule
 
@@ -246,8 +257,9 @@ After complete original-inventory triage, adding ActiveLawDiscovery and rebuildi
 OPF-v2, Truss-v2, Antenna-v2, NMR-v2, HeatExchanger-v2, ReactionMechanismFitting-v2 and
 GravityInversion-v2, OceanCurrentInversion-v2, RadiativeTransferFit-v2, LowThrustTransfer-v2,
 LidDrivenCavity-v2, EnergyBalanceModel-v2, BroadbandAbsorber-v2, Distillation-v2,
-HartreeFockSCF-v2, RoomImpulseResponse-v2 and ConvectionDiffusionOpt-v2, the net expansion gap is
-approximately 17 admissible tasks: 51 folders minus 18 quarantines leaves 33 internally admissible certified or
+HartreeFockSCF-v2, RoomImpulseResponse-v2, ConvectionDiffusionOpt-v2 and
+SeismicWaveInversion-v2, the net expansion gap is approximately 16 admissible tasks: 51 folders
+minus 17 quarantines leaves 34 internally admissible certified or
 candidate packages, while the target
 is about 50. New
 work should emphasize procedural task families and independent regimes,

@@ -488,8 +488,19 @@ Every new or rebuilt task must pass the following gate before it counts toward t
 - classical and domain baselines, followed by GPT-5.5 budget-one headroom screening; and
 - retention as an on-ramp, not a headline task, if a standard method reliably saturates it.
 
-The present inventory contains 33 internally admissible certified or candidate packages: seven
-certified and 26 candidate, with 18 quarantined. The remaining gap is approximately 17 tasks.
+SeismicWaveInversion-v2 adds the same distinction in a wave-propagation setting. Its truth-blind
+NMO/Dix plus public-waveform fit reaches development/held-out joint quality `0.997697/0.994382`,
+but this near-ceiling classical result follows only after a complementary two-acquisition design.
+The centered narrow-offset experiment has numerical rank five for nine parameters and zero
+information score, whereas the reference design is rank nine with worst condition number
+`246.34`. Null and resolvable four-layer worlds are correctly refused; the minimum misspecified
+reduced chi-square is `33.10`. Thus good acquired-waveform fit, parameter identifiability,
+far-offset prediction, model-class adequacy and geological interpretation remain separate axes.
+The current synthetic primary-reflection laboratory is an active-acquisition/model-checking
+on-ramp, not field FWI or autonomous geological discovery.
+
+The present inventory contains 34 internally admissible certified or candidate packages: seven
+certified and 27 candidate, with 17 quarantined. The remaining gap is approximately 16 tasks.
 Expansion should use procedural families spanning
 design, inverse problems, control, multifidelity validation, mechanism discovery and exact
 mathematical construction rather than cloning one scalar optimization template across domains.
