@@ -76,6 +76,8 @@ DEFAULT_REPORTS = (
     "experiments/gpt55_rans_v2_b3_2026-07-24.json",
     "experiments/gpt55_gene_network_v1_b1_2026-07-24.json",
     "experiments/gpt55_gene_network_v1_b3_2026-07-24.json",
+    "experiments/gpt55_rna_inverse_v1_b1_2026-07-24.json",
+    "experiments/gpt55_rna_inverse_v1_b3_2026-07-24.json",
 )
 
 
