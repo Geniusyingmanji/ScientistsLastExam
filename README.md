@@ -46,10 +46,10 @@ controlled exception text is reduced to a fixed label-blind failure taxonomy bef
 search feedback, preventing observations from being carried between worlds through exceptions.
 The current audit reports:
 
-- 257/257 unit, security, protocol, analysis and scientific-invariant tests passed after the
+- 275/275 unit, security, protocol, analysis and scientific-invariant tests passed after the
   MOSFETDoping-v2 rebuild. The latest trusted task/security/baseline reports bind clean source
-  revision `97158a8`; the trusted Rankine model analysis and 45-condition cross-task summary bind
-  later clean evidence revisions.
+  revision `97158a8`; the trusted MOSFET model analysis and 47-condition cross-task summary v17
+  bind clean source revision `2f647d9`.
 - The latest 51×2 secure-baseline audit reports 51/51 deterministic, 51/51 valid, 51/51
   fail-closed and zero infrastructure failures.
 - Current source manifest: 7 certified / 29 candidate / 15 quarantined. D-optimal design, quantum
@@ -237,8 +237,8 @@ credible multi-seed model-performance evidence. A clean-revision GPT-5.5 budget-
 is recorded as task calibration, not a benchmark leaderboard.
 The latest trusted clean-revision certification/security/baseline audits are v35/v19/v25. The
 current source manifest is 7/29/15 and contains 36 internally admissible tasks, leaving an
-approximate gap of 14 to the roughly 50-task target. The hash-bound cross-task summary v16
-contains 45 normal single-run conditions over 23 tasks; it is calibration
+approximate gap of 14 to the roughly 50-task target. The hash-bound cross-task summary v17
+contains 47 normal single-run conditions over 24 tasks; it is calibration
 evidence, not a leaderboard or population result.
 
 The latest EdgeBench re-audit keeps its upstream facts at arXiv `2607.05155v1`, SForge

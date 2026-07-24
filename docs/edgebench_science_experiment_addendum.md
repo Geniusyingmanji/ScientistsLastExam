@@ -927,8 +927,9 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
 - [x] 把 information、mechanism、coverage、refusal 与 protocol failure 分轴；
 - [x] clean revision `2706281` 生成 derived analysis、43-condition/22-task summary 和四类审计；
 - [x] clean revision `ce1cf4d` 生成 45-condition/23-task summary v16，并纳入可信 Rankine 正常条件；
-- [x] 当前全量回归 244/244；clean revision `ec14510` 的 certification/security/baseline 刷新为
-  v34/v18/v24。
+- [x] clean revision `2f647d9` 生成 MOSFET 派生分析与 47-condition/24-task summary v17；
+- [x] 当前全量回归 275/275；clean revision `97158a8` 的 certification/security/baseline 刷新为
+  v35/v19/v25。
 
 ### P1 — Long-horizon pilot
 

@@ -6,21 +6,22 @@ NMR-v2, HeatExchanger-v2, ReactionMechanismFitting-v2, GravityInversion-v2,
 OceanCurrentInversion-v2, RadiativeTransferFit-v2, LowThrustTransfer-v2,
 LidDrivenCavity-v2, EnergyBalanceModel-v2, BroadbandAbsorber-v2,
 DistillationColumnDesign-v2, HartreeFockSCF-v2, RoomImpulseResponse-v2,
-ConvectionDiffusionOpt-v2, SeismicWaveInversion-v2 and RankineCycleOpt-v2. The 45 normal-feedback
-model conditions across these 23 tasks each
+ConvectionDiffusionOpt-v2, SeismicWaveInversion-v2, RankineCycleOpt-v2 and MOSFETDoping-v2. The
+47 normal-feedback model conditions across these 24 tasks each
 contain one seed and proposal budget one or three. They calibrate tasks and motivate experiments;
 they are not a model leaderboard, a causal feedback study or population evidence.
 
 The portable machine record
-`experiments/science_calibration_summary_2026-07-24_v16.json` retains every top-level scalar metric,
-candidate lineage hash and raw trajectory SHA-256 for all 45 normal conditions.
+`experiments/science_calibration_summary_2026-07-24_v17.json` retains every top-level scalar metric,
+candidate lineage hash and raw trajectory SHA-256 for all 47 normal conditions.
 Additional strict diagnostics for Distillation-v2, Hartree--Fock and room acoustics are bound
 separately by `experiments/distillation_v2_calibration_analysis_2026-07-23.json`,
 `experiments/hartree_fock_v2_calibration_analysis_2026-07-23.json` and
 `experiments/room_acoustics_v2_calibration_analysis_2026-07-23.json` and
 `experiments/convection_diffusion_v2_calibration_analysis_2026-07-23.json`,
 `experiments/seismic_wave_v2_calibration_analysis_2026-07-24.json` and
-`experiments/rankine_v2_calibration_analysis_2026-07-24.json`. Strict selection-blind
+`experiments/rankine_v2_calibration_analysis_2026-07-24.json` and
+`experiments/mosfet_v2_calibration_analysis_2026-07-24.json`. Strict selection-blind
 diagnostics remain in task-specific analysis because they are not normal-feedback calibrations.
 The underlying reports bind the task-specific source revision. Pendulum's initial budget-one
 run on revision `57c0e1b` is
@@ -46,6 +47,8 @@ by the corrected-contract run on `2557adb`.
 | Antenna-v2, budget 3 | development 0.845170 → 0.993267 → 1.0 | development robustness 0.704823 → 0.635511 → 0.576348 | Every accepted nominal improvement lowers sealed robustness and mean worst-shift quality within this trajectory. |
 | NMR-v2, budget 1 | development mechanism/refusal 0.427998; reconstruction 0.874116 | held-out mechanism/refusal 0.176186; reconstruction 0.878353; false-discovery 0.5/0.5 | GPT-5.5 beats the classical mechanism baseline without saturating, but high reconstruction coexists with false discovery and weak shifted mechanism validity. |
 | NMR-v2, budget 3 | development proposals 0.375440 → 0.212692 → 0.161475; only step 1 accepted | held-out mechanism/refusal remains 0.0; rejected steps retain development reconstruction 0.819/0.783 while false-discovery is 1.0 on both splits | Aggregate score feedback does not repair model-inadequacy detection in this trajectory; residual quality alone remains misleading. |
+| MOSFETDoping-v2, budget 1 | nominal development/held-out `0.780/0.746` | robustness `0.707/0.718`; shift feasibility `0.586/0.536` | One proposal finds a useful compact-model Pareto archive, but many process/operating-shift archive members are infeasible. This is reduced-order design optimization, not TCAD or device validation. |
+| MOSFETDoping-v2, budget 3 | normal nominal development/held-out `0.457/0.445`; selection-blind `0.770/0.738` | normal robustness `0.298/0.402`; selection-blind `0.723/0.712` | The frozen-parent batch happens to outperform the normal run on every main score axis. Oracle calls match, but tokens differ by 5,507 and model randomness is unseeded, so the contrast is proposal-variance evidence, not a negative feedback effect. |
 | HeatExchanger-v2, budget 1 | the only proposal is invalid; development remains 0.0 | no validated improvement | Valid code generation and scientific feasibility remain separate gates. |
 | HeatExchanger-v2, budget 3 | development exact 0.000 → 0.008 → 0.126; final proxy 0.173 | held-out exact 0.280; robustness 0.130; two of four development regimes remain zero | Aggregate improvement can be concentrated in one regime and need not transfer to physical shifts. |
 | LowThrustTransfer-v2, public Gauss--Newton | development/held-out utility 0.711/0.719; nominal feasibility 1.0/1.0 | shifted robustness 0.682/0.660; held-out shifted feasibility 0.833; production/refinement discrepancy 0.0423 tolerance | Long-horizon optimization must separate numerical error, terminal feasibility, nominal utility, held-out transfer and execution robustness. |

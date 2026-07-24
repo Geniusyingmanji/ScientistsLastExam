@@ -1960,3 +1960,31 @@ into best-of-K search. Source hashes, design distinctions and claim limits are s
 This audit does not show excessive path dependence or wrong-hypothesis lock-in in EdgeBench, whose
 raw headline trajectories are unavailable. CF1/E51 is a proposed Frontier-Science experiment and
 does not change any model-performance result.
+
+## 2026-07-24 — Trusted MOSFET GPT-5.5 analysis and cross-task summary v17
+
+The MOSFET analysis implementation and its fail-closed synthetic tests were committed at clean
+source revision `2f647d9`; the full suite then passed **275/275** tests. From that clean revision,
+`experiments/mosfet_v2_calibration_analysis_2026-07-24.json` validates the three trusted input
+reports, raw/portable trajectory hashes, best-program hashes, run manifests, oracle/token
+accounting, normal incumbent lineage, frozen-baseline selection-blind lineage, and all six devices
+by six process/operating shifts. The report has `execution_passed=true`,
+`trusted_evidence=true` and SHA-256
+`733b86d364f0ee497719753123de086bdea081abe9c89451b4858bbbe9630f8f`.
+
+The budget-one selected artifact reaches development/held-out nominal `0.779698/0.746442`,
+robustness `0.706953/0.717508` and shift feasibility `0.585938/0.536458`. The normal budget-three
+artifact reaches nominal `0.457400/0.445406`, robustness `0.297742/0.401801` and shift feasibility
+`0.619792/0.552083`. The frozen-parent selection-blind batch selects nominal
+`0.770322/0.738085`, robustness `0.722514/0.711681` and shift feasibility `0.770833/0.708333`.
+Normal and selection-blind use the same four oracle calls, but normal uses 18,215 versus 12,708
+tokens and the Azure endpoint exposes no server-side generation seed. The observed `-0.313`
+normal-minus-blind nominal contrast is therefore descriptive proposal variance, not evidence that
+feedback hurts or is unnecessary.
+
+`experiments/science_calibration_summary_2026-07-24_v17.json` has SHA-256
+`83d5ba3c3ec4756e172276a3280ba79dcb42809b0d44f786fe5e4962e409a977`, binds the same clean source
+and contains **47 normal single-run conditions across 24 tasks**. The strict open-loop MOSFET arm
+remains in the task-specific analysis. Both derived artifacts retain the compact-model boundary:
+they are neither multidimensional self-consistent/commercial TCAD, fabricated-device validation,
+feedback-causal evidence nor autonomous semiconductor discovery.
