@@ -1838,3 +1838,27 @@ fresh, correlated and duplicate feedback using evidence effective sample size an
 not only calls or bits. These are proposed experiments and release gates, not new EdgeBench or
 Frontier-Science model results. Source hashes, arithmetic and claim boundaries are recorded in
 `.research/edgebench_science_seventh_order_audit_2026-07-24.json`.
+
+## 2026-07-24 — Trusted MOSFETDoping-v2 calibration and repository audits
+
+Clean source revision `97158a8` replaces the six-orders-wrong per-m3 doping toy with a transparent
+six-parameter Gaussian halo compact-model task over four development and two interleaved held-out
+devices. It combines screened-Poisson drain coupling, standard MOS threshold electrostatics,
+Caughey--Thomas mobility, charge-sheet current and Poisson random-dopant variation. This is a
+reduced-order nMOS benchmark model, not TCAD or a measured-device claim.
+
+`mosfet_doping_v2_calibration_2026-07-24.json` reconstructs every fixed-seed 2048-point Sobol
+archive and anchor exactly. The valid weak baseline scores `0/0` development/held-out nominal. The
+nominal witness scores `1/1` but has development/held-out worst-shift robustness `0/0.2870` and
+shift feasibility `0.8385/0.8281`; the robust witness trades nominal score to `0.9340/0.8998` and
+reaches unit worst-shift robustness and shift feasibility on both splits. Nominal-feasible pools
+contain 1084--1380 of 2048 designs and all-shift-feasible pools 458--852. All directional checks,
+fail-closed cases, six-device process/tmpfs isolation and legacy-v2-driver tests pass; the three
+task-card DOIs resolve to Sze--Ng, Taur--Ning and Caughey--Thomas metadata.
+
+The same clean revision produces trusted wave4 v7, certification v35, security v19 and secure-
+baseline v25 reports. Wave4 recommends MOSFET as a candidate; certification records **7 certified,
+29 candidate and 15 quarantined** packages; all 18 security tests pass; and all 51 baselines are
+deterministic, valid and fail closed across two runs with zero infrastructure failures. These are
+task calibration and infrastructure results, not GPT-5.5 performance, feedback learning, TCAD
+validation or semiconductor discovery.

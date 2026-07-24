@@ -46,9 +46,9 @@ controlled exception text is reduced to a fixed label-blind failure taxonomy bef
 search feedback, preventing observations from being carried between worlds through exceptions.
 The current audit reports:
 
-- 244/244 unit, security, protocol, analysis and scientific-invariant tests passed after the
-  RankineCycleOpt-v2 rebuild. The latest trusted task/security/baseline reports bind clean source
-  revision `ec14510`; the trusted Rankine model analysis and 45-condition cross-task summary bind
+- 257/257 unit, security, protocol, analysis and scientific-invariant tests passed after the
+  MOSFETDoping-v2 rebuild. The latest trusted task/security/baseline reports bind clean source
+  revision `97158a8`; the trusted Rankine model analysis and 45-condition cross-task summary bind
   later clean evidence revisions.
 - The latest 51×2 secure-baseline audit reports 51/51 deterministic, 51/51 valid, 51/51
   fail-closed and zero infrastructure failures.
@@ -235,7 +235,7 @@ the post-repair 50-package audits bind revision `47c3613`; the subsequent wave-2
 audit quarantines seven additional defective candidates. The two P2 smokes are baseline-only; the repository does not yet contain
 credible multi-seed model-performance evidence. A clean-revision GPT-5.5 budget-one core pilot
 is recorded as task calibration, not a benchmark leaderboard.
-The latest trusted clean-revision certification/security/baseline audits are v34/v18/v24. The
+The latest trusted clean-revision certification/security/baseline audits are v35/v19/v25. The
 current source manifest is 7/29/15 and contains 36 internally admissible tasks, leaving an
 approximate gap of 14 to the roughly 50-task target. The hash-bound cross-task summary v16
 contains 45 normal single-run conditions over 23 tasks; it is calibration

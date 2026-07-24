@@ -1,0 +1,2278 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_TASK_CALIBRATION",
+  "evidence_scope": "TASK_CALIBRATION_NOT_TCAD_MEASUREMENT_MODEL_PERFORMANCE_OR_DISCOVERY_EVIDENCE",
+  "created_at": "2026-07-24T11:58:44.844505+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "97158a8c5c41d9f9d75b856b841a7ad515a87c7d",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/calibrate_mosfet_v2.py",
+      "--output",
+      "experiments/mosfet_doping_v2_calibration_2026-07-24.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10",
+    "numpy": "1.24.4",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "model_scope": "screened-Poisson drain coupling, MOS threshold electrostatics, Caughey-Thomas mobility, charge-sheet current and Poisson random-dopant variation",
+  "task": "Semiconductor/MOSFETDoping",
+  "task_source_sha256": {
+    "benchmarks/Semiconductor/MOSFETDoping/verification/device.py": "0321c9d0ace1fa3e2653adbed57227aa7aa69d6bf0e11816ffdb0c69e9c0ce02",
+    "benchmarks/Semiconductor/MOSFETDoping/verification/evaluator.py": "6859f5d1ffb7dc84882b691ac1f3eb511450f7afff15aa8365cbf5082ff6e01a",
+    "benchmarks/Semiconductor/MOSFETDoping/solution.py": "243f1a3fe6bca79989c47a8945e69dc9de419544c02f5f737a754ec56acac5e6",
+    "benchmarks/Semiconductor/MOSFETDoping/Task.md": "f210019894dcb2fc1b3aed23d676c214e9c883fe21a111588f5be463064feb6a",
+    "benchmarks/Semiconductor/MOSFETDoping/TASK_CARD.yaml": "8783679b7890c0eb98690eb9e3e3d116b33e985df38ec54cd5da692692c88517"
+  },
+  "task_dimensions": {
+    "development_instance_count": 4,
+    "heldout_instance_count": 2,
+    "shift_count": 6,
+    "sobol_power": 11,
+    "sobol_pool_size_per_instance": 2048,
+    "archive_size": 16
+  },
+  "reference_claim": {
+    "deterministic": true,
+    "truth_blind_to_candidate": true,
+    "global_optimality_claimed": false,
+    "normalization_clips_better_feasible_candidates": true
+  },
+  "instances": [
+    {
+      "name": "dev_reference_40nm",
+      "split": "development",
+      "seed": 260724,
+      "power": 11,
+      "pool_size": 2048,
+      "nominal_feasible_pool_count": 1312,
+      "all_shift_feasible_pool_count": 744,
+      "nominal_shortlist_size": 303,
+      "robust_shortlist_size": 312,
+      "nominal_indices": [
+        682,
+        349,
+        1824,
+        485,
+        1410,
+        626,
+        841,
+        2045,
+        1310,
+        1550,
+        1858,
+        1498,
+        808,
+        2040,
+        821,
+        386
+      ],
+      "robust_indices": [
+        1330,
+        169,
+        2034,
+        90,
+        591,
+        702,
+        1781,
+        432,
+        1151,
+        2,
+        1962,
+        830,
+        1628,
+        772,
+        1600,
+        1949
+      ],
+      "anchors": {
+        "baseline_nominal_hypervolume": 0.44049999549170415,
+        "reference_nominal_hypervolume": 0.6021565333350363,
+        "baseline_shifted_hypervolumes": [
+          0.307865752758699,
+          0.44017774249952374,
+          0.41399981639080025,
+          0.43041626067221506,
+          0.44049999549170415,
+          0.33137581602125543
+        ],
+        "reference_shifted_hypervolumes": [
+          0.4527148791670644,
+          0.5992566765066475,
+          0.541132744292832,
+          0.5957407092731214,
+          0.5889375562155663,
+          0.4690924001229216
+        ]
+      },
+      "baseline_feasible_counts": [
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8
+      ],
+      "reference_feasible_counts": [
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16
+      ],
+      "passed": true
+    },
+    {
+      "name": "heldout_short_low_v",
+      "split": "heldout",
+      "seed": 260725,
+      "power": 11,
+      "pool_size": 2048,
+      "nominal_feasible_pool_count": 1292,
+      "all_shift_feasible_pool_count": 822,
+      "nominal_shortlist_size": 600,
+      "robust_shortlist_size": 674,
+      "nominal_indices": [
+        138,
+        1637,
+        510,
+        82,
+        289,
+        1804,
+        962,
+        922,
+        1598,
+        1917,
+        122,
+        420,
+        1214,
+        1858,
+        1350,
+        1228
+      ],
+      "robust_indices": [
+        920,
+        292,
+        1765,
+        236,
+        791,
+        1684,
+        809,
+        1208,
+        1228,
+        567,
+        1795,
+        482,
+        1358,
+        699,
+        1961,
+        407
+      ],
+      "anchors": {
+        "baseline_nominal_hypervolume": 0.3675275779542334,
+        "reference_nominal_hypervolume": 0.4717865212437461,
+        "baseline_shifted_hypervolumes": [
+          0.2614269736431374,
+          0.36729039190929,
+          0.33658190511318875,
+          0.36294886058858966,
+          0.3675275779542334,
+          0.2797179205712751
+        ],
+        "reference_shifted_hypervolumes": [
+          0.35429000052099624,
+          0.468492883732063,
+          0.4256816723873299,
+          0.4664571886384361,
+          0.46855807039840813,
+          0.3716402209327662
+        ]
+      },
+      "baseline_feasible_counts": [
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8
+      ],
+      "reference_feasible_counts": [
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16
+      ],
+      "passed": true
+    },
+    {
+      "name": "dev_thin_oxide_32nm",
+      "split": "development",
+      "seed": 260726,
+      "power": 11,
+      "pool_size": 2048,
+      "nominal_feasible_pool_count": 1304,
+      "all_shift_feasible_pool_count": 818,
+      "nominal_shortlist_size": 441,
+      "robust_shortlist_size": 526,
+      "nominal_indices": [
+        1266,
+        693,
+        1642,
+        1314,
+        1229,
+        1342,
+        553,
+        1210,
+        52,
+        450,
+        725,
+        818,
+        1988,
+        650,
+        1582,
+        77
+      ],
+      "robust_indices": [
+        1422,
+        1497,
+        24,
+        1099,
+        1320,
+        1572,
+        421,
+        961,
+        550,
+        606,
+        1164,
+        1800,
+        1760,
+        424,
+        2041,
+        1659
+      ],
+      "anchors": {
+        "baseline_nominal_hypervolume": 0.41680686480383144,
+        "reference_nominal_hypervolume": 0.5431645034149495,
+        "baseline_shifted_hypervolumes": [
+          0.29898538915475315,
+          0.4168525419260881,
+          0.3831423286916819,
+          0.4114328432723307,
+          0.41680686480383144,
+          0.3178730132208075
+        ],
+        "reference_shifted_hypervolumes": [
+          0.4077077896958566,
+          0.5391355313281349,
+          0.49249382829515653,
+          0.535737805401298,
+          0.5397055729276992,
+          0.427437348279477
+        ]
+      },
+      "baseline_feasible_counts": [
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8
+      ],
+      "reference_feasible_counts": [
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16
+      ],
+      "passed": true
+    },
+    {
+      "name": "heldout_long_hot",
+      "split": "heldout",
+      "seed": 260727,
+      "power": 11,
+      "pool_size": 2048,
+      "nominal_feasible_pool_count": 1084,
+      "all_shift_feasible_pool_count": 458,
+      "nominal_shortlist_size": 158,
+      "robust_shortlist_size": 57,
+      "nominal_indices": [
+        1087,
+        1335,
+        135,
+        1635,
+        720,
+        271,
+        975,
+        0,
+        1031,
+        563,
+        543,
+        1395,
+        1421,
+        887,
+        840,
+        1960
+      ],
+      "robust_indices": [
+        1435,
+        717,
+        403,
+        1713,
+        1831,
+        1957,
+        1039,
+        1469,
+        935,
+        2009,
+        563,
+        1023,
+        687,
+        1239,
+        735,
+        1941
+      ],
+      "anchors": {
+        "baseline_nominal_hypervolume": 0.26894452141215913,
+        "reference_nominal_hypervolume": 0.45730425908176603,
+        "baseline_shifted_hypervolumes": [
+          0.15479323452557422,
+          0.2640234515057002,
+          0.27075434513457003,
+          0.24872863068247641,
+          0.26894452141215913,
+          0.1847676812045957
+        ],
+        "reference_shifted_hypervolumes": [
+          0.3188639672194978,
+          0.4275862980871787,
+          0.3899352697759931,
+          0.4203309939870395,
+          0.43327447294463983,
+          0.33259082571034526
+        ]
+      },
+      "baseline_feasible_counts": [
+        8,
+        4,
+        7,
+        8,
+        7,
+        8,
+        6
+      ],
+      "reference_feasible_counts": [
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16
+      ],
+      "passed": true
+    },
+    {
+      "name": "dev_long_warm",
+      "split": "development",
+      "seed": 260728,
+      "power": 11,
+      "pool_size": 2048,
+      "nominal_feasible_pool_count": 1203,
+      "all_shift_feasible_pool_count": 564,
+      "nominal_shortlist_size": 192,
+      "robust_shortlist_size": 86,
+      "nominal_indices": [
+        1010,
+        430,
+        885,
+        938,
+        1542,
+        1605,
+        434,
+        634,
+        912,
+        1856,
+        1461,
+        314,
+        1114,
+        1418,
+        2006,
+        1080
+      ],
+      "robust_indices": [
+        1552,
+        1348,
+        314,
+        1718,
+        121,
+        860,
+        530,
+        80,
+        270,
+        88,
+        1886,
+        1034,
+        624,
+        1466,
+        1089,
+        888
+      ],
+      "anchors": {
+        "baseline_nominal_hypervolume": 0.33699943475007477,
+        "reference_nominal_hypervolume": 0.5279479059030665,
+        "baseline_shifted_hypervolumes": [
+          0.2102834491345274,
+          0.33553694905757137,
+          0.3312063257324888,
+          0.32062001485697433,
+          0.33699943475007477,
+          0.2432304175870945
+        ],
+        "reference_shifted_hypervolumes": [
+          0.37653671590808674,
+          0.5013401903194157,
+          0.45554013490706025,
+          0.49632127301529716,
+          0.5074313043338211,
+          0.39037902445837847
+        ]
+      },
+      "baseline_feasible_counts": [
+        8,
+        6,
+        8,
+        8,
+        8,
+        8,
+        8
+      ],
+      "reference_feasible_counts": [
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16
+      ],
+      "passed": true
+    },
+    {
+      "name": "dev_cold_operation",
+      "split": "development",
+      "seed": 260729,
+      "power": 11,
+      "pool_size": 2048,
+      "nominal_feasible_pool_count": 1380,
+      "all_shift_feasible_pool_count": 852,
+      "nominal_shortlist_size": 222,
+      "robust_shortlist_size": 335,
+      "nominal_indices": [
+        1893,
+        921,
+        1029,
+        1317,
+        1551,
+        205,
+        149,
+        1645,
+        1073,
+        1777,
+        1642,
+        565,
+        673,
+        1927,
+        77,
+        597
+      ],
+      "robust_indices": [
+        301,
+        1151,
+        1170,
+        185,
+        1757,
+        1509,
+        1474,
+        1836,
+        1181,
+        1453,
+        1629,
+        2031,
+        1251,
+        1568,
+        265,
+        1311
+      ],
+      "anchors": {
+        "baseline_nominal_hypervolume": 0.589095907875794,
+        "reference_nominal_hypervolume": 0.7521352119444288,
+        "baseline_shifted_hypervolumes": [
+          0.417526412299843,
+          0.5896708787510319,
+          0.5487521746617002,
+          0.5731646280527705,
+          0.589095907875794,
+          0.44533093041137156
+        ],
+        "reference_shifted_hypervolumes": [
+          0.5749925274616581,
+          0.7437346188667766,
+          0.7083373950407502,
+          0.7441193693366265,
+          0.7386101934197781,
+          0.6029794615305671
+        ]
+      },
+      "baseline_feasible_counts": [
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8
+      ],
+      "reference_feasible_counts": [
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16
+      ],
+      "passed": true
+    }
+  ],
+  "directional_checks": {
+    "higher_doping_raises_threshold": true,
+    "higher_doping_reduces_effective_mobility": true,
+    "higher_temperature_increases_subthreshold_swing": true,
+    "higher_temperature_increases_off_current": true,
+    "all_finite": true
+  },
+  "witness_tradeoff_checks": {
+    "baseline_is_zero_valid_witness": true,
+    "nominal_witness_reaches_nominal_anchors": true,
+    "nominal_witness_exposes_shift_failure": true,
+    "robust_witness_reaches_worst_shift_anchors": true,
+    "robust_witness_trades_nominal_hypervolume": true
+  },
+  "witness_metrics": {
+    "baseline": {
+      "combined_score": 0.0,
+      "valid": 1.0,
+      "feasibility_rate": 1.0,
+      "raw_score": 0.0,
+      "robustness_score": 0.0,
+      "heldout_policy_score": 0.0,
+      "heldout_robustness_score": 0.0,
+      "heldout_feasibility_rate": 1.0,
+      "development_shift_feasibility_rate": 0.9895833333333334,
+      "heldout_shift_feasibility_rate": 0.9166666666666666,
+      "development_mean_nominal_feasible_rate": 1.0,
+      "heldout_mean_nominal_feasible_rate": 1.0,
+      "candidate_instance_call_count": 6,
+      "candidate_instance_valid_rate": 1.0,
+      "per_instance": [
+        {
+          "name": "dev_reference_40nm",
+          "split": "development",
+          "valid": true,
+          "nominal_score": 0.0,
+          "robustness_score": 0.0,
+          "archive_size": 8,
+          "nominal_feasible_count": 8,
+          "nominal_feasibility_rate": 1.0,
+          "pareto_front_size": 8,
+          "raw_nominal_hypervolume": 0.44049999549170415,
+          "raw_shifted_hypervolumes": [
+            0.307865752758699,
+            0.44017774249952374,
+            0.41399981639080025,
+            0.43041626067221506,
+            0.44049999549170415,
+            0.33137581602125543
+          ],
+          "shifted_scores": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "shift_feasible_counts": [
+            8,
+            8,
+            8,
+            8,
+            8,
+            8
+          ],
+          "shift_feasibility_rates": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "anchors": {
+            "baseline_nominal_hypervolume": 0.44049999549170415,
+            "reference_nominal_hypervolume": 0.6021565333350363,
+            "baseline_shifted_hypervolumes": [
+              0.307865752758699,
+              0.44017774249952374,
+              0.41399981639080025,
+              0.43041626067221506,
+              0.44049999549170415,
+              0.33137581602125543
+            ],
+            "reference_shifted_hypervolumes": [
+              0.4527148791670644,
+              0.5992566765066475,
+              0.541132744292832,
+              0.5957407092731214,
+              0.5889375562155663,
+              0.4690924001229216
+            ]
+          },
+          "minimum_threshold_voltage_v": 0.2804495313352263,
+          "maximum_dibl_v": 0.021505543096336455,
+          "minimum_on_current_ma_per_um": 0.4356640297137147,
+          "minimum_log10_on_off_ratio": 5.696865598890647,
+          "maximum_subthreshold_swing_mv_dec": 62.677828532278696,
+          "maximum_random_dopant_sigma_v": 0.0032207657196127466
+        },
+        {
+          "name": "heldout_short_low_v",
+          "split": "heldout",
+          "valid": true,
+          "nominal_score": 0.0,
+          "robustness_score": 0.0,
+          "archive_size": 8,
+          "nominal_feasible_count": 8,
+          "nominal_feasibility_rate": 1.0,
+          "pareto_front_size": 8,
+          "raw_nominal_hypervolume": 0.3675275779542334,
+          "raw_shifted_hypervolumes": [
+            0.2614269736431374,
+            0.36729039190929,
+            0.33658190511318875,
+            0.36294886058858966,
+            0.3675275779542334,
+            0.2797179205712751
+          ],
+          "shifted_scores": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "shift_feasible_counts": [
+            8,
+            8,
+            8,
+            8,
+            8,
+            8
+          ],
+          "shift_feasibility_rates": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "anchors": {
+            "baseline_nominal_hypervolume": 0.3675275779542334,
+            "reference_nominal_hypervolume": 0.4717865212437461,
+            "baseline_shifted_hypervolumes": [
+              0.2614269736431374,
+              0.36729039190929,
+              0.33658190511318875,
+              0.36294886058858966,
+              0.3675275779542334,
+              0.2797179205712751
+            ],
+            "reference_shifted_hypervolumes": [
+              0.35429000052099624,
+              0.468492883732063,
+              0.4256816723873299,
+              0.4664571886384361,
+              0.46855807039840813,
+              0.3716402209327662
+            ]
+          },
+          "minimum_threshold_voltage_v": 0.28569823116351234,
+          "maximum_dibl_v": 0.018001521610823912,
+          "minimum_on_current_ma_per_um": 0.3855791921154953,
+          "minimum_log10_on_off_ratio": 5.2967424679964425,
+          "maximum_subthreshold_swing_mv_dec": 64.73995243468845,
+          "maximum_random_dopant_sigma_v": 0.0022639890263363486
+        },
+        {
+          "name": "dev_thin_oxide_32nm",
+          "split": "development",
+          "valid": true,
+          "nominal_score": 0.0,
+          "robustness_score": 0.0,
+          "archive_size": 8,
+          "nominal_feasible_count": 8,
+          "nominal_feasibility_rate": 1.0,
+          "pareto_front_size": 8,
+          "raw_nominal_hypervolume": 0.41680686480383144,
+          "raw_shifted_hypervolumes": [
+            0.29898538915475315,
+            0.4168525419260881,
+            0.3831423286916819,
+            0.4114328432723307,
+            0.41680686480383144,
+            0.3178730132208075
+          ],
+          "shifted_scores": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "shift_feasible_counts": [
+            8,
+            8,
+            8,
+            8,
+            8,
+            8
+          ],
+          "shift_feasibility_rates": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "anchors": {
+            "baseline_nominal_hypervolume": 0.41680686480383144,
+            "reference_nominal_hypervolume": 0.5431645034149495,
+            "baseline_shifted_hypervolumes": [
+              0.29898538915475315,
+              0.4168525419260881,
+              0.3831423286916819,
+              0.4114328432723307,
+              0.41680686480383144,
+              0.3178730132208075
+            ],
+            "reference_shifted_hypervolumes": [
+              0.4077077896958566,
+              0.5391355313281349,
+              0.49249382829515653,
+              0.535737805401298,
+              0.5397055729276992,
+              0.427437348279477
+            ]
+          },
+          "minimum_threshold_voltage_v": 0.29541949116310445,
+          "maximum_dibl_v": 0.01932246904283863,
+          "minimum_on_current_ma_per_um": 0.3997589909447426,
+          "minimum_log10_on_off_ratio": 5.722821964452643,
+          "maximum_subthreshold_swing_mv_dec": 62.587788555137344,
+          "maximum_random_dopant_sigma_v": 0.002614229347595299
+        },
+        {
+          "name": "heldout_long_hot",
+          "split": "heldout",
+          "valid": true,
+          "nominal_score": 0.0,
+          "robustness_score": 0.0,
+          "archive_size": 8,
+          "nominal_feasible_count": 8,
+          "nominal_feasibility_rate": 1.0,
+          "pareto_front_size": 8,
+          "raw_nominal_hypervolume": 0.26894452141215913,
+          "raw_shifted_hypervolumes": [
+            0.15479323452557422,
+            0.2640234515057002,
+            0.27075434513457003,
+            0.24872863068247641,
+            0.26894452141215913,
+            0.1847676812045957
+          ],
+          "shifted_scores": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "shift_feasible_counts": [
+            4,
+            7,
+            8,
+            7,
+            8,
+            6
+          ],
+          "shift_feasibility_rates": [
+            0.5,
+            0.875,
+            1.0,
+            0.875,
+            1.0,
+            0.75
+          ],
+          "anchors": {
+            "baseline_nominal_hypervolume": 0.26894452141215913,
+            "reference_nominal_hypervolume": 0.45730425908176603,
+            "baseline_shifted_hypervolumes": [
+              0.15479323452557422,
+              0.2640234515057002,
+              0.27075434513457003,
+              0.24872863068247641,
+              0.26894452141215913,
+              0.1847676812045957
+            ],
+            "reference_shifted_hypervolumes": [
+              0.3188639672194978,
+              0.4275862980871787,
+              0.3899352697759931,
+              0.4203309939870395,
+              0.43327447294463983,
+              0.33259082571034526
+            ]
+          },
+          "minimum_threshold_voltage_v": 0.1615731546362907,
+          "maximum_dibl_v": 0.020813308467630992,
+          "minimum_on_current_ma_per_um": 0.4500990013727185,
+          "minimum_log10_on_off_ratio": 3.874185363235954,
+          "maximum_subthreshold_swing_mv_dec": 71.52432140639199,
+          "maximum_random_dopant_sigma_v": 0.0036470190539977564
+        },
+        {
+          "name": "dev_long_warm",
+          "split": "development",
+          "valid": true,
+          "nominal_score": 0.0,
+          "robustness_score": 0.0,
+          "archive_size": 8,
+          "nominal_feasible_count": 8,
+          "nominal_feasibility_rate": 1.0,
+          "pareto_front_size": 8,
+          "raw_nominal_hypervolume": 0.33699943475007477,
+          "raw_shifted_hypervolumes": [
+            0.2102834491345274,
+            0.33553694905757137,
+            0.3312063257324888,
+            0.32062001485697433,
+            0.33699943475007477,
+            0.2432304175870945
+          ],
+          "shifted_scores": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "shift_feasible_counts": [
+            6,
+            8,
+            8,
+            8,
+            8,
+            8
+          ],
+          "shift_feasibility_rates": [
+            0.75,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "anchors": {
+            "baseline_nominal_hypervolume": 0.33699943475007477,
+            "reference_nominal_hypervolume": 0.5279479059030665,
+            "baseline_shifted_hypervolumes": [
+              0.2102834491345274,
+              0.33553694905757137,
+              0.3312063257324888,
+              0.32062001485697433,
+              0.33699943475007477,
+              0.2432304175870945
+            ],
+            "reference_shifted_hypervolumes": [
+              0.37653671590808674,
+              0.5013401903194157,
+              0.45554013490706025,
+              0.49632127301529716,
+              0.5074313043338211,
+              0.39037902445837847
+            ]
+          },
+          "minimum_threshold_voltage_v": 0.2034852341805118,
+          "maximum_dibl_v": 0.021328735455406866,
+          "minimum_on_current_ma_per_um": 0.46374358726248405,
+          "minimum_log10_on_off_ratio": 4.481115152024694,
+          "maximum_subthreshold_swing_mv_dec": 67.9301513620934,
+          "maximum_random_dopant_sigma_v": 0.0035943203997524558
+        },
+        {
+          "name": "dev_cold_operation",
+          "split": "development",
+          "valid": true,
+          "nominal_score": 0.0,
+          "robustness_score": 0.0,
+          "archive_size": 8,
+          "nominal_feasible_count": 8,
+          "nominal_feasibility_rate": 1.0,
+          "pareto_front_size": 8,
+          "raw_nominal_hypervolume": 0.589095907875794,
+          "raw_shifted_hypervolumes": [
+            0.417526412299843,
+            0.5896708787510319,
+            0.5487521746617002,
+            0.5731646280527705,
+            0.589095907875794,
+            0.44533093041137156
+          ],
+          "shifted_scores": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "shift_feasible_counts": [
+            8,
+            8,
+            8,
+            8,
+            8,
+            8
+          ],
+          "shift_feasibility_rates": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "anchors": {
+            "baseline_nominal_hypervolume": 0.589095907875794,
+            "reference_nominal_hypervolume": 0.7521352119444288,
+            "baseline_shifted_hypervolumes": [
+              0.417526412299843,
+              0.5896708787510319,
+              0.5487521746617002,
+              0.5731646280527705,
+              0.589095907875794,
+              0.44533093041137156
+            ],
+            "reference_shifted_hypervolumes": [
+              0.5749925274616581,
+              0.7437346188667766,
+              0.7083373950407502,
+              0.7441193693366265,
+              0.7386101934197781,
+              0.6029794615305671
+            ]
+          },
+          "minimum_threshold_voltage_v": 0.30404955568088343,
+          "maximum_dibl_v": 0.018705183892030963,
+          "minimum_on_current_ma_per_um": 0.4816445845883158,
+          "minimum_log10_on_off_ratio": 6.60034960363281,
+          "maximum_subthreshold_swing_mv_dec": 57.11230192052049,
+          "maximum_random_dopant_sigma_v": 0.0029162949271003217
+        }
+      ]
+    },
+    "nominal": {
+      "combined_score": 1.0,
+      "valid": 1.0,
+      "feasibility_rate": 1.0,
+      "raw_score": 1.0,
+      "robustness_score": 0.0,
+      "heldout_policy_score": 1.0,
+      "heldout_robustness_score": 0.2870407360082658,
+      "heldout_feasibility_rate": 1.0,
+      "development_shift_feasibility_rate": 0.8385416666666666,
+      "heldout_shift_feasibility_rate": 0.828125,
+      "development_mean_nominal_feasible_rate": 1.0,
+      "heldout_mean_nominal_feasible_rate": 1.0,
+      "candidate_instance_call_count": 6,
+      "candidate_instance_valid_rate": 1.0,
+      "per_instance": [
+        {
+          "name": "dev_reference_40nm",
+          "split": "development",
+          "valid": true,
+          "nominal_score": 1.0,
+          "robustness_score": 0.0,
+          "archive_size": 16,
+          "nominal_feasible_count": 16,
+          "nominal_feasibility_rate": 1.0,
+          "pareto_front_size": 16,
+          "raw_nominal_hypervolume": 0.6021565333350363,
+          "raw_shifted_hypervolumes": [
+            0.45739186811606736,
+            0.602128879400412,
+            0.5412314656341025,
+            0.5993061919005541,
+            0.0,
+            0.4709687949453566
+          ],
+          "shifted_scores": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.0,
+            1.0
+          ],
+          "shift_feasible_counts": [
+            16,
+            16,
+            15,
+            16,
+            3,
+            16
+          ],
+          "shift_feasibility_rates": [
+            1.0,
+            1.0,
+            0.9375,
+            1.0,
+            0.1875,
+            1.0
+          ],
+          "anchors": {
+            "baseline_nominal_hypervolume": 0.44049999549170415,
+            "reference_nominal_hypervolume": 0.6021565333350363,
+            "baseline_shifted_hypervolumes": [
+              0.307865752758699,
+              0.44017774249952374,
+              0.41399981639080025,
+              0.43041626067221506,
+              0.44049999549170415,
+              0.33137581602125543
+            ],
+            "reference_shifted_hypervolumes": [
+              0.4527148791670644,
+              0.5992566765066475,
+              0.541132744292832,
+              0.5957407092731214,
+              0.5889375562155663,
+              0.4690924001229216
+            ]
+          },
+          "minimum_threshold_voltage_v": 0.22854320569572967,
+          "maximum_dibl_v": 0.1054707036167884,
+          "minimum_on_current_ma_per_um": 0.11741376431877922,
+          "minimum_log10_on_off_ratio": 4.896639413594978,
+          "maximum_subthreshold_swing_mv_dec": 66.55772922329055,
+          "maximum_random_dopant_sigma_v": 0.004618064073061429
+        },
+        {
+          "name": "heldout_short_low_v",
+          "split": "heldout",
+          "valid": true,
+          "nominal_score": 1.0,
+          "robustness_score": 0.5740814720165316,
+          "archive_size": 16,
+          "nominal_feasible_count": 16,
+          "nominal_feasibility_rate": 1.0,
+          "pareto_front_size": 16,
+          "raw_nominal_hypervolume": 0.4717865212437461,
+          "raw_shifted_hypervolumes": [
+            0.35780129551944984,
+            0.4707409089057631,
+            0.4172607454913309,
+            0.46932817987668746,
+            0.4255273117751403,
+            0.37067733496703725
+          ],
+          "shifted_scores": [
+            1.0,
+            1.0,
+            0.9054887890998684,
+            1.0,
+            0.5740814720165316,
+            0.9895250014203044
+          ],
+          "shift_feasible_counts": [
+            16,
+            16,
+            15,
+            16,
+            8,
+            16
+          ],
+          "shift_feasibility_rates": [
+            1.0,
+            1.0,
+            0.9375,
+            1.0,
+            0.5,
+            1.0
+          ],
+          "anchors": {
+            "baseline_nominal_hypervolume": 0.3675275779542334,
+            "reference_nominal_hypervolume": 0.4717865212437461,
+            "baseline_shifted_hypervolumes": [
+              0.2614269736431374,
+              0.36729039190929,
+              0.33658190511318875,
+              0.36294886058858966,
+              0.3675275779542334,
+              0.2797179205712751
+            ],
+            "reference_shifted_hypervolumes": [
+              0.35429000052099624,
+              0.468492883732063,
+              0.4256816723873299,
+              0.4664571886384361,
+              0.46855807039840813,
+              0.3716402209327662
+            ]
+          },
+          "minimum_threshold_voltage_v": 0.24061305321493026,
+          "maximum_dibl_v": 0.1200798878850986,
+          "minimum_on_current_ma_per_um": 0.11879272828952203,
+          "minimum_log10_on_off_ratio": 4.6222786374903935,
+          "maximum_subthreshold_swing_mv_dec": 65.57563021695367,
+          "maximum_random_dopant_sigma_v": 0.0038302379390879426
+        },
+        {
+          "name": "dev_thin_oxide_32nm",
+          "split": "development",
+          "valid": true,
+          "nominal_score": 1.0,
+          "robustness_score": 0.0,
+          "archive_size": 16,
+          "nominal_feasible_count": 16,
+          "nominal_feasibility_rate": 1.0,
+          "pareto_front_size": 16,
+          "raw_nominal_hypervolume": 0.5431645034149495,
+          "raw_shifted_hypervolumes": [
+            0.4136002583286941,
+            0.5430460651058019,
+            0.4826210781317302,
+            0.5407667809277668,
+            0.3690267459645239,
+            0.4267769379155478
+          ],
+          "shifted_scores": [
+            1.0,
+            1.0,
+            0.9097154570424144,
+            1.0,
+            0.0,
+            0.9939723965506154
+          ],
+          "shift_feasible_counts": [
+            16,
+            16,
+            15,
+            16,
+            5,
+            16
+          ],
+          "shift_feasibility_rates": [
+            1.0,
+            1.0,
+            0.9375,
+            1.0,
+            0.3125,
+            1.0
+          ],
+          "anchors": {
+            "baseline_nominal_hypervolume": 0.41680686480383144,
+            "reference_nominal_hypervolume": 0.5431645034149495,
+            "baseline_shifted_hypervolumes": [
+              0.29898538915475315,
+              0.4168525419260881,
+              0.3831423286916819,
+              0.4114328432723307,
+              0.41680686480383144,
+              0.3178730132208075
+            ],
+            "reference_shifted_hypervolumes": [
+              0.4077077896958566,
+              0.5391355313281349,
+              0.49249382829515653,
+              0.535737805401298,
+              0.5397055729276992,
+              0.427437348279477
+            ]
+          },
+          "minimum_threshold_voltage_v": 0.24642675706667788,
+          "maximum_dibl_v": 0.09049685368573257,
+          "minimum_on_current_ma_per_um": 0.11960935771785965,
+          "minimum_log10_on_off_ratio": 4.952001785163892,
+          "maximum_subthreshold_swing_mv_dec": 64.25930905206654,
+          "maximum_random_dopant_sigma_v": 0.004093180287748325
+        },
+        {
+          "name": "heldout_long_hot",
+          "split": "heldout",
+          "valid": true,
+          "nominal_score": 1.0,
+          "robustness_score": 0.0,
+          "archive_size": 16,
+          "nominal_feasible_count": 16,
+          "nominal_feasibility_rate": 1.0,
+          "pareto_front_size": 16,
+          "raw_nominal_hypervolume": 0.45730425908176603,
+          "raw_shifted_hypervolumes": [
+            0.33765826532354104,
+            0.4544279473094703,
+            0.4132040214062724,
+            0.44949844789952087,
+            0.0,
+            0.35135599865743256
+          ],
+          "shifted_scores": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.0,
+            1.0
+          ],
+          "shift_feasible_counts": [
+            13,
+            15,
+            14,
+            15,
+            1,
+            14
+          ],
+          "shift_feasibility_rates": [
+            0.8125,
+            0.9375,
+            0.875,
+            0.9375,
+            0.0625,
+            0.875
+          ],
+          "anchors": {
+            "baseline_nominal_hypervolume": 0.26894452141215913,
+            "reference_nominal_hypervolume": 0.45730425908176603,
+            "baseline_shifted_hypervolumes": [
+              0.15479323452557422,
+              0.2640234515057002,
+              0.27075434513457003,
+              0.24872863068247641,
+              0.26894452141215913,
+              0.1847676812045957
+            ],
+            "reference_shifted_hypervolumes": [
+              0.3188639672194978,
+              0.4275862980871787,
+              0.3899352697759931,
+              0.4203309939870395,
+              0.43327447294463983,
+              0.33259082571034526
+            ]
+          },
+          "minimum_threshold_voltage_v": 0.16199897738941132,
+          "maximum_dibl_v": 0.08871589238225552,
+          "minimum_on_current_ma_per_um": 0.14668231649083616,
+          "minimum_log10_on_off_ratio": 3.810991252915093,
+          "maximum_subthreshold_swing_mv_dec": 80.01006910849739,
+          "maximum_random_dopant_sigma_v": 0.00392806519945837
+        },
+        {
+          "name": "dev_long_warm",
+          "split": "development",
+          "valid": true,
+          "nominal_score": 1.0,
+          "robustness_score": 0.0,
+          "archive_size": 16,
+          "nominal_feasible_count": 16,
+          "nominal_feasibility_rate": 1.0,
+          "pareto_front_size": 16,
+          "raw_nominal_hypervolume": 0.5279479059030665,
+          "raw_shifted_hypervolumes": [
+            0.3895639057510468,
+            0.5293619698589102,
+            0.47930855167157876,
+            0.5199949112118774,
+            0.0,
+            0.4070511325853392
+          ],
+          "shifted_scores": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.0,
+            1.0
+          ],
+          "shift_feasible_counts": [
+            14,
+            16,
+            14,
+            15,
+            1,
+            15
+          ],
+          "shift_feasibility_rates": [
+            0.875,
+            1.0,
+            0.875,
+            0.9375,
+            0.0625,
+            0.9375
+          ],
+          "anchors": {
+            "baseline_nominal_hypervolume": 0.33699943475007477,
+            "reference_nominal_hypervolume": 0.5279479059030665,
+            "baseline_shifted_hypervolumes": [
+              0.2102834491345274,
+              0.33553694905757137,
+              0.3312063257324888,
+              0.32062001485697433,
+              0.33699943475007477,
+              0.2432304175870945
+            ],
+            "reference_shifted_hypervolumes": [
+              0.37653671590808674,
+              0.5013401903194157,
+              0.45554013490706025,
+              0.49632127301529716,
+              0.5074313043338211,
+              0.39037902445837847
+            ]
+          },
+          "minimum_threshold_voltage_v": 0.1655165677919074,
+          "maximum_dibl_v": 0.06310685283123202,
+          "minimum_on_current_ma_per_um": 0.12478262303609354,
+          "minimum_log10_on_off_ratio": 3.859709073204385,
+          "maximum_subthreshold_swing_mv_dec": 75.080875577531,
+          "maximum_random_dopant_sigma_v": 0.005206607747935541
+        },
+        {
+          "name": "dev_cold_operation",
+          "split": "development",
+          "valid": true,
+          "nominal_score": 1.0,
+          "robustness_score": 0.0,
+          "archive_size": 16,
+          "nominal_feasible_count": 16,
+          "nominal_feasibility_rate": 1.0,
+          "pareto_front_size": 16,
+          "raw_nominal_hypervolume": 0.7521352119444288,
+          "raw_shifted_hypervolumes": [
+            0.5788788336908894,
+            0.7521996206853413,
+            0.6673444566140269,
+            0.7461553686090137,
+            0.0,
+            0.5941232301788811
+          ],
+          "shifted_scores": [
+            1.0,
+            1.0,
+            0.7431282274802383,
+            1.0,
+            0.0,
+            0.9438229377158615
+          ],
+          "shift_feasible_counts": [
+            16,
+            16,
+            16,
+            16,
+            1,
+            16
+          ],
+          "shift_feasibility_rates": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.0625,
+            1.0
+          ],
+          "anchors": {
+            "baseline_nominal_hypervolume": 0.589095907875794,
+            "reference_nominal_hypervolume": 0.7521352119444288,
+            "baseline_shifted_hypervolumes": [
+              0.417526412299843,
+              0.5896708787510319,
+              0.5487521746617002,
+              0.5731646280527705,
+              0.589095907875794,
+              0.44533093041137156
+            ],
+            "reference_shifted_hypervolumes": [
+              0.5749925274616581,
+              0.7437346188667766,
+              0.7083373950407502,
+              0.7441193693366265,
+              0.7386101934197781,
+              0.6029794615305671
+            ]
+          },
+          "minimum_threshold_voltage_v": 0.30051045841067947,
+          "maximum_dibl_v": 0.10429718848032343,
+          "minimum_on_current_ma_per_um": 0.16707893264446244,
+          "minimum_log10_on_off_ratio": 6.512074686043843,
+          "maximum_subthreshold_swing_mv_dec": 60.10469087753978,
+          "maximum_random_dopant_sigma_v": 0.004259746085316619
+        }
+      ]
+    },
+    "robust": {
+      "combined_score": 0.9339709336200794,
+      "valid": 1.0,
+      "feasibility_rate": 1.0,
+      "raw_score": 0.9339709336200794,
+      "robustness_score": 1.0,
+      "heldout_policy_score": 0.89975408913372,
+      "heldout_robustness_score": 1.0,
+      "heldout_feasibility_rate": 1.0,
+      "development_shift_feasibility_rate": 1.0,
+      "heldout_shift_feasibility_rate": 1.0,
+      "development_mean_nominal_feasible_rate": 1.0,
+      "heldout_mean_nominal_feasible_rate": 1.0,
+      "candidate_instance_call_count": 6,
+      "candidate_instance_valid_rate": 1.0,
+      "per_instance": [
+        {
+          "name": "dev_reference_40nm",
+          "split": "development",
+          "valid": true,
+          "nominal_score": 0.9777189353594277,
+          "robustness_score": 1.0,
+          "archive_size": 16,
+          "nominal_feasible_count": 16,
+          "nominal_feasibility_rate": 1.0,
+          "pareto_front_size": 16,
+          "raw_nominal_hypervolume": 0.5985546535657779,
+          "raw_shifted_hypervolumes": [
+            0.4527148791670644,
+            0.5992566765066475,
+            0.541132744292832,
+            0.5957407092731214,
+            0.5889375562155663,
+            0.4690924001229216
+          ],
+          "shifted_scores": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "shift_feasible_counts": [
+            16,
+            16,
+            16,
+            16,
+            16,
+            16
+          ],
+          "shift_feasibility_rates": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "anchors": {
+            "baseline_nominal_hypervolume": 0.44049999549170415,
+            "reference_nominal_hypervolume": 0.6021565333350363,
+            "baseline_shifted_hypervolumes": [
+              0.307865752758699,
+              0.44017774249952374,
+              0.41399981639080025,
+              0.43041626067221506,
+              0.44049999549170415,
+              0.33137581602125543
+            ],
+            "reference_shifted_hypervolumes": [
+              0.4527148791670644,
+              0.5992566765066475,
+              0.541132744292832,
+              0.5957407092731214,
+              0.5889375562155663,
+              0.4690924001229216
+            ]
+          },
+          "minimum_threshold_voltage_v": 0.22738882419768466,
+          "maximum_dibl_v": 0.10591021113370772,
+          "minimum_on_current_ma_per_um": 0.128146788602776,
+          "minimum_log10_on_off_ratio": 4.853317374072861,
+          "maximum_subthreshold_swing_mv_dec": 66.1999238720705,
+          "maximum_random_dopant_sigma_v": 0.005104304237672429
+        },
+        {
+          "name": "heldout_short_low_v",
+          "split": "heldout",
+          "valid": true,
+          "nominal_score": 0.9759532340859434,
+          "robustness_score": 1.0,
+          "archive_size": 16,
+          "nominal_feasible_count": 16,
+          "nominal_feasibility_rate": 1.0,
+          "pareto_front_size": 15,
+          "raw_nominal_hypervolume": 0.4692794308400163,
+          "raw_shifted_hypervolumes": [
+            0.35429000052099624,
+            0.468492883732063,
+            0.4256816723873299,
+            0.4664571886384361,
+            0.46855807039840813,
+            0.3716402209327662
+          ],
+          "shifted_scores": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "shift_feasible_counts": [
+            16,
+            16,
+            16,
+            16,
+            16,
+            16
+          ],
+          "shift_feasibility_rates": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "anchors": {
+            "baseline_nominal_hypervolume": 0.3675275779542334,
+            "reference_nominal_hypervolume": 0.4717865212437461,
+            "baseline_shifted_hypervolumes": [
+              0.2614269736431374,
+              0.36729039190929,
+              0.33658190511318875,
+              0.36294886058858966,
+              0.3675275779542334,
+              0.2797179205712751
+            ],
+            "reference_shifted_hypervolumes": [
+              0.35429000052099624,
+              0.468492883732063,
+              0.4256816723873299,
+              0.4664571886384361,
+              0.46855807039840813,
+              0.3716402209327662
+            ]
+          },
+          "minimum_threshold_voltage_v": 0.2271216528291158,
+          "maximum_dibl_v": 0.11946394746497863,
+          "minimum_on_current_ma_per_um": 0.1330768462745084,
+          "minimum_log10_on_off_ratio": 4.412055735282894,
+          "maximum_subthreshold_swing_mv_dec": 65.37169811841915,
+          "maximum_random_dopant_sigma_v": 0.0047129143741784585
+        },
+        {
+          "name": "dev_thin_oxide_32nm",
+          "split": "development",
+          "valid": true,
+          "nominal_score": 0.9693153484837372,
+          "robustness_score": 1.0,
+          "archive_size": 16,
+          "nominal_feasible_count": 16,
+          "nominal_feasibility_rate": 1.0,
+          "pareto_front_size": 16,
+          "raw_nominal_hypervolume": 0.5392872633077495,
+          "raw_shifted_hypervolumes": [
+            0.4077077896958566,
+            0.5391355313281349,
+            0.49249382829515653,
+            0.535737805401298,
+            0.5397055729276992,
+            0.427437348279477
+          ],
+          "shifted_scores": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "shift_feasible_counts": [
+            16,
+            16,
+            16,
+            16,
+            16,
+            16
+          ],
+          "shift_feasibility_rates": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "anchors": {
+            "baseline_nominal_hypervolume": 0.41680686480383144,
+            "reference_nominal_hypervolume": 0.5431645034149495,
+            "baseline_shifted_hypervolumes": [
+              0.29898538915475315,
+              0.4168525419260881,
+              0.3831423286916819,
+              0.4114328432723307,
+              0.41680686480383144,
+              0.3178730132208075
+            ],
+            "reference_shifted_hypervolumes": [
+              0.4077077896958566,
+              0.5391355313281349,
+              0.49249382829515653,
+              0.535737805401298,
+              0.5397055729276992,
+              0.427437348279477
+            ]
+          },
+          "minimum_threshold_voltage_v": 0.22998801589145473,
+          "maximum_dibl_v": 0.12069008741475196,
+          "minimum_on_current_ma_per_um": 0.15311927663558803,
+          "minimum_log10_on_off_ratio": 4.704789609038117,
+          "maximum_subthreshold_swing_mv_dec": 63.87921105638421,
+          "maximum_random_dopant_sigma_v": 0.004538367701726291
+        },
+        {
+          "name": "heldout_long_hot",
+          "split": "heldout",
+          "valid": true,
+          "nominal_score": 0.8235549441814967,
+          "robustness_score": 1.0,
+          "archive_size": 16,
+          "nominal_feasible_count": 16,
+          "nominal_feasibility_rate": 1.0,
+          "pareto_front_size": 15,
+          "raw_nominal_hypervolume": 0.4240691146546936,
+          "raw_shifted_hypervolumes": [
+            0.3188639672194978,
+            0.4275862980871787,
+            0.3899352697759931,
+            0.4203309939870395,
+            0.43327447294463983,
+            0.33259082571034526
+          ],
+          "shifted_scores": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "shift_feasible_counts": [
+            16,
+            16,
+            16,
+            16,
+            16,
+            16
+          ],
+          "shift_feasibility_rates": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "anchors": {
+            "baseline_nominal_hypervolume": 0.26894452141215913,
+            "reference_nominal_hypervolume": 0.45730425908176603,
+            "baseline_shifted_hypervolumes": [
+              0.15479323452557422,
+              0.2640234515057002,
+              0.27075434513457003,
+              0.24872863068247641,
+              0.26894452141215913,
+              0.1847676812045957
+            ],
+            "reference_shifted_hypervolumes": [
+              0.3188639672194978,
+              0.4275862980871787,
+              0.3899352697759931,
+              0.4203309939870395,
+              0.43327447294463983,
+              0.33259082571034526
+            ]
+          },
+          "minimum_threshold_voltage_v": 0.22190713041549165,
+          "maximum_dibl_v": 0.12684542286545597,
+          "minimum_on_current_ma_per_um": 0.18953314033144267,
+          "minimum_log10_on_off_ratio": 4.6887974041842595,
+          "maximum_subthreshold_swing_mv_dec": 79.11512358092729,
+          "maximum_random_dopant_sigma_v": 0.0051354415789717466
+        },
+        {
+          "name": "dev_long_warm",
+          "split": "development",
+          "valid": true,
+          "nominal_score": 0.8475224530232639,
+          "robustness_score": 1.0,
+          "archive_size": 16,
+          "nominal_feasible_count": 16,
+          "nominal_feasibility_rate": 1.0,
+          "pareto_front_size": 16,
+          "raw_nominal_hypervolume": 0.4988325514227003,
+          "raw_shifted_hypervolumes": [
+            0.37653671590808674,
+            0.5013401903194157,
+            0.45554013490706025,
+            0.49632127301529716,
+            0.5074313043338211,
+            0.39037902445837847
+          ],
+          "shifted_scores": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "shift_feasible_counts": [
+            16,
+            16,
+            16,
+            16,
+            16,
+            16
+          ],
+          "shift_feasibility_rates": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "anchors": {
+            "baseline_nominal_hypervolume": 0.33699943475007477,
+            "reference_nominal_hypervolume": 0.5279479059030665,
+            "baseline_shifted_hypervolumes": [
+              0.2102834491345274,
+              0.33553694905757137,
+              0.3312063257324888,
+              0.32062001485697433,
+              0.33699943475007477,
+              0.2432304175870945
+            ],
+            "reference_shifted_hypervolumes": [
+              0.37653671590808674,
+              0.5013401903194157,
+              0.45554013490706025,
+              0.49632127301529716,
+              0.5074313043338211,
+              0.39037902445837847
+            ]
+          },
+          "minimum_threshold_voltage_v": 0.22605284248110896,
+          "maximum_dibl_v": 0.09309483517680261,
+          "minimum_on_current_ma_per_um": 0.16700630227519783,
+          "minimum_log10_on_off_ratio": 4.7695551337235,
+          "maximum_subthreshold_swing_mv_dec": 73.9488637465465,
+          "maximum_random_dopant_sigma_v": 0.0055219526195619175
+        },
+        {
+          "name": "dev_cold_operation",
+          "split": "development",
+          "valid": true,
+          "nominal_score": 0.941326997613889,
+          "robustness_score": 1.0,
+          "archive_size": 16,
+          "nominal_feasible_count": 16,
+          "nominal_feasibility_rate": 1.0,
+          "pareto_front_size": 14,
+          "raw_nominal_hypervolume": 0.7425692064677799,
+          "raw_shifted_hypervolumes": [
+            0.5749925274616581,
+            0.7437346188667766,
+            0.7083373950407502,
+            0.7441193693366265,
+            0.7386101934197781,
+            0.6029794615305671
+          ],
+          "shifted_scores": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "shift_feasible_counts": [
+            16,
+            16,
+            16,
+            16,
+            16,
+            16
+          ],
+          "shift_feasibility_rates": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "anchors": {
+            "baseline_nominal_hypervolume": 0.589095907875794,
+            "reference_nominal_hypervolume": 0.7521352119444288,
+            "baseline_shifted_hypervolumes": [
+              0.417526412299843,
+              0.5896708787510319,
+              0.5487521746617002,
+              0.5731646280527705,
+              0.589095907875794,
+              0.44533093041137156
+            ],
+            "reference_shifted_hypervolumes": [
+              0.5749925274616581,
+              0.7437346188667766,
+              0.7083373950407502,
+              0.7441193693366265,
+              0.7386101934197781,
+              0.6029794615305671
+            ]
+          },
+          "minimum_threshold_voltage_v": 0.240046840991346,
+          "maximum_dibl_v": 0.1267420924280771,
+          "minimum_on_current_ma_per_um": 0.13474700758318175,
+          "minimum_log10_on_off_ratio": 5.504148641027887,
+          "maximum_subthreshold_swing_mv_dec": 60.4607439130075,
+          "maximum_random_dopant_sigma_v": 0.0048423943813516585
+        }
+      ]
+    }
+  },
+  "reference_sobol_literal": {
+    "dev_reference_40nm": {
+      "seed": 260724,
+      "power": 11,
+      "nominal": [
+        682,
+        349,
+        1824,
+        485,
+        1410,
+        626,
+        841,
+        2045,
+        1310,
+        1550,
+        1858,
+        1498,
+        808,
+        2040,
+        821,
+        386
+      ],
+      "robust": [
+        1330,
+        169,
+        2034,
+        90,
+        591,
+        702,
+        1781,
+        432,
+        1151,
+        2,
+        1962,
+        830,
+        1628,
+        772,
+        1600,
+        1949
+      ]
+    },
+    "heldout_short_low_v": {
+      "seed": 260725,
+      "power": 11,
+      "nominal": [
+        138,
+        1637,
+        510,
+        82,
+        289,
+        1804,
+        962,
+        922,
+        1598,
+        1917,
+        122,
+        420,
+        1214,
+        1858,
+        1350,
+        1228
+      ],
+      "robust": [
+        920,
+        292,
+        1765,
+        236,
+        791,
+        1684,
+        809,
+        1208,
+        1228,
+        567,
+        1795,
+        482,
+        1358,
+        699,
+        1961,
+        407
+      ]
+    },
+    "dev_thin_oxide_32nm": {
+      "seed": 260726,
+      "power": 11,
+      "nominal": [
+        1266,
+        693,
+        1642,
+        1314,
+        1229,
+        1342,
+        553,
+        1210,
+        52,
+        450,
+        725,
+        818,
+        1988,
+        650,
+        1582,
+        77
+      ],
+      "robust": [
+        1422,
+        1497,
+        24,
+        1099,
+        1320,
+        1572,
+        421,
+        961,
+        550,
+        606,
+        1164,
+        1800,
+        1760,
+        424,
+        2041,
+        1659
+      ]
+    },
+    "heldout_long_hot": {
+      "seed": 260727,
+      "power": 11,
+      "nominal": [
+        1087,
+        1335,
+        135,
+        1635,
+        720,
+        271,
+        975,
+        0,
+        1031,
+        563,
+        543,
+        1395,
+        1421,
+        887,
+        840,
+        1960
+      ],
+      "robust": [
+        1435,
+        717,
+        403,
+        1713,
+        1831,
+        1957,
+        1039,
+        1469,
+        935,
+        2009,
+        563,
+        1023,
+        687,
+        1239,
+        735,
+        1941
+      ]
+    },
+    "dev_long_warm": {
+      "seed": 260728,
+      "power": 11,
+      "nominal": [
+        1010,
+        430,
+        885,
+        938,
+        1542,
+        1605,
+        434,
+        634,
+        912,
+        1856,
+        1461,
+        314,
+        1114,
+        1418,
+        2006,
+        1080
+      ],
+      "robust": [
+        1552,
+        1348,
+        314,
+        1718,
+        121,
+        860,
+        530,
+        80,
+        270,
+        88,
+        1886,
+        1034,
+        624,
+        1466,
+        1089,
+        888
+      ]
+    },
+    "dev_cold_operation": {
+      "seed": 260729,
+      "power": 11,
+      "nominal": [
+        1893,
+        921,
+        1029,
+        1317,
+        1551,
+        205,
+        149,
+        1645,
+        1073,
+        1777,
+        1642,
+        565,
+        673,
+        1927,
+        77,
+        597
+      ],
+      "robust": [
+        301,
+        1151,
+        1170,
+        185,
+        1757,
+        1509,
+        1474,
+        1836,
+        1181,
+        1453,
+        1629,
+        2031,
+        1251,
+        1568,
+        265,
+        1311
+      ]
+    }
+  },
+  "anchors_literal": {
+    "dev_reference_40nm": {
+      "baseline_nominal_hypervolume": 0.44049999549170415,
+      "reference_nominal_hypervolume": 0.6021565333350363,
+      "baseline_shifted_hypervolumes": [
+        0.307865752758699,
+        0.44017774249952374,
+        0.41399981639080025,
+        0.43041626067221506,
+        0.44049999549170415,
+        0.33137581602125543
+      ],
+      "reference_shifted_hypervolumes": [
+        0.4527148791670644,
+        0.5992566765066475,
+        0.541132744292832,
+        0.5957407092731214,
+        0.5889375562155663,
+        0.4690924001229216
+      ]
+    },
+    "heldout_short_low_v": {
+      "baseline_nominal_hypervolume": 0.3675275779542334,
+      "reference_nominal_hypervolume": 0.4717865212437461,
+      "baseline_shifted_hypervolumes": [
+        0.2614269736431374,
+        0.36729039190929,
+        0.33658190511318875,
+        0.36294886058858966,
+        0.3675275779542334,
+        0.2797179205712751
+      ],
+      "reference_shifted_hypervolumes": [
+        0.35429000052099624,
+        0.468492883732063,
+        0.4256816723873299,
+        0.4664571886384361,
+        0.46855807039840813,
+        0.3716402209327662
+      ]
+    },
+    "dev_thin_oxide_32nm": {
+      "baseline_nominal_hypervolume": 0.41680686480383144,
+      "reference_nominal_hypervolume": 0.5431645034149495,
+      "baseline_shifted_hypervolumes": [
+        0.29898538915475315,
+        0.4168525419260881,
+        0.3831423286916819,
+        0.4114328432723307,
+        0.41680686480383144,
+        0.3178730132208075
+      ],
+      "reference_shifted_hypervolumes": [
+        0.4077077896958566,
+        0.5391355313281349,
+        0.49249382829515653,
+        0.535737805401298,
+        0.5397055729276992,
+        0.427437348279477
+      ]
+    },
+    "heldout_long_hot": {
+      "baseline_nominal_hypervolume": 0.26894452141215913,
+      "reference_nominal_hypervolume": 0.45730425908176603,
+      "baseline_shifted_hypervolumes": [
+        0.15479323452557422,
+        0.2640234515057002,
+        0.27075434513457003,
+        0.24872863068247641,
+        0.26894452141215913,
+        0.1847676812045957
+      ],
+      "reference_shifted_hypervolumes": [
+        0.3188639672194978,
+        0.4275862980871787,
+        0.3899352697759931,
+        0.4203309939870395,
+        0.43327447294463983,
+        0.33259082571034526
+      ]
+    },
+    "dev_long_warm": {
+      "baseline_nominal_hypervolume": 0.33699943475007477,
+      "reference_nominal_hypervolume": 0.5279479059030665,
+      "baseline_shifted_hypervolumes": [
+        0.2102834491345274,
+        0.33553694905757137,
+        0.3312063257324888,
+        0.32062001485697433,
+        0.33699943475007477,
+        0.2432304175870945
+      ],
+      "reference_shifted_hypervolumes": [
+        0.37653671590808674,
+        0.5013401903194157,
+        0.45554013490706025,
+        0.49632127301529716,
+        0.5074313043338211,
+        0.39037902445837847
+      ]
+    },
+    "dev_cold_operation": {
+      "baseline_nominal_hypervolume": 0.589095907875794,
+      "reference_nominal_hypervolume": 0.7521352119444288,
+      "baseline_shifted_hypervolumes": [
+        0.417526412299843,
+        0.5896708787510319,
+        0.5487521746617002,
+        0.5731646280527705,
+        0.589095907875794,
+        0.44533093041137156
+      ],
+      "reference_shifted_hypervolumes": [
+        0.5749925274616581,
+        0.7437346188667766,
+        0.7083373950407502,
+        0.7441193693366265,
+        0.7386101934197781,
+        0.6029794615305671
+      ]
+    }
+  },
+  "committed_literals_checked": true,
+  "committed_literals_match": true,
+  "limitations": [
+    "The reduced-order compact model is not a two-dimensional self-consistent drift-diffusion, quantum-corrected or commercial TCAD solver.",
+    "The Gaussian halo family omits source/drain junction resistance, gate leakage, band-to-band tunnelling, velocity overshoot, interface traps and detailed implant/anneal chemistry.",
+    "The fixed repository devices and shifts require server-held procedural conditions before leakage-resistant population claims.",
+    "The fixed Sobol witnesses are strong reproducible archives, not global Pareto-optimality certificates.",
+    "Task calibration does not measure GPT-5.5, feedback causality, fabricated-device performance or autonomous scientific discovery."
+  ],
+  "execution_passed": true,
+  "trust_decision": "trusted_clean_revision",
+  "trusted_evidence": true,
+  "passed": true
+}
