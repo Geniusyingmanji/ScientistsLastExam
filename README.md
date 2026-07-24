@@ -258,6 +258,12 @@ single-run best-so-far monotonicity. These are proposed experiments, not new Edg
 Science performance results. The expansion plan also prioritizes one prospective evidence-synthesis task over another
 near-duplicate clean-simulator scalar task.
 
+An implementation-level OBS1 micro-pilot now replays the three trusted MOSFET trajectories on a
+common 120-second horizon. Dense AUC ordering survives 15/30/60-second fixed grids, while the
+120-second fixed grid collapses all three trajectories to a zero-AUC tie and its seeded-random-phase
+variant produces one pairwise reversal. This is a trusted short-run measurement-sensitivity report,
+not the planned multi-hour OBS1 experiment and not evidence for a feedback or model effect.
+
 ## Quickstart
 
 ```bash

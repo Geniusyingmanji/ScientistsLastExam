@@ -1908,3 +1908,29 @@ These deductions do not show selective reporting or invalid inference in EdgeBen
 results. They specify additional science-only gates that are distinct from E17 repeated-holdout
 control, E27 crash-consistent retention, E43 feedback acquisition, E47 evidence eESS and E48
 observation-kernel sensitivity.
+
+## 2026-07-24 — Trusted MOSFET OBS1 micro-pilot
+
+The observation-kernel implementation was run from clean source revision `412c101` over the three
+trusted MOSFET GPT-5.5 trajectory reports committed at `928447c`. Each raw trajectory is bound to
+one clean-revision portable snapshot and report hash. The offline replay uses a common 120-second
+analysis horizon, dense-event observation, fixed 15/30/60/120-second grids and a preregistered
+seeded-random phase for each grid. The resulting report
+`experiments/mosfet_observation_kernel_micro_pilot_2026-07-24.json` has
+`execution_passed=true`, `trusted_evidence=true` and source revision `412c101`.
+
+This short implementation pilot shows material observation sensitivity. Dense AUCs are
+`0.5427/0.1642/0.4831` for budget-one normal, budget-three normal and budget-three
+selection-blind trajectories. A 120-second fixed grid assigns AUC zero to all three and changes
+all three pairwise strict comparisons into ties; its seeded-random-phase counterpart produces one
+strict pairwise rank reversal and one tie change relative to dense observation. Across all tested
+kernels the largest absolute within-trajectory AUC shift is `0.5427`. The report also retains
+interval-censored material-event times, missed-current-state rates and the exact realized phases.
+
+The result is **not** a completed long-horizon OBS1 experiment and is not a feedback-effect or
+model-ranking estimate. The three inputs are single short calibration runs, the budget-one arm has
+only one post-baseline event, feedback conditions are not repeated or generation-seeded, and a
+120-second grid is deliberately too coarse for this two-minute window. It demonstrates that the
+analysis gate works and that cadence can erase or reverse a short-trajectory AUC comparison; the
+planned 5/15/30/60-minute replay still requires sentinel-complete multi-hour trajectories and a
+separate path-dependent live-state task.

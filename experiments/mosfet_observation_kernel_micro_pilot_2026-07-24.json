@@ -1,0 +1,3649 @@
+{
+  "schema_version": 1,
+  "trust_status": "OBSERVATION_KERNEL_DERIVED_ANALYSIS",
+  "evidence_scope": "OFFLINE_MEASUREMENT_SENSITIVITY_NOT_MODEL_PERFORMANCE_OR_EDGE_BENCH_REANALYSIS",
+  "created_at": "2026-07-24T13:53:15.200032+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "412c1013469d60cbe2e7ffe8ad813abedb964904",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/analyze_observation_kernels.py",
+      "runs/mosfet_v2_b1/Semiconductor__MOSFETDoping/greedy_rewrite/normal/seed_0/trajectory.jsonl",
+      "runs/mosfet_v2_b3/Semiconductor__MOSFETDoping/greedy_rewrite/normal/seed_1/trajectory.jsonl",
+      "runs/mosfet_v2_blind_b3/Semiconductor__MOSFETDoping/greedy_rewrite/selection_blind/seed_1/trajectory.jsonl",
+      "--reports",
+      "experiments/gpt55_mosfet_v2_b1_2026-07-24.json",
+      "experiments/gpt55_mosfet_v2_b3_2026-07-24.json",
+      "experiments/gpt55_mosfet_v2_blind_b3_2026-07-24.json",
+      "--require-trusted-inputs",
+      "--intervals",
+      "15",
+      "30",
+      "60",
+      "120",
+      "--horizon-seconds",
+      "120",
+      "--phase-seed",
+      "20260724",
+      "--compare-ranks",
+      "--output",
+      "experiments/mosfet_observation_kernel_micro_pilot_2026-07-24.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "design": {
+    "plan_id": "OBS1",
+    "material_epsilon": 0.0,
+    "fixed_intervals_seconds": [
+      15.0,
+      30.0,
+      60.0,
+      120.0
+    ],
+    "phases_per_interval": [
+      "zero",
+      "seeded_uniform_random"
+    ],
+    "phase_seed": 20260724,
+    "realized_phase_schedule": [
+      {
+        "interval_seconds": 15.0,
+        "phase_seconds": 0.0
+      },
+      {
+        "interval_seconds": 15.0,
+        "phase_seconds": 2.236058215087985
+      },
+      {
+        "interval_seconds": 30.0,
+        "phase_seconds": 0.0
+      },
+      {
+        "interval_seconds": 30.0,
+        "phase_seconds": 0.9918893052575479
+      },
+      {
+        "interval_seconds": 60.0,
+        "phase_seconds": 0.0
+      },
+      {
+        "interval_seconds": 60.0,
+        "phase_seconds": 4.819593749393135
+      },
+      {
+        "interval_seconds": 120.0,
+        "phase_seconds": 0.0
+      },
+      {
+        "interval_seconds": 120.0,
+        "phase_seconds": 35.55621511911938
+      }
+    ],
+    "event_time_semantics": "seconds_since_first_recorded_baseline_event",
+    "periodic_event_time_semantics": "interval_censored",
+    "pre_first_valid_score_fill_for_auc": 0.0,
+    "live_state_in_scope": false,
+    "rank_comparison_enabled": true,
+    "rank_comparison_requires_common_score_construct": true,
+    "trusted_input_binding_required": true,
+    "report_bindings": [
+      "experiments/gpt55_mosfet_v2_b1_2026-07-24.json",
+      "experiments/gpt55_mosfet_v2_b3_2026-07-24.json",
+      "experiments/gpt55_mosfet_v2_blind_b3_2026-07-24.json"
+    ]
+  },
+  "trajectories": [
+    {
+      "trajectory": "runs/mosfet_v2_b1/Semiconductor__MOSFETDoping/greedy_rewrite/normal/seed_0/trajectory.jsonl",
+      "trajectory_sha256": "3f8a85d720ba0a507b1c5fe761abb60995801a523557d991a3b52182513a5dfe",
+      "input_report_binding": {
+        "report": "experiments/gpt55_mosfet_v2_b1_2026-07-24.json",
+        "report_sha256": "57a6b48b7c9e07207bf29ab100bc48fd356d50709d89954a9f226e4af6228c88",
+        "report_source_revision": "3bebc21a5091dd1d69aef0c130511edd588cb947",
+        "run_index": 0,
+        "task": "Semiconductor/MOSFETDoping",
+        "algorithm": "greedy_rewrite",
+        "feedback_mode": "normal",
+        "seed": 0,
+        "snapshot_trajectory_sha256": "3f8a85d720ba0a507b1c5fe761abb60995801a523557d991a3b52182513a5dfe"
+      },
+      "event_count": 2,
+      "analysis_origin_source_seconds": 2.4816811541095376,
+      "source_horizon_seconds": 38.962646634317935,
+      "analysis_last_event_seconds": 36.4809654802084,
+      "analysis_horizon_seconds": 120.0,
+      "portable_source_events": [
+        {
+          "step": 0,
+          "source_time_seconds": 2.4816811541095376,
+          "analysis_time_seconds": 0.0,
+          "valid": true,
+          "accepted": true,
+          "score": 0.0,
+          "best_score": 0.0,
+          "candidate_sha256": "243f1a3fe6bca79989c47a8945e69dc9de419544c02f5f737a754ec56acac5e6"
+        },
+        {
+          "step": 1,
+          "source_time_seconds": 38.962646634317935,
+          "analysis_time_seconds": 36.4809654802084,
+          "valid": true,
+          "accepted": true,
+          "score": 0.7796977003981657,
+          "best_score": 0.7796977003981657,
+          "candidate_sha256": "e243c6bcf8bad145173a1d00870473e2e1064e02c3c2d04d828d9e4b28dde2b4"
+        }
+      ],
+      "kernels": [
+        {
+          "kernel": "dense_event",
+          "interval_seconds": null,
+          "phase_seconds": 0.0,
+          "horizon_seconds": 120.0,
+          "material_epsilon": 0.0,
+          "observation_count": 3,
+          "material_state_count_including_baseline": 2,
+          "first_valid_event": {
+            "event_step": 0,
+            "event_kind": "baseline_valid",
+            "event_time_seconds": 0.0,
+            "left_open_seconds": 0.0,
+            "right_closed_seconds": 0.0,
+            "interval_width_seconds": 0.0,
+            "detection_delay_seconds": 0.0,
+            "material_best_score": 0.0,
+            "observed_as_distinct_state": true
+          },
+          "post_first_valid_improvement_count": 1,
+          "material_transition_count_excluding_valid_t0_baseline": 1,
+          "observed_material_state_count": 2,
+          "source_event_state_count": 2,
+          "observed_current_event_state_count": 2,
+          "missed_current_event_state_count": 0,
+          "missed_current_event_state_rate": 0.0,
+          "missed_current_event_steps": [],
+          "missed_material_transition_count": 0,
+          "missed_material_transition_rate": 0.0,
+          "mean_detection_delay_seconds": 0.0,
+          "maximum_detection_delay_seconds": 0.0,
+          "wall_time_auc": 0.5426633262879711,
+          "wall_time_ever_valid_auc": 1.0,
+          "wall_time_current_validity_auc": 1.0,
+          "observations": [
+            {
+              "observed_at_seconds": 0.0,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 36.4809654802084,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.7796977003981657,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.7796977003981657
+            },
+            {
+              "observed_at_seconds": 120.0,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.7796977003981657,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.7796977003981657
+            }
+          ],
+          "material_event_intervals": [
+            {
+              "event_step": 0,
+              "event_kind": "baseline_valid",
+              "event_time_seconds": 0.0,
+              "left_open_seconds": 0.0,
+              "right_closed_seconds": 0.0,
+              "interval_width_seconds": 0.0,
+              "detection_delay_seconds": 0.0,
+              "material_best_score": 0.0,
+              "observed_as_distinct_state": true
+            },
+            {
+              "event_step": 1,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 36.4809654802084,
+              "left_open_seconds": 0.0,
+              "right_closed_seconds": 36.4809654802084,
+              "interval_width_seconds": 36.4809654802084,
+              "detection_delay_seconds": 0.0,
+              "material_best_score": 0.7796977003981657,
+              "observed_as_distinct_state": true
+            }
+          ],
+          "auc_delta_from_dense": 0.0
+        },
+        {
+          "kernel": "fixed",
+          "interval_seconds": 15.0,
+          "phase_seconds": 0.0,
+          "horizon_seconds": 120.0,
+          "material_epsilon": 0.0,
+          "observation_count": 9,
+          "material_state_count_including_baseline": 2,
+          "first_valid_event": {
+            "event_step": 0,
+            "event_kind": "baseline_valid",
+            "event_time_seconds": 0.0,
+            "left_open_seconds": 0.0,
+            "right_closed_seconds": 0.0,
+            "interval_width_seconds": 0.0,
+            "detection_delay_seconds": 0.0,
+            "material_best_score": 0.0,
+            "observed_as_distinct_state": true
+          },
+          "post_first_valid_improvement_count": 1,
+          "material_transition_count_excluding_valid_t0_baseline": 1,
+          "observed_material_state_count": 2,
+          "source_event_state_count": 2,
+          "observed_current_event_state_count": 2,
+          "missed_current_event_state_count": 0,
+          "missed_current_event_state_rate": 0.0,
+          "missed_current_event_steps": [],
+          "missed_material_transition_count": 0,
+          "missed_material_transition_rate": 0.0,
+          "mean_detection_delay_seconds": 8.519034519791603,
+          "maximum_detection_delay_seconds": 8.519034519791603,
+          "wall_time_auc": 0.48731106274885355,
+          "wall_time_ever_valid_auc": 1.0,
+          "wall_time_current_validity_auc": 1.0,
+          "observations": [
+            {
+              "observed_at_seconds": 0.0,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 15.0,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 30.0,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 45.0,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.7796977003981657,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.7796977003981657
+            },
+            {
+              "observed_at_seconds": 60.0,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.7796977003981657,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.7796977003981657
+            },
+            {
+              "observed_at_seconds": 75.0,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.7796977003981657,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.7796977003981657
+            },
+            {
+              "observed_at_seconds": 90.0,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.7796977003981657,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.7796977003981657
+            },
+            {
+              "observed_at_seconds": 105.0,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.7796977003981657,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.7796977003981657
+            },
+            {
+              "observed_at_seconds": 120.0,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.7796977003981657,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.7796977003981657
+            }
+          ],
+          "material_event_intervals": [
+            {
+              "event_step": 0,
+              "event_kind": "baseline_valid",
+              "event_time_seconds": 0.0,
+              "left_open_seconds": 0.0,
+              "right_closed_seconds": 0.0,
+              "interval_width_seconds": 0.0,
+              "detection_delay_seconds": 0.0,
+              "material_best_score": 0.0,
+              "observed_as_distinct_state": true
+            },
+            {
+              "event_step": 1,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 36.4809654802084,
+              "left_open_seconds": 30.0,
+              "right_closed_seconds": 45.0,
+              "interval_width_seconds": 15.0,
+              "detection_delay_seconds": 8.519034519791603,
+              "material_best_score": 0.7796977003981657,
+              "observed_as_distinct_state": true
+            }
+          ],
+          "auc_delta_from_dense": -0.05535226353911754
+        },
+        {
+          "kernel": "random_phase",
+          "interval_seconds": 15.0,
+          "phase_seconds": 2.236058215087985,
+          "horizon_seconds": 120.0,
+          "material_epsilon": 0.0,
+          "observation_count": 10,
+          "material_state_count_including_baseline": 2,
+          "first_valid_event": {
+            "event_step": 0,
+            "event_kind": "baseline_valid",
+            "event_time_seconds": 0.0,
+            "left_open_seconds": 0.0,
+            "right_closed_seconds": 0.0,
+            "interval_width_seconds": 0.0,
+            "detection_delay_seconds": 0.0,
+            "material_best_score": 0.0,
+            "observed_as_distinct_state": true
+          },
+          "post_first_valid_improvement_count": 1,
+          "material_transition_count_excluding_valid_t0_baseline": 1,
+          "observed_material_state_count": 2,
+          "source_event_state_count": 2,
+          "observed_current_event_state_count": 2,
+          "missed_current_event_state_count": 0,
+          "missed_current_event_state_rate": 0.0,
+          "missed_current_event_steps": [],
+          "missed_material_transition_count": 0,
+          "missed_material_transition_rate": 0.0,
+          "mean_detection_delay_seconds": 10.75509273487959,
+          "maximum_detection_delay_seconds": 10.75509273487959,
+          "wall_time_auc": 0.47278231734668247,
+          "wall_time_ever_valid_auc": 1.0,
+          "wall_time_current_validity_auc": 1.0,
+          "observations": [
+            {
+              "observed_at_seconds": 0.0,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 2.236058215087985,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 17.236058215087986,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 32.236058215087986,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 47.236058215087986,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.7796977003981657,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.7796977003981657
+            },
+            {
+              "observed_at_seconds": 62.236058215087986,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.7796977003981657,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.7796977003981657
+            },
+            {
+              "observed_at_seconds": 77.23605821508798,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.7796977003981657,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.7796977003981657
+            },
+            {
+              "observed_at_seconds": 92.23605821508798,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.7796977003981657,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.7796977003981657
+            },
+            {
+              "observed_at_seconds": 107.23605821508798,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.7796977003981657,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.7796977003981657
+            },
+            {
+              "observed_at_seconds": 120.0,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.7796977003981657,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.7796977003981657
+            }
+          ],
+          "material_event_intervals": [
+            {
+              "event_step": 0,
+              "event_kind": "baseline_valid",
+              "event_time_seconds": 0.0,
+              "left_open_seconds": 0.0,
+              "right_closed_seconds": 0.0,
+              "interval_width_seconds": 0.0,
+              "detection_delay_seconds": 0.0,
+              "material_best_score": 0.0,
+              "observed_as_distinct_state": true
+            },
+            {
+              "event_step": 1,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 36.4809654802084,
+              "left_open_seconds": 32.236058215087986,
+              "right_closed_seconds": 47.236058215087986,
+              "interval_width_seconds": 15.0,
+              "detection_delay_seconds": 10.75509273487959,
+              "material_best_score": 0.7796977003981657,
+              "observed_as_distinct_state": true
+            }
+          ],
+          "auc_delta_from_dense": -0.06988100894128862
+        },
+        {
+          "kernel": "fixed",
+          "interval_seconds": 30.0,
+          "phase_seconds": 0.0,
+          "horizon_seconds": 120.0,
+          "material_epsilon": 0.0,
+          "observation_count": 5,
+          "material_state_count_including_baseline": 2,
+          "first_valid_event": {
+            "event_step": 0,
+            "event_kind": "baseline_valid",
+            "event_time_seconds": 0.0,
+            "left_open_seconds": 0.0,
+            "right_closed_seconds": 0.0,
+            "interval_width_seconds": 0.0,
+            "detection_delay_seconds": 0.0,
+            "material_best_score": 0.0,
+            "observed_as_distinct_state": true
+          },
+          "post_first_valid_improvement_count": 1,
+          "material_transition_count_excluding_valid_t0_baseline": 1,
+          "observed_material_state_count": 2,
+          "source_event_state_count": 2,
+          "observed_current_event_state_count": 2,
+          "missed_current_event_state_count": 0,
+          "missed_current_event_state_rate": 0.0,
+          "missed_current_event_steps": [],
+          "missed_material_transition_count": 0,
+          "missed_material_transition_rate": 0.0,
+          "mean_detection_delay_seconds": 23.519034519791603,
+          "maximum_detection_delay_seconds": 23.519034519791603,
+          "wall_time_auc": 0.38984885019908283,
+          "wall_time_ever_valid_auc": 1.0,
+          "wall_time_current_validity_auc": 1.0,
+          "observations": [
+            {
+              "observed_at_seconds": 0.0,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 30.0,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 60.0,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.7796977003981657,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.7796977003981657
+            },
+            {
+              "observed_at_seconds": 90.0,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.7796977003981657,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.7796977003981657
+            },
+            {
+              "observed_at_seconds": 120.0,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.7796977003981657,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.7796977003981657
+            }
+          ],
+          "material_event_intervals": [
+            {
+              "event_step": 0,
+              "event_kind": "baseline_valid",
+              "event_time_seconds": 0.0,
+              "left_open_seconds": 0.0,
+              "right_closed_seconds": 0.0,
+              "interval_width_seconds": 0.0,
+              "detection_delay_seconds": 0.0,
+              "material_best_score": 0.0,
+              "observed_as_distinct_state": true
+            },
+            {
+              "event_step": 1,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 36.4809654802084,
+              "left_open_seconds": 30.0,
+              "right_closed_seconds": 60.0,
+              "interval_width_seconds": 30.0,
+              "detection_delay_seconds": 23.519034519791603,
+              "material_best_score": 0.7796977003981657,
+              "observed_as_distinct_state": true
+            }
+          ],
+          "auc_delta_from_dense": -0.15281447608888826
+        },
+        {
+          "kernel": "random_phase",
+          "interval_seconds": 30.0,
+          "phase_seconds": 0.9918893052575479,
+          "horizon_seconds": 120.0,
+          "material_epsilon": 0.0,
+          "observation_count": 6,
+          "material_state_count_including_baseline": 2,
+          "first_valid_event": {
+            "event_step": 0,
+            "event_kind": "baseline_valid",
+            "event_time_seconds": 0.0,
+            "left_open_seconds": 0.0,
+            "right_closed_seconds": 0.0,
+            "interval_width_seconds": 0.0,
+            "detection_delay_seconds": 0.0,
+            "material_best_score": 0.0,
+            "observed_as_distinct_state": true
+          },
+          "post_first_valid_improvement_count": 1,
+          "material_transition_count_excluding_valid_t0_baseline": 1,
+          "observed_material_state_count": 2,
+          "source_event_state_count": 2,
+          "observed_current_event_state_count": 2,
+          "missed_current_event_state_count": 0,
+          "missed_current_event_state_rate": 0.0,
+          "missed_current_event_steps": [],
+          "missed_material_transition_count": 0,
+          "missed_material_transition_rate": 0.0,
+          "mean_detection_delay_seconds": 24.510923825049147,
+          "maximum_detection_delay_seconds": 24.510923825049147,
+          "wall_time_auc": 0.3834040684460925,
+          "wall_time_ever_valid_auc": 1.0,
+          "wall_time_current_validity_auc": 1.0,
+          "observations": [
+            {
+              "observed_at_seconds": 0.0,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 0.9918893052575479,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 30.991889305257548,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 60.991889305257544,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.7796977003981657,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.7796977003981657
+            },
+            {
+              "observed_at_seconds": 90.99188930525754,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.7796977003981657,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.7796977003981657
+            },
+            {
+              "observed_at_seconds": 120.0,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.7796977003981657,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.7796977003981657
+            }
+          ],
+          "material_event_intervals": [
+            {
+              "event_step": 0,
+              "event_kind": "baseline_valid",
+              "event_time_seconds": 0.0,
+              "left_open_seconds": 0.0,
+              "right_closed_seconds": 0.0,
+              "interval_width_seconds": 0.0,
+              "detection_delay_seconds": 0.0,
+              "material_best_score": 0.0,
+              "observed_as_distinct_state": true
+            },
+            {
+              "event_step": 1,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 36.4809654802084,
+              "left_open_seconds": 30.991889305257548,
+              "right_closed_seconds": 60.991889305257544,
+              "interval_width_seconds": 29.999999999999996,
+              "detection_delay_seconds": 24.510923825049147,
+              "material_best_score": 0.7796977003981657,
+              "observed_as_distinct_state": true
+            }
+          ],
+          "auc_delta_from_dense": -0.1592592578418786
+        },
+        {
+          "kernel": "fixed",
+          "interval_seconds": 60.0,
+          "phase_seconds": 0.0,
+          "horizon_seconds": 120.0,
+          "material_epsilon": 0.0,
+          "observation_count": 3,
+          "material_state_count_including_baseline": 2,
+          "first_valid_event": {
+            "event_step": 0,
+            "event_kind": "baseline_valid",
+            "event_time_seconds": 0.0,
+            "left_open_seconds": 0.0,
+            "right_closed_seconds": 0.0,
+            "interval_width_seconds": 0.0,
+            "detection_delay_seconds": 0.0,
+            "material_best_score": 0.0,
+            "observed_as_distinct_state": true
+          },
+          "post_first_valid_improvement_count": 1,
+          "material_transition_count_excluding_valid_t0_baseline": 1,
+          "observed_material_state_count": 2,
+          "source_event_state_count": 2,
+          "observed_current_event_state_count": 2,
+          "missed_current_event_state_count": 0,
+          "missed_current_event_state_rate": 0.0,
+          "missed_current_event_steps": [],
+          "missed_material_transition_count": 0,
+          "missed_material_transition_rate": 0.0,
+          "mean_detection_delay_seconds": 23.519034519791603,
+          "maximum_detection_delay_seconds": 23.519034519791603,
+          "wall_time_auc": 0.38984885019908283,
+          "wall_time_ever_valid_auc": 1.0,
+          "wall_time_current_validity_auc": 1.0,
+          "observations": [
+            {
+              "observed_at_seconds": 0.0,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 60.0,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.7796977003981657,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.7796977003981657
+            },
+            {
+              "observed_at_seconds": 120.0,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.7796977003981657,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.7796977003981657
+            }
+          ],
+          "material_event_intervals": [
+            {
+              "event_step": 0,
+              "event_kind": "baseline_valid",
+              "event_time_seconds": 0.0,
+              "left_open_seconds": 0.0,
+              "right_closed_seconds": 0.0,
+              "interval_width_seconds": 0.0,
+              "detection_delay_seconds": 0.0,
+              "material_best_score": 0.0,
+              "observed_as_distinct_state": true
+            },
+            {
+              "event_step": 1,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 36.4809654802084,
+              "left_open_seconds": 0.0,
+              "right_closed_seconds": 60.0,
+              "interval_width_seconds": 60.0,
+              "detection_delay_seconds": 23.519034519791603,
+              "material_best_score": 0.7796977003981657,
+              "observed_as_distinct_state": true
+            }
+          ],
+          "auc_delta_from_dense": -0.15281447608888826
+        },
+        {
+          "kernel": "random_phase",
+          "interval_seconds": 60.0,
+          "phase_seconds": 4.819593749393135,
+          "horizon_seconds": 120.0,
+          "material_epsilon": 0.0,
+          "observation_count": 4,
+          "material_state_count_including_baseline": 2,
+          "first_valid_event": {
+            "event_step": 0,
+            "event_kind": "baseline_valid",
+            "event_time_seconds": 0.0,
+            "left_open_seconds": 0.0,
+            "right_closed_seconds": 0.0,
+            "interval_width_seconds": 0.0,
+            "detection_delay_seconds": 0.0,
+            "material_best_score": 0.0,
+            "observed_as_distinct_state": true
+          },
+          "post_first_valid_improvement_count": 1,
+          "material_transition_count_excluding_valid_t0_baseline": 1,
+          "observed_material_state_count": 2,
+          "source_event_state_count": 2,
+          "observed_current_event_state_count": 2,
+          "missed_current_event_state_count": 0,
+          "missed_current_event_state_rate": 0.0,
+          "missed_current_event_steps": [],
+          "missed_material_transition_count": 0,
+          "missed_material_transition_rate": 0.0,
+          "mean_detection_delay_seconds": 28.33862826918474,
+          "maximum_detection_delay_seconds": 28.33862826918474,
+          "wall_time_auc": 0.35853363217195616,
+          "wall_time_ever_valid_auc": 1.0,
+          "wall_time_current_validity_auc": 1.0,
+          "observations": [
+            {
+              "observed_at_seconds": 0.0,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 4.819593749393135,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 64.81959374939314,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.7796977003981657,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.7796977003981657
+            },
+            {
+              "observed_at_seconds": 120.0,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.7796977003981657,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.7796977003981657
+            }
+          ],
+          "material_event_intervals": [
+            {
+              "event_step": 0,
+              "event_kind": "baseline_valid",
+              "event_time_seconds": 0.0,
+              "left_open_seconds": 0.0,
+              "right_closed_seconds": 0.0,
+              "interval_width_seconds": 0.0,
+              "detection_delay_seconds": 0.0,
+              "material_best_score": 0.0,
+              "observed_as_distinct_state": true
+            },
+            {
+              "event_step": 1,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 36.4809654802084,
+              "left_open_seconds": 4.819593749393135,
+              "right_closed_seconds": 64.81959374939314,
+              "interval_width_seconds": 60.0,
+              "detection_delay_seconds": 28.33862826918474,
+              "material_best_score": 0.7796977003981657,
+              "observed_as_distinct_state": true
+            }
+          ],
+          "auc_delta_from_dense": -0.18412969411601493
+        },
+        {
+          "kernel": "fixed",
+          "interval_seconds": 120.0,
+          "phase_seconds": 0.0,
+          "horizon_seconds": 120.0,
+          "material_epsilon": 0.0,
+          "observation_count": 2,
+          "material_state_count_including_baseline": 2,
+          "first_valid_event": {
+            "event_step": 0,
+            "event_kind": "baseline_valid",
+            "event_time_seconds": 0.0,
+            "left_open_seconds": 0.0,
+            "right_closed_seconds": 0.0,
+            "interval_width_seconds": 0.0,
+            "detection_delay_seconds": 0.0,
+            "material_best_score": 0.0,
+            "observed_as_distinct_state": true
+          },
+          "post_first_valid_improvement_count": 1,
+          "material_transition_count_excluding_valid_t0_baseline": 1,
+          "observed_material_state_count": 2,
+          "source_event_state_count": 2,
+          "observed_current_event_state_count": 2,
+          "missed_current_event_state_count": 0,
+          "missed_current_event_state_rate": 0.0,
+          "missed_current_event_steps": [],
+          "missed_material_transition_count": 0,
+          "missed_material_transition_rate": 0.0,
+          "mean_detection_delay_seconds": 83.5190345197916,
+          "maximum_detection_delay_seconds": 83.5190345197916,
+          "wall_time_auc": 0.0,
+          "wall_time_ever_valid_auc": 1.0,
+          "wall_time_current_validity_auc": 1.0,
+          "observations": [
+            {
+              "observed_at_seconds": 0.0,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 120.0,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.7796977003981657,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.7796977003981657
+            }
+          ],
+          "material_event_intervals": [
+            {
+              "event_step": 0,
+              "event_kind": "baseline_valid",
+              "event_time_seconds": 0.0,
+              "left_open_seconds": 0.0,
+              "right_closed_seconds": 0.0,
+              "interval_width_seconds": 0.0,
+              "detection_delay_seconds": 0.0,
+              "material_best_score": 0.0,
+              "observed_as_distinct_state": true
+            },
+            {
+              "event_step": 1,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 36.4809654802084,
+              "left_open_seconds": 0.0,
+              "right_closed_seconds": 120.0,
+              "interval_width_seconds": 120.0,
+              "detection_delay_seconds": 83.5190345197916,
+              "material_best_score": 0.7796977003981657,
+              "observed_as_distinct_state": true
+            }
+          ],
+          "auc_delta_from_dense": -0.5426633262879711
+        },
+        {
+          "kernel": "random_phase",
+          "interval_seconds": 120.0,
+          "phase_seconds": 35.55621511911938,
+          "horizon_seconds": 120.0,
+          "material_epsilon": 0.0,
+          "observation_count": 3,
+          "material_state_count_including_baseline": 2,
+          "first_valid_event": {
+            "event_step": 0,
+            "event_kind": "baseline_valid",
+            "event_time_seconds": 0.0,
+            "left_open_seconds": 0.0,
+            "right_closed_seconds": 0.0,
+            "interval_width_seconds": 0.0,
+            "detection_delay_seconds": 0.0,
+            "material_best_score": 0.0,
+            "observed_as_distinct_state": true
+          },
+          "post_first_valid_improvement_count": 1,
+          "material_transition_count_excluding_valid_t0_baseline": 1,
+          "observed_material_state_count": 2,
+          "source_event_state_count": 2,
+          "observed_current_event_state_count": 2,
+          "missed_current_event_state_count": 0,
+          "missed_current_event_state_rate": 0.0,
+          "missed_current_event_steps": [],
+          "missed_material_transition_count": 0,
+          "missed_material_transition_rate": 0.0,
+          "mean_detection_delay_seconds": 83.5190345197916,
+          "maximum_detection_delay_seconds": 83.5190345197916,
+          "wall_time_auc": 0.0,
+          "wall_time_ever_valid_auc": 1.0,
+          "wall_time_current_validity_auc": 1.0,
+          "observations": [
+            {
+              "observed_at_seconds": 0.0,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 35.55621511911938,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 120.0,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.7796977003981657,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.7796977003981657
+            }
+          ],
+          "material_event_intervals": [
+            {
+              "event_step": 0,
+              "event_kind": "baseline_valid",
+              "event_time_seconds": 0.0,
+              "left_open_seconds": 0.0,
+              "right_closed_seconds": 0.0,
+              "interval_width_seconds": 0.0,
+              "detection_delay_seconds": 0.0,
+              "material_best_score": 0.0,
+              "observed_as_distinct_state": true
+            },
+            {
+              "event_step": 1,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 36.4809654802084,
+              "left_open_seconds": 35.55621511911938,
+              "right_closed_seconds": 120.0,
+              "interval_width_seconds": 84.44378488088063,
+              "detection_delay_seconds": 83.5190345197916,
+              "material_best_score": 0.7796977003981657,
+              "observed_as_distinct_state": true
+            }
+          ],
+          "auc_delta_from_dense": -0.5426633262879711
+        }
+      ]
+    },
+    {
+      "trajectory": "runs/mosfet_v2_b3/Semiconductor__MOSFETDoping/greedy_rewrite/normal/seed_1/trajectory.jsonl",
+      "trajectory_sha256": "1c521f091ce79658fc0be00e6f377051eb6d7418a1acb2175ccc5bd69bb1564d",
+      "input_report_binding": {
+        "report": "experiments/gpt55_mosfet_v2_b3_2026-07-24.json",
+        "report_sha256": "66860155c19f4bf3389f070fcee169d76381a798f2a14f7eb0af13f82ac9d441",
+        "report_source_revision": "3bebc21a5091dd1d69aef0c130511edd588cb947",
+        "run_index": 0,
+        "task": "Semiconductor/MOSFETDoping",
+        "algorithm": "greedy_rewrite",
+        "feedback_mode": "normal",
+        "seed": 1,
+        "snapshot_trajectory_sha256": "1c521f091ce79658fc0be00e6f377051eb6d7418a1acb2175ccc5bd69bb1564d"
+      },
+      "event_count": 4,
+      "analysis_origin_source_seconds": 2.48009960539639,
+      "source_horizon_seconds": 108.3349256850779,
+      "analysis_last_event_seconds": 105.85482607968152,
+      "analysis_horizon_seconds": 120.0,
+      "portable_source_events": [
+        {
+          "step": 0,
+          "source_time_seconds": 2.48009960539639,
+          "analysis_time_seconds": 0.0,
+          "valid": true,
+          "accepted": true,
+          "score": 0.0,
+          "best_score": 0.0,
+          "candidate_sha256": "243f1a3fe6bca79989c47a8945e69dc9de419544c02f5f737a754ec56acac5e6"
+        },
+        {
+          "step": 1,
+          "source_time_seconds": 39.658871923573315,
+          "analysis_time_seconds": 37.178772318176925,
+          "valid": true,
+          "accepted": true,
+          "score": 0.1927414831115123,
+          "best_score": 0.1927414831115123,
+          "candidate_sha256": "f80b43d3a6d5e15dfac2444d333bee2427426edec7c44338b7668c34cb39a4a4"
+        },
+        {
+          "step": 2,
+          "source_time_seconds": 74.70537397451699,
+          "analysis_time_seconds": 72.2252743691206,
+          "valid": true,
+          "accepted": false,
+          "score": 0.16331803410461165,
+          "best_score": 0.1927414831115123,
+          "candidate_sha256": "b6ec1da5c1df1bbe068de15583c5729b40a22793c025f914c757e9848380cc3d"
+        },
+        {
+          "step": 3,
+          "source_time_seconds": 108.3349256850779,
+          "analysis_time_seconds": 105.85482607968152,
+          "valid": true,
+          "accepted": true,
+          "score": 0.45739953664973576,
+          "best_score": 0.45739953664973576,
+          "candidate_sha256": "d5af76e6256f27c5dcf2623b852c8d4fdc7907e7807368ea17555289d516af0e"
+        }
+      ],
+      "kernels": [
+        {
+          "kernel": "dense_event",
+          "interval_seconds": null,
+          "phase_seconds": 0.0,
+          "horizon_seconds": 120.0,
+          "material_epsilon": 0.0,
+          "observation_count": 5,
+          "material_state_count_including_baseline": 3,
+          "first_valid_event": {
+            "event_step": 0,
+            "event_kind": "baseline_valid",
+            "event_time_seconds": 0.0,
+            "left_open_seconds": 0.0,
+            "right_closed_seconds": 0.0,
+            "interval_width_seconds": 0.0,
+            "detection_delay_seconds": 0.0,
+            "material_best_score": 0.0,
+            "observed_as_distinct_state": true
+          },
+          "post_first_valid_improvement_count": 2,
+          "material_transition_count_excluding_valid_t0_baseline": 2,
+          "observed_material_state_count": 3,
+          "source_event_state_count": 4,
+          "observed_current_event_state_count": 4,
+          "missed_current_event_state_count": 0,
+          "missed_current_event_state_rate": 0.0,
+          "missed_current_event_steps": [],
+          "missed_material_transition_count": 0,
+          "missed_material_transition_rate": 0.0,
+          "mean_detection_delay_seconds": 0.0,
+          "maximum_detection_delay_seconds": 0.0,
+          "wall_time_auc": 0.16422267044351624,
+          "wall_time_ever_valid_auc": 1.0,
+          "wall_time_current_validity_auc": 1.0,
+          "observations": [
+            {
+              "observed_at_seconds": 0.0,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 37.178772318176925,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.1927414831115123,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.1927414831115123
+            },
+            {
+              "observed_at_seconds": 72.2252743691206,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.1927414831115123,
+              "current_event_step": 2,
+              "current_valid": true,
+              "current_score": 0.16331803410461165
+            },
+            {
+              "observed_at_seconds": 105.85482607968152,
+              "envelope_source_event_step": 3,
+              "valid_envelope": true,
+              "best_score": 0.45739953664973576,
+              "current_event_step": 3,
+              "current_valid": true,
+              "current_score": 0.45739953664973576
+            },
+            {
+              "observed_at_seconds": 120.0,
+              "envelope_source_event_step": 3,
+              "valid_envelope": true,
+              "best_score": 0.45739953664973576,
+              "current_event_step": 3,
+              "current_valid": true,
+              "current_score": 0.45739953664973576
+            }
+          ],
+          "material_event_intervals": [
+            {
+              "event_step": 0,
+              "event_kind": "baseline_valid",
+              "event_time_seconds": 0.0,
+              "left_open_seconds": 0.0,
+              "right_closed_seconds": 0.0,
+              "interval_width_seconds": 0.0,
+              "detection_delay_seconds": 0.0,
+              "material_best_score": 0.0,
+              "observed_as_distinct_state": true
+            },
+            {
+              "event_step": 1,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 37.178772318176925,
+              "left_open_seconds": 0.0,
+              "right_closed_seconds": 37.178772318176925,
+              "interval_width_seconds": 37.178772318176925,
+              "detection_delay_seconds": 0.0,
+              "material_best_score": 0.1927414831115123,
+              "observed_as_distinct_state": true
+            },
+            {
+              "event_step": 3,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 105.85482607968152,
+              "left_open_seconds": 72.2252743691206,
+              "right_closed_seconds": 105.85482607968152,
+              "interval_width_seconds": 33.62955171056092,
+              "detection_delay_seconds": 0.0,
+              "material_best_score": 0.45739953664973576,
+              "observed_as_distinct_state": true
+            }
+          ],
+          "auc_delta_from_dense": 0.0
+        },
+        {
+          "kernel": "fixed",
+          "interval_seconds": 15.0,
+          "phase_seconds": 0.0,
+          "horizon_seconds": 120.0,
+          "material_epsilon": 0.0,
+          "observation_count": 9,
+          "material_state_count_including_baseline": 3,
+          "first_valid_event": {
+            "event_step": 0,
+            "event_kind": "baseline_valid",
+            "event_time_seconds": 0.0,
+            "left_open_seconds": 0.0,
+            "right_closed_seconds": 0.0,
+            "interval_width_seconds": 0.0,
+            "detection_delay_seconds": 0.0,
+            "material_best_score": 0.0,
+            "observed_as_distinct_state": true
+          },
+          "post_first_valid_improvement_count": 2,
+          "material_transition_count_excluding_valid_t0_baseline": 2,
+          "observed_material_state_count": 3,
+          "source_event_state_count": 4,
+          "observed_current_event_state_count": 4,
+          "missed_current_event_state_count": 0,
+          "missed_current_event_state_rate": 0.0,
+          "missed_current_event_steps": [],
+          "missed_material_transition_count": 0,
+          "missed_material_transition_rate": 0.0,
+          "mean_detection_delay_seconds": 10.98320080107078,
+          "maximum_detection_delay_seconds": 14.145173920318484,
+          "wall_time_auc": 0.12046342694469517,
+          "wall_time_ever_valid_auc": 1.0,
+          "wall_time_current_validity_auc": 1.0,
+          "observations": [
+            {
+              "observed_at_seconds": 0.0,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 15.0,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 30.0,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 45.0,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.1927414831115123,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.1927414831115123
+            },
+            {
+              "observed_at_seconds": 60.0,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.1927414831115123,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.1927414831115123
+            },
+            {
+              "observed_at_seconds": 75.0,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.1927414831115123,
+              "current_event_step": 2,
+              "current_valid": true,
+              "current_score": 0.16331803410461165
+            },
+            {
+              "observed_at_seconds": 90.0,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.1927414831115123,
+              "current_event_step": 2,
+              "current_valid": true,
+              "current_score": 0.16331803410461165
+            },
+            {
+              "observed_at_seconds": 105.0,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.1927414831115123,
+              "current_event_step": 2,
+              "current_valid": true,
+              "current_score": 0.16331803410461165
+            },
+            {
+              "observed_at_seconds": 120.0,
+              "envelope_source_event_step": 3,
+              "valid_envelope": true,
+              "best_score": 0.45739953664973576,
+              "current_event_step": 3,
+              "current_valid": true,
+              "current_score": 0.45739953664973576
+            }
+          ],
+          "material_event_intervals": [
+            {
+              "event_step": 0,
+              "event_kind": "baseline_valid",
+              "event_time_seconds": 0.0,
+              "left_open_seconds": 0.0,
+              "right_closed_seconds": 0.0,
+              "interval_width_seconds": 0.0,
+              "detection_delay_seconds": 0.0,
+              "material_best_score": 0.0,
+              "observed_as_distinct_state": true
+            },
+            {
+              "event_step": 1,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 37.178772318176925,
+              "left_open_seconds": 30.0,
+              "right_closed_seconds": 45.0,
+              "interval_width_seconds": 15.0,
+              "detection_delay_seconds": 7.821227681823075,
+              "material_best_score": 0.1927414831115123,
+              "observed_as_distinct_state": true
+            },
+            {
+              "event_step": 3,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 105.85482607968152,
+              "left_open_seconds": 105.0,
+              "right_closed_seconds": 120.0,
+              "interval_width_seconds": 15.0,
+              "detection_delay_seconds": 14.145173920318484,
+              "material_best_score": 0.45739953664973576,
+              "observed_as_distinct_state": true
+            }
+          ],
+          "auc_delta_from_dense": -0.04375924349882107
+        },
+        {
+          "kernel": "random_phase",
+          "interval_seconds": 15.0,
+          "phase_seconds": 2.236058215087985,
+          "horizon_seconds": 120.0,
+          "material_epsilon": 0.0,
+          "observation_count": 10,
+          "material_state_count_including_baseline": 3,
+          "first_valid_event": {
+            "event_step": 0,
+            "event_kind": "baseline_valid",
+            "event_time_seconds": 0.0,
+            "left_open_seconds": 0.0,
+            "right_closed_seconds": 0.0,
+            "interval_width_seconds": 0.0,
+            "detection_delay_seconds": 0.0,
+            "material_best_score": 0.0,
+            "observed_as_distinct_state": true
+          },
+          "post_first_valid_improvement_count": 2,
+          "material_transition_count_excluding_valid_t0_baseline": 2,
+          "observed_material_state_count": 3,
+          "source_event_state_count": 4,
+          "observed_current_event_state_count": 4,
+          "missed_current_event_state_count": 0,
+          "missed_current_event_state_rate": 0.0,
+          "missed_current_event_steps": [],
+          "missed_material_transition_count": 0,
+          "missed_material_transition_rate": 0.0,
+          "mean_detection_delay_seconds": 5.719259016158762,
+          "maximum_detection_delay_seconds": 10.057285896911061,
+          "wall_time_auc": 0.14502258370778076,
+          "wall_time_ever_valid_auc": 1.0,
+          "wall_time_current_validity_auc": 1.0,
+          "observations": [
+            {
+              "observed_at_seconds": 0.0,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 2.236058215087985,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 17.236058215087986,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 32.236058215087986,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 47.236058215087986,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.1927414831115123,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.1927414831115123
+            },
+            {
+              "observed_at_seconds": 62.236058215087986,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.1927414831115123,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.1927414831115123
+            },
+            {
+              "observed_at_seconds": 77.23605821508798,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.1927414831115123,
+              "current_event_step": 2,
+              "current_valid": true,
+              "current_score": 0.16331803410461165
+            },
+            {
+              "observed_at_seconds": 92.23605821508798,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.1927414831115123,
+              "current_event_step": 2,
+              "current_valid": true,
+              "current_score": 0.16331803410461165
+            },
+            {
+              "observed_at_seconds": 107.23605821508798,
+              "envelope_source_event_step": 3,
+              "valid_envelope": true,
+              "best_score": 0.45739953664973576,
+              "current_event_step": 3,
+              "current_valid": true,
+              "current_score": 0.45739953664973576
+            },
+            {
+              "observed_at_seconds": 120.0,
+              "envelope_source_event_step": 3,
+              "valid_envelope": true,
+              "best_score": 0.45739953664973576,
+              "current_event_step": 3,
+              "current_valid": true,
+              "current_score": 0.45739953664973576
+            }
+          ],
+          "material_event_intervals": [
+            {
+              "event_step": 0,
+              "event_kind": "baseline_valid",
+              "event_time_seconds": 0.0,
+              "left_open_seconds": 0.0,
+              "right_closed_seconds": 0.0,
+              "interval_width_seconds": 0.0,
+              "detection_delay_seconds": 0.0,
+              "material_best_score": 0.0,
+              "observed_as_distinct_state": true
+            },
+            {
+              "event_step": 1,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 37.178772318176925,
+              "left_open_seconds": 32.236058215087986,
+              "right_closed_seconds": 47.236058215087986,
+              "interval_width_seconds": 15.0,
+              "detection_delay_seconds": 10.057285896911061,
+              "material_best_score": 0.1927414831115123,
+              "observed_as_distinct_state": true
+            },
+            {
+              "event_step": 3,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 105.85482607968152,
+              "left_open_seconds": 92.23605821508798,
+              "right_closed_seconds": 107.23605821508798,
+              "interval_width_seconds": 15.0,
+              "detection_delay_seconds": 1.3812321354064636,
+              "material_best_score": 0.45739953664973576,
+              "observed_as_distinct_state": true
+            }
+          ],
+          "auc_delta_from_dense": -0.019200086735735478
+        },
+        {
+          "kernel": "fixed",
+          "interval_seconds": 30.0,
+          "phase_seconds": 0.0,
+          "horizon_seconds": 120.0,
+          "material_epsilon": 0.0,
+          "observation_count": 5,
+          "material_state_count_including_baseline": 3,
+          "first_valid_event": {
+            "event_step": 0,
+            "event_kind": "baseline_valid",
+            "event_time_seconds": 0.0,
+            "left_open_seconds": 0.0,
+            "right_closed_seconds": 0.0,
+            "interval_width_seconds": 0.0,
+            "detection_delay_seconds": 0.0,
+            "material_best_score": 0.0,
+            "observed_as_distinct_state": true
+          },
+          "post_first_valid_improvement_count": 2,
+          "material_transition_count_excluding_valid_t0_baseline": 2,
+          "observed_material_state_count": 3,
+          "source_event_state_count": 4,
+          "observed_current_event_state_count": 4,
+          "missed_current_event_state_count": 0,
+          "missed_current_event_state_rate": 0.0,
+          "missed_current_event_steps": [],
+          "missed_material_transition_count": 0,
+          "missed_material_transition_rate": 0.0,
+          "mean_detection_delay_seconds": 18.48320080107078,
+          "maximum_detection_delay_seconds": 22.821227681823075,
+          "wall_time_auc": 0.09637074155575615,
+          "wall_time_ever_valid_auc": 1.0,
+          "wall_time_current_validity_auc": 1.0,
+          "observations": [
+            {
+              "observed_at_seconds": 0.0,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 30.0,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 60.0,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.1927414831115123,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.1927414831115123
+            },
+            {
+              "observed_at_seconds": 90.0,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.1927414831115123,
+              "current_event_step": 2,
+              "current_valid": true,
+              "current_score": 0.16331803410461165
+            },
+            {
+              "observed_at_seconds": 120.0,
+              "envelope_source_event_step": 3,
+              "valid_envelope": true,
+              "best_score": 0.45739953664973576,
+              "current_event_step": 3,
+              "current_valid": true,
+              "current_score": 0.45739953664973576
+            }
+          ],
+          "material_event_intervals": [
+            {
+              "event_step": 0,
+              "event_kind": "baseline_valid",
+              "event_time_seconds": 0.0,
+              "left_open_seconds": 0.0,
+              "right_closed_seconds": 0.0,
+              "interval_width_seconds": 0.0,
+              "detection_delay_seconds": 0.0,
+              "material_best_score": 0.0,
+              "observed_as_distinct_state": true
+            },
+            {
+              "event_step": 1,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 37.178772318176925,
+              "left_open_seconds": 30.0,
+              "right_closed_seconds": 60.0,
+              "interval_width_seconds": 30.0,
+              "detection_delay_seconds": 22.821227681823075,
+              "material_best_score": 0.1927414831115123,
+              "observed_as_distinct_state": true
+            },
+            {
+              "event_step": 3,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 105.85482607968152,
+              "left_open_seconds": 90.0,
+              "right_closed_seconds": 120.0,
+              "interval_width_seconds": 30.0,
+              "detection_delay_seconds": 14.145173920318484,
+              "material_best_score": 0.45739953664973576,
+              "observed_as_distinct_state": true
+            }
+          ],
+          "auc_delta_from_dense": -0.0678519288877601
+        },
+        {
+          "kernel": "random_phase",
+          "interval_seconds": 30.0,
+          "phase_seconds": 0.9918893052575479,
+          "horizon_seconds": 120.0,
+          "material_epsilon": 0.0,
+          "observation_count": 6,
+          "material_state_count_including_baseline": 3,
+          "first_valid_event": {
+            "event_step": 0,
+            "event_kind": "baseline_valid",
+            "event_time_seconds": 0.0,
+            "left_open_seconds": 0.0,
+            "right_closed_seconds": 0.0,
+            "interval_width_seconds": 0.0,
+            "detection_delay_seconds": 0.0,
+            "material_best_score": 0.0,
+            "observed_as_distinct_state": true
+          },
+          "post_first_valid_improvement_count": 2,
+          "material_transition_count_excluding_valid_t0_baseline": 2,
+          "observed_material_state_count": 3,
+          "source_event_state_count": 4,
+          "observed_current_event_state_count": 4,
+          "missed_current_event_state_count": 0,
+          "missed_current_event_state_rate": 0.0,
+          "missed_current_event_steps": [],
+          "missed_material_transition_count": 0,
+          "missed_material_transition_rate": 0.0,
+          "mean_detection_delay_seconds": 18.97914545369955,
+          "maximum_detection_delay_seconds": 23.81311698708062,
+          "wall_time_auc": 0.09477758975760793,
+          "wall_time_ever_valid_auc": 1.0,
+          "wall_time_current_validity_auc": 1.0,
+          "observations": [
+            {
+              "observed_at_seconds": 0.0,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 0.9918893052575479,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 30.991889305257548,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 60.991889305257544,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.1927414831115123,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.1927414831115123
+            },
+            {
+              "observed_at_seconds": 90.99188930525754,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.1927414831115123,
+              "current_event_step": 2,
+              "current_valid": true,
+              "current_score": 0.16331803410461165
+            },
+            {
+              "observed_at_seconds": 120.0,
+              "envelope_source_event_step": 3,
+              "valid_envelope": true,
+              "best_score": 0.45739953664973576,
+              "current_event_step": 3,
+              "current_valid": true,
+              "current_score": 0.45739953664973576
+            }
+          ],
+          "material_event_intervals": [
+            {
+              "event_step": 0,
+              "event_kind": "baseline_valid",
+              "event_time_seconds": 0.0,
+              "left_open_seconds": 0.0,
+              "right_closed_seconds": 0.0,
+              "interval_width_seconds": 0.0,
+              "detection_delay_seconds": 0.0,
+              "material_best_score": 0.0,
+              "observed_as_distinct_state": true
+            },
+            {
+              "event_step": 1,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 37.178772318176925,
+              "left_open_seconds": 30.991889305257548,
+              "right_closed_seconds": 60.991889305257544,
+              "interval_width_seconds": 29.999999999999996,
+              "detection_delay_seconds": 23.81311698708062,
+              "material_best_score": 0.1927414831115123,
+              "observed_as_distinct_state": true
+            },
+            {
+              "event_step": 3,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 105.85482607968152,
+              "left_open_seconds": 90.99188930525754,
+              "right_closed_seconds": 120.0,
+              "interval_width_seconds": 29.008110694742456,
+              "detection_delay_seconds": 14.145173920318484,
+              "material_best_score": 0.45739953664973576,
+              "observed_as_distinct_state": true
+            }
+          ],
+          "auc_delta_from_dense": -0.06944508068590831
+        },
+        {
+          "kernel": "fixed",
+          "interval_seconds": 60.0,
+          "phase_seconds": 0.0,
+          "horizon_seconds": 120.0,
+          "material_epsilon": 0.0,
+          "observation_count": 3,
+          "material_state_count_including_baseline": 3,
+          "first_valid_event": {
+            "event_step": 0,
+            "event_kind": "baseline_valid",
+            "event_time_seconds": 0.0,
+            "left_open_seconds": 0.0,
+            "right_closed_seconds": 0.0,
+            "interval_width_seconds": 0.0,
+            "detection_delay_seconds": 0.0,
+            "material_best_score": 0.0,
+            "observed_as_distinct_state": true
+          },
+          "post_first_valid_improvement_count": 2,
+          "material_transition_count_excluding_valid_t0_baseline": 2,
+          "observed_material_state_count": 3,
+          "source_event_state_count": 4,
+          "observed_current_event_state_count": 3,
+          "missed_current_event_state_count": 1,
+          "missed_current_event_state_rate": 0.25,
+          "missed_current_event_steps": [
+            2
+          ],
+          "missed_material_transition_count": 0,
+          "missed_material_transition_rate": 0.0,
+          "mean_detection_delay_seconds": 18.48320080107078,
+          "maximum_detection_delay_seconds": 22.821227681823075,
+          "wall_time_auc": 0.09637074155575615,
+          "wall_time_ever_valid_auc": 1.0,
+          "wall_time_current_validity_auc": 1.0,
+          "observations": [
+            {
+              "observed_at_seconds": 0.0,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 60.0,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.1927414831115123,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.1927414831115123
+            },
+            {
+              "observed_at_seconds": 120.0,
+              "envelope_source_event_step": 3,
+              "valid_envelope": true,
+              "best_score": 0.45739953664973576,
+              "current_event_step": 3,
+              "current_valid": true,
+              "current_score": 0.45739953664973576
+            }
+          ],
+          "material_event_intervals": [
+            {
+              "event_step": 0,
+              "event_kind": "baseline_valid",
+              "event_time_seconds": 0.0,
+              "left_open_seconds": 0.0,
+              "right_closed_seconds": 0.0,
+              "interval_width_seconds": 0.0,
+              "detection_delay_seconds": 0.0,
+              "material_best_score": 0.0,
+              "observed_as_distinct_state": true
+            },
+            {
+              "event_step": 1,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 37.178772318176925,
+              "left_open_seconds": 0.0,
+              "right_closed_seconds": 60.0,
+              "interval_width_seconds": 60.0,
+              "detection_delay_seconds": 22.821227681823075,
+              "material_best_score": 0.1927414831115123,
+              "observed_as_distinct_state": true
+            },
+            {
+              "event_step": 3,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 105.85482607968152,
+              "left_open_seconds": 60.0,
+              "right_closed_seconds": 120.0,
+              "interval_width_seconds": 60.0,
+              "detection_delay_seconds": 14.145173920318484,
+              "material_best_score": 0.45739953664973576,
+              "observed_as_distinct_state": true
+            }
+          ],
+          "auc_delta_from_dense": -0.0678519288877601
+        },
+        {
+          "kernel": "random_phase",
+          "interval_seconds": 60.0,
+          "phase_seconds": 4.819593749393135,
+          "horizon_seconds": 120.0,
+          "material_epsilon": 0.0,
+          "observation_count": 4,
+          "material_state_count_including_baseline": 3,
+          "first_valid_event": {
+            "event_step": 0,
+            "event_kind": "baseline_valid",
+            "event_time_seconds": 0.0,
+            "left_open_seconds": 0.0,
+            "right_closed_seconds": 0.0,
+            "interval_width_seconds": 0.0,
+            "detection_delay_seconds": 0.0,
+            "material_best_score": 0.0,
+            "observed_as_distinct_state": true
+          },
+          "post_first_valid_improvement_count": 2,
+          "material_transition_count_excluding_valid_t0_baseline": 2,
+          "observed_material_state_count": 3,
+          "source_event_state_count": 4,
+          "observed_current_event_state_count": 3,
+          "missed_current_event_state_count": 1,
+          "missed_current_event_state_rate": 0.25,
+          "missed_current_event_steps": [
+            2
+          ],
+          "missed_material_transition_count": 0,
+          "missed_material_transition_rate": 0.0,
+          "mean_detection_delay_seconds": 20.892997675767347,
+          "maximum_detection_delay_seconds": 27.64082143121621,
+          "wall_time_auc": 0.08862961116198109,
+          "wall_time_ever_valid_auc": 1.0,
+          "wall_time_current_validity_auc": 1.0,
+          "observations": [
+            {
+              "observed_at_seconds": 0.0,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 4.819593749393135,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 64.81959374939314,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.1927414831115123,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.1927414831115123
+            },
+            {
+              "observed_at_seconds": 120.0,
+              "envelope_source_event_step": 3,
+              "valid_envelope": true,
+              "best_score": 0.45739953664973576,
+              "current_event_step": 3,
+              "current_valid": true,
+              "current_score": 0.45739953664973576
+            }
+          ],
+          "material_event_intervals": [
+            {
+              "event_step": 0,
+              "event_kind": "baseline_valid",
+              "event_time_seconds": 0.0,
+              "left_open_seconds": 0.0,
+              "right_closed_seconds": 0.0,
+              "interval_width_seconds": 0.0,
+              "detection_delay_seconds": 0.0,
+              "material_best_score": 0.0,
+              "observed_as_distinct_state": true
+            },
+            {
+              "event_step": 1,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 37.178772318176925,
+              "left_open_seconds": 4.819593749393135,
+              "right_closed_seconds": 64.81959374939314,
+              "interval_width_seconds": 60.0,
+              "detection_delay_seconds": 27.64082143121621,
+              "material_best_score": 0.1927414831115123,
+              "observed_as_distinct_state": true
+            },
+            {
+              "event_step": 3,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 105.85482607968152,
+              "left_open_seconds": 64.81959374939314,
+              "right_closed_seconds": 120.0,
+              "interval_width_seconds": 55.180406250606865,
+              "detection_delay_seconds": 14.145173920318484,
+              "material_best_score": 0.45739953664973576,
+              "observed_as_distinct_state": true
+            }
+          ],
+          "auc_delta_from_dense": -0.07559305928153515
+        },
+        {
+          "kernel": "fixed",
+          "interval_seconds": 120.0,
+          "phase_seconds": 0.0,
+          "horizon_seconds": 120.0,
+          "material_epsilon": 0.0,
+          "observation_count": 2,
+          "material_state_count_including_baseline": 3,
+          "first_valid_event": {
+            "event_step": 0,
+            "event_kind": "baseline_valid",
+            "event_time_seconds": 0.0,
+            "left_open_seconds": 0.0,
+            "right_closed_seconds": 0.0,
+            "interval_width_seconds": 0.0,
+            "detection_delay_seconds": 0.0,
+            "material_best_score": 0.0,
+            "observed_as_distinct_state": true
+          },
+          "post_first_valid_improvement_count": 2,
+          "material_transition_count_excluding_valid_t0_baseline": 2,
+          "observed_material_state_count": 2,
+          "source_event_state_count": 4,
+          "observed_current_event_state_count": 2,
+          "missed_current_event_state_count": 2,
+          "missed_current_event_state_rate": 0.5,
+          "missed_current_event_steps": [
+            1,
+            2
+          ],
+          "missed_material_transition_count": 1,
+          "missed_material_transition_rate": 0.5,
+          "mean_detection_delay_seconds": 48.48320080107078,
+          "maximum_detection_delay_seconds": 82.82122768182307,
+          "wall_time_auc": 0.0,
+          "wall_time_ever_valid_auc": 1.0,
+          "wall_time_current_validity_auc": 1.0,
+          "observations": [
+            {
+              "observed_at_seconds": 0.0,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 120.0,
+              "envelope_source_event_step": 3,
+              "valid_envelope": true,
+              "best_score": 0.45739953664973576,
+              "current_event_step": 3,
+              "current_valid": true,
+              "current_score": 0.45739953664973576
+            }
+          ],
+          "material_event_intervals": [
+            {
+              "event_step": 0,
+              "event_kind": "baseline_valid",
+              "event_time_seconds": 0.0,
+              "left_open_seconds": 0.0,
+              "right_closed_seconds": 0.0,
+              "interval_width_seconds": 0.0,
+              "detection_delay_seconds": 0.0,
+              "material_best_score": 0.0,
+              "observed_as_distinct_state": true
+            },
+            {
+              "event_step": 1,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 37.178772318176925,
+              "left_open_seconds": 0.0,
+              "right_closed_seconds": 120.0,
+              "interval_width_seconds": 120.0,
+              "detection_delay_seconds": 82.82122768182307,
+              "material_best_score": 0.1927414831115123,
+              "observed_as_distinct_state": false
+            },
+            {
+              "event_step": 3,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 105.85482607968152,
+              "left_open_seconds": 0.0,
+              "right_closed_seconds": 120.0,
+              "interval_width_seconds": 120.0,
+              "detection_delay_seconds": 14.145173920318484,
+              "material_best_score": 0.45739953664973576,
+              "observed_as_distinct_state": true
+            }
+          ],
+          "auc_delta_from_dense": -0.16422267044351624
+        },
+        {
+          "kernel": "random_phase",
+          "interval_seconds": 120.0,
+          "phase_seconds": 35.55621511911938,
+          "horizon_seconds": 120.0,
+          "material_epsilon": 0.0,
+          "observation_count": 3,
+          "material_state_count_including_baseline": 3,
+          "first_valid_event": {
+            "event_step": 0,
+            "event_kind": "baseline_valid",
+            "event_time_seconds": 0.0,
+            "left_open_seconds": 0.0,
+            "right_closed_seconds": 0.0,
+            "interval_width_seconds": 0.0,
+            "detection_delay_seconds": 0.0,
+            "material_best_score": 0.0,
+            "observed_as_distinct_state": true
+          },
+          "post_first_valid_improvement_count": 2,
+          "material_transition_count_excluding_valid_t0_baseline": 2,
+          "observed_material_state_count": 2,
+          "source_event_state_count": 4,
+          "observed_current_event_state_count": 2,
+          "missed_current_event_state_count": 2,
+          "missed_current_event_state_rate": 0.5,
+          "missed_current_event_steps": [
+            1,
+            2
+          ],
+          "missed_material_transition_count": 1,
+          "missed_material_transition_rate": 0.5,
+          "mean_detection_delay_seconds": 48.48320080107078,
+          "maximum_detection_delay_seconds": 82.82122768182307,
+          "wall_time_auc": 0.0,
+          "wall_time_ever_valid_auc": 1.0,
+          "wall_time_current_validity_auc": 1.0,
+          "observations": [
+            {
+              "observed_at_seconds": 0.0,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 35.55621511911938,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 120.0,
+              "envelope_source_event_step": 3,
+              "valid_envelope": true,
+              "best_score": 0.45739953664973576,
+              "current_event_step": 3,
+              "current_valid": true,
+              "current_score": 0.45739953664973576
+            }
+          ],
+          "material_event_intervals": [
+            {
+              "event_step": 0,
+              "event_kind": "baseline_valid",
+              "event_time_seconds": 0.0,
+              "left_open_seconds": 0.0,
+              "right_closed_seconds": 0.0,
+              "interval_width_seconds": 0.0,
+              "detection_delay_seconds": 0.0,
+              "material_best_score": 0.0,
+              "observed_as_distinct_state": true
+            },
+            {
+              "event_step": 1,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 37.178772318176925,
+              "left_open_seconds": 35.55621511911938,
+              "right_closed_seconds": 120.0,
+              "interval_width_seconds": 84.44378488088063,
+              "detection_delay_seconds": 82.82122768182307,
+              "material_best_score": 0.1927414831115123,
+              "observed_as_distinct_state": false
+            },
+            {
+              "event_step": 3,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 105.85482607968152,
+              "left_open_seconds": 35.55621511911938,
+              "right_closed_seconds": 120.0,
+              "interval_width_seconds": 84.44378488088063,
+              "detection_delay_seconds": 14.145173920318484,
+              "material_best_score": 0.45739953664973576,
+              "observed_as_distinct_state": true
+            }
+          ],
+          "auc_delta_from_dense": -0.16422267044351624
+        }
+      ]
+    },
+    {
+      "trajectory": "runs/mosfet_v2_blind_b3/Semiconductor__MOSFETDoping/greedy_rewrite/selection_blind/seed_1/trajectory.jsonl",
+      "trajectory_sha256": "79ccb018edf360577fd139f52e9c97cf636954a68524982a55fc834e8251091c",
+      "input_report_binding": {
+        "report": "experiments/gpt55_mosfet_v2_blind_b3_2026-07-24.json",
+        "report_sha256": "411dca9f9084e2435222890f12a07a9e221cac721601c7e33ab8d9c14bab35d7",
+        "report_source_revision": "3bebc21a5091dd1d69aef0c130511edd588cb947",
+        "run_index": 0,
+        "task": "Semiconductor/MOSFETDoping",
+        "algorithm": "greedy_rewrite",
+        "feedback_mode": "selection_blind",
+        "seed": 1,
+        "snapshot_trajectory_sha256": "79ccb018edf360577fd139f52e9c97cf636954a68524982a55fc834e8251091c"
+      },
+      "event_count": 4,
+      "analysis_origin_source_seconds": 2.5456180488690734,
+      "source_horizon_seconds": 111.4323115022853,
+      "analysis_last_event_seconds": 108.88669345341623,
+      "analysis_horizon_seconds": 120.0,
+      "portable_source_events": [
+        {
+          "step": 0,
+          "source_time_seconds": 2.5456180488690734,
+          "analysis_time_seconds": 0.0,
+          "valid": true,
+          "accepted": true,
+          "score": 0.0,
+          "best_score": 0.0,
+          "candidate_sha256": "243f1a3fe6bca79989c47a8945e69dc9de419544c02f5f737a754ec56acac5e6"
+        },
+        {
+          "step": 1,
+          "source_time_seconds": 35.82291704695672,
+          "analysis_time_seconds": 33.277298998087645,
+          "valid": true,
+          "accepted": true,
+          "score": 0.5100130852546624,
+          "best_score": 0.5100130852546624,
+          "candidate_sha256": "c5ad5c765432e9cc789ff790d929be6c83c00636cb073bbf9de7a80cf1c56177"
+        },
+        {
+          "step": 2,
+          "source_time_seconds": 69.75413286685944,
+          "analysis_time_seconds": 67.20851481799036,
+          "valid": true,
+          "accepted": true,
+          "score": 0.7703221705827237,
+          "best_score": 0.7703221705827237,
+          "candidate_sha256": "7dc47656aee789a2f53def3c4ae5f39a9d6f771aa01d540c80d6c7829f512d74"
+        },
+        {
+          "step": 3,
+          "source_time_seconds": 111.4323115022853,
+          "analysis_time_seconds": 108.88669345341623,
+          "valid": true,
+          "accepted": false,
+          "score": 0.6861819586968257,
+          "best_score": 0.7703221705827237,
+          "candidate_sha256": "1fee4134c90e02fa4f2c2cf49ca389e484b27039ecd49dd25d500e30aebcef46"
+        }
+      ],
+      "kernels": [
+        {
+          "kernel": "dense_event",
+          "interval_seconds": null,
+          "phase_seconds": 0.0,
+          "horizon_seconds": 120.0,
+          "material_epsilon": 0.0,
+          "observation_count": 5,
+          "material_state_count_including_baseline": 3,
+          "first_valid_event": {
+            "event_step": 0,
+            "event_kind": "baseline_valid",
+            "event_time_seconds": 0.0,
+            "left_open_seconds": 0.0,
+            "right_closed_seconds": 0.0,
+            "interval_width_seconds": 0.0,
+            "detection_delay_seconds": 0.0,
+            "material_best_score": 0.0,
+            "observed_as_distinct_state": true
+          },
+          "post_first_valid_improvement_count": 2,
+          "material_transition_count_excluding_valid_t0_baseline": 2,
+          "observed_material_state_count": 3,
+          "source_event_state_count": 4,
+          "observed_current_event_state_count": 4,
+          "missed_current_event_state_count": 0,
+          "missed_current_event_state_rate": 0.0,
+          "missed_current_event_steps": [],
+          "missed_material_transition_count": 0,
+          "missed_material_transition_rate": 0.0,
+          "mean_detection_delay_seconds": 0.0,
+          "maximum_detection_delay_seconds": 0.0,
+          "wall_time_auc": 0.48309846267034795,
+          "wall_time_ever_valid_auc": 1.0,
+          "wall_time_current_validity_auc": 1.0,
+          "observations": [
+            {
+              "observed_at_seconds": 0.0,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 33.277298998087645,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.5100130852546624,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.5100130852546624
+            },
+            {
+              "observed_at_seconds": 67.20851481799036,
+              "envelope_source_event_step": 2,
+              "valid_envelope": true,
+              "best_score": 0.7703221705827237,
+              "current_event_step": 2,
+              "current_valid": true,
+              "current_score": 0.7703221705827237
+            },
+            {
+              "observed_at_seconds": 108.88669345341623,
+              "envelope_source_event_step": 2,
+              "valid_envelope": true,
+              "best_score": 0.7703221705827237,
+              "current_event_step": 3,
+              "current_valid": true,
+              "current_score": 0.6861819586968257
+            },
+            {
+              "observed_at_seconds": 120.0,
+              "envelope_source_event_step": 2,
+              "valid_envelope": true,
+              "best_score": 0.7703221705827237,
+              "current_event_step": 3,
+              "current_valid": true,
+              "current_score": 0.6861819586968257
+            }
+          ],
+          "material_event_intervals": [
+            {
+              "event_step": 0,
+              "event_kind": "baseline_valid",
+              "event_time_seconds": 0.0,
+              "left_open_seconds": 0.0,
+              "right_closed_seconds": 0.0,
+              "interval_width_seconds": 0.0,
+              "detection_delay_seconds": 0.0,
+              "material_best_score": 0.0,
+              "observed_as_distinct_state": true
+            },
+            {
+              "event_step": 1,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 33.277298998087645,
+              "left_open_seconds": 0.0,
+              "right_closed_seconds": 33.277298998087645,
+              "interval_width_seconds": 33.277298998087645,
+              "detection_delay_seconds": 0.0,
+              "material_best_score": 0.5100130852546624,
+              "observed_as_distinct_state": true
+            },
+            {
+              "event_step": 2,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 67.20851481799036,
+              "left_open_seconds": 33.277298998087645,
+              "right_closed_seconds": 67.20851481799036,
+              "interval_width_seconds": 33.93121581990272,
+              "detection_delay_seconds": 0.0,
+              "material_best_score": 0.7703221705827237,
+              "observed_as_distinct_state": true
+            }
+          ],
+          "auc_delta_from_dense": 0.0
+        },
+        {
+          "kernel": "fixed",
+          "interval_seconds": 15.0,
+          "phase_seconds": 0.0,
+          "horizon_seconds": 120.0,
+          "material_epsilon": 0.0,
+          "observation_count": 9,
+          "material_state_count_including_baseline": 3,
+          "first_valid_event": {
+            "event_step": 0,
+            "event_kind": "baseline_valid",
+            "event_time_seconds": 0.0,
+            "left_open_seconds": 0.0,
+            "right_closed_seconds": 0.0,
+            "interval_width_seconds": 0.0,
+            "detection_delay_seconds": 0.0,
+            "material_best_score": 0.0,
+            "observed_as_distinct_state": true
+          },
+          "post_first_valid_improvement_count": 2,
+          "material_transition_count_excluding_valid_t0_baseline": 2,
+          "observed_material_state_count": 3,
+          "source_event_state_count": 4,
+          "observed_current_event_state_count": 4,
+          "missed_current_event_state_count": 0,
+          "missed_current_event_state_rate": 0.0,
+          "missed_current_event_steps": [],
+          "missed_material_transition_count": 0,
+          "missed_material_transition_rate": 0.0,
+          "mean_detection_delay_seconds": 9.757093091960996,
+          "maximum_detection_delay_seconds": 11.722701001912355,
+          "wall_time_auc": 0.41637408528218695,
+          "wall_time_ever_valid_auc": 1.0,
+          "wall_time_current_validity_auc": 1.0,
+          "observations": [
+            {
+              "observed_at_seconds": 0.0,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 15.0,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 30.0,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 45.0,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.5100130852546624,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.5100130852546624
+            },
+            {
+              "observed_at_seconds": 60.0,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.5100130852546624,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.5100130852546624
+            },
+            {
+              "observed_at_seconds": 75.0,
+              "envelope_source_event_step": 2,
+              "valid_envelope": true,
+              "best_score": 0.7703221705827237,
+              "current_event_step": 2,
+              "current_valid": true,
+              "current_score": 0.7703221705827237
+            },
+            {
+              "observed_at_seconds": 90.0,
+              "envelope_source_event_step": 2,
+              "valid_envelope": true,
+              "best_score": 0.7703221705827237,
+              "current_event_step": 2,
+              "current_valid": true,
+              "current_score": 0.7703221705827237
+            },
+            {
+              "observed_at_seconds": 105.0,
+              "envelope_source_event_step": 2,
+              "valid_envelope": true,
+              "best_score": 0.7703221705827237,
+              "current_event_step": 2,
+              "current_valid": true,
+              "current_score": 0.7703221705827237
+            },
+            {
+              "observed_at_seconds": 120.0,
+              "envelope_source_event_step": 2,
+              "valid_envelope": true,
+              "best_score": 0.7703221705827237,
+              "current_event_step": 3,
+              "current_valid": true,
+              "current_score": 0.6861819586968257
+            }
+          ],
+          "material_event_intervals": [
+            {
+              "event_step": 0,
+              "event_kind": "baseline_valid",
+              "event_time_seconds": 0.0,
+              "left_open_seconds": 0.0,
+              "right_closed_seconds": 0.0,
+              "interval_width_seconds": 0.0,
+              "detection_delay_seconds": 0.0,
+              "material_best_score": 0.0,
+              "observed_as_distinct_state": true
+            },
+            {
+              "event_step": 1,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 33.277298998087645,
+              "left_open_seconds": 30.0,
+              "right_closed_seconds": 45.0,
+              "interval_width_seconds": 15.0,
+              "detection_delay_seconds": 11.722701001912355,
+              "material_best_score": 0.5100130852546624,
+              "observed_as_distinct_state": true
+            },
+            {
+              "event_step": 2,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 67.20851481799036,
+              "left_open_seconds": 60.0,
+              "right_closed_seconds": 75.0,
+              "interval_width_seconds": 15.0,
+              "detection_delay_seconds": 7.791485182009637,
+              "material_best_score": 0.7703221705827237,
+              "observed_as_distinct_state": true
+            }
+          ],
+          "auc_delta_from_dense": -0.066724377388161
+        },
+        {
+          "kernel": "random_phase",
+          "interval_seconds": 15.0,
+          "phase_seconds": 2.236058215087985,
+          "horizon_seconds": 120.0,
+          "material_epsilon": 0.0,
+          "observation_count": 10,
+          "material_state_count_including_baseline": 3,
+          "first_valid_event": {
+            "event_step": 0,
+            "event_kind": "baseline_valid",
+            "event_time_seconds": 0.0,
+            "left_open_seconds": 0.0,
+            "right_closed_seconds": 0.0,
+            "interval_width_seconds": 0.0,
+            "detection_delay_seconds": 0.0,
+            "material_best_score": 0.0,
+            "observed_as_distinct_state": true
+          },
+          "post_first_valid_improvement_count": 2,
+          "material_transition_count_excluding_valid_t0_baseline": 2,
+          "observed_material_state_count": 3,
+          "source_event_state_count": 4,
+          "observed_current_event_state_count": 4,
+          "missed_current_event_state_count": 0,
+          "missed_current_event_state_rate": 0.0,
+          "missed_current_event_steps": [],
+          "missed_material_transition_count": 0,
+          "missed_material_transition_rate": 0.0,
+          "mean_detection_delay_seconds": 11.99315130704898,
+          "maximum_detection_delay_seconds": 13.958759217000342,
+          "wall_time_auc": 0.4020200418005544,
+          "wall_time_ever_valid_auc": 1.0,
+          "wall_time_current_validity_auc": 1.0,
+          "observations": [
+            {
+              "observed_at_seconds": 0.0,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 2.236058215087985,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 17.236058215087986,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 32.236058215087986,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 47.236058215087986,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.5100130852546624,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.5100130852546624
+            },
+            {
+              "observed_at_seconds": 62.236058215087986,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.5100130852546624,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.5100130852546624
+            },
+            {
+              "observed_at_seconds": 77.23605821508798,
+              "envelope_source_event_step": 2,
+              "valid_envelope": true,
+              "best_score": 0.7703221705827237,
+              "current_event_step": 2,
+              "current_valid": true,
+              "current_score": 0.7703221705827237
+            },
+            {
+              "observed_at_seconds": 92.23605821508798,
+              "envelope_source_event_step": 2,
+              "valid_envelope": true,
+              "best_score": 0.7703221705827237,
+              "current_event_step": 2,
+              "current_valid": true,
+              "current_score": 0.7703221705827237
+            },
+            {
+              "observed_at_seconds": 107.23605821508798,
+              "envelope_source_event_step": 2,
+              "valid_envelope": true,
+              "best_score": 0.7703221705827237,
+              "current_event_step": 2,
+              "current_valid": true,
+              "current_score": 0.7703221705827237
+            },
+            {
+              "observed_at_seconds": 120.0,
+              "envelope_source_event_step": 2,
+              "valid_envelope": true,
+              "best_score": 0.7703221705827237,
+              "current_event_step": 3,
+              "current_valid": true,
+              "current_score": 0.6861819586968257
+            }
+          ],
+          "material_event_intervals": [
+            {
+              "event_step": 0,
+              "event_kind": "baseline_valid",
+              "event_time_seconds": 0.0,
+              "left_open_seconds": 0.0,
+              "right_closed_seconds": 0.0,
+              "interval_width_seconds": 0.0,
+              "detection_delay_seconds": 0.0,
+              "material_best_score": 0.0,
+              "observed_as_distinct_state": true
+            },
+            {
+              "event_step": 1,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 33.277298998087645,
+              "left_open_seconds": 32.236058215087986,
+              "right_closed_seconds": 47.236058215087986,
+              "interval_width_seconds": 15.0,
+              "detection_delay_seconds": 13.958759217000342,
+              "material_best_score": 0.5100130852546624,
+              "observed_as_distinct_state": true
+            },
+            {
+              "event_step": 2,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 67.20851481799036,
+              "left_open_seconds": 62.236058215087986,
+              "right_closed_seconds": 77.23605821508798,
+              "interval_width_seconds": 14.999999999999993,
+              "detection_delay_seconds": 10.027543397097617,
+              "material_best_score": 0.7703221705827237,
+              "observed_as_distinct_state": true
+            }
+          ],
+          "auc_delta_from_dense": -0.08107842086979355
+        },
+        {
+          "kernel": "fixed",
+          "interval_seconds": 30.0,
+          "phase_seconds": 0.0,
+          "horizon_seconds": 120.0,
+          "material_epsilon": 0.0,
+          "observation_count": 5,
+          "material_state_count_including_baseline": 3,
+          "first_valid_event": {
+            "event_step": 0,
+            "event_kind": "baseline_valid",
+            "event_time_seconds": 0.0,
+            "left_open_seconds": 0.0,
+            "right_closed_seconds": 0.0,
+            "interval_width_seconds": 0.0,
+            "detection_delay_seconds": 0.0,
+            "material_best_score": 0.0,
+            "observed_as_distinct_state": true
+          },
+          "post_first_valid_improvement_count": 2,
+          "material_transition_count_excluding_valid_t0_baseline": 2,
+          "observed_material_state_count": 3,
+          "source_event_state_count": 4,
+          "observed_current_event_state_count": 4,
+          "missed_current_event_state_count": 0,
+          "missed_current_event_state_rate": 0.0,
+          "missed_current_event_steps": [],
+          "missed_material_transition_count": 0,
+          "missed_material_transition_rate": 0.0,
+          "mean_detection_delay_seconds": 24.757093091960996,
+          "maximum_detection_delay_seconds": 26.722701001912355,
+          "wall_time_auc": 0.3200838139593465,
+          "wall_time_ever_valid_auc": 1.0,
+          "wall_time_current_validity_auc": 1.0,
+          "observations": [
+            {
+              "observed_at_seconds": 0.0,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 30.0,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 60.0,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.5100130852546624,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.5100130852546624
+            },
+            {
+              "observed_at_seconds": 90.0,
+              "envelope_source_event_step": 2,
+              "valid_envelope": true,
+              "best_score": 0.7703221705827237,
+              "current_event_step": 2,
+              "current_valid": true,
+              "current_score": 0.7703221705827237
+            },
+            {
+              "observed_at_seconds": 120.0,
+              "envelope_source_event_step": 2,
+              "valid_envelope": true,
+              "best_score": 0.7703221705827237,
+              "current_event_step": 3,
+              "current_valid": true,
+              "current_score": 0.6861819586968257
+            }
+          ],
+          "material_event_intervals": [
+            {
+              "event_step": 0,
+              "event_kind": "baseline_valid",
+              "event_time_seconds": 0.0,
+              "left_open_seconds": 0.0,
+              "right_closed_seconds": 0.0,
+              "interval_width_seconds": 0.0,
+              "detection_delay_seconds": 0.0,
+              "material_best_score": 0.0,
+              "observed_as_distinct_state": true
+            },
+            {
+              "event_step": 1,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 33.277298998087645,
+              "left_open_seconds": 30.0,
+              "right_closed_seconds": 60.0,
+              "interval_width_seconds": 30.0,
+              "detection_delay_seconds": 26.722701001912355,
+              "material_best_score": 0.5100130852546624,
+              "observed_as_distinct_state": true
+            },
+            {
+              "event_step": 2,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 67.20851481799036,
+              "left_open_seconds": 60.0,
+              "right_closed_seconds": 90.0,
+              "interval_width_seconds": 30.0,
+              "detection_delay_seconds": 22.791485182009637,
+              "material_best_score": 0.7703221705827237,
+              "observed_as_distinct_state": true
+            }
+          ],
+          "auc_delta_from_dense": -0.16301464871100146
+        },
+        {
+          "kernel": "random_phase",
+          "interval_seconds": 30.0,
+          "phase_seconds": 0.9918893052575479,
+          "horizon_seconds": 120.0,
+          "material_epsilon": 0.0,
+          "observation_count": 6,
+          "material_state_count_including_baseline": 3,
+          "first_valid_event": {
+            "event_step": 0,
+            "event_kind": "baseline_valid",
+            "event_time_seconds": 0.0,
+            "left_open_seconds": 0.0,
+            "right_closed_seconds": 0.0,
+            "interval_width_seconds": 0.0,
+            "detection_delay_seconds": 0.0,
+            "material_best_score": 0.0,
+            "observed_as_distinct_state": true
+          },
+          "post_first_valid_improvement_count": 2,
+          "material_transition_count_excluding_valid_t0_baseline": 2,
+          "observed_material_state_count": 3,
+          "source_event_state_count": 4,
+          "observed_current_event_state_count": 4,
+          "missed_current_event_state_count": 0,
+          "missed_current_event_state_rate": 0.0,
+          "missed_current_event_steps": [],
+          "missed_material_transition_count": 0,
+          "missed_material_transition_rate": 0.0,
+          "mean_detection_delay_seconds": 25.74898239721854,
+          "maximum_detection_delay_seconds": 27.7145903071699,
+          "wall_time_auc": 0.31371652793764837,
+          "wall_time_ever_valid_auc": 1.0,
+          "wall_time_current_validity_auc": 1.0,
+          "observations": [
+            {
+              "observed_at_seconds": 0.0,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 0.9918893052575479,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 30.991889305257548,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 60.991889305257544,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.5100130852546624,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.5100130852546624
+            },
+            {
+              "observed_at_seconds": 90.99188930525754,
+              "envelope_source_event_step": 2,
+              "valid_envelope": true,
+              "best_score": 0.7703221705827237,
+              "current_event_step": 2,
+              "current_valid": true,
+              "current_score": 0.7703221705827237
+            },
+            {
+              "observed_at_seconds": 120.0,
+              "envelope_source_event_step": 2,
+              "valid_envelope": true,
+              "best_score": 0.7703221705827237,
+              "current_event_step": 3,
+              "current_valid": true,
+              "current_score": 0.6861819586968257
+            }
+          ],
+          "material_event_intervals": [
+            {
+              "event_step": 0,
+              "event_kind": "baseline_valid",
+              "event_time_seconds": 0.0,
+              "left_open_seconds": 0.0,
+              "right_closed_seconds": 0.0,
+              "interval_width_seconds": 0.0,
+              "detection_delay_seconds": 0.0,
+              "material_best_score": 0.0,
+              "observed_as_distinct_state": true
+            },
+            {
+              "event_step": 1,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 33.277298998087645,
+              "left_open_seconds": 30.991889305257548,
+              "right_closed_seconds": 60.991889305257544,
+              "interval_width_seconds": 29.999999999999996,
+              "detection_delay_seconds": 27.7145903071699,
+              "material_best_score": 0.5100130852546624,
+              "observed_as_distinct_state": true
+            },
+            {
+              "event_step": 2,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 67.20851481799036,
+              "left_open_seconds": 60.991889305257544,
+              "right_closed_seconds": 90.99188930525754,
+              "interval_width_seconds": 30.0,
+              "detection_delay_seconds": 23.78337448726718,
+              "material_best_score": 0.7703221705827237,
+              "observed_as_distinct_state": true
+            }
+          ],
+          "auc_delta_from_dense": -0.16938193473269958
+        },
+        {
+          "kernel": "fixed",
+          "interval_seconds": 60.0,
+          "phase_seconds": 0.0,
+          "horizon_seconds": 120.0,
+          "material_epsilon": 0.0,
+          "observation_count": 3,
+          "material_state_count_including_baseline": 3,
+          "first_valid_event": {
+            "event_step": 0,
+            "event_kind": "baseline_valid",
+            "event_time_seconds": 0.0,
+            "left_open_seconds": 0.0,
+            "right_closed_seconds": 0.0,
+            "interval_width_seconds": 0.0,
+            "detection_delay_seconds": 0.0,
+            "material_best_score": 0.0,
+            "observed_as_distinct_state": true
+          },
+          "post_first_valid_improvement_count": 2,
+          "material_transition_count_excluding_valid_t0_baseline": 2,
+          "observed_material_state_count": 3,
+          "source_event_state_count": 4,
+          "observed_current_event_state_count": 3,
+          "missed_current_event_state_count": 1,
+          "missed_current_event_state_rate": 0.25,
+          "missed_current_event_steps": [
+            2
+          ],
+          "missed_material_transition_count": 0,
+          "missed_material_transition_rate": 0.0,
+          "mean_detection_delay_seconds": 39.757093091960996,
+          "maximum_detection_delay_seconds": 52.79148518200964,
+          "wall_time_auc": 0.2550065426273312,
+          "wall_time_ever_valid_auc": 1.0,
+          "wall_time_current_validity_auc": 1.0,
+          "observations": [
+            {
+              "observed_at_seconds": 0.0,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 60.0,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.5100130852546624,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.5100130852546624
+            },
+            {
+              "observed_at_seconds": 120.0,
+              "envelope_source_event_step": 2,
+              "valid_envelope": true,
+              "best_score": 0.7703221705827237,
+              "current_event_step": 3,
+              "current_valid": true,
+              "current_score": 0.6861819586968257
+            }
+          ],
+          "material_event_intervals": [
+            {
+              "event_step": 0,
+              "event_kind": "baseline_valid",
+              "event_time_seconds": 0.0,
+              "left_open_seconds": 0.0,
+              "right_closed_seconds": 0.0,
+              "interval_width_seconds": 0.0,
+              "detection_delay_seconds": 0.0,
+              "material_best_score": 0.0,
+              "observed_as_distinct_state": true
+            },
+            {
+              "event_step": 1,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 33.277298998087645,
+              "left_open_seconds": 0.0,
+              "right_closed_seconds": 60.0,
+              "interval_width_seconds": 60.0,
+              "detection_delay_seconds": 26.722701001912355,
+              "material_best_score": 0.5100130852546624,
+              "observed_as_distinct_state": true
+            },
+            {
+              "event_step": 2,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 67.20851481799036,
+              "left_open_seconds": 60.0,
+              "right_closed_seconds": 120.0,
+              "interval_width_seconds": 60.0,
+              "detection_delay_seconds": 52.79148518200964,
+              "material_best_score": 0.7703221705827237,
+              "observed_as_distinct_state": true
+            }
+          ],
+          "auc_delta_from_dense": -0.22809192004301676
+        },
+        {
+          "kernel": "random_phase",
+          "interval_seconds": 60.0,
+          "phase_seconds": 4.819593749393135,
+          "horizon_seconds": 120.0,
+          "material_epsilon": 0.0,
+          "observation_count": 4,
+          "material_state_count_including_baseline": 3,
+          "first_valid_event": {
+            "event_step": 0,
+            "event_kind": "baseline_valid",
+            "event_time_seconds": 0.0,
+            "left_open_seconds": 0.0,
+            "right_closed_seconds": 0.0,
+            "interval_width_seconds": 0.0,
+            "detection_delay_seconds": 0.0,
+            "material_best_score": 0.0,
+            "observed_as_distinct_state": true
+          },
+          "post_first_valid_improvement_count": 2,
+          "material_transition_count_excluding_valid_t0_baseline": 2,
+          "observed_material_state_count": 3,
+          "source_event_state_count": 4,
+          "observed_current_event_state_count": 3,
+          "missed_current_event_state_count": 1,
+          "missed_current_event_state_rate": 0.25,
+          "missed_current_event_steps": [
+            2
+          ],
+          "missed_material_transition_count": 0,
+          "missed_material_transition_rate": 0.0,
+          "mean_detection_delay_seconds": 42.166889966657564,
+          "maximum_detection_delay_seconds": 52.79148518200964,
+          "wall_time_auc": 0.2345227436456472,
+          "wall_time_ever_valid_auc": 1.0,
+          "wall_time_current_validity_auc": 1.0,
+          "observations": [
+            {
+              "observed_at_seconds": 0.0,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 4.819593749393135,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 64.81959374939314,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.5100130852546624,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.5100130852546624
+            },
+            {
+              "observed_at_seconds": 120.0,
+              "envelope_source_event_step": 2,
+              "valid_envelope": true,
+              "best_score": 0.7703221705827237,
+              "current_event_step": 3,
+              "current_valid": true,
+              "current_score": 0.6861819586968257
+            }
+          ],
+          "material_event_intervals": [
+            {
+              "event_step": 0,
+              "event_kind": "baseline_valid",
+              "event_time_seconds": 0.0,
+              "left_open_seconds": 0.0,
+              "right_closed_seconds": 0.0,
+              "interval_width_seconds": 0.0,
+              "detection_delay_seconds": 0.0,
+              "material_best_score": 0.0,
+              "observed_as_distinct_state": true
+            },
+            {
+              "event_step": 1,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 33.277298998087645,
+              "left_open_seconds": 4.819593749393135,
+              "right_closed_seconds": 64.81959374939314,
+              "interval_width_seconds": 60.0,
+              "detection_delay_seconds": 31.54229475130549,
+              "material_best_score": 0.5100130852546624,
+              "observed_as_distinct_state": true
+            },
+            {
+              "event_step": 2,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 67.20851481799036,
+              "left_open_seconds": 64.81959374939314,
+              "right_closed_seconds": 120.0,
+              "interval_width_seconds": 55.180406250606865,
+              "detection_delay_seconds": 52.79148518200964,
+              "material_best_score": 0.7703221705827237,
+              "observed_as_distinct_state": true
+            }
+          ],
+          "auc_delta_from_dense": -0.24857571902470074
+        },
+        {
+          "kernel": "fixed",
+          "interval_seconds": 120.0,
+          "phase_seconds": 0.0,
+          "horizon_seconds": 120.0,
+          "material_epsilon": 0.0,
+          "observation_count": 2,
+          "material_state_count_including_baseline": 3,
+          "first_valid_event": {
+            "event_step": 0,
+            "event_kind": "baseline_valid",
+            "event_time_seconds": 0.0,
+            "left_open_seconds": 0.0,
+            "right_closed_seconds": 0.0,
+            "interval_width_seconds": 0.0,
+            "detection_delay_seconds": 0.0,
+            "material_best_score": 0.0,
+            "observed_as_distinct_state": true
+          },
+          "post_first_valid_improvement_count": 2,
+          "material_transition_count_excluding_valid_t0_baseline": 2,
+          "observed_material_state_count": 2,
+          "source_event_state_count": 4,
+          "observed_current_event_state_count": 2,
+          "missed_current_event_state_count": 2,
+          "missed_current_event_state_rate": 0.5,
+          "missed_current_event_steps": [
+            1,
+            2
+          ],
+          "missed_material_transition_count": 1,
+          "missed_material_transition_rate": 0.5,
+          "mean_detection_delay_seconds": 69.757093091961,
+          "maximum_detection_delay_seconds": 86.72270100191236,
+          "wall_time_auc": 0.0,
+          "wall_time_ever_valid_auc": 1.0,
+          "wall_time_current_validity_auc": 1.0,
+          "observations": [
+            {
+              "observed_at_seconds": 0.0,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 120.0,
+              "envelope_source_event_step": 2,
+              "valid_envelope": true,
+              "best_score": 0.7703221705827237,
+              "current_event_step": 3,
+              "current_valid": true,
+              "current_score": 0.6861819586968257
+            }
+          ],
+          "material_event_intervals": [
+            {
+              "event_step": 0,
+              "event_kind": "baseline_valid",
+              "event_time_seconds": 0.0,
+              "left_open_seconds": 0.0,
+              "right_closed_seconds": 0.0,
+              "interval_width_seconds": 0.0,
+              "detection_delay_seconds": 0.0,
+              "material_best_score": 0.0,
+              "observed_as_distinct_state": true
+            },
+            {
+              "event_step": 1,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 33.277298998087645,
+              "left_open_seconds": 0.0,
+              "right_closed_seconds": 120.0,
+              "interval_width_seconds": 120.0,
+              "detection_delay_seconds": 86.72270100191236,
+              "material_best_score": 0.5100130852546624,
+              "observed_as_distinct_state": false
+            },
+            {
+              "event_step": 2,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 67.20851481799036,
+              "left_open_seconds": 0.0,
+              "right_closed_seconds": 120.0,
+              "interval_width_seconds": 120.0,
+              "detection_delay_seconds": 52.79148518200964,
+              "material_best_score": 0.7703221705827237,
+              "observed_as_distinct_state": true
+            }
+          ],
+          "auc_delta_from_dense": -0.48309846267034795
+        },
+        {
+          "kernel": "random_phase",
+          "interval_seconds": 120.0,
+          "phase_seconds": 35.55621511911938,
+          "horizon_seconds": 120.0,
+          "material_epsilon": 0.0,
+          "observation_count": 3,
+          "material_state_count_including_baseline": 3,
+          "first_valid_event": {
+            "event_step": 0,
+            "event_kind": "baseline_valid",
+            "event_time_seconds": 0.0,
+            "left_open_seconds": 0.0,
+            "right_closed_seconds": 0.0,
+            "interval_width_seconds": 0.0,
+            "detection_delay_seconds": 0.0,
+            "material_best_score": 0.0,
+            "observed_as_distinct_state": true
+          },
+          "post_first_valid_improvement_count": 2,
+          "material_transition_count_excluding_valid_t0_baseline": 2,
+          "observed_material_state_count": 3,
+          "source_event_state_count": 4,
+          "observed_current_event_state_count": 3,
+          "missed_current_event_state_count": 1,
+          "missed_current_event_state_rate": 0.25,
+          "missed_current_event_steps": [
+            2
+          ],
+          "missed_material_transition_count": 0,
+          "missed_material_transition_rate": 0.0,
+          "mean_detection_delay_seconds": 27.535200651520686,
+          "maximum_detection_delay_seconds": 52.79148518200964,
+          "wall_time_auc": 0.3588952938139912,
+          "wall_time_ever_valid_auc": 1.0,
+          "wall_time_current_validity_auc": 1.0,
+          "observations": [
+            {
+              "observed_at_seconds": 0.0,
+              "envelope_source_event_step": 0,
+              "valid_envelope": true,
+              "best_score": 0.0,
+              "current_event_step": 0,
+              "current_valid": true,
+              "current_score": 0.0
+            },
+            {
+              "observed_at_seconds": 35.55621511911938,
+              "envelope_source_event_step": 1,
+              "valid_envelope": true,
+              "best_score": 0.5100130852546624,
+              "current_event_step": 1,
+              "current_valid": true,
+              "current_score": 0.5100130852546624
+            },
+            {
+              "observed_at_seconds": 120.0,
+              "envelope_source_event_step": 2,
+              "valid_envelope": true,
+              "best_score": 0.7703221705827237,
+              "current_event_step": 3,
+              "current_valid": true,
+              "current_score": 0.6861819586968257
+            }
+          ],
+          "material_event_intervals": [
+            {
+              "event_step": 0,
+              "event_kind": "baseline_valid",
+              "event_time_seconds": 0.0,
+              "left_open_seconds": 0.0,
+              "right_closed_seconds": 0.0,
+              "interval_width_seconds": 0.0,
+              "detection_delay_seconds": 0.0,
+              "material_best_score": 0.0,
+              "observed_as_distinct_state": true
+            },
+            {
+              "event_step": 1,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 33.277298998087645,
+              "left_open_seconds": 0.0,
+              "right_closed_seconds": 35.55621511911938,
+              "interval_width_seconds": 35.55621511911938,
+              "detection_delay_seconds": 2.2789161210317346,
+              "material_best_score": 0.5100130852546624,
+              "observed_as_distinct_state": true
+            },
+            {
+              "event_step": 2,
+              "event_kind": "material_improvement",
+              "event_time_seconds": 67.20851481799036,
+              "left_open_seconds": 35.55621511911938,
+              "right_closed_seconds": 120.0,
+              "interval_width_seconds": 84.44378488088063,
+              "detection_delay_seconds": 52.79148518200964,
+              "material_best_score": 0.7703221705827237,
+              "observed_as_distinct_state": true
+            }
+          ],
+          "auc_delta_from_dense": -0.12420316885635674
+        }
+      ]
+    }
+  ],
+  "rank_analysis": {
+    "enabled": true,
+    "caller_attestation": "input trajectories share one scientifically comparable score construct",
+    "comparison_count": 3,
+    "kernels": [
+      {
+        "kernel_key": "dense_event",
+        "ranks": [
+          {
+            "trajectory": "runs/mosfet_v2_b1/Semiconductor__MOSFETDoping/greedy_rewrite/normal/seed_0/trajectory.jsonl",
+            "wall_time_auc": 0.5426633262879711,
+            "rank": 1
+          },
+          {
+            "trajectory": "runs/mosfet_v2_blind_b3/Semiconductor__MOSFETDoping/greedy_rewrite/selection_blind/seed_1/trajectory.jsonl",
+            "wall_time_auc": 0.48309846267034795,
+            "rank": 2
+          },
+          {
+            "trajectory": "runs/mosfet_v2_b3/Semiconductor__MOSFETDoping/greedy_rewrite/normal/seed_1/trajectory.jsonl",
+            "wall_time_auc": 0.16422267044351624,
+            "rank": 3
+          }
+        ],
+        "strict_pair_count": 3,
+        "pairwise_rank_reversal_count_vs_dense": 0,
+        "pairwise_tie_change_count_vs_dense": 0
+      },
+      {
+        "kernel_key": "fixed:120:0",
+        "ranks": [
+          {
+            "trajectory": "runs/mosfet_v2_b1/Semiconductor__MOSFETDoping/greedy_rewrite/normal/seed_0/trajectory.jsonl",
+            "wall_time_auc": 0.0,
+            "rank": 1
+          },
+          {
+            "trajectory": "runs/mosfet_v2_b3/Semiconductor__MOSFETDoping/greedy_rewrite/normal/seed_1/trajectory.jsonl",
+            "wall_time_auc": 0.0,
+            "rank": 1
+          },
+          {
+            "trajectory": "runs/mosfet_v2_blind_b3/Semiconductor__MOSFETDoping/greedy_rewrite/selection_blind/seed_1/trajectory.jsonl",
+            "wall_time_auc": 0.0,
+            "rank": 1
+          }
+        ],
+        "strict_pair_count": 3,
+        "pairwise_rank_reversal_count_vs_dense": 0,
+        "pairwise_tie_change_count_vs_dense": 3
+      },
+      {
+        "kernel_key": "fixed:15:0",
+        "ranks": [
+          {
+            "trajectory": "runs/mosfet_v2_b1/Semiconductor__MOSFETDoping/greedy_rewrite/normal/seed_0/trajectory.jsonl",
+            "wall_time_auc": 0.48731106274885355,
+            "rank": 1
+          },
+          {
+            "trajectory": "runs/mosfet_v2_blind_b3/Semiconductor__MOSFETDoping/greedy_rewrite/selection_blind/seed_1/trajectory.jsonl",
+            "wall_time_auc": 0.41637408528218695,
+            "rank": 2
+          },
+          {
+            "trajectory": "runs/mosfet_v2_b3/Semiconductor__MOSFETDoping/greedy_rewrite/normal/seed_1/trajectory.jsonl",
+            "wall_time_auc": 0.12046342694469517,
+            "rank": 3
+          }
+        ],
+        "strict_pair_count": 3,
+        "pairwise_rank_reversal_count_vs_dense": 0,
+        "pairwise_tie_change_count_vs_dense": 0
+      },
+      {
+        "kernel_key": "fixed:30:0",
+        "ranks": [
+          {
+            "trajectory": "runs/mosfet_v2_b1/Semiconductor__MOSFETDoping/greedy_rewrite/normal/seed_0/trajectory.jsonl",
+            "wall_time_auc": 0.38984885019908283,
+            "rank": 1
+          },
+          {
+            "trajectory": "runs/mosfet_v2_blind_b3/Semiconductor__MOSFETDoping/greedy_rewrite/selection_blind/seed_1/trajectory.jsonl",
+            "wall_time_auc": 0.3200838139593465,
+            "rank": 2
+          },
+          {
+            "trajectory": "runs/mosfet_v2_b3/Semiconductor__MOSFETDoping/greedy_rewrite/normal/seed_1/trajectory.jsonl",
+            "wall_time_auc": 0.09637074155575615,
+            "rank": 3
+          }
+        ],
+        "strict_pair_count": 3,
+        "pairwise_rank_reversal_count_vs_dense": 0,
+        "pairwise_tie_change_count_vs_dense": 0
+      },
+      {
+        "kernel_key": "fixed:60:0",
+        "ranks": [
+          {
+            "trajectory": "runs/mosfet_v2_b1/Semiconductor__MOSFETDoping/greedy_rewrite/normal/seed_0/trajectory.jsonl",
+            "wall_time_auc": 0.38984885019908283,
+            "rank": 1
+          },
+          {
+            "trajectory": "runs/mosfet_v2_blind_b3/Semiconductor__MOSFETDoping/greedy_rewrite/selection_blind/seed_1/trajectory.jsonl",
+            "wall_time_auc": 0.2550065426273312,
+            "rank": 2
+          },
+          {
+            "trajectory": "runs/mosfet_v2_b3/Semiconductor__MOSFETDoping/greedy_rewrite/normal/seed_1/trajectory.jsonl",
+            "wall_time_auc": 0.09637074155575615,
+            "rank": 3
+          }
+        ],
+        "strict_pair_count": 3,
+        "pairwise_rank_reversal_count_vs_dense": 0,
+        "pairwise_tie_change_count_vs_dense": 0
+      },
+      {
+        "kernel_key": "random_phase:120:35.5562",
+        "ranks": [
+          {
+            "trajectory": "runs/mosfet_v2_blind_b3/Semiconductor__MOSFETDoping/greedy_rewrite/selection_blind/seed_1/trajectory.jsonl",
+            "wall_time_auc": 0.3588952938139912,
+            "rank": 1
+          },
+          {
+            "trajectory": "runs/mosfet_v2_b1/Semiconductor__MOSFETDoping/greedy_rewrite/normal/seed_0/trajectory.jsonl",
+            "wall_time_auc": 0.0,
+            "rank": 2
+          },
+          {
+            "trajectory": "runs/mosfet_v2_b3/Semiconductor__MOSFETDoping/greedy_rewrite/normal/seed_1/trajectory.jsonl",
+            "wall_time_auc": 0.0,
+            "rank": 2
+          }
+        ],
+        "strict_pair_count": 3,
+        "pairwise_rank_reversal_count_vs_dense": 1,
+        "pairwise_tie_change_count_vs_dense": 1
+      },
+      {
+        "kernel_key": "random_phase:15:2.23606",
+        "ranks": [
+          {
+            "trajectory": "runs/mosfet_v2_b1/Semiconductor__MOSFETDoping/greedy_rewrite/normal/seed_0/trajectory.jsonl",
+            "wall_time_auc": 0.47278231734668247,
+            "rank": 1
+          },
+          {
+            "trajectory": "runs/mosfet_v2_blind_b3/Semiconductor__MOSFETDoping/greedy_rewrite/selection_blind/seed_1/trajectory.jsonl",
+            "wall_time_auc": 0.4020200418005544,
+            "rank": 2
+          },
+          {
+            "trajectory": "runs/mosfet_v2_b3/Semiconductor__MOSFETDoping/greedy_rewrite/normal/seed_1/trajectory.jsonl",
+            "wall_time_auc": 0.14502258370778076,
+            "rank": 3
+          }
+        ],
+        "strict_pair_count": 3,
+        "pairwise_rank_reversal_count_vs_dense": 0,
+        "pairwise_tie_change_count_vs_dense": 0
+      },
+      {
+        "kernel_key": "random_phase:30:0.991889",
+        "ranks": [
+          {
+            "trajectory": "runs/mosfet_v2_b1/Semiconductor__MOSFETDoping/greedy_rewrite/normal/seed_0/trajectory.jsonl",
+            "wall_time_auc": 0.3834040684460925,
+            "rank": 1
+          },
+          {
+            "trajectory": "runs/mosfet_v2_blind_b3/Semiconductor__MOSFETDoping/greedy_rewrite/selection_blind/seed_1/trajectory.jsonl",
+            "wall_time_auc": 0.31371652793764837,
+            "rank": 2
+          },
+          {
+            "trajectory": "runs/mosfet_v2_b3/Semiconductor__MOSFETDoping/greedy_rewrite/normal/seed_1/trajectory.jsonl",
+            "wall_time_auc": 0.09477758975760793,
+            "rank": 3
+          }
+        ],
+        "strict_pair_count": 3,
+        "pairwise_rank_reversal_count_vs_dense": 0,
+        "pairwise_tie_change_count_vs_dense": 0
+      },
+      {
+        "kernel_key": "random_phase:60:4.81959",
+        "ranks": [
+          {
+            "trajectory": "runs/mosfet_v2_b1/Semiconductor__MOSFETDoping/greedy_rewrite/normal/seed_0/trajectory.jsonl",
+            "wall_time_auc": 0.35853363217195616,
+            "rank": 1
+          },
+          {
+            "trajectory": "runs/mosfet_v2_blind_b3/Semiconductor__MOSFETDoping/greedy_rewrite/selection_blind/seed_1/trajectory.jsonl",
+            "wall_time_auc": 0.2345227436456472,
+            "rank": 2
+          },
+          {
+            "trajectory": "runs/mosfet_v2_b3/Semiconductor__MOSFETDoping/greedy_rewrite/normal/seed_1/trajectory.jsonl",
+            "wall_time_auc": 0.08862961116198109,
+            "rank": 3
+          }
+        ],
+        "strict_pair_count": 3,
+        "pairwise_rank_reversal_count_vs_dense": 0,
+        "pairwise_tie_change_count_vs_dense": 0
+      }
+    ]
+  },
+  "limitations": [
+    "Input event timestamps mark completed ledger events, not latent edit start times.",
+    "The first recorded valid baseline event is normalized to analysis time zero; pre-baseline setup time is excluded and retained as analysis_origin_source_seconds.",
+    "The audit replays observation only and does not model observer effects or feedback release.",
+    "Current trajectory schema is artifact-oriented; path-dependent live-state tasks require timestamped state transitions.",
+    "No EdgeBench raw trajectory is public, so this analysis cannot estimate an EdgeBench observation-kernel effect."
+  ],
+  "execution_passed": true,
+  "trust_decision": "trusted_clean_revision",
+  "trusted_evidence": true,
+  "passed": true
+}
