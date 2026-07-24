@@ -8,6 +8,7 @@ generation randomness, so normal versus selection-blind differences are not caus
 from __future__ import annotations
 
 import argparse
+import ast
 import hashlib
 import json
 import platform
@@ -81,6 +82,30 @@ def _failure_kind(event: dict[str, Any]) -> str | None:
     if isinstance(message, str) and message.startswith(prefix):
         return message[len(prefix):]
     return None
+
+
+def _fixed_instance_shortcut_scan(path: Path) -> dict[str, Any]:
+    source = path.read_text(encoding="utf-8")
+    tree = ast.parse(source)
+    forbidden_literals = {
+        "hairpin_24", "single_bulge_28", "internal_loop_30",
+        "tandem_hairpins_32", "two_branch_36", "asymmetric_internal_34",
+        "three_branch_40", "long_tandem_42",
+    }
+    string_literals = {
+        node.value for node in ast.walk(tree)
+        if isinstance(node, ast.Str)
+    }
+    forbidden_hits = sorted(forbidden_literals & string_literals)
+    source_hits = sorted(term for term in (
+        "verification", "REFERENCE_SEQUENCES", "_reference_policy"
+    ) if term in source)
+    return {
+        "source_sha256": _sha256(path),
+        "fixed_instance_literal_hits": forbidden_hits,
+        "evaluator_source_term_hits": source_hits,
+        "passed": not forbidden_hits and not source_hits,
+    }
 
 
 def _load_calibration(relative: str) -> dict[str, Any]:
@@ -306,6 +331,9 @@ def _load_model(label: str, relative: str) -> dict[str, Any]:
             event["valid"] and event["score"] > 0.0 for event in proposals
         ),
         "failure_counts": failure_counts,
+        "fixed_instance_shortcut_scan": _fixed_instance_shortcut_scan(
+            best_program_path
+        ),
     }
     record["integrity_passed"] = bool(
         _lineage_is_valid(record)
@@ -318,6 +346,7 @@ def _load_model(label: str, relative: str) -> dict[str, Any]:
         and record["accepted_proposals"] == int(run["accepted"])
         and abs(record["best_score"] - selected["score"]) < 1.0e-12
         and record["terminal_program_sha256"] == record["terminal_candidate_sha256"]
+        and record["fixed_instance_shortcut_scan"]["passed"]
         and manifest.get("task_id") == TASK
         and manifest.get("feedback_mode") == expected_mode
         and manifest.get("seed") == 1

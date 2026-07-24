@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -112,6 +113,26 @@ class RNAInverseAnalysisTests(unittest.TestCase):
             }),
             "invalid_sequence",
         )
+
+    def test_shortcut_scan_rejects_fixed_instance_literals(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            clean = Path(tmp) / "clean.py"
+            clean.write_text(
+                "def design_rna(problem):\n    return 'A' * problem['length']\n",
+                encoding="utf-8",
+            )
+            bad = Path(tmp) / "bad.py"
+            bad.write_text(
+                "def design_rna(problem):\n"
+                "    return 'A' if problem.get('name') == 'hairpin_24' else 'C'\n",
+                encoding="utf-8",
+            )
+            self.assertTrue(ANALYSIS._fixed_instance_shortcut_scan(clean)["passed"])
+            scanned = ANALYSIS._fixed_instance_shortcut_scan(bad)
+            self.assertFalse(scanned["passed"])
+            self.assertEqual(
+                scanned["fixed_instance_literal_hits"], ["hairpin_24"]
+            )
 
 
 if __name__ == "__main__":
