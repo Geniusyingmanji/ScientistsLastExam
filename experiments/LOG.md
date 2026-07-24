@@ -1594,3 +1594,14 @@ one-shot independent confirmation; null/model-mismatch worlds and false-discover
 are mandatory; stochastic artifacts are re-evaluated on hidden seeds; and agent-caused invalid
 runs remain in failure-inclusive estimates. The detailed, source-checked experiment list and
 phased TODO are in `docs/edgebench_science_experiment_addendum.md`.
+
+## 2026-07-24 — post-analysis clean-revision audit refresh
+
+On clean source `2706281`, the Seismic derived analyzer binds all formal and superseded reports,
+raw trajectories, parent/candidate hashes and selected artifacts; cross-task summary v15 binds
+**43 normal single-run conditions across 22 tasks**. The complete suite passes **227/227** tests.
+Inverse-track admission v7 passes all seven checks and retains five candidates/two quarantines;
+certification v33 remains **7 certified / 27 candidate / 17 quarantined**; security v17 passes
+**18/18**; and secure baseline v23 records **51/51 deterministic, 51/51 valid and 51/51
+fail-closed**, with zero infrastructure failures. These refresh provenance and close the Seismic
+evidence loop; they do not turn synthetic calibration into field or discovery evidence.

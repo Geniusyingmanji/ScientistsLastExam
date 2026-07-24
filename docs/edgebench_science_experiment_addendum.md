@@ -171,8 +171,8 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
 
 - [x] Seismic 正式/欠定义报告分流，绑定 report/raw trajectory/candidate/parent hashes；
 - [x] 把 information、mechanism、coverage、refusal 与 protocol failure 分轴；
-- [ ] clean revision 生成 derived analysis、43-condition/22-task summary 和四类审计；
-- [ ] 修正文档中的最终 revision、测试数和 report hashes。
+- [x] clean revision `2706281` 生成 derived analysis、43-condition/22-task summary 和四类审计；
+- [x] 全量回归 227/227，certification/security/baseline 刷新为 v33/v17/v23。
 
 ### P1 — Long-horizon pilot
 
