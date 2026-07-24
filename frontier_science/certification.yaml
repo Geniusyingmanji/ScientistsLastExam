@@ -72,8 +72,8 @@ tasks:
       - doi:10.1016/j.cell.2022.05.013
 
   RNAEngineering/RNAInverseDesign:
-    status: quarantined
-    reason: new exact pair-stack-loop ensemble inverse-design implementation has passed local equation, constraint, sandbox and headroom preflight but is not internally admissible until clean-revision calibration, full-inventory audits and required GPT-5.5 budget-one, normal budget-three and selection-blind budget-three calibrations are complete; the quarantine prevents a new directory from being counted as progress before that evidence exists
+    status: candidate
+    reason: constrained inverse design over five development and three held-out hairpin, bulge, internal-loop, tandem and multibranch targets uses an exact public pair-stack-loop partition-function dynamic program, exact pair marginals, MFE agreement, target probability, ensemble defect, fixed bases, GC and motif constraints plus four sealed energy/temperature shifts; independent exhaustive enumeration and deterministic reference regeneration pass, the weak hairpin baseline has perfect pair compatibility but target probability 3e-9, normal GPT-5.5 budget three improves 0.239 to 0.507 to 0.720 while retaining proxy false promotions, and a frozen-parent batch reaches 0.894 development and 0.986 held-out; retain as a simplified ensemble-design candidate pending server-held families, complete Turner/ViennaRNA or NUPACK replication, synthesis, functional assays and independent RNA-design review
     citation_ids:
       - doi:10.1093/nar/9.1.133
       - doi:10.1002/bip.360290621
