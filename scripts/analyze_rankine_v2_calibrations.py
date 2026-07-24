@@ -44,7 +44,9 @@ REPORTS = {
 }
 # Pinned after the preregistered runner source is committed and before the
 # derived report is generated.  Unit tests inject a synthetic expected revision.
-EXPECTED_MODEL_SOURCE_REVISION = "TO_BE_PINNED_AFTER_MODEL_RUNS"
+EXPECTED_MODEL_SOURCE_REVISION = (
+    "4b019e5699f03e1c025a5537ca4ffb56b56672cd"
+)
 TASK_RUNTIME_SCOPE = (
     "frontier_science",
     "benchmarks/Thermodynamics/RankineCycleOpt",
