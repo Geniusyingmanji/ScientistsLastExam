@@ -425,6 +425,67 @@ agent submission、每次 signed commit/abstain、preregistered fixed-grid check
 observer envelope 都有共同边界；若某个 sentinel capture/judge 失败，作为 reason-coded missing outcome，
 不能用邻近 best-so-far 值前向填充。
 
+### E29. 评分粒度与任务顺序不变性
+
+EdgeBench 的理论把 task score 写成许多带权 `score units`，其平滑极限要求大分值原子在聚合中不占
+主导；正文报告“从 1 个任务到 134 个任务”时拟合误差随任务数下降，但论文/公开源码未报告不同
+任务排列或子样本下的分布，因此尚不能把该图单独解释为与任务组成无关的样本量规律。Science evaluator
+的分项拆法又常由作者决定：同一
+机制恢复可以写成一个 40 分 gate，也可以拆成 40 个 1 分参数/世界指标。拆得更细会机械地降低跳跃、
+提高曲线平滑度，却没有增加任何科学证据。
+
+因此选择 3--4 个代表任务，在不改变 artifact、raw physical outcomes、hard gates 或总权重的前提下，
+预注册 `coarse / canonical / fine` 三套等价 score partitions，离线重放同一批 sentinel-complete raw
+trajectories。比较 improvement-event 数、最大 score atom、AUC、拟合优度、`Smax/tmid/beta`、模型排序和
+held-out forecast；同时对 task accumulation 做大量随机排列、lineage-blocked permutation 和随机
+subsample，而不是只展示一个任意前缀序列。只有科学结论对合理粒度与任务顺序稳定，才把总体曲线解释为
+agent 学习规律；否则应报告 raw physical event / claim-state trajectory，并把平滑性标为 evaluator
+construction effect。
+
+### E30. 跨任务课程与科研经验迁移
+
+EdgeBench 的 aggregate theorem 明确假设不同任务彼此不交互，而公开实验的 stateful 对照也只保留
+同一个任务内部的状态。真实科研组却会把一个反问题、仪器或失败机制中学到的知识带到相关新课题。
+这与 E12 的“同任务保留什么状态”不同，需要把 **任务顺序** 本身随机化并以目标任务为实验单位。
+
+在同一 `lineage_id` 下构造 source→target procedural twins，并加入 unrelated-source 和 misleading-source
+负对照；比较 target cold start、artifact-only warm start、只迁移原始 observation ledger、只迁移经审计的
+hypothesis/evidence notebook、以及 full-state transfer。Source 与 target 的具体 world、最终答案和
+confirmation panel 必须隔离，预算只从 target 首次 action 起计。主要结果为 target time-to-valid、early
+AUC、最终 sealed/mechanism/false-discovery、adaptation/retraction delay 和 transfer half-life。进一步交叉
+easy→hard、hard→easy、related→related、unrelated→target 的平衡顺序，区分真正的 scientific
+meta-learning、artifact 复用、训练污染和错误假说负迁移。
+
+### E31. 共享科研组合预算与机会成本
+
+EdgeBench 给每个任务独立且几乎相同的长时预算，适合测单任务能力，却绕过了科研管理中的核心决定：
+在多个候选假说、样品和实验并存时，下一单位 instrument/compute/human-review budget 应投在哪里，以及何时
+放弃低价值线路。平均每任务曲线不能回答这个问题，甚至会奖励把昂贵预算均匀花在已饱和或无望的任务上。
+
+建立一个小型 preregistered portfolio episode：同时给出 4--6 个 blinded candidate systems，包含有信号、
+null、misspecified、cheap-proxy/high-fidelity 和不同潜在价值/安全风险的项目，共享一个 token、wall、
+instrument、oracle 和 confirmation budget。比较 equal allocation、independent per-task budgets、random、
+myopic expected-improvement、cost-aware VOI/knowledge-gradient 和 agent 自主 allocation。报告最终 validated
+portfolio utility、discoveries per cost、false-discovery/unsafe exposure、regret against an offline
+information-constrained oracle、starvation rate、time-to-drop 和 predicted value-of-information calibration。
+所有被主动放弃的项目仍留在 intent-to-study 分母；不可让“只挑容易任务”提高平均分。
+
+### E32. 非平稳、不可逆和乱序科学环境
+
+EdgeBench 理论假设 attainable support 在拟合窗口内稳定、raw time 近似线性供给 search effort，而且不同
+任务互不影响；公开 harness 的异步 judge 也主要把延迟视为吞吐问题。真实实验会有仪器漂移、样品老化/
+耗尽、batch effects、不可逆干预、并行实验乱序完成以及安全边界。此时简单 retry、rollback 或把旧反馈
+应用到当前 world state 都可能在科学上无效，即使软件 artifact 可以恢复。
+
+在至少一个 active-mechanism task 和一个 physical-design task 增加 server-side hidden state：校准随时间
+缓慢漂移、样品批次切换、一次 destructive measurement 消耗 specimen、某些 intervention 永久改变系统，
+且 2--3 个实验以随机 latency 乱序返回。比较 stationary/reversible、drift-aware、fresh-sample、并行与串行
+策略；要求 observation event 绑定 `world_state/sample_id/calibration_id/intervention_parent`，禁止跨状态
+缓存复用和把不可逆实验当作可重试调用。报告 drift detection/recalibration delay、sample efficiency、
+causal attribution、unsafe/invalid intervention、stale-result misuse、duplicate physical act 和最终 fresh-batch
+confirmation。若 wall-time scaling 在 characteristic cycles/batches 下失效，改用样品/实验成本或 piecewise
+event time，不强行解释为 log-time law。
+
 ## 5. 推荐的曲线与表格
 
 主文可沿用 Frontier-Eng/EdgeBench 的时间或 oracle-budget best-so-far 图，但 science 论文至少再加：
@@ -455,6 +516,14 @@ observer envelope 都有共同边界；若某个 sentinel capture/judge 失败�
     duplicate/retry/crash/late-result 数和 exactly-once budget reconciliation；
 21. sentinel-complete trajectory：明确标出 `t=0`、first-valid、agent submissions、signed commits、fixed-grid
     snapshots 和 terminal，禁止用 best-so-far 补齐缺失边界。
+22. score-granularity/order robustness：同一 raw evidence 在 coarse/canonical/fine partitions 与 task
+    permutations 下的曲线参数、排序和 forecast 分布；
+23. source→target transfer matrix：cold/artifact/evidence-notebook/full-state 在 related/unrelated/misleading
+    curricula 下的 target gain 与 negative-transfer；
+24. shared-budget portfolio frontier：validated scientific utility 对 instrument/oracle/cost，附 starvation、
+    false-discovery 和 allocation regret；
+25. nonstationary laboratory timeline：sample/calibration/intervention lineage、乱序结果、漂移检测、不可逆
+    行为和 fresh-batch confirmation。
 
 log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、Gompertz、piecewise/change-point
 和 hierarchical task-mixture 比较；必须用 held-out time forecasting、bootstrap over tasks 与跨 seed
@@ -489,13 +558,22 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
 - [ ] 把 agent-visible payload 分成现实观测和 truth-relative grader feedback，先跑 paired pilot；
 - [ ] 在一个 procedural system 上跑 data-QC/inference/design/intervention linked-campaign pilot，并做
   baseline/agent stage-swap counterfactual；
+- [ ] 在已有 sentinel raw trajectories 上离线做 coarse/canonical/fine score partition 与 task-order
+  permutation audit；未通过前不解释曲线平滑性或 task-count scaling；
+- [ ] 在一个同 lineage source→target pair 上做 cold/artifact/evidence-notebook/full-state transfer pilot，
+  含 unrelated/misleading source 负对照；
+- [ ] 实现一个 4--6 project 共享 instrument/oracle budget 的 portfolio episode，先比较 equal/random/
+  cost-aware VOI，再测试 agent allocation；
+- [ ] 在一个 active task 注入 calibration drift、sample depletion、irreversible intervention 与乱序结果，
+  验证 world-state lineage、stale-result guard 和 fresh-batch confirmation；
 - [ ] 对 pilot cells 先跑 measurement-health gate，再决定是否分配 6h/12h；
 - [ ] pilot 可按 headroom 分配后续工程资源，但 confirmatory cohort 不得据此删任务；
 - [ ] 仅在 pilot 证明基础设施稳定且至少部分任务有 headroom 后扩展 6h/12h。
 
 ### P2 — 约 50 个 admissible tasks
 
-- [ ] 先修 RankineCycleOpt、MOSFETDoping、RANSCalibration；
+- [x] RankineCycleOpt-v2 完成内部重建与独立 IF97 复算并进入 candidate；
+- [ ] 继续修 MOSFETDoping、RANSCalibration；
 - [ ] 新增/重建任务按 `docs/task_expansion_v2_plan.md` 的 R2--R4 推进；
 - [ ] 为约 50-task inventory 增加 author/reviewer effort、shortcut red-team 与
   `long-horizon-ready` maturity ledger；
@@ -504,12 +582,14 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
   端到端重放的 method artifact；
 - [ ] 为 admission、pilot、confirmatory 和每个论文 figure/table 冻结独立的 hashed cohort manifest；
 - [ ] 每个任务强制 E1--E3、E7--E9；主动/随机/多保真任务再分别强制 E2/E8/E5；
-- [ ] 只有 admission DoD 全部通过才计数，目标从当前 34 提升到约 50。
+- [ ] 只有 admission DoD 全部通过才计数，目标从当前 35 提升到约 50。
 
 ### P3 — 统计与论文
 
 - [ ] 预注册主要 estimand、失败口径、multiple-comparison 与 bootstrap unit；
 - [ ] 分析脚本校验 cohort/task-count/weight/transform/run-policy 与 manifest 完全一致；
+- [ ] 将 scoring partition、task accumulation order、curriculum order 和 shared-budget allocation policy
+  纳入 figure manifest 与 sensitivity report；
 - [ ] 独立重跑至少一个模型/agent harness，分离模型和脚手架效应；
 - [ ] 生成向量曲线、evidence ladder、failure incidence 与 cost frontier；
 - [ ] 最终论文把 simulator optimization、mechanism discovery 和 prospective validation 分层措辞。
@@ -534,3 +614,8 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
   `8193aeb41a3474690a40fac82e2ecbd53e651ab6b4759984b4c6845c04fbfd29`（2026-07-24
   下载核验）；taxonomy/count 差异来自源码中的 `task_by_task_specifications.tex` 与
   `category_score_tables.tex`，不是 PDF 文本提取推断。
+- EdgeBench arXiv v1 `theory.tex` SHA-256
+  `eaee62c9b5cf53fbd81b6b23b4053733bbfaa43a70140bd7fca47ba904c19be0`：E29--E32 所引用的
+  finite score granularity、non-interacting tasks、stable attainable support、linear effort 与 characteristic
+  feedback cycles 均来自该理论的明示假设/限制；具体压力测试是 Frontier-Science 的推论，不是作者已做
+  的实验或报告的结果。

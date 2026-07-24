@@ -507,6 +507,18 @@ The source hashes, contract census and explicit claim limits are retained in
 29. **Exactly-once recovery audit:** inject judge/work-container/network failures, duplicate and
     late deliveries; verify idempotent recovery, oracle/sample budget reconciliation and correct
     feedback-descendant lineage.
+30. **Score-granularity and task-order audit:** replay identical raw scientific outcomes under
+    coarse/canonical/fine score partitions, then refit over random and lineage-blocked task
+    permutations/subsamples; treat unstable smoothness, ranking or forecasts as evaluator effects.
+31. **Cross-task curriculum transfer:** randomize related, unrelated and misleading source tasks
+    before answer-disjoint procedural targets; compare cold, artifact-only, raw-evidence,
+    hypothesis/evidence-notebook and full-state target starts.
+32. **Shared research portfolio:** allocate one common instrument/oracle/confirmation budget over
+    blinded signal, null, misspecified and multifidelity projects; compare equal/random,
+    cost-aware VOI and agent allocation on fresh-confirmed portfolio utility and regret.
+33. **Stateful laboratory stress test:** inject calibration drift, batch/sample depletion,
+    irreversible interventions and out-of-order results; require world/sample/calibration/
+    intervention lineage and distinguish physical acts from evaluator retries.
 
 ## Claim boundary
 

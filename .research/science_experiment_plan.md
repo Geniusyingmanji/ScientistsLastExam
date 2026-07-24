@@ -73,6 +73,10 @@ Report its visible, sealed and mechanism advantage over `committed` as an
 | I3 | Is a narrated breakthrough caused by the attributed edit? | Parent, full child, component-only patch and rollback replay on one frozen sealed evaluator panel | retained effect, interaction, regression and component-specific science metrics | Causal edit attribution for selected milestones, not from chronology alone |
 | I4 | Do all system layers agree on which artifact is incumbent and why? | Replay every event through one versioned objective-selection contract and compare prompt, agent cache, online selector, signed commit, terminal endpoint, dashboard and analysis; include score-first, valid-then-score, safety-lexicographic and material-Pareto sensitivity | incumbent-hash agreement, selector reversals, sealed/mechanism/false-discovery reversal rate and protocol failures | Trustworthy artifact selection rather than an ambiguous scalar leaderboard |
 | I5 | Can a day-long scientific run survive failures without losing or double-spending evidence? | Durable append-only ledger with judge/work-container/network crash injection, duplicate/late delivery, restart and idempotent replay | exactly-once oracle/sample budget reconciliation, lost/duplicate events, stale-feedback attribution, recovery time and byte-replay of derived tables | Crash-consistent long-horizon evidence rather than best-effort execution logs |
+| S3 | Is the apparent scaling shape invariant to evaluator granularity and task ordering? | Replay identical raw outcomes under preregistered coarse/canonical/fine score partitions; random and lineage-blocked task accumulation orders/subsamples | curve/forecast/parameter/ranking dispersion, maximum score atom and material-event stability | A curve tied to scientific outcomes rather than rubric atomization or one task ordering |
+| F8 | Does scientific experience transfer across tasks rather than only persist within one task? | Randomized source→target curricula with related, unrelated and misleading sources; cold, artifact-only, evidence-notebook and full-state transfer | target early AUC/time-to-valid, sealed/mechanism lift, false discovery, adaptation/retraction delay and transfer half-life | Cross-task scientific meta-learning or negative transfer |
+| P1 | Can the agent allocate a shared research budget across competing projects? | Equal/random/independent allocations vs cost-aware VOI/knowledge-gradient and agent allocation over blinded signal/null/misspecified projects | validated portfolio utility and discoveries per cost, allocation regret, starvation/drop decisions and unsafe/false-discovery exposure | Scientific portfolio decision quality rather than per-task optimization in isolation |
+| D1 | Can the agent reason under nonstationary, irreversible and asynchronously observed science? | Stationary/reversible control vs drift, batch changes, sample depletion, irreversible interventions and randomized result latency | drift/recalibration delay, sample efficiency, stale-result misuse, duplicate physical acts, unsafe interventions and fresh-batch confirmation | Laboratory-state reasoning rather than replayable software search |
 
 ## Controls that must be strict
 
@@ -113,6 +117,13 @@ All evaluator-only snapshots must be atomic, content-addressed bundles rather th
 copies. For asynchronous judging, log `submitted_at`, `feedback_ready_at`, `feedback_read_at`, the
 submitted artifact hash and the first descendant proposal hash. A score can be credited as
 feedback used only by descendants produced after it was actually read.
+
+For stateful scientific environments, artifact lineage is insufficient. Every observation must
+also bind a `world_state_id`, `sample_id`, `calibration_id`, intervention parent and whether the
+physical act is reversible or consumptive. Retrying an evaluator process may be idempotent;
+repeating a destructive assay is a new intervention and must consume a new sample/budget entry.
+Out-of-order results can update only hypotheses and descendants whose world-state assumptions
+remain compatible.
 
 Auto-evaluation is score-hidden but can still change behavior when its schedule and requirement
 to keep files runnable are disclosed. Keep the stable committed candidate in a separate path from
@@ -273,6 +284,14 @@ server-held procedural worlds, multi-seed feedback controls and independent revi
     events with duplicate/retry/crash/late-result accounting and exactly-once budget reconciliation.
 33. Sentinel-complete trajectory marking `t=0`, first-valid, submissions, signed commits,
     fixed-grid snapshots and terminal without best-so-far imputation at missing boundaries.
+34. Equivalent-score-partition and task-order audit: curve/rank/forecast distributions under
+    coarse/canonical/fine rubric atoms plus random and lineage-blocked accumulation orders.
+35. Cross-task curriculum transfer matrix: related/unrelated/misleading source tasks crossed with
+    cold/artifact/evidence-notebook/full-state target starts.
+36. Shared-budget research portfolio: validated utility and false-discovery/safety against total
+    instrument/oracle cost, with allocation regret and dropped/starved projects visible.
+37. Stateful laboratory timeline: calibration/sample/intervention lineage, drift/batch changes,
+    asynchronous results, irreversible acts and fresh-batch confirmation.
 
 Avoid presenting a radar chart or a single “science score”; small multiples preserve the
 important capability dissociations.
@@ -349,6 +368,19 @@ important capability dissociations.
 - For interpreted breakthrough milestones, archive the parent and patch decomposition and replay
   parent/full-child/component-only/rollback artifacts on one frozen sealed panel. Chronological
   score coincidence without this edit ablation is descriptive, not causal attribution.
+- Treat a scoring rubric as an analysis choice, not extra evidence. Recompute headline curves
+  under preregistered coarsenings/refinements that preserve raw physical outcomes and total
+  weights; also randomize task accumulation order. A curve whose smoothness, rank or forecast
+  changes materially is evaluator-dependent and cannot support a universal scaling claim.
+- Randomize source→target curriculum order and keep target worlds/confirmation panels disjoint
+  from source tasks. Analyze transfer on target outcomes only; pooled source+target score gains
+  cannot identify cross-task learning.
+- For portfolio experiments, the experimental unit is a complete shared-budget episode. Retain
+  abandoned/null projects in the denominator and compare allocation against information- and
+  cost-constrained baselines, not an oracle that knew hidden truth before spending budget.
+- For nonstationary or consumptive tasks, model world/sample state as part of treatment history.
+  Bootstrap complete episodes or batches; do not shuffle observations across calibration eras,
+  count repeated destructive acts as software retries, or reuse a post-intervention baseline.
 
 ## Scaling-law caution
 
@@ -371,6 +403,13 @@ logistic frontier account through its material-event prediction—improvement in
 `y(1-y)` with an inflection near `y=0.5`—and allow multiple phases or moving attainable support.
 Any model-generation speed trend must use a panel and analysis frozen before the evaluated model
 releases, or be labeled retrospective/exploratory.
+
+The EdgeBench frontier derivation also requires vanishing score granularity and treats benchmark
+tasks as non-interacting. Before interpreting smoother fits at larger task count, repeat the fit
+under equivalent rubric partitions and randomized/lineage-blocked task orders. Cross-task
+curricula, shared portfolio budgets, drifting instruments and irreversible interventions violate
+the independent stationary task abstraction by design; analyze them with transfer, decision or
+state-space estimands rather than forcing them into the same scalar log-sigmoid.
 
 Do not interpret fitted `Smax`, `tmid` or `beta` merely because the aggregate level curve has a
 high `R²`. The parameters trade off when the plateau or post-inflection region is weakly observed.
@@ -409,6 +448,8 @@ midpoint, speed or doubling-time claim.
   uncertainty propagation and stage-swap attribution of final decision utility.
 - A measurement-health screen and hashed cohort manifest for every long-horizon and headline
   aggregate cell.
+- S3 score-partition/task-order replay on the headline aggregate; F8 source→target transfer on at
+  least one procedural lineage; one small P1 portfolio and one D1 stateful-laboratory stress test.
 
 Only Stage B can support claims about feedback-driven scientific discovery. A real-world
 discovery claim additionally requires independent high-fidelity or physical confirmation and
@@ -433,6 +474,12 @@ domain-expert review.
   evaluation, distinguishing retrieval/reproduction from task-local discovery.
 - H9: a structured claim/evidence ledger reduces unsupported-claim exposure and revision delay
   after contradictory evidence relative to score-only or artifact-only memory.
+- H10: a genuine aggregate learning result retains its qualitative curve, model ranking and
+  held-out forecast under scientifically equivalent score partitions and task orders.
+- H11: provenance-clean evidence memory improves target-task early efficiency on related worlds
+  without increasing false discovery after misleading or regime-shift sources.
+- H12: cost-aware allocation improves fresh-confirmed portfolio utility over equal allocation,
+  while drift/state lineage reduces stale-result and irreversible-intervention errors.
 
 These are hypotheses to test. The paper should report failed hypotheses and negative results
 rather than selecting only curves that resemble Frontier-Eng or EdgeBench.

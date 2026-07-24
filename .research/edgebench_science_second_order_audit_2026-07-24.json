@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "audit_date_utc": "2026-07-24",
+  "scope": "Second-order deductions from the current EdgeBench v1 theory and public runtime for science-specific experiment design. These are Frontier-Science proposals, not additional EdgeBench empirical results.",
+  "upstream_state": {
+    "arxiv_id": "2607.05155v1",
+    "arxiv_source_sha256": "8193aeb41a3474690a40fac82e2ecbd53e651ab6b4759984b4c6845c04fbfd29",
+    "theory_tex_sha256": "eaee62c9b5cf53fbd81b6b23b4053733bbfaa43a70140bd7fca47ba904c19be0",
+    "emerging_scaling_tex_sha256": "b514910993655b4aec6033decbcb0c0f4d7336d900ec2359132029d530125f07",
+    "github_commit": "a87350ab80eeb320b13cb71d1b0c3ffcc20a670f",
+    "official_codex_experiment_sha256": "6cf7d41bc67f765adbd458409209e6af02bbb9a53020cf366511707b3fc45b33",
+    "huggingface_revision": "47846a4c3669ad447e0ea984833b0d352460c5f9",
+    "changed_since_2026_07_24_contract_audit": false
+  },
+  "source_facts": [
+    "The theory requires average score-unit granularity error to vanish and notes that coarse score units can preserve jumps and variance.",
+    "The benchmark-level derivation treats different task environments as non-interacting and requires aligned task midpoints and concentrated task speeds.",
+    "The theory assumes a stable attainable support and approximately linear search-effort supply; it lists characteristic cycles and batch feedback as reasons a single log-time coordinate can fail.",
+    "The paper reports decreasing fit error as task count grows, but the paper and public source do not report permutation- or subsample-distributions for that task-count curve.",
+    "The official public Codex configuration gives each listed task an independent 12-hour default budget and staggers launches by 600 seconds; it is not a shared scientific portfolio allocation protocol.",
+    "The public harness supports asynchronous judging, but the released benchmark does not report experiments on drifting instruments, consumptive samples or irreversible interventions."
+  ],
+  "frontier_science_experiments": [
+    {
+      "id": "score_granularity_and_task_order_invariance",
+      "design": "Replay identical raw physical outcomes under preregistered coarse, canonical and fine score partitions; refit under random and lineage-blocked task accumulation orders and subsamples.",
+      "primary_outcomes": [
+        "curve_parameter_dispersion",
+        "held_out_forecast_dispersion",
+        "model_rank_reversal",
+        "material_event_stability",
+        "maximum_score_atom"
+      ]
+    },
+    {
+      "id": "cross_task_curriculum_transfer",
+      "design": "Randomize related, unrelated and misleading source tasks before an answer-disjoint procedural target; compare cold, artifact-only, raw-evidence, audited-notebook and full-state starts.",
+      "primary_outcomes": [
+        "target_early_auc",
+        "target_time_to_valid",
+        "sealed_mechanism_gain",
+        "false_discovery",
+        "adaptation_and_retraction_delay",
+        "transfer_half_life"
+      ]
+    },
+    {
+      "id": "shared_research_portfolio_budget",
+      "design": "Allocate one shared token, wall, instrument, oracle and confirmation budget across blinded signal, null, misspecified and multifidelity projects; compare equal, random, cost-aware VOI and agent policies.",
+      "primary_outcomes": [
+        "fresh_confirmed_portfolio_utility",
+        "discoveries_per_cost",
+        "allocation_regret",
+        "starvation_and_drop_rate",
+        "unsafe_or_false_discovery_exposure"
+      ]
+    },
+    {
+      "id": "nonstationary_irreversible_async_lab",
+      "design": "Inject calibration drift, batch changes, sample depletion, irreversible interventions and randomized result latency into server-side world state; require state-compatible observation lineage and fresh-batch confirmation.",
+      "primary_outcomes": [
+        "drift_detection_and_recalibration_delay",
+        "sample_efficiency",
+        "stale_result_misuse",
+        "duplicate_physical_acts",
+        "unsafe_interventions",
+        "fresh_batch_confirmation"
+      ]
+    }
+  ],
+  "claim_boundary": [
+    "No new EdgeBench numerical result is claimed.",
+    "The proposed stress tests are deductions from explicit assumptions and limits, not experiments reported by the EdgeBench authors.",
+    "Until these tests are run, Frontier-Science should not claim invariance of a scaling law, cross-task scientific meta-learning, portfolio-level autonomy or laboratory-state competence."
+  ]
+}
