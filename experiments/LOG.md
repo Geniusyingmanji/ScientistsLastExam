@@ -1631,3 +1631,36 @@ Conditions with no valid terminal run remain visible; scheduled/completed counts
 rates are reported; failed retry attempts and recovered cells no longer disappear when the latest
 attempt succeeds. This is an accounting improvement, not a new model-performance result. It does
 not yet implement evaluator-only wall-clock snapshots or declared-artifact confirmation.
+
+## 2026-07-24 — EdgeBench full taxonomy and task-construction audit
+
+We rechecked arXiv:2607.05155v1 against the official arXiv API, PDF, source package, public
+SForge commit `a87350ab80eeb320b13cb71d1b0c3ffcc20a670f` and Hugging Face revision
+`47846a4c3669ad447e0ea984833b0d352460c5f9`. The API remains v1; GitHub and the dataset remain at
+those revisions. The source package SHA-256 is
+`8193aeb41a3474690a40fac82e2ecbd53e651ab6b4759984b4c6845c04fbfd29`.
+
+The fifth pass audited all 39 Science/ML task design notes and the full per-task score table. It
+adds three task-design requirements for Frontier-Science: at least one linked data-QC → inference
+→ monitoring/experiment-design → intervention campaign with typed, uncertainty-bearing handoffs;
+fresh-world replay of an executable scientific method rather than scoring only a frozen answer;
+and a measurement-health gate before assigning long horizons, covering first-valid rate,
+baseline/reference separation, fixed-artifact judge noise, floor/ceiling mass, material post-2h
+headroom and shortcut resistance. Campaign stages share one statistical lineage, and stage-swap
+counterfactuals attribute final decision utility.
+
+The source also exposes a reproducibility warning that was not visible from category totals alone.
+`task_by_task_specifications.tex` assigns the 134 tasks as `36/39/19/13/19/8`, while
+`category_score_tables.tex` assigns the same IDs as `35/34/16/13/24/12`; eleven tasks move family.
+Five Science/ML specification tasks move into Systems, Optimization or Knowledge Work in the
+score tables. The mean of the 34 displayed one-decimal Opus rows is `48.494...`, which rounds to
+the reported Science score `48.5`; adding the five moved displayed rows gives `47.395`, whose full
+row-rounding interval cannot include `48.5`. This does not challenge the 134-task total, but makes
+a prose family count insufficient to reproduce family curves. Frontier-Science therefore requires a hashed,
+machine-readable cohort manifest for every admission set and aggregate figure/table, with task
+IDs, tracks, lineages, weights, transforms, run/failure policy and source revision.
+The source-hash-bound 11-task mapping and numerical mean check are retained in
+`.research/edgebench_taxonomy_audit_2026-07-24.json`.
+
+These are protocol and portfolio findings, not new Frontier-Science model results. No Rankine-v2
+source or calibration artifact was changed by this audit.

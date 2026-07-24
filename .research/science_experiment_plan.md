@@ -237,6 +237,11 @@ server-held procedural worlds, multi-seed feedback controls and independent revi
     and rollback on the same sealed panel.
 28. Exploration-to-confirmation flow showing hypothesis/evaluator look counts, signed commit,
     fresh post-commit world/replication and any confirmation-set refresh after contamination.
+29. Linked-campaign error propagation from data QC through inference/design to intervention,
+    including baseline/agent stage swaps and final decision regret.
+30. Measurement-health and cohort-provenance panel: first-valid rate, baseline/reference gap,
+    fixed-artifact judge noise, floor/ceiling mass, post-2h material headroom, manifest hash and
+    nominal versus effective lineage count.
 
 Avoid presenting a radar chart or a single “science score”; small multiples preserve the
 important capability dissociations.
@@ -280,6 +285,9 @@ important capability dissociations.
 - Predeclare task weights, normalization anchors and endpoint-selection policy. Repeat aggregate
   claims under rank/family-balanced aggregation, raw within-task gain, plausible anchor
   perturbations and leave-one-task/family-out analyses.
+- Generate each aggregate from a frozen machine-readable manifest containing task IDs, evidence
+  tracks, lineage clusters, weights, score transforms, run/failure policy and source revision;
+  fail closed on any count or input mismatch and publish taxonomy changes as manifest diffs.
 - Treat the task sampling frame as part of the estimand. Headroom-screened headline tasks measure
   improvement conditional on improvability; retain saturated on-ramps, null/misspecified and
   unsolvable cases for refusal, calibration and unconditional reliability analyses.
@@ -355,6 +363,10 @@ midpoint, speed or doubling-time claim.
 - R4 reversible-claim trials with contradictory/misspecified evidence; the mechanism curve must
   represent the current defended claim rather than a historical maximum.
 - A small B1 expert-trajectory calibration before making claims relative to scientific work.
+- One linked campaign with raw-input executable-method replay, typed stage handoffs,
+  uncertainty propagation and stage-swap attribution of final decision utility.
+- A measurement-health screen and hashed cohort manifest for every long-horizon and headline
+  aggregate cell.
 
 Only Stage B can support claims about feedback-driven scientific discovery. A real-world
 discovery claim additionally requires independent high-fidelity or physical confirmation and

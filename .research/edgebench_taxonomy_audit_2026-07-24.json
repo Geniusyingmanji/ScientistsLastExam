@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "audit_date_utc": "2026-07-24",
+  "paper": {
+    "title": "EdgeBench: Unveiling Scaling Laws of Learning from Real-World Environments",
+    "arxiv_id": "2607.05155v1",
+    "published": "2026-07-06T14:39:22Z",
+    "source_tar_sha256": "8193aeb41a3474690a40fac82e2ecbd53e651ab6b4759984b4c6845c04fbfd29",
+    "task_specification_tex_sha256": "30b8556573c739f1120f15eb8dc56bea2bd55661f8a839e07a332dc4f6657df5",
+    "category_score_tables_tex_sha256": "a71605685889384c6fb8fffb5d83622001a5ea458042d798e73ba1323f7e36c5",
+    "all_curves_appendix_tex_sha256": "0e83569e3b882899c18dbe87836d115fdac737231e752c8b79a33e1fba690e60"
+  },
+  "public_implementation": {
+    "github_repository": "ByteDance-Seed/EdgeBench",
+    "github_commit": "a87350ab80eeb320b13cb71d1b0c3ffcc20a670f",
+    "huggingface_dataset": "ByteDance-Seed/EdgeBench",
+    "huggingface_revision": "47846a4c3669ad447e0ea984833b0d352460c5f9"
+  },
+  "task_set_comparison": {
+    "task_specification_total": 134,
+    "score_table_total": 134,
+    "same_task_id_set": true,
+    "reassigned_task_count": 11,
+    "task_specification_family_counts": {
+      "Systems & Software Engineering": 36,
+      "Scientific Problems & ML": 39,
+      "Combinatorial Optimization": 19,
+      "Formal Math & Theorem Proving": 13,
+      "Professional Knowledge Work": 19,
+      "Interactive Games & Simulators": 8
+    },
+    "score_table_family_counts": {
+      "Systems & Software Engineering": 35,
+      "Scientific Problems & ML": 34,
+      "Combinatorial Optimization": 16,
+      "Formal Math & Theorem Proving": 13,
+      "Professional Knowledge Work": 24,
+      "Interactive Games & Simulators": 12
+    }
+  },
+  "reassignments": [
+    {
+      "task_id": "apple_incremental_game",
+      "task_specification_family": "Combinatorial Optimization",
+      "score_table_family": "Interactive Games & Simulators"
+    },
+    {
+      "task_id": "grid_turing_robot",
+      "task_specification_family": "Combinatorial Optimization",
+      "score_table_family": "Interactive Games & Simulators"
+    },
+    {
+      "task_id": "herbal_depression_target_screening",
+      "task_specification_family": "Scientific Problems & ML",
+      "score_table_family": "Professional Knowledge Work"
+    },
+    {
+      "task_id": "high_performance_object_mapper",
+      "task_specification_family": "Systems & Software Engineering",
+      "score_table_family": "Professional Knowledge Work"
+    },
+    {
+      "task_id": "molecular_self_assembly",
+      "task_specification_family": "Combinatorial Optimization",
+      "score_table_family": "Interactive Games & Simulators"
+    },
+    {
+      "task_id": "odata_query_service",
+      "task_specification_family": "Systems & Software Engineering",
+      "score_table_family": "Professional Knowledge Work"
+    },
+    {
+      "task_id": "pancreatic_radiotherapy_meta_analysis",
+      "task_specification_family": "Scientific Problems & ML",
+      "score_table_family": "Professional Knowledge Work"
+    },
+    {
+      "task_id": "pdf_structured_extraction",
+      "task_specification_family": "Scientific Problems & ML",
+      "score_table_family": "Systems & Software Engineering"
+    },
+    {
+      "task_id": "quantum_architecture_search",
+      "task_specification_family": "Scientific Problems & ML",
+      "score_table_family": "Combinatorial Optimization"
+    },
+    {
+      "task_id": "touchstone_vna_diagnostics",
+      "task_specification_family": "Scientific Problems & ML",
+      "score_table_family": "Professional Knowledge Work"
+    },
+    {
+      "task_id": "treant_forest",
+      "task_specification_family": "Combinatorial Optimization",
+      "score_table_family": "Interactive Games & Simulators"
+    }
+  ],
+  "published_score_cross_check": {
+    "model": "Claude Opus 4.8",
+    "reported_science_score_12h": 48.5,
+    "score_table_science_row_count": 34,
+    "mean_of_displayed_one_decimal_row_means": 48.49411764705882,
+    "possible_mean_interval_from_row_rounding": [
+      48.444117647058825,
+      48.54411764705882
+    ],
+    "rounded_displayed_row_mean_matches_reported": true,
+    "task_specification_science_row_count": 39,
+    "mean_after_adding_five_reassigned_displayed_rows": 47.3948717948718,
+    "possible_39_row_mean_interval_from_row_rounding": [
+      47.3448717948718,
+      47.444871794871794
+    ],
+    "reported_score_outside_possible_39_row_rounding_interval": true
+  },
+  "interpretation": {
+    "supported": "The 134 task IDs are present in both source tables, but family-level results require an explicit choice between two taxonomies. Averaging the 34 displayed one-decimal score-table row means gives 48.494..., which rounds to the reported Claude Opus 4.8 Science score of 48.5. Adding the five reassigned displayed rows gives 47.395; even allowing each displayed row its full one-decimal rounding interval cannot produce 48.5 from those 39 rows.",
+    "not_supported": "This audit does not recover the unrounded run-level values or identify which taxonomy was used for every family curve or fit because the raw trajectory corpus and figure-analysis code are not in the public release.",
+    "project_requirement": "Bind every aggregate to a versioned cohort manifest containing task IDs, tracks, lineage clusters, weights, score transforms, run inclusion policy and source revision."
+  }
+}

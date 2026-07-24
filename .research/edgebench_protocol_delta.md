@@ -318,6 +318,64 @@ authors.
    and validation looks, and refresh a contaminated confirmation panel rather than calling it
    sealed.
 
+## Fifth-pass task-construction and measurement findings
+
+These findings come from auditing all 39 `Scientific Problems & ML` design notes and their full
+score table, rather than only the four publicly released science task contracts.
+
+1. **A scientific workflow can be a linked campaign, not four nominally independent tasks.**
+   EdgeBench's Borden/Cape Cod group spans sensor-fault diagnosis, source inversion, monitoring-
+   network reconstruction and pump-and-treat dispatch. That decomposition exposes where a
+   workflow fails, but the tasks share a scientific system and cannot be counted as independent
+   worlds. Frontier-Science should build at least one end-to-end campaign with a typed handoff
+   from data-quality diagnosis to inference, experiment design and intervention. Report both
+   stage-local scores and final decision regret, propagate upstream uncertainty, and cluster all
+   campaign stages under one lineage for confidence intervals and held-out transfer.
+2. **The primary discovery artifact should be an executable method, not a fitted answer.** Several
+   EdgeBench tasks require a solver, directive, scripts, results and a report, whereas the public
+   Borden judge reads only the final `answer.json`. The latter can test one inverse answer but
+   cannot show that the method would work on a new aquifer. For discovery and inference tasks,
+   replay the submitted workflow from raw observations on unseen procedural worlds, including
+   preprocessing, experiment selection, inference, uncertainty and claim generation. Score both
+   method replay and the final claim; a correct static answer with a non-replayable or target-
+   specific workflow is not a transferable scientific result.
+3. **Long-horizon readiness needs a measurement-health gate, not headroom alone.** The full
+   science table includes ceiling cells (`100`), an all-model floor (`0` on
+   `substrate_interface_simulation`) and task/model standard deviations comparable with most of
+   the score range (for example Ocean MT, VSG and motor-clutch cells). These are valid descriptive
+   results, but such cells contribute little identifiable information to a three-run learning or
+   model contrast. Before 6h/12h admission, measure first-valid probability, baseline--reference
+   separation, fixed-artifact repeatability, evaluator resolution, non-saturation, material gain
+   after 2h, and shortcut resistance. Use common worlds/seeds and more repeats when scientific
+   stochasticity is genuine; quarantine evaluator noise or universal floor failures rather than
+   smoothing them into an aggregate curve.
+4. **Stage-local improvement and end-to-end scientific utility can disagree.** A better anomaly
+   classifier or inverse fit need not improve the downstream monitoring or intervention decision.
+   Run counterfactual handoff replays that swap baseline versus agent-produced outputs at each
+   campaign stage, then estimate main and interaction effects on final utility, safety and false
+   intervention. This gives a scientific analogue of the gravitational-wave component trace, but
+   with causal stage ablations rather than a chronological narrative.
+5. **The 39-task category is a sampling frame, not a discovery denominator.** Its design notes
+   mix prediction, numerical software, prescribed reproduction, inverse problems, active
+   learning and decision optimization. Publish track labels before aggregation and report how
+   many independent lineages and genuinely active discovery environments support each claim.
+   The label `Science / ML`, a real dataset, or a long runtime does not by itself establish an
+   autonomous-science task.
+6. **Every aggregate needs a versioned cohort manifest.** In the arXiv v1 source,
+   `task_by_task_specifications.tex` assigns the 134 tasks to families with counts
+   `36/39/19/13/19/8`, while `category_score_tables.tex` assigns the same 134 task IDs with counts
+   `35/34/16/13/24/12`. Eleven tasks change family. In particular, five Science/ML design-note
+   tasks move to Systems, Optimization or Knowledge Work in the score tables; averaging the 34
+   displayed one-decimal Opus row means gives `48.494...`, which rounds to the reported Science
+   score `48.5`. Adding the five moved displayed rows gives `47.395`, and their full one-decimal
+   rounding intervals still cannot yield `48.5`. This does not invalidate the 134-task total, but
+   the public text alone leaves two different family sampling frames. Frontier-Science must bind every curve,
+   table and claim to a machine-readable manifest containing task IDs, track labels, lineage
+   clusters, weights, score transforms, run inclusion and an immutable hash. A prose category
+   count is not sufficient provenance for a family-level result. The source-hash-bound mapping
+   and numerical cross-check are retained in
+   `.research/edgebench_taxonomy_audit_2026-07-24.json`.
+
 ## Minimum next experiments
 
 1. **HartreeFockSCF-v2 calibration:** GPT-5.5 budget 1, normal budget 3 and strict
@@ -381,6 +439,24 @@ authors.
 20. **Fresh-confirmation gate:** reserve a one-shot post-commit world/replication budget that is
     never used by search, periodic snapshots, task admission or stopping; report adaptive looks
     and invalidate/refresh any confirmation panel exposed through repeated analysis.
+21. **Linked-campaign pilot:** connect data-quality diagnosis, inference/identification,
+    experiment design and intervention on one procedural scientific system; hold out complete
+    system lineages and measure stage-local quality, uncertainty propagation and final decision
+    regret.
+22. **Executable-method replay:** rerun the committed workflow from raw inputs on fresh worlds and
+    compare it with scoring only a frozen final answer; record target-specific answer success,
+    end-to-end replay success and method-transfer success separately.
+23. **Measurement-health audit:** before assigning long horizons, estimate fixed-artifact judge
+    noise, first-valid rate, baseline/reference separation, ceiling/floor mass, material 2h
+    headroom and required replicate count. Exclude unhealthy cells from scaling-law estimation
+    with a reason code, while retaining them in the public sampling-frame ledger.
+24. **Campaign-stage counterfactuals:** replay baseline/agent output swaps at each linked stage and
+    their combinations on common worlds, so a downstream gain is attributed to the responsible
+    scientific stage rather than to temporal co-occurrence.
+25. **Cohort-manifest replay:** generate every aggregate figure/table from a hashed manifest and
+    fail closed if the declared task count, task set, weights, transforms or run-coverage policy
+    differs from the analysis input. Publish taxonomy transitions rather than silently moving a
+    task between science, optimization, software and knowledge-work denominators.
 
 ## Claim boundary
 

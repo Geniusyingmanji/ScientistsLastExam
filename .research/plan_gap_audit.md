@@ -297,6 +297,29 @@ world/seed panel or independent high-fidelity replication that is never used for
 admission, fitting, stopping or interpretation; count all evaluator looks and refresh any
 confirmation set that has influenced a decision.
 
+### 20. Static answers and isolated tasks do not prove a reusable scientific workflow
+
+Several current tasks score one frozen program or parameter set on fixed hidden worlds. That can
+establish optimization or inverse-answer quality, but not that preprocessing, experiment design,
+inference, uncertainty and claim generation form a reusable method. EdgeBench's Borden/Cape Cod
+group also illustrates a richer scientific campaign—diagnosis, source inversion, monitoring and
+remediation—whose stages share one system. Build at least one typed end-to-end campaign, replay
+the committed workflow from raw observations on fresh procedural worlds, propagate uncertainty,
+and use baseline/agent stage swaps to locate downstream decision gains. Count campaign stages as
+one shared lineage for uncertainty, even if each is a useful task surface.
+
+### 21. Long-horizon cohorts need measurement-health and manifest gates
+
+Headroom alone does not make a task informative: a universal floor, early ceiling, invalidity or
+fixed-artifact judge noise can all create misleading trajectories. Before allocating 6h/12h,
+measure first-valid probability, baseline--reference separation, evaluator resolution and
+repeatability, ceiling/floor mass, material post-2h gain and shortcut resistance. In addition,
+bind every aggregate to a versioned machine-readable cohort manifest. EdgeBench arXiv v1 itself
+uses one `36/39/19/13/19/8` family assignment in task specifications and another
+`35/34/16/13/24/12` assignment in score tables; the same 134 IDs include 11 category moves.
+Frontier-Science should fail closed when a claimed task count, task set, lineage, weight, score
+transform or run-inclusion rule differs from the figure/table manifest.
+
 ## Revised TODO plan
 
 ### P0/P1 closeout — completed locally, reproduce in CI
@@ -372,6 +395,9 @@ confirmation set that has influenced a decision.
 - [ ] Add adaptive allocation/stopping baselines (for example, SMC-style convergence control).
 - [ ] Add a task-contract linter for prompt versus actual horizon, checkpoint schedule,
   evaluator timeout, cooldown, maximum submissions, submitted paths and deliverables.
+- [ ] Add a measurement-health gate before long-horizon allocation: first-valid rate,
+  baseline/reference separation, fixed-artifact judge noise, resolution, floor/ceiling mass,
+  material post-2h headroom and shortcut resistance.
 - [ ] Use independent runs disclosed their true horizon for budget comparisons; do not treat a
   horizon-aware long run's prefixes as counterfactual short-horizon executions.
 - [ ] Implement delayed-feedback controls and preregister paired Track F contrasts.
@@ -410,6 +436,8 @@ confirmation set that has influenced a decision.
   post-inflection data; otherwise report observed-window gain/AUC/time-to-material-event only.
 - [ ] Register task/data/oracle/template lineage, report nominal and effective independent-world
   counts, and hold out/resample complete lineages rather than sibling instances.
+- [ ] Generate each admission/pilot/confirmatory/figure cohort from a hashed manifest and fail
+  closed on task-count, task-set, lineage, weight, transform or run-policy drift.
 - [ ] Separate pilot admission/calibration worlds and runs from fresh confirmatory seeds/worlds;
   retain excluded and saturated tasks in the sampling-frame ledger.
 - [ ] Partition exploratory, periodically monitored validation and one-shot post-commit
@@ -450,6 +478,10 @@ confirmation set that has influenced a decision.
   exposure, revision/retraction delay and correct-mechanism recovery.
 - [ ] Add hypothesis–test–evidence/belief-update artifacts, explicit exploration DAGs,
   failed branches, falsification metrics, and replay checks.
+- [ ] Require executable method bundles for discovery/inference tasks and replay preprocessing,
+  experiment selection, inference, uncertainty and claims from raw inputs on fresh worlds.
+- [ ] Build one linked data-QC/inference/design/intervention campaign with typed handoffs,
+  uncertainty propagation, final decision regret and baseline/agent stage-swap counterfactuals.
 - [ ] For selected large trajectory jumps, replay parent, full child, component-only patches and
   rollback on an identical sealed evaluator panel before attributing a milestone to an insight.
 - [ ] Add sequential-vs-parallel, tool-access, novelty, ensemble, and component ablations where

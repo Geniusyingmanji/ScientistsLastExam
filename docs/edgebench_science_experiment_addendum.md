@@ -327,6 +327,48 @@ condition 只开放前四类中任务现实允许的通道，sealed mechanism/ro
 预算、提交次数和 target-reconstruction attack success。若提升只出现在 score-oracle condition，结论是
 grader-assisted search，而不是从科学环境中学习。
 
+### E22. 联动 scientific campaign，而非孤立目录计数
+
+EdgeBench 的 Borden/Cape Cod 任务把同一地下水系统拆成传感器故障诊断、污染源反演、监测网络和
+pump-and-treat 决策。这提示我们至少建设一个可执行的端到端 campaign：
+`data QC -> mechanism/inference -> experiment/monitoring design -> intervention`。每阶段用类型化、带
+uncertainty/provenance 的 artifact 交接；既评分阶段局部质量，也评分最终 decision regret、安全和
+false intervention。整条 campaign 按一个共享 lineage 做 holdout/bootstrap，不能把四个相关阶段当成
+四个独立科学世界来放大样本量。
+
+### E23. 从静态答案升级到 executable-method replay
+
+发现/反演任务的最终 artifact 应同时包含可执行 preprocessing、实验选择、推断、uncertainty 和 claim
+生成流程，而不只是某个 world 的拟合参数或 `answer.json`。权威 evaluator 在 fresh procedural worlds
+上从原始观测重跑整条方法，并分别报告：静态答案正确率、workflow replay 成功率、method transfer、
+claim--evidence consistency 和复算差异。只在一个隐藏目标上答对、但无法重放或迁移的方法，不算自主
+科学发现。
+
+### E24. Measurement-health 与 long-horizon-ready 门槛
+
+EdgeBench 全量 science 表同时存在 100 分天花板、全模型 0 分地板，以及 SD 接近整个分数范围的 cell。
+因此“看起来有 headroom”不足以分配 12h。每个 task--condition 先测 first-valid probability、weak
+baseline 与 truth-blind reference 的间隔、固定 artifact 重评噪声、evaluator resolution、2h 后的 material
+headroom、ceiling/floor mass 和 shortcut resistance。真实随机科学任务使用 common worlds/seeds 并按
+pilot 方差增加重复；universal floor 或 evaluator noise 进入 reason-coded sampling ledger，但不进入
+scaling-law 拟合。任务仍可科学有效而暂时不是 `long-horizon-ready`。
+
+### E25. 每张汇总图绑定 cohort manifest
+
+EdgeBench arXiv v1 源码的 task specification taxonomy 为 `36/39/19/13/19/8`，score-table taxonomy
+却为 `35/34/16/13/24/12`；同一 134 个 task ID 中有 11 个换类，Science/ML 有 5 个被移到 Systems、
+Optimization 或 Knowledge Work。至少对 Opus，34 个 score-table 显示行均值为 `48.494...`，四舍五入
+得到 Table 2 的 Science `48.5`；加回 5 个换类显示行后为 `47.395`，即使给每行完整的一位小数舍入
+区间也不可能得到 `48.5`。这不否定 134-task 总体曲线，但说明
+family-level 结果不能只靠 prose category label 复现。
+
+因此每个 curve/table 预先冻结并发布机器可读 manifest：`cohort_id`、task IDs、science track、
+`lineage_id`、analysis role、权重、raw-to-report transform、run inclusion/failure policy、source revision 和
+manifest hash。分析脚本若发现声明数量、task set、权重或 transform 不匹配必须 fail closed；taxonomy
+变化作为显式 diff 发布，不能静默改变“science tasks”分母。
+本次源码级映射与均值复算保存在
+`.research/edgebench_taxonomy_audit_2026-07-24.json`。
+
 ## 5. 推荐的曲线与表格
 
 主文可沿用 Frontier-Eng/EdgeBench 的时间或 oracle-budget best-so-far 图，但 science 论文至少再加：
@@ -347,6 +389,10 @@ grader-assisted search，而不是从科学环境中学习。
 14. autonomous-stop 与 forced-continuation 的收益、风险和成本曲线。
 15. observation-only 与 truth-relative score-oracle 的 paired trajectory；
 16. known-answer replication 与 procedural/prospective transfer 的 novelty matrix。
+17. campaign stage-local score 到最终 decision-regret 的 error-propagation 图，并含 stage-swap
+    counterfactual；
+18. task measurement-health 图：first-valid、baseline/reference gap、judge noise、floor/ceiling、2h
+    material headroom 与所需重复数。
 
 log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、Gompertz、piecewise/change-point
 和 hierarchical task-mixture 比较；必须用 held-out time forecasting、bootstrap over tasks 与跨 seed
@@ -372,6 +418,9 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
 - [ ] 在 null worlds 扫描 feedback budget，验证 anytime-valid/one-shot confirmation 的错误率；
 - [ ] 在 2 个任务比较 autonomous-stop 与 forced-horizon continuation；
 - [ ] 把 agent-visible payload 分成现实观测和 truth-relative grader feedback，先跑 paired pilot；
+- [ ] 在一个 procedural system 上跑 data-QC/inference/design/intervention linked-campaign pilot，并做
+  baseline/agent stage-swap counterfactual；
+- [ ] 对 pilot cells 先跑 measurement-health gate，再决定是否分配 6h/12h；
 - [ ] pilot 可按 headroom 分配后续工程资源，但 confirmatory cohort 不得据此删任务；
 - [ ] 仅在 pilot 证明基础设施稳定且至少部分任务有 headroom 后扩展 6h/12h。
 
@@ -382,12 +431,16 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
 - [ ] 为约 50-task inventory 增加 author/reviewer effort、shortcut red-team 与
   `long-horizon-ready` maturity ledger；
 - [ ] 为每个任务增加 known-answer/procedural/prospective provenance 和 novelty-risk 字段；
+- [ ] 为任务卡增加 `campaign_id/workflow_stage/lineage_id`，发现/反演任务提交可在 fresh world
+  端到端重放的 method artifact；
+- [ ] 为 admission、pilot、confirmatory 和每个论文 figure/table 冻结独立的 hashed cohort manifest；
 - [ ] 每个任务强制 E1--E3、E7--E9；主动/随机/多保真任务再分别强制 E2/E8/E5；
 - [ ] 只有 admission DoD 全部通过才计数，目标从当前 34 提升到约 50。
 
 ### P3 — 统计与论文
 
 - [ ] 预注册主要 estimand、失败口径、multiple-comparison 与 bootstrap unit；
+- [ ] 分析脚本校验 cohort/task-count/weight/transform/run-policy 与 manifest 完全一致；
 - [ ] 独立重跑至少一个模型/agent harness，分离模型和脚手架效应；
 - [ ] 生成向量曲线、evidence ladder、failure incidence 与 cost frontier；
 - [ ] 最终论文把 simulator optimization、mechanism discovery 和 prospective validation 分层措辞。
@@ -404,3 +457,7 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
   12h、30min auto-eval、120s submission cooldown；公开文档说明 final best 包含不可见 auto-eval，
   `run_agent.py` 显示定时器直接打包 live workspace。这些实现事实用于 2.1/E11--E16 的协议审计，
   不代表官方作者对 Frontier-Science 的结论。
+- EdgeBench arXiv v1 source package SHA-256
+  `8193aeb41a3474690a40fac82e2ecbd53e651ab6b4759984b4c6845c04fbfd29`（2026-07-24
+  下载核验）；taxonomy/count 差异来自源码中的 `task_by_task_specifications.tex` 与
+  `category_score_tables.tex`，不是 PDF 文本提取推断。
