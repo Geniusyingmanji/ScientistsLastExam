@@ -1,0 +1,436 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_SECURE_EVAL",
+  "evidence_scope": "MODEL_PERFORMANCE",
+  "created_at": "2026-07-24T16:38:07.795122+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "458cdf8357977c04d3d3dc14fd83cdc99794fd08",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "/home/azureuser/workspace-gzy/zyf/frontier-science/scripts/batch_evolve.py",
+      "--tasks",
+      "RANSCalibration",
+      "--all",
+      "--algorithms",
+      "greedy_rewrite",
+      "--feedback-modes",
+      "selection_blind",
+      "--seeds",
+      "1",
+      "--budget",
+      "3",
+      "--timeout",
+      "60",
+      "--workdir",
+      "runs/rans_v2_blind_b3",
+      "--output",
+      "experiments/gpt55_rans_v2_blind_b3_2026-07-24.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "config": {
+    "tasks": [
+      "Turbulence/RANSCalibration"
+    ],
+    "algorithms": [
+      "greedy_rewrite"
+    ],
+    "feedback_modes": [
+      "selection_blind"
+    ],
+    "condition_order": "as_listed_for_even_seeds_reversed_for_odd_seeds",
+    "seeds": [
+      1
+    ],
+    "budget": 3,
+    "timeout_s": 60.0,
+    "work_root": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/rans_v2_blind_b3",
+    "llm_condition_sha256": "5b0df4671481f6b3505155bc6c5654a64c4da5591422fb806904e7d0f44fc4d2",
+    "llm": {
+      "wire": "responses",
+      "endpoint_sha256": "b22995a1fcaf8ad713ac37716f006c717313dfdebd357ac02a077a5582650bb6",
+      "model": "gpt-5.5",
+      "max_output_tokens": 16000,
+      "temperature": null,
+      "reasoning_effort": "low",
+      "input_cost_per_million": null,
+      "output_cost_per_million": null,
+      "server_side_seed_control": false
+    }
+  },
+  "runs": [
+    {
+      "task": "Turbulence/RANSCalibration",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "selection_blind",
+      "seed": 1,
+      "baseline": 0.0,
+      "best": 0.0,
+      "accepted": 0,
+      "evaluated": 4,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/rans_v2_blind_b3/Turbulence__RANSCalibration/greedy_rewrite/selection_blind/seed_1",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 4,
+        "budget_units": 4,
+        "best_score": 0.0,
+        "best_so_far_auc": 0.0,
+        "valid_rate": 1.0,
+        "accepted": 0,
+        "wall_seconds": 103.94351303204894,
+        "llm": {
+          "calls": 3,
+          "provider_usage_records": 3,
+          "input_tokens": 3540,
+          "output_tokens": 4883,
+          "total_tokens": 8423,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "Turbulence/RANSCalibration",
+        "seed": 1,
+        "baseline_score": 0.0,
+        "budget": 3,
+        "feedback_mode": "selection_blind",
+        "feedback_scope": "open-loop proposal batch: every proposal sees the frozen baseline program and its allowlisted baseline metrics; evaluated scores are retained only for offline best-of-batch analysis and never change a later parent or prompt; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "offline_best_of_open_loop_batch"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 1,
+        "trajectory_sha256": "7caeb14178fd46f85399f5c7c8442989cc8f7423980f424225087fe0003a9760",
+        "events": [
+          {
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "08d77d5949beb6d20b7459805f4834306fd6daebc982cc38e1f38c03b7d371e5",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.0,
+              "robustness_score": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "heldout_feasibility_rate": 1.0,
+              "development_raw_loss": 1.0041455593279376,
+              "heldout_raw_loss": 0.9924611424883841,
+              "development_worst_shift_loss": 1.2038265711931302,
+              "heldout_worst_shift_loss": 1.1703085734791872,
+              "development_velocity_rmse_plus": 0.3713543249510964,
+              "heldout_velocity_rmse_plus": 0.36907561526738775,
+              "development_reynolds_shear_rmse_plus": 0.01515194939003935,
+              "heldout_reynolds_shear_rmse_plus": 0.013954420863982945,
+              "candidate_parameter_count": 4,
+              "physics_gate_passed": true,
+              "data_source_doi": "10.5281/zenodo.5749302",
+              "data_source_license": "CC-BY-4.0"
+            },
+            "algorithm_metadata": {},
+            "error": null
+          },
+          {
+            "step": 1,
+            "oracle_calls": 2,
+            "budget_units": 2,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": false,
+            "candidate_sha256": "b19d73d16ee73ad18209be60ad057de69efd59b63b34739a65e7249796004048",
+            "parent_sha256": "08d77d5949beb6d20b7459805f4834306fd6daebc982cc38e1f38c03b7d371e5",
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.0,
+              "robustness_score": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "heldout_feasibility_rate": 1.0,
+              "development_raw_loss": 6.2779846242957795,
+              "heldout_raw_loss": 6.06684834942423,
+              "development_worst_shift_loss": 6.427644795968897,
+              "heldout_worst_shift_loss": 6.265314404294156,
+              "development_velocity_rmse_plus": 2.4708698766617103,
+              "heldout_velocity_rmse_plus": 2.3864968071128017,
+              "development_reynolds_shear_rmse_plus": 0.02016198652830064,
+              "heldout_reynolds_shear_rmse_plus": 0.020121266328445166,
+              "candidate_parameter_count": 4,
+              "physics_gate_passed": true,
+              "data_source_doi": "10.5281/zenodo.5749302",
+              "data_source_license": "CC-BY-4.0"
+            },
+            "algorithm_metadata": {
+              "selection_policy": "offline_best_of_open_loop_batch",
+              "accepted_semantics": "offline_best_update",
+              "proposal_slot": 1
+            },
+            "error": null
+          },
+          {
+            "step": 2,
+            "oracle_calls": 3,
+            "budget_units": 3,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": false,
+            "candidate_sha256": "a00ef5a8a1cbc729fb1406043748fe754cb10919f34e9332e707a5addec30cc7",
+            "parent_sha256": "08d77d5949beb6d20b7459805f4834306fd6daebc982cc38e1f38c03b7d371e5",
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.0,
+              "robustness_score": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "heldout_feasibility_rate": 1.0,
+              "development_raw_loss": 2.234732266860716,
+              "heldout_raw_loss": 2.453645946210129,
+              "development_worst_shift_loss": 2.3062752070191603,
+              "heldout_worst_shift_loss": 2.562028500086611,
+              "development_velocity_rmse_plus": 0.8176317910400962,
+              "heldout_velocity_rmse_plus": 0.9096211549522756,
+              "development_reynolds_shear_rmse_plus": 0.038130557852095084,
+              "heldout_reynolds_shear_rmse_plus": 0.035918611765888016,
+              "candidate_parameter_count": 4,
+              "physics_gate_passed": true,
+              "data_source_doi": "10.5281/zenodo.5749302",
+              "data_source_license": "CC-BY-4.0"
+            },
+            "algorithm_metadata": {
+              "selection_policy": "offline_best_of_open_loop_batch",
+              "accepted_semantics": "offline_best_update",
+              "proposal_slot": 2
+            },
+            "error": null
+          },
+          {
+            "step": 3,
+            "oracle_calls": 4,
+            "budget_units": 4,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": false,
+            "candidate_sha256": "b5b55e0eeb4e52aebd21b699b28cf38319b9aed339ec5ed22139e20c7091b246",
+            "parent_sha256": "08d77d5949beb6d20b7459805f4834306fd6daebc982cc38e1f38c03b7d371e5",
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.0,
+              "robustness_score": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "heldout_feasibility_rate": 1.0,
+              "development_raw_loss": 2.981671202002503,
+              "heldout_raw_loss": 2.9995902760642377,
+              "development_worst_shift_loss": 3.1489886622292085,
+              "heldout_worst_shift_loss": 3.1285254474085105,
+              "development_velocity_rmse_plus": 1.150428592343665,
+              "heldout_velocity_rmse_plus": 1.1618422898198828,
+              "development_reynolds_shear_rmse_plus": 0.021119944228667965,
+              "heldout_reynolds_shear_rmse_plus": 0.018996910302906043,
+              "candidate_parameter_count": 4,
+              "physics_gate_passed": true,
+              "data_source_doi": "10.5281/zenodo.5749302",
+              "data_source_license": "CC-BY-4.0"
+            },
+            "algorithm_metadata": {
+              "selection_policy": "offline_best_of_open_loop_batch",
+              "accepted_semantics": "offline_best_update",
+              "proposal_slot": 3
+            },
+            "error": null
+          }
+        ]
+      }
+    }
+  ],
+  "aggregate": {
+    "attempt_count": 1,
+    "superseded_attempts": 0,
+    "failed_attempts": 0,
+    "attempt_failure_rate": 0.0,
+    "recovered_runs": 0,
+    "successful_runs": 1,
+    "failed_runs": 0,
+    "intent_to_evaluate": {
+      "scheduled_runs": 1,
+      "successful_runs": 1,
+      "terminal_failed_runs": 0,
+      "completion_rate": 1.0,
+      "run_cells_with_any_failed_attempt": 0,
+      "recovered_runs": 0
+    },
+    "quality_metrics_scope": "latest successful runs only; interpret jointly with intent_to_evaluate and failed_attempts",
+    "by_condition": {
+      "Turbulence/RANSCalibration|greedy_rewrite|selection_blind": {
+        "n": 1,
+        "scheduled_n": 1,
+        "successful_runs": 1,
+        "terminal_failed_runs": 0,
+        "completion_rate": 1.0,
+        "attempt_count": 1,
+        "failed_attempts": 0,
+        "recovered_runs": 0,
+        "best_score": {
+          "n": 1,
+          "mean": 0.0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.0
+        },
+        "best_so_far_auc": {
+          "n": 1,
+          "mean": 0.0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.0
+        },
+        "budget_units": {
+          "n": 1,
+          "mean": 4.0,
+          "ci95_low": 4.0,
+          "ci95_high": 4.0
+        },
+        "oracle_calls": {
+          "n": 1,
+          "mean": 4.0,
+          "ci95_low": 4.0,
+          "ci95_high": 4.0
+        },
+        "wall_seconds": {
+          "n": 1,
+          "mean": 103.94351303204894,
+          "ci95_low": 103.94351303204894,
+          "ci95_high": 103.94351303204894
+        },
+        "total_tokens": {
+          "n": 1,
+          "mean": 8423.0,
+          "ci95_low": 8423.0,
+          "ci95_high": 8423.0
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      }
+    },
+    "overall": {
+      "best_score": {
+        "n": 1,
+        "mean": 0.0,
+        "ci95_low": 0.0,
+        "ci95_high": 0.0
+      },
+      "best_so_far_auc": {
+        "n": 1,
+        "mean": 0.0,
+        "ci95_low": 0.0,
+        "ci95_high": 0.0
+      },
+      "budget_units": {
+        "n": 1,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "oracle_calls": {
+        "n": 1,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "wall_seconds": {
+        "n": 1,
+        "mean": 103.94351303204894,
+        "ci95_low": 103.94351303204894,
+        "ci95_high": 103.94351303204894
+      },
+      "total_tokens": {
+        "n": 1,
+        "mean": 8423.0,
+        "ci95_low": 8423.0,
+        "ci95_high": 8423.0
+      },
+      "estimated_cost_usd": {
+        "n": 0,
+        "mean": null,
+        "ci95_low": null,
+        "ci95_high": null
+      }
+    },
+    "overall_valid_only": {
+      "best_score": {
+        "n": 1,
+        "mean": 0.0,
+        "ci95_low": 0.0,
+        "ci95_high": 0.0
+      },
+      "best_so_far_auc": {
+        "n": 1,
+        "mean": 0.0,
+        "ci95_low": 0.0,
+        "ci95_high": 0.0
+      },
+      "budget_units": {
+        "n": 1,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "oracle_calls": {
+        "n": 1,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "wall_seconds": {
+        "n": 1,
+        "mean": 103.94351303204894,
+        "ci95_low": 103.94351303204894,
+        "ci95_high": 103.94351303204894
+      },
+      "total_tokens": {
+        "n": 1,
+        "mean": 8423.0,
+        "ci95_low": 8423.0,
+        "ci95_high": 8423.0
+      },
+      "estimated_cost_usd": {
+        "n": 0,
+        "mean": null,
+        "ci95_low": null,
+        "ci95_high": null
+      }
+    }
+  },
+  "completed_at": "2026-07-24T16:39:51.745839+00:00",
+  "execution_passed": true,
+  "trust_decision": "trusted_clean_revision",
+  "trusted_evidence": true,
+  "passed": true
+}
