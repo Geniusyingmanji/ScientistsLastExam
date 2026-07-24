@@ -1605,3 +1605,29 @@ certification v33 remains **7 certified / 27 candidate / 17 quarantined**; secur
 **18/18**; and secure baseline v23 records **51/51 deterministic, 51/51 valid and 51/51
 fail-closed**, with zero infrastructure failures. These refresh provenance and close the Seismic
 evidence loop; they do not turn synthetic calibration into field or discovery evidence.
+
+## 2026-07-24 — EdgeBench implementation and science-task second pass
+
+We checked the full EdgeBench v1 paper and appendices against public SForge commit
+`a87350ab80eeb320b13cb71d1b0c3ffcc20a670f`, the official Codex experiment configuration and
+the four publicly released Science/ML contracts. This second pass adds science-specific controls
+that the first protocol review did not make explicit: declared/terminal artifacts must remain
+separate from an evaluator-only historical-best envelope; continuous experience must be split
+into artifact, observation-ledger, scientific-notebook and context retention; non-improving
+experiments can still refute hypotheses; fixed-interval snapshots require immutable atomic
+publishing and event-time accounting; and scaling-law fits require held-out-task, transformation,
+selection and independent-restart-null sensitivity analyses. Repeated feedback also requires a
+sequential false-discovery study and a one-shot confirmation rule.
+
+The public 51-task manifest contains only four Science/ML tasks, while the private/full suite is
+reported to contain 39. The public contracts are useful protocol examples but span inversion,
+method replication, stochastic policy optimization and generic ML engineering; their category
+label alone is not sufficient admission evidence for a roughly 50-task Frontier-Science
+inventory. The updated addendum therefore separates scientific optimization, mechanism/discovery
+and replication tracks and adds a task-maturity ledger.
+
+The batch runner now preserves both valid-only quality and intent-to-evaluate reliability.
+Conditions with no valid terminal run remain visible; scheduled/completed counts and completion
+rates are reported; failed retry attempts and recovered cells no longer disappear when the latest
+attempt succeeds. This is an accounting improvement, not a new model-performance result. It does
+not yet implement evaluator-only wall-clock snapshots or declared-artifact confirmation.

@@ -58,8 +58,37 @@ class BatchAggregationTests(unittest.TestCase):
         got = MODULE.aggregate_runs([failed, successful])
         self.assertEqual(got["attempt_count"], 2)
         self.assertEqual(got["superseded_attempts"], 1)
+        self.assertEqual(got["failed_attempts"], 1)
+        self.assertEqual(got["attempt_failure_rate"], 0.5)
+        self.assertEqual(got["recovered_runs"], 1)
         self.assertEqual(got["successful_runs"], 1)
         self.assertEqual(got["failed_runs"], 0)
+        self.assertEqual(got["intent_to_evaluate"], {
+            "scheduled_runs": 1,
+            "successful_runs": 1,
+            "terminal_failed_runs": 0,
+            "completion_rate": 1.0,
+            "run_cells_with_any_failed_attempt": 1,
+            "recovered_runs": 1,
+        })
+        condition = got["by_condition"]["T/X|greedy_rewrite|normal"]
+        self.assertEqual(condition["attempt_count"], 2)
+        self.assertEqual(condition["failed_attempts"], 1)
+        self.assertEqual(condition["recovered_runs"], 1)
+
+    def test_failed_condition_stays_visible_without_valid_quality_rows(self):
+        failed = {"task": "T/X", "algorithm": "greedy_rewrite",
+                  "feedback_mode": "normal", "seed": 0, "error": "offline"}
+        got = MODULE.aggregate_runs([failed])
+        condition = got["by_condition"]["T/X|greedy_rewrite|normal"]
+        self.assertEqual(condition["n"], 0)
+        self.assertEqual(condition["scheduled_n"], 1)
+        self.assertEqual(condition["terminal_failed_runs"], 1)
+        self.assertEqual(condition["completion_rate"], 0.0)
+        self.assertEqual(condition["best_score"]["n"], 0)
+        self.assertEqual(got["failed_attempts"], 1)
+        self.assertEqual(got["intent_to_evaluate"]["completion_rate"], 0.0)
+        self.assertEqual(got["overall_valid_only"], {})
 
     def test_complete_smoke_writes_passed_status(self):
         client = type("Client", (), {"config": self.Config()})()

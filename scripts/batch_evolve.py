@@ -76,31 +76,86 @@ def aggregate_runs(runs: list[dict[str, Any]]) -> dict[str, Any]:
         "estimated_cost_usd": lambda run: run["summary"]["llm"]["estimated_cost_usd"],
     }
     current = _latest_runs(runs)
+    attempts_by_run: dict[str, list[dict[str, Any]]] = {}
+    for run in runs:
+        attempts_by_run.setdefault(_run_key(
+            run["task"], run["algorithm"], run["feedback_mode"], int(run["seed"])
+        ), []).append(run)
     groups: dict[str, list[dict[str, Any]]] = {}
     for run in current:
-        if run.get("error"):
-            continue
         key = "%s|%s|%s" % (run["task"], run["algorithm"], run["feedback_mode"])
         groups.setdefault(key, []).append(run)
 
     by_condition = {}
     for key, group in sorted(groups.items()):
+        successful_group = [run for run in group if not run.get("error")]
+        group_attempts = [
+            attempt
+            for run in group
+            for attempt in attempts_by_run[_run_key(
+                run["task"], run["algorithm"], run["feedback_mode"], int(run["seed"])
+            )]
+        ]
+        recovered = sum(
+            not run.get("error") and any(
+                attempt.get("error") for attempt in attempts_by_run[_run_key(
+                    run["task"], run["algorithm"], run["feedback_mode"], int(run["seed"])
+                )]
+            )
+            for run in group
+        )
         by_condition[key] = {
-            "n": len(group),
-            **{name: mean_confidence_interval(getter(run) for run in group)
+            # ``n`` remains the valid-only sample size for compatibility. The
+            # scheduled denominator and retry history are retained separately so
+            # a recovered condition cannot erase an earlier failure.
+            "n": len(successful_group),
+            "scheduled_n": len(group),
+            "successful_runs": len(successful_group),
+            "terminal_failed_runs": len(group) - len(successful_group),
+            "completion_rate": len(successful_group) / len(group),
+            "attempt_count": len(group_attempts),
+            "failed_attempts": sum(bool(run.get("error")) for run in group_attempts),
+            "recovered_runs": recovered,
+            **{name: mean_confidence_interval(getter(run) for run in successful_group)
                for name, getter in fields.items()},
         }
     successful = [run for run in current if not run.get("error")]
+    failed_attempts = sum(bool(run.get("error")) for run in runs)
+    recovered_run_keys = {
+        key
+        for key, attempts in attempts_by_run.items()
+        if not attempts[-1].get("error") and any(run.get("error") for run in attempts)
+    }
+    valid_only = {
+        name: mean_confidence_interval(getter(run) for run in successful)
+        for name, getter in fields.items()
+    } if successful else {}
     return {
         "attempt_count": len(runs),
         "superseded_attempts": len(runs) - len(current),
+        "failed_attempts": failed_attempts,
+        "attempt_failure_rate": failed_attempts / len(runs) if runs else 0.0,
+        "recovered_runs": len(recovered_run_keys),
         "successful_runs": len(successful),
         "failed_runs": len(current) - len(successful),
+        "intent_to_evaluate": {
+            "scheduled_runs": len(current),
+            "successful_runs": len(successful),
+            "terminal_failed_runs": len(current) - len(successful),
+            "completion_rate": len(successful) / len(current) if current else 0.0,
+            "run_cells_with_any_failed_attempt": sum(
+                any(run.get("error") for run in attempts)
+                for attempts in attempts_by_run.values()
+            ),
+            "recovered_runs": len(recovered_run_keys),
+        },
+        "quality_metrics_scope": (
+            "latest successful runs only; interpret jointly with intent_to_evaluate "
+            "and failed_attempts"
+        ),
         "by_condition": by_condition,
-        "overall": {
-            name: mean_confidence_interval(getter(run) for run in successful)
-            for name, getter in fields.items()
-        } if successful else {},
+        "overall": valid_only,
+        "overall_valid_only": valid_only,
     }
 
 
