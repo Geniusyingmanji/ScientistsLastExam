@@ -1,0 +1,1181 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_TASK_CALIBRATION",
+  "evidence_scope": "IAPWS_IF97_REGION_1_2_4_SINGLE_REHEAT_PARETO_TASK_CALIBRATION_NOT_PLANT_DESIGN_ECONOMICS_EMISSIONS_TRANSIENT_OR_FIELD_VALIDATION",
+  "created_at": "2026-07-24T07:40:03.571955+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "ec145104dd7cbccfeb687a7b305f6878c8ffba43",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/calibrate_rankine_v2.py",
+      "--power",
+      "11",
+      "--require-independent-iapws",
+      "--output",
+      "experiments/rankine_v2_calibration_2026-07-24.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29",
+    "numpy": "1.24.4"
+  },
+  "task": "Thermodynamics/RankineCycleOpt",
+  "if97_release_sha256": "c92f887e989cbf074af1fa982083dc54195d57691eab4fbc950ef6098d4cf1f4",
+  "task_source_sha256": {
+    "benchmarks/Thermodynamics/RankineCycleOpt/verification/if97.py": "cb1f2eeecad734bad24a8fdb6c7e52d5897d8b7d2e789da80316da0c340eb43d",
+    "benchmarks/Thermodynamics/RankineCycleOpt/verification/cycle.py": "175d95ea87492a2f9f90f506e9fa05e91f2dccf9e9a1e9164abcdb288a308836",
+    "benchmarks/Thermodynamics/RankineCycleOpt/verification/evaluator.py": "6142fbdf84e6dbba8816b7ff8d957bb3c229bd71290b258286b8326b645a7c2c",
+    "benchmarks/Thermodynamics/RankineCycleOpt/solution.py": "d50518acdb9767de62f1124e8cd99c6a30af33da999ab265445d4e017b8bbcb6",
+    "benchmarks/Thermodynamics/RankineCycleOpt/Task.md": "e127a7974ab10674ff400a870086db1d7453c9938215bf914855a98552e8bea5",
+    "benchmarks/Thermodynamics/RankineCycleOpt/TASK_CARD.yaml": "b6ee258aeba9c3c92c4f668f727f6c65549b57773b4839612164aeb8c6b23227"
+  },
+  "task_dimensions": {
+    "development_instance_count": 4,
+    "heldout_instance_count": 2,
+    "shift_count": 5,
+    "sobol_power": 11,
+    "sobol_pool_size_per_instance": 2048,
+    "archive_size": 16
+  },
+  "reference_method": "fixed-seed scrambled Sobol nominal screen, exact shortlist evaluation, and greedy nominal/shift-robust hypervolume archives",
+  "reference_claim": {
+    "deterministic": true,
+    "truth_blind_to_candidate": true,
+    "global_optimality_claimed": false,
+    "normalization_clips_better_feasible_candidates": true
+  },
+  "instances": [
+    {
+      "name": "dev_temperate_reference",
+      "split": "development",
+      "seed": 9321,
+      "power": 11,
+      "pool_size": 2048,
+      "nominal_feasible_pool_count": 1989,
+      "shortlist_size": 44,
+      "robust_structural_pool_count": 1371,
+      "robust_allowed_count": 1339,
+      "nominal_indices": [
+        383,
+        1751,
+        1859,
+        423,
+        1311,
+        1739,
+        23,
+        51,
+        119,
+        149,
+        175,
+        235,
+        247,
+        295,
+        387,
+        407
+      ],
+      "robust_indices": [
+        1859,
+        2015,
+        1739,
+        655,
+        831,
+        1311,
+        1927,
+        0,
+        1,
+        2,
+        5,
+        6,
+        7,
+        10,
+        11,
+        12
+      ],
+      "anchors": {
+        "baseline_nominal_hypervolume": 0.45817671116762587,
+        "reference_nominal_hypervolume": 0.6337774731201494,
+        "baseline_shifted_hypervolumes": [
+          0.4095007813603086,
+          0.2977962198969881,
+          0.4460942783992582,
+          0.45817671116762587,
+          0.3264059682282639
+        ],
+        "reference_shifted_hypervolumes": [
+          0.47390863035166464,
+          0.35410614680400937,
+          0.5147306851723913,
+          0.5283452265805713,
+          0.3839467516644685
+        ]
+      },
+      "baseline_feasible_counts": [
+        8,
+        8,
+        8,
+        8,
+        8,
+        8
+      ],
+      "reference_feasible_counts": [
+        16,
+        16,
+        16,
+        16,
+        16,
+        16
+      ],
+      "maximum_energy_balance_residual_kj_kg": 4.547473508864641e-13,
+      "passed": true
+    },
+    {
+      "name": "dev_warm_sink",
+      "split": "development",
+      "seed": 9322,
+      "power": 11,
+      "pool_size": 2048,
+      "nominal_feasible_pool_count": 1549,
+      "shortlist_size": 41,
+      "robust_structural_pool_count": 1003,
+      "robust_allowed_count": 995,
+      "nominal_indices": [
+        551,
+        611,
+        1837,
+        671,
+        1523,
+        767,
+        1003,
+        1791,
+        1967,
+        7,
+        15,
+        63,
+        133,
+        203,
+        251,
+        299
+      ],
+      "robust_indices": [
+        1523,
+        223,
+        1791,
+        0,
+        3,
+        4,
+        6,
+        9,
+        10,
+        12,
+        14,
+        17,
+        18,
+        22,
+        26,
+        27
+      ],
+      "anchors": {
+        "baseline_nominal_hypervolume": 0.2957915977312599,
+        "reference_nominal_hypervolume": 0.4188772339951581,
+        "baseline_shifted_hypervolumes": [
+          0.2552784142085323,
+          0.17492101532331666,
+          0.285809428678901,
+          0.2957915977312599,
+          0.19404802622811965
+        ],
+        "reference_shifted_hypervolumes": [
+          0.3213015850906002,
+          0.2323215809681128,
+          0.35703799860644947,
+          0.3686541278269374,
+          0.2526498307452724
+        ]
+      },
+      "baseline_feasible_counts": [
+        8,
+        8,
+        8,
+        8,
+        8,
+        8
+      ],
+      "reference_feasible_counts": [
+        16,
+        16,
+        16,
+        16,
+        16,
+        16
+      ],
+      "maximum_energy_balance_residual_kj_kg": 4.547473508864641e-13,
+      "passed": true
+    },
+    {
+      "name": "dev_cold_sink",
+      "split": "development",
+      "seed": 9323,
+      "power": 11,
+      "pool_size": 2048,
+      "nominal_feasible_pool_count": 1135,
+      "shortlist_size": 43,
+      "robust_structural_pool_count": 782,
+      "robust_allowed_count": 707,
+      "nominal_indices": [
+        262,
+        1882,
+        1642,
+        858,
+        1402,
+        1462,
+        1654,
+        486,
+        54,
+        86,
+        170,
+        233,
+        356,
+        378,
+        410,
+        458
+      ],
+      "robust_indices": [
+        1642,
+        282,
+        1978,
+        0,
+        3,
+        5,
+        7,
+        10,
+        13,
+        15,
+        19,
+        20,
+        21,
+        24,
+        25,
+        27
+      ],
+      "anchors": {
+        "baseline_nominal_hypervolume": 0.5145460060306123,
+        "reference_nominal_hypervolume": 0.6672878854698431,
+        "baseline_shifted_hypervolumes": [
+          0.46464713364380944,
+          0.3428598215870096,
+          0.502101133733511,
+          0.5145460060306123,
+          0.37489766313076245
+        ],
+        "reference_shifted_hypervolumes": [
+          0.5330564556096585,
+          0.40248866628866226,
+          0.5740027320833729,
+          0.5878142219355531,
+          0.43583012747368866
+        ]
+      },
+      "baseline_feasible_counts": [
+        8,
+        8,
+        8,
+        8,
+        8,
+        8
+      ],
+      "reference_feasible_counts": [
+        16,
+        16,
+        16,
+        16,
+        16,
+        16
+      ],
+      "maximum_energy_balance_residual_kj_kg": 2.2737367544323206e-13,
+      "passed": true
+    },
+    {
+      "name": "dev_aged_turbomachinery",
+      "split": "development",
+      "seed": 9324,
+      "power": 11,
+      "pool_size": 2048,
+      "nominal_feasible_pool_count": 910,
+      "shortlist_size": 45,
+      "robust_structural_pool_count": 530,
+      "robust_allowed_count": 529,
+      "nominal_indices": [
+        1978,
+        390,
+        1782,
+        1582,
+        1830,
+        21,
+        81,
+        86,
+        180,
+        282,
+        288,
+        350,
+        504,
+        534,
+        576,
+        623
+      ],
+      "robust_indices": [
+        1582,
+        390,
+        1358,
+        1825,
+        742,
+        3,
+        7,
+        15,
+        17,
+        19,
+        20,
+        25,
+        27,
+        30,
+        33,
+        35
+      ],
+      "anchors": {
+        "baseline_nominal_hypervolume": 0.19776831887363497,
+        "reference_nominal_hypervolume": 0.300729724450286,
+        "baseline_shifted_hypervolumes": [
+          0.16656637795827464,
+          0.10198739993780521,
+          0.18988292913494137,
+          0.19776831887363497,
+          0.11759689953561125
+        ],
+        "reference_shifted_hypervolumes": [
+          0.20952201541994925,
+          0.13760256673474963,
+          0.23668967322659218,
+          0.2457828486433836,
+          0.15452014302236597
+        ]
+      },
+      "baseline_feasible_counts": [
+        8,
+        8,
+        8,
+        8,
+        8,
+        8
+      ],
+      "reference_feasible_counts": [
+        16,
+        16,
+        16,
+        16,
+        16,
+        16
+      ],
+      "maximum_energy_balance_residual_kj_kg": 2.2737367544323206e-13,
+      "passed": true
+    },
+    {
+      "name": "heldout_hot_humid_sink",
+      "split": "heldout",
+      "seed": 9325,
+      "power": 11,
+      "pool_size": 2048,
+      "nominal_feasible_pool_count": 1388,
+      "shortlist_size": 42,
+      "robust_structural_pool_count": 881,
+      "robust_allowed_count": 876,
+      "nominal_indices": [
+        1385,
+        393,
+        949,
+        1993,
+        607,
+        1865,
+        26,
+        57,
+        125,
+        157,
+        165,
+        185,
+        233,
+        255,
+        277,
+        301
+      ],
+      "robust_indices": [
+        949,
+        607,
+        0,
+        2,
+        4,
+        7,
+        8,
+        10,
+        13,
+        18,
+        20,
+        21,
+        28,
+        31,
+        34,
+        35
+      ],
+      "anchors": {
+        "baseline_nominal_hypervolume": 0.22636959323328898,
+        "reference_nominal_hypervolume": 0.3449200481392878,
+        "baseline_shifted_hypervolumes": [
+          0.19069899230317136,
+          0.12405625737290443,
+          0.21754844280665794,
+          0.22636959323328898,
+          0.13937896940883676
+        ],
+        "reference_shifted_hypervolumes": [
+          0.23504364421890186,
+          0.16329280095738666,
+          0.2664715568847174,
+          0.27652824509524765,
+          0.17891479588057801
+        ]
+      },
+      "baseline_feasible_counts": [
+        8,
+        8,
+        8,
+        8,
+        8,
+        8
+      ],
+      "reference_feasible_counts": [
+        16,
+        16,
+        16,
+        16,
+        16,
+        16
+      ],
+      "maximum_energy_balance_residual_kj_kg": 2.2737367544323206e-13,
+      "passed": true
+    },
+    {
+      "name": "heldout_derated_retrofit",
+      "split": "heldout",
+      "seed": 9326,
+      "power": 11,
+      "pool_size": 2048,
+      "nominal_feasible_pool_count": 598,
+      "shortlist_size": 40,
+      "robust_structural_pool_count": 357,
+      "robust_allowed_count": 327,
+      "nominal_indices": [
+        4,
+        628,
+        1908,
+        1354,
+        220,
+        19,
+        1700,
+        52,
+        91,
+        324,
+        382,
+        395,
+        443,
+        524,
+        539,
+        613
+      ],
+      "robust_indices": [
+        1354,
+        124,
+        1315,
+        19,
+        301,
+        5,
+        13,
+        17,
+        25,
+        33,
+        35,
+        38,
+        41,
+        53,
+        57,
+        65
+      ],
+      "anchors": {
+        "baseline_nominal_hypervolume": 0.2433608928222019,
+        "reference_nominal_hypervolume": 0.35643580540062564,
+        "baseline_shifted_hypervolumes": [
+          0.20930283465452879,
+          0.13480982804238079,
+          0.2346711826705231,
+          0.2433608928222019,
+          0.15329407201048365
+        ],
+        "reference_shifted_hypervolumes": [
+          0.25862716412242687,
+          0.1746630906518818,
+          0.287521889439883,
+          0.2977860678414193,
+          0.19507724977093957
+        ]
+      },
+      "baseline_feasible_counts": [
+        8,
+        8,
+        8,
+        8,
+        8,
+        8
+      ],
+      "reference_feasible_counts": [
+        16,
+        16,
+        16,
+        16,
+        16,
+        16
+      ],
+      "maximum_energy_balance_residual_kj_kg": 4.547473508864641e-13,
+      "passed": true
+    }
+  ],
+  "independent_iapws_1_5_4_check": {
+    "requested": true,
+    "performed": true,
+    "required": true,
+    "package": "iapws",
+    "expected_version": "1.5.4",
+    "observed_version": "1.5.4",
+    "expected_sdist_sha256": "9f0faa39a967d76fc5e5f95f61d922e135453192e02bf875d07242f13d6eaa55",
+    "runtime_module_path": "/tmp/iapws154-src.12mHxG/iapws-1.5.4/iapws/__init__.py",
+    "state_count": 32,
+    "maximum_absolute_property_errors": {
+      "v": 4.440892098500626e-16,
+      "h": 9.094947017729282e-13,
+      "u": 9.094947017729282e-13,
+      "s": 1.9984014443252818e-15,
+      "cp": 5.329070518200751e-15,
+      "w": 4.092726157978177e-12
+    },
+    "maximum_absolute_saturation_temperature_error_k": 0.0,
+    "region_checks": [
+      {
+        "kind": "region1",
+        "temperature_k": 300.0,
+        "pressure_mpa": 0.1,
+        "independent_region": 1,
+        "maximum_absolute_property_error": 5.400124791776761e-13
+      },
+      {
+        "kind": "region1",
+        "temperature_k": 320.0,
+        "pressure_mpa": 1.0,
+        "independent_region": 1,
+        "maximum_absolute_property_error": 7.105427357601002e-13
+      },
+      {
+        "kind": "region1",
+        "temperature_k": 350.0,
+        "pressure_mpa": 1.0,
+        "independent_region": 1,
+        "maximum_absolute_property_error": 6.821210263296962e-13
+      },
+      {
+        "kind": "region1",
+        "temperature_k": 300.0,
+        "pressure_mpa": 5.0,
+        "independent_region": 1,
+        "maximum_absolute_property_error": 4.973799150320701e-13
+      },
+      {
+        "kind": "region1",
+        "temperature_k": 400.0,
+        "pressure_mpa": 5.0,
+        "independent_region": 1,
+        "maximum_absolute_property_error": 2.2737367544323206e-13
+      },
+      {
+        "kind": "region1",
+        "temperature_k": 500.0,
+        "pressure_mpa": 5.0,
+        "independent_region": 1,
+        "maximum_absolute_property_error": 4.547473508864641e-13
+      },
+      {
+        "kind": "region1",
+        "temperature_k": 300.0,
+        "pressure_mpa": 12.0,
+        "independent_region": 1,
+        "maximum_absolute_property_error": 2.842170943040401e-14
+      },
+      {
+        "kind": "region1",
+        "temperature_k": 400.0,
+        "pressure_mpa": 12.0,
+        "independent_region": 1,
+        "maximum_absolute_property_error": 6.821210263296962e-13
+      },
+      {
+        "kind": "region1",
+        "temperature_k": 500.0,
+        "pressure_mpa": 12.0,
+        "independent_region": 1,
+        "maximum_absolute_property_error": 4.547473508864641e-13
+      },
+      {
+        "kind": "region1",
+        "temperature_k": 550.0,
+        "pressure_mpa": 12.0,
+        "independent_region": 1,
+        "maximum_absolute_property_error": 1.7763568394002505e-15
+      },
+      {
+        "kind": "region1",
+        "temperature_k": 450.0,
+        "pressure_mpa": 15.0,
+        "independent_region": 1,
+        "maximum_absolute_property_error": 2.2737367544323206e-13
+      },
+      {
+        "kind": "region1",
+        "temperature_k": 580.0,
+        "pressure_mpa": 15.0,
+        "independent_region": 1,
+        "maximum_absolute_property_error": 4.092726157978177e-12
+      },
+      {
+        "kind": "region2",
+        "temperature_k": 400.0,
+        "pressure_mpa": 0.01,
+        "independent_region": 2,
+        "maximum_absolute_property_error": 4.547473508864641e-13
+      },
+      {
+        "kind": "region2",
+        "temperature_k": 500.0,
+        "pressure_mpa": 0.01,
+        "independent_region": 2,
+        "maximum_absolute_property_error": 4.547473508864641e-13
+      },
+      {
+        "kind": "region2",
+        "temperature_k": 700.0,
+        "pressure_mpa": 0.01,
+        "independent_region": 2,
+        "maximum_absolute_property_error": 0.0
+      },
+      {
+        "kind": "region2",
+        "temperature_k": 450.0,
+        "pressure_mpa": 0.1,
+        "independent_region": 2,
+        "maximum_absolute_property_error": 8.881784197001252e-16
+      },
+      {
+        "kind": "region2",
+        "temperature_k": 600.0,
+        "pressure_mpa": 0.1,
+        "independent_region": 2,
+        "maximum_absolute_property_error": 4.547473508864641e-13
+      },
+      {
+        "kind": "region2",
+        "temperature_k": 800.0,
+        "pressure_mpa": 0.1,
+        "independent_region": 2,
+        "maximum_absolute_property_error": 9.094947017729282e-13
+      },
+      {
+        "kind": "region2",
+        "temperature_k": 500.0,
+        "pressure_mpa": 1.0,
+        "independent_region": 2,
+        "maximum_absolute_property_error": 9.094947017729282e-13
+      },
+      {
+        "kind": "region2",
+        "temperature_k": 650.0,
+        "pressure_mpa": 1.0,
+        "independent_region": 2,
+        "maximum_absolute_property_error": 4.440892098500626e-16
+      },
+      {
+        "kind": "region2",
+        "temperature_k": 850.0,
+        "pressure_mpa": 1.0,
+        "independent_region": 2,
+        "maximum_absolute_property_error": 9.094947017729282e-13
+      },
+      {
+        "kind": "region2",
+        "temperature_k": 650.0,
+        "pressure_mpa": 12.0,
+        "independent_region": 2,
+        "maximum_absolute_property_error": 4.547473508864641e-13
+      },
+      {
+        "kind": "region2",
+        "temperature_k": 750.0,
+        "pressure_mpa": 12.0,
+        "independent_region": 2,
+        "maximum_absolute_property_error": 4.440892098500626e-16
+      },
+      {
+        "kind": "region2",
+        "temperature_k": 900.0,
+        "pressure_mpa": 12.0,
+        "independent_region": 2,
+        "maximum_absolute_property_error": 9.094947017729282e-13
+      }
+    ],
+    "saturation_checks": [
+      {
+        "kind": "region4_saturated_liquid",
+        "pressure_mpa": 0.01,
+        "quality": 0,
+        "independent_region": 1,
+        "absolute_temperature_error_k": 0.0,
+        "maximum_absolute_property_error": 6.821210263296962e-13
+      },
+      {
+        "kind": "region4_saturated_vapor",
+        "pressure_mpa": 0.01,
+        "quality": 1,
+        "independent_region": 2,
+        "absolute_temperature_error_k": 0.0,
+        "maximum_absolute_property_error": 4.547473508864641e-13
+      },
+      {
+        "kind": "region4_saturated_liquid",
+        "pressure_mpa": 0.1,
+        "quality": 0,
+        "independent_region": 1,
+        "absolute_temperature_error_k": 0.0,
+        "maximum_absolute_property_error": 5.684341886080802e-14
+      },
+      {
+        "kind": "region4_saturated_vapor",
+        "pressure_mpa": 0.1,
+        "quality": 1,
+        "independent_region": 2,
+        "absolute_temperature_error_k": 0.0,
+        "maximum_absolute_property_error": 4.440892098500626e-16
+      },
+      {
+        "kind": "region4_saturated_liquid",
+        "pressure_mpa": 1.0,
+        "quality": 0,
+        "independent_region": 1,
+        "absolute_temperature_error_k": 0.0,
+        "maximum_absolute_property_error": 1.1368683772161603e-13
+      },
+      {
+        "kind": "region4_saturated_vapor",
+        "pressure_mpa": 1.0,
+        "quality": 1,
+        "independent_region": 2,
+        "absolute_temperature_error_k": 0.0,
+        "maximum_absolute_property_error": 4.547473508864641e-13
+      },
+      {
+        "kind": "region4_saturated_liquid",
+        "pressure_mpa": 10.0,
+        "quality": 0,
+        "independent_region": 1,
+        "absolute_temperature_error_k": 0.0,
+        "maximum_absolute_property_error": 8.881784197001252e-16
+      },
+      {
+        "kind": "region4_saturated_vapor",
+        "pressure_mpa": 10.0,
+        "quality": 1,
+        "independent_region": 2,
+        "absolute_temperature_error_k": 0.0,
+        "maximum_absolute_property_error": 9.094947017729282e-13
+      }
+    ],
+    "passed": true
+  },
+  "reference_sobol_literal": {
+    "dev_temperate_reference": {
+      "seed": 9321,
+      "power": 11,
+      "nominal": [
+        383,
+        1751,
+        1859,
+        423,
+        1311,
+        1739,
+        23,
+        51,
+        119,
+        149,
+        175,
+        235,
+        247,
+        295,
+        387,
+        407
+      ],
+      "robust": [
+        1859,
+        2015,
+        1739,
+        655,
+        831,
+        1311,
+        1927,
+        0,
+        1,
+        2,
+        5,
+        6,
+        7,
+        10,
+        11,
+        12
+      ]
+    },
+    "dev_warm_sink": {
+      "seed": 9322,
+      "power": 11,
+      "nominal": [
+        551,
+        611,
+        1837,
+        671,
+        1523,
+        767,
+        1003,
+        1791,
+        1967,
+        7,
+        15,
+        63,
+        133,
+        203,
+        251,
+        299
+      ],
+      "robust": [
+        1523,
+        223,
+        1791,
+        0,
+        3,
+        4,
+        6,
+        9,
+        10,
+        12,
+        14,
+        17,
+        18,
+        22,
+        26,
+        27
+      ]
+    },
+    "dev_cold_sink": {
+      "seed": 9323,
+      "power": 11,
+      "nominal": [
+        262,
+        1882,
+        1642,
+        858,
+        1402,
+        1462,
+        1654,
+        486,
+        54,
+        86,
+        170,
+        233,
+        356,
+        378,
+        410,
+        458
+      ],
+      "robust": [
+        1642,
+        282,
+        1978,
+        0,
+        3,
+        5,
+        7,
+        10,
+        13,
+        15,
+        19,
+        20,
+        21,
+        24,
+        25,
+        27
+      ]
+    },
+    "dev_aged_turbomachinery": {
+      "seed": 9324,
+      "power": 11,
+      "nominal": [
+        1978,
+        390,
+        1782,
+        1582,
+        1830,
+        21,
+        81,
+        86,
+        180,
+        282,
+        288,
+        350,
+        504,
+        534,
+        576,
+        623
+      ],
+      "robust": [
+        1582,
+        390,
+        1358,
+        1825,
+        742,
+        3,
+        7,
+        15,
+        17,
+        19,
+        20,
+        25,
+        27,
+        30,
+        33,
+        35
+      ]
+    },
+    "heldout_hot_humid_sink": {
+      "seed": 9325,
+      "power": 11,
+      "nominal": [
+        1385,
+        393,
+        949,
+        1993,
+        607,
+        1865,
+        26,
+        57,
+        125,
+        157,
+        165,
+        185,
+        233,
+        255,
+        277,
+        301
+      ],
+      "robust": [
+        949,
+        607,
+        0,
+        2,
+        4,
+        7,
+        8,
+        10,
+        13,
+        18,
+        20,
+        21,
+        28,
+        31,
+        34,
+        35
+      ]
+    },
+    "heldout_derated_retrofit": {
+      "seed": 9326,
+      "power": 11,
+      "nominal": [
+        4,
+        628,
+        1908,
+        1354,
+        220,
+        19,
+        1700,
+        52,
+        91,
+        324,
+        382,
+        395,
+        443,
+        524,
+        539,
+        613
+      ],
+      "robust": [
+        1354,
+        124,
+        1315,
+        19,
+        301,
+        5,
+        13,
+        17,
+        25,
+        33,
+        35,
+        38,
+        41,
+        53,
+        57,
+        65
+      ]
+    }
+  },
+  "anchors_literal": {
+    "dev_temperate_reference": {
+      "baseline_nominal_hypervolume": 0.45817671116762587,
+      "reference_nominal_hypervolume": 0.6337774731201494,
+      "baseline_shifted_hypervolumes": [
+        0.4095007813603086,
+        0.2977962198969881,
+        0.4460942783992582,
+        0.45817671116762587,
+        0.3264059682282639
+      ],
+      "reference_shifted_hypervolumes": [
+        0.47390863035166464,
+        0.35410614680400937,
+        0.5147306851723913,
+        0.5283452265805713,
+        0.3839467516644685
+      ]
+    },
+    "dev_warm_sink": {
+      "baseline_nominal_hypervolume": 0.2957915977312599,
+      "reference_nominal_hypervolume": 0.4188772339951581,
+      "baseline_shifted_hypervolumes": [
+        0.2552784142085323,
+        0.17492101532331666,
+        0.285809428678901,
+        0.2957915977312599,
+        0.19404802622811965
+      ],
+      "reference_shifted_hypervolumes": [
+        0.3213015850906002,
+        0.2323215809681128,
+        0.35703799860644947,
+        0.3686541278269374,
+        0.2526498307452724
+      ]
+    },
+    "dev_cold_sink": {
+      "baseline_nominal_hypervolume": 0.5145460060306123,
+      "reference_nominal_hypervolume": 0.6672878854698431,
+      "baseline_shifted_hypervolumes": [
+        0.46464713364380944,
+        0.3428598215870096,
+        0.502101133733511,
+        0.5145460060306123,
+        0.37489766313076245
+      ],
+      "reference_shifted_hypervolumes": [
+        0.5330564556096585,
+        0.40248866628866226,
+        0.5740027320833729,
+        0.5878142219355531,
+        0.43583012747368866
+      ]
+    },
+    "dev_aged_turbomachinery": {
+      "baseline_nominal_hypervolume": 0.19776831887363497,
+      "reference_nominal_hypervolume": 0.300729724450286,
+      "baseline_shifted_hypervolumes": [
+        0.16656637795827464,
+        0.10198739993780521,
+        0.18988292913494137,
+        0.19776831887363497,
+        0.11759689953561125
+      ],
+      "reference_shifted_hypervolumes": [
+        0.20952201541994925,
+        0.13760256673474963,
+        0.23668967322659218,
+        0.2457828486433836,
+        0.15452014302236597
+      ]
+    },
+    "heldout_hot_humid_sink": {
+      "baseline_nominal_hypervolume": 0.22636959323328898,
+      "reference_nominal_hypervolume": 0.3449200481392878,
+      "baseline_shifted_hypervolumes": [
+        0.19069899230317136,
+        0.12405625737290443,
+        0.21754844280665794,
+        0.22636959323328898,
+        0.13937896940883676
+      ],
+      "reference_shifted_hypervolumes": [
+        0.23504364421890186,
+        0.16329280095738666,
+        0.2664715568847174,
+        0.27652824509524765,
+        0.17891479588057801
+      ]
+    },
+    "heldout_derated_retrofit": {
+      "baseline_nominal_hypervolume": 0.2433608928222019,
+      "reference_nominal_hypervolume": 0.35643580540062564,
+      "baseline_shifted_hypervolumes": [
+        0.20930283465452879,
+        0.13480982804238079,
+        0.2346711826705231,
+        0.2433608928222019,
+        0.15329407201048365
+      ],
+      "reference_shifted_hypervolumes": [
+        0.25862716412242687,
+        0.1746630906518818,
+        0.287521889439883,
+        0.2977860678414193,
+        0.19507724977093957
+      ]
+    }
+  },
+  "committed_literals_checked": true,
+  "committed_literals_match": true,
+  "limitations": [
+    "The self-contained oracle implements only IF97 Regions 1, 2 and 4; Region 3 is deliberately unsupported and excluded by task bounds.",
+    "The independent iapws check validates thermodynamic properties at 32 states, not the complete cycle implementation or a physical plant.",
+    "The steady-state equilibrium model omits regeneration, combustion, capital cost, emissions, transient stress, water chemistry and detailed off-design component maps.",
+    "The repository-visible deterministic regimes require server-held procedural conditions before leakage-resistant population claims.",
+    "The Sobol/greedy reference archives are strong reproducible witnesses, not global Pareto-optimality certificates.",
+    "Task calibration does not measure GPT-5.5, feedback causality, model-population performance or autonomous scientific discovery."
+  ],
+  "execution_passed": true,
+  "trust_decision": "trusted_clean_revision",
+  "trusted_evidence": true,
+  "passed": true
+}
