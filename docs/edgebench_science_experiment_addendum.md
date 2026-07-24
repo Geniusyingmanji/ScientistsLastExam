@@ -754,6 +754,33 @@ sealed/mechanism/refusal、置信校准和每 eESS 的增益。重复件仍可�
 跨任务“证据分”：主表同时保留最高共享 ancestry 的独立 cluster 数；只有相关结构可估时才给 design-effect/
 weight sensitivity，intervention、独立实验室复现和样本量仍分列报告。
 
+### E48. 观测核、区间删失与 live-state 科学任务
+
+EdgeBench 把 trajectory 画在统一 elapsed-time 横轴上，但公开 SForge 实际有两类不同的观测过程。普通
+artifact task 的 host thread 先等待一个完整 `eval_interval`，打包 live workspace，异步提交后再从头等待
+下一个 interval；它不是带 `scheduled_at` 的绝对固定网格。公开 51 个合同中另有 3 个
+`game_mode=true` text-adventure tasks（`anchorhead/trinity/tryst`）：`run_agent.py` 对它们明确跳过
+auto-eval，只在 agent 驱动的 game session 结束/关闭时归档；公开 step record 含 move、action、observation、
+score，却没有 wall-clock timestamp。公开 Games family 的其余 5 个任务仍是 artifact mode。因此“同为
+12h 曲线”不保证 latent state 以同一机制、同一时间分辨率被观察。这是 released-code scope finding；没有
+公开约 38,000h raw trajectories，不能推断它是否改变了官方数值或拟合。
+
+对 Frontier-Science，同一 artifact 在两次快照之间完成实质改进时，真实 event time 只知道落在一个区间；
+直接把下一次 capture、judge start 或 judge completion 当成“发现时刻”，会机械地后移 first-valid、takeoff、
+`tmid`，并改变 AUC。更重要的是，湿实验、耗材实验、漂移仪器和不可逆 intervention 的 live world 不能像
+代码文件一样事后重评；session-close score 也不能代表中途每个固定 checkpoint 的科学状态。
+
+新增 `OBS1`：在不改变 agent 行为的前提下，对同一批 immutable material commits/event ledger 离线重放
+`dense-event / fixed 5,15,30,60min / preregistered seeded-random phase / agent-event-only` 观测核；比较 interval-censored
+first-valid/material-event time、AUC、plateau/takeoff、curve forecast/`tmid`/`beta` 与模型排序，并报告
+`scheduled_capture_at / actual_capture_at / artifact_or_state_created_at / judge_started_at /
+judge_completed_at`、snapshot age 与遗漏 transient-state 比例。可确定性重放的 artifact 应尽量逐 material
+commit 统一评分；只能周期观察时使用区间删失分析和 cadence/phase sensitivity，禁止把 judge 完成时刻无条件
+归因为 edit 时刻。对 path-dependent live-state tasks，保留带时间戳的 action、instrument reading、world-state
+transition 与 destructive-act lineage，单独报告 live-state stratum；只有测量面等价性通过后，才能与 artifact
+tasks 合并解释 wall-time learning speed。这一实验检验的是“如何观察同一过程”，不同于 S4 的 feedback
+release treatment、I1 的 observer effect 和 M2 的 changing risk set。
+
 ## 5. 推荐的曲线与表格
 
 主文可沿用 Frontier-Eng/EdgeBench 的时间或 oracle-budget best-so-far 图，但 science 论文至少再加：
@@ -824,6 +851,8 @@ weight sensitivity，intervention、独立实验室复现和样本量仍分列�
     mechanism gain 与排序反转；
 41. evidence-efficiency：raw calls/bits 与 lineage-clustered eESS、information gain、独立 interventions/
     replications 及每 eESS 的科学收益。
+42. observation-kernel sensitivity：dense/fixed/random-phase/event-triggered grids 下的区间删失 event time、
+    AUC/曲线/排序变化、snapshot age，以及 replayable artifact 与 path-dependent live-state 的分层覆盖。
 
 log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、Gompertz、piecewise/change-point
 和 hierarchical task-mixture 比较；必须用 held-out time forecasting、bootstrap over tasks 与跨 seed
@@ -897,6 +926,10 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
   在 2 个程序化 families 先跑 leave-one-builder-out 交叉拟合；
 - [ ] 给 observation/evaluation ledger 增加 world/sample/batch/instrument/intervention lineage，并在一个
   active-science task 上比较 fresh/correlated/duplicate feedback 的 raw-call 与 eESS 曲线；
+- [ ] 在 sentinel-complete trajectories 上离线重放 dense、5/15/30/60min、seeded-random-phase 与 agent-event
+  观测核，报告 interval-censored first-valid/material-event、AUC/曲线/排序敏感性和 snapshot age；
+- [ ] 为 interactive/consumptive/irreversible tasks 记录带 wall-time 的 action、sensor reading 与 state
+  transition，单列 live-state measurement stratum，禁止用 session-close score 前向填充固定 checkpoint；
 - [ ] 对选中的大跳变重放 parent/full-child/component-only/rollback，在同一 sealed panel
   上通过后才做“某科学思路导致增益”的因果归因；
 - [ ] pilot 可按 headroom 分配后续工程资源，但 confirmatory cohort 不得据此删任务；
@@ -992,3 +1025,7 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
   三池发布、builder cross-fit 与 evidence-eESS 是 Frontier-Science 的新增协议建议，不是 EdgeBench 已做
   实验；source facts 与 claim boundary 保存在
   `.research/edgebench_science_seventh_order_audit_2026-07-24.json`。
+- 同一上游版本的公开实现还显示：普通 artifact tasks 使用等待式 host auto-eval，而 51 个公开合同中的
+  3 个 `game_mode=true` tasks 跳过 auto-eval、依赖没有 wall-time step timestamps 的 session-close 历史。
+  这只说明公开观测语义异质，不能据此推断官方曲线受偏；OBS1/E48 的 source facts、合同计数与 claim
+  boundary 保存在 `.research/edgebench_science_eighth_order_audit_2026-07-24.json`。

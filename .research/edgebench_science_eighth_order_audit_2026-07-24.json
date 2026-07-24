@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "audit_date_utc": "2026-07-24",
+  "scope": "Eighth-order observation-process audit of the unchanged EdgeBench v1 paper, public SForge implementation and all 51 public task contracts. OBS1/E48 is a Frontier-Science protocol proposal, not an EdgeBench treatment or performance result.",
+  "upstream_state": {
+    "arxiv_id": "2607.05155v1",
+    "arxiv_updated_utc": "2026-07-06T14:39:22Z",
+    "github_commit": "a87350ab80eeb320b13cb71d1b0c3ffcc20a670f",
+    "github_commit_date_utc": "2026-07-17T10:27:00Z",
+    "huggingface_revision": "47846a4c3669ad447e0ea984833b0d352460c5f9",
+    "huggingface_last_modified_utc": "2026-07-09T11:28:50.000Z",
+    "changed_since_seventh_order_audit": false
+  },
+  "source_hashes": {
+    "arxiv_source_package_sha256": "8193aeb41a3474690a40fac82e2ecbd53e651ab6b4759984b4c6845c04fbfd29",
+    "arxiv_approach_tex_sha256": "14cd29671b9cccccefc564aab1b053afbda585dd2fbfcd7c1573c053ff5eba74",
+    "arxiv_construction_tex_sha256": "5b51921fea5e03c1a39a0dd09f6af89a57cee37c460ba555a24cd6f251038bcb",
+    "sforge_run_agent_py_sha256": "40cd57d4f9d9eaa727efa75dc15eac9e75b9b536f05e961e485bd4f3e66442fe",
+    "sforge_judge_server_py_sha256": "e5e05cc91a03e9d3d8d6770223b78df326bcde6b636cdd1bcd668c0195c78360",
+    "sforge_run_evaluation_py_sha256": "16c75048b68fdafea9980d2895549ad8454863341fd65fd47ae88833386b1d97",
+    "public_contracts_name_and_content_sha256": "6bf00e0d13408cc7706add75d79b11d58dc95a41cb088af9e39acc1af8f6a285"
+  },
+  "source_facts": [
+    "The paper describes host-side auto-evaluation at fixed intervals and the official public configurations set eval_interval to 1800 seconds.",
+    "For non-game tasks, SForge _auto_eval_loop waits eval_interval, captures the live workspace, asynchronously submits it, then begins the next wait; the implementation does not retain a planned absolute-grid scheduled_at field.",
+    "For game_mode tasks, run_agent skips host auto-evaluation and scores agent-driven game sessions through the game API.",
+    "All 51 public contracts were scanned: 3 are game_mode=true and all three are text adventures; the public Interactive Games & Simulators family contains 8 tasks, of which the other 5 use artifact mode.",
+    "Archived public game step records contain move, action, observation, score, peak_score, max_score and done, but no wall-clock timestamp.",
+    "Ordinary evaluation reports retain a submitted_at time created inside judge_submission; the summarized in-memory history drops this field, and capture time, judge start/completion and underlying artifact edit time are distinct."
+  ],
+  "public_contract_mode_census": {
+    "total_public_contracts": 51,
+    "game_mode_true": 3,
+    "artifact_mode": 48,
+    "public_games_family_total": 8,
+    "games_game_mode_true": 3,
+    "games_artifact_mode": 5,
+    "game_mode_task_ids": [
+      "anchorhead_text_adventure",
+      "trinity_text_adventure",
+      "tryst_text_adventure"
+    ],
+    "game_mode_contract_sha256": {
+      "anchorhead_text_adventure": "4b92b45a34d83e21d60fa1529ec078f44f8593b0a2457345c92e82c343031cb2",
+      "trinity_text_adventure": "7364a0121b674177006567c7dc4e7365268c3547d647d956c835db04fd2fc0ee",
+      "tryst_text_adventure": "a6e4815a7f300f53ac430c2962da256ed8bc5f6552d6e188cd6dfafa78c51b5f"
+    }
+  },
+  "frontier_science_experiment": {
+    "id": "observation_kernel_sensitivity",
+    "plan_id": "OBS1",
+    "addendum_id": "E48",
+    "design": "Replay identical sentinel-complete immutable artifact/event trajectories under dense-event, fixed 5/15/30/60-minute, preregistered seeded-random-phase and agent-event-only observation kernels. Preserve scheduled capture, actual capture, artifact or state creation, judge start/completion and feedback-read times. Analyze material event times as interval-censored when dense replay is impossible. Separately retain timestamped actions, sensor readings and world transitions for path-dependent live-state laboratories.",
+    "primary_outcomes": [
+      "interval_censored_first_valid_and_material_event_time",
+      "auc_and_takeoff_sensitivity",
+      "curve_midpoint_speed_and_forecast_sensitivity",
+      "system_rank_reversal",
+      "snapshot_age_and_missed_transient_state_rate",
+      "replayable_artifact_coverage",
+      "live_state_transition_coverage"
+    ],
+    "distinct_from": {
+      "S4": "intervenes on when feedback is released to the agent",
+      "I1": "intervenes on whether the observation process changes agent behavior or resource availability",
+      "M2": "audits longitudinal run membership and best-so-far selector invariants"
+    }
+  },
+  "claim_boundary": [
+    "The mode census and source semantics do not establish how EdgeBench internally constructed every published trajectory or whether observation heterogeneity changed any reported score, rank or fit.",
+    "The approximately 38000-hour raw trajectory corpus and figure-analysis code are not public, so OBS1 cannot be run on the EdgeBench headline data from the public release.",
+    "A nominal 1800-second eval_interval is not evidence of exact absolute-grid captures; source code shows a wait-capture-submit loop, but runtime scheduling and judge queues are unobserved here.",
+    "Game-mode tasks are not intrinsically invalid or inferior; they require a live-state measurement estimand rather than silent equivalence to replayable artifact snapshots.",
+    "OBS1/E48 was unrun when this source-audit artifact was frozen. Any later Frontier-Science replay report is separate evidence and cannot retroactively become an EdgeBench result."
+  ]
+}

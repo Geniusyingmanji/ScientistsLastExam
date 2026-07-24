@@ -1862,3 +1862,25 @@ baseline v25 reports. Wave4 recommends MOSFET as a candidate; certification reco
 deterministic, valid and fail closed across two runs with zero infrastructure failures. These are
 task calibration and infrastructure results, not GPT-5.5 performance, feedback learning, TCAD
 validation or semiconductor discovery.
+
+## 2026-07-24 — EdgeBench observation-process audit
+
+EdgeBench upstream remains unchanged at arXiv `2607.05155v1`, SForge `a87350a` and public
+dataset `47846a4`. A full scan of the 51 released contracts and the current SForge execution path
+finds a measurement distinction not represented by a common wall-time axis. Ordinary artifact
+tasks wait one `eval_interval`, capture the live workspace and submit asynchronously before the
+next wait. Three public `game_mode=true` text-adventure tasks skip host auto-evaluation entirely;
+their agent-driven game-session steps record moves/actions/scores but no wall-clock timestamps.
+The public Games family therefore contains three live-state game-mode and five artifact-mode tasks.
+
+This source fact does not show that any EdgeBench score or fit is wrong: the raw 38,000-hour
+trajectory corpus and figure-analysis code are unavailable, and the audit cannot reconstruct how
+the published curves handled every task. It motivates OBS1/E48 in Frontier-Science. The proposed
+gate replays identical sentinel-complete immutable trajectories under dense, 5/15/30/60-minute,
+seeded-random-phase and agent-event observation kernels; treats first-valid/material-event time as
+interval-censored when necessary; and reports AUC, takeoff, curve-parameter, forecast and ranking
+sensitivity. Consumptive, irreversible and interactive scientific worlds instead require
+timestamped actions, instrument readings and state transitions in a separate live-state stratum.
+Source hashes, contract counts and claim limits are recorded in
+`.research/edgebench_science_eighth_order_audit_2026-07-24.json`. OBS1/E48 is an unrun protocol
+proposal, not a Frontier-Science model result.

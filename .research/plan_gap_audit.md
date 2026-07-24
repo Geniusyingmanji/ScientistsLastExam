@@ -536,6 +536,27 @@ claiming that more environment contact means more scientific learning. Define eE
 and retain the highest-lineage cluster, intervention and independent-lab counts separately; a single
 cross-task evidence scalar would recreate the aggregation problem this control is meant to expose.
 
+### 41. A common wall-time axis does not imply a common observation process
+
+EdgeBench describes host auto-evaluation at fixed intervals, but its public SForge implementation
+uses two different trajectory-observation paths. Ordinary artifact tasks wait one full interval,
+archive the live workspace and submit it asynchronously; the timer then waits another full interval
+after that capture attempt rather than targeting an absolute wall-clock grid. In contrast, the
+three public `game_mode=true` text-adventure contracts skip host auto-evaluation entirely. Their
+score histories are produced when agent-driven game sessions close, and archived step records have
+move/action/score but no wall-clock timestamp. Thus even within the eight-task public Games family,
+three tasks are event-triggered live-state interactions and five are artifact submissions. This is
+a released-code observation, not evidence about the unavailable raw trajectories or official fits.
+
+For Frontier-Science, an improvement that occurred between two scored captures is interval-censored;
+using the later capture or judge-completion time as the discovery time shifts AUC, takeoff, midpoint
+and speed. The risk is larger when comparing replayable programs with asynchronous, consumptive or
+irreversible experiments whose state cannot be re-evaluated from a file. Add an observation-kernel
+audit: replay identical immutable event trajectories on dense, 5/15/30/60-minute, preregistered seeded-random-phase and
+agent-event grids; retain scheduled/actual capture, state/artifact creation and judge times; report
+interval-censored event metrics and curve/rank sensitivity. Keep path-dependent live-state tasks in
+a separate stratum unless timestamped state transitions provide an equivalent measurement surface.
+
 ## Revised TODO plan
 
 ### P0/P1 closeout — completed locally, reproduce in CI
@@ -679,6 +700,12 @@ cross-task evidence scalar would recreate the aggregation problem this control i
   untouched reserve; report open-to-sealed transport and independently replay each delayed release.
 - [ ] Add world/sample/batch/instrument/intervention ancestry to the durable event ledger and report
   nominal calls/bits beside lineage-clustered eESS, information gain and independent confirmation.
+- [ ] Replay sentinel-complete raw trajectories under dense-event, 5/15/30/60-minute,
+  seeded-random-phase and agent-event observation kernels; report interval-censored first-valid/material
+  event times, AUC/curve/rank sensitivity and snapshot age rather than treating capture time as edit time.
+- [ ] For interactive, consumptive or irreversible tasks, retain timestamped state transitions and
+  sensor observations and publish a separate live-state measurement stratum; do not infer missing
+  fixed-grid states from session-close scores or artifact-style forward fill.
 - [ ] Generate each admission/pilot/confirmatory/figure cohort from a hashed manifest and fail
   closed on task-count, task-set, lineage, weight, transform or run-policy drift.
 - [ ] Separate pilot admission/calibration worlds and runs from fresh confirmatory seeds/worlds;

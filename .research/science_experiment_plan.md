@@ -94,6 +94,7 @@ Report its visible, sealed and mechanism advantage over `committed` as an
 | G1 | Can an externally replayable result transport to a contamination-resistant prospective cohort? | Pre-registered lineage-stratified open-replay, sealed-prospective and delayed-release pools; freeze one system, evaluate open and sealed pools concurrently, then release and independently replay the delayed pool before rotating in an untouched reserve | open-to-sealed gaps in level, baseline-adjusted gain and feedback effect; rank/curve/forecast transport; delayed-release replay; exposure age and contamination sensitivity | Reproducibility and prospective validity as separate, jointly measured properties |
 | G2 | Did benchmark construction adapt to the model used to build and calibrate the task? | Record builder/calibrator model and scaffold lineage; cross-evaluate A-built, B-built and independent-expert-built procedural families on common fresh worlds while excluding each evaluated solver from the corresponding final construction round | builder×solver interaction, first-valid/invalidity, shortcut and exclusion rates, sealed/mechanism gain, feedback interpretability and ranking reversals | Builder-balanced capability rather than performance on a benchmark tuned through the tested system |
 | EVI1 | Does another feedback event add independent scientific evidence? | Match nominal calls, payload and scientific cost while varying fresh-independent, correlated-batch, exact-duplicate and adversarially redundant observations; bind all events to world/sample/batch/instrument/intervention lineage | lineage-clustered evidence effective sample size, information/entropy gain, independent interventions/replications, sealed/mechanism/refusal gain per eESS and confidence calibration | Evidence accumulation and identifiability rather than repeated evaluator contact |
+| OBS1 | Is the reported learning trajectory robust to how and when latent scientific state is observed? | Replay identical immutable artifact/event trajectories under dense-event, fixed 5/15/30/60-minute, preregistered seeded-random-phase and agent-event-only observation kernels; separately stratify replayable artifacts and path-dependent live-state laboratories | interval-censored first-valid/material-event time, AUC and curve/rank/forecast sensitivity, observation delay/age, missed transient states and live-state replay coverage | A trajectory attributable to agent progress rather than observation cadence or task-interface mode |
 
 ## Controls that must be strict
 
@@ -349,6 +350,9 @@ server-held procedural worlds, multi-seed feedback controls and independent revi
     with shortcut, invalidity, sealed/mechanism and rank-reversal outcomes.
 53. Evidence-efficiency panel: nominal calls/bits beside lineage-clustered eESS, information gain,
     independent interventions/replications and science gain per eESS.
+54. Observation-kernel sensitivity: dense-event versus fixed/random-phase/event-triggered grids,
+    with interval-censored event times, AUC/curve/rank shifts, snapshot age and separate coverage for
+    replayable artifacts versus path-dependent laboratory state.
 
 Avoid presenting a radar chart or a single “science score”; small multiples preserve the
 important capability dissociations.
@@ -424,6 +428,14 @@ important capability dissociations.
   mechanism or replication evidence. Define eESS per estimand and show the independent top-lineage
   cluster count plus design-effect/weight sensitivity; do not collapse interventions, samples and
   independent laboratories into one universal evidence score.
+- Treat the observation process as part of the measurement contract. Record scheduled capture,
+  actual capture, artifact/state creation, judge start/completion and feedback-read times. For a
+  deterministic replayable artifact, evaluate every immutable material commit offline or analyze
+  first-valid/improvement times as interval-censored between scored captures; never assign the
+  capture or judge-completion time to the underlying edit without qualification. Replay headline
+  analyses under multiple fixed cadences and preregistered seeded-random phases. For consumptive, irreversible or
+  interactive worlds, retain timestamped state transitions and sensor observations and report
+  them in a separate live-state stratum rather than imputing an artifact-style snapshot curve.
 - Replay the versioned selection contract over the raw event stream and assert that the declared
   incumbent hashes in online state, endpoint files, dashboards and analysis inputs are identical.
   Treat any divergence as a protocol failure before comparing systems.
@@ -578,6 +590,9 @@ midpoint, speed or doubling-time claim.
 - One G1 open/sealed/delayed-release transport audit, a two-family G2 builder--solver cross-fit,
   and one EVI1 fresh/correlated/duplicate evidence-unit pilot before claiming that a public
   long-horizon curve generalizes to prospective science or measures independent evidence growth.
+- One OBS1 offline observation-kernel replay on sentinel-complete trajectories, plus one
+  path-dependent laboratory smoke with timestamped state transitions, before comparing curve
+  speed, AUC or takeoff time across artifact and live-state task families.
 
 Only Stage B can support claims about feedback-driven scientific discovery. A real-world
 discovery claim additionally requires independent high-fidelity or physical confirmation and
@@ -644,6 +659,10 @@ domain-expert review.
 - H27: fresh independent evidence improves sealed mechanism/refusal outcomes and calibration more
   per nominal call than correlated or duplicate feedback; raw-call gains without eESS or fresh-
   confirmation gain do not constitute evidence accumulation.
+- H28: first-valid time, AUC, fitted midpoint/speed and system ranking remain materially stable
+  across preregistered observation cadences and seeded-random phases after interval-censoring is respected;
+  event-triggered or live-state tasks that fail this test are analyzed separately rather than
+  pooled into a common wall-time scaling curve.
 
 These are hypotheses to test. The paper should report failed hypotheses and negative results
 rather than selecting only curves that resemble Frontier-Eng or EdgeBench.
