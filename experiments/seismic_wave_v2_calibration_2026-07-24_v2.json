@@ -1,0 +1,1957 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_TASK_CALIBRATION",
+  "evidence_scope": "SEISMIC_WAVE_V2_SYNTHETIC_LAYERED_ACTIVE_INVERSION_CALIBRATION_NOT_FIELD_OR_DISCOVERY_EVIDENCE",
+  "created_at": "2026-07-24T02:04:16.811708+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "e59e7bb7d46a8a5aeb3787ea7af18f01fceee295",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/calibrate_seismic_wave_v2.py",
+      "--output",
+      "experiments/seismic_wave_v2_calibration_2026-07-24_v2.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "task_dimensions": {
+    "development_worlds": 6,
+    "heldout_worlds": 5,
+    "parameters": [
+      "v1_m_s",
+      "v2_m_s",
+      "v3_m_s",
+      "h1_center_m",
+      "h1_slope_m",
+      "h1_curvature_m",
+      "h2_center_m",
+      "h2_slope_m",
+      "h2_curvature_m"
+    ],
+    "acquisition_budget_units": 12,
+    "trace_shape_per_offset": 501
+  },
+  "weak_baseline": {
+    "combined_score": 0.0,
+    "valid": 1.0,
+    "feasibility_rate": 1.0,
+    "raw_score": 0.0,
+    "mechanism_score": 0.0,
+    "development_prediction_score": 0.0,
+    "development_far_offset_prediction_score": 0.0,
+    "development_observed_fit_score": 0.0,
+    "development_experiment_information_score": 0.0,
+    "robustness_score": 0.0,
+    "development_validation_gap": 0.0,
+    "heldout_policy_score": 0.0,
+    "heldout_mechanism_score": 0.0,
+    "heldout_prediction_score": 0.0,
+    "heldout_far_offset_prediction_score": 0.0,
+    "heldout_observed_fit_score": 0.0,
+    "heldout_experiment_information_score": 0.0,
+    "heldout_robustness_score": 0.0,
+    "development_supported_claim_coverage": 0.0,
+    "heldout_supported_claim_coverage": 0.0,
+    "development_false_discovery_rate": 0.0,
+    "heldout_false_discovery_rate": 0.0,
+    "development_correct_refusal_rate": 1.0,
+    "heldout_correct_refusal_rate": 1.0,
+    "development_confidence_calibration_score": 0.6666666666666666,
+    "heldout_confidence_calibration_score": 0.6,
+    "development_mean_acquisition_calls": 1.0,
+    "heldout_mean_acquisition_calls": 1.0,
+    "development_mean_budget_units": 4.0,
+    "heldout_mean_budget_units": 4.0,
+    "development_mean_acquired_traces": 4.0,
+    "heldout_mean_acquired_traces": 4.0,
+    "heldout_feasibility_rate": 1.0,
+    "candidate_world_call_count": 11,
+    "candidate_world_valid_rate": 1.0,
+    "per_world": [
+      {
+        "split": "development",
+        "world_index": 0,
+        "kind": "in_library",
+        "valid": true,
+        "abstain": true,
+        "confidence": 0.0,
+        "mechanism_quality": 0.0,
+        "prediction_quality": 0.0,
+        "far_offset_prediction_quality": 0.0,
+        "observed_fit_quality": 0.0,
+        "experiment_information_score": 0.0,
+        "experiment_jacobian_rank": 5,
+        "experiment_condition_number": null,
+        "experiment_log_determinant": -18.51709348853481,
+        "reference_experiment_log_determinant": 137.95062816924468,
+        "joint_quality": 0.0,
+        "robust_joint_quality": 0.0,
+        "confidence_calibration_score": 1.0,
+        "correct_refusal": false,
+        "false_discovery": false,
+        "acquisition_calls": 1,
+        "acquisition_budget_units": 4,
+        "acquired_trace_count": 4
+      },
+      {
+        "split": "development",
+        "world_index": 1,
+        "kind": "in_library",
+        "valid": true,
+        "abstain": true,
+        "confidence": 0.0,
+        "mechanism_quality": 0.0,
+        "prediction_quality": 0.0,
+        "far_offset_prediction_quality": 0.0,
+        "observed_fit_quality": 0.0,
+        "experiment_information_score": 0.0,
+        "experiment_jacobian_rank": 5,
+        "experiment_condition_number": null,
+        "experiment_log_determinant": -16.622317270059995,
+        "reference_experiment_log_determinant": 142.79072150922988,
+        "joint_quality": 0.0,
+        "robust_joint_quality": 0.0,
+        "confidence_calibration_score": 1.0,
+        "correct_refusal": false,
+        "false_discovery": false,
+        "acquisition_calls": 1,
+        "acquisition_budget_units": 4,
+        "acquired_trace_count": 4
+      },
+      {
+        "split": "development",
+        "world_index": 2,
+        "kind": "in_library",
+        "valid": true,
+        "abstain": true,
+        "confidence": 0.0,
+        "mechanism_quality": 0.0,
+        "prediction_quality": 0.0,
+        "far_offset_prediction_quality": 0.0,
+        "observed_fit_quality": 0.0,
+        "experiment_information_score": 0.0,
+        "experiment_jacobian_rank": 5,
+        "experiment_condition_number": null,
+        "experiment_log_determinant": -22.2117260763037,
+        "reference_experiment_log_determinant": 133.21200527859386,
+        "joint_quality": 0.0,
+        "robust_joint_quality": 0.0,
+        "confidence_calibration_score": 1.0,
+        "correct_refusal": false,
+        "false_discovery": false,
+        "acquisition_calls": 1,
+        "acquisition_budget_units": 4,
+        "acquired_trace_count": 4
+      },
+      {
+        "split": "development",
+        "world_index": 3,
+        "kind": "in_library",
+        "valid": true,
+        "abstain": true,
+        "confidence": 0.0,
+        "mechanism_quality": 0.0,
+        "prediction_quality": 0.0,
+        "far_offset_prediction_quality": 0.0,
+        "observed_fit_quality": 0.0,
+        "experiment_information_score": 0.0,
+        "experiment_jacobian_rank": 5,
+        "experiment_condition_number": null,
+        "experiment_log_determinant": -19.39915288495628,
+        "reference_experiment_log_determinant": 137.68932952116876,
+        "joint_quality": 0.0,
+        "robust_joint_quality": 0.0,
+        "confidence_calibration_score": 1.0,
+        "correct_refusal": false,
+        "false_discovery": false,
+        "acquisition_calls": 1,
+        "acquisition_budget_units": 4,
+        "acquired_trace_count": 4
+      },
+      {
+        "split": "development",
+        "world_index": 4,
+        "kind": "null",
+        "valid": true,
+        "abstain": true,
+        "confidence": 0.0,
+        "mechanism_quality": 1.0,
+        "prediction_quality": 1.0,
+        "far_offset_prediction_quality": 1.0,
+        "observed_fit_quality": 1.0,
+        "experiment_information_score": 0.0,
+        "experiment_jacobian_rank": 0,
+        "experiment_condition_number": null,
+        "joint_quality": 1.0,
+        "robust_joint_quality": 1.0,
+        "confidence_calibration_score": 0.0,
+        "correct_refusal": true,
+        "false_discovery": false,
+        "acquisition_calls": 1,
+        "acquisition_budget_units": 4,
+        "acquired_trace_count": 4
+      },
+      {
+        "split": "development",
+        "world_index": 5,
+        "kind": "misspecified",
+        "valid": true,
+        "abstain": true,
+        "confidence": 0.0,
+        "mechanism_quality": 1.0,
+        "prediction_quality": 1.0,
+        "far_offset_prediction_quality": 1.0,
+        "observed_fit_quality": 1.0,
+        "experiment_information_score": 0.0,
+        "experiment_jacobian_rank": 0,
+        "experiment_condition_number": null,
+        "joint_quality": 1.0,
+        "robust_joint_quality": 1.0,
+        "confidence_calibration_score": 0.0,
+        "correct_refusal": true,
+        "false_discovery": false,
+        "acquisition_calls": 1,
+        "acquisition_budget_units": 4,
+        "acquired_trace_count": 4
+      },
+      {
+        "split": "heldout",
+        "world_index": 0,
+        "kind": "in_library",
+        "valid": true,
+        "abstain": true,
+        "confidence": 0.0,
+        "mechanism_quality": 0.0,
+        "prediction_quality": 0.0,
+        "far_offset_prediction_quality": 0.0,
+        "observed_fit_quality": 0.0,
+        "experiment_information_score": 0.0,
+        "experiment_jacobian_rank": 5,
+        "experiment_condition_number": null,
+        "experiment_log_determinant": -24.41733336941402,
+        "reference_experiment_log_determinant": 128.9995748586997,
+        "joint_quality": 0.0,
+        "robust_joint_quality": 0.0,
+        "confidence_calibration_score": 1.0,
+        "correct_refusal": false,
+        "false_discovery": false,
+        "acquisition_calls": 1,
+        "acquisition_budget_units": 4,
+        "acquired_trace_count": 4
+      },
+      {
+        "split": "heldout",
+        "world_index": 1,
+        "kind": "in_library",
+        "valid": true,
+        "abstain": true,
+        "confidence": 0.0,
+        "mechanism_quality": 0.0,
+        "prediction_quality": 0.0,
+        "far_offset_prediction_quality": 0.0,
+        "observed_fit_quality": 0.0,
+        "experiment_information_score": 0.0,
+        "experiment_jacobian_rank": 5,
+        "experiment_condition_number": null,
+        "experiment_log_determinant": -19.6375829447402,
+        "reference_experiment_log_determinant": 137.9641694511739,
+        "joint_quality": 0.0,
+        "robust_joint_quality": 0.0,
+        "confidence_calibration_score": 1.0,
+        "correct_refusal": false,
+        "false_discovery": false,
+        "acquisition_calls": 1,
+        "acquisition_budget_units": 4,
+        "acquired_trace_count": 4
+      },
+      {
+        "split": "heldout",
+        "world_index": 2,
+        "kind": "in_library",
+        "valid": true,
+        "abstain": true,
+        "confidence": 0.0,
+        "mechanism_quality": 0.0,
+        "prediction_quality": 0.0,
+        "far_offset_prediction_quality": 0.0,
+        "observed_fit_quality": 0.0,
+        "experiment_information_score": 0.0,
+        "experiment_jacobian_rank": 5,
+        "experiment_condition_number": null,
+        "experiment_log_determinant": -27.281926910797324,
+        "reference_experiment_log_determinant": 125.03595108757305,
+        "joint_quality": 0.0,
+        "robust_joint_quality": 0.0,
+        "confidence_calibration_score": 1.0,
+        "correct_refusal": false,
+        "false_discovery": false,
+        "acquisition_calls": 1,
+        "acquisition_budget_units": 4,
+        "acquired_trace_count": 4
+      },
+      {
+        "split": "heldout",
+        "world_index": 3,
+        "kind": "null",
+        "valid": true,
+        "abstain": true,
+        "confidence": 0.0,
+        "mechanism_quality": 1.0,
+        "prediction_quality": 1.0,
+        "far_offset_prediction_quality": 1.0,
+        "observed_fit_quality": 1.0,
+        "experiment_information_score": 0.0,
+        "experiment_jacobian_rank": 0,
+        "experiment_condition_number": null,
+        "joint_quality": 1.0,
+        "robust_joint_quality": 1.0,
+        "confidence_calibration_score": 0.0,
+        "correct_refusal": true,
+        "false_discovery": false,
+        "acquisition_calls": 1,
+        "acquisition_budget_units": 4,
+        "acquired_trace_count": 4
+      },
+      {
+        "split": "heldout",
+        "world_index": 4,
+        "kind": "misspecified",
+        "valid": true,
+        "abstain": true,
+        "confidence": 0.0,
+        "mechanism_quality": 1.0,
+        "prediction_quality": 1.0,
+        "far_offset_prediction_quality": 1.0,
+        "observed_fit_quality": 1.0,
+        "experiment_information_score": 0.0,
+        "experiment_jacobian_rank": 0,
+        "experiment_condition_number": null,
+        "joint_quality": 1.0,
+        "robust_joint_quality": 1.0,
+        "confidence_calibration_score": 0.0,
+        "correct_refusal": true,
+        "false_discovery": false,
+        "acquisition_calls": 1,
+        "acquisition_budget_units": 4,
+        "acquired_trace_count": 4
+      }
+    ]
+  },
+  "reference_policy": {
+    "combined_score": 1.0,
+    "valid": 1.0,
+    "feasibility_rate": 1.0,
+    "raw_score": 1.0,
+    "mechanism_score": 1.0,
+    "development_prediction_score": 1.0,
+    "development_far_offset_prediction_score": 1.0,
+    "development_observed_fit_score": 0.9755310985960606,
+    "development_experiment_information_score": 1.0,
+    "robustness_score": 1.0,
+    "development_validation_gap": 0.0,
+    "heldout_policy_score": 1.0,
+    "heldout_mechanism_score": 1.0,
+    "heldout_prediction_score": 1.0,
+    "heldout_far_offset_prediction_score": 1.0,
+    "heldout_observed_fit_score": 0.9489604210421887,
+    "heldout_experiment_information_score": 1.0,
+    "heldout_robustness_score": 1.0,
+    "development_supported_claim_coverage": 1.0,
+    "heldout_supported_claim_coverage": 1.0,
+    "development_false_discovery_rate": 0.0,
+    "heldout_false_discovery_rate": 0.0,
+    "development_correct_refusal_rate": 1.0,
+    "heldout_correct_refusal_rate": 1.0,
+    "development_confidence_calibration_score": 1.0,
+    "heldout_confidence_calibration_score": 1.0,
+    "development_mean_acquisition_calls": 2.0,
+    "heldout_mean_acquisition_calls": 2.0,
+    "development_mean_budget_units": 12.0,
+    "heldout_mean_budget_units": 12.0,
+    "development_mean_acquired_traces": 16.0,
+    "heldout_mean_acquired_traces": 16.0,
+    "heldout_feasibility_rate": 1.0,
+    "candidate_world_call_count": 11,
+    "candidate_world_valid_rate": 1.0,
+    "per_world": [
+      {
+        "split": "development",
+        "world_index": 0,
+        "kind": "in_library",
+        "valid": true,
+        "abstain": false,
+        "confidence": 1.0,
+        "mechanism_quality": 1.0,
+        "prediction_quality": 1.0,
+        "far_offset_prediction_quality": 1.0,
+        "observed_fit_quality": 0.9704553740066046,
+        "experiment_information_score": 1.0,
+        "experiment_jacobian_rank": 9,
+        "experiment_condition_number": 67.15579994882336,
+        "experiment_log_determinant": 137.95062816924468,
+        "reference_experiment_log_determinant": 137.95062816924468,
+        "joint_quality": 1.0,
+        "robust_joint_quality": 1.0,
+        "confidence_calibration_score": 1.0,
+        "correct_refusal": false,
+        "false_discovery": false,
+        "acquisition_calls": 2,
+        "acquisition_budget_units": 12,
+        "acquired_trace_count": 16
+      },
+      {
+        "split": "development",
+        "world_index": 1,
+        "kind": "in_library",
+        "valid": true,
+        "abstain": false,
+        "confidence": 1.0,
+        "mechanism_quality": 1.0,
+        "prediction_quality": 1.0,
+        "far_offset_prediction_quality": 1.0,
+        "observed_fit_quality": 0.9832518748758823,
+        "experiment_information_score": 1.0,
+        "experiment_jacobian_rank": 9,
+        "experiment_condition_number": 177.03861824396077,
+        "experiment_log_determinant": 142.79072150922988,
+        "reference_experiment_log_determinant": 142.79072150922988,
+        "joint_quality": 1.0,
+        "robust_joint_quality": 1.0,
+        "confidence_calibration_score": 1.0,
+        "correct_refusal": false,
+        "false_discovery": false,
+        "acquisition_calls": 2,
+        "acquisition_budget_units": 12,
+        "acquired_trace_count": 16
+      },
+      {
+        "split": "development",
+        "world_index": 2,
+        "kind": "in_library",
+        "valid": true,
+        "abstain": false,
+        "confidence": 1.0,
+        "mechanism_quality": 1.0,
+        "prediction_quality": 1.0,
+        "far_offset_prediction_quality": 1.0,
+        "observed_fit_quality": 0.9648162965607063,
+        "experiment_information_score": 1.0,
+        "experiment_jacobian_rank": 9,
+        "experiment_condition_number": 85.30276833803383,
+        "experiment_log_determinant": 133.21200527859386,
+        "reference_experiment_log_determinant": 133.21200527859386,
+        "joint_quality": 1.0,
+        "robust_joint_quality": 1.0,
+        "confidence_calibration_score": 1.0,
+        "correct_refusal": false,
+        "false_discovery": false,
+        "acquisition_calls": 2,
+        "acquisition_budget_units": 12,
+        "acquired_trace_count": 16
+      },
+      {
+        "split": "development",
+        "world_index": 3,
+        "kind": "in_library",
+        "valid": true,
+        "abstain": false,
+        "confidence": 1.0,
+        "mechanism_quality": 1.0,
+        "prediction_quality": 1.0,
+        "far_offset_prediction_quality": 1.0,
+        "observed_fit_quality": 0.9836008489410492,
+        "experiment_information_score": 1.0,
+        "experiment_jacobian_rank": 9,
+        "experiment_condition_number": 142.61039155442214,
+        "experiment_log_determinant": 137.68932952116876,
+        "reference_experiment_log_determinant": 137.68932952116876,
+        "joint_quality": 1.0,
+        "robust_joint_quality": 1.0,
+        "confidence_calibration_score": 1.0,
+        "correct_refusal": false,
+        "false_discovery": false,
+        "acquisition_calls": 2,
+        "acquisition_budget_units": 12,
+        "acquired_trace_count": 16
+      },
+      {
+        "split": "development",
+        "world_index": 4,
+        "kind": "null",
+        "valid": true,
+        "abstain": true,
+        "confidence": 1.0,
+        "mechanism_quality": 1.0,
+        "prediction_quality": 1.0,
+        "far_offset_prediction_quality": 1.0,
+        "observed_fit_quality": 1.0,
+        "experiment_information_score": 0.0,
+        "experiment_jacobian_rank": 0,
+        "experiment_condition_number": null,
+        "joint_quality": 1.0,
+        "robust_joint_quality": 1.0,
+        "confidence_calibration_score": 1.0,
+        "correct_refusal": true,
+        "false_discovery": false,
+        "acquisition_calls": 2,
+        "acquisition_budget_units": 12,
+        "acquired_trace_count": 16
+      },
+      {
+        "split": "development",
+        "world_index": 5,
+        "kind": "misspecified",
+        "valid": true,
+        "abstain": true,
+        "confidence": 1.0,
+        "mechanism_quality": 1.0,
+        "prediction_quality": 1.0,
+        "far_offset_prediction_quality": 1.0,
+        "observed_fit_quality": 1.0,
+        "experiment_information_score": 0.0,
+        "experiment_jacobian_rank": 0,
+        "experiment_condition_number": null,
+        "joint_quality": 1.0,
+        "robust_joint_quality": 1.0,
+        "confidence_calibration_score": 1.0,
+        "correct_refusal": true,
+        "false_discovery": false,
+        "acquisition_calls": 2,
+        "acquisition_budget_units": 12,
+        "acquired_trace_count": 16
+      },
+      {
+        "split": "heldout",
+        "world_index": 0,
+        "kind": "in_library",
+        "valid": true,
+        "abstain": false,
+        "confidence": 1.0,
+        "mechanism_quality": 1.0,
+        "prediction_quality": 1.0,
+        "far_offset_prediction_quality": 1.0,
+        "observed_fit_quality": 0.9359747488187067,
+        "experiment_information_score": 1.0,
+        "experiment_jacobian_rank": 9,
+        "experiment_condition_number": 74.70504212637385,
+        "experiment_log_determinant": 128.9995748586997,
+        "reference_experiment_log_determinant": 128.9995748586997,
+        "joint_quality": 1.0,
+        "robust_joint_quality": 1.0,
+        "confidence_calibration_score": 1.0,
+        "correct_refusal": false,
+        "false_discovery": false,
+        "acquisition_calls": 2,
+        "acquisition_budget_units": 12,
+        "acquired_trace_count": 16
+      },
+      {
+        "split": "heldout",
+        "world_index": 1,
+        "kind": "in_library",
+        "valid": true,
+        "abstain": false,
+        "confidence": 1.0,
+        "mechanism_quality": 1.0,
+        "prediction_quality": 1.0,
+        "far_offset_prediction_quality": 1.0,
+        "observed_fit_quality": 0.9743400156277215,
+        "experiment_information_score": 1.0,
+        "experiment_jacobian_rank": 9,
+        "experiment_condition_number": 246.3362327164356,
+        "experiment_log_determinant": 137.9641694511739,
+        "reference_experiment_log_determinant": 137.9641694511739,
+        "joint_quality": 1.0,
+        "robust_joint_quality": 1.0,
+        "confidence_calibration_score": 1.0,
+        "correct_refusal": false,
+        "false_discovery": false,
+        "acquisition_calls": 2,
+        "acquisition_budget_units": 12,
+        "acquired_trace_count": 16
+      },
+      {
+        "split": "heldout",
+        "world_index": 2,
+        "kind": "in_library",
+        "valid": true,
+        "abstain": false,
+        "confidence": 1.0,
+        "mechanism_quality": 1.0,
+        "prediction_quality": 1.0,
+        "far_offset_prediction_quality": 1.0,
+        "observed_fit_quality": 0.936566498680138,
+        "experiment_information_score": 1.0,
+        "experiment_jacobian_rank": 9,
+        "experiment_condition_number": 99.70816561591283,
+        "experiment_log_determinant": 125.03595108757305,
+        "reference_experiment_log_determinant": 125.03595108757305,
+        "joint_quality": 1.0,
+        "robust_joint_quality": 1.0,
+        "confidence_calibration_score": 1.0,
+        "correct_refusal": false,
+        "false_discovery": false,
+        "acquisition_calls": 2,
+        "acquisition_budget_units": 12,
+        "acquired_trace_count": 16
+      },
+      {
+        "split": "heldout",
+        "world_index": 3,
+        "kind": "null",
+        "valid": true,
+        "abstain": true,
+        "confidence": 1.0,
+        "mechanism_quality": 1.0,
+        "prediction_quality": 1.0,
+        "far_offset_prediction_quality": 1.0,
+        "observed_fit_quality": 1.0,
+        "experiment_information_score": 0.0,
+        "experiment_jacobian_rank": 0,
+        "experiment_condition_number": null,
+        "joint_quality": 1.0,
+        "robust_joint_quality": 1.0,
+        "confidence_calibration_score": 1.0,
+        "correct_refusal": true,
+        "false_discovery": false,
+        "acquisition_calls": 2,
+        "acquisition_budget_units": 12,
+        "acquired_trace_count": 16
+      },
+      {
+        "split": "heldout",
+        "world_index": 4,
+        "kind": "misspecified",
+        "valid": true,
+        "abstain": true,
+        "confidence": 1.0,
+        "mechanism_quality": 1.0,
+        "prediction_quality": 1.0,
+        "far_offset_prediction_quality": 1.0,
+        "observed_fit_quality": 1.0,
+        "experiment_information_score": 0.0,
+        "experiment_jacobian_rank": 0,
+        "experiment_condition_number": null,
+        "joint_quality": 1.0,
+        "robust_joint_quality": 1.0,
+        "confidence_calibration_score": 1.0,
+        "correct_refusal": true,
+        "false_discovery": false,
+        "acquisition_calls": 2,
+        "acquisition_budget_units": 12,
+        "acquired_trace_count": 16
+      }
+    ]
+  },
+  "truth_blind_nmo_dix_waveform_policy": {
+    "combined_score": 0.9976972506155382,
+    "valid": 1.0,
+    "feasibility_rate": 1.0,
+    "raw_score": 0.9976972506155382,
+    "mechanism_score": 0.999826221431273,
+    "development_prediction_score": 0.9936601261922681,
+    "development_far_offset_prediction_score": 0.9962716827459632,
+    "development_observed_fit_score": 0.9614975996756209,
+    "development_experiment_information_score": 1.0,
+    "robustness_score": 0.9986151362058932,
+    "development_validation_gap": -0.0009178855903549943,
+    "heldout_policy_score": 0.9943818299064866,
+    "heldout_mechanism_score": 0.9995698378193759,
+    "heldout_prediction_score": 0.9845765776206378,
+    "heldout_far_offset_prediction_score": 0.9914088557157151,
+    "heldout_observed_fit_score": 0.9237682737969298,
+    "heldout_experiment_information_score": 1.0,
+    "heldout_robustness_score": 0.9967907178146811,
+    "development_supported_claim_coverage": 1.0,
+    "heldout_supported_claim_coverage": 1.0,
+    "development_false_discovery_rate": 0.0,
+    "heldout_false_discovery_rate": 0.0,
+    "development_correct_refusal_rate": 1.0,
+    "heldout_correct_refusal_rate": 1.0,
+    "development_confidence_calibration_score": 0.5654724812929051,
+    "heldout_confidence_calibration_score": 0.504154026636414,
+    "development_mean_acquisition_calls": 2.0,
+    "heldout_mean_acquisition_calls": 2.0,
+    "development_mean_budget_units": 12.0,
+    "heldout_mean_budget_units": 12.0,
+    "development_mean_acquired_traces": 16.0,
+    "heldout_mean_acquired_traces": 16.0,
+    "heldout_feasibility_rate": 1.0,
+    "candidate_world_call_count": 11,
+    "candidate_world_valid_rate": 1.0,
+    "per_world": [
+      {
+        "split": "development",
+        "world_index": 0,
+        "kind": "in_library",
+        "valid": true,
+        "abstain": false,
+        "confidence": 0.5546380740753825,
+        "mechanism_quality": 0.9995549683669032,
+        "prediction_quality": 0.9884788274955008,
+        "far_offset_prediction_quality": 0.9941743933583327,
+        "observed_fit_quality": 0.9489094197486757,
+        "experiment_information_score": 1.0,
+        "experiment_jacobian_rank": 9,
+        "experiment_condition_number": 67.15579994882336,
+        "experiment_log_determinant": 137.95062816924468,
+        "reference_experiment_log_determinant": 137.95062816924468,
+        "joint_quality": 0.9957529162699191,
+        "robust_joint_quality": 0.9977572852531303,
+        "confidence_calibration_score": 0.805417695995689,
+        "correct_refusal": false,
+        "false_discovery": false,
+        "acquisition_calls": 2,
+        "acquisition_budget_units": 12,
+        "acquired_trace_count": 16
+      },
+      {
+        "split": "development",
+        "world_index": 1,
+        "kind": "in_library",
+        "valid": true,
+        "abstain": false,
+        "confidence": 0.6192746861621987,
+        "mechanism_quality": 0.9999712529969245,
+        "prediction_quality": 0.9941175250777791,
+        "far_offset_prediction_quality": 0.9963067156498305,
+        "observed_fit_quality": 0.9750391340256382,
+        "experiment_information_score": 1.0,
+        "experiment_jacobian_rank": 9,
+        "experiment_condition_number": 177.03861824396077,
+        "experiment_log_determinant": 142.79072150922988,
+        "reference_experiment_log_determinant": 142.79072150922988,
+        "joint_quality": 0.9979242752745626,
+        "robust_joint_quality": 0.9986928762167256,
+        "confidence_calibration_score": 0.856624488665038,
+        "correct_refusal": false,
+        "false_discovery": false,
+        "acquisition_calls": 2,
+        "acquisition_budget_units": 12,
+        "acquired_trace_count": 16
+      },
+      {
+        "split": "development",
+        "world_index": 2,
+        "kind": "in_library",
+        "valid": true,
+        "abstain": false,
+        "confidence": 0.5789804555444953,
+        "mechanism_quality": 0.9998304584624412,
+        "prediction_quality": 0.9944053788562575,
+        "far_offset_prediction_quality": 0.9959122118135351,
+        "observed_fit_quality": 0.942238853098028,
+        "experiment_information_score": 1.0,
+        "experiment_jacobian_rank": 9,
+        "experiment_condition_number": 85.30276833803383,
+        "experiment_log_determinant": 133.21200527859386,
+        "reference_experiment_log_determinant": 133.21200527859386,
+        "joint_quality": 0.9979621636750742,
+        "robust_joint_quality": 0.9984911811422529,
+        "confidence_calibration_score": 0.8244543282519824,
+        "correct_refusal": false,
+        "false_discovery": false,
+        "acquisition_calls": 2,
+        "acquisition_budget_units": 12,
+        "acquired_trace_count": 16
+      },
+      {
+        "split": "development",
+        "world_index": 3,
+        "kind": "in_library",
+        "valid": true,
+        "abstain": false,
+        "confidence": 0.6931077789381451,
+        "mechanism_quality": 0.9999482058988229,
+        "prediction_quality": 0.997638773339535,
+        "far_offset_prediction_quality": 0.9986934101621543,
+        "observed_fit_quality": 0.9798029918301415,
+        "experiment_information_score": 1.0,
+        "experiment_jacobian_rank": 9,
+        "experiment_condition_number": 142.61039155442214,
+        "experiment_log_determinant": 137.68932952116876,
+        "reference_experiment_log_determinant": 137.68932952116876,
+        "joint_quality": 0.9991496472425964,
+        "robust_joint_quality": 0.9995192022114647,
+        "confidence_calibration_score": 0.9063383748447209,
+        "correct_refusal": false,
+        "false_discovery": false,
+        "acquisition_calls": 2,
+        "acquisition_budget_units": 12,
+        "acquired_trace_count": 16
+      },
+      {
+        "split": "development",
+        "world_index": 4,
+        "kind": "null",
+        "valid": true,
+        "abstain": true,
+        "confidence": 0.0,
+        "mechanism_quality": 1.0,
+        "prediction_quality": 1.0,
+        "far_offset_prediction_quality": 1.0,
+        "observed_fit_quality": 1.0,
+        "experiment_information_score": 0.0,
+        "experiment_jacobian_rank": 0,
+        "experiment_condition_number": null,
+        "joint_quality": 1.0,
+        "robust_joint_quality": 1.0,
+        "confidence_calibration_score": 0.0,
+        "correct_refusal": true,
+        "false_discovery": false,
+        "acquisition_calls": 2,
+        "acquisition_budget_units": 12,
+        "acquired_trace_count": 16
+      },
+      {
+        "split": "development",
+        "world_index": 5,
+        "kind": "misspecified",
+        "valid": true,
+        "abstain": true,
+        "confidence": 0.0,
+        "mechanism_quality": 1.0,
+        "prediction_quality": 1.0,
+        "far_offset_prediction_quality": 1.0,
+        "observed_fit_quality": 1.0,
+        "experiment_information_score": 0.0,
+        "experiment_jacobian_rank": 0,
+        "experiment_condition_number": null,
+        "joint_quality": 1.0,
+        "robust_joint_quality": 1.0,
+        "confidence_calibration_score": 0.0,
+        "correct_refusal": true,
+        "false_discovery": false,
+        "acquisition_calls": 2,
+        "acquisition_budget_units": 12,
+        "acquired_trace_count": 16
+      },
+      {
+        "split": "heldout",
+        "world_index": 0,
+        "kind": "in_library",
+        "valid": true,
+        "abstain": false,
+        "confidence": 0.6537298434884813,
+        "mechanism_quality": 0.9998355491919078,
+        "prediction_quality": 0.9853928745848041,
+        "far_offset_prediction_quality": 0.9875904864090372,
+        "observed_fit_quality": 0.9121180360472716,
+        "experiment_information_score": 1.0,
+        "experiment_jacobian_rank": 9,
+        "experiment_condition_number": 74.70504212637385,
+        "experiment_log_determinant": 128.9995748586997,
+        "reference_experiment_log_determinant": 128.9995748586997,
+        "joint_quality": 0.9947894125427458,
+        "robust_joint_quality": 0.9955653491732284,
+        "confidence_calibration_score": 0.8836783703565194,
+        "correct_refusal": false,
+        "false_discovery": false,
+        "acquisition_calls": 2,
+        "acquisition_budget_units": 12,
+        "acquired_trace_count": 16
+      },
+      {
+        "split": "heldout",
+        "world_index": 1,
+        "kind": "in_library",
+        "valid": true,
+        "abstain": false,
+        "confidence": 0.5099065583054198,
+        "mechanism_quality": 0.9997984759552919,
+        "prediction_quality": 0.983260167779089,
+        "far_offset_prediction_quality": 0.9934327579803338,
+        "observed_fit_quality": 0.9502991662790137,
+        "experiment_information_score": 1.0,
+        "experiment_jacobian_rank": 9,
+        "experiment_condition_number": 246.3362327164356,
+        "experiment_log_determinant": 137.9641694511739,
+        "reference_experiment_log_determinant": 137.9641694511739,
+        "joint_quality": 0.9940187301283845,
+        "robust_joint_quality": 0.9976060596659375,
+        "confidence_calibration_score": 0.7656354050928522,
+        "correct_refusal": false,
+        "false_discovery": false,
+        "acquisition_calls": 2,
+        "acquisition_budget_units": 12,
+        "acquired_trace_count": 16
+      },
+      {
+        "split": "heldout",
+        "world_index": 2,
+        "kind": "in_library",
+        "valid": true,
+        "abstain": false,
+        "confidence": 0.6358075124915641,
+        "mechanism_quality": 0.9990754883109281,
+        "prediction_quality": 0.9850766904980204,
+        "far_offset_prediction_quality": 0.9932033227577745,
+        "observed_fit_quality": 0.9088876190645041,
+        "experiment_information_score": 1.0,
+        "experiment_jacobian_rank": 9,
+        "experiment_condition_number": 99.70816561591283,
+        "experiment_log_determinant": 125.03595108757305,
+        "reference_experiment_log_determinant": 125.03595108757305,
+        "joint_quality": 0.9943373470483301,
+        "robust_joint_quality": 0.997200744604877,
+        "confidence_calibration_score": 0.871456357732698,
+        "correct_refusal": false,
+        "false_discovery": false,
+        "acquisition_calls": 2,
+        "acquisition_budget_units": 12,
+        "acquired_trace_count": 16
+      },
+      {
+        "split": "heldout",
+        "world_index": 3,
+        "kind": "null",
+        "valid": true,
+        "abstain": true,
+        "confidence": 0.0,
+        "mechanism_quality": 1.0,
+        "prediction_quality": 1.0,
+        "far_offset_prediction_quality": 1.0,
+        "observed_fit_quality": 1.0,
+        "experiment_information_score": 0.0,
+        "experiment_jacobian_rank": 0,
+        "experiment_condition_number": null,
+        "joint_quality": 1.0,
+        "robust_joint_quality": 1.0,
+        "confidence_calibration_score": 0.0,
+        "correct_refusal": true,
+        "false_discovery": false,
+        "acquisition_calls": 2,
+        "acquisition_budget_units": 12,
+        "acquired_trace_count": 16
+      },
+      {
+        "split": "heldout",
+        "world_index": 4,
+        "kind": "misspecified",
+        "valid": true,
+        "abstain": true,
+        "confidence": 0.0,
+        "mechanism_quality": 1.0,
+        "prediction_quality": 1.0,
+        "far_offset_prediction_quality": 1.0,
+        "observed_fit_quality": 1.0,
+        "experiment_information_score": 0.0,
+        "experiment_jacobian_rank": 0,
+        "experiment_condition_number": null,
+        "joint_quality": 1.0,
+        "robust_joint_quality": 1.0,
+        "confidence_calibration_score": 0.0,
+        "correct_refusal": true,
+        "false_discovery": false,
+        "acquisition_calls": 2,
+        "acquisition_budget_units": 12,
+        "acquired_trace_count": 16
+      }
+    ]
+  },
+  "truth_blind_fit_diagnostics": [
+    {
+      "split": "development",
+      "world_index": 0,
+      "kind": "in_library",
+      "claim_supported": true,
+      "reduced_chi_squared": 1.7814477036984702,
+      "diagnostics": {
+        "detected_event_count": 2,
+        "picked_zero_offset_times_s": [
+          0.316,
+          0.764
+        ],
+        "nmo_curve_velocities_m_s": [
+          1780.0,
+          2240.0
+        ],
+        "initial_parameters": [
+          1780.0,
+          2498.477700847056,
+          3800.0,
+          269.906582278481,
+          0.0,
+          0.0,
+          571.9932619939221,
+          0.0,
+          0.0
+        ],
+        "third_velocity_starts_m_s": [
+          2648.477700847056,
+          3400.0,
+          4400.0,
+          4750.0
+        ],
+        "core_reduced_chi_squared": 1.0221509027044393,
+        "reduced_chi_squared": 1.7814477036984702,
+        "fitted_parameters": [
+          1786.7674187357345,
+          2437.30875722535,
+          3361.0593604594105,
+          276.32720137154814,
+          70.55072076640522,
+          -28.52653686946755,
+          549.2728799952326,
+          -99.06438184002414,
+          38.114056460056574
+        ],
+        "core_optimizer_evaluations": 30,
+        "lateral_event_thicknesses": [
+          [
+            500.0,
+            189.39734638598784,
+            667.8225994797459
+          ],
+          [
+            1785.7142857142858,
+            219.5102053441153,
+            630.041689254114
+          ],
+          [
+            3071.4285714285716,
+            244.8047143353072,
+            595.5637091444545
+          ],
+          [
+            4357.142857142857,
+            268.2313153441747,
+            560.1712849648313
+          ],
+          [
+            5642.857142857143,
+            283.11544105993346,
+            537.9363341589532
+          ],
+          [
+            6928.571428571429,
+            298.70079815518875,
+            516.2271366461216
+          ],
+          [
+            8214.285714285714,
+            311.39650644492497,
+            500.22929929692026
+          ],
+          [
+            9500.0,
+            316.239015796688,
+            492.03916667150594
+          ]
+        ]
+      },
+      "mechanism_quality": 0.9995549683669032,
+      "prediction_quality": 0.9884788274955008
+    },
+    {
+      "split": "development",
+      "world_index": 1,
+      "kind": "in_library",
+      "claim_supported": true,
+      "reduced_chi_squared": 1.522901255351205,
+      "diagnostics": {
+        "detected_event_count": 2,
+        "picked_zero_offset_times_s": [
+          0.312,
+          0.96
+        ],
+        "nmo_curve_velocities_m_s": [
+          1560.0,
+          2040.0
+        ],
+        "initial_parameters": [
+          1560.0,
+          2220.0565631412906,
+          3800.0,
+          228.806582278481,
+          0.0,
+          0.0,
+          733.5460312364191,
+          0.0,
+          0.0
+        ],
+        "third_velocity_starts_m_s": [
+          2600.0,
+          3400.0,
+          4400.0,
+          4750.0
+        ],
+        "core_reduced_chi_squared": 1.0062238903778602,
+        "reduced_chi_squared": 1.522901255351205,
+        "fitted_parameters": [
+          1569.051497486588,
+          2190.23416221366,
+          3948.7638205726216,
+          236.15997427111188,
+          -54.701103958450474,
+          30.629842222233478,
+          717.9903623943178,
+          132.28686928353773,
+          -41.923057787362495
+        ],
+        "core_optimizer_evaluations": 24,
+        "lateral_event_thicknesses": [
+          [
+            500.0,
+            310.67219650234443,
+            565.0804138511243
+          ],
+          [
+            1785.7142857142858,
+            284.34284166363784,
+            613.446425016941
+          ],
+          [
+            3071.4285714285716,
+            260.77491388996606,
+            663.9163560870605
+          ],
+          [
+            4357.142857142857,
+            242.99943263485343,
+            699.3141667907149
+          ],
+          [
+            5642.857142857143,
+            229.47095467623774,
+            735.2922869908379
+          ],
+          [
+            6928.571428571429,
+            219.4280050807596,
+            764.2183562261762
+          ],
+          [
+            8214.285714285714,
+            217.06966906479153,
+            780.1463690029752
+          ],
+          [
+            9500.0,
+            209.5852281991924,
+            806.082204704949
+          ]
+        ]
+      },
+      "mechanism_quality": 0.9999712529969245,
+      "prediction_quality": 0.9941175250777791
+    },
+    {
+      "split": "development",
+      "world_index": 2,
+      "kind": "in_library",
+      "claim_supported": true,
+      "reduced_chi_squared": 1.6840781778220186,
+      "diagnostics": {
+        "detected_event_count": 2,
+        "picked_zero_offset_times_s": [
+          0.404,
+          0.736
+        ],
+        "nmo_curve_velocities_m_s": [
+          2040.0,
+          2460.0
+        ],
+        "initial_parameters": [
+          2040.0,
+          2870.0778301006926,
+          3800.0,
+          402.1124050632912,
+          0.0,
+          0.0,
+          489.18478458614965,
+          0.0,
+          0.0
+        ],
+        "third_velocity_starts_m_s": [
+          3020.0778301006926,
+          3400.0,
+          4400.0,
+          4750.0
+        ],
+        "core_reduced_chi_squared": 1.0161457788757238,
+        "reduced_chi_squared": 1.6840781778220186,
+        "fitted_parameters": [
+          2046.8229111544015,
+          2774.4014739240565,
+          4071.8570419846315,
+          407.8623718801433,
+          105.88112821805484,
+          43.69288154037413,
+          466.90841148234716,
+          -123.63996214777785,
+          61.635991797614
+        ],
+        "core_optimizer_evaluations": 16,
+        "lateral_event_thicknesses": [
+          [
+            500.0,
+            347.9598948962483,
+            627.0147331068368
+          ],
+          [
+            1785.7142857142858,
+            356.75405716223173,
+            574.7623290856686
+          ],
+          [
+            3071.4285714285716,
+            375.8196022954624,
+            521.9795351790841
+          ],
+          [
+            4357.142857142857,
+            394.06210713697595,
+            483.5201019505453
+          ],
+          [
+            5642.857142857143,
+            421.6469350014395,
+            451.3200841299229
+          ],
+          [
+            6928.571428571429,
+            455.8385148880998,
+            429.7328584598917
+          ],
+          [
+            8214.285714285714,
+            493.117154408589,
+            412.7677937055039
+          ],
+          [
+            9500.0,
+            539.0420831299373,
+            405.3418106049825
+          ]
+        ]
+      },
+      "mechanism_quality": 0.9998304584624412,
+      "prediction_quality": 0.9944053788562575
+    },
+    {
+      "split": "development",
+      "world_index": 3,
+      "kind": "in_library",
+      "claim_supported": true,
+      "reduced_chi_squared": 1.2275688842474195,
+      "diagnostics": {
+        "detected_event_count": 2,
+        "picked_zero_offset_times_s": [
+          0.4,
+          0.892
+        ],
+        "nmo_curve_velocities_m_s": [
+          1760.0,
+          2680.0
+        ],
+        "initial_parameters": [
+          1760.0,
+          3212.1270211496926,
+          3800.0,
+          341.6627848101266,
+          0.0,
+          0.0,
+          812.383517500897,
+          0.0,
+          0.0
+        ],
+        "third_velocity_starts_m_s": [
+          3362.1270211496926,
+          3712.1270211496926,
+          4400.0,
+          4750.0
+        ],
+        "core_reduced_chi_squared": 1.0113073108634714,
+        "reduced_chi_squared": 1.2275688842474195,
+        "fitted_parameters": [
+          1760.1358685560795,
+          3103.269447189911,
+          4382.646676796042,
+          346.9170014307582,
+          -84.64657795542581,
+          -35.1178239348221,
+          772.9987740557015,
+          148.54532944592654,
+          54.04056961550306
+        ],
+        "core_optimizer_evaluations": 12,
+        "lateral_event_thicknesses": [
+          [
+            500.0,
+            394.2704345565618,
+            682.7192783817804
+          ],
+          [
+            1785.7142857142858,
+            387.5379849039658,
+            699.4367272718683
+          ],
+          [
+            3071.4285714285716,
+            374.0948924372517,
+            725.3833780415243
+          ],
+          [
+            4357.142857142857,
+            356.9971828287149,
+            755.3709317777318
+          ],
+          [
+            5642.857142857143,
+            335.68689242123594,
+            790.6273634856173
+          ],
+          [
+            6928.571428571429,
+            309.41468293153116,
+            839.170893569982
+          ],
+          [
+            8214.285714285714,
+            277.0396453857408,
+            890.6706449872809
+          ],
+          [
+            9500.0,
+            242.76708208207123,
+            950.6893568334507
+          ]
+        ]
+      },
+      "mechanism_quality": 0.9999482058988229,
+      "prediction_quality": 0.997638773339535
+    },
+    {
+      "split": "development",
+      "world_index": 4,
+      "kind": "null",
+      "claim_supported": false,
+      "reduced_chi_squared": null,
+      "diagnostics": {
+        "detected_event_count": 0
+      },
+      "mechanism_quality": null,
+      "prediction_quality": null
+    },
+    {
+      "split": "development",
+      "world_index": 5,
+      "kind": "misspecified",
+      "claim_supported": false,
+      "reduced_chi_squared": 78.0561190178361,
+      "diagnostics": {
+        "detected_event_count": 3,
+        "picked_zero_offset_times_s": [
+          0.3,
+          0.968
+        ],
+        "nmo_curve_velocities_m_s": [
+          1740.0,
+          2220.0
+        ],
+        "initial_parameters": [
+          1740.0,
+          2391.33527782155,
+          3800.0,
+          249.06227848101267,
+          0.0,
+          0.0,
+          823.4971675080412,
+          0.0,
+          0.0
+        ],
+        "third_velocity_starts_m_s": [
+          2600.0,
+          3400.0,
+          4400.0,
+          4750.0
+        ],
+        "core_reduced_chi_squared": 78.0561190178361,
+        "reduced_chi_squared": 78.0561190178361,
+        "fitted_parameters": [
+          1745.0739998334136,
+          2354.844494701181,
+          3790.2975717123,
+          256.6289932090802,
+          0.0,
+          0.0,
+          796.6563651592384,
+          0.0,
+          0.0
+        ],
+        "core_optimizer_evaluations": 16,
+        "model_check_rejected_before_lateral_fit": true
+      },
+      "mechanism_quality": null,
+      "prediction_quality": 0.05760819009056043
+    },
+    {
+      "split": "heldout",
+      "world_index": 0,
+      "kind": "in_library",
+      "claim_supported": true,
+      "reduced_chi_squared": 1.3850806260460748,
+      "diagnostics": {
+        "detected_event_count": 2,
+        "picked_zero_offset_times_s": [
+          0.528,
+          0.8320000000000001
+        ],
+        "nmo_curve_velocities_m_s": [
+          1940.0,
+          2280.0
+        ],
+        "initial_parameters": [
+          1940.0,
+          2750.3508587861998,
+          3800.0,
+          503.6387341772152,
+          0.0,
+          0.0,
+          432.98878013574637,
+          0.0,
+          0.0
+        ],
+        "third_velocity_starts_m_s": [
+          2900.3508587861998,
+          3400.0,
+          4400.0,
+          4750.0
+        ],
+        "core_reduced_chi_squared": 1.0125039789909616,
+        "reduced_chi_squared": 1.3850806260460748,
+        "fitted_parameters": [
+          1944.1904902658719,
+          2618.8832754615896,
+          3630.151966513996,
+          508.45351424611647,
+          57.216017818735025,
+          55.97344269236068,
+          401.98171863154334,
+          -72.2268562553931,
+          -36.957323194154355
+        ],
+        "core_optimizer_evaluations": 14,
+        "lateral_event_thicknesses": [
+          [
+            500.0,
+            501.60114648859496,
+            439.9723902775471
+          ],
+          [
+            1785.7142857142858,
+            495.19490804094943,
+            431.32513749378165
+          ],
+          [
+            3071.4285714285716,
+            495.49940704400547,
+            420.92156963241524
+          ],
+          [
+            4357.142857142857,
+            503.0437443124548,
+            408.02270091037167
+          ],
+          [
+            5642.857142857143,
+            514.6549641126383,
+            397.04034040414115
+          ],
+          [
+            6928.571428571429,
+            539.8449139931349,
+            369.6343096572574
+          ],
+          [
+            8214.285714285714,
+            567.1230629587757,
+            341.4671385582595
+          ],
+          [
+            9500.0,
+            606.1122135811623,
+            304.83439599080725
+          ]
+        ]
+      },
+      "mechanism_quality": 0.9998355491919078,
+      "prediction_quality": 0.9853928745848041
+    },
+    {
+      "split": "heldout",
+      "world_index": 1,
+      "kind": "in_library",
+      "claim_supported": true,
+      "reduced_chi_squared": 1.960373766778321,
+      "diagnostics": {
+        "detected_event_count": 2,
+        "picked_zero_offset_times_s": [
+          0.32,
+          1.024
+        ],
+        "nmo_curve_velocities_m_s": [
+          1500.0,
+          2160.0
+        ],
+        "initial_parameters": [
+          1500.0,
+          2385.5913942977354,
+          3800.0,
+          228.22784810126583,
+          0.0,
+          0.0,
+          855.0382320194984,
+          0.0,
+          0.0
+        ],
+        "third_velocity_starts_m_s": [
+          2600.0,
+          3400.0,
+          4400.0,
+          4750.0
+        ],
+        "core_reduced_chi_squared": 1.0033746815054565,
+        "reduced_chi_squared": 1.960373766778321,
+        "fitted_parameters": [
+          1501.6017449216615,
+          2352.6964815237193,
+          4595.962566757169,
+          234.77479027259167,
+          34.89166422666586,
+          -40.57020284948444,
+          835.3888401598151,
+          160.22308844134523,
+          -68.31657908690934
+        ],
+        "core_optimizer_evaluations": 11,
+        "lateral_event_thicknesses": [
+          [
+            500.0,
+            171.18259892106943,
+            635.2280500114043
+          ],
+          [
+            1785.7142857142858,
+            194.90338340602645,
+            704.7802978630119
+          ],
+          [
+            3071.4285714285716,
+            215.14883668749366,
+            763.1367730850119
+          ],
+          [
+            4357.142857142857,
+            228.44748538526815,
+            816.1992069390353
+          ],
+          [
+            5642.857142857143,
+            239.8999889004153,
+            851.3207985691632
+          ],
+          [
+            6928.571428571429,
+            242.61651849396844,
+            889.0040003527436
+          ],
+          [
+            8214.285714285714,
+            240.35616073621702,
+            908.7117937314471
+          ],
+          [
+            9500.0,
+            232.974100593992,
+            925.0049010910554
+          ]
+        ]
+      },
+      "mechanism_quality": 0.9997984759552919,
+      "prediction_quality": 0.983260167779089
+    },
+    {
+      "split": "heldout",
+      "world_index": 2,
+      "kind": "in_library",
+      "claim_supported": true,
+      "reduced_chi_squared": 1.4567699500337434,
+      "diagnostics": {
+        "detected_event_count": 2,
+        "picked_zero_offset_times_s": [
+          0.512,
+          0.9480000000000001
+        ],
+        "nmo_curve_velocities_m_s": [
+          2240.0,
+          2660.0
+        ],
+        "initial_parameters": [
+          2240.0,
+          3078.139566042236,
+          3800.0,
+          568.0243037974684,
+          0.0,
+          0.0,
+          669.5148375101741,
+          0.0,
+          0.0
+        ],
+        "third_velocity_starts_m_s": [
+          3228.139566042236,
+          3578.139566042236,
+          4400.0,
+          4750.0
+        ],
+        "core_reduced_chi_squared": 0.9779922806969501,
+        "reduced_chi_squared": 1.4567699500337434,
+        "fitted_parameters": [
+          2232.8176155772553,
+          3040.096535363449,
+          4525.4896377398645,
+          571.2790152750106,
+          -109.0387406507127,
+          28.63215268343184,
+          659.9154755555729,
+          -136.4090890556705,
+          74.94903605778202
+        ],
+        "core_optimizer_evaluations": 11,
+        "lateral_event_thicknesses": [
+          [
+            500.0,
+            692.1734608289491,
+            845.1468368310389
+          ],
+          [
+            1785.7142857142858,
+            654.5414228794789,
+            773.7848653545491
+          ],
+          [
+            3071.4285714285716,
+            617.1395313439878,
+            724.1822544895523
+          ],
+          [
+            4357.142857142857,
+            583.9016110382811,
+            684.5685318857821
+          ],
+          [
+            5642.857142857143,
+            559.2425538490411,
+            642.4766406707844
+          ],
+          [
+            6928.571428571429,
+            533.8235954516244,
+            616.6985257617079
+          ],
+          [
+            8214.285714285714,
+            512.5936344079954,
+            600.6066843677038
+          ],
+          [
+            9500.0,
+            496.33189071014226,
+            600.0036452210772
+          ]
+        ]
+      },
+      "mechanism_quality": 0.9990754883109281,
+      "prediction_quality": 0.9850766904980204
+    },
+    {
+      "split": "heldout",
+      "world_index": 3,
+      "kind": "null",
+      "claim_supported": false,
+      "reduced_chi_squared": null,
+      "diagnostics": {
+        "detected_event_count": 0
+      },
+      "mechanism_quality": null,
+      "prediction_quality": null
+    },
+    {
+      "split": "heldout",
+      "world_index": 4,
+      "kind": "misspecified",
+      "claim_supported": false,
+      "reduced_chi_squared": 33.097796936610244,
+      "diagnostics": {
+        "detected_event_count": 3,
+        "picked_zero_offset_times_s": [
+          0.3,
+          0.9440000000000001
+        ],
+        "nmo_curve_velocities_m_s": [
+          1740.0,
+          2240.0
+        ],
+        "initial_parameters": [
+          1740.0,
+          2424.8191294256812,
+          3800.0,
+          249.06227848101267,
+          0.0,
+          0.0,
+          801.1418240144267,
+          0.0,
+          0.0
+        ],
+        "third_velocity_starts_m_s": [
+          2600.0,
+          3400.0,
+          4400.0,
+          4750.0
+        ],
+        "core_reduced_chi_squared": 33.097796936610244,
+        "reduced_chi_squared": 33.097796936610244,
+        "fitted_parameters": [
+          1743.6975773017155,
+          2383.579322493669,
+          3891.26360114914,
+          254.00436007329694,
+          0.0,
+          0.0,
+          777.4220132192532,
+          0.0,
+          0.0
+        ],
+        "core_optimizer_evaluations": 14,
+        "model_check_rejected_before_lateral_fit": true
+      },
+      "mechanism_quality": null,
+      "prediction_quality": 0.07456935398495285
+    }
+  ],
+  "independent_equation_checks": [
+    {
+      "split": "development",
+      "world_index": 0,
+      "maximum_absolute_error": 2.7755575615628914e-17,
+      "normal_incidence_maximum_absolute_error": 2.7755575615628914e-17,
+      "passed": true
+    },
+    {
+      "split": "development",
+      "world_index": 1,
+      "maximum_absolute_error": 5.551115123125783e-17,
+      "normal_incidence_maximum_absolute_error": 5.551115123125783e-17,
+      "passed": true
+    },
+    {
+      "split": "development",
+      "world_index": 2,
+      "maximum_absolute_error": 2.7755575615628914e-17,
+      "normal_incidence_maximum_absolute_error": 2.7755575615628914e-17,
+      "passed": true
+    },
+    {
+      "split": "development",
+      "world_index": 3,
+      "maximum_absolute_error": 5.551115123125783e-17,
+      "normal_incidence_maximum_absolute_error": 5.551115123125783e-17,
+      "passed": true
+    },
+    {
+      "split": "heldout",
+      "world_index": 0,
+      "maximum_absolute_error": 2.7755575615628914e-17,
+      "normal_incidence_maximum_absolute_error": 2.7755575615628914e-17,
+      "passed": true
+    },
+    {
+      "split": "heldout",
+      "world_index": 1,
+      "maximum_absolute_error": 5.551115123125783e-17,
+      "normal_incidence_maximum_absolute_error": 5.551115123125783e-17,
+      "passed": true
+    },
+    {
+      "split": "heldout",
+      "world_index": 2,
+      "maximum_absolute_error": 1.1102230246251565e-16,
+      "normal_incidence_maximum_absolute_error": 2.7755575615628914e-17,
+      "passed": true
+    }
+  ],
+  "identifiability_checks": [
+    {
+      "split": "development",
+      "world_index": 0,
+      "information_score": 1.0,
+      "jacobian_rank": 9,
+      "condition_number": 67.15579994882336,
+      "log_determinant": 137.95062816924468,
+      "reference_log_determinant": 137.95062816924468,
+      "passed": true
+    },
+    {
+      "split": "development",
+      "world_index": 1,
+      "information_score": 1.0,
+      "jacobian_rank": 9,
+      "condition_number": 177.03861824396077,
+      "log_determinant": 142.79072150922988,
+      "reference_log_determinant": 142.79072150922988,
+      "passed": true
+    },
+    {
+      "split": "development",
+      "world_index": 2,
+      "information_score": 1.0,
+      "jacobian_rank": 9,
+      "condition_number": 85.30276833803383,
+      "log_determinant": 133.21200527859386,
+      "reference_log_determinant": 133.21200527859386,
+      "passed": true
+    },
+    {
+      "split": "development",
+      "world_index": 3,
+      "information_score": 1.0,
+      "jacobian_rank": 9,
+      "condition_number": 142.61039155442214,
+      "log_determinant": 137.68932952116876,
+      "reference_log_determinant": 137.68932952116876,
+      "passed": true
+    },
+    {
+      "split": "heldout",
+      "world_index": 0,
+      "information_score": 1.0,
+      "jacobian_rank": 9,
+      "condition_number": 74.70504212637385,
+      "log_determinant": 128.9995748586997,
+      "reference_log_determinant": 128.9995748586997,
+      "passed": true
+    },
+    {
+      "split": "heldout",
+      "world_index": 1,
+      "information_score": 1.0,
+      "jacobian_rank": 9,
+      "condition_number": 246.3362327164356,
+      "log_determinant": 137.9641694511739,
+      "reference_log_determinant": 137.9641694511739,
+      "passed": true
+    },
+    {
+      "split": "heldout",
+      "world_index": 2,
+      "information_score": 1.0,
+      "jacobian_rank": 9,
+      "condition_number": 99.70816561591283,
+      "log_determinant": 125.03595108757305,
+      "reference_log_determinant": 125.03595108757305,
+      "passed": true
+    }
+  ],
+  "narrow_information_checks": [
+    {
+      "split": "development",
+      "world_index": 0,
+      "reference_information_score": 1.0,
+      "narrow_information_score": 0.0,
+      "narrow_rank": 5,
+      "narrow_condition_number": null,
+      "passed": true
+    },
+    {
+      "split": "development",
+      "world_index": 1,
+      "reference_information_score": 1.0,
+      "narrow_information_score": 0.0,
+      "narrow_rank": 5,
+      "narrow_condition_number": null,
+      "passed": true
+    },
+    {
+      "split": "development",
+      "world_index": 2,
+      "reference_information_score": 1.0,
+      "narrow_information_score": 0.0,
+      "narrow_rank": 5,
+      "narrow_condition_number": null,
+      "passed": true
+    },
+    {
+      "split": "development",
+      "world_index": 3,
+      "reference_information_score": 1.0,
+      "narrow_information_score": 0.0,
+      "narrow_rank": 5,
+      "narrow_condition_number": null,
+      "passed": true
+    },
+    {
+      "split": "heldout",
+      "world_index": 0,
+      "reference_information_score": 1.0,
+      "narrow_information_score": 0.0,
+      "narrow_rank": 5,
+      "narrow_condition_number": null,
+      "passed": true
+    },
+    {
+      "split": "heldout",
+      "world_index": 1,
+      "reference_information_score": 1.0,
+      "narrow_information_score": 0.0,
+      "narrow_rank": 5,
+      "narrow_condition_number": null,
+      "passed": true
+    },
+    {
+      "split": "heldout",
+      "world_index": 2,
+      "reference_information_score": 1.0,
+      "narrow_information_score": 0.0,
+      "narrow_rank": 5,
+      "narrow_condition_number": null,
+      "passed": true
+    }
+  ],
+  "misspecified_resolvability_checks": [
+    {
+      "split": "development",
+      "world_index": 5,
+      "best_public_model_reduced_chi_squared": 78.0561190178361,
+      "passed": true
+    },
+    {
+      "split": "heldout",
+      "world_index": 4,
+      "best_public_model_reduced_chi_squared": 33.097796936610244,
+      "passed": true
+    }
+  ],
+  "limitations": [
+    "All worlds are controlled synthetic horizontal acoustic layers with primary reflections only.",
+    "The oracle omits elastic conversion, attenuation, anisotropy, multiples, source uncertainty, topography and field noise.",
+    "Public deterministic seeds aid reproducibility and require a future server-held procedural split.",
+    "The truth-blind policy is a calibration witness, not a global optimum or a model-population result.",
+    "No result supports field-geology validation or autonomous scientific discovery."
+  ],
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}

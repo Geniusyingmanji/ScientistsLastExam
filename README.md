@@ -46,7 +46,8 @@ search feedback, preventing observations from being carried between worlds throu
 The current audit reports:
 
 - 222/222 unit, security, protocol, analysis and scientific-invariant tests passed on the
-  clean SeismicWaveInversion-v2 source revision.
+  last clean SeismicWaveInversion-v2 source revision; the new calibration-analysis test is
+  included in the next clean-source refresh below.
 - The latest 51×2 secure-baseline audit reports 51/51 deterministic, 51/51 valid, 51/51
   fail-closed and zero infrastructure failures.
 - Current source manifest: 7 certified / 27 candidate / 17 quarantined. D-optimal design, quantum
@@ -210,6 +211,14 @@ The current audit reports:
   reference acquisition has rank nine with worst condition number 246, while one centered
   narrow-offset experiment has rank five and zero information score. This is a controlled
   ray-theoretical acquisition/model-checking on-ramp, not field FWI or geological discovery.
+  Under the now-explicit acquisition return contract, three formal GPT-5.5 conditions yield
+  six executable proposals and one timeout. Five executable proposals abstain on every
+  supported world even though their experiment-information score is `0.974–1.0`; the remaining
+  budget-one proposal claims only one of three held-out supported worlds and none in development.
+  Thus high-information acquisition is not mechanism recovery, while the shared scalar zero
+  conflates timeout, over-refusal and weak transfer. Three earlier runs are retained only as
+  superseded contract diagnostics because `acquire()` returned an undocumented dictionary at
+  that revision; they are excluded from formal model-performance counts.
 
 Machine-readable evidence lives in [`experiments/`](experiments/).
 The original five dated P0–P2 reports were regenerated from clean source revision `f48b101`;
@@ -219,8 +228,8 @@ credible multi-seed model-performance evidence. A clean-revision GPT-5.5 budget-
 is recorded as task calibration, not a benchmark leaderboard.
 The latest trusted clean-revision certification/security/baseline audits are v32/v16/v22. The
 current source manifest is 7/27/17 and contains 34 internally admissible tasks, leaving an
-approximate gap of 16 to the roughly 50-task target. The hash-bound cross-task summary v14
-contains 41 normal single-run conditions over 21 tasks; it is calibration
+approximate gap of 16 to the roughly 50-task target. The next hash-bound cross-task summary v15
+contains 43 normal single-run conditions over 22 tasks; it is calibration
 evidence, not a leaderboard or population result.
 
 ## Quickstart

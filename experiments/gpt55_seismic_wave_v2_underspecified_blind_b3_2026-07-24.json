@@ -1,0 +1,404 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_SECURE_EVAL",
+  "evidence_scope": "MODEL_PERFORMANCE",
+  "created_at": "2026-07-24T01:08:01.222303+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "2ae6725209a77d1d5ad032e9c76054c652786521",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "/home/azureuser/workspace-gzy/zyf/frontier-science/scripts/batch_evolve.py",
+      "--tasks",
+      "WavePropagation/SeismicWaveInversion",
+      "--all",
+      "--algorithms",
+      "greedy_rewrite",
+      "--feedback-modes",
+      "selection_blind",
+      "--seeds",
+      "1",
+      "--budget",
+      "3",
+      "--timeout",
+      "900",
+      "--llm-config",
+      "frontier_science/conf/llm/local.yaml",
+      "--workdir",
+      "runs/seismic_wave_v2_blind_b3",
+      "--output",
+      "experiments/gpt55_seismic_wave_v2_blind_b3_2026-07-24.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "config": {
+    "tasks": [
+      "WavePropagation/SeismicWaveInversion"
+    ],
+    "algorithms": [
+      "greedy_rewrite"
+    ],
+    "feedback_modes": [
+      "selection_blind"
+    ],
+    "condition_order": "as_listed_for_even_seeds_reversed_for_odd_seeds",
+    "seeds": [
+      1
+    ],
+    "budget": 3,
+    "timeout_s": 900.0,
+    "work_root": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/seismic_wave_v2_blind_b3",
+    "llm_condition_sha256": "5b0df4671481f6b3505155bc6c5654a64c4da5591422fb806904e7d0f44fc4d2",
+    "llm": {
+      "wire": "responses",
+      "endpoint_sha256": "b22995a1fcaf8ad713ac37716f006c717313dfdebd357ac02a077a5582650bb6",
+      "model": "gpt-5.5",
+      "max_output_tokens": 16000,
+      "temperature": null,
+      "reasoning_effort": "low",
+      "input_cost_per_million": null,
+      "output_cost_per_million": null,
+      "server_side_seed_control": false
+    }
+  },
+  "runs": [
+    {
+      "task": "WavePropagation/SeismicWaveInversion",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "selection_blind",
+      "seed": 1,
+      "baseline": 0.0,
+      "best": 0.0,
+      "accepted": 0,
+      "evaluated": 4,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/seismic_wave_v2_blind_b3/WavePropagation__SeismicWaveInversion/greedy_rewrite/selection_blind/seed_1",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 4,
+        "budget_units": 4,
+        "best_score": 0.0,
+        "best_so_far_auc": 0.0,
+        "valid_rate": 0.75,
+        "accepted": 0,
+        "wall_seconds": 150.25030415970832,
+        "llm": {
+          "calls": 3,
+          "provider_usage_records": 3,
+          "input_tokens": 5280,
+          "output_tokens": 11832,
+          "total_tokens": 17112,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "WavePropagation/SeismicWaveInversion",
+        "seed": 1,
+        "baseline_score": 0.0,
+        "budget": 3,
+        "feedback_mode": "selection_blind",
+        "feedback_scope": "open-loop proposal batch: every proposal sees the frozen baseline program and its allowlisted baseline metrics; evaluated scores are retained only for offline best-of-batch analysis and never change a later parent or prompt; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "offline_best_of_open_loop_batch"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 1,
+        "trajectory_sha256": "716b61f42c45638fa9a776170f81a09c6b1fec675386eaf777e749545df6bf27",
+        "events": [
+          {
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "29056b8ad8bd067f766e294b34fa2912efb4f90311b490d5d984f48515dbd443",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.0,
+              "mechanism_score": 0.0,
+              "development_prediction_score": 0.0,
+              "development_far_offset_prediction_score": 0.0,
+              "development_observed_fit_score": 0.0,
+              "development_experiment_information_score": 0.0,
+              "robustness_score": 0.0,
+              "development_validation_gap": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_mechanism_score": 0.0,
+              "heldout_prediction_score": 0.0,
+              "heldout_far_offset_prediction_score": 0.0,
+              "heldout_observed_fit_score": 0.0,
+              "heldout_experiment_information_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "development_supported_claim_coverage": 0.0,
+              "heldout_supported_claim_coverage": 0.0,
+              "development_false_discovery_rate": 0.0,
+              "heldout_false_discovery_rate": 0.0,
+              "development_correct_refusal_rate": 1.0,
+              "heldout_correct_refusal_rate": 1.0,
+              "development_confidence_calibration_score": 0.6666666666666666,
+              "heldout_confidence_calibration_score": 0.6,
+              "development_mean_acquisition_calls": 1.0,
+              "heldout_mean_acquisition_calls": 1.0,
+              "development_mean_budget_units": 4.0,
+              "heldout_mean_budget_units": 4.0,
+              "development_mean_acquired_traces": 4.0,
+              "heldout_mean_acquired_traces": 4.0,
+              "heldout_feasibility_rate": 1.0,
+              "candidate_world_call_count": 11,
+              "candidate_world_valid_rate": 1.0
+            },
+            "algorithm_metadata": {},
+            "error": null
+          },
+          {
+            "step": 1,
+            "oracle_calls": 2,
+            "budget_units": 2,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": false,
+            "candidate_sha256": "2d8180852d019d104900ddaf2aefd997519be4a3b1a3a6bea77403ed5e990c55",
+            "parent_sha256": "29056b8ad8bd067f766e294b34fa2912efb4f90311b490d5d984f48515dbd443",
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.0,
+              "mechanism_score": 0.0,
+              "development_prediction_score": 0.0,
+              "development_far_offset_prediction_score": 0.0,
+              "development_observed_fit_score": 0.0,
+              "development_experiment_information_score": 0.7366820225460515,
+              "robustness_score": 0.0,
+              "development_validation_gap": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_mechanism_score": 0.0,
+              "heldout_prediction_score": 0.0,
+              "heldout_far_offset_prediction_score": 0.0,
+              "heldout_observed_fit_score": 0.0,
+              "heldout_experiment_information_score": 0.7268664797893413,
+              "heldout_robustness_score": 0.0,
+              "development_supported_claim_coverage": 0.0,
+              "heldout_supported_claim_coverage": 0.0,
+              "development_false_discovery_rate": 0.0,
+              "heldout_false_discovery_rate": 0.0,
+              "development_correct_refusal_rate": 1.0,
+              "heldout_correct_refusal_rate": 1.0,
+              "development_confidence_calibration_score": 0.6666666666666666,
+              "heldout_confidence_calibration_score": 0.6,
+              "development_mean_acquisition_calls": 1.0,
+              "heldout_mean_acquisition_calls": 1.0,
+              "development_mean_budget_units": 6.0,
+              "heldout_mean_budget_units": 6.0,
+              "development_mean_acquired_traces": 8.0,
+              "heldout_mean_acquired_traces": 8.0,
+              "heldout_feasibility_rate": 1.0,
+              "candidate_world_call_count": 11,
+              "candidate_world_valid_rate": 1.0
+            },
+            "algorithm_metadata": {
+              "selection_policy": "offline_best_of_open_loop_batch",
+              "accepted_semantics": "offline_best_update",
+              "proposal_slot": 1
+            },
+            "error": null
+          },
+          {
+            "step": 2,
+            "oracle_calls": 3,
+            "budget_units": 3,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": false,
+            "candidate_sha256": "400c3f563763c2841d525380084ef3f7625aed0a761c38dcb4bdeb8bf4152bb7",
+            "parent_sha256": "29056b8ad8bd067f766e294b34fa2912efb4f90311b490d5d984f48515dbd443",
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.0,
+              "mechanism_score": 0.0,
+              "development_prediction_score": 0.0,
+              "development_far_offset_prediction_score": 0.0,
+              "development_observed_fit_score": 0.0,
+              "development_experiment_information_score": 1.0,
+              "robustness_score": 0.0,
+              "development_validation_gap": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_mechanism_score": 0.0,
+              "heldout_prediction_score": 0.0,
+              "heldout_far_offset_prediction_score": 0.0,
+              "heldout_observed_fit_score": 0.0,
+              "heldout_experiment_information_score": 1.0,
+              "heldout_robustness_score": 0.0,
+              "development_supported_claim_coverage": 0.0,
+              "heldout_supported_claim_coverage": 0.0,
+              "development_false_discovery_rate": 0.0,
+              "heldout_false_discovery_rate": 0.0,
+              "development_correct_refusal_rate": 1.0,
+              "heldout_correct_refusal_rate": 1.0,
+              "development_confidence_calibration_score": 0.6666666666666666,
+              "heldout_confidence_calibration_score": 0.6,
+              "development_mean_acquisition_calls": 1.0,
+              "heldout_mean_acquisition_calls": 1.0,
+              "development_mean_budget_units": 8.0,
+              "heldout_mean_budget_units": 8.0,
+              "development_mean_acquired_traces": 12.0,
+              "heldout_mean_acquired_traces": 12.0,
+              "heldout_feasibility_rate": 1.0,
+              "candidate_world_call_count": 11,
+              "candidate_world_valid_rate": 1.0
+            },
+            "algorithm_metadata": {
+              "selection_policy": "offline_best_of_open_loop_batch",
+              "accepted_semantics": "offline_best_update",
+              "proposal_slot": 2
+            },
+            "error": null
+          },
+          {
+            "step": 3,
+            "oracle_calls": 4,
+            "budget_units": 4,
+            "score": -1e+18,
+            "best_score": 0.0,
+            "valid": false,
+            "accepted": false,
+            "candidate_sha256": "abc4589e963097945bbb571897cea16191cfa6d61ed85d9694a9787c5cc6d38f",
+            "parent_sha256": "29056b8ad8bd067f766e294b34fa2912efb4f90311b490d5d984f48515dbd443",
+            "metrics": {
+              "combined_score": -1e+18,
+              "valid": 0.0,
+              "error_message": "candidate invalid: candidate_callback_schema_error",
+              "candidate_failure_kind": "candidate_callback_schema_error",
+              "raw_score": -1e+18
+            },
+            "algorithm_metadata": {
+              "selection_policy": "offline_best_of_open_loop_batch",
+              "accepted_semantics": "offline_best_update",
+              "proposal_slot": 3
+            },
+            "error": "candidate invalid: candidate_callback_schema_error"
+          }
+        ]
+      }
+    }
+  ],
+  "aggregate": {
+    "attempt_count": 1,
+    "superseded_attempts": 0,
+    "successful_runs": 1,
+    "failed_runs": 0,
+    "by_condition": {
+      "WavePropagation/SeismicWaveInversion|greedy_rewrite|selection_blind": {
+        "n": 1,
+        "best_score": {
+          "n": 1,
+          "mean": 0.0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.0
+        },
+        "best_so_far_auc": {
+          "n": 1,
+          "mean": 0.0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.0
+        },
+        "budget_units": {
+          "n": 1,
+          "mean": 4.0,
+          "ci95_low": 4.0,
+          "ci95_high": 4.0
+        },
+        "oracle_calls": {
+          "n": 1,
+          "mean": 4.0,
+          "ci95_low": 4.0,
+          "ci95_high": 4.0
+        },
+        "wall_seconds": {
+          "n": 1,
+          "mean": 150.25030415970832,
+          "ci95_low": 150.25030415970832,
+          "ci95_high": 150.25030415970832
+        },
+        "total_tokens": {
+          "n": 1,
+          "mean": 17112.0,
+          "ci95_low": 17112.0,
+          "ci95_high": 17112.0
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      }
+    },
+    "overall": {
+      "best_score": {
+        "n": 1,
+        "mean": 0.0,
+        "ci95_low": 0.0,
+        "ci95_high": 0.0
+      },
+      "best_so_far_auc": {
+        "n": 1,
+        "mean": 0.0,
+        "ci95_low": 0.0,
+        "ci95_high": 0.0
+      },
+      "budget_units": {
+        "n": 1,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "oracle_calls": {
+        "n": 1,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "wall_seconds": {
+        "n": 1,
+        "mean": 150.25030415970832,
+        "ci95_low": 150.25030415970832,
+        "ci95_high": 150.25030415970832
+      },
+      "total_tokens": {
+        "n": 1,
+        "mean": 17112.0,
+        "ci95_low": 17112.0,
+        "ci95_high": 17112.0
+      },
+      "estimated_cost_usd": {
+        "n": 0,
+        "mean": null,
+        "ci95_low": null,
+        "ci95_high": null
+      }
+    }
+  },
+  "completed_at": "2026-07-24T01:10:31.478822+00:00",
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}

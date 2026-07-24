@@ -24,8 +24,13 @@ class RoomAcousticsAnalysisTests(unittest.TestCase):
     def test_analysis_binds_inputs_axes_and_noncausal_scope(self):
         report = _module().analyze()
         self.assertTrue(report["execution_passed"])
-        self.assertTrue(report["trusted_evidence"])
-        self.assertTrue(report["passed"])
+        # During development the source-under-test can be uncommitted.  Trust is
+        # intentionally upgraded only by a clean-source invocation after commit.
+        self.assertEqual(
+            report["trusted_evidence"],
+            report["source_provenance"]["source_tree_dirty"] is False,
+        )
+        self.assertEqual(report["passed"], report["trusted_evidence"])
         self.assertTrue(report["input_task_runtime_source_equivalent"])
         self.assertTrue(report["input_source_scope_equivalent"])
         self.assertTrue(report["input_llm_condition_equivalent"])

@@ -66,6 +66,8 @@ DEFAULT_REPORTS = (
     "experiments/gpt55_room_acoustics_v2_b3_2026-07-23.json",
     "experiments/gpt55_convection_diffusion_v2_b1_2026-07-23.json",
     "experiments/gpt55_convection_diffusion_v2_b3_2026-07-23.json",
+    "experiments/gpt55_seismic_wave_v2_b1_2026-07-24.json",
+    "experiments/gpt55_seismic_wave_v2_b3_2026-07-24.json",
 )
 
 

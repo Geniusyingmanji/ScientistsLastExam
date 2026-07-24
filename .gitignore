@@ -24,3 +24,8 @@ experiments/*.out
 GOAL.md
 plan.md
 docs/
+
+# Public, source-checked experiment protocol (other planning drafts stay local).
+!docs/
+docs/*
+!docs/edgebench_science_experiment_addendum.md

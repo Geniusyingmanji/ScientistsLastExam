@@ -1553,3 +1553,44 @@ seven checks and records five repaired candidates plus two remaining quarantines
 v32 records **7 certified / 27 candidate / 17 quarantined** across 51 packages with no task or
 manifest issues. Security v16 passes **18/18**, and secure baseline v22 records **51/51**
 deterministic, valid and fail-closed tasks over two repetitions with zero infrastructure failures.
+
+### GPT-5.5 seismic-wave calibration and contract diagnostic
+
+The public task contract now states that `acquire()` returns a dictionary. Three earlier reports
+from source `2ae6725` predate that statement; four proposals try to unpack that dictionary as a
+tuple and fail with `candidate_callback_schema_error`. They are retained as
+**superseded underspecified-contract diagnostics**, not counted as current-contract model
+performance.
+
+On clean source `e59e7bb`, the formal budget-one, normal budget-three and strict open-loop
+budget-three conditions contain seven nonbaseline proposals: **six valid and one timeout**. Five
+valid proposals abstain on all seven supported worlds. The budget-one proposal alone makes a
+claim, covering no development supported world and one of three held-out supported worlds, with
+held-out joint score **0.1020**. All valid proposals have zero false discovery. The three strict
+open-loop proposals achieve experiment-information **0.974--1.000** yet mechanism score zero;
+normal budget-three also has two full-budget/high-information valid abstentions. This directly
+separates experiment geometry/information from inference, supported discovery coverage and
+refusal. A scalar score of zero cannot distinguish those abstentions from the timeout.
+
+Normal/open-loop use four oracle calls and **16,749/17,007** tokens, take **1386.45/858.11 s**,
+share only a local seed label, and have no server-side generation seed. Neither condition changes
+its incumbent, so the equal-zero contrast contains no feedback-effect estimate. These are
+single-run synthetic ray-theory calibrations, not population, field-FWI, geological or autonomous
+discovery evidence.
+
+## 2026-07-24 — EdgeBench long-horizon protocol review
+
+We cross-checked the ByteDance Seed EdgeBench v1 paper (arXiv:2607.05155, 2026-07-06),
+its public dataset card and 51 released task descriptors. The transferable protocol is the dual
+feedback loop, hidden fixed-interval trajectory snapshots, three independent long-horizon runs,
+continuous-experience versus equal-budget restart controls, first-attempt/gain separation and
+adaptive-evaluator attack audit. Its 134-task aggregate log-sigmoid is explicitly a population
+phenomenon, not a universal single-task law.
+
+Frontier-Science therefore adds a science-specific protocol rather than copying the scalar
+leaderboard: each snapshot retains optimization, fidelity, mechanism, experiment information,
+validity, refusal, supported coverage, uncertainty and cost axes; sealed transfer is followed by
+one-shot independent confirmation; null/model-mismatch worlds and false-discovery/over-refusal
+are mandatory; stochastic artifacts are re-evaluated on hidden seeds; and agent-caused invalid
+runs remain in failure-inclusive estimates. The detailed, source-checked experiment list and
+phased TODO are in `docs/edgebench_science_experiment_addendum.md`.
