@@ -102,6 +102,15 @@ class SeismicWaveV2Tests(unittest.TestCase):
             {"combined_score", "valid", "feasibility_rate", "raw_score"},
         )
 
+    def test_public_contract_unambiguously_declares_callback_mapping(self):
+        task_text = (TASK / "Task.md").read_text(encoding="utf-8")
+        constraints = (TASK / "frontier_eval/constraints.txt").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("returns a dictionary,\n    not a tuple", task_text)
+        self.assertIn('observation["traces"]', task_text)
+        self.assertIn("returns a dictionary, not a tuple", constraints)
+
     def test_independent_public_forward_matches_oracle(self):
         oracle = self.oracle
         calibration = self.calibration

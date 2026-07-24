@@ -58,15 +58,16 @@ def discover_layered_velocity(
       confidence: scalar in [0,1]
       abstain:    bool
 
-    acquire(midpoints_m, offsets_m, peak_frequency_hz) returns:
-      midpoints_m:        selected CMP midpoint positions
-      offsets_m:          selected receiver offsets
-      peak_frequency_hz: selected Ricker peak frequency
-      time_s:             trace sample times
-      traces:             array with shape (n_offsets, n_times)
-      noise_std:          stated pointwise Gaussian-noise standard deviation
-      budget_cost:        charged acquisition units
-      budget_used:        cumulative charged units
+    acquire(midpoints_m, offsets_m, peak_frequency_hz) returns a dictionary,
+    not a tuple. Access its values by these exact string keys:
+      observation["midpoints_m"]:        selected CMP midpoint positions
+      observation["offsets_m"]:          selected receiver offsets
+      observation["peak_frequency_hz"]: selected Ricker peak frequency
+      observation["time_s"]:             trace sample times
+      observation["traces"]:             array with shape (n_traces, n_times)
+      observation["noise_std"]:           stated pointwise Gaussian-noise std
+      observation["budget_cost"]:         charged acquisition units
+      observation["budget_used"]:         cumulative charged units
     """
 ```
 
