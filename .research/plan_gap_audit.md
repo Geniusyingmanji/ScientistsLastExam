@@ -26,7 +26,7 @@ physical validation, and auditable claim–evidence provenance.
 | Capability | Current status | Evidence | Remaining acceptance criterion |
 |---|---|---|---|
 | Candidate/oracle isolation | Implemented | Clean-revision security v18: 18/18 adversarial tests; Bubblewrap, no network, read-only mounts, resource/seccomp limits, typed RPC, fresh multi-world sessions and candidate-exception sanitization | Reproduce in clean Linux CI; document portability/non-Linux behavior |
-| Fail-closed trusted metrics | Implemented | Clean-revision 51×2 v27: 51 deterministic, 51 valid, 51 fail-closed and zero infrastructure failures; this predates GeneNetworkIntervention | Re-run the secure baseline for all 52 tasks on its clean source revision; repair or quarantine every future invalid candidate oracle before certification |
+| Fail-closed trusted metrics | Implemented | Clean-revision 52×2 v28: 52 deterministic, 52 valid, 52 fail-closed and zero infrastructure failures | Repair or quarantine every future invalid candidate oracle before certification |
 | Task admission policy | Implemented, narrow | Current source manifest: 7 certified / 31 candidate / 14 quarantined; GeneNetworkIntervention adds active CRISPRi/a-like acquisition, signed dynamic mechanisms, protected-readout intervention, sealed transfer and null/latent-regulator refusal | Independent domain + evaluator reviews are still declarations, not completed external review |
 | Scientific validity of inventory | Audited, sparse | All original 50 packages passed adversarial admission; ActiveLawDiscovery and GeneNetworkIntervention bring inventory to 52, and substantive rebuilds now leave 38 internally admissible packages | Rebuild high-value families and add approximately 12 net admissible tasks to reach about 50; hidden/generated instances and shortcut analysis remain mandatory |
 | Unified trajectory/accounting | Implemented, protocol-smoked | Clean-revision two-seed baseline smoke; trajectory schema v2, hashes, AUC over `budget_units`, separate `oracle_calls`, wall/token/cost, seed, checkpoint/resume | Validate nonzero-budget schema-v2 artifact replay in CI and version future changes |
@@ -636,9 +636,10 @@ learns whom to trust.
 ### P0/P1 closeout — completed locally, reproduce in CI
 
 - [x] Trusted oracle / isolated candidate architecture and adversarial regression suite.
-- [x] Last trusted 51-package deterministic secure baseline and certification audit; all 51 weak baselines are valid, deterministic and fail closed.
-- [ ] Re-run the deterministic secure baseline, certification and security audits on the clean
-  52-task GeneNetworkIntervention revision.
+- [x] Current 52-package deterministic secure baseline and certification audit; all 52 weak
+  baselines are valid, deterministic and fail closed.
+- [x] Re-run the deterministic secure baseline, certification and security audits on the clean
+  52-task GeneNetworkIntervention revision (v28/v38/v22).
 - [x] Seven-task certified core, 31 candidates and 14 quarantined packages after all
   admission waves and the current substantive rebuilds.
 - [x] Task-card/citation/invariant audit and dated machine-readable evidence.

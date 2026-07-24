@@ -2060,3 +2060,34 @@ bounded positive-control evidence contribution in a synthetic benchmark, not an 
 The current Reaction and Convection normal trajectories still contain zero eligible positive
 agent milestones, and the positive Reaction selection-blind artifact remains excluded because it
 is an offline frozen-parent proposal with FDR `0.5`.
+
+## 2026-07-24 — GeneNetworkIntervention admission and trusted calibration
+
+`SystemsBiology/GeneNetworkIntervention` adds the 38th internally admissible task and raises the
+inventory to 52 directories: 7 certified, 31 candidate and 14 quarantined. It is distinct from
+the static interventional SCM task: candidates actively choose bounded CRISPRi/a-like time-series
+experiments in a nonlinear four-gene ODE, recover a signed dynamic network and kinetic parameters,
+and design a sparse intervention on actionable regulators of a protected phenotype readout.
+Mechanism, sealed trajectory prediction, phenotype utility, intervention transfer, confidence,
+coverage, false discovery and null/latent-regulator refusal remain separate. Candidate experiments,
+final interventions and sealed prediction schedules cannot directly perturb the readout.
+
+The truth-blind nonlinear reference uses six fixed single/pair regulator experiments, derivative
+filtering, bounded nonlinear regression, leave-one-experiment model checks and fitted-model
+intervention search. It scores `0.905293` development and `0.893222` held-out joint quality;
+mechanism is `0.862462/0.800048`, prediction `0.915986/0.898357`, and decision utility
+`0.942784/0.993940`. Supported-world coverage and unsupported-world refusal are both one on both
+splits, with zero false discovery. These values are synthetic task calibration, not autonomous
+agent performance or biological discovery.
+
+All evidence binds clean source revision `b777889`. The task calibration SHA-256 is
+`d689563cb72ad9b7acdc699250760ac5094a7f706f6c8a09f46f4e9c134b5e1d`; certification v38 is
+`7631a77da11826254522575a41fef5ddd2c9ec772a52a6e9a15738f6edd712bb`; security v22 is
+`0ff1ce80104e024f9a905661ab7f70bde5d3f27aa5905c8203ed77c4cd60acab`; and secure baseline v28
+is `d09a04a771abb595eeac0b4d1d69b04c5055972e4b207af90b284720ceb629e3`. Certification reports
+52 tasks at 7/31/14, security passes 18/18, the 52×2 baseline reports 52 deterministic, valid and
+fail-closed tasks with zero infrastructure failures, and the full suite passes 305/305.
+
+The benchmark remains a deterministic synthetic four-gene abstraction. Server-held worlds,
+measurement/batch/cell-state models, independent systems-biology review, real Perturb-seq assays
+and prospective wet-lab validation remain necessary before any biological claim.

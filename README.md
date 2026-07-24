@@ -46,13 +46,12 @@ controlled exception text is reduced to a fixed label-blind failure taxonomy bef
 search feedback, preventing observations from being carried between worlds through exceptions.
 The current audit reports:
 
-- 293/293 unit, security, protocol, analysis and scientific-invariant tests passed after adding
-  the MA1/E52 attribution analyzer. The latest trusted task/security/baseline reports bind clean
-  source revision `d775e9a`; the current hash-bound calibration summary contains 49 normal
-  single-run conditions over 25 tasks.
-- The latest trusted 51×2 secure-baseline audit reports 51/51 deterministic, 51/51 valid,
-  51/51 fail-closed and zero infrastructure failures. It predates the new systems-biology task;
-  a 52-task clean-revision rerun is required before claiming a current trusted baseline.
+- 305/305 unit, security, protocol, analysis and scientific-invariant tests pass after adding
+  GeneNetworkIntervention. The latest trusted task/security/baseline reports bind clean source
+  revision `b777889`; the current hash-bound calibration summary still contains 49 normal
+  single-run conditions over 25 tasks and predates the new model runs.
+- The latest trusted 52×2 secure-baseline audit reports 52/52 deterministic, 52/52 valid,
+  52/52 fail-closed and zero infrastructure failures.
 - Current source manifest: 7 certified / 31 candidate / 14 quarantined. D-optimal design, quantum
   gate synthesis, DC optimal power flow, truss sizing, antenna synthesis and NMR peak fitting have been rebuilt with separate sealed
   validation or robustness metrics and re-admitted as candidates. HeatExchanger-v2 additionally
@@ -236,11 +235,12 @@ the post-repair 50-package audits bind revision `47c3613`; the subsequent wave-2
 audit quarantines seven additional defective candidates. The two P2 smokes are baseline-only; the repository does not yet contain
 credible multi-seed model-performance evidence. A clean-revision GPT-5.5 budget-one core pilot
 is recorded as task calibration, not a benchmark leaderboard.
-The latest trusted clean-revision certification/security/baseline audits are v37/v21/v27 and
-still cover the preceding 51-task revision. The current source manifest is 7/31/14 and contains
+The latest trusted clean-revision certification/security/baseline audits are v38/v22/v28 and
+cover all 52 current task directories. The current source manifest is 7/31/14 and contains
 38 internally admissible tasks, leaving an approximate gap of 12 to the roughly 50-task target.
 GeneNetworkIntervention adds an active nonlinear signed-network, protected-readout intervention,
-sealed-transfer and null/latent-regulator refusal candidate; its clean-revision audit and model
+sealed-transfer and null/latent-regulator refusal candidate. Its truth-blind nonlinear reference
+scores `0.9053/0.8932` development/held-out joint quality with zero false discovery; GPT-5.5
 calibrations are still pending. The hash-bound cross-task summary v18
 contains 49 normal single-run conditions over 25 tasks; it is calibration
 evidence, not a leaderboard or population result.
