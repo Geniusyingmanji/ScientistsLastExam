@@ -1,0 +1,17 @@
+domain: RNAEngineering
+task: RNAInverseDesign
+difficulty: hard
+tier: T3
+oracle_type: exact_dynamic_programming
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 120
+science_metric: constrained_rna_target_ensemble_probability_defect_mfe_transfer_and_proxy_false_promotion
+reference_baseline: deterministic constraint-feasible ACGU repeat that ignores the target structure
+reference_sota: deterministic target-compatible local-search witnesses under the declared pair-and-stack ensemble
+tool_level: L2
+tools_suggested:
+  - literature_search
+  - offline_dynamic_programming
+tool_rationale: RNA partition-function and inverse-folding literature supplies algorithms that materially improve over pair-compatibility heuristics.
+citation: "McCaskill, Biopolymers 1990, DOI 10.1002/bip.360290621; Zadeh et al., Journal of Computational Chemistry 2011, DOI 10.1002/jcc.21596"

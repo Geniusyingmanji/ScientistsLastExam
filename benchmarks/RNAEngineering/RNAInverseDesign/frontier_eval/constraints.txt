@@ -1,0 +1,5 @@
+1) Only edit solution.py. Keep design_rna(problem).
+2) Return one A/C/G/U sequence with exactly the requested length.
+3) Honor every fixed base, GC-fraction interval and forbidden motif in problem.
+4) Optimize the public pair-and-stack secondary-structure ensemble, not only target-pair compatibility.
+5) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read verification/ or frontier_eval/.

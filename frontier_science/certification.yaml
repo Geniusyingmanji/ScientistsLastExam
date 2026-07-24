@@ -71,6 +71,17 @@ tasks:
       - doi:10.1016/j.cell.2016.11.038
       - doi:10.1016/j.cell.2022.05.013
 
+  RNAEngineering/RNAInverseDesign:
+    status: quarantined
+    reason: new exact pair-stack-loop ensemble inverse-design implementation has passed local equation, constraint, sandbox and headroom preflight but is not internally admissible until clean-revision calibration, full-inventory audits and required GPT-5.5 budget-one, normal budget-three and selection-blind budget-three calibrations are complete; the quarantine prevents a new directory from being counted as progress before that evidence exists
+    citation_ids:
+      - doi:10.1093/nar/9.1.133
+      - doi:10.1002/bip.360290621
+      - doi:10.1093/nar/gkp892
+      - doi:10.1002/jcc.21596
+      - doi:10.1186/1748-7188-6-26
+      - doi:10.1073/pnas.1313039111
+
   BayesianInference/OptimalExperimentDesign:
     status: candidate
     reason: v2 is scientifically valid with procedural families and sealed shifts, but GPT-5.5 implements a generic D-optimal algorithm and reaches 0.991 development plus 0.994 validation at budget one; retain as an on-ramp pending harder sequential model-discrimination regimes and independent review

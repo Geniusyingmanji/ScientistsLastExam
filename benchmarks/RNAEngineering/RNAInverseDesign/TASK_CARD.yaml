@@ -1,0 +1,36 @@
+schema_version: 1
+scientific_question: Design constrained RNA sequences whose target pseudoknot-free secondary structures dominate a declared thermodynamic ensemble across new structural families and parameter shifts.
+artifact: One finite A/C/G/U sequence per target structure, satisfying fixed functional bases, GC-content bounds and forbidden-motif constraints.
+oracle:
+  model: exact dynamic programming for a public simplified canonical-pair, adjacent-stack and helix-loop-initiation Boltzmann ensemble with a minimum hairpin length
+  feasibility: exact length and alphabet, fixed bases, GC interval and forbidden motifs; malformed or non-finite-like artifacts fail closed
+  deterministic: true
+normalization:
+  baseline: deterministic constraint-feasible ACGU repeat that ignores target base pairs
+  reference: deterministic target-compatible local-search witness scored by the same public ensemble; reference sequences remain evaluator-only
+  score: development exact ensemble utility normalized between the weak baseline and reference; proxy compatibility, MFE agreement, ensemble defect, target probability, held-out families and parameter-shift robustness remain separate
+citations:
+  - id: doi:10.1093/nar/9.1.133
+    title: Optimal computer folding of large RNA sequences using thermodynamics and auxiliary information
+  - id: doi:10.1002/bip.360290621
+    title: The equilibrium partition function and base pair binding probabilities for RNA secondary structure
+  - id: doi:10.1093/nar/gkp892
+    title: "NNDB: the nearest neighbor parameter database for predicting stability of nucleic acid secondary structure"
+  - id: doi:10.1002/jcc.21596
+    title: "NUPACK: Analysis and design of nucleic acid systems"
+  - id: doi:10.1186/1748-7188-6-26
+    title: ViennaRNA Package 2.0
+  - id: doi:10.1073/pnas.1313039111
+    title: RNA design rules from a massive open laboratory
+invariants:
+  - partition functions and pair marginals are computed exactly for the declared noncrossing pair-and-stack model
+  - target probability equals the target Boltzmann weight divided by the full partition function and ensemble defect uses exact base-pair marginals
+  - target-pair compatibility is a separately reported proxy and cannot replace exact ensemble quality
+  - development and held-out panels span hairpin, internal-loop, bulge, tandem and multibranch structure families
+  - temperature and pair or stacking-energy perturbations remain evaluator-only robustness axes
+  - candidate code gets a fresh sandbox process and private tmpfs for every target instance
+  - held-out, robustness, exact component and per-instance metrics remain evaluator-only
+known_shortcuts: This benchmark uses a transparent simplified pair-and-stack energy model, not the complete Turner nearest-neighbor parameter set, salt corrections, pseudoknots, tertiary structure, kinetics, degradation, expression context or experimental yield. Public deterministic target generators permit target-specific branching and require server-held families for release. Any claim about real RNA function requires full ViennaRNA or NUPACK replication, synthesis and structural or functional assays.
+review:
+  domain: pending_external_rna_design
+  evaluator_security: automated_dynamic_programming_sandbox_metric_sealing_malformed_artifact_and_independent_enumeration_tests
