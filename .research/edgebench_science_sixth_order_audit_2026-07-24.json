@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "audit_date_utc": "2026-07-24",
+  "scope": "Sixth-order descriptive recomputation from the unchanged public EdgeBench 51-task per-time README table. The continuation and risk-set treatments are proposed Frontier-Science experiments and gates, not EdgeBench causal results.",
+  "upstream_state": {
+    "arxiv_id": "2607.05155v1",
+    "arxiv_updated_utc": "2026-07-06T14:39:22Z",
+    "github_commit": "a87350ab80eeb320b13cb71d1b0c3ffcc20a670f",
+    "huggingface_revision": "47846a4c3669ad447e0ea984833b0d352460c5f9",
+    "github_readme_sha256": "b58e38094f275b4f81bd31ec2b99014f345bcf6e65c5d6a0181a9c77a025c76a",
+    "arxiv_emerging_scaling_tex_sha256": "b514910993655b4aec6033decbcb0c0f4d7336d900ec2359132029d530125f07",
+    "arxiv_appendix_tex_sha256": "0e83569e3b882899c18dbe87836d115fdac737231e752c8b79a33e1fba690e60",
+    "changed_since_fifth_order_audit": false
+  },
+  "source_facts": [
+    "The paper defines S(t) as best-so-far performance and states that the with-experience curve averages three 12-hour best-so-far curves per task before averaging across tasks.",
+    "The public README exposes displayed 2h, 4h, 6h, 8h, 10h and 12h values for 51 tasks and five models, yielding 255 task-model sequences.",
+    "The public release does not include the raw 38000-hour trajectory corpus or figure-analysis code, so displayed-table inconsistencies cannot be causally attributed from public evidence alone."
+  ],
+  "descriptive_recomputation": {
+    "source": "official GitHub README public 51-task per-time table",
+    "checkpoints_hours": [2, 4, 6, 8, 10, 12],
+    "tasks": 51,
+    "models": 5,
+    "task_model_sequences": 255,
+    "sequences_with_at_least_one_displayed_decrease": 6,
+    "nonmonotone_sequences": [
+      {"task": "dabic_gravity_inversion", "model": "GPT-5.4", "scores": [14.6, 14.6, 15.5, 15.5, 15.0, 15.0]},
+      {"task": "equivalence_class_divide_and_conquer", "model": "GLM-5.1", "scores": [3.8, 4.2, 10.0, 8.0, 10.6, 10.6]},
+      {"task": "warehouse_forklift_routing", "model": "GLM-5.1", "scores": [null, 0.0, 0.0, 0.6, 0.7, 0.5]},
+      {"task": "wireless_electricity_layout", "model": "GLM-5.1", "scores": [7.2, 9.4, 6.6, 8.1, 9.4, 9.5]},
+      {"task": "k12_math_recommendation", "model": "DS-V4-Pro", "scores": [25.6, 26.3, 26.8, 25.7, 26.0, 26.3]},
+      {"task": "flt_regular_formalization", "model": "GLM-5.1", "scores": [14.4, 13.4, 16.5, 18.8, 18.8, 38.7]}
+    ],
+    "continuation_sensitivity_policy": "For this sensitivity only, require all six displayed checkpoints, replace each sequence by its cumulative maximum, and retain cells with positive 2h-to-12h total gain.",
+    "complete_positive_gain_sequences": 246,
+    "late_four_hour_gain_exceeds_early_four_hour_gain": {
+      "definition": "displayed cumulative-maximum gain from 8h to 12h is greater than gain from 2h to 6h",
+      "count": 33,
+      "fraction": 0.13414634146341464
+    },
+    "delayed_takeoff_sequences": {
+      "definition": "displayed cumulative-maximum gain from 2h to 6h is at most 1.0 point and gain from 6h to 12h is at least 2.0 points",
+      "count": 7,
+      "cells": [
+        {"task": "bipedalwalker_locomotion_rl", "model": "GPT-5.5", "early_gain": 0.5, "late_gain": 5.8},
+        {"task": "bipedalwalker_locomotion_rl", "model": "GPT-5.4", "early_gain": 0.0, "late_gain": 3.6},
+        {"task": "rust_multicrate_reconstruction", "model": "GLM-5.1", "early_gain": 0.4, "late_gain": 13.3},
+        {"task": "tree_block_partitioning", "model": "DS-V4-Pro", "early_gain": 0.7, "late_gain": 4.2},
+        {"task": "college_english_exam_bank", "model": "GPT-5.4", "early_gain": 0.6, "late_gain": 3.2},
+        {"task": "dcss_dungeon_ai", "model": "GLM-5.1", "early_gain": 0.5, "late_gain": 4.3},
+        {"task": "tryst_text_adventure", "model": "GPT-5.4", "early_gain": 0.5, "late_gain": 24.3}
+      ]
+    },
+    "recomputation_note": "Cumulative-maximum repair is used only to make the delayed-takeoff sensitivity conservative under the declared best-so-far estimand. It is not a permitted repair for Frontier-Science source trajectories, which must instead pass event-level replay."
+  },
+  "frontier_science_protocol_changes": [
+    {
+      "id": "randomized_continuation_allocation",
+      "plan_id": "CA1",
+      "addendum_id": "E44",
+      "design": "Under a fixed total task-hour budget compare fixed-12h, deterministic 2h-headroom, randomized-positive-probability and uncertainty-aware futility policies; force a random audit tranche to 12h independent of its early outcome.",
+      "primary_outcomes": ["task_hour_savings", "late_bloomer_recall", "false_futility_rate", "continuation_regret", "committed_12h_sealed_mechanism_utility", "selection_induced_curve_and_rank_bias"]
+    },
+    {
+      "id": "longitudinal_risk_set_integrity",
+      "plan_id": "M2",
+      "addendum_id": "M2_GATE",
+      "design": "Freeze scheduled run IDs, replay selector events, require every single-run observer envelope to be monotone, publish checkpoint run-flow counts, and separate failure-inclusive ITT, fixed paired-completer and explicitly dynamic-risk-set summaries.",
+      "primary_outcomes": ["single_run_monotonicity_violations", "scheduled_started_captured_judged_valid_flow", "risk_set_drift", "itt_vs_paired_completer_sensitivity", "byte_replay_status"]
+    }
+  ],
+  "claim_boundary": [
+    "The six displayed decreases are public-table observations, not proof that EdgeBench raw single-run best-so-far trajectories decrease or that its reported aggregate result is wrong.",
+    "The delayed-takeoff counts are descriptive thresholded sensitivities on rounded displayed means, not causal estimates of the value of continuation.",
+    "The 13.4 percent public-table fraction must not be transferred as an expected Frontier-Science late-bloomer rate.",
+    "Until CA1 is run, a 2h headroom gate may allocate exploratory engineering resources but cannot support an unbiased full-cohort 12h estimate.",
+    "Until M2 passes, no long-horizon Frontier-Science aggregate should be labeled a fixed-cohort best-so-far trajectory."
+  ]
+}

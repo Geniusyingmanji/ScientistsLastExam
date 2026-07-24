@@ -497,6 +497,34 @@ These are incremental deductions from the unchanged EdgeBench v1 experiment defi
 The source facts, descriptive 51-task recomputation, proposed designs and claim limits are
 retained in `.research/edgebench_science_fifth_order_audit_2026-07-24.json`.
 
+## Ninth-pass continuation and longitudinal-risk-set findings
+
+These are descriptive recomputations from the same unchanged public EdgeBench README table and
+protocol deductions for Frontier-Science. They do not establish why any upstream displayed value
+has its reported shape and are not additional model-performance claims.
+
+1. **A 2-hour futility screen can delete delayed takeoff.** After applying a cumulative maximum
+   solely as a conservative sensitivity to the declared best-so-far semantics, 246 public
+   task--model sequences have all six checkpoints and positive 2h-to-12h gain. In 33/246, gain
+   from 8h to 12h exceeds gain from 2h to 6h; seven cells improve by at most one point from 2h to
+   6h but by at least two points from 6h to 12h. These rounded displayed means are motivation,
+   not a continuation-policy treatment effect. Compare fixed, deterministic-headroom,
+   randomized-positive-probability and uncertainty-aware continuation under a fixed task-hour
+   budget. Force a random audit tranche to 12h regardless of early results and estimate the full
+   sampling-frame endpoint; otherwise task selection and long-horizon estimation use the same
+   evidence twice.
+2. **Best-so-far semantics need an event-level invariant.** Six of the 255 public displayed
+   task--model sequences contain a decrease. The public release lacks the raw trajectory corpus
+   and figure-analysis code, so this could reflect changing valid-run membership, a different
+   checkpoint estimand, aggregation, or another cause; no cause is asserted here. Frontier-Science
+   must freeze scheduled run IDs, assert each single-run observer envelope is monotone under one
+   selector, publish scheduled/started/captured/judged/valid counts, and distinguish
+   failure-inclusive ITT, paired completers and any dynamic risk-set mean. Current artifacts and
+   current claims may regress, but they cannot share a column with the historical envelope.
+
+The exact cells, thresholds, source hash and claim boundaries are recorded in
+`.research/edgebench_science_sixth_order_audit_2026-07-24.json`.
+
 ## Minimum next experiments
 
 1. **HartreeFockSCF-v2 calibration:** GPT-5.5 budget 1, normal budget 3 and strict
@@ -622,6 +650,12 @@ retained in `.research/edgebench_science_fifth_order_audit_2026-07-24.json`.
 41. **Latent-utility robustness:** freeze a domain-valid utility family, reveal constraints but
     draw weights after commit, and compare public-scalar artifacts against reusable Pareto/method
     artifacts on sealed regret, coverage and safety.
+42. **Randomized continuation audit:** compare fixed-12h, deterministic headroom,
+    positive-probability randomized and uncertainty-aware futility gates; retain an unconditional
+    12h audit tranche and report late-bloomer recall, false futility and continuation regret.
+43. **Longitudinal risk-set gate:** freeze scheduled run IDs, replay every selector envelope,
+    fail on single-run nonmonotonicity and publish ITT, paired-completer and explicitly dynamic
+    risk-set summaries separately.
 
 ## Claim boundary
 

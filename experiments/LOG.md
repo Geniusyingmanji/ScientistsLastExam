@@ -1801,3 +1801,21 @@ also scoped to a performance-level advantage: its displayed gap narrows from +5.
 at 12h, so it does not alone identify a faster baseline-adjusted learning slope. The source hashes,
 descriptive recomputation and claim boundaries are recorded in
 `.research/edgebench_science_fifth_order_audit_2026-07-24.json`.
+
+## 2026-07-24 — EdgeBench continuation and longitudinal-risk-set audit
+
+The unchanged official 51-task table was reprocessed at all six displayed checkpoints. After a
+cumulative-maximum sensitivity used only to respect the paper's declared best-so-far estimand,
+246 task--model cells are complete and have positive 2h-to-12h gain. Of these, 33 have larger
+8h-to-12h than 2h-to-6h gain, and seven improve by at most one point through 6h but at least two
+points afterward. This motivates CA1/E44: compare fixed, deterministic-headroom, randomized and
+uncertainty-aware continuation policies while forcing a random audit tranche to 12h, so late
+takeoff and the full-cohort endpoint remain estimable.
+
+Separately, six of the 255 public displayed sequences decrease despite the paper's best-so-far
+definition. The raw 38,000-hour trajectories and figure-analysis code are not public, so no cause
+is assigned and this is not evidence that the upstream headline result is wrong. M2 instead makes
+the lesson operational here: freeze scheduled run IDs, assert every single-run observer envelope
+is monotone under the versioned selector, publish checkpoint run-flow counts, and separate ITT,
+paired-completer and any changing-risk-set summaries. The exact source hash, cells, thresholds and
+claim limits are stored in `.research/edgebench_science_sixth_order_audit_2026-07-24.json`.

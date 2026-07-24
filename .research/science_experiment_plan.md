@@ -89,6 +89,8 @@ Report its visible, sealed and mechanism advantage over `committed` as an
 | U1 | Does the artifact remain useful when a reasonable downstream utility is not known during search? | Public fixed scalar vs public utility family with sealed post-commit weights vs reusable Pareto/response-surface/method artifact; announced objective-shift control | sealed utility regret, worst-case/CVaR regret, Pareto coverage, safety violations and adaptation cost | Reusable scientific knowledge separated from evaluator-targeted scalar optimization |
 | HZ1 | Does the disclosed research horizon change the scientific policy, not merely its cutoff? | Independent runs with the true horizon disclosed as 2/6/12 h, matched prefixes from a 12 h-aware run, and a preregistered random-censoring arm; hold task/world, feedback policy and per-unit resources fixed | exploration-to-confirmation allocation, early committed/sealed/mechanism utility, confirmation-budget reserve, stopping/abstention, horizon-conditioned rank and prefix regret | Budget-response and model rankings that are valid for the policy actually deployed at each horizon |
 | J1 | Are rubric- or model-mediated scientific judgments stable enough to support trajectory and ranking claims? | Pin a complete judge manifest and evaluate blinded anchor artifacts, exact duplicates and adversarial style/verbosity twins with repeated independent judges, deterministic executable metrics and expert adjudication where needed | repeatability, inter-judge agreement, anchor drift, style sensitivity, rank reversals, calibration to executable outcomes and adjudication rate | Judge-mediated evidence only when evaluator identity, uncertainty and construct validity are demonstrated |
+| CA1 | Can early evidence allocate continuation budget without systematically deleting late scientific progress? | Under one fixed total task-hour budget compare fixed-12h, deterministic 2h-headroom, randomized-positive-probability and uncertainty-aware futility policies; force a randomly selected audit tranche to 12h regardless of its early result | task-hour savings, late-bloomer recall, false-futility rate, continuation regret, 12h committed sealed/mechanism utility and selection-induced curve/rank bias | Research-budget allocation with an estimable full-cohort endpoint, distinct from an agent's own stopping decision |
+| M2 | Does the longitudinal analysis preserve one risk set and the declared best-so-far semantics? | Replay scheduled run IDs and selector events at every checkpoint; assert each single-run observer envelope is monotone and compare failure-inclusive ITT with fixed paired-completer and explicitly named changing-risk-set summaries | scheduled/started/captured/judged/valid flow, monotonicity violations, risk-set drift, attrition sensitivity and replay status | A trustworthy longitudinal curve; this is a protocol gate, not an agent capability score |
 
 ## Controls that must be strict
 
@@ -150,6 +152,14 @@ policy; submitted paths and exclusion rules must match the claimed deliverable; 
 maximum submissions must leave the advertised workflow possible. Time-budget comparisons require
 independent runs told their true horizon. A prefix of a long-horizon-aware run is descriptive, not
 a counterfactual short-horizon policy.
+
+Every longitudinal curve must also pass a risk-set and envelope lint. Bind every checkpoint to
+the preregistered scheduled run IDs, publish scheduled/started/captured/judged/valid counts, and
+assert monotonicity for each single-run observer-side best-so-far envelope under one selector.
+Current artifacts, terminal artifacts and current scientific claims may regress, but must live in
+separate named columns. A changing-valid-run mean is a different estimand and cannot be relabeled
+as one fixed-cohort best-so-far trajectory. Do not repair violations with an analysis-time
+cumulative maximum; fail closed and trace them to source events.
 
 The objective and selection rule are also part of that contract. Render the exact raw objective
 direction, validity/safety/confirmation gates, materiality `epsilon`, constraint ordering,
@@ -326,6 +336,10 @@ server-held procedural worlds, multi-seed feedback controls and independent revi
     with repeatability, inter-judge agreement, executable-metric concordance and adjudication rates.
 48. Feedback-acquisition calibration: predicted versus realized information/decision value for
     each external request, costed request-timing regret and unused confirmation reserve.
+49. Continuation-policy audit: fixed/headroom/randomized/uncertainty-aware allocation against
+    task-hour cost, late-bloomer recall, false futility, 12-hour scientific utility and curve bias.
+50. Longitudinal risk-set audit: checkpoint scheduled-to-valid flow, single-run envelope
+    monotonicity, ITT versus paired-completer sensitivity and all changing-risk-set warnings.
 
 Avoid presenting a radar chart or a single “science score”; small multiples preserve the
 important capability dissociations.
@@ -361,6 +375,14 @@ important capability dissociations.
   exclusions. Give both a scientific estimand over preregistered valid executions and an
   operational estimand that retains model/infrastructure failures; never silently analyze only
   long-horizon survivors.
+- Freeze the scheduled run-ID risk set before the first checkpoint. Validate observer-envelope
+  monotonicity at the single-run/event level, then report failure-inclusive ITT and a fixed
+  paired-completer sensitivity. If valid membership changes with time, name and plot that dynamic
+  risk set separately; it cannot replace the fixed-cohort curve.
+- When early outcomes allocate later task-hours, retain a randomized audit tranche with strictly
+  positive continuation probability for every eligible cell. Estimate the full sampling-frame
+  12-hour endpoint with prespecified inverse-probability or doubly robust sensitivity, and keep
+  the pilot/allocation sample separate from confirmatory headline estimation.
 - Report end-to-end wall time for deployment and active model/tool/oracle time for algorithmic
   efficiency. Queueing, rate limits, serving incidents and resume count are outcomes, not tokens.
 - Block and randomize treatment order over calendar time. Prefer concurrently paired conditions
@@ -529,6 +551,8 @@ midpoint, speed or doubling-time claim.
   collaborative autonomous science or stakeholder-robust scientific knowledge.
 - One HZ1 disclosed-horizon/random-censoring pilot before interpreting long-run prefixes as
   short-budget policies; J1 judge calibration before any rubric/model-judge result is primary.
+- One CA1 continuation-policy pilot with a randomized forced-12h audit tranche; M2 risk-set and
+  single-run envelope replay must pass before any long-horizon aggregate curve is primary.
 
 Only Stage B can support claims about feedback-driven scientific discovery. A real-world
 discovery claim additionally requires independent high-fidelity or physical confirmation and
@@ -584,6 +608,9 @@ domain-expert review.
 - H23: an agent-requested external-feedback policy predicts realized information or decision value
   better than fixed/random schedules and improves fresh-confirmed utility per cost without spending
   the one-shot confirmation reserve or increasing false discovery.
+- H24: a deterministic 2h-headroom continuation gate saves task-hours but misses more materially
+  useful 12h outcomes than a positive-probability uncertainty-aware gate at matched total cost;
+  any retained advantage survives full-sampling-frame weighting and fresh confirmation.
 
 These are hypotheses to test. The paper should report failed hypotheses and negative results
 rather than selecting only curves that resemble Frontier-Eng or EdgeBench.

@@ -243,11 +243,13 @@ evidence, not a leaderboard or population result.
 
 The latest EdgeBench re-audit keeps its upstream facts at arXiv `2607.05155v1`, SForge
 `a87350a` and public dataset `47846a4`. In addition to E1--E36, the science plan now preregisters
-seven unrun scope/protocol tests: raw instrument-to-claim error propagation (I6/E37), unit/coordinate/
+eight unrun scope/protocol tests: raw instrument-to-claim error propagation (I6/E37), unit/coordinate/
 representation metamorphic invariance (V4/E38), independent investigators with blinded synthesis
 (T1/E39), post-commit sealed downstream utilities (U1/E40), independently disclosed research
 horizons rather than long-run prefixes (HZ1/E41), and pinned/calibrated rubric or model judges
-(J1/E42), plus calibrated acquisition of costly authoritative feedback (F9/E43). These are
+(J1/E42), calibrated acquisition of costly authoritative feedback (F9/E43), plus randomized
+continuation auditing to retain delayed scientific takeoff (CA1/E44). A separate M2 protocol gate
+freezes the checkpoint risk set and replays single-run best-so-far monotonicity. These are
 proposed experiments, not new EdgeBench or Frontier-Science performance results. The expansion
 plan also prioritizes one prospective evidence-synthesis task over another
 near-duplicate clean-simulator scalar task.

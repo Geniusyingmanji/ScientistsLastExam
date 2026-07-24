@@ -669,6 +669,36 @@ calibration、每单位成本的 sealed/mechanism gain、request timing regret�
 feedback、为一次性 confirmation 保留的预算、null-world false discovery 和最终 committed utility。若 agent
 只靠高频询问 grader 提分而没有更好的 fresh confirmation，应称 evaluator querying，而不是科研判断力。
 
+### E44. 早期 futility gate、随机续跑与 late-bloomer 偏差
+
+E18/R3 问的是单条科研轨迹中的 agent 是否知道何时停止；这里问的是 benchmark 建造者或研究管理者在
+看到 2h pilot 后，是否应继续给这个 task--condition 分配 6h/12h。二者不能共用一个 stopping estimand。
+EdgeBench 的公开 51-task 表提供了直接动机：在先对每条展示序列做 cumulative-maximum 修复的保守
+sensitivity 中，246 个六个 checkpoint 都存在且 2h→12h 总增益为正的 task--model cells 里，33 个
+（13.4%）在同为四小时的 8h→12h 增益大于 2h→6h；其中 7 个在 2h→6h 只提升不超过 1 分，却在
+6h→12h 至少提升 2 分。这是展示表上的描述性 delayed-takeoff 信号，不证明某种 continuation policy
+更好，也不代表科学任务会有相同比例。
+
+在预先锁定的 long-horizon-ready sampling frame 中，比较 fixed-12h、2h point-headroom gate、带最低
+续跑概率的 randomized gate、以及使用 first-valid/噪声/不确定区间/科学事件的 uncertainty-aware futility
+gate。固定总 task-hour 预算，并随机保留一个不受 2h 结果影响的 audit tranche 跑满 12h，使每个 cell 的
+continuation probability 严格大于零；用 inverse-probability/doubly-robust sensitivity 重建全 sampling-frame
+12h estimand。报告 task-hour 节省、late-bloomer recall、false-futility rate、12h committed sealed/mechanism
+utility、continuation regret、模型排序与曲线参数偏差。Pilot 数据可以分配后续工程资源，但同一批早期
+轨迹不能同时筛选 confirmatory cohort 并估计 headline 长程增益。
+
+### M2 protocol gate. 固定 longitudinal risk set 与 envelope 单调性
+
+论文将主量定义为 best-so-far，但公开 255 个 task--model 展示序列中有 6 条至少一次下降。由于原始
+38,000h trajectory corpus 和 figure-analysis code 未公开，展示表本身无法区分 checkpoint 间 valid-run
+集合变化、current-vs-envelope 口径、舍入/汇总或其他原因；这不是对官方结果错误的判定。它要求我们的
+管线把如下不变量机器化：单运行、同 selector 的 observer envelope 必须逐事件非降；每个 checkpoint
+绑定固定的 scheduled run IDs，并报告 scheduled/started/captured/judged/valid 数；任何 changing-risk-set
+均值必须显式命名，不能标作同一 cohort 的 best-so-far。主曲线给 failure-inclusive ITT，另给固定 paired
+completer sensitivity；current、terminal 和 current-claim 允许下降，但列名、artifact hash 与 envelope
+严格分离。违反单运行单调性或无法重放 risk set 时，曲线分析 fail closed，而不是事后 cumulative-max
+掩盖数据问题。
+
 ## 5. 推荐的曲线与表格
 
 主文可沿用 Frontier-Eng/EdgeBench 的时间或 oracle-budget best-so-far 图，但 science 论文至少再加：
@@ -729,6 +759,10 @@ feedback、为一次性 confirmation 保留的预算、null-world false discover
     repeatability、agreement、drift、executable-outcome concordance 与 expert adjudication。
 36. feedback-acquisition calibration：每次外部请求前预测与事后实际 information/decision value、单位成本
     收益、请求时机 regret、重复调用和未花掉的 confirmation reserve。
+37. continuation-policy audit：fixed/randomized/headroom/uncertainty-aware gates 的 task-hour 节省、
+    late-bloomer recall、false-futility、12h sealed utility 和选择后曲线偏差。
+38. longitudinal risk-set audit：每个 checkpoint 的 scheduled→valid run flow、单运行 envelope
+    单调性、ITT/paired-completer 敏感性与 changing-risk-set 告警。
 
 log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、Gompertz、piecewise/change-point
 和 hierarchical task-mixture 比较；必须用 held-out time forecasting、bootstrap over tasks 与跨 seed
@@ -791,7 +825,13 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
   science-content-equivalent style twins、第二 judge 与 expert/executable adjudication 先做可靠性门槛；
 - [ ] 在 2 个 feedback-cost 异质任务比较 agent-requested/fixed-grid/random/VOI/end-only 请求策略；每次
   请求前冻结 request card，核对 predicted-realized value、timing regret 与 confirmation reserve；
-- [ ] 对 pilot cells 先跑 measurement-health gate，再决定是否分配 6h/12h；
+- [ ] 对 pilot cells 先跑 measurement-health gate；任何 2h-based 续跑策略都保留一个随机
+  audit tranche 无条件跑满 12h，比较 fixed/headroom/randomized/uncertainty-aware gates 的
+  late-bloomer 漏检、continuation regret 与选择偏差；
+- [ ] 将 M2 作为曲线硬门槛：固定 longitudinal run IDs，校验每条 observer envelope
+  单调，发布 checkpoint risk-set flow，并同报 ITT 与 paired-completer sensitivity；
+- [ ] 对选中的大跳变重放 parent/full-child/component-only/rollback，在同一 sealed panel
+  上通过后才做“某科学思路导致增益”的因果归因；
 - [ ] pilot 可按 headroom 分配后续工程资源，但 confirmatory cohort 不得据此删任务；
 - [ ] 仅在 pilot 证明基础设施稳定且至少部分任务有 headroom 后扩展 6h/12h。
 
@@ -868,3 +908,10 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
   policy 已改变官方结果。
   Source hashes、描述性重算与 claim boundary 保存在
   `.research/edgebench_science_fifth_order_audit_2026-07-24.json`。
+- EdgeBench 公开 51-task 表的 delayed-takeoff 和单调性重算使用同一官方 README
+  (`b58e38094f275b4f81bd31ec2b99014f345bcf6e65c5d6a0181a9c77a025c76a`)。展示表中 6/255
+  序列下降；对序列做 cumulative-maximum 仅用于 late-bloomer sensitivity 后，246 个完整且
+  总增益为正的 cell 中 33 个后段四小时增益大于前段，7 个呈现预定义的 delayed
+  takeoff。原始轨迹/分析代码不可用，因此不对下降原因作官方口径外的推断。
+  可重现记录与 claim boundary 保存在
+  `.research/edgebench_science_sixth_order_audit_2026-07-24.json`。
