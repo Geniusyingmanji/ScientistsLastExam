@@ -376,6 +376,44 @@ score table, rather than only the four publicly released science task contracts.
    and numerical cross-check are retained in
    `.research/edgebench_taxonomy_audit_2026-07-24.json`.
 
+## Sixth-pass contract and runtime findings
+
+These findings come from rechecking all 51 public task contracts and tracing the current SForge
+prompt, selector, judge history, snapshot and visualizer paths. The upstream paper, GitHub main and
+Hugging Face dataset remain at v1, `a87350a` and `47846a4`; this is therefore an incremental
+implementation audit, not a new EdgeBench result.
+
+1. **The objective-selection contract is not uniform across system layers.** The public contracts
+   contain 37 `score_first`, four `valid_then_score`, one explicit `pass_rate_first` and nine
+   default-`pass_rate_first` tasks. The generic prompt nevertheless says the best score across all
+   submissions is final; its local cache advances only on pass-rate gain; the judge executes the
+   configured selector; and the visualizer reads selector metadata but recomputes best/ranking via
+   score direction or pass rate. Frontier-Science must render one exact, versioned objective and
+   selection contract into the prompt and replay it through online state, commit, terminal,
+   dashboard and analysis, failing closed on incumbent-hash disagreement.
+2. **The convenient run history is a lossy view, not a scientific event ledger.** `EvalReport`
+   contains normalized score, runtime, timeout, details, metrics and submission time, but
+   judge-server history retains only scalar score/pass rate/counts/valid/summary and explicitly
+   drops `score_0_100`. Component trajectories and exact feedback therefore require later joins
+   against mutable per-submission files. Use an append-only, schema-versioned ledger containing the
+   full raw report, visible-feedback projection, artifact/evaluator/world hashes, all event times,
+   costs, failure/retry lineage and selector decisions; generate derived tables only from this
+   ledger plus a hashed cohort manifest.
+3. **Periodic snapshots omit guaranteed trajectory boundaries.** Auto-evaluation waits one full
+   interval before its first tick, stops before terminal archive extraction, and does not judge
+   that terminal archive on the same path. A run may therefore lack both `t=0` and terminal points.
+   Force immutable, charged sentinels at baseline, first-valid, every explicit submission/commit,
+   every fixed checkpoint and the cutoff terminal; reason-code missing captures instead of
+   forward-filling historical best.
+4. **Agent auto-resume is not exactly-once experimental recovery.** The public judge holds session,
+   counters, pending status and run history in process memory. A judge restart can lose budget or
+   lineage even if the work container and agent continue. Persist evaluation intent before work,
+   key it by artifact + evaluator manifest + seed/world panel, atomically commit outcomes, and
+   crash-test that recovery neither loses nor repeats stochastic/costly evidence.
+
+The source hashes, contract census and explicit claim limits are retained in
+`.research/edgebench_contract_runtime_audit_2026-07-24.json`.
+
 ## Minimum next experiments
 
 1. **HartreeFockSCF-v2 calibration:** GPT-5.5 budget 1, normal budget 3 and strict
@@ -457,6 +495,18 @@ score table, rather than only the four publicly released science task contracts.
     fail closed if the declared task count, task set, weights, transforms or run-coverage policy
     differs from the analysis input. Publish taxonomy transitions rather than silently moving a
     task between science, optimization, software and knowledge-work denominators.
+26. **Objective-selector replay:** render objective direction, hard gates, materiality, stochastic
+    aggregation, tie/Pareto and endpoint policy into the prompt; replay all events and require the
+    prompt/online/commit/terminal/dashboard/analysis incumbent hashes to agree.
+27. **Lossless durable event ledger:** retain the complete evaluator report and agent-visible
+    projection with artifact/evaluator/world hashes, times, costs and retry lineage; regenerate all
+    results from this ledger rather than in-memory or summary history.
+28. **Boundary-sentinel audit:** score `t=0`, first-valid, every submission/commit, fixed-grid and
+    terminal artifacts through one immutable path; quantify missing boundary events without
+    best-so-far imputation.
+29. **Exactly-once recovery audit:** inject judge/work-container/network failures, duplicate and
+    late deliveries; verify idempotent recovery, oracle/sample budget reconciliation and correct
+    feedback-descendant lineage.
 
 ## Claim boundary
 

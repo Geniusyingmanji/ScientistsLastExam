@@ -71,6 +71,8 @@ Report its visible, sealed and mechanism advantage over `committed` as an
 | S1 | Is an aggregate scaling curve predictively and mechanistically supported? | Preregistered log-sigmoid and alternatives, whole-trajectory validation across held-out suffixes/runs/tasks/families, and fixed-grid material-improvement events | held-out error/log score, interval coverage, parameter stability and improvement hazard versus normalized progress | A bounded empirical regularity; never feedback learning or discovery by itself |
 | S2 | Are the fitted ceiling, midpoint and speed actually identifiable in the observed horizon? | Profile/trajectory-bootstrap fits across rolling windows and longer horizons, with constrained or nonparametric alternatives | parameter intervals/correlation, post-inflection support, window stability and coverage | Curve-parameter interpretation only when identified; otherwise observed-window gain |
 | I3 | Is a narrated breakthrough caused by the attributed edit? | Parent, full child, component-only patch and rollback replay on one frozen sealed evaluator panel | retained effect, interaction, regression and component-specific science metrics | Causal edit attribution for selected milestones, not from chronology alone |
+| I4 | Do all system layers agree on which artifact is incumbent and why? | Replay every event through one versioned objective-selection contract and compare prompt, agent cache, online selector, signed commit, terminal endpoint, dashboard and analysis; include score-first, valid-then-score, safety-lexicographic and material-Pareto sensitivity | incumbent-hash agreement, selector reversals, sealed/mechanism/false-discovery reversal rate and protocol failures | Trustworthy artifact selection rather than an ambiguous scalar leaderboard |
+| I5 | Can a day-long scientific run survive failures without losing or double-spending evidence? | Durable append-only ledger with judge/work-container/network crash injection, duplicate/late delivery, restart and idempotent replay | exactly-once oracle/sample budget reconciliation, lost/duplicate events, stale-feedback attribution, recovery time and byte-replay of derived tables | Crash-consistent long-horizon evidence rather than best-effort execution logs |
 
 ## Controls that must be strict
 
@@ -126,6 +128,14 @@ maximum submissions must leave the advertised workflow possible. Time-budget com
 independent runs told their true horizon. A prefix of a long-horizon-aware run is descriptive, not
 a counterfactual short-horizon policy.
 
+The objective and selection rule are also part of that contract. Render the exact raw objective
+direction, validity/safety/confirmation gates, materiality `epsilon`, constraint ordering,
+tie/Pareto rule, stochastic expectation or quantile policy and eligible endpoint policy into the
+agent prompt. The agent-visible incumbent cache, authoritative online selector, signed commit,
+terminal evaluation, dashboard and analysis must execute the same versioned selector. Replay all
+events and fail closed if any layer names a different incumbent artifact hash, even when two
+artifacts happen to share the same scalar score.
+
 Score changes smaller than numerical noise or scientific materiality must not automatically
 replace an incumbent. Predeclare an evaluator-resolution `epsilon`, hard scientific constraints,
 domain-material effect thresholds and tie/Pareto policy. Retain both strict-score and material-
@@ -151,6 +161,21 @@ Log every hypothesis/evaluator look and reserve a post-commit confirmation world
 higher-fidelity replication that influences neither search, task admission, curve-model choice,
 stopping nor milestone selection. If analysts inspect or tune against that panel, mark it
 contaminated and refresh it before a confirmatory claim.
+
+The authoritative trajectory must be an append-only, schema-versioned, durable event ledger, not
+an in-memory judge history, a container-local display cache or a mutable summary. Before judging,
+persist an evaluation intent keyed by artifact hash, evaluator manifest and world/seed panel;
+atomically commit the complete raw report, agent-visible feedback projection, event times, costs,
+failure/retry lineage and selector decision. Recovery must query or resume this idempotency key
+rather than silently rerun a costly or stochastic experiment. Crash-injection tests must show
+that evidence and budget are neither lost nor counted twice and that every headline table can be
+reconstructed from the ledger plus its hashed cohort manifest.
+
+Fixed-grid monitoring must include boundary sentinels. Capture and charge the immutable artifact
+at `t=0`, first-valid, every agent submission, every signed commit/abstention, every scheduled
+checkpoint and the terminal cutoff. A terminal evaluation may finish after the cutoff, but its
+feedback cannot cause an in-horizon descendant. Missing boundary captures remain reason-coded
+missing outcomes; never forward-fill them with a historical best.
 
 Science tasks often need literature access, so blanket network isolation is not a sufficient
 contamination protocol. Build a dated, frozen and logged literature corpus for the primary
@@ -242,6 +267,12 @@ server-held procedural worlds, multi-seed feedback controls and independent revi
 30. Measurement-health and cohort-provenance panel: first-valid rate, baseline/reference gap,
     fixed-artifact judge noise, floor/ceiling mass, post-2h material headroom, manifest hash and
     nominal versus effective lineage count.
+31. Objective-selection agreement panel: prompt/online/commit/terminal/dashboard/analysis
+    incumbent hashes plus selector-sensitivity reversals on sealed, mechanism and safety axes.
+32. Durable event and recovery panel: scheduled, durably accepted, judged, delivered and used
+    events with duplicate/retry/crash/late-result accounting and exactly-once budget reconciliation.
+33. Sentinel-complete trajectory marking `t=0`, first-valid, submissions, signed commits,
+    fixed-grid snapshots and terminal without best-so-far imputation at missing boundaries.
 
 Avoid presenting a radar chart or a single “science score”; small multiples preserve the
 important capability dissociations.
@@ -297,6 +328,15 @@ important capability dissociations.
 - Distinguish artifact creation/submission before the cutoff from judge completion after it.
   Post-cutoff scores may enter a preregistered observer-side endpoint, but their feedback cannot
   be credited with causing an in-horizon descendant.
+- Require every trajectory used for AUC, first-valid, terminal or commitment estimands to contain
+  the preregistered boundary sentinels or an explicit reason-coded missing event; do not infer a
+  start/end artifact from the nearest periodic snapshot or forward-filled historical maximum.
+- Reconcile every oracle/sample call against a durable idempotency key and event ledger. Retry,
+  recovery and duplicate delivery are operational events, not additional scientific evidence or
+  free independent replicates.
+- Replay the versioned selection contract over the raw event stream and assert that the declared
+  incumbent hashes in online state, endpoint files, dashboards and analysis inputs are identical.
+  Treat any divergence as a protocol failure before comparing systems.
 - Analyze protocol/runtime validity as a separate transition before conditional optimization.
   Never let a high rate of first-valid artifacts silently substitute for post-valid sealed or
   mechanism improvement, and never discard invalid attempts from the operational estimand.
@@ -348,6 +388,8 @@ midpoint, speed or doubling-time claim.
 - O1–O3 figures, raw trajectories, paired uncertainty and cost/oracle accounting.
 - O0 one-shot/first-valid baselines; committed, terminal and evaluator-only endpoints reported
   separately; complete run-coverage and time-decomposition tables.
+- Sentinel-complete, durable trajectory ledger with objective-selector replay and crash/recovery
+  budget reconciliation on the pilot slice.
 - Claim only cross-domain executable scientific generative optimization.
 
 ### Stage B — science-distinctive evidence

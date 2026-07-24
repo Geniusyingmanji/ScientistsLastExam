@@ -133,6 +133,31 @@ EdgeBench 的总曲线衡量“环境中提升”，不自动等于科学发现�
     diagnostics 能帮助工程迭代，但现实科学家通常获得的是仪器读数、实验失败、solver residual 或
     审稿意见，而不是对未知真值的距离。Science 主实验应让 agent 只看到可实现的观测通道；任何
     truth-relative score feedback 单列为 oracle-assisted optimization，不与自主发现混写。
+12. **目标函数和 incumbent 规则必须端到端一致**。公开 51-task contracts 中，37 个使用
+    `score_first`、4 个 `valid_then_score`、1 个显式 `pass_rate_first`，另有 9 个依赖默认
+    `pass_rate_first`。但 SForge 的通用 prompt 只说“所有提交中的 best score 是最终分”，容器内
+    display cache 又只在 pass rate 上升时更新；authoritative judge 才执行 task-specific policy。
+    visualizer 虽读取 `selection` 元数据，scanner 的 best 仍主要按 raw score direction 重算，run
+    排序则优先 pass rate。对带 hard validity、robustness、mechanism 和 Pareto trade-off 的 science
+    artifact，这不是显示小问题：agent、在线 selector、最终 endpoint 和论文图可能指向四个不同
+    artifact。必须把 objective/direction/hard gates/material epsilon/tie-Pareto/commit policy 显式写入
+    prompt 与事件，并用同一版本化 selector replay；任何环节 incumbent hash 不一致即 fail closed。
+13. **摘要 history 不是可重放科学轨迹**。公开 `EvalReport` 本来含 `score_0_100`、runtime、timeout、
+    `details`、`metrics` 和 `submitted_at`，但 judge-server run history 删除归一化分数，只保留
+    score/pass-rate/counts/valid/summary；component metrics 和 failure/timing 只能事后再拼每个 submission
+    目录。Science 需要 append-only、schema-versioned event ledger，绑定 artifact/report/evaluator hashes，
+    并完整保存 raw vector metrics、实际返回给 agent 的 feedback projection、时间、成本、failure class、
+    selector version 和 source revisions；论文 derived table 只能从该 ledger 和 hashed manifest 重建。
+14. **固定间隔快照缺少边界哨兵**。公开实现等待一个完整 interval 后才做第一次 auto-eval，run 结束时
+    先停止 auto-eval、再抽取 final archive，且不会自动把 terminal archive 送入同一路径评分。因此
+    fixed-grid trajectory 不保证含 `t=0` baseline 或 terminal artifact，会偏置 first-valid、早期 gain、
+    terminal regression、AUC 和 held-out-suffix forecast。必须强制捕获并计费 `t=0`、每个 scheduled
+    checkpoint、每次显式 commit 和 cutoff terminal 四类 immutable sentinel artifact。
+15. **agent resume 不等于实验 exactly-once recovery**。公开 judge server 把 session、submission counter、
+    pending job 和 run history 保存在进程内存；agent 可自动续跑，但 judge 重启会成为独立故障域。对
+    costly/stochastic science oracle，盲目 retry 会双花实验预算、重复使用证据或改变 winner。因此需
+    durable write-ahead ledger，以 `artifact hash + evaluator manifest + seed/world panel` 为 idempotency key，
+    恢复 counters/pending jobs，区分 retry 与 new evidence，并做 crash-injection exactly-once 测试。
 
 ## 3. Science 独有的核心向量轨迹
 
@@ -369,6 +394,37 @@ manifest hash。分析脚本若发现声明数量、task set、权重或 transfo
 本次源码级映射与均值复算保存在
 `.research/edgebench_taxonomy_audit_2026-07-24.json`。
 
+### E26. Objective-selection contract replay
+
+每个 task 的 agent-visible prompt、online incumbent、declared commit、terminal endpoint、dashboard 和
+analysis table 必须引用同一个 versioned selection contract。Contract 至少含 raw objective direction、
+validity/safety/confirmation gates、scientific materiality `epsilon`、constraint violation ordering、
+Pareto/tie policy、随机任务的 expectation/quantile rule，以及允许进入 confirmation 的 endpoint policy。
+在每个 event 上离线 replay selector，并逐项核对 incumbent artifact hash；任何 prompt/config/selector/
+visualizer 分歧即使最终 scalar 相同也记为 protocol failure。另做 selector-sensitivity：score-first、
+valid-then-score、lexicographic safety-first、material-Pareto 各自会选中多少不同 artifact，以及这些反转
+如何影响 sealed/mechanism/false-discovery 结论。
+
+### E27. 无损事件账本与 exactly-once 恢复
+
+长期科学运行必须以 append-only ledger 为 source of truth，而不是依赖进程内 history、容器 display
+cache 或可变 summary JSON。每条 evaluation event 绑定 immutable artifact、完整原始 evaluator report、
+agent-visible feedback projection、world/seed panel、evaluator/container/source revisions、六类 event time、
+token/tool/oracle/sample/energy cost、failure/retry lineage 和 selector decision。系统在 submission 接收前
+写 durable intent，完成后原子 commit；重启时按 idempotency key 恢复或查询既有结果，不能静默重跑。
+用 judge crash、work-container crash、network partition、late result 和重复 delivery 注入测试证明：预算
+不丢不重、同一证据只计一次、stale feedback 不归因给错误 descendant、ledger replay 可字节级重建所有
+headline tables。
+
+### E28. 起点、提交、commit 与终点的 sentinel 快照
+
+除固定间隔快照外，每个 run 强制记录：agent action 前的 `t=0` baseline、第一次 valid artifact、每个
+agent submission、每次 signed commit/abstain、preregistered fixed-grid checkpoint 和 cutoff terminal。
+所有 sentinel 都走相同 immutable capture/evaluator pipeline，且 terminal score 可以在 cutoff 后完成、
+但其反馈不得回流。这样 first-attempt/first-valid gain、AUC、terminal regression、commit regret 和
+observer envelope 都有共同边界；若某个 sentinel capture/judge 失败，作为 reason-coded missing outcome，
+不能用邻近 best-so-far 值前向填充。
+
 ## 5. 推荐的曲线与表格
 
 主文可沿用 Frontier-Eng/EdgeBench 的时间或 oracle-budget best-so-far 图，但 science 论文至少再加：
@@ -393,6 +449,12 @@ manifest hash。分析脚本若发现声明数量、task set、权重或 transfo
     counterfactual；
 18. task measurement-health 图：first-valid、baseline/reference gap、judge noise、floor/ceiling、2h
     material headroom 与所需重复数。
+19. objective-selector disagreement matrix：prompt/online/commit/terminal/dashboard/analysis 的 incumbent hash
+    是否一致，以及不同 scientific selection policy 下的 sealed/mechanism reversal；
+20. event-ledger completeness/recovery 图：scheduled→durably accepted→judged→feedback delivered→used，附
+    duplicate/retry/crash/late-result 数和 exactly-once budget reconciliation；
+21. sentinel-complete trajectory：明确标出 `t=0`、first-valid、agent submissions、signed commits、fixed-grid
+    snapshots 和 terminal，禁止用 best-so-far 补齐缺失边界。
 
 log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、Gompertz、piecewise/change-point
 和 hierarchical task-mixture 比较；必须用 held-out time forecasting、bootstrap over tasks 与跨 seed
@@ -410,6 +472,13 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
 ### P1 — Long-horizon pilot
 
 - [ ] 增加 immutable publish manifest、原子 evaluator-only snapshots 与六类 event timestamps；
+- [ ] 增加 versioned objective-selection contract；prompt/online/commit/dashboard/analysis 用同一 selector，
+  逐 event replay incumbent hash 并 fail closed on disagreement；
+- [ ] 建立 append-only durable event ledger，保存完整 raw report、agent-visible projection、artifact/evaluator
+  hashes、world/seed/cost/timing/failure/retry lineage；
+- [ ] 强制 `t=0`、first-valid、每次 submission/commit、fixed-grid 与 terminal sentinel snapshots；
+- [ ] 做 judge/work-container/network crash injection，验证 idempotent retry、exactly-once oracle budget 和
+  stale/duplicate feedback lineage；
 - [ ] checkpoint 同时报 current/declared/terminal/envelope，confirmation 只接收 declared artifact；
 - [ ] 增加 elapsed/active/oracle-time summary、regression/recovery 和 failure-inclusive aggregation；
 - [ ] 在目标模型运行前锁定 6 个代表任务：设计、逆问题、主动机制、随机优化、多保真、PDE；
@@ -457,6 +526,10 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
   12h、30min auto-eval、120s submission cooldown；公开文档说明 final best 包含不可见 auto-eval，
   `run_agent.py` 显示定时器直接打包 live workspace。这些实现事实用于 2.1/E11--E16 的协议审计，
   不代表官方作者对 Frontier-Science 的结论。
+- 51 个公开 task contracts 的 selection/parser/rescale census，以及 selection/prompt/history/visualizer/
+  recovery 源码审计，保存于
+  `.research/edgebench_contract_runtime_audit_2026-07-24.json`。截至 2026-07-24，arXiv/GitHub/Hugging
+  Face 仍分别为 v1/`a87350a`/`47846a4`；这些是实现语义审计，不证明其影响了论文数值。
 - EdgeBench arXiv v1 source package SHA-256
   `8193aeb41a3474690a40fac82e2ecbd53e651ab6b4759984b4c6845c04fbfd29`（2026-07-24
   下载核验）；taxonomy/count 差异来自源码中的 `task_by_task_specifications.tex` 与

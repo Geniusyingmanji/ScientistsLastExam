@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "audit_date_utc": "2026-07-24",
+  "scope": "Incremental source-level audit of the current EdgeBench release, its 51 public task contracts, and SForge runtime/visualizer semantics. This artifact records implementation facts and Frontier-Science deductions; it does not claim additional EdgeBench empirical results.",
+  "upstream_state": {
+    "paper": {
+      "title": "EdgeBench: Unveiling Scaling Laws of Learning from Real-World Environments",
+      "arxiv_id": "2607.05155",
+      "version": "v1",
+      "published_utc": "2026-07-06T14:39:22Z",
+      "source_tar_sha256": "8193aeb41a3474690a40fac82e2ecbd53e651ab6b4759984b4c6845c04fbfd29"
+    },
+    "github": {
+      "repository": "ByteDance-Seed/EdgeBench",
+      "main_commit": "a87350ab80eeb320b13cb71d1b0c3ffcc20a670f"
+    },
+    "huggingface": {
+      "dataset": "ByteDance-Seed/EdgeBench",
+      "revision": "47846a4c3669ad447e0ea984833b0d352460c5f9",
+      "public_task_count": 51,
+      "tasks_jsonl_sha256": "7e7b9b4d591162dbdbea341f5464e4cf7944a496c9f8ffa629dada822170bfd6",
+      "contract_filename_hash_manifest_sha256": "1bfa7d84aff0648144fe93db70fafb0a47c479fa42e994d734ccbbbd04988cde",
+      "contract_total_bytes": 197732
+    },
+    "changed_since_previous_2026_07_24_audit": false
+  },
+  "public_contract_census": {
+    "selection_policy_counts": {
+      "score_first": 37,
+      "valid_then_score": 4,
+      "explicit_pass_rate_first": 1,
+      "implicit_default_pass_rate_first": 9
+    },
+    "parser_counts": {
+      "structured_json": 27,
+      "score_sum": 18,
+      "pytest_v": 3,
+      "empty_game_contract": 3
+    },
+    "rescale": {
+      "configured_tasks": 44,
+      "unconfigured_tasks": 7,
+      "kind_counts": {
+        "linear": 29,
+        "log_anchor": 1,
+        "log_max": 3,
+        "log_min": 1,
+        "log1p_max": 1,
+        "piecewise_max": 4,
+        "piecewise_min": 1,
+        "piecewise_log_min": 4
+      }
+    },
+    "public_science_contracts": {
+      "bipedalwalker_locomotion_rl": "valid_then_score",
+      "borden_source_inversion": "score_first",
+      "dabic_gravity_inversion": "valid_then_score",
+      "graph_node_classification": "valid_then_score"
+    }
+  },
+  "source_file_sha256": {
+    "sforge/harness/selection.py": "abb55b7b0466f73e4fab248dfed31ad89b1caec19b1a8117edcbf2429571cf0a",
+    "sforge/harness/evolve_scripts.py": "e2ae42009611b434c803e47a1f24d729c22848ff259b346754d8226bf543c2b8",
+    "sforge/harness/judge_server.py": "e5e05cc91a03e9d3d8d6770223b78df326bcde6b636cdd1bcd668c0195c78360",
+    "sforge/harness/run_agent.py": "40cd57d4f9d9eaa727efa75dc15eac9e75b9b536f05e961e485bd4f3e66442fe",
+    "sforge/harness/grading.py": "ba15c46d073889858bd9005f598a782b3b0c9de8b00c72eea9c98502ca0eac56",
+    "sforge/harness/run_evaluation.py": "16c75048b68fdafea9980d2895549ad8454863341fd65fd47ae88833386b1d97",
+    "sforge/visualizer/scanner.py": "dd3fdd49fe40dc01e376ca3a5a0f33df5481570f60fee62666f78c21ae780f2e",
+    "sforge/visualizer/server.py": "807f1134b99a570c532cbe6729f757fb3f2624ed3d5fb88a9709ee32251ded90"
+  },
+  "implementation_findings": [
+    {
+      "id": "objective_selection_contract",
+      "fact": "The generic agent prompt states that the best score across all submissions is final, while SForge supports pass_rate_first, score_first, and valid_then_score. The local display cache advances only when pass_rate improves. The judge server uses the configured policy.",
+      "risk": "The agent, local cache, authoritative endpoint, and later analysis can optimize or display different incumbents. On constrained scientific tasks this can favor an invalid or scientifically dominated artifact, or make the agent believe a valid score improvement was not retained.",
+      "frontier_science_gate": "Render the exact objective, direction, hard constraints, materiality epsilon, tie/Pareto rule, and endpoint policy into the task prompt and event schema; replay every event through one versioned selector and fail closed on disagreement."
+    },
+    {
+      "id": "visualizer_selection_drift",
+      "fact": "The visualizer loads selection metadata but its scanner chooses the best scored submission using score direction only; run sorting is pass-rate first; the documented smoothing uses only new-best milestones. These paths do not uniformly execute the configured selection policy.",
+      "risk": "A dashboard or smoothed plot can silently disagree with the authoritative result and hide invalid, dominated, or scientifically important regressions.",
+      "frontier_science_gate": "Treat dashboards and plots as tested analysis code: recompute incumbent identity from the signed event ledger with the same selector and verify it equals the authoritative endpoint before rendering. Keep raw current-state events visible."
+    },
+    {
+      "id": "lossy_runtime_history",
+      "fact": "EvalReport contains score_0_100, runtime_seconds, timed_out, details, metrics, and submitted_at, but judge_server removes score_0_100 and stores only score/pass-rate/counts/valid/summary in run_history. Full reports remain in per-submission files, while summary scans may trust final_result.json.",
+      "risk": "The convenient run ledger is insufficient to reconstruct component trajectories, feedback payloads, normalized-score provenance, timing, failures, or science-specific mechanism/uncertainty/refusal metrics. Joining mutable side files later can yield inconsistent analyses.",
+      "frontier_science_gate": "Use an append-only, schema-versioned event ledger keyed by artifact/report/evaluator hashes and retain raw metrics, visible-feedback projection, timestamps, costs, failure class, selector version, and source revisions. Derived tables must be regenerated only from this ledger plus hashed manifests."
+    },
+    {
+      "id": "missing_boundary_snapshots",
+      "fact": "Periodic auto-evaluation starts only after one full interval, stops before final archive extraction, and the extracted terminal archive is not automatically judged by the same path. Therefore the fixed-grid series need not contain a t=0 baseline or the terminal artifact.",
+      "risk": "Time-to-first-valid, early gain, terminal regression, declared-versus-terminal comparison, AUC, and held-out suffix forecasts can be biased or undefined, particularly when the agent never submits near a boundary.",
+      "frontier_science_gate": "Always capture and charge immutable sentinel artifacts at t=0, every scheduled checkpoint, every explicit commit, and the terminal cutoff. Record scheduled/published/captured/judge/feedback times and score boundary artifacts under the preregistered endpoint policy."
+    },
+    {
+      "id": "non_durable_judge_state",
+      "fact": "The public judge server keeps sessions, counters, submission status, and run_history in process memory; no durable reload path is present. The agent may auto-resume while the authoritative judge state remains a separate failure domain.",
+      "risk": "A judge/server restart during a day-long run can lose submission budget, feedback lineage, pending jobs, or endpoint identity. Retrying a costly or stochastic scientific evaluation can double-spend evidence and change the selected result.",
+      "frontier_science_gate": "Persist a write-ahead submission/evaluation ledger; make artifact-hash plus evaluator-manifest plus seed-panel an idempotency key; recover counters and pending jobs; distinguish retry from new evidence; and test crash/restart exactly-once semantics."
+    }
+  ],
+  "not_supported_by_public_release": [
+    "This audit does not recover the private 83 task contracts, raw 38,000-hour trajectories, or figure-analysis code.",
+    "It does not establish that the implementation issues changed any reported numerical result.",
+    "The public 51-task contracts are sufficient for a contract census but not for reconstructing the private Science/ML evaluators or feedback payloads."
+  ]
+}

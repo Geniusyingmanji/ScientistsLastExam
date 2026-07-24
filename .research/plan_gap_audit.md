@@ -320,6 +320,24 @@ uses one `36/39/19/13/19/8` family assignment in task specifications and another
 Frontier-Science should fail closed when a claimed task count, task set, lineage, weight, score
 transform or run-inclusion rule differs from the figure/table manifest.
 
+### 22. Objective selection, event retention and recovery are not yet one trusted protocol
+
+The current plan predeclares material/Pareto acceptance but does not yet require the prompt,
+agent-visible incumbent cache, authoritative selector, signed commit, terminal endpoint,
+dashboard and analysis to replay one versioned objective-selection contract. This matters because
+the current EdgeBench release has three selector families across its public contracts, while its
+generic prompt, local cache, judge and visualizer do not express or recompute them identically.
+For science, selector disagreement can change which valid, safe or mechanism-supported artifact
+is called “best,” not merely its display label.
+
+The same source audit shows a second gap: convenient run history is lossy relative to evaluator
+reports, periodic snapshots omit guaranteed `t=0` and terminal boundary evaluations, and judge
+session/history state is process-local. Add a durable append-only ledger with complete raw report
+and visible-feedback projections; force immutable baseline/first-valid/submission/commit/fixed-grid/
+terminal sentinels; use artifact+evaluator+world-panel idempotency keys; and crash-test exactly-once
+budget/evidence recovery. The source/hash-bound audit is
+`.research/edgebench_contract_runtime_audit_2026-07-24.json`.
+
 ## Revised TODO plan
 
 ### P0/P1 closeout — completed locally, reproduce in CI
@@ -373,6 +391,8 @@ transform or run-inclusion rule differs from the figure/table manifest.
 - [ ] Add agent-visible submission budgets/cooldowns, feedback-payload accounting and a
   scalar/aggregated/diagnostic feedback-bandwidth ablation.
 - [ ] Add fixed-interval evaluator-only snapshots that never affect online selection or stopping.
+- [ ] Require `t=0`, first-valid, every submission/commit, fixed-grid and terminal sentinel
+  snapshots through the same immutable capture/evaluator path; reason-code missing boundaries.
 - [ ] Make every snapshot an atomic content-addressed bundle and report three endpoint policies:
   agent/search committed, fixed-horizon terminal and evaluator-only snapshot oracle-best.
 - [ ] Keep an explicit stable committed candidate head separate from scratch work; compare fixed
@@ -395,6 +415,16 @@ transform or run-inclusion rule differs from the figure/table manifest.
 - [ ] Add adaptive allocation/stopping baselines (for example, SMC-style convergence control).
 - [ ] Add a task-contract linter for prompt versus actual horizon, checkpoint schedule,
   evaluator timeout, cooldown, maximum submissions, submitted paths and deliverables.
+- [ ] Extend contract linting to raw objective direction, validity/safety/confirmation gates,
+  material epsilon, stochastic expectation/quantile, tie/Pareto and endpoint selection policy.
+- [ ] Replay one versioned selector over every raw event and fail closed unless prompt/online/
+  commit/terminal/dashboard/analysis incumbent artifact hashes agree.
+- [ ] Replace summary/in-memory history as source of truth with an append-only durable event ledger
+  retaining full raw reports, agent-visible feedback projection, artifact/evaluator/world hashes,
+  event times, costs, failure/retry lineage and selector decisions.
+- [ ] Add judge/work-container/network crash injection and idempotent recovery keyed by artifact +
+  evaluator manifest + seed/world panel; reconcile exactly-once oracle/sample budgets and stale or
+  duplicate feedback delivery.
 - [ ] Add a measurement-health gate before long-horizon allocation: first-valid rate,
   baseline/reference separation, fixed-artifact judge noise, resolution, floor/ceiling mass,
   material post-2h headroom and shortcut resistance.
