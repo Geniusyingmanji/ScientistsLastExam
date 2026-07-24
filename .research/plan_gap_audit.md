@@ -1,8 +1,8 @@
 # Frontier-Science plan gap audit
 
-Audit date: 2026-07-19 (UTC), with the experiment roadmap extended after a full-text
+Audit date: 2026-07-19 (UTC), with the experiment roadmap extended after repeated full-text
 EdgeBench comparison and the task inventory updated on 2026-07-24 through
-SeismicWaveInversion-v2.
+RankineCycleOpt-v2.
 Evidence base: `literature_matrix.md`,
 `science_experiment_plan.md`, current source/tests, and the dated artifacts in `experiments/`.
 
@@ -25,13 +25,13 @@ physical validation, and auditable claim–evidence provenance.
 
 | Capability | Current status | Evidence | Remaining acceptance criterion |
 |---|---|---|---|
-| Candidate/oracle isolation | Implemented | Clean-revision security v16: 18/18 adversarial tests; Bubblewrap, no network, read-only mounts, resource/seccomp limits, typed RPC, fresh multi-world sessions and candidate-exception sanitization | Reproduce in clean Linux CI; document portability/non-Linux behavior |
-| Fail-closed trusted metrics | Implemented | Clean-revision 51×2 v22: 51 deterministic, 51 valid, 51 fail-closed and zero infrastructure failures after the SeismicWaveInversion-v2 rebuild | Repair or quarantine every future invalid candidate oracle before certification |
+| Candidate/oracle isolation | Implemented | Clean-revision security v18: 18/18 adversarial tests; Bubblewrap, no network, read-only mounts, resource/seccomp limits, typed RPC, fresh multi-world sessions and candidate-exception sanitization | Reproduce in clean Linux CI; document portability/non-Linux behavior |
+| Fail-closed trusted metrics | Implemented | Clean-revision 51×2 v24: 51 deterministic, 51 valid, 51 fail-closed and zero infrastructure failures after the RankineCycleOpt-v2 rebuild | Repair or quarantine every future invalid candidate oracle before certification |
 | Task admission policy | Implemented, narrow | Current manifest: 7 certified / 28 candidate / 16 quarantined; the latest rebuilds add active inverse/discovery candidates, LowThrustTransfer-v2, full-field LidDrivenCavity-v2, Climate-v2, BroadbandAbsorber-v2, Distillation-v2, HartreeFockSCF-v2, RoomImpulseResponse-v2, ConvectionDiffusionOpt-v2, SeismicWaveInversion-v2 and RankineCycleOpt-v2 | Independent domain + evaluator reviews are still declarations, not completed external review |
 | Scientific validity of inventory | Audited, sparse | All original 50 packages passed adversarial admission; ActiveLawDiscovery brings inventory to 51 and substantive rebuilds now leave 35 internally admissible packages | Rebuild high-value families and add approximately 15 net admissible tasks to reach about 50; hidden/generated instances and shortcut analysis remain mandatory |
 | Unified trajectory/accounting | Implemented, protocol-smoked | Clean-revision two-seed baseline smoke; trajectory schema v2, hashes, AUC over `budget_units`, separate `oracle_calls`, wall/token/cost, seed, checkpoint/resume | Validate nonzero-budget schema-v2 artifact replay in CI and version future changes |
 | Feedback controls | Implemented; strict pilot run | None/shuffled prompt-metric modes disclose true-score selection; strict selection-blind freezes parent/metrics; four-task n=3 pilot has no direction-stable lift and is not token-matched | Run token-matched ≥10 paired seeds with score-only, delayed/replayed and strict open-loop controls |
-| Evaluator-only metric sealing | Implemented and integration-verified | Closed search-visible allowlist; search-state redaction/hash-keyed sidecars; candidate-controlled exception text mapped to a finite label-blind taxonomy; current 222-test suite; clean pinned OpenEvolve/TreeQuest/Shinka no-leak report `aff026d` | Extend from baseline smoke to nonzero-budget upstream runs before comparative claims |
+| Evaluator-only metric sealing | Implemented and integration-verified | Closed search-visible allowlist; search-state redaction/hash-keyed sidecars; candidate-controlled exception text mapped to a finite label-blind taxonomy; current 244-test suite; clean pinned OpenEvolve/TreeQuest/Shinka no-leak report `aff026d` | Extend from baseline smoke to nonzero-budget upstream runs before comparative claims |
 | Official OpenEvolve adapter | Implemented, trusted baseline smoke | Explicit 0.2.26 adapter; clean-revision secure baseline passed under Python 3.10 | Run nonzero-budget/checkpoint integration and multi-seed study |
 | TreeQuest AB-MCTS | Implemented, trusted baseline smoke | Real TreeQuest AB-MCTS-A ask/tell adapter; clean-revision secure baseline passed under Python 3.12 | Run nonzero-budget/checkpoint integration and multi-seed study |
 | ShinkaEvolve | Implemented, trusted baseline smoke | Official runner/database adapter at pinned commit; clean-revision secure baseline passed under Python 3.10 | Run nonzero-budget/resume integration and token accounting audit |
@@ -378,6 +378,48 @@ destructive measurements and random completion latency. Score drift detection, r
 stale-result use, duplicate physical acts, safety and fresh-batch confirmation; use event/sample
 cost or piecewise time when fixed cycles invalidate a log-time coordinate.
 
+### 27. Wall time conflates search effort with feedback opportunity
+
+EdgeBench models elapsed interaction time as a search-effort coordinate, but its official public
+Codex configuration does not expose one uniform authoritative-feedback cadence: among 51 tasks,
+44 use a 120-second submission cooldown, three use 216 seconds, one uses 2160 seconds and three
+use zero, while observer auto-evaluation runs every 1800 seconds. Different judge and experiment
+costs add further task-specific clocks. Splitting elapsed/active/queue time is necessary but does
+not identify which clock governs learning. Add a randomized cadence experiment that holds active
+compute, local calls, total feedback events/bits and confirmation budget fixed, then tests curve
+collapse and forecasts on wall, active, experiment-cost, feedback-event and revealed-bit axes.
+Without it, report hour-based curves descriptively rather than as an agent-intrinsic rate.
+
+### 28. The proposed frontier graph has not been interventionally tested
+
+Current curve checks test score granularity, material-event hazard and alternative functional
+forms, but they do not manipulate the weighted-cut mixing or dependency topology invoked by the
+EdgeBench mechanism. Build answer-disjoint procedural twins with matched marginal work-unit
+difficulty, score mass, feedback and cost but well-mixed, chain, modular-single-bridge and
+hierarchical graphs. Freeze predictions, randomize bridge/prerequisite availability and measure
+plateaus, inflections, transfer and the bridge treatment effect. A curve fit alone cannot validate
+the latent task graph; the topology intervention can support or falsify it.
+
+### 29. Fixed task objectives omit scientific question formation
+
+The current tasks, EdgeBench tasks and the planned portfolio all begin from author-specified
+objectives or candidate projects. This measures problem solving and allocation, not whether the
+agent can formulate a nontrivial, identifiable and falsifiable research question. Add a rich
+procedural laboratory with fixed-question, candidate-menu and open-question arms. Require a
+signed preregistration before new data and score fresh-world answerability, realized information
+or decision value, confirmation, triviality, false discovery and deviation from the plan. Do not
+use prose similarity or an LLM judge as the primary question-quality oracle.
+
+### 30. Executable starters can anchor the claimed method discovery
+
+Legal baselines reduce invalid runs, while prescribed starters and published methods make a task
+tractable, but they also inject an initial scientific prior. Text-only workflow-hint ablations do
+not isolate this executable path dependence. Randomize blank schema-only, neutral, plausible but
+scientifically wrong, correct and diverse-choice starters on identical procedural worlds. Track
+basin escape, exploration diversity, stale-mechanism retraction, sealed/mechanism validity and
+structural distance from the starter. Until this is done, describe success as scaffold-conditioned
+adaptation when the starting artifact substantially constrains the search.
+
 ## Revised TODO plan
 
 ### P0/P1 closeout — completed locally, reproduce in CI
@@ -523,6 +565,11 @@ cost or piecewise time when fixed cycles invalidate a log-time coordinate.
   effect/interval-width target; treat fixed seed counts as minimum screens, not proof of power.
 - [ ] Add a 4--6-project shared-budget portfolio pilot with equal/random, cost-aware VOI and agent
   allocation; report fresh-confirmed utility, allocation regret and all abandoned projects.
+- [ ] Add a feedback-clock pilot that fixes active work, scientific calls and total feedback
+  events/bits while randomizing immediate/even/batched/jittered release; test wall/active/cost/
+  event/bit curve collapse and held-out forecasts.
+- [ ] Add matched well-mixed/chain/modular-bottleneck/hierarchical procedural twins plus a
+  randomized bridge/prerequisite treatment before interpreting a scaling curve mechanistically.
 - [ ] Freeze a prospective task/scaffold/weight panel before making any model-generation learning-
   speed or doubling-time claim; retain all scheduled systems and adjust for initial capability.
 - [ ] Add equal-bit meaningful-label, permuted-label, unlabeled-component and scalar feedback
@@ -565,6 +612,11 @@ cost or piecewise time when fixed cycles invalidate a log-time coordinate.
 - [ ] Add one stateful laboratory stress task with calibration drift, sample depletion,
   irreversible interventions and out-of-order results; bind every observation to world/sample/
   calibration/intervention lineage and distinguish physical acts from evaluator retries.
+- [ ] Add one open-question procedural laboratory with fixed/menu/open contracts and signed
+  pre-data preregistration; score identifiability, fresh-confirmed information/decision value,
+  triviality, false discovery and plan deviation.
+- [ ] Randomize blank/neutral/plausible-wrong/correct/diverse executable starters on one discovery
+  lineage and measure basin escape, exploration diversity, mechanism retraction and sealed transfer.
 - [ ] Tag tasks as method-prescriptive reproduction, method-neutral inference, optimization or
   mechanism discovery, and run workflow-hint ablations before claiming method discovery.
 - [ ] Declare the primary benchmark's structured-observation scope or add a separate instrument/

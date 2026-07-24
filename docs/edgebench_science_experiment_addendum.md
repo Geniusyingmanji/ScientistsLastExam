@@ -486,6 +486,69 @@ causal attribution、unsafe/invalid intervention、stale-result misuse、duplica
 confirmation。若 wall-time scaling 在 characteristic cycles/batches 下失效，改用样品/实验成本或 piecewise
 event time，不强行解释为 log-time law。
 
+### E33. Wall time、反馈时钟与实验时钟不变性
+
+EdgeBench 把横轴定义为 elapsed interaction time，但其理论额外假设 raw time 近似线性供给 search effort。
+公开 Codex 配置同时表明反馈机会并不完全同质：51 个公开任务中，44 个 agent submission cooldown 为
+120 秒，3 个为 216 秒，D-ABIC 为 2160 秒，3 个文字冒险为 0；observer auto-eval 默认每 1800 秒一次。
+因此一条按小时画出的总体曲线可能同时反映 agent 的搜索能力、judge 的反馈吞吐和实验本身的批处理节奏。
+E4/F1 的 delayed-feedback 对照回答“反馈有没有因果价值”，这里进一步问“同一总信息在不同释放时刻下，
+哪一个时钟才是可迁移的 scaling coordinate”。
+
+在 2--3 个计算代价不同的任务上固定 active model/tool time、local simulator calls、权威反馈事件数、
+反馈总字段/bit 预算和最终 confirmation budget，仅改变同一反馈 payload 的释放日程：即时均匀、稀疏均匀、
+mini-batch burst、随机延迟和全部末端释放。分别以 wall time、active time、累计实验成本、累计反馈事件和
+累计 revealed bits 重画 committed/sealed/mechanism 曲线，检验跨 cadence 的 curve collapse、排序和
+held-out forecast。主要结果还包括 feedback-to-descendant latency、单位反馈的 material gain、批反馈后的
+错误归因和 null-world false discovery。若曲线只在反馈事件轴而非 wall-time 轴对齐，结论应是
+feedback-limited learning，而不是普适的 hour-based scaling law。
+
+### E34. 对 latent task graph 做拓扑干预
+
+EdgeBench 的 log-sigmoid 机制解释依赖 weighted cut mixing、近似自相似的 edge-difficulty 分布和稳定的
+task graph；理论也明确预测 prerequisite chain、模块和 bottleneck 会产生平台、多拐点或 mixture，而不是
+单一 sigmoid。目前的 E29 检验 score atoms，S1 检验 improvement hazard，但二者都没有直接操纵科学
+问题的依赖拓扑，因而不能区分“曲线拟合得像”与“frontier-expansion 机制被验证”。
+
+构造 answer-disjoint procedural twins，使 raw scientific outcomes、总权重、边际子问题难度、反馈容量、
+oracle cost 和 reference-solver endpoint 尽量匹配，只改变可审计的依赖图：well-mixed/expander、串行链、
+双模块单桥 bottleneck、层级/近自相似图。节点必须对应真实可重放的科学工作单元——例如 calibration、
+辨识、干预测试和 shift validation——而不是只把同一 rubric 人为拆分。随机化节点命名并用经典方法校准
+难度，避免语义提示泄露拓扑。比较 material-event hazard、路径顺序、平台/多拐点、跨模块 transfer、
+committed sealed/mechanism 结果及 single/multistage/mixture 模型预测。再对 bridge availability 或一个
+prerequisite observation 做预注册干预；只有曲线按理论方向发生可复现变化，才把 frontier graph 当作有
+经验支持的机制，而非事后解释。
+
+### E35. 研究问题形成，而不只是在给定目标上求解
+
+EdgeBench 的任务都由作者预先给出目标、deliverable 和 judge；即便 agent 能长期优化，它仍未被要求决定
+“什么问题值得问、怎样使问题可证伪、什么结果足以改变行动”。E31 的 portfolio 只在作者给定的项目间
+分配预算，也没有覆盖开放的 question formulation。这是 scientific optimization 与 autonomous science
+之间仍然缺少的一层。
+
+在一个有多个潜在异常/机制的 rich procedural laboratory 中比较三种合同：固定研究问题、给定候选问题
+菜单、开放问题形成。开放条件要求 agent 在新数据前签署 machine-readable preregistration：question、
+hypothesis set、可辨识性判断、预期信息/决策价值、实验计划、证伪和停止标准；随后才获得共享实验预算。
+程序化 evaluator 不以文风评分，而以 fresh worlds 上的 answerability、realized information gain、
+下游 decision-regret reduction、confirmation、false discovery、trivial-question rate 和 preregistration
+deviation 评分，并保留 null、不可辨识和高价值但困难的候选现象。只有开放条件能提出非平凡、可检验且
+最终有确认价值的问题，才支持“研究议程形成”；在固定目标上提分仍只支持问题求解。
+
+### E36. Starter、baseline 与错误科学先验的锚定效应
+
+EdgeBench 为任务提供 workspace、文档和不同程度的 starter；公开 Borden 合同要求先运行 legal baseline，
+D-ABIC 又直接指定论文、方法和比较路线。这样能降低 first-valid 失败，却也可能把长程轨迹变成围绕作者
+先验的局部修补。K2 的 workflow-hint 消融关注文字是否指定方法，E36 单独检验初始 executable artifact
+和其中隐含科学假说的路径依赖。
+
+在同一 procedural worlds、接口、可见资料和预算下随机分配：空白但有 schema 的 scaffold、质量匹配的
+中性 legal baseline、强但系统性错配的 baseline、强且方向正确的 baseline，以及两个相异 baseline
+可选。错误 baseline 必须在 development 上具有迷惑性、在预注册 intervention/shift 上可证伪，并标记其
+来源，不能暗含 hidden truth。报告 time-to-valid、探索 DAG/方法多样性、离开 parent basin 的时间、错误
+假说存活与撤回延迟、sealed/mechanism/false-discovery、最终 artifact 与 starter 的结构距离。若强模型只
+在正确 starter 下成功或长期继承错误机制，应将结果解释为 scaffold-conditioned adaptation，而不是独立
+方法发现。
+
 ## 5. 推荐的曲线与表格
 
 主文可沿用 Frontier-Eng/EdgeBench 的时间或 oracle-budget best-so-far 图，但 science 论文至少再加：
@@ -524,6 +587,14 @@ event time，不强行解释为 log-time law。
     false-discovery 和 allocation regret；
 25. nonstationary laboratory timeline：sample/calibration/intervention lineage、乱序结果、漂移检测、不可逆
     行为和 fresh-batch confirmation。
+26. feedback-clock collapse：同一反馈总量在不同 cadence 下，分别按 wall/active/experiment/event/bit
+    时钟对齐后的曲线、排序与 forecast；
+27. task-graph topology intervention：well-mixed/chain/modular/bottleneck twins 的 material-event hazard、
+    多阶段曲线和 bridge-intervention 响应；
+28. question-formulation frontier：fixed/menu/open contracts 下问题可辨识性、信息价值、fresh-confirmed
+    decision utility、triviality 与 false discovery；
+29. starter-prior anchoring matrix：blank/neutral/wrong/correct/diverse starters 下的 basin escape、机制撤回、
+    探索多样性和 sealed transfer。
 
 log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、Gompertz、piecewise/change-point
 和 hierarchical task-mixture 比较；必须用 held-out time forecasting、bootstrap over tasks 与跨 seed
@@ -536,7 +607,8 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
 - [x] Seismic 正式/欠定义报告分流，绑定 report/raw trajectory/candidate/parent hashes；
 - [x] 把 information、mechanism、coverage、refusal 与 protocol failure 分轴；
 - [x] clean revision `2706281` 生成 derived analysis、43-condition/22-task summary 和四类审计；
-- [x] 全量回归 227/227，certification/security/baseline 刷新为 v33/v17/v23。
+- [x] 当前全量回归 244/244；clean revision `ec14510` 的 certification/security/baseline 刷新为
+  v34/v18/v24。
 
 ### P1 — Long-horizon pilot
 
@@ -566,6 +638,10 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
   cost-aware VOI，再测试 agent allocation；
 - [ ] 在一个 active task 注入 calibration drift、sample depletion、irreversible intervention 与乱序结果，
   验证 world-state lineage、stale-result guard 和 fresh-batch confirmation；
+- [ ] 在 2--3 个任务固定反馈总事件/bit 与 active budget，随机化 immediate/even/batched/jittered cadence，
+  检验曲线究竟按 wall time、实验成本还是 feedback clock 对齐；
+- [ ] 构造一个小型 well-mixed/chain/modular/bottleneck procedural-twin family，先验证 task-graph 拓扑干预
+  是否按理论改变 material-event hazard 和曲线阶段，再讨论 frontier-expansion 机制；
 - [ ] 对 pilot cells 先跑 measurement-health gate，再决定是否分配 6h/12h；
 - [ ] pilot 可按 headroom 分配后续工程资源，但 confirmatory cohort 不得据此删任务；
 - [ ] 仅在 pilot 证明基础设施稳定且至少部分任务有 headroom 后扩展 6h/12h。
@@ -578,6 +654,10 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
 - [ ] 为约 50-task inventory 增加 author/reviewer effort、shortcut red-team 与
   `long-horizon-ready` maturity ledger；
 - [ ] 为每个任务增加 known-answer/procedural/prospective provenance 和 novelty-risk 字段；
+- [ ] 对 discovery/inference 候选记录 starter provenance，并为一个 lineage 建立 blank/neutral/wrong/correct
+  baseline 随机化版本，防止把 scaffold 锚定误写成方法发现；
+- [ ] 增加一个可机器验证的 open-question procedural laboratory，区分 fixed question、candidate menu 和
+  agent-formulated preregistered question；
 - [ ] 为任务卡增加 `campaign_id/workflow_stage/lineage_id`，发现/反演任务提交可在 fresh world
   端到端重放的 method artifact；
 - [ ] 为 admission、pilot、confirmatory 和每个论文 figure/table 冻结独立的 hashed cohort manifest；
@@ -589,7 +669,8 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
 - [ ] 预注册主要 estimand、失败口径、multiple-comparison 与 bootstrap unit；
 - [ ] 分析脚本校验 cohort/task-count/weight/transform/run-policy 与 manifest 完全一致；
 - [ ] 将 scoring partition、task accumulation order、curriculum order 和 shared-budget allocation policy
-  纳入 figure manifest 与 sensitivity report；
+  以及 feedback cadence、task-graph topology、starter arm、question-contract arm 纳入 figure manifest 与
+  sensitivity report；
 - [ ] 独立重跑至少一个模型/agent harness，分离模型和脚手架效应；
 - [ ] 生成向量曲线、evidence ladder、failure incidence 与 cost frontier；
 - [ ] 最终论文把 simulator optimization、mechanism discovery 和 prospective validation 分层措辞。
@@ -603,7 +684,8 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
   `https://huggingface.co/datasets/ByteDance-Seed/EdgeBench`（2026-07-24 访问）。
 - ByteDance-Seed/EdgeBench public SForge implementation, commit
   `a87350ab80eeb320b13cb71d1b0c3ffcc20a670f`（2026-07-24 核验）：官方 Codex 配置为
-  12h、30min auto-eval、120s submission cooldown；公开文档说明 final best 包含不可见 auto-eval，
+  12h、30min auto-eval；51-task 配置中 submission cooldown 为 44×120s、3×216s、1×2160s、3×0s。
+  公开文档说明 final best 包含不可见 auto-eval，
   `run_agent.py` 显示定时器直接打包 live workspace。这些实现事实用于 2.1/E11--E16 的协议审计，
   不代表官方作者对 Frontier-Science 的结论。
 - 51 个公开 task contracts 的 selection/parser/rescale census，以及 selection/prompt/history/visualizer/
@@ -617,5 +699,7 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
 - EdgeBench arXiv v1 `theory.tex` SHA-256
   `eaee62c9b5cf53fbd81b6b23b4053733bbfaa43a70140bd7fca47ba904c19be0`：E29--E32 所引用的
   finite score granularity、non-interacting tasks、stable attainable support、linear effort 与 characteristic
-  feedback cycles 均来自该理论的明示假设/限制；具体压力测试是 Frontier-Science 的推论，不是作者已做
-  的实验或报告的结果。
+  feedback cycles，以及 E33--E34 所引用的 effort clock、weighted cut mixing、bottleneck/module failure
+  modes，均来自该理论的明示假设/限制；E35--E36 来自固定任务合同与 starter/method guidance 的 scope
+  差异。具体压力测试是 Frontier-Science 的推论，不是作者已做的实验或报告的结果。增量事实和 claim
+  boundary 保存在 `.research/edgebench_science_third_order_audit_2026-07-24.json`。

@@ -1,8 +1,9 @@
 # Science-specific experiment plan
 
-Date: 2026-07-23 (UTC). This plan complements the Frontier-Eng-style optimization study and
-the EdgeBench-style long-horizon trajectory study. It does not assume that optimization,
-feedback learning, mechanism recovery, and scientific validation are interchangeable.
+Date: 2026-07-23 (UTC), updated 2026-07-24 after the EdgeBench theory/configuration re-audit.
+This plan complements the Frontier-Eng-style optimization study and the EdgeBench-style
+long-horizon trajectory study. It does not assume that optimization, feedback learning,
+mechanism recovery, and scientific validation are interchangeable.
 
 ## Central experimental distinction
 
@@ -77,6 +78,10 @@ Report its visible, sealed and mechanism advantage over `committed` as an
 | F8 | Does scientific experience transfer across tasks rather than only persist within one task? | Randomized source→target curricula with related, unrelated and misleading sources; cold, artifact-only, evidence-notebook and full-state transfer | target early AUC/time-to-valid, sealed/mechanism lift, false discovery, adaptation/retraction delay and transfer half-life | Cross-task scientific meta-learning or negative transfer |
 | P1 | Can the agent allocate a shared research budget across competing projects? | Equal/random/independent allocations vs cost-aware VOI/knowledge-gradient and agent allocation over blinded signal/null/misspecified projects | validated portfolio utility and discoveries per cost, allocation regret, starvation/drop decisions and unsafe/false-discovery exposure | Scientific portfolio decision quality rather than per-task optimization in isolation |
 | D1 | Can the agent reason under nonstationary, irreversible and asynchronously observed science? | Stationary/reversible control vs drift, batch changes, sample depletion, irreversible interventions and randomized result latency | drift/recalibration delay, sample efficiency, stale-result misuse, duplicate physical acts, unsafe interventions and fresh-batch confirmation | Laboratory-state reasoning rather than replayable software search |
+| S4 | Is elapsed time the relevant scaling coordinate, or merely a proxy for feedback opportunity? | Hold active compute, local calls, total authoritative feedback events/bits and confirmation budget fixed; randomize immediate/even/batched/jittered/end-only feedback release | cross-cadence curve collapse and forecast/rank stability on wall, active, experiment-cost, feedback-event and revealed-bit axes; gain per feedback; false discovery | A named feedback/effort clock, rather than an uninterpretable hour-based curve |
+| S5 | Does intervening on the task dependency graph change learning as the frontier mechanism predicts? | Answer-disjoint procedural twins with matched marginal node difficulty, score mass, feedback and cost but well-mixed, chain, modular-bottleneck and hierarchical dependency graphs; bridge/prerequisite intervention | material-event hazard, plateau/inflection count, module transfer, bridge treatment effect, sealed/mechanism outcome and prospective curve-family prediction | Empirical support or falsification of the latent frontier-expansion mechanism rather than fit alone |
+| Q1 | Can the agent formulate a worthwhile, falsifiable scientific question before solving it? | Fixed question vs candidate menu vs open question formation in one rich procedural laboratory; signed preregistration before new data | answerability/identifiability, predicted and realized information or decision value, fresh confirmation, trivial-question rate, false discovery and preregistration deviation | Research-question/agenda formation, distinct from solving an author-specified objective |
+| K3 | How strongly do executable starters and embedded scientific priors anchor the search? | Blank schema-only scaffold vs quality-matched neutral, development-plausible wrong, correct and diverse-choice starters on identical procedural worlds | time-to-valid and basin escape, exploration diversity, stale-hypothesis/retraction delay, sealed/mechanism/false-discovery outcome and structural distance from starter | Scaffold-conditioned adaptation separated from independent method discovery |
 
 ## Controls that must be strict
 
@@ -292,6 +297,14 @@ server-held procedural worlds, multi-seed feedback controls and independent revi
     instrument/oracle cost, with allocation regret and dropped/starved projects visible.
 37. Stateful laboratory timeline: calibration/sample/intervention lineage, drift/batch changes,
     asynchronous results, irreversible acts and fresh-batch confirmation.
+38. Feedback-clock collapse panel: the same total feedback under different release schedules,
+    aligned by wall time, active time, scientific cost, feedback-event count and revealed bits.
+39. Task-graph intervention panel: well-mixed, chain, modular-bottleneck and hierarchical twins,
+    including prospective curve predictions and the bridge/prerequisite treatment effect.
+40. Question-formulation frontier: fixed/menu/open contracts with identifiability, realized
+    information/decision value, triviality, false discovery and fresh confirmation.
+41. Starter-prior anchoring matrix: blank/neutral/wrong/correct/diverse starters with basin
+    escape, exploration diversity, mechanism retraction and sealed transfer.
 
 Avoid presenting a radar chart or a single “science score”; small multiples preserve the
 important capability dissociations.
@@ -381,6 +394,22 @@ important capability dissociations.
 - For nonstationary or consumptive tasks, model world/sample state as part of treatment history.
   Bootstrap complete episodes or batches; do not shuffle observations across calibration eras,
   count repeated destructive acts as software retries, or reuse a post-intervention baseline.
+- For feedback-clock studies, randomize release schedule at the run level and hold total feedback
+  payload, active budget and scientific calls fixed. Do not call delayed bits independent
+  observations, and do not compare cadence arms only at unequal event counts. Predeclare the
+  candidate time coordinate and evaluate curve collapse/forecast on held-out runs and tasks.
+- For task-graph interventions, the experimental unit is a generated graph/world lineage, not a
+  graph node. Match or adjust for marginal node difficulty and score mass, randomize surface names,
+  and freeze curve-family predictions before opening outcomes. Rubric repartition alone is S3,
+  not evidence for S5.
+- For question-formation studies, sign the question, hypothesis set, identifiability rationale,
+  value forecast, falsification and stopping criteria before revealing outcome-bearing data.
+  Evaluate with fresh procedural worlds and decision consequences, never prose style or similarity
+  to an author-written question.
+- For starter-prior studies, randomize starter arm within the same task/world block and hash the
+  complete starter lineage. A wrong starter must be truth-blind, plausible on development evidence
+  and falsifiable on preregistered interventions; do not count hidden-answer leakage as a helpful
+  prior.
 
 ## Scaling-law caution
 
@@ -410,6 +439,14 @@ under equivalent rubric partitions and randomized/lineage-blocked task orders. C
 curricula, shared portfolio budgets, drifting instruments and irreversible interventions violate
 the independent stationary task abstraction by design; analyze them with transfer, decision or
 state-space estimands rather than forcing them into the same scalar log-sigmoid.
+
+Elapsed time also cannot be assumed to be the causal learning coordinate. The current public
+EdgeBench Codex configuration uses four different submission-cooldown values across 51 tasks
+(`44×120 s`, `3×216 s`, `1×2160 s`, `3×0 s`) while auto-evaluation remains on a 30-minute observer
+schedule. Frontier-Science should require an S4 cadence intervention before interpreting a
+wall-time slope as an agent-intrinsic rate. Likewise, a good S-curve fit does not validate the
+frontier graph: S5 must prospectively distinguish matched well-mixed, chained and bottlenecked
+procedural worlds and recover the predicted bridge effect.
 
 Do not interpret fitted `Smax`, `tmid` or `beta` merely because the aggregate level curve has a
 high `R²`. The parameters trade off when the plateau or post-inflection region is weakly observed.
@@ -450,6 +487,10 @@ midpoint, speed or doubling-time claim.
   aggregate cell.
 - S3 score-partition/task-order replay on the headline aggregate; F8 source→target transfer on at
   least one procedural lineage; one small P1 portfolio and one D1 stateful-laboratory stress test.
+- S4 feedback-clock intervention on at least two heterogeneous tasks and an S5 matched task-graph
+  twin pilot before giving a mechanistic interpretation to any scaling curve.
+- One exploratory Q1 question-formulation laboratory and one K3 wrong-prior starter ablation before
+  using the phrases autonomous research agenda or independent method discovery.
 
 Only Stage B can support claims about feedback-driven scientific discovery. A real-world
 discovery claim additionally requires independent high-fidelity or physical confirmation and
@@ -480,6 +521,15 @@ domain-expert review.
   without increasing false discovery after misleading or regime-shift sources.
 - H12: cost-aware allocation improves fresh-confirmed portfolio utility over equal allocation,
   while drift/state lineage reduces stale-result and irreversible-intervention errors.
+- H13: after equalizing feedback payload and active scientific work, trajectories align more
+  consistently on feedback-event or experiment-cost time than on raw wall time when cadence varies.
+- H14: matched well-mixed task graphs exhibit a single frontier-like material-event hazard, while
+  chain or bridge-bottleneck twins show preregistered plateaus/multiple phases that shrink when the
+  bridge prerequisite is supplied.
+- H15: open question formation can improve fresh-confirmed information or decision value over a
+  candidate menu without increasing trivial questions or false discoveries.
+- H16: a development-plausible wrong starter delays mechanism correction and reduces exploration
+  diversity relative to blank/neutral starters; a successful system detects and escapes this prior.
 
 These are hypotheses to test. The paper should report failed hypotheses and negative results
 rather than selecting only curves that resemble Frontier-Eng or EdgeBench.

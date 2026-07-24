@@ -1711,3 +1711,28 @@ candidate-wave-4 and certification audits all have `execution_passed=true`, but 
 `trust_decision=source_tree_dirty_or_unknown`, `trusted_evidence=false` and `passed=false`.
 They are pre-commit validation only. Formal reports must be regenerated from the committed clean
 source before this rebuild contributes trusted evidence or GPT-5.5 calibration results.
+
+## 2026-07-24 — EdgeBench effort-clock and autonomy re-audit
+
+EdgeBench upstream remains unchanged at arXiv `2607.05155v1`, public SForge commit
+`a87350ab80eeb320b13cb71d1b0c3ffcc20a670f` and Hugging Face revision
+`47846a4c3669ad447e0ea984833b0d352460c5f9`. Re-reading the full theory against the official
+51-task Codex configuration exposes a feedback-clock confound not captured by a generic wall-time
+breakdown: all tasks use a 12-hour horizon and 30-minute observer auto-evaluation, but agent
+submission cooldowns are `44×120 s`, `3×216 s`, `1×2160 s` and `3×0 s`. A common hour axis can
+therefore mix search speed with authoritative-feedback opportunity.
+
+Four new, explicitly unrun Frontier-Science experiments enter the plan. S4 fixes active work,
+scientific calls and total feedback events/bits while randomizing feedback cadence, then tests
+which of wall, active, experiment-cost, feedback-event or revealed-bit time supports stable curve
+collapse and forecasts. S5 directly intervenes on matched well-mixed, chain, modular-bottleneck
+and hierarchical scientific dependency graphs, including a bridge/prerequisite treatment, so the
+frontier-expansion mechanism can be falsified rather than inferred from curve fit. Q1 compares
+fixed, menu and open preregistered research questions on fresh-world information/decision value.
+K3 randomizes blank, neutral, plausible-wrong, correct and diverse executable starters to measure
+scientific-prior anchoring and mechanism retraction.
+
+The source facts, configuration census, designs and claim limits are machine-recorded in
+`.research/edgebench_science_third_order_audit_2026-07-24.json`; E33--E36 and the corresponding
+experiment-matrix/TODO changes are in the EdgeBench addendum and research plan. These deductions
+are not new EdgeBench numerical results and do not change any Frontier-Science model result.

@@ -1,10 +1,10 @@
 # EdgeBench → Frontier-Science protocol delta
 
-Date: 2026-07-23 UTC. Sources: EdgeBench arXiv:2607.05155v1 full text; public SForge
+Date: 2026-07-23 UTC, rechecked and extended 2026-07-24. Sources: EdgeBench arXiv:2607.05155v1 full text; public SForge
 repository revision `a87350ab80eeb320b13cb71d1b0c3ffcc20a670f`; official Codex experiment
 configuration; and the public 51-task Hugging Face dataset at revision
-`47846a4c3669ad447e0ea984833b0d352460c5f9`. The arXiv API and upstream `main` were
-rechecked on 2026-07-23 and still resolve to v1 and this repository revision. EdgeBench results
+`47846a4c3669ad447e0ea984833b0d352460c5f9`. The arXiv API, upstream `main` and dataset were
+rechecked on 2026-07-24 and still resolve to v1 and these revisions. EdgeBench results
 below are author-reported; implementation observations are labeled separately.
 
 ## What EdgeBench actually establishes
@@ -246,7 +246,7 @@ EdgeBench authors.
    Every science task therefore needs a target-access audit: determine whether visible papers,
    figures, baselines or repeated diagnostics can reconstruct evaluator targets, and require
    predictions on new observations, interventions or regimes before calling the result discovery.
-7. **Protocol release and claim replay are different deliverables.** As rechecked on 2026-07-23,
+7. **Protocol release and claim replay are different deliverables.** As rechecked on 2026-07-24,
    the public GitHub/Hugging Face release provides the SForge harness and 51 of 134 task contracts,
    but not the raw 38,000-hour trajectory corpus or figure-analysis code. The headline fits are
    therefore not independently replayable from the public release alone. Frontier-Science should
@@ -414,6 +414,46 @@ implementation audit, not a new EdgeBench result.
 The source hashes, contract census and explicit claim limits are retained in
 `.research/edgebench_contract_runtime_audit_2026-07-24.json`.
 
+## Seventh-pass effort-clock and autonomy findings
+
+These are new deductions from the unchanged EdgeBench v1 theory, official Codex configuration
+and fixed task contracts. They are proposed Frontier-Science experiments, not EdgeBench results.
+
+1. **Wall time is not automatically a common learning clock.** The theory assumes that raw time
+   supplies search effort approximately linearly, yet the official 51-task Codex configuration
+   exposes four submission cadences: 44 tasks use a 120-second cooldown, three use 216 seconds,
+   D-ABIC uses 2160 seconds and three text adventures use zero; observer auto-evaluation remains
+   every 1800 seconds. Judge cost and batch structure differ further by task. A common elapsed-hour
+   axis can therefore mix agent search speed with the rate at which the environment releases
+   authoritative information. Hold active compute, local calls, total feedback events/bits and
+   confirmation budget fixed while randomizing immediate, evenly spaced, batched, jittered and
+   end-only release. Compare curve collapse and forecasts on wall, active, experiment-cost,
+   feedback-event and revealed-bit clocks before interpreting a wall-time slope.
+2. **The frontier graph can be tested by intervention, not only by curve fitting.** Weighted cut
+   mixing and self-similar edge difficulty are sufficient assumptions in the paper's mechanism;
+   its own limitations predict chains, modules and bottlenecks should produce plateaus or multiple
+   phases. Construct matched, answer-disjoint procedural twins with well-mixed, chain,
+   modular-single-bridge and hierarchical dependency graphs, where nodes are genuine scientific
+   work units rather than rubric atoms. Freeze prospective curve/hazard predictions and intervene
+   on bridge availability or one prerequisite observation. A reproducible topology treatment
+   effect would support the mechanism; another high-`R²` fit would not.
+3. **Fixed objectives omit research-question formation.** Every EdgeBench task specifies the
+   objective, deliverable and judge in advance. Even the shared-budget extension chooses among
+   author-provided projects. A science benchmark needs one rich procedural laboratory that
+   randomizes fixed-question, candidate-menu and open-question contracts. In the open arm, the
+   agent preregisters a falsifiable question, hypotheses, identifiability, expected value,
+   experiment and stopping rule before seeing new data. Score fresh-world answerability,
+   information/decision value, confirmation, triviality and false discovery—not prose style.
+4. **Executable starters may anchor the apparent learning path.** A mandatory legal baseline
+   lowers first-valid failure, and a prescribed paper/method narrows search, but both can turn a
+   long trajectory into local repair around an author prior. Randomize blank schema-only, neutral,
+   development-plausible wrong, correct and diverse-choice starters on identical worlds. Measure
+   basin escape, exploration diversity, stale-mechanism retraction and sealed/mechanism transfer.
+   Keep this separate from text-only workflow-hint ablations.
+
+The configuration census, proposed designs and claim limits are retained in
+`.research/edgebench_science_third_order_audit_2026-07-24.json`.
+
 ## Minimum next experiments
 
 1. **HartreeFockSCF-v2 calibration:** GPT-5.5 budget 1, normal budget 3 and strict
@@ -519,6 +559,14 @@ The source hashes, contract census and explicit claim limits are retained in
 33. **Stateful laboratory stress test:** inject calibration drift, batch/sample depletion,
     irreversible interventions and out-of-order results; require world/sample/calibration/
     intervention lineage and distinguish physical acts from evaluator retries.
+34. **Feedback-clock intervention:** fix total feedback and active/scientific budgets, randomize
+    its cadence, and test which time axis yields stable curve collapse and held-out forecasts.
+35. **Task-graph topology intervention:** compare matched well-mixed, chain, modular-bottleneck
+    and hierarchical procedural twins, including a randomized bridge/prerequisite treatment.
+36. **Research-question formation:** compare fixed, menu and open preregistered questions in a
+    rich laboratory using fresh-confirmed information/decision value and false discovery.
+37. **Starter-prior anchoring:** randomize blank, neutral, plausible-wrong, correct and diverse
+    starters and quantify basin escape, mechanism revision, diversity and sealed transfer.
 
 ## Claim boundary
 

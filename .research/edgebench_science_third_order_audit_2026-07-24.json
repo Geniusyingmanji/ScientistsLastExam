@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "audit_date_utc": "2026-07-24",
+  "scope": "Third-order deductions from the unchanged EdgeBench v1 theory, official public Codex configuration, and fixed science task contracts. All experiment designs are Frontier-Science proposals, not EdgeBench empirical results.",
+  "upstream_state": {
+    "arxiv_id": "2607.05155v1",
+    "arxiv_updated_utc": "2026-07-06T14:39:22Z",
+    "arxiv_source_sha256": "8193aeb41a3474690a40fac82e2ecbd53e651ab6b4759984b4c6845c04fbfd29",
+    "theory_tex_sha256": "eaee62c9b5cf53fbd81b6b23b4053733bbfaa43a70140bd7fca47ba904c19be0",
+    "emerging_scaling_tex_sha256": "b514910993655b4aec6033decbcb0c0f4d7336d900ec2359132029d530125f07",
+    "github_commit": "a87350ab80eeb320b13cb71d1b0c3ffcc20a670f",
+    "huggingface_revision": "47846a4c3669ad447e0ea984833b0d352460c5f9",
+    "official_codex_experiment_sha256": "6cf7d41bc67f765adbd458409209e6af02bbb9a53020cf366511707b3fc45b33",
+    "changed_since_second_order_audit": false
+  },
+  "source_facts": [
+    "The EdgeBench theory assumes that raw interaction time supplies search effort approximately linearly and notes that characteristic feedback cycles can invalidate one log-time coordinate.",
+    "The official public Codex configuration uses a 43200-second horizon and 1800-second observer auto-evaluation interval for all 51 listed tasks.",
+    "The 51 official public Codex task settings have submission-cooldown counts 44 at 120 seconds, 3 at 216 seconds, 1 at 2160 seconds, and 3 at 0 seconds.",
+    "The theory identifies weighted cut mixing and approximately self-similar edge-difficulty growth as sufficient ingredients for the frontier interpretation, and predicts chains, modules and bottlenecks as non-logistic failure modes.",
+    "EdgeBench tasks specify their objective, deliverables and judge before the run; the released benchmark does not report an open scientific-question formulation experiment.",
+    "The public Borden contract requires a legal baseline workflow, while the D-ABIC contract specifies a published method and comparison route; these contracts motivate but do not themselves quantify starter-prior anchoring."
+  ],
+  "configuration_census": {
+    "public_tasks": 51,
+    "timeout_seconds": 43200,
+    "observer_auto_eval_interval_seconds": 1800,
+    "agent_submission_cooldown_seconds": {
+      "0": 3,
+      "120": 44,
+      "216": 3,
+      "2160": 1
+    }
+  },
+  "frontier_science_experiments": [
+    {
+      "id": "feedback_clock_invariance",
+      "plan_id": "S4",
+      "design": "Hold active compute, local calls, total authoritative feedback events and bits, and confirmation budget fixed while randomizing immediate, evenly spaced, batched, jittered and end-only release schedules.",
+      "primary_outcomes": [
+        "cross_cadence_curve_collapse_by_time_coordinate",
+        "held_out_forecast_and_rank_stability",
+        "material_gain_per_feedback_event_and_bit",
+        "feedback_to_descendant_latency",
+        "null_world_false_discovery"
+      ]
+    },
+    {
+      "id": "task_graph_topology_intervention",
+      "plan_id": "S5",
+      "design": "Generate answer-disjoint procedural twins with matched marginal scientific work-unit difficulty, score mass, feedback and cost but well-mixed, chain, modular-single-bridge and hierarchical dependency graphs; randomize bridge or prerequisite availability.",
+      "primary_outcomes": [
+        "material_event_hazard",
+        "plateau_and_inflection_count",
+        "module_transfer",
+        "bridge_treatment_effect",
+        "prospective_curve_family_accuracy",
+        "sealed_and_mechanism_outcomes"
+      ]
+    },
+    {
+      "id": "scientific_question_formulation",
+      "plan_id": "Q1",
+      "design": "Compare author-fixed, candidate-menu and open preregistered question contracts in one rich procedural laboratory before outcome-bearing data are released.",
+      "primary_outcomes": [
+        "question_answerability_and_identifiability",
+        "predicted_and_realized_information_or_decision_value",
+        "fresh_confirmation",
+        "trivial_question_rate",
+        "false_discovery",
+        "preregistration_deviation"
+      ]
+    },
+    {
+      "id": "starter_prior_anchoring",
+      "plan_id": "K3",
+      "design": "Randomize blank schema-only, quality-matched neutral, development-plausible wrong, correct and diverse-choice executable starters on identical procedural worlds.",
+      "primary_outcomes": [
+        "time_to_valid_and_basin_escape",
+        "exploration_diversity",
+        "stale_hypothesis_and_retraction_delay",
+        "sealed_mechanism_and_false_discovery",
+        "structural_distance_from_starter"
+      ]
+    }
+  ],
+  "claim_boundary": [
+    "No new EdgeBench numerical performance result is claimed.",
+    "The cooldown census is a fact about the official public Codex configuration, not evidence that it changes EdgeBench headline curves.",
+    "Until S4 is run, Frontier-Science should not call a wall-time slope an agent-intrinsic scientific learning rate.",
+    "Until S5 is run, a log-sigmoid fit should not be presented as empirical validation of the latent task-graph mechanism.",
+    "Until Q1 and K3 are run, fixed-objective performance should not be called research-agenda formation or starter-independent method discovery."
+  ]
+}
