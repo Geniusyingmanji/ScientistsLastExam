@@ -97,6 +97,7 @@ Report its visible, sealed and mechanism advantage over `committed` as an
 | OBS1 | Is the reported learning trajectory robust to how and when latent scientific state is observed? | Replay identical immutable artifact/event trajectories under dense-event, fixed 5/15/30/60-minute, preregistered seeded-random-phase and agent-event-only observation kernels; separately stratify replayable artifacts and path-dependent live-state laboratories | interval-censored first-valid/material-event time, AUC and curve/rank/forecast sensitivity, observation delay/age, missed transient states and live-state replay coverage | A trajectory attributable to agent progress rather than observation cadence or task-interface mode |
 | AD1 | Does an adaptively chosen experiment stream still support calibrated scientific inference? | In answer-disjoint procedural worlds compare fixed randomized/balanced designs, agent-adaptive acquisition, the same adaptive data analyzed naively, and policy-aware analysis using logged action probabilities or randomized exploration; require positivity or mark unsupported regions | bias/RMSE and interval coverage for effects/mechanisms, FDR, propensity calibration, support violations, information/decision value, fresh-world confirmation and policy regret | Valid inference after endogenous experiment selection, distinct from merely choosing informative experiments |
 | NR1 | Does the system preserve and report unfavorable local evidence rather than only the best artifact or selected milestones? | Route every simulator/instrument action through a trusted event server, then compare the objective ledger with the submitted claim/evidence package under a preregistered result-reporting schema; inject positive, null, contradictory, failed and censored outcomes | result-capture completeness, sign-conditional reporting odds, failed/null/contradictory omission, effect-size inflation, claim reversals after full-ledger disclosure, reproducibility and fresh confirmation | Auditable scientific reporting without a file-drawer or selective-reporting advantage |
+| CF1 | Given the same accumulated scientific history, how variable and path-dependent is the remaining research outcome? | At preregistered first-valid and mid-budget times, clone one content-addressed full checkpoint into independently randomized equal-budget continuations; add matched-score/different-history parents and incumbent-only or audited-notebook descendants | within-checkpoint continuation variance, between-history variance at matched score, conditional value of remaining budget, wrong-mechanism lock-in/escape, descendant diversity, sealed/mechanism confirmation and state-sufficiency prediction | Conditional reproducibility and research-history lock-in rather than unconditional seed variance or best-of-K search |
 
 ## Controls that must be strict
 
@@ -361,6 +362,9 @@ server-held procedural worlds, multi-seed feedback controls and independent revi
 56. Local-result reporting audit: objective trusted action/result ledger versus the agent's submitted
     evidence package, stratified by positive/null/contradictory/failed/censored result and linked to
     effect-size inflation, claim revision and reproducibility after full-ledger disclosure.
+57. Conditional checkpoint-fork tree: one frozen parent history to all randomized continuations,
+    showing within-parent versus matched-score between-history variance, wrong-mechanism lock-in,
+    escape probability and sealed-confirmed child outcomes without post-hoc best-child selection.
 
 Avoid presenting a radar chart or a single “science score”; small multiples preserve the
 important capability dissociations.
@@ -463,6 +467,11 @@ important capability dissociations.
 - Within each claim-bearing run, separate exploratory/development evaluations, evaluator-only
   monitoring and a one-shot fresh post-commit confirmation panel. Count adaptive looks; a panel
   used to choose a claim, curve, milestone or stopping point is validation, not confirmation.
+- For checkpoint-fork experiments, freeze the parent artifact, model/conversation or explicit
+  context state, hypothesis/evidence ledger, local-result cache, outstanding jobs, environment,
+  budget and random-state metadata before cloning. Treat the parent checkpoint as the top-level
+  experimental unit, retain every descendant and report the conditional distribution; selecting
+  the best child converts the design into best-of-`K` search and does not measure reproducibility.
 - For interpreted breakthrough milestones, archive the parent and patch decomposition and replay
   parent/full-child/component-only/rollback artifacts on one frozen sealed panel. Chronological
   score coincidence without this edit ablation is descriptive, not causal attribution.
@@ -604,6 +613,9 @@ midpoint, speed or doubling-time claim.
 - One AD1 adaptive-acquisition inference pilot crossed with naive versus policy-aware analysis,
   and one NR1 trusted local-result ledger audit, before claiming that an agent's endogenously
   collected evidence supports calibrated inference or complete scientific reporting.
+- One CF1 checkpoint-fork pilot on two checkpointable procedural tasks before treating a single
+  long trajectory as a stable estimate of future scientific progress or claiming that equal
+  current scores represent equivalent research states.
 
 Only Stage B can support claims about feedback-driven scientific discovery. A real-world
 discovery claim additionally requires independent high-fidelity or physical confirmation and
@@ -680,6 +692,10 @@ domain-expert review.
 - H30: a trusted all-action ledger reveals more null, contradictory and failed local results than
   the agent's submitted evidence package unless complete-result reporting is required; mandatory
   disclosure reduces effect-size inflation and unsupported confirmation without erasing true findings.
+- H31: continuations cloned from one complete research checkpoint show lower outcome variance than
+  matched-score checkpoints reached through different histories; histories carrying a wrong but
+  development-plausible mechanism have lower sealed-confirmed escape probability even at equal
+  current score, demonstrating that scalar progress is not a sufficient scientific state.
 
 These are hypotheses to test. The paper should report failed hypotheses and negative results
 rather than selecting only curves that resemble Frontier-Eng or EdgeBench.

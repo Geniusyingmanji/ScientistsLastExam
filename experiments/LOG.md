@@ -1934,3 +1934,29 @@ only one post-baseline event, feedback conditions are not repeated or generation
 analysis gate works and that cadence can erase or reverse a short-trajectory AUC comparison; the
 planned 5/15/30/60-minute replay still requires sentinel-complete multi-hour trajectories and a
 separate path-dependent live-state task.
+
+## 2026-07-24 — EdgeBench conditional-continuation audit
+
+EdgeBench upstream was rechecked and remains arXiv `2607.05155v1`, SForge `a87350a` and public
+dataset `47846a4`. The paper's nominally three 12-hour trials are independent runs, and its
+stateful ablation compares one continuous 12-hour trajectory with six fresh 2-hour attempts.
+Neither design clones one identical mid-run research state into independently randomized
+continuations. The theory nevertheless conditions stochastic unlocking on the full latent state
+`n(u)`, while the observed score is a scalar projection; its bottleneck/module discussion notes
+that frontier location can matter beyond unlocked score mass. Public SForge auto-resume continues
+one native session after failure but does not expose a same-checkpoint multi-continuation
+experiment primitive.
+
+This motivates the unrun CF1/E51 protocol. On two checkpointable procedural science tasks, freeze
+a content-addressed first-valid and mid-budget state containing artifact, context, evidence ledger,
+local cache, environment, pending jobs and remaining budget, then fork each parent into multiple
+equal-budget randomized continuations. Add matched-score parents reached through different
+hypothesis/evidence histories and state-channel controls; report within-parent future variance,
+between-history variance, wrong-mechanism lock-in/escape and sealed confirmation. The parent is the
+experimental unit and every child is retained—post-hoc best-child selection would turn the audit
+into best-of-K search. Source hashes, design distinctions and claim limits are stored in
+`.research/edgebench_science_tenth_order_audit_2026-07-24.json`.
+
+This audit does not show excessive path dependence or wrong-hypothesis lock-in in EdgeBench, whose
+raw headline trajectories are unavailable. CF1/E51 is a proposed Frontier-Science experiment and
+does not change any model-performance result.

@@ -587,6 +587,24 @@ completeness, sign-conditional reporting odds, effect inflation, claim reversal 
 reproducibility and fresh confirmation. This is distinct from crash-safe retention (I5/E27): a result
 can be durably stored by the system yet selectively omitted from the scientific claim.
 
+### 44. Independent runs do not estimate futures conditional on the same research history
+
+EdgeBench's nominally three independent 12-hour trials estimate unconditional run-to-run
+variation, and its stateful comparison asks whether one continuous run beats six fresh 2-hour
+attempts. Neither design clones one intermediate scientific state into repeated continuations.
+That distinction matters because the paper's own stochastic frontier process conditions the
+unlocking hazard on the full latent state `n(u)`, while the observed score is only a scalar
+projection; modular or bottlenecked tasks may retain history not visible in the current score.
+Add CF1/E51: at preregistered first-valid and mid-budget events, content-address and clone the full
+artifact, context, evidence ledger, local-result cache, environment, pending-job and budget state
+into multiple independently randomized equal-budget continuations. Compare within-parent
+continuation variance with matched-score parents reached through different histories, including
+wrong-mechanism histories. Report all descendants, lock-in/escape and sealed confirmation; the
+parent checkpoint is the top-level unit and post-hoc best-child selection is forbidden. This is
+distinct from restart depth/width, memory-channel ablation, starter randomization and independent
+investigator replication. The source audit motivates the design but does not show excessive
+path dependence in EdgeBench; its headline raw trajectories are unavailable.
+
 ## Revised TODO plan
 
 ### P0/P1 closeout — completed locally, reproduce in CI
@@ -742,6 +760,11 @@ can be durably stored by the system yet selectively omitted from the scientific 
 - [ ] Route all local experiment actions on one active-science task through a trusted result ledger;
   compare free reporting, mandatory all-result manifests and blinded synthesis for selective
   omission, effect-size inflation and claim reversal after full-ledger disclosure.
+- [ ] Add CF1 on two checkpointable procedural tasks: clone preregistered full-state parents into
+  independently randomized equal-budget continuations, include matched-score/different-history
+  and state-channel controls, and report conditional variance plus wrong-mechanism lock-in/escape
+  without selecting the best descendant; start with ActiveLawDiscovery and EnergyBalanceModel-v2,
+  which already separate supported/misspecified worlds and prediction from mechanism quality.
 - [ ] Generate each admission/pilot/confirmatory/figure cohort from a hashed manifest and fail
   closed on task-count, task-set, lineage, weight, transform or run-policy drift.
 - [ ] Separate pilot admission/calibration worlds and runs from fresh confirmatory seeds/worlds;

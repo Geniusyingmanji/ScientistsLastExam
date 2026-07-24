@@ -737,6 +737,11 @@ The source hashes, 51-contract mode census, OBS1/E48 design and claim limits are
     compare it with the agent's claim/evidence package. Report sign-conditional omission of null,
     contradictory, failed and censored outcomes, effect inflation and claim reversal after full
     disclosure; conversation text alone is not a structured all-result manifest.
+50. **Conditional checkpoint-fork audit:** freeze one full first-valid or mid-budget research state
+    and clone it into independently randomized equal-budget continuations; compare within-parent
+    future variance with matched-score states reached through different evidence/hypothesis paths.
+    Treat the parent checkpoint as the unit, report every child, wrong-mechanism lock-in and sealed
+    escape, and never convert the design into an oracle best-of-`K` endpoint.
 
 ## Claim boundary
 

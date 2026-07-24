@@ -816,6 +816,26 @@ effect-size inflation、full-ledger disclosure 后的 claim reversal、reproduci
 至少含自由报告、强制 all-result manifest、以及 blinded independent synthesis。NR1 检验 **证据是否完整报告**，
 不同于 E27 的 crash-consistent 保存、R4 的遇到反证后是否改口，以及 T1 的多 investigator 错误相关性。
 
+### E51. 同一科研历史的 checkpoint fork 与路径锁定
+
+EdgeBench 对每个 task--model cell nominally 运行三条独立 12h trajectory，并用一条 continuous 12h
+与六条独立 2h restart 比较 bundled experience 的平均价值。这两个设计都从不同初始运行出发，因而不能回答：
+**给定完全相同的中途科研历史，剩余结果有多随机；以及当前分数相同、但假设与证据路径不同的状态，是否有
+相同的未来潜力**。这在 science 中尤其关键：一条轨迹可能早早形成错误但 development-plausible 的机制，随后
+持续局部优化；另一条同分轨迹可能保留多个可证伪假设。EdgeBench 理论自身把 unlock hazard 条件化于完整
+latent state `n(u)`，而观测分数 `x(u)` 只是其标量投影；当存在 module/bottleneck 时，理论也明确指出 frontier
+会记住自己位于图中的哪里，而不只记住已解锁多少 score mass。
+
+新增 `CF1`：在两个可 checkpoint 的 procedural science tasks 上预注册 first-valid 与 mid-budget fork。
+冻结并哈希 artifact、model conversation/显式 context state、hypothesis/evidence ledger、local-result cache、
+tool/environment manifest、pending async jobs、剩余预算与随机状态，然后将同一 parent 克隆成 `K` 个独立随机
+continuations，给予完全相同的剩余预算。再加入 **matched-score/different-history** parents，以及 incumbent-only、
+audited-notebook 与 full-state descendants。主要结果为同 parent 条件方差、同分不同历史方差、remaining-budget
+conditional value、错误机制锁定/逃逸率、hypothesis/artifact diversity、sealed/mechanism confirmation 与状态对
+未来结果的预测充分性。统计单位首先是 parent checkpoint；必须保留全部 descendants，禁止只挑最好 child，
+否则实验退化为 best-of-K 搜索。CF1 不同于 O3 的 depth/width 预算分配、F5 的状态通道消融、K3 的初始 starter
+随机化、S5 的环境 task-graph 干预和 T1 的独立研究者实验。
+
 ## 5. 推荐的曲线与表格
 
 主文可沿用 Frontier-Eng/EdgeBench 的时间或 oracle-budget best-so-far 图，但 science 论文至少再加：
@@ -892,6 +912,8 @@ effect-size inflation、full-ledger disclosure 后的 claim reversal、reproduci
     analysis，显示 positivity、effect/mechanism bias、coverage、FDR 与 fresh-world confirmation；
 44. complete-result reporting：可信 all-action/result ledger 与 agent evidence package 的 capture completeness、
     sign-conditional reporting、失败/null/反证遗漏、effect inflation 和 full-ledger claim reversal。
+45. checkpoint-fork tree：同一 parent history 的全部随机 continuation、matched-score 不同历史的终点分布、
+    错误机制锁定/逃逸与 sealed-confirmed outcomes；不显示 post-hoc best-child 作为部署结果。
 
 log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、Gompertz、piecewise/change-point
 和 hierarchical task-mixture 比较；必须用 held-out time forecasting、bootstrap over tasks 与跨 seed
@@ -974,6 +996,10 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
   fail closed，不给总体因果结论；
 - [ ] 将一个 active-science task 的全部 simulator/instrument actions 路由到 trusted ledger，比较自由报告、
   强制 all-result manifest 与 blinded synthesis 对 null/contradictory/failed outcomes 的遗漏和 effect inflation；
+- [ ] 在两个可序列化 procedural tasks 的 first-valid/mid-budget checkpoint 上做 full-state fork；每个 parent
+  产生多个独立随机 continuation，并加入 matched-score/different-history 与 incumbent/notebook/full-state
+  对照，报告条件方差、错误机制锁定和 sealed escape，禁止 best-child selection；首选 ActiveLawDiscovery
+  与 EnergyBalanceModel-v2，因其已有 supported/misspecified worlds 和 prediction/mechanism 分轴；
 - [ ] 对选中的大跳变重放 parent/full-child/component-only/rollback，在同一 sealed panel
   上通过后才做“某科学思路导致增益”的因果归因；
 - [ ] pilot 可按 headroom 分配后续工程资源，但 confirmatory cohort 不得据此删任务；
@@ -1079,3 +1105,9 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
   这些事实只用于提出 AD1/E49 与 NR1/E50，不能据此断言 EdgeBench 做了失准推断或选择性报告；source
   hashes、实验边界与 claim boundary 见
   `.research/edgebench_science_ninth_order_audit_2026-07-24.json`。
+- EdgeBench v1 对 task--model cell 使用独立 12h trials，其 restart ablation 比较一条 12h continuous 与
+  六条独立 2h attempts；公开 SForge 的 auto-resume 延续同一 native session，但没有公开的同 checkpoint
+  多随机 continuation 实验原语。理论将 stochastic unlock hazard 条件化于完整 `n(u)`，并指出 bottleneck/
+  module 下状态不只由 scalar unlocked mass 决定。这些事实只用于提出 CF1/E51，不证明官方 trajectories
+  存在过度 path dependence 或错误锁定；source hashes、设计与 claim boundary 见
+  `.research/edgebench_science_tenth_order_audit_2026-07-24.json`。
