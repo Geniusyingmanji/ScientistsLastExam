@@ -1819,3 +1819,22 @@ the lesson operational here: freeze scheduled run IDs, assert every single-run o
 is monotone under the versioned selector, publish checkpoint run-flow counts, and separate ITT,
 paired-completer and any changing-risk-set summaries. The exact source hash, cells, thresholds and
 claim limits are stored in `.research/edgebench_science_sixth_order_audit_2026-07-24.json`.
+
+## 2026-07-24 — EdgeBench release-cohort, builder and evidence-unit audit
+
+EdgeBench upstream remains arXiv `2607.05155v1`, SForge `a87350a` and public dataset
+`47846a4`. The official README reports 12-hour aggregates for both the 134-task headline cohort
+and the public 51-task subset. Full-minus-public differences are `7.1/5.3/5.1/7.0/5.3` points
+for Opus 4.8, GPT-5.5, GPT-5.4, GLM-5.1 and DS-V4-Pro. These are descriptive task-mixture gaps;
+without the other 83 contracts, release-selection rule and raw trajectories they do not identify
+which cohort is harder or why the gap exists.
+
+Three additional Frontier-Science protocols were added. G1/E45 rotates lineage-matched open-
+replay, sealed-prospective and delayed-release pools, then requires independent replay when the
+delayed pool is published. G2/E46 records every task-building/calibration model and cross-fits
+A-built, B-built and expert-built procedural families to detect builder--solver interactions.
+EVI1/E47 binds observations to world/sample/batch/instrument/intervention ancestry and compares
+fresh, correlated and duplicate feedback using evidence effective sample size and information gain,
+not only calls or bits. These are proposed experiments and release gates, not new EdgeBench or
+Frontier-Science model results. Source hashes, arithmetic and claim boundaries are recorded in
+`.research/edgebench_science_seventh_order_audit_2026-07-24.json`.

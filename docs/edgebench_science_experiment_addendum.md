@@ -699,6 +699,61 @@ completer sensitivity；current、terminal 和 current-claim 允许下降，但�
 严格分离。违反单运行单调性或无法重放 risk set 时，曲线分析 fail closed，而不是事后 cumulative-max
 掩盖数据问题。
 
+### E45. 开放复现、密封外推与延迟公开的三池轮换
+
+EdgeBench 的证据面天然分成两层：论文在 134 个任务上报告主曲线，但公开 release 只有 51 个 task
+contracts，且没有约 38,000 小时的 raw trajectories 与 figure-analysis code。官方 README 中，五个模型在
+公开 51-task 子集上的 12h 总分都低于 134-task 全集（差值依次为 `7.1/5.3/5.1/7.0/5.3` 分）。这只是两个
+不同 task mixtures 的描述性差异；没有公开 83 个任务的选择机制、任务级结果和原始轨迹，不能断言公开
+任务“更难”或隐藏任务“更容易”。但它揭示了一个发布设计问题：只公开全部任务会加速 contamination 与
+evaluator-specific tuning，只隐藏全部任务又使 headline curve 无法由外部团队独立重放。
+
+Frontier-Science 应预注册三池：`open-replay` 公布完整 task contract、去敏后的 event ledger 与一键分析；
+`sealed-prospective` 使用同一 lineage schema 的新世界/新实例，只发布生成与评分承诺的 hash；
+`delayed-release` 在一个冻结周期内保持密封，作为最终评测，周期结束后公开其 contracts、去敏轨迹、
+selection manifest 与结果，并从预先生成且未触碰的 reserve pool 补位。每次 release 前在 open/sealed 两池
+上同时运行同一冻结系统，报告两池的绝对水平、baseline-adjusted gain、feedback-control effect、模型排序、
+curve parameters/forecast 与 gap；记录 exposure age、公开下载/调参次数、task lineage 和所有例外。若结论
+只在 open 池成立，标为 public-benchmark adaptation；若只在 sealed 池成立但无法在随后延迟公开池重放，
+标为 non-replicated prospective result。任何池都不能用同一批运行同时做 task admission 和 headline estimate。
+
+### E46. 任务建造者—被测系统交叉拟合与 builder bias
+
+EdgeBench 明确由专家与 agent 轨迹反复构建、红队并修改任务；被 hacking 的任务会被修复或排除。这样的
+开发流程是必要的，却也可能让最终 benchmark 对“建造时使用的模型/脚手架”产生特殊适配：它的常见失败
+会被修复，它暴露的 shortcut 会被封堵，它能理解的反馈粒度会被保留，而未参与构建的系统可能面对不同
+的隐性摩擦。Frontier-Science 当前也用 GPT-5.5 calibration 判断 headroom、重建 candidate oracle 并决定
+准入，因此约 50-task 扩展若不记录 builder lineage，会把 benchmark-development feedback 混进模型比较。
+
+每个任务卡新增 `builder_model_ids`、`builder_scaffolds`、`calibration_runs`、`edits_triggered_by_model`、
+`shortcut_discoverer` 与 `frozen_before_eval`。在一小组程序化 task families 上做 leave-one-builder-out：A/B
+两类模型分别只能看到各自的 development worlds 来发现 shortcut、调 rubric 与设置 difficulty；冻结后在
+共同 fresh worlds 上交叉评价 A-built、B-built 和 independent-expert-built tasks，且被测系统不能参与对应
+task 的最后一轮建造。报告 builder×solver interaction、first-valid/invalidity、反馈可解释性、sealed/
+mechanism gain、shortcut rate、模型排序反转和 task exclusion rate。builder effect 明显时，主榜使用
+builder-balanced/leave-builder-out 估计；由单一目标模型反复调到“刚好有 headroom”的任务只能作为该系统
+条件下的 calibration cohort，不能代表一般科学能力。
+
+### E47. 证据有效样本量，而不只是反馈次数或 payload bits
+
+EdgeBench 的双循环把 local feedback、submission 与 fixed-grid auto-eval 都视为环境交互；现有 F3/S4 已
+要求记录事件数与 revealed bits。但 science 中相同字节数不等于相同证据量：同一固定 artifact 在相同
+seed 上重评十次、同一 dataset 的十个高度相关切片、一个真正的新 intervention，以及一个独立实验室复算，
+对科学结论的贡献完全不同。若只按 calls/bits 对齐，agent 可以通过重复测量或伪重复获得平滑曲线，却没有
+增加可识别性、独立确认或机制区分能力。
+
+在每个 observation/evaluation event 上记录 `world_id/sample_id/batch_id/instrument_id/intervention_id`、
+shared ancestry、是否 adaptive、是否 outcome-bearing 以及与已有证据的 preregistered correlation block。
+为同成本 feedback arms 同时报 raw calls/bits 和按最高共享 lineage 聚类的 evidence effective sample size
+(`eESS`)；在可建模任务上再给 Fisher-information/log-determinant gain 或 posterior entropy reduction，另列
+独立 intervention 数、独立 lab/oracle 数与 confirmation reserve。实验比较 fresh-independent、correlated-
+batch、exact-duplicate 和 adversarially redundant feedback，保持名义 calls、payload 与科学成本可比，考察
+sealed/mechanism/refusal、置信校准和每 eESS 的增益。重复件仍可用于 judge noise/reliability，但不得作为
+新的机制或 replication evidence；只有在 raw-call 曲线上上涨而 eESS、identifiability 与 fresh confirmation
+不涨时，应称 feedback exploitation，而不是证据累积。`eESS` 必须对具体 estimand 定义，不能再压成一个
+跨任务“证据分”：主表同时保留最高共享 ancestry 的独立 cluster 数；只有相关结构可估时才给 design-effect/
+weight sensitivity，intervention、独立实验室复现和样本量仍分列报告。
+
 ## 5. 推荐的曲线与表格
 
 主文可沿用 Frontier-Eng/EdgeBench 的时间或 oracle-budget best-so-far 图，但 science 论文至少再加：
@@ -763,6 +818,12 @@ completer sensitivity；current、terminal 和 current-claim 允许下降，但�
     late-bloomer recall、false-futility、12h sealed utility 和选择后曲线偏差。
 38. longitudinal risk-set audit：每个 checkpoint 的 scheduled→valid run flow、单运行 envelope
     单调性、ITT/paired-completer 敏感性与 changing-risk-set 告警。
+39. open/sealed/delayed-release 三池：两池 gap、模型排序/曲线/feedback-effect 外推，以及每轮延迟公开后的
+    独立重放结果与 exposure age；
+40. builder×solver 交叉拟合：A-built/B-built/expert-built tasks 上的 first-valid、shortcut、sealed/
+    mechanism gain 与排序反转；
+41. evidence-efficiency：raw calls/bits 与 lineage-clustered eESS、information gain、独立 interventions/
+    replications 及每 eESS 的科学收益。
 
 log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、Gompertz、piecewise/change-point
 和 hierarchical task-mixture 比较；必须用 held-out time forecasting、bootstrap over tasks 与跨 seed
@@ -830,6 +891,12 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
   late-bloomer 漏检、continuation regret 与选择偏差；
 - [ ] 将 M2 作为曲线硬门槛：固定 longitudinal run IDs，校验每条 observer envelope
   单调，发布 checkpoint risk-set flow，并同报 ITT 与 paired-completer sensitivity；
+- [ ] 冻结 open-replay/sealed-prospective/delayed-release 三池及 reserve-pool rotation；每轮同时报告
+  open→sealed gap，并在延迟公开后提供一键重放；
+- [ ] 给全部 task cards 增加 builder/calibrator model、scaffold、触发的 task edits 与 freeze timestamp；
+  在 2 个程序化 families 先跑 leave-one-builder-out 交叉拟合；
+- [ ] 给 observation/evaluation ledger 增加 world/sample/batch/instrument/intervention lineage，并在一个
+  active-science task 上比较 fresh/correlated/duplicate feedback 的 raw-call 与 eESS 曲线；
 - [ ] 对选中的大跳变重放 parent/full-child/component-only/rollback，在同一 sealed panel
   上通过后才做“某科学思路导致增益”的因果归因；
 - [ ] pilot 可按 headroom 分配后续工程资源，但 confirmatory cohort 不得据此删任务；
@@ -838,11 +905,14 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
 ### P2 — 约 50 个 admissible tasks
 
 - [x] RankineCycleOpt-v2 完成内部重建与独立 IF97 复算并进入 candidate；
-- [ ] 继续修 MOSFETDoping、RANSCalibration；
+- [x] MOSFETDoping-v2 完成内部 compact-model 重建并进入 candidate；
+- [ ] 继续修 RANSCalibration；
 - [ ] 新增/重建任务按 `docs/task_expansion_v2_plan.md` 的 R2--R4 推进；
 - [ ] 为约 50-task inventory 增加 author/reviewer effort、shortcut red-team 与
   `long-horizon-ready` maturity ledger；
 - [ ] 为每个任务增加 known-answer/procedural/prospective provenance 和 novelty-risk 字段；
+- [ ] 为约 50-task inventory 增加 builder-model lineage，并保证 headline cohort 至少能给出
+  builder-balanced 与 leave-builder-out sensitivity；
 - [ ] 对 discovery/inference 候选记录 starter provenance，并为一个 lineage 建立 blank/neutral/wrong/correct
   baseline 随机化版本，防止把 scaffold 锚定误写成方法发现；
 - [ ] 增加一个可机器验证的 open-question procedural laboratory，区分 fixed question、candidate menu 和
@@ -854,7 +924,7 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
   端到端重放的 method artifact；
 - [ ] 为 admission、pilot、confirmatory 和每个论文 figure/table 冻结独立的 hashed cohort manifest；
 - [ ] 每个任务强制 E1--E3、E7--E9；主动/随机/多保真任务再分别强制 E2/E8/E5；
-- [ ] 只有 admission DoD 全部通过才计数，目标从当前 35 提升到约 50。
+- [ ] 只有 admission DoD 全部通过才计数，目标从当前 36 提升到约 50。
 
 ### P3 — 统计与论文
 
@@ -915,3 +985,10 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
   takeoff。原始轨迹/分析代码不可用，因此不对下降原因作官方口径外的推断。
   可重现记录与 claim boundary 保存在
   `.research/edgebench_science_sixth_order_audit_2026-07-24.json`。
+- EdgeBench 上游于 2026-07-24 再核验仍为 arXiv `2607.05155v1`、GitHub
+  `a87350ab80eeb320b13cb71d1b0c3ffcc20a670f` 与 Hugging Face
+  `47846a4c3669ad447e0ea984833b0d352460c5f9`。官方 README 的 134-task 与公开 51-task
+  12h 总分差值仅用于说明 release cohort 不是 headline cohort，不能据此推断选择原因或任务难度。
+  三池发布、builder cross-fit 与 evidence-eESS 是 Frontier-Science 的新增协议建议，不是 EdgeBench 已做
+  实验；source facts 与 claim boundary 保存在
+  `.research/edgebench_science_seventh_order_audit_2026-07-24.json`。

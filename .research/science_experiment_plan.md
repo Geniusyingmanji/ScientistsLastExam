@@ -91,6 +91,9 @@ Report its visible, sealed and mechanism advantage over `committed` as an
 | J1 | Are rubric- or model-mediated scientific judgments stable enough to support trajectory and ranking claims? | Pin a complete judge manifest and evaluate blinded anchor artifacts, exact duplicates and adversarial style/verbosity twins with repeated independent judges, deterministic executable metrics and expert adjudication where needed | repeatability, inter-judge agreement, anchor drift, style sensitivity, rank reversals, calibration to executable outcomes and adjudication rate | Judge-mediated evidence only when evaluator identity, uncertainty and construct validity are demonstrated |
 | CA1 | Can early evidence allocate continuation budget without systematically deleting late scientific progress? | Under one fixed total task-hour budget compare fixed-12h, deterministic 2h-headroom, randomized-positive-probability and uncertainty-aware futility policies; force a randomly selected audit tranche to 12h regardless of its early result | task-hour savings, late-bloomer recall, false-futility rate, continuation regret, 12h committed sealed/mechanism utility and selection-induced curve/rank bias | Research-budget allocation with an estimable full-cohort endpoint, distinct from an agent's own stopping decision |
 | M2 | Does the longitudinal analysis preserve one risk set and the declared best-so-far semantics? | Replay scheduled run IDs and selector events at every checkpoint; assert each single-run observer envelope is monotone and compare failure-inclusive ITT with fixed paired-completer and explicitly named changing-risk-set summaries | scheduled/started/captured/judged/valid flow, monotonicity violations, risk-set drift, attrition sensitivity and replay status | A trustworthy longitudinal curve; this is a protocol gate, not an agent capability score |
+| G1 | Can an externally replayable result transport to a contamination-resistant prospective cohort? | Pre-registered lineage-stratified open-replay, sealed-prospective and delayed-release pools; freeze one system, evaluate open and sealed pools concurrently, then release and independently replay the delayed pool before rotating in an untouched reserve | open-to-sealed gaps in level, baseline-adjusted gain and feedback effect; rank/curve/forecast transport; delayed-release replay; exposure age and contamination sensitivity | Reproducibility and prospective validity as separate, jointly measured properties |
+| G2 | Did benchmark construction adapt to the model used to build and calibrate the task? | Record builder/calibrator model and scaffold lineage; cross-evaluate A-built, B-built and independent-expert-built procedural families on common fresh worlds while excluding each evaluated solver from the corresponding final construction round | builder×solver interaction, first-valid/invalidity, shortcut and exclusion rates, sealed/mechanism gain, feedback interpretability and ranking reversals | Builder-balanced capability rather than performance on a benchmark tuned through the tested system |
+| EVI1 | Does another feedback event add independent scientific evidence? | Match nominal calls, payload and scientific cost while varying fresh-independent, correlated-batch, exact-duplicate and adversarially redundant observations; bind all events to world/sample/batch/instrument/intervention lineage | lineage-clustered evidence effective sample size, information/entropy gain, independent interventions/replications, sealed/mechanism/refusal gain per eESS and confidence calibration | Evidence accumulation and identifiability rather than repeated evaluator contact |
 
 ## Controls that must be strict
 
@@ -340,6 +343,12 @@ server-held procedural worlds, multi-seed feedback controls and independent revi
     task-hour cost, late-bloomer recall, false futility, 12-hour scientific utility and curve bias.
 50. Longitudinal risk-set audit: checkpoint scheduled-to-valid flow, single-run envelope
     monotonicity, ITT versus paired-completer sensitivity and all changing-risk-set warnings.
+51. Open/sealed/delayed-release transport: level, gain, feedback effect, model rank and curve/
+    forecast gaps, plus delayed-release replay and exposure age.
+52. Builder×solver cross-fit: A-built/B-built/expert-built task families by evaluated system,
+    with shortcut, invalidity, sealed/mechanism and rank-reversal outcomes.
+53. Evidence-efficiency panel: nominal calls/bits beside lineage-clustered eESS, information gain,
+    independent interventions/replications and science gain per eESS.
 
 Avoid presenting a radar chart or a single “science score”; small multiples preserve the
 important capability dissociations.
@@ -409,6 +418,12 @@ important capability dissociations.
 - Reconcile every oracle/sample call against a durable idempotency key and event ledger. Retry,
   recovery and duplicate delivery are operational events, not additional scientific evidence or
   free independent replicates.
+- Bind every scientific observation to world, sample, batch, instrument and intervention lineage.
+  Report nominal calls/bits beside an explicitly defined lineage-clustered evidence effective
+  sample size; exact repeats may estimate measurement noise but never count as independent
+  mechanism or replication evidence. Define eESS per estimand and show the independent top-lineage
+  cluster count plus design-effect/weight sensitivity; do not collapse interventions, samples and
+  independent laboratories into one universal evidence score.
 - Replay the versioned selection contract over the raw event stream and assert that the declared
   incumbent hashes in online state, endpoint files, dashboards and analysis inputs are identical.
   Treat any divergence as a protocol failure before comparing systems.
@@ -418,6 +433,13 @@ important capability dissociations.
 - Separate task admission/calibration data from confirmatory evaluation. Freeze thresholds,
   task weights and inclusion using a declared pilot model/seed/world panel; headline estimates
   use fresh seeds and procedural worlds, with reused pilot data labeled exploratory.
+- Record every model/scaffold used to author, calibrate, red-team or revise a task and every task
+  edit triggered by its trajectory. Use builder-blocked or leave-builder-out sensitivity for
+  headline model comparisons rather than treating model-assisted task construction as neutral.
+- Keep lineage-matched open-replay, sealed-prospective and delayed-release pools. Release the
+  delayed pool and its privacy-reviewed ledger after the frozen cycle, independently replay it,
+  and replenish only from a pre-generated untouched reserve; never report open and sealed pools
+  as if they were the same reproducibility estimand.
 - Within each claim-bearing run, separate exploratory/development evaluations, evaluator-only
   monitoring and a one-shot fresh post-commit confirmation panel. Count adaptive looks; a panel
   used to choose a claim, curve, milestone or stopping point is validation, not confirmation.
@@ -553,6 +575,9 @@ midpoint, speed or doubling-time claim.
   short-budget policies; J1 judge calibration before any rubric/model-judge result is primary.
 - One CA1 continuation-policy pilot with a randomized forced-12h audit tranche; M2 risk-set and
   single-run envelope replay must pass before any long-horizon aggregate curve is primary.
+- One G1 open/sealed/delayed-release transport audit, a two-family G2 builder--solver cross-fit,
+  and one EVI1 fresh/correlated/duplicate evidence-unit pilot before claiming that a public
+  long-horizon curve generalizes to prospective science or measures independent evidence growth.
 
 Only Stage B can support claims about feedback-driven scientific discovery. A real-world
 discovery claim additionally requires independent high-fidelity or physical confirmation and
@@ -611,6 +636,14 @@ domain-expert review.
 - H24: a deterministic 2h-headroom continuation gate saves task-hours but misses more materially
   useful 12h outcomes than a positive-probability uncertainty-aware gate at matched total cost;
   any retained advantage survives full-sampling-frame weighting and fresh confirmation.
+- H25: baseline-adjusted learning and feedback-control effects measured on open-replay tasks
+  attenuate on sealed prospective tasks as public exposure grows, while delayed-release replay
+  recovers the original sealed estimate within preregistered uncertainty.
+- H26: a solver performs differently on tasks whose final construction used that same solver;
+  builder-balanced or leave-builder-out aggregation reduces the interaction and any induced rank reversal.
+- H27: fresh independent evidence improves sealed mechanism/refusal outcomes and calibration more
+  per nominal call than correlated or duplicate feedback; raw-call gains without eESS or fresh-
+  confirmation gain do not constitute evidence accumulation.
 
 These are hypotheses to test. The paper should report failed hypotheses and negative results
 rather than selecting only curves that resemble Frontier-Eng or EdgeBench.

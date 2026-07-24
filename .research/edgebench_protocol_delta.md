@@ -525,6 +525,36 @@ has its reported shape and are not additional model-performance claims.
 The exact cells, thresholds, source hash and claim boundaries are recorded in
 `.research/edgebench_science_sixth_order_audit_2026-07-24.json`.
 
+## Tenth-pass release-cohort, builder and evidence-unit findings
+
+These are protocol deductions from the unchanged EdgeBench v1 paper and public release. They do
+not estimate any new EdgeBench treatment effect.
+
+1. **External replay and prospective resistance require different but linked cohorts.** The
+   headline study uses 134 tasks, while 51 contracts are public and the raw trajectory corpus plus
+   analysis code are not. At 12 hours, the official public-subset aggregate is 5.1--7.1 points
+   below the full-benchmark aggregate for every displayed model. This gap does not identify task
+   difficulty or the release rule; it shows only that the replayable and headline populations
+   differ. Use lineage-matched open, sealed and delayed-release pools, estimate transport between
+   them, then publish and independently replay each delayed cohort before rotating an untouched
+   reserve into the prospective slot.
+2. **Iterative task construction can be a model-specific adaptation channel.** EdgeBench revised
+   or excluded tasks after model traces exposed hacking, and Frontier-Science currently uses
+   GPT-5.5 calibration to establish headroom and guide rebuilds. Record builder/calibrator model,
+   scaffold, triggering trajectory and task edits. Cross-fit procedural families built with
+   different systems on common fresh worlds and exclude the evaluated solver from the task's
+   final construction round; otherwise builder--solver interaction can masquerade as a model
+   capability difference.
+3. **Feedback opportunity is not scientific evidence quantity.** Event and bit counts treat an
+   exact duplicate, a correlated batch member, a new intervention and independent replication as
+   comparable units. Bind evidence to world/sample/batch/instrument/intervention ancestry and
+   report nominal calls beside lineage-clustered evidence effective sample size and information
+   gain. Repeats may estimate measurement noise but cannot count as independent mechanism or
+   confirmation evidence.
+
+The upstream hashes, aggregate-table arithmetic, proposed treatments and claim limits are in
+`.research/edgebench_science_seventh_order_audit_2026-07-24.json`.
+
 ## Minimum next experiments
 
 1. **HartreeFockSCF-v2 calibration:** GPT-5.5 budget 1, normal budget 3 and strict
@@ -656,6 +686,14 @@ The exact cells, thresholds, source hash and claim boundaries are recorded in
 43. **Longitudinal risk-set gate:** freeze scheduled run IDs, replay every selector envelope,
     fail on single-run nonmonotonicity and publish ITT, paired-completer and explicitly dynamic
     risk-set summaries separately.
+44. **Rotating release-cohort audit:** freeze lineage-matched open, sealed and delayed-release
+    pools, publish delayed cohorts after evaluation, and test whether levels, gains, feedback
+    effects, ranks and forecasts transport before pooling them.
+45. **Builder--solver cross-fit:** record all task-building/calibration systems and cross-evaluate
+    A-built, B-built and independent-expert-built procedural families on fresh common worlds.
+46. **Evidence-unit audit:** at matched calls, bits and cost compare fresh, correlated, duplicate
+    and redundant feedback; report lineage-clustered eESS, information gain and independent
+    intervention/replication counts beside science outcomes.
 
 ## Claim boundary
 

@@ -501,13 +501,48 @@ compare agent-requested, fixed-grid, random, cost-aware VOI and end-only policie
 pre-request prediction and action threshold, then score predicted-realized value calibration,
 request-timing regret, redundant calls, false discovery and fresh-confirmed utility.
 
+### 38. Public replay and sealed prospective validity are not the same evidence surface
+
+EdgeBench reports its main curves on 134 tasks but releases 51 task contracts and no raw 38,000h
+trajectory corpus or figure-analysis code. Its official README's public-51 aggregate is 5.1--7.1
+points below the full-134 aggregate at 12h across all five displayed models. This does not identify
+why the cohorts differ, but it proves an external reproducer cannot currently replay the same task
+population as the headline estimate. Frontier-Science should maintain lineage-matched open-replay,
+sealed-prospective and delayed-release pools, publish the delayed pool after a frozen cycle, and
+measure open-to-sealed transport before pooling any claim. A fully public static leaderboard and a
+fully hidden benchmark each solve only one side of the reproducibility--contamination tradeoff.
+
+### 39. Model-assisted task construction can induce builder bias
+
+The planned inventory uses GPT-5.5 calibration to test headroom and guide substantive task rebuilds.
+That is productive development evidence, but a task repeatedly modified in response to one model's
+failures, shortcuts and feedback interpretation is not automatically neutral when comparing that
+model with others. Add builder/calibrator model, scaffold, triggering trajectory and freeze time to
+every task lineage. On procedural families, cross-evaluate A-built, B-built and independent-expert-
+built variants on fresh common worlds while excluding the tested solver from its final construction
+round. If builder×solver interactions or rank reversals are material, headline aggregation must be
+builder-balanced or leave-builder-out.
+
+### 40. Feedback counts and bits overstate independent scientific evidence
+
+Existing controls match submission counts, payload classes and revealed bits, but ten repeats on one
+seed, ten correlated samples from one batch and ten independent interventions are not ten equivalent
+scientific observations. Without world/sample/batch/instrument/intervention lineage, a smooth long-
+horizon curve can be driven by pseudoreplication. Extend the event ledger with evidence ancestry and
+report raw calls beside a preregistered lineage-clustered evidence effective sample size, information
+gain and independent confirmation count. Exact repeats may estimate evaluator noise; they cannot
+raise mechanism or replication evidence. Run matched fresh/correlated/duplicate-feedback arms before
+claiming that more environment contact means more scientific learning. Define eESS for each estimand
+and retain the highest-lineage cluster, intervention and independent-lab counts separately; a single
+cross-task evidence scalar would recreate the aggregation problem this control is meant to expose.
+
 ## Revised TODO plan
 
 ### P0/P1 closeout — completed locally, reproduce in CI
 
 - [x] Trusted oracle / isolated candidate architecture and adversarial regression suite.
 - [x] Current 51-package deterministic secure baseline and certification audit; all 51 weak baselines are valid, deterministic and fail closed.
-- [x] Seven-task certified core, 28 candidates and 16 quarantined packages after all
+- [x] Seven-task certified core, 29 candidates and 15 quarantined packages after all
   admission waves and the current substantive rebuilds.
 - [x] Task-card/citation/invariant audit and dated machine-readable evidence.
 - [ ] Add Linux CI reproduction of all dated audits (local clean-revision reproduction is done).
@@ -637,6 +672,13 @@ request-timing regret, redundant calls, false discovery and fresh-confirmed util
   post-inflection data; otherwise report observed-window gain/AUC/time-to-material-event only.
 - [ ] Register task/data/oracle/template lineage, report nominal and effective independent-world
   counts, and hold out/resample complete lineages rather than sibling instances.
+- [ ] Add builder/calibrator model, scaffold, triggering trajectory/task edit and freeze timestamp
+  to task lineage; run builder-balanced/leave-builder-out sensitivity and a two-family A-built/
+  B-built/expert-built cross-fit pilot.
+- [ ] Freeze lineage-matched open-replay, sealed-prospective and delayed-release cohorts plus an
+  untouched reserve; report open-to-sealed transport and independently replay each delayed release.
+- [ ] Add world/sample/batch/instrument/intervention ancestry to the durable event ledger and report
+  nominal calls/bits beside lineage-clustered eESS, information gain and independent confirmation.
 - [ ] Generate each admission/pilot/confirmatory/figure cohort from a hashed manifest and fail
   closed on task-count, task-set, lineage, weight, transform or run-policy drift.
 - [ ] Separate pilot admission/calibration worlds and runs from fresh confirmatory seeds/worlds;
@@ -726,6 +768,8 @@ request-timing regret, redundant calls, false discovery and fresh-confirmed util
 
 - [ ] Resolve the FrontierScience naming collision before public release.
 - [ ] Freeze license, data/model redistribution, contamination cutoff and refresh policy.
+- [ ] Publish a delayed-release rotation schedule and criteria for refreshing the sealed reserve;
+  a static public task set is reproducibility evidence, not the permanent prospective leaderboard.
 - [ ] Release privacy-reviewed raw event logs, an immutable derived analysis table and a one-command
   figure/table rebuild; task/harness release alone is insufficient to replay empirical claims.
 - [ ] Freeze a dated literature corpus and cross no-literature/frozen-corpus/open-Web access with
