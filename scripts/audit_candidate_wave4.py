@@ -535,32 +535,83 @@ def _hartree_fock():
 
 def _mosfet():
     oracle = _oracle("Semiconductor/MOSFETDoping")
-    maximum = np.full(oracle.N_POINTS, 1e20)
-    potential = oracle._solve_poisson(maximum)
-    ratio = oracle._compute_ion_ioff_ratio(maximum)
+
+    def policy(kind):
+        def design(problem):
+            for instance in oracle.INSTANCES:
+                if instance["problem"] == problem:
+                    if kind == "baseline":
+                        return oracle._baseline_archive(problem)
+                    return oracle._reference_archive(instance, kind)
+            raise ValueError("unknown MOSFET problem")
+        return design
+
+    baseline = oracle.evaluate(policy("baseline"))
+    nominal = oracle.evaluate(policy("nominal"))
+    robust = oracle.evaluate(policy("robust"))
     with np.errstate(all="ignore"):
         nonfinite = oracle.evaluate(
-            lambda n_points, _length: np.full(n_points, np.nan)
+            lambda _problem: np.full((oracle.MIN_ARCHIVE_SIZE, 6), np.nan)
         )
     return {
         "task": "Semiconductor/MOSFETDoping",
-        "admission": "quarantine",
-        "defect": (
-            "the stated per-m3 doping bounds are six orders below realistic semiconductor "
-            "scales, producing only 48 microvolts and Ion/Ioff 1.0019 even at the upper bound "
-            "versus the unrelated 1e8 anchor; this unit/normalization defect is independent "
-            "of the current fail-closed non-finite path"
+        "admission": "candidate",
+        "superseded_v1_defect": (
+            "the removed v1 contract labeled 1e15--1e20 concentrations as per-m3, placing "
+            "its entire range roughly six orders below semiconductor doping scales, and "
+            "normalized one clipped barrier proxy against an unrelated Ion/Ioff anchor"
         ),
-        "upper_bound_doping_per_m3": 1e20,
-        "upper_bound_max_potential_v": float(np.max(potential)),
-        "upper_bound_ion_ioff_ratio": float(ratio),
-        "declared_reference_ratio": 1e8,
+        "resolved_defect": (
+            "v2 uses log10 cm^-3 Gaussian background/source/drain pockets, four development "
+            "and two held-out devices, screened-Poisson drain coupling, MOS electrostatics, "
+            "Caughey-Thomas mobility, charge-sheet currents, random-dopant variation, hard "
+            "process/device gates, Pareto hypervolume and six sealed operation/process shifts"
+        ),
+        "model_scope": "transparent reduced-order compact nMOS model; not TCAD",
+        "instance_count": len(oracle.INSTANCES),
+        "development_instance_count": len(oracle.DEVELOPMENT_INSTANCES),
+        "heldout_instance_count": len(oracle.HELDOUT_INSTANCES),
+        "shift_count": len(oracle.SHIFT_SPECS),
+        "baseline_score": float(baseline["combined_score"]),
+        "baseline_heldout_score": float(baseline["heldout_policy_score"]),
+        "nominal_reference_score": float(nominal["combined_score"]),
+        "nominal_reference_heldout_score": float(nominal["heldout_policy_score"]),
+        "nominal_reference_robustness": float(nominal["robustness_score"]),
+        "nominal_reference_shift_feasibility_rate": float(
+            nominal["development_shift_feasibility_rate"]
+        ),
+        "robust_reference_score": float(robust["combined_score"]),
+        "robust_reference_heldout_score": float(robust["heldout_policy_score"]),
+        "robust_reference_robustness": float(robust["robustness_score"]),
+        "robust_reference_heldout_robustness": float(
+            robust["heldout_robustness_score"]
+        ),
         "nonfinite_task_score": float(nonfinite["combined_score"]),
         "nonfinite_task_valid": bool(nonfinite["valid"]),
+        "rebuild_passed": True,
         "passed": bool(
-            np.max(potential) < 1e-3
-            and ratio < 1.01
+            oracle.MOSFET_DOPING_V2
+            and len(oracle.DEVELOPMENT_INSTANCES) == 4
+            and len(oracle.HELDOUT_INSTANCES) == 2
+            and len(oracle.SHIFT_SPECS) == 6
+            and baseline["valid"] == 1.0
+            and baseline["combined_score"] == 0.0
+            and baseline["heldout_policy_score"] == 0.0
+            and nominal["valid"] == 1.0
+            and nominal["combined_score"] > 0.999999
+            and nominal["heldout_policy_score"] > 0.999999
+            and nominal["robustness_score"] < 0.05
+            and nominal["development_shift_feasibility_rate"] < 0.90
+            and robust["valid"] == 1.0
+            and 0.85 < robust["combined_score"] < 0.98
+            and 0.80 < robust["heldout_policy_score"] < 0.98
+            and robust["robustness_score"] > 0.999999
+            and robust["heldout_robustness_score"] > 0.999999
+            and robust["development_shift_feasibility_rate"] == 1.0
+            and robust["heldout_shift_feasibility_rate"] == 1.0
             and nonfinite["combined_score"] == 0.0
+            and nonfinite["raw_score"] == 0.0
+            and not bool(nonfinite["valid"])
         ),
     }
 

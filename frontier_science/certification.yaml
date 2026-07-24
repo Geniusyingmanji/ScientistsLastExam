@@ -248,8 +248,12 @@ tasks:
       - doi:10.1002/wcms.1340
       - doi:10.1063/5.0006074
   Semiconductor/MOSFETDoping:
-    status: quarantined
-    reason: stated per-m3 doping scale yields at most 48 microvolts and Ion/Ioff 1.0019 versus an unrelated 1e8 anchor; the present non-finite path fails closed but does not repair the six-order unit and normalization defect
+    status: candidate
+    reason: v2 replaces the six-orders-wrong per-m3 concentration contract, clipped barrier proxy and unrelated Ion/Ioff anchor with log10 cm^-3 Gaussian background/source/drain pockets evaluated on four development and two held-out devices by a transparent screened-Poisson/MOS-electrostatics/Caughey-Thomas/charge-sheet/random-dopant compact model; hard threshold, current, DIBL, swing, variability, dose, active-doping and gradient gates feed drive-current-versus-leakage Pareto hypervolume, while six operation/process shifts remain sealed; fixed-seed 2048-point Sobol witnesses reconstruct exactly, the nominal witness reaches unit development/held-out score but zero development worst-shift robustness, and the robust witness trades nominal score to approximately 0.934/0.900 for unit development/held-out worst-shift robustness; retain pending GPT-5.5 headroom calibration, paired controls, server-held devices, independent semiconductor review, higher-fidelity TCAD/process replication and measured-device validation
+    citation_ids:
+      - doi:10.1002/0470068329
+      - doi:10.1017/CBO9781139195065
+      - doi:10.1109/PROC.1967.6123
   Thermodynamics/RankineCycleOpt:
     status: candidate
     reason: v2 replaces the zero-baseline polynomial steam surrogate and unrelated 46 percent anchor with a self-contained IAPWS-IF97 Region 1/2/4 single-reheat cycle over four development and two held-out operating regimes; hard moisture, material and energy-closure gates feed efficiency-versus-specific-work Pareto hypervolume, while five sealed weather, pressure-loss, degradation and material shifts remain evaluator-only; official IAPWS verification tables and an audit-only 32-state iapws-1.5.4 implementation agree to floating-point precision, a fixed-seed 2048-point Sobol witness reaches unit nominal development/held-out score but only approximately 0.71/0.73 shift feasibility, and a robust witness trades nominal score down to approximately 0.48/0.45 while reaching unit development/held-out robustness; retain pending GPT-5.5 headroom calibration, paired controls, server-held cycles, independent thermodynamics review, process-simulator/component-map replication and plant data

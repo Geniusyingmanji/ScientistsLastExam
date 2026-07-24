@@ -1,7 +1,12 @@
 domain: Semiconductor
 task: MOSFETDoping
 difficulty: hard
+tier: T2
 oracle_type: physical_sim
 score_mode: clipped
 gpu_required: false
-eval_time_seconds: 10
+eval_time_seconds: 25
+science_metric: development nominal compact-model drive-current-versus-leakage Pareto hypervolume with sealed held-out transfer and worst-shift robustness
+reference_baseline: conservative eight-profile background-only archive nominally feasible on all devices
+reference_sota: fixed-seed 2048-point scrambled-Sobol compact-model witnesses; no global-optimality or TCAD claim
+citation: "Sze and Ng, doi:10.1002/0470068329; Taur and Ning, doi:10.1017/CBO9781139195065; Caughey and Thomas, doi:10.1109/PROC.1967.6123"
