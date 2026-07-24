@@ -110,6 +110,13 @@ optimization**, with later “discovery” claims gated on (2)–(4).
   history comparisons, but does not establish path lock-in in EdgeBench. Source hashes, the
   proposed design and claim boundary are in
   `.research/edgebench_science_tenth_order_audit_2026-07-24.json`.
+- The eleventh-order audit checks the gravitational-wave case study's 224 submissions, 23
+  auto-evaluations and seven narrated milestones. Phase-level component-score changes are useful
+  trajectory descriptions, but multi-edit/multi-submission phases do not identify an individual
+  edit, newly acquired evidence or their interaction. This motivates preregistered MA1/E52
+  parent/full-child/component/leave-one-out/rollback and data-by-method replay; it does not show
+  that the EdgeBench narrative is wrong. Source hashes, the unrun design and claim boundary are in
+  `.research/edgebench_science_eleventh_order_audit_2026-07-24.json`.
 - The same recheck found no public raw interaction-trajectory corpus or figure-analysis source in
   the official GitHub/Hugging Face trees. This is a release-scope observation, not evidence that
   the authors did not retain or internally analyze such data.

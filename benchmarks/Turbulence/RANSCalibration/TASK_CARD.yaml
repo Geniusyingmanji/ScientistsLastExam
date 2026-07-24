@@ -12,10 +12,10 @@ normalization:
 citations:
   - id: doi:10.5281/zenodo.5749302
     title: Lagrangian statistics in turbulent channel flow
-  - id: doi:10.1016/S0009-2509(00)00178-4
-    title: Turbulent flow through a channel at low Reynolds number
-  - id: doi:10.1016/j.ijheatfluidflow.2004.02.008
-    title: Turbulence budgets for channel flow at Reynolds numbers up to Re-tau 2000
+  - id: doi:10.1007/s003480050256
+    title: Turbulent flow in a channel at a low Reynolds number
+  - id: doi:10.1063/1.3005862
+    title: Reynolds number effects on the Reynolds-stress budgets in turbulent channels
 invariants:
   - the committed DNS manifest is CC-BY-4.0 and binds the Zenodo record, authors and source-file hashes
   - development uses Re-tau 180 and 395 while Re-tau 590 and 950 are evaluator-only held-out conditions

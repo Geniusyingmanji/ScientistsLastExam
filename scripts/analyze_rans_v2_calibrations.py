@@ -46,7 +46,10 @@ EXPECTED_MODEL_SOURCE_REVISION = (
 )
 TASK_RUNTIME_SCOPE = (
     "frontier_science",
-    "benchmarks/Turbulence/RANSCalibration",
+    "benchmarks/Turbulence/RANSCalibration/Task.md",
+    "benchmarks/Turbulence/RANSCalibration/solution.py",
+    "benchmarks/Turbulence/RANSCalibration/frontier_eval",
+    "benchmarks/Turbulence/RANSCalibration/verification",
     "requirements-upstream.txt",
 )
 SCALAR_FIELDS = (

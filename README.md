@@ -243,7 +243,7 @@ evidence, not a leaderboard or population result.
 
 The latest EdgeBench re-audit keeps its upstream facts at arXiv `2607.05155v1`, SForge
 `a87350a` and public dataset `47846a4`. In addition to E1--E36, the science plan now preregisters
-fifteen unrun scope/protocol tests: raw instrument-to-claim error propagation (I6/E37), unit/coordinate/
+sixteen unrun scope/protocol tests: raw instrument-to-claim error propagation (I6/E37), unit/coordinate/
 representation metamorphic invariance (V4/E38), independent investigators with blinded synthesis
 (T1/E39), post-commit sealed downstream utilities (U1/E40), independently disclosed research
 horizons rather than long-run prefixes (HZ1/E41), and pinned/calibrated rubric or model judges
@@ -254,9 +254,10 @@ accounting (EVI1/E47), observation-kernel/interval-censoring sensitivity with a 
 live-state stratum (OBS1/E48), policy-aware inference after endogenous experiment selection
 (AD1/E49), complete reporting of null/contradictory/failed local experiments (NR1/E50), and
 conditional checkpoint forks that separate same-history continuation randomness from matched-score
-research-history lock-in (CF1/E51). A separate M2 protocol gate freezes the checkpoint risk set and
-replays
-single-run best-so-far monotonicity. These are proposed experiments, not new EdgeBench or Frontier-
+research-history lock-in (CF1/E51), plus preregistered single-factor/factorial replay that separates
+new evidence, method edits and their interactions at narrated breakthroughs (MA1/E52). A separate M2
+protocol gate freezes the checkpoint risk set and replays single-run best-so-far monotonicity.
+These are proposed experiments, not new EdgeBench or Frontier-
 Science performance results. The expansion plan also prioritizes one prospective evidence-synthesis task over another
 near-duplicate clean-simulator scalar task.
 

@@ -1988,3 +1988,36 @@ and contains **47 normal single-run conditions across 24 tasks**. The strict ope
 remains in the task-specific analysis. Both derived artifacts retain the compact-model boundary:
 they are neither multidimensional self-consistent/commercial TCAD, fabricated-device validation,
 feedback-causal evidence nor autonomous semiconductor discovery.
+
+## 2026-07-24 — EdgeBench milestone-attribution audit
+
+EdgeBench upstream was rechecked and remains arXiv `2607.05155v1`, SForge `a87350a` and public
+dataset `47846a4`. Its gravitational-wave case study reports one 12-hour GPT-5.5 run with 224
+agent submissions, 23 auto-evaluations and seven representative milestones. The paper usefully
+compresses the run into phases involving frequency estimation, time-frequency localization,
+source-mass calibration and waveform alignment, but some phases contain many submissions and
+effective updates. Component-score movement identifies the scored output that improved; it does
+not by itself isolate an individual edit, newly acquired evidence or interaction. The public
+paper/release does not provide parent/full-child/component-only/leave-one-out factorial replay or
+the raw artifact lineage needed to reconstruct it.
+
+This motivates MA1/E52, an unrun Frontier-Science experiment. Milestones are selected by a
+preregistered material-event rule rather than narrative appeal; every parent-to-child diff is
+partitioned into observation/data, scientific model, inference/refusal, optimizer/design and
+postprocessing components. Parent, full child, component-only, leave-one-out, rollback and key `2x2` interactions
+are replayed on common frozen worlds/seeds. When a milestone also acquires data, an explicit
+`old/new data x old/new method` design prevents crediting evidence acquisition to a code or
+mechanism edit. Non-separable patches are reported rather than scored as zero, and attribution
+must survive sealed/mechanism/refusal/validity gates. ReactionMechanismFitting-v2 and
+ConvectionDiffusionOpt-v2 are the first proposed micro-pilot tasks because both already expose
+active experiments and supported/null/misspecified worlds.
+
+These source facts do not show that the EdgeBench case-study narrative is wrong, and the existing
+Frontier-Science calibration contrasts are only positive controls, not agent milestone effects.
+The current Reaction and Convection normal b1/b3 trajectories have no positive combined-score jump.
+Reaction selection-blind b3 contains one `0.342579` frozen-baseline open-loop candidate, but it is
+not an iterative feedback descendant and has development/heldout false-discovery rate `0.5`; it can
+only smoke-test bundled replay and does not pass the planned science attribution gate. All three
+Convection short-run conditions remain at zero.
+MA1/E52 has not been run. Source hashes, design and claim limits are stored in
+`.research/edgebench_science_eleventh_order_audit_2026-07-24.json`.

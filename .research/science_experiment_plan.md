@@ -72,7 +72,7 @@ Report its visible, sealed and mechanism advantage over `committed` as an
 | I2 | How much performance comes from continuation scaffolding? | Fixed model/context/tools crossed with continuous session, goal state and fresh-context file-backed loop; separately vary context capacity with a preregistered one-shot/first-valid baseline | active duty cycle, state-loss incidents, evidence retention, baseline-adjusted gain, context-by-time interaction and committed/sealed outcomes | Model capability and initial level separated from continuation or accumulated-experience effects |
 | S1 | Is an aggregate scaling curve predictively and mechanistically supported? | Preregistered log-sigmoid and alternatives, whole-trajectory validation across held-out suffixes/runs/tasks/families, and fixed-grid material-improvement events | held-out error/log score, interval coverage, parameter stability and improvement hazard versus normalized progress | A bounded empirical regularity; never feedback learning or discovery by itself |
 | S2 | Are the fitted ceiling, midpoint and speed actually identifiable in the observed horizon? | Profile/trajectory-bootstrap fits across rolling windows and longer horizons, with constrained or nonparametric alternatives | parameter intervals/correlation, post-inflection support, window stability and coverage | Curve-parameter interpretation only when identified; otherwise observed-window gain |
-| I3 | Is a narrated breakthrough caused by the attributed edit? | Parent, full child, component-only patch and rollback replay on one frozen sealed evaluator panel | retained effect, interaction, regression and component-specific science metrics | Causal edit attribution for selected milestones, not from chronology alone |
+| MA1 | Which component, new evidence or interaction caused a milestone jump? | Pre-register eligible milestones and sample them without outcome cherry-picking; rebuild parent/full child, component-only, leave-one-out and rollback variants; run key 2×2 component interactions and, when observations changed, `old/new data × old/new method` on common frozen worlds/seeds | paired development/sealed/mechanism/refusal/validity effects, interaction and retained-effect fraction, non-separable-patch rate, causal-attribution coverage and fresh-confirmation retention | A bounded causal contribution of an edit/evidence component to a selected milestone, rather than a bundled chronological story |
 | I4 | Do all system layers agree on which artifact is incumbent and why? | Replay every event through one versioned objective-selection contract and compare prompt, agent cache, online selector, signed commit, terminal endpoint, dashboard and analysis; include score-first, valid-then-score, safety-lexicographic and material-Pareto sensitivity | incumbent-hash agreement, selector reversals, sealed/mechanism/false-discovery reversal rate and protocol failures | Trustworthy artifact selection rather than an ambiguous scalar leaderboard |
 | I5 | Can a day-long scientific run survive failures without losing or double-spending evidence? | Durable append-only ledger with judge/work-container/network crash injection, duplicate/late delivery, restart and idempotent replay | exactly-once oracle/sample budget reconciliation, lost/duplicate events, stale-feedback attribution, recovery time and byte-replay of derived tables | Crash-consistent long-horizon evidence rather than best-effort execution logs |
 | S3 | Is the apparent scaling shape invariant to evaluator granularity and task ordering? | Replay identical raw outcomes under preregistered coarse/canonical/fine score partitions; random and lineage-blocked task accumulation orders/subsamples | curve/forecast/parameter/ranking dispersion, maximum score atom and material-event stability | A curve tied to scientific outcomes rather than rubric atomization or one task ordering |
@@ -300,6 +300,9 @@ server-held procedural worlds, multi-seed feedback controls and independent revi
     world count, admission versus confirmation split, treatment order and endpoint snapshot.
 27. Selected milestone edit-ablation table comparing parent, full child, component-only patches
     and rollback on the same sealed panel.
+27a. Milestone component-attribution forest/interaction plot: preregistered parent/full-child,
+    component-only, leave-one-out, rollback and key `2×2` contrasts across development, sealed,
+    mechanism, refusal and validity; separate `old/new data × old/new method` and non-separable patches.
 28. Exploration-to-confirmation flow showing hypothesis/evaluator look counts, signed commit,
     fresh post-commit world/replication and any confirmation-set refresh after contamination.
 29. Linked-campaign error propagation from data QC through inference/design to intervention,
@@ -616,6 +619,9 @@ midpoint, speed or doubling-time claim.
 - One CF1 checkpoint-fork pilot on two checkpointable procedural tasks before treating a single
   long trajectory as a stable estimate of future scientific progress or claiming that equal
   current scores represent equivalent research states.
+- One MA1 milestone-attribution pilot on ReactionMechanismFitting-v2 and ConvectionDiffusionOpt-v2,
+  with preregistered milestone sampling, component/leave-one-out/rollback replay, key interactions
+  and separate new-evidence attribution, before describing a score jump as a scientific insight.
 
 Only Stage B can support claims about feedback-driven scientific discovery. A real-world
 discovery claim additionally requires independent high-fidelity or physical confirmation and
@@ -696,6 +702,10 @@ domain-expert review.
   matched-score checkpoints reached through different histories; histories carrying a wrong but
   development-plausible mechanism have lower sealed-confirmed escape probability even at equal
   current score, demonstrating that scalar progress is not a sufficient scientific state.
+- H32: for preregistered milestone jumps, the full-child gain is often not recoverable from every
+  narrated component in isolation; a small subset of components or interactions should retain the
+  sealed/mechanism effect, while `old/new data × old/new method` separates evidence acquisition
+  from method improvement and exposes bundled gains that do not survive false-discovery/validity gates.
 
 These are hypotheses to test. The paper should report failed hypotheses and negative results
 rather than selecting only curves that resemble Frontier-Eng or EdgeBench.

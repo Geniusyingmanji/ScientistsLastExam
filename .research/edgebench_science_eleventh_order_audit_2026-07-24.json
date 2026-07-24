@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "audit_date_utc": "2026-07-24",
+  "scope": "Eleventh-order audit of retrospective milestone attribution and bundled scientific changes in the unchanged EdgeBench v1 paper and public release. MA1/E52 is a Frontier-Science experiment proposal, not an EdgeBench treatment or empirical finding.",
+  "upstream_state": {
+    "arxiv_id": "2607.05155v1",
+    "arxiv_updated_utc": "2026-07-06T14:39:22Z",
+    "github_commit": "a87350ab80eeb320b13cb71d1b0c3ffcc20a670f",
+    "github_commit_date_utc": "2026-07-17T10:27:00Z",
+    "huggingface_revision": "47846a4c3669ad447e0ea984833b0d352460c5f9",
+    "huggingface_last_modified_utc": "2026-07-09T11:28:50.000Z",
+    "changed_since_tenth_order_audit": false
+  },
+  "source_hashes": {
+    "arxiv_source_package_sha256": "8193aeb41a3474690a40fac82e2ecbd53e651ab6b4759984b4c6845c04fbfd29",
+    "arxiv_experiments_tex_sha256": "1eb7b254a49fccf097c92eaf84f3f869276772d214a28c3b0ca7a7351b90c844",
+    "arxiv_gw_case_study_details_tex_sha256": "0253d935b4c8128985bf72d6ba1344a0d0d912b8e894d2b062fd2653c279201b",
+    "arxiv_approach_tex_sha256": "14cd29671b9cccccefc564aab1b053afbda585dd2fbfcd7c1573c053ff5eba74",
+    "arxiv_harness_ablations_tex_sha256": "3dbc611d2d70b1d6452f9c55a5855c47858172caf7068095ea784296575e5a67"
+  },
+  "source_facts": [
+    "The EdgeBench gravitational-wave case study reports one 12-hour GPT-5.5 run with 224 explicit submissions and 23 auto-evaluations. It presents seven representative best-so-far milestones and compresses the trajectory into interpreted phases rather than reporting every artifact-level edit.",
+    "The paper attributes phase-level gains to changes such as replacing a noisy frequency estimate, time-frequency localization, source-mass calibration and waveform alignment. Some reported phases contain multiple submissions and multiple effective updates; the largest source-dynamics phase contains 17 submissions and five useful updates.",
+    "The displayed component-score changes show which scored outputs improved, but the paper and appendix do not report parent/full-child/component-only/leave-one-out factorial replays that isolate individual edits or their interactions.",
+    "The model-comparison discussion separately notes that weaker agents often bundle unrelated edits, which can reduce sample efficiency. This is an aggregate behavioral observation, not a causal decomposition of the gravitational-wave milestones.",
+    "The approximately 38000-hour raw trajectory corpus and figure-analysis code, including artifact lineages sufficient for retrospective component replay, are not public. Therefore this audit cannot infer that any official milestone attribution is wrong or estimate causal edit effects for EdgeBench."
+  ],
+  "frontier_science_experiment": {
+    "id": "milestone_component_attribution",
+    "plan_id": "MA1",
+    "supersedes_plan_id": "I3",
+    "addendum_id": "E52",
+    "design": "Before inspecting treatment outcomes, preregister a domain-material milestone eligibility rule and select all eligible jumps or a fixed/random sample. Partition each parent-to-child change into executable observation/data-acquisition, scientific-model/mechanism, inference/uncertainty/refusal, optimizer/downstream-design and presentation/postprocessing components. From the identical frozen parent, observation ledger, evaluator manifest, world/seed panel and budget, evaluate parent, full child, component-only, leave-one-out and rollback variants; run a complete 2x2 factorial for two preregistered key components. If the child acquired new observations, separately cross old versus new data with old versus new method so evidence acquisition is not credited to a code or mechanism edit.",
+    "initial_tasks": [
+      "ChemicalKinetics/ReactionMechanismFitting",
+      "HeatTransfer/ConvectionDiffusionOpt"
+    ],
+    "primary_outcomes": [
+      "paired_development_effect",
+      "paired_sealed_effect",
+      "paired_mechanism_effect",
+      "refusal_and_false_discovery_effect",
+      "hard_validity_effect",
+      "component_interaction",
+      "full_child_effect_retained_by_components",
+      "old_new_data_by_old_new_method_effect",
+      "nonseparable_patch_rate",
+      "causal_attribution_coverage",
+      "fresh_confirmation_retention",
+      "replay_cost"
+    ],
+    "analysis_requirements": [
+      "Treat an independently selected parent milestone or world lineage as the top-level experimental unit; common-random-number seed replays from one parent quantify evaluator noise and do not create independent milestones.",
+      "Use common random numbers and multiple seeds for stochastic judges, and report vector outcomes plus hard gates rather than only the aggregate score.",
+      "Rebuild every treatment from the frozen parent and verify dependency closure, merge validity, semantic equivalence of untouched components and equal evidence access before judging.",
+      "Classify patches that cannot execute independently as non-separable; do not encode their invalid score as a zero causal effect.",
+      "Do not select milestones because their post-hoc component story is attractive. Report attribution coverage and multiplicity over the preregistered eligible set, including null and harmful component effects.",
+      "Require the component or interaction effect to persist on sealed or fresh worlds without worsening false discovery or hard validity before using causal scientific-insight language."
+    ],
+    "positive_control_rationale": {
+      "ReactionMechanismFitting-v2": "Existing truth-blind calibration separates assay choice, sparse support selection, kinetic parameter refit and misspecification/refusal; the classical two-temperature fitter has a 0.5 false-discovery rate on development and heldout misspecified worlds.",
+      "ConvectionDiffusionOpt-v2": "Existing truth-blind calibration separates a symmetric midline assay from the added off-axis assay, five-parameter inference, design optimization and refusal; the one-experiment combined score is 0 and the two-experiment score is 0.895605, providing a known information-design interaction without claiming an agent milestone result."
+    },
+    "current_agent_trajectory_eligibility": {
+      "ReactionMechanismFitting-v2": "Normal budget-one and budget-three trajectories have no positive combined-score jump. The selection-blind budget-three open-loop batch has one frozen-baseline candidate at 0.342579, but it is not an iterative feedback descendant and its development and heldout false-discovery rates are both 0.5; it is only a bundled analyzer smoke and fails the science attribution gate.",
+      "ConvectionDiffusionOpt-v2": "Normal budget-one, normal budget-three and selection-blind budget-three trajectories all have maximum combined score 0, so there is no current positive milestone to attribute."
+    },
+    "distinct_from": {
+      "F4": "tests whether feedback labels teach structure, whereas MA1 tests which downstream change actually caused a selected artifact jump.",
+      "AD1": "tests inferential calibration under adaptive data collection, whereas MA1 separates the causal contribution of newly collected data from method edits at one milestone.",
+      "CF1": "estimates the distribution of futures from a shared checkpoint, whereas MA1 intervenes on the realized parent-to-child change itself.",
+      "NR1": "tests complete result reporting, whereas MA1 assumes the evidence ledger is available and decomposes a claimed breakthrough."
+    }
+  },
+  "claim_boundary": [
+    "The source facts do not show that EdgeBench's qualitative gravitational-wave narrative is incorrect; they show that chronology and component-score movement alone do not identify edit-level causal effects.",
+    "The public absence of factorial milestone replay does not imply that the EdgeBench authors performed no internal artifact inspection or robustness checks.",
+    "A successful component replay would establish a bounded causal contribution within the frozen task, parent state and evaluator panel. It would not by itself establish a novel physical mechanism or real-world discovery.",
+    "The ReactionMechanismFitting-v2 and ConvectionDiffusionOpt-v2 calibration contrasts are design positive controls, not agent-trajectory causal estimates.",
+    "MA1/E52 was not run when this audit was frozen, and no new Frontier-Science model-performance or milestone-causality result is claimed."
+  ]
+}

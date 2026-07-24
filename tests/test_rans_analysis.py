@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import subprocess
 import unittest
 from pathlib import Path
 
@@ -135,6 +136,23 @@ def _records(low=False):
 
 
 class RANSAnalysisTests(unittest.TestCase):
+    def test_runtime_scope_excludes_task_card_bibliography(self):
+        module = _module()
+        self.assertNotIn(
+            "benchmarks/Turbulence/RANSCalibration/TASK_CARD.yaml",
+            module.TASK_RUNTIME_SCOPE,
+        )
+        changed = subprocess.check_output(
+            [
+                "git", "diff", "--name-only",
+                module.EXPECTED_MODEL_SOURCE_REVISION, "HEAD", "--",
+                *module.TASK_RUNTIME_SCOPE,
+            ],
+            cwd=ROOT,
+            text=True,
+        ).splitlines()
+        self.assertEqual(changed, [])
+
     def test_integrity_gate_does_not_require_desired_model_outcome(self):
         module = _module()
         report = module._analyze_records(

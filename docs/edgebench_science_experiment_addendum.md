@@ -836,6 +836,54 @@ conditional value、错误机制锁定/逃逸率、hypothesis/artifact diversity
 否则实验退化为 best-of-K 搜索。CF1 不同于 O3 的 depth/width 预算分配、F5 的状态通道消融、K3 的初始 starter
 随机化、S5 的环境 task-graph 干预和 T1 的独立研究者实验。
 
+### E52. 突破里程碑的单因素与 bundled-change 因果归因
+
+EdgeBench 的引力波案例把 224 次 agent submissions 与 23 次 auto-evaluations 压缩成七个代表性
+milestones，并将若干分数跃升解释为频率估计、时频定位、source-mass calibration 或 waveform
+alignment 的进展。这个压缩对理解轨迹很有用，但正文和附录提供的是 **一条回顾性时间序列**：阶段叙事
+合并解释了预处理、模型/参数、优化与后处理等变化，最大跃升还发生在一个含 17 次 submissions、5 次
+有效更新的时间窗中；因原始 artifact lineage 未公开，无法判断每个单独 milestone 是 single edit 还是
+bundled edits。component score 与总分同步改善只能定位受益输出，不能
+单独识别是哪项 edit、哪条新 observation 或它们的交互造成增益。EdgeBench 自己也观察到弱轨迹常把
+unrelated edits 打包；截至 2026-07-24，公开论文/代码没有发布这 247 次评测的原始 artifact lineage，
+因此不能对官方案例事后补做逐 edit 因果分解。
+
+把现有 `I3` 正式化为 `MA1`：在运行前预注册 milestone eligibility（例如 agent-visible development 指标
+超过 domain-material threshold，或签名的机制/拒绝 claim state 改变），并从所有 eligible jumps 中按
+固定规则或随机抽样选取；sealed/fresh outcomes 只能用于事后验证，不能参与 milestone 入选，也不能
+只挑最漂亮的故事。对每个 parent→child diff 先用语义与 executable dependency graph 分成五类：
+`observation/data acquisition`、`scientific model/mechanism`、`inference/uncertainty/refusal`、
+`optimizer/downstream design`、`presentation/postprocess`。
+在相同的 frozen parent、相同 observation ledger、相同 seed/world panel 和相同计算预算上重放：
+
+1. parent/no-change 与 full child；
+2. 每个 component-only patch；
+3. leave-one-component-out 与 rollback；
+4. 对预注册的两个关键 component 做完整 `2×2` factorial，估计 interaction；
+5. 若 child 同时取得了新实验数据，再交叉 `old data/new data × old method/new method`，严禁把 evidence
+   acquisition 的收益归给代码或“科学洞见”。
+
+每个 treatment 必须从 parent 重新构建并经过 dependency/merge/semantic-equivalence 检查；无法独立运行的
+patch 标为 **non-separable**，不能把 invalid component 当成零效果。随机或噪声 evaluator 使用 common
+random numbers 与多 seed，结果同时报告 development、sealed、mechanism、refusal/false-discovery、hard
+validity、cost 和 interaction，不以总分 alone 判定。实验单位是独立的 parent milestone/world lineage，
+不是同一 parent 的 seed replay；跨 milestone 用 hierarchical model，并把 retrospective selection 作为
+sensitivity，而不是把所有 replay 当独立样本。
+
+首个 micro-pilot 放在 `ReactionMechanismFitting-v2` 与 `ConvectionDiffusionOpt-v2`：前者可分解 assay plan、
+sparse support selection、kinetic parameter refit 与 misspecification/refusal；后者可分解第二个 off-axis
+experiment、five-parameter inference、thermal-source design optimizer 与 refusal logic。两者都已有
+supported/null/misspecified worlds 和 prediction/mechanism/refusal 分轴。现有 truth-blind calibration 只能
+提供 positive controls（Reaction 的两温度 fitter 会在 misspecified worlds 产生 0.5 false-discovery rate；
+Convection 的单一 midline experiment 为近奇异设计，而增加 off-axis experiment 后 combined score 从 0
+升到 0.895605）；它们不是 agent milestone 的 causal result。当前两任务 normal b1/b3 也都没有正向
+combined-score jump；Reaction selection-blind b3 虽有一个 `0.342579` open-loop 候选，但所有 proposal 都从
+冻结 baseline 独立生成，且该候选在 development/heldout 的 false-discovery rate 均为 0.5，所以只能作为
+bundled analyzer smoke，不能称反馈驱动 breakthrough。只有 full-child 增益由预注册 component 或
+interaction 在 sealed/fresh worlds 上保留、且不恶化 false discovery/validity 时，才可表述为该改动对该
+milestone 的因果贡献；否则只称 bundled empirical improvement。可执行门槛、抽样框、因子定义与
+estimands 已冻结在 `.research/milestone_attribution_preregistration.md`。
+
 ## 5. 推荐的曲线与表格
 
 主文可沿用 Frontier-Eng/EdgeBench 的时间或 oracle-budget best-so-far 图，但 science 论文至少再加：
@@ -914,6 +962,9 @@ conditional value、错误机制锁定/逃逸率、hypothesis/artifact diversity
     sign-conditional reporting、失败/null/反证遗漏、effect inflation 和 full-ledger claim reversal。
 45. checkpoint-fork tree：同一 parent history 的全部随机 continuation、matched-score 不同历史的终点分布、
     错误机制锁定/逃逸与 sealed-confirmed outcomes；不显示 post-hoc best-child 作为部署结果。
+46. milestone component-attribution forest/interaction plot：parent/full child、component-only、leave-one-out、
+    rollback 与关键 `2×2` interactions 在 development/sealed/mechanism/refusal 上的配对效应，并单列
+    non-separable patches 与 `old/new data × old/new method` 归因。
 
 log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、Gompertz、piecewise/change-point
 和 hierarchical task-mixture 比较；必须用 held-out time forecasting、bootstrap over tasks 与跨 seed
@@ -1002,7 +1053,10 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
   对照，报告条件方差、错误机制锁定和 sealed escape，禁止 best-child selection；首选 ActiveLawDiscovery
   与 EnergyBalanceModel-v2，因其已有 supported/misspecified worlds 和 prediction/mechanism 分轴；
 - [ ] 对选中的大跳变重放 parent/full-child/component-only/rollback，在同一 sealed panel
-  上通过后才做“某科学思路导致增益”的因果归因；
+  上通过后才做“某科学思路导致增益”的因果归因；先在 ReactionMechanismFitting-v2 和
+  ConvectionDiffusionOpt-v2 实现 `MA1/E52` micro-pilot，预注册 milestone 抽样、patch taxonomy、
+  leave-one-out/rollback、关键 `2×2` interaction 与 `old/new data × old/new method`，并将 non-separable
+  patch 和 false-discovery/validity 变化计入失败而非零效果；
 - [ ] pilot 可按 headroom 分配后续工程资源，但 confirmatory cohort 不得据此删任务；
 - [ ] 仅在 pilot 证明基础设施稳定且至少部分任务有 headroom 后扩展 6h/12h。
 
@@ -1112,3 +1166,9 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
   module 下状态不只由 scalar unlocked mass 决定。这些事实只用于提出 CF1/E51，不证明官方 trajectories
   存在过度 path dependence 或错误锁定；source hashes、设计与 claim boundary 见
   `.research/edgebench_science_tenth_order_audit_2026-07-24.json`。
+- EdgeBench v1 的引力波案例报告 224 次 agent submissions、23 次 auto-evaluations、七个代表性
+  milestones 和若干多提交阶段；公开正文/附录按阶段解释 component-score 跃升，但未提供逐 milestone
+  single-factor/leave-one-out factorial replay，公开 release 也不含约 38,000h 原始 artifact trajectories。
+  这些事实只用于把已有 I3 升级为 MA1/E52；它们不否定官方案例的描述价值，也不证明任何具体 edit 的
+  归因错误。来源哈希、实验设计和 claim boundary 见
+  `.research/edgebench_science_eleventh_order_audit_2026-07-24.json`。

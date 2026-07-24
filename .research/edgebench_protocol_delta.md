@@ -641,9 +641,11 @@ The source hashes, 51-contract mode census, OBS1/E48 design and claim limits are
 18. **Lineage-blocked confirmatory design:** freeze task admission on pilot data, assign task-
     lineage clusters, randomize/concurrently pair calendar blocks, and size confirmatory repeats
     from pilot variance and a material-effect target.
-19. **Milestone edit ablation:** for a small set of large trajectory jumps, replay parent, full
-    child, component-only patches and rollback on an identical sealed evaluator panel before
-    attributing the gain to a scientific insight.
+19. **MA1/E52 milestone attribution:** preregister the material-event eligibility and milestone
+    sample before component outcomes are known. Rebuild parent, full child, component-only,
+    leave-one-out and rollback variants on an identical sealed panel; run key `2×2` component
+    interactions and, whenever observations changed, `old/new data × old/new method`. Report
+    non-separable patches and refusal/validity harms before attributing a gain to a scientific insight.
 20. **Fresh-confirmation gate:** reserve a one-shot post-commit world/replication budget that is
     never used by search, periodic snapshots, task admission or stopping; report adaptive looks
     and invalidate/refresh any confirmation panel exposed through repeated analysis.

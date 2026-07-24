@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "audit_date_utc": "2026-07-24",
+  "task": "Turbulence/RANSCalibration",
+  "scope": "Metadata correction for the two contextual non-dataset citations in TASK_CARD.yaml. The licensed DNS data source and all numerical task assets are unchanged.",
+  "superseded_records": [
+    {
+      "id": "doi:10.1016/S0009-2509(00)00178-4",
+      "listed_title": "Turbulent flow through a channel at low Reynolds number",
+      "finding": "DOI Foundation returned DOI Not Found; the intended title resolves instead to doi:10.1007/s003480050256."
+    },
+    {
+      "id": "doi:10.1016/j.ijheatfluidflow.2004.02.008",
+      "listed_title": "Turbulence budgets for channel flow at Reynolds numbers up to Re-tau 2000",
+      "registered_title": "A study of the influence of buoyancy on turbulent flow in a vertical plane passage",
+      "finding": "Crossref metadata proves a title/topic mismatch; this DOI is unrelated to the listed Reynolds-stress-budget citation."
+    }
+  ],
+  "verified_records": [
+    {
+      "id": "doi:10.5281/zenodo.5749302",
+      "title": "Lagrangian statistics in turbulent channel flow",
+      "authors": ["Davide Perrone", "J.G.M. Kuerten", "Luca Ridolfi", "Stefania Scarsoglio"],
+      "year": 2021,
+      "publisher": "Zenodo",
+      "license": "CC-BY-4.0",
+      "verification_sources": ["DataCite", "Zenodo record"],
+      "role": "authoritative task dataset"
+    },
+    {
+      "id": "doi:10.1007/s003480050256",
+      "title": "Turbulent flow in a channel at a low Reynolds number",
+      "authors": ["A. Günther", "D. V. Papavassiliou", "M. D. Warholic", "T. J. Hanratty"],
+      "journal": "Experiments in Fluids",
+      "year": 1998,
+      "volume": "25",
+      "issue": "5-6",
+      "pages": "503-511",
+      "verification_sources": ["Crossref", "OpenAlex", "Semantic Scholar", "DOI resolver"],
+      "role": "contextual low-Reynolds-number channel-flow reference"
+    },
+    {
+      "id": "doi:10.1063/1.3005862",
+      "title": "Reynolds number effects on the Reynolds-stress budgets in turbulent channels",
+      "authors": ["Sergio Hoyas", "Javier Jiménez"],
+      "journal": "Physics of Fluids",
+      "year": 2008,
+      "volume": "20",
+      "issue": "10",
+      "article_number": "101511",
+      "verification_sources": ["Crossref", "OpenAlex", "Semantic Scholar", "AIP landing page"],
+      "role": "contextual Reynolds-number and Reynolds-stress-budget reference"
+    }
+  ],
+  "runtime_impact": {
+    "changed_files": [
+      "benchmarks/Turbulence/RANSCalibration/TASK_CARD.yaml",
+      "frontier_science/certification.yaml"
+    ],
+    "agent_prompt_changed": false,
+    "initial_program_changed": false,
+    "evaluator_changed": false,
+    "data_changed": false,
+    "normalization_changed": false,
+    "old_gpt55_runtime_semantics_reusable": true
+  },
+  "claim_boundary": [
+    "The two corrected papers are contextual references and are not the source of the committed DNS profiles.",
+    "The correction does not retroactively validate any RANS performance or discovery claim.",
+    "The authoritative numerical evidence remains the hash-bound Zenodo dataset and executable evaluator."
+  ],
+  "passed": true
+}

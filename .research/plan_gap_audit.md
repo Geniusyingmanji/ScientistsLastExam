@@ -286,7 +286,9 @@ or rotate treatment order in task-instance blocks, pair conditions concurrently 
 and log the endpoint snapshot and UTC batch. Separately, a large score jump after bundled edits
 does not identify which edit or scientific idea caused it. For selected milestones, replay the
 parent, full child, component-only patches and rollback on the same sealed panel before making a
-causal case-study attribution.
+causal case-study attribution. MA1/E52 now preregisters milestone eligibility,
+component/leave-one-out/rollback replay, key `2×2` interactions and a separate `old/new data ×
+old/new method` contrast; the experiment remains unrun.
 
 ### 18. Task calibration and confirmatory estimates are not yet separated
 
@@ -822,8 +824,12 @@ path dependence in EdgeBench; its headline raw trajectories are unavailable.
   experiment selection, inference, uncertainty and claims from raw inputs on fresh worlds.
 - [ ] Build one linked data-QC/inference/design/intervention campaign with typed handoffs,
   uncertainty propagation, final decision regret and baseline/agent stage-swap counterfactuals.
-- [ ] For selected large trajectory jumps, replay parent, full child, component-only patches and
-  rollback on an identical sealed evaluator panel before attributing a milestone to an insight.
+- [ ] Run MA1/E52 first on ReactionMechanismFitting-v2 and ConvectionDiffusionOpt-v2: select
+  milestones by a preregistered material-event rule, replay parent/full-child/component-only/
+  leave-one-out/rollback plus key `2×2` interactions on an identical sealed panel, and separate
+  `old/new data × old/new method`; current normal short trajectories have no positive jump, while
+  Reaction's one selection-blind open-loop candidate is non-iterative and fails the false-discovery
+  gate, so classical contrasts remain analyzer controls rather than agent causal evidence.
 - [ ] Add sequential-vs-parallel, tool-access, novelty, ensemble, and component ablations where
   the corresponding scaffold capability is claimed.
 - [ ] Add one stateful laboratory stress task with calibration drift, sample depletion,
