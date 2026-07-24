@@ -2021,3 +2021,42 @@ only smoke-test bundled replay and does not pass the planned science attribution
 Convection short-run conditions remain at zero.
 MA1/E52 has not been run. Source hashes, design and claim limits are stored in
 `.research/edgebench_science_eleventh_order_audit_2026-07-24.json`.
+
+## 2026-07-24 — EdgeBench hypothesis-state and feedback-authority audit
+
+EdgeBench upstream was rechecked and remains arXiv `2607.05155v1`, SForge `a87350a` and public
+dataset `47846a4`. The paper's behavioral analysis describes strong systems as preserving a
+current best, making focused changes and rolling back failures; its outer loop deliberately
+provides task-defined authoritative scores, verdicts or diagnostics. The public paper does not
+report a randomized single-incumbent versus explicit competing-hypothesis treatment, nor a
+feedback-source bias/drift/conflict treatment. The unavailable raw trajectories may contain
+alternative-hypothesis tracking or source criticism, so no absence claim is made.
+
+This motivates two unrun Frontier-Science protocols. HP1/E53 compares a single incumbent with an
+explicit hypothesis portfolio, model averaging and diverse branches across an early-ambiguous
+phase and later discriminating interventions; one synthesis must be signed before fresh
+confirmation. FR1/E54 randomizes calibrated, biased, drifting and conflicting feedback sources,
+crosses source labels visible/hidden/permuted and scores source calibration, blind following,
+escalation, false discovery and sealed recovery. These proposals do not establish a defect in any
+EdgeBench judge or a new model result. Source hashes, distinctions and claim limits are stored in
+`.research/edgebench_science_twelfth_order_audit_2026-07-24.json`.
+
+## 2026-07-24 — MA1/E52 analyzer implementation smoke
+
+`scripts/analyze_milestone_attribution.py` now implements the preregistered full-child,
+component-only, leave-one-out, rollback, two-factor interaction and `old/new data × old/new
+method` estimands with frozen-parent/evidence/evaluator/world/environment hash checks. It reports
+non-separable treatments without assigning them a zero effect and applies sealed materiality,
+validity and false-discovery gates. Five synthetic and real-control tests pass.
+
+The existing truth-blind task calibrations are analyzer controls, not agent milestones. The
+Reaction classical bundle improves aggregate score to `0.4818355`, but two of eleven paired worlds
+gain false discoveries and the heldout FDR is `0.5`, so the reliability gate rejects a scientific-
+insight attribution; its historical components remain non-separable. In Convection, adding the
+off-axis experiment raises combined score from `0` to `0.8956051473` and heldout score from
+approximately zero to `0.8915088582`; mechanism, prediction and design improve on all seven
+supported paired worlds without changing false discovery on four unsupported worlds. This is a
+bounded positive-control evidence contribution in a synthetic benchmark, not an agent discovery.
+The current Reaction and Convection normal trajectories still contain zero eligible positive
+agent milestones, and the positive Reaction selection-blind artifact remains excluded because it
+is an offline frozen-parent proposal with FDR `0.5`.

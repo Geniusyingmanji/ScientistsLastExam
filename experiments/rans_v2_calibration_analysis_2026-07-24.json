@@ -2,10 +2,10 @@
   "schema_version": 1,
   "trust_status": "TRUSTED_DERIVED_EVIDENCE",
   "evidence_scope": "RANS_SINGLE_RUN_TASK_CALIBRATION_NOT_CAUSAL_POPULATION_UNIVERSAL_CLOSURE_CFD_OR_DISCOVERY_EVIDENCE",
-  "created_at": "2026-07-24T16:46:28.874908+00:00",
+  "created_at": "2026-07-24T17:27:51.994996+00:00",
   "source_provenance": {
     "git_available": true,
-    "git_revision": "82239ffb3214bfff5141eef94500a85e7240a558",
+    "git_revision": "d775e9a7e5dee35c2aa56a3a57918ebd80d2453c",
     "source_tree_dirty": false,
     "source_changes": [],
     "source_scope": [
@@ -26,7 +26,7 @@
     "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
     "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
   },
-  "input_task_source_revision": "5d5cfc26fea42f920531f41564bddebdd812f9e8",
+  "input_task_source_revision": "d775e9a7e5dee35c2aa56a3a57918ebd80d2453c",
   "input_model_source_revision": "458cdf8357977c04d3d3dc14fd83cdc99794fd08",
   "expected_model_source_revision": "458cdf8357977c04d3d3dc14fd83cdc99794fd08",
   "input_task_runtime_source_equivalent": true,
@@ -34,8 +34,8 @@
   "input_llm_condition_equivalent": true,
   "task_calibration": {
     "report": "experiments/rans_v2_calibration_2026-07-24.json",
-    "report_sha256": "0a456a0b8e8d46b6f037e6502c7abd3b6db1f01d72cf8f4aa64012c48c2ddc9e",
-    "source_revision": "5d5cfc26fea42f920531f41564bddebdd812f9e8",
+    "report_sha256": "62054f7ec2b8cba27a03d1046ce4e23ea3d317edf2c60d6ea194ff362c4766c3",
+    "source_revision": "d775e9a7e5dee35c2aa56a3a57918ebd80d2453c",
     "data_provenance_checks": {
       "aggregate_sha256": "0f70ce507fa65175f044538b41a266d42347cdf9c1bf2e7fafd8f630f47ed9bf",
       "expected_aggregate_sha256": "0f70ce507fa65175f044538b41a266d42347cdf9c1bf2e7fafd8f630f47ed9bf",

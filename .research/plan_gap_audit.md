@@ -26,9 +26,9 @@ physical validation, and auditable claim–evidence provenance.
 | Capability | Current status | Evidence | Remaining acceptance criterion |
 |---|---|---|---|
 | Candidate/oracle isolation | Implemented | Clean-revision security v18: 18/18 adversarial tests; Bubblewrap, no network, read-only mounts, resource/seccomp limits, typed RPC, fresh multi-world sessions and candidate-exception sanitization | Reproduce in clean Linux CI; document portability/non-Linux behavior |
-| Fail-closed trusted metrics | Implemented | Clean-revision 51×2 v24: 51 deterministic, 51 valid, 51 fail-closed and zero infrastructure failures after the RankineCycleOpt-v2 rebuild | Repair or quarantine every future invalid candidate oracle before certification |
-| Task admission policy | Implemented, narrow | Current manifest: 7 certified / 28 candidate / 16 quarantined; the latest rebuilds add active inverse/discovery candidates, LowThrustTransfer-v2, full-field LidDrivenCavity-v2, Climate-v2, BroadbandAbsorber-v2, Distillation-v2, HartreeFockSCF-v2, RoomImpulseResponse-v2, ConvectionDiffusionOpt-v2, SeismicWaveInversion-v2 and RankineCycleOpt-v2 | Independent domain + evaluator reviews are still declarations, not completed external review |
-| Scientific validity of inventory | Audited, sparse | All original 50 packages passed adversarial admission; ActiveLawDiscovery brings inventory to 51 and substantive rebuilds now leave 35 internally admissible packages | Rebuild high-value families and add approximately 15 net admissible tasks to reach about 50; hidden/generated instances and shortcut analysis remain mandatory |
+| Fail-closed trusted metrics | Implemented | Clean-revision 51×2 v27: 51 deterministic, 51 valid, 51 fail-closed and zero infrastructure failures | Repair or quarantine every future invalid candidate oracle before certification |
+| Task admission policy | Implemented, narrow | Current manifest: 7 certified / 30 candidate / 14 quarantined; the latest rebuilds add active inverse/discovery candidates, LowThrustTransfer-v2, full-field LidDrivenCavity-v2, Climate-v2, BroadbandAbsorber-v2, Distillation-v2, HartreeFockSCF-v2, RoomImpulseResponse-v2, ConvectionDiffusionOpt-v2, SeismicWaveInversion-v2, RankineCycleOpt-v2, MOSFETDoping-v2 and RANSCalibration-v2 | Independent domain + evaluator reviews are still declarations, not completed external review |
+| Scientific validity of inventory | Audited, sparse | All original 50 packages passed adversarial admission; ActiveLawDiscovery brings inventory to 51 and substantive rebuilds now leave 37 internally admissible packages | Rebuild high-value families and add approximately 13 net admissible tasks to reach about 50; hidden/generated instances and shortcut analysis remain mandatory |
 | Unified trajectory/accounting | Implemented, protocol-smoked | Clean-revision two-seed baseline smoke; trajectory schema v2, hashes, AUC over `budget_units`, separate `oracle_calls`, wall/token/cost, seed, checkpoint/resume | Validate nonzero-budget schema-v2 artifact replay in CI and version future changes |
 | Feedback controls | Implemented; strict pilot run | None/shuffled prompt-metric modes disclose true-score selection; strict selection-blind freezes parent/metrics; four-task n=3 pilot has no direction-stable lift and is not token-matched | Run token-matched ≥10 paired seeds with score-only, delayed/replayed and strict open-loop controls |
 | Evaluator-only metric sealing | Implemented and integration-verified | Closed search-visible allowlist; search-state redaction/hash-keyed sidecars; candidate-controlled exception text mapped to a finite label-blind taxonomy; current 244-test suite; clean pinned OpenEvolve/TreeQuest/Shinka no-leak report `aff026d` | Extend from baseline smoke to nonzero-budget upstream runs before comparative claims |
@@ -36,7 +36,7 @@ physical validation, and auditable claim–evidence provenance.
 | TreeQuest AB-MCTS | Implemented, trusted baseline smoke | Real TreeQuest AB-MCTS-A ask/tell adapter; clean-revision secure baseline passed under Python 3.12 | Run nonzero-budget/checkpoint integration and multi-seed study |
 | ShinkaEvolve | Implemented, trusted baseline smoke | Official runner/database adapter at pinned commit; clean-revision secure baseline passed under Python 3.10 | Run nonzero-budget/resume integration and token accounting audit |
 | Classical/domain baselines | Partial | NMR, HeatExchanger, Reaction, Gravity, Ocean, Radiative, LowThrust and Climate rebuilds have truth-blind domain baselines exposing reconstruction/proxy/prediction, terminal-feasibility, experiment-design or mechanism/refusal gaps | Add random/quasi-random plus BO/CMA-ES/DE and one domain heuristic for each meaningful task family |
-| Multi-seed benchmark evidence | Missing | Keyless GPT-5.5 Responses path is operational; 47 trusted normal single-run conditions cover 24 tasks and a separate four-task n=3 control pilot is negative/inconclusive | Certified-core and science-subset reports with paired uncertainty and portable raw trajectories |
+| Multi-seed benchmark evidence | Missing | Keyless GPT-5.5 Responses path is operational; 49 trusted normal single-run conditions cover 25 tasks and a separate four-task n=3 control pilot is negative/inconclusive | Certified-core and science-subset reports with paired uncertainty and portable raw trajectories |
 | Multifidelity/Pareto | Candidate-level | HeatExchanger-v2 implements proxy/exact Pareto archives, measured false promotion and physical shifts | Add independent high-fidelity review/replication and at least one certified multifidelity task |
 | Feedback learning claim | Negative pilot only | A strict open-loop control and three-replicate four-task pilot are complete; no direction-stable visible or sealed lift, and normal uses more tokens | Token-matched preregistered ≥10-replicate study with delayed/replayed and score-only controls |
 | Mechanistic discovery | Candidate-level | ActiveLaw, NMR, Reaction, Gravity, Ocean, Radiative and Climate tasks separately score mechanisms, prediction, coverage, hidden shifts, false discovery and refusal | Add paired repeated studies, harder regimes and independent scientific validation |
@@ -118,8 +118,8 @@ or make the executable-optimization qualifier unavoidable.
 
 ### 1. Only calibration-level empirical P2 evidence exists
 
-The keyless GPT-5.5 Responses path was restored and 47 trusted normal single-run conditions now
-cover 24 tasks, with task-specific strict open-loop diagnostics on a subset. They expose
+The keyless GPT-5.5 Responses path was restored and 49 trusted normal single-run conditions now
+cover 25 tasks, with task-specific strict open-loop diagnostics on a subset. They expose
 one-step saturation and multiple oracle defects, but there are still no valid five-seed
 certified-core trajectories, no paired feedback-control result, and no nonzero-budget official-
 backend search run. The project must distinguish “calibrated at budget one” from
@@ -607,13 +607,37 @@ distinct from restart depth/width, memory-channel ablation, starter randomizatio
 investigator replication. The source audit motivates the design but does not show excessive
 path dependence in EdgeBench; its headline raw trajectories are unavailable.
 
+### 45. A best artifact is not a calibrated set of competing hypotheses
+
+The current plan records hypothesis/evidence updates, false branches and claim revision, but its
+optimization loop and most trajectory summaries still center one incumbent. Early scientific
+evidence can leave several mechanisms compatible, and deleting all but the development-score
+leader can create confident path lock-in before a discriminating experiment is available. Add
+HP1/E53 on early-ambiguous procedural worlds: compare one incumbent with a fixed-capacity explicit
+hypothesis portfolio, model averaging and diverse branches; require executable predictions,
+support/contradiction links, calibrated weights and elimination reasons. Score true-mechanism
+retention, premature elimination, discriminating-test choice, false consensus, recovery and one
+fresh-confirmed precommitted synthesis. This is not ordinary population diversity or best-of-K.
+
+### 46. Scientific feedback sources are fallible treatment components
+
+The plan separates local and trusted loops and audits judge stability, but it generally treats
+received observations or critiques as having a known epistemic status. Real instruments,
+simulators, automated graders, reviewers and collaborating laboratories can be systematically
+biased, drift across regimes or share hidden ancestry. Add FR1/E54 with matched payload and cost:
+cross visible/hidden/permuted source identity against calibrated, noisy, biased, drifting and
+conflicting sources, with optional costly adjudication. Measure source-specific calibration,
+evidence-weighting regret, blind following, drift detection, escalation, false discovery and
+sealed recovery. J1 validates a judge from the evaluator side; FR1 evaluates whether the agent
+learns whom to trust.
+
 ## Revised TODO plan
 
 ### P0/P1 closeout — completed locally, reproduce in CI
 
 - [x] Trusted oracle / isolated candidate architecture and adversarial regression suite.
 - [x] Current 51-package deterministic secure baseline and certification audit; all 51 weak baselines are valid, deterministic and fail closed.
-- [x] Seven-task certified core, 29 candidates and 15 quarantined packages after all
+- [x] Seven-task certified core, 30 candidates and 14 quarantined packages after all
   admission waves and the current substantive rebuilds.
 - [x] Task-card/citation/invariant audit and dated machine-readable evidence.
 - [ ] Add Linux CI reproduction of all dated audits (local clean-revision reproduction is done).
@@ -683,6 +707,8 @@ path dependence in EdgeBench; its headline raw trajectories are unavailable.
   cumulative incidence, validity probability by budget, conditional post-valid quality and joint
   sealed-plus-mechanism success.
 - [ ] Add structural/behavioral diversity and genealogy-collapse diagnostics.
+- [ ] Add HP1 competing-hypothesis controls on an early-ambiguous mechanism task: single incumbent,
+  explicit portfolio, model averaging and diverse branches, with one pre-confirmation synthesis.
 - [ ] Add adaptive allocation/stopping baselines (for example, SMC-style convergence control).
 - [ ] Add a task-contract linter for prompt versus actual horizon, checkpoint schedule,
   evaluator timeout, cooldown, maximum submissions, submitted paths and deliverables.
@@ -793,6 +819,8 @@ path dependence in EdgeBench; its headline raw trajectories are unavailable.
   hashes in the event manifest; fail closed when a rubric/LLM evaluator is not reproducibly identified.
 - [ ] Calibrate every rubric/LLM evaluator on blinded anchors, exact duplicates and content-preserving
   style twins, with an independent judge and expert/executable adjudication for material disagreements.
+- [ ] Add FR1 source-reliability treatments with calibrated/noisy, biased, drifting and conflicting
+  channels crossed with visible/hidden/permuted source labels and a costed adjudication option.
 
 ### P3 — scientific validity and distinctiveness
 

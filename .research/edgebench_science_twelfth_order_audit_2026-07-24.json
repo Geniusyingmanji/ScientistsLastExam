@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "audit_date_utc": "2026-07-24",
+  "scope": "Twelfth-order audit of single-incumbent optimization semantics and the assumption that agent-visible external feedback is authoritative in the unchanged EdgeBench v1 paper and public release. HP1/E53 and FR1/E54 are Frontier-Science experiment proposals, not EdgeBench treatments or empirical findings.",
+  "upstream_state": {
+    "arxiv_id": "2607.05155v1",
+    "arxiv_updated_utc": "2026-07-06T14:39:22Z",
+    "github_commit": "a87350ab80eeb320b13cb71d1b0c3ffcc20a670f",
+    "github_commit_date_utc": "2026-07-17T10:27:00Z",
+    "huggingface_revision": "47846a4c3669ad447e0ea984833b0d352460c5f9",
+    "huggingface_last_modified_utc": "2026-07-09T11:28:50.000Z",
+    "changed_since_eleventh_order_audit": false
+  },
+  "source_hashes": {
+    "arxiv_source_package_sha256": "8193aeb41a3474690a40fac82e2ecbd53e651ab6b4759984b4c6845c04fbfd29",
+    "arxiv_approach_tex_sha256": "14cd29671b9cccccefc564aab1b053afbda585dd2fbfcd7c1573c053ff5eba74",
+    "arxiv_experiments_tex_sha256": "1eb7b254a49fccf097c92eaf84f3f869276772d214a28c3b0ca7a7351b90c844",
+    "arxiv_gw_case_study_details_tex_sha256": "0253d935b4c8128985bf72d6ba1344a0d0d912b8e894d2b062fd2653c279201b",
+    "arxiv_evaluation_hacking_tex_sha256": "a0cb97b14e33fb76788d6ba9f6e46de356b66e240eb65cf970f884b16927125d",
+    "sforge_judge_server_py_sha256": "e5e05cc91a03e9d3d8d6770223b78df326bcde6b636cdd1bcd668c0195c78360"
+  },
+  "source_facts": [
+    "EdgeBench describes its outer loop as judge-mediated authoritative calibration that returns task-defined scores, verdicts or diagnostics, while its local loop supplies tests, simulations and validators.",
+    "The model-comparison discussion describes stronger agents as building a submit-ready baseline, preserving the current best solution, making focused changes and using feedback to retain gains or roll back failures. This is an optimization-level behavioral description, not an experiment comparing one incumbent with an explicit set of competing scientific hypotheses.",
+    "The gravitational-wave case study presents one selected best-so-far path and seven representative milestones. The public paper does not report a randomized single-incumbent versus hypothesis-portfolio or model-averaging treatment.",
+    "The evaluation-hacking appendix reports feedback leakage, stochastic-tail optimization, reused-seed overfitting, a trust-boundary exploit and blocked online lookup. These cases concern adaptation to the evaluator; they do not randomize feedback-source bias, regime drift, conflict or source-identity information.",
+    "The approximately 38000-hour raw trajectory corpus and figure-analysis code are not public, so this audit cannot determine whether individual EdgeBench agents internally retained alternative hypotheses or calibrated the reliability of different information sources."
+  ],
+  "frontier_science_experiments": [
+    {
+      "id": "competing_hypothesis_management",
+      "plan_id": "HP1",
+      "addendum_id": "E53",
+      "design": "In matched answer-disjoint procedural worlds, reveal an early observation set that leaves at least two mechanisms observationally compatible, followed at a preregistered time by discriminating interventions, nulls or out-of-library evidence. Compare a single-incumbent policy with a fixed-size explicit hypothesis portfolio, posterior or model averaging and equal-budget diverse branches. Each hypothesis binds executable predictions, supporting and contradicting evidence, calibrated weight, a proposed discriminating test and an elimination reason. One conclusion must be signed before fresh confirmation; evaluator-selected best-branch endpoints are prohibited.",
+      "primary_outcomes": [
+        "true_hypothesis_retention",
+        "premature_elimination_rate",
+        "hypothesis_set_calibration",
+        "discriminating_experiment_information_and_decision_value",
+        "recovery_after_early_misleading_evidence",
+        "false_consensus",
+        "portfolio_diversity_and_cost",
+        "fresh_confirmed_mechanism_and_refusal"
+      ],
+      "distinct_from": {
+        "F5": "tests which retained state channel carries value, not whether one or several live scientific hypotheses should be retained",
+        "CF1": "estimates conditional continuation variance from a frozen history, whereas HP1 intervenes on the hypothesis-management policy during one trajectory",
+        "K3": "randomizes the initial executable prior, whereas HP1 tests maintenance and elimination of alternatives after evidence arrives",
+        "T1": "compares investigators and synthesis, whereas HP1 can be implemented within one agent and one evidence stream",
+        "R4": "tests revision of a defended claim after contradiction, whereas HP1 tests whether plausible alternatives survived before commitment"
+      }
+    },
+    {
+      "id": "feedback_source_reliability",
+      "plan_id": "FR1",
+      "addendum_id": "E54",
+      "design": "Hold the latent world, total scientific cost and payload size fixed while crossing source identity with calibrated noisy, systematically biased, regime-drifting, shared-bias and adversarially conflicting observation or critique channels. Compare source labels visible, hidden and permuted, with an optional costly independent adjudication action. Persist source lineage, predicted reliability, realized residual, evidence weight, conflict handling and escalation before the final outcome.",
+      "primary_outcomes": [
+        "source_specific_calibration",
+        "evidence_weighting_regret",
+        "corruption_and_drift_detection_delay",
+        "blind_judge_following_rate",
+        "false_discovery",
+        "unnecessary_escalation_cost",
+        "sealed_mechanism_and_utility",
+        "recovery_after_source_drift"
+      ],
+      "distinct_from": {
+        "E7_R2": "checks independent replication of a final artifact rather than online learning of source reliability",
+        "J1": "audits evaluator repeatability and construct validity from the benchmark side, whereas FR1 scores the agent's evidence-weighting policy",
+        "R1": "tests absence or misspecification of a scientific signal, not heterogeneous reliability of the channels reporting it",
+        "F4": "tests semantic information in diagnostics, not whether that information source is accurate in the current regime",
+        "F9": "tests when to request feedback, whereas FR1 tests how to trust and combine feedback after it arrives"
+      }
+    }
+  ],
+  "claim_boundary": [
+    "The source facts do not show that EdgeBench agents failed to maintain alternative hypotheses or blindly trusted all feedback; the unavailable trajectories may contain such behavior.",
+    "Calling the judge authoritative is a benchmark interface choice, not evidence that any official EdgeBench judge was biased, drifting or wrong.",
+    "HP1 and FR1 are motivated by the migration from score optimization to scientific epistemic practice. They are not necessary to interpret EdgeBench strictly as an environment-learning benchmark.",
+    "Neither HP1/E53 nor FR1/E54 has been run, and no new Frontier-Science performance, hypothesis-management or feedback-reliability result is claimed."
+  ]
+}

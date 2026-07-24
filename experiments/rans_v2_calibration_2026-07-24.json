@@ -2,10 +2,10 @@
   "schema_version": 1,
   "trust_status": "TRUSTED_TASK_CALIBRATION",
   "evidence_scope": "ALGEBRAIC_CHANNEL_CLOSURE_TASK_CALIBRATION_NOT_GENERAL_RANS_SEPARATED_FLOW_EXPERIMENT_OR_DISCOVERY_VALIDATION",
-  "created_at": "2026-07-24T16:25:05.829982+00:00",
+  "created_at": "2026-07-24T17:27:24.352353+00:00",
   "source_provenance": {
     "git_available": true,
-    "git_revision": "5d5cfc26fea42f920531f41564bddebdd812f9e8",
+    "git_revision": "d775e9a7e5dee35c2aa56a3a57918ebd80d2453c",
     "source_tree_dirty": false,
     "source_changes": [],
     "source_scope": [
@@ -30,7 +30,7 @@
   "task": "Turbulence/RANSCalibration",
   "task_source_sha256": {
     "benchmarks/Turbulence/RANSCalibration/Task.md": "ec5058eb2193bf4b44626da9204ca8bfb93e02f068a0226907a460373bea6e1f",
-    "benchmarks/Turbulence/RANSCalibration/TASK_CARD.yaml": "f01a68bd00ea7b504ebe135d21899eef8ac2808b424ea1611fba28eb27ff308d",
+    "benchmarks/Turbulence/RANSCalibration/TASK_CARD.yaml": "96e36d152c56b0f1225b6d93c7babb629b3709622ccafcffa5e1508a42648222",
     "benchmarks/Turbulence/RANSCalibration/solution.py": "08d77d5949beb6d20b7459805f4834306fd6daebc982cc38e1f38c03b7d371e5",
     "benchmarks/Turbulence/RANSCalibration/verification/closure_model.py": "dc462617193a1b39aa509a7662313e080b401fbbe5e39048f334eb1f2fc0b48b",
     "benchmarks/Turbulence/RANSCalibration/verification/evaluator.py": "c9c84fea2b6c810ad8a38e84377daadb68355c02d8ff1dddb86c0934be119511",

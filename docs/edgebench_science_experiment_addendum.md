@@ -884,6 +884,41 @@ interaction 在 sealed/fresh worlds 上保留、且不恶化 false discovery/val
 milestone 的因果贡献；否则只称 bundled empirical improvement。可执行门槛、抽样框、因子定义与
 estimands 已冻结在 `.research/milestone_attribution_preregistration.md`。
 
+### E53. 竞争假设的保留、淘汰与证伪
+
+EdgeBench 将强 agent 的行为概括为建立可提交 baseline、保留 current best、做 focused changes，并根据
+反馈保留增益或回滚失败；引力波案例也沿 best-so-far milestones 解释一条成功路径。这适合工程优化，但
+科学推断的状态不只是一个 incumbent artifact。早期观测常同时支持多个机制；若 agent 一看到局部最高分
+就删除替代假设，后续优化可以在错误机制附近持续涨分。现有 F5 测哪类 memory 有用，CF1 测同一 checkpoint
+的未来分布，K3 测 starter 锚定，T1 测独立研究者，R4 测已有 claim 遇到反证后是否撤回；它们都没有直接
+随机化 **单一 incumbent 与显式竞争假设集合**。
+
+新增 `HP1`：在 ActiveLawDiscovery、InterventionalSCM 或后续 GeneNetworkIntervention 的 matched
+procedural worlds 中，先提供可由两个以上机制解释的 ambiguous observations，再于预注册时点开放能区分
+机制的 intervention、null 或 out-of-library evidence。比较 single-incumbent、固定容量 hypothesis portfolio、
+posterior/model averaging 和等预算 diverse branches；每个候选需绑定可执行预测、支持/反对证据、置信度、
+下一项 discriminating test 与淘汰理由。主要结果为 true-hypothesis retention、premature elimination、
+hypothesis-set calibration、区分实验的信息/决策价值、早期误导后的恢复、false consensus、fresh-confirmed
+mechanism/refusal 及额外成本。所有 branch 在 confirmation 前合成一个签名结论；禁止 evaluator 事后挑最佳
+branch，否则实验退化为 best-of-K。
+
+### E54. 有偏、漂移和冲突反馈下的来源可信度校准
+
+EdgeBench 的 outer loop 被设计为提供 authoritative calibration，论文中的 scores、verdicts 与 diagnostics
+按任务定义生成；其 hacking 案例说明反馈可泄露 hidden target 或奖励随机上尾，但没有把“权威来源本身
+可能有偏或漂移”作为 treatment。真实科研同时面对仪器批次、低/高保真 simulator、自动 grader、审稿意见
+和独立实验室，它们可能共享偏差或互相冲突。E7 比较独立 simulator 的最终复算，J1 从评测者侧检查 judge
+repeatability/style sensitivity，R1 测 null/错配 world，F4 测 diagnostic 语义，F9 测何时请求反馈；这些都
+不回答 agent 是否能学习 **哪个来源在当前 regime 对哪个 quantity 可信**。
+
+新增 `FR1`：固定 latent world、科学预算与 feedback payload 大小，交叉 source identity 与 calibrated/noisy、
+systematically biased、regime-drifting、shared-bias 和 adversarially conflicting channels；比较 source labels
+可见、隐藏、随机置换，以及可付费请求独立 adjudication 的条件。每次更新保存 source lineage、预测可靠度、
+实际残差、采用权重、冲突处理和 escalation 决策。主要结果为 source-specific calibration、evidence-weighting
+regret、corruption/drift detection delay、blind judge-following rate、false discovery、不必要复核、sealed
+mechanism/utility 与来源漂移后的恢复。FR1 测被评系统的 epistemic trust policy；它不能由离线判定 judge
+稳定性替代，也不能把 benchmark 故意注入的偏差写成真实仪器结论。
+
 ## 5. 推荐的曲线与表格
 
 主文可沿用 Frontier-Eng/EdgeBench 的时间或 oracle-budget best-so-far 图，但 science 论文至少再加：
@@ -965,6 +1000,10 @@ estimands 已冻结在 `.research/milestone_attribution_preregistration.md`。
 46. milestone component-attribution forest/interaction plot：parent/full child、component-only、leave-one-out、
     rollback 与关键 `2×2` interactions 在 development/sealed/mechanism/refusal 上的配对效应，并单列
     non-separable patches 与 `old/new data × old/new method` 归因。
+47. competing-hypothesis survival：single incumbent、显式 hypothesis portfolio、model averaging 与 diverse
+    branches 的 hypothesis-set calibration、真机制保留/过早淘汰、区分实验和 fresh confirmation；
+48. feedback-source reliability：各来源 predicted/realized error、采用权重、冲突/escalation、bias/drift
+    detection 与最终 sealed mechanism/refusal，分离 source label 与 feedback content。
 
 log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、Gompertz、piecewise/change-point
 和 hierarchical task-mixture 比较；必须用 held-out time forecasting、bootstrap over tasks 与跨 seed
@@ -979,8 +1018,8 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
 - [x] clean revision `2706281` 生成 derived analysis、43-condition/22-task summary 和四类审计；
 - [x] clean revision `ce1cf4d` 生成 45-condition/23-task summary v16，并纳入可信 Rankine 正常条件；
 - [x] clean revision `2f647d9` 生成 MOSFET 派生分析与 47-condition/24-task summary v17；
-- [x] 当前全量回归 275/275；clean revision `97158a8` 的 certification/security/baseline 刷新为
-  v35/v19/v25。
+- [x] 当前全量回归 293/293；clean revision `d775e9a` 的 certification/security/baseline 刷新为
+  v37/v21/v27，当前准入为 7/30/14，49 个 normal conditions 覆盖 25 个任务。
 
 ### P1 — Long-horizon pilot
 
@@ -1057,6 +1096,12 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
   ConvectionDiffusionOpt-v2 实现 `MA1/E52` micro-pilot，预注册 milestone 抽样、patch taxonomy、
   leave-one-out/rollback、关键 `2×2` interaction 与 `old/new data × old/new method`，并将 non-separable
   patch 和 false-discovery/validity 变化计入失败而非零效果；
+- [ ] 在一个机制 family 构造 early-ambiguous→discriminating-intervention 序列，比较 single incumbent、
+  显式 hypothesis portfolio、model averaging 与 diverse branches；在 fresh confirmation 前只能提交一个
+  结论，禁止 post-hoc best branch；
+- [ ] 在一个 active-science task 注入 calibrated/noisy、systematically biased、drifting 和 conflicting
+  feedback sources，交叉 source label 可见/隐藏/置换，并测 reliability calibration、blind following、
+  escalation cost、false discovery 与 sealed recovery；
 - [ ] pilot 可按 headroom 分配后续工程资源，但 confirmatory cohort 不得据此删任务；
 - [ ] 仅在 pilot 证明基础设施稳定且至少部分任务有 headroom 后扩展 6h/12h。
 
@@ -1172,3 +1217,9 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
   这些事实只用于把已有 I3 升级为 MA1/E52；它们不否定官方案例的描述价值，也不证明任何具体 edit 的
   归因错误。来源哈希、实验设计和 claim boundary 见
   `.research/edgebench_science_eleventh_order_audit_2026-07-24.json`。
+- EdgeBench v1 将外环描述为 scores/verdicts/diagnostics 形式的 authoritative calibration，并在行为分析中
+  强调 current-best preservation、focused changes 与 rollback；公开正文/附录没有报告 single-incumbent
+  versus explicit hypothesis-portfolio treatment，也没有随机化 feedback-source bias/drift/conflict。该范围
+  事实只用于提出 HP1/E53 与 FR1/E54，不说明官方 agent 没有内部保留替代假设，也不说明任何官方 judge
+  不可靠。来源哈希、实验设计和 claim boundary 见
+  `.research/edgebench_science_twelfth_order_audit_2026-07-24.json`。

@@ -584,6 +584,32 @@ wrong or quantify any effect on them.
 The source hashes, 51-contract mode census, OBS1/E48 design and claim limits are retained in
 `.research/edgebench_science_eighth_order_audit_2026-07-24.json`.
 
+## Twelfth-pass hypothesis-state and feedback-authority findings
+
+These are scope deductions from the unchanged EdgeBench v1 paper and public release. They do not
+measure an omitted behavior in the unavailable raw trajectories or identify an error in any
+official judge.
+
+1. **A current-best artifact is not a scientific hypothesis set.** EdgeBench's behavioral analysis
+   describes stronger systems as preserving the current best, making focused changes and rolling
+   back failures, while its gravitational-wave case presents one best-so-far lineage. Scientific
+   ambiguity often requires retaining several mechanisms until a discriminating intervention is
+   available. HP1/E53 therefore randomizes single-incumbent versus explicit portfolio, model-
+   averaging and diverse-branch policies on early-ambiguous procedural worlds. It scores true-
+   hypothesis retention, premature elimination, set calibration and fresh-confirmed synthesis;
+   post-hoc best-branch selection is prohibited.
+2. **An authoritative benchmark judge is not automatically an infallible evidence source.** The
+   EdgeBench outer loop intentionally supplies calibrated task-defined scores, verdicts or
+   diagnostics, and its hacking audit studies exploitation of that interface. Real scientific
+   channels may instead have source-specific bias, drift or shared error. FR1/E54 holds the latent
+   world and budget fixed while randomizing source reliability and source-label information, then
+   measures reliability calibration, evidence-weighting regret, blind following, escalation and
+   sealed recovery. This agent-side trust-policy experiment is distinct from offline judge
+   repeatability or independent final-artifact replay.
+
+Source hashes, experiment distinctions and claim limits are stored in
+`.research/edgebench_science_twelfth_order_audit_2026-07-24.json`.
+
 ## Minimum next experiments
 
 1. **HartreeFockSCF-v2 calibration:** GPT-5.5 budget 1, normal budget 3 and strict
@@ -744,6 +770,14 @@ The source hashes, 51-contract mode census, OBS1/E48 design and claim limits are
     future variance with matched-score states reached through different evidence/hypothesis paths.
     Treat the parent checkpoint as the unit, report every child, wrong-mechanism lock-in and sealed
     escape, and never convert the design into an oracle best-of-`K` endpoint.
+51. **Competing-hypothesis audit:** expose an early ambiguous evidence phase followed by
+    preregistered discriminating interventions; compare a single incumbent with a capacity-matched
+    explicit hypothesis portfolio, model averaging and diverse branches, then require one signed
+    conclusion before fresh confirmation.
+52. **Feedback-source reliability audit:** cross source identity with calibrated, biased, drifting,
+    shared-bias and conflicting channels under matched scientific cost and payload; hide or permute
+    source labels and score reliability calibration, evidence weighting, escalation and sealed
+    mechanism/refusal recovery.
 
 ## Claim boundary
 

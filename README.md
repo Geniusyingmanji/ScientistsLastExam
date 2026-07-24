@@ -20,7 +20,7 @@ The repository contains **51 task packages in 47 metadata domains**:
 
 - **7 certified core tasks**: Lennard–Jones clusters, spin glass, Poisson solver,
   matrix-multiplication rank, Cap Set, circle packing, and multilayer thin films.
-- **28 candidate tasks** pending scientific certification, including intervention-based causal
+- **30 candidate tasks** pending scientific certification, including intervention-based causal
   and active dynamical-law laboratories whose prediction and mechanism metrics are reported
   separately, a multi-spectrum NMR peak-mechanism/refusal task, and a multi-fidelity
   heat-exchanger Pareto-design task, a full-field lid-driven-cavity solver, active
@@ -30,7 +30,7 @@ The repository contains **51 task packages in 47 metadata domains**:
   single-reheat Pareto-cycle task, robust room
   acoustics design, active convection--diffusion identification/design and active layered
   reflection acquisition/inversion with explicit model-inadequacy refusal.
-- **15 quarantined tasks** with reproduced scientific-oracle, identifiability, provenance or
+- **14 quarantined tasks** with reproduced scientific-oracle, identifiability, provenance or
   shortcut defects; these remain inventory packages but are not admissible benchmark tasks.
 
 The default CLI exposes only the certified core. `--all` explicitly shows the full
@@ -46,13 +46,13 @@ controlled exception text is reduced to a fixed label-blind failure taxonomy bef
 search feedback, preventing observations from being carried between worlds through exceptions.
 The current audit reports:
 
-- 275/275 unit, security, protocol, analysis and scientific-invariant tests passed after the
-  MOSFETDoping-v2 rebuild. The latest trusted task/security/baseline reports bind clean source
-  revision `97158a8`; the trusted MOSFET model analysis and 47-condition cross-task summary v17
-  bind clean source revision `2f647d9`.
+- 293/293 unit, security, protocol, analysis and scientific-invariant tests passed after adding
+  the MA1/E52 attribution analyzer. The latest trusted task/security/baseline reports bind clean
+  source revision `d775e9a`; the current hash-bound calibration summary contains 49 normal
+  single-run conditions over 25 tasks.
 - The latest 51×2 secure-baseline audit reports 51/51 deterministic, 51/51 valid, 51/51
   fail-closed and zero infrastructure failures.
-- Current source manifest: 7 certified / 29 candidate / 15 quarantined. D-optimal design, quantum
+- Current source manifest: 7 certified / 30 candidate / 14 quarantined. D-optimal design, quantum
   gate synthesis, DC optimal power flow, truss sizing, antenna synthesis and NMR peak fitting have been rebuilt with separate sealed
   validation or robustness metrics and re-admitted as candidates. HeatExchanger-v2 additionally
   separates a public constant-property proxy from a sealed segmented temperature-dependent
@@ -235,10 +235,10 @@ the post-repair 50-package audits bind revision `47c3613`; the subsequent wave-2
 audit quarantines seven additional defective candidates. The two P2 smokes are baseline-only; the repository does not yet contain
 credible multi-seed model-performance evidence. A clean-revision GPT-5.5 budget-one core pilot
 is recorded as task calibration, not a benchmark leaderboard.
-The latest trusted clean-revision certification/security/baseline audits are v35/v19/v25. The
-current source manifest is 7/29/15 and contains 36 internally admissible tasks, leaving an
-approximate gap of 14 to the roughly 50-task target. The hash-bound cross-task summary v17
-contains 47 normal single-run conditions over 24 tasks; it is calibration
+The latest trusted clean-revision certification/security/baseline audits are v37/v21/v27. The
+current source manifest is 7/30/14 and contains 37 internally admissible tasks, leaving an
+approximate gap of 13 to the roughly 50-task target. The hash-bound cross-task summary v18
+contains 49 normal single-run conditions over 25 tasks; it is calibration
 evidence, not a leaderboard or population result.
 
 The latest EdgeBench re-audit keeps its upstream facts at arXiv `2607.05155v1`, SForge
@@ -255,7 +255,9 @@ live-state stratum (OBS1/E48), policy-aware inference after endogenous experimen
 (AD1/E49), complete reporting of null/contradictory/failed local experiments (NR1/E50), and
 conditional checkpoint forks that separate same-history continuation randomness from matched-score
 research-history lock-in (CF1/E51), plus preregistered single-factor/factorial replay that separates
-new evidence, method edits and their interactions at narrated breakthroughs (MA1/E52). A separate M2
+new evidence, method edits and their interactions at narrated breakthroughs (MA1/E52), explicit
+retention and falsification of competing hypotheses rather than only one incumbent (HP1/E53), and
+calibration of biased, drifting or conflicting feedback sources (FR1/E54). A separate M2
 protocol gate freezes the checkpoint risk set and replays single-run best-so-far monotonicity.
 These are proposed experiments, not new EdgeBench or Frontier-
 Science performance results. The expansion plan also prioritizes one prospective evidence-synthesis task over another

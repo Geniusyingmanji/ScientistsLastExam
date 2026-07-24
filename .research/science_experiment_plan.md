@@ -98,6 +98,8 @@ Report its visible, sealed and mechanism advantage over `committed` as an
 | AD1 | Does an adaptively chosen experiment stream still support calibrated scientific inference? | In answer-disjoint procedural worlds compare fixed randomized/balanced designs, agent-adaptive acquisition, the same adaptive data analyzed naively, and policy-aware analysis using logged action probabilities or randomized exploration; require positivity or mark unsupported regions | bias/RMSE and interval coverage for effects/mechanisms, FDR, propensity calibration, support violations, information/decision value, fresh-world confirmation and policy regret | Valid inference after endogenous experiment selection, distinct from merely choosing informative experiments |
 | NR1 | Does the system preserve and report unfavorable local evidence rather than only the best artifact or selected milestones? | Route every simulator/instrument action through a trusted event server, then compare the objective ledger with the submitted claim/evidence package under a preregistered result-reporting schema; inject positive, null, contradictory, failed and censored outcomes | result-capture completeness, sign-conditional reporting odds, failed/null/contradictory omission, effect-size inflation, claim reversals after full-ledger disclosure, reproducibility and fresh confirmation | Auditable scientific reporting without a file-drawer or selective-reporting advantage |
 | CF1 | Given the same accumulated scientific history, how variable and path-dependent is the remaining research outcome? | At preregistered first-valid and mid-budget times, clone one content-addressed full checkpoint into independently randomized equal-budget continuations; add matched-score/different-history parents and incumbent-only or audited-notebook descendants | within-checkpoint continuation variance, between-history variance at matched score, conditional value of remaining budget, wrong-mechanism lock-in/escape, descendant diversity, sealed/mechanism confirmation and state-sufficiency prediction | Conditional reproducibility and research-history lock-in rather than unconditional seed variance or best-of-K search |
+| HP1 | Can the system preserve and discriminate competing scientific hypotheses instead of committing early to the current score leader? | On matched procedural worlds, compare single-incumbent memory with a fixed-size explicit hypothesis portfolio and with posterior/model-averaged or diverse-branch controls; introduce early ambiguous evidence followed by preregistered discriminating interventions, nulls and out-of-library mechanisms | true-hypothesis retention, premature-elimination and false-consensus rates, hypothesis-set calibration, discriminating-test value, recovery after early misleading evidence, portfolio diversity/cost and fresh-confirmed mechanism/refusal | Calibrated management and falsification of a version space, not merely preservation of one best artifact or post-hoc branch selection |
+| FR1 | Can the system learn which feedback sources are reliable instead of treating every external score or critique as authoritative? | Hold the latent world and evidence budget fixed while crossing source identity with calibrated, noisy, systematically biased, drifting and adversarially conflicting observation/critique channels; compare source labels present/hidden/swapped and allow independent adjudication at a cost | source-specific calibration and reliability estimates, evidence-weighting regret, corruption detection delay, judge-following rate, false discovery, unnecessary escalation, sealed mechanism/utility and recovery after source drift | Feedback-source calibration and evidence triangulation, distinct from evaluator repeatability or generic model misspecification |
 
 ## Controls that must be strict
 
@@ -368,6 +370,12 @@ server-held procedural worlds, multi-seed feedback controls and independent revi
 57. Conditional checkpoint-fork tree: one frozen parent history to all randomized continuations,
     showing within-parent versus matched-score between-history variance, wrong-mechanism lock-in,
     escape probability and sealed-confirmed child outcomes without post-hoc best-child selection.
+58. Competing-hypothesis survival panel: explicit version-space size and calibration over time,
+    true-hypothesis retention, premature elimination, discriminating interventions and recovery
+    after early ambiguous or misleading evidence under single-incumbent and portfolio policies.
+59. Feedback-source reliability panel: source-specific predicted versus realized error, evidence
+    weights, conflict/escalation decisions, corruption or drift detection and downstream sealed
+    mechanism/refusal outcomes for calibrated, biased, drifting and adversarial sources.
 
 Avoid presenting a radar chart or a single “science score”; small multiples preserve the
 important capability dissociations.
@@ -622,6 +630,10 @@ midpoint, speed or doubling-time claim.
 - One MA1 milestone-attribution pilot on ReactionMechanismFitting-v2 and ConvectionDiffusionOpt-v2,
   with preregistered milestone sampling, component/leave-one-out/rollback replay, key interactions
   and separate new-evidence attribution, before describing a score jump as a scientific insight.
+- One HP1 competing-hypothesis pilot on a mechanism family with deliberately ambiguous early
+  observations, and one FR1 fallible-feedback pilot with source identity crossed against source
+  reliability, before claiming that persistent state constitutes scientific reasoning under
+  uncertainty or that external feedback is epistemically authoritative.
 
 Only Stage B can support claims about feedback-driven scientific discovery. A real-world
 discovery claim additionally requires independent high-fidelity or physical confirmation and
@@ -706,6 +718,12 @@ domain-expert review.
   narrated component in isolation; a small subset of components or interactions should retain the
   sealed/mechanism effect, while `old/new data × old/new method` separates evidence acquisition
   from method improvement and exposes bundled gains that do not survive false-discovery/validity gates.
+- H33: an explicit, budget-limited competing-hypothesis portfolio retains the supported mechanism
+  through an ambiguous early phase more often than a single-incumbent policy and selects more
+  discriminating interventions, without obtaining its endpoint by post-hoc best-branch selection.
+- H34: when feedback sources have heterogeneous bias or drift, provenance-aware reliability
+  updating reduces blind judge following and false discovery relative to source-agnostic feedback;
+  hiding or swapping source labels removes this advantage unless the content alone identifies reliability.
 
 These are hypotheses to test. The paper should report failed hypotheses and negative results
 rather than selecting only curves that resemble Frontier-Eng or EdgeBench.
