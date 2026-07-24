@@ -1774,3 +1774,30 @@ The source hashes, experiment designs and claim boundaries are recorded in
 `EvidenceSynthesis/ProspectiveMetaAnalysis`, whose executable screening, duplicate/selective-
 reporting detection, hierarchical inference and next-study design are tested by a fresh prospective
 confirmation. None of these additions is an EdgeBench numerical result or a completed experiment.
+
+## 2026-07-24 — EdgeBench disclosed-horizon and scientific-judge audit
+
+EdgeBench upstream was rechecked and remains arXiv `2607.05155v1`, SForge `a87350a` and public
+dataset `47846a4`. The paper's main per-time values are checkpoints from independent 12-hour
+trials, so they describe a 12-hour-aware policy rather than counterfactual agents independently
+told to stop at 2/4/6/8/10 hours. A direct recomputation of the official public 51-task displayed
+table finds disjoint best-model sets at 2h and 12h on 19/51 tasks. This is descriptive
+horizon-conditioned ranking drift, not evidence that disclosed horizon caused the changes.
+
+The current public harness also exposes a model-mediated evaluation path:
+`college_english_exam_bank` invokes `grade_with_codex.py`, with the grader selected at runtime by
+`SFORGE_JUDGE_MODEL`. The judge image pins grading code, but current judge-image hashing and
+persisted effective `run_config.json` do not naturally bind the runtime judge environment. This is
+a provenance/reliability risk, not evidence that any EdgeBench score changed or is incorrect.
+
+Three unrun Frontier-Science experiments were added. HZ1/E41 randomizes independently disclosed
+2/6/12-hour horizons, compares them with 12-hour-aware matched prefixes and adds a preregistered
+random-censoring arm. J1/E42 pins complete judge manifests and measures blinded anchor/duplicate/
+style-twin repeatability, inter-judge agreement, executable-outcome concordance and expert
+adjudication. F9/E43 separately treats the agent's decision to request costly authoritative
+feedback as an acquisition policy, comparing agent-requested, fixed-grid, random, cost-aware VOI
+and end-only schedules with pre-request value predictions. The 1M-versus-200k context result is
+also scoped to a performance-level advantage: its displayed gap narrows from +5.8 at 2h to +4.4
+at 12h, so it does not alone identify a faster baseline-adjusted learning slope. The source hashes,
+descriptive recomputation and claim boundaries are recorded in
+`.research/edgebench_science_fifth_order_audit_2026-07-24.json`.

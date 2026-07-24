@@ -87,6 +87,15 @@ Goal/Ralph scaffolds can help or harm by task. The revised plan therefore factor
 continuation, separates local-loop from trusted-loop feedback, and treats model plus scaffold as
 the evaluated system. These are implementation-derived deductions, not additional author claims.
 
+A further incremental pass separates checkpoint time from horizon-conditioned policy and treats
+model-mediated grading as part of the evaluator system. EdgeBench's main checkpoints come from
+12-hour-aware runs; the public displayed best-model sets at 2h and 12h are disjoint on 19/51
+tasks, which motivates but does not identify a horizon effect. SForge also exposes at least one
+runtime-configurable LLM grader whose complete manifest is not naturally bound into the public
+task/run hash chain. The revised plan therefore adds independent disclosed-horizon/random-censoring
+experiments and blinded judge-anchor/duplicate/style-twin calibration. These are Frontier-Science
+proposals, not revised EdgeBench results.
+
 `arXiv:2601.21165` also creates a direct naming collision: *FrontierScience* already denotes an
 expert-authored Olympiad/Research question benchmark. Public release should rename this project
 or make the executable-optimization qualifier unavoidable.
@@ -458,6 +467,40 @@ surfaces or Pareto sets. Report sealed weight-distribution regret, worst-case/CV
 and safety. This differs from score granularity and portfolio allocation: U1 asks whether one
 scientific artifact remains decision-useful when legitimate downstream preferences were unknown.
 
+### 35. A long-run prefix is not a short-horizon scientific policy
+
+EdgeBench reports `@2h/.../@12h` from agents assigned independent 12-hour runs. Those checkpoints
+describe one long-horizon policy, but horizon knowledge can change how a scientist allocates early
+exploration, expensive confirmation and stopping. The public 51-task table makes the practical
+stakes visible: recomputing the best displayed model at 2h and 12h gives disjoint winner sets on
+19/51 tasks. This is descriptive ranking drift, not a causal horizon effect. Randomize the true,
+disclosed 2/6/12-hour deadline on matched task worlds, compare independent short-run endpoints
+against 12-hour-aware prefixes, and add a hidden random-censoring arm. Budget and model rankings
+must be labeled horizon-conditioned until this policy effect is measured.
+
+### 36. Model-mediated judges are part of the experimental treatment
+
+The public SForge documentation configures an LLM grader at runtime through
+`SFORGE_JUDGE_MODEL` for at least one released task. The judge image pins grading code, but the
+runtime judge identity and response configuration are not naturally part of the task image hash or
+the persisted effective run configuration. This does not show that EdgeBench's reported score is
+wrong; it exposes a reproducibility risk for future open-question, evidence-synthesis and report
+tasks. Pin a complete judge manifest, repeatedly score blinded expert anchors, exact duplicates and
+scientifically equivalent style/verbosity twins, and cross-check against executable outcomes plus
+expert adjudication. Report judge noise, drift and rank reversals; do not promote a single mutable
+rubric model to the primary scientific truth oracle.
+
+### 37. Effective submissions do not identify calibrated feedback acquisition
+
+An EdgeBench submission is counted effective when it improves the historical best, but the agent
+chooses when to submit after inspecting local evidence. The ratio therefore bundles candidate
+quality with endogenous request timing, cooldown, latency and task difficulty. In science the
+external loop may be an expensive experiment, higher-fidelity solve or expert review, making
+feedback acquisition itself a core decision. Under one fixed total feedback/confirmation budget,
+compare agent-requested, fixed-grid, random, cost-aware VOI and end-only policies. Require a
+pre-request prediction and action threshold, then score predicted-realized value calibration,
+request-timing regret, redundant calls, false discovery and fresh-confirmed utility.
+
 ## Revised TODO plan
 
 ### P0/P1 closeout — completed locally, reproduce in CI
@@ -510,6 +553,8 @@ scientific artifact remains decision-useful when legitimate downstream preferenc
   identical evaluator feedback schedules and both visible and sealed curves.
 - [ ] Add agent-visible submission budgets/cooldowns, feedback-payload accounting and a
   scalar/aggregated/diagnostic feedback-bandwidth ablation.
+- [ ] Compare agent-requested, fixed-grid, random, cost-aware VOI and end-only external feedback
+  under one total budget; freeze a question/value/action-threshold card before each request.
 - [ ] Add fixed-interval evaluator-only snapshots that never affect online selection or stopping.
 - [ ] Require `t=0`, first-valid, every submission/commit, fixed-grid and terminal sentinel
   snapshots through the same immutable capture/evaluator path; reason-code missing boundaries.
@@ -550,6 +595,8 @@ scientific artifact remains decision-useful when legitimate downstream preferenc
   material post-2h headroom and shortcut resistance.
 - [ ] Use independent runs disclosed their true horizon for budget comparisons; do not treat a
   horizon-aware long run's prefixes as counterfactual short-horizon executions.
+- [ ] Randomize disclosed 2/6/12-hour horizons on matched worlds and add a preregistered hidden
+  random-censoring arm; report exploration/confirmation allocation, prefix regret and rank reversals.
 - [ ] Implement delayed-feedback controls and preregister paired Track F contrasts.
 - [x] Implement a strict selection-blind open-loop control with frozen baseline parent/metrics,
   offline-only best selection, explicit parent-hash tests and machine-readable feedback scope.
@@ -612,6 +659,10 @@ scientific artifact remains decision-useful when legitimate downstream preferenc
   speed or doubling-time claim; retain all scheduled systems and adjust for initial capability.
 - [ ] Add equal-bit meaningful-label, permuted-label, unlabeled-component and scalar feedback
   conditions to distinguish scientific diagnostics from score-decomposition leakage.
+- [ ] Pin runtime judge provider/model snapshot, rubric/prompt, sampling, tools/corpus and response
+  hashes in the event manifest; fail closed when a rubric/LLM evaluator is not reproducibly identified.
+- [ ] Calibrate every rubric/LLM evaluator on blinded anchors, exact duplicates and content-preserving
+  style twins, with an independent judge and expert/executable adjudication for material disagreements.
 
 ### P3 — scientific validity and distinctiveness
 

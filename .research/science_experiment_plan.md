@@ -56,6 +56,7 @@ Report its visible, sealed and mechanism advantage over `committed` as an
 | F5 | Which retained state actually carries scientific learning? | Factor incumbent artifact, local-result cache, judge-feedback ledger, hypothesis/evidence memory, conversational context and full workspace | sealed/mechanism lift, evidence-use accuracy, contradiction/failed-branch retention, transfer to a new instance | Mechanism of stateful improvement rather than a bundled continuous-run effect |
 | F6 | Which loop causes improvement? | 2×2 local simulator/test feedback × agent-visible trusted-judge feedback, with matched calls and information accounting | visible/sealed/mechanism gain per local tool call, trusted call and revealed bit | Local experimentation separated from authoritative-judge learning |
 | F7 | Does retained experience transfer, or anchor a stale hypothesis? | Same-regime continuation vs related-instance transfer or a preregistered regime change; artifact-only, evidence-memory, full-state and clean-restart conditions | positive/negative transfer, adaptation delay, stale-claim persistence, calibrated revision and false discovery | Scientific memory quality rather than same-task score persistence |
+| F9 | Can the agent decide when costly external feedback is worth requesting? | Equal total trusted-feedback budget under agent-requested, fixed-grid, random, cost-aware VOI and end-only policies; every on-demand request preregisters its question, expected information/decision value and action threshold | predicted-versus-realized feedback value, gain/information per cost, request timing regret, redundant/escalatory calls, confirmation reserve, false discovery and committed utility | Autonomous feedback acquisition rather than an endogenous effective-submission rate |
 | V1 | Does optimization generalize beyond the visible oracle? | Visible development oracle vs evaluator-only hidden instances/shifts | sealed score, development–validation gap, rank correlation, replication rate | Generalizable result |
 | V2 | Does a cheap proxy survive higher-fidelity evaluation? | Proxy-only search; scheduled promotion; adaptive multifidelity; exact-only reference where affordable | proxy/exact rank correlation, false-promotion rate, exact-call efficiency, high-fidelity regret | Multifidelity validation |
 | V3 | Does an adaptively selected claim survive genuinely fresh confirmation? | Exploration/development worlds and periodic sealed monitoring vs a single post-commit server-held world or independent high-fidelity replication never used for search, admission, fitting or stopping | confirmation success, replication effect/interval, adaptive-look count and confirmation regret | Confirmatory evidence separated from adaptive discovery |
@@ -68,7 +69,7 @@ Report its visible, sealed and mechanism advantage over `committed` as an
 | K2 | Did the system discover a method or execute one supplied by the task? | Method-prescriptive vs method-neutral contracts and workflow-hint ablations on matched procedural worlds | algorithm-family novelty, mechanism/validation lift, literature overlap and independent transfer | Prescribed reproduction separated from task-local method discovery |
 | B1 | How does the trajectory compare with domain experts under the same interface? | Expert one-shot and iterative runs on a stratified subset with matched feedback, experiment and wall/compute budgets | validated utility, sample efficiency, mechanism/refusal calibration, stopping and failed-hypothesis coverage | Human-calibrated capability and task difficulty |
 | I1 | Does hidden trajectory measurement alter the trajectory? | Stable committed head plus scratch workspace; fixed disclosed snapshots vs jittered undisclosed snapshots vs post-run event replay | branching/edit cadence, transient invalidity, throughput, visible-feedback latency and final science outcomes | Observer effect of evaluator-only measurement |
-| I2 | How much performance comes from continuation scaffolding? | Fixed model/context/tools crossed with continuous session, goal state and fresh-context file-backed loop | active duty cycle, state-loss incidents, evidence retention and committed/sealed outcomes | Model capability separated from continuation harness |
+| I2 | How much performance comes from continuation scaffolding? | Fixed model/context/tools crossed with continuous session, goal state and fresh-context file-backed loop; separately vary context capacity with a preregistered one-shot/first-valid baseline | active duty cycle, state-loss incidents, evidence retention, baseline-adjusted gain, context-by-time interaction and committed/sealed outcomes | Model capability and initial level separated from continuation or accumulated-experience effects |
 | S1 | Is an aggregate scaling curve predictively and mechanistically supported? | Preregistered log-sigmoid and alternatives, whole-trajectory validation across held-out suffixes/runs/tasks/families, and fixed-grid material-improvement events | held-out error/log score, interval coverage, parameter stability and improvement hazard versus normalized progress | A bounded empirical regularity; never feedback learning or discovery by itself |
 | S2 | Are the fitted ceiling, midpoint and speed actually identifiable in the observed horizon? | Profile/trajectory-bootstrap fits across rolling windows and longer horizons, with constrained or nonparametric alternatives | parameter intervals/correlation, post-inflection support, window stability and coverage | Curve-parameter interpretation only when identified; otherwise observed-window gain |
 | I3 | Is a narrated breakthrough caused by the attributed edit? | Parent, full child, component-only patch and rollback replay on one frozen sealed evaluator panel | retained effect, interaction, regression and component-specific science metrics | Causal edit attribution for selected milestones, not from chronology alone |
@@ -86,6 +87,8 @@ Report its visible, sealed and mechanism advantage over `committed` as an
 | V4 | Is the scientific method invariant to equivalent representations while remaining sensitive to real physical changes? | Unit, coordinate, channel, grid, spectral and symmetry-equivalent metamorphic twins plus visually similar non-equivalent negative controls | physical-claim consistency, performance drop, equivariance violations, contradictions and negative-control sensitivity | Representation-robust scientific transfer rather than template or schema matching |
 | T1 | Does independent scientific review reduce correlated error under a fixed total budget? | Single continuous agent vs shared branches vs isolated investigators vs blinded evidence synthesis vs shared-context critic; team signs one claim before fresh confirmation | hypothesis diversity, pairwise error correlation, false consensus, minority correctness, synthesis calibration, confirmation and utility per cost | Multi-agent/team benefit without post-hoc oracle winner selection |
 | U1 | Does the artifact remain useful when a reasonable downstream utility is not known during search? | Public fixed scalar vs public utility family with sealed post-commit weights vs reusable Pareto/response-surface/method artifact; announced objective-shift control | sealed utility regret, worst-case/CVaR regret, Pareto coverage, safety violations and adaptation cost | Reusable scientific knowledge separated from evaluator-targeted scalar optimization |
+| HZ1 | Does the disclosed research horizon change the scientific policy, not merely its cutoff? | Independent runs with the true horizon disclosed as 2/6/12 h, matched prefixes from a 12 h-aware run, and a preregistered random-censoring arm; hold task/world, feedback policy and per-unit resources fixed | exploration-to-confirmation allocation, early committed/sealed/mechanism utility, confirmation-budget reserve, stopping/abstention, horizon-conditioned rank and prefix regret | Budget-response and model rankings that are valid for the policy actually deployed at each horizon |
+| J1 | Are rubric- or model-mediated scientific judgments stable enough to support trajectory and ranking claims? | Pin a complete judge manifest and evaluate blinded anchor artifacts, exact duplicates and adversarial style/verbosity twins with repeated independent judges, deterministic executable metrics and expert adjudication where needed | repeatability, inter-judge agreement, anchor drift, style sensitivity, rank reversals, calibration to executable outcomes and adjudication rate | Judge-mediated evidence only when evaluator identity, uncertainty and construct validity are demonstrated |
 
 ## Controls that must be strict
 
@@ -317,6 +320,12 @@ server-held procedural worlds, multi-seed feedback controls and independent revi
     synthesis on diversity, correlated error, false consensus, fresh confirmation and cost.
 45. Latent-utility robustness frontier comparing public scalar optimization with reusable
     Pareto/method artifacts under post-commit sealed utility weights.
+46. Horizon-policy matrix: independently disclosed 2/6/12-hour runs versus matched prefixes of
+    a 12-hour-aware run, including exploration/confirmation allocation, rank reversals and prefix regret.
+47. Judge-reliability panel: blinded anchors/duplicates/style twins across pinned judge manifests,
+    with repeatability, inter-judge agreement, executable-metric concordance and adjudication rates.
+48. Feedback-acquisition calibration: predicted versus realized information/decision value for
+    each external request, costed request-timing regret and unused confirmation reserve.
 
 Avoid presenting a radar chart or a single “science score”; small multiples preserve the
 important capability dissociations.
@@ -518,6 +527,8 @@ midpoint, speed or doubling-time claim.
 - One I6 raw-instrument pipeline and V4 metamorphic-invariance audit before claiming scope beyond
   structured observations; one T1 independent-team and U1 sealed-utility pilot before claiming
   collaborative autonomous science or stakeholder-robust scientific knowledge.
+- One HZ1 disclosed-horizon/random-censoring pilot before interpreting long-run prefixes as
+  short-budget policies; J1 judge calibration before any rubric/model-judge result is primary.
 
 Only Stage B can support claims about feedback-driven scientific discovery. A real-world
 discovery claim additionally requires independent high-fidelity or physical confirmation and
@@ -566,6 +577,13 @@ domain-expert review.
   over an equal-budget single agent or shared-context critic without relying on oracle winner selection.
 - H20: executable Pareto/method artifacts have lower post-commit sealed-utility regret than artifacts
   optimized for one public scalar, at comparable scientific cost and safety.
+- H21: an independently disclosed short-horizon policy differs materially from the matched prefix
+  of a long-horizon-aware policy in exploration/confirmation allocation or committed science utility.
+- H22: a pinned rubric/model judge meets preregistered repeatability, agreement and style-invariance
+  thresholds and preserves conclusions against executable outcomes or expert adjudication.
+- H23: an agent-requested external-feedback policy predicts realized information or decision value
+  better than fixed/random schedules and improves fresh-confirmed utility per cost without spending
+  the one-shot confirmation reserve or increasing false discovery.
 
 These are hypotheses to test. The paper should report failed hypotheses and negative results
 rather than selecting only curves that resemble Frontier-Eng or EdgeBench.

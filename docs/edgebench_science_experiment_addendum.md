@@ -311,6 +311,12 @@ order-statistic null 曲线比较。`Smax/beta/tmid` 给 profile/bootstrap uncer
 原始数据、假说 ledger、declared incumbent 和未完成实验。跨模型比较若未统一这些条件，结论对象
 明确写成 model+harness+service system，而非基础模型本身。
 
+EdgeBench 的 1M-context Opus 相对 200k 在 2h 已领先 5.8 分、到 12h 领先 4.4 分；这可靠地说明
+model+context system 在整个窗口有 level advantage，但差距略缩小，不能单靠该图证明“长 context
+让累计经验的学习斜率更快”。Context arm 应增加匹配 one-shot/first-valid baseline，比较 baseline-adjusted
+gain、context×time interaction、证据记忆质量和新 instance transfer；若主要差异已在首次 checkpoint
+出现，应优先解释为初始有效能力/状态容量，而不是 within-run learning-speed gain。
+
 ### E17. 自适应数据复用与 anytime-valid 证据
 
 在 null、weak-signal 和 supported worlds 上扫描 submission/feedback budget，比较：重复使用固定
@@ -613,6 +619,56 @@ information/coverage/risk），比较三种合同：公开一个固定 scalar；
 post-weight adaptation cost 和 method replay transfer。隐藏权重不得参与搜索、admission 或 snapshot selection；
 若只有公开 scalar 臂成功，结论应是 evaluator-targeted optimization，而不是可复用科学知识。
 
+### E41. 已知研究期限对策略的因果效应
+
+EdgeBench 的 `@2h/@4h/.../@12h` 主表来自三条 12 小时长程运行的时间切片，而不是分别告知 agent
+真实截止时间的独立 2/4/.../12 小时策略。这个口径适合描述“一条 12 小时政策走到各时点时有多强”，
+但不能直接回答“只给 2 小时时 agent 会如何工作”。研究期限本身会改变探索、保守提交、实验并行、
+停止以及为复核/confirmation 预留预算的策略；对 science 来说，前缀可比性尤其不是技术细节。
+
+在 2--3 个既有 long-horizon-ready 任务上随机分配真实且明确披露的 `2h/6h/12h` 截止时间，并把每个
+短期限 arm 与同一 task/world 下 12h-aware run 的匹配前缀比较；另加一个 server-side 预注册随机截断
+arm，截断分布对 agent 公开但具体时点隐藏。固定单位时间/实验成本、工具、feedback policy、world panel
+与 harness，只让 horizon knowledge 改变。主要结果为 exploration→confirmation 预算分配、前缀时点的
+committed/sealed/mechanism/refusal、最后一次新假说与第一次复核的时间、confirmation reserve、停止质量、
+`prefix regret = short-horizon terminal - long-horizon prefix` 及 task/model 排序反转。公开 51-task 表的
+重算可作动机：2h 与 12h 的最高模型集合在 19/51 个任务上互不相交；这是展示 horizon-dependent
+ranking 的描述性结果，不是 horizon treatment effect。只有独立 disclosed-horizon runs 才进入预算政策
+结论；长程前缀继续作为部署过程的描述量。
+
+### E42. 科学 judge 的校准、漂移与可替代性
+
+EdgeBench 的公开 SForge 至少为 `college_english_exam_bank` 暴露可配置的 LLM grader：judge 容器由
+`SFORGE_JUDGE_MODEL` 指定模型。任务镜像 hash 固定程序环境，但运行时 judge identity、endpoint、版本、
+sampling/config 与响应未天然进入 task contract 的内容 hash 或公开 `run_config.json`。这不说明官方分数
+发生变化，却说明任何 rubric/LLM-mediated science 评价都不能仅把 grader 当成无误差真值。当前 E7 的
+独立 simulator 复算覆盖数值 oracle disagreement，但不覆盖评审者偏好、文风敏感性和 model drift。
+
+凡开放问题、证据综合、报告或 claim-quality 需要 rubric/model judge 时，先冻结完整 judge manifest
+（provider/model snapshot、prompt/rubric、sampling、tool/corpus、endpoint 日期与 response hash），再对一组
+domain-expert anchor artifacts、精确重复、顺序随机化以及科学内容不变但 verbosity/style/citation-placement
+改变的 metamorphic twins 做 blinded repeated scoring。至少与 deterministic executable outcomes 和一小组
+独立专家 adjudication 交叉；报告固定 artifact repeatability、inter-judge agreement、anchor drift、style
+sensitivity、模型/方法排序反转、可执行结果相关性与 adjudication rate。LLM judge 可作高吞吐辅评或反馈
+treatment，但若主要科学结论只在单个可变 judge 上成立，应降级为 judge-specific rubric optimization；
+confirmation、机制真值、单位/守恒/可行性和新实验结果仍由可执行或独立证据决定。
+
+### E43. 自主请求外部反馈的校准与机会成本
+
+EdgeBench 报告 effective-submission rate，并观察到更频繁提交不必然带来更高终分；但 submission 本身由
+agent 在看过本地状态后内生选择。于是“有效提交比例”同时混合候选质量、何时请求 judge、反馈延迟、
+cooldown 和任务难度，不能单独解释为学习效率。Science 中 authoritative loop 往往对应昂贵实验、
+高保真计算、领域专家评审或破坏性测量；agent 不仅要利用反馈，还要判断 **何时值得买这一条反馈**。
+E4/F1 识别反馈是否有用，S4 改变同一反馈的释放 cadence；E43 则识别自主 acquisition policy 的质量。
+
+固定总 trusted-feedback/confirmation budget，比较 agent-requested、fixed-grid、随机、cost-aware VOI 和
+end-only 五种请求策略；本地 simulator 与 active work budget 匹配。每次自主请求前，agent 必须签署
+request card：当前假说/不确定性、想区分的问题、预测结果分布、预计 information/decision value、成本、
+以及何种返回会改变下一步；请求结果只能用于其后 descendant。报告 predicted-vs-realized value
+calibration、每单位成本的 sealed/mechanism gain、request timing regret、重复/升级调用、queue-induced stale
+feedback、为一次性 confirmation 保留的预算、null-world false discovery 和最终 committed utility。若 agent
+只靠高频询问 grader 提分而没有更好的 fresh confirmation，应称 evaluator querying，而不是科研判断力。
+
 ## 5. 推荐的曲线与表格
 
 主文可沿用 Frontier-Eng/EdgeBench 的时间或 oracle-budget best-so-far 图，但 science 论文至少再加：
@@ -667,6 +723,12 @@ post-weight adaptation cost 和 method replay transfer。隐藏权重不得参�
     hypothesis diversity、错误相关性、false consensus、fresh confirmation 和 cost；
 33. latent-utility robustness frontier：公开 scalar 与 sealed utility-family 权重下的 Pareto coverage、
     worst-case regret、post-weight adaptation cost 和安全约束。
+34. horizon-policy matrix：独立披露的 2/6/12h runs 与 12h-aware matched prefixes 的探索/复核分配、
+    prefix regret、停止质量与 task/model 排序反转。
+35. judge-reliability panel：固定 anchors、重复件和 style/verbosity twins 跨 pinned judge manifests 的
+    repeatability、agreement、drift、executable-outcome concordance 与 expert adjudication。
+36. feedback-acquisition calibration：每次外部请求前预测与事后实际 information/decision value、单位成本
+    收益、请求时机 regret、重复调用和未花掉的 confirmation reserve。
 
 log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、Gompertz、piecewise/change-point
 和 hierarchical task-mixture 比较；必须用 held-out time forecasting、bootstrap over tasks 与跨 seed
@@ -723,6 +785,12 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
   必须在 fresh confirmation 前由团队签署，禁止 post-hoc oracle winner selection；
 - [ ] 在一个多目标任务隐藏 commit 后才抽取的 domain-valid utility weights，比较 fixed-scalar 与可复用
   Pareto/method artifact 的 sealed regret；
+- [ ] 在 2--3 个任务随机分配真实披露的 2/6/12h horizon，并把独立短期限策略与 12h-aware matched
+  prefixes 比较；另加隐藏具体截断时点的随机-censoring arm，报告 prefix regret、复核预算和排序反转；
+- [ ] 对所有 rubric/LLM-mediated evaluator 固定完整 judge manifest，并用 blinded anchors、duplicates、
+  science-content-equivalent style twins、第二 judge 与 expert/executable adjudication 先做可靠性门槛；
+- [ ] 在 2 个 feedback-cost 异质任务比较 agent-requested/fixed-grid/random/VOI/end-only 请求策略；每次
+  请求前冻结 request card，核对 predicted-realized value、timing regret 与 confirmation reserve；
 - [ ] 对 pilot cells 先跑 measurement-health gate，再决定是否分配 6h/12h；
 - [ ] pilot 可按 headroom 分配后续工程资源，但 confirmatory cohort 不得据此删任务；
 - [ ] 仅在 pilot 证明基础设施稳定且至少部分任务有 headroom 后扩展 6h/12h。
@@ -753,8 +821,8 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
 - [ ] 预注册主要 estimand、失败口径、multiple-comparison 与 bootstrap unit；
 - [ ] 分析脚本校验 cohort/task-count/weight/transform/run-policy 与 manifest 完全一致；
 - [ ] 将 scoring partition、task accumulation order、curriculum order 和 shared-budget allocation policy
-  以及 feedback cadence、task-graph topology、starter arm、question-contract arm 纳入 figure manifest 与
-  sensitivity report；
+  以及 feedback cadence、task-graph topology、starter arm、question-contract arm、disclosed horizon 和
+  judge manifest 纳入 figure manifest 与 sensitivity report；
 - [ ] 独立重跑至少一个模型/agent harness，分离模型和脚手架效应；
 - [ ] 生成向量曲线、evidence ladder、failure incidence 与 cost frontier；
 - [ ] 最终论文把 simulator optimization、mechanism discovery 和 prospective validation 分层措辞。
@@ -793,3 +861,10 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
   sensor-fault/dirty-GNSS/ECG/evidence-extraction/active-learning 任务范围，以及固定 objective/single-run
   scope 支撑 E37--E40 的问题边界；具体 treatment 是 Frontier-Science 提案，机器记录见
   `.research/edgebench_science_fourth_order_audit_2026-07-24.json`。
+- EdgeBench v1 论文将 2--12h 主表定义为三条 12h trajectories 的时间切片；公开 README 的 51-task
+  per-time table 在 2h 和 12h 的最高模型集合有 19/51 个任务互不相交。公开 SForge 还为一个 LLM-graded
+  task 通过运行时 `SFORGE_JUDGE_MODEL` 配置 grader，而 `run_config.json` 不记录 judge manifest。这些
+  source-level facts 只用于提出 E41--E43；它们不证明 horizon knowledge、judge choice 或 feedback-request
+  policy 已改变官方结果。
+  Source hashes、描述性重算与 claim boundary 保存在
+  `.research/edgebench_science_fifth_order_audit_2026-07-24.json`。

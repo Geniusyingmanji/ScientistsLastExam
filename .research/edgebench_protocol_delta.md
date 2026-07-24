@@ -454,6 +454,49 @@ and fixed task contracts. They are proposed Frontier-Science experiments, not Ed
 The configuration census, proposed designs and claim limits are retained in
 `.research/edgebench_science_third_order_audit_2026-07-24.json`.
 
+## Eighth-pass horizon-policy and judge findings
+
+These are incremental deductions from the unchanged EdgeBench v1 experiment definition, public
+51-task score table and current SForge release. They are not additional EdgeBench empirical claims.
+
+1. **Checkpoint budgets inherit the long-horizon policy.** EdgeBench schedules three independent
+   12-hour trials per task--model pair and reads its 2/4/6/8/10/12-hour table from those
+   trajectories. This measures the state of a 12-hour-aware policy at each checkpoint, not the
+   endpoint of an agent independently told it has two or six hours. Horizon knowledge can change
+   exploration, verification, finalization and stopping. In the public 51-task displayed table,
+   the best-model sets at 2h and 12h are disjoint on 19 tasks, showing that horizon-conditioned
+   rankings are consequential, although it does not identify why they change. Frontier-Science
+   should randomize true disclosed horizons and compare independent endpoints with matched
+   long-run prefixes; a server-side random-censoring arm can test anytime readiness without
+   revealing the exact stop time.
+2. **A model-based judge needs its own provenance and reliability experiment.** The public
+   `college_english_exam_bank` contract invokes `grade_with_codex.py`, while SForge documentation
+   passes the grader model through runtime `SFORGE_JUDGE_MODEL`. The judge image identifies the
+   grading program, but `TaskSpec.judge_image_hash` hashes the base/platform/cwd/setup commands and
+   the persisted effective `run_config.json` omits `judge_extra_env`; runtime grader identity is
+   therefore not naturally bound into the public task/run hash chain. This is an implementation
+   provenance finding, not evidence of changed scores. For scientific rubric judgments, pin the
+   full judge manifest and measure duplicate/anchor repeatability, inter-judge agreement, style
+   sensitivity, drift and rank reversals against executable metrics and expert adjudication.
+3. **Effective-submission rate is an endogenous acquisition statistic.** An agent submits after
+   inspecting its local state, so the fraction of submissions that improve bundles candidate
+   quality with the decision to request feedback, cooldown/latency and task difficulty. Science
+   often makes the outer loop an expensive experiment, high-fidelity computation or expert review.
+   Compare agent-requested, fixed-grid, random, cost-aware value-of-information and end-only
+   policies under the same total feedback/confirmation budget. Require a pre-request prediction of
+   what the feedback will distinguish and how it will change action; score predicted-realized
+   value calibration, request timing regret, redundant calls and fresh-confirmed utility.
+4. **Longer context establishes a level advantage, not automatically faster learning.** The
+   reported 1M-versus-200k gap is +5.8 at 2h and +4.4 at 12h. Because the advantage is already
+   present at the first displayed checkpoint and slightly narrows, this comparison shows that the
+   model--context system performs better over the window; it does not by itself identify a larger
+   within-run learning slope. Context studies should add a one-shot/first-valid baseline and test
+   baseline-adjusted gain plus the context-by-time interaction before attributing the difference
+   to greater accumulation of experience.
+
+The source facts, descriptive 51-task recomputation, proposed designs and claim limits are
+retained in `.research/edgebench_science_fifth_order_audit_2026-07-24.json`.
+
 ## Minimum next experiments
 
 1. **HartreeFockSCF-v2 calibration:** GPT-5.5 budget 1, normal budget 3 and strict

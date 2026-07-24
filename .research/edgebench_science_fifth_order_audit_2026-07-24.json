@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "audit_date_utc": "2026-07-24",
+  "scope": "Fifth-order Frontier-Science deductions from the unchanged EdgeBench v1 experiment definition, public 51-task per-time score table, and runtime-configurable LLM judge path. Proposed treatments are not EdgeBench empirical results.",
+  "upstream_state": {
+    "arxiv_id": "2607.05155v1",
+    "arxiv_updated_utc": "2026-07-06T14:39:22Z",
+    "github_commit": "a87350ab80eeb320b13cb71d1b0c3ffcc20a670f",
+    "huggingface_revision": "47846a4c3669ad447e0ea984833b0d352460c5f9",
+    "experiments_tex_sha256": "1eb7b254a49fccf097c92eaf84f3f869276772d214a28c3b0ca7a7351b90c844",
+    "scaling_tex_sha256": "ff9ede3db3a878d161131753d1b7b801be3330e8ba9f5dd19380c6b43dcd23c5",
+    "github_readme_sha256": "b58e38094f275b4f81bd31ec2b99014f345bcf6e65c5d6a0181a9c77a025c76a",
+    "public_llm_graded_contract_sha256": "93e112ed9d4b899cff8c7f41552e0a35ce6ae2bb0bc45d109706cf39eaf0406f",
+    "sforge_task_spec_py_sha256": "6be45aeae6a061c0097a34b6740461a673d40e76a631975946572bdd78f8ad55",
+    "sforge_config_py_sha256": "4f118682c3ffe517fddd71a640552c66608d22baf8abae3292a59853fe9e094c",
+    "sforge_cli_py_sha256": "2bce6a6ebbb5a62edcf437ba2b0ebe64d25d79d1e5d223081b7c2b2bef2f617f",
+    "changed_since_fourth_order_audit": false
+  },
+  "source_facts": [
+    "The main EdgeBench experiment schedules three independent 12-hour trials for each task-model pair and reports the same trajectories at 2, 4, 6, 8, 10 and 12 hours.",
+    "The public 51-task README table contains per-time values for five models; recomputation finds that the displayed best-model sets at 2 hours and 12 hours are disjoint on 19 of 51 tasks.",
+    "EdgeBench defines an effective submission as one that sets a new best-so-far score, while the agent chooses when to submit; this is therefore an endogenous request-and-quality statistic.",
+    "The 1M-context Opus comparison leads the 200k condition by 5.8 points at 2 hours and 4.4 points at 12 hours, establishing a performance-level advantage but not by itself a larger baseline-adjusted learning slope.",
+    "The public college_english_exam_bank contract invokes grade_with_codex.py and the SForge documentation configures its grader model through the runtime SFORGE_JUDGE_MODEL environment variable.",
+    "The current TaskSpec judge-image hash does not include runtime judge_extra_env, and the persisted effective run_config.json does not record judge_extra_env."
+  ],
+  "descriptive_recomputation": {
+    "source": "official GitHub README public 51-task per-time table",
+    "tasks": 51,
+    "checkpoint_pair": [
+      "2h",
+      "12h"
+    ],
+    "tasks_with_disjoint_displayed_best_model_sets": 19,
+    "task_ids": [
+      "borden_source_inversion",
+      "dabic_gravity_inversion",
+      "ann_vector_search_qps",
+      "git_rewrite_in_zig",
+      "vliw_kernel_optimization",
+      "equivalence_class_divide_and_conquer",
+      "jagua_nesting_optimization",
+      "tree_block_partitioning",
+      "triangulation_coloring_optimization",
+      "wireless_electricity_layout",
+      "college_english_exam_bank",
+      "k12_math_recommendation",
+      "portfolio_risk_calibration",
+      "combinatorial_games_formalization",
+      "lean_analysis_proofs",
+      "new_foundations_consistency",
+      "pfr_formalization",
+      "openrct2_theme_park_ai",
+      "trinity_text_adventure"
+    ],
+    "tie_policy": "For each checkpoint, retain the set of all models tied at the displayed maximum; count a task only when the 2h and 12h sets are disjoint.",
+    "interpretation": "Horizon-conditioned ranking drift in displayed public scores; not a randomized causal effect of disclosed horizon."
+  },
+  "frontier_science_experiments": [
+    {
+      "id": "disclosed_horizon_policy",
+      "plan_id": "HZ1",
+      "addendum_id": "E41",
+      "design": "Randomize true disclosed 2h, 6h and 12h horizons on matched task worlds; compare independent short-run endpoints with matched prefixes from 12h-aware runs and add a preregistered random-censoring arm whose distribution, but not realized cutoff, is disclosed.",
+      "primary_outcomes": [
+        "exploration_to_confirmation_allocation",
+        "committed_sealed_mechanism_prefix_utility",
+        "confirmation_budget_reserve",
+        "stopping_and_abstention_quality",
+        "prefix_regret",
+        "horizon_conditioned_rank_reversal"
+      ]
+    },
+    {
+      "id": "scientific_judge_reliability",
+      "plan_id": "J1",
+      "addendum_id": "E42",
+      "design": "Pin a complete judge manifest and repeatedly score blinded expert anchors, exact duplicates and content-preserving style or verbosity twins across independent judge manifests, deterministic executable outcomes and expert adjudication.",
+      "primary_outcomes": [
+        "fixed_artifact_repeatability",
+        "inter_judge_agreement",
+        "anchor_drift",
+        "style_sensitivity",
+        "model_or_method_rank_reversal",
+        "executable_outcome_concordance",
+        "expert_adjudication_rate"
+      ]
+    },
+    {
+      "id": "external_feedback_acquisition",
+      "plan_id": "F9",
+      "addendum_id": "E43",
+      "design": "At equal total trusted-feedback and confirmation budgets compare agent-requested, fixed-grid, random, cost-aware value-of-information and end-only feedback policies; require a signed prediction and action threshold before each on-demand request.",
+      "primary_outcomes": [
+        "predicted_realized_feedback_value_calibration",
+        "sealed_and_mechanism_gain_per_cost",
+        "request_timing_regret",
+        "redundant_or_escalatory_requests",
+        "confirmation_budget_reserve",
+        "null_world_false_discovery",
+        "committed_utility"
+      ]
+    }
+  ],
+  "claim_boundary": [
+    "No new EdgeBench performance result is claimed.",
+    "The 19-of-51 recomputation is descriptive and does not establish that horizon knowledge causes the ranking changes.",
+    "The runtime judge provenance finding does not establish that any reported EdgeBench score changed or is incorrect.",
+    "Until HZ1 is run, long-run prefixes should not be described as counterfactual short-horizon scientific policies.",
+    "Until J1 is passed, rubric or model-judge outcomes should be labeled judge-specific and should not be the sole basis for a scientific discovery claim.",
+    "Until F9 is run, effective-submission rate should not be interpreted as calibrated scientific feedback-acquisition efficiency."
+  ]
+}
