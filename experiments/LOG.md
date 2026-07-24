@@ -1884,3 +1884,27 @@ timestamped actions, instrument readings and state transitions in a separate liv
 Source hashes, contract counts and claim limits are recorded in
 `.research/edgebench_science_eighth_order_audit_2026-07-24.json`. OBS1/E48 is an unrun protocol
 proposal, not a Frontier-Science model result.
+
+## 2026-07-24 — EdgeBench endogenous-experience and local-result audit
+
+EdgeBench upstream was rechecked and remains arXiv `2607.05155v1`, SForge `a87350a` and public
+dataset `47846a4`. The paper explicitly distinguishes benchmark-supplied sequences from its
+endogenous long-task stream: the agent chooses local tests, simulations and submissions and thus
+changes what it observes next. The public harness preserves outer-loop submissions, auto-evals,
+archives and conversation logs, but these are not a structured census of every inner-loop local
+experiment or its positive, null, contradictory, failed or censored outcome.
+
+Two unrun Frontier-Science experiments were added. AD1/E49 crosses fixed randomized/balanced and
+agent-adaptive acquisition with naive versus policy-aware inference, logging eligible actions and
+acquisition probabilities or randomized exploration before outcomes. It reports effect/mechanism
+bias, interval coverage, FDR and positivity violations; fresh confirmation does not retroactively
+make an invalid adaptive-data interval calibrated. NR1/E50 routes every local simulator/instrument/
+data action through a trusted append-only result ledger and compares it with the submitted
+claim/evidence package under free-reporting, mandatory-all-result and blinded-synthesis conditions.
+It measures sign-conditional omission, effect inflation and claim reversal after full disclosure.
+
+These deductions do not show selective reporting or invalid inference in EdgeBench, whose raw
+38,000-hour trajectories are unavailable, and they are not new Frontier-Science performance
+results. They specify additional science-only gates that are distinct from E17 repeated-holdout
+control, E27 crash-consistent retention, E43 feedback acquisition, E47 evidence eESS and E48
+observation-kernel sensitivity.

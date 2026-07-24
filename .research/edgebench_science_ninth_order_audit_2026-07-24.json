@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "audit_date_utc": "2026-07-24",
+  "scope": "Ninth-order audit of endogenous experience selection and local-result observability in the unchanged EdgeBench v1 paper and public SForge implementation. AD1/E49 and NR1/E50 are Frontier-Science experiment proposals, not EdgeBench treatments or empirical findings.",
+  "upstream_state": {
+    "arxiv_id": "2607.05155v1",
+    "arxiv_updated_utc": "2026-07-06T14:39:22Z",
+    "github_commit": "a87350ab80eeb320b13cb71d1b0c3ffcc20a670f",
+    "github_commit_date_utc": "2026-07-17T10:27:00Z",
+    "huggingface_revision": "47846a4c3669ad447e0ea984833b0d352460c5f9",
+    "huggingface_last_modified_utc": "2026-07-09T11:28:50.000Z",
+    "changed_since_eighth_order_audit": false
+  },
+  "source_hashes": {
+    "arxiv_source_package_sha256": "8193aeb41a3474690a40fac82e2ecbd53e651ab6b4759984b4c6845c04fbfd29",
+    "arxiv_approach_tex_sha256": "14cd29671b9cccccefc564aab1b053afbda585dd2fbfcd7c1573c053ff5eba74",
+    "arxiv_additional_relatedwork_tex_sha256": "dc78ebb1321d41fe6ead1fff898f852dee47d56e0a7d24ae7e65bbb74871206f",
+    "arxiv_experiments_tex_sha256": "1eb7b254a49fccf097c92eaf84f3f869276772d214a28c3b0ca7a7351b90c844",
+    "sforge_visualizer_server_py_sha256": "807f1134b99a570c532cbe6729f757fb3f2624ed3d5fb88a9709ee32251ded90",
+    "sforge_iterative_evaluation_doc_sha256": "ec4fbc3ea9658d2d63388146fc4537e8da5d1fe79a4c29b03c6499077e4db735"
+  },
+  "source_facts": [
+    "EdgeBench explicitly contrasts benchmark-organized sequences with one continuous task whose experience stream is endogenous: the agent plans, edits artifacts, submits attempts, receives diagnostics and thereby affects what it learns next.",
+    "The EdgeBench inner loop is local and agent-driven, while the outer loop records judge-mediated submissions; for scientific tasks the paper names development splits and validators as local feedback.",
+    "EdgeBench defines an effective submission as an agent submission that sets a new best-so-far score. This is an optimization statistic over submitted artifacts, not a scientific completeness criterion for every local experiment.",
+    "The public SForge visualizer exposes submission histories, archives, diffs and a downloadable full conversation log, but the public generic harness does not define a task-independent structured schema that guarantees a one-to-one census of every local simulator or instrument action and its positive, null, contradictory, failed or censored outcome.",
+    "The approximately 38000-hour raw trajectory corpus and figure-analysis code are not public, so local-result reporting rates or adaptive-design inferential validity cannot be estimated for the EdgeBench headline runs from the public release."
+  ],
+  "frontier_science_experiments": [
+    {
+      "id": "adaptive_design_inference",
+      "plan_id": "AD1",
+      "addendum_id": "E49",
+      "design": "On answer-disjoint procedural worlds, compare fixed randomized or balanced acquisition with agent-adaptive acquisition, and cross the adaptive observations with naive versus policy-aware analysis. Before each outcome, persist the eligible action set, chosen action, acquisition probability or replayable policy state, randomized-exploration probability, stopping rule and evidence lineage. Fail closed on unsupported population contrasts when positivity is absent.",
+      "primary_outcomes": [
+        "effect_and_mechanism_bias_rmse",
+        "interval_coverage",
+        "false_discovery_rate",
+        "propensity_calibration",
+        "positivity_and_support_violations",
+        "information_and_decision_value",
+        "fresh_world_confirmation",
+        "acquisition_policy_regret"
+      ],
+      "distinct_from": {
+        "E17": "controls repeated adaptive looks at evaluation data rather than inference under an endogenously chosen scientific design",
+        "F9_E43": "evaluates whether and when feedback is requested rather than whether estimates from selected observations are calibrated",
+        "EVI1_E47": "accounts for independent evidence units rather than selection probabilities and support of the acquisition policy",
+        "V3": "tests a fresh final claim but does not retroactively validate confidence intervals computed under an invalid adaptive design"
+      }
+    },
+    {
+      "id": "complete_local_result_reporting",
+      "plan_id": "NR1",
+      "addendum_id": "E50",
+      "design": "Route every simulator, instrument and data-query action through a trusted append-only event server that durably records intent before revealing the outcome. Compare the objective positive, null, contradictory, failed, timeout and censored result ledger with the agent's submitted claim-evidence package under free-reporting, mandatory all-result-manifest and blinded independent-synthesis arms.",
+      "primary_outcomes": [
+        "result_capture_completeness",
+        "sign_conditional_reporting_odds",
+        "null_contradictory_failed_and_censored_omission",
+        "effect_size_inflation",
+        "claim_reversal_after_full_ledger_disclosure",
+        "reproducibility",
+        "fresh_confirmation"
+      ],
+      "distinct_from": {
+        "I5_E27": "ensures crash-consistent retention and exactly-once accounting but not inclusion of retained unfavorable evidence in a scientific claim",
+        "R4": "tests revision after contradictory evidence is considered, while NR1 tests whether the evidence is disclosed at all",
+        "T1": "tests correlated error across investigators rather than selective reporting within one evidence stream",
+        "OBS1_E48": "tests when latent state is observed rather than which observed local results enter the submitted evidence package"
+      }
+    }
+  ],
+  "claim_boundary": [
+    "The source facts do not show that EdgeBench reported scientific effects from adaptively selected observations or that its agents selectively omitted unfavorable local results.",
+    "Conversation logs may contain many local tool interactions; the finding is the absence of a guaranteed task-independent structured all-action/result census, not the absence of all local traces.",
+    "AD1 and NR1 are motivated by the migration from optimization trajectories to scientific inference and reporting. They are not required to interpret EdgeBench strictly as an optimization or environment-learning benchmark.",
+    "Neither AD1 nor NR1 was run when this audit was frozen, and no new Frontier-Science performance, inference-calibration or reporting-completeness result is claimed."
+  ]
+}

@@ -727,6 +727,16 @@ The source hashes, 51-contract mode census, OBS1/E48 design and claim limits are
     dense, fixed 5/15/30/60-minute, seeded-random-phase and agent-event grids; report interval-censored
     first-valid/material events, AUC/curve/rank sensitivity and snapshot age. Add a separate
     timestamped live-state smoke for an interactive or irreversible laboratory.
+48. **Adaptive-design inference audit:** because the agent shapes its own experience stream,
+    cross fixed/randomized and agent-adaptive acquisition with naive versus policy-aware analysis.
+    Log eligible actions, acquisition probabilities or randomized exploration before outcomes;
+    report effect/mechanism bias, coverage, FDR and positivity failures rather than treating
+    adaptively selected observations as an i.i.d. design.
+49. **Complete-result reporting audit:** outer-loop submissions are not a census of local science.
+    Route every simulator/instrument/data action through a trusted append-only result ledger and
+    compare it with the agent's claim/evidence package. Report sign-conditional omission of null,
+    contradictory, failed and censored outcomes, effect inflation and claim reversal after full
+    disclosure; conversation text alone is not a structured all-result manifest.
 
 ## Claim boundary
 

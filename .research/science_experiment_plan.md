@@ -95,6 +95,8 @@ Report its visible, sealed and mechanism advantage over `committed` as an
 | G2 | Did benchmark construction adapt to the model used to build and calibrate the task? | Record builder/calibrator model and scaffold lineage; cross-evaluate A-built, B-built and independent-expert-built procedural families on common fresh worlds while excluding each evaluated solver from the corresponding final construction round | builder×solver interaction, first-valid/invalidity, shortcut and exclusion rates, sealed/mechanism gain, feedback interpretability and ranking reversals | Builder-balanced capability rather than performance on a benchmark tuned through the tested system |
 | EVI1 | Does another feedback event add independent scientific evidence? | Match nominal calls, payload and scientific cost while varying fresh-independent, correlated-batch, exact-duplicate and adversarially redundant observations; bind all events to world/sample/batch/instrument/intervention lineage | lineage-clustered evidence effective sample size, information/entropy gain, independent interventions/replications, sealed/mechanism/refusal gain per eESS and confidence calibration | Evidence accumulation and identifiability rather than repeated evaluator contact |
 | OBS1 | Is the reported learning trajectory robust to how and when latent scientific state is observed? | Replay identical immutable artifact/event trajectories under dense-event, fixed 5/15/30/60-minute, preregistered seeded-random-phase and agent-event-only observation kernels; separately stratify replayable artifacts and path-dependent live-state laboratories | interval-censored first-valid/material-event time, AUC and curve/rank/forecast sensitivity, observation delay/age, missed transient states and live-state replay coverage | A trajectory attributable to agent progress rather than observation cadence or task-interface mode |
+| AD1 | Does an adaptively chosen experiment stream still support calibrated scientific inference? | In answer-disjoint procedural worlds compare fixed randomized/balanced designs, agent-adaptive acquisition, the same adaptive data analyzed naively, and policy-aware analysis using logged action probabilities or randomized exploration; require positivity or mark unsupported regions | bias/RMSE and interval coverage for effects/mechanisms, FDR, propensity calibration, support violations, information/decision value, fresh-world confirmation and policy regret | Valid inference after endogenous experiment selection, distinct from merely choosing informative experiments |
+| NR1 | Does the system preserve and report unfavorable local evidence rather than only the best artifact or selected milestones? | Route every simulator/instrument action through a trusted event server, then compare the objective ledger with the submitted claim/evidence package under a preregistered result-reporting schema; inject positive, null, contradictory, failed and censored outcomes | result-capture completeness, sign-conditional reporting odds, failed/null/contradictory omission, effect-size inflation, claim reversals after full-ledger disclosure, reproducibility and fresh confirmation | Auditable scientific reporting without a file-drawer or selective-reporting advantage |
 
 ## Controls that must be strict
 
@@ -353,6 +355,12 @@ server-held procedural worlds, multi-seed feedback controls and independent revi
 54. Observation-kernel sensitivity: dense-event versus fixed/random-phase/event-triggered grids,
     with interval-censored event times, AUC/curve/rank shifts, snapshot age and separate coverage for
     replayable artifacts versus path-dependent laboratory state.
+55. Adaptive-design inference panel: fixed/randomized acquisition versus agent-adaptive acquisition,
+    crossed with naive and policy-aware estimators; show overlap/positivity, effect/mechanism bias,
+    interval coverage, false discovery and fresh-world confirmation.
+56. Local-result reporting audit: objective trusted action/result ledger versus the agent's submitted
+    evidence package, stratified by positive/null/contradictory/failed/censored result and linked to
+    effect-size inflation, claim revision and reproducibility after full-ledger disclosure.
 
 Avoid presenting a radar chart or a single “science score”; small multiples preserve the
 important capability dissociations.
@@ -593,6 +601,9 @@ midpoint, speed or doubling-time claim.
 - One OBS1 offline observation-kernel replay on sentinel-complete trajectories, plus one
   path-dependent laboratory smoke with timestamped state transitions, before comparing curve
   speed, AUC or takeoff time across artifact and live-state task families.
+- One AD1 adaptive-acquisition inference pilot crossed with naive versus policy-aware analysis,
+  and one NR1 trusted local-result ledger audit, before claiming that an agent's endogenously
+  collected evidence supports calibrated inference or complete scientific reporting.
 
 Only Stage B can support claims about feedback-driven scientific discovery. A real-world
 discovery claim additionally requires independent high-fidelity or physical confirmation and
@@ -663,6 +674,12 @@ domain-expert review.
   across preregistered observation cadences and seeded-random phases after interval-censoring is respected;
   event-triggered or live-state tasks that fail this test are analyzed separately rather than
   pooled into a common wall-time scaling curve.
+- H29: policy-aware inference using logged acquisition propensities or randomized exploration
+  restores effect/mechanism coverage after adaptive experiment selection relative to a naive
+  analysis of the same observations; unsupported regions are refused rather than extrapolated.
+- H30: a trusted all-action ledger reveals more null, contradictory and failed local results than
+  the agent's submitted evidence package unless complete-result reporting is required; mandatory
+  disclosure reduces effect-size inflation and unsupported confirmation without erasing true findings.
 
 These are hypotheses to test. The paper should report failed hypotheses and negative results
 rather than selecting only curves that resemble Frontier-Eng or EdgeBench.

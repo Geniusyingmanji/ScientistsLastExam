@@ -557,6 +557,36 @@ agent-event grids; retain scheduled/actual capture, state/artifact creation and 
 interval-censored event metrics and curve/rank sensitivity. Keep path-dependent live-state tasks in
 a separate stratum unless timestamped state transitions provide an equivalent measurement surface.
 
+### 42. Endogenous experiment streams need design-aware inference
+
+EdgeBench explicitly distinguishes benchmark-organized streams from its own endogenous long-task
+stream: the agent chooses what to test, simulate and submit next, thereby changing what it observes.
+That is a desirable optimization capability, but scientific estimators cannot generally treat the
+resulting observations as an i.i.d. sample from a fixed design. The current plan tests experiment
+informativeness, feedback value, repeated holdout use and evidence independence; it does not yet
+test bias, interval coverage or support after adaptive acquisition. Add AD1 on answer-disjoint
+procedural worlds: compare fixed randomized/balanced designs with agent-adaptive acquisition, and
+cross adaptive data with naive versus policy-aware analysis using logged action probabilities or a
+randomized exploration floor. Persist the eligible action set and policy state before each outcome.
+Report effect/mechanism bias, coverage, FDR, propensity calibration and positivity violations; where
+the policy assigns zero probability, refuse population inference rather than extrapolating. Fresh
+confirmation validates the final claim but does not retrospectively calibrate an invalid interval.
+
+### 43. Submission history is not a complete scientific result ledger
+
+EdgeBench preserves submissions, evaluator snapshots, archives and conversation traces, while its
+fast local loop remains agent-driven inside a writable workspace. Consequently, outer-loop history
+does not provide an objective denominator for every local simulation, null result, failed run or
+contradictory observation. Defining effective submissions by best-score improvement is appropriate
+for optimization efficiency; using only effective submissions or selected milestones for science can
+create a machine-scale file drawer and inflate effects. Add NR1: route every simulator/instrument/data
+action through a trusted event server that durably records intent before returning the result. Compare
+the resulting positive/null/contradictory/failed/censored ledger with the agent's submitted evidence
+package under free-reporting, mandatory all-result manifest and blinded-synthesis arms. Score capture
+completeness, sign-conditional reporting odds, effect inflation, claim reversal after full disclosure,
+reproducibility and fresh confirmation. This is distinct from crash-safe retention (I5/E27): a result
+can be durably stored by the system yet selectively omitted from the scientific claim.
+
 ## Revised TODO plan
 
 ### P0/P1 closeout — completed locally, reproduce in CI
@@ -706,6 +736,12 @@ a separate stratum unless timestamped state transitions provide an equivalent me
 - [ ] For interactive, consumptive or irreversible tasks, retain timestamped state transitions and
   sensor observations and publish a separate live-state measurement stratum; do not infer missing
   fixed-grid states from session-close scores or artifact-style forward fill.
+- [ ] Cross fixed randomized acquisition and agent-adaptive acquisition with naive and policy-aware
+  inference on one active mechanism task; persist eligible sets/propensities and fail closed on
+  positivity violations before making effect, mechanism or uncertainty claims.
+- [ ] Route all local experiment actions on one active-science task through a trusted result ledger;
+  compare free reporting, mandatory all-result manifests and blinded synthesis for selective
+  omission, effect-size inflation and claim reversal after full-ledger disclosure.
 - [ ] Generate each admission/pilot/confirmatory/figure cohort from a hashed manifest and fail
   closed on task-count, task-set, lineage, weight, transform or run-policy drift.
 - [ ] Separate pilot admission/calibration worlds and runs from fresh confirmatory seeds/worlds;

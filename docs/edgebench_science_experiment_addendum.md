@@ -781,6 +781,41 @@ transition 与 destructive-act lineage，单独报告 live-state stratum；只�
 tasks 合并解释 wall-time learning speed。这一实验检验的是“如何观察同一过程”，不同于 S4 的 feedback
 release treatment、I1 的 observer effect 和 M2 的 changing risk set。
 
+### E49. 自适应实验选择后的推断有效性
+
+EdgeBench 明确把单条长程经验流定义为内生过程：agent 自己决定下一步运行哪个 test/simulator、何时
+submit，因而影响后续能看到什么。对工程优化，这种 adaptivity 本身就是能力；对 science，如果把 agent
+挑出的样本、intervention 或参数点直接交给普通 i.i.d. estimator，再输出 effect size、置信区间或机制结论，
+就会把选择策略造成的分布偏移和 overlap 缺失误写成科学证据。E17 控制同一 holdout 的反复窥视，E43/F9
+评价“何时值得请求反馈”，E47/EVI1 计算证据独立性；它们都没有回答 **在 agent 内生选择的数据上，推断
+是否仍校准**。
+
+新增 `AD1`：在 answer-disjoint procedural worlds 上比较固定随机/平衡 design、agent-adaptive acquisition、
+对 adaptive data 的 naive analysis，以及记录 acquisition probability 或保留随机探索后的 policy-aware
+analysis。每次 action 在 outcome 返回前冻结候选集合、选择概率或可重放 policy state、eligible set、
+world/sample/intervention lineage 与 stopping rule；若 deterministic policy 使某些 action 的 probability 为零，
+应报告 positivity violation 并拒绝对该区域作总体因果结论，不能伪造 inverse-propensity correction。主要结果为
+effect/mechanism bias、RMSE、interval coverage、FDR、propensity calibration、support violation、information/
+decision value、fresh-world confirmation 与 policy regret。设计得更有信息但 naive inference 失准，与 inference
+校准但采样低效，是两个不同失败模式。
+
+### E50. 本地负结果、失败实验与 selective reporting
+
+EdgeBench 的 outer loop 完整保留 agent submissions、auto-evals 和最终 archives，并提供 conversation trace；
+但 fast inner loop 仍由 agent 在可写 workspace 中自由运行。提交历史因此不是所有 local tests、simulations、
+failed runs 和 null/contradictory outcomes 的客观分母。论文按“是否刷新 best-so-far”定义 effective submission，
+非常适合优化效率；science 若只保留有效提交、选中的 milestones 或最终 report，则可能出现 machine-scale
+file drawer：大量不利结果被丢弃，effect size 膨胀，失败分析也无法复算。普通 source provenance 或完整
+conversation 文本不能保证每个工具动作和结果都进入结构化证据包。
+
+新增 `NR1`：所有 simulator/instrument/data-query action 必须经过可信 event server，在结果可见前 durable
+记录 intent，并把 positive、null、contradictory、failed、timeout、censored outcomes 全部写入不可由 agent
+删除的 ledger。最终 artifact 另交一份 preregistered claim/evidence package；离线比较客观 ledger 与提交包的
+result-capture completeness、按结果符号/显著性/成败分层的 reporting odds、null/contradictory/failed omission、
+effect-size inflation、full-ledger disclosure 后的 claim reversal、reproducibility 和 fresh confirmation。对照臂
+至少含自由报告、强制 all-result manifest、以及 blinded independent synthesis。NR1 检验 **证据是否完整报告**，
+不同于 E27 的 crash-consistent 保存、R4 的遇到反证后是否改口，以及 T1 的多 investigator 错误相关性。
+
 ## 5. 推荐的曲线与表格
 
 主文可沿用 Frontier-Eng/EdgeBench 的时间或 oracle-budget best-so-far 图，但 science 论文至少再加：
@@ -853,6 +888,10 @@ release treatment、I1 的 observer effect 和 M2 的 changing risk set。
     replications 及每 eESS 的科学收益。
 42. observation-kernel sensitivity：dense/fixed/random-phase/event-triggered grids 下的区间删失 event time、
     AUC/曲线/排序变化、snapshot age，以及 replayable artifact 与 path-dependent live-state 的分层覆盖。
+43. adaptive-design inference：固定/随机 acquisition 与 agent-adaptive acquisition，交叉 naive/policy-aware
+    analysis，显示 positivity、effect/mechanism bias、coverage、FDR 与 fresh-world confirmation；
+44. complete-result reporting：可信 all-action/result ledger 与 agent evidence package 的 capture completeness、
+    sign-conditional reporting、失败/null/反证遗漏、effect inflation 和 full-ledger claim reversal。
 
 log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、Gompertz、piecewise/change-point
 和 hierarchical task-mixture 比较；必须用 held-out time forecasting、bootstrap over tasks 与跨 seed
@@ -930,6 +969,11 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
   观测核，报告 interval-censored first-valid/material-event、AUC/曲线/排序敏感性和 snapshot age；
 - [ ] 为 interactive/consumptive/irreversible tasks 记录带 wall-time 的 action、sensor reading 与 state
   transition，单列 live-state measurement stratum，禁止用 session-close score 前向填充固定 checkpoint；
+- [ ] 在一个主动机制/实验设计任务上比较 fixed-random、agent-adaptive-naive 与
+  agent-adaptive-policy-aware arms；记录 eligible actions 与 acquisition propensity，positivity 不满足时
+  fail closed，不给总体因果结论；
+- [ ] 将一个 active-science task 的全部 simulator/instrument actions 路由到 trusted ledger，比较自由报告、
+  强制 all-result manifest 与 blinded synthesis 对 null/contradictory/failed outcomes 的遗漏和 effect inflation；
 - [ ] 对选中的大跳变重放 parent/full-child/component-only/rollback，在同一 sealed panel
   上通过后才做“某科学思路导致增益”的因果归因；
 - [ ] pilot 可按 headroom 分配后续工程资源，但 confirmatory cohort 不得据此删任务；
@@ -1029,3 +1073,9 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
   3 个 `game_mode=true` tasks 跳过 auto-eval、依赖没有 wall-time step timestamps 的 session-close 历史。
   这只说明公开观测语义异质，不能据此推断官方曲线受偏；OBS1/E48 的 source facts、合同计数与 claim
   boundary 保存在 `.research/edgebench_science_eighth_order_audit_2026-07-24.json`。
+- EdgeBench v1 `additional_relatedwork.tex` 明确将单任务 experience stream 描述为 agent 行为内生，
+  `approach.tex` 将 inner loop 描述为 local and agent-driven；公开 SForge 同时提供 outer-loop submission/
+  archive/diff 与 conversation logs，但没有 task-independent 的结构化 all-local-experiment result schema。
+  这些事实只用于提出 AD1/E49 与 NR1/E50，不能据此断言 EdgeBench 做了失准推断或选择性报告；source
+  hashes、实验边界与 claim boundary 见
+  `.research/edgebench_science_ninth_order_audit_2026-07-24.json`。
