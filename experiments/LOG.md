@@ -2557,3 +2557,70 @@ Cross-task summary v26 (SHA-256
 `3df0877` and validates 65 normal single-run conditions across 33 tasks. It adds photovoltaic
 budgets one and three; strict open-loop diagnostics remain task-specific and heterogeneous science
 axes are not averaged.
+
+## 2026-07-25 — CatalystDeactivationLab-v1 admission, calibration and analysis
+
+`Catalysis/CatalystDeactivationLab` adds a procedural reduced-order laboratory with instrument
+gain/offset drift, four finite catalyst coupons, at most three irreversible reactions per coupon,
+out-of-order batch completion and exact request-retry idempotency. Stale parents, conflicting
+retries, concurrent use of one coupon, exhausted samples and excess physical acts fail closed.
+Every observation binds laboratory, coupon, calibration and intervention lineage. Candidates
+estimate Arrhenius kinetics, deactivation and drift, refuse abrupt-drift or two-site worlds when
+appropriate, and submit a fresh-batch operating policy.
+
+The trusted task calibration (SHA-256
+`cacf003aab1c8f36bd7d16011808865a4d49be4fbf589aeeec0797089a8624c7`) binds clean source
+`2c5e654`. Independent numerical integration agrees with the closed-form product calculation to
+`6.35e-12` and exactly reproduces post-reaction activity at the reported precision. The
+truth-blind reference reaches development/held-out nominal `0.958034/0.951263` and robustness
+`0.883174/0.942773`. It covers every supported world, refuses every unsupported world, has zero
+false discovery, uses 12 physical acts, four out-of-order batches and one exact retry per world,
+and records no duplicate physical acts or stale-parent attempts. These are synthetic task anchors,
+not measurements from a catalyst, reactor or instrument.
+
+Wave-7 admission (SHA-256
+`42c6bcaba5c834f2e955e11f6b7ff64653cbcdb33dee784a3b11f3d1c4122a14`) recommends the task as
+one candidate. Certification v52
+(`df55cffc973ace7e61df9f671d35d72b1563301acacd1e3900a5715a00c36b78`) records 58 packages at
+`7/39/12`, or 46 internally admissible tasks. Security v36
+(`a253bf99e8bbbb1f49ca32b6b7a326594cd0456dd96b3a5a2634eda257193bb9`) passes 18/18 tests.
+Baseline v41 (`7e860be9b068b30175146605b589a5304e37b221dad5548ae55dca1971697c60`) reports 58/58
+deterministic, valid and fail-closed tasks over two repetitions with no infrastructure failure.
+Full-suite v9 (`8b1462c7055967dee35f4d91fe02c73e4fc05d7b8c567a3d20dcc8401a9364c6`) passes 420/420 in
+1273.775 seconds. All five closeout reports bind clean source `2c5e654`.
+
+Three trusted GPT-5.5 reports also bind `2c5e654`. Budget one (SHA-256
+`f80636dff17df315898f1b9b6b2de88104587b9b72a3ffac38d84c754899ec0e`) produces one valid
+proposal that uses five physical acts and three reactions, refuses every world and remains at
+zero. The normal budget-three trajectory
+(`5039e9c4a219477d1e909bca19498cc98d8423f5879d40df2e6e46e57972e338`) scores
+`0.072976 → 0.075190 → 0.071403`; steps one and two are accepted. Its selected artifact reaches
+development/held-out mechanism `0.146052/0.300539` and prediction `0.000337/0.167796`, but has
+zero development decision score and robustness. It covers every supported world while refusing
+none of the unsupported worlds, yielding false-discovery rates `0.40/0.333`.
+
+The frozen-parent budget-three run (SHA-256
+`9c93ff62a965bc0795fb5631c1181d18d321bab9096b7d257b379546a22dc466`) contains one invalid
+submission, a selected proposal at `0.041417` and one valid all-refusal proposal at zero. The
+selected proposal has the same coverage/refusal and false-discovery pattern as the normal
+selection and is the only selected model artifact that processes out-of-order batches. No valid
+model proposal exercises exact retry. Normal and frozen-parent use four oracle calls but consume
+25,260 versus 18,417 tokens and 450.77 versus 137.50 seconds. Each condition has one run, Azure
+provides no server-side generation seed and their histories differ, so the contrast is descriptive
+rather than a feedback-effect estimate.
+
+The trusted derived analysis (SHA-256
+`387d54463a9255439b8549fe41c3edd54623af676279b133e228792159d2c27e`) binds clean analysis
+source `b9bdf63`. It verifies the three reports, raw trajectories, manifests, online-incumbent and
+frozen-parent lineage, task/runtime hashes, proposal accounting, all eight world records and
+retained best/terminal source scans. Across seven proposals, six are valid, one is an
+`invalid_submission`, four have nonzero score, two are valid all-refusal policies and none has an
+infrastructure failure. Five proposal source bodies are retained and scan clean; two intermediate
+sources are available only through candidate, parent, report and raw-trajectory hashes.
+
+Cross-task summary v27 (SHA-256
+`72c259ab05a9ff559401b044a1c86c1e84e74bceace6d0a68365cf541d8ee4dc`) binds clean source
+`e76ac03` and validates 67 normal single-run conditions across 34 tasks. It adds catalyst budgets
+one and three. The frozen-parent diagnostic remains task-specific, and heterogeneous science axes
+are not averaged. None of these reports supports a population, feedback-causal, physical-catalysis
+or autonomous-discovery claim.

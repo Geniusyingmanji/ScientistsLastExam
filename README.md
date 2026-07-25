@@ -16,11 +16,11 @@ text-question benchmark named *FrontierScience* in
 
 ## Current status
 
-The repository contains **57 task packages in 53 metadata domains**:
+The repository contains **58 task packages in 54 metadata domains**:
 
 - **7 certified core tasks**: Lennard–Jones clusters, spin glass, Poisson solver,
   matrix-multiplication rank, Cap Set, circle packing, and multilayer thin films.
-- **38 candidate tasks** pending scientific certification, including intervention-based causal
+- **39 candidate tasks** pending scientific certification, including intervention-based causal
   and active dynamical-law laboratories whose prediction and mechanism metrics are reported
   separately, a multi-spectrum NMR peak-mechanism/refusal task, and a multi-fidelity
   heat-exchanger Pareto-design task, a full-field lid-driven-cavity solver, active
@@ -37,15 +37,17 @@ The repository contains **57 task packages in 53 metadata domains**:
   cost-conditioned sampling-calorimeter design with sealed fabrication margins, and prospective
   evidence synthesis with registry screening, participant-lineage de-duplication, selective-report
   detection, heterogeneous inference, pre-result commitment and fresh simulated confirmation,
-  and budget-conditioned finite-absorption tandem-photovoltaic design with held-out spectra and
-  sealed thermal, process and optical perturbations.
+  budget-conditioned finite-absorption tandem-photovoltaic design with held-out spectra and
+  sealed thermal, process and optical perturbations, and a stateful catalyst-deactivation
+  laboratory with instrument drift, finite coupons, irreversible reactions, out-of-order batch
+  completion, retry lineage, model refusal and a sealed fresh-batch operating decision.
 - **12 quarantined tasks** retain reproduced scientific-oracle, identifiability, provenance or
   shortcut defects.
   Quarantined packages remain inventory artifacts but are not admissible benchmark tasks.
 
 The default CLI exposes only the certified core. `--all` explicitly shows the full
 inventory. Certification status is not a difficulty claim: the inventory metadata contains
-50 `hard` and 7 `flagship` packages, but only certified tasks are benchmark-admissible.
+50 `hard` and 8 `flagship` packages, but only certified tasks are benchmark-admissible.
 
 All candidate code runs in a networkless Bubblewrap sandbox with read-only mounts, resource
 and process limits, and a typed JSON RPC boundary. The trusted parent alone imports the
@@ -56,16 +58,16 @@ controlled exception text is reduced to a fixed label-blind failure taxonomy bef
 search feedback, preventing observations from being carried between worlds through exceptions.
 The current audit reports:
 
-- Trusted certification v51 and security v35 bind clean revision `0c0ca5e`. Certification covers
-  `7/38/12` over 57 packages with no missing manifest records, orphaned records or task-level
+- Trusted certification v52 and security v36 bind clean revision `2c5e654`. Certification covers
+  `7/39/12` over 58 packages with no missing manifest records, orphaned records or task-level
   admission issues; it retains one known duplicate-oracle group containing five quarantined
-  packages. Security passes 18/18 adversarial tests. The 57×2 baseline v40 reports 57/57
+  packages. Security passes 18/18 adversarial tests. The 58×2 baseline v41 reports 58/58
   deterministic, valid and fail-closed tasks with zero infrastructure failures. The latest
-  full-suite v8 binds clean revision `0c0ca5e` and passes 404/404 tests in 1247.653 seconds.
-  Cross-task summary v26 (SHA-256
-  `4be6c33217f6b3655e8c1571b34064a7818be813eaf8f53bc9d8b86091997051`) binds clean
-  revision `3df0877` and contains 65 normal single-run conditions over 33 tasks.
-- Current source manifest: 7 certified / 38 candidate / 12 quarantined. ProteinStabilityDesign
+  full-suite v9 binds clean revision `2c5e654` and passes 420/420 tests in 1273.775 seconds.
+  Cross-task summary v27 (SHA-256
+  `72c259ab05a9ff559401b044a1c86c1e84e74bceace6d0a68365cf541d8ee4dc`) binds clean
+  revision `e76ac03` and contains 67 normal single-run conditions over 34 tasks.
+- Current source manifest: 7 certified / 39 candidate / 12 quarantined. ProteinStabilityDesign
   rebuilds 2,756 reliable double-mutant records across five
   development and three held-out domains from hash-bound ProteinGym v1.3/Tsuboyama sources.
   It separates additive proxy, charged assay, diversity, top-decile, trypsin, chymotrypsin,
@@ -255,12 +257,12 @@ the post-repair 50-package audits bind revision `47c3613`; the subsequent wave-2
 audit quarantines seven additional defective candidates. The two P2 smokes are baseline-only; the repository does not yet contain
 credible multi-seed model-performance evidence. A clean-revision GPT-5.5 budget-one core pilot
 is recorded as task calibration, not a benchmark leaderboard.
-The latest closeout certification/security/baseline audits are v51/v35/v40 and bind clean
-source revision `0c0ca5e`; full-suite v8 binds the same revision and passes 404/404 tests.
+The latest closeout certification/security/baseline audits are v52/v36/v41 and bind clean
+source revision `2c5e654`; full-suite v9 binds the same revision and passes 420/420 tests.
 CalorimeterDesign-v2's task calibration and wave-4 admission
-audit also bind `f6a7b73`. After the internally admitted PhotovoltaicTandemDesign addition, the
-current source manifest is 7/38/12 and contains 45 internally admissible tasks, leaving an
-approximate gap of 5 to the roughly 50-task target. Its clean-revision calibration reproduces
+audit also bind `f6a7b73`. After the internally admitted CatalystDeactivationLab addition, the
+current source manifest is 7/39/12 and contains 46 internally admissible tasks, leaving an
+approximate gap of 4 to the roughly 50-task target. The preceding photovoltaic calibration reproduces
 ideal one-through-four-junction efficiencies `0.33695/0.45735/0.51291/0.55329`, with nominal
 reference score `1.000/1.000` and minimax-reference nominal/robust score
 `0.963/0.965` and `1.000/1.000`; these are reduced-order task anchors, not device records.
@@ -318,9 +320,19 @@ unsupported-world refusal. Across budget-one, normal budget-three and selection-
 three GPT-5.5 runs, four proposals are schema-invalid and three are valid empty abstentions; none
 screens evidence or requests confirmation. Normal iteration repairs executable validity after its
 first proposal but does not cross the scientific-workflow hurdle. The single-run normal/open-loop
-contrast remains non-causal. The updated cross-task summary v26 contains 65 normal conditions over
-33 tasks; it adds PhotovoltaicTandemDesign-v1 budgets one and three without averaging its
-task-specific science axes into a common score.
+contrast remains non-causal. CatalystDeactivationLab-v1 then adds a deterministic reduced-order
+state machine with gain/offset drift, four finite coupons, irreversible deactivation, out-of-order
+batch completion and exact-retry idempotency. Its truth-blind reference reaches
+`0.958034/0.951263` development/held-out nominal score and `0.883174/0.942773` robustness while
+covering all supported worlds, refusing every unsupported world and producing no false discovery.
+Across the three GPT-5.5 calibration conditions, six of seven proposals are valid and four obtain
+nonzero scores. Budget one conservatively refuses every world. Normal and frozen-parent budget
+three cover all supported worlds but refuse none of the unsupported worlds, with false-discovery
+rates `0.40/0.333` and zero development decision score. The frozen-parent selected artifact uses
+out-of-order batches; no model proposal exercises exact retry. These single synthetic runs do not
+support feedback-causal, reactor, catalyst, instrument or autonomous-discovery claims. Cross-task
+summary v27 contains 67 normal conditions over 34 tasks and adds CatalystDeactivationLab-v1
+budgets one and three without averaging task-specific science axes into a common score.
 
 The latest EdgeBench re-audit keeps its upstream facts at arXiv `2607.05155v1`, SForge
 `a87350a` and public dataset `47846a4`. In addition to E1--E36, the science plan now preregisters

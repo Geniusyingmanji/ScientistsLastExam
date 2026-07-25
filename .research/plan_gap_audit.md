@@ -2,7 +2,7 @@
 
 Audit date: 2026-07-19 (UTC), with the experiment roadmap extended after repeated full-text
 EdgeBench comparison and the task inventory updated on 2026-07-25 through
-PhotovoltaicTandemDesign-v1.
+CatalystDeactivationLab-v1.
 Evidence base: `literature_matrix.md`,
 `science_experiment_plan.md`, current source/tests, and the dated artifacts in `experiments/`.
 
@@ -25,21 +25,21 @@ physical validation, and auditable claim–evidence provenance.
 
 | Capability | Current status | Evidence | Remaining acceptance criterion |
 |---|---|---|---|
-| Candidate/oracle isolation | Implemented | Clean-revision security v35: 18/18 adversarial tests; Bubblewrap, no network, read-only mounts, resource/seccomp limits, typed RPC, fresh multi-world sessions and candidate-exception sanitization | Reproduce in clean Linux CI; document portability/non-Linux behavior |
-| Fail-closed trusted metrics | Implemented | Clean-revision 57×2 v40: 57 deterministic, 57 valid, 57 fail-closed and zero infrastructure failures | Repair or quarantine every future invalid candidate oracle before certification |
-| Task admission policy | Implemented, narrow | Trusted certification v51 records 7/38/12; ProspectiveMetaAnalysis-v1 and PhotovoltaicTandemDesign-v1 pass their task-specific integrity, independent-model, finite-output, sandbox and metric-sealing gates | External domain review, server-held corpora/regimes and genuinely independent physical or prospective replication remain incomplete |
-| Scientific validity of inventory | Audited, sparse | All original 50 packages were adversarially audited; later substantive rebuilds and additions plus clean-revision-admitted PhotovoltaicTandemDesign-v1 leave 45 internally admissible packages in the 57-package inventory | Add approximately 5 net admissible tasks to reach about 50; hidden/generated instances and shortcut analysis remain mandatory |
+| Candidate/oracle isolation | Implemented | Clean-revision security v36: 18/18 adversarial tests; Bubblewrap, no network, read-only mounts, resource/seccomp limits, typed RPC, fresh multi-world sessions and candidate-exception sanitization | Reproduce in clean Linux CI; document portability/non-Linux behavior |
+| Fail-closed trusted metrics | Implemented | Clean-revision 58×2 v41: 58 deterministic, 58 valid, 58 fail-closed and zero infrastructure failures | Repair or quarantine every future invalid candidate oracle before certification |
+| Task admission policy | Implemented, narrow | Trusted certification v52 records 7/39/12; ProspectiveMetaAnalysis-v1, PhotovoltaicTandemDesign-v1 and CatalystDeactivationLab-v1 pass task-specific integrity, independent-model, finite-output, sandbox and metric-sealing gates | External domain review, server-held corpora/regimes and genuinely independent physical or prospective replication remain incomplete |
+| Scientific validity of inventory | Audited, sparse | All original 50 packages were adversarially audited; later substantive rebuilds and additions plus clean-revision-admitted CatalystDeactivationLab-v1 leave 46 internally admissible packages in the 58-package inventory | Add approximately 4 net admissible tasks to reach about 50; hidden/generated instances and shortcut analysis remain mandatory |
 | Unified trajectory/accounting | Implemented, protocol-smoked | Clean-revision two-seed baseline smoke; trajectory schema v2, hashes, AUC over `budget_units`, separate `oracle_calls`, wall/token/cost, seed, checkpoint/resume | Validate nonzero-budget schema-v2 artifact replay in CI and version future changes |
 | Feedback controls | Implemented; strict pilot run | None/shuffled prompt-metric modes disclose true-score selection; strict selection-blind freezes parent/metrics; four-task n=3 pilot has no direction-stable lift and is not token-matched | Run token-matched ≥10 paired seeds with score-only, delayed/replayed and strict open-loop controls |
-| Evaluator-only metric sealing | Implemented and integration-verified | Closed search-visible allowlist; search-state redaction/hash-keyed sidecars; candidate-controlled exception text mapped to a finite label-blind taxonomy; clean-revision full-suite v8 passes 404/404; clean pinned OpenEvolve/TreeQuest/Shinka no-leak report `aff026d` | Extend from baseline smoke to nonzero-budget upstream runs before comparative claims |
+| Evaluator-only metric sealing | Implemented and integration-verified | Closed search-visible allowlist; search-state redaction/hash-keyed sidecars; candidate-controlled exception text mapped to a finite label-blind taxonomy; clean-revision full-suite v9 passes 420/420; clean pinned OpenEvolve/TreeQuest/Shinka no-leak report `aff026d` | Extend from baseline smoke to nonzero-budget upstream runs before comparative claims |
 | Official OpenEvolve adapter | Implemented, trusted baseline smoke | Explicit 0.2.26 adapter; clean-revision secure baseline passed under Python 3.10 | Run nonzero-budget/checkpoint integration and multi-seed study |
 | TreeQuest AB-MCTS | Implemented, trusted baseline smoke | Real TreeQuest AB-MCTS-A ask/tell adapter; clean-revision secure baseline passed under Python 3.12 | Run nonzero-budget/checkpoint integration and multi-seed study |
 | ShinkaEvolve | Implemented, trusted baseline smoke | Official runner/database adapter at pinned commit; clean-revision secure baseline passed under Python 3.10 | Run nonzero-budget/resume integration and token accounting audit |
 | Classical/domain baselines | Partial | NMR, HeatExchanger, Reaction, Gravity, Ocean, Radiative, LowThrust, Climate and DemographicSFS rebuilds have truth-blind domain baselines exposing reconstruction/proxy/prediction, terminal-feasibility, experiment-design or mechanism/refusal gaps | Add random/quasi-random plus BO/CMA-ES/DE and one domain heuristic for each meaningful task family |
-| Multi-seed benchmark evidence | Missing | Keyless GPT-5.5 Responses path is operational; 63 trusted normal single-run conditions cover 32 tasks and a separate four-task n=3 control pilot is negative/inconclusive | Certified-core and science-subset reports with paired uncertainty and portable raw trajectories |
+| Multi-seed benchmark evidence | Missing | Keyless GPT-5.5 Responses path is operational; 67 trusted normal single-run conditions cover 34 tasks and a separate four-task n=3 control pilot is negative/inconclusive | Certified-core and science-subset reports with paired uncertainty and portable raw trajectories |
 | Multifidelity/Pareto | Candidate-level | HeatExchanger-v2 implements proxy/exact Pareto archives, measured false promotion and physical shifts | Add independent high-fidelity review/replication and at least one certified multifidelity task |
 | Feedback learning claim | Negative pilot only | A strict open-loop control and three-replicate four-task pilot are complete; no direction-stable visible or sealed lift, and normal uses more tokens | Token-matched preregistered ≥10-replicate study with delayed/replayed and score-only controls |
-| Mechanistic discovery | Candidate-level | ActiveLaw, NMR, Reaction, Gravity, Ocean, Radiative, Climate, DemographicSFS and ProspectiveMetaAnalysis tasks separately score mechanisms or evidence integrity, prediction, coverage, hidden shifts, confirmation, false discovery and refusal | Add paired repeated studies, harder regimes and independent scientific validation |
+| Mechanistic discovery | Candidate-level | ActiveLaw, NMR, Reaction, Gravity, Ocean, Radiative, Climate, DemographicSFS, ProspectiveMetaAnalysis and CatalystDeactivationLab tasks separately score mechanisms or evidence integrity, prediction, coverage, hidden shifts, confirmation, false discovery and refusal | Add paired repeated studies, harder regimes and independent scientific validation |
 | Validation/distribution shift | Calibration-level | Nominal/robustness and prediction/mechanism gaps recur across control, design and inverse tasks; ElectrolyteConductivityDesign has zero selected untouched-repeat confirmation, while CalorimeterDesign-v2 trades 1.913 percentage points of development cost utilization for shifted-geometry feasibility `0.483→1.000` | Paired repeated hidden-shift studies; performance–cost–constraint-margin sweeps for instruments; post-commit independent repeats, new batches/labs and higher-fidelity or physical confirmation |
 | Research-integrity track | Partial | Immutable candidate/parent hashes and artifacts | Hypothesis–test–evidence records, failed branches, claim links and calibrated refusal |
 
@@ -118,8 +118,8 @@ or make the executable-optimization qualifier unavoidable.
 
 ### 1. Only calibration-level empirical P2 evidence exists
 
-The keyless GPT-5.5 Responses path was restored and 63 trusted normal single-run conditions now
-cover 32 tasks, with task-specific strict open-loop diagnostics on a subset. They expose
+The keyless GPT-5.5 Responses path was restored and 67 trusted normal single-run conditions now
+cover 34 tasks, with task-specific strict open-loop diagnostics on a subset. They expose
 one-step saturation, protocol failures and scientifically empty valid abstentions, but there are still no valid five-seed
 certified-core trajectories, no paired feedback-control result, and no nonzero-budget official-
 backend search run. The project must distinguish “calibrated at budget one” from
@@ -379,15 +379,20 @@ different cost and value. Compare equal/random allocation, cost-aware VOI or kno
 baselines and agent allocation using fresh-confirmed portfolio utility, starvation, abandonment,
 unsafe/false-discovery exposure and regret. Keep every offered project in the denominator.
 
-### 26. Software-replay semantics omit drifting and irreversible laboratories
+### 26. One synthetic state machine does not complete the laboratory-state claim
 
 Exactly-once evaluator recovery is necessary but not sufficient when an assay consumes a sample,
 an intervention changes the system, calibration drifts or parallel experiments return out of
-order. Such actions cannot be rolled back or retried under the same idempotency key. Add a
-server-stateful stress task with sample/calibration/intervention lineage, hidden drift/batches,
-destructive measurements and random completion latency. Score drift detection, recalibration,
-stale-result use, duplicate physical acts, safety and fresh-batch confirmation; use event/sample
-cost or piecewise time when fixed cycles invalidate a log-time coordinate.
+order. CatalystDeactivationLab-v1 now supplies a deterministic reduced-order stress task with
+sample, calibration and intervention lineage, gain/offset drift, finite coupons, destructive
+reactions, latency-ordered completion, exact-retry idempotency and a sealed fresh-batch decision.
+The reference uses one exact retry without duplicating a physical act, but none of the six valid
+model proposals exercises that path. Only one selected proposal processes out-of-order batches,
+and both nonzero selected artifacts fail every unsupported-world refusal. The implementation gap
+is therefore narrower, but the evidence gap remains. Run paired repeated controls with randomized
+latency, drift and batch regimes, require retry/recovery coverage, and add a real service or
+instrument integration before making laboratory-state or catalysis claims. Use event/sample cost
+or piecewise time when fixed cycles invalidate a log-time coordinate.
 
 ### 27. Wall time conflates search effort with feedback opportunity
 
@@ -655,8 +660,9 @@ not whether a reduced-order design is physically validated.
 ### P0/P1 closeout — completed locally, reproduce in CI
 
 - [x] Trusted oracle / isolated candidate architecture and adversarial regression suite.
-- [x] Current 56-package deterministic secure baseline and certification audit; all 56 weak
-  baselines are valid, deterministic and fail closed.
+- [x] Current 58-package deterministic secure baseline and certification audit; all 58 weak
+  baselines are valid, deterministic and fail closed. Certification v52 records `7/39/12`,
+  security v36 passes 18/18 and full-suite v9 passes 420/420.
 - [x] Re-run the deterministic secure baseline, certification and security audits on the clean
   53-task RNAInverseDesign revision (v30/v40/v24).
 - [x] Re-run full 332-test regression plus deterministic baseline, certification and security on
@@ -687,6 +693,10 @@ not whether a reduced-order design is physically validated.
   multi-regime design curves, multi-energy resolution/linearity/containment, held-out regimes and
   five sealed fabrication/calibration shifts; retain as a reduced-order candidate pending
   server-held regimes, independent review, GEANT4/electronics and test-beam replication.
+- [x] Add `Catalysis/CatalystDeactivationLab` as the first stateful laboratory stress candidate,
+  with drift, finite coupons, irreversible deactivation, out-of-order completion, exact-retry
+  idempotency, fail-closed lineage and separate mechanism/prediction/decision/refusal metrics.
+  Keep the scope synthetic pending randomized repeated controls and real instrumentation.
 
 ### P2a — reproducible protocol release
 
@@ -903,9 +913,13 @@ not whether a reduced-order design is physically validated.
   gate, so classical contrasts remain analyzer controls rather than agent causal evidence.
 - [ ] Add sequential-vs-parallel, tool-access, novelty, ensemble, and component ablations where
   the corresponding scaffold capability is claimed.
-- [ ] Add one stateful laboratory stress task with calibration drift, sample depletion,
-  irreversible interventions and out-of-order results; bind every observation to world/sample/
-  calibration/intervention lineage and distinguish physical acts from evaluator retries.
+- [x] Add one synthetic stateful laboratory stress task with calibration drift, sample depletion,
+  irreversible interventions and out-of-order results; CatalystDeactivationLab-v1 binds every
+  event to laboratory/coupon/calibration/intervention lineage and distinguishes physical acts
+  from exact retries.
+- [ ] Extend the stateful-laboratory track beyond deterministic replay: randomize completion and
+  drift regimes across server-held worlds, force retry/recovery coverage, run paired multi-seed
+  controls and connect one task to a real service or instrument before laboratory claims.
 - [ ] Add one open-question procedural laboratory with fixed/menu/open contracts and signed
   pre-data preregistration; score identifiability, fresh-confirmed information/decision value,
   triviality, false discovery and plan deviation.

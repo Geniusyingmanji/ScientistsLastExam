@@ -1,6 +1,7 @@
 # Science-specific experiment plan
 
-Date: 2026-07-23 (UTC), updated 2026-07-24 after the EdgeBench theory/configuration re-audit.
+Date: 2026-07-23 (UTC), updated 2026-07-25 after the EdgeBench re-audit and
+CatalystDeactivationLab-v1 calibration.
 This plan complements the Frontier-Eng-style optimization study and the EdgeBench-style
 long-horizon trajectory study. It does not assume that optimization, feedback learning,
 mechanism recovery, and scientific validation are interchangeable.
@@ -147,6 +148,15 @@ physical act is reversible or consumptive. Retrying an evaluator process may be 
 repeating a destructive assay is a new intervention and must consume a new sample/budget entry.
 Out-of-order results can update only hypotheses and descendants whose world-state assumptions
 remain compatible.
+
+CatalystDeactivationLab-v1 is the current D1 implementation smoke. It provides deterministic
+gain/offset drift, finite coupons, irreversible reactions, out-of-order completion, exact-retry
+idempotency and a fresh-batch decision. Its truth-blind reference exercises the complete state
+contract, whereas the three single-run GPT-5.5 conditions do not exercise exact retry and only one
+selected artifact uses out-of-order batches. Both selected nonzero artifacts also fail every
+unsupported-world refusal. D1 therefore remains an unrun comparative experiment. The next D1
+study must randomize latency, drift and batch regimes across server-held worlds, force recovery
+coverage, repeat each treatment and retain a separate real-service or instrument stratum.
 
 Auto-evaluation is score-hidden but can still change behavior when its schedule and requirement
 to keep files runnable are disclosed. Keep the stable committed candidate in a separate path from
@@ -325,7 +335,9 @@ server-held procedural worlds, multi-seed feedback controls and independent revi
 36. Shared-budget research portfolio: validated utility and false-discovery/safety against total
     instrument/oracle cost, with allocation regret and dropped/starved projects visible.
 37. Stateful laboratory timeline: calibration/sample/intervention lineage, drift/batch changes,
-    asynchronous results, irreversible acts and fresh-batch confirmation.
+    asynchronous results, irreversible acts and fresh-batch confirmation. The deterministic
+    CatalystDeactivationLab-v1 smoke supplies the schema; the comparative randomized panel remains
+    unrun.
 38. Feedback-clock collapse panel: the same total feedback under different release schedules,
     aligned by wall time, active time, scientific cost, feedback-event count and revealed bits.
 39. Task-graph intervention panel: well-mixed, chain, modular-bottleneck and hierarchical twins,
@@ -603,7 +615,8 @@ midpoint, speed or doubling-time claim.
 - A measurement-health screen and hashed cohort manifest for every long-horizon and headline
   aggregate cell.
 - S3 score-partition/task-order replay on the headline aggregate; F8 source→target transfer on at
-  least one procedural lineage; one small P1 portfolio and one D1 stateful-laboratory stress test.
+  least one procedural lineage; one small P1 portfolio and one repeated randomized D1 study using
+  the CatalystDeactivationLab-v1 smoke plus a real-service or instrument stratum.
 - S4 feedback-clock intervention on at least two heterogeneous tasks and an S5 matched task-graph
   twin pilot before giving a mechanistic interpretation to any scaling curve.
 - One exploratory Q1 question-formulation laboratory and one K3 wrong-prior starter ablation before

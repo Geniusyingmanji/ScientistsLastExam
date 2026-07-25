@@ -9,14 +9,14 @@ DistillationColumnDesign-v2, HartreeFockSCF-v2, RoomImpulseResponse-v2,
 ConvectionDiffusionOpt-v2, SeismicWaveInversion-v2, RankineCycleOpt-v2 and MOSFETDoping-v2. The
 list now also includes RANSCalibration-v2, GeneNetworkIntervention-v1, RNAInverseDesign-v1,
 ProteinStabilityDesign-v1, ElectrolyteConductivityDesign-v1, DemographicSFS-v2 and
-CalorimeterDesign-v2, ProspectiveMetaAnalysis-v1 and PhotovoltaicTandemDesign-v1. The 65
-normal-feedback model conditions across these 33 tasks each
+CalorimeterDesign-v2, ProspectiveMetaAnalysis-v1, PhotovoltaicTandemDesign-v1 and
+CatalystDeactivationLab-v1. The 67 normal-feedback model conditions across these 34 tasks each
 contain one seed and proposal budget one or three. They calibrate tasks and motivate experiments;
 they are not a model leaderboard, a causal feedback study or population evidence.
 
 The portable machine record
-`experiments/science_calibration_summary_2026-07-25_v26.json` retains every top-level scalar metric,
-candidate lineage hash and raw trajectory SHA-256 for all 65 normal conditions.
+`experiments/science_calibration_summary_2026-07-25_v27.json` retains every top-level scalar metric,
+candidate lineage hash and raw trajectory SHA-256 for all 67 normal conditions.
 Additional strict diagnostics for Distillation-v2, Hartree--Fock and room acoustics are bound
 separately by `experiments/distillation_v2_calibration_analysis_2026-07-23.json`,
 `experiments/hartree_fock_v2_calibration_analysis_2026-07-23.json` and
@@ -33,7 +33,8 @@ separately by `experiments/distillation_v2_calibration_analysis_2026-07-23.json`
 `experiments/demographic_sfs_v2_calibration_analysis_2026-07-25.json` and
 `experiments/calorimeter_v2_calibration_analysis_2026-07-25.json`, and
 `experiments/prospective_meta_analysis_calibration_analysis_2026-07-25.json` and
-`experiments/photovoltaic_tandem_v1_calibration_analysis_2026-07-25.json`. Strict selection-blind
+`experiments/photovoltaic_tandem_v1_calibration_analysis_2026-07-25.json` and
+`experiments/catalyst_deactivation_lab_v1_calibration_analysis_2026-07-25.json`. Strict selection-blind
 diagnostics remain in task-specific analysis because they are not normal-feedback calibrations.
 The underlying reports bind the task-specific source revision. Pendulum's initial budget-one
 run on revision `57c0e1b` is
@@ -120,6 +121,10 @@ by the corrected-contract run on `2557adb`.
 | PhotovoltaicTandemDesign-v1, budget 1 | development/held-out nominal `0.994571/0.993728`; cost utilization `0.996735/0.998258` | development/held-out robustness `0.862800/0.806769` | One proposal nearly saturates the public nominal detailed-balance objective while leaving a larger response to sealed thermal, process and optical shifts. This is known-model algorithm synthesis, not a device or materials result. |
 | PhotovoltaicTandemDesign-v1, normal budget 3 | proposal outcomes runtime-invalid → `0.974838` → `0.993821`; selected held-out nominal `0.989500`; cost utilization `1/1` | selected development/held-out robustness `0.827879/0.814356` | Two valid rewrites improve the visible trajectory, but nominal selection leaves sealed robustness headroom. One unseeded trajectory cannot attribute either movement to feedback. |
 | PhotovoltaicTandemDesign-v1, selection-blind budget 3 | frozen-parent proposals score `0.999926`, runtime-invalid and `0.942996`; selected held-out nominal `0.999878` | selected development/held-out robustness `0.898214/0.824565` | Offline selection finds the highest nominal artifact among the three single-run conditions, but unequal tokens and wall time plus uncontrolled model sampling preclude a feedback-effect comparison. |
+| CatalystDeactivationLab-v1, truth-blind reference | development/held-out nominal `0.958034/0.951263`; mechanism `0.853482/0.832859`; prediction `0.988979/0.997231` | robustness `0.883174/0.942773`; supported coverage and unsupported refusal `1/1`; false discovery `0/0` | Twelve physical acts, four out-of-order batches and one idempotent retry per world suffice for the registered reduced-order fit and fresh-batch decision. This is a task-calibration witness, not a catalyst or reactor result. |
+| CatalystDeactivationLab-v1, budget 1 | one valid proposal uses five physical acts and three reactions, scores zero and is rejected | supported coverage `0/0`; unsupported refusal `1/1`; false discovery `0/0` | Protocol-valid experiment use can remain scientifically empty when the policy refuses every supported world. |
+| CatalystDeactivationLab-v1, normal budget 3 | proposal scores `0.072976 → 0.075190 → 0.071403`; steps 1–2 are accepted; selected mechanism `0.146052/0.300539` | selected prediction `0.000337/0.167796`; development decision and robustness `0/0`; supported coverage `1/1`, unsupported refusal `0/0`, false discovery `0.40/0.333` | Full-budget measurement and supported-world coverage coexist with weak mechanism recovery, no development decision utility and false claims in every unsupported world. |
+| CatalystDeactivationLab-v1, selection-blind budget 3 | one invalid submission, one nonzero proposal at `0.041417` and one legal all-refusal proposal; offline selection keeps step 2 | selected supported coverage `1/1`, unsupported refusal `0/0`, false discovery `0.40/0.333`; only this selected artifact uses out-of-order batches | Out-of-order state handling does not by itself imply calibrated model checking. The one-run normal/open-loop contrast is unseeded, token- and wall-time-mismatched, and non-causal. |
 
 OPF's `robustness_score` combines security-constrained economic quality with overload penalties.
 It is not a pure safety probability. The proportional baseline is feasible for every tested
@@ -418,6 +423,17 @@ conditions use four oracle calls, but the normal run uses 20,192 tokens and 249 
 not estimate a feedback effect. It identifies the next treatment: expose a label-blind
 robustness-relevant diagnostic, while preserving the sealed shifts used for final validation.
 
+CatalystDeactivationLab-v1 adds a stateful claim-control counterpart. Its normal selected artifact
+uses all 12 physical acts per world and covers every supported world, yet development prediction
+is `0.000337`, development decision and robustness are zero, and every unsupported world is
+claimed rather than refused. The frozen-parent selected artifact also covers every supported world
+and processes out-of-order batches, but has the same refusal and false-discovery failure. The
+budget-one and final frozen-parent proposals occupy the opposite endpoint: both are legal and
+produce no false discovery because they refuse every supported world. A useful feedback treatment
+must therefore expose label-blind residual, decision and model-check diagnostics and evaluate the
+full risk–coverage curve. More experiment use or correct state bookkeeping alone cannot select a
+scientifically defensible claim.
+
 ### 8. Contract completeness must precede headroom claims
 
 The superseded Pendulum diagnostic failed because the public contract omitted the evaluator's
@@ -488,8 +504,13 @@ The observations above define hypotheses rather than assumed conclusions:
 9. At equal search and evaluation budget, explicit constraint-margin-aware selection will retain
    more sealed manufacturing feasibility than nominal-only selection; the comparison must report
    the full performance–cost–margin surface and confirm selected designs at higher fidelity.
+10. On the stateful catalyst laboratory, factorized label-blind mechanism, prediction, decision
+    and model-check feedback will improve the supported-coverage versus false-discovery frontier
+    more reliably than one aggregate score; repeated runs must also test exact-retry use,
+    asynchronous completion and fresh-batch confirmation rather than treating correct lineage as
+    sufficient scientific success.
 
-Tests 1--3, 7 and 8 require at least ten paired seeds on the focused science subset. All comparisons must
+Tests 1--3, 7, 8 and 10 require at least ten paired seeds on the focused science subset. All comparisons must
 hold proposal budget, actual oracle calls, tool access and feedback-message shape fixed. Hidden
 metrics may be evaluated periodically for curves but cannot affect search or stopping in the
 nominal-only condition.
@@ -741,12 +762,12 @@ far-offset prediction, model-class adequacy and geological interpretation remain
 The current synthetic primary-reflection laboratory is an active-acquisition/model-checking
 on-ramp, not field FWI or autonomous geological discovery.
 
-The present source manifest contains 45 internally admissible certified or candidate packages:
-seven certified and 38 candidate, with 12 quarantined after adding
-PhotovoltaicTandemDesign-v1. The remaining admissible gap is approximately 5 tasks. The
-photovoltaic task passes clean-revision calibration, wave-6 admission, 57-package certification,
-18/18 security, 57-by-2 baseline determinism and 404/404 full-suite tests. Its reduced-order
-same-model results are not photovoltaic device records or experimental discovery evidence.
+The present source manifest contains 46 internally admissible certified or candidate packages:
+seven certified and 39 candidate, with 12 quarantined after adding
+CatalystDeactivationLab-v1. The remaining admissible gap is approximately 4 tasks. The catalyst
+task passes clean-revision calibration, wave-7 admission, 58-package certification, 18/18 security,
+58-by-2 baseline determinism and 420/420 full-suite tests. Its reduced-order state-machine results
+are not catalyst, reactor, instrument or experimental-discovery evidence.
 Expansion should use procedural families spanning
 design, inverse problems, control, multifidelity validation, mechanism discovery and exact
 mathematical construction rather than cloning one scalar optimization template across domains.

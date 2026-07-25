@@ -1,8 +1,11 @@
 # Scientific task portfolio audit
 
-Audit date: 2026-07-24 (UTC). The original inventory contained 50 discoverable task packages;
-the new ActiveLawDiscovery candidate brings the current inventory to 51. This count is an
-inventory fact, not evidence that all packages are benchmark-admissible.
+Audit date: 2026-07-24 (UTC), updated 2026-07-25 through CatalystDeactivationLab-v1. The original
+inventory contained 50 discoverable task packages. The current registry contains 58 packages in
+54 metadata domains, with `7 certified / 39 candidate / 12 quarantined`. The certified and
+candidate total is 46, leaving an approximate gap of 4 to the target of about 50 internally
+admissible open tasks. Directory count and candidate status are not external scientific
+validation or evidence of long-horizon headroom.
 
 ## Admission dimensions
 
@@ -23,6 +26,13 @@ better evaluator; conversely, a deterministic numerical objective can still lack
 meaning.
 
 ## Current inventory triage
+
+The bullets below retain the chronological triage findings from the original inventory and repair
+waves. The current machine-counted snapshot is 7 certified, 39 candidate and 12 quarantined.
+CatalystDeactivationLab-v1 is the latest candidate. It supplies a synthetic stateful laboratory
+with drift, finite coupons, irreversible reactions, out-of-order completion and retry lineage,
+but still requires repeated paired controls, server-held worlds, independent catalysis review and
+physical replication.
 
 - **7 certified core tasks.** Secure and documented, but the 2026-07-21 GPT-5.5 pilot shows
   that Poisson and Spin Glass saturate in one proposal and Lennard-Jones nearly saturates.
@@ -55,7 +65,8 @@ meaning.
   as multifidelity Pareto and long-horizon trajectory-optimization candidates, respectively;
   RoomImpulseResponse-v2 has now also been substantively rebuilt; the remaining three stay
   quarantined.
-- **No original unscreened candidates remain after wave 4; 28 candidates remain in total.** They include
+- **At the wave-4 snapshot, no original unscreened candidates remained and 28 candidates were
+  recorded.** They included
   SCM, Lyapunov control, neutron criticality, seismic refraction, pendulum control, sparse
   recovery, OED-v2, GateSynthesis-v2, OPF-v2, Truss-v2, Antenna-v2, NMR-v2,
   HeatExchanger-v2, ReactionMechanismFitting-v2, GravityInversion-v2,
@@ -72,7 +83,7 @@ meaning.
   independent budget-three run, all three proposals retain the same two false discoveries;
   score feedback does not fix model-inadequacy detection and later proposals reduce mechanism
   recovery. This is a reliability/refusal frontier rather than an ordinary prediction frontier.
-- **16 quarantined packages.** Five generic-objective clones must be replaced with real domain
+- **At that snapshot, 16 packages were quarantined.** Five generic-objective clones must be replaced with real domain
   oracles; metadata completion alone cannot rehabilitate them. The former Climate, cavity and
   broadband-absorber defects have been resolved by substantive v2 rebuilds rather than local
   numerical patches. The remaining wave-2 and inverse-track tasks are still blocked by concrete oracle failures;
@@ -90,7 +101,7 @@ meaning.
   that do not implement the claimed science. BroadbandAbsorber-v2, Distillation-v2 and
   HartreeFockSCF-v2, ConvectionDiffusionOpt-v2 and RankineCycleOpt-v2 now resolve five of those
   twelve; the other seven retain their reproduced
-  defects.
+  defects. Subsequent substantive rebuilds reduced the current quarantined count to 12.
 
 ## Priority review findings
 
@@ -253,17 +264,12 @@ The target is approximately 50 **admissible** open scientific optimization tasks
 4. add missing mechanism, multifidelity, experimental-design and null/misspecification families;
 5. run frontier-model budget-one screening before expensive budget 30/100/300 studies.
 
-After complete original-inventory triage, adding ActiveLawDiscovery and rebuilding Gate-v2,
-OPF-v2, Truss-v2, Antenna-v2, NMR-v2, HeatExchanger-v2, ReactionMechanismFitting-v2 and
-GravityInversion-v2, OceanCurrentInversion-v2, RadiativeTransferFit-v2, LowThrustTransfer-v2,
-LidDrivenCavity-v2, EnergyBalanceModel-v2, BroadbandAbsorber-v2, Distillation-v2,
-HartreeFockSCF-v2, RoomImpulseResponse-v2, ConvectionDiffusionOpt-v2 and
-SeismicWaveInversion-v2 and RankineCycleOpt-v2, the net expansion gap is approximately 15
-admissible tasks: 51 folders minus 16 quarantines leaves 35 internally admissible certified or
-candidate packages, while the target
-is about 50. New
-work should emphasize procedural task families and independent regimes,
-not one-off fixed instances or scientific names around hand-written scalar objectives.
+After complete original-inventory triage, repair waves and additions through
+CatalystDeactivationLab-v1, the registry contains 46 internally admissible certified or candidate
+packages. The net expansion gap is therefore approximately 4 tasks rather than the earlier
+51-folder snapshot's gap of 15. New work should emphasize procedural task families, server-held
+regimes and independent replication rather than one-off fixed instances or scientific names around
+hand-written scalar objectives.
 
 A candidate that saturates across seeds at budget one is a calibration/on-ramp task, not an
 open-optimization headline task. A candidate that improves development score without sealed

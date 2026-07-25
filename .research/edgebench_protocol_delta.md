@@ -612,8 +612,11 @@ Source hashes, experiment distinctions and claim limits are stored in
 
 ## Minimum next experiments
 
-1. **HartreeFockSCF-v2 calibration:** GPT-5.5 budget 1, normal budget 3 and strict
-   selection-blind budget 3. These are single-run calibration only.
+1. **Catalyst D1 and claim-control pilot:** use server-held drift, batch and latency worlds to
+   compare aggregate, factorized label-blind, delayed/replayed and strict selection-blind
+   feedback at matched physical acts, oracle calls and payload. Require retry/recovery coverage,
+   fresh-batch confirmation and at least ten independently randomized repetitions before any
+   feedback claim. The current deterministic task and three single runs are schema calibration.
 2. **Trajectory instrumentation pilot:** record raw/regression curves, effective-submission
    rate, improvement magnitude, rollback latency and active-learning span on Hartree–Fock,
    Distillation, ActiveLaw and Truss.
@@ -628,8 +631,8 @@ Source hashes, experiment distinctions and claim limits are stored in
    only science curves; no causal claim unless compute/information balance and run coverage pass.
 6. **Population budget curves:** primary long trajectories with preregistered checkpoints at
    30/100/300 proposal units; independent fixed-horizon runs on a smaller subset to test whether
-   horizon knowledge changes behavior. Do not fit a scaling law to the present 32 admissible
-   tasks or single calibrations.
+   horizon knowledge changes behavior. Do not fit a scaling law to the present 46 internally
+   admissible tasks or the 67 single-run normal calibrations.
 7. **Endpoint-policy audit:** replay existing trajectories and compare committed, terminal and
    evaluator-only oracle-best artifacts on visible, sealed and mechanism metrics; add atomic
    snapshot hashes before long runs.
@@ -714,9 +717,10 @@ Source hashes, experiment distinctions and claim limits are stored in
 32. **Shared research portfolio:** allocate one common instrument/oracle/confirmation budget over
     blinded signal, null, misspecified and multifidelity projects; compare equal/random,
     cost-aware VOI and agent allocation on fresh-confirmed portfolio utility and regret.
-33. **Stateful laboratory stress test:** inject calibration drift, batch/sample depletion,
-    irreversible interventions and out-of-order results; require world/sample/calibration/
-    intervention lineage and distinguish physical acts from evaluator retries.
+33. **Stateful laboratory stress test:** extend the CatalystDeactivationLab-v1 schema smoke with
+    randomized calibration drift, batch/sample depletion, irreversible interventions and
+    out-of-order results; require world/sample/calibration/intervention lineage, forced
+    retry/recovery cases and a separate real-service or instrument stratum.
 34. **Feedback-clock intervention:** fix total feedback and active/scientific budgets, randomize
     its cadence, and test which time axis yields stable curve collapse and held-out forecasts.
 35. **Task-graph topology intervention:** compare matched well-mixed, chain, modular-bottleneck
@@ -778,6 +782,28 @@ Source hashes, experiment distinctions and claim limits are stored in
     shared-bias and conflicting channels under matched scientific cost and payload; hide or permute
     source labels and score reliability calibration, evidence weighting, escalation and sealed
     mechanism/refusal recovery.
+
+## CatalystDeactivationLab-v1 implementation update
+
+CatalystDeactivationLab-v1 now implements the deterministic contract portion of item 33. Four
+finite coupons undergo irreversible deactivation, instrument gain and offset drift over events,
+batch results return in deterministic latency order, and an exact request retry is idempotent.
+Stale parents, conflicting retries, same-coupon concurrency, exhausted samples and excess physical
+acts fail closed. Each event retains laboratory, coupon, calibration and intervention lineage.
+
+The task calibration reference uses 12 physical acts, four out-of-order batches and one exact retry
+per world without duplicate acts or stale-parent attempts. Across seven GPT-5.5 proposals, six are
+valid, one has an invalid submission and four score above zero. Neither normal nor frozen-parent
+selection produces a calibrated scientific claim: both selected nonzero artifacts cover all
+supported worlds but refuse no unsupported worlds, with development/held-out false-discovery rates
+`0.40/0.333` and zero development decision score. Only the frozen-parent selected artifact uses
+out-of-order batches, and no model proposal exercises exact retry.
+
+This smoke does not complete the EdgeBench-style long-horizon experiment. Item 33 still requires
+randomized latency/drift/batch treatments, repeated matched controls, crash/retry injection, a
+fresh confirmation reserve and a real service or instrument stratum. The normal and frozen-parent
+runs contain one condition each, differ in tokens and wall time, and lack a server-side generation
+seed, so their score difference is not a feedback-effect estimate.
 
 ## Claim boundary
 

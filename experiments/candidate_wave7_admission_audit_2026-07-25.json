@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_CANDIDATE_ADMISSION_AUDIT",
+  "evidence_scope": "INTERNAL_SYNTHETIC_STATEFUL_CATALYST_LAB_ADMISSION_NOT_PHYSICAL_REACTOR_CATALYST_OR_AUTONOMOUS_DISCOVERY_EVIDENCE",
+  "created_at": "2026-07-25T17:29:41.669407+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "2c5e6546502bb27d642e858170f6d0e72a9e24dc",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/audit_candidate_wave7.py",
+      "--output",
+      "experiments/candidate_wave7_admission_audit_2026-07-25.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "records": [
+    {
+      "task": "Catalysis/CatalystDeactivationLab",
+      "admission": "candidate",
+      "resolved_capability_gap": "adds a path-dependent scientific laboratory rather than another static artifact optimizer: raw calibration drift, finite catalyst coupons, irreversible deactivation, out-of-order batch completion, idempotent physical retries, stale-parent rejection, model-family refusal and a separate sealed fresh-batch operating decision",
+      "development_world_count": 5,
+      "heldout_world_count": 3,
+      "coupon_count_per_world": 4,
+      "maximum_reactions_per_coupon": 3,
+      "physical_act_budget": 12,
+      "maximum_batch_size": 3,
+      "baseline_score": 0.0,
+      "truth_blind_development_score": 0.9580340000000003,
+      "truth_blind_heldout_score": 0.9512629999999999,
+      "truth_blind_development_robustness": 0.8831736666666666,
+      "truth_blind_heldout_robustness": 0.9427729999999999,
+      "truth_blind_development_refusal_rate": 1.0,
+      "truth_blind_heldout_refusal_rate": 1.0,
+      "truth_blind_development_false_discovery_rate": 0.0,
+      "truth_blind_heldout_false_discovery_rate": 0.0,
+      "mean_physical_acts": 12.0,
+      "mean_exact_retries": 1.0,
+      "mean_out_of_order_batches": 4.0,
+      "duplicate_physical_act_count": 0,
+      "stale_parent_attempt_count": 0,
+      "maximum_independent_product_gap": 6.352474102300221e-12,
+      "state_machine_checks": {
+        "out_of_order_completion": true,
+        "exact_retry_is_idempotent": true,
+        "exact_retry_count": 1,
+        "duplicate_physical_act_count": 0,
+        "reaction_post_coupon_version": 1,
+        "reaction_remaining_uses": 2,
+        "failure_checks": {
+          "stale_parent": true,
+          "conflicting_retry": true
+        },
+        "passed": true
+      },
+      "search_visible_metric_keys": [
+        "combined_score",
+        "feasibility_rate",
+        "raw_score",
+        "valid"
+      ],
+      "limitations": [
+        "This is a deterministic procedural reduced-order state machine, not a physical reactor or instrument.",
+        "The kinetic family omits transport, thermal gradients, complex adsorption, catalyst characterization and safety constraints.",
+        "Out-of-order completion is deterministic latency replay, not a real asynchronous laboratory service.",
+        "Fixed public equations and repository-visible worlds require server-held cohorts and contamination auditing.",
+        "Reference policies are reproducible normalization witnesses, not global optima or catalyst discoveries.",
+        "Engineering and discovery claims require independent catalysis review, real instrumentation, fresh catalysts and experimental replication."
+      ],
+      "passed": true
+    }
+  ],
+  "summary": {
+    "task_count": 1,
+    "recommended_candidate_count": 1,
+    "recommended_quarantine_count": 0,
+    "resolved_capability_gap_count": 1
+  },
+  "execution_passed": true,
+  "trust_decision": "trusted_clean_revision",
+  "trusted_evidence": true,
+  "passed": true
+}
