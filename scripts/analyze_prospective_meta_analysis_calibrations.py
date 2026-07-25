@@ -50,7 +50,7 @@ CONDITIONS = {
     "blind_budget_three": {"mode": "selection_blind", "budget": 3, "seed": 1},
 }
 TASK_RUNTIME_SCOPE = (
-    "frontier_science",
+    ":(glob)frontier_science/**/*.py",
     "benchmarks/EvidenceSynthesis/ProspectiveMetaAnalysis",
     "requirements-upstream.txt",
 )

@@ -123,6 +123,13 @@ class ProspectiveMetaAnalysisCalibrationAnalysisTests(unittest.TestCase):
             runtime_source_changes=["benchmarks/example.py"],
         )["execution_passed"])
 
+    def test_runtime_scope_tracks_python_not_certification_narrative(self):
+        self.assertIn(
+            ":(glob)frontier_science/**/*.py",
+            self.module.TASK_RUNTIME_SCOPE,
+        )
+        self.assertNotIn("frontier_science", self.module.TASK_RUNTIME_SCOPE)
+
     def test_retained_scan_rejects_hidden_world_and_dynamic_io(self):
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "candidate.py"
