@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_ADMISSION_AUDIT",
+  "created_at": "2026-07-25T12:35:50.698789+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "3b10e68fedefc415128386f626a39071d7ecfe02",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/audit_candidate_wave5.py",
+      "--output",
+      "experiments/candidate_wave5_admission_audit_2026-07-25.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "records": [
+    {
+      "task": "EvidenceSynthesis/ProspectiveMetaAnalysis",
+      "admission": "candidate",
+      "resolved_capability_gap": "adds a prospective evidence-synthesis workflow rather than another clean-simulator scalar optimizer: registry screening, participant-lineage de-duplication, preregistered-primary extraction, selective-report flags, heterogeneous inference, model-family refusal, immutable pre-result forecast/study commit and one fresh prospective confirmation",
+      "development_world_count": 6,
+      "heldout_world_count": 4,
+      "eligible_lineages_per_world": 14,
+      "supported_world_count": 8,
+      "unsupported_world_count": 2,
+      "baseline_score": 0.0,
+      "truth_blind_development_score": 0.9336980235736575,
+      "truth_blind_heldout_score": 0.8861236827037715,
+      "truth_blind_development_robustness": 0.2989472265941332,
+      "truth_blind_heldout_robustness": 0.5417344002833724,
+      "truth_blind_development_false_discovery_rate": 0.0,
+      "truth_blind_heldout_false_discovery_rate": 0.0,
+      "truth_blind_development_unsupported_refusal_rate": 1.0,
+      "truth_blind_heldout_unsupported_refusal_rate": 1.0,
+      "oracle_reference_score": 1.0,
+      "oracle_reference_robustness": 1.0,
+      "maximum_independent_beta_gap": 0.0,
+      "minimum_nonlinear_lack_of_fit_z": 3.1999609332663423,
+      "maximum_supported_lack_of_fit_z": 1.3589683647116697,
+      "minimum_naive_highlighted_article_intercept_bias": 0.06316909297125302,
+      "search_visible_metric_keys": [
+        "combined_score",
+        "feasibility_rate",
+        "raw_score",
+        "valid"
+      ],
+      "limitations": [
+        "The study corpora, registries, publications and prospective results are synthetic standardized-effect summaries, not human-participant research.",
+        "Known registration identifiers make lineage de-duplication executable; real reviews require source-document investigation, author contact and risk-of-bias assessment.",
+        "The public linear moderator family and quadratic lack-of-fit control omit multi-level dependence, endpoint covariance, cluster trials, missing data and individual participant data.",
+        "Fixed repository-visible seeds require server-held corpora and contamination/shortcut auditing.",
+        "A sealed simulated confirmation is not independent laboratory, clinical or policy confirmation.",
+        "Task calibration does not measure GPT-5.5, feedback causality, population performance or autonomous scientific discovery."
+      ],
+      "passed": true
+    }
+  ],
+  "summary": {
+    "task_count": 1,
+    "recommended_candidate_count": 1,
+    "recommended_quarantine_count": 0,
+    "resolved_capability_gap_count": 1
+  },
+  "execution_passed": true,
+  "trust_decision": "trusted_clean_revision",
+  "trusted_evidence": true,
+  "passed": true
+}

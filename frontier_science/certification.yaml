@@ -99,7 +99,7 @@ tasks:
       - doi:10.1039/D2DD00027J
   EvidenceSynthesis/ProspectiveMetaAnalysis:
     status: candidate
-    reason: v1 adds a procedural registered-study laboratory with randomized eligibility screening, participant-lineage de-duplication, preregistered-primary extraction, outcome-selective publication flags, heterogeneous linear meta-regression, resolvable nonlinear-family refusal, an immutable pre-result claim/forecast/study-design commit and one fresh prospective confirmation; retain as a synthetic evidence-synthesis candidate pending calibration, server-held corpora, independent research-synthesis/biostatistics review and real prospective replication
+    reason: v1 adds a procedural registered-study laboratory with randomized eligibility screening, participant-lineage de-duplication, preregistered-primary extraction, outcome-selective publication flags, heterogeneous linear meta-regression, resolvable nonlinear-family refusal, an immutable pre-result claim/forecast/study-design commit and one fresh simulated confirmation; the truth-blind registry-first reference reaches 0.934/0.886 development/held-out score with zero false discovery and full nonlinear refusal, while four of seven GPT-5.5 proposals are schema-invalid and the three executable proposals are empty abstentions with no screening or confirmation workflow; retain as a synthetic evidence-synthesis candidate pending paired repeated controls, server-held corpora, independent research-synthesis/biostatistics review, source-document extraction and genuinely independent prospective replication
     citation_ids:
       - doi:10.1016/0197-2456(86)90046-2
       - doi:10.1002/sim.1186

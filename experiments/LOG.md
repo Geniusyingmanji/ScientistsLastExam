@@ -2399,3 +2399,65 @@ The final static-source full-suite v5 report has SHA-256
 `bf8b2e87be95e0f4caf7706668de23f1e1d8fa836038bdca45ccbc1b0d9ec68d`, binds clean
 source `3eca1ac`, and passes 375/375 tests in 1173.923 seconds. It supersedes the unretained
 transition report generated while source work was still changing.
+
+## 2026-07-25 — ProspectiveMetaAnalysis-v1 admission, GPT-5.5 calibration and hurdle analysis
+
+`EvidenceSynthesis/ProspectiveMetaAnalysis` adds a synthetic registered-study workflow over six
+development and four held-out worlds. Each world contains registry results, duplicate publications
+from shared participant lineages, selectively highlighted outcomes and ineligible records. A
+candidate must screen the evidence, fit a heterogeneous linear meta-regression, reject resolvable
+nonlinear misspecification, commit a forecast and study design before the result, request at most
+one fresh simulated study and update the claim.
+
+The trusted task calibration has SHA-256
+`53a2a6ee60fb917ae0077b5714342bf25f4c3806e6d55f9507237d285805a9c9` and binds clean
+source `3b10e68`. The weak baseline scores zero. The truth-blind registry-first reference reaches
+development/held-out `0.933698/0.886124` and robustness `0.298947/0.541734`, with evidence
+integrity, supported-claim coverage and nonlinear refusal `1/1` and false discovery `0/0`.
+Naive article/highlighted-outcome analysis has an intercept bias of at least `0.063169` in every
+world. The largest supported-world lack-of-fit z-score is `1.358968`, whereas the smallest
+nonlinear-world value is `3.199961`. The oracle witness scores one. These values calibrate a
+synthetic standardized-summary task, not a real systematic review, clinical trial or autonomous
+discovery result.
+
+Wave-5 admission (SHA-256
+`2efa2371c5f8786b80c644149732b5b8f18d6fe45e8b0f831c58192068784ca9`) recommends the task
+as a candidate. Certification v47
+(`0ab2fc89d62788304d0bc885a8f01fa12b883f663f84714a30dfb73de4411ccb`) records 56
+packages at `7/37/12`, or 44 internally admissible tasks and an approximate gap of six to the
+roughly 50-task target. Security v30
+(`2cabf60df9dba8f66da1a4a70b64ad33df2119e0d1151304045d3cab43d0675e`) passes 18/18.
+Secure baseline v36
+(`97da4727e33982e1d07ac7f3aee94df6dbd9170304dda50733ea08d19826cfd0`) reports 56/56
+deterministic, valid and fail-closed baselines with zero infrastructure failures. All bind clean
+source `3b10e68`.
+
+Three trusted GPT-5.5 reports also bind `3b10e68`: budget one (SHA-256
+`643ed1c4b163def915ed99e9b74217ec2d7438878aaf833a9ac467d85df0c854`), normal budget
+three (`2877b41b775f9de023e34772b86c596adb91c7a0cb42dd60f1edc19b97dbec94`) and frozen-
+parent budget three (`d1b4e9f5bfd7aea7c72d088497bc1b59a097f8d38de9f87c0e588bcef25a4389`). Across seven
+proposals, four are schema-invalid and three are valid empty abstentions. No proposal has nonzero
+evidence integrity, makes a confirmation call or covers a supported claim, and every selected
+score remains zero. The normal budget-three trajectory changes from schema-invalid at step one to
+legal empty abstention at steps two and three. This is protocol repair, not scientific-workflow
+progress.
+
+Normal and frozen-parent budget three both use four oracle calls and 4,641 input tokens, but use
+13,029 and 13,599 output tokens. Azure exposes no server-side generation seed, and the prompts and
+generated programs differ, so the contrast is descriptive rather than causal. The trusted derived
+analysis has SHA-256
+`d288ad58e4fbf88ebe6d8e89f1c5875a7a07b209b69094de74ee6334f7397c43` and binds clean
+analysis source `df4fda0`. It verifies raw/report hashes, lineage, accounting, all ten-world
+science axes and narrow hidden-label/I/O scans of the three retained terminal programs. Four
+intermediate proposal sources were not retained and receive no narrower diagnosis.
+
+Cross-task summary v25 has SHA-256
+`7cd4a4b3af5a729ca901735ca3027df27d15c75ec69b8fe360a3b4d5ef2d7dae`, binds clean source
+`b85b0ee`, and covers 63 normal single-run conditions across 32 tasks. A same-revision closeout
+rerun records wave-5 admission v2 SHA-256
+`8f09efd426e27b8a4c6b25ce6bc5b3cdd9136c1f21a1722a28a46841ff877ca5`, certification v48
+`445decdb6b627976ead1b2e669b4e757720bfe5fd20bc1472d83c5b37473eb36`, security v31
+`f326b84754526dab9d26880261784681d274f6d20eebd731352ae2e6be9a6b76` and 56×2 secure
+baseline v37 `41e29f416b38c79e0f3ffae1637e0e95de3f929d498b8c49961603958d6802a0`.
+All are trusted and pass. A new static-source full suite remains to be generated after the
+documentation and evidence artifacts are committed.

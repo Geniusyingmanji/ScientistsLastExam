@@ -9,13 +9,14 @@ DistillationColumnDesign-v2, HartreeFockSCF-v2, RoomImpulseResponse-v2,
 ConvectionDiffusionOpt-v2, SeismicWaveInversion-v2, RankineCycleOpt-v2 and MOSFETDoping-v2. The
 list now also includes RANSCalibration-v2, GeneNetworkIntervention-v1, RNAInverseDesign-v1,
 ProteinStabilityDesign-v1, ElectrolyteConductivityDesign-v1, DemographicSFS-v2 and
-CalorimeterDesign-v2. The 61 normal-feedback model conditions across these 31 tasks each
+CalorimeterDesign-v2, plus ProspectiveMetaAnalysis-v1. The 63 normal-feedback model conditions
+across these 32 tasks each
 contain one seed and proposal budget one or three. They calibrate tasks and motivate experiments;
 they are not a model leaderboard, a causal feedback study or population evidence.
 
 The portable machine record
-`experiments/science_calibration_summary_2026-07-25_v24.json` retains every top-level scalar metric,
-candidate lineage hash and raw trajectory SHA-256 for all 61 normal conditions.
+`experiments/science_calibration_summary_2026-07-25_v25.json` retains every top-level scalar metric,
+candidate lineage hash and raw trajectory SHA-256 for all 63 normal conditions.
 Additional strict diagnostics for Distillation-v2, Hartree--Fock and room acoustics are bound
 separately by `experiments/distillation_v2_calibration_analysis_2026-07-23.json`,
 `experiments/hartree_fock_v2_calibration_analysis_2026-07-23.json` and
@@ -30,7 +31,8 @@ separately by `experiments/distillation_v2_calibration_analysis_2026-07-23.json`
 `experiments/protein_stability_design_calibration_analysis_2026-07-25.json`,
 `experiments/electrolyte_conductivity_design_calibration_analysis_2026-07-25.json`,
 `experiments/demographic_sfs_v2_calibration_analysis_2026-07-25.json` and
-`experiments/calorimeter_v2_calibration_analysis_2026-07-25.json`. Strict selection-blind
+`experiments/calorimeter_v2_calibration_analysis_2026-07-25.json`, and
+`experiments/prospective_meta_analysis_calibration_analysis_2026-07-25.json`. Strict selection-blind
 diagnostics remain in task-specific analysis because they are not normal-feedback calibrations.
 The underlying reports bind the task-specific source revision. Pendulum's initial budget-one
 run on revision `57c0e1b` is
@@ -112,6 +114,8 @@ by the corrected-contract run on `2557adb`.
 | DemographicSFS-v2, normal budget 3 | three valid proposals; development mechanism `0.640 → 0.521 → 0.637`, only step 1 accepted | held-out mechanism `0.397 → 0.603 → 0.417`; selected prediction `0.883/0.939`; full coverage/refusal and zero false discovery | Development-only selection rejects the best held-out mechanism proposal and the selected policy remains below the truth-blind classical fit. |
 | CalorimeterDesign-v2, calibrated references | nominal development/held-out `1.000/1.000` at cost utilization `0.994/0.999`; robust reference `0.798/0.754` at `0.975/0.981` | nominal robustness `0/0` and shifted-geometry feasibility `0.483/0.467`; robust reference has robustness `1/1` and shifted feasibility `1/1` | Leaving 1.913 percentage points of development cost headroom trades nominal score for complete fabrication-envelope feasibility. Scientific-instrument curves must expose resource margin as well as performance. |
 | CalorimeterDesign-v2, three GPT-5.5 conditions | all seven proposals are runtime-invalid and the valid baseline remains at zero | no proposal reaches the nominal–robust tradeoff; zero infrastructure failures | The three retained terminal sources compile but use nonexistent public keys; four intermediate sources were not retained and cannot be diagnosed more narrowly. The one-run normal/open-loop contrast is unseeded, non-token-matched and non-causal. |
+| ProspectiveMetaAnalysis-v1, calibrated references | truth-blind development/held-out `0.934/0.886`; evidence-integrity and supported-claim coverage `1/1`; false discovery `0/0` | robustness `0.299/0.542`; nonlinear refusal `1/1`; every naive highlighted-article fit has intercept bias at least `0.063` | Registry-first lineage de-duplication and preregistered-primary extraction prevent the planted publication/duplication shortcut. Separate lack-of-fit, forecast, study-design and fresh-confirmation axes leave measurable headroom. This is a synthetic standardized-summary laboratory. |
+| ProspectiveMetaAnalysis-v1, three GPT-5.5 conditions | 4/7 proposals are schema-invalid; 3/7 are valid empty abstentions; all selected scores remain zero | no proposal has nonzero evidence integrity, makes a confirmation call or covers a supported claim | Normal budget three changes from schema failure at step 1 to legal abstention at steps 2–3, but does not enter the evidence workflow. A scalar zero therefore merges protocol failure with epistemic over-conservatism. The one-run normal/open-loop contrast is descriptive, not causal. |
 
 OPF's `robustness_score` combines security-constrained economic quality with overload penalties.
 It is not a pure safety probability. The proportional baseline is feasible for every tested
@@ -311,6 +315,14 @@ budget-three run execute on all eleven worlds and make nonzero claims. Only thos
 proposals admit interpretation of mechanism, prediction, coverage and refusal. This is not a
 normal-versus-open-loop effect estimate—the endpoint has no server-side seed—but it shows why
 invalid-proposal incidence and time-to-first-valid must accompany scientific-quality curves.
+
+ProspectiveMetaAnalysis-v1 separates two zero-score states more narrowly. Four proposals fail
+the response schema, whereas three proposals satisfy the executable contract but submit empty
+screening sets, make no confirmation call and cover no supported claim. In the normal budget-
+three trajectory, step one is schema-invalid and steps two and three are valid empty abstentions.
+The later prompts therefore repair the contract without entering the scientific workflow. Curves
+for evidence-synthesis agents should retain schema validity, evidence-integrity completion,
+pre-result commitment, confirmation execution and supported-claim coverage as distinct hurdles.
 
 ### 7. Feedback cannot optimize information that selection never receives
 
@@ -700,9 +712,9 @@ far-offset prediction, model-class adequacy and geological interpretation remain
 The current synthetic primary-reflection laboratory is an active-acquisition/model-checking
 on-ramp, not field FWI or autonomous geological discovery.
 
-The present source manifest contains 43 internally admissible certified or candidate packages:
-seven certified and 36 candidate, with 12 quarantined after rebuilding CalorimeterDesign-v2. The
-remaining admissible gap is approximately 7 tasks.
+The present source manifest contains 44 internally admissible certified or candidate packages:
+seven certified and 37 candidate, with 12 quarantined after adding ProspectiveMetaAnalysis-v1.
+The remaining admissible gap is approximately 6 tasks.
 Expansion should use procedural families spanning
 design, inverse problems, control, multifidelity validation, mechanism discovery and exact
 mathematical construction rather than cloning one scalar optimization template across domains.
