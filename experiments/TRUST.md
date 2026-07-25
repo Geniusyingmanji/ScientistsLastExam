@@ -299,3 +299,15 @@ Raw `.out`/`.log` files predating the trusted evaluator inherit
 | `security_audit_2026-07-25_v33.json` | `TRUSTED_SECURE_EVAL` | All 18 sandbox and protocol security regressions pass on clean fixed source `c813f16`. |
 | `secure_baseline_determinism_2026-07-25_v39.json` | `TRUSTED_SECURE_EVAL` | On clean fixed source `c813f16`, all 56 baselines are deterministic, valid and fail closed over two repetitions, with zero infrastructure failures. |
 | `full_test_suite_2026-07-25_v7.json` | `TRUSTED_FULL_TEST_SUITE` | On clean fixed source `c813f16`, all 396 tests pass in 1224.275 seconds, including task, analysis, source-equivalence, certification, security and cross-task-summary coverage. |
+
+## 2026-07-25 PhotovoltaicTandemDesign-v1 evidence
+
+| Artifact | Trust | Scope |
+|---|---|---|
+| `photovoltaic_tandem_v1_calibration_2026-07-25.json` | `TRUSTED_TASK_CALIBRATION` | On clean source `0c0ca5e`, validates the hash-bound ASTM-G173-derived spectrum, independent one-through-four-junction detailed-balance limits, all 24 nominal/minimax anchors, cost-conditioned topology response, secure baseline and metric sealing. Reduced-order same-model calibration only. |
+| `candidate_wave6_admission_audit_2026-07-25.json` | `TRUSTED_ADMISSION_AUDIT` | On clean source `0c0ca5e`, verifies five development and three held-out regimes, three budgets, six sealed shifts and recommends one photovoltaic candidate. |
+| `task_certification_audit_2026-07-25_v51.json` | `TRUSTED_CERTIFICATION_AUDIT` | On clean source `0c0ca5e`, records all 57 packages at seven certified, 38 candidate and 12 quarantined, with no missing or orphaned records. |
+| `security_audit_2026-07-25_v34.json` | `FAILED_SECURITY_AUDIT / DO_NOT_USE AS PASSING EVIDENCE` | A concurrent clean-source run has one 0.5-second timeout-classification regression fail under CPU-heavy audit load; retained as negative evidence and superseded by isolated plus serial v35. |
+| `security_audit_2026-07-25_v35.json` | `TRUSTED_SECURE_EVAL` | Serial rerun on clean source `0c0ca5e`; all 18 sandbox and protocol security regressions pass. |
+| `secure_baseline_determinism_2026-07-25_v40.json` | `TRUSTED_SECURE_EVAL` | On clean source `0c0ca5e`, all 57 baselines are deterministic, valid and fail closed over two repetitions, with zero infrastructure failures. |
+| `full_test_suite_2026-07-25_v8.json` | `TRUSTED_FULL_TEST_SUITE` | On clean source `0c0ca5e`, all 404 tests pass in 1247.653 seconds. |

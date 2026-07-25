@@ -56,12 +56,12 @@ controlled exception text is reduced to a fixed label-blind failure taxonomy bef
 search feedback, preventing observations from being carried between worlds through exceptions.
 The current audit reports:
 
-- Trusted certification v48 and security v31 bind clean revision `b85b0ee`. Those pre-photovoltaic
-  records cover `7/37/12` over 56 packages with no missing manifest records, orphaned records or task-level
+- Trusted certification v51 and security v35 bind clean revision `0c0ca5e`. Certification covers
+  `7/38/12` over 57 packages with no missing manifest records, orphaned records or task-level
   admission issues; it retains one known duplicate-oracle group containing five quarantined
-  packages. Security passes 18/18 adversarial tests. The 56×2 baseline v37 reports 56/56
+  packages. Security passes 18/18 adversarial tests. The 57×2 baseline v40 reports 57/57
   deterministic, valid and fail-closed tasks with zero infrastructure failures. The latest
-  full-suite v7 binds clean revision `c813f16` and passes 396/396 tests in 1224.275 seconds.
+  full-suite v8 binds clean revision `0c0ca5e` and passes 404/404 tests in 1247.653 seconds.
   Cross-task summary v25 binds clean revision `b85b0ee` and contains 63 normal single-run
   conditions over 32 tasks.
 - Current source manifest: 7 certified / 38 candidate / 12 quarantined. ProteinStabilityDesign
@@ -254,13 +254,15 @@ the post-repair 50-package audits bind revision `47c3613`; the subsequent wave-2
 audit quarantines seven additional defective candidates. The two P2 smokes are baseline-only; the repository does not yet contain
 credible multi-seed model-performance evidence. A clean-revision GPT-5.5 budget-one core pilot
 is recorded as task calibration, not a benchmark leaderboard.
-The final closeout certification/security/baseline audits are v50/v33/v39 and bind clean
-analysis revision `c813f16`; full-suite v7 binds the same revision and passes 396/396 tests.
+The latest closeout certification/security/baseline audits are v51/v35/v40 and bind clean
+source revision `0c0ca5e`; full-suite v8 binds the same revision and passes 404/404 tests.
 CalorimeterDesign-v2's task calibration and wave-4 admission
 audit also bind `f6a7b73`. After the internally admitted PhotovoltaicTandemDesign addition, the
 current source manifest is 7/38/12 and contains 45 internally admissible tasks, leaving an
-approximate gap of 5 to the roughly 50-task target. Clean-revision whole-repository audits and
-model calibration for the photovoltaic task are still pending.
+approximate gap of 5 to the roughly 50-task target. Its clean-revision calibration reproduces
+ideal one-through-four-junction efficiencies `0.33695/0.45735/0.51291/0.55329`, with nominal
+reference score `1.000/1.000` and minimax-reference nominal/robust score
+`0.963/0.965` and `1.000/1.000`; these are reduced-order task anchors, not device records.
 GeneNetworkIntervention adds an active nonlinear signed-network, protected-readout intervention,
 sealed-transfer and null/latent-regulator refusal candidate. Its truth-blind nonlinear reference
 scores `0.9053/0.8932` development/held-out joint quality with zero false discovery. Across the

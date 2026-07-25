@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_CANDIDATE_ADMISSION_AUDIT",
+  "evidence_scope": "INTERNAL_REDUCED_ORDER_PHOTOVOLTAIC_TASK_ADMISSION_NOT_DEVICE_VALIDATION_RECORD_EFFICIENCY_OR_AUTONOMOUS_DISCOVERY_EVIDENCE",
+  "created_at": "2026-07-25T15:30:34.341538+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "0c0ca5ea21e6be5a58929e336b4c5dfbf0eddb55",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/audit_candidate_wave6.py",
+      "--output",
+      "experiments/candidate_wave6_admission_audit_2026-07-25.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "records": [
+    {
+      "task": "Photovoltaics/PhotovoltaicTandemDesign",
+      "admission": "candidate",
+      "resolved_capability_gap": "adds a cost-conditioned scientific-instrument design curve rather than a fixed scalar optimum: the policy jointly chooses junction count, band gaps and finite optical depths across budgets, while held-out spectra, current matching and thermal/process/optical robustness remain separately auditable",
+      "development_world_count": 5,
+      "heldout_world_count": 3,
+      "fabrication_budget_options_per_world": 3,
+      "sealed_shift_count": 6,
+      "baseline_score": 0.0,
+      "nominal_reference_development_score": 1.0,
+      "nominal_reference_heldout_score": 1.0,
+      "nominal_reference_development_robustness": 0.8910086650133792,
+      "nominal_reference_heldout_robustness": 0.8207572534082007,
+      "robust_reference_development_score": 0.9634888321747228,
+      "robust_reference_heldout_score": 0.9647892884865182,
+      "robust_reference_development_robustness": 1.0,
+      "robust_reference_heldout_robustness": 1.0,
+      "nominal_junction_counts_by_budget_option": [
+        [
+          1
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          4
+        ]
+      ],
+      "robust_junction_counts_by_budget_option": [
+        [
+          1
+        ],
+        [
+          2
+        ],
+        [
+          3
+        ]
+      ],
+      "minimum_nominal_headroom": 0.02520168613097254,
+      "minimum_robust_headroom": 0.022677099344748264,
+      "maximum_independent_runtime_efficiency_gap": 3.3306690738754696e-16,
+      "canonical_ideal_efficiencies": [
+        0.33694818654829256,
+        0.4573512080246412,
+        0.5129071536726227,
+        0.5532935525436598
+      ],
+      "spectrum_generated_sha256": "eeb37120e14ad2fbb5e986d63b5f7711fbf622a03ebf67edabea618df397a728",
+      "spectrum_upstream_sha256": "91964ac23c0ec82dbbda4a7f160a5f5faf551dfe18ffae7e2446d74b57ee7859",
+      "search_visible_metric_keys": [
+        "combined_score",
+        "feasibility_rate",
+        "raw_score",
+        "valid"
+      ],
+      "limitations": [
+        "The deterministic reduced-order model is not a drift-diffusion, optical-transfer-matrix or multiphysics device simulation.",
+        "It omits non-radiative recombination, transport, interfaces, tunnel junctions, luminescent coupling, resistance, thermal balance, actual materials and manufacturing yield.",
+        "Fixed repository-visible spectra require server-held cohorts and contamination auditing.",
+        "Reference designs are reproducible same-model search witnesses, not global optima or certified photovoltaic records.",
+        "Engineering claims require higher-fidelity device simulation, manufacturability review and independent experimental validation.",
+        "Task calibration does not measure GPT-5.5, feedback causality, population performance or autonomous scientific discovery."
+      ],
+      "passed": true
+    }
+  ],
+  "summary": {
+    "task_count": 1,
+    "recommended_candidate_count": 1,
+    "recommended_quarantine_count": 0,
+    "resolved_capability_gap_count": 1
+  },
+  "execution_passed": true,
+  "trust_decision": "trusted_clean_revision",
+  "trusted_evidence": true,
+  "passed": true
+}

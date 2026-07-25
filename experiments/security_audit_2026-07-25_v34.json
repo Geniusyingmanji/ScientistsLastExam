@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_SECURE_EVAL",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "0c0ca5ea21e6be5a58929e336b4c5dfbf0eddb55",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/run_security_audit.py",
+      "--output",
+      "experiments/security_audit_2026-07-25_v34.json"
+    ]
+  },
+  "started_at": "2026-07-25T15:30:26.741453+00:00",
+  "completed_at": "2026-07-25T15:30:39.544148+00:00",
+  "command": [
+    "/usr/bin/python3",
+    "-W",
+    "error::ResourceWarning",
+    "-m",
+    "unittest",
+    "-v",
+    "tests.test_secure_eval"
+  ],
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "duration_seconds": 12.774961998686194,
+  "returncode": 1,
+  "test_count": 18,
+  "tests": [
+    {
+      "name": "test_metric_validation_preserves_scientific_raw_score",
+      "case": "tests.test_secure_eval.CodecTests",
+      "status": "ok"
+    },
+    {
+      "name": "test_rejects_objects_and_non_finite",
+      "case": "tests.test_secure_eval.CodecTests",
+      "status": "ok"
+    },
+    {
+      "name": "test_roundtrip_supported_values",
+      "case": "tests.test_secure_eval.CodecTests",
+      "status": "ok"
+    },
+    {
+      "name": "test_seccomp_file_fallback_is_available",
+      "case": "tests.test_secure_eval.CodecTests",
+      "status": "ok"
+    },
+    {
+      "name": "test_candidate_exception_text_is_not_returned_as_feedback",
+      "case": "tests.test_secure_eval.SecureEvaluationTests",
+      "status": "ok"
+    },
+    {
+      "name": "test_candidate_stdout_cannot_forge_rpc",
+      "case": "tests.test_secure_eval.SecureEvaluationTests",
+      "status": "ok"
+    },
+    {
+      "name": "test_caught_multi_instance_timeout_is_not_masked_by_closed_worker",
+      "case": "tests.test_secure_eval.SecureEvaluationTests",
+      "status": "FAIL"
+    },
+    {
+      "name": "test_fork_is_blocked_by_seccomp",
+      "case": "tests.test_secure_eval.SecureEvaluationTests",
+      "status": "ok"
+    },
+    {
+      "name": "test_host_secret_and_path_traversal_are_not_visible",
+      "case": "tests.test_secure_eval.SecureEvaluationTests",
+      "status": "ok"
+    },
+    {
+      "name": "test_metrics_path_and_argv_are_not_exposed",
+      "case": "tests.test_secure_eval.SecureEvaluationTests",
+      "status": "ok"
+    },
+    {
+      "name": "test_network_namespace_is_disconnected",
+      "case": "tests.test_secure_eval.SecureEvaluationTests",
+      "status": "ok"
+    },
+    {
+      "name": "test_non_finite_candidate_output_is_rejected",
+      "case": "tests.test_secure_eval.SecureEvaluationTests",
+      "status": "ok"
+    },
+    {
+      "name": "test_oracle_import_is_not_visible",
+      "case": "tests.test_secure_eval.SecureEvaluationTests",
+      "status": "ok"
+    },
+    {
+      "name": "test_partial_rpc_frame_cannot_bypass_deadline",
+      "case": "tests.test_secure_eval.SecureEvaluationTests",
+      "status": "ok"
+    },
+    {
+      "name": "test_symlink_candidate_is_resolved_before_mount",
+      "case": "tests.test_secure_eval.SecureEvaluationTests",
+      "status": "ok"
+    },
+    {
+      "name": "test_timeout_kills_worker",
+      "case": "tests.test_secure_eval.SecureEvaluationTests",
+      "status": "ok"
+    },
+    {
+      "name": "test_top_level_instances_get_fresh_process_and_tmpfs_state",
+      "case": "tests.test_secure_eval.SecureEvaluationTests",
+      "status": "ok"
+    },
+    {
+      "name": "test_trusted_callback_is_also_wall_time_supervised",
+      "case": "tests.test_secure_eval.SecureEvaluationTests",
+      "status": "ok"
+    }
+  ],
+  "stdout": "",
+  "stderr": "test_metric_validation_preserves_scientific_raw_score (tests.test_secure_eval.CodecTests) ... ok\ntest_rejects_objects_and_non_finite (tests.test_secure_eval.CodecTests) ... ok\ntest_roundtrip_supported_values (tests.test_secure_eval.CodecTests) ... ok\ntest_seccomp_file_fallback_is_available (tests.test_secure_eval.CodecTests) ... ok\ntest_candidate_exception_text_is_not_returned_as_feedback (tests.test_secure_eval.SecureEvaluationTests) ... ok\ntest_candidate_stdout_cannot_forge_rpc (tests.test_secure_eval.SecureEvaluationTests) ... ok\ntest_caught_multi_instance_timeout_is_not_masked_by_closed_worker (tests.test_secure_eval.SecureEvaluationTests) ... FAIL\ntest_fork_is_blocked_by_seccomp (tests.test_secure_eval.SecureEvaluationTests) ... ok\ntest_host_secret_and_path_traversal_are_not_visible (tests.test_secure_eval.SecureEvaluationTests) ... ok\ntest_metrics_path_and_argv_are_not_exposed (tests.test_secure_eval.SecureEvaluationTests) ... ok\ntest_network_namespace_is_disconnected (tests.test_secure_eval.SecureEvaluationTests) ... ok\ntest_non_finite_candidate_output_is_rejected (tests.test_secure_eval.SecureEvaluationTests) ... ok\ntest_oracle_import_is_not_visible (tests.test_secure_eval.SecureEvaluationTests) ... ok\ntest_partial_rpc_frame_cannot_bypass_deadline (tests.test_secure_eval.SecureEvaluationTests) ... ok\ntest_symlink_candidate_is_resolved_before_mount (tests.test_secure_eval.SecureEvaluationTests) ... ok\ntest_timeout_kills_worker (tests.test_secure_eval.SecureEvaluationTests) ... ok\ntest_top_level_instances_get_fresh_process_and_tmpfs_state (tests.test_secure_eval.SecureEvaluationTests) ... ok\ntest_trusted_callback_is_also_wall_time_supervised (tests.test_secure_eval.SecureEvaluationTests) ... ok\n\n======================================================================\nFAIL: test_caught_multi_instance_timeout_is_not_masked_by_closed_worker (tests.test_secure_eval.SecureEvaluationTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/azureuser/workspace-gzy/zyf/frontier-science/tests/test_secure_eval.py\", line 108, in test_caught_multi_instance_timeout_is_not_masked_by_closed_worker\n    self.assertEqual(result.get(\"timeout\"), 1.0)\nAssertionError: None != 1.0\n\n----------------------------------------------------------------------\nRan 18 tests in 12.526s\n\nFAILED (failures=1)\n",
+  "execution_passed": false,
+  "trust_decision": "execution_failed",
+  "trusted_evidence": false,
+  "passed": false
+}

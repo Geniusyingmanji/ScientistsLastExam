@@ -1111,7 +1111,7 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
 - [x] MOSFETDoping-v2 完成内部 compact-model 重建并进入 candidate；
 - [x] ProspectiveMetaAnalysis-v1 完成 registry/lineage/commit/confirmation 内部准入；
 - [x] PhotovoltaicTandemDesign-v1 完成 ASTM 光谱 provenance、独立 detailed-balance 极限、
-  成本条件结数响应、sealed robustness 与 secure baseline 的任务级准入；
+  成本条件结数响应、sealed robustness、57×2 baseline 与 404-test clean-revision 准入；
 - [ ] 继续修 RANSCalibration；
 - [ ] 新增/重建任务按 `docs/task_expansion_v2_plan.md` 的 R2--R4 推进；
 - [ ] 为约 50-task inventory 增加 author/reviewer effort、shortcut red-team 与

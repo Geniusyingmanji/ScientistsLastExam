@@ -715,8 +715,9 @@ on-ramp, not field FWI or autonomous geological discovery.
 The present source manifest contains 45 internally admissible certified or candidate packages:
 seven certified and 38 candidate, with 12 quarantined after adding
 PhotovoltaicTandemDesign-v1. The remaining admissible gap is approximately 5 tasks. The
-photovoltaic task has passed dirty-tree task-level admission but still requires clean-revision
-whole-repository audits and model calibration.
+photovoltaic task passes clean-revision calibration, wave-6 admission, 57-package certification,
+18/18 security, 57-by-2 baseline determinism and 404/404 full-suite tests. Its reduced-order
+same-model results are not photovoltaic device records or experimental discovery evidence.
 Expansion should use procedural families spanning
 design, inverse problems, control, multifidelity validation, mechanism discovery and exact
 mathematical construction rather than cloning one scalar optimization template across domains.

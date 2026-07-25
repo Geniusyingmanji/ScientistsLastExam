@@ -2480,3 +2480,40 @@ All are trusted and pass; certification remains `7/37/12`, security is 18/18, an
 is deterministic, valid and fail closed with zero infrastructure failures. Full-suite v7
 (`af8698781056793a9aef2d8deac8cda54ee24fef1ec325e6950764a88ae36a18`) passes 396/396 in
 1224.275 seconds and supersedes v6 for current-source regression evidence.
+
+## 2026-07-25 — PhotovoltaicTandemDesign-v1 admission and clean closeout
+
+`Photovoltaics/PhotovoltaicTandemDesign` adds a three-point fabrication-budget design curve over
+five development and three interleaved held-out ASTM-G173-derived spectral/temperature regimes.
+Candidates jointly choose one-to-four ordered band gaps and finite optical depths. Six sealed
+thermal, band-gap, absorber-loss and spectral perturbations, plus absolute efficiency, current
+matching, cost and junction count, remain evaluator-only.
+
+The trusted task calibration (SHA-256
+`76f78623101267ddc33405d73a8292a4764e5354ec37b77f0281d84dc006f690`) binds clean source
+`0c0ca5e`. The exact 2002-row pvlib v0.13.1 spectrum copy has generated SHA-256
+`eeb37120e14ad2fbb5e986d63b5f7711fbf622a03ebf67edabea618df397a728` and integrates to
+`1000.370656 W/m2`. An independent first-order-condition root solve reproduces the oracle's
+one-through-four-junction ideal efficiencies `0.336948/0.457351/0.512907/0.553294` with maximum
+gap `3.33e-16`. The weak baseline scores zero. Nominal witnesses score `1.0/1.0`
+development/held-out and select one, two-or-three, then three-or-four junctions as budget rises.
+Minimax witnesses select one/two/three junctions, retain nominal score `0.963489/0.964789` and
+reach robustness `1.0/1.0`. Minimum per-regime/cap nominal and robust headroom are `0.025202`
+and `0.022677` absolute efficiency. These are reduced-order same-model anchors, not certified
+device efficiencies, materials, manufacturing results or autonomous discovery.
+
+Wave-6 admission SHA-256
+`db6e13dbb5f15e846df247389ef6e9d155ebabf964ad1b082165c13ab6a7541a` recommends one
+candidate. Certification v51
+(`ad6435882ae0120c3adc8e4b0d5836152c9517402f405331decf26906ede4f32`) records 57
+packages at `7/38/12`, or 45 internally admissible tasks. A concurrent security v34 attempt
+(`994035a893a6ec175de18a71b1eb128f4ececdeb0d853c02a2cb15c91fc2b3ee`) is retained as
+failed evidence because one 0.5-second timeout-classification regression failed under concurrent
+CPU-heavy audit load. The isolated test and full serial security v35
+(`8cad6e2868f71f644e7ae48cc1c4894348539d73310e0df7774517ae74907a5e`) pass, including
+all 18/18 adversarial tests. The 57×2 baseline v40
+(`4515392a29ffae58ae3cb224f091d2d53250b80ce30aa747a23b3cbd936f36c8`) reports 57/57
+deterministic, valid and fail-closed tasks with zero infrastructure failures. Full-suite v8
+(`240e51812a71e0d18f0d410b8f1596c43e482d98a46e9af4ed79cdaf0cc788e6`) passes 404/404
+in 1247.653 seconds. All passing closeout reports bind clean source `0c0ca5e`; GPT-5.5 task
+calibration remains unrun.
