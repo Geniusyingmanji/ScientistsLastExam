@@ -2341,3 +2341,61 @@ source `63e32fd`, and covers 59 normal conditions across 30 tasks. Full-suite v3
 `3e35253`, and passes 359/359 tests in 1147.462 seconds. These are synthetic finite-SFS task and
 model calibrations, not real-population inference, feedback causality, population performance or
 autonomous biological discovery.
+
+## 2026-07-25 — CalorimeterDesign-v2 rebuild, admission and model calibration
+
+`ParticlePhysics/CalorimeterDesign` now replaces its false fixed-10-GeV baseline and fail-open
+clipping path with three cost-conditioned Pb/scintillator design points over four development and
+two interleaved held-out regimes. The transparent longitudinal gamma-profile oracle spans 28--40
+layers and 0.8--250 GeV, separates resolution, response linearity, containment, material, length
+and readout cost, and withholds five fabrication/calibration/dead-material/light-yield/electronics
+shifts from search.
+
+The trusted task calibration has SHA-256
+`af5754f996fd736564bf991c19eb1256afc26a160a13257fe107a7cb6677f735` and binds clean
+source `f6a7b73`. Independent gamma-CDF quadrature and material/cost identities pass; 36 fixed-
+seed reference replays have zero gap; malformed, non-finite and duplicate archives fail closed.
+The valid weak baseline has development RMS resolution `0.085573` and normalized score zero. The
+nominal witness reaches development/held-out `1.0/1.0` at cost utilization `0.994478/0.999435`,
+but robustness is zero and shifted-geometry feasibility is only `0.483333/0.466667`. The robust
+witness uses `0.975352/0.980763` of cost, reaches nominal `0.797789/0.754127`, and preserves unit
+robustness and shifted feasibility. Thus 1.913 percentage points of development cost headroom
+reverse the manufacturing-feasibility conclusion. This motivates performance--cost--constraint-
+margin curves; it is not evidence for a universal margin or a validated detector.
+
+Wave-4 admission v9 (SHA-256
+`e46f6e1e6e6f9888c33c70f5794d30fc130a09b2551e1d237aa82ea0a3909e18`) verifies seven
+repaired candidates and retains five defects. Certification v46
+(`bf9e5d2ff72af3d78ab600239f64499dcbd447532cd214c75c39f81f73ff7555`) records
+`7/36/12`, or 43 internally admissible tasks and an approximate gap of seven to the roughly
+50-task target. Security v29
+(`ded2213d6372fc7caf37198e90b0a03635f159ca4a7a508948a78b18439792c3`) passes 18/18,
+and secure baseline v35
+(`348a2183d2fafd734ccb384f461909e2001c4a6668955a021aeb7e1c7c539723`) reports 55/55
+deterministic, valid and fail-closed baselines with zero infrastructure failures. All bind clean
+source `f6a7b73`.
+
+Three GPT-5.5 reports also bind `f6a7b73`: budget one (SHA-256
+`011b5576a7674be9706855302f62de9ef173aa86bc9bc052a982e4a13656c129`), normal budget
+three (`a335f39a65e196a8a497342ce871ad22d4f2e72624216d8288e6ebab6a8da9b0`) and frozen-
+parent budget three (`82b39b3ed84a6af0927b27045c6dee32eed4163b8e44e837c9623104bdf0aba2`). All seven
+proposals are runtime-invalid, all failures are safely exposed only as `candidate_runtime_error`,
+and infrastructure failures are zero. The conditions use 5,944, 18,091 and 18,329 tokens. Normal
+and frozen-parent budget three match four oracle calls and 6,678 input tokens but differ by 238
+output tokens; Azure exposes no server-side seed, so no feedback effect is identified.
+
+The trusted analysis (SHA-256
+`d6a09d7500d59652a229dae55112fb01edc7e0cfc405e1eff1bce356d2f5f888`) binds clean
+analysis source `3eca1ac`. The three retained terminal sources compile, but the budget-one and
+normal terminals request nonexistent `radiation_length_scint_mm`, while the frozen-parent
+terminal requests nonexistent `light_yield_per_gev`. Four intermediate proposal sources were not
+retained, so they remain only sanitized runtime failures. Cross-task summary v24 (SHA-256
+`b49296829e9533b4f98f218a7ff891008e7fbc93077a8c5fd3f31232a99f9732`) binds `3eca1ac`
+and covers 61 normal conditions across 31 tasks. These results support reduced-order task and
+protocol calibration only, not feedback causality, model population performance, GEANT4/
+electronics validity, test-beam performance or autonomous scientific discovery.
+
+The final static-source full-suite v5 report has SHA-256
+`bf8b2e87be95e0f4caf7706668de23f1e1d8fa836038bdca45ccbc1b0d9ec68d`, binds clean
+source `3eca1ac`, and passes 375/375 tests in 1173.923 seconds. It supersedes the unretained
+transition report generated while source work was still changing.

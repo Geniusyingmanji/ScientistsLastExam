@@ -20,7 +20,7 @@ The repository contains **55 task packages in 51 metadata domains**:
 
 - **7 certified core tasks**: Lennard–Jones clusters, spin glass, Poisson solver,
   matrix-multiplication rank, Cap Set, circle packing, and multilayer thin films.
-- **35 candidate tasks** pending scientific certification, including intervention-based causal
+- **36 candidate tasks** pending scientific certification, including intervention-based causal
   and active dynamical-law laboratories whose prediction and mechanism metrics are reported
   separately, a multi-spectrum NMR peak-mechanism/refusal task, and a multi-fidelity
   heat-exchanger Pareto-design task, a full-field lid-driven-cavity solver, active
@@ -33,8 +33,9 @@ The repository contains **55 task packages in 51 metadata domains**:
   inverse design with exact ensemble scoring and proxy-false-promotion diagnostics, and a
   real-data protein-stability assay-allocation replay, and a real-data electrolyte-conductivity
   assay-allocation replay with discovery and untouched-repeat confirmation reported separately,
-  and active demographic-SFS inference with finite-information and model-refusal diagnostics.
-- **13 quarantined tasks** retain reproduced scientific-oracle, identifiability, provenance or
+  active demographic-SFS inference with finite-information and model-refusal diagnostics, and
+  cost-conditioned sampling-calorimeter design with sealed fabrication margins.
+- **12 quarantined tasks** retain reproduced scientific-oracle, identifiability, provenance or
   shortcut defects.
   Quarantined packages remain inventory artifacts but are not admissible benchmark tasks.
 
@@ -51,20 +52,20 @@ controlled exception text is reduced to a fixed label-blind failure taxonomy bef
 search feedback, preventing observations from being carried between worlds through exceptions.
 The current audit reports:
 
-- Trusted certification v45 and security v28 bind clean revision `9a72b51`. Certification records
-  `7/35/13` over 55 packages with no missing manifest records, orphaned records or task-level
+- Trusted certification v46 and security v29 bind clean revision `f6a7b73`. Certification records
+  `7/36/12` over 55 packages with no missing manifest records, orphaned records or task-level
   admission issues; it retains one known duplicate-oracle group containing five quarantined
-  packages. Security passes 18/18 adversarial tests. The 55×2 baseline v34 reports 55/55
+  packages. Security passes 18/18 adversarial tests. The 55×2 baseline v35 reports 55/55
   deterministic, valid and fail-closed tasks with zero infrastructure failures. The latest
-  full-suite v3 binds clean revision `3e35253` and passes 359/359 tests in 1147.462 seconds.
-  Cross-task summary v23 binds clean revision `63e32fd` and contains 59 normal single-run
-  conditions over 30 tasks.
-- Current source manifest: 7 certified / 35 candidate / 13 quarantined. ProteinStabilityDesign
+  full-suite v5 binds clean revision `3eca1ac` and passes 375/375 tests in 1173.923 seconds.
+  Cross-task summary v24 binds clean revision `3eca1ac` and contains 61 normal single-run
+  conditions over 31 tasks.
+- Current source manifest: 7 certified / 36 candidate / 12 quarantined. ProteinStabilityDesign
   rebuilds 2,756 reliable double-mutant records across five
   development and three held-out domains from hash-bound ProteinGym v1.3/Tsuboyama sources.
   It separates additive proxy, charged assay, diversity, top-decile, trypsin, chymotrypsin,
   uncertainty and held-out metrics. Source reconstruction, secure baseline and shortcut audits
-  pass, and all seven GPT-5.5 proposals are executable. It is counted among 42 internally
+  pass, and all seven GPT-5.5 proposals are executable. It is counted among 43 internally
   admissible tasks but remains an offline public-data candidate, not prospective protein
   discovery. D-optimal design, quantum
   gate synthesis, DC optimal power flow, truss sizing, antenna synthesis and NMR peak fitting have been rebuilt with separate sealed
@@ -249,13 +250,11 @@ the post-repair 50-package audits bind revision `47c3613`; the subsequent wave-2
 audit quarantines seven additional defective candidates. The two P2 smokes are baseline-only; the repository does not yet contain
 credible multi-seed model-performance evidence. A clean-revision GPT-5.5 budget-one core pilot
 is recorded as task calibration, not a benchmark leaderboard.
-The latest trusted certification/security/baseline audits are v45/v28/v34 and bind clean
-candidate-manifest revision `9a72b51`; full-suite v2 binds the committed audit revision
-`090b065`, while the post-model-analysis full-suite v3 binds `3e35253` and passes 359/359 tests.
-DemographicSFS-v2's superseding task calibration and
-inverse-track admission audit also bind `9a72b51`, including the equal-budget observation-design
-control. The current source manifest is 7/35/13 and contains 42 internally admissible tasks,
-leaving an approximate gap of 8 to the roughly 50-task target.
+The latest trusted certification/security/baseline audits are v46/v29/v35 and bind clean
+candidate-manifest revision `f6a7b73`; post-model-analysis full-suite v5 binds `3eca1ac` and
+passes 375/375 tests. CalorimeterDesign-v2's task calibration and wave-4 admission
+audit also bind `f6a7b73`. The current source manifest is 7/36/12 and contains 43 internally
+admissible tasks, leaving an approximate gap of 7 to the roughly 50-task target.
 GeneNetworkIntervention adds an active nonlinear signed-network, protected-readout intervention,
 sealed-transfer and null/latent-regulator refusal candidate. Its truth-blind nonlinear reference
 scores `0.9053/0.8932` development/held-out joint quality with zero false discovery. Across the
@@ -282,12 +281,17 @@ budget-three selected policy reaches development/held-out mechanism `0.640/0.397
 sample-size prediction `0.883/0.939`, with full supported coverage, full resolvable-mismatch
 refusal and zero false discovery. A rejected proposal reaches higher held-out mechanism `0.603`
 at lower development mechanism `0.521`. Budget one and all three frozen-parent proposals fail
-the executable protocol; the normal/open-loop contrast is unseeded and non-causal. The updated
-cross-task summary contains 59 normal conditions over 30 tasks.
+the executable protocol; the normal/open-loop contrast is unseeded and non-causal.
+CalorimeterDesign-v2 adds three cost-conditioned detector curves per regime. Its nominal
+reference reaches `1.0/1.0` development/held-out score but only `0.483/0.467` shifted-geometry
+feasibility; leaving 1.913 percentage points of development cost headroom yields unit robustness
+and shift feasibility at nominal score `0.798/0.754`. All seven GPT-5.5 proposals are runtime-
+invalid, so this is a task/reference calibration, not model success or detector validation. The
+updated cross-task summary contains 61 normal conditions over 31 tasks.
 
 The latest EdgeBench re-audit keeps its upstream facts at arXiv `2607.05155v1`, SForge
 `a87350a` and public dataset `47846a4`. In addition to E1--E36, the science plan now preregisters
-sixteen unrun scope/protocol tests: raw instrument-to-claim error propagation (I6/E37), unit/coordinate/
+nineteen unrun scope/protocol tests: raw instrument-to-claim error propagation (I6/E37), unit/coordinate/
 representation metamorphic invariance (V4/E38), independent investigators with blinded synthesis
 (T1/E39), post-commit sealed downstream utilities (U1/E40), independently disclosed research
 horizons rather than long-run prefixes (HZ1/E41), and pinned/calibrated rubric or model judges
@@ -301,7 +305,8 @@ conditional checkpoint forks that separate same-history continuation randomness 
 research-history lock-in (CF1/E51), plus preregistered single-factor/factorial replay that separates
 new evidence, method edits and their interactions at narrated breakthroughs (MA1/E52), explicit
 retention and falsification of competing hypotheses rather than only one incumbent (HP1/E53), and
-calibration of biased, drifting or conflicting feedback sources (FR1/E54). A separate M2
+calibration of biased, drifting or conflicting feedback sources (FR1/E54), and preregistered
+performance–cost–constraint-margin sweeps for scientific instruments (CM1/E55). A separate M2
 protocol gate freezes the checkpoint risk set and replays single-run best-so-far monotonicity.
 These are proposed experiments, not new EdgeBench or Frontier-
 Science performance results. The expansion plan also prioritizes one prospective evidence-synthesis task over another

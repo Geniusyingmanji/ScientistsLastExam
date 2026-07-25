@@ -1,0 +1,1750 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_TASK_CALIBRATION",
+  "evidence_scope": "TRANSPARENT_REDUCED_ORDER_SAMPLING_CALORIMETER_TASK_CALIBRATION_NOT_GEANT4_TEST_BEAM_OR_DETECTOR_VALIDATION",
+  "created_at": "2026-07-25T10:36:02.696151+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "f6a7b7365809bbe64c655777f8e4f72eb8182da4",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/calibrate_calorimeter_v2.py",
+      "--output",
+      "experiments/calorimeter_v2_calibration_2026-07-25.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "task_dimensions": {
+    "development_instance_count": 4,
+    "heldout_instance_count": 2,
+    "archive_size": 3,
+    "shift_count": 5,
+    "layer_count_range": [
+      28,
+      40
+    ],
+    "incident_energy_range_gev": [
+      0.8,
+      250.0
+    ],
+    "total_regime_option_count": 18
+  },
+  "reference_method": {
+    "family": "bounded total absorber depth, exponential passive slope/curvature, active-budget fraction and Gaussian-plus-slope active allocation",
+    "optimizer": "SciPy differential_evolution plus polish",
+    "nominal_seed_base": 7100,
+    "robust_seed_base": 8100,
+    "seed_formula": "base + 10 * instance_index + option_index",
+    "population_multiplier": 9,
+    "maximum_iterations": 48,
+    "tolerance": 2e-07,
+    "reference_utility_tolerance": 2e-06,
+    "global_optimality_claimed": false,
+    "normalization_clips_better_feasible_candidates": true
+  },
+  "weak_baseline": {
+    "combined_score": 0.0,
+    "valid": 1.0,
+    "feasibility_rate": 1.0,
+    "raw_score": 0.0,
+    "robustness_score": 0.0,
+    "development_validation_gap": 0.0,
+    "heldout_policy_score": 0.0,
+    "heldout_robustness_score": 0.0,
+    "heldout_feasibility_rate": 1.0,
+    "development_mean_resolution": 0.08557286970637404,
+    "heldout_mean_resolution": 0.09144671377157701,
+    "development_linearity_rms": 0.007937951437726187,
+    "heldout_linearity_rms": 0.008808983369859039,
+    "development_minimum_containment": 0.9707119451235569,
+    "heldout_minimum_containment": 0.9699250099718363,
+    "development_mean_cost_utilization": 0.9,
+    "heldout_mean_cost_utilization": 0.9,
+    "development_shift_geometry_feasibility_rate": 1.0,
+    "heldout_shift_geometry_feasibility_rate": 1.0,
+    "candidate_instance_call_count": 6,
+    "candidate_instance_valid_rate": 1.0
+  },
+  "secure_sandbox_baseline": {
+    "combined_score": 0.0,
+    "valid": 1.0,
+    "feasibility_rate": 1.0,
+    "raw_score": 0.0,
+    "robustness_score": 0.0,
+    "development_validation_gap": 0.0,
+    "heldout_policy_score": 0.0,
+    "heldout_robustness_score": 0.0,
+    "heldout_feasibility_rate": 1.0,
+    "development_mean_resolution": 0.08557286970637404,
+    "heldout_mean_resolution": 0.09144671377157701,
+    "development_linearity_rms": 0.007937951437726187,
+    "heldout_linearity_rms": 0.008808983369859039,
+    "development_minimum_containment": 0.9707119451235569,
+    "heldout_minimum_containment": 0.9699250099718363,
+    "development_mean_cost_utilization": 0.9,
+    "heldout_mean_cost_utilization": 0.9,
+    "development_shift_geometry_feasibility_rate": 1.0,
+    "heldout_shift_geometry_feasibility_rate": 1.0,
+    "candidate_instance_call_count": 6,
+    "candidate_instance_valid_rate": 1.0
+  },
+  "nominal_reference_policy": {
+    "combined_score": 1.0,
+    "valid": 1.0,
+    "feasibility_rate": 1.0,
+    "raw_score": 1.0,
+    "robustness_score": 0.0,
+    "development_validation_gap": 1.0,
+    "heldout_policy_score": 1.0,
+    "heldout_robustness_score": 0.0,
+    "heldout_feasibility_rate": 1.0,
+    "development_mean_resolution": 0.05321042032904738,
+    "heldout_mean_resolution": 0.0574000947944428,
+    "development_linearity_rms": 0.01606666591410283,
+    "heldout_linearity_rms": 0.01571143796278496,
+    "development_minimum_containment": 0.9588835526381586,
+    "heldout_minimum_containment": 0.9552432545187123,
+    "development_mean_cost_utilization": 0.9944782789292711,
+    "heldout_mean_cost_utilization": 0.9994347570120181,
+    "development_shift_geometry_feasibility_rate": 0.48333333333333334,
+    "heldout_shift_geometry_feasibility_rate": 0.4666666666666667,
+    "candidate_instance_call_count": 6,
+    "candidate_instance_valid_rate": 1.0
+  },
+  "robust_reference_policy": {
+    "combined_score": 0.7977894682304659,
+    "valid": 1.0,
+    "feasibility_rate": 1.0,
+    "raw_score": 0.7977894682304659,
+    "robustness_score": 1.0,
+    "development_validation_gap": -0.20221053176953407,
+    "heldout_policy_score": 0.7541269490241698,
+    "heldout_robustness_score": 1.0,
+    "heldout_feasibility_rate": 1.0,
+    "development_mean_resolution": 0.0552961030196007,
+    "heldout_mean_resolution": 0.06077733747445094,
+    "development_linearity_rms": 0.02031160082543176,
+    "heldout_linearity_rms": 0.019218554085554406,
+    "development_minimum_containment": 0.9548630563862371,
+    "heldout_minimum_containment": 0.9571864816116599,
+    "development_mean_cost_utilization": 0.975351517046594,
+    "heldout_mean_cost_utilization": 0.9807634621404396,
+    "development_shift_geometry_feasibility_rate": 1.0,
+    "heldout_shift_geometry_feasibility_rate": 1.0,
+    "candidate_instance_call_count": 6,
+    "candidate_instance_valid_rate": 1.0
+  },
+  "independent_physics_checks": [
+    {
+      "name": "dev_general_purpose_32",
+      "split": "development",
+      "energy_menu_gev": [
+        2.0,
+        5.0,
+        10.0,
+        30.0,
+        80.0
+      ],
+      "shower_maxima_x0": [
+        5.095376600812415,
+        6.011667332686571,
+        6.7048145132465145,
+        7.803426801914625,
+        8.78425605492635
+      ],
+      "maximum_cdf_or_quadrature_error": 1.3322676295501878e-15,
+      "maximum_density_relative_error": 0.0,
+      "maximum_at_formula_error": 0.0,
+      "maximum_independent_nominal_scalar_error": 0.0,
+      "maximum_independent_energy_scalar_error": 0.0,
+      "containment_monotonic_with_depth": true,
+      "stochastic_one_over_sqrt_energy_identity_error": 1.3877787807814457e-17,
+      "lead_mass_identity_error_kg_m2": 0.0,
+      "radiation_length_identity_error": 5.717648576819556e-15,
+      "active_intervals_strictly_ordered": true,
+      "passed": true
+    },
+    {
+      "name": "heldout_compact_low_signal_28",
+      "split": "heldout",
+      "energy_menu_gev": [
+        1.0,
+        3.0,
+        12.0,
+        50.0
+      ],
+      "shower_maxima_x0": [
+        4.402229420252469,
+        5.5008417089205786,
+        6.887136070040469,
+        8.314252425680616
+      ],
+      "maximum_cdf_or_quadrature_error": 6.661338147750939e-16,
+      "maximum_density_relative_error": 0.0,
+      "maximum_at_formula_error": 0.0,
+      "maximum_independent_nominal_scalar_error": 0.0,
+      "maximum_independent_energy_scalar_error": 0.0,
+      "containment_monotonic_with_depth": true,
+      "stochastic_one_over_sqrt_energy_identity_error": 0.0,
+      "lead_mass_identity_error_kg_m2": 0.0,
+      "radiation_length_identity_error": 1.887379141862766e-15,
+      "active_intervals_strictly_ordered": true,
+      "passed": true
+    },
+    {
+      "name": "dev_high_energy_36",
+      "split": "development",
+      "energy_menu_gev": [
+        5.0,
+        15.0,
+        50.0,
+        150.0
+      ],
+      "shower_maxima_x0": [
+        6.011667332686571,
+        7.110279621354678,
+        8.314252425680616,
+        9.412864714348725
+      ],
+      "maximum_cdf_or_quadrature_error": 1.3322676295501878e-15,
+      "maximum_density_relative_error": 0.0,
+      "maximum_at_formula_error": 0.0,
+      "maximum_independent_nominal_scalar_error": 0.0,
+      "maximum_independent_energy_scalar_error": 0.0,
+      "containment_monotonic_with_depth": true,
+      "stochastic_one_over_sqrt_energy_identity_error": 1.3877787807814457e-17,
+      "lead_mass_identity_error_kg_m2": 0.0,
+      "radiation_length_identity_error": 7.216449660063518e-15,
+      "active_intervals_strictly_ordered": true,
+      "passed": true
+    },
+    {
+      "name": "dev_low_energy_noise_limited_30",
+      "split": "development",
+      "energy_menu_gev": [
+        0.8,
+        2.0,
+        6.0,
+        20.0
+      ],
+      "shower_maxima_x0": [
+        4.17908586893826,
+        5.095376600812415,
+        6.193988889480524,
+        7.397961693806462
+      ],
+      "maximum_cdf_or_quadrature_error": 9.992007221626409e-16,
+      "maximum_density_relative_error": 0.0,
+      "maximum_at_formula_error": 0.0,
+      "maximum_independent_nominal_scalar_error": 0.0,
+      "maximum_independent_energy_scalar_error": 0.0,
+      "containment_monotonic_with_depth": true,
+      "stochastic_one_over_sqrt_energy_identity_error": 0.0,
+      "lead_mass_identity_error_kg_m2": 0.0,
+      "radiation_length_identity_error": 3.9968028886505635e-15,
+      "active_intervals_strictly_ordered": true,
+      "passed": true
+    },
+    {
+      "name": "heldout_ultra_high_energy_40",
+      "split": "heldout",
+      "energy_menu_gev": [
+        3.0,
+        10.0,
+        40.0,
+        120.0,
+        250.0
+      ],
+      "shower_maxima_x0": [
+        5.5008417089205786,
+        6.7048145132465145,
+        8.091108874366405,
+        9.189721163034514,
+        9.923690338114715
+      ],
+      "maximum_cdf_or_quadrature_error": 1.1102230246251565e-15,
+      "maximum_density_relative_error": 0.0,
+      "maximum_at_formula_error": 0.0,
+      "maximum_independent_nominal_scalar_error": 0.0,
+      "maximum_independent_energy_scalar_error": 0.0,
+      "containment_monotonic_with_depth": true,
+      "stochastic_one_over_sqrt_energy_identity_error": 1.3877787807814457e-17,
+      "lead_mass_identity_error_kg_m2": 0.0,
+      "radiation_length_identity_error": 2.6645352591003757e-15,
+      "active_intervals_strictly_ordered": true,
+      "passed": true
+    },
+    {
+      "name": "dev_precision_linearity_34",
+      "split": "development",
+      "energy_menu_gev": [
+        1.5,
+        4.0,
+        15.0,
+        60.0
+      ],
+      "shower_maxima_x0": [
+        4.807694528360634,
+        5.78852378137236,
+        7.110279621354678,
+        8.49657398247457
+      ],
+      "maximum_cdf_or_quadrature_error": 8.36136715420821e-16,
+      "maximum_density_relative_error": 0.0,
+      "maximum_at_formula_error": 0.0,
+      "maximum_independent_nominal_scalar_error": 0.0,
+      "maximum_independent_energy_scalar_error": 0.0,
+      "containment_monotonic_with_depth": true,
+      "stochastic_one_over_sqrt_energy_identity_error": 0.0,
+      "lead_mass_identity_error_kg_m2": 0.0,
+      "radiation_length_identity_error": 1.021405182655144e-14,
+      "active_intervals_strictly_ordered": true,
+      "passed": true
+    }
+  ],
+  "reference_regeneration": [
+    {
+      "name": "dev_general_purpose_32",
+      "split": "development",
+      "n_layers": 32,
+      "energy_menu_gev": [
+        2.0,
+        5.0,
+        10.0,
+        30.0,
+        80.0
+      ],
+      "options": [
+        {
+          "option_index": 0,
+          "cost_cap": 4427.648177777778,
+          "baseline_nominal_utility": 0.432564343916425,
+          "baseline_robust_utility": 0.4269831215749916,
+          "declared_nominal_parameters": [
+            19.81096082232441,
+            0.32177307171276126,
+            0.882581459388294,
+            0.998,
+            0.7243048090224606,
+            0.10031051840588863,
+            -1.0334545848475678
+          ],
+          "declared_nominal_utility": 0.5741799376914813,
+          "recalibrated_nominal": {
+            "seed": 7100,
+            "maximum_iterations": 48,
+            "population_multiplier": 9,
+            "function_evaluations": 3519,
+            "success": false,
+            "message": "Maximum number of iterations has been exceeded.",
+            "parameters": [
+              19.81096082232441,
+              0.32177307171276126,
+              0.882581459388294,
+              0.998,
+              0.7243048090224606,
+              0.10031051840588863,
+              -1.0334545848475678
+            ],
+            "utility": 0.5741799376914813
+          },
+          "recalibrated_minus_declared_nominal_utility": 0.0,
+          "declared_robust_parameters": [
+            19.512922208361683,
+            0.14588537969755155,
+            0.6330221470230897,
+            0.9055466349644425,
+            0.3902267675367115,
+            0.40967203956013054,
+            0.2879421710040865
+          ],
+          "declared_robust_utility": 0.5484403542571968,
+          "recalibrated_robust": {
+            "seed": 8100,
+            "maximum_iterations": 48,
+            "population_multiplier": 9,
+            "function_evaluations": 3815,
+            "success": false,
+            "message": "Maximum number of iterations has been exceeded.",
+            "parameters": [
+              19.512922208361683,
+              0.14588537969755155,
+              0.6330221470230897,
+              0.9055466349644425,
+              0.3902267675367115,
+              0.40967203956013054,
+              0.2879421710040865
+            ],
+            "utility": 0.5484403542571968
+          },
+          "recalibrated_minus_declared_robust_utility": 0.0,
+          "nominal_cost_utilization": 0.9996304557716827,
+          "robust_cost_utilization": 0.9817384116119711,
+          "nominal_shift_geometry_feasibility_rate": 0.4,
+          "robust_shift_geometry_feasibility_rate": 1.0,
+          "passed": true
+        },
+        {
+          "option_index": 1,
+          "cost_cap": 5174.314844444444,
+          "baseline_nominal_utility": 0.5446602858604538,
+          "baseline_robust_utility": 0.5395631394368091,
+          "declared_nominal_parameters": [
+            20.08023429251501,
+            0.3026196632179386,
+            0.9694572750873705,
+            0.9943119198338319,
+            0.7969543192192146,
+            0.3819735089686235,
+            -0.5432300047844904
+          ],
+          "declared_nominal_utility": 0.6163333809272471,
+          "recalibrated_nominal": {
+            "seed": 7101,
+            "maximum_iterations": 48,
+            "population_multiplier": 9,
+            "function_evaluations": 3327,
+            "success": false,
+            "message": "Maximum number of iterations has been exceeded.",
+            "parameters": [
+              20.08023429251501,
+              0.3026196632179386,
+              0.9694572750873705,
+              0.9943119198338319,
+              0.7969543192192146,
+              0.3819735089686235,
+              -0.5432300047844904
+            ],
+            "utility": 0.6163333809272471
+          },
+          "recalibrated_minus_declared_nominal_utility": 0.0,
+          "declared_robust_parameters": [
+            19.893150824261312,
+            0.14456087466639225,
+            0.6530937461234066,
+            0.9367930527754819,
+            0.6879116355469828,
+            0.37103976411805073,
+            -0.5562637617616786
+          ],
+          "declared_robust_utility": 0.6075258023392406,
+          "recalibrated_robust": {
+            "seed": 8101,
+            "maximum_iterations": 48,
+            "population_multiplier": 9,
+            "function_evaluations": 3967,
+            "success": false,
+            "message": "Maximum number of iterations has been exceeded.",
+            "parameters": [
+              19.893150824261312,
+              0.14456087466639225,
+              0.6530937461234066,
+              0.9367930527754819,
+              0.6879116355469828,
+              0.37103976411805073,
+              -0.5562637617616786
+            ],
+            "utility": 0.6075258023392406
+          },
+          "recalibrated_minus_declared_robust_utility": 0.0,
+          "nominal_cost_utilization": 0.9983175350544107,
+          "robust_cost_utilization": 0.9810132774791565,
+          "nominal_shift_geometry_feasibility_rate": 0.6,
+          "robust_shift_geometry_feasibility_rate": 1.0,
+          "passed": true
+        },
+        {
+          "option_index": 2,
+          "cost_cap": 6169.8704,
+          "baseline_nominal_utility": 0.6166078547794444,
+          "baseline_robust_utility": 0.6117697079978214,
+          "declared_nominal_parameters": [
+            21.89222630369619,
+            0.3385901107298446,
+            0.6738111134203479,
+            0.998,
+            0.7324285468229834,
+            0.1262721933991813,
+            -0.9313828860287446
+          ],
+          "declared_nominal_utility": 0.6784724371470802,
+          "recalibrated_nominal": {
+            "seed": 7102,
+            "maximum_iterations": 48,
+            "population_multiplier": 9,
+            "function_evaluations": 3719,
+            "success": false,
+            "message": "Maximum number of iterations has been exceeded.",
+            "parameters": [
+              21.89222630369619,
+              0.3385901107298446,
+              0.6738111134203479,
+              0.998,
+              0.7324285468229834,
+              0.1262721933991813,
+              -0.9313828860287446
+            ],
+            "utility": 0.6784724371470802
+          },
+          "recalibrated_minus_declared_nominal_utility": 0.0,
+          "declared_robust_parameters": [
+            21.25013991551597,
+            0.27772787847806535,
+            0.2507772205052039,
+            0.9547269051201083,
+            0.6002449441050093,
+            0.48457102744838304,
+            0.025521370132149016
+          ],
+          "declared_robust_utility": 0.6548531995241997,
+          "recalibrated_robust": {
+            "seed": 8102,
+            "maximum_iterations": 48,
+            "population_multiplier": 9,
+            "function_evaluations": 3391,
+            "success": false,
+            "message": "Maximum number of iterations has been exceeded.",
+            "parameters": [
+              21.25013991551597,
+              0.27772787847806535,
+              0.2507772205052039,
+              0.9547269051201083,
+              0.6002449441050093,
+              0.48457102744838304,
+              0.025521370132149016
+            ],
+            "utility": 0.6548531995241997
+          },
+          "recalibrated_minus_declared_robust_utility": 0.0,
+          "nominal_cost_utilization": 0.9992559246193212,
+          "robust_cost_utilization": 0.9802776725637057,
+          "nominal_shift_geometry_feasibility_rate": 0.4,
+          "robust_shift_geometry_feasibility_rate": 1.0,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "heldout_compact_low_signal_28",
+      "split": "heldout",
+      "n_layers": 28,
+      "energy_menu_gev": [
+        1.0,
+        3.0,
+        12.0,
+        50.0
+      ],
+      "options": [
+        {
+          "option_index": 0,
+          "cost_cap": 4603.852897777779,
+          "baseline_nominal_utility": 0.23073947222233349,
+          "baseline_robust_utility": 0.2184208923599262,
+          "declared_nominal_parameters": [
+            19.0,
+            0.43741263720948953,
+            1.0,
+            0.998,
+            0.4817945175962318,
+            0.15155683334933429,
+            -0.16764927525722337
+          ],
+          "declared_nominal_utility": 0.4199866964266165,
+          "recalibrated_nominal": {
+            "seed": 7110,
+            "maximum_iterations": 48,
+            "population_multiplier": 9,
+            "function_evaluations": 3375,
+            "success": false,
+            "message": "Maximum number of iterations has been exceeded.",
+            "parameters": [
+              19.0,
+              0.43741263720948953,
+              1.0,
+              0.998,
+              0.4817945175962318,
+              0.15155683334933429,
+              -0.16764927525722337
+            ],
+            "utility": 0.4199866964266165
+          },
+          "recalibrated_minus_declared_nominal_utility": 0.0,
+          "declared_robust_parameters": [
+            19.058927125946507,
+            0.1456303859691995,
+            0.496532292947083,
+            0.896271263754641,
+            0.7336973765765332,
+            0.29569390474245877,
+            -1.1366142317410985
+          ],
+          "declared_robust_utility": 0.3849377494212861,
+          "recalibrated_robust": {
+            "seed": 8110,
+            "maximum_iterations": 48,
+            "population_multiplier": 9,
+            "function_evaluations": 3679,
+            "success": false,
+            "message": "Maximum number of iterations has been exceeded.",
+            "parameters": [
+              19.058927125946507,
+              0.1456303859691995,
+              0.496532292947083,
+              0.896271263754641,
+              0.7336973765765332,
+              0.29569390474245877,
+              -1.1366142317410985
+            ],
+            "utility": 0.3849377494212861
+          },
+          "recalibrated_minus_declared_robust_utility": 0.0,
+          "nominal_cost_utilization": 0.9996239247547655,
+          "robust_cost_utilization": 0.9806809808782077,
+          "nominal_shift_geometry_feasibility_rate": 0.4,
+          "robust_shift_geometry_feasibility_rate": 1.0,
+          "passed": true
+        },
+        {
+          "option_index": 1,
+          "cost_cap": 5254.852897777777,
+          "baseline_nominal_utility": 0.35580855842351766,
+          "baseline_robust_utility": 0.3443000820286982,
+          "declared_nominal_parameters": [
+            19.0,
+            0.39788066647197956,
+            1.0,
+            0.998,
+            0.6820459820913323,
+            0.1,
+            -1.0343301887139267
+          ],
+          "declared_nominal_utility": 0.4853659799409579,
+          "recalibrated_nominal": {
+            "seed": 7111,
+            "maximum_iterations": 48,
+            "population_multiplier": 9,
+            "function_evaluations": 3599,
+            "success": false,
+            "message": "Maximum number of iterations has been exceeded.",
+            "parameters": [
+              19.0,
+              0.39788066647197956,
+              1.0,
+              0.998,
+              0.6820459820913323,
+              0.1,
+              -1.0343301887139267
+            ],
+            "utility": 0.4853659799409579
+          },
+          "recalibrated_minus_declared_nominal_utility": 0.0,
+          "declared_robust_parameters": [
+            19.056225738340054,
+            0.16215364490681033,
+            0.4677403158362523,
+            0.9333785710678434,
+            0.48338827478800406,
+            0.2362047928410676,
+            -0.3730289675419611
+          ],
+          "declared_robust_utility": 0.4604718445705123,
+          "recalibrated_robust": {
+            "seed": 8111,
+            "maximum_iterations": 48,
+            "population_multiplier": 9,
+            "function_evaluations": 3255,
+            "success": false,
+            "message": "Maximum number of iterations has been exceeded.",
+            "parameters": [
+              19.056225738340054,
+              0.16215364490681033,
+              0.4677403158362523,
+              0.9333785710678434,
+              0.48338827478800406,
+              0.2362047928410676,
+              -0.3730289675419611
+            ],
+            "utility": 0.4604718445705123
+          },
+          "recalibrated_minus_declared_robust_utility": 0.0,
+          "nominal_cost_utilization": 0.9994227440488699,
+          "robust_cost_utilization": 0.9808709944587082,
+          "nominal_shift_geometry_feasibility_rate": 0.4,
+          "robust_shift_geometry_feasibility_rate": 1.0,
+          "passed": true
+        },
+        {
+          "option_index": 2,
+          "cost_cap": 6171.07512,
+          "baseline_nominal_utility": 0.45008303486679874,
+          "baseline_robust_utility": 0.43857584018866724,
+          "declared_nominal_parameters": [
+            19.09217374462555,
+            0.26080706783888635,
+            0.9440292590106986,
+            0.998,
+            0.7060313385164586,
+            0.13186548116983363,
+            -0.9724148933812882
+          ],
+          "declared_nominal_utility": 0.5362790291183909,
+          "recalibrated_nominal": {
+            "seed": 7112,
+            "maximum_iterations": 48,
+            "population_multiplier": 9,
+            "function_evaluations": 3439,
+            "success": false,
+            "message": "Maximum number of iterations has been exceeded.",
+            "parameters": [
+              19.09217374462555,
+              0.26080706783888635,
+              0.9440292590106986,
+              0.998,
+              0.7060313385164586,
+              0.13186548116983363,
+              -0.9724148933812882
+            ],
+            "utility": 0.5362790291183909
+          },
+          "recalibrated_minus_declared_nominal_utility": 0.0,
+          "declared_robust_parameters": [
+            19.032144972852166,
+            0.28051315437883423,
+            0.29594185764619624,
+            0.9498400308911653,
+            0.5738971745872441,
+            0.3852843244978343,
+            -0.07891838536142268
+          ],
+          "declared_robust_utility": 0.5171547535977261,
+          "recalibrated_robust": {
+            "seed": 8112,
+            "maximum_iterations": 48,
+            "population_multiplier": 9,
+            "function_evaluations": 3543,
+            "success": false,
+            "message": "Maximum number of iterations has been exceeded.",
+            "parameters": [
+              19.032144972852166,
+              0.28051315437883423,
+              0.29594185764619624,
+              0.9498400308911653,
+              0.5738971745872441,
+              0.3852843244978343,
+              -0.07891838536142268
+            ],
+            "utility": 0.5171547535977261
+          },
+          "recalibrated_minus_declared_robust_utility": 0.0,
+          "nominal_cost_utilization": 0.9992156910583387,
+          "robust_cost_utilization": 0.9802612299253314,
+          "nominal_shift_geometry_feasibility_rate": 0.4,
+          "robust_shift_geometry_feasibility_rate": 1.0,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "dev_high_energy_36",
+      "split": "development",
+      "n_layers": 36,
+      "energy_menu_gev": [
+        5.0,
+        15.0,
+        50.0,
+        150.0
+      ],
+      "options": [
+        {
+          "option_index": 0,
+          "cost_cap": 4471.72816,
+          "baseline_nominal_utility": 0.5790697910171242,
+          "baseline_robust_utility": 0.5781073901386361,
+          "declared_nominal_parameters": [
+            21.058194409143482,
+            0.2517516037720387,
+            0.7742123641186079,
+            0.998,
+            0.7505764663866443,
+            0.2670205077945325,
+            -0.8510180264098823
+          ],
+          "declared_nominal_utility": 0.6760201959579315,
+          "recalibrated_nominal": {
+            "seed": 7120,
+            "maximum_iterations": 48,
+            "population_multiplier": 9,
+            "function_evaluations": 3799,
+            "success": false,
+            "message": "Maximum number of iterations has been exceeded.",
+            "parameters": [
+              21.058194409143482,
+              0.2517516037720387,
+              0.7742123641186079,
+              0.998,
+              0.7505764663866443,
+              0.2670205077945325,
+              -0.8510180264098823
+            ],
+            "utility": 0.6760201959579315
+          },
+          "recalibrated_minus_declared_nominal_utility": 0.0,
+          "declared_robust_parameters": [
+            20.570893561184384,
+            0.10341600684100606,
+            0.8477889520027067,
+            0.901448172584861,
+            0.5298543948934532,
+            0.41512248132126844,
+            -0.04545970412852606
+          ],
+          "declared_robust_utility": 0.6668941799249382,
+          "recalibrated_robust": {
+            "seed": 8120,
+            "maximum_iterations": 48,
+            "population_multiplier": 9,
+            "function_evaluations": 3575,
+            "success": false,
+            "message": "Maximum number of iterations has been exceeded.",
+            "parameters": [
+              20.570893561184384,
+              0.10341600684100606,
+              0.8477889520027067,
+              0.901448172584861,
+              0.5298543948934532,
+              0.41512248132126844,
+              -0.04545970412852606
+            ],
+            "utility": 0.6668941799249382
+          },
+          "recalibrated_minus_declared_robust_utility": 0.0,
+          "nominal_cost_utilization": 0.9996621206401874,
+          "robust_cost_utilization": 0.9820520996559725,
+          "nominal_shift_geometry_feasibility_rate": 0.6,
+          "robust_shift_geometry_feasibility_rate": 1.0,
+          "passed": true
+        },
+        {
+          "option_index": 1,
+          "cost_cap": 5281.72816,
+          "baseline_nominal_utility": 0.6705247133209096,
+          "baseline_robust_utility": 0.6693645904354779,
+          "declared_nominal_parameters": [
+            22.551094929493075,
+            0.25240529512302345,
+            0.870759944688091,
+            0.998,
+            0.7203932468210917,
+            0.48441533146041976,
+            -0.26032822175115194
+          ],
+          "declared_nominal_utility": 0.7244461637612343,
+          "recalibrated_nominal": {
+            "seed": 7121,
+            "maximum_iterations": 48,
+            "population_multiplier": 9,
+            "function_evaluations": 3799,
+            "success": false,
+            "message": "Maximum number of iterations has been exceeded.",
+            "parameters": [
+              22.551094929493075,
+              0.25240529512302345,
+              0.870759944688091,
+              0.998,
+              0.7203932468210917,
+              0.48441533146041976,
+              -0.26032822175115194
+            ],
+            "utility": 0.7244461637612343
+          },
+          "recalibrated_minus_declared_nominal_utility": 0.0,
+          "declared_robust_parameters": [
+            22.419396828616453,
+            0.19832903452753414,
+            0.5385367119147358,
+            0.9293884067459294,
+            0.38341505062917164,
+            0.3803118631803938,
+            0.36245455641229246
+          ],
+          "declared_robust_utility": 0.7160643696191009,
+          "recalibrated_robust": {
+            "seed": 8121,
+            "maximum_iterations": 48,
+            "population_multiplier": 9,
+            "function_evaluations": 3639,
+            "success": false,
+            "message": "Maximum number of iterations has been exceeded.",
+            "parameters": [
+              22.419396828616453,
+              0.19832903452753414,
+              0.5385367119147358,
+              0.9293884067459294,
+              0.38341505062917164,
+              0.3803118631803938,
+              0.36245455641229246
+            ],
+            "utility": 0.7160643696191009
+          },
+          "recalibrated_minus_declared_robust_utility": 0.0,
+          "nominal_cost_utilization": 0.9994755744726781,
+          "robust_cost_utilization": 0.9812718448029952,
+          "nominal_shift_geometry_feasibility_rate": 0.6,
+          "robust_shift_geometry_feasibility_rate": 1.0,
+          "passed": true
+        },
+        {
+          "option_index": 2,
+          "cost_cap": 6361.728160000001,
+          "baseline_nominal_utility": 0.7249629796569529,
+          "baseline_robust_utility": 0.7238676609555604,
+          "declared_nominal_parameters": [
+            23.320741998889027,
+            0.33228204959373364,
+            0.7237378348442293,
+            0.998,
+            0.5759041345884244,
+            0.55,
+            0.11777808072977419
+          ],
+          "declared_nominal_utility": 0.7642617297992893,
+          "recalibrated_nominal": {
+            "seed": 7122,
+            "maximum_iterations": 48,
+            "population_multiplier": 9,
+            "function_evaluations": 3719,
+            "success": false,
+            "message": "Maximum number of iterations has been exceeded.",
+            "parameters": [
+              23.320741998889027,
+              0.33228204959373364,
+              0.7237378348442293,
+              0.998,
+              0.5759041345884244,
+              0.55,
+              0.11777808072977419
+            ],
+            "utility": 0.7642617297992893
+          },
+          "recalibrated_minus_declared_nominal_utility": 0.0,
+          "declared_robust_parameters": [
+            22.700272190715168,
+            0.19939471134949247,
+            0.5027785840411362,
+            0.9488770612413909,
+            0.48502077281907285,
+            0.5293547162313036,
+            0.10953931976351294
+          ],
+          "declared_robust_utility": 0.758508523884868,
+          "recalibrated_robust": {
+            "seed": 8122,
+            "maximum_iterations": 48,
+            "population_multiplier": 9,
+            "function_evaluations": 4047,
+            "success": false,
+            "message": "Maximum number of iterations has been exceeded.",
+            "parameters": [
+              22.700272190715168,
+              0.19939471134949247,
+              0.5027785840411362,
+              0.9488770612413909,
+              0.48502077281907285,
+              0.5293547162313036,
+              0.10953931976351294
+            ],
+            "utility": 0.758508523884868
+          },
+          "recalibrated_minus_declared_robust_utility": 0.0,
+          "nominal_cost_utilization": 0.999254330359281,
+          "robust_cost_utilization": 0.980336687768713,
+          "nominal_shift_geometry_feasibility_rate": 0.6,
+          "robust_shift_geometry_feasibility_rate": 1.0,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "dev_low_energy_noise_limited_30",
+      "split": "development",
+      "n_layers": 30,
+      "energy_menu_gev": [
+        0.8,
+        2.0,
+        6.0,
+        20.0
+      ],
+      "options": [
+        {
+          "option_index": 0,
+          "cost_cap": 4496.537066666667,
+          "baseline_nominal_utility": 0.2090874875653294,
+          "baseline_robust_utility": 0.1934965276652833,
+          "declared_nominal_parameters": [
+            18.5,
+            0.4361366496212936,
+            1.0,
+            0.998,
+            0.4553186655454147,
+            0.11321199835495836,
+            -0.13299533325385726
+          ],
+          "declared_nominal_utility": 0.4221244235796603,
+          "recalibrated_nominal": {
+            "seed": 7130,
+            "maximum_iterations": 48,
+            "population_multiplier": 9,
+            "function_evaluations": 3319,
+            "success": false,
+            "message": "Maximum number of iterations has been exceeded.",
+            "parameters": [
+              18.5,
+              0.4361366496212936,
+              1.0,
+              0.998,
+              0.4553186655454147,
+              0.11321199835495836,
+              -0.13299533325385726
+            ],
+            "utility": 0.4221244235796603
+          },
+          "recalibrated_minus_declared_nominal_utility": 0.0,
+          "declared_robust_parameters": [
+            18.57587134277584,
+            0.1776089907197254,
+            0.5674287224634564,
+            0.9015239793370486,
+            0.35212185404284335,
+            0.1640301561209714,
+            0.3241112606954879
+          ],
+          "declared_robust_utility": 0.3835719848283243,
+          "recalibrated_robust": {
+            "seed": 8130,
+            "maximum_iterations": 48,
+            "population_multiplier": 9,
+            "function_evaluations": 3639,
+            "success": false,
+            "message": "Maximum number of iterations has been exceeded.",
+            "parameters": [
+              18.57587134277584,
+              0.1776089907197254,
+              0.5674287224634564,
+              0.9015239793370486,
+              0.35212185404284335,
+              0.1640301561209714,
+              0.3241112606954879
+            ],
+            "utility": 0.3835719848283243
+          },
+          "recalibrated_minus_declared_robust_utility": 0.0,
+          "nominal_cost_utilization": 0.999593411576458,
+          "robust_cost_utilization": 0.9802024599911645,
+          "nominal_shift_geometry_feasibility_rate": 0.4,
+          "robust_shift_geometry_feasibility_rate": 1.0,
+          "passed": true
+        },
+        {
+          "option_index": 1,
+          "cost_cap": 5323.203733333333,
+          "baseline_nominal_utility": 0.3497211416938515,
+          "baseline_robust_utility": 0.3348220044908435,
+          "declared_nominal_parameters": [
+            18.5,
+            0.4218200222936388,
+            1.0,
+            0.998,
+            0.5239333461406469,
+            0.14363726006909797,
+            -0.6285221677432902
+          ],
+          "declared_nominal_utility": 0.4942250073186315,
+          "recalibrated_nominal": {
+            "seed": 7131,
+            "maximum_iterations": 48,
+            "population_multiplier": 9,
+            "function_evaluations": 3519,
+            "success": false,
+            "message": "Maximum number of iterations has been exceeded.",
+            "parameters": [
+              18.5,
+              0.4218200222936388,
+              1.0,
+              0.998,
+              0.5239333461406469,
+              0.14363726006909797,
+              -0.6285221677432902
+            ],
+            "utility": 0.4942250073186315
+          },
+          "recalibrated_minus_declared_nominal_utility": 0.0,
+          "declared_robust_parameters": [
+            18.554951744872163,
+            0.24548394732692877,
+            0.48918275081797513,
+            0.9288422342499845,
+            0.41012873308243475,
+            0.21029453304729556,
+            0.026528407229030024
+          ],
+          "declared_robust_utility": 0.4657124525498893,
+          "recalibrated_robust": {
+            "seed": 8131,
+            "maximum_iterations": 48,
+            "population_multiplier": 9,
+            "function_evaluations": 3895,
+            "success": false,
+            "message": "Maximum number of iterations has been exceeded.",
+            "parameters": [
+              18.554951744872163,
+              0.24548394732692877,
+              0.48918275081797513,
+              0.9288422342499845,
+              0.41012873308243475,
+              0.21029453304729556,
+              0.026528407229030024
+            ],
+            "utility": 0.4657124525498893
+          },
+          "recalibrated_minus_declared_robust_utility": 0.0,
+          "nominal_cost_utilization": 0.9993459628026511,
+          "robust_cost_utilization": 0.9768282575943102,
+          "nominal_shift_geometry_feasibility_rate": 0.4,
+          "robust_shift_geometry_feasibility_rate": 1.0,
+          "passed": true
+        },
+        {
+          "option_index": 2,
+          "cost_cap": 6389.8704,
+          "baseline_nominal_utility": 0.44606139271989703,
+          "baseline_robust_utility": 0.43195275256281723,
+          "declared_nominal_parameters": [
+            18.51098168882024,
+            0.305157337929543,
+            1.0,
+            0.998,
+            0.6044866005737936,
+            0.15030745547928012,
+            -1.0380707520762666
+          ],
+          "declared_nominal_utility": 0.5302766496816221,
+          "recalibrated_nominal": {
+            "seed": 7132,
+            "maximum_iterations": 48,
+            "population_multiplier": 9,
+            "function_evaluations": 3743,
+            "success": false,
+            "message": "Maximum number of iterations has been exceeded.",
+            "parameters": [
+              18.51098168882024,
+              0.305157337929543,
+              1.0,
+              0.998,
+              0.6044866005737936,
+              0.15030745547928012,
+              -1.0380707520762666
+            ],
+            "utility": 0.5302766496816221
+          },
+          "recalibrated_minus_declared_nominal_utility": 0.0,
+          "declared_robust_parameters": [
+            18.55682254296795,
+            0.2025960575292714,
+            0.5906213207180135,
+            0.9574102731592498,
+            0.4255110203861133,
+            0.3369957147289602,
+            0.022100118823102467
+          ],
+          "declared_robust_utility": 0.5082426018204246,
+          "recalibrated_robust": {
+            "seed": 8132,
+            "maximum_iterations": 48,
+            "population_multiplier": 9,
+            "function_evaluations": 3639,
+            "success": false,
+            "message": "Maximum number of iterations has been exceeded.",
+            "parameters": [
+              18.55682254296795,
+              0.2025960575292714,
+              0.5906213207180135,
+              0.9574102731592498,
+              0.4255110203861133,
+              0.3369957147289602,
+              0.022100118823102467
+            ],
+            "utility": 0.5082426018204246
+          },
+          "recalibrated_minus_declared_robust_utility": 0.0,
+          "nominal_cost_utilization": 0.9410017071705671,
+          "robust_cost_utilization": 0.9258833622357049,
+          "nominal_shift_geometry_feasibility_rate": 0.4,
+          "robust_shift_geometry_feasibility_rate": 1.0,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "heldout_ultra_high_energy_40",
+      "split": "heldout",
+      "n_layers": 40,
+      "energy_menu_gev": [
+        3.0,
+        10.0,
+        40.0,
+        120.0,
+        250.0
+      ],
+      "options": [
+        {
+          "option_index": 0,
+          "cost_cap": 4443.803599999999,
+          "baseline_nominal_utility": 0.5548432829382209,
+          "baseline_robust_utility": 0.5534011322243626,
+          "declared_nominal_parameters": [
+            21.06398108754716,
+            0.36490534564110155,
+            -0.061010874388833125,
+            0.998,
+            0.8,
+            0.55,
+            0.06605236888926412
+          ],
+          "declared_nominal_utility": 0.6383048150994033,
+          "recalibrated_nominal": {
+            "seed": 7140,
+            "maximum_iterations": 48,
+            "population_multiplier": 9,
+            "function_evaluations": 3423,
+            "success": false,
+            "message": "Maximum number of iterations has been exceeded.",
+            "parameters": [
+              21.06398108754716,
+              0.36490534564110155,
+              -0.061010874388833125,
+              0.998,
+              0.8,
+              0.55,
+              0.06605236888926412
+            ],
+            "utility": 0.6383048150994033
+          },
+          "recalibrated_minus_declared_nominal_utility": 0.0,
+          "declared_robust_parameters": [
+            21.380481352810836,
+            0.35283568477613525,
+            0.22888285538074027,
+            0.8919610473040628,
+            0.30111919198513815,
+            0.5288068245760432,
+            0.6894714057953987
+          ],
+          "declared_robust_utility": 0.6280693318573508,
+          "recalibrated_robust": {
+            "seed": 8140,
+            "maximum_iterations": 48,
+            "population_multiplier": 9,
+            "function_evaluations": 3255,
+            "success": false,
+            "message": "Maximum number of iterations has been exceeded.",
+            "parameters": [
+              21.380481352810836,
+              0.35283568477613525,
+              0.22888285538074027,
+              0.8919610473040628,
+              0.30111919198513815,
+              0.5288068245760432,
+              0.6894714057953987
+            ],
+            "utility": 0.6280693318573508
+          },
+          "recalibrated_minus_declared_robust_utility": 0.0,
+          "nominal_cost_utilization": 0.9996440529436332,
+          "robust_cost_utilization": 0.9816533868141508,
+          "nominal_shift_geometry_feasibility_rate": 0.6,
+          "robust_shift_geometry_feasibility_rate": 1.0,
+          "passed": true
+        },
+        {
+          "option_index": 1,
+          "cost_cap": 5252.692488888889,
+          "baseline_nominal_utility": 0.6492310985679213,
+          "baseline_robust_utility": 0.6479434095730604,
+          "declared_nominal_parameters": [
+            22.237086486162166,
+            0.42271967654999887,
+            -0.33198492620378595,
+            0.998,
+            0.8,
+            0.55,
+            0.07773183231095883
+          ],
+          "declared_nominal_utility": 0.694303292505581,
+          "recalibrated_nominal": {
+            "seed": 7141,
+            "maximum_iterations": 48,
+            "population_multiplier": 9,
+            "function_evaluations": 3415,
+            "success": false,
+            "message": "Maximum number of iterations has been exceeded.",
+            "parameters": [
+              22.237086486162166,
+              0.42271967654999887,
+              -0.33198492620378595,
+              0.998,
+              0.8,
+              0.55,
+              0.07773183231095883
+            ],
+            "utility": 0.694303292505581
+          },
+          "recalibrated_minus_declared_nominal_utility": 0.0,
+          "declared_robust_parameters": [
+            22.161161326221084,
+            0.4436519502165919,
+            -0.011996948810575114,
+            0.9325551637791676,
+            0.44239938472738705,
+            0.5361707206036745,
+            0.5458597398593575
+          ],
+          "declared_robust_utility": 0.6846745958051658,
+          "recalibrated_robust": {
+            "seed": 8141,
+            "maximum_iterations": 48,
+            "population_multiplier": 9,
+            "function_evaluations": 3823,
+            "success": false,
+            "message": "Maximum number of iterations has been exceeded.",
+            "parameters": [
+              22.161161326221084,
+              0.4436519502165919,
+              -0.011996948810575114,
+              0.9325551637791676,
+              0.44239938472738705,
+              0.5361707206036745,
+              0.5458597398593575
+            ],
+            "utility": 0.6846745958051658
+          },
+          "recalibrated_minus_declared_robust_utility": 0.0,
+          "nominal_cost_utilization": 0.9994420436533511,
+          "robust_cost_utilization": 0.981072687866977,
+          "nominal_shift_geometry_feasibility_rate": 0.6,
+          "robust_shift_geometry_feasibility_rate": 1.0,
+          "passed": true
+        },
+        {
+          "option_index": 2,
+          "cost_cap": 6321.581377777778,
+          "baseline_nominal_utility": 0.7061635650143998,
+          "baseline_robust_utility": 0.705020969135673,
+          "declared_nominal_parameters": [
+            23.944264834091353,
+            0.3790200445663919,
+            0.7244891832319464,
+            0.998,
+            0.7542529753009436,
+            0.1105543290452373,
+            -0.9080591116208565
+          ],
+          "declared_nominal_utility": 0.764169128075299,
+          "recalibrated_nominal": {
+            "seed": 7142,
+            "maximum_iterations": 48,
+            "population_multiplier": 9,
+            "function_evaluations": 3703,
+            "success": false,
+            "message": "Maximum number of iterations has been exceeded.",
+            "parameters": [
+              23.944264834091353,
+              0.3790200445663919,
+              0.7244891832319464,
+              0.998,
+              0.7542529753009436,
+              0.1105543290452373,
+              -0.9080591116208565
+            ],
+            "utility": 0.764169128075299
+          },
+          "recalibrated_minus_declared_nominal_utility": 0.0,
+          "declared_robust_parameters": [
+            23.26362746781877,
+            0.28858646907168245,
+            -0.25400270815008114,
+            0.9477923549893376,
+            0.7824113451768036,
+            0.3916038405731125,
+            -0.4607446539950514
+          ],
+          "declared_robust_utility": 0.7298417453099489,
+          "recalibrated_robust": {
+            "seed": 8142,
+            "maximum_iterations": 48,
+            "population_multiplier": 9,
+            "function_evaluations": 3751,
+            "success": false,
+            "message": "Maximum number of iterations has been exceeded.",
+            "parameters": [
+              23.26362746781877,
+              0.28858646907168245,
+              -0.25400270815008114,
+              0.9477923549893376,
+              0.7824113451768036,
+              0.3916038405731125,
+              -0.4607446539950514
+            ],
+            "utility": 0.7298417453099489
+          },
+          "recalibrated_minus_declared_robust_utility": 0.0,
+          "nominal_cost_utilization": 0.9992600856131505,
+          "robust_cost_utilization": 0.9800414928992629,
+          "nominal_shift_geometry_feasibility_rate": 0.4,
+          "robust_shift_geometry_feasibility_rate": 1.0,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "dev_precision_linearity_34",
+      "split": "development",
+      "n_layers": 34,
+      "energy_menu_gev": [
+        1.5,
+        4.0,
+        15.0,
+        60.0
+      ],
+      "options": [
+        {
+          "option_index": 0,
+          "cost_cap": 4519.703733333334,
+          "baseline_nominal_utility": 0.40097447487981963,
+          "baseline_robust_utility": 0.39542130388368896,
+          "declared_nominal_parameters": [
+            19.5,
+            0.38549347562810027,
+            1.0,
+            0.998,
+            0.7282128114233307,
+            0.1,
+            -0.9980586570425632
+          ],
+          "declared_nominal_utility": 0.552153682563654,
+          "recalibrated_nominal": {
+            "seed": 7150,
+            "maximum_iterations": 48,
+            "population_multiplier": 9,
+            "function_evaluations": 3743,
+            "success": false,
+            "message": "Maximum number of iterations has been exceeded.",
+            "parameters": [
+              19.5,
+              0.38549347562810027,
+              1.0,
+              0.998,
+              0.7282128114233307,
+              0.1,
+              -0.9980586570425632
+            ],
+            "utility": 0.552153682563654
+          },
+          "recalibrated_minus_declared_nominal_utility": 0.0,
+          "declared_robust_parameters": [
+            19.554325757952967,
+            0.24667938211864635,
+            0.6247521693632527,
+            0.89379962342458,
+            0.7543052506317856,
+            0.2988945840862047,
+            -0.8842044503436116
+          ],
+          "declared_robust_utility": 0.5279653537034434,
+          "recalibrated_robust": {
+            "seed": 8150,
+            "maximum_iterations": 48,
+            "population_multiplier": 9,
+            "function_evaluations": 3575,
+            "success": false,
+            "message": "Maximum number of iterations has been exceeded.",
+            "parameters": [
+              19.554325757952967,
+              0.24667938211864635,
+              0.6247521693632527,
+              0.89379962342458,
+              0.7543052506317856,
+              0.2988945840862047,
+              -0.8842044503436116
+            ],
+            "utility": 0.5279653537034434
+          },
+          "recalibrated_minus_declared_robust_utility": 0.0,
+          "nominal_cost_utilization": 0.9996173463287181,
+          "robust_cost_utilization": 0.9798434915282932,
+          "nominal_shift_geometry_feasibility_rate": 0.4,
+          "robust_shift_geometry_feasibility_rate": 1.0,
+          "passed": true
+        },
+        {
+          "option_index": 1,
+          "cost_cap": 5341.370400000001,
+          "baseline_nominal_utility": 0.5197861502056652,
+          "baseline_robust_utility": 0.5143167688010573,
+          "declared_nominal_parameters": [
+            19.875731407088495,
+            0.3907500393442468,
+            0.9597687872038116,
+            0.998,
+            0.7493148948446338,
+            0.1,
+            -0.9466851337034082
+          ],
+          "declared_nominal_utility": 0.616016443587802,
+          "recalibrated_nominal": {
+            "seed": 7151,
+            "maximum_iterations": 48,
+            "population_multiplier": 9,
+            "function_evaluations": 3719,
+            "success": false,
+            "message": "Maximum number of iterations has been exceeded.",
+            "parameters": [
+              19.875731407088495,
+              0.3907500393442468,
+              0.9597687872038116,
+              0.998,
+              0.7493148948446338,
+              0.1,
+              -0.9466851337034082
+            ],
+            "utility": 0.616016443587802
+          },
+          "recalibrated_minus_declared_nominal_utility": 0.0,
+          "declared_robust_parameters": [
+            19.669970138617682,
+            0.22033763962138656,
+            0.6365468824808058,
+            0.9364730998910902,
+            0.28770884678100206,
+            0.4024176297278086,
+            0.5350075831925053
+          ],
+          "declared_robust_utility": 0.5905265142888114,
+          "recalibrated_robust": {
+            "seed": 8151,
+            "maximum_iterations": 48,
+            "population_multiplier": 9,
+            "function_evaluations": 3695,
+            "success": false,
+            "message": "Maximum number of iterations has been exceeded.",
+            "parameters": [
+              19.669970138617682,
+              0.22033763962138656,
+              0.6365468824808058,
+              0.9364730998910902,
+              0.28770884678100206,
+              0.4024176297278086,
+              0.5350075831925053
+            ],
+            "utility": 0.5905265142888114
+          },
+          "recalibrated_minus_declared_robust_utility": 0.0,
+          "nominal_cost_utilization": 0.9993864555334382,
+          "robust_cost_utilization": 0.9802002315944299,
+          "nominal_shift_geometry_feasibility_rate": 0.6,
+          "robust_shift_geometry_feasibility_rate": 1.0,
+          "passed": true
+        },
+        {
+          "option_index": 2,
+          "cost_cap": 6382.148177777779,
+          "baseline_nominal_utility": 0.5937566300513442,
+          "baseline_robust_utility": 0.5874298490148651,
+          "declared_nominal_parameters": [
+            20.832587905124978,
+            0.2723863882647761,
+            0.7151069169864751,
+            0.998,
+            0.7614636618012837,
+            0.1402031228329485,
+            -1.0815794162325998
+          ],
+          "declared_nominal_utility": 0.6598390451264383,
+          "recalibrated_nominal": {
+            "seed": 7152,
+            "maximum_iterations": 48,
+            "population_multiplier": 9,
+            "function_evaluations": 4231,
+            "success": false,
+            "message": "Maximum number of iterations has been exceeded.",
+            "parameters": [
+              20.832587905124978,
+              0.2723863882647761,
+              0.7151069169864751,
+              0.998,
+              0.7614636618012837,
+              0.1402031228329485,
+              -1.0815794162325998
+            ],
+            "utility": 0.6598390451264383
+          },
+          "recalibrated_minus_declared_nominal_utility": 0.0,
+          "declared_robust_parameters": [
+            19.521402893274846,
+            0.21290990019615638,
+            0.35941502695052385,
+            0.9404302604225502,
+            0.48373154810760904,
+            0.4373912892673718,
+            0.12505694542029316
+          ],
+          "declared_robust_utility": 0.6354742516325205,
+          "recalibrated_robust": {
+            "seed": 8152,
+            "maximum_iterations": 48,
+            "population_multiplier": 9,
+            "function_evaluations": 3847,
+            "success": false,
+            "message": "Maximum number of iterations has been exceeded.",
+            "parameters": [
+              19.521402893274846,
+              0.21290990019615638,
+              0.35941502695052385,
+              0.9404302604225502,
+              0.48373154810760904,
+              0.4373912892673718,
+              0.12505694542029316
+            ],
+            "utility": 0.6354742516325205
+          },
+          "recalibrated_minus_declared_robust_utility": 0.0,
+          "nominal_cost_utilization": 0.9991985228218596,
+          "robust_cost_utilization": 0.9745704077327093,
+          "nominal_shift_geometry_feasibility_rate": 0.4,
+          "robust_shift_geometry_feasibility_rate": 1.0,
+          "passed": true
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "invalid_artifact_checks": {
+    "nonfinite": {
+      "combined_score": 0.0,
+      "raw_score": 0.0,
+      "valid": 0.0,
+      "feasibility_rate": 0.0,
+      "candidate_instance_valid_rate": 0.0,
+      "passed": true
+    },
+    "wrong_shape": {
+      "combined_score": 0.0,
+      "raw_score": 0.0,
+      "valid": 0.0,
+      "feasibility_rate": 0.0,
+      "candidate_instance_valid_rate": 0.0,
+      "passed": true
+    },
+    "out_of_bounds": {
+      "combined_score": 0.0,
+      "raw_score": 0.0,
+      "valid": 0.0,
+      "feasibility_rate": 0.0,
+      "candidate_instance_valid_rate": 0.0,
+      "passed": true
+    },
+    "duplicate_archive": {
+      "combined_score": 0.0,
+      "raw_score": 0.0,
+      "valid": 0.0,
+      "feasibility_rate": 0.0,
+      "candidate_instance_valid_rate": 0.0,
+      "passed": true
+    },
+    "complex": {
+      "combined_score": 0.0,
+      "raw_score": 0.0,
+      "valid": 0.0,
+      "feasibility_rate": 0.0,
+      "candidate_instance_valid_rate": 0.0,
+      "passed": true
+    },
+    "unexpected_field": {
+      "combined_score": 0.0,
+      "raw_score": 0.0,
+      "valid": 0.0,
+      "feasibility_rate": 0.0,
+      "candidate_instance_valid_rate": 0.0,
+      "passed": true
+    }
+  },
+  "determinism_check": {
+    "exact_json_replay": true,
+    "passed": true
+  },
+  "metric_and_problem_sealing": {
+    "visible_metric_keys": [
+      "combined_score",
+      "feasibility_rate",
+      "raw_score",
+      "valid"
+    ],
+    "forbidden_visible_keys": [
+      "development_linearity_rms",
+      "development_mean_resolution",
+      "heldout_policy_score",
+      "per_instance",
+      "robustness_score"
+    ],
+    "forbidden_visible_keys_absent": true,
+    "forbidden_problem_keys": [
+      "baseline_design",
+      "name",
+      "nominal_reference_parameters",
+      "reference",
+      "robust_reference_parameters",
+      "shift",
+      "split"
+    ],
+    "forbidden_problem_keys_absent": true
+  },
+  "difficulty_gate": {
+    "nominal_reference_is_unit_normalized": true,
+    "nominal_reference_is_shift_brittle": true,
+    "robust_reference_preserves_all_shift_envelopes": true,
+    "robust_reference_nominal_tradeoff": {
+      "development_score": 0.7977894682304659,
+      "heldout_score": 0.7541269490241698,
+      "development_cost_utilization_delta_from_nominal": -0.019126761882677146
+    },
+    "passed": true
+  },
+  "limitations": [
+    "The deterministic reduced-order longitudinal model is not GEANT4, a test-beam measurement or an engineering detector validation.",
+    "The model omits lateral development, detailed interfaces, non-compensation, saturation, cross-talk, structural mechanics and event-level fluctuations beyond its explicit resolution terms.",
+    "The nominal and robust references are reproducible members of a seven-parameter family, not certificates of global optimality or experimental state of the art.",
+    "Repository-visible fixed regimes require future server-held detector families, independent detector-physics review and leakage/contamination auditing.",
+    "Detector claims require event-level transport simulation, electronics simulation, manufacturing studies and test-beam replication.",
+    "Task calibration does not measure GPT-5.5, feedback causality, population performance or autonomous scientific discovery."
+  ],
+  "execution_passed": true,
+  "trust_decision": "trusted_clean_revision",
+  "trusted_evidence": true,
+  "passed": true
+}

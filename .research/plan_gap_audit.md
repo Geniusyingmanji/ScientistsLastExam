@@ -25,22 +25,22 @@ physical validation, and auditable claim–evidence provenance.
 
 | Capability | Current status | Evidence | Remaining acceptance criterion |
 |---|---|---|---|
-| Candidate/oracle isolation | Implemented | Clean-revision security v28: 18/18 adversarial tests; Bubblewrap, no network, read-only mounts, resource/seccomp limits, typed RPC, fresh multi-world sessions and candidate-exception sanitization | Reproduce in clean Linux CI; document portability/non-Linux behavior |
-| Fail-closed trusted metrics | Implemented | Clean-revision 55×2 v34: 55 deterministic, 55 valid, 55 fail-closed and zero infrastructure failures | Repair or quarantine every future invalid candidate oracle before certification |
-| Task admission policy | Implemented, narrow | Trusted certification v45 records 7/35/13; DemographicSFS-v2 passes exact Kingman-CTMC/ODE identities, full-rank sensitivity, charged and equal-budget sequencing controls, refusal and finite-information audits | External population-genetics/evaluator review and server-held histories remain incomplete |
-| Scientific validity of inventory | Audited, sparse | All original 50 packages were adversarially audited; later substantive rebuilds and additions bring inventory to 55 and leave 42 internally admissible packages | Add approximately 8 net admissible tasks to reach about 50; hidden/generated instances and shortcut analysis remain mandatory |
+| Candidate/oracle isolation | Implemented | Clean-revision security v29: 18/18 adversarial tests; Bubblewrap, no network, read-only mounts, resource/seccomp limits, typed RPC, fresh multi-world sessions and candidate-exception sanitization | Reproduce in clean Linux CI; document portability/non-Linux behavior |
+| Fail-closed trusted metrics | Implemented | Clean-revision 55×2 v35: 55 deterministic, 55 valid, 55 fail-closed and zero infrastructure failures | Repair or quarantine every future invalid candidate oracle before certification |
+| Task admission policy | Implemented, narrow | Trusted certification v46 records 7/36/12; CalorimeterDesign-v2 passes analytic/numerical identities, reference regeneration, finite fail-closed archives and a nominal-versus-manufacturing-margin tradeoff | External detector-physics/evaluator review, server-held regimes and higher-fidelity replication remain incomplete |
+| Scientific validity of inventory | Audited, sparse | All original 50 packages were adversarially audited; later substantive rebuilds and additions leave 43 internally admissible packages in the 55-package inventory | Add approximately 7 net admissible tasks to reach about 50; hidden/generated instances and shortcut analysis remain mandatory |
 | Unified trajectory/accounting | Implemented, protocol-smoked | Clean-revision two-seed baseline smoke; trajectory schema v2, hashes, AUC over `budget_units`, separate `oracle_calls`, wall/token/cost, seed, checkpoint/resume | Validate nonzero-budget schema-v2 artifact replay in CI and version future changes |
 | Feedback controls | Implemented; strict pilot run | None/shuffled prompt-metric modes disclose true-score selection; strict selection-blind freezes parent/metrics; four-task n=3 pilot has no direction-stable lift and is not token-matched | Run token-matched ≥10 paired seeds with score-only, delayed/replayed and strict open-loop controls |
-| Evaluator-only metric sealing | Implemented and integration-verified | Closed search-visible allowlist; search-state redaction/hash-keyed sidecars; candidate-controlled exception text mapped to a finite label-blind taxonomy; clean-revision 359-test full suite; clean pinned OpenEvolve/TreeQuest/Shinka no-leak report `aff026d` | Extend from baseline smoke to nonzero-budget upstream runs before comparative claims |
+| Evaluator-only metric sealing | Implemented and integration-verified | Closed search-visible allowlist; search-state redaction/hash-keyed sidecars; candidate-controlled exception text mapped to a finite label-blind taxonomy; clean-revision full-suite v5 passes 375/375; clean pinned OpenEvolve/TreeQuest/Shinka no-leak report `aff026d` | Extend from baseline smoke to nonzero-budget upstream runs before comparative claims |
 | Official OpenEvolve adapter | Implemented, trusted baseline smoke | Explicit 0.2.26 adapter; clean-revision secure baseline passed under Python 3.10 | Run nonzero-budget/checkpoint integration and multi-seed study |
 | TreeQuest AB-MCTS | Implemented, trusted baseline smoke | Real TreeQuest AB-MCTS-A ask/tell adapter; clean-revision secure baseline passed under Python 3.12 | Run nonzero-budget/checkpoint integration and multi-seed study |
 | ShinkaEvolve | Implemented, trusted baseline smoke | Official runner/database adapter at pinned commit; clean-revision secure baseline passed under Python 3.10 | Run nonzero-budget/resume integration and token accounting audit |
 | Classical/domain baselines | Partial | NMR, HeatExchanger, Reaction, Gravity, Ocean, Radiative, LowThrust, Climate and DemographicSFS rebuilds have truth-blind domain baselines exposing reconstruction/proxy/prediction, terminal-feasibility, experiment-design or mechanism/refusal gaps | Add random/quasi-random plus BO/CMA-ES/DE and one domain heuristic for each meaningful task family |
-| Multi-seed benchmark evidence | Missing | Keyless GPT-5.5 Responses path is operational; 59 trusted normal single-run conditions cover 30 tasks and a separate four-task n=3 control pilot is negative/inconclusive | Certified-core and science-subset reports with paired uncertainty and portable raw trajectories |
+| Multi-seed benchmark evidence | Missing | Keyless GPT-5.5 Responses path is operational; 61 trusted normal single-run conditions cover 31 tasks and a separate four-task n=3 control pilot is negative/inconclusive | Certified-core and science-subset reports with paired uncertainty and portable raw trajectories |
 | Multifidelity/Pareto | Candidate-level | HeatExchanger-v2 implements proxy/exact Pareto archives, measured false promotion and physical shifts | Add independent high-fidelity review/replication and at least one certified multifidelity task |
 | Feedback learning claim | Negative pilot only | A strict open-loop control and three-replicate four-task pilot are complete; no direction-stable visible or sealed lift, and normal uses more tokens | Token-matched preregistered ≥10-replicate study with delayed/replayed and score-only controls |
 | Mechanistic discovery | Candidate-level | ActiveLaw, NMR, Reaction, Gravity, Ocean, Radiative, Climate and DemographicSFS tasks separately score mechanisms, prediction, coverage, hidden shifts, false discovery and refusal | Add paired repeated studies, harder regimes and independent scientific validation |
-| Validation/distribution shift | Calibration-level | Nominal/robustness and prediction/mechanism gaps recur across control, design and inverse tasks; ElectrolyteConductivityDesign additionally reaches `0.878/0.926` visible development/held-out optimization and `0.826/0.896` discovery-repeat robustness while all selected untouched-repeat confirmation axes remain zero | Paired repeated hidden-shift studies plus post-commit independent repeats, new batches/labs, higher-fidelity or physical confirmation and abstention cases |
+| Validation/distribution shift | Calibration-level | Nominal/robustness and prediction/mechanism gaps recur across control, design and inverse tasks; ElectrolyteConductivityDesign has zero selected untouched-repeat confirmation, while CalorimeterDesign-v2 trades 1.913 percentage points of development cost utilization for shifted-geometry feasibility `0.483→1.000` | Paired repeated hidden-shift studies; performance–cost–constraint-margin sweeps for instruments; post-commit independent repeats, new batches/labs and higher-fidelity or physical confirmation |
 | Research-integrity track | Partial | Immutable candidate/parent hashes and artifacts | Hypothesis–test–evidence records, failed branches, claim links and calibrated refusal |
 
 ## What the latest literature changes
@@ -118,8 +118,8 @@ or make the executable-optimization qualifier unavoidable.
 
 ### 1. Only calibration-level empirical P2 evidence exists
 
-The keyless GPT-5.5 Responses path was restored and 59 trusted normal single-run conditions now
-cover 30 tasks, with task-specific strict open-loop diagnostics on a subset. They expose
+The keyless GPT-5.5 Responses path was restored and 61 trusted normal single-run conditions now
+cover 31 tasks, with task-specific strict open-loop diagnostics on a subset. They expose
 one-step saturation and multiple oracle defects, but there are still no valid five-seed
 certified-core trajectories, no paired feedback-control result, and no nonzero-budget official-
 backend search run. The project must distinguish “calibrated at budget one” from
@@ -631,12 +631,31 @@ evidence-weighting regret, blind following, drift detection, escalation, false d
 sealed recovery. J1 validates a judge from the evaluator side; FR1 evaluates whether the agent
 learns whom to trust.
 
+### 47. Instrument performance curves omit resource and constraint margins
+
+Frontier-Engineering/EdgeBench-style best-score curves remain insufficient for physical design
+when the nominal optimum sits on a manufacturing, power, mass, time or cost boundary. In
+CalorimeterDesign-v2, the nominal reference uses `0.994478` of the development cost and reaches
+unit nominal score but only `0.483333` shifted-geometry feasibility. Reducing utilization to
+`0.975352` lowers nominal score to `0.797789` while preserving every sealed fabrication envelope.
+Thus a small resource margin can reverse the engineering conclusion even when both designs are
+nominally feasible.
+
+Add CM1/E55 on CalorimeterDesign-v2 and at least two non-detector design families. Preregister a
+grid of nominal-performance/resource-margin tradeoffs; compare nominal-only, hard-margin,
+distributionally robust and chance-constrained selection at matched oracle calls; evaluate
+server-held manufacturing/operating shifts and a higher-fidelity simulator; and report the full
+performance–cost–minimum-margin surface, shifted feasibility, worst-case regret and robustness of
+the selected knee. The margin grid, knee rule and high-fidelity promotion threshold must be fixed
+before sealed evaluation. This estimates whether an agent discovers robust engineering slack,
+not whether a reduced-order design is physically validated.
+
 ## Revised TODO plan
 
 ### P0/P1 closeout — completed locally, reproduce in CI
 
 - [x] Trusted oracle / isolated candidate architecture and adversarial regression suite.
-- [x] Current 54-package deterministic secure baseline and certification audit; all 54 weak
+- [x] Current 55-package deterministic secure baseline and certification audit; all 55 weak
   baselines are valid, deterministic and fail closed.
 - [x] Re-run the deterministic secure baseline, certification and security audits on the clean
   53-task RNAInverseDesign revision (v30/v40/v24).
@@ -664,6 +683,10 @@ learns whom to trust.
 - [x] Replace evidence-free `WavePropagation/SeismicWaveInversion` with charged active
   CMP/offset/frequency acquisition, a nine-parameter layered model, prediction/mechanism/design
   separation, far-offset transfer and null/four-layer model-inadequacy refusal.
+- [x] Replace the false fixed-energy `ParticlePhysics/CalorimeterDesign` proxy with cost-conditioned
+  multi-regime design curves, multi-energy resolution/linearity/containment, held-out regimes and
+  five sealed fabrication/calibration shifts; retain as a reduced-order candidate pending
+  server-held regimes, independent review, GEANT4/electronics and test-beam replication.
 
 ### P2a — reproducible protocol release
 
@@ -830,6 +853,8 @@ learns whom to trust.
   style twins, with an independent judge and expert/executable adjudication for material disagreements.
 - [ ] Add FR1 source-reliability treatments with calibrated/noisy, biased, drifting and conflicting
   channels crossed with visible/hidden/permuted source labels and a costed adjudication option.
+- [ ] Run CM1/E55 performance–cost–constraint-margin sweeps with preregistered knee selection,
+  server-held shifts and higher-fidelity promotion on CalorimeterDesign-v2 plus two design families.
 
 ### P3 — scientific validity and distinctiveness
 
@@ -840,6 +865,9 @@ learns whom to trust.
 - [ ] Independently review all seven core tasks and generate hidden/time-held-out instances.
 - [ ] Define task-family/time-held-out splits for search-policy training and transfer studies.
 - [ ] Add one certified proxy/exact multifidelity task with measured rank correlation.
+- [ ] Require every scientific-instrument candidate to expose nominal performance, resource use,
+  minimum constraint margin, held-out transfer and shifted feasibility as separate curves; accept
+  it only after a preregistered margin sweep and independent higher-fidelity replication.
 - [x] Add one intervention-based mechanism task and separate mechanism score (SCM-v1 is an
   on-ramp: GPT-5.5 reaches 0.983 at budget one, so harder regimes remain required).
 - [x] Add an active dynamical-law candidate with budgeted experiments, sparse mechanism

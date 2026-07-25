@@ -8,14 +8,14 @@ LidDrivenCavity-v2, EnergyBalanceModel-v2, BroadbandAbsorber-v2,
 DistillationColumnDesign-v2, HartreeFockSCF-v2, RoomImpulseResponse-v2,
 ConvectionDiffusionOpt-v2, SeismicWaveInversion-v2, RankineCycleOpt-v2 and MOSFETDoping-v2. The
 list now also includes RANSCalibration-v2, GeneNetworkIntervention-v1, RNAInverseDesign-v1,
-ProteinStabilityDesign-v1, ElectrolyteConductivityDesign-v1 and DemographicSFS-v2. The 59
-normal-feedback model conditions across these 30 tasks each
+ProteinStabilityDesign-v1, ElectrolyteConductivityDesign-v1, DemographicSFS-v2 and
+CalorimeterDesign-v2. The 61 normal-feedback model conditions across these 31 tasks each
 contain one seed and proposal budget one or three. They calibrate tasks and motivate experiments;
 they are not a model leaderboard, a causal feedback study or population evidence.
 
 The portable machine record
-`experiments/science_calibration_summary_2026-07-25_v23.json` retains every top-level scalar metric,
-candidate lineage hash and raw trajectory SHA-256 for all 59 normal conditions.
+`experiments/science_calibration_summary_2026-07-25_v24.json` retains every top-level scalar metric,
+candidate lineage hash and raw trajectory SHA-256 for all 61 normal conditions.
 Additional strict diagnostics for Distillation-v2, Hartree--Fock and room acoustics are bound
 separately by `experiments/distillation_v2_calibration_analysis_2026-07-23.json`,
 `experiments/hartree_fock_v2_calibration_analysis_2026-07-23.json` and
@@ -28,8 +28,9 @@ separately by `experiments/distillation_v2_calibration_analysis_2026-07-23.json`
 `experiments/gene_network_intervention_calibration_analysis_2026-07-24.json` and
 `experiments/rna_inverse_design_calibration_analysis_2026-07-24.json` and
 `experiments/protein_stability_design_calibration_analysis_2026-07-25.json`,
-`experiments/electrolyte_conductivity_design_calibration_analysis_2026-07-25.json` and
-`experiments/demographic_sfs_v2_calibration_analysis_2026-07-25.json`. Strict selection-blind
+`experiments/electrolyte_conductivity_design_calibration_analysis_2026-07-25.json`,
+`experiments/demographic_sfs_v2_calibration_analysis_2026-07-25.json` and
+`experiments/calorimeter_v2_calibration_analysis_2026-07-25.json`. Strict selection-blind
 diagnostics remain in task-specific analysis because they are not normal-feedback calibrations.
 The underlying reports bind the task-specific source revision. Pendulum's initial budget-one
 run on revision `57c0e1b` is
@@ -109,6 +110,8 @@ by the corrected-contract run on `2557adb`.
 | DemographicSFS-v2, truth-blind designs | multisample mechanism `0.770/0.510`; repeated-`n=12` `0.538/0.397` at equal eight-unit cost | multisample prediction `0.988/0.983`; full supported coverage/refusal and zero false discovery | Complementary sample sizes improve mechanism recovery beyond buying more small-sample panels, while prediction still substantially exceeds mechanism. |
 | DemographicSFS-v2, budget 1 and selection-blind budget 3 | all four model proposals fail at runtime and remain at the valid zero-score baseline | no model-generated mechanism or prediction claim is validated | Proposal validity is a prerequisite; equal oracle calls do not make the unseeded normal/open-loop contrast causal. |
 | DemographicSFS-v2, normal budget 3 | three valid proposals; development mechanism `0.640 → 0.521 → 0.637`, only step 1 accepted | held-out mechanism `0.397 → 0.603 → 0.417`; selected prediction `0.883/0.939`; full coverage/refusal and zero false discovery | Development-only selection rejects the best held-out mechanism proposal and the selected policy remains below the truth-blind classical fit. |
+| CalorimeterDesign-v2, calibrated references | nominal development/held-out `1.000/1.000` at cost utilization `0.994/0.999`; robust reference `0.798/0.754` at `0.975/0.981` | nominal robustness `0/0` and shifted-geometry feasibility `0.483/0.467`; robust reference has robustness `1/1` and shifted feasibility `1/1` | Leaving 1.913 percentage points of development cost headroom trades nominal score for complete fabrication-envelope feasibility. Scientific-instrument curves must expose resource margin as well as performance. |
+| CalorimeterDesign-v2, three GPT-5.5 conditions | all seven proposals are runtime-invalid and the valid baseline remains at zero | no proposal reaches the nominal–robust tradeoff; zero infrastructure failures | The three retained terminal sources compile but use nonexistent public keys; four intermediate sources were not retained and cannot be diagnosed more narrowly. The one-run normal/open-loop contrast is unseeded, non-token-matched and non-causal. |
 
 OPF's `robustness_score` combines security-constrained economic quality with overload penalties.
 It is not a pure safety probability. The proportional baseline is feasible for every tested
@@ -398,6 +401,25 @@ would allow nominal gains to compensate for unsafe dispatch or false discovery. 
 should retain an O/F/M/V/R capability vector and use Pareto or risk-coverage analysis where a
 single ordering is not scientifically justified.
 
+### 10. Scientific-instrument design needs performance–cost–constraint-margin curves
+
+CalorimeterDesign-v2 makes a resource-slack failure visible. Its calibrated nominal policy reaches
+unit development and held-out score while using `0.994478/0.999435` of the available cost. Under
+fabrication overbuild and the other sealed shifts, only `0.483/0.467` of its archive geometries
+remain inside the envelope and normalized robustness is zero. The robust policy uses
+`0.975352/0.980763` of the cost, reaches lower nominal score `0.797789/0.754127`, and preserves
+every shifted geometry and unit robustness. On development regimes, the decisive margin is only
+`0.019127` of the budget.
+
+A performance-only curve would rank the brittle policy first and hide why it fails. Scientific-
+instrument tasks should therefore report a Pareto surface over nominal performance, total resource
+use and minimum physical/operational constraint margin, together with shifted feasibility and
+held-out transfer. The margin must be swept rather than chosen after seeing sealed outcomes, and
+selected designs require a fidelity ladder such as event-level transport, electronics and
+manufacturing simulation followed by physical replication. This reduced-order calorimeter result
+motivates that protocol; it is not evidence that a two-percent margin is universal or that a
+detector has been validated.
+
 ## Preregistered next tests
 
 The observations above define hypotheses rather than assumed conclusions:
@@ -422,6 +444,9 @@ The observations above define hypotheses rather than assumed conclusions:
 8. At equal experiment count and cost, complementary off-axis or intervention-rich designs will
    improve mechanism recovery over merely full-rank but ill-conditioned designs; budget use and
    numerical rank alone will not predict discovery success.
+9. At equal search and evaluation budget, explicit constraint-margin-aware selection will retain
+   more sealed manufacturing feasibility than nominal-only selection; the comparison must report
+   the full performance–cost–margin surface and confirm selected designs at higher fidelity.
 
 Tests 1--3, 7 and 8 require at least ten paired seeds on the focused science subset. All comparisons must
 hold proposal budget, actual oracle calls, tool access and feedback-message shape fixed. Hidden
@@ -654,6 +679,8 @@ Every new or rebuilt task must pass the following gate before it counts toward t
 - an independent numerical, analytic or exact reference plus invariant tests;
 - procedural development and server-held instances rather than a fixed public truth;
 - separate nominal, held-out and shifted/high-fidelity metrics where applicable;
+- performance–cost–constraint-margin curves for scientific instruments and other designs whose
+  resource-boundary solutions can become infeasible under manufacturing or operating shifts;
 - post-commit repeats kept out of agent feedback and model selection for empirical tasks;
 - explicit mechanism and refusal outputs for discovery tasks;
 - finite-output rejection, secure isolation, deterministic replay and metric sealing;
@@ -673,9 +700,9 @@ far-offset prediction, model-class adequacy and geological interpretation remain
 The current synthetic primary-reflection laboratory is an active-acquisition/model-checking
 on-ramp, not field FWI or autonomous geological discovery.
 
-The present source manifest contains 42 internally admissible certified or candidate packages:
-seven certified and 35 candidate, with 13 quarantined after rebuilding DemographicSFS-v2. The
-remaining admissible gap is approximately 8 tasks.
+The present source manifest contains 43 internally admissible certified or candidate packages:
+seven certified and 36 candidate, with 12 quarantined after rebuilding CalorimeterDesign-v2. The
+remaining admissible gap is approximately 7 tasks.
 Expansion should use procedural families spanning
 design, inverse problems, control, multifidelity validation, mechanism discovery and exact
 mathematical construction rather than cloning one scalar optimization template across domains.
