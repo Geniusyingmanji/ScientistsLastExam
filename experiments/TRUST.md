@@ -238,6 +238,12 @@ Raw `.out`/`.log` files predating the trusted evaluator inherit
 | `security_audit_2026-07-25_v28.json` | `TRUSTED_SECURE_EVAL` | All 18 sandbox and protocol security regressions pass on clean source `9a72b51`. |
 | `secure_baseline_determinism_2026-07-25_v34.json` | `TRUSTED_SECURE_EVAL` | On clean source `9a72b51`, all 55 baselines are deterministic, valid and fail closed over two repetitions, with zero infrastructure failures. |
 | `full_test_suite_2026-07-25_v2.json` | `TRUSTED_FULL_TEST_SUITE` | On clean source `090b065`, all 355 tests pass in 1162.826 seconds, including the eight DemographicSFS-v2 protocol, physics, isolation and difficulty checks. |
+| `gpt55_demographic_sfs_v2_b1_2026-07-25.json` | `TRUSTED_SECURE_EVAL / CALIBRATION_ONLY` | One GPT-5.5 proposal on clean source `1c30a99` fails the executable protocol; the valid baseline remains selected at zero. |
+| `gpt55_demographic_sfs_v2_b3_2026-07-25.json` | `TRUSTED_SECURE_EVAL / CALIBRATION_ONLY` | Independent normal budget-three run on clean source `1c30a99`; all three proposals are valid, step one is selected at `0.639534/0.397010` development/held-out mechanism, and a rejected proposal reaches higher held-out mechanism `0.603214`. |
+| `gpt55_demographic_sfs_v2_blind_b3_2026-07-25.json` | `TRUSTED_SECURE_EVAL / CALIBRATION_ONLY` | Same-local-identifier frozen-parent diagnostic on clean source `1c30a99`; all three proposals fail at runtime. The single-run unseeded contrast is not a feedback-effect estimate. |
+| `demographic_sfs_v2_calibration_analysis_2026-07-25.json` | `TRUSTED_DERIVED_EVIDENCE / CALIBRATION_ONLY` | On clean analysis source `7ac644f`, binds all three reports, raw trajectories, lineage, accounting, eleven-world science axes and retained artifacts; records 3/7 valid proposals and explicitly rejects feedback-causal, real-population and discovery claims. |
+| `science_calibration_summary_2026-07-25_v23.json` | `TRUSTED_DERIVED_EVIDENCE / CALIBRATION_ONLY` | On clean source `63e32fd`, validates 59 normal single-run conditions across 30 tasks. Heterogeneous science axes are not averaged and strict controls remain task-specific. |
+| `full_test_suite_2026-07-25_v3.json` | `TRUSTED_FULL_TEST_SUITE` | On clean source `3e35253`, all 359 tests pass in 1147.462 seconds, including four DemographicSFS model-analysis integrity and fail-closed tests. |
 
 ## 2026-07-25 ProteinStabilityDesign evidence
 

@@ -8,14 +8,14 @@ LidDrivenCavity-v2, EnergyBalanceModel-v2, BroadbandAbsorber-v2,
 DistillationColumnDesign-v2, HartreeFockSCF-v2, RoomImpulseResponse-v2,
 ConvectionDiffusionOpt-v2, SeismicWaveInversion-v2, RankineCycleOpt-v2 and MOSFETDoping-v2. The
 list now also includes RANSCalibration-v2, GeneNetworkIntervention-v1, RNAInverseDesign-v1,
-ProteinStabilityDesign-v1 and ElectrolyteConductivityDesign-v1. The 57 normal-feedback model
-conditions across these 29 tasks each
+ProteinStabilityDesign-v1, ElectrolyteConductivityDesign-v1 and DemographicSFS-v2. The 59
+normal-feedback model conditions across these 30 tasks each
 contain one seed and proposal budget one or three. They calibrate tasks and motivate experiments;
 they are not a model leaderboard, a causal feedback study or population evidence.
 
 The portable machine record
-`experiments/science_calibration_summary_2026-07-25_v22.json` retains every top-level scalar metric,
-candidate lineage hash and raw trajectory SHA-256 for all 57 normal conditions.
+`experiments/science_calibration_summary_2026-07-25_v23.json` retains every top-level scalar metric,
+candidate lineage hash and raw trajectory SHA-256 for all 59 normal conditions.
 Additional strict diagnostics for Distillation-v2, Hartree--Fock and room acoustics are bound
 separately by `experiments/distillation_v2_calibration_analysis_2026-07-23.json`,
 `experiments/hartree_fock_v2_calibration_analysis_2026-07-23.json` and
@@ -27,8 +27,9 @@ separately by `experiments/distillation_v2_calibration_analysis_2026-07-23.json`
 `experiments/rans_v2_calibration_analysis_2026-07-24.json`,
 `experiments/gene_network_intervention_calibration_analysis_2026-07-24.json` and
 `experiments/rna_inverse_design_calibration_analysis_2026-07-24.json` and
-`experiments/protein_stability_design_calibration_analysis_2026-07-25.json` and
-`experiments/electrolyte_conductivity_design_calibration_analysis_2026-07-25.json`. Strict selection-blind
+`experiments/protein_stability_design_calibration_analysis_2026-07-25.json`,
+`experiments/electrolyte_conductivity_design_calibration_analysis_2026-07-25.json` and
+`experiments/demographic_sfs_v2_calibration_analysis_2026-07-25.json`. Strict selection-blind
 diagnostics remain in task-specific analysis because they are not normal-feedback calibrations.
 The underlying reports bind the task-specific source revision. Pendulum's initial budget-one
 run on revision `57c0e1b` is
@@ -105,6 +106,9 @@ by the corrected-contract run on `2557adb`.
 | ElectrolyteConductivityDesign-v1, budget 1 | development/held-out visible `0.263/0.309`; discovery-repeat robustness `0.446/0.294` | untouched-repeat confirmation and confirmation robustness are `0.000/0.000` on both splits | The selected policy spends all eight unique assays per world and improves the visible surface, but the independent repeat axis does not support the selected gain. |
 | ElectrolyteConductivityDesign-v1, normal budget 3 | accepted development `0.492→0.878`; selected held-out visible `0.926`; discovery-repeat robustness `0.826/0.896` | selected untouched-repeat confirmation and confirmation robustness are `0.000/0.000` on both splits | Strong duty transfer and a worst-of-visible-repeat score do not imply independent repeatability. The third, visibly worse proposal has nonzero development confirmation robustness `0.0073` and is rejected. |
 | ElectrolyteConductivityDesign-v1, selection-blind budget 3 | frozen-parent development-selected score `0.646`; held-out visible `0.765` | selected untouched-repeat confirmation is `0.000/0.000`; a discarded proposal has development confirmation `0.0266` | Development-score selection can discard the batch with better untouched-repeat support. Normal and blind match four oracle calls but differ by 7,941 tokens and uncontrolled model sampling, so the score contrast is not causal. |
+| DemographicSFS-v2, truth-blind designs | multisample mechanism `0.770/0.510`; repeated-`n=12` `0.538/0.397` at equal eight-unit cost | multisample prediction `0.988/0.983`; full supported coverage/refusal and zero false discovery | Complementary sample sizes improve mechanism recovery beyond buying more small-sample panels, while prediction still substantially exceeds mechanism. |
+| DemographicSFS-v2, budget 1 and selection-blind budget 3 | all four model proposals fail at runtime and remain at the valid zero-score baseline | no model-generated mechanism or prediction claim is validated | Proposal validity is a prerequisite; equal oracle calls do not make the unseeded normal/open-loop contrast causal. |
+| DemographicSFS-v2, normal budget 3 | three valid proposals; development mechanism `0.640 → 0.521 → 0.637`, only step 1 accepted | held-out mechanism `0.397 → 0.603 → 0.417`; selected prediction `0.883/0.939`; full coverage/refusal and zero false discovery | Development-only selection rejects the best held-out mechanism proposal and the selected policy remains below the truth-blind classical fit. |
 
 OPF's `robustness_score` combines security-constrained economic quality with overload penalties.
 It is not a pure safety probability. The proportional baseline is feasible for every tested
@@ -272,6 +276,14 @@ procedural worlds it predicts supported responses at 0.995 while supported mecha
 not preregistered hidden validation, but they show why response fit, parameter recovery,
 model-class adequacy and refusal must be separate curves.
 
+DemographicSFS-v2 repeats the separation under an exact finite-sample coalescent forward model.
+The selected normal budget-three policy reaches development/held-out sample-size prediction
+`0.883/0.939` but mechanism only `0.640/0.397`, leaving prediction-minus-mechanism gaps
+`0.244/0.542`. The truth-blind multisample fit is better on both axes (`0.988/0.983` prediction,
+`0.770/0.510` mechanism), yet even it cannot distinguish registered four-epoch and population-
+mixture counterexamples. Fit, extrapolation, supported-family parameters and model-class
+adequacy therefore remain logically distinct even when the simulator equations are exact.
+
 ### 6. Protocol validity, scientific coverage and conditional quality are sequential hurdles
 
 GeneNetworkIntervention makes the hurdle structure explicit. Across budget one, normal budget
@@ -288,6 +300,14 @@ refusal, and finally mechanism, prediction, decision utility and transfer condit
 warranted claim. A joint success curve may be reported after these components, but it cannot
 replace them. The current evidence is task calibration from single runs and does not estimate a
 population success probability.
+
+DemographicSFS-v2 makes the first hurdle condition-dependent within the same frozen task. The
+budget-one proposal and all three frozen-parent proposals fail with the label-blind
+`candidate_runtime_error` category, whereas all three proposals in the independent normal
+budget-three run execute on all eleven worlds and make nonzero claims. Only those three valid
+proposals admit interpretation of mechanism, prediction, coverage and refusal. This is not a
+normal-versus-open-loop effect estimate—the endpoint has no server-side seed—but it shows why
+invalid-proposal incidence and time-to-first-valid must accompany scientific-quality curves.
 
 ### 7. Feedback cannot optimize information that selection never receives
 
@@ -354,6 +374,13 @@ selected artifact remains at zero on every untouched confirmation axis. The sele
 never receives those confirmation values. This single trajectory does not estimate a feedback
 effect, but it makes the information boundary explicit: feedback on discovery repeats cannot by
 itself select for repeatability measured only after commitment.
+
+DemographicSFS-v2 supplies a direct selection-axis counterexample within one normal trajectory.
+Development selection keeps step one at mechanism `0.640` and held-out mechanism `0.397`; it
+rejects step two because development mechanism falls to `0.521`, even though held-out mechanism
+rises to `0.603`. Step three nearly recovers development (`0.637`) but held-out mechanism is only
+`0.417`. This does not prove a feedback treatment effect, but it does prove that a development-
+only incumbent rule can discard the best observed transfer mechanism when that axis is sealed.
 
 ### 8. Contract completeness must precede headroom claims
 
@@ -595,6 +622,22 @@ four-epoch history and a mixture of contraction/expansion histories have clean b
 reduced deviances only `0.0092` and `0.0592`. They are retained as near-equivalence limits, not
 scored as forced-refusal labels. A benchmark must not reward an agent for detecting model
 misspecification that its available observations cannot identify.
+
+The GPT-5.5 calibration adds a protocol and selection diagnostic. The budget-one proposal and
+all three strict frozen-parent proposals fail at runtime, while all three independent normal
+budget-three proposals are valid. Normal step one is selected at development/held-out mechanism
+`0.639534/0.397010`, observed-SFS fit `0.865220/0.926762` and sample-size prediction
+`0.883087/0.939153`; it uses all eight sequencing units in two calls, covers every supported
+world, refuses both resolvable mismatch worlds and makes zero false discoveries. It remains below
+the truth-blind multisample mechanism by `0.130214/0.112715`. A rejected step-two proposal trades
+development mechanism down to `0.520768` while raising held-out mechanism to `0.603214`, exposing
+the cost of selecting only on development mechanism.
+
+Normal and selection-blind each use four oracle calls, but consume `26,450` and `17,984` tokens.
+Azure exposes no server-side generation seed, so their `0.6395` versus `0.0` endpoints cannot be
+attributed to feedback. Across all three conditions only three of seven model proposals are valid;
+the four failures share a sanitized runtime category. The evidence supports task headroom,
+protocol-hurdle and selection-axis conclusions, not population capability or feedback causality.
 
 The reporting rule is therefore six-way: observation design and cost, finite-SFS fit,
 held-out-sample prediction, demographic mechanism, conditioning/uncertainty, and model-class

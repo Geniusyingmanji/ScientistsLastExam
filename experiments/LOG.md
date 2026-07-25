@@ -2308,3 +2308,36 @@ revision `090b065`, and passes 355/355 tests in 1162.826 seconds. This closes in
 and infrastructure reproduction for DemographicSFS-v2. GPT-5.5 task calibration, server-held
 histories, linkage-aware models, real sequence QC and independent population-genetics review
 remain separate outstanding evidence.
+
+## 2026-07-25 — DemographicSFS-v2 GPT-5.5 calibration and analysis
+
+Three trusted GPT-5.5 reports bind clean model source `1c30a99`. Budget one (SHA-256
+`ba5b8dc1d960be47455f1375c8ade7b84d1d4e046381e8211d5813110cb3d223`) evaluates one
+proposal, which fails with the sanitized `candidate_runtime_error` category; the valid baseline
+remains selected at zero. The independent normal budget-three report (SHA-256
+`77a19700c0097e36abf44603c1711762123443374685eeddc4001e720806655f`) has three valid
+proposals. Step one is accepted at development/held-out mechanism `0.639534/0.397010`,
+observed-SFS fit `0.865220/0.926762` and prediction `0.883087/0.939153`; it uses all eight
+sequencing units in two calls, has full supported coverage and resolvable-mismatch refusal, and
+zero false discovery. Steps two and three score `0.520768/0.637054` on development mechanism and
+are rejected. Step two nevertheless reaches held-out mechanism `0.603214`, above the selected
+step's `0.397010`.
+
+The frozen-parent budget-three report (SHA-256
+`8851bc75b08944dd0be8fb291ae5021ae90d30b4702c3f9d7fbcef2393ffb732`) has three runtime-
+invalid proposals and remains at zero. Normal and frozen-parent conditions both use four oracle
+calls but consume `26,450/17,984` tokens. Azure has no server-side seed, so this difference is
+not a feedback-effect estimate. Across the three reports, 3/7 proposals are valid and all four
+invalid proposals share the label-blind runtime category.
+
+The derived audit has SHA-256
+`88950cd4d3b99c55ca6810a3c2c9d9c0471109fadd2ed817416d3753383222c0`, binds clean
+analysis source `7ac644f`, and verifies report/raw-trajectory agreement, lineage, accounting,
+selected and terminal artifact hashes, all eleven world axes and narrow retained-source shortcut
+scans. Cross-task summary v23 has SHA-256
+`3b2beaaf7ad8736ef33a83a00e875f9fccfb7b41d7570846be8eb84feafca0d5`, binds clean
+source `63e32fd`, and covers 59 normal conditions across 30 tasks. Full-suite v3 has SHA-256
+`3d83d362f09ae04f5ca9ef0e436f712b2bfd7dc6e576b26127415f44ac49c509`, binds clean source
+`3e35253`, and passes 359/359 tests in 1147.462 seconds. These are synthetic finite-SFS task and
+model calibrations, not real-population inference, feedback causality, population performance or
+autonomous biological discovery.

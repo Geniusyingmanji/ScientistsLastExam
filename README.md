@@ -55,10 +55,10 @@ The current audit reports:
   `7/35/13` over 55 packages with no missing manifest records, orphaned records or task-level
   admission issues; it retains one known duplicate-oracle group containing five quarantined
   packages. Security passes 18/18 adversarial tests. The 55×2 baseline v34 reports 55/55
-  deterministic, valid and fail-closed tasks with zero infrastructure failures. Full-suite v2
-  binds clean revision `090b065` and passes 355/355 tests in 1162.826 seconds.
-  Cross-task summary v22 binds clean revision `5de2a20` and contains 57 normal single-run
-  conditions over 29 tasks.
+  deterministic, valid and fail-closed tasks with zero infrastructure failures. The latest
+  full-suite v3 binds clean revision `3e35253` and passes 359/359 tests in 1147.462 seconds.
+  Cross-task summary v23 binds clean revision `63e32fd` and contains 59 normal single-run
+  conditions over 30 tasks.
 - Current source manifest: 7 certified / 35 candidate / 13 quarantined. ProteinStabilityDesign
   rebuilds 2,756 reliable double-mutant records across five
   development and three held-out domains from hash-bound ProteinGym v1.3/Tsuboyama sources.
@@ -251,7 +251,8 @@ credible multi-seed model-performance evidence. A clean-revision GPT-5.5 budget-
 is recorded as task calibration, not a benchmark leaderboard.
 The latest trusted certification/security/baseline audits are v45/v28/v34 and bind clean
 candidate-manifest revision `9a72b51`; full-suite v2 binds the committed audit revision
-`090b065` and passes 355/355 tests. DemographicSFS-v2's superseding task calibration and
+`090b065`, while the post-model-analysis full-suite v3 binds `3e35253` and passes 359/359 tests.
+DemographicSFS-v2's superseding task calibration and
 inverse-track admission audit also bind `9a72b51`, including the equal-budget observation-design
 control. The current source manifest is 7/35/13 and contains 42 internally admissible tasks,
 leaving an approximate gap of 8 to the roughly 50-task target.
@@ -275,8 +276,14 @@ ElectrolyteConductivityDesign adds two normal runs and one strict selection-blin
 measurements. Its normal budget-three selected artifact reaches development/held-out visible
 scores `0.878/0.926` and discovery-repeat robustness `0.826/0.896`, while untouched-repeat
 confirmation and confirmation robustness are `0/0` on both splits. This is offline optimization
-and repeatability-gap evidence, not a prospective formulation or complete-cell result. The
-updated cross-task summary contains 57 normal conditions over 29 tasks.
+and repeatability-gap evidence, not a prospective formulation or complete-cell result.
+DemographicSFS-v2 adds two normal runs and a strict selection-blind diagnostic. Its normal
+budget-three selected policy reaches development/held-out mechanism `0.640/0.397` and
+sample-size prediction `0.883/0.939`, with full supported coverage, full resolvable-mismatch
+refusal and zero false discovery. A rejected proposal reaches higher held-out mechanism `0.603`
+at lower development mechanism `0.521`. Budget one and all three frozen-parent proposals fail
+the executable protocol; the normal/open-loop contrast is unseeded and non-causal. The updated
+cross-task summary contains 59 normal conditions over 30 tasks.
 
 The latest EdgeBench re-audit keeps its upstream facts at arXiv `2607.05155v1`, SForge
 `a87350a` and public dataset `47846a4`. In addition to E1--E36, the science plan now preregisters
