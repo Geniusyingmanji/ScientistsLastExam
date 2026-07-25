@@ -1,0 +1,12 @@
+domain: Catalysis
+task: CatalystDeactivationLab
+difficulty: flagship
+tier: T3
+oracle_type: stateful_reduced_order_kinetics
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 90
+science_metric: lineage-bound kinetic and calibration-drift recovery with irreversible coupon deactivation, out-of-order completion, model refusal and sealed fresh-batch decision utility
+reference_baseline: one blank observation followed by an always-abstain valid artifact
+reference_sota: truth-blind calibrated sequential design and nonlinear fit; normalization witness only, not a catalyst, reactor or autonomous-discovery result
+citation: "Franceschini and Macchietto, DOI 10.1016/j.ces.2007.11.034; Bartholomew, DOI 10.1016/S0926-860X(00)00843-7; Hase et al., DOI 10.1016/j.trechm.2019.02.007; Burger et al., DOI 10.1038/s41586-020-2442-2"

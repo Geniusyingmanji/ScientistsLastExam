@@ -1,0 +1,40 @@
+schema_version: 1
+scientific_question: Can a policy infer catalyst kinetics and deactivation from raw, drifting, out-of-order measurements without confusing irreversible physical acts, stale state or evaluator retries?
+artifact: A lineage-bound kinetic/model decision plus one fresh-batch operating policy.
+oracle:
+  nominal: public Arrhenius first-order production and irreversible deactivation with raw linear gain/offset drift
+  state: finite catalyst coupons, versioned parentage, irreversible reaction use, deterministic out-of-order completion and idempotent exact retries
+  feasibility: typed finite submission, safe experiment bounds, current lab/coupon parents, unique request lineage and physical-act budget
+  deterministic: true
+normalization:
+  baseline: one blank observation followed by valid abstention
+  reference: truth-blind calibration/reaction schedule with nonlinear kinetic fitting and model-residual refusal
+  score: development lineage-mechanism-prediction-decision joint controls search; fresh-batch shifts, held-out worlds, refusal, state/retry diagnostics and per-event lineage remain separate
+citations:
+  - id: doi:10.1016/j.ces.2007.11.034
+    title: "Model-based design of experiments for parameter precision: State of the art"
+  - id: doi:10.1016/S0926-860X(00)00843-7
+    title: Mechanisms of catalyst deactivation
+  - id: doi:10.1016/j.trechm.2019.02.007
+    title: Next-Generation Experimentation with Self-Driving Laboratories
+  - id: doi:10.1038/s41586-020-2442-2
+    title: A mobile robotic chemist
+  - id: doi:10.1126/sciadv.aaz8867
+    title: Self-driving laboratory for accelerated discovery of thin-film materials
+invariants:
+  - every new physical event has one immutable ID and explicit scheduled, execution, coupon and calibration lineage
+  - exact same-payload request retries are idempotent and do not consume a sample or physical-act budget
+  - conflicting retries, stale laboratory or coupon parents, concurrent same-coupon reactions, exhausted coupons and unsafe conditions fail closed even if caught
+  - reaction events irreversibly reduce coupon activity and decrement remaining uses
+  - returned batches are ordered by deterministic physical completion rather than submission order
+  - raw signals include calibration gain, offset, drift and noise; reaction truth is never returned
+  - an independent closed-form integral agrees with numerical activity/rate integration
+  - the weak one-blank abstention baseline is valid and scores zero by construction
+  - a truth-blind calibrated sequential witness improves the baseline on development and held-out supported worlds and refuses resolvable misspecification
+  - every world receives a fresh candidate process and private temporary filesystem
+  - held-out, fresh-batch robustness, refusal, physical-act, retry, sample and per-event metrics remain evaluator-only
+  - malformed, complex, non-finite, stale, over-budget and lineage-inconsistent artifacts fail closed
+known_shortcuts: The procedural reduced-order kinetics omit transport, heat and mass transfer, surface coverage dynamics beyond one fixed adsorption term, catalyst characterization, reactor control, real analytical pipelines and safety review. Fixed equations and same-model witnesses are simulator-overfitting risks. This task calibrates stateful scientific reasoning; it is not experimental catalysis or autonomous discovery.
+review:
+  domain: pending_external_catalysis_and_reaction_engineering
+  evaluator_security: automated_state_lineage_idempotency_irreversibility_independent_integral_reference_replay_fresh_sandbox_fail_closed_and_metric_sealing_tests

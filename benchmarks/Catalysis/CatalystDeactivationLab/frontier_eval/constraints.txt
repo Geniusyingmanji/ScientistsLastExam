@@ -1,0 +1,5 @@
+1) Only edit solution.py. Keep investigate_catalyst(problem, experiment).
+2) Bind every conclusion to returned event IDs and final laboratory/coupon state versions.
+3) At most 12 physical acts, batches of one to three, and three irreversible reactions per coupon.
+4) Exact request retries are idempotent; conflicting IDs, stale parents, unsafe conditions and exhausted coupons fail closed.
+5) NumPy/SciPy only. CPU, seconds. No network. Do not read verification/ or frontier_eval/.

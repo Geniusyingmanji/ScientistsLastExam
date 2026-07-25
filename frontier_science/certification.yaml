@@ -122,6 +122,16 @@ tasks:
       - doi:10.1109/PVSC.2017.8366786
       - doi:10.21105/joss.00884
 
+  Catalysis/CatalystDeactivationLab:
+    status: candidate
+    reason: v1 adds a procedural stateful catalyst laboratory with raw drifting instrument signals, deterministic out-of-order batch completion, four finite coupons, irreversible reaction deactivation, exact-retry idempotency, stale/conflicting lineage rejection, single-site kinetic and linear-drift recovery, resolvable abrupt-drift/two-site refusal, and a sealed shifted fresh-batch operating policy; an independently checked truth-blind sequential reference reaches about 0.958/0.951 development/held-out nominal joint quality and 0.883/0.943 robustness with full supported coverage, full unsupported refusal, zero false discovery, one exact retry and no duplicate physical act, so retain as a synthetic state-machine and kinetic-inference candidate pending paired agent controls, server-held worlds, real reactor/instrument integration, independent catalysis review and experimental replication
+    citation_ids:
+      - doi:10.1016/j.ces.2007.11.034
+      - doi:10.1016/S0926-860X(00)00843-7
+      - doi:10.1016/j.trechm.2019.02.007
+      - doi:10.1038/s41586-020-2442-2
+      - doi:10.1126/sciadv.aaz8867
+
   BayesianInference/OptimalExperimentDesign:
     status: candidate
     reason: v2 is scientifically valid with procedural families and sealed shifts, but GPT-5.5 implements a generic D-optimal algorithm and reaches 0.991 development plus 0.994 validation at budget one; retain as an on-ramp pending harder sequential model-discrimination regimes and independent review
