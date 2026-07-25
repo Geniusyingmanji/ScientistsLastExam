@@ -1,0 +1,34 @@
+schema_version: 1
+scientific_question: Under a limited budget of repeated EIS temperature scans, select a diverse EC/PC/EMC/LiPF6 formulation batch whose ionic conductivity is high and repeat-robust across an application-specific temperature duty profile.
+artifact: A deterministic active-design policy that chooses charged formulation assays and returns three distinct candidate formulation IDs.
+oracle:
+  model: hash-bound replay of independent high-throughput EIS experiments, with a historical polynomial proxy and later non-overlapping candidate campaigns
+  feasibility: exactly three distinct declared candidate IDs and no more than eight charged assays per fresh application-profile session
+  deterministic: true
+normalization:
+  baseline: a diversity-aware batch selected only by the degree-three ridge proxy fitted to 358 earlier complete experiments across 85 formulations
+  reference: exhaustive three-formulation search over the two discovery-assay repeats; untouched confirmation and repeat-robust references remain separate, and every reference is a finite-landscape witness rather than a global chemical optimum
+  score: visible discovery-assay weighted log-conductivity quality plus formulation-space diversity; untouched confirmation, independent-repeat lower performance, held-out duty profiles, proxy false promotion and EIS quality remain separate
+citations:
+  - id: doi:10.1038/s41597-023-01936-3
+    title: Conductivity experiments for electrolyte formulations and their automated analysis
+  - id: doi:10.5281/zenodo.7244939
+    title: Dataset of 5035 Conductivity Experiments for Lithium-Ion Battery Electrolyte Formulations at Various Temperatures
+  - id: doi:10.1002/batt.202200228
+    title: One-Shot Active Learning for Globally Optimal Battery Electrolyte Conductivity
+  - id: doi:10.1039/D2DD00027J
+    title: Learning the laws of lithium-ion transport in electrolytes using symbolic regression
+invariants:
+  - the exact 39,235,727-byte Zenodo CSV is checked by MD5 and SHA-256 before parsing
+  - 5,035 temperature rows are grouped into 504 experiment IDs rather than treated as independent samples
+  - only 499 experiments with all ten temperatures are eligible for source or candidate curves
+  - the 85 historical proxy formulations and 23 January 2022 candidate formulations have no exact composition overlap
+  - each charged assay exposes the first two lexically ordered independent repeats while scoring uses the next two repeats and never audit-only extras
+  - conductivity is independently reproduced as cell constant divided by fitted resistance for every retained source row
+  - public application profiles expose temperature weights but not their names or development/held-out labels
+  - candidate code receives a fresh sandbox process and private tmpfs for every application profile
+  - repeat robustness, held-out transfer, proxy failure, EIS quality, campaign and per-world metrics remain evaluator-only
+known_shortcuts: The finite public Zenodo table and public follow-up repository cannot rule out memorization, pretraining contamination or an external lookup. Networkless runtime and sealed labels reduce direct access but do not make this prospective. Conductivity alone does not prove electrochemical stability, safety, electrode compatibility, cycle life, manufacturability, complete-cell performance or autonomous discovery.
+review:
+  domain: pending_external_electrochemistry
+  evaluator_security: automated_hash_bound_source_rebuild_lineage_partition_fresh_sandbox_budget_metric_sealing_malformed_artifact_independent_repeat_and_physical_identity_tests

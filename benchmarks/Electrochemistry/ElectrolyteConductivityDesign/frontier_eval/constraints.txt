@@ -1,0 +1,5 @@
+1) Only edit solution.py. Keep design_electrolyte_batch(problem, assay).
+2) Return exactly three distinct formulation IDs from candidate_formulations.
+3) Use at most eight charged assays per application profile; repeats consume budget and caught callback violations still fail.
+4) Candidate code gets a fresh sandbox for every application profile. Do not branch on evaluator-only labels or read verification/frontier_eval.
+5) NumPy/SciPy only. Deterministic CPU code. No network or process creation.

@@ -89,6 +89,15 @@ tasks:
       - doi:10.1038/s41586-023-06328-6
       - doi:10.5281/zenodo.15293562
 
+  Electrochemistry/ElectrolyteConductivityDesign:
+    status: candidate
+    reason: hash-bound CC-BY-4.0 replay reconstructs all 5,035 temperature records as 504 experiment IDs, retains 358 complete historical experiments across 85 formulations for a public proxy and 141 complete later experiments across 23 non-overlapping candidate formulations, exposes eight charged two-repeat EIS temperature assays and separately scores visible optimization, worse-repeat robustness, untouched-repeat confirmation and held-out temperature duties; exact source rebuilding, cell-constant/resistance conductivity identities, independent Arrhenius recalculation, secure-baseline replay and metric sealing pass, while a truth-blind eight-assay strategy reaches 0.408 development and 0.270 held-out visible optimization but only 0.026/0.000 untouched confirmation, so retain as a real-data optimization and Goodhart/repeatability candidate pending server-held formulations, new batches, independent EIS analysis, complete-cell validation and external electrochemistry review
+    citation_ids:
+      - doi:10.1038/s41597-023-01936-3
+      - doi:10.5281/zenodo.7244939
+      - doi:10.1002/batt.202200228
+      - doi:10.1039/D2DD00027J
+
   BayesianInference/OptimalExperimentDesign:
     status: candidate
     reason: v2 is scientifically valid with procedural families and sealed shifts, but GPT-5.5 implements a generic D-optimal algorithm and reaches 0.991 development plus 0.994 validation at budget one; retain as an on-ramp pending harder sequential model-discrimination regimes and independent review
