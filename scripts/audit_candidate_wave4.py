@@ -395,35 +395,102 @@ def _inventory():
 
 def _calorimeter():
     oracle = _oracle("ParticlePhysics/CalorimeterDesign")
-    passive = np.full(oracle.N_LAYERS, 2.0)
-    active = np.full(oracle.N_LAYERS, 4.0)
-    sigma, sampling = oracle._compute_resolution(passive, active)
-    total_x0 = float(np.sum(passive) / oracle.X0_PB)
-    metrics = oracle.evaluate(lambda n, _length: {
-        "passive_thicknesses_mm": np.full(n, 2.0),
-        "active_thicknesses_mm": np.full(n, 4.0),
-    })
+    baseline = oracle.evaluate(oracle._weak_baseline_design)
+    nominal = oracle.evaluate(
+        lambda problem: oracle.reference_policy(problem, robust=False)
+    )
+    robust = oracle.evaluate(
+        lambda problem: oracle.reference_policy(problem, robust=True)
+    )
     with np.errstate(all="ignore"):
-        nonfinite = oracle.evaluate(lambda n, _length: {
-            "passive_thicknesses_mm": np.full(n, np.nan),
-            "active_thicknesses_mm": np.full(n, np.nan),
+        nonfinite = oracle.evaluate(lambda problem: {
+            "passive_thicknesses_mm": np.full(
+                (problem["archive_size"], problem["n_layers"]), np.nan
+            ),
+            "active_thicknesses_mm": np.full(
+                (problem["archive_size"], problem["n_layers"]), np.nan
+            ),
         })
     return {
         "task": "ParticlePhysics/CalorimeterDesign",
-        "admission": "quarantine",
-        "defect": (
-            "the documented uniform baseline is claimed to have 3.8% resolution but contains "
-            "only 10.7 radiation lengths, triggers the oracle's containment failure, and is "
-            "actually scored as 100%; non-finite layers also receive full task score"
+        "admission": "candidate",
+        "superseded_v1_defect": (
+            "the removed v1 fixed 30-layer, 10 GeV oracle documented a 3.8 percent "
+            "uniform baseline that actually contained only 10.7 radiation lengths, "
+            "returned 100 percent resolution and let non-finite layers score one"
         ),
-        "baseline_total_radiation_lengths": total_x0,
-        "minimum_required_radiation_lengths": float(oracle.MIN_X0_TOTAL),
-        "documented_baseline_sigma": 0.038,
-        "oracle_baseline_sigma": float(sigma),
-        "oracle_baseline_sampling_fraction": float(sampling),
-        "baseline_marked_valid": bool(metrics["valid"]),
+        "resolved_defect": (
+            "v2 returns three cost-conditioned design curves over six changing layer/"
+            "energy/noise/material regimes, uses normalized gamma-profile integrals "
+            "and explicit resolution components, finite fail-closed depth/mass/length/"
+            "cost envelopes, same-model nominal and worst-shift witnesses, interleaved "
+            "held-out regimes and five sealed fabrication/calibration shifts"
+        ),
+        "instance_count": len(oracle.INSTANCES),
+        "development_instance_count": len(oracle.DEVELOPMENT_INSTANCES),
+        "heldout_instance_count": len(oracle.HELDOUT_INSTANCES),
+        "archive_size": int(oracle.ARCHIVE_SIZE),
+        "shift_count": len(oracle.SHIFT_SPECS),
+        "energy_range_gev": [
+            min(min(row["problem"]["energies_gev"])
+                for row in oracle.INSTANCES),
+            max(max(row["problem"]["energies_gev"])
+                for row in oracle.INSTANCES),
+        ],
+        "baseline_score": float(baseline["combined_score"]),
+        "baseline_mean_resolution": float(
+            baseline["development_mean_resolution"]
+        ),
+        "nominal_reference_score": float(nominal["combined_score"]),
+        "nominal_reference_heldout_score": float(
+            nominal["heldout_policy_score"]
+        ),
+        "nominal_reference_robustness": float(
+            nominal["robustness_score"]
+        ),
+        "nominal_reference_shift_geometry_feasibility_rate": float(
+            nominal["development_shift_geometry_feasibility_rate"]
+        ),
+        "robust_reference_score": float(robust["combined_score"]),
+        "robust_reference_heldout_score": float(
+            robust["heldout_policy_score"]
+        ),
+        "robust_reference_robustness": float(
+            robust["robustness_score"]
+        ),
+        "robust_reference_heldout_robustness": float(
+            robust["heldout_robustness_score"]
+        ),
+        "robust_reference_shift_geometry_feasibility_rate": float(
+            robust["development_shift_geometry_feasibility_rate"]
+        ),
         "nonfinite_task_score": float(nonfinite["combined_score"]),
-        "passed": total_x0 < oracle.MIN_X0_TOTAL and sigma == 1.0 and nonfinite["combined_score"] == 1.0,
+        "nonfinite_task_valid": bool(nonfinite["valid"]),
+        "rebuild_passed": True,
+        "passed": (
+            oracle.CALORIMETER_V2
+            and len(oracle.DEVELOPMENT_INSTANCES) == 4
+            and len(oracle.HELDOUT_INSTANCES) == 2
+            and oracle.ARCHIVE_SIZE == 3
+            and len(oracle.SHIFT_SPECS) == 5
+            and baseline["valid"] == 1.0
+            and baseline["combined_score"] == 0.0
+            and baseline["robustness_score"] == 0.0
+            and 0.08 < baseline["development_mean_resolution"] < 0.09
+            and nominal["valid"] == 1.0
+            and nominal["combined_score"] > 0.999999
+            and nominal["heldout_policy_score"] > 0.999999
+            and nominal["robustness_score"] == 0.0
+            and nominal["development_shift_geometry_feasibility_rate"] < 0.60
+            and 0.70 < robust["combined_score"] < 0.90
+            and 0.65 < robust["heldout_policy_score"] < 0.90
+            and robust["robustness_score"] > 0.999999
+            and robust["heldout_robustness_score"] > 0.999999
+            and robust["development_shift_geometry_feasibility_rate"] == 1.0
+            and nonfinite["combined_score"] == 0.0
+            and nonfinite["raw_score"] == 0.0
+            and not bool(nonfinite["valid"])
+        ),
     }
 
 

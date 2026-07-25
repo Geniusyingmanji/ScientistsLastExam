@@ -1,0 +1,38 @@
+schema_version: 1
+scientific_question: Can a longitudinal Pb/scintillator design policy improve multi-energy resolution and linearity across changing detector regimes without becoming brittle to fabrication, calibration, dead-material, light-yield and electronics shifts?
+artifact: Three longitudinal passive/active thickness designs, one for each public areal-cost cap.
+oracle:
+  nominal: normalized gamma longitudinal shower integrals plus explicit sampling, photoelectron, electronics, constant and leakage resolution terms
+  feasibility: finite exact archive shape, per-layer thickness bounds, minimum absorber depth, maximum lead mass, total length and option-specific cost
+  deterministic: true
+normalization:
+  baseline: valid uniform same-model designs at ninety percent of each cost cap
+  reference: separately calibrated fixed-seed nominal and worst-shift witnesses in a seven-parameter graded family
+  score: development nominal multi-energy utility controls search; held-out regimes, shifts, resolution components, linearity and containment remain separate
+citations:
+  - id: doi:10.1103/RevModPhys.75.1243
+    title: Calorimetry for particle physics
+  - id: doi:10.1016/0168-9002(90)90566-O
+    title: The fast simulation of electromagnetic and hadronic showers
+  - id: doi:10.1016/0029-554X(75)90679-5
+    title: Monte Carlo calculation of photon-initiated electromagnetic showers in lead glass
+  - id: doi:10.1016/0168-9002(89)90571-8
+    title: On the energy resolution of electromagnetic sampling calorimeters
+  - id: doi:10.1016/0168-9002(92)90495-P
+    title: Optimization of electromagnetic sampling calorimeters
+invariants:
+  - the shower density integrates to the regularized-gamma CDF and its maximum moves deeper with log energy
+  - radiation-length, lead areal-mass and active-volume cost identities are dimensionally explicit
+  - containment is nondecreasing with calorimeter depth at fixed energy
+  - with leakage, noise and constant terms removed, the stochastic resolution follows one over square-root energy
+  - every returned archive row is finite, in bounds, unique and obeys its public depth, mass, length and cost envelope
+  - the weak uniform baseline is valid and has zero normalized nominal and robust score by construction
+  - separately replayable nominal and robust witnesses improve their matching baseline utilities for every cost cap and regime
+  - nominal witnesses expose a construction-envelope failure under sealed overbuild while robust witnesses preserve every shifted envelope
+  - malformed, non-finite, complex, duplicate, out-of-bound and over-budget artifacts fail closed
+  - every scientific instance receives fresh candidate process and private temporary-filesystem state
+  - held-out, shift, resolution-component, linearity, containment and per-instance metrics remain evaluator-only
+known_shortcuts: The deterministic repository-visible reduced-order model omits lateral development, interfaces, non-compensation, saturation, cross-talk, structural mechanics and event-level detector simulation. Reference witnesses are reproducible anchors, not global optima or experimental SOTA. Server-held regimes, GEANT4/test-beam replication and independent detector-physics review remain required.
+review:
+  domain: pending_external
+  evaluator_security: automated_invariant_sandbox_and_metric_sealing_tests

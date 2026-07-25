@@ -280,8 +280,14 @@ tasks:
     status: quarantined
     reason: stages receive their own prior orders without upstream fulfillment, so retailer service is exactly independent of factory and warehouse stocks
   ParticlePhysics/CalorimeterDesign:
-    status: quarantined
-    reason: documented uniform baseline has only 10.7 radiation lengths and scores 100 percent resolution rather than claimed 3.8 percent; non-finite layers receive full score
+    status: candidate
+    reason: v2 replaces the false fixed-10-GeV baseline and fail-open clipping path with three cost-conditioned Pb/scintillator design curves over four development and two interleaved held-out layer/energy/noise/material regimes; a transparent normalized-gamma longitudinal model separates multi-energy resolution, response linearity, containment, sampling, photoelectron, electronics, leakage, lead mass, length and readout cost, while five fabrication, calibration, dead-material, light-yield and electronics shifts remain sealed; the valid uniform baseline has development RMS resolution 0.0856 and zero normalized score, fixed-seed nominal witnesses improve it to unit development/held-out nominal score but retain only 0.483 development shifted-envelope feasibility and zero robustness, whereas minimax witnesses leave approximately two percent cost headroom, preserve every shifted envelope and trade nominal score to 0.798 development and 0.754 held-out; independent gamma-CDF quadrature, material-budget identities, reference regeneration, secure baseline replay and fail-closed archive tests pass internally, so retain as a reduced-order scientific-instrument optimization candidate pending GPT-5.5 headroom calibration, paired controls, server-held detector regimes, independent detector-physics review, GEANT4/electronics replication and test-beam validation
+    citation_ids:
+      - doi:10.1103/RevModPhys.75.1243
+      - doi:10.1016/0168-9002(90)90566-O
+      - doi:10.1016/0029-554X(75)90679-5
+      - doi:10.1016/0168-9002(89)90571-8
+      - doi:10.1016/0168-9002(92)90495-P
   QuantumChemistry/HartreeFockSCF:
     status: candidate
     reason: v2 replaces the inconsistent two-coefficient H2 toy with seven closed-shell finite-basis Hamiltonians, a valid zero-score single-start DIIS policy, fixed-seed stable multistart witnesses, fail-closed RHF equations and separate held-out molecule, physical geometry, AO-representation and occupied-virtual stability axes; development H8 and held-out H4 rings retain lower stable solutions beyond the baseline, while GPT-5.5 reaches approximately unit score in one proposal and a 9e-15 online selection change reverses development/held-out robustness tradeoffs, making the fixed task a known-algorithm/materiality on-ramp pending procedural molecules, repeated controls, external-instability and correlated-method checks and independent quantum-chemistry review

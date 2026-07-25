@@ -9,7 +9,7 @@ def main():
     metrics={"combined_score":INVALID,"valid":0.0}
     try:
         sys.path.insert(0,str(TASK_DIR/"verification")); import evaluator as o
-        f=_load(Path(args.candidate).resolve(),"design_calorimeter"); r=o.evaluate(f); metrics.update(r); metrics["raw_score"]=r.get("combined_score")
+        f=_load(Path(args.candidate).resolve(),"design_calorimeter"); r=o.evaluate(f); metrics.update(r); metrics["raw_score"]=r.get("raw_score",r.get("combined_score"))
     except Exception as e: metrics["error_message"]=f"{type(e).__name__}: {e}"
     Path(args.metrics_out).write_text(json.dumps(metrics,indent=2,default=str)); print(json.dumps({k:metrics.get(k) for k in ("combined_score","valid")})); return 0
 if __name__=="__main__": raise SystemExit(main())

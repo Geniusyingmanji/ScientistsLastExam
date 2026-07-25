@@ -1,7 +1,12 @@
 domain: ParticlePhysics
 task: CalorimeterDesign
 difficulty: hard
-oracle_type: physical_sim
+tier: T2
+oracle_type: analytical_reduced_order_physics
 score_mode: clipped
 gpu_required: false
-eval_time_seconds: 15
+eval_time_seconds: 60
+science_metric: development nominal multi-energy resolution-linearity-containment utility across three public cost caps, with separate held-out detector transfer and worst fabrication/calibration-shift robustness
+reference_baseline: valid uniform Pb/scintillator archives at ninety percent of each option cost cap
+reference_sota: fixed-seed nominal and worst-shift witnesses in a replayable seven-parameter graded family; no global-optimality, GEANT4, test-beam or engineering claim
+citation: "Fabjan and Gianotti, doi:10.1103/RevModPhys.75.1243; Grindhammer et al., doi:10.1016/0168-9002(90)90566-O; Del Peso and Ros, doi:10.1016/0168-9002(89)90571-8"
