@@ -2,7 +2,7 @@
 
 Audit date: 2026-07-19 (UTC), with the experiment roadmap extended after repeated full-text
 EdgeBench comparison and the task inventory updated on 2026-07-25 through
-CatalystDeactivationLab-v1.
+QuartzCrystalMicrobalanceLab-v1.
 Evidence base: `literature_matrix.md`,
 `science_experiment_plan.md`, current source/tests, and the dated artifacts in `experiments/`.
 
@@ -25,22 +25,23 @@ physical validation, and auditable claim–evidence provenance.
 
 | Capability | Current status | Evidence | Remaining acceptance criterion |
 |---|---|---|---|
-| Candidate/oracle isolation | Implemented | Clean-revision security v36: 18/18 adversarial tests; Bubblewrap, no network, read-only mounts, resource/seccomp limits, typed RPC, fresh multi-world sessions and candidate-exception sanitization | Reproduce in clean Linux CI; document portability/non-Linux behavior |
-| Fail-closed trusted metrics | Implemented | Clean-revision 58×2 v41: 58 deterministic, 58 valid, 58 fail-closed and zero infrastructure failures | Repair or quarantine every future invalid candidate oracle before certification |
-| Task admission policy | Implemented, narrow | Trusted certification v52 records 7/39/12; ProspectiveMetaAnalysis-v1, PhotovoltaicTandemDesign-v1 and CatalystDeactivationLab-v1 pass task-specific integrity, independent-model, finite-output, sandbox and metric-sealing gates | External domain review, server-held corpora/regimes and genuinely independent physical or prospective replication remain incomplete |
-| Scientific validity of inventory | Audited, sparse | All original 50 packages were adversarially audited; later substantive rebuilds and additions plus clean-revision-admitted CatalystDeactivationLab-v1 leave 46 internally admissible packages in the 58-package inventory | Add approximately 4 net admissible tasks to reach about 50; hidden/generated instances and shortcut analysis remain mandatory |
+| Candidate/oracle isolation | Implemented | Clean-revision security v37: 18/18 adversarial tests; Bubblewrap, no network, read-only mounts, resource/seccomp limits, typed RPC, fresh multi-world sessions and candidate-exception sanitization | Reproduce in clean Linux CI; document portability/non-Linux behavior |
+| Fail-closed trusted metrics | Implemented | Clean-revision 59×2 v42: 59 deterministic, 59 valid, 59 fail-closed and zero infrastructure failures | Repair or quarantine every future invalid candidate oracle before certification |
+| Task admission policy | Implemented, narrow | Trusted certification v53 records 7/40/12; ProspectiveMetaAnalysis-v1, PhotovoltaicTandemDesign-v1, CatalystDeactivationLab-v1 and QuartzCrystalMicrobalanceLab-v1 pass task-specific integrity, finite-output, sandbox and metric-sealing gates | External domain review, server-held corpora/regimes and genuinely independent physical or prospective replication remain incomplete |
+| Scientific validity of inventory | Audited, sparse | All original 50 packages were adversarially audited; later substantive rebuilds and additions plus clean-revision-admitted QuartzCrystalMicrobalanceLab-v1 leave 47 internally admissible packages in the 59-package inventory | Add approximately 3 net admissible tasks to reach about 50; hidden/generated instances and shortcut analysis remain mandatory |
 | Unified trajectory/accounting | Implemented, protocol-smoked | Clean-revision two-seed baseline smoke; trajectory schema v2, hashes, AUC over `budget_units`, separate `oracle_calls`, wall/token/cost, seed, checkpoint/resume | Validate nonzero-budget schema-v2 artifact replay in CI and version future changes |
 | Feedback controls | Implemented; strict pilot run | None/shuffled prompt-metric modes disclose true-score selection; strict selection-blind freezes parent/metrics; four-task n=3 pilot has no direction-stable lift and is not token-matched | Run token-matched ≥10 paired seeds with score-only, delayed/replayed and strict open-loop controls |
-| Evaluator-only metric sealing | Implemented and integration-verified | Closed search-visible allowlist; search-state redaction/hash-keyed sidecars; candidate-controlled exception text mapped to a finite label-blind taxonomy; clean-revision full-suite v9 passes 420/420; clean pinned OpenEvolve/TreeQuest/Shinka no-leak report `aff026d` | Extend from baseline smoke to nonzero-budget upstream runs before comparative claims |
+| Evaluator-only metric sealing | Implemented and integration-verified | Closed search-visible allowlist; search-state redaction/hash-keyed sidecars; candidate-controlled exception text mapped to a finite label-blind taxonomy; clean-revision full-suite v10 passes 438/438; clean pinned OpenEvolve/TreeQuest/Shinka no-leak report `aff026d` | Extend from baseline smoke to nonzero-budget upstream runs before comparative claims |
 | Official OpenEvolve adapter | Implemented, trusted baseline smoke | Explicit 0.2.26 adapter; clean-revision secure baseline passed under Python 3.10 | Run nonzero-budget/checkpoint integration and multi-seed study |
 | TreeQuest AB-MCTS | Implemented, trusted baseline smoke | Real TreeQuest AB-MCTS-A ask/tell adapter; clean-revision secure baseline passed under Python 3.12 | Run nonzero-budget/checkpoint integration and multi-seed study |
 | ShinkaEvolve | Implemented, trusted baseline smoke | Official runner/database adapter at pinned commit; clean-revision secure baseline passed under Python 3.10 | Run nonzero-budget/resume integration and token accounting audit |
 | Classical/domain baselines | Partial | NMR, HeatExchanger, Reaction, Gravity, Ocean, Radiative, LowThrust, Climate and DemographicSFS rebuilds have truth-blind domain baselines exposing reconstruction/proxy/prediction, terminal-feasibility, experiment-design or mechanism/refusal gaps | Add random/quasi-random plus BO/CMA-ES/DE and one domain heuristic for each meaningful task family |
-| Multi-seed benchmark evidence | Missing | Keyless GPT-5.5 Responses path is operational; 67 trusted normal single-run conditions cover 34 tasks and a separate four-task n=3 control pilot is negative/inconclusive | Certified-core and science-subset reports with paired uncertainty and portable raw trajectories |
+| Multi-seed benchmark evidence | Missing | Keyless GPT-5.5 Responses path is operational; 69 trusted normal single-run conditions cover 35 tasks and a separate four-task n=3 control pilot is negative/inconclusive | Certified-core and science-subset reports with paired uncertainty and portable raw trajectories |
 | Multifidelity/Pareto | Candidate-level | HeatExchanger-v2 implements proxy/exact Pareto archives, measured false promotion and physical shifts | Add independent high-fidelity review/replication and at least one certified multifidelity task |
 | Feedback learning claim | Negative pilot only | A strict open-loop control and three-replicate four-task pilot are complete; no direction-stable visible or sealed lift, and normal uses more tokens | Token-matched preregistered ≥10-replicate study with delayed/replayed and score-only controls |
 | Mechanistic discovery | Candidate-level | ActiveLaw, NMR, Reaction, Gravity, Ocean, Radiative, Climate, DemographicSFS, ProspectiveMetaAnalysis and CatalystDeactivationLab tasks separately score mechanisms or evidence integrity, prediction, coverage, hidden shifts, confirmation, false discovery and refusal | Add paired repeated studies, harder regimes and independent scientific validation |
 | Validation/distribution shift | Calibration-level | Nominal/robustness and prediction/mechanism gaps recur across control, design and inverse tasks; ElectrolyteConductivityDesign has zero selected untouched-repeat confirmation, while CalorimeterDesign-v2 trades 1.913 percentage points of development cost utilization for shifted-geometry feasibility `0.483→1.000` | Paired repeated hidden-shift studies; performance–cost–constraint-margin sweeps for instruments; post-commit independent repeats, new batches/labs and higher-fidelity or physical confirmation |
+| Raw-instrument inference | Synthetic on-ramp | QuartzCrystalMicrobalanceLab-v1 binds quantized I/Q calibration and sweeps to extraction, mass/rate inference, physical-versus-instrument diagnosis and a sealed stop decision; the truth-blind reference passes all registered worlds, while seven GPT-5.5 proposals score zero | Add calibrated uncertainty intervals, server-held and real electronics/deposition traces, paired preprocessing controls and independent sensing/thin-film review |
 | Research-integrity track | Partial | Immutable candidate/parent hashes and artifacts | Hypothesis–test–evidence records, failed branches, claim links and calibrated refusal |
 
 ## What the latest literature changes
@@ -118,8 +119,8 @@ or make the executable-optimization qualifier unavoidable.
 
 ### 1. Only calibration-level empirical P2 evidence exists
 
-The keyless GPT-5.5 Responses path was restored and 67 trusted normal single-run conditions now
-cover 34 tasks, with task-specific strict open-loop diagnostics on a subset. They expose
+The keyless GPT-5.5 Responses path was restored and 69 trusted normal single-run conditions now
+cover 35 tasks, with task-specific strict open-loop diagnostics on a subset. They expose
 one-step saturation, protocol failures and scientifically empty valid abstentions, but there are still no valid five-seed
 certified-core trajectories, no paired feedback-control result, and no nonzero-budget official-
 backend search run. The project must distinguish “calibrated at budget one” from
@@ -436,16 +437,20 @@ basin escape, exploration diversity, stale-mechanism retraction, sealed/mechanis
 structural distance from the starter. Until this is done, describe success as scaffold-conditioned
 adaptation when the starting artifact substantially constrains the search.
 
-### 31. Clean simulator observations bypass the instrument-to-claim problem
+### 31. One synthetic raw pipeline does not establish real-instrument scope
 
 Most current tasks begin from structured arrays emitted by a trusted simulator. EdgeBench excludes
 vision-dominated tasks to avoid a perception confound, yet its full science task notes include
 sensor-fault diagnosis, dirty GNSS, ECG preprocessing, evidence extraction and image active
-learning. A linked campaign alone does not identify measurement error: randomize oracle-clean,
-reference-preprocessed and agent-built raw-data pipelines on paired latent worlds, inject realistic
-calibration/censoring/channel faults and true anomalies, and propagate typed feature uncertainty
-through mechanism, confirmation and decision regret. Until one such I6 task is run, state the
-benchmark scope as structured-observation science.
+learning. QuartzCrystalMicrobalanceLab-v1 now supplies one deterministic I6 smoke: quantized I/Q
+standards and sweeps, linearly drifting complex calibration, missingness, clipping, channel
+conjugation and true physical anomalies feed BVD extraction, rigid-film inference and a sealed stop
+decision. The reference pipeline succeeds, but all seven GPT-5.5 proposals score zero, demonstrating
+headroom rather than instrument capability. The task lacks calibrated output intervals, real raw
+electronics/deposition traces and paired repeated preprocessing treatments. Continue to state the
+primary scope as structured-observation science plus one synthetic raw-instrument on-ramp until
+oracle-clean, reference-preprocessed and agent-built pipelines are compared on server-held and real
+traces with uncertainty propagated through mechanism, confirmation and decision regret.
 
 ### 32. Scientific transfer is not tested under equivalent representations
 
@@ -660,9 +665,9 @@ not whether a reduced-order design is physically validated.
 ### P0/P1 closeout — completed locally, reproduce in CI
 
 - [x] Trusted oracle / isolated candidate architecture and adversarial regression suite.
-- [x] Current 58-package deterministic secure baseline and certification audit; all 58 weak
-  baselines are valid, deterministic and fail closed. Certification v52 records `7/39/12`,
-  security v36 passes 18/18 and full-suite v9 passes 420/420.
+- [x] Current 59-package deterministic secure baseline and certification audit; all 59 weak
+  baselines are valid, deterministic and fail closed. Certification v53 records `7/40/12`,
+  security v37 passes 18/18 and full-suite v10 passes 438/438.
 - [x] Re-run the deterministic secure baseline, certification and security audits on the clean
   53-task RNAInverseDesign revision (v30/v40/v24).
 - [x] Re-run full 332-test regression plus deterministic baseline, certification and security on
@@ -697,6 +702,10 @@ not whether a reduced-order design is physically validated.
   with drift, finite coupons, irreversible deactivation, out-of-order completion, exact-retry
   idempotency, fail-closed lineage and separate mechanism/prediction/decision/refusal metrics.
   Keep the scope synthetic pending randomized repeated controls and real instrumentation.
+- [x] Add `Sensors/QuartzCrystalMicrobalanceLab` as an I6 raw-instrument inference candidate with
+  quantized I/Q calibration and sweeps, missingness, multi-harmonic BVD extraction, rigid-film
+  mass/rate inference, physical-versus-instrument diagnosis, evidence lineage and a sealed stop
+  decision. Keep the scope synthetic pending calibrated uncertainty, real traces and review.
 
 ### P2a — reproducible protocol release
 
@@ -929,8 +938,10 @@ not whether a reduced-order design is physically validated.
   mechanism discovery, and run workflow-hint ablations before claiming method discovery.
 - [ ] Declare the primary benchmark's structured-observation scope or add a separate instrument/
   perception track with calibration/extraction uncertainty propagated into scientific scores.
-- [ ] Implement one paired raw-instrument I6 task with oracle-clean/reference/agent preprocessing,
-  realistic sensor faults and uncertainty propagation to mechanism and decision regret.
+- [x] Implement the deterministic task-contract portion of I6 with oracle-clean/reference/agent
+  controls, realistic reduced-order sensor faults and propagation from raw calibration/extraction
+  into inference and decision scores. The paired repeated treatment, calibrated uncertainty and
+  real-instrument strata remain required before instrument-facing claims.
 - [ ] Add V4 unit/coordinate/channel/grid/spectral metamorphic twins plus non-equivalent physical
   controls to 4--6 tasks and fail admission on unexplained claim contradictions.
 - [ ] Run one T1 equal-budget single/shared/isolated/blinded-synthesis pilot with a pre-confirmation

@@ -1,9 +1,9 @@
 # Scientific task portfolio audit
 
-Audit date: 2026-07-24 (UTC), updated 2026-07-25 through CatalystDeactivationLab-v1. The original
-inventory contained 50 discoverable task packages. The current registry contains 58 packages in
-54 metadata domains, with `7 certified / 39 candidate / 12 quarantined`. The certified and
-candidate total is 46, leaving an approximate gap of 4 to the target of about 50 internally
+Audit date: 2026-07-24 (UTC), updated 2026-07-25 through QuartzCrystalMicrobalanceLab-v1. The original
+inventory contained 50 discoverable task packages. The current registry contains 59 packages in
+55 metadata domains, with `7 certified / 40 candidate / 12 quarantined`. The certified and
+candidate total is 47, leaving an approximate gap of 3 to the target of about 50 internally
 admissible open tasks. Directory count and candidate status are not external scientific
 validation or evidence of long-horizon headroom.
 
@@ -28,11 +28,12 @@ meaning.
 ## Current inventory triage
 
 The bullets below retain the chronological triage findings from the original inventory and repair
-waves. The current machine-counted snapshot is 7 certified, 39 candidate and 12 quarantined.
-CatalystDeactivationLab-v1 is the latest candidate. It supplies a synthetic stateful laboratory
-with drift, finite coupons, irreversible reactions, out-of-order completion and retry lineage,
-but still requires repeated paired controls, server-held worlds, independent catalysis review and
-physical replication.
+waves. The current machine-counted snapshot is 7 certified, 40 candidate and 12 quarantined.
+QuartzCrystalMicrobalanceLab-v1 is the latest candidate. It supplies a synthetic raw-instrument
+pipeline with complex I/Q calibration drift, missingness, multi-harmonic BVD fitting, rigid-film
+inference, physical anomaly versus instrument-fault refusal and a sealed stop decision. It still
+requires repeated paired controls, server-held or real raw traces, explicit uncertainty intervals,
+independent sensing/thin-film review and physical replication.
 
 - **7 certified core tasks.** Secure and documented, but the 2026-07-21 GPT-5.5 pilot shows
   that Poisson and Spin Glass saturate in one proposal and Lennard-Jones nearly saturates.
@@ -252,6 +253,14 @@ The first review tranche contains real scientific topics but several narrow eval
   while one centered narrow design is rank five and scores zero information. Retain as an
   active-acquisition/model-checking on-ramp pending GPT-5.5 calibration, server-held worlds,
   elastic/wave-equation replication, field evidence and independent geophysics review.
+- QuartzCrystalMicrobalanceLab-v1 adds two complex calibration captures and nine quantized I/Q
+  sweeps over three harmonics and three deposition times. A truth-blind BVD/Sauerbrey reference
+  reaches `0.995/0.996` development/held-out nominal quality and `0.940/0.949` sealed robustness,
+  with full supported coverage, unsupported refusal and physical-versus-instrument diagnosis.
+  Seven GPT-5.5 proposals are executable but none scores above the weak abstention baseline: five
+  over-refuse, one claims every world and one has development-only partial coverage. Retain as an
+  I6 synthetic on-ramp pending real traces, server-held cohorts, uncertainty calibration and
+  independent review; it is not physical QCM or thin-film discovery evidence.
 
 ## Expansion rule
 
@@ -265,8 +274,8 @@ The target is approximately 50 **admissible** open scientific optimization tasks
 5. run frontier-model budget-one screening before expensive budget 30/100/300 studies.
 
 After complete original-inventory triage, repair waves and additions through
-CatalystDeactivationLab-v1, the registry contains 46 internally admissible certified or candidate
-packages. The net expansion gap is therefore approximately 4 tasks rather than the earlier
+QuartzCrystalMicrobalanceLab-v1, the registry contains 47 internally admissible certified or candidate
+packages. The net expansion gap is therefore approximately 3 tasks rather than the earlier
 51-folder snapshot's gap of 15. New work should emphasize procedural task families, server-held
 regimes and independent replication rather than one-off fixed instances or scientific names around
 hand-written scalar objectives.

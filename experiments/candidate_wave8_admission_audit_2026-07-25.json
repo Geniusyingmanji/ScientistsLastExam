@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_CANDIDATE_ADMISSION_AUDIT",
+  "evidence_scope": "INTERNAL_SYNTHETIC_RAW_IQ_QCM_PIPELINE_ADMISSION_NOT_PHYSICAL_INSTRUMENT_FILM_MATERIAL_OR_AUTONOMOUS_DISCOVERY_EVIDENCE",
+  "created_at": "2026-07-25T20:15:37.667712+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "c49f5143b9b3487b9a66ec21e09fe9253a6c303b",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/audit_candidate_wave8.py",
+      "--output",
+      "experiments/candidate_wave8_admission_audit_2026-07-25.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "records": [
+    {
+      "task": "Sensors/QuartzCrystalMicrobalanceLab",
+      "admission": "candidate",
+      "resolved_capability_gap": "adds an I6 raw-instrument-to-scientific-conclusion pipeline rather than another clean-array optimizer: quantized I/Q standards, time-varying complex calibration, missing samples, multi-harmonic BVD extraction, Sauerbrey inference, sealed prediction and stop decision, evidence lineage, physical-model refusal and distinct instrument-fault diagnosis",
+      "development_world_count": 6,
+      "heldout_world_count": 4,
+      "harmonic_count": 3,
+      "deposition_time_count": 3,
+      "sweep_count_per_world": 9,
+      "supported_world_count": 5,
+      "physical_anomaly_world_count": 3,
+      "instrument_fault_world_count": 2,
+      "baseline_score": 0.0,
+      "truth_blind_development_score": 0.995228,
+      "truth_blind_heldout_score": 0.996343,
+      "truth_blind_development_robustness": 0.9402776666666668,
+      "truth_blind_heldout_robustness": 0.9492815000000001,
+      "development_supported_claim_coverage": 1.0,
+      "heldout_supported_claim_coverage": 1.0,
+      "development_unsupported_refusal_rate": 1.0,
+      "heldout_unsupported_refusal_rate": 1.0,
+      "development_fault_diagnosis_accuracy": 1.0,
+      "heldout_fault_diagnosis_accuracy": 1.0,
+      "development_false_discovery_rate": 0.0,
+      "heldout_false_discovery_rate": 0.0,
+      "independent_resonance_checks_passed": true,
+      "complex_affine_calibration_checks_passed": true,
+      "missing_supported_recovery_passed": true,
+      "physical_anomaly_classification_passed": true,
+      "instrument_fault_classification_passed": true,
+      "sealed_rate_and_sauerbrey_shift_checks_passed": true,
+      "fresh_process_per_world_passed": true,
+      "fail_closed_passed": true,
+      "search_visible_metric_keys": [
+        "combined_score",
+        "feasibility_rate",
+        "raw_score",
+        "valid"
+      ],
+      "limitations": [
+        "This is a deterministic synthetic reduced-order QCM and electronics model, not a physical instrument or deposition experiment.",
+        "The model omits temperature drift, electrode roughness, fluid loading, distributed films, nonlinear electronics and closed-loop actuator hazards.",
+        "The two-point linear complex-drift family is narrower than calibration behavior in real QCM electronics.",
+        "Fixed public equations and repository-visible worlds require server-held traces and contamination auditing.",
+        "The reference preprocessing policy is a reproducible calibration witness, not a globally optimal estimator or a discovered material law.",
+        "Instrument, film and discovery claims require independent sensing/thin-film review, real raw traces and prospective physical replication."
+      ],
+      "passed": true
+    }
+  ],
+  "summary": {
+    "task_count": 1,
+    "recommended_candidate_count": 1,
+    "recommended_quarantine_count": 0,
+    "resolved_capability_gap_count": 1
+  },
+  "execution_passed": true,
+  "trust_decision": "trusted_clean_revision",
+  "trusted_evidence": true,
+  "passed": true
+}

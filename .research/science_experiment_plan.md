@@ -1,7 +1,7 @@
 # Science-specific experiment plan
 
 Date: 2026-07-23 (UTC), updated 2026-07-25 after the EdgeBench re-audit and
-CatalystDeactivationLab-v1 calibration.
+QuartzCrystalMicrobalanceLab-v1 calibration.
 This plan complements the Frontier-Eng-style optimization study and the EdgeBench-style
 long-horizon trajectory study. It does not assume that optimization, feedback learning,
 mechanism recovery, and scientific validation are interchangeable.
@@ -157,6 +157,15 @@ selected artifact uses out-of-order batches. Both selected nonzero artifacts als
 unsupported-world refusal. D1 therefore remains an unrun comparative experiment. The next D1
 study must randomize latency, drift and batch regimes across server-held worlds, force recovery
 coverage, repeat each treatment and retain a separate real-service or instrument stratum.
+
+QuartzCrystalMicrobalanceLab-v1 is the current I6 task-contract smoke. It pairs latent worlds with
+raw quantized I/Q standards and sweeps, a frozen reference preprocessor, an oracle-clean control,
+calibration drift, missing samples, physical anomalies and instrument faults. Its truth-blind
+reference reaches `0.995/0.996` nominal and `0.940/0.949` sealed robustness, whereas all seven
+single-run GPT-5.5 proposals score zero. This establishes a reproducible synthetic measurement
+chain and headroom, not a treatment effect or instrument capability. The comparative I6 study
+still needs repeated randomized pipelines, calibrated intervals, server-held and real traces, and
+independent sensing/thin-film review.
 
 Auto-evaluation is score-hidden but can still change behavior when its schedule and requirement
 to keep files runnable are disclosed. Keep the stable committed candidate in a separate path from
@@ -621,8 +630,9 @@ midpoint, speed or doubling-time claim.
   twin pilot before giving a mechanistic interpretation to any scaling curve.
 - One exploratory Q1 question-formulation laboratory and one K3 wrong-prior starter ablation before
   using the phrases autonomous research agenda or independent method discovery.
-- One I6 raw-instrument pipeline and V4 metamorphic-invariance audit before claiming scope beyond
-  structured observations; one T1 independent-team and U1 sealed-utility pilot before claiming
+- One repeated I6 preprocessing treatment with calibrated uncertainty and a real-instrument stratum,
+  plus a V4 metamorphic-invariance audit, before claiming scope beyond structured observations and
+  the present synthetic QCM on-ramp; one T1 independent-team and U1 sealed-utility pilot before claiming
   collaborative autonomous science or stakeholder-robust scientific knowledge.
 - One HZ1 disclosed-horizon/random-censoring pilot before interpreting long-run prefixes as
   short-budget policies; J1 judge calibration before any rubric/model-judge result is primary.

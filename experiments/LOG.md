@@ -2624,3 +2624,62 @@ Cross-task summary v27 (SHA-256
 one and three. The frozen-parent diagnostic remains task-specific, and heterogeneous science axes
 are not averaged. None of these reports supports a population, feedback-causal, physical-catalysis
 or autonomous-discovery claim.
+
+## 2026-07-25 — QuartzCrystalMicrobalanceLab-v1 admission, calibration and analysis
+
+`Sensors/QuartzCrystalMicrobalanceLab` adds a deterministic reduced-order raw-instrument pipeline.
+Each world contains two complex calibration captures and nine quantized I/Q sweeps over harmonics
+1/3/5 and deposition times 0/20/40 seconds. Candidates must recover linearly drifting complex
+gain/offset, fit BVD resonance and Q, infer Sauerbrey mass and rate, predict 60-second mass, commit
+a target-mass stop time, and distinguish supported rigid deposition from viscoelastic/rate-change
+model mismatch and I/Q-conjugation/ADC-clipping instrument faults. Returned conclusions bind
+immutable calibration and sweep evidence IDs.
+
+The trusted task calibration (SHA-256
+`c594b912264c97ef320aebdd5eae64fc0717c72391790960d5e49b1c9c391b68`) and wave-8 admission
+(`348499ff163e01db5cdc37ecd0054f9e05563258b5e7717a8543c5d181b2f4e2`) bind clean source
+`c49f514`. Independent peak/half-power checks agree with nonlinear BVD fits; maximum recoverable
+complex-calibration offset error is 2.057 counts and gain relative error is `2.90e-4`. Missing-data
+supported worlds recover, physical anomalies and instrument faults separate, both sealed rate and
+Sauerbrey axes affect the counterfactual, malformed/nonfinite/fabricated evidence fails closed and
+each world receives a fresh candidate process. The truth-blind reference reaches
+development/held-out nominal `0.995228/0.996343` and robustness `0.940278/0.949282`, with full
+supported coverage, unsupported refusal and fault diagnosis and zero false discovery. These are
+synthetic task anchors, not physical QCM, film or material measurements.
+
+Three trusted GPT-5.5 reports also bind `c49f514`: budget one (SHA-256
+`36aa87922f22665b4be7511f629055ed21bf17d7d405f475c029a6d69bbaf3bf`), normal budget three
+(`b3ac43274b4b0dece51e079085b268200c63d4ae035168562f166b65a8345dc0`) and frozen-parent
+budget three (`7bb471bde4ca16c7a6bbf61ebffc67cf04b7a2160967ff99ea9319fd3304d094`). All seven proposals
+are submission-valid but score zero, so all three conditions retain the weak baseline. Five
+proposals refuse every supported world. One normal proposal claims every world, covers all
+supported worlds but refuses no unsupported world and has development/held-out false-discovery
+rate `0.5/0.5`. One frozen-parent proposal covers two of three development supported worlds but no
+held-out supported world, with held-out false-discovery rate 1.0. Every proposal has zero normalized
+calibration, extraction, mechanism, prediction and decision score.
+
+Normal and frozen-parent budget three both use four oracle calls, but consume 18,662 versus 17,797
+tokens and 140.87 versus 137.51 seconds. Each condition contains one run; Azure exposes no
+server-side generation seed and the prompt/parent histories differ. Equal zero outcomes therefore
+do not identify a feedback effect. The trusted derived analysis (SHA-256
+`543133a8c855add9923a1773fa21cc409f6b6cf7d609d2b47b8dc86b346447ad`) binds clean analysis
+source `e516d56`; it verifies report/raw-trajectory/manifests, online and frozen-parent lineage,
+all ten world records, accounting and retained best/terminal source scans. Three proposal source
+bodies are retained and scan clean; four intermediate sources remain bound only by hashes and
+metrics.
+
+Certification v53 (SHA-256
+`43a08634712135fab2bee49fae5be57df07b3abce92cd177a3c1613fb867c6d3`) records 59 packages at
+`7/40/12`, or 47 internally admissible tasks. Security v37
+(`cbb6a69c4bd57780afeeec4ca278eca9b10b8b091c081759f111c2be44da5685`) passes 18/18 tests.
+Baseline v42 (`41b89e401f11cefefeb73371f83a3b5cbbb2c629e7c1e798e9706ebb8293706b`) reports 59/59
+deterministic, valid and fail-closed tasks over two repetitions with no infrastructure failure.
+Full-suite v10 (`d1f2f4cd7bb4a96b0f70bdd5535ba0bb627347308ec1f2b85170543d302a353b`) passes 438/438 in
+1272.433 seconds. These four reports bind clean analysis source `e516d56`.
+
+Cross-task summary v28 (SHA-256
+`940495a9cb64e717e6395b3cb7e4ec1d8d5b8d13232618a05c43e20f68edded4`) binds clean source
+`577e66a` and validates 69 normal single-run conditions across 35 tasks. It adds QCM budgets one
+and three; the frozen-parent diagnostic remains task-specific and heterogeneous science axes are
+not averaged. None of this evidence supports a population, feedback-causal, physical-instrument,
+thin-film, material or autonomous-discovery claim.

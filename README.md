@@ -16,11 +16,11 @@ text-question benchmark named *FrontierScience* in
 
 ## Current status
 
-The repository contains **58 task packages in 54 metadata domains**:
+The repository contains **59 task packages in 55 metadata domains**:
 
 - **7 certified core tasks**: Lennard–Jones clusters, spin glass, Poisson solver,
   matrix-multiplication rank, Cap Set, circle packing, and multilayer thin films.
-- **39 candidate tasks** pending scientific certification, including intervention-based causal
+- **40 candidate tasks** pending scientific certification, including intervention-based causal
   and active dynamical-law laboratories whose prediction and mechanism metrics are reported
   separately, a multi-spectrum NMR peak-mechanism/refusal task, and a multi-fidelity
   heat-exchanger Pareto-design task, a full-field lid-driven-cavity solver, active
@@ -40,14 +40,17 @@ The repository contains **58 task packages in 54 metadata domains**:
   budget-conditioned finite-absorption tandem-photovoltaic design with held-out spectra and
   sealed thermal, process and optical perturbations, and a stateful catalyst-deactivation
   laboratory with instrument drift, finite coupons, irreversible reactions, out-of-order batch
-  completion, retry lineage, model refusal and a sealed fresh-batch operating decision.
+  completion, retry lineage, model refusal and a sealed fresh-batch operating decision, and a
+  raw-I/Q quartz-crystal-microbalance pipeline that separates complex calibration, BVD resonance
+  extraction, rigid-film inference, physical-model mismatch, instrument faults and a sealed stop
+  decision.
 - **12 quarantined tasks** retain reproduced scientific-oracle, identifiability, provenance or
   shortcut defects.
   Quarantined packages remain inventory artifacts but are not admissible benchmark tasks.
 
 The default CLI exposes only the certified core. `--all` explicitly shows the full
 inventory. Certification status is not a difficulty claim: the inventory metadata contains
-50 `hard` and 8 `flagship` packages, but only certified tasks are benchmark-admissible.
+50 `hard` and 9 `flagship` packages, but only certified tasks are benchmark-admissible.
 
 All candidate code runs in a networkless Bubblewrap sandbox with read-only mounts, resource
 and process limits, and a typed JSON RPC boundary. The trusted parent alone imports the
@@ -58,16 +61,16 @@ controlled exception text is reduced to a fixed label-blind failure taxonomy bef
 search feedback, preventing observations from being carried between worlds through exceptions.
 The current audit reports:
 
-- Trusted certification v52 and security v36 bind clean revision `2c5e654`. Certification covers
-  `7/39/12` over 58 packages with no missing manifest records, orphaned records or task-level
+- Trusted certification v53 and security v37 bind clean revision `e516d56`. Certification covers
+  `7/40/12` over 59 packages with no missing manifest records, orphaned records or task-level
   admission issues; it retains one known duplicate-oracle group containing five quarantined
-  packages. Security passes 18/18 adversarial tests. The 58×2 baseline v41 reports 58/58
+  packages. Security passes 18/18 adversarial tests. The 59×2 baseline v42 reports 59/59
   deterministic, valid and fail-closed tasks with zero infrastructure failures. The latest
-  full-suite v9 binds clean revision `2c5e654` and passes 420/420 tests in 1273.775 seconds.
-  Cross-task summary v27 (SHA-256
-  `72c259ab05a9ff559401b044a1c86c1e84e74bceace6d0a68365cf541d8ee4dc`) binds clean
-  revision `e76ac03` and contains 67 normal single-run conditions over 34 tasks.
-- Current source manifest: 7 certified / 39 candidate / 12 quarantined. ProteinStabilityDesign
+  full-suite v10 binds clean revision `e516d56` and passes 438/438 tests in 1272.433 seconds.
+  Cross-task summary v28 (SHA-256
+  `940495a9cb64e717e6395b3cb7e4ec1d8d5b8d13232618a05c43e20f68edded4`) binds clean
+  revision `577e66a` and contains 69 normal single-run conditions over 35 tasks.
+- Current source manifest: 7 certified / 40 candidate / 12 quarantined. ProteinStabilityDesign
   rebuilds 2,756 reliable double-mutant records across five
   development and three held-out domains from hash-bound ProteinGym v1.3/Tsuboyama sources.
   It separates additive proxy, charged assay, diversity, top-decile, trypsin, chymotrypsin,
@@ -257,12 +260,12 @@ the post-repair 50-package audits bind revision `47c3613`; the subsequent wave-2
 audit quarantines seven additional defective candidates. The two P2 smokes are baseline-only; the repository does not yet contain
 credible multi-seed model-performance evidence. A clean-revision GPT-5.5 budget-one core pilot
 is recorded as task calibration, not a benchmark leaderboard.
-The latest closeout certification/security/baseline audits are v52/v36/v41 and bind clean
-source revision `2c5e654`; full-suite v9 binds the same revision and passes 420/420 tests.
+The latest closeout certification/security/baseline audits are v53/v37/v42 and bind clean
+source revision `e516d56`; full-suite v10 binds the same revision and passes 438/438 tests.
 CalorimeterDesign-v2's task calibration and wave-4 admission
-audit also bind `f6a7b73`. After the internally admitted CatalystDeactivationLab addition, the
-current source manifest is 7/39/12 and contains 46 internally admissible tasks, leaving an
-approximate gap of 4 to the roughly 50-task target. The preceding photovoltaic calibration reproduces
+audit also bind `f6a7b73`. After the internally admitted QuartzCrystalMicrobalanceLab addition,
+the current source manifest is 7/40/12 and contains 47 internally admissible tasks, leaving an
+approximate gap of 3 to the roughly 50-task target. The preceding photovoltaic calibration reproduces
 ideal one-through-four-junction efficiencies `0.33695/0.45735/0.51291/0.55329`, with nominal
 reference score `1.000/1.000` and minimax-reference nominal/robust score
 `0.963/0.965` and `1.000/1.000`; these are reduced-order task anchors, not device records.
@@ -333,10 +336,22 @@ out-of-order batches; no model proposal exercises exact retry. These single synt
 support feedback-causal, reactor, catalyst, instrument or autonomous-discovery claims. Cross-task
 summary v27 contains 67 normal conditions over 34 tasks and adds CatalystDeactivationLab-v1
 budgets one and three without averaging task-specific science axes into a common score.
+QuartzCrystalMicrobalanceLab-v1 then adds nine raw I/Q sweeps per world, two complex calibration
+blocks, three harmonics, missing samples, viscoelastic/rate anomalies, I/Q conjugation and ADC
+clipping. Its truth-blind reference reaches development/held-out nominal
+`0.995228/0.996343` and sealed robustness `0.940278/0.949282`, with full supported coverage,
+unsupported refusal and fault diagnosis and zero false discovery. Across budget one, normal
+budget three and selection-blind budget three, all seven GPT-5.5 proposals are valid but score
+zero: five refuse every supported world, one claims every world with false-discovery rate
+`0.5/0.5`, and one obtains partial development coverage without held-out transfer. All three
+conditions retain the weak baseline. This is a synthetic raw-instrument task calibration, not a
+QCM, thin-film, material or autonomous-discovery result. Cross-task summary v28 contains 69
+normal conditions over 35 tasks; the selection-blind run remains in the task-specific analysis.
 
 The latest EdgeBench re-audit keeps its upstream facts at arXiv `2607.05155v1`, SForge
 `a87350a` and public dataset `47846a4`. In addition to E1--E36, the science plan now preregisters
-nineteen unrun scope/protocol tests: raw instrument-to-claim error propagation (I6/E37), unit/coordinate/
+nineteen scope/protocol tests. I6/E37 has a synthetic QCM implementation smoke, while its paired
+repeated treatment and real-instrument stratum remain unrun; the other tests include unit/coordinate/
 representation metamorphic invariance (V4/E38), independent investigators with blinded synthesis
 (T1/E39), post-commit sealed downstream utilities (U1/E40), independently disclosed research
 horizons rather than long-run prefixes (HZ1/E41), and pinned/calibrated rubric or model judges

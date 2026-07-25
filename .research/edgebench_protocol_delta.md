@@ -631,8 +631,8 @@ Source hashes, experiment distinctions and claim limits are stored in
    only science curves; no causal claim unless compute/information balance and run coverage pass.
 6. **Population budget curves:** primary long trajectories with preregistered checkpoints at
    30/100/300 proposal units; independent fixed-horizon runs on a smaller subset to test whether
-   horizon knowledge changes behavior. Do not fit a scaling law to the present 46 internally
-   admissible tasks or the 67 single-run normal calibrations.
+   horizon knowledge changes behavior. Do not fit a scaling law to the present 47 internally
+   admissible tasks or the 69 single-run normal calibrations.
 7. **Endpoint-policy audit:** replay existing trajectories and compare committed, terminal and
    evaluator-only oracle-best artifacts on visible, sealed and mechanism metrics; add atomic
    snapshot hashes before long runs.
@@ -804,6 +804,28 @@ randomized latency/drift/batch treatments, repeated matched controls, crash/retr
 fresh confirmation reserve and a real service or instrument stratum. The normal and frozen-parent
 runs contain one condition each, differ in tokens and wall time, and lack a server-side generation
 seed, so their score difference is not a feedback-effect estimate.
+
+## QuartzCrystalMicrobalanceLab-v1 implementation update
+
+QuartzCrystalMicrobalanceLab-v1 now implements the deterministic task-contract portion of item 38.
+Each world exposes two raw complex calibration captures and nine quantized I/Q sweeps across three
+harmonics and deposition times. The sealed evaluator separates calibration, BVD resonance/Q
+extraction, Sauerbrey mass/rate inference, prediction, stop decision, physical-model mismatch,
+instrument faults and evidence lineage. Missing samples, I/Q conjugation and ADC clipping are
+explicit rather than represented as clean arrays.
+
+The truth-blind reference reaches development/held-out nominal `0.995228/0.996343` and sealed
+robustness `0.940278/0.949282`, with complete supported coverage, unsupported refusal and fault
+diagnosis. All seven GPT-5.5 proposals are structurally valid but score zero. Five refuse every
+supported world, one claims every world with false-discovery rate `0.5/0.5`, and one achieves
+partial development coverage without held-out transfer. The normal and frozen-parent budget-three
+runs both use four oracle calls but use 18,662 and 17,797 tokens and lack a server-side generation
+seed, so equal outcomes are descriptive rather than a feedback-effect estimate.
+
+This smoke does not complete item 38. It lacks repeated randomized preprocessing treatments,
+calibrated output intervals, server-held/raw physical traces and independent thin-film or sensing
+review. It is evidence for a synthetic instrument-to-claim benchmark path, not a QCM instrument,
+coating, material or autonomous scientific discovery.
 
 ## Claim boundary
 
