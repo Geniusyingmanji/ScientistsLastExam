@@ -80,6 +80,8 @@ DEFAULT_REPORTS = (
     "experiments/gpt55_rna_inverse_v1_b3_2026-07-24.json",
     "experiments/gpt55_protein_stability_v1_b1_2026-07-25.json",
     "experiments/gpt55_protein_stability_v1_b3_2026-07-25.json",
+    "experiments/gpt55_electrolyte_conductivity_v1_b1_2026-07-25.json",
+    "experiments/gpt55_electrolyte_conductivity_v1_b3_2026-07-25.json",
 )
 
 
@@ -142,6 +144,8 @@ def build_report(paths: list[Path]) -> dict[str, Any]:
         "source_provenance": source_provenance(ROOT),
         "environment": {"python": sys.version, "platform": platform.platform()},
         "input_count": len(records),
+        "normal_condition_count": len(records),
+        "task_count": len({record["task"] for record in records}),
         "records": records,
         "limitations": [
             "Each model condition has one seed; no confidence interval or causal feedback claim is supported.",
