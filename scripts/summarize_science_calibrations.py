@@ -84,6 +84,8 @@ DEFAULT_REPORTS = (
     "experiments/gpt55_electrolyte_conductivity_v1_b3_2026-07-25.json",
     "experiments/gpt55_demographic_sfs_v2_b1_2026-07-25.json",
     "experiments/gpt55_demographic_sfs_v2_b3_2026-07-25.json",
+    "experiments/gpt55_calorimeter_v2_b1_2026-07-25.json",
+    "experiments/gpt55_calorimeter_v2_b3_2026-07-25.json",
 )
 
 
