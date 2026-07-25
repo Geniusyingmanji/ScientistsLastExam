@@ -1,1 +1,1 @@
-fit_demography
+infer_demography

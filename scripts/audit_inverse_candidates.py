@@ -43,6 +43,7 @@ from calibrate_seismic_wave_v2 import (
     truth_blind_discover as seismic_truth_blind_discover,
 )
 from calibrate_rans_v2 import _sensitivity_record as rans_sensitivity_record
+from calibrate_demographic_sfs_v2 import calibrate as calibrate_demographic_sfs
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
@@ -346,32 +347,51 @@ def _ocean():
 
 
 def _population_genetics():
-    oracle = _oracle("PopulationGenetics/DemographicSFS")
-    truth = oracle._TRUE_PARAMS.copy()
-    jacobian = np.zeros((oracle.N_SAMPLE - 1, len(truth)), dtype=float)
-    for index in range(len(truth)):
-        step = max(1e-6, abs(truth[index]) * 1e-4)
-        upper, lower = truth.copy(), truth.copy()
-        upper[index] += step
-        lower[index] -= step
-        jacobian[:, index] = (
-            oracle._expected_sfs_piecewise(upper)
-            - oracle._expected_sfs_piecewise(lower)
-        ) / (2 * step)
-    alternative = np.array([1.0, 0.1, 100.0, 0.08, 0.001])
-    identical = bool(np.array_equal(
-        oracle._expected_sfs_piecewise(truth),
-        oracle._expected_sfs_piecewise(alternative),
-    ))
+    report = calibrate_demographic_sfs()
+    classical = report["truth_blind_multisample_fit"]
+    rank_checks = report["identifiability_checks"]
+    misspecified = report["misspecified_resolvability_checks"]
+    limits = report["finite_sfs_near_equivalence_limits"]
+    physics = report["physics_checks"]
+    passed = bool(
+        report["execution_passed"]
+        and report["difficulty_gate"]["passed"]
+        and classical["combined_score"] > 0.70
+        and classical["heldout_policy_score"] > 0.45
+        and classical["development_prediction_score"] > 0.95
+        and classical["heldout_prediction_score"] > 0.95
+        and classical["heldout_prediction_score"]
+        > classical["heldout_mechanism_score"] + 0.40
+        and classical["development_unsupported_refusal_rate"] == 1.0
+        and classical["heldout_unsupported_refusal_rate"] == 1.0
+        and classical["development_false_discovery_rate"] == 0.0
+        and classical["heldout_false_discovery_rate"] == 0.0
+        and all(row["passed"] for row in rank_checks)
+        and all(row["passed"] for row in misspecified)
+        and all(row["passed"] for row in physics["independent_ode_occupancy"])
+        and all(row["passed"] for row in physics["constant_size_theta_over_i_identity"])
+        and all(row["indistinguishable_under_registered_threshold"] for row in limits)
+    )
     return {
         "task": "PopulationGenetics/DemographicSFS",
-        "admission": "quarantine",
-        "defect": "the five-parameter surrogate has only two locally active columns and radically different current-size/time parameters produce identical SFS",
-        "jacobian_rank": int(np.linalg.matrix_rank(jacobian)),
-        "parameter_count": len(truth),
-        "column_norms": [float(value) for value in np.linalg.norm(jacobian, axis=0)],
-        "alternative_sfs_exactly_identical": identical,
-        "passed": np.linalg.matrix_rank(jacobian) <= 2 and identical,
+        "admission": "candidate",
+        "resolved_defect": "v2 replaces the rank-two time-index surrogate with exact finite-sample Kingman-CTMC occupancy, fixed-scale constant/three-epoch recovery, charged sample-size design, held-out projection and calibrated ancestral-polarization-error refusal",
+        "parameter_count": 4,
+        "always_abstain_score": float(report["always_abstain_baseline"]["combined_score"]),
+        "classical_development_selection_score": float(classical["combined_score"]),
+        "classical_heldout_mechanism_score": float(classical["heldout_policy_score"]),
+        "classical_development_mechanism_score": float(classical["development_mechanism_score"]),
+        "classical_heldout_mechanism_component": float(classical["heldout_mechanism_score"]),
+        "classical_development_prediction_score": float(classical["development_prediction_score"]),
+        "classical_heldout_prediction_score": float(classical["heldout_prediction_score"]),
+        "classical_development_false_discovery_rate": float(classical["development_false_discovery_rate"]),
+        "classical_heldout_false_discovery_rate": float(classical["heldout_false_discovery_rate"]),
+        "full_rank_supported_worlds": sum(row["passed"] for row in rank_checks),
+        "supported_world_count": len(rank_checks),
+        "maximum_identifiability_condition_number": max(row["condition_number"] for row in rank_checks),
+        "minimum_misspecified_expected_reduced_deviance": min(row["expected_noisy_reduced_deviance"] for row in misspecified),
+        "finite_sfs_near_equivalence_limits": limits,
+        "passed": passed,
     }
 
 

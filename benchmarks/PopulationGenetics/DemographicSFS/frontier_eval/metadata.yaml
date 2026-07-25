@@ -1,7 +1,12 @@
 domain: PopulationGenetics
 task: DemographicSFS
 difficulty: hard
-oracle_type: physical_sim
+tier: T2
+oracle_type: active_coalescent_inference
 score_mode: clipped
 gpu_required: false
-eval_time_seconds: 15
+eval_time_seconds: 180
+science_metric: demographic parameter recovery, held-out sample-size prediction, model-inadequacy refusal and budgeted sequencing design
+reference_baseline: always abstain without sequencing
+reference_sota: exact constant or supported three-epoch parameters and correct refusal under resolvable ancestral-state polarization error; no real-population claim
+citation: "Gutenkunst et al. 2009, DOI 10.1371/journal.pgen.1000695; Jouganous et al. 2017, DOI 10.1534/genetics.117.200493; Myers et al. 2008, DOI 10.1016/j.tpb.2008.01.001; Bhaskar and Song 2014, DOI 10.1214/14-AOS1264; Terhorst and Song 2015, DOI 10.1073/pnas.1503717112"

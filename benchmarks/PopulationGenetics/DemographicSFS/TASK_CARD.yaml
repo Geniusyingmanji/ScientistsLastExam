@@ -1,0 +1,36 @@
+schema_version: 1
+scientific_question: Can an agent allocate a finite sequencing budget, recover a supported constant or three-epoch population history from unfolded site-frequency spectra, and refuse panels with resolvable ancestral-state polarization error?
+artifact: Four fixed-scale demographic shape parameters, calibrated confidence or abstention, and a charged sample-size/replicate sequencing policy.
+oracle:
+  model: exact finite-sample Kingman lineage-count CTMC occupancy for neutral piecewise-constant population size, with Poisson locus counts, constant-size histories and ancestral-state polarization-error worlds
+  feasibility: finite ordered parameters within public bounds plus charged sample-size and replicate requests under a strict budget
+  deterministic: true
+normalization:
+  baseline: perform no sequencing and abstain on every world
+  reference: exact constant or four-parameter history on supported worlds and correct refusal on polarization-error worlds
+  score: development mechanism normalized above always abstaining; observed-SFS fit, evaluator-only sample-size prediction, held-out worlds, confidence and false discovery remain separate
+citations:
+  - id: doi:10.1371/journal.pgen.1000695
+    title: Inferring the Joint Demographic History of Multiple Populations from Multidimensional SNP Frequency Data
+  - id: doi:10.1534/genetics.117.200493
+    title: "Inferring the Joint Demographic History of Multiple Populations: Beyond the Diffusion Approximation"
+  - id: doi:10.1016/j.tpb.2008.01.001
+    title: Can one learn history from the allelic spectrum?
+  - id: doi:10.1214/14-AOS1264
+    title: Descartes' rule of signs and the identifiability of population demographic models from genomic variation data
+  - id: doi:10.1073/pnas.1503717112
+    title: Fundamental limits on the accuracy of demographic inference based on the sample frequency spectrum
+invariants:
+  - constant-size CTMC occupancy recovers the analytical theta/i unfolded SFS
+  - an independent lineage-state ODE/quadrature implementation reproduces piecewise-constant expected spectra
+  - supported histories have full-rank scaled sensitivities under the registered reference sequencing design
+  - exact supported parameters and correct unsupported refusals score one on both splits
+  - constant-size histories are recognized as an identifiable nested mechanism while resolvable ancestral-state polarization error rewards abstention
+  - four-epoch and population-mixture near-equivalences are retained as calibration limits rather than forced-refusal labels
+  - invalid sample size, replicate count, budget overspend, malformed artifact and non-finite values fail closed
+  - every hidden world receives a fresh candidate process and private temporary filesystem
+  - observed-SFS fit, mechanism recovery, held-out sample-size prediction, confidence, coverage and false discovery remain separate evaluator metrics
+known_shortcuts: The oracle assumes a single panmictic neutral population, independent loci, known ancestral allele, known mutation scale and piecewise-constant history. It omits recombination/linkage, selection, migration, structure, ascertainment error and ancestral-state error. Public deterministic seeds require a future server-held split; real demographic claims require sequence-data QC, linkage-aware uncertainty, competing models and independent population-genetics review.
+review:
+  domain: pending_external
+  evaluator_security: automated_equation_identifiability_budget_refusal_sandbox_fresh_session_and_metric_sealing_tests
