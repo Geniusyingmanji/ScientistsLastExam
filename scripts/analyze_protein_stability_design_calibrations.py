@@ -15,6 +15,7 @@ import ast
 import hashlib
 import json
 import platform
+import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -52,6 +53,12 @@ EXPECTED_CONDITIONS = {
         "mode": "selection_blind", "budget": 3, "seed": 1,
     },
 }
+TASK_RUNTIME_SCOPE = (
+    "frontier_science",
+    ":(exclude)frontier_science/certification.yaml",
+    "benchmarks/ProteinEngineering/ProteinStabilityDesign",
+    "requirements-upstream.txt",
+)
 SCIENCE_FIELDS = (
     "development_batch_utility",
     "development_mean_stability_ddg",
@@ -100,6 +107,14 @@ def _finite_number(value: Any) -> bool:
 
 def _science_metrics(metrics: dict[str, Any]) -> dict[str, Any]:
     return {field: metrics.get(field) for field in SCIENCE_FIELDS}
+
+
+def _source_changes(left: str, right: str) -> list[str]:
+    output = subprocess.check_output(
+        ["git", "diff", "--name-only", left, right, "--", *TASK_RUNTIME_SCOPE],
+        cwd=str(ROOT), text=True, stderr=subprocess.DEVNULL,
+    )
+    return [line for line in output.splitlines() if line.strip()]
 
 
 def _failure_kind(event: dict[str, Any]) -> str | None:
@@ -483,6 +498,8 @@ def _analyze_records(
     calibration: dict[str, Any],
     records: dict[str, dict[str, Any]],
     expected_source_revision: str = INPUT_SOURCE_REVISION,
+    runtime_source_equivalent: bool = True,
+    runtime_source_changes: list[str] | None = None,
 ) -> dict[str, Any]:
     one = records["budget_one"]
     normal = records["normal_budget_three"]
@@ -542,6 +559,7 @@ def _analyze_records(
     execution_passed = bool(
         calibration["source_revision"] == expected_source_revision
         and revisions == {expected_source_revision}
+        and runtime_source_equivalent
         and len(scopes) == 1
         and tuple(calibration.get("source_scope") or []) in scopes
         and len(conditions) == 1
@@ -568,6 +586,8 @@ def _analyze_records(
         "source_provenance": source_provenance(ROOT),
         "environment": {"python": sys.version, "platform": platform.platform()},
         "input_source_revision": expected_source_revision,
+        "input_task_runtime_source_equivalent": runtime_source_equivalent,
+        "input_task_runtime_source_changes": runtime_source_changes or [],
         "input_source_scope_equivalent": len(scopes) == 1,
         "input_llm_condition_equivalent": len(conditions) == 1,
         "task_calibration": calibration,
@@ -668,7 +688,14 @@ def analyze() -> dict[str, Any]:
         label: _load_model(label, relative)
         for label, relative in REPORTS.items()
     }
-    return _analyze_records(calibration, records)
+    current_revision = source_provenance(ROOT).get("git_revision")
+    changes = _source_changes(INPUT_SOURCE_REVISION, current_revision)
+    return _analyze_records(
+        calibration,
+        records,
+        runtime_source_equivalent=not changes,
+        runtime_source_changes=changes,
+    )
 
 
 def main() -> int:

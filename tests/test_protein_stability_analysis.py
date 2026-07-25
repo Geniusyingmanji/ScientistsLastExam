@@ -38,6 +38,8 @@ class ProteinStabilityAnalysisTests(unittest.TestCase):
         self.assertEqual(report["passed"], report["trusted_evidence"])
         self.assertTrue(report["input_source_scope_equivalent"])
         self.assertTrue(report["input_llm_condition_equivalent"])
+        self.assertTrue(report["input_task_runtime_source_equivalent"])
+        self.assertEqual(report["input_task_runtime_source_changes"], [])
         self.assertEqual(
             set(report["records"]),
             {"budget_one", "normal_budget_three", "blind_budget_three"},
@@ -145,6 +147,14 @@ class ProteinStabilityAnalysisTests(unittest.TestCase):
         records["normal_budget_three"]["integrity_passed"] = False
         failed = self.module._analyze_records(
             self.report["task_calibration"], records,
+        )
+        self.assertFalse(failed["execution_passed"])
+
+        failed = self.module._analyze_records(
+            self.report["task_calibration"],
+            copy.deepcopy(self.report["records"]),
+            runtime_source_equivalent=False,
+            runtime_source_changes=["benchmarks/ProteinEngineering/change.py"],
         )
         self.assertFalse(failed["execution_passed"])
 
