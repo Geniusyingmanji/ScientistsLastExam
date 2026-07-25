@@ -1,0 +1,5 @@
+1) Only edit solution.py and keep synthesize_evidence(problem, confirm).
+2) Screen eligible registration lineages and use the preregistered primary outcome; do not count duplicate articles as independent evidence.
+3) If running confirmation, commit screening, preconfirmation model/claim, feasible site/sample size and 90% prediction interval before the result; return that exact immutable commit.
+4) Call confirm at most once; caught invalid or duplicate calls still invalidate the world.
+5) Python/NumPy/SciPy/stdlib only; deterministic CPU code, no network/process creation, and no reading verification/ or frontier_eval/.

@@ -1,0 +1,12 @@
+domain: EvidenceSynthesis
+task: ProspectiveMetaAnalysis
+difficulty: flagship
+tier: T3
+oracle_type: prospective_evidence_synthesis
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 120
+science_metric: registry screening, evidence-lineage integrity, heterogeneous meta-regression, calibrated refusal, next-study information and fresh prospective confirmation
+reference_baseline: always abstain without screening or confirmation
+reference_sota: truth-blind registry-first random-effects meta-regression and information-cost prospective study design with sealed nonlinear refusal and fresh-result updating
+citation: "DerSimonian and Laird 1986, DOI 10.1016/0197-2456(86)90046-2; Higgins and Thompson 2002, DOI 10.1002/sim.1186; Knapp and Hartung 2003, DOI 10.1002/sim.1482; von Elm et al. 2004, DOI 10.1001/jama.291.8.974; Chan et al. 2004, DOI 10.1001/jama.291.20.2457; Seidler et al. 2019, DOI 10.1136/bmj.l5342; Page et al. 2021, DOI 10.1136/bmj.n71"
