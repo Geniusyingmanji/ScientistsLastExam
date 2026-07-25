@@ -132,6 +132,16 @@ tasks:
       - doi:10.1038/s41586-020-2442-2
       - doi:10.1126/sciadv.aaz8867
 
+  Sensors/QuartzCrystalMicrobalanceLab:
+    status: candidate
+    reason: v1 adds a procedural raw-instrument pipeline over ten development/held-out rigid-film, missing-data, viscoelastic, rate-change, I/Q-conjugation and ADC-clipping worlds; candidates must calibrate drifting complex I/Q counts, fit multi-harmonic BVD resonance and Q, infer Sauerbrey mass and deposition rate, distinguish physical model mismatch from instrument faults, predict a sealed horizon and commit a target-mass stop decision with immutable evidence IDs; a truth-blind reference pipeline and independent peak/bandwidth checks retain graded calibration/extraction/decision headroom, but this deterministic reduced-order task remains a synthetic I6 on-ramp pending GPT-5.5 headroom calibration, server-held traces, real QCM electronics/deposition data and independent sensing/thin-film review
+    citation_ids:
+      - doi:10.1063/1.1145396
+      - doi:10.1021/ac00020a015
+      - doi:10.1021/la025911w
+      - doi:10.1143/jjap.29.963
+      - doi:10.3390/chemosensors9010009
+
   BayesianInference/OptimalExperimentDesign:
     status: candidate
     reason: v2 is scientifically valid with procedural families and sealed shifts, but GPT-5.5 implements a generic D-optimal algorithm and reaches 0.991 development plus 0.994 validation at budget one; retain as an on-ramp pending harder sequential model-discrimination regimes and independent review

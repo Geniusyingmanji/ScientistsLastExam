@@ -1,0 +1,41 @@
+schema_version: 1
+scientific_question: Can a policy transform quantized complex QCM calibration and sweep records into a calibrated rigid-film mass, prediction and stop decision while distinguishing physical model mismatch from instrument failure?
+artifact: An evidence-bound raw-signal calibration, resonance extraction, mass/rate inference, diagnosis and deposition stop decision.
+oracle:
+  nominal: public Butterworth-Van Dyke complex admittance and Sauerbrey rigid-film mass relation with linearly drifting complex gain and offset
+  observations: quantized I/Q calibration records and three-harmonic time-series sweeps with possible missingness, clipping or channel conjugation
+  feasibility: exact typed finite submission, every sweep represented, bounded estimates and immutable returned evidence IDs
+  deterministic: true
+normalization:
+  baseline: nominal frequencies, zero mass and rate followed by valid undetermined abstention
+  reference: truth-blind complex-affine calibration, BVD nonlinear fitting, overtone/rate/Q model checks and target stop calculation
+  score: development lineage-calibration-extraction-mechanism-prediction-decision-diagnosis joint; held-out, sealed shifts, fault type, reference-preprocessor and oracle-clean controls remain separate
+citations:
+  - id: doi:10.1063/1.1145396
+    title: Quartz crystal microbalance setup for frequency and Q-factor measurements in gaseous and liquid environments
+  - id: doi:10.1021/ac00020a015
+    title: Characterization of a quartz crystal microbalance with simultaneous mass and liquid loading
+  - id: doi:10.1021/la025911w
+    title: Sauerbrey Equation of Quartz Crystal Microbalance in Liquid Medium
+  - id: doi:10.1143/jjap.29.963
+    title: A Theory of a Quartz Crystal Microbalance Based upon a Mason Equivalent Circuit
+  - id: doi:10.3390/chemosensors9010009
+    title: Interpretation of Quartz Crystal Microbalance Behavior with Viscous Film Using a Mason Equivalent Circuit
+invariants:
+  - calibration truth is never returned; candidates receive known complex standards and raw quantized I/Q counts
+  - supported gain and offset vary linearly between independent start and end calibration captures
+  - every world contains three harmonics and three deposition times with immutable calibration and sweep lineage
+  - missing records are explicit None values and do not change the latent sweep
+  - clipping and I/Q conjugation are instrument faults rather than valid physical conclusions
+  - harmonic-dependent mass shifts or Q loss and rate changes are resolvable physical model mismatch
+  - an independent peak/Q calculation agrees with the BVD nonlinear fit on noise-free probes
+  - the weak all-world abstention baseline is valid and scores zero by construction
+  - a truth-blind raw-signal reference covers supported worlds and separately diagnoses instrument versus physical anomalies
+  - the sealed Sauerbrey-coefficient counterfactual remaps observed mass and rate while an independent future-rate shift starts after the final observed sweep
+  - every world receives a fresh candidate process and private temporary filesystem
+  - held-out, robust prediction/decision, fault type, raw health, reference-preprocessor, oracle-clean and per-world metrics remain evaluator-only
+  - missing keys, extra keys, malformed complex pairs, complex/non-finite values, incomplete sweep maps and fabricated evidence IDs fail closed
+known_shortcuts: The deterministic public reduced-order BVD/Sauerbrey families omit electrode roughness, temperature, fluid coupling, distributed films, nonlinear electronics and real deposition control. Fixed equations and repository-visible worlds require server-held cohorts. This task calibrates raw-signal inference and refusal; it is not instrument, coating, material or autonomous-discovery evidence.
+review:
+  domain: pending_external_sensing_instrumentation_and_thin_film_review
+  evaluator_security: automated_raw_iq_calibration_bvd_fit_independent_peak_q_model_mismatch_fault_type_fresh_sandbox_fail_closed_and_metric_sealing_tests

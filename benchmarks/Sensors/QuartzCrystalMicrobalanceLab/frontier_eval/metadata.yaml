@@ -1,0 +1,12 @@
+domain: Sensors
+task: QuartzCrystalMicrobalanceLab
+difficulty: flagship
+tier: T3
+oracle_type: raw_complex_instrument_pipeline
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 90
+science_metric: evidence-bound raw-IQ calibration, BVD resonance extraction, rigid-film mass/rate recovery, fault-versus-model diagnosis and sealed deposition-stop decision
+reference_baseline: nominal resonance, zero mass/rate and valid undetermined abstention
+reference_sota: truth-blind complex calibration plus BVD/Sauerbrey pipeline; normalization witness only, not a QCM instrument, coating or autonomous-discovery result
+citation: "Rodahl et al., DOI 10.1063/1.1145396; Martin et al., DOI 10.1021/ac00020a015; Kankare, DOI 10.1021/la025911w; Nakamoto and Moriizumi, DOI 10.1143/jjap.29.963; Na Songkhla and Nakamoto, DOI 10.3390/chemosensors9010009"

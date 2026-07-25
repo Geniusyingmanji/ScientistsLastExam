@@ -1,0 +1,5 @@
+1) Only edit solution.py. Keep analyze_qcm(problem).
+2) Use only returned calibration and sweep IDs as evidence; never fabricate or omit a sweep estimate.
+3) Fit or diagnose the supplied raw integer I/Q records; no hidden clean feature is available.
+4) Return finite bounded mass, rate, prediction, stop time, calibration, resonance, Q, confidence, diagnosis and abstention fields.
+5) NumPy/SciPy only. CPU, seconds. No network. Do not read verification/ or frontier_eval/.
