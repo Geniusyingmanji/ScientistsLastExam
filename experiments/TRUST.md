@@ -232,6 +232,12 @@ Raw `.out`/`.log` files predating the trusted evaluator inherit
 |---|---|---|
 | `demographic_sfs_v2_calibration_2026-07-25.json` | `TRUSTED_TASK_CALIBRATION` | On clean source `d0257dc`, replaces the rank-two time-index surrogate with exact Kingman-CTMC occupancy, verifies the constant-size theta/i identity against an independent ODE calculation, checks 7/7 full-rank supported histories, charged sequencing, ancestral-state-error refusal and finite-SFS near-equivalence limits. Synthetic finite-panel task only; not a real-population or discovery result. |
 | `inverse_candidate_admission_audit_2026-07-25_v9.json` | `TRUSTED_ADMISSION_AUDIT` | On clean source `d0257dc`, all seven inverse-track checks pass and DemographicSFS-v2 is recommended for candidate admission. Four-epoch and population-mixture histories remain explicitly non-rejectable under the registered finite-SFS threshold. |
+| `demographic_sfs_v2_calibration_2026-07-25_v2.json` | `TRUSTED_TASK_CALIBRATION` | Supersedes the first calibration on clean candidate-manifest source `9a72b51`; adds an equal-eight-unit repeated-`n=12` control and verifies that multisample sequencing improves development/held-out mechanism recovery by `0.231731/0.112348` without changing coverage, refusal or false-discovery rates. Synthetic finite-panel task only. |
+| `inverse_candidate_admission_audit_2026-07-25_v10.json` | `TRUSTED_ADMISSION_AUDIT` | On clean source `9a72b51`, all seven inverse-track checks pass; the DemographicSFS admission gate includes the equal-budget observation-design contrast and finite-SFS near-equivalence limits. |
+| `task_certification_audit_2026-07-25_v45.json` | `TRUSTED_CERTIFICATION_AUDIT` | On clean source `9a72b51`, records all 55 packages at seven certified, 35 candidate and 13 quarantined, with no missing/orphaned manifest records or task-level issues. |
+| `security_audit_2026-07-25_v28.json` | `TRUSTED_SECURE_EVAL` | All 18 sandbox and protocol security regressions pass on clean source `9a72b51`. |
+| `secure_baseline_determinism_2026-07-25_v34.json` | `TRUSTED_SECURE_EVAL` | On clean source `9a72b51`, all 55 baselines are deterministic, valid and fail closed over two repetitions, with zero infrastructure failures. |
+| `full_test_suite_2026-07-25_v2.json` | `TRUSTED_FULL_TEST_SUITE` | On clean source `090b065`, all 355 tests pass in 1162.826 seconds, including the eight DemographicSFS-v2 protocol, physics, isolation and difficulty checks. |
 
 ## 2026-07-25 ProteinStabilityDesign evidence
 

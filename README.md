@@ -51,12 +51,12 @@ controlled exception text is reduced to a fixed label-blind failure taxonomy bef
 search feedback, preventing observations from being carried between worlds through exceptions.
 The current audit reports:
 
-- Trusted certification v44 and security v27 bind clean revision `ea0075e`. Certification records
-  `7/34/14` over 55 packages with no missing manifest records, orphaned records or task-level
+- Trusted certification v45 and security v28 bind clean revision `9a72b51`. Certification records
+  `7/35/13` over 55 packages with no missing manifest records, orphaned records or task-level
   admission issues; it retains one known duplicate-oracle group containing five quarantined
-  packages. Security passes 18/18 adversarial tests. The 55×2 baseline v33 reports 55/55
-  deterministic, valid and fail-closed tasks with zero infrastructure failures. Full-suite v1
-  binds clean revision `24a24ab` and passes 347/347 tests in 1139.654 seconds.
+  packages. Security passes 18/18 adversarial tests. The 55×2 baseline v34 reports 55/55
+  deterministic, valid and fail-closed tasks with zero infrastructure failures. Full-suite v2
+  binds clean revision `090b065` and passes 355/355 tests in 1162.826 seconds.
   Cross-task summary v22 binds clean revision `5de2a20` and contains 57 normal single-run
   conditions over 29 tasks.
 - Current source manifest: 7 certified / 35 candidate / 13 quarantined. ProteinStabilityDesign
@@ -249,12 +249,12 @@ the post-repair 50-package audits bind revision `47c3613`; the subsequent wave-2
 audit quarantines seven additional defective candidates. The two P2 smokes are baseline-only; the repository does not yet contain
 credible multi-seed model-performance evidence. A clean-revision GPT-5.5 budget-one core pilot
 is recorded as task calibration, not a benchmark leaderboard.
-The latest trusted certification/security/baseline audits covering the prior 55-task manifest are
-v44/v27/v33. Full-suite v1 passes 347/347 tests. DemographicSFS-v2 subsequently passed a trusted
-task calibration and inverse-track admission audit on clean revision `d0257dc`; the current source
-manifest is 7/35/13 and contains 42 internally admissible tasks, leaving an approximate gap of 8
-to the roughly 50-task target. Updated certification/security/baseline closeout follows the
-candidate-manifest commit.
+The latest trusted certification/security/baseline audits are v45/v28/v34 and bind clean
+candidate-manifest revision `9a72b51`; full-suite v2 binds the committed audit revision
+`090b065` and passes 355/355 tests. DemographicSFS-v2's superseding task calibration and
+inverse-track admission audit also bind `9a72b51`, including the equal-budget observation-design
+control. The current source manifest is 7/35/13 and contains 42 internally admissible tasks,
+leaving an approximate gap of 8 to the roughly 50-task target.
 GeneNetworkIntervention adds an active nonlinear signed-network, protected-readout intervention,
 sealed-transfer and null/latent-regulator refusal candidate. Its truth-blind nonlinear reference
 scores `0.9053/0.8932` development/held-out joint quality with zero false discovery. Across the

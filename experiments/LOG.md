@@ -2287,3 +2287,24 @@ neutral panmictic inference task, not a real-population history or autonomous bi
 discovery. The source manifest becomes `7/35/13`, with 42 internally admissible tasks and an
 approximate gap of eight to the roughly 50-task target; post-admission clean infrastructure and
 GPT-5.5 calibration evidence remain pending.
+
+## 2026-07-25 — DemographicSFS-v2 post-admission closeout
+
+The superseding calibration, inverse admission, certification, security and secure-baseline
+reports all bind clean candidate-manifest revision `9a72b51`. Their SHA-256 digests are,
+respectively, `1318e29b2b393cccf6f235a3b9d3ab8057a06c5515856b92b2c3bea601d20927`,
+`e9104f603656f5a76550751641b448eab8e84b02afe3af202216f9c9db5cfc12`,
+`64c7f6cf6ef261edc25d36530530d178c5d0656141456cbecc753db29f75b466`,
+`b09685d5adf8dcd4246811470c037d4df466da882ce1d39858a96c629a9fbaff` and
+`58061604b56663e08dcf8bc13c1e9852fe83ac1ff0509bb091e1e3ef31a1e170`.
+The calibration includes the equal-budget repeated-small-sample control; inverse admission passes
+7/7; certification v45 records `7/35/13`; security v28 passes 18/18; and baseline v34 reports
+55/55 deterministic, valid and fail-closed tasks over two repetitions with zero infrastructure
+failures.
+
+Full-suite v2 has SHA-256
+`8d0458eb0d3b104c8ad510013e7f110621a927800d14b9c6eb2b9d3dbb258a0d`, binds clean audit
+revision `090b065`, and passes 355/355 tests in 1162.826 seconds. This closes internal admission
+and infrastructure reproduction for DemographicSFS-v2. GPT-5.5 task calibration, server-held
+histories, linkage-aware models, real sequence QC and independent population-genetics review
+remain separate outstanding evidence.
