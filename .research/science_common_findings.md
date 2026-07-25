@@ -712,9 +712,11 @@ far-offset prediction, model-class adequacy and geological interpretation remain
 The current synthetic primary-reflection laboratory is an active-acquisition/model-checking
 on-ramp, not field FWI or autonomous geological discovery.
 
-The present source manifest contains 44 internally admissible certified or candidate packages:
-seven certified and 37 candidate, with 12 quarantined after adding ProspectiveMetaAnalysis-v1.
-The remaining admissible gap is approximately 6 tasks.
+The present source manifest contains 45 internally admissible certified or candidate packages:
+seven certified and 38 candidate, with 12 quarantined after adding
+PhotovoltaicTandemDesign-v1. The remaining admissible gap is approximately 5 tasks. The
+photovoltaic task has passed dirty-tree task-level admission but still requires clean-revision
+whole-repository audits and model calibration.
 Expansion should use procedural families spanning
 design, inverse problems, control, multifidelity validation, mechanism discovery and exact
 mathematical construction rather than cloning one scalar optimization template across domains.

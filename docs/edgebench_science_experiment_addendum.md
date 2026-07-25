@@ -1109,6 +1109,9 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
 
 - [x] RankineCycleOpt-v2 完成内部重建与独立 IF97 复算并进入 candidate；
 - [x] MOSFETDoping-v2 完成内部 compact-model 重建并进入 candidate；
+- [x] ProspectiveMetaAnalysis-v1 完成 registry/lineage/commit/confirmation 内部准入；
+- [x] PhotovoltaicTandemDesign-v1 完成 ASTM 光谱 provenance、独立 detailed-balance 极限、
+  成本条件结数响应、sealed robustness 与 secure baseline 的任务级准入；
 - [ ] 继续修 RANSCalibration；
 - [ ] 新增/重建任务按 `docs/task_expansion_v2_plan.md` 的 R2--R4 推进；
 - [ ] 为约 50-task inventory 增加 author/reviewer effort、shortcut red-team 与
@@ -1120,14 +1123,14 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
   baseline 随机化版本，防止把 scaffold 锚定误写成方法发现；
 - [ ] 增加一个可机器验证的 open-question procedural laboratory，区分 fixed question、candidate menu 和
   agent-formulated preregistered question；
-- [ ] 优先新增一个 prospective evidence-synthesis task：程序化生成异质、重复、选择性报告与 publication-
-  bias 文献集合，提交可执行 screening/extraction/meta-analysis/next-study method，并用 fresh prospective
-  study confirmation；其统计 lineage 不与 source publications 重复计数；
+- [x] 新增 prospective evidence-synthesis task：程序化生成异质、重复、选择性报告文献集合，提交可执行
+  screening/extraction/meta-analysis/next-study method，并用 fresh simulated prospective study confirmation；
+  真实 source-document extraction 与独立 prospective replication 仍未完成；
 - [ ] 为任务卡增加 `campaign_id/workflow_stage/lineage_id`，发现/反演任务提交可在 fresh world
   端到端重放的 method artifact；
 - [ ] 为 admission、pilot、confirmatory 和每个论文 figure/table 冻结独立的 hashed cohort manifest；
 - [ ] 每个任务强制 E1--E3、E7--E9；主动/随机/多保真任务再分别强制 E2/E8/E5；
-- [ ] 只有 admission DoD 全部通过才计数，目标从当前 36 提升到约 50。
+- [ ] 只有 admission DoD 全部通过才计数；当前内部可采信为 45，目标提升到约 50。
 
 ### P3 — 统计与论文
 

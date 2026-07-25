@@ -16,11 +16,11 @@ text-question benchmark named *FrontierScience* in
 
 ## Current status
 
-The repository contains **56 task packages in 52 metadata domains**:
+The repository contains **57 task packages in 53 metadata domains**:
 
 - **7 certified core tasks**: Lennard–Jones clusters, spin glass, Poisson solver,
   matrix-multiplication rank, Cap Set, circle packing, and multilayer thin films.
-- **37 candidate tasks** pending scientific certification, including intervention-based causal
+- **38 candidate tasks** pending scientific certification, including intervention-based causal
   and active dynamical-law laboratories whose prediction and mechanism metrics are reported
   separately, a multi-spectrum NMR peak-mechanism/refusal task, and a multi-fidelity
   heat-exchanger Pareto-design task, a full-field lid-driven-cavity solver, active
@@ -36,14 +36,16 @@ The repository contains **56 task packages in 52 metadata domains**:
   active demographic-SFS inference with finite-information and model-refusal diagnostics, and
   cost-conditioned sampling-calorimeter design with sealed fabrication margins, and prospective
   evidence synthesis with registry screening, participant-lineage de-duplication, selective-report
-  detection, heterogeneous inference, pre-result commitment and fresh simulated confirmation.
+  detection, heterogeneous inference, pre-result commitment and fresh simulated confirmation,
+  and budget-conditioned finite-absorption tandem-photovoltaic design with held-out spectra and
+  sealed thermal, process and optical perturbations.
 - **12 quarantined tasks** retain reproduced scientific-oracle, identifiability, provenance or
   shortcut defects.
   Quarantined packages remain inventory artifacts but are not admissible benchmark tasks.
 
 The default CLI exposes only the certified core. `--all` explicitly shows the full
 inventory. Certification status is not a difficulty claim: the inventory metadata contains
-49 `hard` and 7 `flagship` packages, but only certified tasks are benchmark-admissible.
+50 `hard` and 7 `flagship` packages, but only certified tasks are benchmark-admissible.
 
 All candidate code runs in a networkless Bubblewrap sandbox with read-only mounts, resource
 and process limits, and a typed JSON RPC boundary. The trusted parent alone imports the
@@ -54,20 +56,20 @@ controlled exception text is reduced to a fixed label-blind failure taxonomy bef
 search feedback, preventing observations from being carried between worlds through exceptions.
 The current audit reports:
 
-- Trusted certification v48 and security v31 bind clean revision `b85b0ee`. Certification records
-  `7/37/12` over 56 packages with no missing manifest records, orphaned records or task-level
+- Trusted certification v48 and security v31 bind clean revision `b85b0ee`. Those pre-photovoltaic
+  records cover `7/37/12` over 56 packages with no missing manifest records, orphaned records or task-level
   admission issues; it retains one known duplicate-oracle group containing five quarantined
   packages. Security passes 18/18 adversarial tests. The 56×2 baseline v37 reports 56/56
   deterministic, valid and fail-closed tasks with zero infrastructure failures. The latest
   full-suite v7 binds clean revision `c813f16` and passes 396/396 tests in 1224.275 seconds.
   Cross-task summary v25 binds clean revision `b85b0ee` and contains 63 normal single-run
   conditions over 32 tasks.
-- Current source manifest: 7 certified / 37 candidate / 12 quarantined. ProteinStabilityDesign
+- Current source manifest: 7 certified / 38 candidate / 12 quarantined. ProteinStabilityDesign
   rebuilds 2,756 reliable double-mutant records across five
   development and three held-out domains from hash-bound ProteinGym v1.3/Tsuboyama sources.
   It separates additive proxy, charged assay, diversity, top-decile, trypsin, chymotrypsin,
   uncertainty and held-out metrics. Source reconstruction, secure baseline and shortcut audits
-  pass, and all seven GPT-5.5 proposals are executable. It is counted among 44 internally
+  pass, and all seven GPT-5.5 proposals are executable. It was counted among 44 internally
   admissible tasks but remains an offline public-data candidate, not prospective protein
   discovery. D-optimal design, quantum
   gate synthesis, DC optimal power flow, truss sizing, antenna synthesis and NMR peak fitting have been rebuilt with separate sealed
@@ -255,8 +257,10 @@ is recorded as task calibration, not a benchmark leaderboard.
 The final closeout certification/security/baseline audits are v50/v33/v39 and bind clean
 analysis revision `c813f16`; full-suite v7 binds the same revision and passes 396/396 tests.
 CalorimeterDesign-v2's task calibration and wave-4 admission
-audit also bind `f6a7b73`. The current source manifest is 7/37/12 and contains 44 internally
-admissible tasks, leaving an approximate gap of 6 to the roughly 50-task target.
+audit also bind `f6a7b73`. After the internally admitted PhotovoltaicTandemDesign addition, the
+current source manifest is 7/38/12 and contains 45 internally admissible tasks, leaving an
+approximate gap of 5 to the roughly 50-task target. Clean-revision whole-repository audits and
+model calibration for the photovoltaic task are still pending.
 GeneNetworkIntervention adds an active nonlinear signed-network, protected-readout intervention,
 sealed-transfer and null/latent-regulator refusal candidate. Its truth-blind nonlinear reference
 scores `0.9053/0.8932` development/held-out joint quality with zero false discovery. Across the

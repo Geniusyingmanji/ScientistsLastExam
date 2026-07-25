@@ -109,6 +109,19 @@ tasks:
       - doi:10.1136/bmj.l5342
       - doi:10.1136/bmj.n71
 
+  Photovoltaics/PhotovoltaicTandemDesign:
+    status: candidate
+    reason: v1 adds three fabrication-budget-conditioned one-to-four-junction series-tandem designs over eight interleaved ASTM-G173-derived spectral, temperature and cost regimes; the transparent detailed-balance oracle exposes finite optical absorption and radiative current matching while separately reporting held-out spectrum transfer, six sealed thermal/process/optical shifts, absolute efficiency, current matching, cost utilization and selected junction count; exact pvlib source hashes, independent one-through-four-junction ideal-limit integration, deterministic reference replay, secure baseline, fail-closed schemas and metric sealing are required before internal admission, and external photovoltaics review, higher-fidelity device simulation, real materials, manufacturing and experiments remain necessary for any engineering or discovery claim
+    citation_ids:
+      - doi:10.1063/1.1736034
+      - doi:10.1088/0022-3727/13/5/018
+      - doi:10.1063/1.328272
+      - doi:10.1016/j.solener.2016.02.015
+      - doi:10.1002/pip.1156
+      - doi:10.1002/pip.2943
+      - doi:10.1109/PVSC.2017.8366786
+      - doi:10.21105/joss.00884
+
   BayesianInference/OptimalExperimentDesign:
     status: candidate
     reason: v2 is scientifically valid with procedural families and sealed shifts, but GPT-5.5 implements a generic D-optimal algorithm and reaches 0.991 development plus 0.994 validation at budget one; retain as an on-ramp pending harder sequential model-discrimination regimes and independent review

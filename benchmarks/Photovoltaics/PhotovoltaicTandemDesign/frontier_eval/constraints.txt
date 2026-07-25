@@ -1,0 +1,5 @@
+1) Only edit solution.py. Keep design_tandem(problem).
+2) Return exactly three distinct finite designs, each with one to four ordered band gaps and matching optical depths.
+3) Obey every public variable bound, band-gap separation and option-specific fabrication budget.
+4) NumPy/SciPy only. CPU, seconds. No network.
+5) Do not read verification/ or frontier_eval/.
