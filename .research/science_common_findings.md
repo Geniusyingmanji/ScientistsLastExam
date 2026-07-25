@@ -1,20 +1,20 @@
 # Cross-task science calibration findings
 
-Date: 2026-07-23 (UTC), updated 2026-07-24. These findings use trusted GPT-5.5 `greedy_rewrite` calibrations on
+Date: 2026-07-23 (UTC), updated 2026-07-25. These findings use trusted GPT-5.5 `greedy_rewrite` calibrations on
 OED-v2, Pendulum-v2, GateSynthesis-v2, ActiveLawDiscovery, OPF-v2, Truss-v2, Antenna-v2,
 NMR-v2, HeatExchanger-v2, ReactionMechanismFitting-v2, GravityInversion-v2,
 OceanCurrentInversion-v2, RadiativeTransferFit-v2, LowThrustTransfer-v2,
 LidDrivenCavity-v2, EnergyBalanceModel-v2, BroadbandAbsorber-v2,
 DistillationColumnDesign-v2, HartreeFockSCF-v2, RoomImpulseResponse-v2,
 ConvectionDiffusionOpt-v2, SeismicWaveInversion-v2, RankineCycleOpt-v2 and MOSFETDoping-v2. The
-list now also includes RANSCalibration-v2, GeneNetworkIntervention-v1 and RNAInverseDesign-v1. The
-53 normal-feedback model conditions across these 27 tasks each
+list now also includes RANSCalibration-v2, GeneNetworkIntervention-v1, RNAInverseDesign-v1 and
+ProteinStabilityDesign-v1. The 55 normal-feedback model conditions across these 28 tasks each
 contain one seed and proposal budget one or three. They calibrate tasks and motivate experiments;
 they are not a model leaderboard, a causal feedback study or population evidence.
 
 The portable machine record
-`experiments/science_calibration_summary_2026-07-24_v20.json` retains every top-level scalar metric,
-candidate lineage hash and raw trajectory SHA-256 for all 53 normal conditions.
+`experiments/science_calibration_summary_2026-07-25_v21.json` retains every top-level scalar metric,
+candidate lineage hash and raw trajectory SHA-256 for all 55 normal conditions.
 Additional strict diagnostics for Distillation-v2, Hartree--Fock and room acoustics are bound
 separately by `experiments/distillation_v2_calibration_analysis_2026-07-23.json`,
 `experiments/hartree_fock_v2_calibration_analysis_2026-07-23.json` and
@@ -25,7 +25,8 @@ separately by `experiments/distillation_v2_calibration_analysis_2026-07-23.json`
 `experiments/mosfet_v2_calibration_analysis_2026-07-24.json`,
 `experiments/rans_v2_calibration_analysis_2026-07-24.json`,
 `experiments/gene_network_intervention_calibration_analysis_2026-07-24.json` and
-`experiments/rna_inverse_design_calibration_analysis_2026-07-24.json`. Strict selection-blind
+`experiments/rna_inverse_design_calibration_analysis_2026-07-24.json` and
+`experiments/protein_stability_design_calibration_analysis_2026-07-25.json`. Strict selection-blind
 diagnostics remain in task-specific analysis because they are not normal-feedback calibrations.
 The underlying reports bind the task-specific source revision. Pendulum's initial budget-one
 run on revision `57c0e1b` is
@@ -95,6 +96,9 @@ by the corrected-contract run on `2557adb`.
 | RNAInverseDesign-v1, proxy counterexample | target-pair compatibility `1.0` | target probability `3e-9`; normalized exact and shifted quality `0`; ensemble defect `0.335` | Satisfying every requested pair is necessary but not sufficient for a target to dominate the complete declared ensemble. |
 | RNAInverseDesign-v1, normal budget 3 | development exact utility `0.239→0.507→0.720`; proxy compatibility remains `1.0` | held-out utility `0.500`; development/held-out robustness `0.712/0.487`; proxy false promotion `0.40/0.667` | Exact ensemble optimization can improve monotonically while a saturated pair proxy continues to over-promote sequences. |
 | RNAInverseDesign-v1, selection-blind budget 3 | frozen-parent offline best development/held-out `0.894/0.986` | robustness `0.888/0.982`; target probability `0.432/0.806`; zero proxy false promotion | A strong open-loop sample exists, but four matched oracle calls do not make the contrast causal: the conditions differ by 12,169 tokens, 37 seconds and uncontrolled endpoint randomness. |
+| ProteinStabilityDesign-v1, budget 1 | development `0.614`; top-decile hit rate `0.925`; proxy false promotion `0.075` | held-out policy `0.412`; held-out robustness `0.646`; held-out false promotion `0.250` | One reusable assay-aware policy exceeds the truth-blind classical development score `0.514` but trails its held-out policy score `0.567`; development selection and domain transfer are distinct axes. |
+| ProteinStabilityDesign-v1, normal budget 3 | development `0.477→0.535`; all proposals valid | accepted step 2 lowers development protease robustness `0.488→0.441` while held-out policy rises `0.425→0.559` | A visible-score improvement can trade away an evaluator-only readout even when assay budget, validity and held-out transfer improve. |
+| ProteinStabilityDesign-v1, selection-blind budget 3 | frozen-parent development-selected score `0.546` | a rejected step reaches held-out policy/robustness `0.652/0.753`, above the selected artifact's `0.519/0.723` | Selecting one development scalar discards a scientifically preferable artifact on held-out and independent protease axes. The one-run normal/open-loop contrast is not causal. |
 
 OPF's `robustness_score` combines security-constrained economic quality with overload penalties.
 It is not a pure safety probability. The proportional baseline is feasible for every tested
@@ -554,9 +558,9 @@ far-offset prediction, model-class adequacy and geological interpretation remain
 The current synthetic primary-reflection laboratory is an active-acquisition/model-checking
 on-ramp, not field FWI or autonomous geological discovery.
 
-The present inventory contains 39 internally admissible certified or candidate packages: seven
-certified and 32 candidate, with 15 quarantined after adding the not-yet-admitted
-ProteinStabilityDesign implementation. The remaining admissible gap is approximately 11 tasks.
+The present inventory contains 40 internally admissible certified or candidate packages: seven
+certified and 33 candidate, with 14 quarantined after admitting the offline
+ProteinStabilityDesign replay. The remaining admissible gap is approximately 10 tasks.
 Expansion should use procedural families spanning
 design, inverse problems, control, multifidelity validation, mechanism discovery and exact
 mathematical construction rather than cloning one scalar optimization template across domains.

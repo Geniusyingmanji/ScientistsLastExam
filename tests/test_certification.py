@@ -30,7 +30,7 @@ class CertificationPolicyTests(unittest.TestCase):
         self.assertEqual(len(list_tasks(None)), 54)
         self.assertEqual(
             certification_status("ProteinEngineering/ProteinStabilityDesign"),
-            "quarantined",
+            "candidate",
         )
 
     def test_manifest_explicitly_covers_inventory(self):

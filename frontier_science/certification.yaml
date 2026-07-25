@@ -83,8 +83,8 @@ tasks:
       - doi:10.1073/pnas.1313039111
 
   ProteinEngineering/ProteinStabilityDesign:
-    status: quarantined
-    reason: hash-bound ProteinGym v1.3 and Tsuboyama 2023 double-mutant batch-design replay is implemented with charged assays, held-out domains and independent raw protease readouts; retain in quarantine until source reconstruction, secure baseline, invariant, GPT-5.5 headroom and independent admission audits are complete
+    status: candidate
+    reason: hash-bound ProteinGym v1.3 and Tsuboyama 2023 replay reconstructs 2,756 reliable double mutants across five development and three held-out protein domains, limits each policy to twelve charged assays and separates stability, diversity, proxy false promotion, held-out transfer and independent trypsin/chymotrypsin readouts; exact source reconstruction, scientific invariants, secure-baseline replay and fixed-instance shortcut screening pass, while seven GPT-5.5 proposals are valid and expose graded development/held-out/protease tradeoffs; retain as an offline public-data optimization candidate pending server-held proteins, contamination review, synthesis, independent biophysical and functional assays, and external protein-engineering review
     citation_ids:
       - doi:10.1038/s41586-023-06328-6
       - doi:10.5281/zenodo.15293562
