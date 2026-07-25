@@ -595,9 +595,10 @@ def _load_model(label: str, relative: str) -> dict[str, Any]:
             "terminal_program": _shortcut_scan(terminal_program),
         },
         "artifact_retention_scope": (
-            "best and terminal sources are retained; two other proposal sources "
-            "are not retained, but candidate hashes, parent lineage, per-world "
-            "metrics, accounting and full raw-trajectory hashes remain bound"
+            "best and terminal sources are retained; any other intermediate "
+            "proposal sources are not retained, but candidate hashes, parent "
+            "lineage, per-world metrics, accounting and full raw-trajectory "
+            "hashes remain bound"
         ),
     }
     record["integrity_passed"] = bool(
@@ -906,7 +907,10 @@ def analyze() -> dict[str, Any]:
         label: _load_model(label, relative)
         for label, relative in REPORTS.items()
     }
-    changes = _source_changes(INPUT_SOURCE_REVISION, INPUT_SOURCE_REVISION)
+    current_revision = subprocess.check_output(
+        ["git", "rev-parse", "HEAD"], cwd=str(ROOT), text=True
+    ).strip()
+    changes = _source_changes(INPUT_SOURCE_REVISION, current_revision)
     return _analyze_records(
         calibration,
         records,
