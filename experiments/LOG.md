@@ -2461,3 +2461,22 @@ rerun records wave-5 admission v2 SHA-256
 baseline v37 `41e29f416b38c79e0f3ffae1637e0e95de3f929d498b8c49961603958d6802a0`.
 All are trusted and pass. A new static-source full suite remains to be generated after the
 documentation and evidence artifacts are committed.
+
+The first post-documentation full-suite attempt, v6 (SHA-256
+`7e8b6be073255a4050464222c49b40e9c0270a04e9beb2ed0256ad35d93264ab`), is retained as
+explicit failed evidence. It ran 394 tests and failed only
+`test_full_analysis_when_raw_trajectories_exist`: the Calorimeter analyzer treated a change to
+the non-runtime `frontier_science/certification.yaml` narrative as a task-runtime mismatch.
+Commit `c813f16` narrows both Calorimeter and ProspectiveMetaAnalysis source-equivalence scopes to
+Python runtime files, the task-specific benchmark contract and requirements. Two new tests require
+that scope, while the existing explicit runtime-mismatch tests still fail closed.
+
+The final clean-revision closeout binds `c813f16`. Wave-5 admission v4 has SHA-256
+`637c78c928385cfa05c34973412361d93b055aa4ca183bd5705c30cf123ab5de`, certification v50
+`30fcb3352e214824575cb70fa72a3e7aeab304c82f09853d130cfeef607d7bd7`, security v33
+`946e0cbe07459e3fd56ae1b8401471f3595a7bece50f05284697e6556d90fdf0`, and 56×2 secure
+baseline v39 `942f7f2eb9b57c72d160b8e33b10589290660973e55b42cedba3ec5a288213ab`.
+All are trusted and pass; certification remains `7/37/12`, security is 18/18, and every baseline
+is deterministic, valid and fail closed with zero infrastructure failures. Full-suite v7
+(`af8698781056793a9aef2d8deac8cda54ee24fef1ec325e6950764a88ae36a18`) passes 396/396 in
+1224.275 seconds and supersedes v6 for current-source regression evidence.

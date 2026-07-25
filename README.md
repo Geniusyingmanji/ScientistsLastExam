@@ -59,10 +59,9 @@ The current audit reports:
   admission issues; it retains one known duplicate-oracle group containing five quarantined
   packages. Security passes 18/18 adversarial tests. The 56×2 baseline v37 reports 56/56
   deterministic, valid and fail-closed tasks with zero infrastructure failures. The latest
-  full-suite v5 binds clean revision `3eca1ac` and passes 375/375 tests in 1173.923 seconds.
+  full-suite v7 binds clean revision `c813f16` and passes 396/396 tests in 1224.275 seconds.
   Cross-task summary v25 binds clean revision `b85b0ee` and contains 63 normal single-run
-  conditions over 32 tasks. A new final full-suite report remains pending after the evidence-
-  synthesis analysis and documentation changes.
+  conditions over 32 tasks.
 - Current source manifest: 7 certified / 37 candidate / 12 quarantined. ProteinStabilityDesign
   rebuilds 2,756 reliable double-mutant records across five
   development and three held-out domains from hash-bound ProteinGym v1.3/Tsuboyama sources.
@@ -253,9 +252,9 @@ the post-repair 50-package audits bind revision `47c3613`; the subsequent wave-2
 audit quarantines seven additional defective candidates. The two P2 smokes are baseline-only; the repository does not yet contain
 credible multi-seed model-performance evidence. A clean-revision GPT-5.5 budget-one core pilot
 is recorded as task calibration, not a benchmark leaderboard.
-The latest trusted certification/security/baseline audits are v48/v31/v37 and bind clean
-analysis revision `b85b0ee`; the previous post-model-analysis full-suite v5 binds `3eca1ac` and
-passes 375/375 tests. CalorimeterDesign-v2's task calibration and wave-4 admission
+The final closeout certification/security/baseline audits are v50/v33/v39 and bind clean
+analysis revision `c813f16`; full-suite v7 binds the same revision and passes 396/396 tests.
+CalorimeterDesign-v2's task calibration and wave-4 admission
 audit also bind `f6a7b73`. The current source manifest is 7/37/12 and contains 44 internally
 admissible tasks, leaving an approximate gap of 6 to the roughly 50-task target.
 GeneNetworkIntervention adds an active nonlinear signed-network, protected-readout intervention,
