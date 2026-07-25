@@ -115,6 +115,7 @@ class DemographicSFSV2Tests(unittest.TestCase):
             )
         classical = report["truth_blind_multisample_fit"]
         underinformative = report["underinformative_single_spectrum_fit"]
+        equal_budget = report["equal_budget_repeated_small_sample_fit"]
         self.assertGreater(classical["combined_score"], 0.70)
         self.assertGreater(classical["heldout_policy_score"], 0.45)
         self.assertGreater(classical["development_prediction_score"], 0.95)
@@ -124,6 +125,15 @@ class DemographicSFSV2Tests(unittest.TestCase):
             - classical["heldout_mechanism_score"], 0.40,
         )
         self.assertGreater(classical["combined_score"], underinformative["combined_score"])
+        self.assertEqual(equal_budget["development_mean_budget_used"], 8.0)
+        self.assertEqual(equal_budget["heldout_mean_budget_used"], 8.0)
+        self.assertGreater(
+            classical["combined_score"] - equal_budget["combined_score"], 0.15
+        )
+        self.assertGreater(
+            classical["heldout_policy_score"]
+            - equal_budget["heldout_policy_score"], 0.08
+        )
         self.assertEqual(classical["development_unsupported_refusal_rate"], 1.0)
         self.assertEqual(classical["heldout_unsupported_refusal_rate"], 1.0)
         self.assertEqual(classical["development_false_discovery_rate"], 0.0)

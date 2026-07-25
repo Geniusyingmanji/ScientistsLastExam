@@ -567,6 +567,41 @@ residual, confidence and false-discovery/refusal curves. A response curve alone 
 short design and the misspecified model claims as successful. This synthetic global-mean task
 does not estimate Earth's climate sensitivity or establish autonomous scientific discovery.
 
+### DemographicSFS-v2 finite-information and model-class diagnostic
+
+DemographicSFS-v2 replaces a five-parameter rank-two time-index surrogate with the exact
+finite-sample Kingman lineage-count CTMC for a fixed-scale constant or three-epoch history.
+The constant-size calculation reproduces `E[xi_i] = theta/i` to floating-point precision, an
+independent ODE occupancy integration agrees below `2e-10`, and all seven nonconstant supported
+histories have rank-four log-parameter sensitivities under the registered eight-unit sequencing
+design. These are local identifiability and implementation checks, not a claim that a finite SFS
+uniquely determines arbitrary population history.
+
+The truth-blind multisample fit reaches development/held-out mechanism `0.769745/0.509725`, while
+observed-menu SFS fit is `0.985692` and evaluator-only sample-size prediction is
+`0.988312/0.982711`. A one-unit single-spectrum design reaches only `0.007777/0.060510`
+mechanism. More importantly, an equal-eight-unit design that only repeats `n=12` reaches
+`0.538014/0.397377`, below the multisample design by `0.231731/0.112348` at identical budget,
+coverage, refusal and false-discovery rates. Thus allocating measurements across sample sizes
+has material inferential value beyond simply buying more panels, but
+near-perfect prediction at unseen sample sizes still does not imply recovery of the demographic
+mechanism. This is the same prediction--mechanism separation seen in climate, gravity, NMR and
+reaction tasks, now under an exact coalescent forward model.
+
+The registered refusal worlds apply a resolvable 20% ancestral-state polarization error. Their
+best public three-epoch fits have expected noisy reduced deviance `5.31--8.24`, above the `2.25`
+threshold, and the truth-blind policy refuses both with zero false discovery. By contrast, a
+four-epoch history and a mixture of contraction/expansion histories have clean best-three-epoch
+reduced deviances only `0.0092` and `0.0592`. They are retained as near-equivalence limits, not
+scored as forced-refusal labels. A benchmark must not reward an agent for detecting model
+misspecification that its available observations cannot identify.
+
+The reporting rule is therefore six-way: observation design and cost, finite-SFS fit,
+held-out-sample prediction, demographic mechanism, conditioning/uncertainty, and model-class
+refusal/false discovery remain separate. This synthetic neutral panmictic task omits linkage,
+recombination, selection, migration, structure, ascertainment and real sequence QC; it is not a
+population-history result or autonomous biological discovery.
+
 ## Consequences for expansion to approximately 50 tasks
 
 Every new or rebuilt task must pass the following gate before it counts toward the target:
@@ -595,9 +630,9 @@ far-offset prediction, model-class adequacy and geological interpretation remain
 The current synthetic primary-reflection laboratory is an active-acquisition/model-checking
 on-ramp, not field FWI or autonomous geological discovery.
 
-The present inventory contains 41 internally admissible certified or candidate packages: seven
-certified and 34 candidate, with 14 quarantined after admitting the offline electrolyte replay.
-The remaining admissible gap is approximately 9 tasks.
+The present source manifest contains 42 internally admissible certified or candidate packages:
+seven certified and 35 candidate, with 13 quarantined after rebuilding DemographicSFS-v2. The
+remaining admissible gap is approximately 8 tasks.
 Expansion should use procedural families spanning
 design, inverse problems, control, multifidelity validation, mechanism discovery and exact
 mathematical construction rather than cloning one scalar optimization template across domains.

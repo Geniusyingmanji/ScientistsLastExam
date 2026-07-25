@@ -349,6 +349,7 @@ def _ocean():
 def _population_genetics():
     report = calibrate_demographic_sfs()
     classical = report["truth_blind_multisample_fit"]
+    equal_budget = report["equal_budget_repeated_small_sample_fit"]
     rank_checks = report["identifiability_checks"]
     misspecified = report["misspecified_resolvability_checks"]
     limits = report["finite_sfs_near_equivalence_limits"]
@@ -362,6 +363,9 @@ def _population_genetics():
         and classical["heldout_prediction_score"] > 0.95
         and classical["heldout_prediction_score"]
         > classical["heldout_mechanism_score"] + 0.40
+        and classical["combined_score"] > equal_budget["combined_score"] + 0.15
+        and classical["heldout_policy_score"]
+        > equal_budget["heldout_policy_score"] + 0.08
         and classical["development_unsupported_refusal_rate"] == 1.0
         and classical["heldout_unsupported_refusal_rate"] == 1.0
         and classical["development_false_discovery_rate"] == 0.0
@@ -384,6 +388,8 @@ def _population_genetics():
         "classical_heldout_mechanism_component": float(classical["heldout_mechanism_score"]),
         "classical_development_prediction_score": float(classical["development_prediction_score"]),
         "classical_heldout_prediction_score": float(classical["heldout_prediction_score"]),
+        "equal_budget_small_sample_development_mechanism_score": float(equal_budget["combined_score"]),
+        "equal_budget_small_sample_heldout_mechanism_score": float(equal_budget["heldout_policy_score"]),
         "classical_development_false_discovery_rate": float(classical["development_false_discovery_rate"]),
         "classical_heldout_false_discovery_rate": float(classical["heldout_false_discovery_rate"]),
         "full_rank_supported_worlds": sum(row["passed"] for row in rank_checks),

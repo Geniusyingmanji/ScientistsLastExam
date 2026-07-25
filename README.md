@@ -20,7 +20,7 @@ The repository contains **55 task packages in 51 metadata domains**:
 
 - **7 certified core tasks**: Lennard–Jones clusters, spin glass, Poisson solver,
   matrix-multiplication rank, Cap Set, circle packing, and multilayer thin films.
-- **34 candidate tasks** pending scientific certification, including intervention-based causal
+- **35 candidate tasks** pending scientific certification, including intervention-based causal
   and active dynamical-law laboratories whose prediction and mechanism metrics are reported
   separately, a multi-spectrum NMR peak-mechanism/refusal task, and a multi-fidelity
   heat-exchanger Pareto-design task, a full-field lid-driven-cavity solver, active
@@ -32,8 +32,9 @@ The repository contains **55 task packages in 51 metadata domains**:
   reflection acquisition/inversion with explicit model-inadequacy refusal, constrained RNA
   inverse design with exact ensemble scoring and proxy-false-promotion diagnostics, and a
   real-data protein-stability assay-allocation replay, and a real-data electrolyte-conductivity
-  assay-allocation replay with discovery and untouched-repeat confirmation reported separately.
-- **14 quarantined tasks** retain reproduced scientific-oracle, identifiability, provenance or
+  assay-allocation replay with discovery and untouched-repeat confirmation reported separately,
+  and active demographic-SFS inference with finite-information and model-refusal diagnostics.
+- **13 quarantined tasks** retain reproduced scientific-oracle, identifiability, provenance or
   shortcut defects.
   Quarantined packages remain inventory artifacts but are not admissible benchmark tasks.
 
@@ -58,12 +59,12 @@ The current audit reports:
   binds clean revision `24a24ab` and passes 347/347 tests in 1139.654 seconds.
   Cross-task summary v22 binds clean revision `5de2a20` and contains 57 normal single-run
   conditions over 29 tasks.
-- Current source manifest: 7 certified / 34 candidate / 14 quarantined. ProteinStabilityDesign
+- Current source manifest: 7 certified / 35 candidate / 13 quarantined. ProteinStabilityDesign
   rebuilds 2,756 reliable double-mutant records across five
   development and three held-out domains from hash-bound ProteinGym v1.3/Tsuboyama sources.
   It separates additive proxy, charged assay, diversity, top-decile, trypsin, chymotrypsin,
   uncertainty and held-out metrics. Source reconstruction, secure baseline and shortcut audits
-  pass, and all seven GPT-5.5 proposals are executable. It is counted among 41 internally
+  pass, and all seven GPT-5.5 proposals are executable. It is counted among 42 internally
   admissible tasks but remains an offline public-data candidate, not prospective protein
   discovery. D-optimal design, quantum
   gate synthesis, DC optimal power flow, truss sizing, antenna synthesis and NMR peak fitting have been rebuilt with separate sealed
@@ -248,9 +249,12 @@ the post-repair 50-package audits bind revision `47c3613`; the subsequent wave-2
 audit quarantines seven additional defective candidates. The two P2 smokes are baseline-only; the repository does not yet contain
 credible multi-seed model-performance evidence. A clean-revision GPT-5.5 budget-one core pilot
 is recorded as task calibration, not a benchmark leaderboard.
-The latest trusted certification/security/baseline audits are v44/v27/v33 and cover all 55 task
-packages. Full-suite v1 passes 347/347 tests. The current source manifest is 7/34/14 and contains
-41 internally admissible tasks, leaving an approximate gap of 9 to the roughly 50-task target.
+The latest trusted certification/security/baseline audits covering the prior 55-task manifest are
+v44/v27/v33. Full-suite v1 passes 347/347 tests. DemographicSFS-v2 subsequently passed a trusted
+task calibration and inverse-track admission audit on clean revision `d0257dc`; the current source
+manifest is 7/35/13 and contains 42 internally admissible tasks, leaving an approximate gap of 8
+to the roughly 50-task target. Updated certification/security/baseline closeout follows the
+candidate-manifest commit.
 GeneNetworkIntervention adds an active nonlinear signed-network, protected-readout intervention,
 sealed-transfer and null/latent-regulator refusal candidate. Its truth-blind nonlinear reference
 scores `0.9053/0.8932` development/held-out joint quality with zero false discovery. Across the

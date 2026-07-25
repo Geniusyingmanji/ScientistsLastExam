@@ -224,8 +224,14 @@ tasks:
       - doi:10.1016/j.pocean.2008.02.002
       - doi:10.1016/j.physd.2005.10.007
   PopulationGenetics/DemographicSFS:
-    status: quarantined
-    reason: five-parameter surrogate has rank-two local sensitivity and radically different demographic parameters produce identical SFS
+    status: candidate
+    reason: v2 replaces the rank-two time-index surrogate with exact finite-sample Kingman lineage-count CTMC occupancy, a fixed ancestral scale, charged sample-size/replicate sequencing, constant and three-epoch mechanism recovery, evaluator-only sample-size projection and resolvable ancestral-state-polarization-error refusal; the constant-size theta/i identity and an independent ODE occupancy implementation agree, all seven nonconstant supported histories have full-rank log-parameter sensitivities, and a truth-blind eight-unit multisample design reaches 0.770/0.510 development/held-out mechanism with 0.988/0.983 sample-size prediction and zero false discovery, versus 0.538/0.397 for an equal-budget repeated-small-sample design; finite four-epoch and population-mixture histories remain explicitly non-rejectable under the registered SFS threshold, so retain as a conditioned demographic-inference candidate pending server-held histories, linkage/recombination and structure, sequence-data QC and independent population-genetics review
+    citation_ids:
+      - doi:10.1371/journal.pgen.1000695
+      - doi:10.1534/genetics.117.200493
+      - doi:10.1016/j.tpb.2008.01.001
+      - doi:10.1214/14-AOS1264
+      - doi:10.1073/pnas.1503717112
   Turbulence/RANSCalibration:
     status: candidate
     reason: v2 replaces the analytic log-law/TKE pseudo-DNS and rank-three five-constant surrogate with hash-bound CC-BY-4.0 channel DNS at Re-tau 180/395/590/950, a four-parameter full-rank positive algebraic closure, joint mean-velocity/Reynolds-shear scoring, exact channel momentum balance, evaluator-only higher-Re transfer and wall-coordinate calibration shifts; deterministic nominal and minimax references expose substantial development-to-heldout tradeoffs; single-run GPT-5.5 budget three improves development nominal to 0.356 and heldout nominal to 0.428 but only reaches 0.127/0.299 development/heldout robustness, while budget one and the selection-blind batch remain at zero; retain as a closure-calibration and transfer candidate pending repeated generation-controlled runs, server-held flow families, transport-equation or higher-fidelity CFD replication and independent turbulence review

@@ -2254,3 +2254,36 @@ has SHA-256 `1db67b1382467b60ac0d9fe0c634b38c9921ff5075fa9226095860ead4c00eaf` a
 `7/34/14`; all three reports bind clean revision `ea0075e`. Full-suite v1 has SHA-256
 `f488a433153de963ec94d72d512bdfb610f9e63a145ced5928b6891e5cac691a`, binds clean revision
 `24a24ab`, and passes 347/347 tests in 1139.654 seconds.
+
+## 2026-07-25 — DemographicSFS-v2 rebuild and admission evidence
+
+`PopulationGenetics/DemographicSFS` replaces its rank-two five-parameter time-index surrogate
+with exact finite-sample Kingman lineage-count CTMC occupancy for a fixed ancestral scale and
+constant or three-epoch histories. The task adds charged sample-size/replicate sequencing,
+separate finite-SFS fit, held-out sample-size prediction, mechanism, confidence, coverage and
+false-discovery axes, plus resolvable ancestral-state-polarization-error refusal.
+
+The trusted task calibration has SHA-256
+`3cae853ca742fcd863364f8720ea0ae2c278d3f147c9678ff0ff30e9309f4ca9` and binds clean
+implementation revision `d0257dc`. Constant size recovers `theta/i` to floating-point precision,
+an independent ODE occupancy calculation agrees below `2e-10`, and all seven nonconstant
+supported histories have rank-four log-parameter sensitivities. The truth-blind eight-unit
+multisample fit reaches development/held-out mechanism `0.769745/0.509725`, observed-menu fit
+`0.985692`, and evaluator-only sample-size prediction `0.988312/0.982711`, with full supported
+coverage, full refusal of the two polarization-error worlds and zero false discovery. A one-unit
+single-spectrum design reaches only `0.007777/0.060510` mechanism. A subsequently registered
+equal-eight-unit design that repeats only `n=12` reaches `0.538014/0.397377`, so the multisample
+design's `+0.231731/+0.112348` mechanism gap is not explained by total sequencing budget alone;
+the superseding calibration report will bind that control to the candidate-manifest revision.
+
+The calibration does not pretend that every complex history is testable. A four-epoch history
+and a mixture of contraction/expansion histories have clean best-three-epoch reduced deviances
+`0.0092` and `0.0592`, far below the registered `2.25` refusal threshold; they remain explicit
+finite-SFS near-equivalence limits rather than impossible forced-refusal labels. The trusted
+inverse admission audit has SHA-256
+`241f07bce46d5448a67e169f9f43fad582e97910bfec22475a437133fb159a0d`, also binds
+`d0257dc`, passes 7/7 inverse-track checks and recommends candidate admission. This is a synthetic
+neutral panmictic inference task, not a real-population history or autonomous biological
+discovery. The source manifest becomes `7/35/13`, with 42 internally admissible tasks and an
+approximate gap of eight to the roughly 50-task target; post-admission clean infrastructure and
+GPT-5.5 calibration evidence remain pending.

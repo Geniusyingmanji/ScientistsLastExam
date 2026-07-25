@@ -27,6 +27,7 @@ from frontier_science.provenance import finalize_report_trust, source_provenance
 
 REFERENCE_DESIGN = ((20, 4), (48, 3), (64, 2))
 UNDERINFORMATIVE_DESIGN = ((12, 1),)
+EQUAL_BUDGET_SMALL_SAMPLE_DESIGN = ((12, 4),) * 8
 REFUSAL_REDUCED_DEVIANCE = 2.25
 
 
@@ -405,6 +406,9 @@ def calibrate():
     underinformative = oracle.evaluate(
         _classical_policy(oracle, UNDERINFORMATIVE_DESIGN)
     )
+    equal_budget_small_sample = oracle.evaluate(
+        _classical_policy(oracle, EQUAL_BUDGET_SMALL_SAMPLE_DESIGN)
+    )
     reference = oracle.evaluate(_ExactReferencePolicy(oracle))
     exact = _exact_checks(oracle)
     identifiability, misspecified = [], []
@@ -440,6 +444,18 @@ def calibrate():
         and underinformative["development_mean_budget_used"] == 1.0
         and underinformative["heldout_mean_budget_used"] == 1.0
         and classical["combined_score"] > underinformative["combined_score"]
+        and equal_budget_small_sample["development_mean_budget_used"] == 8.0
+        and equal_budget_small_sample["heldout_mean_budget_used"] == 8.0
+        and classical["combined_score"]
+        > equal_budget_small_sample["combined_score"] + 0.15
+        and classical["heldout_policy_score"]
+        > equal_budget_small_sample["heldout_policy_score"] + 0.08
+        and equal_budget_small_sample["development_supported_claim_coverage"] == 1.0
+        and equal_budget_small_sample["heldout_supported_claim_coverage"] == 1.0
+        and equal_budget_small_sample["development_unsupported_refusal_rate"] == 1.0
+        and equal_budget_small_sample["heldout_unsupported_refusal_rate"] == 1.0
+        and equal_budget_small_sample["development_false_discovery_rate"] == 0.0
+        and equal_budget_small_sample["heldout_false_discovery_rate"] == 0.0
     )
     execution_passed = bool(
         oracle.DEMOGRAPHIC_SFS_V2
@@ -449,6 +465,8 @@ def calibrate():
         and classical["valid"] == 1.0
         and classical["heldout_feasibility_rate"] == 1.0
         and underinformative["valid"] == 1.0
+        and equal_budget_small_sample["valid"] == 1.0
+        and equal_budget_small_sample["heldout_feasibility_rate"] == 1.0
         and reference["valid"] == 1.0
         and reference["combined_score"] == 1.0
         and reference["heldout_policy_score"] == 1.0
@@ -502,6 +520,7 @@ def calibrate():
         "always_abstain_baseline": baseline,
         "truth_blind_multisample_fit": classical,
         "underinformative_single_spectrum_fit": underinformative,
+        "equal_budget_repeated_small_sample_fit": equal_budget_small_sample,
         "exact_reference": reference,
         "exact_parameter_or_refusal_checks": exact,
         "identifiability_checks": identifiability,
@@ -515,9 +534,14 @@ def calibrate():
         "difficulty_gate": {
             "reference_design": [list(value) for value in REFERENCE_DESIGN],
             "underinformative_design": [list(value) for value in UNDERINFORMATIVE_DESIGN],
+            "equal_budget_small_sample_design": [
+                list(value) for value in EQUAL_BUDGET_SMALL_SAMPLE_DESIGN
+            ],
             "refusal_reduced_deviance": REFUSAL_REDUCED_DEVIANCE,
             "required_full_design_budget": 8,
             "required_underinformative_budget": 1,
+            "minimum_multisample_minus_equal_budget_development_gap": 0.15,
+            "minimum_multisample_minus_equal_budget_heldout_gap": 0.08,
             "passed": difficulty_passed,
         },
         "citation_validation": {
