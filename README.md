@@ -62,8 +62,9 @@ The current audit reports:
   packages. Security passes 18/18 adversarial tests. The 57×2 baseline v40 reports 57/57
   deterministic, valid and fail-closed tasks with zero infrastructure failures. The latest
   full-suite v8 binds clean revision `0c0ca5e` and passes 404/404 tests in 1247.653 seconds.
-  Cross-task summary v25 binds clean revision `b85b0ee` and contains 63 normal single-run
-  conditions over 32 tasks.
+  Cross-task summary v26 (SHA-256
+  `4be6c33217f6b3655e8c1571b34064a7818be813eaf8f53bc9d8b86091997051`) binds clean
+  revision `3df0877` and contains 65 normal single-run conditions over 33 tasks.
 - Current source manifest: 7 certified / 38 candidate / 12 quarantined. ProteinStabilityDesign
   rebuilds 2,756 reliable double-mutant records across five
   development and three held-out domains from hash-bound ProteinGym v1.3/Tsuboyama sources.
@@ -263,6 +264,20 @@ approximate gap of 5 to the roughly 50-task target. Its clean-revision calibrati
 ideal one-through-four-junction efficiencies `0.33695/0.45735/0.51291/0.55329`, with nominal
 reference score `1.000/1.000` and minimax-reference nominal/robust score
 `0.963/0.965` and `1.000/1.000`; these are reduced-order task anchors, not device records.
+Three same-model GPT-5.5 calibrations bind clean revision `e57bb68`. Budget one reaches
+development/held-out nominal `0.994571/0.993728` but development/held-out robustness
+`0.862800/0.806769`. Normal budget three accepts `0.974838→0.993821`, while its selected
+held-out robustness is `0.814356`; a frozen-parent batch selects nominal `0.999926` with held-out
+robustness `0.824565`. Across seven proposals, five are valid and two have sanitized candidate
+runtime errors, with no infrastructure failure. These one-run conditions are not token- or
+wall-time-matched and the endpoint has no generation seed, so their ordering is not a feedback-
+effect estimate. The selected programs optimize a known public detailed-balance model; they are
+not photovoltaic device records, new materials or autonomous discovery.
+The budget-one, normal budget-three and frozen-parent reports have SHA-256
+`6402d412916e5d4b252a1d5b7a4a483cfe2c6b0a070f5b8e6c1dac34f5b607c5`,
+`581a668727b27a4d621ebf3bb6b2f057595098b98478d706f709183a22428aaa` and
+`07d3a6d37afa04791eac0dc38b17cf9857be70f77e561a3cf131fb08438538f2`; the derived
+analysis has SHA-256 `e938f0bc635ec1569a2276a9041995ee957eeb89248db008dc5a48a5e8658607`.
 GeneNetworkIntervention adds an active nonlinear signed-network, protected-readout intervention,
 sealed-transfer and null/latent-regulator refusal candidate. Its truth-blind nonlinear reference
 scores `0.9053/0.8932` development/held-out joint quality with zero false discovery. Across the
@@ -303,8 +318,9 @@ unsupported-world refusal. Across budget-one, normal budget-three and selection-
 three GPT-5.5 runs, four proposals are schema-invalid and three are valid empty abstentions; none
 screens evidence or requests confirmation. Normal iteration repairs executable validity after its
 first proposal but does not cross the scientific-workflow hurdle. The single-run normal/open-loop
-contrast remains non-causal. The updated cross-task summary contains 63 normal conditions over
-32 tasks.
+contrast remains non-causal. The updated cross-task summary v26 contains 65 normal conditions over
+33 tasks; it adds PhotovoltaicTandemDesign-v1 budgets one and three without averaging its
+task-specific science axes into a common score.
 
 The latest EdgeBench re-audit keeps its upstream facts at arXiv `2607.05155v1`, SForge
 `a87350a` and public dataset `47846a4`. In addition to E1--E36, the science plan now preregisters

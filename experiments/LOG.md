@@ -2516,4 +2516,44 @@ all 18/18 adversarial tests. The 57×2 baseline v40
 deterministic, valid and fail-closed tasks with zero infrastructure failures. Full-suite v8
 (`240e51812a71e0d18f0d410b8f1596c43e482d98a46e9af4ed79cdaf0cc788e6`) passes 404/404
 in 1247.653 seconds. All passing closeout reports bind clean source `0c0ca5e`; GPT-5.5 task
-calibration remains unrun.
+calibration was run only after this task closeout.
+
+## 2026-07-25 — PhotovoltaicTandemDesign-v1 GPT-5.5 calibration and analysis
+
+Three trusted GPT-5.5 reports bind clean model source `e57bb68`: budget one (SHA-256
+`6402d412916e5d4b252a1d5b7a4a483cfe2c6b0a070f5b8e6c1dac34f5b607c5`), normal budget
+three (`581a668727b27a4d621ebf3bb6b2f057595098b98478d706f709183a22428aaa`) and frozen-
+parent budget three (`07d3a6d37afa04791eac0dc38b17cf9857be70f77e561a3cf131fb08438538f2`).
+Budget one reaches development/held-out nominal `0.994571/0.993728` and development/held-out
+robustness `0.862800/0.806769`, using `0.996735/0.998258` of the fabrication cost.
+
+The normal budget-three trajectory is runtime-invalid → `0.974838` → `0.993821`; both valid
+proposals are accepted, and the selected artifact reaches held-out nominal `0.989500` and
+development/held-out robustness `0.827879/0.814356`. The frozen-parent trajectory scores
+`0.999926`, runtime-invalid and `0.942996`; offline selection keeps the first proposal, whose
+held-out nominal and development/held-out robustness are `0.999878` and `0.898214/0.824565`.
+Across all three conditions, five of seven proposals are valid, two have sanitized
+`candidate_runtime_error`, and none has an infrastructure failure.
+
+Normal and frozen-parent budget three both use four oracle calls, but use 20,192 versus 16,723
+tokens and 249 versus 660 seconds. Azure exposes no server-side generation seed, their prompt and
+parent histories differ, and each condition contains one run. Their ordering is therefore
+descriptive rather than a feedback-effect estimate. All three selected programs use nearly the
+full fabrication cost, but the sealed shifts alter physical performance rather than the cost
+constraint. The observed cost use does not explain the robustness gap, and this task does not yet
+implement shifted cost-overrun or constraint-margin axes.
+
+The trusted derived analysis (SHA-256
+`e938f0bc635ec1569a2276a9041995ee957eeb89248db008dc5a48a5e8658607`) binds clean analysis
+source `744ea3a`. It verifies report and raw-trajectory hashes, runtime/source/LLM-condition
+equivalence, normal and frozen-parent lineage, proposal accounting, sealed science axes and
+narrow fixed-world/evaluator-term scans of retained best artifacts. The task runtime is unchanged
+between the model and analysis revisions. These same-model detailed-balance results support task
+and model calibration only, not feedback causality, population performance, material/device
+performance, manufacturing validation or autonomous scientific discovery.
+
+Cross-task summary v26 (SHA-256
+`4be6c33217f6b3655e8c1571b34064a7818be813eaf8f53bc9d8b86091997051`) binds clean source
+`3df0877` and validates 65 normal single-run conditions across 33 tasks. It adds photovoltaic
+budgets one and three; strict open-loop diagnostics remain task-specific and heterogeneous science
+axes are not averaged.

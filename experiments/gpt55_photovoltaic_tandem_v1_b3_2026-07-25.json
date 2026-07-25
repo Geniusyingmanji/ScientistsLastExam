@@ -1,0 +1,423 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_SECURE_EVAL",
+  "evidence_scope": "MODEL_PERFORMANCE",
+  "created_at": "2026-07-25T16:07:58.291560+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "e57bb682930d65c39699b2153e8743063587b97e",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "/home/azureuser/workspace-gzy/zyf/frontier-science/scripts/batch_evolve.py",
+      "--all",
+      "--tasks",
+      "Photovoltaics/PhotovoltaicTandemDesign",
+      "--algorithms",
+      "greedy_rewrite",
+      "--feedback-modes",
+      "normal",
+      "--seeds",
+      "1",
+      "--budget",
+      "3",
+      "--timeout",
+      "600",
+      "--llm-config",
+      "frontier_science/conf/llm/local.yaml",
+      "--workdir",
+      "runs/photovoltaic_tandem_v1_b3",
+      "--output",
+      "experiments/gpt55_photovoltaic_tandem_v1_b3_2026-07-25.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "config": {
+    "tasks": [
+      "Photovoltaics/PhotovoltaicTandemDesign"
+    ],
+    "algorithms": [
+      "greedy_rewrite"
+    ],
+    "feedback_modes": [
+      "normal"
+    ],
+    "condition_order": "as_listed_for_even_seeds_reversed_for_odd_seeds",
+    "seeds": [
+      1
+    ],
+    "budget": 3,
+    "timeout_s": 600.0,
+    "work_root": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/photovoltaic_tandem_v1_b3",
+    "llm_condition_sha256": "5b0df4671481f6b3505155bc6c5654a64c4da5591422fb806904e7d0f44fc4d2",
+    "llm": {
+      "wire": "responses",
+      "endpoint_sha256": "b22995a1fcaf8ad713ac37716f006c717313dfdebd357ac02a077a5582650bb6",
+      "model": "gpt-5.5",
+      "max_output_tokens": 16000,
+      "temperature": null,
+      "reasoning_effort": "low",
+      "input_cost_per_million": null,
+      "output_cost_per_million": null,
+      "server_side_seed_control": false
+    }
+  },
+  "runs": [
+    {
+      "task": "Photovoltaics/PhotovoltaicTandemDesign",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 1,
+      "baseline": 0.0,
+      "best": 0.9938209332027605,
+      "accepted": 2,
+      "evaluated": 4,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/photovoltaic_tandem_v1_b3/Photovoltaics__PhotovoltaicTandemDesign/greedy_rewrite/normal/seed_1",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 4,
+        "budget_units": 4,
+        "best_score": 0.9938209332027605,
+        "best_so_far_auc": 0.4921646257610941,
+        "valid_rate": 0.75,
+        "accepted": 2,
+        "wall_seconds": 248.5082899471745,
+        "llm": {
+          "calls": 3,
+          "provider_usage_records": 3,
+          "input_tokens": 8271,
+          "output_tokens": 11921,
+          "total_tokens": 20192,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "Photovoltaics/PhotovoltaicTandemDesign",
+        "seed": 1,
+        "baseline_score": 0.0,
+        "budget": 3,
+        "feedback_mode": "normal",
+        "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "online_incumbent"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 1,
+        "trajectory_sha256": "352dee2d42142087cf882c7de5f1a5357696755c2680a5b072a255af4785ef7c",
+        "events": [
+          {
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "cb7b5a4c674603b59a149718b8491fc41a2936509101ad77db41050b81acfb93",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.0,
+              "raw_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "robustness_score": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "heldout_feasibility_rate": 1.0,
+              "development_mean_nominal_efficiency": 0.23902148230674167,
+              "heldout_mean_nominal_efficiency": 0.2349413416540853,
+              "development_minimum_shift_efficiency": 0.12615677577213413,
+              "heldout_minimum_shift_efficiency": 0.1349466912592541,
+              "development_mean_current_matching_ratio": 1.0,
+              "heldout_mean_current_matching_ratio": 1.0,
+              "development_mean_cost_utilization": 0.8424348022037098,
+              "heldout_mean_cost_utilization": 0.8347114521091362,
+              "development_mean_junction_count": 1.0,
+              "heldout_mean_junction_count": 1.0,
+              "candidate_instance_call_count": 8,
+              "candidate_instance_valid_rate": 1.0
+            },
+            "algorithm_metadata": {},
+            "error": null
+          },
+          {
+            "step": 1,
+            "oracle_calls": 2,
+            "budget_units": 2,
+            "score": -1e+18,
+            "best_score": 0.0,
+            "valid": false,
+            "accepted": false,
+            "candidate_sha256": "b5aae8edc77ef75db612c9f4f43cb91dad5bb158e465adc9299fac1120e780f5",
+            "parent_sha256": "cb7b5a4c674603b59a149718b8491fc41a2936509101ad77db41050b81acfb93",
+            "metrics": {
+              "combined_score": -1e+18,
+              "valid": 0.0,
+              "error_message": "candidate invalid: candidate_runtime_error",
+              "candidate_failure_kind": "candidate_runtime_error",
+              "raw_score": -1e+18
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 1
+            },
+            "error": "candidate invalid: candidate_runtime_error"
+          },
+          {
+            "step": 2,
+            "oracle_calls": 3,
+            "budget_units": 3,
+            "score": 0.9748375698416158,
+            "best_score": 0.9748375698416158,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "b325583e94b3d733dc216d81b0dc7062fc9bcd69a66ff97895ca55376fc2c431",
+            "parent_sha256": "cb7b5a4c674603b59a149718b8491fc41a2936509101ad77db41050b81acfb93",
+            "metrics": {
+              "combined_score": 0.9748375698416158,
+              "raw_score": 0.9748375698416158,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "robustness_score": 0.7847111397973234,
+              "heldout_policy_score": 0.9773458214549264,
+              "heldout_robustness_score": 0.7815536509485437,
+              "heldout_feasibility_rate": 1.0,
+              "development_mean_nominal_efficiency": 0.33496033771394934,
+              "heldout_mean_nominal_efficiency": 0.3361636853591489,
+              "development_minimum_shift_efficiency": 0.16668179637075067,
+              "heldout_minimum_shift_efficiency": 0.1818828841188553,
+              "development_mean_current_matching_ratio": 0.9651314266768708,
+              "heldout_mean_current_matching_ratio": 0.9757542726202265,
+              "development_mean_cost_utilization": 0.9929488743916194,
+              "heldout_mean_cost_utilization": 0.9946104473629395,
+              "development_mean_junction_count": 2.066666666666667,
+              "heldout_mean_junction_count": 2.0,
+              "candidate_instance_call_count": 8,
+              "candidate_instance_valid_rate": 1.0
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 2
+            },
+            "error": null
+          },
+          {
+            "step": 3,
+            "oracle_calls": 4,
+            "budget_units": 4,
+            "score": 0.9938209332027605,
+            "best_score": 0.9938209332027605,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "6df9e132717f2a143a0a5ff3fde4bbad33dca014e71f94a2b4acb30efcb09c90",
+            "parent_sha256": "b325583e94b3d733dc216d81b0dc7062fc9bcd69a66ff97895ca55376fc2c431",
+            "metrics": {
+              "combined_score": 0.9938209332027605,
+              "raw_score": 0.9938209332027605,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "robustness_score": 0.8278787131703245,
+              "heldout_policy_score": 0.9894996656913322,
+              "heldout_robustness_score": 0.8143556381555185,
+              "heldout_feasibility_rate": 1.0,
+              "development_mean_nominal_efficiency": 0.3377865052774155,
+              "heldout_mean_nominal_efficiency": 0.3373222303613177,
+              "development_minimum_shift_efficiency": 0.16668193883552232,
+              "heldout_minimum_shift_efficiency": 0.18180616818360806,
+              "development_mean_current_matching_ratio": 0.9738638663801865,
+              "heldout_mean_current_matching_ratio": 0.966995375341337,
+              "development_mean_cost_utilization": 1.0,
+              "heldout_mean_cost_utilization": 1.0,
+              "development_mean_junction_count": 2.2,
+              "heldout_mean_junction_count": 2.222222222222222,
+              "candidate_instance_call_count": 8,
+              "candidate_instance_valid_rate": 1.0
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 3
+            },
+            "error": null
+          }
+        ]
+      }
+    }
+  ],
+  "aggregate": {
+    "attempt_count": 1,
+    "superseded_attempts": 0,
+    "failed_attempts": 0,
+    "attempt_failure_rate": 0.0,
+    "recovered_runs": 0,
+    "successful_runs": 1,
+    "failed_runs": 0,
+    "intent_to_evaluate": {
+      "scheduled_runs": 1,
+      "successful_runs": 1,
+      "terminal_failed_runs": 0,
+      "completion_rate": 1.0,
+      "run_cells_with_any_failed_attempt": 0,
+      "recovered_runs": 0
+    },
+    "quality_metrics_scope": "latest successful runs only; interpret jointly with intent_to_evaluate and failed_attempts",
+    "by_condition": {
+      "Photovoltaics/PhotovoltaicTandemDesign|greedy_rewrite|normal": {
+        "n": 1,
+        "scheduled_n": 1,
+        "successful_runs": 1,
+        "terminal_failed_runs": 0,
+        "completion_rate": 1.0,
+        "attempt_count": 1,
+        "failed_attempts": 0,
+        "recovered_runs": 0,
+        "best_score": {
+          "n": 1,
+          "mean": 0.9938209332027605,
+          "ci95_low": 0.9938209332027605,
+          "ci95_high": 0.9938209332027605
+        },
+        "best_so_far_auc": {
+          "n": 1,
+          "mean": 0.4921646257610941,
+          "ci95_low": 0.4921646257610941,
+          "ci95_high": 0.4921646257610941
+        },
+        "budget_units": {
+          "n": 1,
+          "mean": 4.0,
+          "ci95_low": 4.0,
+          "ci95_high": 4.0
+        },
+        "oracle_calls": {
+          "n": 1,
+          "mean": 4.0,
+          "ci95_low": 4.0,
+          "ci95_high": 4.0
+        },
+        "wall_seconds": {
+          "n": 1,
+          "mean": 248.5082899471745,
+          "ci95_low": 248.5082899471745,
+          "ci95_high": 248.5082899471745
+        },
+        "total_tokens": {
+          "n": 1,
+          "mean": 20192.0,
+          "ci95_low": 20192.0,
+          "ci95_high": 20192.0
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      }
+    },
+    "overall": {
+      "best_score": {
+        "n": 1,
+        "mean": 0.9938209332027605,
+        "ci95_low": 0.9938209332027605,
+        "ci95_high": 0.9938209332027605
+      },
+      "best_so_far_auc": {
+        "n": 1,
+        "mean": 0.4921646257610941,
+        "ci95_low": 0.4921646257610941,
+        "ci95_high": 0.4921646257610941
+      },
+      "budget_units": {
+        "n": 1,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "oracle_calls": {
+        "n": 1,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "wall_seconds": {
+        "n": 1,
+        "mean": 248.5082899471745,
+        "ci95_low": 248.5082899471745,
+        "ci95_high": 248.5082899471745
+      },
+      "total_tokens": {
+        "n": 1,
+        "mean": 20192.0,
+        "ci95_low": 20192.0,
+        "ci95_high": 20192.0
+      },
+      "estimated_cost_usd": {
+        "n": 0,
+        "mean": null,
+        "ci95_low": null,
+        "ci95_high": null
+      }
+    },
+    "overall_valid_only": {
+      "best_score": {
+        "n": 1,
+        "mean": 0.9938209332027605,
+        "ci95_low": 0.9938209332027605,
+        "ci95_high": 0.9938209332027605
+      },
+      "best_so_far_auc": {
+        "n": 1,
+        "mean": 0.4921646257610941,
+        "ci95_low": 0.4921646257610941,
+        "ci95_high": 0.4921646257610941
+      },
+      "budget_units": {
+        "n": 1,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "oracle_calls": {
+        "n": 1,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "wall_seconds": {
+        "n": 1,
+        "mean": 248.5082899471745,
+        "ci95_low": 248.5082899471745,
+        "ci95_high": 248.5082899471745
+      },
+      "total_tokens": {
+        "n": 1,
+        "mean": 20192.0,
+        "ci95_low": 20192.0,
+        "ci95_high": 20192.0
+      },
+      "estimated_cost_usd": {
+        "n": 0,
+        "mean": null,
+        "ci95_low": null,
+        "ci95_high": null
+      }
+    }
+  },
+  "completed_at": "2026-07-25T16:12:06.811570+00:00",
+  "execution_passed": true,
+  "trust_decision": "trusted_clean_revision",
+  "trusted_evidence": true,
+  "passed": true
+}

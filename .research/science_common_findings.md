@@ -9,14 +9,14 @@ DistillationColumnDesign-v2, HartreeFockSCF-v2, RoomImpulseResponse-v2,
 ConvectionDiffusionOpt-v2, SeismicWaveInversion-v2, RankineCycleOpt-v2 and MOSFETDoping-v2. The
 list now also includes RANSCalibration-v2, GeneNetworkIntervention-v1, RNAInverseDesign-v1,
 ProteinStabilityDesign-v1, ElectrolyteConductivityDesign-v1, DemographicSFS-v2 and
-CalorimeterDesign-v2, plus ProspectiveMetaAnalysis-v1. The 63 normal-feedback model conditions
-across these 32 tasks each
+CalorimeterDesign-v2, ProspectiveMetaAnalysis-v1 and PhotovoltaicTandemDesign-v1. The 65
+normal-feedback model conditions across these 33 tasks each
 contain one seed and proposal budget one or three. They calibrate tasks and motivate experiments;
 they are not a model leaderboard, a causal feedback study or population evidence.
 
 The portable machine record
-`experiments/science_calibration_summary_2026-07-25_v25.json` retains every top-level scalar metric,
-candidate lineage hash and raw trajectory SHA-256 for all 63 normal conditions.
+`experiments/science_calibration_summary_2026-07-25_v26.json` retains every top-level scalar metric,
+candidate lineage hash and raw trajectory SHA-256 for all 65 normal conditions.
 Additional strict diagnostics for Distillation-v2, Hartree--Fock and room acoustics are bound
 separately by `experiments/distillation_v2_calibration_analysis_2026-07-23.json`,
 `experiments/hartree_fock_v2_calibration_analysis_2026-07-23.json` and
@@ -32,7 +32,8 @@ separately by `experiments/distillation_v2_calibration_analysis_2026-07-23.json`
 `experiments/electrolyte_conductivity_design_calibration_analysis_2026-07-25.json`,
 `experiments/demographic_sfs_v2_calibration_analysis_2026-07-25.json` and
 `experiments/calorimeter_v2_calibration_analysis_2026-07-25.json`, and
-`experiments/prospective_meta_analysis_calibration_analysis_2026-07-25.json`. Strict selection-blind
+`experiments/prospective_meta_analysis_calibration_analysis_2026-07-25.json` and
+`experiments/photovoltaic_tandem_v1_calibration_analysis_2026-07-25.json`. Strict selection-blind
 diagnostics remain in task-specific analysis because they are not normal-feedback calibrations.
 The underlying reports bind the task-specific source revision. Pendulum's initial budget-one
 run on revision `57c0e1b` is
@@ -116,6 +117,9 @@ by the corrected-contract run on `2557adb`.
 | CalorimeterDesign-v2, three GPT-5.5 conditions | all seven proposals are runtime-invalid and the valid baseline remains at zero | no proposal reaches the nominal–robust tradeoff; zero infrastructure failures | The three retained terminal sources compile but use nonexistent public keys; four intermediate sources were not retained and cannot be diagnosed more narrowly. The one-run normal/open-loop contrast is unseeded, non-token-matched and non-causal. |
 | ProspectiveMetaAnalysis-v1, calibrated references | truth-blind development/held-out `0.934/0.886`; evidence-integrity and supported-claim coverage `1/1`; false discovery `0/0` | robustness `0.299/0.542`; nonlinear refusal `1/1`; every naive highlighted-article fit has intercept bias at least `0.063` | Registry-first lineage de-duplication and preregistered-primary extraction prevent the planted publication/duplication shortcut. Separate lack-of-fit, forecast, study-design and fresh-confirmation axes leave measurable headroom. This is a synthetic standardized-summary laboratory. |
 | ProspectiveMetaAnalysis-v1, three GPT-5.5 conditions | 4/7 proposals are schema-invalid; 3/7 are valid empty abstentions; all selected scores remain zero | no proposal has nonzero evidence integrity, makes a confirmation call or covers a supported claim | Normal budget three changes from schema failure at step 1 to legal abstention at steps 2–3, but does not enter the evidence workflow. A scalar zero therefore merges protocol failure with epistemic over-conservatism. The one-run normal/open-loop contrast is descriptive, not causal. |
+| PhotovoltaicTandemDesign-v1, budget 1 | development/held-out nominal `0.994571/0.993728`; cost utilization `0.996735/0.998258` | development/held-out robustness `0.862800/0.806769` | One proposal nearly saturates the public nominal detailed-balance objective while leaving a larger response to sealed thermal, process and optical shifts. This is known-model algorithm synthesis, not a device or materials result. |
+| PhotovoltaicTandemDesign-v1, normal budget 3 | proposal outcomes runtime-invalid → `0.974838` → `0.993821`; selected held-out nominal `0.989500`; cost utilization `1/1` | selected development/held-out robustness `0.827879/0.814356` | Two valid rewrites improve the visible trajectory, but nominal selection leaves sealed robustness headroom. One unseeded trajectory cannot attribute either movement to feedback. |
+| PhotovoltaicTandemDesign-v1, selection-blind budget 3 | frozen-parent proposals score `0.999926`, runtime-invalid and `0.942996`; selected held-out nominal `0.999878` | selected development/held-out robustness `0.898214/0.824565` | Offline selection finds the highest nominal artifact among the three single-run conditions, but unequal tokens and wall time plus uncontrolled model sampling preclude a feedback-effect comparison. |
 
 OPF's `robustness_score` combines security-constrained economic quality with overload penalties.
 It is not a pure safety probability. The proportional baseline is feasible for every tested
@@ -128,7 +132,8 @@ cost separately.
 ### 1. One-step success often measures algorithm synthesis, not scientific learning
 
 GPT-5.5 writes recognizable multiplicative/Fedorov design, GRAPE, convex DC-OPF, window/null-
-synthesis, deterministic multistart SCF and Sobol/Pareto cycle-design procedures
+synthesis, deterministic multistart SCF, Sobol/Pareto cycle-design and finite-absorption
+detailed-balance tandem-design procedures
 in one proposal. These results directly measure whether a model can instantiate a known method
 inside a new executable contract. They do not establish that score feedback produced a new
 scientific strategy. Budget-one saturation is therefore useful as an on-ramp calibration but
@@ -147,8 +152,8 @@ requires repeated paired runs and hidden server-side instances.
 
 ### 3. Held-out nominal transfer does not imply robustness
 
-Gate synthesis, OPF, Antenna, the absorber and Rankine calibrations reach strong nominal scores on
-interleaved held-out instances.
+Gate synthesis, OPF, Antenna, the absorber, Rankine and photovoltaic calibrations reach strong
+nominal scores on interleaved held-out instances.
 Their sealed perturbation or contingency scores remain lower. Procedural held-out networks or
 targets test policy transfer, whereas altered physics, hardware error and component failure test
 robustness. Future task cards must specify both axes instead of using one generic validation
@@ -166,6 +171,12 @@ yet only `0.449` held-out robustness versus `0.858`. Its nominal geometry is val
 manufacturing pattern leaves the hard panel envelope on two development instances and one
 held-out instance. A transfer curve over nominal bands would therefore reverse the engineering
 conclusion supplied by the manufacturing-shift curve.
+
+PhotovoltaicTandemDesign-v1 supplies the same separation under spectral and temperature transfer.
+The three selected artifacts retain held-out nominal scores from `0.989500` to `0.999878`, while
+held-out robustness ranges only from `0.806769` to `0.824565`. These values come from the same
+reduced-order detailed-balance evaluator, so they establish a benchmark-axis distinction rather
+than cross-model, manufacturing or device validation.
 
 ### 4. Held-out transfer and visible-repeat robustness do not imply independent replication
 
@@ -394,8 +405,18 @@ DemographicSFS-v2 supplies a direct selection-axis counterexample within one nor
 Development selection keeps step one at mechanism `0.640` and held-out mechanism `0.397`; it
 rejects step two because development mechanism falls to `0.521`, even though held-out mechanism
 rises to `0.603`. Step three nearly recovers development (`0.637`) but held-out mechanism is only
-`0.417`. This does not prove a feedback treatment effect, but it does prove that a development-
-only incumbent rule can discard the best observed transfer mechanism when that axis is sealed.
+`0.417`. This is not a feedback treatment estimate. It directly records a case in which a
+development-only incumbent rule discards the best observed transfer mechanism because that axis
+is sealed.
+
+PhotovoltaicTandemDesign-v1 adds a near-ceiling counterpart. Normal budget three first produces a
+runtime-invalid proposal and then accepts nominal scores `0.974838` and `0.993821`; the selected
+held-out nominal score is `0.989500`, but held-out robustness is `0.814356`. A frozen-parent batch
+selects a higher nominal artifact at `0.999926`, with held-out robustness `0.824565`. Both
+conditions use four oracle calls, but the normal run uses 20,192 tokens and 249 seconds versus
+16,723 tokens and 660 seconds, and the endpoint supplies no generation seed. The contrast does
+not estimate a feedback effect. It identifies the next treatment: expose a label-blind
+robustness-relevant diagnostic, while preserving the sealed shifts used for final validation.
 
 ### 8. Contract completeness must precede headroom claims
 
@@ -431,6 +452,14 @@ selected designs require a fidelity ladder such as event-level transport, electr
 manufacturing simulation followed by physical replication. This reduced-order calorimeter result
 motivates that protocol; it is not evidence that a two-percent margin is universal or that a
 detector has been validated.
+
+The photovoltaic calibration also shows what this protocol cannot infer from resource utilization
+alone. Its three selected model artifacts use `0.996735–1.000000` of the development cost and
+retain a sealed robustness gap, but the sealed perturbations change optical and thermal
+performance without changing the fabrication-cost constraint. Full cost use therefore cannot be
+assigned as the cause of the robustness gap. PhotovoltaicTandemDesign-v1 still lacks shifted cost
+overrun and explicit constraint-margin axes; adding those axes is required before it can test a
+performance–cost–margin claim.
 
 ## Preregistered next tests
 
