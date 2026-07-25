@@ -1,0 +1,5 @@
+1) Only edit solution.py. Keep design_stable_batch(problem, assay).
+2) Return exactly eight distinct full-length sequences from the declared feasible double-mutant pairs.
+3) Use at most twelve charged assays per domain; repeats consume budget and caught callback violations still fail.
+4) Candidate code gets a fresh sandbox for every domain. Do not branch on evaluator-only labels or read verification/frontier_eval.
+5) NumPy/SciPy only. Deterministic CPU code. No network or process creation.

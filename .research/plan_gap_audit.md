@@ -1,8 +1,8 @@
 # Frontier-Science plan gap audit
 
 Audit date: 2026-07-19 (UTC), with the experiment roadmap extended after repeated full-text
-EdgeBench comparison and the task inventory updated on 2026-07-24 through
-RNAInverseDesign-v1.
+EdgeBench comparison and the task inventory updated on 2026-07-25 through the quarantined
+ProteinStabilityDesign-v1 implementation.
 Evidence base: `literature_matrix.md`,
 `science_experiment_plan.md`, current source/tests, and the dated artifacts in `experiments/`.
 
@@ -27,8 +27,8 @@ physical validation, and auditable claim–evidence provenance.
 |---|---|---|---|
 | Candidate/oracle isolation | Implemented | Clean-revision security v24: 18/18 adversarial tests; Bubblewrap, no network, read-only mounts, resource/seccomp limits, typed RPC, fresh multi-world sessions and candidate-exception sanitization | Reproduce in clean Linux CI; document portability/non-Linux behavior |
 | Fail-closed trusted metrics | Implemented | Clean-revision 53×2 v30: 53 deterministic, 53 valid, 53 fail-closed and zero infrastructure failures | Repair or quarantine every future invalid candidate oracle before certification |
-| Task admission policy | Implemented, narrow | Current source manifest: 7 certified / 32 candidate / 14 quarantined; RNAInverseDesign adds constrained sequence design, exact ensemble scoring, held-out structure families and proxy-false-promotion diagnostics | Independent domain + evaluator reviews are still declarations, not completed external review |
-| Scientific validity of inventory | Audited, sparse | All original 50 packages passed adversarial admission; later substantive rebuilds and additions bring inventory to 53 and leave 39 internally admissible packages | Add approximately 11 net admissible tasks to reach about 50; hidden/generated instances and shortcut analysis remain mandatory |
+| Task admission policy | Implemented, narrow | Current source manifest: 7 certified / 32 candidate / 15 quarantined; ProteinStabilityDesign adds hash-bound real DMS replay, charged assays, held-out domains and independent protease axes but is not yet admitted | Complete GPT-5.5 headroom and independent admission audits; external domain + evaluator reviews remain declarations rather than completed reviews |
+| Scientific validity of inventory | Audited, sparse | All original 50 packages passed adversarial admission; later substantive rebuilds and additions bring inventory to 54 and leave 39 internally admissible packages | Admit or retain quarantine for ProteinStabilityDesign on evidence, then add approximately 10 more net admissible tasks to reach about 50; hidden/generated instances and shortcut analysis remain mandatory |
 | Unified trajectory/accounting | Implemented, protocol-smoked | Clean-revision two-seed baseline smoke; trajectory schema v2, hashes, AUC over `budget_units`, separate `oracle_calls`, wall/token/cost, seed, checkpoint/resume | Validate nonzero-budget schema-v2 artifact replay in CI and version future changes |
 | Feedback controls | Implemented; strict pilot run | None/shuffled prompt-metric modes disclose true-score selection; strict selection-blind freezes parent/metrics; four-task n=3 pilot has no direction-stable lift and is not token-matched | Run token-matched ≥10 paired seeds with score-only, delayed/replayed and strict open-loop controls |
 | Evaluator-only metric sealing | Implemented and integration-verified | Closed search-visible allowlist; search-state redaction/hash-keyed sidecars; candidate-controlled exception text mapped to a finite label-blind taxonomy; current 244-test suite; clean pinned OpenEvolve/TreeQuest/Shinka no-leak report `aff026d` | Extend from baseline smoke to nonzero-budget upstream runs before comparative claims |
@@ -640,8 +640,8 @@ learns whom to trust.
   baselines are valid, deterministic and fail closed.
 - [x] Re-run the deterministic secure baseline, certification and security audits on the clean
   53-task RNAInverseDesign revision (v30/v40/v24).
-- [x] Seven-task certified core, 32 candidates and 14 quarantined packages after all
-  admission waves and the current substantive rebuilds.
+- [x] Seven-task certified core, 32 candidates and 15 quarantined packages after adding the
+  not-yet-admitted ProteinStabilityDesign implementation.
 - [x] Task-card/citation/invariant audit and dated machine-readable evidence.
 - [ ] Add Linux CI reproduction of all dated audits (local clean-revision reproduction is done).
 - [x] Replace the quarantined `ClimateScience/EnergyBalanceModel` with an active, identifiable

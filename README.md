@@ -16,7 +16,7 @@ text-question benchmark named *FrontierScience* in
 
 ## Current status
 
-The repository contains **53 task packages in 49 metadata domains**:
+The repository contains **54 task packages in 50 metadata domains**:
 
 - **7 certified core tasks**: Lennard–Jones clusters, spin glass, Poisson solver,
   matrix-multiplication rank, Cap Set, circle packing, and multilayer thin films.
@@ -31,12 +31,14 @@ The repository contains **53 task packages in 49 metadata domains**:
   acoustics design, active convection--diffusion identification/design, active layered
   reflection acquisition/inversion with explicit model-inadequacy refusal, and constrained RNA
   inverse design with exact ensemble scoring and proxy-false-promotion diagnostics.
-- **14 quarantined tasks** with reproduced scientific-oracle, identifiability, provenance or
-  shortcut defects; these remain inventory packages but are not admissible benchmark tasks.
+- **15 quarantined tasks**: fourteen retain reproduced scientific-oracle, identifiability,
+  provenance or shortcut defects, while the new real-data `ProteinStabilityDesign` package
+  remains quarantined until its model calibration and independent admission audits are complete.
+  Quarantined packages remain inventory artifacts but are not admissible benchmark tasks.
 
 The default CLI exposes only the certified core. `--all` explicitly shows the full
 inventory. Certification status is not a difficulty claim: the inventory metadata contains
-47 `hard` and 6 `flagship` packages, but only certified tasks are benchmark-admissible.
+48 `hard` and 6 `flagship` packages, but only certified tasks are benchmark-admissible.
 
 All candidate code runs in a networkless Bubblewrap sandbox with read-only mounts, resource
 and process limits, and a typed JSON RPC boundary. The trusted parent alone imports the
@@ -47,13 +49,19 @@ controlled exception text is reduced to a fixed label-blind failure taxonomy bef
 search feedback, preventing observations from being carried between worlds through exceptions.
 The current audit reports:
 
-- 317/317 unit, security, protocol, analysis and scientific-invariant tests pass after adding
-  RNAInverseDesign and its calibration analysis. The latest trusted task/security/baseline
+- 328/328 unit, security, protocol, analysis and scientific-invariant tests pass after adding
+  the quarantined ProteinStabilityDesign implementation. The latest trusted task/security/baseline
   reports bind clean source revision `cebd378`; cross-task summary v20 binds revision `30593bb`
-  and contains 53 normal single-run conditions over 27 tasks.
+  and contains 53 normal single-run conditions over 27 tasks. Those trusted reports predate the
+  54th task and therefore remain historical 53-task evidence until regenerated on clean source.
 - The latest trusted 53×2 secure-baseline audit reports 53/53 deterministic, 53/53 valid,
   53/53 fail-closed and zero infrastructure failures.
-- Current source manifest: 7 certified / 32 candidate / 14 quarantined. D-optimal design, quantum
+- Current source manifest: 7 certified / 32 candidate / 15 quarantined. The quarantined
+  ProteinStabilityDesign task rebuilds 2,756 reliable double-mutant records across five
+  development and three held-out domains from hash-bound ProteinGym v1.3/Tsuboyama sources.
+  It separates additive proxy, charged assay, diversity, top-decile, trypsin, chymotrypsin,
+  uncertainty and held-out metrics, but is not counted among the 39 internally admissible tasks
+  before GPT-5.5 calibration and admission audits. D-optimal design, quantum
   gate synthesis, DC optimal power flow, truss sizing, antenna synthesis and NMR peak fitting have been rebuilt with separate sealed
   validation or robustness metrics and re-admitted as candidates. HeatExchanger-v2 additionally
   separates a public constant-property proxy from a sealed segmented temperature-dependent
@@ -237,8 +245,9 @@ audit quarantines seven additional defective candidates. The two P2 smokes are b
 credible multi-seed model-performance evidence. A clean-revision GPT-5.5 budget-one core pilot
 is recorded as task calibration, not a benchmark leaderboard.
 The latest trusted clean-revision certification/security/baseline audits are v40/v24/v30 and
-cover all 53 current task directories. The current source manifest is 7/32/14 and contains
-39 internally admissible tasks, leaving an approximate gap of 11 to the roughly 50-task target.
+cover the 53-task source revision before ProteinStabilityDesign. The current 54-task source
+manifest is 7/32/15 and still contains 39 internally admissible tasks, leaving an approximate
+gap of 11 to the roughly 50-task target until the quarantined protein task passes admission.
 GeneNetworkIntervention adds an active nonlinear signed-network, protected-readout intervention,
 sealed-transfer and null/latent-regulator refusal candidate. Its truth-blind nonlinear reference
 scores `0.9053/0.8932` development/held-out joint quality with zero false discovery. Across the

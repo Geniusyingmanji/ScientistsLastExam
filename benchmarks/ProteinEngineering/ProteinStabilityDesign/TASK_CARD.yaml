@@ -1,0 +1,29 @@
+schema_version: 1
+scientific_question: Under a limited experimental budget, select a diverse batch of double mutants with high folding stability that transfers across held-out protein domains and independent protease readouts.
+artifact: A deterministic policy that chooses charged DMS replay assays and returns eight distinct feasible full-length protein sequences per domain.
+oracle:
+  model: frozen ProteinGym v1.3 processed ddG_ML_float measurements joined to raw Tsuboyama 2023 trypsin and chymotrypsin cDNA-display proteolysis readouts
+  feasibility: exactly eight distinct measured double-mutant sequences at the declared positions, no malformed artifacts, and no more than twelve charged assays per fresh protein-domain session
+  deterministic: true
+normalization:
+  baseline: top eight feasible double mutants under the sum of the two public single-mutation scores, with no assays
+  reference: deterministic full-landscape diversity-aware greedy search with one-swap refinement; it is a strong normalization witness rather than a global-optimality claim
+  score: development mean-stability and batch-diversity utility normalized between baseline and reference; top-decile hits, proxy false promotion, measurement efficiency, held-out transfer and independent protease robustness remain separate
+citations:
+  - id: doi:10.1038/s41586-023-06328-6
+    title: Mega-scale experimental analysis of protein folding stability in biology and design
+  - id: doi:10.5281/zenodo.15293562
+    title: ProteinGym v1.3
+invariants:
+  - every derived candidate is reconstructed from a fixed ProteinGym reference sequence and a validated double-mutation token
+  - processed DMS_score exactly equals the mean raw ddG_ML_float across duplicate amino-acid constructs before a candidate is admitted
+  - single-mutant additive scores are exposed only as a proxy while double-mutant stability labels remain behind a charged callback
+  - raw deltaG_t and deltaG_c measurements are kept separate and evaluator-only rather than replaced with synthetic robustness shifts
+  - every admitted raw construct has finite non-dummy protease-specific delta-G and combined, trypsin and chymotrypsin 95 percent interval widths no greater than 0.5 kcal/mol
+  - five development and three held-out protein domains each contain at least 300 complete double mutants
+  - candidate code receives a fresh sandbox process and private tmpfs for every protein domain
+  - held-out, protease, top-decile, efficiency, proxy-failure and per-domain metrics remain evaluator-only
+known_shortcuts: These are finite public DMS landscapes and therefore cannot rule out pretraining or external lookup. Runtime code is networkless and labels are sealed, but release-quality claims require server-held proteins and contamination audits. The assay is an offline replay of proteolysis-derived stability, not de novo protein generation, wet-lab validation, biological function, in vivo fitness or autonomous discovery.
+review:
+  domain: pending_external_protein_engineering
+  evaluator_security: automated_source_rebuild_fresh_sandbox_budget_metric_sealing_malformed_artifact_and_independent_raw_readout_tests

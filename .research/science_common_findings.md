@@ -555,7 +555,8 @@ The current synthetic primary-reflection laboratory is an active-acquisition/mod
 on-ramp, not field FWI or autonomous geological discovery.
 
 The present inventory contains 39 internally admissible certified or candidate packages: seven
-certified and 32 candidate, with 14 quarantined. The remaining gap is approximately 11 tasks.
+certified and 32 candidate, with 15 quarantined after adding the not-yet-admitted
+ProteinStabilityDesign implementation. The remaining admissible gap is approximately 11 tasks.
 Expansion should use procedural families spanning
 design, inverse problems, control, multifidelity validation, mechanism discovery and exact
 mathematical construction rather than cloning one scalar optimization template across domains.

@@ -1,0 +1,12 @@
+domain: ProteinEngineering
+task: ProteinStabilityDesign
+difficulty: hard
+tier: T2
+oracle_type: real_data_replay
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 90
+science_metric: budgeted_batch_stability_top_decile_diversity_protease_robustness_and_domain_transfer
+reference_baseline: additive single-mutation proxy top-eight batch without assays
+reference_sota: diversity-aware full-landscape replay witness with sealed trypsin and chymotrypsin validation
+citation: "Tsuboyama et al., Nature 2023, DOI 10.1038/s41586-023-06328-6; ProteinGym v1.3, DOI 10.5281/zenodo.15293562"

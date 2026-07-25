@@ -27,7 +27,11 @@ class CertificationPolicyTests(unittest.TestCase):
         tasks = list_tasks()
         self.assertEqual(len(tasks), 7)
         self.assertTrue(all(certification_status(s.task_id) == "certified" for s in tasks))
-        self.assertEqual(len(list_tasks(None)), 53)
+        self.assertEqual(len(list_tasks(None)), 54)
+        self.assertEqual(
+            certification_status("ProteinEngineering/ProteinStabilityDesign"),
+            "quarantined",
+        )
 
     def test_manifest_explicitly_covers_inventory(self):
         inventory_ids = {spec.task_id for spec in list_tasks(None)}

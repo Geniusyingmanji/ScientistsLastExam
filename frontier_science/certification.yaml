@@ -82,6 +82,13 @@ tasks:
       - doi:10.1186/1748-7188-6-26
       - doi:10.1073/pnas.1313039111
 
+  ProteinEngineering/ProteinStabilityDesign:
+    status: quarantined
+    reason: hash-bound ProteinGym v1.3 and Tsuboyama 2023 double-mutant batch-design replay is implemented with charged assays, held-out domains and independent raw protease readouts; retain in quarantine until source reconstruction, secure baseline, invariant, GPT-5.5 headroom and independent admission audits are complete
+    citation_ids:
+      - doi:10.1038/s41586-023-06328-6
+      - doi:10.5281/zenodo.15293562
+
   BayesianInference/OptimalExperimentDesign:
     status: candidate
     reason: v2 is scientifically valid with procedural families and sealed shifts, but GPT-5.5 implements a generic D-optimal algorithm and reaches 0.991 development plus 0.994 validation at budget one; retain as an on-ramp pending harder sequential model-discrimination regimes and independent review
