@@ -2244,3 +2244,13 @@ summary v22 has SHA-256
 offline scientific-optimization and repeatability-gap analysis. It does not establish a new
 electrolyte, independent laboratory replication, complete-cell performance, feedback causality,
 population performance or autonomous scientific discovery.
+
+The subsequent 55-package closeout binds the complete infrastructure checks. Security v27 has
+SHA-256 `43e225fa6106f789a42d4e70d569ff1af22d0b260503f213f2c3c49a24a94b22` and passes
+18/18 adversarial tests. Secure baseline v33 has SHA-256
+`add9262b2e1dec521974d2e054f66598d494b8a51bd10b8b13c0cd4437b11b7c` and reports 55/55
+deterministic, valid and fail-closed tasks with zero infrastructure failures. Certification v44
+has SHA-256 `1db67b1382467b60ac0d9fe0c634b38c9921ff5075fa9226095860ead4c00eaf` and records
+`7/34/14`; all three reports bind clean revision `ea0075e`. Full-suite v1 has SHA-256
+`f488a433153de963ec94d72d512bdfb610f9e63a145ced5928b6891e5cac691a`, binds clean revision
+`24a24ab`, and passes 347/347 tests in 1139.654 seconds.

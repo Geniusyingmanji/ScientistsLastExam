@@ -25,9 +25,9 @@ physical validation, and auditable claim–evidence provenance.
 
 | Capability | Current status | Evidence | Remaining acceptance criterion |
 |---|---|---|---|
-| Candidate/oracle isolation | Implemented | Clean-revision security v26: 18/18 adversarial tests; Bubblewrap, no network, read-only mounts, resource/seccomp limits, typed RPC, fresh multi-world sessions and candidate-exception sanitization | Reproduce in clean Linux CI; document portability/non-Linux behavior |
-| Fail-closed trusted metrics | Implemented | Clean-revision 54×2 v32: 54 deterministic, 54 valid, 54 fail-closed and zero infrastructure failures | Repair or quarantine every future invalid candidate oracle before certification |
-| Task admission policy | Implemented, narrow | Trusted certification v43 records 7 certified / 34 candidate / 14 quarantined over 55 packages; ElectrolyteConductivityDesign passes exact source rebuilding, secure-baseline equivalence, physical identities, independent Arrhenius recalculation, assay isolation and confirmation separation | External electrochemistry/evaluator review, server-held formulations, new batches and complete-cell validation remain incomplete |
+| Candidate/oracle isolation | Implemented | Clean-revision security v27: 18/18 adversarial tests; Bubblewrap, no network, read-only mounts, resource/seccomp limits, typed RPC, fresh multi-world sessions and candidate-exception sanitization | Reproduce in clean Linux CI; document portability/non-Linux behavior |
+| Fail-closed trusted metrics | Implemented | Clean-revision 55×2 v33: 55 deterministic, 55 valid, 55 fail-closed and zero infrastructure failures | Repair or quarantine every future invalid candidate oracle before certification |
+| Task admission policy | Implemented, narrow | Trusted certification v44 records 7 certified / 34 candidate / 14 quarantined over 55 packages; ElectrolyteConductivityDesign passes exact source rebuilding, secure-baseline equivalence, physical identities, independent Arrhenius recalculation, assay isolation and confirmation separation | External electrochemistry/evaluator review, server-held formulations, new batches and complete-cell validation remain incomplete |
 | Scientific validity of inventory | Audited, sparse | All original 50 packages passed adversarial admission; later substantive rebuilds and additions bring inventory to 55 and leave 41 internally admissible packages | Add approximately 9 net admissible tasks to reach about 50; hidden/generated instances and shortcut analysis remain mandatory |
 | Unified trajectory/accounting | Implemented, protocol-smoked | Clean-revision two-seed baseline smoke; trajectory schema v2, hashes, AUC over `budget_units`, separate `oracle_calls`, wall/token/cost, seed, checkpoint/resume | Validate nonzero-budget schema-v2 artifact replay in CI and version future changes |
 | Feedback controls | Implemented; strict pilot run | None/shuffled prompt-metric modes disclose true-score selection; strict selection-blind freezes parent/metrics; four-task n=3 pilot has no direction-stable lift and is not token-matched | Run token-matched ≥10 paired seeds with score-only, delayed/replayed and strict open-loop controls |
@@ -643,10 +643,11 @@ learns whom to trust.
 - [x] Re-run full 332-test regression plus deterministic baseline, certification and security on
   the clean 54-task ProteinStabilityDesign candidate revision (v32/v42/v26).
 - [x] Seven-task certified core, 34 candidates and 14 quarantined packages after admitting the
-  source-rebuilt and model-calibrated ElectrolyteConductivityDesign replay; certification v43
+  source-rebuilt and model-calibrated ElectrolyteConductivityDesign replay; certification v44
   covers all 55 packages.
-- [ ] Re-run the full regression, deterministic baseline and security audits over the 55-package
-  revision; only certification v43 currently covers the new electrolyte candidate.
+- [x] Re-run the full regression, deterministic baseline and security audits over the 55-package
+  revision: full-suite v1 passes 347/347, baseline v33 passes 55×2 with no infrastructure
+  failures, and security v27 passes 18/18.
 - [x] Task-card/citation/invariant audit and dated machine-readable evidence.
 - [ ] Add Linux CI reproduction of all dated audits (local clean-revision reproduction is done).
 - [x] Replace the quarantined `ClimateScience/EnergyBalanceModel` with an active, identifiable
