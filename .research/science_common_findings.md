@@ -7,14 +7,15 @@ OceanCurrentInversion-v2, RadiativeTransferFit-v2, LowThrustTransfer-v2,
 LidDrivenCavity-v2, EnergyBalanceModel-v2, BroadbandAbsorber-v2,
 DistillationColumnDesign-v2, HartreeFockSCF-v2, RoomImpulseResponse-v2,
 ConvectionDiffusionOpt-v2, SeismicWaveInversion-v2, RankineCycleOpt-v2 and MOSFETDoping-v2. The
-list now also includes RANSCalibration-v2, GeneNetworkIntervention-v1, RNAInverseDesign-v1 and
-ProteinStabilityDesign-v1. The 55 normal-feedback model conditions across these 28 tasks each
+list now also includes RANSCalibration-v2, GeneNetworkIntervention-v1, RNAInverseDesign-v1,
+ProteinStabilityDesign-v1 and ElectrolyteConductivityDesign-v1. The 57 normal-feedback model
+conditions across these 29 tasks each
 contain one seed and proposal budget one or three. They calibrate tasks and motivate experiments;
 they are not a model leaderboard, a causal feedback study or population evidence.
 
 The portable machine record
-`experiments/science_calibration_summary_2026-07-25_v21.json` retains every top-level scalar metric,
-candidate lineage hash and raw trajectory SHA-256 for all 55 normal conditions.
+`experiments/science_calibration_summary_2026-07-25_v22.json` retains every top-level scalar metric,
+candidate lineage hash and raw trajectory SHA-256 for all 57 normal conditions.
 Additional strict diagnostics for Distillation-v2, Hartree--Fock and room acoustics are bound
 separately by `experiments/distillation_v2_calibration_analysis_2026-07-23.json`,
 `experiments/hartree_fock_v2_calibration_analysis_2026-07-23.json` and
@@ -26,7 +27,8 @@ separately by `experiments/distillation_v2_calibration_analysis_2026-07-23.json`
 `experiments/rans_v2_calibration_analysis_2026-07-24.json`,
 `experiments/gene_network_intervention_calibration_analysis_2026-07-24.json` and
 `experiments/rna_inverse_design_calibration_analysis_2026-07-24.json` and
-`experiments/protein_stability_design_calibration_analysis_2026-07-25.json`. Strict selection-blind
+`experiments/protein_stability_design_calibration_analysis_2026-07-25.json` and
+`experiments/electrolyte_conductivity_design_calibration_analysis_2026-07-25.json`. Strict selection-blind
 diagnostics remain in task-specific analysis because they are not normal-feedback calibrations.
 The underlying reports bind the task-specific source revision. Pendulum's initial budget-one
 run on revision `57c0e1b` is
@@ -99,6 +101,10 @@ by the corrected-contract run on `2557adb`.
 | ProteinStabilityDesign-v1, budget 1 | development `0.614`; top-decile hit rate `0.925`; proxy false promotion `0.075` | held-out policy `0.412`; held-out robustness `0.646`; held-out false promotion `0.250` | One reusable assay-aware policy exceeds the truth-blind classical development score `0.514` but trails its held-out policy score `0.567`; development selection and domain transfer are distinct axes. |
 | ProteinStabilityDesign-v1, normal budget 3 | development `0.477→0.535`; all proposals valid | accepted step 2 lowers development protease robustness `0.488→0.441` while held-out policy rises `0.425→0.559` | A visible-score improvement can trade away an evaluator-only readout even when assay budget, validity and held-out transfer improve. |
 | ProteinStabilityDesign-v1, selection-blind budget 3 | frozen-parent development-selected score `0.546` | a rejected step reaches held-out policy/robustness `0.652/0.753`, above the selected artifact's `0.519/0.723` | Selecting one development scalar discards a scientifically preferable artifact on held-out and independent protease axes. The one-run normal/open-loop contrast is not causal. |
+| ElectrolyteConductivityDesign-v1, truth-blind assay policy | discovery-visible development/held-out `0.408/0.270`; discovery-repeat robustness `0.570/0.355` | untouched-repeat confirmation `0.026/0.000`; confirmation robustness `0.000/0.000` | Optimization on the two repeats returned by the assay transfers across temperature-duty weights but receives little support from repeats that never enter selection. This is a finite public replay. |
+| ElectrolyteConductivityDesign-v1, budget 1 | development/held-out visible `0.263/0.309`; discovery-repeat robustness `0.446/0.294` | untouched-repeat confirmation and confirmation robustness are `0.000/0.000` on both splits | The selected policy spends all eight unique assays per world and improves the visible surface, but the independent repeat axis does not support the selected gain. |
+| ElectrolyteConductivityDesign-v1, normal budget 3 | accepted development `0.492→0.878`; selected held-out visible `0.926`; discovery-repeat robustness `0.826/0.896` | selected untouched-repeat confirmation and confirmation robustness are `0.000/0.000` on both splits | Strong duty transfer and a worst-of-visible-repeat score do not imply independent repeatability. The third, visibly worse proposal has nonzero development confirmation robustness `0.0073` and is rejected. |
+| ElectrolyteConductivityDesign-v1, selection-blind budget 3 | frozen-parent development-selected score `0.646`; held-out visible `0.765` | selected untouched-repeat confirmation is `0.000/0.000`; a discarded proposal has development confirmation `0.0266` | Development-score selection can discard the batch with better untouched-repeat support. Normal and blind match four oracle calls but differ by 7,941 tokens and uncontrolled model sampling, so the score contrast is not causal. |
 
 OPF's `robustness_score` combines security-constrained economic quality with overload penalties.
 It is not a pure safety probability. The proportional baseline is feasible for every tested
@@ -150,7 +156,30 @@ manufacturing pattern leaves the hard panel envelope on two development instance
 held-out instance. A transfer curve over nominal bands would therefore reverse the engineering
 conclusion supplied by the manufacturing-shift curve.
 
-### 4. Prediction does not imply mechanism recovery or warranted belief
+### 4. Held-out transfer and visible-repeat robustness do not imply independent replication
+
+ElectrolyteConductivityDesign separates four quantities that are often merged into one
+best-so-far curve. The visible score uses the two discovery repeats returned by each charged
+assay. A second score uses the worse of those same visible repeats, held-out worlds change only
+the temperature-duty weights, and confirmation uses two repeats that never enter proposal
+feedback or selection.
+
+The normal budget-three selected policy reaches `0.878` development and `0.926` held-out visible
+optimization, with discovery-repeat robustness `0.826/0.896`. Its untouched-repeat confirmation
+and confirmation robustness are zero on both splits. The truth-blind classical policy shows the
+same direction at lower visible performance: `0.408/0.270` visible optimization but only
+`0.026/0.000` confirmation. These replay results indicate that temperature-duty transfer and a
+lower envelope over discovery repeats do not test whether a selected formulation batch repeats
+in experiments withheld from search.
+
+This distinction changes the experimental protocol for real-data tasks. A scientific optimization
+curve should retain the discovery score, visible-repeat robustness, held-out condition transfer
+and post-commit confirmation as separate series. New batches, independently analyzed spectra,
+other instruments or laboratories, and downstream cell tests remain additional validation layers.
+The public EIS replay does not identify the source of the repeat discrepancy and is not a
+prospective electrolyte discovery.
+
+### 5. Prediction does not imply mechanism recovery or warranted belief
 
 ActiveLawDiscovery predicts in-library trajectories with approximately 0.99 accuracy while
 assigning high confidence to unsupported polynomial mechanisms in misspecified worlds. NMR-v2
@@ -243,7 +272,7 @@ procedural worlds it predicts supported responses at 0.995 while supported mecha
 not preregistered hidden validation, but they show why response fit, parameter recovery,
 model-class adequacy and refusal must be separate curves.
 
-### 5. Protocol validity, scientific coverage and conditional quality are sequential hurdles
+### 6. Protocol validity, scientific coverage and conditional quality are sequential hurdles
 
 GeneNetworkIntervention makes the hurdle structure explicit. Across budget one, normal budget
 three and selection-blind budget three, six of seven proposals fail before scientific quality can
@@ -260,7 +289,7 @@ warranted claim. A joint success curve may be reported after these components, b
 replace them. The current evidence is task calibration from single runs and does not estimate a
 population success probability.
 
-### 6. Feedback cannot optimize information that selection never receives
+### 7. Feedback cannot optimize information that selection never receives
 
 In the OPF budget-three run, later proposals receive only nominal score and reproduce the same
 N-1 failure. Pendulum's visible improvement is accompanied by flat shifted robustness, while
@@ -319,7 +348,14 @@ model claims, while a truth-blind long multiscale forcing design avoids those er
 treatments must factor protocol repair, temporal experiment design, parameter estimation and
 model checking instead of interpreting one aggregate score as the source of failure.
 
-### 7. Contract completeness must precede headroom claims
+ElectrolyteConductivityDesign supplies a non-plateau counterpart. Normal feedback accepts two
+visible improvements and reaches `0.878/0.926` development/held-out optimization, yet the
+selected artifact remains at zero on every untouched confirmation axis. The selection channel
+never receives those confirmation values. This single trajectory does not estimate a feedback
+effect, but it makes the information boundary explicit: feedback on discovery repeats cannot by
+itself select for repeatability measured only after commitment.
+
+### 8. Contract completeness must precede headroom claims
 
 The superseded Pendulum diagnostic failed because the public contract omitted the evaluator's
 exact equations. Disclosing the equations changed budget-one performance from no improvement to
@@ -327,7 +363,7 @@ exact equations. Disclosing the equations changed budget-one performance from no
 equations or observations required to define the stated problem. Apparent difficulty caused by
 an underspecified contract is evaluator error, not scientific headroom.
 
-### 8. A single science score would erase the observed failure modes
+### 9. A single science score would erase the observed failure modes
 
 The calibrated tasks expose different quantities: nominal utility, held-out transfer, physical
 robustness, constraint feasibility, prediction, mechanism recovery and refusal. Averaging them
@@ -540,6 +576,7 @@ Every new or rebuilt task must pass the following gate before it counts toward t
 - an independent numerical, analytic or exact reference plus invariant tests;
 - procedural development and server-held instances rather than a fixed public truth;
 - separate nominal, held-out and shifted/high-fidelity metrics where applicable;
+- post-commit repeats kept out of agent feedback and model selection for empirical tasks;
 - explicit mechanism and refusal outputs for discovery tasks;
 - finite-output rejection, secure isolation, deterministic replay and metric sealing;
 - a fixed label-blind failure taxonomy so candidate exception text cannot carry observations
@@ -558,9 +595,9 @@ far-offset prediction, model-class adequacy and geological interpretation remain
 The current synthetic primary-reflection laboratory is an active-acquisition/model-checking
 on-ramp, not field FWI or autonomous geological discovery.
 
-The present inventory contains 40 internally admissible certified or candidate packages: seven
-certified and 33 candidate, with 14 quarantined after admitting the offline
-ProteinStabilityDesign replay. The remaining admissible gap is approximately 10 tasks.
+The present inventory contains 41 internally admissible certified or candidate packages: seven
+certified and 34 candidate, with 14 quarantined after admitting the offline electrolyte replay.
+The remaining admissible gap is approximately 9 tasks.
 Expansion should use procedural families spanning
 design, inverse problems, control, multifidelity validation, mechanism discovery and exact
 mathematical construction rather than cloning one scalar optimization template across domains.

@@ -2199,3 +2199,48 @@ failures. The full suite passes 332/332 in 1064.926 seconds. Cross-task summary 
 conditions remain in task-specific analyses. These reports support task calibration and offline
 scientific optimization only, not population performance, feedback causality, prospective
 confirmation, protein function or autonomous scientific discovery.
+
+## 2026-07-25 — ElectrolyteConductivityDesign admission and science summary v22
+
+`Electrochemistry/ElectrolyteConductivityDesign` raises the inventory to 55 packages and the
+internally admissible count to 41. The candidate reconstructs a CC-BY-4.0 public EIS source with
+5,035 temperature records as 504 experiment IDs. It uses 358 complete historical experiments
+over 85 formulations for a public proxy and 141 complete later experiments over 23 non-overlapping
+candidate formulations. Each charged assay returns two discovery repeats; two further repeats
+remain untouched by proposal feedback and selection.
+
+The trusted task calibration has SHA-256
+`b16bb89861bfb154b46595406302e98a0a5b22b040c61c17e87454cb551eb2b6` and binds clean
+implementation revision `903f84b`. Exact source rebuilding, all 141 independent Arrhenius
+recalculations, conductivity/cell-constant identities, secure-baseline equivalence and metric
+sealing pass. The truth-blind eight-assay policy reaches visible development/held-out
+`0.407836/0.270111` and discovery-repeat robustness `0.569955/0.355477`, but untouched-repeat
+confirmation is only `0.025989/0.000000` and confirmation robustness is zero on both splits.
+
+All seven formal GPT-5.5 proposals are executable, improve the zero discovery-score baseline and
+use all eight unique assays per world. Budget one reaches visible development/held-out
+`0.262816/0.309358`, while its untouched confirmation axes are all zero. Normal budget three
+accepts `0.492354→0.878184`; the selected artifact reaches held-out visible `0.926444` and
+discovery-repeat robustness `0.826243/0.895519`, yet all four selected confirmation axes remain
+zero. The frozen-parent selection-blind batch selects visible development/held-out
+`0.645852/0.764770`, also with zero nominal confirmation. Its discarded first proposal has
+development confirmation `0.026578`. Normal and selection-blind use four oracle calls but
+22,583 and 14,642 tokens. Azure exposes no server-side sampling seed, so their difference is
+descriptive and does not identify a feedback effect.
+
+The trusted derived analysis has SHA-256
+`2f3fa9d7b0d57375ddfa1f5699129421fae3931895f6f6e3b3d8894db864bb31`. It binds the three
+model reports, raw trajectories, online and frozen-parent lineage, eight world axes, selected and
+terminal artifact hashes, and retained-source shortcut scans. The scans find no fixed formulation
+IDs, dataset/evaluator terms, filesystem reads or network imports, but cannot rule out pretraining
+memorization or semantically hidden lookup.
+
+Certification v43 has SHA-256
+`1bb11ebccc9b0b4d5db042ebe3a5c777ae6c968ee0bd0a4a7362dd30e8363f45`, binds clean task
+revision `903f84b` and records `7/34/14` with no missing or orphaned manifest records. Cross-task
+summary v22 has SHA-256
+`cfa60d2cbb66749e830ea8b61b838b005f50239def9878b509a0c1607172eca1`, binds clean revision
+`5de2a20` and contains 57 normal single-run conditions over 29 tasks. The EIS result supports
+offline scientific-optimization and repeatability-gap analysis. It does not establish a new
+electrolyte, independent laboratory replication, complete-cell performance, feedback causality,
+population performance or autonomous scientific discovery.

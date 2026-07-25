@@ -1,8 +1,8 @@
 # Frontier-Science plan gap audit
 
 Audit date: 2026-07-19 (UTC), with the experiment roadmap extended after repeated full-text
-EdgeBench comparison and the task inventory updated on 2026-07-25 through the quarantined
-ProteinStabilityDesign-v1 implementation.
+EdgeBench comparison and the task inventory updated on 2026-07-25 through the
+ElectrolyteConductivityDesign-v1 real-data replay.
 Evidence base: `literature_matrix.md`,
 `science_experiment_plan.md`, current source/tests, and the dated artifacts in `experiments/`.
 
@@ -27,8 +27,8 @@ physical validation, and auditable claim–evidence provenance.
 |---|---|---|---|
 | Candidate/oracle isolation | Implemented | Clean-revision security v26: 18/18 adversarial tests; Bubblewrap, no network, read-only mounts, resource/seccomp limits, typed RPC, fresh multi-world sessions and candidate-exception sanitization | Reproduce in clean Linux CI; document portability/non-Linux behavior |
 | Fail-closed trusted metrics | Implemented | Clean-revision 54×2 v32: 54 deterministic, 54 valid, 54 fail-closed and zero infrastructure failures | Repair or quarantine every future invalid candidate oracle before certification |
-| Task admission policy | Implemented, narrow | Current source manifest: 7 certified / 33 candidate / 14 quarantined; ProteinStabilityDesign passed source reconstruction, secure baseline, model headroom, trajectory and fixed-instance shortcut audits and is now an offline replay candidate | External protein-domain and evaluator reviews plus server-held instances remain incomplete |
-| Scientific validity of inventory | Audited, sparse | All original 50 packages passed adversarial admission; later substantive rebuilds and additions bring inventory to 54 and leave 40 internally admissible packages | Add approximately 10 net admissible tasks to reach about 50; hidden/generated instances and shortcut analysis remain mandatory |
+| Task admission policy | Implemented, narrow | Trusted certification v43 records 7 certified / 34 candidate / 14 quarantined over 55 packages; ElectrolyteConductivityDesign passes exact source rebuilding, secure-baseline equivalence, physical identities, independent Arrhenius recalculation, assay isolation and confirmation separation | External electrochemistry/evaluator review, server-held formulations, new batches and complete-cell validation remain incomplete |
+| Scientific validity of inventory | Audited, sparse | All original 50 packages passed adversarial admission; later substantive rebuilds and additions bring inventory to 55 and leave 41 internally admissible packages | Add approximately 9 net admissible tasks to reach about 50; hidden/generated instances and shortcut analysis remain mandatory |
 | Unified trajectory/accounting | Implemented, protocol-smoked | Clean-revision two-seed baseline smoke; trajectory schema v2, hashes, AUC over `budget_units`, separate `oracle_calls`, wall/token/cost, seed, checkpoint/resume | Validate nonzero-budget schema-v2 artifact replay in CI and version future changes |
 | Feedback controls | Implemented; strict pilot run | None/shuffled prompt-metric modes disclose true-score selection; strict selection-blind freezes parent/metrics; four-task n=3 pilot has no direction-stable lift and is not token-matched | Run token-matched ≥10 paired seeds with score-only, delayed/replayed and strict open-loop controls |
 | Evaluator-only metric sealing | Implemented and integration-verified | Closed search-visible allowlist; search-state redaction/hash-keyed sidecars; candidate-controlled exception text mapped to a finite label-blind taxonomy; current 244-test suite; clean pinned OpenEvolve/TreeQuest/Shinka no-leak report `aff026d` | Extend from baseline smoke to nonzero-budget upstream runs before comparative claims |
@@ -36,11 +36,11 @@ physical validation, and auditable claim–evidence provenance.
 | TreeQuest AB-MCTS | Implemented, trusted baseline smoke | Real TreeQuest AB-MCTS-A ask/tell adapter; clean-revision secure baseline passed under Python 3.12 | Run nonzero-budget/checkpoint integration and multi-seed study |
 | ShinkaEvolve | Implemented, trusted baseline smoke | Official runner/database adapter at pinned commit; clean-revision secure baseline passed under Python 3.10 | Run nonzero-budget/resume integration and token accounting audit |
 | Classical/domain baselines | Partial | NMR, HeatExchanger, Reaction, Gravity, Ocean, Radiative, LowThrust and Climate rebuilds have truth-blind domain baselines exposing reconstruction/proxy/prediction, terminal-feasibility, experiment-design or mechanism/refusal gaps | Add random/quasi-random plus BO/CMA-ES/DE and one domain heuristic for each meaningful task family |
-| Multi-seed benchmark evidence | Missing | Keyless GPT-5.5 Responses path is operational; 55 trusted normal single-run conditions cover 28 tasks and a separate four-task n=3 control pilot is negative/inconclusive | Certified-core and science-subset reports with paired uncertainty and portable raw trajectories |
+| Multi-seed benchmark evidence | Missing | Keyless GPT-5.5 Responses path is operational; 57 trusted normal single-run conditions cover 29 tasks and a separate four-task n=3 control pilot is negative/inconclusive | Certified-core and science-subset reports with paired uncertainty and portable raw trajectories |
 | Multifidelity/Pareto | Candidate-level | HeatExchanger-v2 implements proxy/exact Pareto archives, measured false promotion and physical shifts | Add independent high-fidelity review/replication and at least one certified multifidelity task |
 | Feedback learning claim | Negative pilot only | A strict open-loop control and three-replicate four-task pilot are complete; no direction-stable visible or sealed lift, and normal uses more tokens | Token-matched preregistered ≥10-replicate study with delayed/replayed and score-only controls |
 | Mechanistic discovery | Candidate-level | ActiveLaw, NMR, Reaction, Gravity, Ocean, Radiative and Climate tasks separately score mechanisms, prediction, coverage, hidden shifts, false discovery and refusal | Add paired repeated studies, harder regimes and independent scientific validation |
-| Validation/distribution shift | Calibration-level | Nominal/robustness and prediction/mechanism gaps recur across control, design and inverse tasks; Radiative adds a protocol-valid perfect-refusal/zero-coverage case, Climate adds near-unit prediction with weak mechanism and false model claims, LowThrust separates numerical integration error from terminal feasibility, and BroadbandAbsorber separates nominal band transfer from manufacturing-envelope robustness | Paired repeated hidden-shift studies plus independent high-fidelity or physical confirmation and abstention cases |
+| Validation/distribution shift | Calibration-level | Nominal/robustness and prediction/mechanism gaps recur across control, design and inverse tasks; ElectrolyteConductivityDesign additionally reaches `0.878/0.926` visible development/held-out optimization and `0.826/0.896` discovery-repeat robustness while all selected untouched-repeat confirmation axes remain zero | Paired repeated hidden-shift studies plus post-commit independent repeats, new batches/labs, higher-fidelity or physical confirmation and abstention cases |
 | Research-integrity track | Partial | Immutable candidate/parent hashes and artifacts | Hypothesis–test–evidence records, failed branches, claim links and calibrated refusal |
 
 ## What the latest literature changes
@@ -118,8 +118,8 @@ or make the executable-optimization qualifier unavoidable.
 
 ### 1. Only calibration-level empirical P2 evidence exists
 
-The keyless GPT-5.5 Responses path was restored and 55 trusted normal single-run conditions now
-cover 28 tasks, with task-specific strict open-loop diagnostics on a subset. They expose
+The keyless GPT-5.5 Responses path was restored and 57 trusted normal single-run conditions now
+cover 29 tasks, with task-specific strict open-loop diagnostics on a subset. They expose
 one-step saturation and multiple oracle defects, but there are still no valid five-seed
 certified-core trajectories, no paired feedback-control result, and no nonzero-budget official-
 backend search run. The project must distinguish “calibrated at budget one” from
@@ -642,8 +642,11 @@ learns whom to trust.
   53-task RNAInverseDesign revision (v30/v40/v24).
 - [x] Re-run full 332-test regression plus deterministic baseline, certification and security on
   the clean 54-task ProteinStabilityDesign candidate revision (v32/v42/v26).
-- [x] Seven-task certified core, 33 candidates and 14 quarantined packages after admitting the
-  source-rebuilt and model-calibrated ProteinStabilityDesign replay.
+- [x] Seven-task certified core, 34 candidates and 14 quarantined packages after admitting the
+  source-rebuilt and model-calibrated ElectrolyteConductivityDesign replay; certification v43
+  covers all 55 packages.
+- [ ] Re-run the full regression, deterministic baseline and security audits over the 55-package
+  revision; only certification v43 currently covers the new electrolyte candidate.
 - [x] Task-card/citation/invariant audit and dated machine-readable evidence.
 - [ ] Add Linux CI reproduction of all dated audits (local clean-revision reproduction is done).
 - [x] Replace the quarantined `ClimateScience/EnergyBalanceModel` with an active, identifiable

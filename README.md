@@ -16,11 +16,11 @@ text-question benchmark named *FrontierScience* in
 
 ## Current status
 
-The repository contains **54 task packages in 50 metadata domains**:
+The repository contains **55 task packages in 51 metadata domains**:
 
 - **7 certified core tasks**: Lennard–Jones clusters, spin glass, Poisson solver,
   matrix-multiplication rank, Cap Set, circle packing, and multilayer thin films.
-- **33 candidate tasks** pending scientific certification, including intervention-based causal
+- **34 candidate tasks** pending scientific certification, including intervention-based causal
   and active dynamical-law laboratories whose prediction and mechanism metrics are reported
   separately, a multi-spectrum NMR peak-mechanism/refusal task, and a multi-fidelity
   heat-exchanger Pareto-design task, a full-field lid-driven-cavity solver, active
@@ -31,14 +31,15 @@ The repository contains **54 task packages in 50 metadata domains**:
   acoustics design, active convection--diffusion identification/design, active layered
   reflection acquisition/inversion with explicit model-inadequacy refusal, constrained RNA
   inverse design with exact ensemble scoring and proxy-false-promotion diagnostics, and a
-  real-data protein-stability assay-allocation replay.
+  real-data protein-stability assay-allocation replay, and a real-data electrolyte-conductivity
+  assay-allocation replay with discovery and untouched-repeat confirmation reported separately.
 - **14 quarantined tasks** retain reproduced scientific-oracle, identifiability, provenance or
   shortcut defects.
   Quarantined packages remain inventory artifacts but are not admissible benchmark tasks.
 
 The default CLI exposes only the certified core. `--all` explicitly shows the full
 inventory. Certification status is not a difficulty claim: the inventory metadata contains
-48 `hard` and 6 `flagship` packages, but only certified tasks are benchmark-admissible.
+49 `hard` and 6 `flagship` packages, but only certified tasks are benchmark-admissible.
 
 All candidate code runs in a networkless Bubblewrap sandbox with read-only mounts, resource
 and process limits, and a typed JSON RPC boundary. The trusted parent alone imports the
@@ -49,18 +50,19 @@ controlled exception text is reduced to a fixed label-blind failure taxonomy bef
 search feedback, preventing observations from being carried between worlds through exceptions.
 The current audit reports:
 
-- The final candidate revision passes 332/332 unit, security, protocol, analysis and scientific-
-  invariant tests. Trusted certification/security/baseline reports v42/v26/v32 bind clean source
-  revision `21a2220`; certification records `7/33/14`, security passes 18/18, and the 54×2
-  baseline reports 54/54 deterministic, valid and fail-closed tasks with zero infrastructure
-  failures. Cross-task summary v21 binds the same revision and contains 55 normal single-run
-  conditions over 28 tasks.
-- Current source manifest: 7 certified / 33 candidate / 14 quarantined. ProteinStabilityDesign
+- Trusted certification v43 binds clean task revision `903f84b`, records `7/34/14` over 55
+  packages and reports no missing manifest records, orphaned records or task-level admission
+  issues. It retains one known duplicate-oracle group containing five quarantined packages.
+  The latest full security and 54×2 baseline audits remain v26/v32 on the preceding
+  Protein candidate revision; a new 55-task full security/baseline rerun is still required.
+  Cross-task summary v22 binds clean revision `5de2a20` and contains 57 normal single-run
+  conditions over 29 tasks.
+- Current source manifest: 7 certified / 34 candidate / 14 quarantined. ProteinStabilityDesign
   rebuilds 2,756 reliable double-mutant records across five
   development and three held-out domains from hash-bound ProteinGym v1.3/Tsuboyama sources.
   It separates additive proxy, charged assay, diversity, top-decile, trypsin, chymotrypsin,
   uncertainty and held-out metrics. Source reconstruction, secure baseline and shortcut audits
-  pass, and all seven GPT-5.5 proposals are executable. It is now counted among 40 internally
+  pass, and all seven GPT-5.5 proposals are executable. It is counted among 41 internally
   admissible tasks but remains an offline public-data candidate, not prospective protein
   discovery. D-optimal design, quantum
   gate synthesis, DC optimal power flow, truss sizing, antenna synthesis and NMR peak fitting have been rebuilt with separate sealed
@@ -245,9 +247,10 @@ the post-repair 50-package audits bind revision `47c3613`; the subsequent wave-2
 audit quarantines seven additional defective candidates. The two P2 smokes are baseline-only; the repository does not yet contain
 credible multi-seed model-performance evidence. A clean-revision GPT-5.5 budget-one core pilot
 is recorded as task calibration, not a benchmark leaderboard.
-The latest trusted certification/security/baseline audits are v42/v26/v32 and cover all 54 task
-packages on the Protein candidate revision. The current source manifest is 7/33/14 and contains 40 internally
-admissible tasks, leaving an approximate gap of 10 to the roughly 50-task target.
+The latest trusted certification audit is v43 and covers all 55 task packages. The latest full
+security/baseline audits remain v26/v32 over the preceding 54-package revision. The current source
+manifest is 7/34/14 and contains 41 internally admissible tasks, leaving an approximate gap of 9
+to the roughly 50-task target.
 GeneNetworkIntervention adds an active nonlinear signed-network, protected-readout intervention,
 sealed-transfer and null/latent-regulator refusal candidate. Its truth-blind nonlinear reference
 scores `0.9053/0.8932` development/held-out joint quality with zero false discovery. Across the
@@ -263,8 +266,13 @@ selection-blind diagnostic over a public DMS replay. Budget one reaches developm
 `0.614/0.412`; normal budget three reaches `0.535/0.559`; the frozen-parent batch selects
 `0.546/0.519`, while a rejected candidate reaches held-out policy/robustness `0.652/0.753`.
 These single runs are calibration evidence, not a leaderboard, feedback-effect estimate,
-pretraining-contamination audit, prospective experiment or biological discovery. The updated
-cross-task summary contains 55 normal conditions over 28 tasks.
+pretraining-contamination audit, prospective experiment or biological discovery.
+ElectrolyteConductivityDesign adds two normal runs and one strict selection-blind diagnostic over public EIS
+measurements. Its normal budget-three selected artifact reaches development/held-out visible
+scores `0.878/0.926` and discovery-repeat robustness `0.826/0.896`, while untouched-repeat
+confirmation and confirmation robustness are `0/0` on both splits. This is offline optimization
+and repeatability-gap evidence, not a prospective formulation or complete-cell result. The
+updated cross-task summary contains 57 normal conditions over 29 tasks.
 
 The latest EdgeBench re-audit keeps its upstream facts at arXiv `2607.05155v1`, SForge
 `a87350a` and public dataset `47846a4`. In addition to E1--E36, the science plan now preregisters
