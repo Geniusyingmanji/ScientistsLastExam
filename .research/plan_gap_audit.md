@@ -25,8 +25,8 @@ physical validation, and auditable claim–evidence provenance.
 
 | Capability | Current status | Evidence | Remaining acceptance criterion |
 |---|---|---|---|
-| Candidate/oracle isolation | Implemented | Clean-revision security v24: 18/18 adversarial tests; Bubblewrap, no network, read-only mounts, resource/seccomp limits, typed RPC, fresh multi-world sessions and candidate-exception sanitization | Reproduce in clean Linux CI; document portability/non-Linux behavior |
-| Fail-closed trusted metrics | Implemented | Clean-revision 54×2 v31: 54 deterministic, 54 valid, 54 fail-closed and zero infrastructure failures | Repair or quarantine every future invalid candidate oracle before certification |
+| Candidate/oracle isolation | Implemented | Clean-revision security v26: 18/18 adversarial tests; Bubblewrap, no network, read-only mounts, resource/seccomp limits, typed RPC, fresh multi-world sessions and candidate-exception sanitization | Reproduce in clean Linux CI; document portability/non-Linux behavior |
+| Fail-closed trusted metrics | Implemented | Clean-revision 54×2 v32: 54 deterministic, 54 valid, 54 fail-closed and zero infrastructure failures | Repair or quarantine every future invalid candidate oracle before certification |
 | Task admission policy | Implemented, narrow | Current source manifest: 7 certified / 33 candidate / 14 quarantined; ProteinStabilityDesign passed source reconstruction, secure baseline, model headroom, trajectory and fixed-instance shortcut audits and is now an offline replay candidate | External protein-domain and evaluator reviews plus server-held instances remain incomplete |
 | Scientific validity of inventory | Audited, sparse | All original 50 packages passed adversarial admission; later substantive rebuilds and additions bring inventory to 54 and leave 40 internally admissible packages | Add approximately 10 net admissible tasks to reach about 50; hidden/generated instances and shortcut analysis remain mandatory |
 | Unified trajectory/accounting | Implemented, protocol-smoked | Clean-revision two-seed baseline smoke; trajectory schema v2, hashes, AUC over `budget_units`, separate `oracle_calls`, wall/token/cost, seed, checkpoint/resume | Validate nonzero-budget schema-v2 artifact replay in CI and version future changes |
@@ -640,6 +640,8 @@ learns whom to trust.
   baselines are valid, deterministic and fail closed.
 - [x] Re-run the deterministic secure baseline, certification and security audits on the clean
   53-task RNAInverseDesign revision (v30/v40/v24).
+- [x] Re-run full 332-test regression plus deterministic baseline, certification and security on
+  the clean 54-task ProteinStabilityDesign candidate revision (v32/v42/v26).
 - [x] Seven-task certified core, 33 candidates and 14 quarantined packages after admitting the
   source-rebuilt and model-calibrated ProteinStabilityDesign replay.
 - [x] Task-card/citation/invariant audit and dated machine-readable evidence.

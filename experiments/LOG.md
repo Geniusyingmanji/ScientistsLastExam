@@ -2159,3 +2159,43 @@ RNA evidence remains task-specific. These artifacts calibrate a transparent simp
 they do not implement the complete Turner model, establish global optimality, validate
 ViennaRNA/NUPACK agreement, synthesize RNA, measure structure or function, or support population,
 feedback-causal or autonomous-discovery claims.
+
+## 2026-07-25 — ProteinStabilityDesign admission and science summary v21
+
+`ProteinEngineering/ProteinStabilityDesign` is now the 40th internally admissible task. The
+54-package manifest contains 7 certified, 33 candidate and 14 quarantined tasks. The task rebuilds
+2,756 reliable double mutants from hash-bound ProteinGym v1.3 and Tsuboyama 2023 sources across
+five development and three held-out domains. Each world exposes a single-mutant additive proxy,
+permits twelve charged double-mutant assays and requires eight distinct sequences. Stability,
+batch diversity, top-decile rate, proxy false promotion, held-out transfer and raw trypsin and
+chymotrypsin readouts remain separate.
+
+The task calibration (`fe7d5aac…be268`) binds clean source `72301ee`. Exact source rebuilding
+passes, the weak additive baseline scores zero, the full-landscape normalization witness scores
+one and the truth-blind twelve-assay policy reaches development/held-out `0.513673/0.567390`.
+The evidence is a finite public DMS replay, not prospective protein design or a wet-lab result.
+
+All seven GPT-5.5 proposals are executable and improve the zero development baseline. Budget one
+reaches development `0.614375`, held-out policy `0.411550` and held-out protease robustness
+`0.646087`. Normal budget three accepts `0.476907→0.534585`; the second accepted update lowers
+development protease robustness `0.488125→0.441239` while held-out policy rises
+`0.424996→0.558983`. The frozen-parent selection-blind batch selects development `0.546399`, but
+its rejected step three reaches held-out policy/robustness `0.652319/0.753267`, above the selected
+artifact's `0.519425/0.722662`. Normal and selection-blind use four oracle calls but 16,306 and
+14,172 tokens. Azure exposes no server-side generation seed, so the contrast is descriptive and
+does not estimate a feedback effect.
+
+The trusted derived analysis (`a8086d75…47f27`) binds all report and raw-trajectory hashes,
+online/frozen-parent lineage, eight world axes and selected/terminal artifact hashes. Its static
+screen finds no ProteinGym identifiers, WT sequences, fixed mutations, dataset paths, network or
+filesystem reads in retained artifacts. Runtime isolation also passes, but neither check rules out
+pretraining contamination or semantically hidden lookup.
+
+On clean candidate revision `21a2220`, certification v42 (`bffad391…34ca`) records `7/33/14`,
+security v26 (`37db99a4…c66f`) passes 18/18, and secure baseline v32
+(`be51dc71…3534`) reports 54/54 deterministic, valid and fail-closed tasks with zero infrastructure
+failures. The full suite passes 332/332 in 1064.926 seconds. Cross-task summary v21
+(`272acb27…823`) contains 55 normal single-run conditions across 28 tasks; strict selection-blind
+conditions remain in task-specific analyses. These reports support task calibration and offline
+scientific optimization only, not population performance, feedback causality, prospective
+confirmation, protein function or autonomous scientific discovery.

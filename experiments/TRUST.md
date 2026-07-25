@@ -225,3 +225,17 @@ remain baseline-only and must not be promoted to model-performance evidence.
 
 Raw `.out`/`.log` files predating the trusted evaluator inherit
 `UNTRUSTED_PRE_SANDBOX` unless a dated trusted report explicitly incorporates them.
+
+## 2026-07-25 ProteinStabilityDesign evidence
+
+| Artifact | Trust | Scope |
+|---|---|---|
+| `protein_stability_design_calibration_2026-07-25.json` | `TRUSTED_TASK_CALIBRATION` | On clean source `72301ee`, exactly rebuilds 2,756 reliable ProteinGym/Tsuboyama double mutants in eight domains, validates baseline/reference anchors and a truth-blind twelve-assay policy. Public offline replay only. |
+| `gpt55_protein_stability_v1_b1_2026-07-25.json` | `TRUSTED_SECURE_EVAL / CALIBRATION_ONLY` | One GPT-5.5 proposal reaches development `0.614375`, held-out policy `0.411550` and held-out protease robustness `0.646087`; no population, contamination or wet-lab claim. |
+| `gpt55_protein_stability_v1_b3_2026-07-25.json` | `TRUSTED_SECURE_EVAL / CALIBRATION_ONLY` | Independent normal budget-three run reaches `0.534585`; an accepted nominal update lowers development protease robustness while improving held-out policy. |
+| `gpt55_protein_stability_v1_blind_b3_2026-07-25.json` | `TRUSTED_SECURE_EVAL / CALIBRATION_ONLY` | Frozen-parent batch selects development `0.546399`; a rejected candidate is better on held-out policy and protease robustness. Equal oracle calls do not identify a feedback effect. |
+| `protein_stability_design_calibration_analysis_2026-07-25.json` | `TRUSTED_DERIVED_EVIDENCE / CALIBRATION_ONLY` | On clean analysis source `1052739`, binds report/trajectory/artifact hashes, model lineage, eight-world science axes and retained-artifact shortcut scans. It explicitly does not rule out pretraining contamination or support prospective discovery. |
+| `task_certification_audit_2026-07-25_v42.json` | `TRUSTED_CERTIFICATION_AUDIT` | On clean candidate revision `21a2220`, records 54 packages at 7 certified, 33 candidate and 14 quarantined with ProteinStabilityDesign as candidate. |
+| `security_audit_2026-07-25_v26.json` | `TRUSTED_SECURE_EVAL` | All 18 sandbox and protocol regressions pass on clean candidate revision `21a2220`. |
+| `secure_baseline_determinism_2026-07-25_v32.json` | `TRUSTED_SECURE_EVAL` | On clean candidate revision `21a2220`, all 54 baselines are deterministic, valid and fail closed over two repetitions; infrastructure failures are zero. |
+| `science_calibration_summary_2026-07-25_v21.json` | `TRUSTED_DERIVED_EVIDENCE / CALIBRATION_ONLY` | On clean candidate revision `21a2220`, validates 55 normal single-run conditions across 28 tasks. Heterogeneous science axes are not averaged, and strict controls remain task-specific. |

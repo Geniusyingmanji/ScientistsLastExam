@@ -49,10 +49,12 @@ controlled exception text is reduced to a fixed label-blind failure taxonomy bef
 search feedback, preventing observations from being carried between worlds through exceptions.
 The current audit reports:
 
-- The pre-admission 328-test suite passed after adding ProteinStabilityDesign; the current final
-  HEAD is being revalidated after adding its model-analysis and admission checks. The trusted
-  task/security reports v41/v25 bind clean task revision `72301ee`, and the 54-task baseline v31
-  reports 54/54 deterministic, 54/54 valid, 54/54 fail-closed and zero infrastructure failures.
+- The final candidate revision passes 332/332 unit, security, protocol, analysis and scientific-
+  invariant tests. Trusted certification/security/baseline reports v42/v26/v32 bind clean source
+  revision `21a2220`; certification records `7/33/14`, security passes 18/18, and the 54×2
+  baseline reports 54/54 deterministic, valid and fail-closed tasks with zero infrastructure
+  failures. Cross-task summary v21 binds the same revision and contains 55 normal single-run
+  conditions over 28 tasks.
 - Current source manifest: 7 certified / 33 candidate / 14 quarantined. ProteinStabilityDesign
   rebuilds 2,756 reliable double-mutant records across five
   development and three held-out domains from hash-bound ProteinGym v1.3/Tsuboyama sources.
@@ -243,8 +245,8 @@ the post-repair 50-package audits bind revision `47c3613`; the subsequent wave-2
 audit quarantines seven additional defective candidates. The two P2 smokes are baseline-only; the repository does not yet contain
 credible multi-seed model-performance evidence. A clean-revision GPT-5.5 budget-one core pilot
 is recorded as task calibration, not a benchmark leaderboard.
-The latest trusted pre-admission certification/security/baseline audits are v41/v25/v31 and
-cover all 54 task packages. The current source manifest is 7/33/14 and contains 40 internally
+The latest trusted certification/security/baseline audits are v42/v26/v32 and cover all 54 task
+packages on the Protein candidate revision. The current source manifest is 7/33/14 and contains 40 internally
 admissible tasks, leaving an approximate gap of 10 to the roughly 50-task target.
 GeneNetworkIntervention adds an active nonlinear signed-network, protected-readout intervention,
 sealed-transfer and null/latent-regulator refusal candidate. Its truth-blind nonlinear reference
