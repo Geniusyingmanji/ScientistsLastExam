@@ -1,0 +1,538 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_SECURE_EVAL",
+  "evidence_scope": "MODEL_PERFORMANCE",
+  "created_at": "2026-07-25T04:07:38.372435+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "489789a5de4265dba308f95b5a808324d2248048",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "/home/azureuser/workspace-gzy/zyf/frontier-science/scripts/batch_evolve.py",
+      "--all",
+      "--tasks",
+      "Electrochemistry/ElectrolyteConductivityDesign",
+      "--algorithms",
+      "greedy_rewrite",
+      "--feedback-modes",
+      "selection_blind",
+      "--seeds",
+      "1",
+      "--budget",
+      "3",
+      "--timeout",
+      "600",
+      "--llm-config",
+      "frontier_science/conf/llm/local.yaml",
+      "--workdir",
+      "runs/electrolyte_conductivity_v1_formal_blind_b3",
+      "--output",
+      "experiments/gpt55_electrolyte_conductivity_v1_blind_b3_2026-07-25.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "config": {
+    "tasks": [
+      "Electrochemistry/ElectrolyteConductivityDesign"
+    ],
+    "algorithms": [
+      "greedy_rewrite"
+    ],
+    "feedback_modes": [
+      "selection_blind"
+    ],
+    "condition_order": "as_listed_for_even_seeds_reversed_for_odd_seeds",
+    "seeds": [
+      1
+    ],
+    "budget": 3,
+    "timeout_s": 600.0,
+    "work_root": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/electrolyte_conductivity_v1_formal_blind_b3",
+    "llm_condition_sha256": "5b0df4671481f6b3505155bc6c5654a64c4da5591422fb806904e7d0f44fc4d2",
+    "llm": {
+      "wire": "responses",
+      "endpoint_sha256": "b22995a1fcaf8ad713ac37716f006c717313dfdebd357ac02a077a5582650bb6",
+      "model": "gpt-5.5",
+      "max_output_tokens": 16000,
+      "temperature": null,
+      "reasoning_effort": "low",
+      "input_cost_per_million": null,
+      "output_cost_per_million": null,
+      "server_side_seed_control": false
+    }
+  },
+  "runs": [
+    {
+      "task": "Electrochemistry/ElectrolyteConductivityDesign",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "selection_blind",
+      "seed": 1,
+      "baseline": 0.0,
+      "best": 0.645851680100704,
+      "accepted": 3,
+      "evaluated": 4,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/electrolyte_conductivity_v1_formal_blind_b3/Electrochemistry__ElectrolyteConductivityDesign/greedy_rewrite/selection_blind/seed_1",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 4,
+        "budget_units": 4,
+        "best_score": 0.645851680100704,
+        "best_so_far_auc": 0.4109576760357809,
+        "valid_rate": 1.0,
+        "accepted": 3,
+        "wall_seconds": 141.16368602123111,
+        "llm": {
+          "calls": 3,
+          "provider_usage_records": 3,
+          "input_tokens": 5193,
+          "output_tokens": 9449,
+          "total_tokens": 14642,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "Electrochemistry/ElectrolyteConductivityDesign",
+        "seed": 1,
+        "baseline_score": 0.0,
+        "budget": 3,
+        "feedback_mode": "selection_blind",
+        "feedback_scope": "open-loop proposal batch: every proposal sees the frozen baseline program and its allowlisted baseline metrics; evaluated scores are retained only for offline best-of-batch analysis and never change a later parent or prompt; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "offline_best_of_open_loop_batch"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 1,
+        "trajectory_sha256": "1021b6c705e346a4f55192b370326d0c1ae21223ce11c6bdb2bb771cb28bd9a5",
+        "events": [
+          {
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "a55e04a4239e8f469a908f41924c0555041b432793cab89ac589a43dc4b1772f",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.0,
+              "development_batch_utility": 0.5672711111595915,
+              "development_mean_weighted_conductivity_s_cm": 0.004436281850337042,
+              "development_minimum_weighted_conductivity_s_cm": 0.0038555524193415467,
+              "development_top_quartile_hit_rate": 0.26666666666666666,
+              "development_confirmation_mean_weighted_conductivity_s_cm": 0.004672329446913198,
+              "development_confirmation_minimum_weighted_conductivity_s_cm": 0.004206285933571046,
+              "development_confirmation_top_quartile_hit_rate": 0.5333333333333333,
+              "development_proxy_false_promotion_rate": 0.7666666666666666,
+              "development_batch_diversity": 0.36731119050311045,
+              "development_mean_eis_fit_quality": 0.7070290008517579,
+              "development_mean_arrhenius_r2": 0.9856586380289716,
+              "development_mean_campaign_count": 1.8,
+              "robustness_score": 0.0,
+              "confirmation_score": 0.0,
+              "confirmation_robustness_score": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "heldout_confirmation_score": 0.0,
+              "heldout_confirmation_robustness_score": 0.0,
+              "heldout_mean_weighted_conductivity_s_cm": 0.004669127561634929,
+              "heldout_minimum_weighted_conductivity_s_cm": 0.0043214305500411596,
+              "heldout_top_quartile_hit_rate": 0.1111111111111111,
+              "heldout_confirmation_mean_weighted_conductivity_s_cm": 0.0049236041135549856,
+              "heldout_confirmation_minimum_weighted_conductivity_s_cm": 0.0042740212014111935,
+              "heldout_confirmation_top_quartile_hit_rate": 0.6666666666666666,
+              "heldout_proxy_false_promotion_rate": 1.0,
+              "heldout_batch_diversity": 0.5814571534955739,
+              "heldout_mean_eis_fit_quality": 0.7135706511964025,
+              "heldout_mean_arrhenius_r2": 0.9830215529720632,
+              "heldout_mean_campaign_count": 2.0,
+              "heldout_feasibility_rate": 1.0,
+              "development_mean_assay_calls": 0.0,
+              "heldout_mean_assay_calls": 0.0,
+              "development_assay_unique_rate": 0.0,
+              "heldout_assay_unique_rate": 0.0,
+              "development_selected_assayed_fraction": 0.0,
+              "heldout_selected_assayed_fraction": 0.0,
+              "development_normalized_gain_per_assay": 0.0,
+              "heldout_normalized_gain_per_assay": 0.0,
+              "candidate_world_call_count": 8,
+              "candidate_world_valid_rate": 1.0
+            },
+            "algorithm_metadata": {},
+            "error": null
+          },
+          {
+            "step": 1,
+            "oracle_calls": 2,
+            "budget_units": 2,
+            "score": 0.43633983580021507,
+            "best_score": 0.43633983580021507,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "734692ac97da1725fc345ced9b1dbd18cf28d4cd870563fa530f8a5539d9c359",
+            "parent_sha256": "a55e04a4239e8f469a908f41924c0555041b432793cab89ac589a43dc4b1772f",
+            "metrics": {
+              "combined_score": 0.43633983580021507,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.43633983580021507,
+              "development_batch_utility": 0.6510385936414347,
+              "development_mean_weighted_conductivity_s_cm": 0.0046682042484639304,
+              "development_minimum_weighted_conductivity_s_cm": 0.0042221298287669585,
+              "development_top_quartile_hit_rate": 0.6666666666666666,
+              "development_confirmation_mean_weighted_conductivity_s_cm": 0.004210958229310367,
+              "development_confirmation_minimum_weighted_conductivity_s_cm": 0.003989295814797697,
+              "development_confirmation_top_quartile_hit_rate": 0.2,
+              "development_proxy_false_promotion_rate": 0.3333333333333333,
+              "development_batch_diversity": 0.4910071620348484,
+              "development_mean_eis_fit_quality": 0.6988546320463485,
+              "development_mean_arrhenius_r2": 0.9910189057889409,
+              "development_mean_campaign_count": 2.0,
+              "robustness_score": 0.6556652273404413,
+              "confirmation_score": 0.026578238771587243,
+              "confirmation_robustness_score": 0.0,
+              "heldout_policy_score": 0.3298968653628305,
+              "heldout_robustness_score": 0.279070433781738,
+              "heldout_confirmation_score": 0.0,
+              "heldout_confirmation_robustness_score": 0.0,
+              "heldout_mean_weighted_conductivity_s_cm": 0.004979897369745052,
+              "heldout_minimum_weighted_conductivity_s_cm": 0.004708144359308618,
+              "heldout_top_quartile_hit_rate": 0.7777777777777777,
+              "heldout_confirmation_mean_weighted_conductivity_s_cm": 0.004668361052644842,
+              "heldout_confirmation_minimum_weighted_conductivity_s_cm": 0.004481894122720924,
+              "heldout_confirmation_top_quartile_hit_rate": 0.1111111111111111,
+              "heldout_proxy_false_promotion_rate": 0.2222222222222222,
+              "heldout_batch_diversity": 0.32163929759087256,
+              "heldout_mean_eis_fit_quality": 0.6998727710710471,
+              "heldout_mean_arrhenius_r2": 0.9941070269153481,
+              "heldout_mean_campaign_count": 1.6666666666666667,
+              "heldout_feasibility_rate": 1.0,
+              "development_mean_assay_calls": 8.0,
+              "heldout_mean_assay_calls": 8.0,
+              "development_assay_unique_rate": 1.0,
+              "heldout_assay_unique_rate": 1.0,
+              "development_selected_assayed_fraction": 1.0,
+              "heldout_selected_assayed_fraction": 1.0,
+              "development_normalized_gain_per_assay": 0.054542479475026884,
+              "heldout_normalized_gain_per_assay": 0.041237108170353816,
+              "candidate_world_call_count": 8,
+              "candidate_world_valid_rate": 1.0
+            },
+            "algorithm_metadata": {
+              "selection_policy": "offline_best_of_open_loop_batch",
+              "accepted_semantics": "offline_best_update",
+              "proposal_slot": 1
+            },
+            "error": null
+          },
+          {
+            "step": 2,
+            "oracle_calls": 3,
+            "budget_units": 3,
+            "score": 0.5616391882422046,
+            "best_score": 0.5616391882422046,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "3e9c66af1d1a9f2e070308b822a298c5ce0cfe9f757856ec5d3490ebd25ef680",
+            "parent_sha256": "a55e04a4239e8f469a908f41924c0555041b432793cab89ac589a43dc4b1772f",
+            "metrics": {
+              "combined_score": 0.5616391882422046,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.5616391882422046,
+              "development_batch_utility": 0.6733941113609244,
+              "development_mean_weighted_conductivity_s_cm": 0.004857727465435281,
+              "development_minimum_weighted_conductivity_s_cm": 0.003899213535677847,
+              "development_top_quartile_hit_rate": 0.6,
+              "development_confirmation_mean_weighted_conductivity_s_cm": 0.004340445974862292,
+              "development_confirmation_minimum_weighted_conductivity_s_cm": 0.004035280545056654,
+              "development_confirmation_top_quartile_hit_rate": 0.26666666666666666,
+              "development_proxy_false_promotion_rate": 0.26666666666666666,
+              "development_batch_diversity": 0.3906102231266414,
+              "development_mean_eis_fit_quality": 0.699955394730492,
+              "development_mean_arrhenius_r2": 0.9901759366448175,
+              "development_mean_campaign_count": 1.8,
+              "robustness_score": 0.483989453422813,
+              "confirmation_score": 0.012133071128412705,
+              "confirmation_robustness_score": 0.03163624699162391,
+              "heldout_policy_score": 0.8626655005048577,
+              "heldout_robustness_score": 0.8064749449594197,
+              "heldout_confirmation_score": 0.0,
+              "heldout_confirmation_robustness_score": 0.0,
+              "heldout_mean_weighted_conductivity_s_cm": 0.0051340034026705434,
+              "heldout_minimum_weighted_conductivity_s_cm": 0.00439683139751693,
+              "heldout_top_quartile_hit_rate": 0.8888888888888888,
+              "heldout_confirmation_mean_weighted_conductivity_s_cm": 0.004730610312684759,
+              "heldout_confirmation_minimum_weighted_conductivity_s_cm": 0.00449958346158566,
+              "heldout_confirmation_top_quartile_hit_rate": 0.2222222222222222,
+              "heldout_proxy_false_promotion_rate": 0.0,
+              "heldout_batch_diversity": 0.6054859648360646,
+              "heldout_mean_eis_fit_quality": 0.6895405273321217,
+              "heldout_mean_arrhenius_r2": 0.9902955346092711,
+              "heldout_mean_campaign_count": 2.0,
+              "heldout_feasibility_rate": 1.0,
+              "development_mean_assay_calls": 8.0,
+              "heldout_mean_assay_calls": 8.0,
+              "development_assay_unique_rate": 1.0,
+              "heldout_assay_unique_rate": 1.0,
+              "development_selected_assayed_fraction": 0.7999999999999999,
+              "heldout_selected_assayed_fraction": 0.8888888888888888,
+              "development_normalized_gain_per_assay": 0.07020489853027558,
+              "heldout_normalized_gain_per_assay": 0.10783318756310721,
+              "candidate_world_call_count": 8,
+              "candidate_world_valid_rate": 1.0
+            },
+            "algorithm_metadata": {
+              "selection_policy": "offline_best_of_open_loop_batch",
+              "accepted_semantics": "offline_best_update",
+              "proposal_slot": 2
+            },
+            "error": null
+          },
+          {
+            "step": 3,
+            "oracle_calls": 4,
+            "budget_units": 4,
+            "score": 0.645851680100704,
+            "best_score": 0.645851680100704,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "cd5125db0f6ef147b4690af7a6b5995effbe25e57d14617984e5e6e85208cc9e",
+            "parent_sha256": "a55e04a4239e8f469a908f41924c0555041b432793cab89ac589a43dc4b1772f",
+            "metrics": {
+              "combined_score": 0.645851680100704,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.645851680100704,
+              "development_batch_utility": 0.6948375612835327,
+              "development_mean_weighted_conductivity_s_cm": 0.004870183571584411,
+              "development_minimum_weighted_conductivity_s_cm": 0.00424556925354669,
+              "development_top_quartile_hit_rate": 0.8666666666666666,
+              "development_confirmation_mean_weighted_conductivity_s_cm": 0.004235980756225021,
+              "development_confirmation_minimum_weighted_conductivity_s_cm": 0.003959859044816614,
+              "development_confirmation_top_quartile_hit_rate": 0.13333333333333333,
+              "development_proxy_false_promotion_rate": 0.16666666666666666,
+              "development_batch_diversity": 0.5000633590983208,
+              "development_mean_eis_fit_quality": 0.6996075895423381,
+              "development_mean_arrhenius_r2": 0.9932016350289086,
+              "development_mean_campaign_count": 2.0,
+              "robustness_score": 0.7287399238238833,
+              "confirmation_score": 0.0,
+              "confirmation_robustness_score": 0.0,
+              "heldout_policy_score": 0.7647702977390703,
+              "heldout_robustness_score": 0.6795520078528746,
+              "heldout_confirmation_score": 0.0,
+              "heldout_confirmation_robustness_score": 0.07112173665108194,
+              "heldout_mean_weighted_conductivity_s_cm": 0.005029951678620578,
+              "heldout_minimum_weighted_conductivity_s_cm": 0.004499744820277959,
+              "heldout_top_quartile_hit_rate": 0.8888888888888888,
+              "heldout_confirmation_mean_weighted_conductivity_s_cm": 0.0046596724968080054,
+              "heldout_confirmation_minimum_weighted_conductivity_s_cm": 0.004484563120292097,
+              "heldout_confirmation_top_quartile_hit_rate": 0.2222222222222222,
+              "heldout_proxy_false_promotion_rate": 0.16666666666666666,
+              "heldout_batch_diversity": 0.6025188139037834,
+              "heldout_mean_eis_fit_quality": 0.6974293376231017,
+              "heldout_mean_arrhenius_r2": 0.9927160839412051,
+              "heldout_mean_campaign_count": 2.0,
+              "heldout_feasibility_rate": 1.0,
+              "development_mean_assay_calls": 8.0,
+              "heldout_mean_assay_calls": 8.0,
+              "development_assay_unique_rate": 1.0,
+              "heldout_assay_unique_rate": 1.0,
+              "development_selected_assayed_fraction": 1.0,
+              "heldout_selected_assayed_fraction": 1.0,
+              "development_normalized_gain_per_assay": 0.080731460012588,
+              "heldout_normalized_gain_per_assay": 0.0955962872173838,
+              "candidate_world_call_count": 8,
+              "candidate_world_valid_rate": 1.0
+            },
+            "algorithm_metadata": {
+              "selection_policy": "offline_best_of_open_loop_batch",
+              "accepted_semantics": "offline_best_update",
+              "proposal_slot": 3
+            },
+            "error": null
+          }
+        ]
+      }
+    }
+  ],
+  "aggregate": {
+    "attempt_count": 1,
+    "superseded_attempts": 0,
+    "failed_attempts": 0,
+    "attempt_failure_rate": 0.0,
+    "recovered_runs": 0,
+    "successful_runs": 1,
+    "failed_runs": 0,
+    "intent_to_evaluate": {
+      "scheduled_runs": 1,
+      "successful_runs": 1,
+      "terminal_failed_runs": 0,
+      "completion_rate": 1.0,
+      "run_cells_with_any_failed_attempt": 0,
+      "recovered_runs": 0
+    },
+    "quality_metrics_scope": "latest successful runs only; interpret jointly with intent_to_evaluate and failed_attempts",
+    "by_condition": {
+      "Electrochemistry/ElectrolyteConductivityDesign|greedy_rewrite|selection_blind": {
+        "n": 1,
+        "scheduled_n": 1,
+        "successful_runs": 1,
+        "terminal_failed_runs": 0,
+        "completion_rate": 1.0,
+        "attempt_count": 1,
+        "failed_attempts": 0,
+        "recovered_runs": 0,
+        "best_score": {
+          "n": 1,
+          "mean": 0.645851680100704,
+          "ci95_low": 0.645851680100704,
+          "ci95_high": 0.645851680100704
+        },
+        "best_so_far_auc": {
+          "n": 1,
+          "mean": 0.4109576760357809,
+          "ci95_low": 0.4109576760357809,
+          "ci95_high": 0.4109576760357809
+        },
+        "budget_units": {
+          "n": 1,
+          "mean": 4.0,
+          "ci95_low": 4.0,
+          "ci95_high": 4.0
+        },
+        "oracle_calls": {
+          "n": 1,
+          "mean": 4.0,
+          "ci95_low": 4.0,
+          "ci95_high": 4.0
+        },
+        "wall_seconds": {
+          "n": 1,
+          "mean": 141.16368602123111,
+          "ci95_low": 141.16368602123111,
+          "ci95_high": 141.16368602123111
+        },
+        "total_tokens": {
+          "n": 1,
+          "mean": 14642.0,
+          "ci95_low": 14642.0,
+          "ci95_high": 14642.0
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      }
+    },
+    "overall": {
+      "best_score": {
+        "n": 1,
+        "mean": 0.645851680100704,
+        "ci95_low": 0.645851680100704,
+        "ci95_high": 0.645851680100704
+      },
+      "best_so_far_auc": {
+        "n": 1,
+        "mean": 0.4109576760357809,
+        "ci95_low": 0.4109576760357809,
+        "ci95_high": 0.4109576760357809
+      },
+      "budget_units": {
+        "n": 1,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "oracle_calls": {
+        "n": 1,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "wall_seconds": {
+        "n": 1,
+        "mean": 141.16368602123111,
+        "ci95_low": 141.16368602123111,
+        "ci95_high": 141.16368602123111
+      },
+      "total_tokens": {
+        "n": 1,
+        "mean": 14642.0,
+        "ci95_low": 14642.0,
+        "ci95_high": 14642.0
+      },
+      "estimated_cost_usd": {
+        "n": 0,
+        "mean": null,
+        "ci95_low": null,
+        "ci95_high": null
+      }
+    },
+    "overall_valid_only": {
+      "best_score": {
+        "n": 1,
+        "mean": 0.645851680100704,
+        "ci95_low": 0.645851680100704,
+        "ci95_high": 0.645851680100704
+      },
+      "best_so_far_auc": {
+        "n": 1,
+        "mean": 0.4109576760357809,
+        "ci95_low": 0.4109576760357809,
+        "ci95_high": 0.4109576760357809
+      },
+      "budget_units": {
+        "n": 1,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "oracle_calls": {
+        "n": 1,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "wall_seconds": {
+        "n": 1,
+        "mean": 141.16368602123111,
+        "ci95_low": 141.16368602123111,
+        "ci95_high": 141.16368602123111
+      },
+      "total_tokens": {
+        "n": 1,
+        "mean": 14642.0,
+        "ci95_low": 14642.0,
+        "ci95_high": 14642.0
+      },
+      "estimated_cost_usd": {
+        "n": 0,
+        "mean": null,
+        "ci95_low": null,
+        "ci95_high": null
+      }
+    }
+  },
+  "completed_at": "2026-07-25T04:09:59.544188+00:00",
+  "execution_passed": true,
+  "trust_decision": "trusted_clean_revision",
+  "trusted_evidence": true,
+  "passed": true
+}
