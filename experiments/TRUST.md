@@ -226,6 +226,13 @@ remain baseline-only and must not be promoted to model-performance evidence.
 Raw `.out`/`.log` files predating the trusted evaluator inherit
 `UNTRUSTED_PRE_SANDBOX` unless a dated trusted report explicitly incorporates them.
 
+## 2026-07-25 DemographicSFS-v2 evidence
+
+| Artifact | Trust | Scope |
+|---|---|---|
+| `demographic_sfs_v2_calibration_2026-07-25.json` | `TRUSTED_TASK_CALIBRATION` | On clean source `d0257dc`, replaces the rank-two time-index surrogate with exact Kingman-CTMC occupancy, verifies the constant-size theta/i identity against an independent ODE calculation, checks 7/7 full-rank supported histories, charged sequencing, ancestral-state-error refusal and finite-SFS near-equivalence limits. Synthetic finite-panel task only; not a real-population or discovery result. |
+| `inverse_candidate_admission_audit_2026-07-25_v9.json` | `TRUSTED_ADMISSION_AUDIT` | On clean source `d0257dc`, all seven inverse-track checks pass and DemographicSFS-v2 is recommended for candidate admission. Four-epoch and population-mixture histories remain explicitly non-rejectable under the registered finite-SFS threshold. |
+
 ## 2026-07-25 ProteinStabilityDesign evidence
 
 | Artifact | Trust | Scope |
