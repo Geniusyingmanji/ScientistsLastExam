@@ -1,0 +1,494 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_SECURE_EVAL",
+  "evidence_scope": "MODEL_PERFORMANCE",
+  "created_at": "2026-07-25T01:35:55.455952+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "72301eee6237a8a4382e7489e07ed772660a59bb",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "/home/azureuser/workspace-gzy/zyf/frontier-science/scripts/batch_evolve.py",
+      "--all",
+      "--tasks",
+      "ProteinEngineering/ProteinStabilityDesign",
+      "--algorithms",
+      "greedy_rewrite",
+      "--feedback-modes",
+      "normal",
+      "--seeds",
+      "1",
+      "--budget",
+      "3",
+      "--timeout",
+      "600",
+      "--llm-config",
+      "frontier_science/conf/llm/local.yaml",
+      "--workdir",
+      "runs/protein_stability_v1_b3",
+      "--output",
+      "experiments/gpt55_protein_stability_v1_b3_2026-07-25.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "config": {
+    "tasks": [
+      "ProteinEngineering/ProteinStabilityDesign"
+    ],
+    "algorithms": [
+      "greedy_rewrite"
+    ],
+    "feedback_modes": [
+      "normal"
+    ],
+    "condition_order": "as_listed_for_even_seeds_reversed_for_odd_seeds",
+    "seeds": [
+      1
+    ],
+    "budget": 3,
+    "timeout_s": 600.0,
+    "work_root": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/protein_stability_v1_b3",
+    "llm_condition_sha256": "5b0df4671481f6b3505155bc6c5654a64c4da5591422fb806904e7d0f44fc4d2",
+    "llm": {
+      "wire": "responses",
+      "endpoint_sha256": "b22995a1fcaf8ad713ac37716f006c717313dfdebd357ac02a077a5582650bb6",
+      "model": "gpt-5.5",
+      "max_output_tokens": 16000,
+      "temperature": null,
+      "reasoning_effort": "low",
+      "input_cost_per_million": null,
+      "output_cost_per_million": null,
+      "server_side_seed_control": false
+    }
+  },
+  "runs": [
+    {
+      "task": "ProteinEngineering/ProteinStabilityDesign",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 1,
+      "baseline": 0.0,
+      "best": 0.5345850949884275,
+      "accepted": 2,
+      "evaluated": 4,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/protein_stability_v1_b3/ProteinEngineering__ProteinStabilityDesign/greedy_rewrite/normal/seed_1",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 4,
+        "budget_units": 4,
+        "best_score": 0.5345850949884275,
+        "best_so_far_auc": 0.3865192959668312,
+        "valid_rate": 1.0,
+        "accepted": 2,
+        "wall_seconds": 108.9099219320342,
+        "llm": {
+          "calls": 3,
+          "provider_usage_records": 3,
+          "input_tokens": 7223,
+          "output_tokens": 9083,
+          "total_tokens": 16306,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "ProteinEngineering/ProteinStabilityDesign",
+        "seed": 1,
+        "baseline_score": 0.0,
+        "budget": 3,
+        "feedback_mode": "normal",
+        "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "online_incumbent"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 1,
+        "trajectory_sha256": "f07968b3d1f72b97401b5af4a99087b9522f58ed7ec9f47c2a8e19e58b460604",
+        "events": [
+          {
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "1d7b7d2dd319c246d235f33f207f5470bcd7d984ed92f85b63903a6ddb098455",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.0,
+              "development_batch_utility": 0.7465392862511318,
+              "development_mean_stability_ddg": -0.6551762949588429,
+              "development_top_decile_hit_rate": 0.675,
+              "development_batch_diversity": 0.6785714285714286,
+              "development_proxy_false_promotion_rate": 0.325,
+              "development_trypsin_score": 0.0,
+              "development_chymotrypsin_score": 0.0,
+              "robustness_score": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_batch_utility": 0.7282223612126781,
+              "heldout_mean_stability_ddg": -0.4658384757617257,
+              "heldout_top_decile_hit_rate": 0.4583333333333333,
+              "heldout_batch_diversity": 0.7261904761904763,
+              "heldout_proxy_false_promotion_rate": 0.5416666666666666,
+              "heldout_trypsin_score": 0.0,
+              "heldout_chymotrypsin_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "heldout_feasibility_rate": 1.0,
+              "development_mean_assay_calls": 0.0,
+              "heldout_mean_assay_calls": 0.0,
+              "development_assay_unique_rate": 0.0,
+              "heldout_assay_unique_rate": 0.0,
+              "development_selected_assayed_fraction": 0.0,
+              "heldout_selected_assayed_fraction": 0.0,
+              "development_selected_unmeasured_fraction": 1.0,
+              "heldout_selected_unmeasured_fraction": 1.0,
+              "development_normalized_utility_gain_per_assay": 0.0,
+              "heldout_normalized_utility_gain_per_assay": 0.0,
+              "candidate_world_call_count": 8,
+              "candidate_world_valid_rate": 1.0
+            },
+            "algorithm_metadata": {},
+            "error": null
+          },
+          {
+            "step": 1,
+            "oracle_calls": 2,
+            "budget_units": 2,
+            "score": 0.47690699389046964,
+            "best_score": 0.47690699389046964,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "34d22aa362359465d2d90fd2d65855219a5cff00d35d4981ec38ae1a53cbfd99",
+            "parent_sha256": "1d7b7d2dd319c246d235f33f207f5470bcd7d984ed92f85b63903a6ddb098455",
+            "metrics": {
+              "combined_score": 0.47690699389046964,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.47690699389046964,
+              "development_batch_utility": 0.8141215230861469,
+              "development_mean_stability_ddg": -0.4375518900513331,
+              "development_top_decile_hit_rate": 0.825,
+              "development_batch_diversity": 0.7678571428571429,
+              "development_proxy_false_promotion_rate": 0.175,
+              "development_trypsin_score": 0.5181504144254957,
+              "development_chymotrypsin_score": 0.4781660757738175,
+              "robustness_score": 0.4881250011940869,
+              "heldout_policy_score": 0.4249960050234558,
+              "heldout_batch_utility": 0.7900428422788984,
+              "heldout_mean_stability_ddg": -0.2586654763670995,
+              "heldout_top_decile_hit_rate": 0.7083333333333334,
+              "heldout_batch_diversity": 0.7678571428571428,
+              "heldout_proxy_false_promotion_rate": 0.2916666666666667,
+              "heldout_trypsin_score": 0.4535498027853222,
+              "heldout_chymotrypsin_score": 0.5961827844017825,
+              "heldout_robustness_score": 0.4901377406060938,
+              "heldout_feasibility_rate": 1.0,
+              "development_mean_assay_calls": 12.0,
+              "heldout_mean_assay_calls": 12.0,
+              "development_assay_unique_rate": 1.0,
+              "heldout_assay_unique_rate": 1.0,
+              "development_selected_assayed_fraction": 1.0,
+              "heldout_selected_assayed_fraction": 1.0,
+              "development_selected_unmeasured_fraction": 0.0,
+              "heldout_selected_unmeasured_fraction": 0.0,
+              "development_normalized_utility_gain_per_assay": 0.03974224949087247,
+              "heldout_normalized_utility_gain_per_assay": 0.03541633375195465,
+              "candidate_world_call_count": 8,
+              "candidate_world_valid_rate": 1.0
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 1
+            },
+            "error": null
+          },
+          {
+            "step": 2,
+            "oracle_calls": 3,
+            "budget_units": 3,
+            "score": 0.5345850949884275,
+            "best_score": 0.5345850949884275,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "13dc6284b853dbb7384598cefef4abf2d8f610817d93db249e3e9293893a7f6c",
+            "parent_sha256": "34d22aa362359465d2d90fd2d65855219a5cff00d35d4981ec38ae1a53cbfd99",
+            "metrics": {
+              "combined_score": 0.5345850949884275,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.5345850949884275,
+              "development_batch_utility": 0.8218278384509535,
+              "development_mean_stability_ddg": -0.4535264604263121,
+              "development_top_decile_hit_rate": 0.875,
+              "development_batch_diversity": 0.8107142857142857,
+              "development_proxy_false_promotion_rate": 0.10714285714285714,
+              "development_trypsin_score": 0.4524372096615263,
+              "development_chymotrypsin_score": 0.430685039899026,
+              "robustness_score": 0.4412394208848546,
+              "heldout_policy_score": 0.5589826992926317,
+              "heldout_batch_utility": 0.8149590408308759,
+              "heldout_mean_stability_ddg": -0.19055512940160516,
+              "heldout_top_decile_hit_rate": 0.7916666666666666,
+              "heldout_batch_diversity": 0.8035714285714285,
+              "heldout_proxy_false_promotion_rate": 0.23214285714285712,
+              "heldout_trypsin_score": 0.49717530538803256,
+              "heldout_chymotrypsin_score": 0.7298726270944548,
+              "heldout_robustness_score": 0.571148475649546,
+              "heldout_feasibility_rate": 1.0,
+              "development_mean_assay_calls": 12.0,
+              "heldout_mean_assay_calls": 12.0,
+              "development_assay_unique_rate": 1.0,
+              "heldout_assay_unique_rate": 1.0,
+              "development_selected_assayed_fraction": 1.0,
+              "heldout_selected_assayed_fraction": 1.0,
+              "development_selected_unmeasured_fraction": 0.0,
+              "heldout_selected_unmeasured_fraction": 0.0,
+              "development_normalized_utility_gain_per_assay": 0.0445487579157023,
+              "heldout_normalized_utility_gain_per_assay": 0.046581891607719306,
+              "candidate_world_call_count": 8,
+              "candidate_world_valid_rate": 1.0
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 2
+            },
+            "error": null
+          },
+          {
+            "step": 3,
+            "oracle_calls": 4,
+            "budget_units": 4,
+            "score": 0.3660305184362086,
+            "best_score": 0.5345850949884275,
+            "valid": true,
+            "accepted": false,
+            "candidate_sha256": "84b13a2f9a33b0ea10c97d38938780540ffc0e462c68fed64f86e703a29e0aa2",
+            "parent_sha256": "13dc6284b853dbb7384598cefef4abf2d8f610817d93db249e3e9293893a7f6c",
+            "metrics": {
+              "combined_score": 0.3660305184362086,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.3660305184362086,
+              "development_batch_utility": 0.703508511955422,
+              "development_mean_stability_ddg": -0.941495881934485,
+              "development_top_decile_hit_rate": 0.725,
+              "development_batch_diversity": 0.7392857142857142,
+              "development_proxy_false_promotion_rate": 0.075,
+              "development_trypsin_score": 0.43310923373957066,
+              "development_chymotrypsin_score": 0.42566249590823785,
+              "robustness_score": 0.42830837833831287,
+              "heldout_policy_score": 0.47277607601353283,
+              "heldout_batch_utility": 0.7318872023274793,
+              "heldout_mean_stability_ddg": -0.5726826790340375,
+              "heldout_top_decile_hit_rate": 0.7083333333333334,
+              "heldout_batch_diversity": 0.8035714285714285,
+              "heldout_proxy_false_promotion_rate": 0.041666666666666664,
+              "heldout_trypsin_score": 0.5317029151085434,
+              "heldout_chymotrypsin_score": 0.6503247620467807,
+              "heldout_robustness_score": 0.5822040071929111,
+              "heldout_feasibility_rate": 1.0,
+              "development_mean_assay_calls": 12.0,
+              "heldout_mean_assay_calls": 12.0,
+              "development_assay_unique_rate": 1.0,
+              "heldout_assay_unique_rate": 1.0,
+              "development_selected_assayed_fraction": 0.55,
+              "heldout_selected_assayed_fraction": 0.5416666666666666,
+              "development_selected_unmeasured_fraction": 0.45,
+              "heldout_selected_unmeasured_fraction": 0.4583333333333333,
+              "development_normalized_utility_gain_per_assay": 0.030502543203017384,
+              "heldout_normalized_utility_gain_per_assay": 0.03939800633446107,
+              "candidate_world_call_count": 8,
+              "candidate_world_valid_rate": 1.0
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 3
+            },
+            "error": null
+          }
+        ]
+      }
+    }
+  ],
+  "aggregate": {
+    "attempt_count": 1,
+    "superseded_attempts": 0,
+    "failed_attempts": 0,
+    "attempt_failure_rate": 0.0,
+    "recovered_runs": 0,
+    "successful_runs": 1,
+    "failed_runs": 0,
+    "intent_to_evaluate": {
+      "scheduled_runs": 1,
+      "successful_runs": 1,
+      "terminal_failed_runs": 0,
+      "completion_rate": 1.0,
+      "run_cells_with_any_failed_attempt": 0,
+      "recovered_runs": 0
+    },
+    "quality_metrics_scope": "latest successful runs only; interpret jointly with intent_to_evaluate and failed_attempts",
+    "by_condition": {
+      "ProteinEngineering/ProteinStabilityDesign|greedy_rewrite|normal": {
+        "n": 1,
+        "scheduled_n": 1,
+        "successful_runs": 1,
+        "terminal_failed_runs": 0,
+        "completion_rate": 1.0,
+        "attempt_count": 1,
+        "failed_attempts": 0,
+        "recovered_runs": 0,
+        "best_score": {
+          "n": 1,
+          "mean": 0.5345850949884275,
+          "ci95_low": 0.5345850949884275,
+          "ci95_high": 0.5345850949884275
+        },
+        "best_so_far_auc": {
+          "n": 1,
+          "mean": 0.3865192959668312,
+          "ci95_low": 0.3865192959668312,
+          "ci95_high": 0.3865192959668312
+        },
+        "budget_units": {
+          "n": 1,
+          "mean": 4.0,
+          "ci95_low": 4.0,
+          "ci95_high": 4.0
+        },
+        "oracle_calls": {
+          "n": 1,
+          "mean": 4.0,
+          "ci95_low": 4.0,
+          "ci95_high": 4.0
+        },
+        "wall_seconds": {
+          "n": 1,
+          "mean": 108.9099219320342,
+          "ci95_low": 108.9099219320342,
+          "ci95_high": 108.9099219320342
+        },
+        "total_tokens": {
+          "n": 1,
+          "mean": 16306.0,
+          "ci95_low": 16306.0,
+          "ci95_high": 16306.0
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      }
+    },
+    "overall": {
+      "best_score": {
+        "n": 1,
+        "mean": 0.5345850949884275,
+        "ci95_low": 0.5345850949884275,
+        "ci95_high": 0.5345850949884275
+      },
+      "best_so_far_auc": {
+        "n": 1,
+        "mean": 0.3865192959668312,
+        "ci95_low": 0.3865192959668312,
+        "ci95_high": 0.3865192959668312
+      },
+      "budget_units": {
+        "n": 1,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "oracle_calls": {
+        "n": 1,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "wall_seconds": {
+        "n": 1,
+        "mean": 108.9099219320342,
+        "ci95_low": 108.9099219320342,
+        "ci95_high": 108.9099219320342
+      },
+      "total_tokens": {
+        "n": 1,
+        "mean": 16306.0,
+        "ci95_low": 16306.0,
+        "ci95_high": 16306.0
+      },
+      "estimated_cost_usd": {
+        "n": 0,
+        "mean": null,
+        "ci95_low": null,
+        "ci95_high": null
+      }
+    },
+    "overall_valid_only": {
+      "best_score": {
+        "n": 1,
+        "mean": 0.5345850949884275,
+        "ci95_low": 0.5345850949884275,
+        "ci95_high": 0.5345850949884275
+      },
+      "best_so_far_auc": {
+        "n": 1,
+        "mean": 0.3865192959668312,
+        "ci95_low": 0.3865192959668312,
+        "ci95_high": 0.3865192959668312
+      },
+      "budget_units": {
+        "n": 1,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "oracle_calls": {
+        "n": 1,
+        "mean": 4.0,
+        "ci95_low": 4.0,
+        "ci95_high": 4.0
+      },
+      "wall_seconds": {
+        "n": 1,
+        "mean": 108.9099219320342,
+        "ci95_low": 108.9099219320342,
+        "ci95_high": 108.9099219320342
+      },
+      "total_tokens": {
+        "n": 1,
+        "mean": 16306.0,
+        "ci95_low": 16306.0,
+        "ci95_high": 16306.0
+      },
+      "estimated_cost_usd": {
+        "n": 0,
+        "mean": null,
+        "ci95_low": null,
+        "ci95_high": null
+      }
+    }
+  },
+  "completed_at": "2026-07-25T01:37:44.373167+00:00",
+  "execution_passed": true,
+  "trust_decision": "trusted_clean_revision",
+  "trusted_evidence": true,
+  "passed": true
+}
