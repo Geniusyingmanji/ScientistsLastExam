@@ -1,0 +1,346 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_ADMISSION_AUDIT",
+  "created_at": "2026-07-25T07:20:18.617434+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "9a72b511311c04b26d39658e76cf2d1cc0cc3d3f",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/audit_inverse_candidates.py",
+      "--output",
+      "experiments/inverse_candidate_admission_audit_2026-07-25_v10.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "records": [
+    {
+      "task": "AtmosphericScience/RadiativeTransferFit",
+      "admission": "candidate",
+      "resolved_defect": "v2 replaces hidden-profile scoring with charged channel/view selection, five evidence-supported temperature/optical-depth parameters, null/absorber/cloud refusal and held-out noise plus viewing shifts",
+      "public_layer_count": 16,
+      "public_channel_count": 24,
+      "supported_parameter_count": 5,
+      "always_abstain_score": 0.0,
+      "classical_mechanism_score": 0.6143947499999999,
+      "classical_heldout_mechanism_score": 0.4909076666666666,
+      "classical_radiance_prediction_score": 0.85460325,
+      "classical_development_false_discovery_rate": 0.0,
+      "classical_heldout_false_discovery_rate": 0.0,
+      "full_rank_in_library_worlds": 7,
+      "in_library_world_count": 7,
+      "maximum_identifiability_condition_number": 27.9953166136132,
+      "minimum_misspecified_reduced_chi2": 4.651871892501017,
+      "noise_label_blind_checks": [
+        {
+          "split": "development",
+          "supported_noise_std": [
+            0.0006,
+            0.000672,
+            0.000744,
+            0.000816
+          ],
+          "unsupported_noise_std": [
+            0.0006,
+            0.000816
+          ],
+          "passed": true
+        },
+        {
+          "split": "heldout",
+          "supported_noise_std": [
+            0.0012,
+            0.001344,
+            0.001488
+          ],
+          "unsupported_noise_std": [
+            0.0012,
+            0.001488
+          ],
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "task": "ChemicalKinetics/ReactionMechanismFitting",
+      "admission": "candidate",
+      "resolved_defect": "v2 replaces effectively complete full-state trajectories with charged partial-species active assays, sparse topology and Arrhenius rate-curve recovery, null/model-inadequacy refusal and held-out topologies",
+      "always_abstain_score": 0.0,
+      "classical_mechanism_score": 0.4818354999999999,
+      "classical_prediction_score": 0.86042925,
+      "classical_false_discovery_rate": 0.5,
+      "full_rank_in_library_worlds": 7,
+      "in_library_world_count": 7,
+      "passed": true
+    },
+    {
+      "task": "Geophysics/GravityInversion",
+      "admission": "candidate",
+      "resolved_defect": "v2 replaces two noise-dominated duplicate grids with charged multi-height survey design, seven procedural rectangular-body topologies, null and observationally resolvable out-of-library worlds, external-field-equivalent matching and held-out noise shifts",
+      "always_abstain_score": 0.0,
+      "classical_mechanism_score": 0.7859467499999998,
+      "classical_prediction_score": 0.9907127499999999,
+      "classical_false_discovery_rate": 0.0,
+      "minimum_in_library_signal_to_noise_ratio": 22.771987295053908,
+      "full_rank_in_library_worlds": 7,
+      "in_library_world_count": 7,
+      "passed": true
+    },
+    {
+      "task": "Oceanography/OceanCurrentInversion",
+      "admission": "candidate",
+      "resolved_defect": "v2 replaces the sub-metre fixed-field inversion with charged release-position/phase/time design, a thirty-mode divergence-free current library, null and resolvable out-of-library refusal, trajectory/field extrapolation and shifted-noise held-out worlds",
+      "public_mode_count": 30,
+      "always_abstain_score": 0.0,
+      "classical_mechanism_score": 0.7067505000000001,
+      "classical_heldout_mechanism_score": 0.4056166666666666,
+      "classical_development_false_discovery_rate": 0.0,
+      "classical_heldout_false_discovery_rate": 0.0,
+      "full_rank_in_library_worlds": 7,
+      "in_library_world_count": 7,
+      "noise_label_blind_checks": [
+        {
+          "split": "development",
+          "supported_noise_std_m": [
+            125.0,
+            150.0,
+            162.5,
+            175.0
+          ],
+          "unsupported_noise_std_m": [
+            125.0,
+            175.0
+          ],
+          "passed": true
+        },
+        {
+          "split": "heldout",
+          "supported_noise_std_m": [
+            250.0,
+            300.0,
+            350.0
+          ],
+          "unsupported_noise_std_m": [
+            250.0,
+            350.0
+          ],
+          "passed": true
+        }
+      ],
+      "minimum_misspecified_approximate_velocity_residual_per_dof": 6.744173548974388,
+      "minimum_misspecified_nonlinear_trajectory_reduced_chi2": 10.527894872565367,
+      "passed": true
+    },
+    {
+      "task": "PopulationGenetics/DemographicSFS",
+      "admission": "candidate",
+      "resolved_defect": "v2 replaces the rank-two time-index surrogate with exact finite-sample Kingman-CTMC occupancy, fixed-scale constant/three-epoch recovery, charged sample-size design, held-out projection and calibrated ancestral-polarization-error refusal",
+      "parameter_count": 4,
+      "always_abstain_score": 0.0,
+      "classical_development_selection_score": 0.7697481957654222,
+      "classical_heldout_mechanism_score": 0.5097251642628561,
+      "classical_development_mechanism_score": 0.7697481957654222,
+      "classical_heldout_mechanism_component": 0.5097251642628561,
+      "classical_development_prediction_score": 0.9883123269938381,
+      "classical_heldout_prediction_score": 0.9827112895478026,
+      "equal_budget_small_sample_development_mechanism_score": 0.5380150597172353,
+      "equal_budget_small_sample_heldout_mechanism_score": 0.3973759367069717,
+      "classical_development_false_discovery_rate": 0.0,
+      "classical_heldout_false_discovery_rate": 0.0,
+      "full_rank_supported_worlds": 7,
+      "supported_world_count": 7,
+      "maximum_identifiability_condition_number": 259.5410391311177,
+      "minimum_misspecified_expected_reduced_deviance": 5.312437272353511,
+      "finite_sfs_near_equivalence_limits": [
+        {
+          "kind": "four_epoch",
+          "best_three_epoch_parameters": [
+            0.28543891083281214,
+            0.47400533064227124,
+            0.025000000000000005,
+            0.5199999999999974
+          ],
+          "clean_structural_reduced_deviance": 0.00923579592081914,
+          "refusal_threshold": 2.25,
+          "indistinguishable_under_registered_threshold": true
+        },
+        {
+          "kind": "population_mixture",
+          "best_three_epoch_parameters": [
+            1.0255917275172308,
+            0.4758940244608501,
+            0.025000000000000005,
+            0.20522670254800882
+          ],
+          "clean_structural_reduced_deviance": 0.059247203432833094,
+          "refusal_threshold": 2.25,
+          "indistinguishable_under_registered_threshold": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "task": "Turbulence/RANSCalibration",
+      "admission": "candidate",
+      "resolved_defect": "v2 replaces the analytic log-law/TKE pseudo-DNS and rank-three five-constant surrogate with licensed Re_tau 180/395/590/950 channel DNS, a four-parameter full-rank positive algebraic closure, joint mean-velocity/Reynolds-shear scoring, exact momentum balance, sealed higher-Re transfer and wall-coordinate shifts",
+      "data_sha256": "0f70ce507fa65175f044538b41a266d42347cdf9c1bf2e7fafd8f630f47ed9bf",
+      "data_doi": "10.5281/zenodo.5749302",
+      "data_license": "CC-BY-4.0",
+      "development_re_tau": [
+        180,
+        395
+      ],
+      "heldout_re_tau": [
+        590,
+        950
+      ],
+      "jacobian_rank": 4,
+      "parameter_count": 4,
+      "parameter_scaled_condition_number": 51.196902065335344,
+      "parameter_scaled_singular_values": [
+        598.6846905200299,
+        115.99223375980262,
+        23.618812544516164,
+        11.693767911113325
+      ],
+      "baseline_score": 0.0,
+      "nominal_development_score": 1.0,
+      "nominal_heldout_score": 0.5122140164414661,
+      "nominal_robustness_score": 0.8566752524134001,
+      "nominal_heldout_robustness_score": 0.3556841811931784,
+      "robust_development_score": 0.9623587767944725,
+      "robustness_score": 1.0,
+      "robust_heldout_score": 0.09573683814097357,
+      "robust_heldout_robustness_score": 0.0,
+      "passed": true
+    },
+    {
+      "task": "WavePropagation/SeismicWaveInversion",
+      "admission": "candidate",
+      "resolved_defect": "v2 replaces the evidence-free fixed-grid design interface with charged CMP/offset/frequency acquisition, exact public Snell/Ricker physics, nine interpretable velocity/interface parameters, separate waveform/mechanism/information/far-offset metrics, and null plus four-layer model-inadequacy refusal",
+      "entrypoint_receives_acquisition_callback": true,
+      "supported_parameter_count": 9,
+      "always_abstain_score": 0.0,
+      "classical_joint_score": 0.9976972506155382,
+      "classical_heldout_joint_score": 0.9943818299064866,
+      "classical_mechanism_score": 0.999826221431273,
+      "classical_heldout_mechanism_score": 0.9995698378193759,
+      "classical_development_false_discovery_rate": 0.0,
+      "classical_heldout_false_discovery_rate": 0.0,
+      "full_rank_supported_worlds": 7,
+      "supported_world_count": 7,
+      "maximum_identifiability_condition_number": 246.3362327164356,
+      "narrow_design_checks": [
+        {
+          "split": "development",
+          "world_index": 0,
+          "jacobian_rank": 5,
+          "parameter_count": 9,
+          "information_score": 0.0,
+          "passed": true
+        },
+        {
+          "split": "development",
+          "world_index": 1,
+          "jacobian_rank": 5,
+          "parameter_count": 9,
+          "information_score": 0.0,
+          "passed": true
+        },
+        {
+          "split": "development",
+          "world_index": 2,
+          "jacobian_rank": 5,
+          "parameter_count": 9,
+          "information_score": 0.0,
+          "passed": true
+        },
+        {
+          "split": "development",
+          "world_index": 3,
+          "jacobian_rank": 5,
+          "parameter_count": 9,
+          "information_score": 0.0,
+          "passed": true
+        },
+        {
+          "split": "heldout",
+          "world_index": 0,
+          "jacobian_rank": 5,
+          "parameter_count": 9,
+          "information_score": 0.0,
+          "passed": true
+        },
+        {
+          "split": "heldout",
+          "world_index": 1,
+          "jacobian_rank": 5,
+          "parameter_count": 9,
+          "information_score": 0.0,
+          "passed": true
+        },
+        {
+          "split": "heldout",
+          "world_index": 2,
+          "jacobian_rank": 5,
+          "parameter_count": 9,
+          "information_score": 0.0,
+          "passed": true
+        }
+      ],
+      "minimum_misspecified_reduced_chi_squared": 33.097796936610244,
+      "noise_label_blind_checks": [
+        {
+          "split": "development",
+          "supported_noise_std": [
+            0.002,
+            0.0022,
+            0.0024
+          ],
+          "unsupported_noise_std": [
+            0.002,
+            0.0024
+          ],
+          "passed": true
+        },
+        {
+          "split": "heldout",
+          "supported_noise_std": [
+            0.003,
+            0.0032,
+            0.0034
+          ],
+          "unsupported_noise_std": [
+            0.003,
+            0.0034
+          ],
+          "passed": true
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "summary": {
+    "task_count": 7,
+    "passed_check_count": 7,
+    "recommended_quarantine_count": 0,
+    "recommended_candidate_count": 7
+  },
+  "execution_passed": true,
+  "trust_decision": "trusted_clean_revision",
+  "trusted_evidence": true,
+  "passed": true
+}
