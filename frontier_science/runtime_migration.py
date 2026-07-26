@@ -20,9 +20,11 @@ from typing import Any, Sequence
 REPO_ROOT = Path(__file__).resolve().parent.parent
 BASE_RUNTIME_REVISION = "20c6b780828c1ec53ddafbbde8fbf4579ff7801a"
 MIGRATION_REPORT = (
-    "experiments/trusted_context_runtime_migration_audit_2026-07-26.json"
+    "experiments/trusted_context_runtime_migration_audit_2026-07-26_v1.json"
 )
-MIGRATION_REPORT_SHA256 = "MIGRATION_REPORT_SHA256_PLACEHOLDER"
+MIGRATION_REPORT_SHA256 = (
+    "fe21a9be7d3a64dadf4e4f0bbc68b9157eb529e9a47e6b97faa751ffd9ee9673"
+)
 RUNTIME_PATHS = (
     "frontier_science/evaluate.py",
     "frontier_science/secure_eval.py",

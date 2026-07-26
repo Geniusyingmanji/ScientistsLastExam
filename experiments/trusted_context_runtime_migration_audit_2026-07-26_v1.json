@@ -1,0 +1,4208 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_RUNTIME_MIGRATION_AUDIT",
+  "evidence_scope": "TRUSTED_CONTEXT_ADDITIVE_RUNTIME_MIGRATION_LEGACY_NONE_PATH_RETAINED_ARTIFACT_REPLAY_NUMERIC_TOLERANCE_NOT_FUTURE_RUNTIME_OR_UNRETAINED_SOURCE_EQUIVALENCE",
+  "created_at": "2026-07-26T18:05:26.031822+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "e021aa07b6e693ccf48035dd7fe230e166760c8b",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/audit_trusted_context_runtime_migration.py",
+      "--output",
+      "experiments/trusted_context_runtime_migration_audit_2026-07-26_v1.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "numeric_tolerance": 5e-10,
+  "source_contract": {
+    "base_revision": "20c6b780828c1ec53ddafbbde8fbf4579ff7801a",
+    "audited_revision": "e021aa07b6e693ccf48035dd7fe230e166760c8b",
+    "runtime_paths": [
+      "frontier_science/evaluate.py",
+      "frontier_science/secure_eval.py",
+      "frontier_science/trusted_driver.py"
+    ],
+    "runtime_source_changes": [
+      "frontier_science/evaluate.py",
+      "frontier_science/secure_eval.py",
+      "frontier_science/trusted_driver.py"
+    ],
+    "base_runtime_sha256": {
+      "frontier_science/evaluate.py": "388a596a7e3b774116480657e0a2c9d423e03cecfd7704a65d78a47bddb8a39f",
+      "frontier_science/secure_eval.py": "af898b0102a826ab9fc8d36dd2455d2680d68db646f31996dbcf02e3dd43edaf",
+      "frontier_science/trusted_driver.py": "e6d630c0a0638138fb214a3a5b00d0f4cf718129edee6610f955ff0d3dda12b4"
+    },
+    "audited_runtime_sha256": {
+      "frontier_science/evaluate.py": "ba30ec09573fd63ab9b3d02b940bc7718146f866363f4c7a44d39f0dc80dfe8d",
+      "frontier_science/secure_eval.py": "8f65b9459c22a508cdfdcbdedc940339d7b78c2adff10448d74c5cbfa41a98d7",
+      "frontier_science/trusted_driver.py": "79800395d619b11b751b512552a184bc19584e4a889c825bd5d6086fa77f1a83"
+    },
+    "passed": true
+  },
+  "legacy_path_semantics": {
+    "trusted_context_none_uses_legacy_oracle": true,
+    "trusted_context_none_adds_no_context_argument": true,
+    "trusted_context_file_is_conditional": true,
+    "candidate_sandbox_contract_unchanged": true,
+    "passed": true
+  },
+  "retained_artifact_replay": {
+    "analyzer_count": 7,
+    "artifact_instance_count": 14,
+    "artifact_count": 14,
+    "numeric_difference_count": 638,
+    "non_numeric_difference_count": 0,
+    "maximum_absolute_numeric_difference": 2.830802259268239e-11,
+    "failure_taxonomy_change_count": 0,
+    "artifact_instances": [
+      {
+        "analyzer": "scripts/analyze_alloy_hardness_calibrations.py",
+        "condition": "budget_one",
+        "artifact": "selected_best",
+        "path": "runs/alloy_hardness_v1_b1/MaterialsScience__AlloyHardnessOptimization/greedy_rewrite/normal/seed_0/best_program.py",
+        "task": "MaterialsScience/AlloyHardnessOptimization",
+        "source_sha256": "572f1dc9aaf4ed66ef0c25635e88ee464970c85b181eb37c910ee1cb70066a98",
+        "historical_metrics_sha256": "8a8980ac9bd8a24b0ddd2d44a5ba89b62ad91fa5e15e732fe89a579a76dc875d",
+        "current_metrics_sha256": "8a8980ac9bd8a24b0ddd2d44a5ba89b62ad91fa5e15e732fe89a579a76dc875d",
+        "failure_taxonomy_changed": false,
+        "comparison": {
+          "equivalent": true,
+          "exactly_equal": true,
+          "numeric_tolerance": 5e-10,
+          "numeric_difference_count": 0,
+          "non_numeric_difference_count": 0,
+          "maximum_absolute_numeric_difference": 0.0,
+          "numeric_differences": [],
+          "non_numeric_differences": []
+        }
+      },
+      {
+        "analyzer": "scripts/analyze_alloy_hardness_calibrations.py",
+        "condition": "normal_budget_three",
+        "artifact": "selected_best",
+        "path": "runs/alloy_hardness_v1_b3/MaterialsScience__AlloyHardnessOptimization/greedy_rewrite/normal/seed_1/best_program.py",
+        "task": "MaterialsScience/AlloyHardnessOptimization",
+        "source_sha256": "aafad4905559c999ba07fb9efc755788dc256acc2fa3154607b1d913ff59b398",
+        "historical_metrics_sha256": "b67b3990921c15a87010f2cd9c8a9ec6b4ea978b14fe1c463216fbc6f23f7390",
+        "current_metrics_sha256": "b67b3990921c15a87010f2cd9c8a9ec6b4ea978b14fe1c463216fbc6f23f7390",
+        "failure_taxonomy_changed": false,
+        "comparison": {
+          "equivalent": true,
+          "exactly_equal": true,
+          "numeric_tolerance": 5e-10,
+          "numeric_difference_count": 0,
+          "non_numeric_difference_count": 0,
+          "maximum_absolute_numeric_difference": 0.0,
+          "numeric_differences": [],
+          "non_numeric_differences": []
+        }
+      },
+      {
+        "analyzer": "scripts/analyze_calorimeter_v2_calibrations.py",
+        "condition": "budget_one",
+        "artifact": "selected_best",
+        "path": "runs/calorimeter_v2_b1/ParticlePhysics__CalorimeterDesign/greedy_rewrite/normal/seed_0/best_program.py",
+        "task": "ParticlePhysics/CalorimeterDesign",
+        "source_sha256": "67c2b8bb34e4d69b81e416f7624085a847eb8d3cd6dd570bd7be30f7a68c4142",
+        "historical_metrics_sha256": "43ebd4f2b6a32ee7a85703b58f289833c3c5643bd44c52ee11b160aa699c7c06",
+        "current_metrics_sha256": "43ebd4f2b6a32ee7a85703b58f289833c3c5643bd44c52ee11b160aa699c7c06",
+        "failure_taxonomy_changed": false,
+        "comparison": {
+          "equivalent": true,
+          "exactly_equal": true,
+          "numeric_tolerance": 5e-10,
+          "numeric_difference_count": 0,
+          "non_numeric_difference_count": 0,
+          "maximum_absolute_numeric_difference": 0.0,
+          "numeric_differences": [],
+          "non_numeric_differences": []
+        }
+      },
+      {
+        "analyzer": "scripts/analyze_calorimeter_v2_calibrations.py",
+        "condition": "budget_one",
+        "artifact": "terminal",
+        "path": "runs/calorimeter_v2_b1/ParticlePhysics__CalorimeterDesign/greedy_rewrite/normal/seed_0/solution.py",
+        "task": "ParticlePhysics/CalorimeterDesign",
+        "source_sha256": "75d02fd4418b619932786ffb474c2cd7f618910cd55d0fb3b26687c83d7d8c5b",
+        "historical_metrics_sha256": "a71f873fc4644fe1972e3ae3610110362a7792d92e53515669bfb54e9dd9f684",
+        "current_metrics_sha256": "a71f873fc4644fe1972e3ae3610110362a7792d92e53515669bfb54e9dd9f684",
+        "failure_taxonomy_changed": false,
+        "comparison": {
+          "equivalent": true,
+          "exactly_equal": true,
+          "numeric_tolerance": 5e-10,
+          "numeric_difference_count": 0,
+          "non_numeric_difference_count": 0,
+          "maximum_absolute_numeric_difference": 0.0,
+          "numeric_differences": [],
+          "non_numeric_differences": []
+        }
+      },
+      {
+        "analyzer": "scripts/analyze_demographic_sfs_v2_calibrations.py",
+        "condition": "budget_one",
+        "artifact": "selected_best",
+        "path": "runs/demographic_sfs_v2_b1/PopulationGenetics__DemographicSFS/greedy_rewrite/normal/seed_0/best_program.py",
+        "task": "PopulationGenetics/DemographicSFS",
+        "source_sha256": "775efcfe3b36377c94afc5a3c8a1f2150d49bed8b86327a0cf0ecfe5277e3370",
+        "historical_metrics_sha256": "77a309e3b50e46d29bba95f4f90837d69744c138b96853643fa1d1844d2df836",
+        "current_metrics_sha256": "77a309e3b50e46d29bba95f4f90837d69744c138b96853643fa1d1844d2df836",
+        "failure_taxonomy_changed": false,
+        "comparison": {
+          "equivalent": true,
+          "exactly_equal": true,
+          "numeric_tolerance": 5e-10,
+          "numeric_difference_count": 0,
+          "non_numeric_difference_count": 0,
+          "maximum_absolute_numeric_difference": 0.0,
+          "numeric_differences": [],
+          "non_numeric_differences": []
+        }
+      },
+      {
+        "analyzer": "scripts/analyze_demographic_sfs_v2_calibrations.py",
+        "condition": "normal_budget_three",
+        "artifact": "selected_best",
+        "path": "runs/demographic_sfs_v2_b3/PopulationGenetics__DemographicSFS/greedy_rewrite/normal/seed_1/best_program.py",
+        "task": "PopulationGenetics/DemographicSFS",
+        "source_sha256": "8e72929f9e95631defbbbcea5af8e3357c77c1b39f5d17f0c141afe0753a5955",
+        "historical_metrics_sha256": "dcfa73e32925e425e6aeea8035fca6c420ef76db8c574162e851a7128069d4fd",
+        "current_metrics_sha256": "20cbddc9de02236695570ab55860bbcdeb740c188844774c2bece93566a78569",
+        "failure_taxonomy_changed": false,
+        "comparison": {
+          "equivalent": true,
+          "exactly_equal": false,
+          "numeric_tolerance": 5e-10,
+          "numeric_difference_count": 22,
+          "non_numeric_difference_count": 0,
+          "maximum_absolute_numeric_difference": 8.881784197001252e-16,
+          "numeric_differences": [
+            {
+              "path": "/development_observed_sfs_fit_score",
+              "historical": 0.8652199655416652,
+              "current": 0.865219965541665,
+              "absolute_difference": 2.220446049250313e-16
+            },
+            {
+              "path": "/development_prediction_score",
+              "historical": 0.883086673984675,
+              "current": 0.8830866739846751,
+              "absolute_difference": 1.1102230246251565e-16
+            },
+            {
+              "path": "/development_validation_gap",
+              "historical": -0.01786670844300975,
+              "current": -0.017866708443010082,
+              "absolute_difference": 3.3306690738754696e-16
+            },
+            {
+              "path": "/heldout_prediction_score",
+              "historical": 0.9391530605691029,
+              "current": 0.9391530605691023,
+              "absolute_difference": 5.551115123125783e-16
+            },
+            {
+              "path": "/heldout_robustness_score",
+              "historical": 0.9391530605691029,
+              "current": 0.9391530605691023,
+              "absolute_difference": 5.551115123125783e-16
+            },
+            {
+              "path": "/per_world/0/observed_sfs_fit_quality",
+              "historical": 0.9147841414576492,
+              "current": 0.9147841414576494,
+              "absolute_difference": 2.220446049250313e-16
+            },
+            {
+              "path": "/per_world/1/confidence_score",
+              "historical": 0.8964334187671346,
+              "current": 0.8964334187671344,
+              "absolute_difference": 1.1102230246251565e-16
+            },
+            {
+              "path": "/per_world/1/heldout_sample_size_quality",
+              "historical": 0.6843208362664216,
+              "current": 0.6843208362664215,
+              "absolute_difference": 1.1102230246251565e-16
+            },
+            {
+              "path": "/per_world/1/observed_sfs_fit_quality",
+              "historical": 0.6268570254455602,
+              "current": 0.6268570254455595,
+              "absolute_difference": 6.661338147750939e-16
+            },
+            {
+              "path": "/per_world/1/scientific_quality",
+              "historical": 0.6781823789273412,
+              "current": 0.678182378927341,
+              "absolute_difference": 2.220446049250313e-16
+            },
+            {
+              "path": "/per_world/2/heldout_sample_size_quality",
+              "historical": 0.985791130136089,
+              "current": 0.9857911301360892,
+              "absolute_difference": 2.220446049250313e-16
+            },
+            {
+              "path": "/per_world/2/observed_sfs_fit_quality",
+              "historical": 0.9880346720276819,
+              "current": 0.9880346720276817,
+              "absolute_difference": 2.220446049250313e-16
+            },
+            {
+              "path": "/per_world/3/confidence_score",
+              "historical": 0.9569385451020406,
+              "current": 0.9569385451020407,
+              "absolute_difference": 1.1102230246251565e-16
+            },
+            {
+              "path": "/per_world/3/heldout_sample_size_quality",
+              "historical": 0.8183401910218883,
+              "current": 0.8183401910218892,
+              "absolute_difference": 8.881784197001252e-16
+            },
+            {
+              "path": "/per_world/3/observed_sfs_fit_quality",
+              "historical": 0.7964239887774355,
+              "current": 0.7964239887774356,
+              "absolute_difference": 1.1102230246251565e-16
+            },
+            {
+              "path": "/per_world/3/scientific_quality",
+              "historical": 0.7924874584562189,
+              "current": 0.7924874584562193,
+              "absolute_difference": 3.3306690738754696e-16
+            },
+            {
+              "path": "/per_world/4/observed_sfs_fit_quality",
+              "historical": 0.9999999999999993,
+              "current": 0.9999999999999994,
+              "absolute_difference": 1.1102230246251565e-16
+            },
+            {
+              "path": "/per_world/7/confidence_score",
+              "historical": 0.552056062290754,
+              "current": 0.5520560622907538,
+              "absolute_difference": 2.220446049250313e-16
+            },
+            {
+              "path": "/per_world/7/heldout_sample_size_quality",
+              "historical": 0.8421020692320931,
+              "current": 0.8421020692320925,
+              "absolute_difference": 5.551115123125783e-16
+            },
+            {
+              "path": "/per_world/7/scientific_quality",
+              "historical": 0.33071385961664646,
+              "current": 0.3307138596166464,
+              "absolute_difference": 5.551115123125783e-17
+            },
+            {
+              "path": "/per_world/9/observed_sfs_fit_quality",
+              "historical": 0.9999999999999993,
+              "current": 0.9999999999999994,
+              "absolute_difference": 1.1102230246251565e-16
+            },
+            {
+              "path": "/robustness_score",
+              "historical": 0.883086673984675,
+              "current": 0.8830866739846751,
+              "absolute_difference": 1.1102230246251565e-16
+            }
+          ],
+          "non_numeric_differences": []
+        }
+      },
+      {
+        "analyzer": "scripts/analyze_diffraction_grating_calibrations.py",
+        "condition": "budget_one",
+        "artifact": "selected_best",
+        "path": "runs/diffraction_grating_v2_b1/Optics__DiffractionGratingDesign/greedy_rewrite/normal/seed_0/best_program.py",
+        "task": "Optics/DiffractionGratingDesign",
+        "source_sha256": "f2abe37d10285154574c5805325f5a0fdcc863e058e8503a5087359fdeba3046",
+        "historical_metrics_sha256": "0cc659d04dfda202e4c7614f8c1cb0921911947de15301d728747786cdef1372",
+        "current_metrics_sha256": "9b609b6a52ffe0840400774d80db116c146ccb631fd0a4f0f1e487e0089509d3",
+        "failure_taxonomy_changed": false,
+        "comparison": {
+          "equivalent": true,
+          "exactly_equal": false,
+          "numeric_tolerance": 5e-10,
+          "numeric_difference_count": 411,
+          "non_numeric_difference_count": 0,
+          "maximum_absolute_numeric_difference": 2.830802259268239e-11,
+          "numeric_differences": [
+            {
+              "path": "/combined_score",
+              "historical": 7.461434153565229e-17,
+              "current": 0.0,
+              "absolute_difference": 7.461434153565229e-17
+            },
+            {
+              "path": "/development_maximum_energy_residual",
+              "historical": 7.105427357601002e-15,
+              "current": 5.10702591327572e-15,
+              "absolute_difference": 1.9984014443252818e-15
+            },
+            {
+              "path": "/development_mean_target_efficiency",
+              "historical": 0.2211964206521741,
+              "current": 0.22119642065217407,
+              "absolute_difference": 2.7755575615628914e-17
+            },
+            {
+              "path": "/development_minimum_target_efficiency",
+              "historical": 0.030937455874890503,
+              "current": 0.030937455874890493,
+              "absolute_difference": 1.0408340855860843e-17
+            },
+            {
+              "path": "/development_te_mean_target_efficiency",
+              "historical": 0.16595279735126336,
+              "current": 0.16595279735126334,
+              "absolute_difference": 2.7755575615628914e-17
+            },
+            {
+              "path": "/development_tm_mean_target_efficiency",
+              "historical": 0.2764400439530848,
+              "current": 0.27644004395308475,
+              "absolute_difference": 5.551115123125783e-17
+            },
+            {
+              "path": "/heldout_maximum_energy_residual",
+              "historical": 8.548717289613705e-15,
+              "current": 6.217248937900877e-15,
+              "absolute_difference": 2.3314683517128287e-15
+            },
+            {
+              "path": "/heldout_mean_target_efficiency",
+              "historical": 0.29259783100693765,
+              "current": 0.2925978310069373,
+              "absolute_difference": 3.3306690738754696e-16
+            },
+            {
+              "path": "/heldout_minimum_target_efficiency",
+              "historical": 0.008650390501823119,
+              "current": 0.008650390501823084,
+              "absolute_difference": 3.469446951953614e-17
+            },
+            {
+              "path": "/heldout_policy_score",
+              "historical": 2.610947489700965e-16,
+              "current": 0.0,
+              "absolute_difference": 2.610947489700965e-16
+            },
+            {
+              "path": "/heldout_robustness_score",
+              "historical": 1.0935943578222418e-16,
+              "current": 0.0,
+              "absolute_difference": 1.0935943578222418e-16
+            },
+            {
+              "path": "/heldout_te_mean_target_efficiency",
+              "historical": 0.21627649834722779,
+              "current": 0.21627649834722756,
+              "absolute_difference": 2.220446049250313e-16
+            },
+            {
+              "path": "/heldout_tm_mean_target_efficiency",
+              "historical": 0.36891916366664745,
+              "current": 0.36891916366664695,
+              "absolute_difference": 4.996003610813204e-16
+            },
+            {
+              "path": "/per_instance/0/maximum_condition_number",
+              "historical": 335.06999693468515,
+              "current": 335.06999693468674,
+              "absolute_difference": 1.5916157281026244e-12
+            },
+            {
+              "path": "/per_instance/0/maximum_energy_residual",
+              "historical": 5.10702591327572e-15,
+              "current": 4.6629367034256575e-15,
+              "absolute_difference": 4.440892098500626e-16
+            },
+            {
+              "path": "/per_instance/0/mean_target_efficiency",
+              "historical": 0.24629160222486762,
+              "current": 0.24629160222486826,
+              "absolute_difference": 6.38378239159465e-16
+            },
+            {
+              "path": "/per_instance/0/minimum_target_efficiency",
+              "historical": 0.021738583286428095,
+              "current": 0.021738583286427846,
+              "absolute_difference": 2.498001805406602e-16
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/0/condition_number",
+              "historical": 64.02850540749994,
+              "current": 64.02850540749989,
+              "absolute_difference": 4.263256414560601e-14
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/0/energy_sum",
+              "historical": 0.999999999999999,
+              "current": 1.0000000000000004,
+              "absolute_difference": 1.4432899320127035e-15
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/0/target_efficiency",
+              "historical": 0.021738583286428095,
+              "current": 0.021738583286427846,
+              "absolute_difference": 2.498001805406602e-16
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/1/condition_number",
+              "historical": 117.67633528464069,
+              "current": 117.67633528464056,
+              "absolute_difference": 1.2789769243681803e-13
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/1/energy_sum",
+              "historical": 1.0000000000000007,
+              "current": 0.9999999999999976,
+              "absolute_difference": 3.1086244689504383e-15
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/1/target_efficiency",
+              "historical": 0.19137045137331932,
+              "current": 0.19137045137332107,
+              "absolute_difference": 1.7486012637846216e-15
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/2/condition_number",
+              "historical": 152.12164975861344,
+              "current": 152.12164975861333,
+              "absolute_difference": 1.1368683772161603e-13
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/2/energy_sum",
+              "historical": 1.0000000000000022,
+              "current": 0.9999999999999987,
+              "absolute_difference": 3.552713678800501e-15
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/2/target_efficiency",
+              "historical": 0.08845756910965001,
+              "current": 0.08845756910964943,
+              "absolute_difference": 5.828670879282072e-16
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/3/condition_number",
+              "historical": 251.97367526582167,
+              "current": 251.97367526582724,
+              "absolute_difference": 5.5706550483591855e-12
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/3/energy_sum",
+              "historical": 1.0000000000000038,
+              "current": 1.0000000000000009,
+              "absolute_difference": 2.886579864025407e-15
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/3/target_efficiency",
+              "historical": 0.38388619137741126,
+              "current": 0.38388619137741226,
+              "absolute_difference": 9.992007221626409e-16
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/4/condition_number",
+              "historical": 64.02850540749928,
+              "current": 64.02850540749921,
+              "absolute_difference": 7.105427357601002e-14
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/4/energy_sum",
+              "historical": 0.9999999999999997,
+              "current": 1.000000000000003,
+              "absolute_difference": 3.4416913763379853e-15
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/4/target_efficiency",
+              "historical": 0.24056463650221088,
+              "current": 0.24056463650221213,
+              "absolute_difference": 1.2490009027033011e-15
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/5/condition_number",
+              "historical": 117.67633528463713,
+              "current": 117.67633528463898,
+              "absolute_difference": 1.8474111129762605e-12
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/5/energy_sum",
+              "historical": 1.0000000000000002,
+              "current": 1.0000000000000047,
+              "absolute_difference": 4.440892098500626e-15
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/5/target_efficiency",
+              "historical": 0.359308965383546,
+              "current": 0.35930896538354834,
+              "absolute_difference": 2.3314683517128287e-15
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/6/condition_number",
+              "historical": 83.68163146299844,
+              "current": 83.68163146299855,
+              "absolute_difference": 1.1368683772161603e-13
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/6/energy_sum",
+              "historical": 1.0000000000000029,
+              "current": 1.0000000000000013,
+              "absolute_difference": 1.5543122344752192e-15
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/6/target_efficiency",
+              "historical": 0.04510072663089839,
+              "current": 0.045100726630898286,
+              "absolute_difference": 1.0408340855860843e-16
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/7/condition_number",
+              "historical": 121.40114192950294,
+              "current": 121.40114192950242,
+              "absolute_difference": 5.258016244624741e-13
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/7/energy_sum",
+              "historical": 1.0000000000000002,
+              "current": 1.0000000000000018,
+              "absolute_difference": 1.5543122344752192e-15
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/7/target_efficiency",
+              "historical": 0.2771195755340874,
+              "current": 0.2771195755340857,
+              "absolute_difference": 1.6653345369377348e-15
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/8/condition_number",
+              "historical": 101.42725377014578,
+              "current": 101.4272537701458,
+              "absolute_difference": 1.4210854715202004e-14
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/8/energy_sum",
+              "historical": 1.000000000000001,
+              "current": 1.0000000000000004,
+              "absolute_difference": 6.661338147750939e-16
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/8/target_efficiency",
+              "historical": 0.24480220638538291,
+              "current": 0.24480220638538333,
+              "absolute_difference": 4.163336342344337e-16
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/9/condition_number",
+              "historical": 258.21448586915807,
+              "current": 258.21448586916614,
+              "absolute_difference": 8.071765478234738e-12
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/9/energy_sum",
+              "historical": 1.000000000000005,
+              "current": 1.0000000000000029,
+              "absolute_difference": 2.220446049250313e-15
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/9/target_efficiency",
+              "historical": 0.3516888314289163,
+              "current": 0.3516888314289215,
+              "absolute_difference": 5.162537064506978e-15
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/10/condition_number",
+              "historical": 83.6816314629986,
+              "current": 83.68163146299854,
+              "absolute_difference": 5.684341886080802e-14
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/10/energy_sum",
+              "historical": 0.9999999999999982,
+              "current": 0.9999999999999992,
+              "absolute_difference": 9.992007221626409e-16
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/10/target_efficiency",
+              "historical": 0.26745438799343385,
+              "current": 0.2674543879934341,
+              "absolute_difference": 2.220446049250313e-16
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/11/condition_number",
+              "historical": 121.40114192950304,
+              "current": 121.40114192950159,
+              "absolute_difference": 1.4495071809506044e-12
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/11/energy_sum",
+              "historical": 1.0000000000000004,
+              "current": 1.0000000000000009,
+              "absolute_difference": 4.440892098500626e-16
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/11/target_efficiency",
+              "historical": 0.3148063387147256,
+              "current": 0.3148063387147252,
+              "absolute_difference": 3.885780586188048e-16
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/12/condition_number",
+              "historical": 113.40367101562883,
+              "current": 113.40367101562875,
+              "absolute_difference": 8.526512829121202e-14
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/12/energy_sum",
+              "historical": 0.9999999999999996,
+              "current": 1.0000000000000007,
+              "absolute_difference": 1.1102230246251565e-15
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/12/target_efficiency",
+              "historical": 0.15545463135441903,
+              "current": 0.15545463135441848,
+              "absolute_difference": 5.551115123125783e-16
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/13/condition_number",
+              "historical": 335.069996934681,
+              "current": 335.06999693468674,
+              "absolute_difference": 5.7411853049416095e-12
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/13/energy_sum",
+              "historical": 1.0000000000000007,
+              "current": 0.9999999999999996,
+              "absolute_difference": 1.1102230246251565e-15
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/13/target_efficiency",
+              "historical": 0.17017706309277877,
+              "current": 0.1701770630927805,
+              "absolute_difference": 1.7208456881689926e-15
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/14/condition_number",
+              "historical": 81.66799882214063,
+              "current": 81.66799882214076,
+              "absolute_difference": 1.2789769243681803e-13
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/14/energy_sum",
+              "historical": 1.0000000000000013,
+              "current": 1.000000000000002,
+              "absolute_difference": 6.661338147750939e-16
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/14/target_efficiency",
+              "historical": 0.3619860738469077,
+              "current": 0.3619860738469067,
+              "absolute_difference": 9.992007221626409e-16
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/15/condition_number",
+              "historical": 116.41051870044122,
+              "current": 116.4105187004424,
+              "absolute_difference": 1.1795009413617663e-12
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/15/energy_sum",
+              "historical": 0.9999999999999959,
+              "current": 0.9999999999999998,
+              "absolute_difference": 3.885780586188048e-15
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/15/target_efficiency",
+              "historical": 0.353046491114487,
+              "current": 0.35304649111449243,
+              "absolute_difference": 5.440092820663267e-15
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/16/condition_number",
+              "historical": 113.40367101562926,
+              "current": 113.40367101562931,
+              "absolute_difference": 5.684341886080802e-14
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/16/energy_sum",
+              "historical": 1.000000000000001,
+              "current": 1.0000000000000004,
+              "absolute_difference": 6.661338147750939e-16
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/16/target_efficiency",
+              "historical": 0.20851317133248903,
+              "current": 0.20851317133248914,
+              "absolute_difference": 1.1102230246251565e-16
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/17/condition_number",
+              "historical": 335.06999693468515,
+              "current": 335.06999693468276,
+              "absolute_difference": 2.3874235921539366e-12
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/17/energy_sum",
+              "historical": 1.0000000000000016,
+              "current": 1.0000000000000013,
+              "absolute_difference": 2.220446049250313e-16
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/17/target_efficiency",
+              "historical": 0.3977729455865254,
+              "current": 0.3977729455865217,
+              "absolute_difference": 3.6637359812630166e-15
+            },
+            {
+              "path": "/per_instance/0/nominal_utility",
+              "historical": 0.18014399889340355,
+              "current": 0.18014399889340393,
+              "absolute_difference": 3.885780586188048e-16
+            },
+            {
+              "path": "/per_instance/0/robust_utility",
+              "historical": 0.1348323718521247,
+              "current": 0.13483237185212524,
+              "absolute_difference": 5.273559366969494e-16
+            },
+            {
+              "path": "/per_instance/0/shifts/0/utility",
+              "historical": 0.16404585312852035,
+              "current": 0.16404585312852069,
+              "absolute_difference": 3.3306690738754696e-16
+            },
+            {
+              "path": "/per_instance/0/shifts/1/utility",
+              "historical": 0.17349192682523376,
+              "current": 0.17349192682523448,
+              "absolute_difference": 7.216449660063518e-16
+            },
+            {
+              "path": "/per_instance/0/shifts/2/utility",
+              "historical": 0.22459661968754235,
+              "current": 0.22459661968754233,
+              "absolute_difference": 2.7755575615628914e-17
+            },
+            {
+              "path": "/per_instance/0/shifts/3/utility",
+              "historical": 0.1348323718521247,
+              "current": 0.13483237185212524,
+              "absolute_difference": 5.273559366969494e-16
+            },
+            {
+              "path": "/per_instance/0/te_mean_target_efficiency",
+              "historical": 0.18156355404909108,
+              "current": 0.18156355404909105,
+              "absolute_difference": 2.7755575615628914e-17
+            },
+            {
+              "path": "/per_instance/0/tm_mean_target_efficiency",
+              "historical": 0.3110196504006441,
+              "current": 0.31101965040064544,
+              "absolute_difference": 1.3322676295501878e-15
+            },
+            {
+              "path": "/per_instance/0/twentieth_percentile_target_efficiency",
+              "historical": 0.16134360404976295,
+              "current": 0.16134360404976328,
+              "absolute_difference": 3.3306690738754696e-16
+            },
+            {
+              "path": "/per_instance/1/maximum_condition_number",
+              "historical": 417.5042318590827,
+              "current": 417.50423185911103,
+              "absolute_difference": 2.830802259268239e-11
+            },
+            {
+              "path": "/per_instance/1/maximum_energy_residual",
+              "historical": 8.548717289613705e-15,
+              "current": 5.551115123125783e-15,
+              "absolute_difference": 2.9976021664879227e-15
+            },
+            {
+              "path": "/per_instance/1/mean_target_efficiency",
+              "historical": 0.29678637848915784,
+              "current": 0.2967863784891578,
+              "absolute_difference": 5.551115123125783e-17
+            },
+            {
+              "path": "/per_instance/1/minimum_target_efficiency",
+              "historical": 0.010147258130979381,
+              "current": 0.010147258130979305,
+              "absolute_difference": 7.632783294297951e-17
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/0/energy_sum",
+              "historical": 1.000000000000004,
+              "current": 1.0000000000000016,
+              "absolute_difference": 2.4424906541753444e-15
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/0/target_efficiency",
+              "historical": 0.010147258130979381,
+              "current": 0.010147258130979305,
+              "absolute_difference": 7.632783294297951e-17
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/1/condition_number",
+              "historical": 73.55618588570354,
+              "current": 73.55618588570373,
+              "absolute_difference": 1.8474111129762605e-13
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/1/energy_sum",
+              "historical": 0.9999999999999997,
+              "current": 0.9999999999999994,
+              "absolute_difference": 2.220446049250313e-16
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/1/target_efficiency",
+              "historical": 0.2562696294481211,
+              "current": 0.2562696294481208,
+              "absolute_difference": 2.7755575615628914e-16
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/2/condition_number",
+              "historical": 113.10434780971744,
+              "current": 113.10434780971757,
+              "absolute_difference": 1.2789769243681803e-13
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/2/energy_sum",
+              "historical": 1.0000000000000004,
+              "current": 0.9999999999999979,
+              "absolute_difference": 2.55351295663786e-15
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/2/target_efficiency",
+              "historical": 0.07930607812006137,
+              "current": 0.07930607812006134,
+              "absolute_difference": 2.7755575615628914e-17
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/3/condition_number",
+              "historical": 417.5042318590827,
+              "current": 417.50423185911103,
+              "absolute_difference": 2.830802259268239e-11
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/3/energy_sum",
+              "historical": 1.0000000000000024,
+              "current": 1.0000000000000022,
+              "absolute_difference": 2.220446049250313e-16
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/3/target_efficiency",
+              "historical": 0.4188593447649298,
+              "current": 0.4188593447649375,
+              "absolute_difference": 7.716050021144838e-15
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/4/condition_number",
+              "historical": 64.42691587751355,
+              "current": 64.42691587751357,
+              "absolute_difference": 1.4210854715202004e-14
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/4/energy_sum",
+              "historical": 1.0000000000000016,
+              "current": 0.999999999999998,
+              "absolute_difference": 3.552713678800501e-15
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/4/target_efficiency",
+              "historical": 0.32041110679473384,
+              "current": 0.3204111067947327,
+              "absolute_difference": 1.1102230246251565e-15
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/5/condition_number",
+              "historical": 73.55618588570368,
+              "current": 73.5561858857036,
+              "absolute_difference": 8.526512829121202e-14
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/5/energy_sum",
+              "historical": 0.999999999999997,
+              "current": 0.9999999999999948,
+              "absolute_difference": 2.220446049250313e-15
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/5/target_efficiency",
+              "historical": 0.44796444000155927,
+              "current": 0.4479644400015596,
+              "absolute_difference": 3.3306690738754696e-16
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/6/condition_number",
+              "historical": 93.2979663707008,
+              "current": 93.29796637070073,
+              "absolute_difference": 7.105427357601002e-14
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/6/energy_sum",
+              "historical": 0.9999999999999996,
+              "current": 0.999999999999999,
+              "absolute_difference": 5.551115123125783e-16
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/6/target_efficiency",
+              "historical": 0.02371412885256162,
+              "current": 0.023714128852561814,
+              "absolute_difference": 1.942890293094024e-16
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/7/condition_number",
+              "historical": 102.51133705400493,
+              "current": 102.5113370540038,
+              "absolute_difference": 1.1226575225009583e-12
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/7/energy_sum",
+              "historical": 1.0000000000000033,
+              "current": 1.0,
+              "absolute_difference": 3.3306690738754696e-15
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/7/target_efficiency",
+              "historical": 0.3131112734197966,
+              "current": 0.3131112734197938,
+              "absolute_difference": 2.831068712794149e-15
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/8/condition_number",
+              "historical": 93.6312264949101,
+              "current": 93.63122649491046,
+              "absolute_difference": 3.694822225952521e-13
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/8/energy_sum",
+              "historical": 1.0000000000000016,
+              "current": 1.0000000000000018,
+              "absolute_difference": 2.220446049250313e-16
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/8/target_efficiency",
+              "historical": 0.2940599623089763,
+              "current": 0.2940599623089761,
+              "absolute_difference": 2.220446049250313e-16
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/9/condition_number",
+              "historical": 136.4798258026217,
+              "current": 136.47982580262018,
+              "absolute_difference": 1.5063505998114124e-12
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/9/energy_sum",
+              "historical": 0.9999999999999941,
+              "current": 0.9999999999999971,
+              "absolute_difference": 2.9976021664879227e-15
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/10/condition_number",
+              "historical": 93.29796637070032,
+              "current": 93.29796637070025,
+              "absolute_difference": 7.105427357601002e-14
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/10/energy_sum",
+              "historical": 0.9999999999999997,
+              "current": 1.0000000000000002,
+              "absolute_difference": 5.551115123125783e-16
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/10/target_efficiency",
+              "historical": 0.40471900785603815,
+              "current": 0.40471900785603754,
+              "absolute_difference": 6.106226635438361e-16
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/11/condition_number",
+              "historical": 102.5113370540049,
+              "current": 102.51133705400427,
+              "absolute_difference": 6.252776074688882e-13
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/11/energy_sum",
+              "historical": 0.9999999999999915,
+              "current": 1.0000000000000009,
+              "absolute_difference": 9.43689570931383e-15
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/11/target_efficiency",
+              "historical": 0.4124019396458579,
+              "current": 0.4124019396458627,
+              "absolute_difference": 4.773959005888173e-15
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/12/condition_number",
+              "historical": 101.72417571677258,
+              "current": 101.72417571677254,
+              "absolute_difference": 4.263256414560601e-14
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/12/energy_sum",
+              "historical": 0.9999999999999979,
+              "current": 0.9999999999999994,
+              "absolute_difference": 1.5543122344752192e-15
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/12/target_efficiency",
+              "historical": 0.04007256146929147,
+              "current": 0.04007256146929149,
+              "absolute_difference": 1.3877787807814457e-17
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/13/condition_number",
+              "historical": 278.57333324511035,
+              "current": 278.57333324511274,
+              "absolute_difference": 2.3874235921539366e-12
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/13/energy_sum",
+              "historical": 0.9999999999999996,
+              "current": 0.9999999999999944,
+              "absolute_difference": 5.10702591327572e-15
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/13/target_efficiency",
+              "historical": 0.3208994833893681,
+              "current": 0.32089948338936397,
+              "absolute_difference": 4.107825191113079e-15
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/14/condition_number",
+              "historical": 78.70013138600024,
+              "current": 78.70013138600046,
+              "absolute_difference": 2.2737367544323206e-13
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/14/energy_sum",
+              "historical": 1.000000000000004,
+              "current": 1.0000000000000027,
+              "absolute_difference": 1.3322676295501878e-15
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/14/target_efficiency",
+              "historical": 0.40623101277523743,
+              "current": 0.40623101277523715,
+              "absolute_difference": 2.7755575615628914e-16
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/15/condition_number",
+              "historical": 107.75005227472924,
+              "current": 107.75005227472701,
+              "absolute_difference": 2.2311041902867146e-12
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/15/energy_sum",
+              "historical": 1.0000000000000029,
+              "current": 1.000000000000003,
+              "absolute_difference": 2.220446049250313e-16
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/15/target_efficiency",
+              "historical": 0.41063826471453985,
+              "current": 0.4106382647145381,
+              "absolute_difference": 1.7208456881689926e-15
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/16/condition_number",
+              "historical": 101.72417571677249,
+              "current": 101.72417571677236,
+              "absolute_difference": 1.2789769243681803e-13
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/16/energy_sum",
+              "historical": 0.9999999999999998,
+              "current": 0.9999999999999986,
+              "absolute_difference": 1.2212453270876722e-15
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/16/target_efficiency",
+              "historical": 0.4526121156739265,
+              "current": 0.4526121156739262,
+              "absolute_difference": 3.3306690738754696e-16
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/17/condition_number",
+              "historical": 278.5733332451148,
+              "current": 278.5733332451129,
+              "absolute_difference": 1.8758328224066645e-12
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/17/energy_sum",
+              "historical": 1.0000000000000016,
+              "current": 1.0000000000000033,
+              "absolute_difference": 1.7763568394002505e-15
+            },
+            {
+              "path": "/per_instance/1/nominal_conditions/17/target_efficiency",
+              "historical": 0.3167887126176612,
+              "current": 0.316788712617659,
+              "absolute_difference": 2.1649348980190553e-15
+            },
+            {
+              "path": "/per_instance/1/nominal_utility",
+              "historical": 0.20278483445805406,
+              "current": 0.20278483445805393,
+              "absolute_difference": 1.3877787807814457e-16
+            },
+            {
+              "path": "/per_instance/1/score",
+              "historical": 5.22189497940193e-16,
+              "current": 0.0,
+              "absolute_difference": 5.22189497940193e-16
+            },
+            {
+              "path": "/per_instance/1/shifts/0/utility",
+              "historical": 0.19648236183000123,
+              "current": 0.1964823618300005,
+              "absolute_difference": 7.216449660063518e-16
+            },
+            {
+              "path": "/per_instance/1/shifts/1/utility",
+              "historical": 0.20343713762139765,
+              "current": 0.20343713762139784,
+              "absolute_difference": 1.942890293094024e-16
+            },
+            {
+              "path": "/per_instance/1/shifts/2/utility",
+              "historical": 0.27483692926725106,
+              "current": 0.27483692926725084,
+              "absolute_difference": 2.220446049250313e-16
+            },
+            {
+              "path": "/per_instance/1/te_mean_target_efficiency",
+              "historical": 0.22569702577575626,
+              "current": 0.22569702577575596,
+              "absolute_difference": 3.0531133177191805e-16
+            },
+            {
+              "path": "/per_instance/1/tm_mean_target_efficiency",
+              "historical": 0.3678757312025594,
+              "current": 0.36787573120255956,
+              "absolute_difference": 1.6653345369377348e-16
+            },
+            {
+              "path": "/per_instance/1/twentieth_percentile_target_efficiency",
+              "historical": 0.15009149865128532,
+              "current": 0.15009149865128518,
+              "absolute_difference": 1.3877787807814457e-16
+            },
+            {
+              "path": "/per_instance/2/maximum_condition_number",
+              "historical": 239.894072862633,
+              "current": 239.89407286263162,
+              "absolute_difference": 1.3926637620897964e-12
+            },
+            {
+              "path": "/per_instance/2/maximum_energy_residual",
+              "historical": 7.105427357601002e-15,
+              "current": 3.774758283725532e-15,
+              "absolute_difference": 3.3306690738754696e-15
+            },
+            {
+              "path": "/per_instance/2/mean_target_efficiency",
+              "historical": 0.29163759387022886,
+              "current": 0.2916375938702287,
+              "absolute_difference": 1.6653345369377348e-16
+            },
+            {
+              "path": "/per_instance/2/minimum_target_efficiency",
+              "historical": 0.01727255532506026,
+              "current": 0.017272555325060352,
+              "absolute_difference": 9.367506770274758e-17
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/0/condition_number",
+              "historical": 71.04943242350512,
+              "current": 71.04943242350522,
+              "absolute_difference": 9.947598300641403e-14
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/0/energy_sum",
+              "historical": 1.0000000000000018,
+              "current": 1.0000000000000013,
+              "absolute_difference": 4.440892098500626e-16
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/0/target_efficiency",
+              "historical": 0.01727255532506026,
+              "current": 0.017272555325060352,
+              "absolute_difference": 9.367506770274758e-17
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/1/condition_number",
+              "historical": 77.84350102940795,
+              "current": 77.84350102940806,
+              "absolute_difference": 1.1368683772161603e-13
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/1/energy_sum",
+              "historical": 1.0000000000000009,
+              "current": 0.9999999999999969,
+              "absolute_difference": 3.9968028886505635e-15
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/1/target_efficiency",
+              "historical": 0.26843380975376085,
+              "current": 0.26843380975376024,
+              "absolute_difference": 6.106226635438361e-16
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/2/condition_number",
+              "historical": 106.10901408766252,
+              "current": 106.10901408766273,
+              "absolute_difference": 2.1316282072803006e-13
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/2/energy_sum",
+              "historical": 0.999999999999998,
+              "current": 0.9999999999999989,
+              "absolute_difference": 8.881784197001252e-16
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/2/target_efficiency",
+              "historical": 0.08210010298196982,
+              "current": 0.08210010298197007,
+              "absolute_difference": 2.498001805406602e-16
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/3/condition_number",
+              "historical": 143.2760490354663,
+              "current": 143.2760490354643,
+              "absolute_difference": 1.9895196601282805e-12
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/3/energy_sum",
+              "historical": 1.0000000000000022,
+              "current": 1.0000000000000038,
+              "absolute_difference": 1.5543122344752192e-15
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/3/target_efficiency",
+              "historical": 0.37369119434183695,
+              "current": 0.373691194341838,
+              "absolute_difference": 1.0547118733938987e-15
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/4/condition_number",
+              "historical": 71.04943242350528,
+              "current": 71.0494324235054,
+              "absolute_difference": 1.1368683772161603e-13
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/4/energy_sum",
+              "historical": 1.000000000000003,
+              "current": 1.0000000000000027,
+              "absolute_difference": 4.440892098500626e-16
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/4/target_efficiency",
+              "historical": 0.3125515537564352,
+              "current": 0.31255155375643506,
+              "absolute_difference": 1.1102230246251565e-16
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/5/condition_number",
+              "historical": 77.84350102940716,
+              "current": 77.84350102940755,
+              "absolute_difference": 3.836930773104541e-13
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/5/energy_sum",
+              "historical": 0.9999999999999959,
+              "current": 0.9999999999999981,
+              "absolute_difference": 2.220446049250313e-15
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/5/target_efficiency",
+              "historical": 0.45750973939005046,
+              "current": 0.45750973939005224,
+              "absolute_difference": 1.7763568394002505e-15
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/6/condition_number",
+              "historical": 99.70597437387117,
+              "current": 99.7059743738713,
+              "absolute_difference": 1.2789769243681803e-13
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/6/energy_sum",
+              "historical": 1.0,
+              "current": 0.9999999999999997,
+              "absolute_difference": 3.3306690738754696e-16
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/6/target_efficiency",
+              "historical": 0.03167830486639023,
+              "current": 0.03167830486638996,
+              "absolute_difference": 2.706168622523819e-16
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/7/condition_number",
+              "historical": 105.24199748041134,
+              "current": 105.24199748041283,
+              "absolute_difference": 1.4921397450962104e-12
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/7/energy_sum",
+              "historical": 1.000000000000002,
+              "current": 1.0000000000000022,
+              "absolute_difference": 2.220446049250313e-16
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/7/target_efficiency",
+              "historical": 0.3072299373381092,
+              "current": 0.30722993733810683,
+              "absolute_difference": 2.3869795029440866e-15
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/8/condition_number",
+              "historical": 102.66909437740959,
+              "current": 102.66909437740941,
+              "absolute_difference": 1.8474111129762605e-13
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/8/energy_sum",
+              "historical": 0.9999999999999979,
+              "current": 1.0000000000000004,
+              "absolute_difference": 2.55351295663786e-15
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/8/target_efficiency",
+              "historical": 0.18560607747655275,
+              "current": 0.18560607747655283,
+              "absolute_difference": 8.326672684688674e-17
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/9/condition_number",
+              "historical": 239.894072862633,
+              "current": 239.89407286263162,
+              "absolute_difference": 1.3926637620897964e-12
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/9/energy_sum",
+              "historical": 0.9999999999999956,
+              "current": 0.9999999999999979,
+              "absolute_difference": 2.3314683517128287e-15
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/9/target_efficiency",
+              "historical": 0.41922347892706924,
+              "current": 0.4192234789270709,
+              "absolute_difference": 1.6653345369377348e-15
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/10/condition_number",
+              "historical": 99.70597437387119,
+              "current": 99.70597437387116,
+              "absolute_difference": 2.842170943040401e-14
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/10/energy_sum",
+              "historical": 1.0000000000000018,
+              "current": 1.0000000000000022,
+              "absolute_difference": 4.440892098500626e-16
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/10/target_efficiency",
+              "historical": 0.3783525876661746,
+              "current": 0.37835258766617424,
+              "absolute_difference": 3.3306690738754696e-16
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/11/condition_number",
+              "historical": 105.24199748041306,
+              "current": 105.24199748041163,
+              "absolute_difference": 1.4352963262354024e-12
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/11/energy_sum",
+              "historical": 1.0000000000000033,
+              "current": 0.9999999999999968,
+              "absolute_difference": 6.5503158452884236e-15
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/11/target_efficiency",
+              "historical": 0.4346320345654979,
+              "current": 0.4346320345654871,
+              "absolute_difference": 1.0824674490095276e-14
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/12/condition_number",
+              "historical": 99.03028963528939,
+              "current": 99.03028963528953,
+              "absolute_difference": 1.4210854715202004e-13
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/12/energy_sum",
+              "historical": 1.0000000000000027,
+              "current": 1.0000000000000009,
+              "absolute_difference": 1.7763568394002505e-15
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/12/target_efficiency",
+              "historical": 0.06026505865301765,
+              "current": 0.060265058653017345,
+              "absolute_difference": 3.0531133177191805e-16
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/13/condition_number",
+              "historical": 163.36280334289853,
+              "current": 163.36280334289802,
+              "absolute_difference": 5.115907697472721e-13
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/13/energy_sum",
+              "historical": 1.000000000000002,
+              "current": 1.0000000000000004,
+              "absolute_difference": 1.5543122344752192e-15
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/13/target_efficiency",
+              "historical": 0.3097864005749201,
+              "current": 0.3097864005749215,
+              "absolute_difference": 1.4432899320127035e-15
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/14/condition_number",
+              "historical": 80.56282492522736,
+              "current": 80.5628249252273,
+              "absolute_difference": 5.684341886080802e-14
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/14/energy_sum",
+              "historical": 0.9999999999999984,
+              "current": 0.9999999999999974,
+              "absolute_difference": 9.992007221626409e-16
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/14/target_efficiency",
+              "historical": 0.366190222306144,
+              "current": 0.3661902223061437,
+              "absolute_difference": 3.3306690738754696e-16
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/15/condition_number",
+              "historical": 109.96870907176934,
+              "current": 109.96870907176921,
+              "absolute_difference": 1.2789769243681803e-13
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/15/energy_sum",
+              "historical": 1.000000000000002,
+              "current": 0.9999999999999997,
+              "absolute_difference": 2.3314683517128287e-15
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/15/target_efficiency",
+              "historical": 0.41751013797507647,
+              "current": 0.41751013797507636,
+              "absolute_difference": 1.1102230246251565e-16
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/16/condition_number",
+              "historical": 99.03028963528988,
+              "current": 99.03028963528985,
+              "absolute_difference": 2.842170943040401e-14
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/16/energy_sum",
+              "historical": 0.9999999999999997,
+              "current": 0.9999999999999984,
+              "absolute_difference": 1.2212453270876722e-15
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/16/target_efficiency",
+              "historical": 0.41478591346772375,
+              "current": 0.4147859134677228,
+              "absolute_difference": 9.43689570931383e-16
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/17/condition_number",
+              "historical": 163.362803342897,
+              "current": 163.36280334289773,
+              "absolute_difference": 7.389644451905042e-13
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/17/energy_sum",
+              "historical": 0.9999999999999929,
+              "current": 1.0000000000000036,
+              "absolute_difference": 1.0658141036401503e-14
+            },
+            {
+              "path": "/per_instance/2/nominal_conditions/17/target_efficiency",
+              "historical": 0.41265758029832966,
+              "current": 0.4126575802983367,
+              "absolute_difference": 7.049916206369744e-15
+            },
+            {
+              "path": "/per_instance/2/nominal_utility",
+              "historical": 0.19473081088858868,
+              "current": 0.19473081088858865,
+              "absolute_difference": 2.7755575615628914e-17
+            },
+            {
+              "path": "/per_instance/2/robust_utility",
+              "historical": 0.1431864219691682,
+              "current": 0.14318642196916834,
+              "absolute_difference": 1.3877787807814457e-16
+            },
+            {
+              "path": "/per_instance/2/score",
+              "historical": 9.255902018563788e-17,
+              "current": 0.0,
+              "absolute_difference": 9.255902018563788e-17
+            },
+            {
+              "path": "/per_instance/2/shifts/0/utility",
+              "historical": 0.19213626556512897,
+              "current": 0.19213626556512883,
+              "absolute_difference": 1.3877787807814457e-16
+            },
+            {
+              "path": "/per_instance/2/shifts/1/utility",
+              "historical": 0.19912699089032132,
+              "current": 0.19912699089032077,
+              "absolute_difference": 5.551115123125783e-16
+            },
+            {
+              "path": "/per_instance/2/shifts/2/utility",
+              "historical": 0.26840656979151717,
+              "current": 0.26840656979151784,
+              "absolute_difference": 6.661338147750939e-16
+            },
+            {
+              "path": "/per_instance/2/shifts/3/utility",
+              "historical": 0.1431864219691682,
+              "current": 0.14318642196916834,
+              "absolute_difference": 1.3877787807814457e-16
+            },
+            {
+              "path": "/per_instance/2/te_mean_target_efficiency",
+              "historical": 0.20542248627771867,
+              "current": 0.20542248627771847,
+              "absolute_difference": 1.942890293094024e-16
+            },
+            {
+              "path": "/per_instance/2/tm_mean_target_efficiency",
+              "historical": 0.377852701462739,
+              "current": 0.3778527014627389,
+              "absolute_difference": 1.1102230246251565e-16
+            },
+            {
+              "path": "/per_instance/2/twentieth_percentile_target_efficiency",
+              "historical": 0.12350249277980302,
+              "current": 0.12350249277980321,
+              "absolute_difference": 1.942890293094024e-16
+            },
+            {
+              "path": "/per_instance/3/maximum_condition_number",
+              "historical": 279.83214281941264,
+              "current": 279.8321428194124,
+              "absolute_difference": 2.2737367544323206e-13
+            },
+            {
+              "path": "/per_instance/3/maximum_energy_residual",
+              "historical": 6.5503158452884236e-15,
+              "current": 4.440892098500626e-15,
+              "absolute_difference": 2.1094237467877974e-15
+            },
+            {
+              "path": "/per_instance/3/mean_target_efficiency",
+              "historical": 0.1633149959771213,
+              "current": 0.16331499597712093,
+              "absolute_difference": 3.608224830031759e-16
+            },
+            {
+              "path": "/per_instance/3/minimum_target_efficiency",
+              "historical": 0.056858521299180044,
+              "current": 0.056858521299180315,
+              "absolute_difference": 2.706168622523819e-16
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/0/condition_number",
+              "historical": 169.2388863418348,
+              "current": 169.2388863418352,
+              "absolute_difference": 3.979039320256561e-13
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/0/energy_sum",
+              "historical": 0.9999999999999994,
+              "current": 0.9999999999999979,
+              "absolute_difference": 1.5543122344752192e-15
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/0/target_efficiency",
+              "historical": 0.06496547320207573,
+              "current": 0.06496547320207532,
+              "absolute_difference": 4.0245584642661925e-16
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/1/condition_number",
+              "historical": 184.38709744554822,
+              "current": 184.38709744554814,
+              "absolute_difference": 8.526512829121202e-14
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/1/energy_sum",
+              "historical": 1.0000000000000027,
+              "current": 1.0000000000000009,
+              "absolute_difference": 1.7763568394002505e-15
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/1/target_efficiency",
+              "historical": 0.0623441848254601,
+              "current": 0.062344184825462154,
+              "absolute_difference": 2.0539125955565396e-15
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/2/energy_sum",
+              "historical": 0.9999999999999998,
+              "current": 1.0000000000000013,
+              "absolute_difference": 1.5543122344752192e-15
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/2/target_efficiency",
+              "historical": 0.15062315056324904,
+              "current": 0.15062315056324885,
+              "absolute_difference": 1.942890293094024e-16
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/3/condition_number",
+              "historical": 78.06836185527919,
+              "current": 78.06836185527862,
+              "absolute_difference": 5.684341886080801e-13
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/3/energy_sum",
+              "historical": 1.000000000000001,
+              "current": 1.0,
+              "absolute_difference": 1.1102230246251565e-15
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/3/target_efficiency",
+              "historical": 0.07907298351610809,
+              "current": 0.07907298351611029,
+              "absolute_difference": 2.2065682614424986e-15
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/4/condition_number",
+              "historical": 169.2388863418361,
+              "current": 169.23888634183618,
+              "absolute_difference": 8.526512829121202e-14
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/4/energy_sum",
+              "historical": 0.9999999999999999,
+              "current": 0.9999999999999987,
+              "absolute_difference": 1.2212453270876722e-15
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/5/condition_number",
+              "historical": 184.3870974455447,
+              "current": 184.38709744554558,
+              "absolute_difference": 8.810729923425242e-13
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/5/energy_sum",
+              "historical": 1.0000000000000013,
+              "current": 0.9999999999999976,
+              "absolute_difference": 3.774758283725532e-15
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/5/target_efficiency",
+              "historical": 0.15107473981208458,
+              "current": 0.1510747398120824,
+              "absolute_difference": 2.192690473634684e-15
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/6/condition_number",
+              "historical": 211.32310054107668,
+              "current": 211.3231005410758,
+              "absolute_difference": 8.810729923425242e-13
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/6/energy_sum",
+              "historical": 0.9999999999999999,
+              "current": 1.0000000000000004,
+              "absolute_difference": 5.551115123125783e-16
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/6/target_efficiency",
+              "historical": 0.06755846701152254,
+              "current": 0.06755846701152328,
+              "absolute_difference": 7.355227538141662e-16
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/7/condition_number",
+              "historical": 278.4538440592247,
+              "current": 278.4538440592238,
+              "absolute_difference": 9.094947017729282e-13
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/7/energy_sum",
+              "historical": 0.9999999999999983,
+              "current": 1.0000000000000044,
+              "absolute_difference": 6.106226635438361e-15
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/7/target_efficiency",
+              "historical": 0.20210236734073564,
+              "current": 0.20210236734073397,
+              "absolute_difference": 1.6653345369377348e-15
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/8/condition_number",
+              "historical": 131.12503130496358,
+              "current": 131.12503130496322,
+              "absolute_difference": 3.694822225952521e-13
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/8/energy_sum",
+              "historical": 1.0000000000000007,
+              "current": 0.9999999999999996,
+              "absolute_difference": 1.1102230246251565e-15
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/8/target_efficiency",
+              "historical": 0.10742266130978145,
+              "current": 0.10742266130978058,
+              "absolute_difference": 8.743006318923108e-16
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/9/condition_number",
+              "historical": 122.94697140979537,
+              "current": 122.9469714097969,
+              "absolute_difference": 1.5347723092418164e-12
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/9/energy_sum",
+              "historical": 1.0000000000000007,
+              "current": 0.9999999999999989,
+              "absolute_difference": 1.7763568394002505e-15
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/9/target_efficiency",
+              "historical": 0.09153157897429916,
+              "current": 0.09153157897429913,
+              "absolute_difference": 2.7755575615628914e-17
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/10/condition_number",
+              "historical": 211.32310054107984,
+              "current": 211.32310054108032,
+              "absolute_difference": 4.831690603168681e-13
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/10/energy_sum",
+              "historical": 0.9999999999999971,
+              "current": 0.999999999999999,
+              "absolute_difference": 1.887379141862766e-15
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/10/target_efficiency",
+              "historical": 0.2792126540372989,
+              "current": 0.27921265403729845,
+              "absolute_difference": 4.440892098500626e-16
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/11/condition_number",
+              "historical": 278.4538440592206,
+              "current": 278.4538440592247,
+              "absolute_difference": 4.092726157978177e-12
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/11/energy_sum",
+              "historical": 0.9999999999999997,
+              "current": 1.0000000000000002,
+              "absolute_difference": 5.551115123125783e-16
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/11/target_efficiency",
+              "historical": 0.33505348808815777,
+              "current": 0.3350534880881511,
+              "absolute_difference": 6.661338147750939e-15
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/12/condition_number",
+              "historical": 82.33413756067239,
+              "current": 82.33413756067257,
+              "absolute_difference": 1.8474111129762605e-13
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/12/energy_sum",
+              "historical": 1.000000000000003,
+              "current": 1.0000000000000027,
+              "absolute_difference": 4.440892098500626e-16
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/12/target_efficiency",
+              "historical": 0.056858521299180044,
+              "current": 0.056858521299180315,
+              "absolute_difference": 2.706168622523819e-16
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/13/condition_number",
+              "historical": 161.08191707152727,
+              "current": 161.0819170715259,
+              "absolute_difference": 1.3642420526593924e-12
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/13/energy_sum",
+              "historical": 0.9999999999999992,
+              "current": 1.0000000000000013,
+              "absolute_difference": 2.1094237467877974e-15
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/13/target_efficiency",
+              "historical": 0.15502260769539034,
+              "current": 0.1550226076953837,
+              "absolute_difference": 6.63358257213531e-15
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/14/condition_number",
+              "historical": 192.60550284605534,
+              "current": 192.605502846056,
+              "absolute_difference": 6.536993168992922e-13
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/14/energy_sum",
+              "historical": 0.9999999999999998,
+              "current": 1.0000000000000016,
+              "absolute_difference": 1.7763568394002505e-15
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/14/target_efficiency",
+              "historical": 0.11668800219658099,
+              "current": 0.11668800219658111,
+              "absolute_difference": 1.249000902703301e-16
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/15/condition_number",
+              "historical": 279.83214281941264,
+              "current": 279.8321428194124,
+              "absolute_difference": 2.2737367544323206e-13
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/15/energy_sum",
+              "historical": 0.9999999999999934,
+              "current": 1.0000000000000009,
+              "absolute_difference": 7.438494264988549e-15
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/15/target_efficiency",
+              "historical": 0.24290083587131783,
+              "current": 0.2429008358713222,
+              "absolute_difference": 4.3576253716537394e-15
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/16/condition_number",
+              "historical": 82.33413756067203,
+              "current": 82.33413756067218,
+              "absolute_difference": 1.4210854715202004e-13
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/16/energy_sum",
+              "historical": 1.0000000000000049,
+              "current": 1.0000000000000042,
+              "absolute_difference": 6.661338147750939e-16
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/16/target_efficiency",
+              "historical": 0.25977855727382176,
+              "current": 0.25977855727382143,
+              "absolute_difference": 3.3306690738754696e-16
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/17/condition_number",
+              "historical": 161.08191707152594,
+              "current": 161.08191707152574,
+              "absolute_difference": 1.9895196601282805e-13
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/17/energy_sum",
+              "historical": 0.9999999999999968,
+              "current": 1.0000000000000013,
+              "absolute_difference": 4.551914400963142e-15
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/17/target_efficiency",
+              "historical": 0.31163400931289387,
+              "current": 0.31163400931289686,
+              "absolute_difference": 2.9976021664879227e-15
+            },
+            {
+              "path": "/per_instance/3/nominal_utility",
+              "historical": 0.11923602045059192,
+              "current": 0.1192360204505921,
+              "absolute_difference": 1.8041124150158794e-16
+            },
+            {
+              "path": "/per_instance/3/robust_utility",
+              "historical": 0.09020651541347735,
+              "current": 0.09020651541347875,
+              "absolute_difference": 1.4016565685892601e-15
+            },
+            {
+              "path": "/per_instance/3/shifts/0/utility",
+              "historical": 0.11728529175364347,
+              "current": 0.11728529175364306,
+              "absolute_difference": 4.0245584642661925e-16
+            },
+            {
+              "path": "/per_instance/3/shifts/1/utility",
+              "historical": 0.1196950179302349,
+              "current": 0.11969501793023458,
+              "absolute_difference": 3.191891195797325e-16
+            },
+            {
+              "path": "/per_instance/3/shifts/2/utility",
+              "historical": 0.14953689267902048,
+              "current": 0.1495368926790208,
+              "absolute_difference": 3.0531133177191805e-16
+            },
+            {
+              "path": "/per_instance/3/shifts/3/utility",
+              "historical": 0.09020651541347735,
+              "current": 0.09020651541347875,
+              "absolute_difference": 1.4016565685892601e-15
+            },
+            {
+              "path": "/per_instance/3/te_mean_target_efficiency",
+              "historical": 0.1454370146835262,
+              "current": 0.1454370146835261,
+              "absolute_difference": 1.1102230246251565e-16
+            },
+            {
+              "path": "/per_instance/3/tm_mean_target_efficiency",
+              "historical": 0.1811929772707164,
+              "current": 0.18119297727071576,
+              "absolute_difference": 6.38378239159465e-16
+            },
+            {
+              "path": "/per_instance/3/twentieth_percentile_target_efficiency",
+              "historical": 0.07216427361335677,
+              "current": 0.07216427361335809,
+              "absolute_difference": 1.3183898417423734e-15
+            },
+            {
+              "path": "/per_instance/4/maximum_condition_number",
+              "historical": 364.69262681322334,
+              "current": 364.69262681321237,
+              "absolute_difference": 1.0970779840135947e-11
+            },
+            {
+              "path": "/per_instance/4/maximum_energy_residual",
+              "historical": 7.882583474838611e-15,
+              "current": 6.217248937900877e-15,
+              "absolute_difference": 1.6653345369377348e-15
+            },
+            {
+              "path": "/per_instance/4/mean_target_efficiency",
+              "historical": 0.28840928352471745,
+              "current": 0.28840928352471684,
+              "absolute_difference": 6.106226635438361e-16
+            },
+            {
+              "path": "/per_instance/4/minimum_target_efficiency",
+              "historical": 0.007153522872666855,
+              "current": 0.007153522872666863,
+              "absolute_difference": 7.806255641895632e-18
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/0/condition_number",
+              "historical": 55.165348555387595,
+              "current": 55.16534855538752,
+              "absolute_difference": 7.815970093361102e-14
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/0/energy_sum",
+              "historical": 1.000000000000002,
+              "current": 1.0000000000000013,
+              "absolute_difference": 6.661338147750939e-16
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/0/target_efficiency",
+              "historical": 0.007153522872666855,
+              "current": 0.007153522872666863,
+              "absolute_difference": 7.806255641895632e-18
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/1/condition_number",
+              "historical": 71.85408195146148,
+              "current": 71.85408195146154,
+              "absolute_difference": 5.684341886080802e-14
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/1/energy_sum",
+              "historical": 0.9999999999999988,
+              "current": 1.000000000000002,
+              "absolute_difference": 3.219646771412954e-15
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/1/target_efficiency",
+              "historical": 0.22055208302210277,
+              "current": 0.22055208302210885,
+              "absolute_difference": 6.078471059822732e-15
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/2/condition_number",
+              "historical": 111.40704018725211,
+              "current": 111.40704018725205,
+              "absolute_difference": 5.684341886080802e-14
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/2/energy_sum",
+              "historical": 0.9999999999999989,
+              "current": 0.9999999999999979,
+              "absolute_difference": 9.992007221626409e-16
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/2/target_efficiency",
+              "historical": 0.07097910525944742,
+              "current": 0.07097910525944687,
+              "absolute_difference": 5.551115123125783e-16
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/3/condition_number",
+              "historical": 364.69262681322334,
+              "current": 364.69262681321237,
+              "absolute_difference": 1.0970779840135947e-11
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/3/energy_sum",
+              "historical": 1.0000000000000004,
+              "current": 0.9999999999999989,
+              "absolute_difference": 1.5543122344752192e-15
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/3/target_efficiency",
+              "historical": 0.4164792343796205,
+              "current": 0.4164792343796161,
+              "absolute_difference": 4.385380947269368e-15
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/4/condition_number",
+              "historical": 55.165348555387716,
+              "current": 55.16534855538768,
+              "absolute_difference": 3.552713678800501e-14
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/4/energy_sum",
+              "historical": 0.9999999999999951,
+              "current": 0.999999999999997,
+              "absolute_difference": 1.887379141862766e-15
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/4/target_efficiency",
+              "historical": 0.31102997468446714,
+              "current": 0.3110299746844679,
+              "absolute_difference": 7.771561172376096e-16
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/5/condition_number",
+              "historical": 71.85408195146132,
+              "current": 71.85408195146142,
+              "absolute_difference": 9.947598300641403e-14
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/5/energy_sum",
+              "historical": 0.9999999999999921,
+              "current": 1.0000000000000009,
+              "absolute_difference": 8.770761894538737e-15
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/5/target_efficiency",
+              "historical": 0.4478441849679022,
+              "current": 0.4478441849679055,
+              "absolute_difference": 3.3306690738754696e-15
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/6/condition_number",
+              "historical": 76.05558080105251,
+              "current": 76.05558080105247,
+              "absolute_difference": 4.263256414560601e-14
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/6/target_efficiency",
+              "historical": 0.009550125865855639,
+              "current": 0.009550125865855637,
+              "absolute_difference": 1.734723475976807e-18
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/7/condition_number",
+              "historical": 77.93734905002016,
+              "current": 77.93734905002063,
+              "absolute_difference": 4.689582056016661e-13
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/7/energy_sum",
+              "historical": 1.0000000000000004,
+              "current": 0.9999999999999973,
+              "absolute_difference": 3.1086244689504383e-15
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/7/target_efficiency",
+              "historical": 0.27219550269077997,
+              "current": 0.27219550269077764,
+              "absolute_difference": 2.3314683517128287e-15
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/8/condition_number",
+              "historical": 100.80512214105553,
+              "current": 100.80512214105568,
+              "absolute_difference": 1.4210854715202004e-13
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/8/energy_sum",
+              "historical": 1.0000000000000007,
+              "current": 1.000000000000002,
+              "absolute_difference": 1.3322676295501878e-15
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/8/target_efficiency",
+              "historical": 0.24923094784495495,
+              "current": 0.24923094784495525,
+              "absolute_difference": 3.0531133177191805e-16
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/9/condition_number",
+              "historical": 168.72645226073433,
+              "current": 168.72645226073064,
+              "absolute_difference": 3.694822225952521e-12
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/9/energy_sum",
+              "historical": 1.0000000000000013,
+              "current": 0.9999999999999987,
+              "absolute_difference": 2.6645352591003757e-15
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/9/target_efficiency",
+              "historical": 0.41177569608267806,
+              "current": 0.4117756960826732,
+              "absolute_difference": 4.829470157119431e-15
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/10/condition_number",
+              "historical": 76.05558080105315,
+              "current": 76.05558080105318,
+              "absolute_difference": 2.842170943040401e-14
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/10/energy_sum",
+              "historical": 0.9999999999999999,
+              "current": 0.9999999999999998,
+              "absolute_difference": 1.1102230246251565e-16
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/10/target_efficiency",
+              "historical": 0.37113214356221147,
+              "current": 0.3711321435622109,
+              "absolute_difference": 5.551115123125783e-16
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/11/condition_number",
+              "historical": 77.93734905002052,
+              "current": 77.9373490500207,
+              "absolute_difference": 1.8474111129762605e-13
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/11/energy_sum",
+              "historical": 1.0000000000000009,
+              "current": 0.999999999999994,
+              "absolute_difference": 6.8833827526759706e-15
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/11/target_efficiency",
+              "historical": 0.4345675442198915,
+              "current": 0.4345675442198919,
+              "absolute_difference": 3.885780586188048e-16
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/12/condition_number",
+              "historical": 95.79504477033902,
+              "current": 95.79504477033917,
+              "absolute_difference": 1.5631940186722204e-13
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/12/energy_sum",
+              "historical": 1.0000000000000027,
+              "current": 1.0000000000000004,
+              "absolute_difference": 2.220446049250313e-15
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/12/target_efficiency",
+              "historical": 0.02310331188647965,
+              "current": 0.023103311886479426,
+              "absolute_difference": 2.255140518769849e-16
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/13/condition_number",
+              "historical": 107.0568219938942,
+              "current": 107.05682199389658,
+              "absolute_difference": 2.3732127374387346e-12
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/13/energy_sum",
+              "historical": 0.999999999999996,
+              "current": 1.0000000000000022,
+              "absolute_difference": 6.217248937900877e-15
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/14/condition_number",
+              "historical": 77.5416343719796,
+              "current": 77.54163437197958,
+              "absolute_difference": 1.4210854715202004e-14
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/14/energy_sum",
+              "historical": 0.9999999999999937,
+              "current": 0.9999999999999938,
+              "absolute_difference": 1.1102230246251565e-16
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/15/condition_number",
+              "historical": 101.28424387528725,
+              "current": 101.28424387528706,
+              "absolute_difference": 1.8474111129762605e-13
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/15/energy_sum",
+              "historical": 1.0000000000000018,
+              "current": 0.9999999999999987,
+              "absolute_difference": 3.1086244689504383e-15
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/15/target_efficiency",
+              "historical": 0.4090022147000581,
+              "current": 0.4090022147000523,
+              "absolute_difference": 5.773159728050814e-15
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/16/condition_number",
+              "historical": 95.79504477033908,
+              "current": 95.79504477033905,
+              "absolute_difference": 2.842170943040401e-14
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/16/energy_sum",
+              "historical": 0.9999999999999996,
+              "current": 1.0,
+              "absolute_difference": 4.440892098500626e-16
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/16/target_efficiency",
+              "historical": 0.43852466104322124,
+              "current": 0.43852466104322035,
+              "absolute_difference": 8.881784197001252e-16
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/17/condition_number",
+              "historical": 107.05682199389621,
+              "current": 107.05682199389602,
+              "absolute_difference": 1.8474111129762605e-13
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/17/energy_sum",
+              "historical": 1.0000000000000013,
+              "current": 1.0000000000000004,
+              "absolute_difference": 8.881784197001252e-16
+            },
+            {
+              "path": "/per_instance/4/nominal_conditions/17/target_efficiency",
+              "historical": 0.3936987894451677,
+              "current": 0.3936987894451645,
+              "absolute_difference": 3.164135620181696e-15
+            },
+            {
+              "path": "/per_instance/4/nominal_utility",
+              "historical": 0.1927578846042554,
+              "current": 0.19275788460425558,
+              "absolute_difference": 1.942890293094024e-16
+            },
+            {
+              "path": "/per_instance/4/robust_utility",
+              "historical": 0.14553387064111006,
+              "current": 0.14553387064111,
+              "absolute_difference": 5.551115123125783e-17
+            },
+            {
+              "path": "/per_instance/4/robustness_score",
+              "historical": 2.1871887156444835e-16,
+              "current": 0.0,
+              "absolute_difference": 2.1871887156444835e-16
+            },
+            {
+              "path": "/per_instance/4/shifts/0/utility",
+              "historical": 0.19060564003547237,
+              "current": 0.19060564003547206,
+              "absolute_difference": 3.0531133177191805e-16
+            },
+            {
+              "path": "/per_instance/4/shifts/1/utility",
+              "historical": 0.1865868988345324,
+              "current": 0.18658689883453256,
+              "absolute_difference": 1.6653345369377348e-16
+            },
+            {
+              "path": "/per_instance/4/shifts/2/utility",
+              "historical": 0.23785319558080353,
+              "current": 0.23785319558080437,
+              "absolute_difference": 8.326672684688674e-16
+            },
+            {
+              "path": "/per_instance/4/shifts/3/utility",
+              "historical": 0.14553387064111006,
+              "current": 0.14553387064111,
+              "absolute_difference": 5.551115123125783e-17
+            },
+            {
+              "path": "/per_instance/4/te_mean_target_efficiency",
+              "historical": 0.20685597091869934,
+              "current": 0.2068559709186992,
+              "absolute_difference": 1.3877787807814457e-16
+            },
+            {
+              "path": "/per_instance/4/tm_mean_target_efficiency",
+              "historical": 0.3699625961307355,
+              "current": 0.36996259613073434,
+              "absolute_difference": 1.1657341758564144e-15
+            },
+            {
+              "path": "/per_instance/4/twentieth_percentile_target_efficiency",
+              "historical": 0.1308082963645096,
+              "current": 0.13080829636451172,
+              "absolute_difference": 2.1094237467877974e-15
+            },
+            {
+              "path": "/per_instance/5/maximum_condition_number",
+              "historical": 542.8509567157355,
+              "current": 542.8509567157189,
+              "absolute_difference": 1.659827830735594e-11
+            },
+            {
+              "path": "/per_instance/5/maximum_energy_residual",
+              "historical": 4.107825191113079e-15,
+              "current": 5.10702591327572e-15,
+              "absolute_difference": 9.992007221626409e-16
+            },
+            {
+              "path": "/per_instance/5/mean_target_efficiency",
+              "historical": 0.18354149053647856,
+              "current": 0.1835414905364784,
+              "absolute_difference": 1.6653345369377348e-16
+            },
+            {
+              "path": "/per_instance/5/minimum_target_efficiency",
+              "historical": 0.02788016358889361,
+              "current": 0.02788016358889346,
+              "absolute_difference": 1.491862189340054e-16
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/0/condition_number",
+              "historical": 127.1762215168459,
+              "current": 127.17622151684586,
+              "absolute_difference": 4.263256414560601e-14
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/0/energy_sum",
+              "historical": 1.0000000000000029,
+              "current": 1.000000000000002,
+              "absolute_difference": 8.881784197001252e-16
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/0/target_efficiency",
+              "historical": 0.03347941072840519,
+              "current": 0.033479410728404844,
+              "absolute_difference": 3.469446951953614e-16
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/1/condition_number",
+              "historical": 191.8921456357609,
+              "current": 191.8921456357594,
+              "absolute_difference": 1.5063505998114124e-12
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/1/energy_sum",
+              "historical": 0.9999999999999993,
+              "current": 1.000000000000001,
+              "absolute_difference": 1.7763568394002505e-15
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/1/target_efficiency",
+              "historical": 0.11194871483906592,
+              "current": 0.11194871483906312,
+              "absolute_difference": 2.8033131371785203e-15
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/2/condition_number",
+              "historical": 109.29408237107015,
+              "current": 109.29408237107023,
+              "absolute_difference": 8.526512829121202e-14
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/2/energy_sum",
+              "historical": 0.9999999999999973,
+              "current": 1.0000000000000004,
+              "absolute_difference": 3.1086244689504383e-15
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/2/target_efficiency",
+              "historical": 0.11491747597663704,
+              "current": 0.11491747597663712,
+              "absolute_difference": 8.326672684688674e-17
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/3/condition_number",
+              "historical": 103.54444175986602,
+              "current": 103.54444175986687,
+              "absolute_difference": 8.526512829121202e-13
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/3/energy_sum",
+              "historical": 0.999999999999999,
+              "current": 1.0000000000000027,
+              "absolute_difference": 3.6637359812630166e-15
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/3/target_efficiency",
+              "historical": 0.10002640326306203,
+              "current": 0.10002640326306216,
+              "absolute_difference": 1.249000902703301e-16
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/4/condition_number",
+              "historical": 127.17622151684655,
+              "current": 127.17622151684607,
+              "absolute_difference": 4.831690603168681e-13
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/4/energy_sum",
+              "historical": 1.0000000000000024,
+              "current": 1.0000000000000018,
+              "absolute_difference": 6.661338147750939e-16
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/4/target_efficiency",
+              "historical": 0.23611365614412974,
+              "current": 0.23611365614412932,
+              "absolute_difference": 4.163336342344337e-16
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/5/condition_number",
+              "historical": 191.89214563575973,
+              "current": 191.89214563575888,
+              "absolute_difference": 8.526512829121202e-13
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/5/energy_sum",
+              "historical": 1.0000000000000002,
+              "current": 0.9999999999999949,
+              "absolute_difference": 5.329070518200751e-15
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/5/target_efficiency",
+              "historical": 0.3750759118346536,
+              "current": 0.37507591183464917,
+              "absolute_difference": 4.440892098500626e-15
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/6/condition_number",
+              "historical": 103.85286257148363,
+              "current": 103.85286257148364,
+              "absolute_difference": 1.4210854715202004e-14
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/6/energy_sum",
+              "historical": 0.9999999999999959,
+              "current": 0.999999999999998,
+              "absolute_difference": 2.1094237467877974e-15
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/6/target_efficiency",
+              "historical": 0.02788016358889361,
+              "current": 0.02788016358889346,
+              "absolute_difference": 1.491862189340054e-16
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/7/condition_number",
+              "historical": 209.6673695205394,
+              "current": 209.66736952053733,
+              "absolute_difference": 2.0747847884194925e-12
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/7/energy_sum",
+              "historical": 0.9999999999999974,
+              "current": 1.0000000000000013,
+              "absolute_difference": 3.885780586188048e-15
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/7/target_efficiency",
+              "historical": 0.11942743398648784,
+              "current": 0.11942743398648843,
+              "absolute_difference": 5.967448757360216e-16
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/8/condition_number",
+              "historical": 182.58201737540915,
+              "current": 182.58201737540773,
+              "absolute_difference": 1.4210854715202004e-12
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/8/energy_sum",
+              "historical": 0.999999999999998,
+              "current": 0.9999999999999988,
+              "absolute_difference": 7.771561172376096e-16
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/8/target_efficiency",
+              "historical": 0.06009816554254658,
+              "current": 0.0600981655425469,
+              "absolute_difference": 3.191891195797325e-16
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/9/condition_number",
+              "historical": 272.98548229621326,
+              "current": 272.9854822962142,
+              "absolute_difference": 9.094947017729282e-13
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/9/energy_sum",
+              "historical": 1.0000000000000016,
+              "current": 1.0000000000000004,
+              "absolute_difference": 1.1102230246251565e-15
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/9/target_efficiency",
+              "historical": 0.22860035475665216,
+              "current": 0.22860035475666643,
+              "absolute_difference": 1.426636586643326e-14
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/10/condition_number",
+              "historical": 103.8528625714884,
+              "current": 103.8528625714885,
+              "absolute_difference": 9.947598300641403e-14
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/10/energy_sum",
+              "historical": 0.9999999999999984,
+              "current": 0.9999999999999998,
+              "absolute_difference": 1.3322676295501878e-15
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/10/target_efficiency",
+              "historical": 0.2337484116371534,
+              "current": 0.23374841163715437,
+              "absolute_difference": 9.71445146547012e-16
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/11/condition_number",
+              "historical": 209.66736952051667,
+              "current": 209.6673695205324,
+              "absolute_difference": 1.5717205315013416e-11
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/11/energy_sum",
+              "historical": 1.0000000000000018,
+              "current": 1.000000000000001,
+              "absolute_difference": 6.661338147750939e-16
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/11/target_efficiency",
+              "historical": 0.34196809704043885,
+              "current": 0.3419680970404327,
+              "absolute_difference": 6.161737786669619e-15
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/12/condition_number",
+              "historical": 66.28937269424407,
+              "current": 66.28937269424397,
+              "absolute_difference": 9.947598300641403e-14
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/12/energy_sum",
+              "historical": 0.9999999999999997,
+              "current": 1.0000000000000004,
+              "absolute_difference": 7.771561172376096e-16
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/12/target_efficiency",
+              "historical": 0.036945185457167795,
+              "current": 0.03694518545716734,
+              "absolute_difference": 4.579669976578771e-16
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/13/condition_number",
+              "historical": 91.2311913257269,
+              "current": 91.23119132572721,
+              "absolute_difference": 3.126388037344441e-13
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/13/energy_sum",
+              "historical": 0.9999999999999998,
+              "current": 0.9999999999999992,
+              "absolute_difference": 5.551115123125783e-16
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/13/target_efficiency",
+              "historical": 0.17474088607136928,
+              "current": 0.17474088607136948,
+              "absolute_difference": 1.942890293094024e-16
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/14/condition_number",
+              "historical": 107.37033625718834,
+              "current": 107.37033625718817,
+              "absolute_difference": 1.7053025658242404e-13
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/14/energy_sum",
+              "historical": 0.9999999999999986,
+              "current": 0.9999999999999987,
+              "absolute_difference": 1.1102230246251565e-16
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/14/target_efficiency",
+              "historical": 0.2011729807681616,
+              "current": 0.20117298076816184,
+              "absolute_difference": 2.498001805406602e-16
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/15/condition_number",
+              "historical": 542.8509567157355,
+              "current": 542.8509567157189,
+              "absolute_difference": 1.659827830735594e-11
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/15/energy_sum",
+              "historical": 0.9999999999999983,
+              "current": 0.9999999999999992,
+              "absolute_difference": 8.881784197001252e-16
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/15/target_efficiency",
+              "historical": 0.3428728650892642,
+              "current": 0.34287286508924913,
+              "absolute_difference": 1.504352198367087e-14
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/16/condition_number",
+              "historical": 66.28937269424412,
+              "current": 66.28937269424407,
+              "absolute_difference": 5.684341886080802e-14
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/16/energy_sum",
+              "historical": 0.9999999999999989,
+              "current": 1.0000000000000018,
+              "absolute_difference": 2.886579864025407e-15
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/16/target_efficiency",
+              "historical": 0.23813775970936277,
+              "current": 0.23813775970936432,
+              "absolute_difference": 1.5543122344752192e-15
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/17/condition_number",
+              "historical": 91.23119132572663,
+              "current": 91.23119132572644,
+              "absolute_difference": 1.8474111129762605e-13
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/17/energy_sum",
+              "historical": 0.9999999999999987,
+              "current": 1.000000000000001,
+              "absolute_difference": 2.4424906541753444e-15
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/17/target_efficiency",
+              "historical": 0.3265929532231626,
+              "current": 0.3265929532231709,
+              "absolute_difference": 8.271161533457416e-15
+            },
+            {
+              "path": "/per_instance/5/nominal_utility",
+              "historical": 0.12554121767053014,
+              "current": 0.12554121767053006,
+              "absolute_difference": 8.326672684688674e-17
+            },
+            {
+              "path": "/per_instance/5/robust_utility",
+              "historical": 0.09591360020285447,
+              "current": 0.095913600202855,
+              "absolute_difference": 5.273559366969494e-16
+            },
+            {
+              "path": "/per_instance/5/score",
+              "historical": 2.0589834595697129e-16,
+              "current": 0.0,
+              "absolute_difference": 2.0589834595697129e-16
+            },
+            {
+              "path": "/per_instance/5/shifts/0/utility",
+              "historical": 0.13668288421129254,
+              "current": 0.13668288421129243,
+              "absolute_difference": 1.1102230246251565e-16
+            },
+            {
+              "path": "/per_instance/5/shifts/1/utility",
+              "historical": 0.12703007888736503,
+              "current": 0.12703007888736556,
+              "absolute_difference": 5.273559366969494e-16
+            },
+            {
+              "path": "/per_instance/5/shifts/2/utility",
+              "historical": 0.15175206273128417,
+              "current": 0.1517520627312838,
+              "absolute_difference": 3.608224830031759e-16
+            },
+            {
+              "path": "/per_instance/5/shifts/3/utility",
+              "historical": 0.09591360020285447,
+              "current": 0.095913600202855,
+              "absolute_difference": 5.273559366969494e-16
+            },
+            {
+              "path": "/per_instance/5/te_mean_target_efficiency",
+              "historical": 0.13138813439471753,
+              "current": 0.13138813439471772,
+              "absolute_difference": 1.942890293094024e-16
+            },
+            {
+              "path": "/per_instance/5/tm_mean_target_efficiency",
+              "historical": 0.23569484667823964,
+              "current": 0.23569484667823903,
+              "absolute_difference": 6.106226635438361e-16
+            },
+            {
+              "path": "/per_instance/5/twentieth_percentile_target_efficiency",
+              "historical": 0.07606946063075277,
+              "current": 0.07606946063075301,
+              "absolute_difference": 2.3592239273284576e-16
+            },
+            {
+              "path": "/raw_score",
+              "historical": 7.461434153565229e-17,
+              "current": 0.0,
+              "absolute_difference": 7.461434153565229e-17
+            }
+          ],
+          "non_numeric_differences": []
+        }
+      },
+      {
+        "analyzer": "scripts/analyze_diffraction_grating_calibrations.py",
+        "condition": "budget_one",
+        "artifact": "terminal",
+        "path": "runs/diffraction_grating_v2_b1/Optics__DiffractionGratingDesign/greedy_rewrite/normal/seed_0/solution.py",
+        "task": "Optics/DiffractionGratingDesign",
+        "source_sha256": "280f466dd602ae6668b429505276980df2e3d3b5757908b50259fe1d7c173369",
+        "historical_metrics_sha256": "e80bbe63b4c37fe297f4724bc55dc8a1fb72183a0f8dc9f8e43d6e557a8dd897",
+        "current_metrics_sha256": "9ff51b1a7c92b051153f9b6e8cd7744acfdd1f04e416754034fd8ed18ef242e9",
+        "failure_taxonomy_changed": false,
+        "comparison": {
+          "equivalent": true,
+          "exactly_equal": false,
+          "numeric_tolerance": 5e-10,
+          "numeric_difference_count": 205,
+          "non_numeric_difference_count": 0,
+          "maximum_absolute_numeric_difference": 1.2278178473934531e-11,
+          "numeric_differences": [
+            {
+              "path": "/development_maximum_energy_residual",
+              "historical": 1.9984014443252818e-14,
+              "current": 1.687538997430238e-14,
+              "absolute_difference": 3.1086244689504383e-15
+            },
+            {
+              "path": "/development_mean_target_efficiency",
+              "historical": 0.16501260814976168,
+              "current": 0.1650126081497618,
+              "absolute_difference": 1.1102230246251565e-16
+            },
+            {
+              "path": "/development_minimum_target_efficiency",
+              "historical": 0.011838295475292904,
+              "current": 0.011838295475292823,
+              "absolute_difference": 8.153200337090993e-17
+            },
+            {
+              "path": "/development_te_mean_target_efficiency",
+              "historical": 0.0625226293234293,
+              "current": 0.06252262932342931,
+              "absolute_difference": 1.3877787807814457e-17
+            },
+            {
+              "path": "/development_tm_mean_target_efficiency",
+              "historical": 0.2675025869760941,
+              "current": 0.2675025869760943,
+              "absolute_difference": 2.220446049250313e-16
+            },
+            {
+              "path": "/per_instance/0/maximum_condition_number",
+              "historical": 194.95402460065628,
+              "current": 194.95402460065722,
+              "absolute_difference": 9.379164112033322e-13
+            },
+            {
+              "path": "/per_instance/0/maximum_energy_residual",
+              "historical": 1.9984014443252818e-14,
+              "current": 1.687538997430238e-14,
+              "absolute_difference": 3.1086244689504383e-15
+            },
+            {
+              "path": "/per_instance/0/mean_target_efficiency",
+              "historical": 0.26711990604550384,
+              "current": 0.26711990604550484,
+              "absolute_difference": 9.992007221626409e-16
+            },
+            {
+              "path": "/per_instance/0/minimum_target_efficiency",
+              "historical": 0.02061572714985767,
+              "current": 0.020615727149857523,
+              "absolute_difference": 1.457167719820518e-16
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/0/condition_number",
+              "historical": 84.7123116711448,
+              "current": 84.71231167114505,
+              "absolute_difference": 2.4158453015843406e-13
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/0/energy_sum",
+              "historical": 1.0000000000000009,
+              "current": 1.0,
+              "absolute_difference": 8.881784197001252e-16
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/0/target_efficiency",
+              "historical": 0.028485699557814676,
+              "current": 0.028485699557814548,
+              "absolute_difference": 1.2836953722228372e-16
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/1/condition_number",
+              "historical": 133.84362855917541,
+              "current": 133.84362855917695,
+              "absolute_difference": 1.5347723092418164e-12
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/1/energy_sum",
+              "historical": 1.0000000000000004,
+              "current": 0.9999999999999868,
+              "absolute_difference": 1.3655743202889425e-14
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/1/target_efficiency",
+              "historical": 0.08682994887552475,
+              "current": 0.08682994887552259,
+              "absolute_difference": 2.1649348980190553e-15
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/2/condition_number",
+              "historical": 94.76933098134188,
+              "current": 94.76933098134202,
+              "absolute_difference": 1.4210854715202004e-13
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/2/energy_sum",
+              "historical": 1.0000000000000009,
+              "current": 1.0000000000000013,
+              "absolute_difference": 4.440892098500626e-16
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/2/target_efficiency",
+              "historical": 0.06802500110921188,
+              "current": 0.06802500110921217,
+              "absolute_difference": 2.914335439641036e-16
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/3/condition_number",
+              "historical": 89.61663393704994,
+              "current": 89.61663393704944,
+              "absolute_difference": 4.973799150320701e-13
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/3/energy_sum",
+              "historical": 0.9999999999999976,
+              "current": 0.9999999999999878,
+              "absolute_difference": 9.769962616701378e-15
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/3/target_efficiency",
+              "historical": 0.3626762090180437,
+              "current": 0.36267620901803943,
+              "absolute_difference": 4.274358644806853e-15
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/4/condition_number",
+              "historical": 81.73967968200245,
+              "current": 81.73967968200243,
+              "absolute_difference": 1.4210854715202004e-14
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/4/energy_sum",
+              "historical": 0.9999999999999991,
+              "current": 0.9999999999999984,
+              "absolute_difference": 6.661338147750939e-16
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/4/target_efficiency",
+              "historical": 0.17378711407184538,
+              "current": 0.17378711407184466,
+              "absolute_difference": 7.216449660063518e-16
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/5/condition_number",
+              "historical": 129.76478920802157,
+              "current": 129.76478920802018,
+              "absolute_difference": 1.3926637620897964e-12
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/5/energy_sum",
+              "historical": 0.9999999999999951,
+              "current": 0.9999999999999973,
+              "absolute_difference": 2.220446049250313e-15
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/5/target_efficiency",
+              "historical": 0.42523084020262364,
+              "current": 0.42523084020262153,
+              "absolute_difference": 2.1094237467877974e-15
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/6/condition_number",
+              "historical": 106.03950512704428,
+              "current": 106.03950512704448,
+              "absolute_difference": 1.9895196601282805e-13
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/6/energy_sum",
+              "historical": 1.0000000000000016,
+              "current": 1.0000000000000009,
+              "absolute_difference": 6.661338147750939e-16
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/6/target_efficiency",
+              "historical": 0.02061572714985767,
+              "current": 0.020615727149857523,
+              "absolute_difference": 1.457167719820518e-16
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/7/condition_number",
+              "historical": 189.85206065797868,
+              "current": 189.8520606579795,
+              "absolute_difference": 8.242295734817162e-13
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/7/energy_sum",
+              "historical": 1.0000000000000078,
+              "current": 0.9999999999999973,
+              "absolute_difference": 1.0436096431476471e-14
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/7/target_efficiency",
+              "historical": 0.361272679187953,
+              "current": 0.3612726791879546,
+              "absolute_difference": 1.5543122344752192e-15
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/8/condition_number",
+              "historical": 95.29058785973231,
+              "current": 95.29058785973203,
+              "absolute_difference": 2.8421709430404007e-13
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/8/target_efficiency",
+              "historical": 0.08930519011868353,
+              "current": 0.08930519011868347,
+              "absolute_difference": 5.551115123125783e-17
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/9/condition_number",
+              "historical": 122.02515149726585,
+              "current": 122.02515149726565,
+              "absolute_difference": 1.9895196601282805e-13
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/9/energy_sum",
+              "historical": 0.9999999999999961,
+              "current": 0.9999999999999976,
+              "absolute_difference": 1.4432899320127035e-15
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/9/target_efficiency",
+              "historical": 0.6500464782355896,
+              "current": 0.6500464782355884,
+              "absolute_difference": 1.2212453270876722e-15
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/10/condition_number",
+              "historical": 106.84173372285328,
+              "current": 106.84173372285326,
+              "absolute_difference": 1.4210854715202004e-14
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/10/energy_sum",
+              "historical": 0.9999999999999969,
+              "current": 0.9999999999999987,
+              "absolute_difference": 1.7763568394002505e-15
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/10/target_efficiency",
+              "historical": 0.3093968533839018,
+              "current": 0.3093968533839022,
+              "absolute_difference": 3.885780586188048e-16
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/11/condition_number",
+              "historical": 178.44062023427676,
+              "current": 178.44062023427372,
+              "absolute_difference": 3.0411229090532288e-12
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/11/energy_sum",
+              "historical": 0.9999999999999992,
+              "current": 1.0000000000000169,
+              "absolute_difference": 1.765254609153999e-14
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/11/target_efficiency",
+              "historical": 0.5364703848938075,
+              "current": 0.5364703848938344,
+              "absolute_difference": 2.6867397195928788e-14
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/12/condition_number",
+              "historical": 80.36758661997865,
+              "current": 80.36758661997852,
+              "absolute_difference": 1.2789769243681803e-13
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/12/energy_sum",
+              "historical": 0.9999999999999981,
+              "current": 0.9999999999999993,
+              "absolute_difference": 1.2212453270876722e-15
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/12/target_efficiency",
+              "historical": 0.03622527393346835,
+              "current": 0.03622527393346876,
+              "absolute_difference": 4.163336342344337e-16
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/13/condition_number",
+              "historical": 194.95402460065628,
+              "current": 194.95402460065722,
+              "absolute_difference": 9.379164112033322e-13
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/13/energy_sum",
+              "historical": 1.0000000000000002,
+              "current": 0.9999999999999973,
+              "absolute_difference": 2.886579864025407e-15
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/13/target_efficiency",
+              "historical": 0.5805237168826584,
+              "current": 0.580523716882659,
+              "absolute_difference": 6.661338147750939e-16
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/14/condition_number",
+              "historical": 66.37137974505835,
+              "current": 66.37137974505832,
+              "absolute_difference": 2.842170943040401e-14
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/14/energy_sum",
+              "historical": 0.9999999999999982,
+              "current": 0.9999999999999987,
+              "absolute_difference": 4.440892098500626e-16
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/14/target_efficiency",
+              "historical": 0.09876085243358902,
+              "current": 0.09876085243358859,
+              "absolute_difference": 4.3021142204224816e-16
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/15/condition_number",
+              "historical": 163.55013704654962,
+              "current": 163.55013704655408,
+              "absolute_difference": 4.462208380573429e-12
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/15/energy_sum",
+              "historical": 0.99999999999998,
+              "current": 1.0000000000000144,
+              "absolute_difference": 3.441691376337985e-14
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/15/target_efficiency",
+              "historical": 0.7164352436057416,
+              "current": 0.7164352436057485,
+              "absolute_difference": 6.8833827526759706e-15
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/16/condition_number",
+              "historical": 80.58301566116138,
+              "current": 80.58301566116153,
+              "absolute_difference": 1.4210854715202004e-13
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/16/energy_sum",
+              "historical": 1.0000000000000009,
+              "current": 1.0000000000000022,
+              "absolute_difference": 1.3322676295501878e-15
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/16/target_efficiency",
+              "historical": 0.22261937448374347,
+              "current": 0.22261937448374403,
+              "absolute_difference": 5.551115123125783e-16
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/17/condition_number",
+              "historical": 184.85066592033039,
+              "current": 184.85066592033493,
+              "absolute_difference": 4.547473508864641e-12
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/17/energy_sum",
+              "historical": 0.9999999999999969,
+              "current": 1.0000000000000107,
+              "absolute_difference": 1.3766765505351941e-14
+            },
+            {
+              "path": "/per_instance/0/nominal_conditions/17/target_efficiency",
+              "historical": 0.04145172167501052,
+              "current": 0.04145172167500261,
+              "absolute_difference": 7.903400156550333e-15
+            },
+            {
+              "path": "/per_instance/0/nominal_utility",
+              "historical": 0.16405935211717143,
+              "current": 0.16405935211717076,
+              "absolute_difference": 6.661338147750939e-16
+            },
+            {
+              "path": "/per_instance/0/shifts/0/utility",
+              "historical": 0.1978429862861736,
+              "current": 0.19784298628617383,
+              "absolute_difference": 2.220446049250313e-16
+            },
+            {
+              "path": "/per_instance/0/shifts/2/utility",
+              "historical": 0.20279658724028027,
+              "current": 0.20279658724028088,
+              "absolute_difference": 6.106226635438361e-16
+            },
+            {
+              "path": "/per_instance/0/shifts/3/utility",
+              "historical": 0.13548360442150842,
+              "current": 0.13548360442150897,
+              "absolute_difference": 5.551115123125783e-16
+            },
+            {
+              "path": "/per_instance/0/te_mean_target_efficiency",
+              "historical": 0.1163578984713462,
+              "current": 0.11635789847134623,
+              "absolute_difference": 2.7755575615628914e-17
+            },
+            {
+              "path": "/per_instance/0/tm_mean_target_efficiency",
+              "historical": 0.41788191361966137,
+              "current": 0.4178819136196635,
+              "absolute_difference": 2.1094237467877974e-15
+            },
+            {
+              "path": "/per_instance/0/twentieth_percentile_target_efficiency",
+              "historical": 0.05208103344869107,
+              "current": 0.05208103344868645,
+              "absolute_difference": 4.621303340002214e-15
+            },
+            {
+              "path": "/per_instance/3/maximum_condition_number",
+              "historical": 134.79042369023375,
+              "current": 134.7904236902347,
+              "absolute_difference": 9.379164112033322e-13
+            },
+            {
+              "path": "/per_instance/3/maximum_energy_residual",
+              "historical": 1.0880185641326534e-14,
+              "current": 1.3322676295501878e-14,
+              "absolute_difference": 2.4424906541753444e-15
+            },
+            {
+              "path": "/per_instance/3/mean_target_efficiency",
+              "historical": 0.18830003610282126,
+              "current": 0.1883000361028211,
+              "absolute_difference": 1.6653345369377348e-16
+            },
+            {
+              "path": "/per_instance/3/minimum_target_efficiency",
+              "historical": 0.011376034280958406,
+              "current": 0.011376034280958536,
+              "absolute_difference": 1.3010426069826053e-16
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/0/condition_number",
+              "historical": 124.2535043173329,
+              "current": 124.25350431733285,
+              "absolute_difference": 4.263256414560601e-14
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/0/energy_sum",
+              "historical": 1.000000000000004,
+              "current": 1.0000000000000007,
+              "absolute_difference": 3.3306690738754696e-15
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/0/target_efficiency",
+              "historical": 0.01763183436647202,
+              "current": 0.017631834366472043,
+              "absolute_difference": 2.42861286636753e-17
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/1/condition_number",
+              "historical": 108.01613426481036,
+              "current": 108.01613426480769,
+              "absolute_difference": 2.6716406864579767e-12
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/1/energy_sum",
+              "historical": 0.9999999999999957,
+              "current": 1.0000000000000036,
+              "absolute_difference": 7.882583474838611e-15
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/1/target_efficiency",
+              "historical": 0.2002085653337019,
+              "current": 0.2002085653337033,
+              "absolute_difference": 1.3877787807814457e-15
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/2/condition_number",
+              "historical": 111.6079631091785,
+              "current": 111.60796310917848,
+              "absolute_difference": 1.4210854715202004e-14
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/2/energy_sum",
+              "historical": 1.0000000000000058,
+              "current": 1.0000000000000069,
+              "absolute_difference": 1.1102230246251565e-15
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/2/target_efficiency",
+              "historical": 0.018880635111570784,
+              "current": 0.01888063511157081,
+              "absolute_difference": 2.7755575615628914e-17
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/3/condition_number",
+              "historical": 88.84376861033836,
+              "current": 88.84376861033724,
+              "absolute_difference": 1.1226575225009583e-12
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/3/energy_sum",
+              "historical": 1.0000000000000016,
+              "current": 1.0000000000000067,
+              "absolute_difference": 5.10702591327572e-15
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/3/target_efficiency",
+              "historical": 0.09913182582892556,
+              "current": 0.09913182582892795,
+              "absolute_difference": 2.3869795029440866e-15
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/4/condition_number",
+              "historical": 128.62459096731325,
+              "current": 128.62459096731314,
+              "absolute_difference": 1.1368683772161603e-13
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/4/energy_sum",
+              "historical": 0.9999999999999962,
+              "current": 0.9999999999999967,
+              "absolute_difference": 4.440892098500626e-16
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/4/target_efficiency",
+              "historical": 0.011376034280958406,
+              "current": 0.011376034280958536,
+              "absolute_difference": 1.3010426069826053e-16
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/5/condition_number",
+              "historical": 130.20160253892317,
+              "current": 130.201602538929,
+              "absolute_difference": 5.8264504332328215e-12
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/5/energy_sum",
+              "historical": 0.9999999999999891,
+              "current": 0.9999999999999961,
+              "absolute_difference": 6.994405055138486e-15
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/5/target_efficiency",
+              "historical": 0.22264003119937062,
+              "current": 0.22264003119937234,
+              "absolute_difference": 1.7208456881689926e-15
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/6/condition_number",
+              "historical": 91.26434041001228,
+              "current": 91.26434041001201,
+              "absolute_difference": 2.7000623958883807e-13
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/6/energy_sum",
+              "historical": 1.0000000000000027,
+              "current": 1.000000000000001,
+              "absolute_difference": 1.5543122344752192e-15
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/6/target_efficiency",
+              "historical": 0.03299750293199586,
+              "current": 0.03299750293199555,
+              "absolute_difference": 3.122502256758253e-16
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/7/condition_number",
+              "historical": 110.21374106795258,
+              "current": 110.21374106795174,
+              "absolute_difference": 8.384404281969182e-13
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/7/energy_sum",
+              "historical": 1.0000000000000104,
+              "current": 0.9999999999999949,
+              "absolute_difference": 1.554312234475219e-14
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/7/target_efficiency",
+              "historical": 0.13654744711697828,
+              "current": 0.13654744711697928,
+              "absolute_difference": 9.992007221626409e-16
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/8/condition_number",
+              "historical": 118.39470546674507,
+              "current": 118.39470546674531,
+              "absolute_difference": 2.4158453015843406e-13
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/8/energy_sum",
+              "historical": 1.000000000000004,
+              "current": 1.0000000000000038,
+              "absolute_difference": 2.220446049250313e-16
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/8/target_efficiency",
+              "historical": 0.04444980509699323,
+              "current": 0.04444980509699349,
+              "absolute_difference": 2.636779683484747e-16
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/9/condition_number",
+              "historical": 104.25150359213391,
+              "current": 104.25150359213417,
+              "absolute_difference": 2.5579538487363607e-13
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/9/energy_sum",
+              "historical": 1.0000000000000093,
+              "current": 0.9999999999999944,
+              "absolute_difference": 1.4876988529977098e-14
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/9/target_efficiency",
+              "historical": 0.27395475059861407,
+              "current": 0.27395475059861535,
+              "absolute_difference": 1.27675647831893e-15
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/10/condition_number",
+              "historical": 91.20647783183752,
+              "current": 91.20647783183763,
+              "absolute_difference": 1.1368683772161603e-13
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/10/energy_sum",
+              "historical": 0.999999999999998,
+              "current": 0.999999999999997,
+              "absolute_difference": 9.992007221626409e-16
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/10/target_efficiency",
+              "historical": 0.0514274996549784,
+              "current": 0.05142749965497837,
+              "absolute_difference": 2.7755575615628914e-17
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/11/condition_number",
+              "historical": 117.12081728933508,
+              "current": 117.12081728933339,
+              "absolute_difference": 1.6910917111090384e-12
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/11/energy_sum",
+              "historical": 1.0000000000000044,
+              "current": 0.9999999999999986,
+              "absolute_difference": 5.88418203051333e-15
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/11/target_efficiency",
+              "historical": 0.42854727360357353,
+              "current": 0.42854727360357026,
+              "absolute_difference": 3.2751579226442118e-15
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/12/condition_number",
+              "historical": 100.9086981653565,
+              "current": 100.9086981653564,
+              "absolute_difference": 9.947598300641403e-14
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/12/energy_sum",
+              "historical": 1.0000000000000027,
+              "current": 1.0000000000000036,
+              "absolute_difference": 8.881784197001252e-16
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/12/target_efficiency",
+              "historical": 0.08572285444722863,
+              "current": 0.08572285444722878,
+              "absolute_difference": 1.5265566588595902e-16
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/13/condition_number",
+              "historical": 134.79042369023375,
+              "current": 134.7904236902347,
+              "absolute_difference": 9.379164112033322e-13
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/13/energy_sum",
+              "historical": 0.9999999999999961,
+              "current": 1.0000000000000133,
+              "absolute_difference": 1.7208456881689926e-14
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/13/target_efficiency",
+              "historical": 0.2566688489756761,
+              "current": 0.256668848975671,
+              "absolute_difference": 5.10702591327572e-15
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/14/condition_number",
+              "historical": 104.9278509076518,
+              "current": 104.92785090765251,
+              "absolute_difference": 7.105427357601002e-13
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/14/energy_sum",
+              "historical": 1.0,
+              "current": 0.9999999999999993,
+              "absolute_difference": 6.661338147750939e-16
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/14/target_efficiency",
+              "historical": 0.09389931244950146,
+              "current": 0.09389931244950118,
+              "absolute_difference": 2.7755575615628914e-16
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/15/condition_number",
+              "historical": 113.28935776881735,
+              "current": 113.28935776881714,
+              "absolute_difference": 2.1316282072803006e-13
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/15/energy_sum",
+              "historical": 1.000000000000003,
+              "current": 0.9999999999999993,
+              "absolute_difference": 3.774758283725532e-15
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/15/target_efficiency",
+              "historical": 0.5498619714275175,
+              "current": 0.5498619714275146,
+              "absolute_difference": 2.886579864025407e-15
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/16/condition_number",
+              "historical": 99.13667932065515,
+              "current": 99.13667932065509,
+              "absolute_difference": 5.684341886080802e-14
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/16/energy_sum",
+              "historical": 0.9999999999999993,
+              "current": 1.0000000000000009,
+              "absolute_difference": 1.5543122344752192e-15
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/16/target_efficiency",
+              "historical": 0.15230091575936577,
+              "current": 0.15230091575936588,
+              "absolute_difference": 1.1102230246251565e-16
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/17/condition_number",
+              "historical": 131.35344543848475,
+              "current": 131.35344543848439,
+              "absolute_difference": 3.694822225952521e-13
+            },
+            {
+              "path": "/per_instance/3/nominal_conditions/17/energy_sum",
+              "historical": 1.0000000000000095,
+              "current": 1.0000000000000078,
+              "absolute_difference": 1.7763568394002505e-15
+            },
+            {
+              "path": "/per_instance/3/nominal_utility",
+              "historical": 0.11523483266224208,
+              "current": 0.11523483266224199,
+              "absolute_difference": 8.326672684688674e-17
+            },
+            {
+              "path": "/per_instance/3/robust_utility",
+              "historical": 0.08111540369685162,
+              "current": 0.08111540369685188,
+              "absolute_difference": 2.636779683484747e-16
+            },
+            {
+              "path": "/per_instance/3/shifts/0/utility",
+              "historical": 0.19072044265455468,
+              "current": 0.19072044265455446,
+              "absolute_difference": 2.220446049250313e-16
+            },
+            {
+              "path": "/per_instance/3/shifts/1/utility",
+              "historical": 0.08111540369685162,
+              "current": 0.08111540369685188,
+              "absolute_difference": 2.636779683484747e-16
+            },
+            {
+              "path": "/per_instance/3/shifts/2/utility",
+              "historical": 0.16520166050228358,
+              "current": 0.16520166050228313,
+              "absolute_difference": 4.440892098500626e-16
+            },
+            {
+              "path": "/per_instance/3/shifts/3/utility",
+              "historical": 0.08447734284918065,
+              "current": 0.08447734284918097,
+              "absolute_difference": 3.191891195797325e-16
+            },
+            {
+              "path": "/per_instance/3/te_mean_target_efficiency",
+              "historical": 0.05652071045545162,
+              "current": 0.05652071045545163,
+              "absolute_difference": 6.938893903907228e-18
+            },
+            {
+              "path": "/per_instance/3/tm_mean_target_efficiency",
+              "historical": 0.32007936175019086,
+              "current": 0.3200793617501905,
+              "absolute_difference": 3.3306690738754696e-16
+            },
+            {
+              "path": "/per_instance/3/twentieth_percentile_target_efficiency",
+              "historical": 0.03757842379799481,
+              "current": 0.03757842379799473,
+              "absolute_difference": 7.632783294297951e-17
+            },
+            {
+              "path": "/per_instance/5/maximum_condition_number",
+              "historical": 189.99276778904274,
+              "current": 189.99276778904158,
+              "absolute_difference": 1.1652900866465643e-12
+            },
+            {
+              "path": "/per_instance/5/maximum_energy_residual",
+              "historical": 1.1546319456101628e-14,
+              "current": 1.1435297153639112e-14,
+              "absolute_difference": 1.1102230246251565e-16
+            },
+            {
+              "path": "/per_instance/5/mean_target_efficiency",
+              "historical": 0.20463049045072165,
+              "current": 0.20463049045072124,
+              "absolute_difference": 4.163336342344337e-16
+            },
+            {
+              "path": "/per_instance/5/minimum_target_efficiency",
+              "historical": 0.015361420470355543,
+              "current": 0.015361420470355233,
+              "absolute_difference": 3.1051550219984847e-16
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/0/condition_number",
+              "historical": 79.54512665757579,
+              "current": 79.54512665757574,
+              "absolute_difference": 5.684341886080802e-14
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/0/energy_sum",
+              "historical": 0.9999999999999991,
+              "current": 0.9999999999999989,
+              "absolute_difference": 2.220446049250313e-16
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/0/target_efficiency",
+              "historical": 0.015361420470355543,
+              "current": 0.015361420470355233,
+              "absolute_difference": 3.1051550219984847e-16
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/1/condition_number",
+              "historical": 86.84305319236786,
+              "current": 86.8430531923676,
+              "absolute_difference": 2.5579538487363607e-13
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/1/energy_sum",
+              "historical": 1.000000000000003,
+              "current": 0.9999999999999993,
+              "absolute_difference": 3.774758283725532e-15
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/1/target_efficiency",
+              "historical": 0.32404734538154745,
+              "current": 0.32404734538154456,
+              "absolute_difference": 2.886579864025407e-15
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/2/condition_number",
+              "historical": 116.12229749524468,
+              "current": 116.12229749524492,
+              "absolute_difference": 2.4158453015843406e-13
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/2/energy_sum",
+              "historical": 0.9999999999999885,
+              "current": 0.9999999999999886,
+              "absolute_difference": 1.1102230246251565e-16
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/2/target_efficiency",
+              "historical": 0.016824311480974647,
+              "current": 0.016824311480974515,
+              "absolute_difference": 1.3183898417423734e-16
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/3/condition_number",
+              "historical": 81.09881850720369,
+              "current": 81.09881850720372,
+              "absolute_difference": 2.842170943040401e-14
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/3/energy_sum",
+              "historical": 1.0000000000000095,
+              "current": 0.9999999999999993,
+              "absolute_difference": 1.021405182655144e-14
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/3/target_efficiency",
+              "historical": 0.10380824286804011,
+              "current": 0.10380824286804206,
+              "absolute_difference": 1.9567680809018384e-15
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/4/condition_number",
+              "historical": 79.98667062060397,
+              "current": 79.98667062060393,
+              "absolute_difference": 4.263256414560601e-14
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/4/energy_sum",
+              "historical": 1.0000000000000044,
+              "current": 1.000000000000007,
+              "absolute_difference": 2.6645352591003757e-15
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/4/target_efficiency",
+              "historical": 0.05457707594059376,
+              "current": 0.0545770759405939,
+              "absolute_difference": 1.3877787807814457e-16
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/5/condition_number",
+              "historical": 93.24103720931294,
+              "current": 93.24103720931313,
+              "absolute_difference": 1.9895196601282805e-13
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/5/energy_sum",
+              "historical": 0.9999999999999982,
+              "current": 0.9999999999999967,
+              "absolute_difference": 1.5543122344752192e-15
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/5/target_efficiency",
+              "historical": 0.2682441190656221,
+              "current": 0.2682441190656209,
+              "absolute_difference": 1.2212453270876722e-15
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/6/condition_number",
+              "historical": 107.94446897074971,
+              "current": 107.944468970749,
+              "absolute_difference": 7.105427357601002e-13
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/6/energy_sum",
+              "historical": 0.9999999999999993,
+              "current": 1.0000000000000007,
+              "absolute_difference": 1.3322676295501878e-15
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/6/target_efficiency",
+              "historical": 0.024428963329647217,
+              "current": 0.02442896332964724,
+              "absolute_difference": 2.42861286636753e-17
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/7/condition_number",
+              "historical": 179.15989737897885,
+              "current": 179.15989737896658,
+              "absolute_difference": 1.2278178473934531e-11
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/7/energy_sum",
+              "historical": 1.0000000000000018,
+              "current": 1.0000000000000069,
+              "absolute_difference": 5.10702591327572e-15
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/7/target_efficiency",
+              "historical": 0.13149289920502338,
+              "current": 0.13149289920502452,
+              "absolute_difference": 1.1379786002407855e-15
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/8/condition_number",
+              "historical": 95.55844724695845,
+              "current": 95.55844724695852,
+              "absolute_difference": 7.105427357601002e-14
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/8/energy_sum",
+              "historical": 0.9999999999999989,
+              "current": 1.0000000000000009,
+              "absolute_difference": 1.9984014443252818e-15
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/8/target_efficiency",
+              "historical": 0.05798702001947006,
+              "current": 0.057987020019469704,
+              "absolute_difference": 3.5388358909926865e-16
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/9/condition_number",
+              "historical": 95.35501685011434,
+              "current": 95.35501685011496,
+              "absolute_difference": 6.252776074688882e-13
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/9/energy_sum",
+              "historical": 1.0000000000000067,
+              "current": 1.0000000000000016,
+              "absolute_difference": 5.10702591327572e-15
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/9/target_efficiency",
+              "historical": 0.31614434665965246,
+              "current": 0.3161443466596511,
+              "absolute_difference": 1.3877787807814457e-15
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/10/condition_number",
+              "historical": 88.97350688801325,
+              "current": 88.97350688801303,
+              "absolute_difference": 2.1316282072803006e-13
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/10/energy_sum",
+              "historical": 1.0000000000000007,
+              "current": 1.0000000000000013,
+              "absolute_difference": 6.661338147750939e-16
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/10/target_efficiency",
+              "historical": 0.1162749460020856,
+              "current": 0.11627494600208557,
+              "absolute_difference": 2.7755575615628914e-17
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/11/condition_number",
+              "historical": 175.204417975363,
+              "current": 175.20441797537293,
+              "absolute_difference": 9.947598300641403e-12
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/11/energy_sum",
+              "historical": 1.0000000000000049,
+              "current": 0.9999999999999968,
+              "absolute_difference": 8.104628079763643e-15
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/11/target_efficiency",
+              "historical": 0.4137795842346618,
+              "current": 0.4137795842346638,
+              "absolute_difference": 1.9984014443252818e-15
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/12/condition_number",
+              "historical": 101.13054723811099,
+              "current": 101.1305472381117,
+              "absolute_difference": 7.105427357601002e-13
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/12/energy_sum",
+              "historical": 0.999999999999996,
+              "current": 0.9999999999999958,
+              "absolute_difference": 2.220446049250313e-16
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/12/target_efficiency",
+              "historical": 0.04751788750259452,
+              "current": 0.0475178875025942,
+              "absolute_difference": 3.2612801348363973e-16
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/13/condition_number",
+              "historical": 189.99276778904274,
+              "current": 189.99276778904158,
+              "absolute_difference": 1.1652900866465643e-12
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/13/energy_sum",
+              "historical": 0.9999999999999951,
+              "current": 0.9999999999999998,
+              "absolute_difference": 4.6629367034256575e-15
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/13/target_efficiency",
+              "historical": 0.2245892617485674,
+              "current": 0.22458926174856675,
+              "absolute_difference": 6.38378239159465e-16
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/14/condition_number",
+              "historical": 101.88647952223579,
+              "current": 101.8864795222358,
+              "absolute_difference": 1.4210854715202004e-14
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/14/energy_sum",
+              "historical": 1.0000000000000027,
+              "current": 1.0000000000000018,
+              "absolute_difference": 8.881784197001252e-16
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/14/target_efficiency",
+              "historical": 0.09363826956961678,
+              "current": 0.0936382695696166,
+              "absolute_difference": 1.8041124150158794e-16
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/15/condition_number",
+              "historical": 107.26054708339667,
+              "current": 107.26054708339672,
+              "absolute_difference": 4.263256414560601e-14
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/15/energy_sum",
+              "historical": 0.9999999999999961,
+              "current": 0.9999999999999941,
+              "absolute_difference": 1.9984014443252818e-15
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/15/target_efficiency",
+              "historical": 0.615035307626629,
+              "current": 0.6150353076266258,
+              "absolute_difference": 3.1086244689504383e-15
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/16/condition_number",
+              "historical": 100.7819189148547,
+              "current": 100.78191891485477,
+              "absolute_difference": 7.105427357601002e-14
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/16/energy_sum",
+              "historical": 0.9999999999999991,
+              "current": 1.0000000000000002,
+              "absolute_difference": 1.1102230246251565e-15
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/16/target_efficiency",
+              "historical": 0.268297280986936,
+              "current": 0.2682972809869372,
+              "absolute_difference": 1.2212453270876722e-15
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/17/condition_number",
+              "historical": 177.20127953571006,
+              "current": 177.2012795357089,
+              "absolute_difference": 1.1652900866465643e-12
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/17/energy_sum",
+              "historical": 0.9999999999999982,
+              "current": 1.0000000000000013,
+              "absolute_difference": 3.1086244689504383e-15
+            },
+            {
+              "path": "/per_instance/5/nominal_conditions/17/target_efficiency",
+              "historical": 0.5913005460209719,
+              "current": 0.5913005460209686,
+              "absolute_difference": 3.3306690738754696e-15
+            },
+            {
+              "path": "/per_instance/5/nominal_utility",
+              "historical": 0.12820444456141658,
+              "current": 0.12820444456141625,
+              "absolute_difference": 3.3306690738754696e-16
+            },
+            {
+              "path": "/per_instance/5/robust_utility",
+              "historical": 0.1021564133605766,
+              "current": 0.10215641336057628,
+              "absolute_difference": 3.191891195797325e-16
+            },
+            {
+              "path": "/per_instance/5/robustness_score",
+              "historical": 0.016759122560656255,
+              "current": 0.0167591225606554,
+              "absolute_difference": 8.569533971325427e-16
+            },
+            {
+              "path": "/per_instance/5/score",
+              "historical": 0.006585511794524977,
+              "current": 0.006585511794524153,
+              "absolute_difference": 8.239936510889834e-16
+            },
+            {
+              "path": "/per_instance/5/shifts/0/utility",
+              "historical": 0.1711148076402495,
+              "current": 0.17111480764024964,
+              "absolute_difference": 1.3877787807814457e-16
+            },
+            {
+              "path": "/per_instance/5/shifts/1/utility",
+              "historical": 0.11032107720608836,
+              "current": 0.11032107720608804,
+              "absolute_difference": 3.191891195797325e-16
+            },
+            {
+              "path": "/per_instance/5/shifts/2/utility",
+              "historical": 0.14614074039018593,
+              "current": 0.14614074039018582,
+              "absolute_difference": 1.1102230246251565e-16
+            },
+            {
+              "path": "/per_instance/5/shifts/3/utility",
+              "historical": 0.1021564133605766,
+              "current": 0.10215641336057628,
+              "absolute_difference": 3.191891195797325e-16
+            },
+            {
+              "path": "/per_instance/5/te_mean_target_efficiency",
+              "historical": 0.07721190836691934,
+              "current": 0.07721190836691935,
+              "absolute_difference": 1.3877787807814457e-17
+            },
+            {
+              "path": "/per_instance/5/tm_mean_target_efficiency",
+              "historical": 0.332049072534524,
+              "current": 0.3320490725345231,
+              "absolute_difference": 8.881784197001252e-16
+            },
+            {
+              "path": "/per_instance/5/twentieth_percentile_target_efficiency",
+              "historical": 0.05034156287779422,
+              "current": 0.05034156287779408,
+              "absolute_difference": 1.3877787807814457e-16
+            },
+            {
+              "path": "/robustness_score",
+              "historical": 0.004189780640164064,
+              "current": 0.00418978064016385,
+              "absolute_difference": 2.1423834928313568e-16
+            }
+          ],
+          "non_numeric_differences": []
+        }
+      },
+      {
+        "analyzer": "scripts/analyze_electrolyte_conductivity_design_calibrations.py",
+        "condition": "budget_one",
+        "artifact": "selected_best",
+        "path": "runs/electrolyte_conductivity_v1_formal_b1/Electrochemistry__ElectrolyteConductivityDesign/greedy_rewrite/normal/seed_0/best_program.py",
+        "task": "Electrochemistry/ElectrolyteConductivityDesign",
+        "source_sha256": "a119c6c3c077353257a630b87564dffe6e1beafef540a94d5b5c087e05c673cf",
+        "historical_metrics_sha256": "48a7ba5c5d76360be0b47cc9439c7a6bcbfa7e4572fb06763a77e02fc6951110",
+        "current_metrics_sha256": "48a7ba5c5d76360be0b47cc9439c7a6bcbfa7e4572fb06763a77e02fc6951110",
+        "failure_taxonomy_changed": false,
+        "comparison": {
+          "equivalent": true,
+          "exactly_equal": true,
+          "numeric_tolerance": 5e-10,
+          "numeric_difference_count": 0,
+          "non_numeric_difference_count": 0,
+          "maximum_absolute_numeric_difference": 0.0,
+          "numeric_differences": [],
+          "non_numeric_differences": []
+        }
+      },
+      {
+        "analyzer": "scripts/analyze_electrolyte_conductivity_design_calibrations.py",
+        "condition": "normal_budget_three",
+        "artifact": "selected_best",
+        "path": "runs/electrolyte_conductivity_v1_formal_b3/Electrochemistry__ElectrolyteConductivityDesign/greedy_rewrite/normal/seed_1/best_program.py",
+        "task": "Electrochemistry/ElectrolyteConductivityDesign",
+        "source_sha256": "2e3e95b75b33e87664b71ff1b9c0c10703317b06de8a653903b129a6f3e947a8",
+        "historical_metrics_sha256": "e893023ece2e3c440c216e4d6cbba407a8483f86a338ea58b490f786050bcca3",
+        "current_metrics_sha256": "e893023ece2e3c440c216e4d6cbba407a8483f86a338ea58b490f786050bcca3",
+        "failure_taxonomy_changed": false,
+        "comparison": {
+          "equivalent": true,
+          "exactly_equal": true,
+          "numeric_tolerance": 5e-10,
+          "numeric_difference_count": 0,
+          "non_numeric_difference_count": 0,
+          "maximum_absolute_numeric_difference": 0.0,
+          "numeric_differences": [],
+          "non_numeric_differences": []
+        }
+      },
+      {
+        "analyzer": "scripts/analyze_force_field_hypothesis_calibrations.py",
+        "condition": "budget_one",
+        "artifact": "selected_best",
+        "path": "runs/force_field_hypothesis_v2_b1/MolecularDynamics__ForceFieldCalibration/greedy_rewrite/normal/seed_0/best_program.py",
+        "task": "MolecularDynamics/ForceFieldCalibration",
+        "source_sha256": "8edee96aeb0ee22f10838110e0d600c1e540d2fba411ced0e13ca27721eab23b",
+        "historical_metrics_sha256": "7d5444d6d7adb9f8ef49adc950ec3eec3767c6ee1320ed8fc8c5a3e40876513c",
+        "current_metrics_sha256": "7d5444d6d7adb9f8ef49adc950ec3eec3767c6ee1320ed8fc8c5a3e40876513c",
+        "failure_taxonomy_changed": false,
+        "comparison": {
+          "equivalent": true,
+          "exactly_equal": true,
+          "numeric_tolerance": 5e-10,
+          "numeric_difference_count": 0,
+          "non_numeric_difference_count": 0,
+          "maximum_absolute_numeric_difference": 0.0,
+          "numeric_differences": [],
+          "non_numeric_differences": []
+        }
+      },
+      {
+        "analyzer": "scripts/analyze_force_field_hypothesis_calibrations.py",
+        "condition": "budget_one",
+        "artifact": "terminal",
+        "path": "runs/force_field_hypothesis_v2_b1/MolecularDynamics__ForceFieldCalibration/greedy_rewrite/normal/seed_0/solution.py",
+        "task": "MolecularDynamics/ForceFieldCalibration",
+        "source_sha256": "9a759346a591c1f155b1122028f481a021a36557f1cc9b5a318f58ce2435a9d1",
+        "historical_metrics_sha256": "5a9fd0998abcb0e6df6ec40e4de0964099a9a9a8110b75d10fae9ea6d842274a",
+        "current_metrics_sha256": "5a9fd0998abcb0e6df6ec40e4de0964099a9a9a8110b75d10fae9ea6d842274a",
+        "failure_taxonomy_changed": false,
+        "comparison": {
+          "equivalent": true,
+          "exactly_equal": true,
+          "numeric_tolerance": 5e-10,
+          "numeric_difference_count": 0,
+          "non_numeric_difference_count": 0,
+          "maximum_absolute_numeric_difference": 0.0,
+          "numeric_differences": [],
+          "non_numeric_differences": []
+        }
+      },
+      {
+        "analyzer": "scripts/analyze_protein_stability_design_calibrations.py",
+        "condition": "budget_one",
+        "artifact": "selected_best",
+        "path": "runs/protein_stability_v1_b1/ProteinEngineering__ProteinStabilityDesign/greedy_rewrite/normal/seed_0/best_program.py",
+        "task": "ProteinEngineering/ProteinStabilityDesign",
+        "source_sha256": "7060c7ae6885f1823893ccbd13a7a1ab3c0548f1bcdf373ed4f8f91bd9b62817",
+        "historical_metrics_sha256": "0470aaec7b87f300b4004276c4a67cf51b0699a3dcbf9cb5cd25831d8d491f0b",
+        "current_metrics_sha256": "0470aaec7b87f300b4004276c4a67cf51b0699a3dcbf9cb5cd25831d8d491f0b",
+        "failure_taxonomy_changed": false,
+        "comparison": {
+          "equivalent": true,
+          "exactly_equal": true,
+          "numeric_tolerance": 5e-10,
+          "numeric_difference_count": 0,
+          "non_numeric_difference_count": 0,
+          "maximum_absolute_numeric_difference": 0.0,
+          "numeric_differences": [],
+          "non_numeric_differences": []
+        }
+      },
+      {
+        "analyzer": "scripts/analyze_protein_stability_design_calibrations.py",
+        "condition": "normal_budget_three",
+        "artifact": "selected_best",
+        "path": "runs/protein_stability_v1_b3/ProteinEngineering__ProteinStabilityDesign/greedy_rewrite/normal/seed_1/best_program.py",
+        "task": "ProteinEngineering/ProteinStabilityDesign",
+        "source_sha256": "13dc6284b853dbb7384598cefef4abf2d8f610817d93db249e3e9293893a7f6c",
+        "historical_metrics_sha256": "b8c22b4eb58888c50f0a8e954776f1e0c383b3f4408494698d8a08f0a8515bfc",
+        "current_metrics_sha256": "b8c22b4eb58888c50f0a8e954776f1e0c383b3f4408494698d8a08f0a8515bfc",
+        "failure_taxonomy_changed": false,
+        "comparison": {
+          "equivalent": true,
+          "exactly_equal": true,
+          "numeric_tolerance": 5e-10,
+          "numeric_difference_count": 0,
+          "non_numeric_difference_count": 0,
+          "maximum_absolute_numeric_difference": 0.0,
+          "numeric_differences": [],
+          "non_numeric_differences": []
+        }
+      }
+    ],
+    "passed": true
+  },
+  "limitations": [
+    "Only retained selected-best and terminal artifacts are replayed; unretained intermediate proposal source cannot be re-executed.",
+    "The tolerance accepts bounded floating-point roundoff only; structure, strings, booleans, keys, lengths and failure taxonomy must remain exact.",
+    "This audit covers the exact hash-bound runtime migration and does not authorize later runtime or task-evaluator edits."
+  ],
+  "execution_passed": true,
+  "trust_decision": "trusted_clean_revision",
+  "trusted_evidence": true,
+  "passed": true
+}
