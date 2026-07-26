@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """Plan Track F sample size from the frozen measurement pilot.
 
-The calculation uses the preregistered normal-minus-selection-blind block
-differences, a two-sided noncentral-t power function, and a conservative
-Holm/Bonferroni first-step alpha across the two task-specific primary hypotheses.
-It reports stage-1 and blinded variance-reassessment options; it does not inspect
-or predict any future confirmatory outcome.
+The endpoint exposes no server-side generation seed, so conditions are powered
+as independent provider draws rather than as paired seeds.  One task-specific
+primary hypothesis is defined for ActiveLaw fresh mechanism recovery.  The
+Diffraction fresh-robustness panel is a high-variance secondary stress test.  The
+cohort size is fixed before new runs; no future outcome enters this calculation.
 """
 
 from __future__ import annotations
@@ -42,21 +42,28 @@ EXPECTED_TASKS = (
 )
 PRIMARY_CONTRAST = "normal_minus_selection_blind"
 PRIMARY_HORIZON = "common_total_token_horizon"
-PRIMARY_FIELD = "best_score"
+PRIMARY_TASK = "DynamicalSystems/ActiveLawDiscovery"
+PRIMARY_PILOT_AXIS = "robustness_score"
+PRIMARY_FUTURE_AXIS = "confirmation_normalized_mechanism_score"
+SECONDARY_TASK = "Optics/DiffractionGratingDesign"
+SECONDARY_PILOT_AXIS = "heldout_robustness_score"
+SECONDARY_FUTURE_AXIS = "confirmation_robustness_score"
 
 
 def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def exact_two_sided_power(
-    *, n: int, sigma: float, effect: float, alpha: float,
+def exact_two_sample_power(
+    *, n_per_condition: int, sigma: float, effect: float, alpha: float,
 ) -> float:
-    if n < 2 or sigma <= 0 or effect <= 0 or not 0 < alpha < 1:
+    if n_per_condition < 2 or sigma <= 0 or effect <= 0 or not 0 < alpha < 1:
         raise ValueError("invalid noncentral-t power inputs")
-    degrees = n - 1
+    degrees = 2 * n_per_condition - 2
     critical = float(t.ppf(1.0 - alpha / 2.0, degrees))
-    noncentrality = float(effect) / (float(sigma) / math.sqrt(n))
+    noncentrality = float(effect) / (
+        float(sigma) * math.sqrt(2.0 / n_per_condition)
+    )
     # Boost can warn at effectively unit power when the noncentrality is very
     # large (ActiveLaw's two pilot differences are nearly identical). Suppress
     # only this local tail computation, then fail closed unless the result is a
@@ -82,8 +89,8 @@ def minimum_n(
     # needed; avoiding those extreme degrees of freedom also keeps SciPy's
     # noncentral-t implementation away from an irrelevant numerical boundary.
     for n in range(4, int(maximum_n) + 1):
-        power = exact_two_sided_power(
-            n=n, sigma=sigma, effect=effect, alpha=alpha
+        power = exact_two_sample_power(
+            n_per_condition=n, sigma=sigma, effect=effect, alpha=alpha
         )
         if math.isfinite(power) and power >= target_power:
             return n, power
@@ -100,11 +107,11 @@ def plan(
     pilot_path: Path,
     *,
     mde: float = 0.15,
-    familywise_alpha: float = 0.05,
-    primary_hypothesis_count: int = 2,
+    alpha: float = 0.05,
     target_power: float = 0.80,
     balance_multiple: int = 4,
-    variance_multipliers: tuple[float, ...] = (1.0, 1.25, 1.5),
+    design_sigma: float = 0.25,
+    sensitivity_sigmas: tuple[float, ...] = (0.20, 0.25, 0.30, 0.35),
 ) -> dict[str, Any]:
     pilot = json.loads(pilot_path.read_text(encoding="utf-8"))
     claims = pilot.get("claims") or {}
@@ -122,66 +129,63 @@ def plan(
         raise ValueError("pilot is not trusted feedback measurement evidence")
     if (
         mde <= 0
-        or not 0 < familywise_alpha < 1
-        or primary_hypothesis_count < 1
+        or not 0 < alpha < 1
         or not 0 < target_power < 1
+        or design_sigma <= 0
     ):
         raise ValueError("invalid design parameters")
-    conservative_alpha = familywise_alpha / primary_hypothesis_count
-    by_task = {}
-    for task in EXPECTED_TASKS:
+
+    def diagnostic(task: str, axis: str) -> dict[str, Any]:
         differences = [
-            float(row[PRIMARY_HORIZON][PRIMARY_FIELD])
+            float(row[PRIMARY_HORIZON][axis])
             for row in pilot.get("paired_descriptive_contrasts") or []
             if row.get("task") == task
             and row.get("contrast") == PRIMARY_CONTRAST
         ]
         if len(differences) < 2:
-            raise ValueError("pilot lacks two differences for %s" % task)
+            raise ValueError("pilot lacks two differences for %s/%s" % (task, axis))
         sigma = statistics.stdev(differences)
         if not math.isfinite(sigma) or sigma <= 0:
-            raise ValueError("pilot variance is unavailable for %s" % task)
-        scenarios = []
-        for multiplier in variance_multipliers:
-            inflated_sigma = sigma * float(multiplier)
-            raw_n, achieved = minimum_n(
-                sigma=inflated_sigma,
-                effect=mde,
-                alpha=conservative_alpha,
-                target_power=target_power,
-            )
-            balanced_n = _round_up(raw_n, balance_multiple)
-            scenarios.append({
-                "variance_multiplier": float(multiplier),
-                "assumed_sigma": inflated_sigma,
-                "minimum_unrounded_n": raw_n,
-                "power_at_minimum_unrounded_n": achieved,
-                "balanced_n": balanced_n,
-                "power_at_balanced_n": exact_two_sided_power(
-                    n=balanced_n,
-                    sigma=inflated_sigma,
-                    effect=mde,
-                    alpha=conservative_alpha,
-                ),
-            })
-        by_task[task] = {
-            "pilot_block_differences": differences,
+            raise ValueError("pilot variance is unavailable for %s/%s" % (task, axis))
+        raw_n, achieved = minimum_n(
+            sigma=sigma, effect=mde, alpha=alpha, target_power=target_power
+        )
+        return {
+            "axis": axis,
+            "pilot_local_identifier_differences": differences,
             "pilot_n": len(differences),
-            "pilot_sample_sd": sigma,
-            "scenarios": scenarios,
+            "pilot_difference_sample_sd": sigma,
+            "unstable_two_identifier_diagnostic_only": True,
+            "implied_independent_draw_minimum_n_per_condition": raw_n,
+            "implied_power_at_minimum_n": achieved,
         }
-    most_variable_task = max(
-        EXPECTED_TASKS, key=lambda task: by_task[task]["pilot_sample_sd"]
+
+    pilot_diagnostics = {
+        PRIMARY_TASK: diagnostic(PRIMARY_TASK, PRIMARY_PILOT_AXIS),
+        SECONDARY_TASK: diagnostic(SECONDARY_TASK, SECONDARY_PILOT_AXIS),
+    }
+    scenarios = []
+    for sigma in sensitivity_sigmas:
+        raw_n, achieved = minimum_n(
+            sigma=float(sigma), effect=mde, alpha=alpha,
+            target_power=target_power,
+        )
+        balanced_n = _round_up(raw_n, balance_multiple)
+        scenarios.append({
+            "assumed_per_condition_sd": float(sigma),
+            "minimum_unrounded_n_per_condition": raw_n,
+            "power_at_minimum_unrounded_n": achieved,
+            "balanced_n_per_condition": balanced_n,
+            "power_at_balanced_n": exact_two_sample_power(
+                n_per_condition=balanced_n,
+                sigma=float(sigma), effect=mde, alpha=alpha,
+            ),
+        })
+    selected = next(
+        row for row in scenarios
+        if abs(row["assumed_per_condition_sd"] - design_sigma) <= 1.0e-12
     )
-    stage1_n = max(
-        by_task[task]["scenarios"][0]["balanced_n"]
-        for task in EXPECTED_TASKS
-    )
-    maximum_n = max(
-        scenario["balanced_n"]
-        for task in EXPECTED_TASKS
-        for scenario in by_task[task]["scenarios"]
-    )
+    fixed_n = int(selected["balanced_n_per_condition"])
     return {
         "schema_version": 1,
         "trust_status": "TRUSTED_DERIVED_EVIDENCE / DESIGN_ONLY",
@@ -200,39 +204,50 @@ def plan(
         "design": {
             "primary_contrast": PRIMARY_CONTRAST,
             "primary_horizon": PRIMARY_HORIZON,
-            "primary_field": PRIMARY_FIELD,
+            "primary_task": PRIMARY_TASK,
+            "primary_pilot_proxy_axis": PRIMARY_PILOT_AXIS,
+            "primary_fresh_confirmation_axis": PRIMARY_FUTURE_AXIS,
+            "secondary_stress_test_task": SECONDARY_TASK,
+            "secondary_pilot_axis": SECONDARY_PILOT_AXIS,
+            "secondary_fresh_confirmation_axis": SECONDARY_FUTURE_AXIS,
             "minimum_important_difference": mde,
-            "familywise_alpha": familywise_alpha,
-            "primary_hypothesis_count": primary_hypothesis_count,
-            "conservative_two_sided_alpha": conservative_alpha,
+            "two_sided_alpha": alpha,
+            "confirmatory_primary_hypothesis_count": 1,
             "target_power": target_power,
-            "power_method": "two_sided_one_sample_noncentral_t",
+            "power_method": "two_sided_equal_n_independent_two_sample_noncentral_t",
+            "provider_draw_assumption": "independent_unpaired",
+            "same_local_identifier_is_paired_seed": False,
+            "design_per_condition_sd": design_sigma,
             "balance_multiple": balance_multiple,
-            "variance_multipliers": list(variance_multipliers),
+            "sensitivity_per_condition_sds": list(sensitivity_sigmas),
         },
-        "task_plans": by_task,
-        "most_variable_task": most_variable_task,
-        "stage1_balanced_blocks_per_condition": stage1_n,
-        "maximum_blinded_variance_reassessment_blocks_per_condition": maximum_n,
-        "blinded_reassessment_rule": {
-            "timing": "after all stage-1 blocks and before treatment labels/outcomes are analyzed",
-            "variance_only": True,
-            "outcome_means_or_directions_used": False,
-            "method": (
-                "estimate pooled within-block residual variance without condition labels; "
-                "choose the smallest multiple of four reaching target power under the "
-                "frozen noncentral-t function, capped at the preregistered maximum"
+        "pilot_diagnostics": pilot_diagnostics,
+        "design_sigma_scenarios": scenarios,
+        "fixed_balanced_blocks_per_condition": fixed_n,
+        "power_at_fixed_n_under_design_sigma": selected["power_at_balanced_n"],
+        "scheduled_search_cells": len(EXPECTED_TASKS) * 4 * fixed_n,
+        "scheduled_model_proposals": len(EXPECTED_TASKS) * 4 * fixed_n * 3,
+        "fixed_sample_rule": {
+            "sample_size_adaptation": False,
+            "interim_efficacy_or_futility_analysis": False,
+            "early_stopping_from_outcomes": False,
+            "reason": (
+                "the search report exposes condition-labelled trajectories and aggregates; "
+                "therefore a post-stage-1 blinded variance reassessment would not be a "
+                "credible operational blind"
             ),
-            "no_early_efficacy_or_futility_stop": True,
         },
         "limitations": [
             "The pilot has only two uncontrolled local identifiers per task.",
-            "Pilot sample standard deviations are unstable and motivate blinded reassessment.",
-            "The calculation plans task-specific normal-versus-selection-blind score contrasts; it does not justify a cross-task science score.",
+            "The endpoint exposes no server-side seed; same-number conditions are not paired model draws.",
+            "The design standard deviation is preregistered rather than estimated from two unstable pilot differences.",
+            "Diffraction fresh robustness is a high-variance secondary stress test and receives no confirmatory significance claim.",
+            "The sole confirmatory primary is ActiveLaw normal versus selection-blind fresh mechanism at the common-token endpoint.",
+            "The design does not justify a cross-task science score or a general scientific-agent effect.",
             "Power is a design calculation, not evidence that the future effect exists.",
         ],
         "claims": {
-            "stage1_sample_size_planned": True,
+            "fixed_sample_size_planned": True,
             "feedback_effect_identified": False,
             "population_effect_estimated": False,
             "autonomous_discovery_demonstrated": False,
@@ -245,7 +260,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--pilot", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--mde", type=float, default=0.15)
-    parser.add_argument("--familywise-alpha", type=float, default=0.05)
+    parser.add_argument("--alpha", type=float, default=0.05)
     parser.add_argument("--target-power", type=float, default=0.80)
     return parser
 
@@ -256,7 +271,7 @@ def main(argv: list[str] | None = None) -> int:
         report = plan(
             args.pilot.expanduser().resolve(),
             mde=args.mde,
-            familywise_alpha=args.familywise_alpha,
+            alpha=args.alpha,
             target_power=args.target_power,
         )
     except (OSError, ValueError) as exc:
@@ -267,12 +282,10 @@ def main(argv: list[str] | None = None) -> int:
     atomic_write_text(output, json.dumps(report, indent=2, allow_nan=False) + "\n")
     print(json.dumps({
         "output": str(output),
-        "stage1_blocks_per_condition": report[
-            "stage1_balanced_blocks_per_condition"
+        "fixed_blocks_per_condition": report[
+            "fixed_balanced_blocks_per_condition"
         ],
-        "maximum_blocks_per_condition": report[
-            "maximum_blinded_variance_reassessment_blocks_per_condition"
-        ],
+        "power_at_fixed_n": report["power_at_fixed_n_under_design_sigma"],
         "execution_passed": report["execution_passed"],
         "trusted_evidence": report["trusted_evidence"],
     }, indent=2))

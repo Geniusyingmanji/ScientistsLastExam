@@ -17,39 +17,44 @@ SPEC.loader.exec_module(MODULE)
 class TrackFPrecisionTests(unittest.TestCase):
     PILOT = ROOT / "experiments/feedback_measurement_pilot_analysis_2026-07-26_v1.json"
 
-    def test_frozen_pilot_yields_balanced_stage1_and_variance_cap(self):
+    def test_frozen_pilot_yields_fixed_unpaired_primary_design(self):
         report = MODULE.plan(self.PILOT)
-        self.assertEqual(report["most_variable_task"], "Optics/DiffractionGratingDesign")
-        self.assertEqual(report["stage1_balanced_blocks_per_condition"], 32)
+        self.assertEqual(report["fixed_balanced_blocks_per_condition"], 48)
+        self.assertEqual(report["scheduled_search_cells"], 384)
+        self.assertEqual(report["scheduled_model_proposals"], 1152)
+        self.assertFalse(report["design"]["same_local_identifier_is_paired_seed"])
+        self.assertEqual(report["design"]["provider_draw_assumption"], "independent_unpaired")
+        self.assertEqual(report["design"]["primary_task"], "DynamicalSystems/ActiveLawDiscovery")
+        self.assertEqual(report["design"]["primary_pilot_proxy_axis"], "robustness_score")
+        self.assertEqual(report["design"]["secondary_stress_test_task"], "Optics/DiffractionGratingDesign")
+        active = report["pilot_diagnostics"]["DynamicalSystems/ActiveLawDiscovery"]
+        diffraction = report["pilot_diagnostics"]["Optics/DiffractionGratingDesign"]
+        self.assertAlmostEqual(active["pilot_difference_sample_sd"], 0.023637872588285126)
+        self.assertAlmostEqual(diffraction["pilot_difference_sample_sd"], 0.6154332715955124)
         self.assertEqual(
-            report["maximum_blinded_variance_reassessment_blocks_per_condition"],
-            68,
+            [row["balanced_n_per_condition"] for row in report["design_sigma_scenarios"]],
+            [32, 48, 64, 88],
         )
-        diffraction = report["task_plans"]["Optics/DiffractionGratingDesign"]
-        self.assertAlmostEqual(diffraction["pilot_sample_sd"], 0.25867132689266675)
-        self.assertEqual(
-            [row["balanced_n"] for row in diffraction["scenarios"]],
-            [32, 48, 68],
-        )
-        self.assertGreater(diffraction["scenarios"][0]["power_at_balanced_n"], 0.80)
-        self.assertTrue(report["blinded_reassessment_rule"]["variance_only"])
+        self.assertGreater(report["power_at_fixed_n_under_design_sigma"], 0.80)
+        self.assertFalse(report["fixed_sample_rule"]["sample_size_adaptation"])
+        self.assertFalse(report["fixed_sample_rule"]["early_stopping_from_outcomes"])
         self.assertFalse(report["claims"]["feedback_effect_identified"])
 
     def test_exact_power_is_monotone_in_n_and_decreases_with_sigma(self):
         powers = [
-            MODULE.exact_two_sided_power(
-                n=n, sigma=0.25, effect=0.15, alpha=0.025
+            MODULE.exact_two_sample_power(
+                n_per_condition=n, sigma=0.25, effect=0.15, alpha=0.05
             )
             for n in (16, 32, 64)
         ]
         self.assertLess(powers[0], powers[1])
         self.assertLess(powers[1], powers[2])
         self.assertGreater(
-            MODULE.exact_two_sided_power(
-                n=32, sigma=0.25, effect=0.15, alpha=0.025
+            MODULE.exact_two_sample_power(
+                n_per_condition=48, sigma=0.25, effect=0.15, alpha=0.05
             ),
-            MODULE.exact_two_sided_power(
-                n=32, sigma=0.35, effect=0.15, alpha=0.025
+            MODULE.exact_two_sample_power(
+                n_per_condition=48, sigma=0.35, effect=0.15, alpha=0.05
             ),
         )
 
