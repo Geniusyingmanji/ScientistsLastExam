@@ -111,6 +111,9 @@ class BatchAggregationTests(unittest.TestCase):
             snapshot = report["runs"][0]["trajectory_snapshot"]
             self.assertEqual(len(snapshot["trajectory_sha256"]), 64)
             self.assertEqual(len(snapshot["events"]), 1)
+            self.assertEqual(snapshot["events"][0]["schema_version"], 2)
+            self.assertIn("wall_seconds", snapshot["events"][0])
+            self.assertIn("cumulative_wall_seconds", snapshot["events"][0])
 
     def test_resume_rejects_changed_experiment_config(self):
         client = type("Client", (), {"config": self.Config()})()

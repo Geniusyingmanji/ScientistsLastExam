@@ -83,6 +83,7 @@ def compact_trajectory_snapshot(path: Path) -> dict[str, Any]:
         "trajectory_sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
         "events": [
             {
+                "schema_version": int(event["schema_version"]),
                 "step": int(event["step"]),
                 "oracle_calls": int(event["oracle_calls"]),
                 "budget_units": int(event.get("budget_units") or event["oracle_calls"]),
@@ -90,6 +91,8 @@ def compact_trajectory_snapshot(path: Path) -> dict[str, Any]:
                 "best_score": event["best_score"],
                 "valid": bool(event["valid"]),
                 "accepted": bool(event["accepted"]),
+                "wall_seconds": event["wall_seconds"],
+                "cumulative_wall_seconds": event["cumulative_wall_seconds"],
                 "candidate_sha256": event["candidate_sha256"],
                 "parent_sha256": event["parent_sha256"],
                 "metrics": compact_scalar_metrics(event.get("metrics") or {}),
@@ -261,14 +264,26 @@ def realized_token_curve(
         if token_key == "total_tokens":
             input_tokens = (event.get("llm") or {}).get("input_tokens")
             output_tokens = (event.get("llm") or {}).get("output_tokens")
-            if all(
-                isinstance(item, (int, float)) and not isinstance(item, bool)
-                for item in (input_tokens, output_tokens)
-            ) and int(value) != int(input_tokens) + int(output_tokens):
-                raise ValueError(
-                    "trajectory step %d total_tokens disagrees with input plus output"
-                    % int(event["step"])
-                )
+            if input_tokens is not None or output_tokens is not None:
+                for label, item in (
+                    ("input_tokens", input_tokens), ("output_tokens", output_tokens)
+                ):
+                    if (
+                        not isinstance(item, (int, float))
+                        or isinstance(item, bool)
+                        or not math.isfinite(float(item))
+                        or float(item) < 0
+                        or int(item) != float(item)
+                    ):
+                        raise ValueError(
+                            "trajectory step %d has invalid %s usage"
+                            % (int(event["step"]), label)
+                        )
+                if int(value) != int(input_tokens) + int(output_tokens):
+                    raise ValueError(
+                        "trajectory step %d total_tokens disagrees with input plus output"
+                        % int(event["step"])
+                    )
         cumulative += int(value)
         curve.append({
             "step": int(event["step"]),
