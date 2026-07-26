@@ -16,7 +16,7 @@ citations:
   - id: doi:10.1109/TASL.2008.917341
     title: Prediction of energy decay in room impulse responses simulated with an image-source model
   - id: standard:ISO-3382-1:2009
-    title: Acoustics — Measurement of room acoustic parameters — Part 1: Performance spaces
+    title: "Acoustics — Measurement of room acoustic parameters — Part 1: Performance spaces"
 invariants:
   - the image lattice contains exactly one direct path and nonnegative finite energy
   - the unfolded image-path wall counts reproduce direct and first-order analytic paths

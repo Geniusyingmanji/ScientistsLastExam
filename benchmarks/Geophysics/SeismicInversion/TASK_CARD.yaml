@@ -1,0 +1,26 @@
+schema_version: 1
+scientific_question: Can an inversion method recover a monotone layered seismic-velocity profile from noisy direct and critically refracted first-arrival picks and predict unobserved offsets?
+artifact: A finite nondecreasing velocity vector with the requested four, five or six layers and values between 1400 and 7000 metres per second.
+oracle:
+  model: exact horizontal-layer direct and head-wave first-arrival branches with known 400-metre finite-layer thickness and deterministic Gaussian pick noise
+  feasibility: exact profile shape, finite bounded velocities and nondecreasing velocity with depth
+  deterministic: true
+normalization:
+  baseline: a constant-velocity profile estimated from mean offset divided by mean observed travel time
+  reference: multistart nonlinear least-squares inversion of the disclosed first-arrival model; not a field-survey or full-waveform reference
+  score: normalized visible-pick RMSE improvement; true-profile mechanism recovery and noiseless prediction at unobserved offsets remain separate evaluator-only diagnostics
+citations:
+  - id: isbn:9780521708425
+    title: Introduction to Seismology, second edition
+  - id: isbn:9780931830149
+    title: Refraction Seismics
+invariants:
+  - source-receiver offset is the absolute position difference
+  - equal adjacent velocities are permitted and every deeper velocity must not be smaller
+  - every finite layer controls a head-wave slope or intercept in the registered surveys
+  - visible-pick fit, velocity mechanism recovery and unobserved-offset prediction remain distinct
+  - malformed, non-finite, out-of-bound and nonmonotone profiles fail closed
+known_shortcuts: Six fixed public seeded surveys use horizontal layers of known equal thickness, a disclosed noise scale and no low-velocity zones, anisotropy, topography or model mismatch. GPT-5.5 reaches 0.994 at budget one with standard optimization. This is a refraction-inversion on-ramp, not an open geology or full-waveform task; certification needs server-held procedural surveys, mismatch/refusal regimes and independent geophysics review.
+review:
+  domain: pending_external_exploration_geophysics_review
+  evaluator_security: automated_first_arrival_identifiability_bounds_sandbox_and_metric_sealing_tests

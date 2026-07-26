@@ -1,0 +1,23 @@
+schema_version: 1
+scientific_question: Can a bounded one-dimensional fuel-enrichment loading improve the multiplication factor of a two-group slab-diffusion model under an average-enrichment constraint?
+artifact: Twenty zone enrichments between two and twenty percent with mean enrichment at most five percent, subject to the evaluator tolerance.
+oracle:
+  model: a conservative symmetric finite-volume two-group neutron-diffusion k-eigenvalue solve with enrichment-dependent reduced-order cross sections and power iteration
+  feasibility: exact finite loading shape, bounded enrichment and the average-enrichment constraint
+  deterministic: true
+normalization:
+  baseline: uniform five-percent enrichment with recomputed multiplication factor
+  reference: a reproducible symmetric multistart constrained-optimization witness with low boundary and high central enrichment; not a proved global or reactor-design optimum
+  score: clipped multiplication-factor improvement from the uniform baseline to the fixed numerical witness
+citations:
+  - id: isbn:9780471223634
+    title: Nuclear Reactor Analysis
+invariants:
+  - harmonic interface diffusion coefficients produce a symmetric conservative spatial operator
+  - the same two-group eigenvalue solver evaluates baseline, reference and candidate loadings
+  - the average enrichment constraint is checked after the public component bounds are applied
+  - invalid shape, non-finite values and enrichment-budget violations fail closed
+known_shortcuts: One fixed public slab, one reduced-order cross-section law and one public witness provide no procedural geometry, material, depletion, thermal-hydraulic, uncertainty or safety shifts. This is a numerical criticality-optimization on-ramp, not reactor validation. It needs server-held regimes, independent transport or Monte Carlo replication and nuclear-engineering review before certification.
+review:
+  domain: pending_external_reactor_physics_review
+  evaluator_security: automated_operator_symmetry_eigenvalue_reference_sandbox_and_constraint_tests

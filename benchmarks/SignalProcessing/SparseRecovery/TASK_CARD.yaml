@@ -1,0 +1,23 @@
+schema_version: 1
+scientific_question: Can one recovery method reconstruct sparse real-valued signals from underdetermined noisy Gaussian measurements more accurately than full least squares?
+artifact: A finite length-200 signal estimate for each supplied 60-by-200 sensing matrix, observation vector and disclosed sparsity level eight.
+oracle:
+  model: five deterministic Gaussian sensing instances with eight nonzero coefficients and additive Gaussian noise of standard deviation 0.01
+  feasibility: exact finite output shape for every instance
+  deterministic: true
+normalization:
+  baseline: minimum-norm full least-squares recovery
+  reference: least-squares recovery on the evaluator-known true support
+  score: mean recovered-signal SNR normalized from the full least-squares baseline to the known-support oracle on each instance
+citations:
+  - id: doi:10.1109/TIT.2006.871582
+    title: Near-optimal signal recovery from random projections
+invariants:
+  - every candidate receives only the sensing matrix, observation and sparsity level
+  - baseline, oracle and candidate SNR use the same hidden signal and Euclidean error
+  - invalid shape, exceptions and non-finite downstream scores are retained as failed instances
+  - all five registered instances contribute to the mean and feasibility rate
+known_shortcuts: The five seeds, Gaussian ensemble, dimensions, sparsity and noise scale are fixed and repository visible, and the sparsity level is supplied. GPT-5.5 reaches 0.958 at budget one using standard sparse solvers. This is a scientifically motivated algorithm on-ramp but not an open-frontier or long-horizon task until procedural sensing families, distribution shifts, uncertainty and independent review are added.
+review:
+  domain: pending_external_compressed_sensing_review
+  evaluator_security: automated_instance_replay_shape_sandbox_and_normalization_tests

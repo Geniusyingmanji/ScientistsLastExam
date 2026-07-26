@@ -1,0 +1,24 @@
+schema_version: 1
+scientific_question: Can one bounded feedback controller swing up and stabilize a nonlinear cart-pole while limiting force and cart travel, and retain utility under plant and disturbance shifts?
+artifact: A deterministic controller mapping cart position, cart velocity, down-zero pendulum angle, angular velocity, time and controller interval to one commanded cart force.
+oracle:
+  model: the disclosed rigid cart-pole equations with distributed pendulum inertia, cart and joint friction, force clipping and two RK4 substeps per controller interval
+  feasibility: finite scalar commands, a ten-newton command limit and a five-metre cart-travel limit
+  deterministic: true
+normalization:
+  baseline: zero-force controller on five disclosed nominal-plant initial conditions
+  reference: energy-shaping swing-up followed by local upright stabilization; a domain baseline rather than a proved global optimum
+  score: mean development swing-up and terminal-stabilization utility with effort and cart-position penalties; four evaluator-only plant-and-impulse shifts remain a separate robustness score
+citations:
+  - id: doi:10.1016/S0005-1098(99)00140-5
+    title: Swinging up a pendulum by energy control
+invariants:
+  - the public coordinate convention is theta zero hanging down and theta pi upright
+  - the trusted simulator clips commands before applying a separately specified disturbance force
+  - development and shifted robustness scenarios use the same controller and numerical integrator
+  - non-finite commands and non-finite trajectories are invalid scientific outcomes
+  - shifted robustness and per-scenario diagnostics remain evaluator-only during search
+known_shortcuts: The task uses one disclosed reduced-order plant, five fixed development starts and four fixed shifts. It has no sensor noise, actuator dynamics, delay, hardware or server-held plant family. It is a nonlinear-control and robustness benchmark, not physical controller validation; future certification needs procedural plants, independent simulation and domain review.
+review:
+  domain: pending_external_nonlinear_control_review
+  evaluator_security: automated_sandbox_dynamics_invariant_metric_sealing_and_shift_replay_tests

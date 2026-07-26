@@ -1,0 +1,25 @@
+schema_version: 1
+scientific_question: Can a budgeted active policy identify anisotropic convection-diffusion transport, refuse unsupported apparatuses and design a four-heater layout that transfers under physical shifts?
+artifact: Five inferred transport parameters, four bounded source positions and strengths, a confidence value and an optional model-inadequacy abstention, all linked to charged calibration experiments.
+oracle:
+  model: a finite-difference steady anisotropic convection-diffusion-loss equation with Gaussian heaters, supported homogeneous worlds, a null response and spatially heterogeneous misspecification
+  feasibility: finite typed submission, parameter and source bounds, source separation, total-power constraints and an exactly charged twelve-unit experiment budget
+  deterministic: true
+normalization:
+  baseline: one legal calibration experiment followed by abstention on every world
+  reference: truth-blind complementary experiments, bounded parameter fitting and a separately calibrated four-source design with correct unsupported-world refusal
+  score: development joint mechanism, diagnostic-prediction and target-field design quality normalized above all-world refusal; held-out transfer, four physical shifts, false discovery and refusal remain separate
+citations:
+  - id: doi:10.1007/978-1-4020-8839-1
+    title: Optimization with PDE Constraints
+invariants:
+  - every calibration call charges one plus the number of sources plus the ceiling of sensors divided by eight
+  - the public homogeneous forward solver and the trusted world solver agree on supported unshifted parameters
+  - null and heterogeneous worlds reward calibrated refusal rather than fabricated parameters
+  - mechanism, prediction, nominal design, shifted design, coverage and false discovery remain separate axes
+  - every world receives a fresh candidate process and private temporary filesystem
+  - callback overspend, malformed artifacts, non-finite values and infeasible heater layouts fail closed
+known_shortcuts: The deterministic 25-by-25 reduced-order apparatus has fixed repository-visible generators and omits continuum discretization uncertainty, device boundaries, calibration drift and real measurements. It is an active PDE identification and design candidate, not a discovered material or device. Certification needs server-held apparatuses, independent discretization or high-fidelity replication and heat-transfer review.
+review:
+  domain: pending_external_heat_transfer_and_pde_control_review
+  evaluator_security: automated_budget_callback_pde_invariant_fresh_sandbox_refusal_and_metric_sealing_tests

@@ -30,6 +30,87 @@ REQUIRED_METADATA = (
     "domain", "task", "difficulty", "oracle_type", "score_mode", "gpu_required",
     "eval_time_seconds", "science_metric", "reference_baseline", "reference_sota", "citation",
 )
+TASK_CARD_REQUIRED_STATUSES = {"certified", "candidate"}
+TASK_CARD_REQUIRED_KEYS = (
+    "scientific_question", "artifact", "oracle", "normalization",
+    "citations", "invariants", "known_shortcuts", "review",
+)
+
+
+def _nonempty_string(value: object) -> bool:
+    return isinstance(value, str) and bool(value.strip())
+
+
+def _task_card_issues(path: Path) -> list[str]:
+    """Return fail-closed schema issues without aborting the inventory audit."""
+    if not path.is_file():
+        return ["missing task card"]
+    try:
+        card = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    except (OSError, yaml.YAMLError) as exc:
+        return ["task card is not valid YAML: %s" % type(exc).__name__]
+    if not isinstance(card, dict):
+        return ["task card root is not a mapping"]
+
+    issues = []
+    if card.get("schema_version") != 1:
+        issues.append("task card schema_version is not 1")
+    for key in TASK_CARD_REQUIRED_KEYS:
+        if not card.get(key):
+            issues.append("task card missing %s" % key)
+
+    for key in ("scientific_question", "artifact", "known_shortcuts"):
+        if key in card and not _nonempty_string(card.get(key)):
+            issues.append("task card %s is not a nonempty string" % key)
+
+    oracle = card.get("oracle")
+    if isinstance(oracle, dict):
+        if oracle.get("deterministic") is not True:
+            issues.append("task card oracle is not explicitly deterministic")
+        if not _nonempty_string(oracle.get("feasibility")):
+            issues.append("task card oracle lacks feasibility semantics")
+        if not any(_nonempty_string(oracle.get(key)) for key in ("model", "nominal", "exact")):
+            issues.append("task card oracle lacks model semantics")
+    elif oracle is not None:
+        issues.append("task card oracle is not a mapping")
+
+    normalization = card.get("normalization")
+    if isinstance(normalization, dict):
+        for key in ("baseline", "reference", "score"):
+            if not _nonempty_string(normalization.get(key)):
+                issues.append("task card normalization lacks %s" % key)
+    elif normalization is not None:
+        issues.append("task card normalization is not a mapping")
+
+    citations = card.get("citations")
+    if isinstance(citations, list):
+        for index, citation in enumerate(citations):
+            if not isinstance(citation, dict):
+                issues.append("task card citation %d is not a mapping" % index)
+                continue
+            identifier = citation.get("id")
+            if not _nonempty_string(identifier) or ":" not in identifier:
+                issues.append("task card citation %d lacks a stable identifier" % index)
+            if not _nonempty_string(citation.get("title")):
+                issues.append("task card citation %d lacks a title" % index)
+    elif citations is not None:
+        issues.append("task card citations is not a list")
+
+    invariants = card.get("invariants")
+    if isinstance(invariants, list):
+        if any(not _nonempty_string(value) for value in invariants):
+            issues.append("task card invariants contain a non-string or empty value")
+    elif invariants is not None:
+        issues.append("task card invariants is not a list")
+
+    review = card.get("review")
+    if isinstance(review, dict):
+        for key in ("domain", "evaluator_security"):
+            if not _nonempty_string(review.get(key)):
+                issues.append("task card review lacks %s" % key)
+    elif review is not None:
+        issues.append("task card review is not a mapping")
+    return issues
 
 
 def _normalized_oracle(path: Path) -> str:
@@ -65,8 +146,9 @@ def audit() -> dict:
         missing_metadata = [k for k in REQUIRED_METADATA if k not in spec.metadata]
         citation_ids = rec.get("citation_ids", [])
         issues = []
-        if rec["status"] == "certified":
-            if not (spec.task_dir / "TASK_CARD.yaml").is_file():
+        if rec["status"] in TASK_CARD_REQUIRED_STATUSES:
+            card_path = spec.task_dir / "TASK_CARD.yaml"
+            if not card_path.is_file():
                 missing_files.append("TASK_CARD.yaml")
             if missing_files:
                 issues.append("missing required files")
@@ -74,13 +156,9 @@ def audit() -> dict:
                 issues.append("missing certification metadata")
             if not citation_ids:
                 issues.append("no stable citation identifier")
-            card_path = spec.task_dir / "TASK_CARD.yaml"
-            if card_path.is_file():
-                card = yaml.safe_load(card_path.read_text(encoding="utf-8")) or {}
-                for key in ("scientific_question", "artifact", "oracle", "normalization",
-                            "citations", "invariants", "known_shortcuts", "review"):
-                    if not card.get(key):
-                        issues.append("task card missing %s" % key)
+            elif any(not isinstance(value, str) or ":" not in value for value in citation_ids):
+                issues.append("unstable citation identifier")
+            issues.extend(_task_card_issues(card_path))
         records.append({
             "task": spec.task_id, "status": rec["status"], "reason": rec["reason"],
             "missing_files": missing_files, "missing_metadata": missing_metadata,
@@ -102,6 +180,14 @@ def audit() -> dict:
         "missing_manifest_records": missing_manifest,
         "orphaned_manifest_records": orphaned,
         "duplicate_oracle_groups": duplicates,
+        "task_card_required_count": sum(
+            record["status"] in TASK_CARD_REQUIRED_STATUSES for record in records
+        ),
+        "task_card_passed_count": sum(
+            record["status"] in TASK_CARD_REQUIRED_STATUSES
+            and not any("task card" in issue for issue in record["issues"])
+            for record in records
+        ),
         "tasks": records,
         "passed": (
             not missing_manifest

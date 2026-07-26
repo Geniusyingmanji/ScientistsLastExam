@@ -1,13 +1,21 @@
 task_id: Optics/DiffractionGratingDesign
 version: 2
 status: candidate
-scientific_scope: deterministic lossless isotropic one-dimensional Fourier-modal grating design
+schema_version: 1
+scientific_question: Can a five-layer one-dimensional dielectric relief direct transmitted light into diffraction order plus one across wavelengths, angles and both polarizations while retaining utility under fabrication and material shifts?
 artifact: five-layer binary dielectric relief with depth, fill fraction and lateral offset per layer
-objective: target transmitted order efficiency across wavelengths, angles and TE/TM polarization
+oracle:
+  model: deterministic lossless isotropic one-dimensional Fourier-modal rigorous coupled-wave analysis across wavelength, incidence-angle and TE/TM grids
+  feasibility: finite five-by-three geometry satisfying depth, fill, lateral-offset, minimum-feature and total-depth constraints
+  deterministic: true
+normalization:
+  baseline: aligned half-duty five-layer dielectric relief
+  reference: calibrated five-layer RCWA witness with separately replayed nominal and robust variants; not a global optimum or fabricated-device record
+  score: development target-order efficiency controls search; held-out material and wavelength transfer, polarization balance, minimum-condition efficiency and four physical shifts remain separate
 development_worlds: 4
 heldout_worlds: 2
 sealed_shifts: 4
-evidence_axes:
+invariants:
   - nominal target-order efficiency
   - held-out material and wavelength transfer
   - TE/TM polarization balance
@@ -15,13 +23,16 @@ evidence_axes:
   - etch and overlay robustness
   - refractive-index and incidence-angle robustness
   - energy conservation and Fourier-order convergence
-limitations:
-  - isotropic, lossless, one-dimensional periodic geometry
-  - finite Fourier truncation and dense boundary matching
-  - no substrate roughness, absorption, finite aperture, fabrication or measurement
-  - calibrated witness is not a global optimum
-references:
-  - doi: 10.1364/JOSA.71.000811
-  - doi: 10.1364/JOSAA.12.001077
-  - doi: 10.1364/JOSAA.13.000779
-  - doi: 10.1364/JOSAA.13.001870
+citations:
+  - id: doi:10.1364/JOSA.71.000811
+    title: Rigorous coupled-wave analysis of planar-grating diffraction
+  - id: doi:10.1364/JOSAA.12.001077
+    title: Stable implementation of the rigorous coupled-wave analysis for surface-relief gratings
+  - id: doi:10.1364/JOSAA.13.000779
+    title: Highly improved convergence of the coupled-wave method for TM polarization
+  - id: doi:10.1364/JOSAA.13.001870
+    title: Use of Fourier series in the analysis of discontinuous periodic structures
+known_shortcuts: The evaluator is an isotropic, lossless, one-dimensional periodic model with finite Fourier truncation and dense boundary matching. It omits roughness, absorption, finite aperture, fabrication and measurement, and its calibrated witness is not a global optimum. Server-held regimes, an independent scattering-matrix or full-wave solver, fabrication, optical measurement and external review are required before engineering or discovery claims.
+review:
+  domain: pending_external_photonics_and_nanofabrication_review
+  evaluator_security: automated_maxwell_energy_fresnel_convergence_external_rcwa_sandbox_and_metric_sealing_tests

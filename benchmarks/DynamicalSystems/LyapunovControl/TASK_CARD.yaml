@@ -1,0 +1,25 @@
+schema_version: 1
+scientific_question: Can a bounded deterministic sampled-data feedback law reduce the maximum Lyapunov exponent of the canonical Lorenz system without exceeding a control-energy budget?
+artifact: A deterministic memoryless three-component state-feedback controller returned for the disclosed Lorenz parameters.
+oracle:
+  model: zero-order-held feedback in an RK4 Lorenz integrator with a two-trajectory Benettin maximum-Lyapunov-exponent estimate and periodic renormalization
+  feasibility: three finite control components clipped to plus or minus twenty and mean squared control norm at most fifty
+  deterministic: true
+normalization:
+  baseline: the score origin is the recomputed uncontrolled maximum Lyapunov exponent; the packaged initial program applies weak linear damping
+  reference: a target exponent of minus 0.5 defines the clipped score ceiling and is not a proved optimum
+  score: normalized reduction from the uncontrolled exponent to the fixed target under the energy constraint
+citations:
+  - id: doi:10.1103/PhysRevLett.64.1196
+    title: Controlling chaos
+  - id: doi:10.1016/0375-9601(92)90745-8
+    title: Continuous control of chaos by self-controlling feedback
+invariants:
+  - reference and perturbed trajectories receive independently evaluated feedback from their own states
+  - periodic renormalization retains the perturbation in the local-stability regime
+  - hidden mutable controller state is incompatible with the paired local-stability experiment
+  - non-finite controls, non-finite trajectories and energy-budget violations fail closed
+known_shortcuts: The evaluator contains one fixed public Lorenz parameter set, one initial state, one perturbation direction and no held-out or shifted regimes. A standard equilibrium feedback reaches the clipped ceiling at budget one. The task is a valid numerical on-ramp but is not open-frontier or long-horizon-ready until procedural plants, energy-stability tradeoffs and independent review are added.
+review:
+  domain: pending_external_nonlinear_dynamics_and_control_review
+  evaluator_security: automated_sampled_feedback_mle_energy_sandbox_and_finite_output_tests

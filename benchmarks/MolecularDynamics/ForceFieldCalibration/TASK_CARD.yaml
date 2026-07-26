@@ -13,9 +13,9 @@ normalization:
   score: development lineage-acquisition-hypothesis-model-parameter-interval-prediction-thermodynamic-confidence joint normalized above the split-specific perfect all-world-refusal baseline; held-out and sealed regimes remain separate
 citations:
   - id: doi:10.1209/0295-5075/26/8/005
-    title: Interatomic potentials from first-principles calculations: the force-matching method
+    title: "Interatomic potentials from first-principles calculations: the force-matching method"
   - id: doi:10.1021/jz500737m
-    title: Building force fields: an automatic, systematic, and reproducible approach
+    title: "Building force fields: an automatic, systematic, and reproducible approach"
   - id: doi:10.1063/1.2992060
     title: The relative entropy is fundamental to multiscale and inverse thermodynamic problems
   - id: doi:10.1103/PhysRevLett.93.165501
