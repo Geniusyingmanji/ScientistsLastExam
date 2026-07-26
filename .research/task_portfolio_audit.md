@@ -1,9 +1,9 @@
 # Scientific task portfolio audit
 
-Audit date: 2026-07-24 (UTC), updated 2026-07-26 through ForceFieldCalibration-v2. The original
+Audit date: 2026-07-24 (UTC), updated 2026-07-26 through AlloyHardnessOptimization-v1. The original
 inventory contained 50 discoverable task packages. The current registry contains 59 packages in
-55 metadata domains, with `7 certified / 41 candidate / 11 quarantined`. The certified and
-candidate total is 48, leaving an approximate gap of 2 to the target of about 50 internally
+55 metadata domains, with `7 certified / 42 candidate / 10 quarantined`. The certified and
+candidate total is 49, leaving an approximate gap of 1 to the target of about 50 internally
 admissible open tasks. Directory count and candidate status are not external scientific
 validation or evidence of long-horizon headroom.
 
@@ -28,12 +28,11 @@ meaning.
 ## Current inventory triage
 
 The bullets below retain the chronological triage findings from the original inventory and repair
-waves. The current machine-counted snapshot is 7 certified, 40 candidate and 12 quarantined.
-QuartzCrystalMicrobalanceLab-v1 is the latest candidate. It supplies a synthetic raw-instrument
-pipeline with complex I/Q calibration drift, missingness, multi-harmonic BVD fitting, rigid-film
-inference, physical anomaly versus instrument-fault refusal and a sealed stop decision. It still
-requires repeated paired controls, server-held or real raw traces, explicit uncertainty intervals,
-independent sensing/thin-film review and physical replication.
+waves. The current machine-counted snapshot is 7 certified, 42 candidate and 10 quarantined.
+AlloyHardnessOptimization-v1 is the latest re-admitted candidate. It supplies DOI-grouped
+historical/target separation, charged target-study assays, predictions with intervals and sparse
+cross-DOI exact-recipe confirmation. It still requires prospective synthesis, harmonized
+processing/measurement, server-held alloys and independent materials-science review.
 
 - **7 certified core tasks.** Secure and documented, but the 2026-07-21 GPT-5.5 pilot shows
   that Poisson and Spin Glass saturate in one proposal and Lennard-Jones nearly saturates.

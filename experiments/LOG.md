@@ -2735,3 +2735,61 @@ Cross-task summary v29 (SHA-256
 budgets one and three; the frozen-parent diagnostic remains task-specific and heterogeneous
 science axes are not averaged. The one-run normal/blind comparison is descriptive rather than
 causal, and none of this evidence supports a physical or autonomous-discovery claim.
+
+## 2026-07-26 — AlloyHardnessOptimization-v1 DOI-held replay evidence
+
+AlloyHardnessOptimization-v1 replaces the polynomial pseudo-material task with the Borg et al.
+MPEA hardness compilation (article DOI `10.1038/s41597-020-00768-9`, Figshare v9 DOI
+`10.6084/m9.figshare.12642953.v9`, CC BY 4.0). The frozen builder retains 358 eligible
+room-temperature records from 1,545 rows. It forms a leakage-free historical proxy from 197
+recipes and 44 DOI studies, reserves nine cross-DOI exact-recipe records for confirmation, and
+uses 65 recipes in thirteen later target DOI studies. A SHA-256 citation split fixes eight
+development and five held-out studies. Ridge alpha 100 is selected only by equal-study-weight
+leave-one-DOI-out error on the historical pool.
+
+The trusted calibration (SHA-256
+`4698c739038ab32d6258096d21f26d1ddb2501f8f4b4ff3c121c77ad2c8943c7`) and wave-10 admission
+(`d5c5d1e4dcdf75b24a7a2863c1c5efb53994dd88aabfd6d03574871220eeac61`) bind clean source
+`52dcec0`. The frozen two-assay truth-blind policy reaches development/held-out utility
+`0.657516/0.877774` and prediction `0.670267/0.652544`. Fresh-process, fail-closed and metric-
+sealing checks pass. Only six of 65 target recipes have an exact composition/process record from
+another DOI, and these records are not controlled replicates. The task is a retrospective public-
+data replay, not prospectively preregistered alloy synthesis, mechanical validation or discovery.
+
+Three GPT-5.5 reports also bind `52dcec0`: budget one (SHA-256
+`01cca0c342aec5027e05d56d5b162abe66382f8b3c8f4869a5d9e2632db7d750`), normal budget three
+(`54faaf56551f1e1a2c18f13fc7f5051342cbb984df22b43e3caf0b340f665ff6`) and frozen-parent
+budget three (`96ebf5a214041f53de8edb974f08b61cd5e4f0dd194cedaf03c36ea7a2584209`). All seven
+proposals are protocol-valid and run all thirteen worlds. The selected artifacts are source-
+distinct, each reaches development score `0.151632`, and each has held-out utility zero.
+Their prediction scores are `0.818232/0.753396`, `0.800608/0.739175` and
+`0.803644/0.739619`, with unit interval coverage. Selected exact-recipe confirmation coverage is
+only `0.0833/0.0667`; development and held-out confirmation MAE are `79.23/144.60 HV`.
+
+The trusted derived analysis (SHA-256
+`a893054dce58713069fd657e9d894e53cd02a014864f9fa614052bab182ff12b`) binds clean analysis
+source `e98d3fe`. It verifies calibration/report hashes, raw trajectories, manifests,
+checkpoints, online/frozen-parent lineage, source-scope equivalence, retained-artifact shortcut
+scans and deterministic re-evaluation. It also freezes two selection-axis counterexamples. Normal
+step one is rejected at development score zero despite held-out utility `0.159906`; the selected
+step has held-out utility zero. Frozen-parent steps one and two tie at `0.151632`, but step two has
+higher development/held-out prediction and narrower intervals at the same unit coverage; the tie
+policy retains step one. These facts show information loss under one development scalar, not a
+feedback effect.
+
+Certification v55 (SHA-256
+`d0d827c172512eb6be002cee5386cc874e77631f7f01a3e266b9b637a80c6193`) records all 59 packages
+at `7/42/10`, or 49 internally admissible tasks. Security v39
+(`7ab659cce470e67c4767d2a041d0f763f852556dcb74650e1628c2b4e3fcea43`) passes 18/18 tests.
+Baseline v44 (`416a607a6fbb26ef44b55df9ed21ca8f9c993fbc5f0cb0b4ad34dd2500b9cd29`) reports 59/59
+deterministic, valid and fail-closed tasks over two repetitions with zero infrastructure failures.
+Full-suite v12 (`1f3d2048858c496fdfe58b4748fd7bea7b5954718c64e96f91f8b303da3122e1`) passes 479/479 in
+1525.927 seconds. These four reports bind clean source `52dcec0`.
+
+Cross-task summary v30 (SHA-256
+`50f9bdd2023b082d22baa2b26eaed7af78606da6a8de5a4e59475a406a676584`) binds clean source
+`e98d3fe` and validates 73 normal single-run conditions across 37 tasks. The frozen-parent run
+remains task-specific. Normal and frozen-parent budget three match four oracle calls and 5,502
+input tokens but use 13,720/14,822 total tokens, different prompts and different source artifacts;
+the endpoint exposes no server-side generation seed. No feedback-causal, population, prospective
+synthesis, mechanical-validation or autonomous-discovery claim is supported.

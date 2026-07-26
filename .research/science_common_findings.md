@@ -10,14 +10,15 @@ ConvectionDiffusionOpt-v2, SeismicWaveInversion-v2, RankineCycleOpt-v2 and MOSFE
 list now also includes RANSCalibration-v2, GeneNetworkIntervention-v1, RNAInverseDesign-v1,
 ProteinStabilityDesign-v1, ElectrolyteConductivityDesign-v1, DemographicSFS-v2 and
 CalorimeterDesign-v2, ProspectiveMetaAnalysis-v1, PhotovoltaicTandemDesign-v1,
-CatalystDeactivationLab-v1, QuartzCrystalMicrobalanceLab-v1 and
-ForceFieldCalibration-v2. The 71 normal-feedback model conditions across these 36 tasks each
+CatalystDeactivationLab-v1, QuartzCrystalMicrobalanceLab-v1,
+ForceFieldCalibration-v2 and AlloyHardnessOptimization-v1. The 73 normal-feedback model
+conditions across these 37 tasks each
 contain one seed and proposal budget one or three. They calibrate tasks and motivate experiments;
 they are not a model leaderboard, a causal feedback study or population evidence.
 
 The portable machine record
-`experiments/science_calibration_summary_2026-07-26_v29.json` retains every top-level scalar metric,
-candidate lineage hash and raw trajectory SHA-256 for all 71 normal conditions.
+`experiments/science_calibration_summary_2026-07-26_v30.json` retains every top-level scalar metric,
+candidate lineage hash and raw trajectory SHA-256 for all 73 normal conditions.
 Additional strict diagnostics for Distillation-v2, Hartree--Fock and room acoustics are bound
 separately by `experiments/distillation_v2_calibration_analysis_2026-07-23.json`,
 `experiments/hartree_fock_v2_calibration_analysis_2026-07-23.json` and
@@ -37,7 +38,8 @@ separately by `experiments/distillation_v2_calibration_analysis_2026-07-23.json`
 `experiments/photovoltaic_tandem_v1_calibration_analysis_2026-07-25.json` and
 `experiments/catalyst_deactivation_lab_v1_calibration_analysis_2026-07-25.json` and
 `experiments/qcm_raw_pipeline_v1_calibration_analysis_2026-07-25.json` and
-`experiments/force_field_hypothesis_v2_calibration_analysis_2026-07-26.json`. Strict selection-blind
+`experiments/force_field_hypothesis_v2_calibration_analysis_2026-07-26.json` and
+`experiments/alloy_hardness_v1_calibration_analysis_2026-07-26.json`. Strict selection-blind
 diagnostics remain in task-specific analysis because they are not normal-feedback calibrations.
 The underlying reports bind the task-specific source revision. Pendulum's initial budget-one
 run on revision `57c0e1b` is
@@ -132,6 +134,8 @@ by the corrected-contract run on `2557adb`.
 | QuartzCrystalMicrobalanceLab-v1, three GPT-5.5 conditions | all seven proposals are valid but score zero; five are all-refusal, one claims every world and one has development-only partial coverage; all three conditions retain the baseline | all proposals have zero normalized calibration, extraction, mechanism, prediction and decision; the all-claim proposal has false discovery `0.5/0.5`, while the partial proposal has held-out coverage `0` | Executable structure is not raw-signal competence. Normal and blind match four oracle calls but use 18,662/17,797 tokens and uncontrolled sampling, so their equal zero scores do not identify a feedback effect. |
 | ForceFieldCalibration-v2, truth-blind reference | development/held-out nominal `0.964178/0.949851`; supported-family selection and supported coverage `1/1`; interval coverage `1/1` | robustness `0.964290/0.949894`; unsupported refusal `1/1`; false discovery `0/0`; true-hypothesis retention `1/1` | Diverse distance, geometry and temperature queries resolve the registered Mie/Morse versus unsupported alternatives without early elimination. This is a deterministic three-particle calibration witness, not a material force field or thermodynamic measurement. |
 | ForceFieldCalibration-v2, three GPT-5.5 conditions | all seven proposals are invalid and all three conditions retain the zero-score baseline | one proposal reaches all twelve worlds but returns invalid submissions; five are sanitized candidate runtime errors and one has a blocked or missing import; infrastructure failures are zero | None of the model proposals crosses the executable scientific-workflow hurdle. Normal and blind match four oracle calls and 6,789 input tokens but differ in output tokens, source and wall time, so the one-run contrast is descriptive rather than causal. |
+| AlloyHardnessOptimization-v1, truth-blind two-assay policy | development/held-out DOI-held utility `0.657516/0.877774`; prediction `0.670267/0.652544` | full interval coverage; only six of 65 target recipes have any exact composition/process record from another DOI | Charged target-study assays can improve a frozen historical ridge proxy in this retrospective replay. Sparse cross-DOI agreement does not establish prospective synthesis, harmonized processing or independent replication. |
+| AlloyHardnessOptimization-v1, three GPT-5.5 conditions | all seven proposals are valid; each selected artifact scores `0.151632` on development and `0` held out | selected prediction spans `0.800608–0.818232` development and `0.739175–0.753396` held out with interval coverage `1/1`, but confirmation coverage is only `0.0833/0.0667` and held-out confirmation MAE is `144.6 HV` | Assays improve prediction and uncertainty without improving selected DOI-held utility. The one-run normal/open-loop contrast is not causal, and the public-data replay is not alloy discovery. |
 
 OPF's `robustness_score` combines security-constrained economic quality with overload penalties.
 It is not a pure safety probability. The proportional baseline is feasible for every tested
@@ -420,6 +424,18 @@ rises to `0.603`. Step three nearly recovers development (`0.637`) but held-out 
 `0.417`. This is not a feedback treatment estimate. It directly records a case in which a
 development-only incumbent rule discards the best observed transfer mechanism because that axis
 is sealed.
+
+AlloyHardnessOptimization-v1 adds two counterexamples without an executable-protocol confound.
+All seven proposals are valid and run all thirteen DOI-grouped worlds. In the normal budget-three
+trajectory, step one receives development score zero and is rejected even though its held-out
+utility is `0.159906`; the selected step-three artifact scores `0.151632` in development but zero
+held out. In the frozen-parent batch, steps one and two have the same visible score `0.151632`.
+Step two nevertheless has higher prediction scores (`0.813480/0.742154` versus
+`0.803644/0.739619`) and narrower development/held-out intervals (`226.19/176.76 HV` versus
+`268.27/194.86 HV`) at the same unit interval coverage, but the strict score/tie policy retains
+step one. These trajectory facts indicate that a scalar development selector can discard transfer
+or uncertainty improvements even when every proposal is valid. They do not estimate a feedback
+effect because each condition has one unseeded model run.
 
 PhotovoltaicTandemDesign-v1 adds a near-ceiling counterpart. Normal budget three first produces a
 runtime-invalid proposal and then accepts nominal scores `0.974838` and `0.993821`; the selected
@@ -780,13 +796,16 @@ far-offset prediction, model-class adequacy and geological interpretation remain
 The current synthetic primary-reflection laboratory is an active-acquisition/model-checking
 on-ramp, not field FWI or autonomous geological discovery.
 
-The present source manifest contains 48 internally admissible certified or candidate packages:
-seven certified and 41 candidate, with 11 quarantined after rebuilding
-ForceFieldCalibration-v2. The remaining admissible gap is approximately 2 tasks. ForceField
-passes clean-revision calibration, wave-9 admission, 59-package certification, 18/18 security,
-59-by-2 baseline determinism and 459/459 full-suite tests. Its reduced-order energy/force and
-virial results are not molecular dynamics, a material potential, a thermodynamic measurement or
-experimental-discovery evidence.
+The present source manifest contains 49 internally admissible certified or candidate packages:
+seven certified and 42 candidate, with 10 quarantined after rebuilding
+ForceFieldCalibration-v2 and AlloyHardnessOptimization-v1. The remaining admissible gap is
+approximately one task. Alloy passes clean-revision data reconstruction, task calibration,
+wave-10 admission, 59-package certification, 18/18 security, 59-by-2 baseline determinism and
+479/479 full-suite tests. Its 197 historical proxy recipes, 65 target recipes in thirteen later
+DOI studies and nine sparse exact-recipe confirmation records support a retrospective replay,
+not prospective materials discovery. Cross-task summary v30 adds the two normal Alloy conditions
+and now binds 73 normal conditions over 37 tasks; the frozen-parent diagnostic remains
+task-specific.
 Expansion should use procedural families spanning
 design, inverse problems, control, multifidelity validation, mechanism discovery and exact
 mathematical construction rather than cloning one scalar optimization template across domains.

@@ -20,7 +20,7 @@ The repository contains **59 task packages in 55 metadata domains**:
 
 - **7 certified core tasks**: Lennard–Jones clusters, spin glass, Poisson solver,
   matrix-multiplication rank, Cap Set, circle packing, and multilayer thin films.
-- **41 candidate tasks** pending scientific certification, including intervention-based causal
+- **42 candidate tasks** pending scientific certification, including intervention-based causal
   and active dynamical-law laboratories whose prediction and mechanism metrics are reported
   separately, a multi-spectrum NMR peak-mechanism/refusal task, and a multi-fidelity
   heat-exchanger Pareto-design task, a full-field lid-driven-cavity solver, active
@@ -45,8 +45,10 @@ The repository contains **59 task packages in 55 metadata domains**:
   extraction, rigid-film inference, physical-model mismatch, instrument faults and a sealed stop
   decision, and an active three-particle pair-potential laboratory that preregisters competing
   Mie, Morse and unsupported hypotheses before energy/force queries and scores parameter
-  intervals, sealed prediction, second-virial/Boyle inference and model refusal separately.
-- **11 quarantined tasks** retain reproduced scientific-oracle, identifiability, provenance or
+  intervals, sealed prediction, second-virial/Boyle inference and model refusal separately, and a
+  DOI-grouped retrospective MPEA-hardness active-design replay with charged assays, prediction
+  intervals and sparse cross-DOI exact-recipe confirmation.
+- **10 quarantined tasks** retain reproduced scientific-oracle, identifiability, provenance or
   shortcut defects.
   Quarantined packages remain inventory artifacts but are not admissible benchmark tasks.
 
@@ -63,16 +65,16 @@ controlled exception text is reduced to a fixed label-blind failure taxonomy bef
 search feedback, preventing observations from being carried between worlds through exceptions.
 The current audit reports:
 
-- Trusted certification v54 and security v38 bind clean revision `0f8a43d`. Certification covers
-  `7/41/11` over 59 packages with no missing manifest records, orphaned records or task-level
+- Trusted certification v55 and security v39 bind clean revision `52dcec0`. Certification covers
+  `7/42/10` over 59 packages with no missing manifest records, orphaned records or task-level
   admission issues; it retains one known duplicate-oracle group containing four quarantined
-  packages. Security passes 18/18 adversarial tests. The 59×2 baseline v43 reports 59/59
+  packages. Security passes 18/18 adversarial tests. The 59×2 baseline v44 reports 59/59
   deterministic, valid and fail-closed tasks with zero infrastructure failures. The latest
-  full-suite v11 binds clean revision `0f8a43d` and passes 459/459 tests in 1444.069 seconds.
-  Cross-task summary v29 (SHA-256
-  `851fdac2bd9f24b69c7b5d6c75009c9b8d4209e902600cb44e4707290e208d0f`) binds clean
-  revision `22f1519` and contains 71 normal single-run conditions over 36 tasks.
-- Current source manifest: 7 certified / 41 candidate / 11 quarantined. ProteinStabilityDesign
+  full-suite v12 binds clean revision `52dcec0` and passes 479/479 tests in 1525.927 seconds.
+  Cross-task summary v30 (SHA-256
+  `50f9bdd2023b082d22baa2b26eaed7af78606da6a8de5a4e59475a406a676584`) binds clean
+  revision `e98d3fe` and contains 73 normal single-run conditions over 37 tasks.
+- Current source manifest: 7 certified / 42 candidate / 10 quarantined. ProteinStabilityDesign
   rebuilds 2,756 reliable double-mutant records across five
   development and three held-out domains from hash-bound ProteinGym v1.3/Tsuboyama sources.
   It separates additive proxy, charged assay, diversity, top-decile, trypsin, chymotrypsin,
@@ -262,8 +264,8 @@ the post-repair 50-package audits bind revision `47c3613`; the subsequent wave-2
 audit quarantines seven additional defective candidates. The two P2 smokes are baseline-only; the repository does not yet contain
 credible multi-seed model-performance evidence. A clean-revision GPT-5.5 budget-one core pilot
 is recorded as task calibration, not a benchmark leaderboard.
-The latest closeout certification/security/baseline audits are v54/v38/v43 and bind clean
-source revision `0f8a43d`; full-suite v11 binds the same revision and passes 459/459 tests.
+The latest closeout certification/security/baseline audits are v55/v39/v44 and bind clean
+source revision `52dcec0`; full-suite v12 binds the same revision and passes 479/479 tests.
 CalorimeterDesign-v2's task calibration and wave-4 admission
 audit also bind `f6a7b73`. After rebuilding and admitting ForceFieldCalibration-v2 and the
 DOI-held AlloyHardnessOptimization-v1 replay, the current source manifest is 7/42/10 and contains
@@ -271,7 +273,16 @@ DOI-held AlloyHardnessOptimization-v1 replay, the current source manifest is 7/4
 Alloy's frozen two-assay residual-smoothing witness reaches 0.658 development and 0.878
 citation-hash-held utility over thirteen later MPEA studies; only six of 65 target recipes have
 any cross-DOI exact composition/process record, so this is retrospective active design rather
-than alloy discovery or independent replication. The preceding photovoltaic calibration reproduces
+than alloy discovery or independent replication. Across the three GPT-5.5 conditions, all seven
+proposals are protocol-valid and every selected artifact scores `0.151632` on development but
+zero on held-out study utility. Prediction scores remain `0.801–0.818` development and
+`0.739–0.753` held out with full interval coverage, while selected exact-recipe confirmation
+coverage is only `0.083/0.067`. Normal step one is rejected at development score zero despite
+held-out utility `0.159906`; a frozen-parent same-score proposal is also discarded despite better
+prediction and narrower intervals. These are selection-axis counterexamples from a public replay,
+not a feedback-causal comparison. The trusted derived analysis has SHA-256
+`a893054dce58713069fd657e9d894e53cd02a014864f9fa614052bab182ff12b`.
+The preceding photovoltaic calibration reproduces
 ideal one-through-four-junction efficiencies `0.33695/0.45735/0.51291/0.55329`, with nominal
 reference score `1.000/1.000` and minimax-reference nominal/robust score
 `0.963/0.965` and `1.000/1.000`; these are reduced-order task anchors, not device records.
@@ -363,6 +374,8 @@ infrastructure failure occurs, and all conditions retain the weak baseline. Cros
 v29 contains 71 normal conditions over 36 tasks; the frozen-parent run remains task-specific.
 These single synthetic calibrations support neither a feedback effect nor a molecular-dynamics,
 material, thermodynamic or autonomous-discovery claim.
+AlloyHardnessOptimization-v1 adds two normal conditions to cross-task summary v30, which contains
+73 normal conditions over 37 tasks. Its strict frozen-parent diagnostic remains task-specific.
 
 The latest EdgeBench re-audit keeps its upstream facts at arXiv `2607.05155v1`, SForge
 `a87350a` and public dataset `47846a4`. In addition to E1--E36, the science plan now preregisters
