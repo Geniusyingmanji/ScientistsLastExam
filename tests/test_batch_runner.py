@@ -45,6 +45,45 @@ class BatchAggregationTests(unittest.TestCase):
         self.assertEqual(MODULE._condition_order(modes, 1), list(reversed(modes)))
         self.assertEqual(MODULE._condition_order(modes, 2), modes)
 
+    def test_four_condition_williams_order_balances_position_and_carryover(self):
+        modes = ["normal", "score_only", "delayed_replay", "selection_blind"]
+        rows = [
+            MODULE._condition_order(
+                modes, seed=100 + index, design="balanced_williams",
+                schedule_index=index,
+            )
+            for index in range(4)
+        ]
+        for position in range(4):
+            self.assertEqual({row[position] for row in rows}, set(modes))
+        carryovers = [
+            (row[index], row[index + 1])
+            for row in rows for index in range(3)
+        ]
+        self.assertEqual(len(carryovers), 12)
+        self.assertEqual(len(set(carryovers)), 12)
+        self.assertTrue(all(left != right for left, right in carryovers))
+
+        repeated = [
+            MODULE._condition_order(
+                modes, seed=index, design="balanced_williams",
+                schedule_index=index,
+            )
+            for index in range(12)
+        ]
+        for position in range(4):
+            counts = {
+                mode: sum(row[position] == mode for row in repeated)
+                for mode in modes
+            }
+            self.assertEqual(set(counts.values()), {3})
+
+    def test_williams_order_rejects_non_four_mode_design(self):
+        with self.assertRaisesRegex(ValueError, "exactly four"):
+            MODULE._condition_order(
+                ["normal", "selection_blind"], 0, "balanced_williams"
+            )
+
     def test_aggregation_uses_latest_attempt_without_dropping_history(self):
         failed = {"task": "T/X", "algorithm": "greedy_rewrite",
                   "feedback_mode": "normal", "seed": 0, "error": "offline"}

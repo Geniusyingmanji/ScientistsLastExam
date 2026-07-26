@@ -51,10 +51,28 @@ def _run_key(task_id: str, algorithm: str, feedback_mode: str, seed: int) -> str
     return "%s|%s|%s|%d" % (task_id, algorithm, feedback_mode, seed)
 
 
-def _condition_order(feedback_modes: list[str], seed: int) -> list[str]:
-    """Counterbalance sequential condition order across replicate identifiers."""
+def _condition_order(
+    feedback_modes: list[str], seed: int, design: str = "reverse_parity",
+    *, schedule_index: int | None = None,
+) -> list[str]:
+    """Return the preregistered within-block condition execution order."""
     modes = list(feedback_modes)
-    return list(reversed(modes)) if int(seed) % 2 else modes
+    if design == "reverse_parity":
+        return list(reversed(modes)) if int(seed) % 2 else modes
+    if design == "balanced_williams":
+        if len(modes) != 4 or len(set(modes)) != 4:
+            raise ValueError("balanced_williams requires exactly four distinct modes")
+        # A B D C, B C A D, C D B A, D A C B. Each condition occupies each
+        # position once and every directed first-order carryover occurs once.
+        rows = (
+            (0, 1, 3, 2),
+            (1, 2, 0, 3),
+            (2, 3, 1, 0),
+            (3, 0, 2, 1),
+        )
+        index = int(seed) if schedule_index is None else int(schedule_index)
+        return [modes[position] for position in rows[index % len(rows)]]
+    raise ValueError("unknown condition order design %r" % design)
 
 
 def _preregistration_record(path: Path | None) -> dict[str, Any] | None:
@@ -197,6 +215,12 @@ def build_parser() -> argparse.ArgumentParser:
         ),
     )
     parser.add_argument("--seeds", type=_seeds, default=[0, 1, 2, 3, 4])
+    parser.add_argument(
+        "--condition-order-design",
+        choices=("reverse_parity", "balanced_williams"),
+        default="reverse_parity",
+        help="within-task/identifier execution-order schedule",
+    )
     parser.add_argument("--budget", type=int, default=30)
     parser.add_argument("--timeout", type=float, default=300.0)
     parser.add_argument("--llm-config", default=None)
@@ -264,7 +288,7 @@ def main(argv: list[str] | None = None) -> int:
         "feedback_protocols": {
             mode: feedback_scope(mode) for mode in feedback_modes
         },
-        "condition_order": "as_listed_for_even_seeds_reversed_for_odd_seeds",
+        "condition_order": args.condition_order_design,
         "preregistration": _preregistration_record(args.preregistration),
         "seeds": args.seeds,
         "replicate_identifier_scope": (
@@ -336,8 +360,11 @@ def main(argv: list[str] | None = None) -> int:
     for spec in specs:
         for algorithm_name in algorithms:
             algorithm = get_algorithm(algorithm_name)
-            for seed in args.seeds:
-                for feedback_mode in _condition_order(feedback_modes, seed):
+            for schedule_index, seed in enumerate(args.seeds):
+                for feedback_mode in _condition_order(
+                    feedback_modes, seed, args.condition_order_design,
+                    schedule_index=schedule_index,
+                ):
                     counter += 1
                     key = _run_key(spec.task_id, algorithm_name, feedback_mode, seed)
                     if key in done:
