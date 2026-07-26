@@ -244,9 +244,13 @@ def audit():
         and len(oracle.HELDOUT_WORLDS) == 2
         and len(oracle.SHIFT_SPECS) == 4
         and baseline["valid"] == 1.0
-        and baseline["combined_score"] == 0.0
-        and baseline["robustness_score"] == 0.0
-        and baseline["heldout_policy_score"] == 0.0
+        # The frozen baseline lies on the normalization boundary.  Different
+        # supported NumPy/LAPACK builds can leave an O(1e-16) positive residue,
+        # so audit the scientific zero with an explicit numerical tolerance.
+        and abs(float(baseline["combined_score"])) < 1.0e-12
+        and abs(float(baseline["robustness_score"])) < 1.0e-12
+        and abs(float(baseline["heldout_policy_score"])) < 1.0e-12
+        and abs(float(baseline["heldout_robustness_score"])) < 1.0e-12
         and reference["valid"] == 1.0
         and reference["combined_score"] == 1.0
         and reference["robustness_score"] == 1.0

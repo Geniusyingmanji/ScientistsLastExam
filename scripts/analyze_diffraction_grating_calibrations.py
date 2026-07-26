@@ -94,8 +94,6 @@ TASK_RUNTIME_SCOPE = (
     ":(exclude)frontier_science/certification.yaml",
     "benchmarks/Optics/DiffractionGratingDesign",
     "requirements-upstream.txt",
-    "scripts/calibrate_diffraction_grating_rcwa.py",
-    "scripts/crosscheck_diffraction_grating_grcwa.py",
 )
 SCIENCE_FIELDS = (
     "combined_score",
@@ -373,9 +371,10 @@ def _load_calibration(relative: str) -> dict[str, Any]:
         and all(row.get("absolute_error", 1.0) < 1e-12 for row in fresnel.values())
         and all(row.get("energy_residual", 1.0) < 1e-12 for row in fresnel.values())
         and baseline.get("valid") == 1.0
-        and baseline.get("combined_score") == 0.0
-        and baseline.get("robustness_score") == 0.0
-        and baseline.get("heldout_policy_score") == 0.0
+        and abs(float(baseline.get("combined_score", 1.0))) < 1e-12
+        and abs(float(baseline.get("robustness_score", 1.0))) < 1e-12
+        and abs(float(baseline.get("heldout_policy_score", 1.0))) < 1e-12
+        and abs(float(baseline.get("heldout_robustness_score", 1.0))) < 1e-12
         and reference == {
             "combined_score": 1.0,
             "robustness_score": 1.0,
