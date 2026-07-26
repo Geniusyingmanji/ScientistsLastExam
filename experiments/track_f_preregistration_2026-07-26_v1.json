@@ -1,0 +1,778 @@
+{
+  "schema_version": 1,
+  "preregistration_version": 1,
+  "purpose": "track_f_feedback_confirmatory_study",
+  "frozen_at_utc": "2026-07-26T19:35:44.186044+00:00",
+  "claim_limit": "specific_active_law_procedural_feedback_primary_with_diffraction_secondary_not_general_physical_or_autonomous_discovery_evidence",
+  "frozen_source": {
+    "revision": "0fe0d02541bc72e51fb475d0a1d0561ed0c82bc6",
+    "runtime_source_sha256": "f356c708e9a125bbe04304406f5308d0aa08649562aaeb39ba7cf2d17f81b465",
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "source_change_rule": "Any later change under source_provenance SOURCE_SCOPE invalidates the frozen cohort; descendant evidence is accepted only when the SOURCE_SCOPE diff is empty."
+  },
+  "model_condition": {
+    "llm_condition_sha256": "5b0df4671481f6b3505155bc6c5654a64c4da5591422fb806904e7d0f44fc4d2",
+    "wire": "responses",
+    "endpoint_sha256": "b22995a1fcaf8ad713ac37716f006c717313dfdebd357ac02a077a5582650bb6",
+    "model": "gpt-5.5",
+    "max_output_tokens": 16000,
+    "temperature": null,
+    "reasoning_effort": "low",
+    "timeout_seconds": 900,
+    "server_side_seed_control": false,
+    "replicate_identifier_scope": "local Python/random ordering only; equal identifiers do not pair provider-side model draws"
+  },
+  "precision_plan": {
+    "path": "experiments/track_f_precision_plan_2026-07-26_v5.json",
+    "sha256": "d280e6221eb3e40bc1f2b69d54dfebf2410aae1d4f6f6f6b86ad825e14281517",
+    "bytes": 5763
+  },
+  "confirmation_commitment": {
+    "path": "experiments/track_f_confirmation_commitment_2026-07-26_v1.json",
+    "sha256": "a52b92beff01b30b01b808cadefa3eef47e4e4c4aa6337f9e2c16744b49baff4",
+    "bytes": 34620,
+    "private_manifest_sha256": "baa1974e71eb54a7da34b47be2990c85900224211817c98ab1e0502b6070d249",
+    "private_manifest_utf8_bytes": 318413,
+    "block_count": 96
+  },
+  "analysis_implementation": {
+    "path": "scripts/analyze_track_f_confirmation.py",
+    "sha256": "ef0ed5247b2b3c35fc413f67e0d535c8c261082aef48a01f0ffa2b0f6c190f9c",
+    "bytes": 26484
+  },
+  "design": {
+    "tasks": [
+      {
+        "task": "DynamicalSystems/ActiveLawDiscovery",
+        "task_contract_sha256": "c9fa66585d912ce33010ff4d972afbfd3da4196be4ccfe38d55d0a0fd9978593",
+        "confirmation_generator": "active_law_fresh_v1",
+        "confirmation_world_count": 7,
+        "scientific_role": "fresh active mechanism recovery, prediction, false discovery and unsupported-model refusal"
+      },
+      {
+        "task": "Optics/DiffractionGratingDesign",
+        "task_contract_sha256": "476d23427837de38f663802bd512cea25483ba2e5f8b162f71af08624f1f1dd2",
+        "confirmation_generator": "diffraction_grating_fresh_v1",
+        "confirmation_world_count": 3,
+        "scientific_role": "fresh RCWA material/wavelength/angle/fabrication robustness stress test"
+      }
+    ],
+    "algorithm": "greedy_rewrite",
+    "feedback_modes": [
+      "normal",
+      "score_only",
+      "delayed_replay",
+      "selection_blind"
+    ],
+    "replicate_identifiers": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47
+    ],
+    "fixed_blocks_per_condition": 48,
+    "condition_order": "balanced_williams",
+    "condition_order_randomization_seed": 2678395752421634827,
+    "condition_order_schedule": [
+      {
+        "replicate_identifier": 0,
+        "feedback_modes": [
+          "delayed_replay",
+          "selection_blind",
+          "score_only",
+          "normal"
+        ]
+      },
+      {
+        "replicate_identifier": 1,
+        "feedback_modes": [
+          "delayed_replay",
+          "selection_blind",
+          "score_only",
+          "normal"
+        ]
+      },
+      {
+        "replicate_identifier": 2,
+        "feedback_modes": [
+          "normal",
+          "score_only",
+          "selection_blind",
+          "delayed_replay"
+        ]
+      },
+      {
+        "replicate_identifier": 3,
+        "feedback_modes": [
+          "delayed_replay",
+          "selection_blind",
+          "score_only",
+          "normal"
+        ]
+      },
+      {
+        "replicate_identifier": 4,
+        "feedback_modes": [
+          "selection_blind",
+          "normal",
+          "delayed_replay",
+          "score_only"
+        ]
+      },
+      {
+        "replicate_identifier": 5,
+        "feedback_modes": [
+          "normal",
+          "score_only",
+          "selection_blind",
+          "delayed_replay"
+        ]
+      },
+      {
+        "replicate_identifier": 6,
+        "feedback_modes": [
+          "score_only",
+          "delayed_replay",
+          "normal",
+          "selection_blind"
+        ]
+      },
+      {
+        "replicate_identifier": 7,
+        "feedback_modes": [
+          "delayed_replay",
+          "selection_blind",
+          "score_only",
+          "normal"
+        ]
+      },
+      {
+        "replicate_identifier": 8,
+        "feedback_modes": [
+          "score_only",
+          "delayed_replay",
+          "normal",
+          "selection_blind"
+        ]
+      },
+      {
+        "replicate_identifier": 9,
+        "feedback_modes": [
+          "delayed_replay",
+          "selection_blind",
+          "score_only",
+          "normal"
+        ]
+      },
+      {
+        "replicate_identifier": 10,
+        "feedback_modes": [
+          "score_only",
+          "delayed_replay",
+          "normal",
+          "selection_blind"
+        ]
+      },
+      {
+        "replicate_identifier": 11,
+        "feedback_modes": [
+          "score_only",
+          "delayed_replay",
+          "normal",
+          "selection_blind"
+        ]
+      },
+      {
+        "replicate_identifier": 12,
+        "feedback_modes": [
+          "score_only",
+          "delayed_replay",
+          "normal",
+          "selection_blind"
+        ]
+      },
+      {
+        "replicate_identifier": 13,
+        "feedback_modes": [
+          "selection_blind",
+          "normal",
+          "delayed_replay",
+          "score_only"
+        ]
+      },
+      {
+        "replicate_identifier": 14,
+        "feedback_modes": [
+          "normal",
+          "score_only",
+          "selection_blind",
+          "delayed_replay"
+        ]
+      },
+      {
+        "replicate_identifier": 15,
+        "feedback_modes": [
+          "delayed_replay",
+          "selection_blind",
+          "score_only",
+          "normal"
+        ]
+      },
+      {
+        "replicate_identifier": 16,
+        "feedback_modes": [
+          "selection_blind",
+          "normal",
+          "delayed_replay",
+          "score_only"
+        ]
+      },
+      {
+        "replicate_identifier": 17,
+        "feedback_modes": [
+          "score_only",
+          "delayed_replay",
+          "normal",
+          "selection_blind"
+        ]
+      },
+      {
+        "replicate_identifier": 18,
+        "feedback_modes": [
+          "delayed_replay",
+          "selection_blind",
+          "score_only",
+          "normal"
+        ]
+      },
+      {
+        "replicate_identifier": 19,
+        "feedback_modes": [
+          "delayed_replay",
+          "selection_blind",
+          "score_only",
+          "normal"
+        ]
+      },
+      {
+        "replicate_identifier": 20,
+        "feedback_modes": [
+          "selection_blind",
+          "normal",
+          "delayed_replay",
+          "score_only"
+        ]
+      },
+      {
+        "replicate_identifier": 21,
+        "feedback_modes": [
+          "normal",
+          "score_only",
+          "selection_blind",
+          "delayed_replay"
+        ]
+      },
+      {
+        "replicate_identifier": 22,
+        "feedback_modes": [
+          "selection_blind",
+          "normal",
+          "delayed_replay",
+          "score_only"
+        ]
+      },
+      {
+        "replicate_identifier": 23,
+        "feedback_modes": [
+          "selection_blind",
+          "normal",
+          "delayed_replay",
+          "score_only"
+        ]
+      },
+      {
+        "replicate_identifier": 24,
+        "feedback_modes": [
+          "normal",
+          "score_only",
+          "selection_blind",
+          "delayed_replay"
+        ]
+      },
+      {
+        "replicate_identifier": 25,
+        "feedback_modes": [
+          "normal",
+          "score_only",
+          "selection_blind",
+          "delayed_replay"
+        ]
+      },
+      {
+        "replicate_identifier": 26,
+        "feedback_modes": [
+          "selection_blind",
+          "normal",
+          "delayed_replay",
+          "score_only"
+        ]
+      },
+      {
+        "replicate_identifier": 27,
+        "feedback_modes": [
+          "selection_blind",
+          "normal",
+          "delayed_replay",
+          "score_only"
+        ]
+      },
+      {
+        "replicate_identifier": 28,
+        "feedback_modes": [
+          "delayed_replay",
+          "selection_blind",
+          "score_only",
+          "normal"
+        ]
+      },
+      {
+        "replicate_identifier": 29,
+        "feedback_modes": [
+          "normal",
+          "score_only",
+          "selection_blind",
+          "delayed_replay"
+        ]
+      },
+      {
+        "replicate_identifier": 30,
+        "feedback_modes": [
+          "score_only",
+          "delayed_replay",
+          "normal",
+          "selection_blind"
+        ]
+      },
+      {
+        "replicate_identifier": 31,
+        "feedback_modes": [
+          "normal",
+          "score_only",
+          "selection_blind",
+          "delayed_replay"
+        ]
+      },
+      {
+        "replicate_identifier": 32,
+        "feedback_modes": [
+          "selection_blind",
+          "normal",
+          "delayed_replay",
+          "score_only"
+        ]
+      },
+      {
+        "replicate_identifier": 33,
+        "feedback_modes": [
+          "normal",
+          "score_only",
+          "selection_blind",
+          "delayed_replay"
+        ]
+      },
+      {
+        "replicate_identifier": 34,
+        "feedback_modes": [
+          "delayed_replay",
+          "selection_blind",
+          "score_only",
+          "normal"
+        ]
+      },
+      {
+        "replicate_identifier": 35,
+        "feedback_modes": [
+          "selection_blind",
+          "normal",
+          "delayed_replay",
+          "score_only"
+        ]
+      },
+      {
+        "replicate_identifier": 36,
+        "feedback_modes": [
+          "score_only",
+          "delayed_replay",
+          "normal",
+          "selection_blind"
+        ]
+      },
+      {
+        "replicate_identifier": 37,
+        "feedback_modes": [
+          "normal",
+          "score_only",
+          "selection_blind",
+          "delayed_replay"
+        ]
+      },
+      {
+        "replicate_identifier": 38,
+        "feedback_modes": [
+          "normal",
+          "score_only",
+          "selection_blind",
+          "delayed_replay"
+        ]
+      },
+      {
+        "replicate_identifier": 39,
+        "feedback_modes": [
+          "normal",
+          "score_only",
+          "selection_blind",
+          "delayed_replay"
+        ]
+      },
+      {
+        "replicate_identifier": 40,
+        "feedback_modes": [
+          "score_only",
+          "delayed_replay",
+          "normal",
+          "selection_blind"
+        ]
+      },
+      {
+        "replicate_identifier": 41,
+        "feedback_modes": [
+          "delayed_replay",
+          "selection_blind",
+          "score_only",
+          "normal"
+        ]
+      },
+      {
+        "replicate_identifier": 42,
+        "feedback_modes": [
+          "score_only",
+          "delayed_replay",
+          "normal",
+          "selection_blind"
+        ]
+      },
+      {
+        "replicate_identifier": 43,
+        "feedback_modes": [
+          "selection_blind",
+          "normal",
+          "delayed_replay",
+          "score_only"
+        ]
+      },
+      {
+        "replicate_identifier": 44,
+        "feedback_modes": [
+          "delayed_replay",
+          "selection_blind",
+          "score_only",
+          "normal"
+        ]
+      },
+      {
+        "replicate_identifier": 45,
+        "feedback_modes": [
+          "selection_blind",
+          "normal",
+          "delayed_replay",
+          "score_only"
+        ]
+      },
+      {
+        "replicate_identifier": 46,
+        "feedback_modes": [
+          "score_only",
+          "delayed_replay",
+          "normal",
+          "selection_blind"
+        ]
+      },
+      {
+        "replicate_identifier": 47,
+        "feedback_modes": [
+          "score_only",
+          "delayed_replay",
+          "normal",
+          "selection_blind"
+        ]
+      }
+    ],
+    "proposal_budget": 3,
+    "evaluator_timeout_seconds": 300.0,
+    "scheduled_cell_count": 384,
+    "scheduled_model_proposals": 1152,
+    "confirmation_replays_per_artifact": 2,
+    "confirmation_randomization_seed": 123858657170046703,
+    "search_block_workers": 8,
+    "search_parallelism_unit": "task_algorithm_replicate",
+    "search_within_block_conditions": "serial_in_condition_order_schedule",
+    "confirmation_workers": 8,
+    "confirmation_worker_isolation": "spawn_process",
+    "confirmation_look_assignment": "planned_order_before_dispatch",
+    "confirmation_endpoint_count": 768,
+    "confirmation_endpoints": [
+      "full_proposal_horizon",
+      "common_total_token_horizon"
+    ]
+  },
+  "analysis": {
+    "primary_task": "DynamicalSystems/ActiveLawDiscovery",
+    "primary_condition": "normal",
+    "primary_control": "selection_blind",
+    "primary_contrast": "normal_minus_selection_blind",
+    "primary_endpoint": "common_total_token_horizon",
+    "primary_axis": "confirmation_normalized_mechanism_score",
+    "statistical_test": "two_sided_independent_welch_t",
+    "two_sided_alpha": 0.05,
+    "confirmatory_primary_hypothesis_count": 1,
+    "minimum_important_difference": 0.15,
+    "mde_role": "power_target_not_additional_significance_threshold",
+    "provider_draw_assumption": "independent_unpaired",
+    "candidate_invalid_score": 0.0,
+    "secondary_task": "Optics/DiffractionGratingDesign",
+    "secondary_axis": "confirmation_robustness_score",
+    "secondary_inference": "descriptive_stress_test_only",
+    "other_conditions_and_full_horizon": "descriptive_secondary_no_multiplicity_claim",
+    "cross_task_score": null
+  },
+  "failure_retry_and_stopping": {
+    "fixed_sample": true,
+    "sample_size_adaptation": false,
+    "interim_efficacy_or_futility_analysis": false,
+    "outcome_based_early_stopping": false,
+    "search_risk_set": "all 384 cells",
+    "candidate_invalidity": "terminal scientific outcome retained at normalized score floor zero",
+    "infrastructure_failure": "retained attempt; retry only the same cell/evaluation with resume",
+    "stochastic_confirmation_artifact": "quarantined and blocks confirmatory analysis",
+    "missing_or_tampered_artifact": "fail closed"
+  },
+  "prerequisites": {
+    "full_test_suite": {
+      "path": "experiments/full_test_suite_2026-07-26_v23.json",
+      "sha256": "42b2d11f0f030b926cee4da22c42964fae80dd738c3723a58c11ec81fd4a4f35",
+      "bytes": 2892
+    },
+    "security_audit": {
+      "path": "experiments/security_audit_2026-07-26_v47.json",
+      "sha256": "7bf28c705de28c6375f05b63f1e3da9c94d4929702d1c372b811af08df14fbbd",
+      "bytes": 7273
+    },
+    "certification_audit": {
+      "path": "experiments/task_certification_audit_2026-07-26_v62.json",
+      "sha256": "505d9f3ab32183540e9b188edc42d4da8a1a2b04263460f227afd06fec1fdf78",
+      "bytes": 52682
+    },
+    "protocol_smoke": {
+      "path": "experiments/track_f_protocol_smoke_2026-07-26_v1.json",
+      "task": "Chemistry/LennardJonesCluster",
+      "budget": 0,
+      "replicate_identifiers": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "feedback_modes": [
+        "normal",
+        "score_only",
+        "delayed_replay",
+        "selection_blind"
+      ],
+      "condition_order": "balanced_williams",
+      "condition_order_randomization_seed": 2678395752421634827,
+      "condition_order_schedule": [
+        {
+          "replicate_identifier": 0,
+          "feedback_modes": [
+            "normal",
+            "score_only",
+            "selection_blind",
+            "delayed_replay"
+          ]
+        },
+        {
+          "replicate_identifier": 1,
+          "feedback_modes": [
+            "delayed_replay",
+            "selection_blind",
+            "score_only",
+            "normal"
+          ]
+        },
+        {
+          "replicate_identifier": 2,
+          "feedback_modes": [
+            "selection_blind",
+            "normal",
+            "delayed_replay",
+            "score_only"
+          ]
+        },
+        {
+          "replicate_identifier": 3,
+          "feedback_modes": [
+            "score_only",
+            "delayed_replay",
+            "normal",
+            "selection_blind"
+          ]
+        }
+      ],
+      "block_workers": 8,
+      "scheduled_cell_count": 16,
+      "required": "trusted clean-source report with exact preregistration hash binding before any nonzero-budget search cell"
+    }
+  },
+  "execution": {
+    "search_report": "experiments/track_f_search_2026-07-26_v1.json",
+    "search_work_root": "runs/track_f_main_v1",
+    "search_command": [
+      "python3",
+      "scripts/batch_evolve.py",
+      "--all",
+      "--tasks",
+      "DynamicalSystems/ActiveLawDiscovery,Optics/DiffractionGratingDesign",
+      "--algorithms",
+      "greedy_rewrite",
+      "--feedback-modes",
+      "normal,score_only,delayed_replay,selection_blind",
+      "--seeds",
+      "0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47",
+      "--budget",
+      "3",
+      "--timeout",
+      "300",
+      "--condition-order-design",
+      "balanced_williams",
+      "--condition-order-randomization-seed",
+      "2678395752421634827",
+      "--preregistration",
+      "<this_preregistration>",
+      "--workdir",
+      "runs/track_f_main_v1",
+      "--block-workers",
+      "8",
+      "--output",
+      "experiments/track_f_search_2026-07-26_v1.json"
+    ],
+    "order": [
+      "commit preregistration and public commitment",
+      "run and verify protocol smoke",
+      "run all fixed search cells without reading private contexts",
+      "run post-search fresh confirmation",
+      "run the frozen final analyzer"
+    ],
+    "protocol_smoke_command": [
+      "python3",
+      "scripts/batch_evolve.py",
+      "--all",
+      "--tasks",
+      "Chemistry/LennardJonesCluster",
+      "--algorithms",
+      "greedy_rewrite",
+      "--feedback-modes",
+      "normal,score_only,delayed_replay,selection_blind",
+      "--seeds",
+      "0,1,2,3",
+      "--budget",
+      "0",
+      "--timeout",
+      "300",
+      "--condition-order-design",
+      "balanced_williams",
+      "--condition-order-randomization-seed",
+      "2678395752421634827",
+      "--preregistration",
+      "<this_preregistration>",
+      "--workdir",
+      "<smoke_work_root>",
+      "--block-workers",
+      "8",
+      "--output",
+      "experiments/track_f_protocol_smoke_2026-07-26_v1.json"
+    ],
+    "confirmation_command": [
+      "python3",
+      "scripts/run_track_f_confirmation.py",
+      "--preregistration",
+      "<this_preregistration>",
+      "--search-report",
+      "experiments/track_f_search_2026-07-26_v1.json",
+      "--private-contexts",
+      "<private_context_manifest>",
+      "--public-commitment",
+      "experiments/track_f_confirmation_commitment_2026-07-26_v1.json",
+      "--workers",
+      "8",
+      "--output",
+      "<confirmation_report>"
+    ]
+  },
+  "claims_before_outcomes": {
+    "feedback_effect_identified": false,
+    "population_effect_estimated": false,
+    "cross_task_general_effect_identified": false,
+    "independent_physical_validation_completed": false,
+    "autonomous_scientific_discovery_demonstrated": false
+  }
+}

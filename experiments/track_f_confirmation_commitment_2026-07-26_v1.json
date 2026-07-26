@@ -1,0 +1,924 @@
+{
+  "schema_version": 1,
+  "commitment_version": 1,
+  "purpose": "track_f_fresh_confirmation_context_commitment",
+  "cohort_id": "track-f-main-v1",
+  "created_at": "2026-07-26T18:47:47.354662+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "0fe0d02541bc72e51fb475d0a1d0561ed0c82bc6",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "/home/azureuser/workspace-gzy/zyf/frontier-science/scripts/generate_track_f_confirmation_contexts.py",
+      "--cohort-id",
+      "track-f-main-v1",
+      "--replicates",
+      "0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47",
+      "--private-output",
+      "/home/azureuser/workspace-gzy/zyf/frontier-science-private/track_f_main_v1_private_contexts.json",
+      "--public-output",
+      "experiments/track_f_confirmation_commitment_2026-07-26_v1.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "source_binding": {
+    "git_revision": "0fe0d02541bc72e51fb475d0a1d0561ed0c82bc6",
+    "runtime_source_sha256": "f356c708e9a125bbe04304406f5308d0aa08649562aaeb39ba7cf2d17f81b465",
+    "tasks": [
+      {
+        "task": "DynamicalSystems/ActiveLawDiscovery",
+        "task_contract_sha256": "c9fa66585d912ce33010ff4d972afbfd3da4196be4ccfe38d55d0a0fd9978593",
+        "generator": "active_law_fresh_v1",
+        "world_count": 7
+      },
+      {
+        "task": "Optics/DiffractionGratingDesign",
+        "task_contract_sha256": "476d23427837de38f663802bd512cea25483ba2e5f8b162f71af08624f1f1dd2",
+        "generator": "diffraction_grating_fresh_v1",
+        "world_count": 3
+      }
+    ]
+  },
+  "private_manifest_sha256": "baa1974e71eb54a7da34b47be2990c85900224211817c98ab1e0502b6070d249",
+  "private_manifest_utf8_bytes": 318413,
+  "block_count": 96,
+  "blocks": [
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 0,
+      "panel_id": "track-f-main-v1-active-law-r0",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "15b45a8e40b8fe716f53d34dbba42c693dc377d7ea8585fd016fae9a8a9d64be",
+      "context_utf8_bytes": 226
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 1,
+      "panel_id": "track-f-main-v1-active-law-r1",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "decdebaac16dcbe10960212b463dbcd84e419790e9d845a9793fd3817d6b60a8",
+      "context_utf8_bytes": 226
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 2,
+      "panel_id": "track-f-main-v1-active-law-r2",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "1e9714aec25b68430bcc194444bf965067d6a2edb5b3f36caec47374f69295ba",
+      "context_utf8_bytes": 226
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 3,
+      "panel_id": "track-f-main-v1-active-law-r3",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "cc5ce33eb26580867f6491728578cad361d2e49f790282127e60cbc91fa148b8",
+      "context_utf8_bytes": 226
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 4,
+      "panel_id": "track-f-main-v1-active-law-r4",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "9a632aa4cd27218ec1b7237f08327188f4ff65b687fd38476d266a96399329ba",
+      "context_utf8_bytes": 226
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 5,
+      "panel_id": "track-f-main-v1-active-law-r5",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "5284e1ed240cb555cbe1dac9530f4714602d50dbc3e8bed71020045b817ba290",
+      "context_utf8_bytes": 226
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 6,
+      "panel_id": "track-f-main-v1-active-law-r6",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "5e91cdfc418730016340a1248d17fa5c78612b4dd7e97fd8a4e894de098cb8fe",
+      "context_utf8_bytes": 226
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 7,
+      "panel_id": "track-f-main-v1-active-law-r7",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "db9eb04b9980bfaf85e4fb2ce5fbf73eae34da27ca07142e96a03320a4377528",
+      "context_utf8_bytes": 226
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 8,
+      "panel_id": "track-f-main-v1-active-law-r8",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "e24b04c3dfaa8c471f64d22544e56d036323b1efab37f04e4f9b36e635b6c106",
+      "context_utf8_bytes": 226
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 9,
+      "panel_id": "track-f-main-v1-active-law-r9",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "c0171e0e09d15ccac9b20e01440f75c1ef7af5d075eba3454af7d0534f595b54",
+      "context_utf8_bytes": 226
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 10,
+      "panel_id": "track-f-main-v1-active-law-r10",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "d9c57895eed55ae1f5d483b503e9c9c6552b3a7778880404dc046e9e2ae82e12",
+      "context_utf8_bytes": 227
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 11,
+      "panel_id": "track-f-main-v1-active-law-r11",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "7799e24b44d49a9aa31f20e029ed69dd3e33ee07b978ffb3f34aa279842e1d74",
+      "context_utf8_bytes": 227
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 12,
+      "panel_id": "track-f-main-v1-active-law-r12",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "d8a3a733f3915641b7d9fb96072874fa830cbedc7d7561a21b092b4c258c62c2",
+      "context_utf8_bytes": 227
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 13,
+      "panel_id": "track-f-main-v1-active-law-r13",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "5aff1a6ae32dd59211a8409871c8ccc59e0a3cb7bd92ec5efcc04f9e6f606a51",
+      "context_utf8_bytes": 227
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 14,
+      "panel_id": "track-f-main-v1-active-law-r14",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "2126db5062f51a89fea04d54c25bc46e62af578aea7c41f292f70e535beccf53",
+      "context_utf8_bytes": 227
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 15,
+      "panel_id": "track-f-main-v1-active-law-r15",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "212d07344620396502a24327163203eba1dfb30800566e8c607538b4c0542067",
+      "context_utf8_bytes": 226
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 16,
+      "panel_id": "track-f-main-v1-active-law-r16",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "cf77e89069236a3c3911c76c6cfe520268087f0319a9346d52cc816a1509c201",
+      "context_utf8_bytes": 226
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 17,
+      "panel_id": "track-f-main-v1-active-law-r17",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "e61866ae785233d7e852bc882bdb129aad6ce08949bd67728f609961ddee4013",
+      "context_utf8_bytes": 227
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 18,
+      "panel_id": "track-f-main-v1-active-law-r18",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "3efd4fe5107cc95c28b5f64f01b11d938e2008e84023e8dad6de05c21ca55989",
+      "context_utf8_bytes": 227
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 19,
+      "panel_id": "track-f-main-v1-active-law-r19",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "9241d21d2a52441b695ac3bacbe016fda2c61af2814d5c3c7441c247d4dab874",
+      "context_utf8_bytes": 227
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 20,
+      "panel_id": "track-f-main-v1-active-law-r20",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "88251f771f4a6a2062718e7bce480ab20e5535931f962c73ab0706a994a76b56",
+      "context_utf8_bytes": 227
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 21,
+      "panel_id": "track-f-main-v1-active-law-r21",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "9c0f2abc8fcd3e7905a2470239c944cfdeb15abc1eb889215bb872fddbd17ba2",
+      "context_utf8_bytes": 227
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 22,
+      "panel_id": "track-f-main-v1-active-law-r22",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "ba5d7c88881149d8ea1a127eff1d1b1472f8d3f0ba14e47a72fb3ac13cecf04f",
+      "context_utf8_bytes": 227
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 23,
+      "panel_id": "track-f-main-v1-active-law-r23",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "be69fb9b4d8a3f71c62f583b5c6800ef622cb32bfc795399a954f9bf8edb09ee",
+      "context_utf8_bytes": 226
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 24,
+      "panel_id": "track-f-main-v1-active-law-r24",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "fc139acdffb7b2da633bea2dbd769b6ed5c8c6144b327647e4821f0505bbce7e",
+      "context_utf8_bytes": 227
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 25,
+      "panel_id": "track-f-main-v1-active-law-r25",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "cc8458fadea9d7677da6a357a8a870103fcb15a1dfa255fcafef02495bd189dd",
+      "context_utf8_bytes": 226
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 26,
+      "panel_id": "track-f-main-v1-active-law-r26",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "5d7f36c05df1c8034543ff16cae192d9096c2b3e2935e7c9fee7703ed4558d83",
+      "context_utf8_bytes": 227
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 27,
+      "panel_id": "track-f-main-v1-active-law-r27",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "21f504870789d2f0304cfdfe7e0f4a8d9d26dcd91b08558e33da56185fbff34b",
+      "context_utf8_bytes": 226
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 28,
+      "panel_id": "track-f-main-v1-active-law-r28",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "3261fcefc250b4d6f6ca65e44297f7aac7fde8578b511ab2ae0aac00f6a99fee",
+      "context_utf8_bytes": 227
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 29,
+      "panel_id": "track-f-main-v1-active-law-r29",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "6282139bef74c9ca5266471a6b7cfe3e712bcc20de1224fa62be220a973384ae",
+      "context_utf8_bytes": 227
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 30,
+      "panel_id": "track-f-main-v1-active-law-r30",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "86d8266f923918364a9d158a083938679db5747baa2eecde12683dec4fd18a76",
+      "context_utf8_bytes": 227
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 31,
+      "panel_id": "track-f-main-v1-active-law-r31",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "e83cd3f99ee68300e9ce6fd1ac120cecb8a090f8254cb16c10825c27814b8655",
+      "context_utf8_bytes": 227
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 32,
+      "panel_id": "track-f-main-v1-active-law-r32",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "149a756467ecd57575bae64a5b9101984f4128061934d0dd3b30f1e379ef3301",
+      "context_utf8_bytes": 227
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 33,
+      "panel_id": "track-f-main-v1-active-law-r33",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "82fdd09f73209ac659fe831765d805846721fad30cd9d583bb1a5118391451bd",
+      "context_utf8_bytes": 227
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 34,
+      "panel_id": "track-f-main-v1-active-law-r34",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "e4cdd81ab753598e048a636df62fcd749a8927500dba4694633ec87892ac236b",
+      "context_utf8_bytes": 227
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 35,
+      "panel_id": "track-f-main-v1-active-law-r35",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "5fdce26bf0e3a321949d7b34a0026bf653a8b7f2a73ac22caeb24ea59deb300a",
+      "context_utf8_bytes": 225
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 36,
+      "panel_id": "track-f-main-v1-active-law-r36",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "010c07ff5f69a997d3dba4288514a71f23f8949f8c6575f9dfa915daf938e903",
+      "context_utf8_bytes": 227
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 37,
+      "panel_id": "track-f-main-v1-active-law-r37",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "5c0d038b30eaf8f42686ce293ce938c2b23dd1760368775598eb697d9918a871",
+      "context_utf8_bytes": 227
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 38,
+      "panel_id": "track-f-main-v1-active-law-r38",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "78c433fe0b93bf5cb3ce24b2cb160561e5445fb8fc6d311a181d137361c4c696",
+      "context_utf8_bytes": 227
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 39,
+      "panel_id": "track-f-main-v1-active-law-r39",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "5aa2f231c16a88ee1d9946ecab5f5c1157bdb5756a8348576e87cf509a69302a",
+      "context_utf8_bytes": 227
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 40,
+      "panel_id": "track-f-main-v1-active-law-r40",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "b2d1662e0f7bcb01049e08a238e79127518d4c81d8a82c6532435ccdadf084d3",
+      "context_utf8_bytes": 227
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 41,
+      "panel_id": "track-f-main-v1-active-law-r41",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "57ed04329a4248344482bc2419b3736411667afa6d7c5df165a05f39f7990bb5",
+      "context_utf8_bytes": 227
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 42,
+      "panel_id": "track-f-main-v1-active-law-r42",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "c80bf61ca961c03a5c2f4c227feec5164a7e86d08eac0040df54fea7ff78dc40",
+      "context_utf8_bytes": 227
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 43,
+      "panel_id": "track-f-main-v1-active-law-r43",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "0b0b65a337333c2a47232f576765de3a667a827c18a9bcc5595a4ebb195e9b56",
+      "context_utf8_bytes": 227
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 44,
+      "panel_id": "track-f-main-v1-active-law-r44",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "500263535683aeae67e98eb7b4eefa3d009f33c503144fa2e39252b5eb4b7405",
+      "context_utf8_bytes": 227
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 45,
+      "panel_id": "track-f-main-v1-active-law-r45",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "d94f717b52609e4dd5f8da345eadf3de62ee89bb6e17680118addd6da637e82b",
+      "context_utf8_bytes": 227
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 46,
+      "panel_id": "track-f-main-v1-active-law-r46",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "246c7e9e8423800ae2c1e7cd73f3f98f8354739136eb19d5ffac84a4bf1108a1",
+      "context_utf8_bytes": 227
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "replicate_id": 47,
+      "panel_id": "track-f-main-v1-active-law-r47",
+      "generator": "active_law_fresh_v1",
+      "world_count": 7,
+      "context_sha256": "88773e5f61e5478dcd392261d5cfb6445b47166ab3c71258d2c9de66c90da52d",
+      "context_utf8_bytes": 227
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 0,
+      "panel_id": "track-f-main-v1-diffraction-r0",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "7ab1d4d2e8da986d130c70805cdd7e72cc890379f8dc7bfe016287c3401c6f83",
+      "context_utf8_bytes": 3206
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 1,
+      "panel_id": "track-f-main-v1-diffraction-r1",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "bc72d58455974be031c033a84f9bbf6c2def39ee5a152ae18315039d7b59ab36",
+      "context_utf8_bytes": 3211
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 2,
+      "panel_id": "track-f-main-v1-diffraction-r2",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "c170723a1e98a3b50ab39f983d7ee7c34d19d2c507e241b59f2f235de56b3a31",
+      "context_utf8_bytes": 3207
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 3,
+      "panel_id": "track-f-main-v1-diffraction-r3",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "f6640c71905a2c10d8b95b80b569b7dab1098223fc91528893d39a879bb4c2a6",
+      "context_utf8_bytes": 3196
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 4,
+      "panel_id": "track-f-main-v1-diffraction-r4",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "e9997ff71cee5818bff58b3c732d6c53d3a1940a2a8cc5a4e8600841d0a8fd6d",
+      "context_utf8_bytes": 3199
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 5,
+      "panel_id": "track-f-main-v1-diffraction-r5",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "307f9f697f3429bc9ecd66311064e0e9ec0438800ad671e4a2efb5ab130c667f",
+      "context_utf8_bytes": 3197
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 6,
+      "panel_id": "track-f-main-v1-diffraction-r6",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "2922012d3b2e5f802f5a28df8399f2ad397c011857db57dbbbe296f9970be3d0",
+      "context_utf8_bytes": 3201
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 7,
+      "panel_id": "track-f-main-v1-diffraction-r7",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "ffc64b6950b79aaf2249b3b455b0509bc75ddf44651ec5e6779330c897562c8c",
+      "context_utf8_bytes": 3202
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 8,
+      "panel_id": "track-f-main-v1-diffraction-r8",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "584552d57965b12fe617c49fedf99a85d513e7aa14cb42b405bd8e0e522db331",
+      "context_utf8_bytes": 3207
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 9,
+      "panel_id": "track-f-main-v1-diffraction-r9",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "df24abbe4b0be221f60e9a73179108cd6b676c033797844a904fd96b99aadc47",
+      "context_utf8_bytes": 3202
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 10,
+      "panel_id": "track-f-main-v1-diffraction-r10",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "d976639d9e59daa6abdda4f76ba670f29ae67dd5615d61a7f33d3237577a3c3e",
+      "context_utf8_bytes": 3208
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 11,
+      "panel_id": "track-f-main-v1-diffraction-r11",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "01d77bfb1e211cc81f83e38f139e79e9b7d6fdca18ce3f562bfef3dcf74c1eed",
+      "context_utf8_bytes": 3202
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 12,
+      "panel_id": "track-f-main-v1-diffraction-r12",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "4c6d65aea465e353e8624f5aae74607a97d71246f9629e330885271cfe2b48eb",
+      "context_utf8_bytes": 3199
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 13,
+      "panel_id": "track-f-main-v1-diffraction-r13",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "1fee95cec256438770f6dbd4cd4274a6f6861bf6d50fa85d8767950645722401",
+      "context_utf8_bytes": 3196
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 14,
+      "panel_id": "track-f-main-v1-diffraction-r14",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "5a2b03b2026a75ab14b344e1d3b7b64f0ce3090e24f0a0021e084a2c4858b281",
+      "context_utf8_bytes": 3205
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 15,
+      "panel_id": "track-f-main-v1-diffraction-r15",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "441883df29e09ba5670269ce3112dbdfe3aa439d366c1cacb1f9239319456bb3",
+      "context_utf8_bytes": 3194
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 16,
+      "panel_id": "track-f-main-v1-diffraction-r16",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "5b439abcfe5ddbd5b1494a5e8b533f2c389eb2407a94311611d60d01f158493c",
+      "context_utf8_bytes": 3196
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 17,
+      "panel_id": "track-f-main-v1-diffraction-r17",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "38b7db3113bbc23cc4ce2687523dfdab342806909aa468c7e60013374a7a37cc",
+      "context_utf8_bytes": 3205
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 18,
+      "panel_id": "track-f-main-v1-diffraction-r18",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "779c76fa772d66327b4f931c1e9cb3c3113276a23917e2818e76b60c46a93d61",
+      "context_utf8_bytes": 3201
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 19,
+      "panel_id": "track-f-main-v1-diffraction-r19",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "dce50e4971def027feeda55a33eab06bb09d1fdce95de268f3cf61d60589bf15",
+      "context_utf8_bytes": 3204
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 20,
+      "panel_id": "track-f-main-v1-diffraction-r20",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "4cb330b8fc84eee9d878c2c56cf576b5591c651797ee7aa6bd16f41ba849e494",
+      "context_utf8_bytes": 3196
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 21,
+      "panel_id": "track-f-main-v1-diffraction-r21",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "d9e7d3a0b91cd03a9cdc9303dd88d8ea1ab07feaf85a9d8e2e4a77af1ff33313",
+      "context_utf8_bytes": 3206
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 22,
+      "panel_id": "track-f-main-v1-diffraction-r22",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "edef73b5691aaee8f133e31b3eacccbb32ea87ae319ce8ae1bca1736ba99c782",
+      "context_utf8_bytes": 3210
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 23,
+      "panel_id": "track-f-main-v1-diffraction-r23",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "ae5d7ce924c2b216bd98e326f49fcd8194a62a88325ec754431c2978382f44f0",
+      "context_utf8_bytes": 3202
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 24,
+      "panel_id": "track-f-main-v1-diffraction-r24",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "845b357154357d2fba3b304de42f07c1c8885054b970b21365ca2ae121b2bb60",
+      "context_utf8_bytes": 3201
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 25,
+      "panel_id": "track-f-main-v1-diffraction-r25",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "77b05f0c917d8cd18260ebe8d78606e8e167f8aa9216a5dacd2284c7cada42de",
+      "context_utf8_bytes": 3212
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 26,
+      "panel_id": "track-f-main-v1-diffraction-r26",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "0b892c03dd38d4daf2bd2d400d20e57cc975c4f54b12dc8b44a35863bff4871b",
+      "context_utf8_bytes": 3205
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 27,
+      "panel_id": "track-f-main-v1-diffraction-r27",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "6ed0db2cdca60e0e2b90cde7018e09da2e12804bdc126a71186db5d9d73952a1",
+      "context_utf8_bytes": 3203
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 28,
+      "panel_id": "track-f-main-v1-diffraction-r28",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "9f4d737eb721eb97edc6a1efec5f665fe62bb1726ed1eea195674dab04f168c3",
+      "context_utf8_bytes": 3201
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 29,
+      "panel_id": "track-f-main-v1-diffraction-r29",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "073c3acd95a6295f48860d22ea30178a80d277c32e4f9646264209a8b273d818",
+      "context_utf8_bytes": 3209
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 30,
+      "panel_id": "track-f-main-v1-diffraction-r30",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "a56b9a34f2ce514ac46ae2ab68127f45874a5599bd44b5edd269a8fe10a7df0c",
+      "context_utf8_bytes": 3197
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 31,
+      "panel_id": "track-f-main-v1-diffraction-r31",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "956c35a00fa3f34aaf2fd71f90758729bdd825f05e80dcd168866ca2a8e9b87f",
+      "context_utf8_bytes": 3194
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 32,
+      "panel_id": "track-f-main-v1-diffraction-r32",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "4da4463314380c8be37f293d1a32aef06ea010ca653d6c0420af38431e014f28",
+      "context_utf8_bytes": 3204
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 33,
+      "panel_id": "track-f-main-v1-diffraction-r33",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "8975a9d994ad788baee710ede55eff8ff7158f06860b3e3257dcb4bcb22a8715",
+      "context_utf8_bytes": 3206
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 34,
+      "panel_id": "track-f-main-v1-diffraction-r34",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "b9bde8872cac42b28555fe9f07f71daf2c7d70be6b8c67c9c505fcdc32c5c796",
+      "context_utf8_bytes": 3202
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 35,
+      "panel_id": "track-f-main-v1-diffraction-r35",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "41e17781ab088495f175cf80fbba0db5ca630988f955d0278ba72ea3a05284ac",
+      "context_utf8_bytes": 3212
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 36,
+      "panel_id": "track-f-main-v1-diffraction-r36",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "e499ffc82dd3c0fd73003bb766b141b65c43f4e4c8a1127d8e6dbc09acc564b7",
+      "context_utf8_bytes": 3199
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 37,
+      "panel_id": "track-f-main-v1-diffraction-r37",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "bd6b9ace3954a9047c387982c4be43ff09af1f1d783b0d53eca6aad900fedd94",
+      "context_utf8_bytes": 3199
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 38,
+      "panel_id": "track-f-main-v1-diffraction-r38",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "c754e24bd2150fab2db06156c68893218fd0c12ca4818c502d2b0a91cf14c011",
+      "context_utf8_bytes": 3208
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 39,
+      "panel_id": "track-f-main-v1-diffraction-r39",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "a0cca85b6956ef5caddcd634b01c47ea67539b652dd3274d3d21117aa9696a30",
+      "context_utf8_bytes": 3199
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 40,
+      "panel_id": "track-f-main-v1-diffraction-r40",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "520a71ee026b9ad3782b2230fd7a2ea5c059ffc0f73e17a1440efd394285a346",
+      "context_utf8_bytes": 3202
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 41,
+      "panel_id": "track-f-main-v1-diffraction-r41",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "e92200aec465248f6407377100a4986628e979a4e5a2a38467b3bb2ff96023b2",
+      "context_utf8_bytes": 3199
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 42,
+      "panel_id": "track-f-main-v1-diffraction-r42",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "00f3f8b941043bde4e0bc3b8e95f76064620e3472457e81e9640c28f4c9d7403",
+      "context_utf8_bytes": 3203
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 43,
+      "panel_id": "track-f-main-v1-diffraction-r43",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "18f8a74c54e17079ce151dc3b95831639bd38dc50cb58e7a6d690918b3caa360",
+      "context_utf8_bytes": 3193
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 44,
+      "panel_id": "track-f-main-v1-diffraction-r44",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "c698d71bae70cc16d5574cd77d886ffa0023ff3ec5d491db349090a1d6149bef",
+      "context_utf8_bytes": 3190
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 45,
+      "panel_id": "track-f-main-v1-diffraction-r45",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "74ee6ab4d2b6562342badb59a1e1045157eaf3558c9c5695ad3e5488f7b664cf",
+      "context_utf8_bytes": 3208
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 46,
+      "panel_id": "track-f-main-v1-diffraction-r46",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "a6ab4c213a77be16afe50d5878989b3b773b33dcbf6e6e35888eedff03b2f272",
+      "context_utf8_bytes": 3197
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "replicate_id": 47,
+      "panel_id": "track-f-main-v1-diffraction-r47",
+      "generator": "diffraction_grating_fresh_v1",
+      "world_count": 3,
+      "context_sha256": "82b21eb186abf428cd8c8b9e28f398cba57fb4dd470c979b095f9a8dfa3ce0bb",
+      "context_utf8_bytes": 3204
+    }
+  ],
+  "claim_limit": "pre_search_hash_commitment_only_not_confirmation_outcome_or_autonomous_discovery_evidence"
+}
