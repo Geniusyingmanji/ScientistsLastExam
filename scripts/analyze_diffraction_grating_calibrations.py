@@ -90,8 +90,13 @@ CROSSCHECK_SHA256 = (
     "4ca80525aed02cf613b60a5cc94ba632c51335057def94b3b7794f413671f8dc"
 )
 TASK_RUNTIME_SCOPE = (
-    "frontier_science",
-    ":(exclude)frontier_science/certification.yaml",
+    "frontier_science/evaluate.py",
+    "frontier_science/trusted_driver.py",
+    "frontier_science/secure_eval.py",
+    "frontier_science/candidate_worker.py",
+    "frontier_science/rpc_codec.py",
+    "frontier_science/spec.py",
+    "frontier_science/registry.py",
     "benchmarks/Optics/DiffractionGratingDesign",
     "requirements-upstream.txt",
 )

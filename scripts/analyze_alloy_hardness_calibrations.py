@@ -73,8 +73,13 @@ DATA_SHA256 = (
     "a55effd2a4077b63a19a45a91729698e07b1bd9e89a72da79b87f2528a09d003"
 )
 TASK_RUNTIME_SCOPE = (
-    "frontier_science",
-    ":(exclude)frontier_science/certification.yaml",
+    "frontier_science/evaluate.py",
+    "frontier_science/trusted_driver.py",
+    "frontier_science/secure_eval.py",
+    "frontier_science/candidate_worker.py",
+    "frontier_science/rpc_codec.py",
+    "frontier_science/spec.py",
+    "frontier_science/registry.py",
     "benchmarks/MaterialsScience/AlloyHardnessOptimization",
     "requirements-upstream.txt",
 )

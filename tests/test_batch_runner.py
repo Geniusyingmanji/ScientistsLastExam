@@ -109,6 +109,8 @@ class BatchAggregationTests(unittest.TestCase):
             self.assertTrue(report["execution_passed"])
             self.assertTrue(report["trusted_evidence"])
             snapshot = report["runs"][0]["trajectory_snapshot"]
+            self.assertEqual(report["config"]["trajectory_snapshot_schema_version"], 2)
+            self.assertEqual(snapshot["schema_version"], 2)
             self.assertEqual(len(snapshot["trajectory_sha256"]), 64)
             self.assertEqual(len(snapshot["events"]), 1)
             self.assertEqual(snapshot["events"][0]["schema_version"], 2)

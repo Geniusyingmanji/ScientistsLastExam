@@ -55,7 +55,13 @@ BASELINE_SHA256 = (
     "8edee96aeb0ee22f10838110e0d600c1e540d2fba411ced0e13ca27721eab23b"
 )
 TASK_RUNTIME_SCOPE = (
-    ":(glob)frontier_science/**/*.py",
+    "frontier_science/evaluate.py",
+    "frontier_science/trusted_driver.py",
+    "frontier_science/secure_eval.py",
+    "frontier_science/candidate_worker.py",
+    "frontier_science/rpc_codec.py",
+    "frontier_science/spec.py",
+    "frontier_science/registry.py",
     "benchmarks/MolecularDynamics/ForceFieldCalibration",
     "requirements-upstream.txt",
 )

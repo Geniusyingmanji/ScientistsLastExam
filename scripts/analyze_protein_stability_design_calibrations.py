@@ -54,8 +54,13 @@ EXPECTED_CONDITIONS = {
     },
 }
 TASK_RUNTIME_SCOPE = (
-    "frontier_science",
-    ":(exclude)frontier_science/certification.yaml",
+    "frontier_science/evaluate.py",
+    "frontier_science/trusted_driver.py",
+    "frontier_science/secure_eval.py",
+    "frontier_science/candidate_worker.py",
+    "frontier_science/rpc_codec.py",
+    "frontier_science/spec.py",
+    "frontier_science/registry.py",
     "benchmarks/ProteinEngineering/ProteinStabilityDesign",
     "requirements-upstream.txt",
 )

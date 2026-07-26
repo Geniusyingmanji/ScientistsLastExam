@@ -19,7 +19,8 @@ from frontier_science.metric_visibility import (load_full_metrics, search_visibl
                                                 score_only_metrics, source_sha256,
                                                 store_full_metrics)
 from frontier_science.protocol import (TrajectoryEvent, append_event, best_so_far_auc,
-                                       load_trajectory, mean_confidence_interval,
+                                       compact_trajectory_snapshot, load_trajectory,
+                                       mean_confidence_interval,
                                        realized_token_curve, sha256_text,
                                        summarize_at_token_horizon, summarize_trajectory)
 from frontier_science.registry import find_task
@@ -98,6 +99,30 @@ class ProtocolMetricTests(unittest.TestCase):
             self.assertEqual(summary["best_score"], 0.5)
             self.assertAlmostEqual(summary["best_so_far_auc"], 0.25)
             self.assertIsNone(summary["llm"]["estimated_cost_usd"])
+
+    def test_snapshot_v1_is_frozen_and_v2_adds_portable_token_clock(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "trajectory.jsonl"
+            append_event(path, TrajectoryEvent(
+                step=0, oracle_calls=1, budget_units=1, score=0.0, best_score=0.0,
+                valid=True, accepted=True, wall_seconds=0.1,
+                cumulative_wall_seconds=0.1, candidate_sha256="a", parent_sha256=None,
+            ))
+            append_event(path, TrajectoryEvent(
+                step=1, oracle_calls=2, budget_units=2, score=0.5, best_score=0.5,
+                valid=True, accepted=True, wall_seconds=0.2,
+                cumulative_wall_seconds=0.3, candidate_sha256="b", parent_sha256="a",
+                llm={"input_tokens": 7, "output_tokens": 3, "total_tokens": 10},
+            ))
+            v1 = compact_trajectory_snapshot(path)
+            v2 = compact_trajectory_snapshot(path, schema_version=2)
+        self.assertEqual(v1["schema_version"], 1)
+        self.assertNotIn("schema_version", v1["events"][0])
+        self.assertNotIn("llm", v1["events"][1])
+        self.assertNotIn("wall_seconds", v1["events"][1])
+        self.assertEqual(v2["schema_version"], 2)
+        self.assertEqual(v2["events"][1]["llm"]["total_tokens"], 10)
+        self.assertEqual(v2["events"][1]["cumulative_wall_seconds"], 0.3)
 
     def test_unknown_pricing_is_null_not_zero(self):
         client = LLMClient(LLMConfig())

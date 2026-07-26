@@ -40,7 +40,13 @@ EXPECTED_MODEL_SOURCE_REVISION = (
     "4bd362e6b96217389176fcc0da216596cde41eaf"
 )
 TASK_RUNTIME_SCOPE = (
-    "frontier_science",
+    "frontier_science/evaluate.py",
+    "frontier_science/trusted_driver.py",
+    "frontier_science/secure_eval.py",
+    "frontier_science/candidate_worker.py",
+    "frontier_science/rpc_codec.py",
+    "frontier_science/spec.py",
+    "frontier_science/registry.py",
     "benchmarks/Acoustics/RoomImpulseResponse",
     "requirements-upstream.txt",
 )

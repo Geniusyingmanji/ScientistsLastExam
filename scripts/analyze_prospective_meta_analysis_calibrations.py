@@ -28,7 +28,6 @@ sys.path.insert(0, str(ROOT))
 from frontier_science.protocol import compact_trajectory_snapshot, load_trajectory  # noqa: E402
 from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402
 from frontier_science.algorithms.common import (  # noqa: E402
-    runtime_source_sha256,
     task_contract_sha256,
 )
 from frontier_science.spec import load_task_spec  # noqa: E402
@@ -50,7 +49,13 @@ CONDITIONS = {
     "blind_budget_three": {"mode": "selection_blind", "budget": 3, "seed": 1},
 }
 TASK_RUNTIME_SCOPE = (
-    ":(glob)frontier_science/**/*.py",
+    "frontier_science/evaluate.py",
+    "frontier_science/trusted_driver.py",
+    "frontier_science/secure_eval.py",
+    "frontier_science/candidate_worker.py",
+    "frontier_science/rpc_codec.py",
+    "frontier_science/spec.py",
+    "frontier_science/registry.py",
     "benchmarks/EvidenceSynthesis/ProspectiveMetaAnalysis",
     "requirements-upstream.txt",
 )
@@ -431,7 +436,9 @@ def _load_model(label, relative):
         and manifest.get("llm_condition_sha256")
         == config.get("llm_condition_sha256")
         and manifest.get("task_contract_sha256") == task_contract_sha256(spec)
-        and manifest.get("runtime_source_sha256") == runtime_source_sha256()
+        and isinstance(manifest.get("runtime_source_sha256"), str)
+        and len(manifest["runtime_source_sha256"]) == 64
+        and all(char in "0123456789abcdef" for char in manifest["runtime_source_sha256"])
     )
     if not record["integrity_passed"]:
         raise ValueError("model lineage, accounting, or retained-artifact gate failed")

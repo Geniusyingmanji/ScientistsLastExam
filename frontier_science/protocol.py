@@ -70,40 +70,65 @@ def compact_scalar_metrics(metrics: dict[str, Any]) -> dict[str, Any]:
     return retained
 
 
-def compact_trajectory_snapshot(path: Path) -> dict[str, Any]:
+def compact_trajectory_snapshot(
+    path: Path, *, schema_version: int = 1
+) -> dict[str, Any]:
     """Freeze scalar science curves and bind them to the full raw trajectory.
 
     The snapshot is generated after search completes. It is suitable for an outer
     experiment report and must never be placed back into algorithm search state.
+    Version 1 is the frozen historical projection. Version 2 adds the timing and
+    provider-usage fields required for portable realized-token analysis.
     """
+    if schema_version not in {1, 2}:
+        raise ValueError("trajectory snapshot schema must be 1 or 2")
     path = Path(path)
     events = load_trajectory(path)
-    return {
-        "schema_version": 1,
-        "trajectory_sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
-        "events": [
-            {
+    snapshots = []
+    for event in events:
+        compact = {
+            "step": int(event["step"]),
+            "oracle_calls": int(event["oracle_calls"]),
+            "budget_units": int(event.get("budget_units") or event["oracle_calls"]),
+            "score": event["score"],
+            "best_score": event["best_score"],
+            "valid": bool(event["valid"]),
+            "accepted": bool(event["accepted"]),
+            "candidate_sha256": event["candidate_sha256"],
+            "parent_sha256": event["parent_sha256"],
+            "metrics": compact_scalar_metrics(event.get("metrics") or {}),
+            "algorithm_metadata": compact_scalar_metrics(
+                event.get("algorithm_metadata") or {}
+            ),
+            "error": event.get("error"),
+        }
+        if schema_version == 2:
+            compact = {
                 "schema_version": int(event["schema_version"]),
-                "step": int(event["step"]),
-                "oracle_calls": int(event["oracle_calls"]),
-                "budget_units": int(event.get("budget_units") or event["oracle_calls"]),
-                "score": event["score"],
-                "best_score": event["best_score"],
-                "valid": bool(event["valid"]),
-                "accepted": bool(event["accepted"]),
+                **{
+                    key: compact[key]
+                    for key in (
+                        "step", "oracle_calls", "budget_units", "score", "best_score",
+                        "valid", "accepted",
+                    )
+                },
                 "wall_seconds": event["wall_seconds"],
                 "cumulative_wall_seconds": event["cumulative_wall_seconds"],
-                "candidate_sha256": event["candidate_sha256"],
-                "parent_sha256": event["parent_sha256"],
-                "metrics": compact_scalar_metrics(event.get("metrics") or {}),
+                **{
+                    key: compact[key]
+                    for key in (
+                        "candidate_sha256", "parent_sha256", "metrics",
+                    )
+                },
                 "llm": compact_scalar_metrics(event.get("llm") or {}),
-                "algorithm_metadata": compact_scalar_metrics(
-                    event.get("algorithm_metadata") or {}
-                ),
-                "error": event.get("error"),
+                "algorithm_metadata": compact["algorithm_metadata"],
+                "error": compact["error"],
             }
-            for event in events
-        ],
+        snapshots.append(compact)
+    return {
+        "schema_version": schema_version,
+        "trajectory_sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+        "events": snapshots,
     }
 
 

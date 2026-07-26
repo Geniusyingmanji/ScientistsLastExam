@@ -286,12 +286,22 @@ class CalorimeterAnalysisTests(unittest.TestCase):
         self.assertEqual(report["trust_decision"], "execution_failed")
         self.assertFalse(report["trusted_evidence"])
 
-    def test_runtime_scope_tracks_python_not_certification_narrative(self):
-        self.assertIn(
-            ":(glob)frontier_science/**/*.py",
-            self.analysis.TASK_RUNTIME_SCOPE,
-        )
-        self.assertNotIn("frontier_science", self.analysis.TASK_RUNTIME_SCOPE)
+    def test_runtime_scope_tracks_trusted_evaluator_not_search_or_narrative(self):
+        scope = self.analysis.TASK_RUNTIME_SCOPE
+        for path in (
+            "frontier_science/evaluate.py",
+            "frontier_science/trusted_driver.py",
+            "frontier_science/secure_eval.py",
+            "frontier_science/candidate_worker.py",
+            "frontier_science/rpc_codec.py",
+        ):
+            self.assertIn(path, scope)
+        for path in (
+            "frontier_science/algorithms/evolve.py",
+            "frontier_science/protocol.py",
+            "frontier_science/certification.yaml",
+        ):
+            self.assertNotIn(path, scope)
 
     def test_full_analysis_when_raw_trajectories_exist(self):
         raw_paths = []

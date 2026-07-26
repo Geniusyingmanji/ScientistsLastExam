@@ -236,6 +236,7 @@ def main(argv: list[str] | None = None) -> int:
         "tasks": [spec.task_id for spec in specs],
         "algorithms": algorithms,
         "feedback_modes": feedback_modes,
+        "trajectory_snapshot_schema_version": 2,
         "feedback_protocols": {
             mode: feedback_scope(mode) for mode in feedback_modes
         },
@@ -340,7 +341,7 @@ def main(argv: list[str] | None = None) -> int:
                             # Generated only after the backend returns. Sealed science
                             # metrics remain outside all agent/search-owned state.
                             "trajectory_snapshot": compact_trajectory_snapshot(
-                                run_dir / "trajectory.jsonl"
+                                run_dir / "trajectory.jsonl", schema_version=2
                             ),
                         }
                     except Exception as exc:  # noqa: BLE001 - retain failed conditions
