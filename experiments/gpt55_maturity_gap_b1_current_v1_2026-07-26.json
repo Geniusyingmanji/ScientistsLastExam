@@ -1,0 +1,789 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_SECURE_EVAL",
+  "evidence_scope": "MODEL_PERFORMANCE",
+  "created_at": "2026-07-26T23:56:31.710376+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "03e3cae6456aa28e0e052430186be52197211f55",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "/home/azureuser/workspace-gzy/zyf/frontier-science/scripts/batch_evolve.py",
+      "--all",
+      "--tasks",
+      "DynamicalSystems/LyapunovControl,Geophysics/SeismicInversion,NuclearEngineering/NeutronDiffusionCriticality",
+      "--feedback-modes",
+      "normal",
+      "--seeds",
+      "1",
+      "--budget",
+      "1",
+      "--timeout",
+      "300",
+      "--block-workers",
+      "3",
+      "--workdir",
+      "runs/maturity_gap_b1_current_v1",
+      "--output",
+      "experiments/gpt55_maturity_gap_b1_current_v1_2026-07-26.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "config": {
+    "tasks": [
+      "DynamicalSystems/LyapunovControl",
+      "Geophysics/SeismicInversion",
+      "NuclearEngineering/NeutronDiffusionCriticality"
+    ],
+    "algorithms": [
+      "greedy_rewrite"
+    ],
+    "feedback_modes": [
+      "normal"
+    ],
+    "trajectory_snapshot_schema_version": 2,
+    "feedback_protocols": {
+      "normal": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace"
+    },
+    "condition_order": "reverse_parity",
+    "condition_order_randomization_seed": null,
+    "condition_order_schedule": [
+      {
+        "replicate_identifier": 1,
+        "feedback_modes": [
+          "normal"
+        ]
+      }
+    ],
+    "preregistration": null,
+    "seeds": [
+      1
+    ],
+    "replicate_identifier_scope": "controls local Python/random ordering only; the endpoint exposes no server-side generation seed, so same-number cells do not share model draws",
+    "resource_matching": {
+      "proposal_budget_and_max_output_tokens": "matched by configuration",
+      "realized_input_output_and_total_tokens": "measured per event; not assumed matched; use a preregistered common-token horizon or model token imbalance explicitly"
+    },
+    "budget": 1,
+    "timeout_s": 300.0,
+    "block_workers": 3,
+    "block_parallelism": {
+      "unit": "task_algorithm_replicate",
+      "within_block_conditions": "serial_in_condition_order_schedule",
+      "cross_block_scheduling": "fixed_submission_order_nonadaptive",
+      "maximum_concurrent_blocks": 3
+    },
+    "work_root": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/maturity_gap_b1_current_v1",
+    "llm_condition_sha256": "5b0df4671481f6b3505155bc6c5654a64c4da5591422fb806904e7d0f44fc4d2",
+    "llm": {
+      "wire": "responses",
+      "endpoint_sha256": "b22995a1fcaf8ad713ac37716f006c717313dfdebd357ac02a077a5582650bb6",
+      "model": "gpt-5.5",
+      "max_output_tokens": 16000,
+      "temperature": null,
+      "reasoning_effort": "low",
+      "input_cost_per_million": null,
+      "output_cost_per_million": null,
+      "server_side_seed_control": false
+    }
+  },
+  "runs": [
+    {
+      "task": "NuclearEngineering/NeutronDiffusionCriticality",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 1,
+      "baseline": 0.0,
+      "best": 0.9392365165082688,
+      "accepted": 1,
+      "evaluated": 2,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/maturity_gap_b1_current_v1/NuclearEngineering__NeutronDiffusionCriticality/greedy_rewrite/normal/seed_1",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 2,
+        "budget_units": 2,
+        "best_score": 0.9392365165082688,
+        "best_so_far_auc": 0.4696182582541344,
+        "valid_rate": 1.0,
+        "accepted": 1,
+        "wall_seconds": 26.73819507844746,
+        "llm": {
+          "calls": 1,
+          "provider_usage_records": 1,
+          "input_tokens": 623,
+          "output_tokens": 1705,
+          "total_tokens": 2328,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "NuclearEngineering/NeutronDiffusionCriticality",
+        "seed": 1,
+        "baseline_score": 0.0,
+        "budget": 1,
+        "feedback_mode": "normal",
+        "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "online_incumbent"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 2,
+        "trajectory_sha256": "0af48c2648fd634c75ef62fdb4fff2b1b65bf7ec6eed6b72e88e19e13a94c1f7",
+        "events": [
+          {
+            "schema_version": 2,
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": true,
+            "wall_seconds": 0.6847150027751923,
+            "cumulative_wall_seconds": 0.6847150027751923,
+            "candidate_sha256": "5257d7dabbfc42e0b7175f1e45945079cb57ae91a602c1096dc0944a0ea99500",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.9841790542199828,
+              "k_eff": 0.984179,
+              "k_baseline": 0.984179,
+              "k_reference": 1.059182,
+              "avg_enrichment": 0.05
+            },
+            "llm": {},
+            "algorithm_metadata": {},
+            "error": null
+          },
+          {
+            "schema_version": 2,
+            "step": 1,
+            "oracle_calls": 2,
+            "budget_units": 2,
+            "score": 0.9392365165082688,
+            "best_score": 0.9392365165082688,
+            "valid": true,
+            "accepted": true,
+            "wall_seconds": 26.05348007567227,
+            "cumulative_wall_seconds": 26.73819507844746,
+            "candidate_sha256": "fa370cffe65e00a0d77b9c4ca88115094a1f707beb5eb31c0d7950333f9d007c",
+            "parent_sha256": "5257d7dabbfc42e0b7175f1e45945079cb57ae91a602c1096dc0944a0ea99500",
+            "metrics": {
+              "combined_score": 0.9392365165082688,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 1.054624108047793,
+              "k_eff": 1.054624,
+              "k_baseline": 0.984179,
+              "k_reference": 1.059182,
+              "avg_enrichment": 0.05
+            },
+            "llm": {
+              "usage_available": true,
+              "pricing_available": false,
+              "input_tokens": 623,
+              "output_tokens": 1705,
+              "total_tokens": 2328,
+              "estimated_cost_usd": null
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 1,
+              "prompt_source_step": 0,
+              "feedback_released_through_step": 0,
+              "prompt_sha256": "5a80849cb9ce4e91cf60947dc53d256ce12388c244bd3d47198ddcdc89de311e",
+              "prompt_utf8_bytes": 2237,
+              "prompt_program_utf8_bytes": 166,
+              "prompt_metrics_sha256": "f7000573d75ca278344614c2768182467063a8b40f1dff252377d40261587801",
+              "prompt_metrics_utf8_bytes": 105,
+              "prompt_metric_keys": "combined_score,feasibility_rate,raw_score,valid"
+            },
+            "error": null
+          }
+        ]
+      },
+      "execution_block_index": 3,
+      "within_block_position": 1
+    },
+    {
+      "task": "DynamicalSystems/LyapunovControl",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 1,
+      "baseline": 0.0,
+      "best": 1.0,
+      "accepted": 1,
+      "evaluated": 2,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/maturity_gap_b1_current_v1/DynamicalSystems__LyapunovControl/greedy_rewrite/normal/seed_1",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 2,
+        "budget_units": 2,
+        "best_score": 1.0,
+        "best_so_far_auc": 0.5,
+        "valid_rate": 1.0,
+        "accepted": 1,
+        "wall_seconds": 42.95826996676624,
+        "llm": {
+          "calls": 1,
+          "provider_usage_records": 1,
+          "input_tokens": 765,
+          "output_tokens": 1966,
+          "total_tokens": 2731,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "DynamicalSystems/LyapunovControl",
+        "seed": 1,
+        "baseline_score": 0.0,
+        "budget": 1,
+        "feedback_mode": "normal",
+        "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "online_incumbent"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 2,
+        "trajectory_sha256": "ec05e4c1641083bbd4f0d681d4d157eed31e251abb9c3b193143defb1bebeb79",
+        "events": [
+          {
+            "schema_version": 2,
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": true,
+            "wall_seconds": 4.948426628485322,
+            "cumulative_wall_seconds": 4.948426628485322,
+            "candidate_sha256": "6198243820b96ba9e1a44aaaca59c104eed6f83026b298758c4190b6741d59ea",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.9134483259132644,
+              "mle": 0.9134,
+              "mle_uncontrolled": 0.9134,
+              "avg_control_energy": 0.0,
+              "mle_method": "two_trajectory_benettin_sampled_feedback"
+            },
+            "llm": {},
+            "algorithm_metadata": {},
+            "error": null
+          },
+          {
+            "schema_version": 2,
+            "step": 1,
+            "oracle_calls": 2,
+            "budget_units": 2,
+            "score": 1.0,
+            "best_score": 1.0,
+            "valid": true,
+            "accepted": true,
+            "wall_seconds": 38.009843338280916,
+            "cumulative_wall_seconds": 42.95826996676624,
+            "candidate_sha256": "1b8cdd83608e07c710f3715da6b3e086cae05836ba2161e944a8231fdad1becb",
+            "parent_sha256": "6198243820b96ba9e1a44aaaca59c104eed6f83026b298758c4190b6741d59ea",
+            "metrics": {
+              "combined_score": 1.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": -1.2547387940869348,
+              "mle": -1.2547,
+              "mle_uncontrolled": 0.9134,
+              "avg_control_energy": 1.8106,
+              "mle_method": "two_trajectory_benettin_sampled_feedback"
+            },
+            "llm": {
+              "usage_available": true,
+              "pricing_available": false,
+              "input_tokens": 765,
+              "output_tokens": 1966,
+              "total_tokens": 2731,
+              "estimated_cost_usd": null
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 1,
+              "prompt_source_step": 0,
+              "feedback_released_through_step": 0,
+              "prompt_sha256": "dbf715fda7d6f43b1f496b399816b288660abdce4f3e8f35d236f89477df2077",
+              "prompt_utf8_bytes": 2737,
+              "prompt_program_utf8_bytes": 214,
+              "prompt_metrics_sha256": "8f22af5ef22e7c6ce76e92e19c08b7d0b8392431269b83c0d6ebbcb4bf1dc9d7",
+              "prompt_metrics_utf8_bytes": 105,
+              "prompt_metric_keys": "combined_score,feasibility_rate,raw_score,valid"
+            },
+            "error": null
+          }
+        ]
+      },
+      "execution_block_index": 1,
+      "within_block_position": 1
+    },
+    {
+      "task": "Geophysics/SeismicInversion",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 1,
+      "baseline": 0.0,
+      "best": 0.9981442528035113,
+      "accepted": 1,
+      "evaluated": 2,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/maturity_gap_b1_current_v1/Geophysics__SeismicInversion/greedy_rewrite/normal/seed_1",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 2,
+        "budget_units": 2,
+        "best_score": 0.9981442528035113,
+        "best_so_far_auc": 0.49907212640175563,
+        "valid_rate": 1.0,
+        "accepted": 1,
+        "wall_seconds": 43.82656988874078,
+        "llm": {
+          "calls": 1,
+          "provider_usage_records": 1,
+          "input_tokens": 779,
+          "output_tokens": 3423,
+          "total_tokens": 4202,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "Geophysics/SeismicInversion",
+        "seed": 1,
+        "baseline_score": 0.0,
+        "budget": 1,
+        "feedback_mode": "normal",
+        "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "online_incumbent"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 2,
+        "trajectory_sha256": "065643d98a9d4490e94d2800f2c03a725aa5d1ea586582465624817d90dd0a14",
+        "events": [
+          {
+            "schema_version": 2,
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": true,
+            "wall_seconds": 0.618728881701827,
+            "cumulative_wall_seconds": 0.618728881701827,
+            "candidate_sha256": "ac82d112d46a0fff331a74c0a2afbc5ffa75cbdd8aeebc8eb7b40b17068aac17",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": -397.32018150814474,
+              "development_score": 0.0,
+              "mechanism_score": 0.0,
+              "holdout_prediction_score": 0.0,
+              "mean_development_rmse_ms": 397.32018150814474,
+              "mean_holdout_rmse_ms": 799.2025826899277
+            },
+            "llm": {},
+            "algorithm_metadata": {},
+            "error": null
+          },
+          {
+            "schema_version": 2,
+            "step": 1,
+            "oracle_calls": 2,
+            "budget_units": 2,
+            "score": 0.9981442528035113,
+            "best_score": 0.9981442528035113,
+            "valid": true,
+            "accepted": true,
+            "wall_seconds": 43.20784100703895,
+            "cumulative_wall_seconds": 43.82656988874078,
+            "candidate_sha256": "8ca35a565dc927ddfaff44996e7755bae5f8de07c4e69fb0ed2bf68610c427c0",
+            "parent_sha256": "ac82d112d46a0fff331a74c0a2afbc5ffa75cbdd8aeebc8eb7b40b17068aac17",
+            "metrics": {
+              "combined_score": 0.9981442528035113,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": -0.7245609162782886,
+              "development_score": 0.9981442528035113,
+              "mechanism_score": 0.9988381412657451,
+              "holdout_prediction_score": 0.9996882015574288,
+              "mean_development_rmse_ms": 0.7245609162782886,
+              "mean_holdout_rmse_ms": 0.2349334356642957
+            },
+            "llm": {
+              "usage_available": true,
+              "pricing_available": false,
+              "input_tokens": 779,
+              "output_tokens": 3423,
+              "total_tokens": 4202,
+              "estimated_cost_usd": null
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 1,
+              "prompt_source_step": 0,
+              "feedback_released_through_step": 0,
+              "prompt_sha256": "26c24c5559f39beb4e9c6d9dd43276332302c83d37a9c006aba4bb1c219aead9",
+              "prompt_utf8_bytes": 2887,
+              "prompt_program_utf8_bytes": 341,
+              "prompt_metrics_sha256": "1f3b924f9306f9d3726115bd6be1baedf1d7281cfc5957417ce5893b08dd8484",
+              "prompt_metrics_utf8_bytes": 106,
+              "prompt_metric_keys": "combined_score,feasibility_rate,raw_score,valid"
+            },
+            "error": null
+          }
+        ]
+      },
+      "execution_block_index": 2,
+      "within_block_position": 1
+    }
+  ],
+  "aggregate": {
+    "attempt_count": 3,
+    "superseded_attempts": 0,
+    "failed_attempts": 0,
+    "attempt_failure_rate": 0.0,
+    "recovered_runs": 0,
+    "successful_runs": 3,
+    "failed_runs": 0,
+    "intent_to_evaluate": {
+      "scheduled_runs": 3,
+      "successful_runs": 3,
+      "terminal_failed_runs": 0,
+      "completion_rate": 1.0,
+      "run_cells_with_any_failed_attempt": 0,
+      "recovered_runs": 0
+    },
+    "quality_metrics_scope": "latest successful runs only; interpret jointly with intent_to_evaluate and failed_attempts",
+    "by_condition": {
+      "DynamicalSystems/LyapunovControl|greedy_rewrite|normal": {
+        "n": 1,
+        "scheduled_n": 1,
+        "successful_runs": 1,
+        "terminal_failed_runs": 0,
+        "completion_rate": 1.0,
+        "attempt_count": 1,
+        "failed_attempts": 0,
+        "recovered_runs": 0,
+        "best_score": {
+          "n": 1,
+          "mean": 1.0,
+          "ci95_low": 1.0,
+          "ci95_high": 1.0
+        },
+        "best_so_far_auc": {
+          "n": 1,
+          "mean": 0.5,
+          "ci95_low": 0.5,
+          "ci95_high": 0.5
+        },
+        "budget_units": {
+          "n": 1,
+          "mean": 2.0,
+          "ci95_low": 2.0,
+          "ci95_high": 2.0
+        },
+        "oracle_calls": {
+          "n": 1,
+          "mean": 2.0,
+          "ci95_low": 2.0,
+          "ci95_high": 2.0
+        },
+        "wall_seconds": {
+          "n": 1,
+          "mean": 42.95826996676624,
+          "ci95_low": 42.95826996676624,
+          "ci95_high": 42.95826996676624
+        },
+        "input_tokens": {
+          "n": 1,
+          "mean": 765.0,
+          "ci95_low": 765.0,
+          "ci95_high": 765.0
+        },
+        "output_tokens": {
+          "n": 1,
+          "mean": 1966.0,
+          "ci95_low": 1966.0,
+          "ci95_high": 1966.0
+        },
+        "total_tokens": {
+          "n": 1,
+          "mean": 2731.0,
+          "ci95_low": 2731.0,
+          "ci95_high": 2731.0
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      },
+      "Geophysics/SeismicInversion|greedy_rewrite|normal": {
+        "n": 1,
+        "scheduled_n": 1,
+        "successful_runs": 1,
+        "terminal_failed_runs": 0,
+        "completion_rate": 1.0,
+        "attempt_count": 1,
+        "failed_attempts": 0,
+        "recovered_runs": 0,
+        "best_score": {
+          "n": 1,
+          "mean": 0.9981442528035113,
+          "ci95_low": 0.9981442528035113,
+          "ci95_high": 0.9981442528035113
+        },
+        "best_so_far_auc": {
+          "n": 1,
+          "mean": 0.49907212640175563,
+          "ci95_low": 0.49907212640175563,
+          "ci95_high": 0.49907212640175563
+        },
+        "budget_units": {
+          "n": 1,
+          "mean": 2.0,
+          "ci95_low": 2.0,
+          "ci95_high": 2.0
+        },
+        "oracle_calls": {
+          "n": 1,
+          "mean": 2.0,
+          "ci95_low": 2.0,
+          "ci95_high": 2.0
+        },
+        "wall_seconds": {
+          "n": 1,
+          "mean": 43.82656988874078,
+          "ci95_low": 43.82656988874078,
+          "ci95_high": 43.82656988874078
+        },
+        "input_tokens": {
+          "n": 1,
+          "mean": 779.0,
+          "ci95_low": 779.0,
+          "ci95_high": 779.0
+        },
+        "output_tokens": {
+          "n": 1,
+          "mean": 3423.0,
+          "ci95_low": 3423.0,
+          "ci95_high": 3423.0
+        },
+        "total_tokens": {
+          "n": 1,
+          "mean": 4202.0,
+          "ci95_low": 4202.0,
+          "ci95_high": 4202.0
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      },
+      "NuclearEngineering/NeutronDiffusionCriticality|greedy_rewrite|normal": {
+        "n": 1,
+        "scheduled_n": 1,
+        "successful_runs": 1,
+        "terminal_failed_runs": 0,
+        "completion_rate": 1.0,
+        "attempt_count": 1,
+        "failed_attempts": 0,
+        "recovered_runs": 0,
+        "best_score": {
+          "n": 1,
+          "mean": 0.9392365165082688,
+          "ci95_low": 0.9392365165082688,
+          "ci95_high": 0.9392365165082688
+        },
+        "best_so_far_auc": {
+          "n": 1,
+          "mean": 0.4696182582541344,
+          "ci95_low": 0.4696182582541344,
+          "ci95_high": 0.4696182582541344
+        },
+        "budget_units": {
+          "n": 1,
+          "mean": 2.0,
+          "ci95_low": 2.0,
+          "ci95_high": 2.0
+        },
+        "oracle_calls": {
+          "n": 1,
+          "mean": 2.0,
+          "ci95_low": 2.0,
+          "ci95_high": 2.0
+        },
+        "wall_seconds": {
+          "n": 1,
+          "mean": 26.73819507844746,
+          "ci95_low": 26.73819507844746,
+          "ci95_high": 26.73819507844746
+        },
+        "input_tokens": {
+          "n": 1,
+          "mean": 623.0,
+          "ci95_low": 623.0,
+          "ci95_high": 623.0
+        },
+        "output_tokens": {
+          "n": 1,
+          "mean": 1705.0,
+          "ci95_low": 1705.0,
+          "ci95_high": 1705.0
+        },
+        "total_tokens": {
+          "n": 1,
+          "mean": 2328.0,
+          "ci95_low": 2328.0,
+          "ci95_high": 2328.0
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      }
+    },
+    "overall": {
+      "best_score": {
+        "n": 3,
+        "mean": 0.9791269231039267,
+        "ci95_low": 0.8932717618662638,
+        "ci95_high": 1.0649820843415896
+      },
+      "best_so_far_auc": {
+        "n": 3,
+        "mean": 0.48956346155196334,
+        "ci95_low": 0.4466358809331319,
+        "ci95_high": 0.5324910421707948
+      },
+      "budget_units": {
+        "n": 3,
+        "mean": 2.0,
+        "ci95_low": 2.0,
+        "ci95_high": 2.0
+      },
+      "oracle_calls": {
+        "n": 3,
+        "mean": 2.0,
+        "ci95_low": 2.0,
+        "ci95_high": 2.0
+      },
+      "wall_seconds": {
+        "n": 3,
+        "mean": 37.841011644651495,
+        "ci95_low": 13.928964340824251,
+        "ci95_high": 61.75305894847874
+      },
+      "input_tokens": {
+        "n": 3,
+        "mean": 722.3333333333334,
+        "ci95_low": 507.9112937499195,
+        "ci95_high": 936.7553729167473
+      },
+      "output_tokens": {
+        "n": 3,
+        "mean": 2364.6666666666665,
+        "ci95_low": 64.6976247536868,
+        "ci95_high": 4664.635708579646
+      },
+      "total_tokens": {
+        "n": 3,
+        "mean": 3087.0,
+        "ci95_low": 636.4034067198386,
+        "ci95_high": 5537.596593280161
+      },
+      "estimated_cost_usd": {
+        "n": 0,
+        "mean": null,
+        "ci95_low": null,
+        "ci95_high": null
+      }
+    },
+    "overall_valid_only": {
+      "best_score": {
+        "n": 3,
+        "mean": 0.9791269231039267,
+        "ci95_low": 0.8932717618662638,
+        "ci95_high": 1.0649820843415896
+      },
+      "best_so_far_auc": {
+        "n": 3,
+        "mean": 0.48956346155196334,
+        "ci95_low": 0.4466358809331319,
+        "ci95_high": 0.5324910421707948
+      },
+      "budget_units": {
+        "n": 3,
+        "mean": 2.0,
+        "ci95_low": 2.0,
+        "ci95_high": 2.0
+      },
+      "oracle_calls": {
+        "n": 3,
+        "mean": 2.0,
+        "ci95_low": 2.0,
+        "ci95_high": 2.0
+      },
+      "wall_seconds": {
+        "n": 3,
+        "mean": 37.841011644651495,
+        "ci95_low": 13.928964340824251,
+        "ci95_high": 61.75305894847874
+      },
+      "input_tokens": {
+        "n": 3,
+        "mean": 722.3333333333334,
+        "ci95_low": 507.9112937499195,
+        "ci95_high": 936.7553729167473
+      },
+      "output_tokens": {
+        "n": 3,
+        "mean": 2364.6666666666665,
+        "ci95_low": 64.6976247536868,
+        "ci95_high": 4664.635708579646
+      },
+      "total_tokens": {
+        "n": 3,
+        "mean": 3087.0,
+        "ci95_low": 636.4034067198386,
+        "ci95_high": 5537.596593280161
+      },
+      "estimated_cost_usd": {
+        "n": 0,
+        "mean": null,
+        "ci95_low": null,
+        "ci95_high": null
+      }
+    }
+  },
+  "completed_at": "2026-07-26T23:57:15.889496+00:00",
+  "execution_passed": true,
+  "trust_decision": "trusted_clean_revision",
+  "trusted_evidence": true,
+  "passed": true
+}
