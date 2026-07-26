@@ -1,4 +1,4 @@
-schema_version: 1
+schema_version: 2
 scientific_question: Can a longitudinal Pb/scintillator design policy improve multi-energy resolution and linearity across changing detector regimes without becoming brittle to fabrication, calibration, dead-material, light-yield and electronics shifts?
 artifact: Three longitudinal passive/active thickness designs, one for each public areal-cost cap.
 oracle:
@@ -10,29 +10,67 @@ normalization:
   reference: separately calibrated fixed-seed nominal and worst-shift witnesses in a seven-parameter graded family
   score: development nominal multi-energy utility controls search; held-out regimes, shifts, resolution components, linearity and containment remain separate
 citations:
-  - id: doi:10.1103/RevModPhys.75.1243
-    title: Calorimetry for particle physics
-  - id: doi:10.1016/0168-9002(90)90566-O
-    title: The fast simulation of electromagnetic and hadronic showers
-  - id: doi:10.1016/0029-554X(75)90679-5
-    title: Monte Carlo calculation of photon-initiated electromagnetic showers in lead glass
-  - id: doi:10.1016/0168-9002(89)90571-8
-    title: On the energy resolution of electromagnetic sampling calorimeters
-  - id: doi:10.1016/0168-9002(92)90495-P
-    title: Optimization of electromagnetic sampling calorimeters
+- id: doi:10.1103/RevModPhys.75.1243
+  title: Calorimetry for particle physics
+- id: doi:10.1016/0168-9002(90)90566-O
+  title: The fast simulation of electromagnetic and hadronic showers
+- id: doi:10.1016/0029-554X(75)90679-5
+  title: Monte Carlo calculation of photon-initiated electromagnetic showers in lead glass
+- id: doi:10.1016/0168-9002(89)90571-8
+  title: On the energy resolution of electromagnetic sampling calorimeters
+- id: doi:10.1016/0168-9002(92)90495-P
+  title: Optimization of electromagnetic sampling calorimeters
 invariants:
-  - the shower density integrates to the regularized-gamma CDF and its maximum moves deeper with log energy
-  - radiation-length, lead areal-mass and active-volume cost identities are dimensionally explicit
-  - containment is nondecreasing with calorimeter depth at fixed energy
-  - with leakage, noise and constant terms removed, the stochastic resolution follows one over square-root energy
-  - every returned archive row is finite, in bounds, unique and obeys its public depth, mass, length and cost envelope
-  - the weak uniform baseline is valid and has zero normalized nominal and robust score by construction
-  - separately replayable nominal and robust witnesses improve their matching baseline utilities for every cost cap and regime
-  - nominal witnesses expose a construction-envelope failure under sealed overbuild while robust witnesses preserve every shifted envelope
-  - malformed, non-finite, complex, duplicate, out-of-bound and over-budget artifacts fail closed
-  - every scientific instance receives fresh candidate process and private temporary-filesystem state
-  - held-out, shift, resolution-component, linearity, containment and per-instance metrics remain evaluator-only
+- the shower density integrates to the regularized-gamma CDF and its maximum moves deeper with log energy
+- radiation-length, lead areal-mass and active-volume cost identities are dimensionally explicit
+- containment is nondecreasing with calorimeter depth at fixed energy
+- with leakage, noise and constant terms removed, the stochastic resolution follows one over square-root energy
+- every returned archive row is finite, in bounds, unique and obeys its public depth, mass, length and cost envelope
+- the weak uniform baseline is valid and has zero normalized nominal and robust score by construction
+- separately replayable nominal and robust witnesses improve their matching baseline utilities for every cost cap and regime
+- nominal witnesses expose a construction-envelope failure under sealed overbuild while robust witnesses preserve every shifted envelope
+- malformed, non-finite, complex, duplicate, out-of-bound and over-budget artifacts fail closed
+- every scientific instance receives fresh candidate process and private temporary-filesystem state
+- held-out, shift, resolution-component, linearity, containment and per-instance metrics remain evaluator-only
 known_shortcuts: The deterministic repository-visible reduced-order model omits lateral development, interfaces, non-compensation, saturation, cross-talk, structural mechanics and event-level detector simulation. Reference witnesses are reproducible anchors, not global optima or experimental SOTA. Server-held regimes, GEANT4/test-beam replication and independent detector-physics review remain required.
 review:
   domain: pending_external
   evaluator_security: automated_invariant_sandbox_and_metric_sealing_tests
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic simulator or generator with development and held-out, shifted, or misspecified instances.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Specific parameters may be held out, but the task family, simulator, and scaffold are visible and builder-model independence has not been established.
+lineage:
+  status: incomplete_legacy
+  builder_model_ids:
+  - unknown_legacy_builder
+  builder_scaffolds:
+  - unknown_legacy_scaffold
+  calibrator_model_ids:
+  - azure-responses:gpt-5.5
+  calibration_runs:
+  - experiments/gpt55_calorimeter_v2_b1_2026-07-25.json
+  - experiments/gpt55_calorimeter_v2_b3_2026-07-25.json
+  - experiments/gpt55_calorimeter_v2_blind_b3_2026-07-25.json
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: Not exhaustively reconstructed; use the task certification reason, dated calibration analyses, and Git history as the retained record.
+  shortcut_discoverer: mixed_automated_red_team_and_gpt5.5_calibration
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: incomplete_legacy
+  author_domain: unknown_legacy
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: null
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: see_task_invariants_and_calibration_evidence

@@ -1,4 +1,4 @@
-schema_version: 1
+schema_version: 2
 scientific_question: Can an agent allocate a finite sequencing budget, recover a supported constant or three-epoch population history from unfolded site-frequency spectra, and refuse panels with resolvable ancestral-state polarization error?
 artifact: Four fixed-scale demographic shape parameters, calibrated confidence or abstention, and a charged sample-size/replicate sequencing policy.
 oracle:
@@ -10,27 +10,65 @@ normalization:
   reference: exact constant or four-parameter history on supported worlds and correct refusal on polarization-error worlds
   score: development mechanism normalized above always abstaining; observed-SFS fit, evaluator-only sample-size prediction, held-out worlds, confidence and false discovery remain separate
 citations:
-  - id: doi:10.1371/journal.pgen.1000695
-    title: Inferring the Joint Demographic History of Multiple Populations from Multidimensional SNP Frequency Data
-  - id: doi:10.1534/genetics.117.200493
-    title: "Inferring the Joint Demographic History of Multiple Populations: Beyond the Diffusion Approximation"
-  - id: doi:10.1016/j.tpb.2008.01.001
-    title: Can one learn history from the allelic spectrum?
-  - id: doi:10.1214/14-AOS1264
-    title: Descartes' rule of signs and the identifiability of population demographic models from genomic variation data
-  - id: doi:10.1073/pnas.1503717112
-    title: Fundamental limits on the accuracy of demographic inference based on the sample frequency spectrum
+- id: doi:10.1371/journal.pgen.1000695
+  title: Inferring the Joint Demographic History of Multiple Populations from Multidimensional SNP Frequency Data
+- id: doi:10.1534/genetics.117.200493
+  title: 'Inferring the Joint Demographic History of Multiple Populations: Beyond the Diffusion Approximation'
+- id: doi:10.1016/j.tpb.2008.01.001
+  title: Can one learn history from the allelic spectrum?
+- id: doi:10.1214/14-AOS1264
+  title: Descartes' rule of signs and the identifiability of population demographic models from genomic variation data
+- id: doi:10.1073/pnas.1503717112
+  title: Fundamental limits on the accuracy of demographic inference based on the sample frequency spectrum
 invariants:
-  - constant-size CTMC occupancy recovers the analytical theta/i unfolded SFS
-  - an independent lineage-state ODE/quadrature implementation reproduces piecewise-constant expected spectra
-  - supported histories have full-rank scaled sensitivities under the registered reference sequencing design
-  - exact supported parameters and correct unsupported refusals score one on both splits
-  - constant-size histories are recognized as an identifiable nested mechanism while resolvable ancestral-state polarization error rewards abstention
-  - four-epoch and population-mixture near-equivalences are retained as calibration limits rather than forced-refusal labels
-  - invalid sample size, replicate count, budget overspend, malformed artifact and non-finite values fail closed
-  - every hidden world receives a fresh candidate process and private temporary filesystem
-  - observed-SFS fit, mechanism recovery, held-out sample-size prediction, confidence, coverage and false discovery remain separate evaluator metrics
+- constant-size CTMC occupancy recovers the analytical theta/i unfolded SFS
+- an independent lineage-state ODE/quadrature implementation reproduces piecewise-constant expected spectra
+- supported histories have full-rank scaled sensitivities under the registered reference sequencing design
+- exact supported parameters and correct unsupported refusals score one on both splits
+- constant-size histories are recognized as an identifiable nested mechanism while resolvable ancestral-state polarization error rewards abstention
+- four-epoch and population-mixture near-equivalences are retained as calibration limits rather than forced-refusal labels
+- invalid sample size, replicate count, budget overspend, malformed artifact and non-finite values fail closed
+- every hidden world receives a fresh candidate process and private temporary filesystem
+- observed-SFS fit, mechanism recovery, held-out sample-size prediction, confidence, coverage and false discovery remain separate evaluator metrics
 known_shortcuts: The oracle assumes a single panmictic neutral population, independent loci, known ancestral allele, known mutation scale and piecewise-constant history. It omits recombination/linkage, selection, migration, structure, ascertainment error and ancestral-state error. Public deterministic seeds require a future server-held split; real demographic claims require sequence-data QC, linkage-aware uncertainty, competing models and independent population-genetics review.
 review:
   domain: pending_external
   evaluator_security: automated_equation_identifiability_budget_refusal_sandbox_fresh_session_and_metric_sealing_tests
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic simulator or generator with development and held-out, shifted, or misspecified instances.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Specific parameters may be held out, but the task family, simulator, and scaffold are visible and builder-model independence has not been established.
+lineage:
+  status: incomplete_legacy
+  builder_model_ids:
+  - unknown_legacy_builder
+  builder_scaffolds:
+  - unknown_legacy_scaffold
+  calibrator_model_ids:
+  - azure-responses:gpt-5.5
+  calibration_runs:
+  - experiments/gpt55_demographic_sfs_v2_b1_2026-07-25.json
+  - experiments/gpt55_demographic_sfs_v2_b3_2026-07-25.json
+  - experiments/gpt55_demographic_sfs_v2_blind_b3_2026-07-25.json
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: Not exhaustively reconstructed; use the task certification reason, dated calibration analyses, and Git history as the retained record.
+  shortcut_discoverer: mixed_automated_red_team_and_gpt5.5_calibration
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: incomplete_legacy
+  author_domain: unknown_legacy
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: null
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: see_task_invariants_and_calibration_evidence

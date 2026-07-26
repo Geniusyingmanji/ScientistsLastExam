@@ -1,4 +1,4 @@
-schema_version: 1
+schema_version: 2
 scientific_question: Can one sizing policy reduce truss weight across varying geometries and materials while retaining stress, displacement and Euler-buckling feasibility under load, material and manufacturing shifts?
 artifact: One intended cross-sectional area per supplied planar-truss member.
 oracle:
@@ -10,19 +10,57 @@ normalization:
   reference: independently calibrated multistart feasible nominal and robust local witnesses
   score: nominal development weight reduction controls search; held-out topology transfer and shifted physical robustness remain separate
 citations:
-  - id: doi:10.2514/3.49321
-    title: Some approximation concepts for structural synthesis
-  - id: doi:10.1007/BF01376857
-    title: Difficulties in truss topology optimization with stress and local buckling constraints
+- id: doi:10.2514/3.49321
+  title: Some approximation concepts for structural synthesis
+- id: doi:10.1007/BF01376857
+  title: Difficulties in truss topology optimization with stress and local buckling constraints
 invariants:
-  - member strain and stress are invariant to rigid translation of the solved displacement field
-  - assembled stiffness is symmetric and reactions plus external loads satisfy force balance
-  - canonical two-bay topology has ten unique undirected members
-  - all-maximum baselines satisfy nominal and every evaluator-only shifted scenario
-  - nominal and robust reference witnesses independently satisfy their declared constraints
-  - non-finite, wrong-length, out-of-bound, singular and nominally infeasible designs fail closed
-  - held-out and shifted metrics remain evaluator-only
+- member strain and stress are invariant to rigid translation of the solved displacement field
+- assembled stiffness is symmetric and reactions plus external loads satisfy force balance
+- canonical two-bay topology has ten unique undirected members
+- all-maximum baselines satisfy nominal and every evaluator-only shifted scenario
+- nominal and robust reference witnesses independently satisfy their declared constraints
+- non-finite, wrong-length, out-of-bound, singular and nominally infeasible designs fail closed
+- held-out and shifted metrics remain evaluator-only
 known_shortcuts: Linear pin-jointed FEM omits joint rigidity, geometric and material nonlinearity, fatigue, connection design, self-weight and code load combinations. Public deterministic families require future server-held instances; engineering claims require nonlinear finite-element and domain-expert replication. Reference witnesses are local feasible designs, not proofs of global optimality.
 review:
   domain: pending_external
   evaluator_security: automated_invariant_sandbox_and_metric_sealing_tests
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic simulator or generator with development and held-out, shifted, or misspecified instances.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Specific parameters may be held out, but the task family, simulator, and scaffold are visible and builder-model independence has not been established.
+lineage:
+  status: incomplete_legacy
+  builder_model_ids:
+  - unknown_legacy_builder
+  builder_scaffolds:
+  - unknown_legacy_scaffold
+  calibrator_model_ids:
+  - azure-responses:gpt-5.5
+  calibration_runs:
+  - experiments/gpt55_truss_v2_b1_2026-07-21.json
+  - experiments/gpt55_truss_v2_b3_2026-07-21.json
+  - experiments/gpt55_truss_v2_blind_b3_2026-07-21.json
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: Not exhaustively reconstructed; use the task certification reason, dated calibration analyses, and Git history as the retained record.
+  shortcut_discoverer: mixed_automated_red_team_and_gpt5.5_calibration
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: incomplete_legacy
+  author_domain: unknown_legacy
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: null
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: see_task_invariants_and_calibration_evidence

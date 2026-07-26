@@ -1,4 +1,4 @@
-schema_version: 1
+schema_version: 2
 scientific_question: Can a policy choose the junction count, band gaps and finite optical depths of a series tandem across fabrication budgets without becoming brittle to spectrum, temperature and manufacturing shifts?
 artifact: Three budget-conditioned one-to-four-junction designs containing ordered band gaps and finite optical depths.
 oracle:
@@ -10,37 +10,75 @@ normalization:
   reference: separately calibrated fixed-seed nominal and worst-shift same-model witnesses over junction count, band gaps and optical depths
   score: development mean nominal efficiency improvement controls search; held-out spectra, worst shifts, absolute efficiency, current matching, cost and junction count remain separate
 citations:
-  - id: doi:10.1063/1.1736034
-    title: Detailed Balance Limit of Efficiency of p-n Junction Solar Cells
-  - id: doi:10.1088/0022-3727/13/5/018
-    title: Detailed balance limit of the efficiency of tandem solar cells
-  - id: doi:10.1063/1.328272
-    title: Limiting efficiencies of ideal single and multiple energy gap terrestrial solar cells
-  - id: doi:10.1016/j.solener.2016.02.015
-    title: Tabulated values of the Shockley-Queisser limit for single junction solar cells
-  - id: doi:10.1002/pip.1156
-    title: Limiting photovoltaic efficiency under new ASTM International G173-based reference spectra
-  - id: doi:10.1002/pip.2943
-    title: Spectral binning for energy production calculations and multijunction solar cell design
-  - id: doi:10.1109/PVSC.2017.8366786
-    title: Spectral and Concentration Sensitivity of Multijunction Solar Cells at High Temperature
-  - id: doi:10.21105/joss.00884
-    title: pvlib python, a python package for modeling solar energy systems
+- id: doi:10.1063/1.1736034
+  title: Detailed Balance Limit of Efficiency of p-n Junction Solar Cells
+- id: doi:10.1088/0022-3727/13/5/018
+  title: Detailed balance limit of the efficiency of tandem solar cells
+- id: doi:10.1063/1.328272
+  title: Limiting efficiencies of ideal single and multiple energy gap terrestrial solar cells
+- id: doi:10.1016/j.solener.2016.02.015
+  title: Tabulated values of the Shockley-Queisser limit for single junction solar cells
+- id: doi:10.1002/pip.1156
+  title: Limiting photovoltaic efficiency under new ASTM International G173-based reference spectra
+- id: doi:10.1002/pip.2943
+  title: Spectral binning for energy production calculations and multijunction solar cell design
+- id: doi:10.1109/PVSC.2017.8366786
+  title: Spectral and Concentration Sensitivity of Multijunction Solar Cells at High Temperature
+- id: doi:10.21105/joss.00884
+  title: pvlib python, a python package for modeling solar energy systems
 invariants:
-  - the 2002-row ASTM-G173-derived data bundle is pinned to pvlib-python v0.13.1 commit and exact upstream and generated SHA-256 hashes under BSD-3-Clause
-  - the global-tilt spectrum integrates to approximately 1000.37 watts per square metre on the stored wavelength grid
-  - independent detailed-balance integration reproduces canonical ideal one-through-four-junction efficiency limits within the registered discretization tolerance
-  - absorptance is zero below the band gap and monotone in optical depth and photon excess energy
-  - transmitted photon flux is nonnegative and decreases after every junction
-  - series operating current never exceeds any junction short-circuit current and reported maximum power is no lower than endpoint power
-  - every archive row is finite, ordered, within bounds, distinct and obeys its public fabrication budget
-  - the weak single-junction baseline is valid and has zero normalized nominal and robust score by construction
-  - separately replayable nominal and robust witnesses improve their matching baseline for every cap and regime
-  - public problems expose observable spectra and budgets but no split, seed, shifts, references or normalization values
-  - every scientific regime receives a fresh candidate process and private temporary-filesystem state
-  - held-out, robustness, physical-efficiency, current-matching, cost, junction-count and per-regime metrics remain evaluator-only
-  - malformed, complex, non-finite, unordered, duplicate, out-of-bound and over-budget artifacts fail closed
+- the 2002-row ASTM-G173-derived data bundle is pinned to pvlib-python v0.13.1 commit and exact upstream and generated SHA-256 hashes under BSD-3-Clause
+- the global-tilt spectrum integrates to approximately 1000.37 watts per square metre on the stored wavelength grid
+- independent detailed-balance integration reproduces canonical ideal one-through-four-junction efficiency limits within the registered discretization tolerance
+- absorptance is zero below the band gap and monotone in optical depth and photon excess energy
+- transmitted photon flux is nonnegative and decreases after every junction
+- series operating current never exceeds any junction short-circuit current and reported maximum power is no lower than endpoint power
+- every archive row is finite, ordered, within bounds, distinct and obeys its public fabrication budget
+- the weak single-junction baseline is valid and has zero normalized nominal and robust score by construction
+- separately replayable nominal and robust witnesses improve their matching baseline for every cap and regime
+- public problems expose observable spectra and budgets but no split, seed, shifts, references or normalization values
+- every scientific regime receives a fresh candidate process and private temporary-filesystem state
+- held-out, robustness, physical-efficiency, current-matching, cost, junction-count and per-regime metrics remain evaluator-only
+- malformed, complex, non-finite, unordered, duplicate, out-of-bound and over-budget artifacts fail closed
 known_shortcuts: The deterministic repository-visible reduced-order model omits non-radiative recombination, transport, interfaces, tunnel junctions, luminescent coupling, resistance, thermal balance, actual material availability and manufacturing yield. Fixed spectra and same-model search witnesses are contamination and simulator-overfitting risks. References are normalization anchors, not global optima, certified records or experimental SOTA.
 review:
   domain: pending_external_photovoltaics
   evaluator_security: automated_hash_provenance_independent_physics_reference_replay_fresh_sandbox_fail_closed_and_metric_sealing_tests
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic simulator or generator with development and held-out, shifted, or misspecified instances.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Specific parameters may be held out, but the task family, simulator, and scaffold are visible and builder-model independence has not been established.
+lineage:
+  status: incomplete_legacy
+  builder_model_ids:
+  - unknown_legacy_builder
+  builder_scaffolds:
+  - unknown_legacy_scaffold
+  calibrator_model_ids:
+  - azure-responses:gpt-5.5
+  calibration_runs:
+  - experiments/gpt55_photovoltaic_tandem_v1_b1_2026-07-25.json
+  - experiments/gpt55_photovoltaic_tandem_v1_b3_2026-07-25.json
+  - experiments/gpt55_photovoltaic_tandem_v1_blind_b3_2026-07-25.json
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: Not exhaustively reconstructed; use the task certification reason, dated calibration analyses, and Git history as the retained record.
+  shortcut_discoverer: mixed_automated_red_team_and_gpt5.5_calibration
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: incomplete_legacy
+  author_domain: unknown_legacy
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: null
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: see_task_invariants_and_calibration_evidence

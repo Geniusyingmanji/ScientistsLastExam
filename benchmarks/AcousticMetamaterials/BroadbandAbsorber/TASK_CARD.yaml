@@ -1,4 +1,4 @@
-schema_version: 1
+schema_version: 2
 scientific_question: Can one geometry policy distribute subwavelength Helmholtz cells across changing bands and thickness limits while retaining broadband absorption under angle, air-property and manufacturing shifts?
 artifact: One cavity depth, neck length and neck radius per equal-area panel cell.
 oracle:
@@ -11,24 +11,62 @@ normalization:
   reference: separately calibrated fixed-seed nominal and worst-shift witnesses in a four-parameter log-spaced-resonance family
   score: development nominal broadband utility controls search; proxy agreement, held-out bands and physical shifts remain separate
 citations:
-  - id: doi:10.1121/1.400379
-    title: The propagation of plane sound waves in narrow and wide circular tubes, and generalization to uniform tubes of arbitrary cross-sectional shape
-  - id: doi:10.1063/1.4962328
-    title: Ultra-thin metamaterial for perfect and quasi-omnidirectional sound absorption
-  - id: doi:10.1063/1.4941338
-    title: Acoustic metasurface-based perfect absorber with deep subwavelength thickness
+- id: doi:10.1121/1.400379
+  title: The propagation of plane sound waves in narrow and wide circular tubes, and generalization to uniform tubes of arbitrary cross-sectional shape
+- id: doi:10.1063/1.4962328
+  title: Ultra-thin metamaterial for perfect and quasi-omnidirectional sound absorption
+- id: doi:10.1063/1.4941338
+  title: Acoustic metasurface-based perfect absorber with deep subwavelength thickness
 invariants:
-  - each returned row is finite, in bounds and obeys the public total-depth constraint
-  - exact and proxy cell impedances have nonnegative resistance over every benchmark band
-  - zero resistance mismatch cannot create absorption above one or below zero
-  - the weak baseline is valid and has normalized nominal score zero by construction
-  - nominal and robust reference witnesses strictly improve their corresponding weak-baseline utilities in every instance
-  - manufacturing shifts that leave the hard panel envelope receive zero shifted utility without changing nominal artifact validity
-  - the circular-tube dynamic-density implementation agrees with an independent scalar Bessel implementation
-  - non-finite, malformed and out-of-bound geometry fails closed
-  - every scientific instance receives fresh candidate process and private temporary-filesystem state
-  - held-out, proxy/exact-gap and shifted metrics remain evaluator-only
+- each returned row is finite, in bounds and obeys the public total-depth constraint
+- exact and proxy cell impedances have nonnegative resistance over every benchmark band
+- zero resistance mismatch cannot create absorption above one or below zero
+- the weak baseline is valid and has normalized nominal score zero by construction
+- nominal and robust reference witnesses strictly improve their corresponding weak-baseline utilities in every instance
+- manufacturing shifts that leave the hard panel envelope receive zero shifted utility without changing nominal artifact validity
+- the circular-tube dynamic-density implementation agrees with an independent scalar Bessel implementation
+- non-finite, malformed and out-of-bound geometry fails closed
+- every scientific instance receives fresh candidate process and private temporary-filesystem state
+- held-out, proxy/exact-gap and shifted metrics remain evaluator-only
 known_shortcuts: The locally reacting reduced-order model omits thermal boundary-layer loss, inter-cell coupling, structural elasticity, grazing flow, nonlinear response and fabrication detail. Fixed procedural instances require future server-held bands and geometries. Engineering claims require thermoviscous finite-element and impedance-tube replication. Reference witnesses are reproducible anchors, not global optima.
 review:
   domain: pending_external
   evaluator_security: automated_invariant_sandbox_and_metric_sealing_tests
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic simulator or generator with development and held-out, shifted, or misspecified instances.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Specific parameters may be held out, but the task family, simulator, and scaffold are visible and builder-model independence has not been established.
+lineage:
+  status: incomplete_legacy
+  builder_model_ids:
+  - unknown_legacy_builder
+  builder_scaffolds:
+  - unknown_legacy_scaffold
+  calibrator_model_ids:
+  - azure-responses:gpt-5.5
+  calibration_runs:
+  - experiments/gpt55_absorber_v2_b1_2026-07-23.json
+  - experiments/gpt55_absorber_v2_b3_2026-07-23.json
+  - experiments/gpt55_absorber_v2_blind_b3_2026-07-23.json
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: Not exhaustively reconstructed; use the task certification reason, dated calibration analyses, and Git history as the retained record.
+  shortcut_discoverer: mixed_automated_red_team_and_gpt5.5_calibration
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: incomplete_legacy
+  author_domain: unknown_legacy
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: null
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: see_task_invariants_and_calibration_evidence

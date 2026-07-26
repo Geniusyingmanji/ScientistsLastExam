@@ -1,4 +1,4 @@
-schema_version: 1
+schema_version: 2
 scientific_question: Can an agent screen registered and published studies by participant lineage, detect duplicate and outcome-selective reports, synthesize heterogeneous evidence, commit a calibrated forecast, and choose a fresh prospective confirmation study?
 artifact: An executable registry/publication screening, linear random-effects meta-regression, immutable claim/forecast/study-design commit and post-confirmation update policy.
 oracle:
@@ -10,31 +10,69 @@ normalization:
   reference: truth-blind registry-first REML-style meta-regression, outcome/lineage audit, information-cost next-study design, preregistered prediction interval, nonlinear-family refusal and fresh-result update
   score: evidence integrity, mechanism, prediction, decision/refusal, forecast distribution, next-study information and post-confirmation update remain separate; the minimum defines robustness
 citations:
-  - id: doi:10.1016/0197-2456(86)90046-2
-    title: Meta-analysis in clinical trials
-  - id: doi:10.1002/sim.1186
-    title: Quantifying heterogeneity in a meta-analysis
-  - id: doi:10.1002/sim.1482
-    title: Improved tests for a random effects meta-regression with a single covariate
-  - id: doi:10.1001/jama.291.8.974
-    title: Different Patterns of Duplicate Publication
-  - id: doi:10.1001/jama.291.20.2457
-    title: Empirical Evidence for Selective Reporting of Outcomes in Randomized Trials
-  - id: doi:10.1136/bmj.l5342
-    title: A guide to prospective meta-analysis
-  - id: doi:10.1136/bmj.n71
-    title: The PRISMA 2020 statement
+- id: doi:10.1016/0197-2456(86)90046-2
+  title: Meta-analysis in clinical trials
+- id: doi:10.1002/sim.1186
+  title: Quantifying heterogeneity in a meta-analysis
+- id: doi:10.1002/sim.1482
+  title: Improved tests for a random effects meta-regression with a single covariate
+- id: doi:10.1001/jama.291.8.974
+  title: Different Patterns of Duplicate Publication
+- id: doi:10.1001/jama.291.20.2457
+  title: Empirical Evidence for Selective Reporting of Outcomes in Randomized Trials
+- id: doi:10.1136/bmj.l5342
+  title: A guide to prospective meta-analysis
+- id: doi:10.1136/bmj.n71
+  title: The PRISMA 2020 statement
 invariants:
-  - registry-primary records sharing a registration are one statistical participant lineage regardless of article count
-  - the preregistered primary endpoint rather than the publication-highlighted outcome defines the effect estimate
-  - registry-first screening recovers eligible unpublished/null lineages and rejects wrong population, comparator or nonrandomized records
-  - supported linear worlds and resolvable nonlinear worlds share publication and noise mechanisms so refusal cannot use a public type label
-  - the prospective study result is unavailable until site, sample size, screening, model, claim and prediction interval are committed
-  - the returned confirmation commit must byte-for-structure equal the object submitted before the result
-  - duplicate confirmation calls, infeasible sample sizes, malformed IDs and non-finite or inconsistent artifacts fail closed
-  - every corpus receives a fresh candidate process and private temporary filesystem
-  - evidence integrity, mechanism, prediction, false discovery, forecast calibration, information gain and confirmation remain evaluator-only
+- registry-primary records sharing a registration are one statistical participant lineage regardless of article count
+- the preregistered primary endpoint rather than the publication-highlighted outcome defines the effect estimate
+- registry-first screening recovers eligible unpublished/null lineages and rejects wrong population, comparator or nonrandomized records
+- supported linear worlds and resolvable nonlinear worlds share publication and noise mechanisms so refusal cannot use a public type label
+- the prospective study result is unavailable until site, sample size, screening, model, claim and prediction interval are committed
+- the returned confirmation commit must byte-for-structure equal the object submitted before the result
+- duplicate confirmation calls, infeasible sample sizes, malformed IDs and non-finite or inconsistent artifacts fail closed
+- every corpus receives a fresh candidate process and private temporary filesystem
+- evidence integrity, mechanism, prediction, false discovery, forecast calibration, information gain and confirmation remain evaluator-only
 known_shortcuts: The worlds are synthetic standardized-effect summaries with known registry linkage and omit full-text extraction, covariance between multiple endpoints, cluster trials, missing-data handling, risk-of-bias judgments, individual participant data, living-review search drift and clinical utility. Public fixed generators require server-held families. Real evidence claims require domain experts, source documents, protocol registration and genuinely independent prospective confirmation.
 review:
   domain: pending_external_research_synthesis_and_biostatistics
   evaluator_security: automated_lineage_primary_endpoint_misspecification_commit_confirmation_sandbox_fresh_session_metric_sealing_and_fail_closed_tests
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic simulator or generator with development and held-out, shifted, or misspecified instances.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Specific parameters may be held out, but the task family, simulator, and scaffold are visible and builder-model independence has not been established.
+lineage:
+  status: incomplete_legacy
+  builder_model_ids:
+  - unknown_legacy_builder
+  builder_scaffolds:
+  - unknown_legacy_scaffold
+  calibrator_model_ids:
+  - azure-responses:gpt-5.5
+  calibration_runs:
+  - experiments/gpt55_prospective_meta_v1_b1_2026-07-25.json
+  - experiments/gpt55_prospective_meta_v1_b3_2026-07-25.json
+  - experiments/gpt55_prospective_meta_v1_blind_b3_2026-07-25.json
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: Not exhaustively reconstructed; use the task certification reason, dated calibration analyses, and Git history as the retained record.
+  shortcut_discoverer: mixed_automated_red_team_and_gpt5.5_calibration
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: incomplete_legacy
+  author_domain: unknown_legacy
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: null
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: see_task_invariants_and_calibration_evidence

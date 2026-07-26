@@ -1,4 +1,4 @@
-schema_version: 1
+schema_version: 2
 scientific_question: Can one deterministic numerical policy find low-energy internally stable closed-shell finite-basis Hartree-Fock occupied spaces across equilibrium, stretched, chain, ring, heteronuclear and polyatomic molecular regimes?
 artifact: A finite real n_ao by n_occupied matrix of overlap-orthonormal occupied spatial-orbital coefficients.
 oracle:
@@ -10,35 +10,73 @@ normalization:
   reference: lowest internally stable fixed-seed multistart PySCF RHF witness among 97 starts for each frozen finite-basis Hamiltonian; independently replayed with NumPy/SciPy equations and not claimed globally optimal
   score: mean nominal development energy/residual utility is rescaled above the conventional policy; held-out molecules, physical geometry shifts, AO representation changes and occupied-virtual stability remain separate evaluator-only axes
 citations:
-  - id: doi:10.1103/RevModPhys.23.69
-    title: New Developments in Molecular Orbital Theory
-  - id: doi:10.1016/0009-2614(80)80396-4
-    title: Convergence acceleration of iterative sequences. The case of SCF iteration
-  - id: doi:10.1063/1.434318
-    title: Self-consistent molecular orbital methods. XVIII. Constraints and stability in Hartree-Fock theory
-  - id: doi:10.1063/1.1672392
-    title: Self-Consistent Molecular-Orbital Methods. I. Use of Gaussian Expansions of Slater-Type Atomic Orbitals
-  - id: doi:10.1063/1.438955
-    title: Self-consistent molecular orbital methods. XX. A basis set for correlated wave functions
-  - id: doi:10.1002/wcms.1340
-    title: PySCF, the Python-based simulations of chemistry framework
-  - id: doi:10.1063/5.0006074
-    title: Recent developments in the PySCF program package
+- id: doi:10.1103/RevModPhys.23.69
+  title: New Developments in Molecular Orbital Theory
+- id: doi:10.1016/0009-2614(80)80396-4
+  title: Convergence acceleration of iterative sequences. The case of SCF iteration
+- id: doi:10.1063/1.434318
+  title: Self-consistent molecular orbital methods. XVIII. Constraints and stability in Hartree-Fock theory
+- id: doi:10.1063/1.1672392
+  title: Self-Consistent Molecular-Orbital Methods. I. Use of Gaussian Expansions of Slater-Type Atomic Orbitals
+- id: doi:10.1063/1.438955
+  title: Self-consistent molecular orbital methods. XX. A basis set for correlated wave functions
+- id: doi:10.1002/wcms.1340
+  title: PySCF, the Python-based simulations of chemistry framework
+- id: doi:10.1063/5.0006074
+  title: Recent developments in the PySCF program package
 invariants:
-  - every accepted occupied space is finite, real, has the exact public dimensions and is orthonormal in the supplied AO overlap metric
-  - every accepted density has the public closed-shell electron count and is idempotent in an orthonormal representation
-  - every nominal score is recomputed from the public integrals and gated by the Roothaan-Hall commutator residual
-  - frozen reference energies and coefficients are reproduced by independent NumPy/SciPy density, Fock, energy and residual calculations
-  - fixed-seed multistart references are internally stable under occupied-virtual rotations; no global or correlated-energy claim is made
-  - a feasible solution below a stored reference is accepted and clips at full score rather than being rejected
-  - the conventional baseline is valid and deterministic but retains a lower-energy internally stable symmetry-broken solution on the hard ring regime
-  - transformed-problem energy and the AO-mapped occupied density are invariant under permutations and dense nonsingular changes of basis
-  - nearby physical shifts use freshly generated molecular overlap, one-electron, two-electron and nuclear-repulsion integrals rather than arbitrary tensor noise
-  - failure on evaluator-only shifts or representation checks cannot change nominal validity or the search-visible score
-  - wrong-shape, non-finite, non-real, nonorthonormal and non-self-consistent nominal artifacts fail closed
-  - every molecular problem and validation transformation receives a fresh candidate process and private temporary-filesystem state
-  - development selection metrics are separated from held-out transfer, physical-shift, representation-invariance and stability diagnostics
+- every accepted occupied space is finite, real, has the exact public dimensions and is orthonormal in the supplied AO overlap metric
+- every accepted density has the public closed-shell electron count and is idempotent in an orthonormal representation
+- every nominal score is recomputed from the public integrals and gated by the Roothaan-Hall commutator residual
+- frozen reference energies and coefficients are reproduced by independent NumPy/SciPy density, Fock, energy and residual calculations
+- fixed-seed multistart references are internally stable under occupied-virtual rotations; no global or correlated-energy claim is made
+- a feasible solution below a stored reference is accepted and clips at full score rather than being rejected
+- the conventional baseline is valid and deterministic but retains a lower-energy internally stable symmetry-broken solution on the hard ring regime
+- transformed-problem energy and the AO-mapped occupied density are invariant under permutations and dense nonsingular changes of basis
+- nearby physical shifts use freshly generated molecular overlap, one-electron, two-electron and nuclear-repulsion integrals rather than arbitrary tensor noise
+- failure on evaluator-only shifts or representation checks cannot change nominal validity or the search-visible score
+- wrong-shape, non-finite, non-real, nonorthonormal and non-self-consistent nominal artifacts fail closed
+- every molecular problem and validation transformation receives a fresh candidate process and private temporary-filesystem state
+- development selection metrics are separated from held-out transfer, physical-shift, representation-invariance and stability diagnostics
 known_shortcuts: The seven frozen small closed-shell systems use STO-3G or 6-31G bases and expose their complete finite-basis Hamiltonians. Programs can branch on these public matrices, so future release work needs server-held procedural molecules, geometries and basis families. RHF omits electron correlation and may be qualitatively wrong under bond stretching; only internal real-RHF stability is scored. Multistart witnesses are reproducible stationary points, not proofs of the global RHF minimum. Chemical claims require larger-basis and correlated-method replication plus independent domain review.
 review:
   domain: pending_external
   evaluator_security: automated_equation_reference_stability_representation_physical_shift_fail_closed_metric_sealing_and_fresh_session_tests
+provenance:
+  class: known_answer
+  target_source: Published or repository-visible fixed targets, reference values, or standard solution families available before evaluation.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: high
+  rationale: Success may reproduce a known numerical method, design pattern, or published target; it is reconstruction/optimization evidence rather than a novel scientific discovery.
+lineage:
+  status: incomplete_legacy
+  builder_model_ids:
+  - unknown_legacy_builder
+  builder_scaffolds:
+  - unknown_legacy_scaffold
+  calibrator_model_ids:
+  - azure-responses:gpt-5.5
+  calibration_runs:
+  - experiments/gpt55_hartree_fock_v2_b1_2026-07-23.json
+  - experiments/gpt55_hartree_fock_v2_b3_2026-07-23.json
+  - experiments/gpt55_hartree_fock_v2_blind_b3_2026-07-23.json
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: Not exhaustively reconstructed; use the task certification reason, dated calibration analyses, and Git history as the retained record.
+  shortcut_discoverer: mixed_automated_red_team_and_gpt5.5_calibration
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: incomplete_legacy
+  author_domain: unknown_legacy
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: null
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: see_task_invariants_and_calibration_evidence

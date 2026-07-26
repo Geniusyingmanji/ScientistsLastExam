@@ -1,4 +1,4 @@
-schema_version: 1
+schema_version: 2
 scientific_question: Recover a signed nonlinear dynamic gene-regulatory network through active CRISPRi/a-like perturbations, design a sparse phenotype intervention, and refuse when the public network family is unsupported.
 artifact: Signed source-by-target weights, kinetic parameters, a calibrated nontrivial-network or model-family claim, and a sparse intervention on actionable regulators of a protected phenotype readout.
 oracle:
@@ -10,22 +10,60 @@ normalization:
   reference: exact signed network and kinetic parameters, correct unsupported-world refusal, and a truth-only grid intervention used only for invariant calibration
   score: development geometric joint of mechanism, sealed prediction and phenotype utility normalized above always-abstain; intervention transfer and held-out panels remain separate
 citations:
-  - id: doi:10.1126/science.1081900
-    title: Inferring Genetic Networks and Identifying Compound Mode of Action via Expression Profiling
-  - id: doi:10.1016/j.cell.2014.09.029
-    title: Genome-Scale CRISPR-Mediated Control of Gene Repression and Activation
-  - id: doi:10.1016/j.cell.2016.11.038
-    title: "Perturb-Seq: Dissecting Molecular Circuits with Scalable Single-Cell RNA Profiling of Pooled Genetic Screens"
-  - id: doi:10.1016/j.cell.2022.05.013
-    title: Mapping information-rich genotype-phenotype landscapes with genome-scale Perturb-seq
+- id: doi:10.1126/science.1081900
+  title: Inferring Genetic Networks and Identifying Compound Mode of Action via Expression Profiling
+- id: doi:10.1016/j.cell.2014.09.029
+  title: Genome-Scale CRISPR-Mediated Control of Gene Repression and Activation
+- id: doi:10.1016/j.cell.2016.11.038
+  title: 'Perturb-Seq: Dissecting Molecular Circuits with Scalable Single-Cell RNA Profiling of Pooled Genetic Screens'
+- id: doi:10.1016/j.cell.2022.05.013
+  title: Mapping information-rich genotype-phenotype landscapes with genome-scale Perturb-seq
 invariants:
-  - exact signed networks and parameters attain perfect mechanism and sealed trajectory scores on supported worlds
-  - intervention callbacks charge duration and target count and fail closed after any overspend or malformed query
-  - protected phenotype readout cannot be directly perturbed and final designs are at most two-target interventions
-  - null and latent-regulator worlds reward refusal and penalize fabricated four-gene mechanisms
-  - candidate code gets a fresh sandbox process and private tmpfs for every hidden world
-  - held-out mechanism, prediction, intervention transfer, refusal and per-world metrics remain evaluator-only
+- exact signed networks and parameters attain perfect mechanism and sealed trajectory scores on supported worlds
+- intervention callbacks charge duration and target count and fail closed after any overspend or malformed query
+- protected phenotype readout cannot be directly perturbed and final designs are at most two-target interventions
+- null and latent-regulator worlds reward refusal and penalize fabricated four-gene mechanisms
+- candidate code gets a fresh sandbox process and private tmpfs for every hidden world
+- held-out mechanism, prediction, intervention transfer, refusal and per-world metrics remain evaluator-only
 known_shortcuts: The four-gene deterministic logistic-sigmoid family is a controlled synthetic abstraction, not a named cell line. Public procedural seeds require server-held replacement, and biological claims require measurement-error models, batch and cell-state variation, independent assays, off-target analysis and wet-lab validation.
 review:
   domain: pending_external_systems_biology
   evaluator_security: automated_equation_solver_sandbox_budget_metric_sealing_and_malformed_artifact_tests
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic simulator or generator with development and held-out, shifted, or misspecified instances.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Specific parameters may be held out, but the task family, simulator, and scaffold are visible and builder-model independence has not been established.
+lineage:
+  status: incomplete_legacy
+  builder_model_ids:
+  - unknown_legacy_builder
+  builder_scaffolds:
+  - unknown_legacy_scaffold
+  calibrator_model_ids:
+  - azure-responses:gpt-5.5
+  calibration_runs:
+  - experiments/gpt55_gene_network_v1_b1_2026-07-24.json
+  - experiments/gpt55_gene_network_v1_b3_2026-07-24.json
+  - experiments/gpt55_gene_network_v1_blind_b3_2026-07-24.json
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: Not exhaustively reconstructed; use the task certification reason, dated calibration analyses, and Git history as the retained record.
+  shortcut_discoverer: mixed_automated_red_team_and_gpt5.5_calibration
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: incomplete_legacy
+  author_domain: unknown_legacy
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: null
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: see_task_invariants_and_calibration_evidence

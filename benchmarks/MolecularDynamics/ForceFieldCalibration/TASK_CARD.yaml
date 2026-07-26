@@ -1,4 +1,4 @@
-schema_version: 1
+schema_version: 2
 scientific_question: Can a policy preserve and discriminate competing pair-potential hypotheses by actively selecting energy/force queries, quantify parameter uncertainty and refuse misspecified interactions?
 artifact: A preregistered hypothesis trajectory followed by an evidence-bound model, parameter intervals, hidden-configuration predictor, second-virial curve and Boyle-temperature decision, or a supported model-inadequacy refusal.
 oracle:
@@ -12,32 +12,70 @@ normalization:
   reference: truth-blind diverse-distance/geometry/temperature acquisition, weighted nonlinear model comparison, covariance intervals and virial integration
   score: development lineage-acquisition-hypothesis-model-parameter-interval-prediction-thermodynamic-confidence joint normalized above the split-specific perfect all-world-refusal baseline; held-out and sealed regimes remain separate
 citations:
-  - id: doi:10.1209/0295-5075/26/8/005
-    title: "Interatomic potentials from first-principles calculations: the force-matching method"
-  - id: doi:10.1021/jz500737m
-    title: "Building force fields: an automatic, systematic, and reproducible approach"
-  - id: doi:10.1063/1.2992060
-    title: The relative entropy is fundamental to multiscale and inverse thermodynamic problems
-  - id: doi:10.1103/PhysRevLett.93.165501
-    title: Bayesian ensemble approach to error estimation of interatomic potentials
-  - id: doi:10.1016/0375-9601(74)90847-0
-    title: A uniqueness theorem for fluid pair correlation functions
-  - id: doi:10.1063/1.1723844
-    title: Interaction of the van der Waals type between three atoms
+- id: doi:10.1209/0295-5075/26/8/005
+  title: 'Interatomic potentials from first-principles calculations: the force-matching method'
+- id: doi:10.1021/jz500737m
+  title: 'Building force fields: an automatic, systematic, and reproducible approach'
+- id: doi:10.1063/1.2992060
+  title: The relative entropy is fundamental to multiscale and inverse thermodynamic problems
+- id: doi:10.1103/PhysRevLett.93.165501
+  title: Bayesian ensemble approach to error estimation of interatomic potentials
+- id: doi:10.1016/0375-9601(74)90847-0
+  title: A uniqueness theorem for fluid pair correlation functions
+- id: doi:10.1063/1.1723844
+  title: Interaction of the van der Waals type between three atoms
 invariants:
-  - supported energies and forces are analytic sums over all three pair distances and obey translation, rotation and force-balance invariance
-  - every active batch records the submitted pre-observation weights and retained set before returning data
-  - retained hypotheses carry at least one percent probability, omitted hypotheses carry zero, and eliminated hypotheses cannot be silently restored; protocol or budget violations fail closed even when caught
-  - the first screening query is limited to one exactly equilateral near-equilibrium configuration at the designated screening temperature, while later repulsive, tail and temperature queries discriminate the hypotheses
-  - every world exposes an identical public problem dictionary; hidden noise scale, family, parameters, kind and split appear only through queried observations or evaluator-only records
-  - the selected model is tied to a maximum final hypothesis weight, and submitted virial/Boyle quantities must be self-consistent with submitted potential parameters
-  - supported worlds reward model selection, parameter/interval recovery, sealed energy-force prediction, an explicitly submitted self-consistent second-virial curve and Boyle-temperature decisions
-  - Buckingham, three-body and state-dependent worlds reward evidence-supported refusal rather than a fabricated supported model
-  - the weak all-world refusal baseline is valid and scores zero by construction
-  - held-out worlds, sealed distance/temperature regimes, true-family retention, information gain, false discovery, reference-policy and oracle-clean controls remain evaluator-only
-  - every world receives a fresh candidate process and private temporary filesystem
-  - missing or extra fields, non-finite values, malformed weights/intervals, fabricated evidence and callback overspend fail closed
+- supported energies and forces are analytic sums over all three pair distances and obey translation, rotation and force-balance invariance
+- every active batch records the submitted pre-observation weights and retained set before returning data
+- retained hypotheses carry at least one percent probability, omitted hypotheses carry zero, and eliminated hypotheses cannot be silently restored; protocol or budget violations fail closed even when caught
+- the first screening query is limited to one exactly equilateral near-equilibrium configuration at the designated screening temperature, while later repulsive, tail and temperature queries discriminate the hypotheses
+- every world exposes an identical public problem dictionary; hidden noise scale, family, parameters, kind and split appear only through queried observations or evaluator-only records
+- the selected model is tied to a maximum final hypothesis weight, and submitted virial/Boyle quantities must be self-consistent with submitted potential parameters
+- supported worlds reward model selection, parameter/interval recovery, sealed energy-force prediction, an explicitly submitted self-consistent second-virial curve and Boyle-temperature decisions
+- Buckingham, three-body and state-dependent worlds reward evidence-supported refusal rather than a fabricated supported model
+- the weak all-world refusal baseline is valid and scores zero by construction
+- held-out worlds, sealed distance/temperature regimes, true-family retention, information gain, false discovery, reference-policy and oracle-clean controls remain evaluator-only
+- every world receives a fresh candidate process and private temporary filesystem
+- missing or extra fields, non-finite values, malformed weights/intervals, fabricated evidence and callback overspend fail closed
 known_shortcuts: The deterministic three-particle reduced-order laboratory omits electronic structure, periodic boundaries, many-body condensed phases, sampling, finite-size effects and real force labels. Repository-visible world generators require server-held cohorts. This task calibrates active hypothesis management and model refusal; it is not molecular dynamics, a material potential, a thermodynamic experiment or autonomous-discovery evidence.
 review:
   domain: pending_external_molecular_simulation_and_statistical_mechanics_review
   evaluator_security: automated_force_energy_invariance_active_budget_hypothesis_monotonicity_parameter_interval_virial_refusal_fresh_sandbox_fail_closed_and_metric_sealing_tests
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic simulator or generator with development and held-out, shifted, or misspecified instances.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Specific parameters may be held out, but the task family, simulator, and scaffold are visible and builder-model independence has not been established.
+lineage:
+  status: incomplete_legacy
+  builder_model_ids:
+  - unknown_legacy_builder
+  builder_scaffolds:
+  - unknown_legacy_scaffold
+  calibrator_model_ids:
+  - azure-responses:gpt-5.5
+  calibration_runs:
+  - experiments/gpt55_force_field_hypothesis_v2_b1_2026-07-26.json
+  - experiments/gpt55_force_field_hypothesis_v2_b3_2026-07-26.json
+  - experiments/gpt55_force_field_hypothesis_v2_blind_b3_2026-07-26.json
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: Not exhaustively reconstructed; use the task certification reason, dated calibration analyses, and Git history as the retained record.
+  shortcut_discoverer: mixed_automated_red_team_and_gpt5.5_calibration
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: incomplete_legacy
+  author_domain: unknown_legacy
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: null
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: see_task_invariants_and_calibration_evidence

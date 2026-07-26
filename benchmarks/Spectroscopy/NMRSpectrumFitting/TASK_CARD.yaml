@@ -1,4 +1,4 @@
-schema_version: 1
+schema_version: 2
 scientific_question: Can one spectral-analysis policy recover the number, centers, amplitudes and Lorentzian/Gaussian broadening of overlapping one-dimensional NMR peaks across baseline/noise shifts, while refusing null or phase-distorted spectra outside its line-shape library?
 artifact: A variable-length positive Voigt peak list with explicit line-shape components, confidence and optional model-inadequacy abstention.
 oracle:
@@ -10,18 +10,56 @@ normalization:
   reference: exact simulator peak parameters on supported spectra and correct abstention on null or phase-distorted spectra
   score: development peak-mechanism/refusal quality above always-abstain; reconstruction, confidence calibration, false discovery and held-out shifted metrics remain separate
 citations:
-  - id: doi:10.1093/bioinformatics/bts308
-    title: BATMAN—an R package for the automated quantification of metabolites from nuclear magnetic resonance spectra using a Bayesian model
-  - id: doi:10.1007/s11306-017-1244-5
-    title: "ASICS: an automatic method for identification and quantification of metabolites in complex 1D 1H NMR spectra"
-  - id: doi:10.1016/0022-4073(77)90161-3
-    title: "Empirical fits to the Voigt line width: A brief review"
+- id: doi:10.1093/bioinformatics/bts308
+  title: BATMAN—an R package for the automated quantification of metabolites from nuclear magnetic resonance spectra using a Bayesian model
+- id: doi:10.1007/s11306-017-1244-5
+  title: 'ASICS: an automatic method for identification and quantification of metabolites in complex 1D 1H NMR spectra'
+- id: doi:10.1016/0022-4073(77)90161-3
+  title: 'Empirical fits to the Voigt line width: A brief review'
 invariants:
-  - exact peak parameters attain perfect mechanism and clean-signal reconstruction on every supported instance
-  - correct null and phase-distortion abstentions attain perfect refusal scores without fabricating peaks
-  - non-finite, inconsistent, out-of-range, nonpositive or excessive peak artifacts fail closed
-  - held-out mechanism, reconstruction, confidence, refusal and per-instance metrics remain evaluator-only
+- exact peak parameters attain perfect mechanism and clean-signal reconstruction on every supported instance
+- correct null and phase-distortion abstentions attain perfect refusal scores without fabricating peaks
+- non-finite, inconsistent, out-of-range, nonpositive or excessive peak artifacts fail closed
+- held-out mechanism, reconstruction, confidence, refusal and per-instance metrics remain evaluator-only
 known_shortcuts: The current spectra are deterministic simulations with public code and finite-grid truth. A release requires server-held mixtures and independent spectroscopist review; experimental discovery claims additionally require instrument data, chemical assignment and orthogonal validation.
 review:
   domain: pending_external
   evaluator_security: automated_fail_closed_reference_refusal_metric_sealing_tests
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic simulator or generator with development and held-out, shifted, or misspecified instances.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Specific parameters may be held out, but the task family, simulator, and scaffold are visible and builder-model independence has not been established.
+lineage:
+  status: incomplete_legacy
+  builder_model_ids:
+  - unknown_legacy_builder
+  builder_scaffolds:
+  - unknown_legacy_scaffold
+  calibrator_model_ids:
+  - azure-responses:gpt-5.5
+  calibration_runs:
+  - experiments/gpt55_nmr_v2_b1_2026-07-22.json
+  - experiments/gpt55_nmr_v2_b3_2026-07-22.json
+  - experiments/science_calibration_summary_2026-07-22.json
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: Not exhaustively reconstructed; use the task certification reason, dated calibration analyses, and Git history as the retained record.
+  shortcut_discoverer: mixed_automated_red_team_and_gpt5.5_calibration
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: incomplete_legacy
+  author_domain: unknown_legacy
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: null
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: see_task_invariants_and_calibration_evidence

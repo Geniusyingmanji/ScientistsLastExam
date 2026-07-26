@@ -1,4 +1,4 @@
-schema_version: 1
+schema_version: 2
 scientific_question: Can a budgeted active policy identify anisotropic convection-diffusion transport, refuse unsupported apparatuses and design a four-heater layout that transfers under physical shifts?
 artifact: Five inferred transport parameters, four bounded source positions and strengths, a confidence value and an optional model-inadequacy abstention, all linked to charged calibration experiments.
 oracle:
@@ -10,16 +10,54 @@ normalization:
   reference: truth-blind complementary experiments, bounded parameter fitting and a separately calibrated four-source design with correct unsupported-world refusal
   score: development joint mechanism, diagnostic-prediction and target-field design quality normalized above all-world refusal; held-out transfer, four physical shifts, false discovery and refusal remain separate
 citations:
-  - id: doi:10.1007/978-1-4020-8839-1
-    title: Optimization with PDE Constraints
+- id: doi:10.1007/978-1-4020-8839-1
+  title: Optimization with PDE Constraints
 invariants:
-  - every calibration call charges one plus the number of sources plus the ceiling of sensors divided by eight
-  - the public homogeneous forward solver and the trusted world solver agree on supported unshifted parameters
-  - null and heterogeneous worlds reward calibrated refusal rather than fabricated parameters
-  - mechanism, prediction, nominal design, shifted design, coverage and false discovery remain separate axes
-  - every world receives a fresh candidate process and private temporary filesystem
-  - callback overspend, malformed artifacts, non-finite values and infeasible heater layouts fail closed
+- every calibration call charges one plus the number of sources plus the ceiling of sensors divided by eight
+- the public homogeneous forward solver and the trusted world solver agree on supported unshifted parameters
+- null and heterogeneous worlds reward calibrated refusal rather than fabricated parameters
+- mechanism, prediction, nominal design, shifted design, coverage and false discovery remain separate axes
+- every world receives a fresh candidate process and private temporary filesystem
+- callback overspend, malformed artifacts, non-finite values and infeasible heater layouts fail closed
 known_shortcuts: The deterministic 25-by-25 reduced-order apparatus has fixed repository-visible generators and omits continuum discretization uncertainty, device boundaries, calibration drift and real measurements. It is an active PDE identification and design candidate, not a discovered material or device. Certification needs server-held apparatuses, independent discretization or high-fidelity replication and heat-transfer review.
 review:
   domain: pending_external_heat_transfer_and_pde_control_review
   evaluator_security: automated_budget_callback_pde_invariant_fresh_sandbox_refusal_and_metric_sealing_tests
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic simulator or generator with development and held-out, shifted, or misspecified instances.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Specific parameters may be held out, but the task family, simulator, and scaffold are visible and builder-model independence has not been established.
+lineage:
+  status: incomplete_legacy
+  builder_model_ids:
+  - unknown_legacy_builder
+  builder_scaffolds:
+  - unknown_legacy_scaffold
+  calibrator_model_ids:
+  - azure-responses:gpt-5.5
+  calibration_runs:
+  - experiments/gpt55_convection_diffusion_v2_b1_2026-07-23.json
+  - experiments/gpt55_convection_diffusion_v2_b3_2026-07-23.json
+  - experiments/gpt55_convection_diffusion_v2_blind_b3_2026-07-23.json
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: Not exhaustively reconstructed; use the task certification reason, dated calibration analyses, and Git history as the retained record.
+  shortcut_discoverer: mixed_automated_red_team_and_gpt5.5_calibration
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: incomplete_legacy
+  author_domain: unknown_legacy
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: null
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: see_task_invariants_and_calibration_evidence

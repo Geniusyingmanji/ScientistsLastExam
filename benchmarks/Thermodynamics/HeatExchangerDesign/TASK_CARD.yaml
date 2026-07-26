@@ -1,4 +1,4 @@
-schema_version: 1
+schema_version: 2
 scientific_question: Can one policy discover cost-versus-duty Pareto archives across varying fluids and operating regimes while avoiding cheap-proxy false promotion and retaining performance under fouling, manufacturing and blockage shifts?
 artifact: A bounded archive of shell-and-tube geometries containing inner diameter, length, tube count, baffle spacing and tube-pass count.
 oracle:
@@ -11,26 +11,64 @@ normalization:
   reference: fixed-seed 4096-point scrambled Sobol proxy screen followed by exact-model shortlist selection and greedy two-objective hypervolume archives
   score: development exact Pareto hypervolume controls search; proxy agreement, held-out transfer and physical robustness remain separate and sealed
 citations:
-  - id: doi:10.1002/9780470172605
-    title: Fundamentals of Heat Exchanger Design
-  - id: doi:10.1007/978-3-540-77877-6_34
-    title: G1 Heat Transfer in Pipe Flow
-  - id: doi:10.1115/1.3240948
-    title: Simple and Explicit Formulas for the Friction Factor in Turbulent Pipe Flow
-  - id: doi:10.1016/j.applthermaleng.2010.04.018
-    title: Multi-objective optimization of shell and tube heat exchangers
-  - id: doi:10.1109/4235.797969
-    title: Multiobjective evolutionary algorithms - a comparative case study and the strength Pareto approach
+- id: doi:10.1002/9780470172605
+  title: Fundamentals of Heat Exchanger Design
+- id: doi:10.1007/978-3-540-77877-6_34
+  title: G1 Heat Transfer in Pipe Flow
+- id: doi:10.1115/1.3240948
+  title: Simple and Explicit Formulas for the Friction Factor in Turbulent Pipe Flow
+- id: doi:10.1016/j.applthermaleng.2010.04.018
+  title: Multi-objective optimization of shell and tube heat exchangers
+- id: doi:10.1109/4235.797969
+  title: Multiobjective evolutionary algorithms - a comparative case study and the strength Pareto approach
 invariants:
-  - every weak-baseline design is nominally feasible and feasible under all three physical shifts
-  - heat duty is nonnegative, outlet temperatures do not cross their inlet bounds and the segmented boundary residual is below 1e-5 K
-  - reference archives reconstruct exactly from committed Sobol seeds and indices
-  - nominal reference archives are 24-of-24 exact feasible and robust references are 24-of-24 feasible under nominal and every shift
-  - every reference hypervolume exceeds its corresponding weak-baseline hypervolume
-  - dominated or duplicate points do not increase two-dimensional hypervolume
-  - non-finite, malformed, out-of-bound, non-integral and entirely exact-infeasible archives fail closed
-  - proxy, held-out, rank-correlation, false-promotion and shifted metrics remain evaluator-only
+- every weak-baseline design is nominally feasible and feasible under all three physical shifts
+- heat duty is nonnegative, outlet temperatures do not cross their inlet bounds and the segmented boundary residual is below 1e-5 K
+- reference archives reconstruct exactly from committed Sobol seeds and indices
+- nominal reference archives are 24-of-24 exact feasible and robust references are 24-of-24 feasible under nominal and every shift
+- every reference hypervolume exceeds its corresponding weak-baseline hypervolume
+- dominated or duplicate points do not increase two-dimensional hypervolume
+- non-finite, malformed, out-of-bound, non-integral and entirely exact-infeasible archives fail closed
+- proxy, held-out, rank-correlation, false-promotion and shifted metrics remain evaluator-only
 known_shortcuts: The exact oracle remains a correlation-based steady-state model. It omits vibration, detailed shell leakage/bypass networks, phase change, corrosion, thermal stress, fabrication standards and experimental uncertainty. Public deterministic instances require future server-held regimes. Engineering claims require independent process simulation, CFD and experimental replication. Reference fronts are strong feasible witnesses, not global-optimality proofs.
 review:
   domain: pending_external
   evaluator_security: automated_invariant_sandbox_and_metric_sealing_tests
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic simulator or generator with development and held-out, shifted, or misspecified instances.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Specific parameters may be held out, but the task family, simulator, and scaffold are visible and builder-model independence has not been established.
+lineage:
+  status: incomplete_legacy
+  builder_model_ids:
+  - unknown_legacy_builder
+  builder_scaffolds:
+  - unknown_legacy_scaffold
+  calibrator_model_ids:
+  - azure-responses:gpt-5.5
+  calibration_runs:
+  - experiments/gpt55_heat_exchanger_v2_b1_2026-07-22.json
+  - experiments/gpt55_heat_exchanger_v2_b3_2026-07-22.json
+  - experiments/gpt55_heat_exchanger_v2_blind_b3_2026-07-22.json
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: Not exhaustively reconstructed; use the task certification reason, dated calibration analyses, and Git history as the retained record.
+  shortcut_discoverer: mixed_automated_red_team_and_gpt5.5_calibration
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: incomplete_legacy
+  author_domain: unknown_legacy
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: null
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: see_task_invariants_and_calibration_evidence

@@ -1,4 +1,4 @@
-schema_version: 1
+schema_version: 2
 scientific_question: Can a policy transform quantized complex QCM calibration and sweep records into a calibrated rigid-film mass, prediction and stop decision while distinguishing physical model mismatch from instrument failure?
 artifact: An evidence-bound raw-signal calibration, resonance extraction, mass/rate inference, diagnosis and deposition stop decision.
 oracle:
@@ -11,31 +11,69 @@ normalization:
   reference: truth-blind complex-affine calibration, BVD nonlinear fitting, overtone/rate/Q model checks and target stop calculation
   score: development lineage-calibration-extraction-mechanism-prediction-decision-diagnosis joint; held-out, sealed shifts, fault type, reference-preprocessor and oracle-clean controls remain separate
 citations:
-  - id: doi:10.1063/1.1145396
-    title: Quartz crystal microbalance setup for frequency and Q-factor measurements in gaseous and liquid environments
-  - id: doi:10.1021/ac00020a015
-    title: Characterization of a quartz crystal microbalance with simultaneous mass and liquid loading
-  - id: doi:10.1021/la025911w
-    title: Sauerbrey Equation of Quartz Crystal Microbalance in Liquid Medium
-  - id: doi:10.1143/jjap.29.963
-    title: A Theory of a Quartz Crystal Microbalance Based upon a Mason Equivalent Circuit
-  - id: doi:10.3390/chemosensors9010009
-    title: Interpretation of Quartz Crystal Microbalance Behavior with Viscous Film Using a Mason Equivalent Circuit
+- id: doi:10.1063/1.1145396
+  title: Quartz crystal microbalance setup for frequency and Q-factor measurements in gaseous and liquid environments
+- id: doi:10.1021/ac00020a015
+  title: Characterization of a quartz crystal microbalance with simultaneous mass and liquid loading
+- id: doi:10.1021/la025911w
+  title: Sauerbrey Equation of Quartz Crystal Microbalance in Liquid Medium
+- id: doi:10.1143/jjap.29.963
+  title: A Theory of a Quartz Crystal Microbalance Based upon a Mason Equivalent Circuit
+- id: doi:10.3390/chemosensors9010009
+  title: Interpretation of Quartz Crystal Microbalance Behavior with Viscous Film Using a Mason Equivalent Circuit
 invariants:
-  - calibration truth is never returned; candidates receive known complex standards and raw quantized I/Q counts
-  - supported gain and offset vary linearly between independent start and end calibration captures
-  - every world contains three harmonics and three deposition times with immutable calibration and sweep lineage
-  - missing records are explicit None values and do not change the latent sweep
-  - clipping and I/Q conjugation are instrument faults rather than valid physical conclusions
-  - harmonic-dependent mass shifts or Q loss and rate changes are resolvable physical model mismatch
-  - an independent peak/Q calculation agrees with the BVD nonlinear fit on noise-free probes
-  - the weak all-world abstention baseline is valid and scores zero by construction
-  - a truth-blind raw-signal reference covers supported worlds and separately diagnoses instrument versus physical anomalies
-  - the sealed Sauerbrey-coefficient counterfactual remaps observed mass and rate while an independent future-rate shift starts after the final observed sweep
-  - every world receives a fresh candidate process and private temporary filesystem
-  - held-out, robust prediction/decision, fault type, raw health, reference-preprocessor, oracle-clean and per-world metrics remain evaluator-only
-  - missing keys, extra keys, malformed complex pairs, complex/non-finite values, incomplete sweep maps and fabricated evidence IDs fail closed
+- calibration truth is never returned; candidates receive known complex standards and raw quantized I/Q counts
+- supported gain and offset vary linearly between independent start and end calibration captures
+- every world contains three harmonics and three deposition times with immutable calibration and sweep lineage
+- missing records are explicit None values and do not change the latent sweep
+- clipping and I/Q conjugation are instrument faults rather than valid physical conclusions
+- harmonic-dependent mass shifts or Q loss and rate changes are resolvable physical model mismatch
+- an independent peak/Q calculation agrees with the BVD nonlinear fit on noise-free probes
+- the weak all-world abstention baseline is valid and scores zero by construction
+- a truth-blind raw-signal reference covers supported worlds and separately diagnoses instrument versus physical anomalies
+- the sealed Sauerbrey-coefficient counterfactual remaps observed mass and rate while an independent future-rate shift starts after the final observed sweep
+- every world receives a fresh candidate process and private temporary filesystem
+- held-out, robust prediction/decision, fault type, raw health, reference-preprocessor, oracle-clean and per-world metrics remain evaluator-only
+- missing keys, extra keys, malformed complex pairs, complex/non-finite values, incomplete sweep maps and fabricated evidence IDs fail closed
 known_shortcuts: The deterministic public reduced-order BVD/Sauerbrey families omit electrode roughness, temperature, fluid coupling, distributed films, nonlinear electronics and real deposition control. Fixed equations and repository-visible worlds require server-held cohorts. This task calibrates raw-signal inference and refusal; it is not instrument, coating, material or autonomous-discovery evidence.
 review:
   domain: pending_external_sensing_instrumentation_and_thin_film_review
   evaluator_security: automated_raw_iq_calibration_bvd_fit_independent_peak_q_model_mismatch_fault_type_fresh_sandbox_fail_closed_and_metric_sealing_tests
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic simulator or generator with development and held-out, shifted, or misspecified instances.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Specific parameters may be held out, but the task family, simulator, and scaffold are visible and builder-model independence has not been established.
+lineage:
+  status: incomplete_legacy
+  builder_model_ids:
+  - unknown_legacy_builder
+  builder_scaffolds:
+  - unknown_legacy_scaffold
+  calibrator_model_ids:
+  - azure-responses:gpt-5.5
+  calibration_runs:
+  - experiments/gpt55_qcm_raw_pipeline_v1_b1_2026-07-25.json
+  - experiments/gpt55_qcm_raw_pipeline_v1_b3_2026-07-25.json
+  - experiments/gpt55_qcm_raw_pipeline_v1_blind_b3_2026-07-25.json
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: Not exhaustively reconstructed; use the task certification reason, dated calibration analyses, and Git history as the retained record.
+  shortcut_discoverer: mixed_automated_red_team_and_gpt5.5_calibration
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: incomplete_legacy
+  author_domain: unknown_legacy
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: null
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: see_task_invariants_and_calibration_evidence

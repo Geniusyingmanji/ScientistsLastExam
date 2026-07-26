@@ -1,4 +1,4 @@
-schema_version: 1
+schema_version: 2
 scientific_question: Can one device-aware policy discover drive-current-versus-leakage halo-profile Pareto archives that transfer across silicon nMOS geometries and remain feasible under operation, process and source-drain asymmetry shifts?
 artifact: A bounded archive of six-parameter Gaussian background/source-pocket/drain-pocket acceptor profiles in log10 cm^-3 and normalized channel coordinates.
 oracle:
@@ -10,25 +10,63 @@ normalization:
   reference: fixed-seed 2048-point scrambled-Sobol screens followed by full compact-model nominal and all-shift-feasible Pareto selection
   score: development nominal drive-current-per-width versus log-leakage-per-width Pareto hypervolume controls search; held-out transfer and worst-shift robustness remain separate and sealed
 citations:
-  - id: doi:10.1002/0470068329
-    title: Physics of Semiconductor Devices
-  - id: doi:10.1017/CBO9781139195065
-    title: Fundamentals of Modern VLSI Devices
-  - id: doi:10.1109/PROC.1967.6123
-    title: Carrier mobilities in silicon empirically related to doping and field
+- id: doi:10.1002/0470068329
+  title: Physics of Semiconductor Devices
+- id: doi:10.1017/CBO9781139195065
+  title: Fundamentals of Modern VLSI Devices
+- id: doi:10.1109/PROC.1967.6123
+  title: Carrier mobilities in silicon empirically related to doping and field
 invariants:
-  - all concentrations use cm^-3 internally and are converted to m^-3 only for SI electrostatics
-  - higher acceptor doping raises the modeled threshold voltage and lowers Caughey-Thomas mobility on a fixed device
-  - higher temperature raises modeled subthreshold swing and off current for a fixed profile
-  - every weak-baseline profile is nominally feasible on all six devices
-  - nominal and robust reference archives reconstruct exactly from committed Sobol seeds and indices
-  - every nominal and shifted reference hypervolume exceeds its corresponding weak-baseline hypervolume
-  - every robust reference profile is feasible under all six sealed shifts
-  - the nominal witness attains unit nominal development and held-out score but loses source-drain-reversal robustness
-  - the robust witness trades nominal hypervolume for unit worst-shift development and held-out robustness
-  - boolean, non-finite, malformed, duplicated-only, out-of-bound and insufficiently feasible archives fail closed
-  - held-out, shift, detailed device and per-instance metrics remain evaluator-only
+- all concentrations use cm^-3 internally and are converted to m^-3 only for SI electrostatics
+- higher acceptor doping raises the modeled threshold voltage and lowers Caughey-Thomas mobility on a fixed device
+- higher temperature raises modeled subthreshold swing and off current for a fixed profile
+- every weak-baseline profile is nominally feasible on all six devices
+- nominal and robust reference archives reconstruct exactly from committed Sobol seeds and indices
+- every nominal and shifted reference hypervolume exceeds its corresponding weak-baseline hypervolume
+- every robust reference profile is feasible under all six sealed shifts
+- the nominal witness attains unit nominal development and held-out score but loses source-drain-reversal robustness
+- the robust witness trades nominal hypervolume for unit worst-shift development and held-out robustness
+- boolean, non-finite, malformed, duplicated-only, out-of-bound and insufficiently feasible archives fail closed
+- held-out, shift, detailed device and per-instance metrics remain evaluator-only
 known_shortcuts: The compact model omits two-dimensional self-consistent carrier transport, quantum confinement, gate and junction leakage, band-to-band tunneling, interface traps, velocity overshoot, series resistance and detailed implant-anneal chemistry. Repository-visible deterministic devices require future server-held procedural regimes. Physical claims require independent TCAD, process integration and measured-device validation. Sobol archives are reproducible witnesses, not global optima.
 review:
   domain: pending_external
   evaluator_security: automated_invariant_sandbox_metric_sealing_and_reference_rebuild_tests
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic simulator or generator with development and held-out, shifted, or misspecified instances.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Specific parameters may be held out, but the task family, simulator, and scaffold are visible and builder-model independence has not been established.
+lineage:
+  status: incomplete_legacy
+  builder_model_ids:
+  - unknown_legacy_builder
+  builder_scaffolds:
+  - unknown_legacy_scaffold
+  calibrator_model_ids:
+  - azure-responses:gpt-5.5
+  calibration_runs:
+  - experiments/gpt55_mosfet_v2_b1_2026-07-24.json
+  - experiments/gpt55_mosfet_v2_b3_2026-07-24.json
+  - experiments/gpt55_mosfet_v2_blind_b3_2026-07-24.json
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: Not exhaustively reconstructed; use the task certification reason, dated calibration analyses, and Git history as the retained record.
+  shortcut_discoverer: mixed_automated_red_team_and_gpt5.5_calibration
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: incomplete_legacy
+  author_domain: unknown_legacy
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: null
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: see_task_invariants_and_calibration_evidence

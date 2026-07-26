@@ -34,7 +34,13 @@ TASK_CARD_REQUIRED_STATUSES = {"certified", "candidate"}
 TASK_CARD_REQUIRED_KEYS = (
     "scientific_question", "artifact", "oracle", "normalization",
     "citations", "invariants", "known_shortcuts", "review",
+    "provenance", "novelty_risk", "lineage", "construction_audit", "long_horizon",
 )
+PROVENANCE_CLASSES = {
+    "known_answer", "procedural", "public_data_replay", "prospective",
+}
+NOVELTY_RISK_LEVELS = {"low", "medium", "high", "unknown"}
+LINEAGE_STATUSES = {"complete", "incomplete_legacy", "unknown"}
 
 
 def _nonempty_string(value: object) -> bool:
@@ -53,8 +59,8 @@ def _task_card_issues(path: Path) -> list[str]:
         return ["task card root is not a mapping"]
 
     issues = []
-    if card.get("schema_version") != 1:
-        issues.append("task card schema_version is not 1")
+    if card.get("schema_version") != 2:
+        issues.append("task card schema_version is not 2")
     for key in TASK_CARD_REQUIRED_KEYS:
         if not card.get(key):
             issues.append("task card missing %s" % key)
@@ -110,6 +116,104 @@ def _task_card_issues(path: Path) -> list[str]:
                 issues.append("task card review lacks %s" % key)
     elif review is not None:
         issues.append("task card review is not a mapping")
+
+    provenance = card.get("provenance")
+    if isinstance(provenance, dict):
+        if provenance.get("class") not in PROVENANCE_CLASSES:
+            issues.append("task card provenance class is invalid")
+        if not _nonempty_string(provenance.get("target_source")):
+            issues.append("task card provenance lacks target_source")
+        if not isinstance(provenance.get("task_contract_public_before_evaluation"), bool):
+            issues.append("task card provenance lacks public-before-evaluation boolean")
+        if not _nonempty_string(provenance.get("fresh_confirmation_status")):
+            issues.append("task card provenance lacks fresh_confirmation_status")
+    elif provenance is not None:
+        issues.append("task card provenance is not a mapping")
+
+    novelty_risk = card.get("novelty_risk")
+    if isinstance(novelty_risk, dict):
+        if novelty_risk.get("level") not in NOVELTY_RISK_LEVELS:
+            issues.append("task card novelty_risk level is invalid")
+        if not _nonempty_string(novelty_risk.get("rationale")):
+            issues.append("task card novelty_risk lacks rationale")
+    elif novelty_risk is not None:
+        issues.append("task card novelty_risk is not a mapping")
+
+    lineage = card.get("lineage")
+    if isinstance(lineage, dict):
+        if lineage.get("status") not in LINEAGE_STATUSES:
+            issues.append("task card lineage status is invalid")
+        for key in ("builder_model_ids", "builder_scaffolds", "calibrator_model_ids"):
+            values = lineage.get(key)
+            if not isinstance(values, list) or any(not _nonempty_string(value) for value in values):
+                issues.append("task card lineage %s is not a string list" % key)
+        runs = lineage.get("calibration_runs")
+        if isinstance(runs, list):
+            for run in runs:
+                if not _nonempty_string(run):
+                    issues.append("task card calibration run is not a nonempty string")
+                    continue
+                relative = Path(run)
+                if relative.is_absolute() or ".." in relative.parts or not run.startswith("experiments/"):
+                    issues.append("task card calibration run is not a safe experiment path")
+                elif not (ROOT / relative).is_file():
+                    issues.append("task card calibration run does not exist")
+        else:
+            issues.append("task card lineage calibration_runs is not a list")
+        if lineage.get("calibration_evidence_status") not in {
+            "current_or_migration_replayed", "historical_only", "missing",
+        }:
+            issues.append("task card calibration_evidence_status is invalid")
+        for key in ("edits_triggered_by_model", "shortcut_discoverer"):
+            if not _nonempty_string(lineage.get(key)):
+                issues.append("task card lineage lacks %s" % key)
+        if not isinstance(lineage.get("frozen_before_eval"), bool):
+            issues.append("task card lineage frozen_before_eval is not boolean")
+        if "freeze_timestamp" not in lineage:
+            issues.append("task card lineage lacks freeze_timestamp")
+        elif lineage.get("frozen_before_eval") is True and not _nonempty_string(
+            lineage.get("freeze_timestamp")
+        ):
+            issues.append("task card frozen lineage lacks freeze_timestamp value")
+    elif lineage is not None:
+        issues.append("task card lineage is not a mapping")
+
+    construction = card.get("construction_audit")
+    if isinstance(construction, dict):
+        for key in (
+            "status", "author_domain", "reviewer_domain",
+            "oracle_disagreement_status", "independent_recomputation_status",
+        ):
+            if not _nonempty_string(construction.get(key)):
+                issues.append("task card construction_audit lacks %s" % key)
+        for key in ("expert_hours", "red_team_rounds"):
+            value = construction.get(key)
+            if value is not None and (
+                isinstance(value, bool) or not isinstance(value, (int, float)) or value < 0
+            ):
+                issues.append("task card construction_audit %s is invalid" % key)
+    elif construction is not None:
+        issues.append("task card construction_audit is not a mapping")
+
+    long_horizon = card.get("long_horizon")
+    if isinstance(long_horizon, dict):
+        if not _nonempty_string(long_horizon.get("status")):
+            issues.append("task card long_horizon lacks status")
+        for key in ("measurement_health_passed", "material_headroom_after_2h"):
+            if not isinstance(long_horizon.get(key), bool):
+                issues.append("task card long_horizon %s is not boolean" % key)
+        long_evidence = long_horizon.get("evidence")
+        if not isinstance(long_evidence, list) or any(
+            not _nonempty_string(value) for value in long_evidence
+        ):
+            issues.append("task card long_horizon evidence is not a string list")
+        elif (
+            long_horizon.get("measurement_health_passed") is True
+            or long_horizon.get("material_headroom_after_2h") is True
+        ) and not long_evidence:
+            issues.append("task card long_horizon passed gate lacks evidence")
+    elif long_horizon is not None:
+        issues.append("task card long_horizon is not a mapping")
     return issues
 
 

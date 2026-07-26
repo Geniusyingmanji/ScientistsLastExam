@@ -1,4 +1,4 @@
-schema_version: 1
+schema_version: 2
 scientific_question: Can an agent select bounded forcing experiments, identify a supported two-layer climate-response model, and refuse null or structurally misspecified responses?
 artifact: Five radiative-feedback, heat-capacity, ocean-exchange and forcing-scale parameters with confidence or an explicit model-inadequacy abstention.
 oracle:
@@ -10,22 +10,60 @@ normalization:
   reference: exact public-model parameters on supported worlds and correct refusal on unsupported worlds
   score: development mechanism/refusal recovery normalized above always abstaining; forcing prediction, forcing shifts and held-out worlds remain separate
 citations:
-  - id: doi:10.1029/RG019i001p00091
-    title: Energy balance climate models
-  - id: doi:10.1175/JCLI-D-12-00195.1
-    title: "Transient Climate Response in a Two-Layer Energy-Balance Model. Part I: Analytical Solution and Parameter Calibration Using CMIP5 AOGCM Experiments"
-  - id: doi:10.1029/2003GL018747
-    title: A new method for diagnosing radiative forcing and climate sensitivity
+- id: doi:10.1029/RG019i001p00091
+  title: Energy balance climate models
+- id: doi:10.1175/JCLI-D-12-00195.1
+  title: 'Transient Climate Response in a Two-Layer Energy-Balance Model. Part I: Analytical Solution and Parameter Calibration Using CMIP5 AOGCM Experiments'
+- id: doi:10.1029/2003GL018747
+  title: A new method for diagnosing radiative forcing and climate sensitivity
 invariants:
-  - the public linear two-layer recurrence agrees with an independent ODE implementation
-  - informative forcing experiments have full-rank scaled parameter sensitivity on every supported world
-  - null and out-of-family responses reward refusal rather than forced two-layer parameters
-  - exact supported parameters and correct unsupported refusals score one on both splits
-  - always abstaining is valid but has zero normalized mechanism and forcing-transfer utility
-  - invalid forcing, budget overspend, malformed artifacts and non-finite values fail closed
-  - every hidden world receives a fresh candidate process and private temporary filesystem
-  - held-out mechanism, forcing transfer, response kind and per-world metrics remain evaluator-only
+- the public linear two-layer recurrence agrees with an independent ODE implementation
+- informative forcing experiments have full-rank scaled parameter sensitivity on every supported world
+- null and out-of-family responses reward refusal rather than forced two-layer parameters
+- exact supported parameters and correct unsupported refusals score one on both splits
+- always abstaining is valid but has zero normalized mechanism and forcing-transfer utility
+- invalid forcing, budget overspend, malformed artifacts and non-finite values fail closed
+- every hidden world receives a fresh candidate process and private temporary filesystem
+- held-out mechanism, forcing transfer, response kind and per-world metrics remain evaluator-only
 known_shortcuts: The model is a synthetic global-mean linear climate abstraction with public equations. It omits spatial climate dynamics, carbon-cycle feedback, correlated internal variability and observational forcing uncertainty. The misspecified feedback and third-ocean-layer effects are deliberately strong enough to resolve inside a 160-year benchmark window and are not Earth parameter estimates. Public deterministic world generators require future server-held seeds, and any Earth-system or discovery claim requires independent GCM and observational validation.
 review:
   domain: pending_external
   evaluator_security: automated_budget_artifact_equation_identifiability_refusal_metric_sealing_and_fresh_session_tests
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic simulator or generator with development and held-out, shifted, or misspecified instances.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Specific parameters may be held out, but the task family, simulator, and scaffold are visible and builder-model independence has not been established.
+lineage:
+  status: incomplete_legacy
+  builder_model_ids:
+  - unknown_legacy_builder
+  builder_scaffolds:
+  - unknown_legacy_scaffold
+  calibrator_model_ids:
+  - azure-responses:gpt-5.5
+  calibration_runs:
+  - experiments/gpt55_climate_v2_b1_2026-07-22.json
+  - experiments/gpt55_climate_v2_b3_2026-07-22.json
+  - experiments/gpt55_climate_v2_blind_b3_2026-07-22.json
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: Not exhaustively reconstructed; use the task certification reason, dated calibration analyses, and Git history as the retained record.
+  shortcut_discoverer: mixed_automated_red_team_and_gpt5.5_calibration
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: incomplete_legacy
+  author_domain: unknown_legacy
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: null
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: see_task_invariants_and_calibration_evidence

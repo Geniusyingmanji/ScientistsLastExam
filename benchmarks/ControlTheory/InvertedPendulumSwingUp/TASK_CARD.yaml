@@ -1,4 +1,4 @@
-schema_version: 1
+schema_version: 2
 scientific_question: Can one bounded feedback controller swing up and stabilize a nonlinear cart-pole while limiting force and cart travel, and retain utility under plant and disturbance shifts?
 artifact: A deterministic controller mapping cart position, cart velocity, down-zero pendulum angle, angular velocity, time and controller interval to one commanded cart force.
 oracle:
@@ -10,15 +10,53 @@ normalization:
   reference: energy-shaping swing-up followed by local upright stabilization; a domain baseline rather than a proved global optimum
   score: mean development swing-up and terminal-stabilization utility with effort and cart-position penalties; four evaluator-only plant-and-impulse shifts remain a separate robustness score
 citations:
-  - id: doi:10.1016/S0005-1098(99)00140-5
-    title: Swinging up a pendulum by energy control
+- id: doi:10.1016/S0005-1098(99)00140-5
+  title: Swinging up a pendulum by energy control
 invariants:
-  - the public coordinate convention is theta zero hanging down and theta pi upright
-  - the trusted simulator clips commands before applying a separately specified disturbance force
-  - development and shifted robustness scenarios use the same controller and numerical integrator
-  - non-finite commands and non-finite trajectories are invalid scientific outcomes
-  - shifted robustness and per-scenario diagnostics remain evaluator-only during search
+- the public coordinate convention is theta zero hanging down and theta pi upright
+- the trusted simulator clips commands before applying a separately specified disturbance force
+- development and shifted robustness scenarios use the same controller and numerical integrator
+- non-finite commands and non-finite trajectories are invalid scientific outcomes
+- shifted robustness and per-scenario diagnostics remain evaluator-only during search
 known_shortcuts: The task uses one disclosed reduced-order plant, five fixed development starts and four fixed shifts. It has no sensor noise, actuator dynamics, delay, hardware or server-held plant family. It is a nonlinear-control and robustness benchmark, not physical controller validation; future certification needs procedural plants, independent simulation and domain review.
 review:
   domain: pending_external_nonlinear_control_review
   evaluator_security: automated_sandbox_dynamics_invariant_metric_sealing_and_shift_replay_tests
+provenance:
+  class: known_answer
+  target_source: Published or repository-visible fixed targets, reference values, or standard solution families available before evaluation.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: high
+  rationale: Success may reproduce a known numerical method, design pattern, or published target; it is reconstruction/optimization evidence rather than a novel scientific discovery.
+lineage:
+  status: incomplete_legacy
+  builder_model_ids:
+  - unknown_legacy_builder
+  builder_scaffolds:
+  - unknown_legacy_scaffold
+  calibrator_model_ids:
+  - azure-responses:gpt-5.5
+  calibration_runs:
+  - experiments/feedback_pilot_pendulum_2026-07-21.json
+  - experiments/feedback_pilot_analysis_2026-07-21.json
+  - experiments/science_calibration_summary_2026-07-21.json
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: Not exhaustively reconstructed; use the task certification reason, dated calibration analyses, and Git history as the retained record.
+  shortcut_discoverer: mixed_automated_red_team_and_gpt5.5_calibration
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: incomplete_legacy
+  author_domain: unknown_legacy
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: null
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: see_task_invariants_and_calibration_evidence

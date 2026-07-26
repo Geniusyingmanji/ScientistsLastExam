@@ -1,4 +1,4 @@
-schema_version: 1
+schema_version: 2
 scientific_question: Minimize generation cost across varying meshed DC networks while measuring whether the dispatch remains secure under every non-islanding single-line outage.
 artifact: A generator dispatch vector for each fully supplied nominal network.
 oracle:
@@ -10,18 +10,56 @@ normalization:
   reference: independent convex QP witnesses for nominal DC-OPF and N-1 security-constrained DC-OPF
   score: nominal economic improvement controls search; security-constrained economy and held-out networks remain separate
 citations:
-  - id: doi:10.1016/0142-0615(79)90026-7
-    title: Optimal power flows
-  - id: doi:10.1109/TPWRS.2013.2271980
-    title: Identification of Umbrella Constraints in DC-Based Security-Constrained Optimal Power Flow
+- id: doi:10.1016/0142-0615(79)90026-7
+  title: Optimal power flows
+- id: doi:10.1109/TPWRS.2013.2271980
+  title: Identification of Umbrella Constraints in DC-Based Security-Constrained Optimal Power Flow
 invariants:
-  - balanced dispatch and DC flow obey nodal Kirchhoff equations
-  - adding a constant to all voltage angles leaves every line flow unchanged
-  - proportional baselines are nominally and N-1 feasible
-  - independent nominal and security-constrained QP witnesses satisfy all corresponding constraints
-  - non-finite, unbalanced, out-of-bound and nominally overloaded dispatches fail closed
-  - N-1, held-out-network and per-instance metrics remain evaluator-only
+- balanced dispatch and DC flow obey nodal Kirchhoff equations
+- adding a constant to all voltage angles leaves every line flow unchanged
+- proportional baselines are nominally and N-1 feasible
+- independent nominal and security-constrained QP witnesses satisfy all corresponding constraints
+- non-finite, unbalanced, out-of-bound and nominally overloaded dispatches fail closed
+- N-1, held-out-network and per-instance metrics remain evaluator-only
 known_shortcuts: The DC approximation omits reactive power, voltage magnitude, losses and dynamic stability. Procedural networks are controlled stress tests, not utility cases. Public seeds require a future server-held split, and real operational claims require AC and dynamic contingency replication.
 review:
   domain: pending_external
   evaluator_security: automated_invariant_sandbox_and_metric_sealing_tests
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic simulator or generator with development and held-out, shifted, or misspecified instances.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Specific parameters may be held out, but the task family, simulator, and scaffold are visible and builder-model independence has not been established.
+lineage:
+  status: incomplete_legacy
+  builder_model_ids:
+  - unknown_legacy_builder
+  builder_scaffolds:
+  - unknown_legacy_scaffold
+  calibrator_model_ids:
+  - azure-responses:gpt-5.5
+  calibration_runs:
+  - experiments/feedback_pilot_opf_2026-07-21.json
+  - experiments/gpt55_opf_v2_b1_2026-07-21.json
+  - experiments/gpt55_opf_v2_b3_2026-07-21.json
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: Not exhaustively reconstructed; use the task certification reason, dated calibration analyses, and Git history as the retained record.
+  shortcut_discoverer: mixed_automated_red_team_and_gpt5.5_calibration
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: incomplete_legacy
+  author_domain: unknown_legacy
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: null
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: see_task_invariants_and_calibration_evidence

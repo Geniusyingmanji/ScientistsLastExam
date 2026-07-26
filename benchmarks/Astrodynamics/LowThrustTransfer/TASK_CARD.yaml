@@ -1,4 +1,4 @@
-schema_version: 1
+schema_version: 2
 scientific_question: Can one compact finite-thrust guidance policy transfer across orbit-raising, lowering, eccentricity-change and plane-change missions while trading terminal orbit accuracy against propellant and retaining feasibility under execution and navigation shifts?
 artifact: Four segments of bounded harmonic radial-transverse-normal thrust guidance, with seven finite coefficients per segment.
 oracle:
@@ -10,26 +10,64 @@ normalization:
   reference: independently repropagated feasible finite-thrust reachability witnesses generated before target freezing; they are not claimed globally optimal
   score: nominal development terminal accuracy times rocket-equation propellant efficiency, normalized above coast; held-out mission transfer, terminal phase and thrust/ISP/J2/pointing/navigation/cutoff robustness remain separate
 citations:
-  - id: doi:10.2514/2.4231
-    title: Survey of Numerical Methods for Trajectory Optimization
-  - id: doi:10.1007/BF01227493
-    title: A set modified equinoctial orbit elements
-  - id: doi:10.1017/CBO9780511778025
-    title: Spacecraft Trajectory Optimization
-  - id: doi:10.2514/8.5723
-    title: Propulsion Requirements for Controllable Satellites
+- id: doi:10.2514/2.4231
+  title: Survey of Numerical Methods for Trajectory Optimization
+- id: doi:10.1007/BF01227493
+  title: A set modified equinoctial orbit elements
+- id: doi:10.1017/CBO9780511778025
+  title: Spacecraft Trajectory Optimization
+- id: doi:10.2514/8.5723
+  title: Propulsion Requirements for Controllable Satellites
 invariants:
-  - frozen targets are reproduced by bounded reachability witnesses without reading a hidden truth at candidate runtime
-  - zero thrust conserves the first five MEE components and mass in the point-mass limit
-  - the MEE RK4 propagator agrees with an independently implemented Cartesian J2 propagator on every reachability witness
-  - the 900-second primary integration step agrees with an independently refined propagation by a small fraction of every public terminal tolerance
-  - reference controls satisfy the resultant thrust bound for every longitude, not only at a discrete set of samples
-  - all reference trajectories retain altitude, eccentricity and mass reserves and meet nominal terminal tolerances
-  - all reference trajectories remain terminal-feasible under every evaluator-only execution and navigation shift
-  - invalid shape, non-finite values, coefficient-bound violations, continuous thrust-bound violations, unsafe trajectories and resource failures fail closed
-  - development selection metrics are separated from held-out transfer, phase and physical-shift robustness
-  - each mission receives a fresh candidate process and private tmpfs so mutable state cannot reveal hidden split order
+- frozen targets are reproduced by bounded reachability witnesses without reading a hidden truth at candidate runtime
+- zero thrust conserves the first five MEE components and mass in the point-mass limit
+- the MEE RK4 propagator agrees with an independently implemented Cartesian J2 propagator on every reachability witness
+- the 900-second primary integration step agrees with an independently refined propagation by a small fraction of every public terminal tolerance
+- reference controls satisfy the resultant thrust bound for every longitude, not only at a discrete set of samples
+- all reference trajectories retain altitude, eccentricity and mass reserves and meet nominal terminal tolerances
+- all reference trajectories remain terminal-feasible under every evaluator-only execution and navigation shift
+- invalid shape, non-finite values, coefficient-bound violations, continuous thrust-bound violations, unsafe trajectories and resource failures fail closed
+- development selection metrics are separated from held-out transfer, phase and physical-shift robustness
+- each mission receives a fresh candidate process and private tmpfs so mutable state cannot reveal hidden split order
 known_shortcuts: The six deterministic Earth-orbit scenarios and low-order harmonic control family are controlled benchmark abstractions. Public targets permit instance-specific fitting and require future server-held procedural missions. J2 is the only modeled gravity perturbation; eclipse, third bodies, drag, radiation pressure, attitude dynamics, power and thermal constraints are omitted. The reachability witnesses are not proofs of global optimality, and simulator scores require independent high-fidelity astrodynamics review and mission-tool replication before any engineering or autonomous-discovery claim.
 review:
   domain: pending_external
   evaluator_security: automated_fail_closed_reference_independent_propagation_shift_metric_sealing_and_fresh_session_tests
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic simulator or generator with development and held-out, shifted, or misspecified instances.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Specific parameters may be held out, but the task family, simulator, and scaffold are visible and builder-model independence has not been established.
+lineage:
+  status: incomplete_legacy
+  builder_model_ids:
+  - unknown_legacy_builder
+  builder_scaffolds:
+  - unknown_legacy_scaffold
+  calibrator_model_ids:
+  - azure-responses:gpt-5.5
+  calibration_runs:
+  - experiments/gpt55_low_thrust_v2_b1_2026-07-22.json
+  - experiments/gpt55_low_thrust_v2_b3_2026-07-22.json
+  - experiments/gpt55_low_thrust_v2_blind_b3_2026-07-22.json
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: Not exhaustively reconstructed; use the task certification reason, dated calibration analyses, and Git history as the retained record.
+  shortcut_discoverer: mixed_automated_red_team_and_gpt5.5_calibration
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: incomplete_legacy
+  author_domain: unknown_legacy
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: null
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: see_task_invariants_and_calibration_evidence

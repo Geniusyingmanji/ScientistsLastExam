@@ -1,4 +1,4 @@
-schema_version: 1
+schema_version: 2
 scientific_question: Under a limited experimental budget, select a diverse batch of double mutants with high folding stability that transfers across held-out protein domains and independent protease readouts.
 artifact: A deterministic policy that chooses charged DMS replay assays and returns eight distinct feasible full-length protein sequences per domain.
 oracle:
@@ -10,20 +10,58 @@ normalization:
   reference: deterministic full-landscape diversity-aware greedy search with one-swap refinement; it is a strong normalization witness rather than a global-optimality claim
   score: development mean-stability and batch-diversity utility normalized between baseline and reference; top-decile hits, proxy false promotion, measurement efficiency, held-out transfer and independent protease robustness remain separate
 citations:
-  - id: doi:10.1038/s41586-023-06328-6
-    title: Mega-scale experimental analysis of protein folding stability in biology and design
-  - id: doi:10.5281/zenodo.15293562
-    title: ProteinGym v1.3
+- id: doi:10.1038/s41586-023-06328-6
+  title: Mega-scale experimental analysis of protein folding stability in biology and design
+- id: doi:10.5281/zenodo.15293562
+  title: ProteinGym v1.3
 invariants:
-  - every derived candidate is reconstructed from a fixed ProteinGym reference sequence and a validated double-mutation token
-  - processed DMS_score exactly equals the mean raw ddG_ML_float across duplicate amino-acid constructs before a candidate is admitted
-  - single-mutant additive scores are exposed only as a proxy while double-mutant stability labels remain behind a charged callback
-  - raw deltaG_t and deltaG_c measurements are kept separate and evaluator-only rather than replaced with synthetic robustness shifts
-  - every admitted raw construct has finite non-dummy protease-specific delta-G and combined, trypsin and chymotrypsin 95 percent interval widths no greater than 0.5 kcal/mol
-  - five development and three held-out protein domains each contain at least 300 complete double mutants
-  - candidate code receives a fresh sandbox process and private tmpfs for every protein domain
-  - held-out, protease, top-decile, efficiency, proxy-failure and per-domain metrics remain evaluator-only
+- every derived candidate is reconstructed from a fixed ProteinGym reference sequence and a validated double-mutation token
+- processed DMS_score exactly equals the mean raw ddG_ML_float across duplicate amino-acid constructs before a candidate is admitted
+- single-mutant additive scores are exposed only as a proxy while double-mutant stability labels remain behind a charged callback
+- raw deltaG_t and deltaG_c measurements are kept separate and evaluator-only rather than replaced with synthetic robustness shifts
+- every admitted raw construct has finite non-dummy protease-specific delta-G and combined, trypsin and chymotrypsin 95 percent interval widths no greater than 0.5 kcal/mol
+- five development and three held-out protein domains each contain at least 300 complete double mutants
+- candidate code receives a fresh sandbox process and private tmpfs for every protein domain
+- held-out, protease, top-decile, efficiency, proxy-failure and per-domain metrics remain evaluator-only
 known_shortcuts: These are finite public DMS landscapes and therefore cannot rule out pretraining or external lookup. Runtime code is networkless and labels are sealed, but release-quality claims require server-held proteins and contamination audits. The assay is an offline replay of proteolysis-derived stability, not de novo protein generation, wet-lab validation, biological function, in vivo fitness or autonomous discovery.
 review:
   domain: pending_external_protein_engineering
   evaluator_security: automated_source_rebuild_fresh_sandbox_budget_metric_sealing_malformed_artifact_and_independent_raw_readout_tests
+provenance:
+  class: public_data_replay
+  target_source: Hash-bound public dataset replay whose source and finite records were available before evaluation.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: high
+  rationale: The public data and finite candidate landscape may occur in pretraining or external sources; memorization and benchmark-specific retrieval cannot be excluded.
+lineage:
+  status: incomplete_legacy
+  builder_model_ids:
+  - unknown_legacy_builder
+  builder_scaffolds:
+  - unknown_legacy_scaffold
+  calibrator_model_ids:
+  - azure-responses:gpt-5.5
+  calibration_runs:
+  - experiments/gpt55_protein_stability_v1_b1_2026-07-25.json
+  - experiments/gpt55_protein_stability_v1_b3_2026-07-25.json
+  - experiments/gpt55_protein_stability_v1_blind_b3_2026-07-25.json
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: Not exhaustively reconstructed; use the task certification reason, dated calibration analyses, and Git history as the retained record.
+  shortcut_discoverer: mixed_automated_red_team_and_gpt5.5_calibration
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: incomplete_legacy
+  author_domain: unknown_legacy
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: null
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: see_task_invariants_and_calibration_evidence

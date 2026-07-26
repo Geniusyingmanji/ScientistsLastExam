@@ -38,7 +38,10 @@ class TaskMaturityAuditTests(unittest.TestCase):
             self.report["evidence_coverage"]["domain_review_complete_task_count"], 0
         )
         self.assertEqual(
-            self.report["evidence_coverage"]["builder_lineage_declared_task_count"], 0
+            self.report["evidence_coverage"]["builder_lineage_declared_task_count"], 50
+        )
+        self.assertEqual(
+            self.report["evidence_coverage"]["builder_lineage_complete_task_count"], 0
         )
 
     def test_track_f_tasks_have_repeated_controls_and_fresh_confirmation(self):

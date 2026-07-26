@@ -321,7 +321,17 @@ def _card_state(task_dir: Path) -> tuple[dict[str, Any], dict[str, Any]]:
         "calibration_runs",
         "frozen_before_eval",
     )
-    lineage_declared = all(lineage.get(key) not in (None, "", [], {}) for key in required_lineage)
+    lineage_declared = all(key in lineage for key in required_lineage)
+    builder_ids = lineage.get("builder_model_ids")
+    builder_scaffolds = lineage.get("builder_scaffolds")
+    lineage_complete = bool(
+        lineage.get("status") == "complete"
+        and lineage.get("frozen_before_eval") is True
+        and isinstance(builder_ids, list) and builder_ids
+        and isinstance(builder_scaffolds, list) and builder_scaffolds
+        and all("unknown" not in str(value).lower() for value in builder_ids)
+        and all("unknown" not in str(value).lower() for value in builder_scaffolds)
+    )
 
     provenance = card.get("provenance") if isinstance(card.get("provenance"), dict) else {}
     provenance_class = str(provenance.get("class") or "undeclared")
@@ -346,6 +356,7 @@ def _card_state(task_dir: Path) -> tuple[dict[str, Any], dict[str, Any]]:
         "external_validation_status": external_status,
         "external_validation_complete": external_validation_complete,
         "builder_lineage_declared": lineage_declared,
+        "builder_lineage_complete": lineage_complete,
         "missing_builder_lineage_fields": [
             key for key in required_lineage if lineage.get(key) in (None, "", [], {})
         ],
@@ -696,8 +707,8 @@ def build_report() -> dict[str, Any]:
             release_blockers.append("internal_science_admission_failed")
         if not card["domain_review_complete"]:
             release_blockers.append("external_domain_review_pending")
-        if not card["builder_lineage_declared"]:
-            release_blockers.append("builder_and_calibrator_lineage_missing")
+        if not card["builder_lineage_complete"]:
+            release_blockers.append("builder_and_calibrator_lineage_incomplete")
         if not card["provenance_class_declared"]:
             release_blockers.append("known_answer_procedural_or_prospective_provenance_missing")
         if not card["novelty_risk_declared"]:
@@ -808,6 +819,9 @@ def build_report() -> dict[str, Any]:
         ),
         "builder_lineage_declared_task_count": sum(
             row["task_card"]["builder_lineage_declared"] for row in task_records
+        ),
+        "builder_lineage_complete_task_count": sum(
+            row["task_card"]["builder_lineage_complete"] for row in task_records
         ),
         "provenance_class_declared_task_count": sum(
             row["task_card"]["provenance_class_declared"] for row in task_records
@@ -946,6 +960,7 @@ def render_markdown(report: dict[str, Any]) -> str:
         "| Fresh post-commit confirmation | %d |" % coverage["fresh_confirmation_task_count"],
         "| Completed external domain review | %d |" % coverage["domain_review_complete_task_count"],
         "| Builder/calibrator lineage declared | %d |" % coverage["builder_lineage_declared_task_count"],
+        "| Builder/calibrator lineage complete | %d |" % coverage["builder_lineage_complete_task_count"],
         "| Provenance class declared | %d |" % coverage["provenance_class_declared_task_count"],
         "| Novelty risk declared | %d |" % coverage["novelty_risk_declared_task_count"],
         "| Declared material post-2h headroom | %d |" % coverage["declared_post_2h_headroom_task_count"],

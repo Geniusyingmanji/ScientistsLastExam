@@ -1,4 +1,4 @@
-schema_version: 1
+schema_version: 2
 scientific_question: Can one compact algebraic eddy-viscosity closure fit real turbulent-channel DNS at two Reynolds numbers and transfer to two higher Reynolds numbers while preserving mean momentum and resisting wall-coordinate calibration shifts?
 artifact: Four bounded interpretable closure parameters controlling the von Karman scale, van-Driest damping and two outer-layer shape corrections.
 oracle:
@@ -10,23 +10,61 @@ normalization:
   reference: independently calibrated development nominal and worst-shift witnesses; separate evaluator-only held-out normalization witnesses
   score: development nominal velocity-plus-Reynolds-shear fit controls search; coordinate-shift robustness and Re-tau 590/950 transfer remain separate and sealed
 citations:
-  - id: doi:10.5281/zenodo.5749302
-    title: Lagrangian statistics in turbulent channel flow
-  - id: doi:10.1007/s003480050256
-    title: Turbulent flow in a channel at a low Reynolds number
-  - id: doi:10.1063/1.3005862
-    title: Reynolds number effects on the Reynolds-stress budgets in turbulent channels
+- id: doi:10.5281/zenodo.5749302
+  title: Lagrangian statistics in turbulent channel flow
+- id: doi:10.1007/s003480050256
+  title: Turbulent flow in a channel at a low Reynolds number
+- id: doi:10.1063/1.3005862
+  title: Reynolds number effects on the Reynolds-stress budgets in turbulent channels
 invariants:
-  - the committed DNS manifest is CC-BY-4.0 and binds the Zenodo record, authors and source-file hashes
-  - development uses Re-tau 180 and 395 while Re-tau 590 and 950 are evaluator-only held-out conditions
-  - the four parameter directions have full-rank development sensitivity after public range scaling
-  - total mean plus Reynolds shear equals one minus y-over-h to machine precision
-  - eddy viscosity, mean shear and modeled Reynolds shear remain nonnegative
-  - the weak standard closure is valid and has zero score by construction
-  - nominal and worst-shift development witnesses improve their declared objectives
-  - malformed, boolean, non-finite and out-of-bound returns fail closed
-  - held-out and coordinate-shift metrics remain evaluator-only
+- the committed DNS manifest is CC-BY-4.0 and binds the Zenodo record, authors and source-file hashes
+- development uses Re-tau 180 and 395 while Re-tau 590 and 950 are evaluator-only held-out conditions
+- the four parameter directions have full-rank development sensitivity after public range scaling
+- total mean plus Reynolds shear equals one minus y-over-h to machine precision
+- eddy viscosity, mean shear and modeled Reynolds shear remain nonnegative
+- the weak standard closure is valid and has zero score by construction
+- nominal and worst-shift development witnesses improve their declared objectives
+- malformed, boolean, non-finite and out-of-bound returns fail closed
+- held-out and coordinate-shift metrics remain evaluator-only
 known_shortcuts: This is a four-parameter algebraic closure calibrated to mean channel statistics, not a transport-equation RANS model, LES/DNS solver, separated-flow benchmark or universal turbulence law. Fixed public DNS profiles require later server-held flows and independent CFD review; no score establishes a new turbulence mechanism or engineering validity.
 review:
   domain: pending_external
   evaluator_security: automated_provenance_identifiability_physics_fail_closed_sandbox_and_metric_sealing_tests
+provenance:
+  class: public_data_replay
+  target_source: Hash-bound public dataset replay whose source and finite records were available before evaluation.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: high
+  rationale: The public data and finite candidate landscape may occur in pretraining or external sources; memorization and benchmark-specific retrieval cannot be excluded.
+lineage:
+  status: incomplete_legacy
+  builder_model_ids:
+  - unknown_legacy_builder
+  builder_scaffolds:
+  - unknown_legacy_scaffold
+  calibrator_model_ids:
+  - azure-responses:gpt-5.5
+  calibration_runs:
+  - experiments/gpt55_rans_v2_b1_2026-07-24.json
+  - experiments/gpt55_rans_v2_b3_2026-07-24.json
+  - experiments/gpt55_rans_v2_blind_b3_2026-07-24.json
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: Not exhaustively reconstructed; use the task certification reason, dated calibration analyses, and Git history as the retained record.
+  shortcut_discoverer: mixed_automated_red_team_and_gpt5.5_calibration
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: incomplete_legacy
+  author_domain: unknown_legacy
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: null
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: see_task_invariants_and_calibration_evidence

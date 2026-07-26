@@ -1,4 +1,4 @@
-schema_version: 1
+schema_version: 2
 scientific_question: Recover interpretable signed density bodies by actively selecting a multi-height gravity survey, and refuse when the public body library is unsupported.
 artifact: A permutation-invariant list of rectangular density bodies, confidence, and optional null or model-inadequacy abstention.
 oracle:
@@ -10,18 +10,56 @@ normalization:
   reference: exact rectangular bodies on in-library worlds and correct refusal on null or misspecified worlds
   score: development body/external-field/mass-moment recovery normalized above always-abstain; held-out mechanism, field prediction, extrapolation and refusal remain separate
 citations:
-  - id: doi:10.1029/JZ064i001p00049
-    title: Rapid gravity computations for two-dimensional bodies with application to the Mendocino submarine fracture zone
-  - id: doi:10.1190/1.1444302
-    title: 3-D inversion of gravity data
+- id: doi:10.1029/JZ064i001p00049
+  title: Rapid gravity computations for two-dimensional bodies with application to the Mendocino submarine fracture zone
+- id: doi:10.1190/1.1444302
+  title: 3-D inversion of gravity data
 invariants:
-  - analytic rectangular-body fields agree with independent Gauss-Legendre area integration
-  - exact bodies attain perfect mechanism and sealed field-prediction scores
-  - a fixed public-budget multi-height survey has full-rank local sensitivity for every in-library world
-  - null and observationally resolvable out-of-library worlds reward refusal rather than fabricated bodies
-  - survey stations and heights consume budget and fail closed on overspend
-  - held-out mechanism, prediction, extrapolation and per-world diagnostics remain evaluator-only
+- analytic rectangular-body fields agree with independent Gauss-Legendre area integration
+- exact bodies attain perfect mechanism and sealed field-prediction scores
+- a fixed public-budget multi-height survey has full-rank local sensitivity for every in-library world
+- null and observationally resolvable out-of-library worlds reward refusal rather than fabricated bodies
+- survey stations and heights consume budget and fail closed on overspend
+- held-out mechanism, prediction, extrapolation and per-world diagnostics remain evaluator-only
 known_shortcuts: The 2-D infinite-strike geometry and synthetic Gaussian noise are controlled research abstractions. Public seeds require a future server-held split, and field-equivalent gravity models remain non-unique. Real discovery claims require independent geological constraints and field validation.
 review:
   domain: pending_external
   evaluator_security: automated_invariant_sandbox_callback_and_metric_sealing_tests
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic simulator or generator with development and held-out, shifted, or misspecified instances.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Specific parameters may be held out, but the task family, simulator, and scaffold are visible and builder-model independence has not been established.
+lineage:
+  status: incomplete_legacy
+  builder_model_ids:
+  - unknown_legacy_builder
+  builder_scaffolds:
+  - unknown_legacy_scaffold
+  calibrator_model_ids:
+  - azure-responses:gpt-5.5
+  calibration_runs:
+  - experiments/gpt55_gravity_v2_b1_2026-07-22.json
+  - experiments/gpt55_gravity_v2_b3_2026-07-22.json
+  - experiments/science_calibration_summary_2026-07-22_v4.json
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: Not exhaustively reconstructed; use the task certification reason, dated calibration analyses, and Git history as the retained record.
+  shortcut_discoverer: mixed_automated_red_team_and_gpt5.5_calibration
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: incomplete_legacy
+  author_domain: unknown_legacy
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: null
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: see_task_invariants_and_calibration_evidence

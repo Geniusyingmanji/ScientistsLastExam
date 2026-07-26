@@ -1,4 +1,4 @@
-schema_version: 1
+schema_version: 2
 scientific_question: Pack equal unit circles into the smallest square for fixed cardinalities.
 artifact: Circle-center coordinates and a positive square side length.
 oracle:
@@ -10,10 +10,51 @@ normalization:
   reference: dated Packomania best-known side lengths for N=7,10,13
   score: clipped fraction of side-length gap closed
 citations:
-  - {id: "url:http://hydra.nat.uni-magdeburg.de/packing/csq/csq.html", title: Packomania circle packings in a square}
-  - {id: doi:10.1007/978-0-387-45676-8, title: New Approaches to Circle Packing in a Square}
-invariants: [translation within an enlarged box, rotation/reflection invariance, center-permutation invariance]
+- id: url:http://hydra.nat.uni-magdeburg.de/packing/csq/csq.html
+  title: Packomania circle packings in a square
+- id: doi:10.1007/978-0-387-45676-8
+  title: New Approaches to Circle Packing in a Square
+invariants:
+- translation within an enlarged box
+- rotation/reflection invariance
+- center-permutation invariance
 known_shortcuts: Public coordinates may be memorized; hidden cardinalities and a contamination policy are required.
 review:
   domain: pending_external
   evaluator_security: automated_invariant_and_sandbox_tests
+provenance:
+  class: known_answer
+  target_source: Published or repository-visible fixed targets, reference values, or standard solution families available before evaluation.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: high
+  rationale: Success may reproduce a known numerical method, design pattern, or published target; it is reconstruction/optimization evidence rather than a novel scientific discovery.
+lineage:
+  status: incomplete_legacy
+  builder_model_ids:
+  - unknown_legacy_builder
+  builder_scaffolds:
+  - unknown_legacy_scaffold
+  calibrator_model_ids:
+  - azure-responses:gpt-5.5
+  calibration_runs:
+  - experiments/gpt55_core_pilot_b1_2026-07-21.json
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: Not exhaustively reconstructed; use the task certification reason, dated calibration analyses, and Git history as the retained record.
+  shortcut_discoverer: mixed_automated_red_team_and_gpt5.5_calibration
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: incomplete_legacy
+  author_domain: unknown_legacy
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: null
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: see_task_invariants_and_calibration_evidence

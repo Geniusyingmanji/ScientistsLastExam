@@ -1,4 +1,4 @@
-schema_version: 1
+schema_version: 2
 scientific_question: Recover sparse controlled dynamical laws by actively selecting experiments, and refuse when the public model library is unsupported.
 artifact: A term-support matrix, coefficient matrix, confidence, and optional null or model-inadequacy abstention.
 oracle:
@@ -10,18 +10,56 @@ normalization:
   reference: exact sparse coefficients on in-library worlds and correct abstention on null or misspecified worlds
   score: development mechanism recovery normalized above always-abstain; shifted mechanism and sealed rollout prediction remain separate
 citations:
-  - id: doi:10.1073/pnas.1517384113
-    title: Discovering governing equations from data by sparse identification of nonlinear dynamical systems
-  - id: doi:10.1073/pnas.0609476104
-    title: Automated reverse engineering of nonlinear dynamical systems
-  - id: doi:10.1214/ss/1177009939
-    title: "Bayesian Experimental Design: A Review"
+- id: doi:10.1073/pnas.1517384113
+  title: Discovering governing equations from data by sparse identification of nonlinear dynamical systems
+- id: doi:10.1073/pnas.0609476104
+  title: Automated reverse engineering of nonlinear dynamical systems
+- id: doi:10.1214/ss/1177009939
+  title: 'Bayesian Experimental Design: A Review'
 invariants:
-  - exact coefficients attain perfect support, coefficient and sealed rollout scores
-  - experiment callbacks charge every requested integration step and fail closed on overspend
-  - null and out-of-library worlds reward supported abstention rather than fabricated mechanisms
-  - validation mechanism, rollout and per-world metrics remain evaluator-only
+- exact coefficients attain perfect support, coefficient and sealed rollout scores
+- experiment callbacks charge every requested integration step and fail closed on overspend
+- null and out-of-library worlds reward supported abstention rather than fabricated mechanisms
+- validation mechanism, rollout and per-world metrics remain evaluator-only
 known_shortcuts: The public polynomial library and low-dimensional deterministic simulator are controlled research abstractions. Public seeds require a future server-held split, and real discovery claims require independent equations, measurement models and physical validation.
 review:
   domain: pending_external
   evaluator_security: automated_invariant_sandbox_callback_and_metric_sealing_tests
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic simulator or generator with development and held-out, shifted, or misspecified instances.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: local_fresh_procedural_panels_available
+novelty_risk:
+  level: medium
+  rationale: Specific parameters may be held out, but the task family, simulator, and scaffold are visible and builder-model independence has not been established.
+lineage:
+  status: incomplete_legacy
+  builder_model_ids:
+  - unknown_legacy_builder
+  builder_scaffolds:
+  - unknown_legacy_scaffold
+  calibrator_model_ids:
+  - azure-responses:gpt-5.5
+  calibration_runs:
+  - experiments/track_f_search_2026-07-26_v1.json
+  - experiments/track_f_analysis_2026-07-26_v1.json
+  - experiments/feedback_measurement_pilot_2026-07-26_v1.json
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: Not exhaustively reconstructed; use the task certification reason, dated calibration analyses, and Git history as the retained record.
+  shortcut_discoverer: mixed_automated_red_team_and_gpt5.5_calibration
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: incomplete_legacy
+  author_domain: unknown_legacy
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: null
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: see_task_invariants_and_calibration_evidence

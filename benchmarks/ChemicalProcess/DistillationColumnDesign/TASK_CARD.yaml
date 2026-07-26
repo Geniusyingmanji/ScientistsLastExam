@@ -1,4 +1,4 @@
-schema_version: 1
+schema_version: 2
 scientific_question: Can one mixed-integer column-design policy trade equilibrium stages against reflux cost across varying binary separations while retaining product purity and recovery under off-design operation?
 artifact: Tray count, feed-stage index, reflux ratio, nominal distillate-to-feed fraction and feed-forward split gain for a total-condenser/partial-reboiler binary column.
 oracle:
@@ -10,25 +10,63 @@ normalization:
   reference: separately calibrated fixed-seed nominal-cost and off-design-robust mixed-integer witnesses
   score: development nominal annualized reduced-order cost controls search; held-out separations and operating shifts remain separate
 citations:
-  - id: doi:10.1021/ie50186a023
-    title: Graphical Design of Fractionating Columns
-  - id: doi:10.1002/aic.690170130
-    title: Multicomponent separation calculations by linearization
-  - id: doi:10.1002/cjce.5450520108
-    title: A new class of solution methods for multicomponent, multistage separation processes
-  - id: doi:10.1021/ie0001974
-    title: Optimal Design of Complex Distillation Columns Using Rigorous Tray-by-Tray Disjunctive Programming Models
+- id: doi:10.1021/ie50186a023
+  title: Graphical Design of Fractionating Columns
+- id: doi:10.1002/aic.690170130
+  title: Multicomponent separation calculations by linearization
+- id: doi:10.1002/cjce.5450520108
+  title: A new class of solution methods for multicomponent, multistage separation processes
+- id: doi:10.1021/ie0001974
+  title: Optimal Design of Complex Distillation Columns Using Rigorous Tray-by-Tray Disjunctive Programming Models
 invariants:
-  - every accepted design is finite, in public bounds and has exact integral tray and feed-stage variables
-  - every feasible design closes each light-component stage balance and the overall feed-product balance
-  - total-condenser and partial-reboiler boundary equations are checked explicitly
-  - weak-baseline designs are nominally feasible in every instance
-  - nominal and robust reference witnesses improve their corresponding weak-baseline cost anchors
-  - product purity and component recovery remain separate from structural artifact validity
-  - non-finite, malformed, out-of-bound, non-integral and nonconverged artifacts fail closed
-  - every scientific instance receives a fresh candidate process and private temporary-filesystem state
-  - held-out, off-design, per-stage and per-instance metrics remain evaluator-only
+- every accepted design is finite, in public bounds and has exact integral tray and feed-stage variables
+- every feasible design closes each light-component stage balance and the overall feed-product balance
+- total-condenser and partial-reboiler boundary equations are checked explicitly
+- weak-baseline designs are nominally feasible in every instance
+- nominal and robust reference witnesses improve their corresponding weak-baseline cost anchors
+- product purity and component recovery remain separate from structural artifact validity
+- non-finite, malformed, out-of-bound, non-integral and nonconverged artifacts fail closed
+- every scientific instance receives a fresh candidate process and private temporary-filesystem state
+- held-out, off-design, per-stage and per-instance metrics remain evaluator-only
 known_shortcuts: The deterministic model assumes binary constant relative volatility, equilibrium stages and constant molar overflow. It omits non-ideal and multicomponent thermodynamics, pressure drop, tray efficiency, hydraulics, heat integration, detailed equipment sizing and control. Fixed procedural instances require future server-held mixtures and specifications. Engineering claims require independent process-simulator and experimental or plant-data replication. Reference designs are feasible witnesses, not global optima.
 review:
   domain: pending_external
   evaluator_security: automated_invariant_sandbox_and_metric_sealing_tests
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic simulator or generator with development and held-out, shifted, or misspecified instances.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Specific parameters may be held out, but the task family, simulator, and scaffold are visible and builder-model independence has not been established.
+lineage:
+  status: incomplete_legacy
+  builder_model_ids:
+  - unknown_legacy_builder
+  builder_scaffolds:
+  - unknown_legacy_scaffold
+  calibrator_model_ids:
+  - azure-responses:gpt-5.5
+  calibration_runs:
+  - experiments/gpt55_distillation_v2_b1_2026-07-23.json
+  - experiments/gpt55_distillation_v2_b3_2026-07-23.json
+  - experiments/gpt55_distillation_v2_blind_b3_2026-07-23.json
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: Not exhaustively reconstructed; use the task certification reason, dated calibration analyses, and Git history as the retained record.
+  shortcut_discoverer: mixed_automated_red_team_and_gpt5.5_calibration
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: incomplete_legacy
+  author_domain: unknown_legacy
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: null
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: see_task_invariants_and_calibration_evidence

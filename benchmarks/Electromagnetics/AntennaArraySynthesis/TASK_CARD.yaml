@@ -1,4 +1,4 @@
-schema_version: 1
+schema_version: 2
 scientific_question: Can one array-synthesis policy suppress sidelobes and interference directions across varying scanned/nonuniform arrays while retaining target gain and suppression under frequency, calibration, position and element-failure shifts?
 artifact: One complex excitation per supplied linear-array element position.
 oracle:
@@ -10,19 +10,57 @@ normalization:
   reference: independently calibrated Kaiser-taper plus regularized-null-projection nominal and robust local family witnesses
   score: nominal development quality controls search; held-out geometry and shifted robustness remain separate
 citations:
-  - id: doi:10.1109/JRPROC.1946.225956
-    title: A Current Distribution for Broadside Arrays Which Optimizes the Relationship between Beam Width and Side-Lobe Level
-  - id: doi:10.1121/1.384777
-    title: Effect of element failure and random errors in amplitude and phase on the sidelobe level attainable with a linear array
+- id: doi:10.1109/JRPROC.1946.225956
+  title: A Current Distribution for Broadside Arrays Which Optimizes the Relationship between Beam Width and Side-Lobe Level
+- id: doi:10.1121/1.384777
+  title: Effect of element failure and random errors in amplitude and phase on the sidelobe level attainable with a linear array
 invariants:
-  - overall nonzero complex scaling and phase of excitations do not change normalized metrics
-  - translating all element positions changes array-factor phase but not its magnitude pattern
-  - uniform steering has unit nominal target response and satisfies excitation limits
-  - nominal and robust reference policies improve their corresponding quality above uniform steering
-  - reference parameters reproduce the optimum of their declared finite Kaiser/null-projection grid, without claiming a global optimum
-  - zero, non-finite, wrong-length and excessive normalized excitations fail closed
-  - held-out and shifted metrics remain evaluator-only
+- overall nonzero complex scaling and phase of excitations do not change normalized metrics
+- translating all element positions changes array-factor phase but not its magnitude pattern
+- uniform steering has unit nominal target response and satisfies excitation limits
+- nominal and robust reference policies improve their corresponding quality above uniform steering
+- reference parameters reproduce the optimum of their declared finite Kaiser/null-projection grid, without claiming a global optimum
+- zero, non-finite, wrong-length and excessive normalized excitations fail closed
+- held-out and shifted metrics remain evaluator-only
 known_shortcuts: The scalar isotropic-element far-field model omits mutual coupling, polarization, platform scattering, wideband waveform effects and nonlinear hardware. Deterministic public instances require future server-held arrays; engineering claims require full-wave or measured-pattern replication. The sampled grid and two-parameter references are reproducible benchmark anchors, not continuous-angle or global-optimality certificates.
 review:
   domain: pending_external
   evaluator_security: automated_invariant_sandbox_and_metric_sealing_tests
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic simulator or generator with development and held-out, shifted, or misspecified instances.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Specific parameters may be held out, but the task family, simulator, and scaffold are visible and builder-model independence has not been established.
+lineage:
+  status: incomplete_legacy
+  builder_model_ids:
+  - unknown_legacy_builder
+  builder_scaffolds:
+  - unknown_legacy_scaffold
+  calibrator_model_ids:
+  - azure-responses:gpt-5.5
+  calibration_runs:
+  - experiments/gpt55_antenna_v2_b1_2026-07-21.json
+  - experiments/gpt55_antenna_v2_b3_2026-07-21.json
+  - experiments/science_calibration_summary_2026-07-21.json
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: Not exhaustively reconstructed; use the task certification reason, dated calibration analyses, and Git history as the retained record.
+  shortcut_discoverer: mixed_automated_red_team_and_gpt5.5_calibration
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: incomplete_legacy
+  author_domain: unknown_legacy
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: null
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: see_task_invariants_and_calibration_evidence
