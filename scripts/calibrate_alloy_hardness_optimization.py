@@ -63,7 +63,7 @@ def _rebuild(csv_path):
 
 
 def _distance(left, right):
-    elements = set(left["composition"]) | set(right["composition"])
+    elements = sorted(set(left["composition"]) | set(right["composition"]))
     return 0.5 * sum(abs(
         float(left["composition"].get(element, 0.0))
         - float(right["composition"].get(element, 0.0))

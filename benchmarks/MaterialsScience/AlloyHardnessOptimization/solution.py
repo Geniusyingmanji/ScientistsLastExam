@@ -4,7 +4,9 @@ import itertools
 
 
 def _distance(left, right):
-    elements = set(left["composition"]) | set(right["composition"])
+    # Stable order keeps floating-point reduction identical across candidate
+    # subprocesses with different PYTHONHASHSEED values.
+    elements = sorted(set(left["composition"]) | set(right["composition"]))
     return 0.5 * sum(abs(
         float(left["composition"].get(element, 0.0))
         - float(right["composition"].get(element, 0.0))

@@ -188,7 +188,10 @@ def _validate_submission(submission, world):
 
 
 def _composition_distance(left, right):
-    elements = set(left["composition"]) | set(right["composition"])
+    # The trusted host and isolated candidate run with independent hash seeds.
+    # Sort before summation so the public baseline and trusted reference follow
+    # the same floating-point reduction order in every process.
+    elements = sorted(set(left["composition"]) | set(right["composition"]))
     return float(0.5 * sum(abs(
         float(left["composition"].get(element, 0.0))
         - float(right["composition"].get(element, 0.0))

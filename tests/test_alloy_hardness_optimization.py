@@ -3,6 +3,9 @@ from __future__ import annotations
 import hashlib
 import importlib.util
 import json
+import os
+import subprocess
+import sys
 import tempfile
 import textwrap
 import unittest
@@ -228,6 +231,32 @@ class AlloyHardnessOptimizationTests(unittest.TestCase):
         self.assertEqual(result["heldout_mean_assay_calls"], 2.0)
         self.assertEqual(result["development_assay_unique_rate"], 1.0)
         self.assertEqual(result["heldout_assay_unique_rate"], 1.0)
+
+    def test_baseline_is_bit_exact_across_hash_seeds_and_secure_path(self):
+        script = (
+            "import importlib.util,json,pathlib;"
+            "p=pathlib.Path(%r);"
+            "s=importlib.util.spec_from_file_location('alloy_seed_oracle',p);"
+            "m=importlib.util.module_from_spec(s);s.loader.exec_module(m);"
+            "print(json.dumps(m.evaluate(m._baseline_policy),sort_keys=True,"
+            "separators=(',',':'),allow_nan=False))"
+        ) % str(TASK / "verification/evaluator.py")
+        rendered = []
+        for seed in ("0", "1", "2", "17", "123456"):
+            env = os.environ.copy()
+            env["PYTHONHASHSEED"] = seed
+            rendered.append(subprocess.check_output(
+                [sys.executable, "-c", script], cwd=ROOT, env=env, text=True,
+            ).strip())
+        self.assertEqual(len(set(rendered)), 1)
+
+        direct = json.loads(rendered[0])
+        direct["raw_score"] = direct["combined_score"]
+        spec = find_task(
+            "MaterialsScience/AlloyHardnessOptimization", include_uncertified=True
+        )
+        secure = evaluate_candidate(spec, spec.initial_program_path, timeout_s=90)
+        self.assertEqual(secure, direct)
 
     def test_calibration_and_candidate_admission_gates(self):
         source = Path("/tmp/MPEA_dataset.csv")
