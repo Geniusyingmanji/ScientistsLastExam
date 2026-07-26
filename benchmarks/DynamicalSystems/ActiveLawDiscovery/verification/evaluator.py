@@ -39,6 +39,13 @@ VALIDATION_SPECS = (
     (41051, 0, 0.0070, "misspecified"),
 )
 
+CONFIRMATION_CONTEXT_SCHEMA_VERSION = 1
+CONFIRMATION_GENERATOR = "active_law_fresh_v1"
+CONFIRMATION_WORLD_COUNT = 7
+_STATIC_WORLD_SEEDS = {
+    int(spec[0]) for spec in DEVELOPMENT_SPECS + VALIDATION_SPECS
+}
+
 
 def _library(state, control):
     x, y = np.asarray(state, dtype=float)
@@ -113,6 +120,69 @@ def _world(spec):
         "kind": str(kind),
         "coefficients": coefficients,
     }
+
+
+def _validate_confirmation_context(context):
+    required = {
+        "schema_version", "purpose", "task_id", "generator", "panel_id",
+        "master_seed", "world_count",
+    }
+    if not isinstance(context, dict) or set(context) != required:
+        raise ValueError("invalid ActiveLaw confirmation context fields")
+    if context["schema_version"] != CONFIRMATION_CONTEXT_SCHEMA_VERSION:
+        raise ValueError("unsupported ActiveLaw confirmation context schema")
+    if context["purpose"] != "fresh_confirmation":
+        raise ValueError("invalid ActiveLaw confirmation purpose")
+    if context["task_id"] != "DynamicalSystems/ActiveLawDiscovery":
+        raise ValueError("ActiveLaw confirmation task mismatch")
+    if context["generator"] != CONFIRMATION_GENERATOR:
+        raise ValueError("ActiveLaw confirmation generator mismatch")
+    panel_id = context["panel_id"]
+    if (
+        not isinstance(panel_id, str)
+        or not 1 <= len(panel_id) <= 64
+        or any(character not in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_.-"
+               for character in panel_id)
+    ):
+        raise ValueError("invalid ActiveLaw confirmation panel_id")
+    seed = context["master_seed"]
+    if isinstance(seed, bool) or not isinstance(seed, int) or not 0 <= seed < 2**63:
+        raise ValueError("invalid ActiveLaw confirmation master_seed")
+    if context["world_count"] != CONFIRMATION_WORLD_COUNT:
+        raise ValueError("ActiveLaw confirmation world_count mismatch")
+    return panel_id, int(seed)
+
+
+def _confirmation_specs(context):
+    """Generate a balanced, answer-disjoint procedural confirmation panel."""
+    _, master_seed = _validate_confirmation_context(context)
+    rng = np.random.default_rng(np.random.SeedSequence([
+        master_seed & 0xFFFFFFFF,
+        (master_seed >> 32) & 0xFFFFFFFF,
+        0xA17E1A9,
+    ]))
+    kinds = np.asarray(
+        ["in_library"] * 5 + ["null", "misspecified"], dtype=object
+    )[rng.permutation(CONFIRMATION_WORLD_COUNT)]
+    in_library_templates = iter(int(value) for value in rng.permutation(5))
+    used_seeds = set(_STATIC_WORLD_SEEDS)
+    specs = []
+    for kind_value in kinds:
+        kind = str(kind_value)
+        if kind == "in_library":
+            template = next(in_library_templates)
+        elif kind == "misspecified":
+            template = int(rng.integers(0, 5))
+        else:
+            template = 0
+        while True:
+            world_seed = int(rng.integers(10_000_000, 2_147_000_000))
+            if world_seed not in used_seeds:
+                used_seeds.add(world_seed)
+                break
+        noise = int(rng.integers(40, 81)) * 1.0e-4
+        specs.append((world_seed, template, noise, kind))
+    return tuple(specs)
 
 
 def _derivative(world, state, control):
@@ -386,15 +456,22 @@ def _split_metrics(records, exception_count):
     }
 
 
+def _evaluate_specs(discover_law, specs, split, *, reset_before_first=False):
+    records = []
+    for index, spec in enumerate(specs):
+        if (index or reset_before_first) and hasattr(discover_law, "reset_session"):
+            discover_law.reset_session()
+        records.append(_evaluate_world(discover_law, spec, split, index))
+    return records
+
+
 def evaluate(discover_law):
-    development = [
-        _evaluate_world(discover_law, spec, "development", index)
-        for index, spec in enumerate(DEVELOPMENT_SPECS)
-    ]
-    validation = [
-        _evaluate_world(discover_law, spec, "validation", index)
-        for index, spec in enumerate(VALIDATION_SPECS)
-    ]
+    development = _evaluate_specs(
+        discover_law, DEVELOPMENT_SPECS, "development"
+    )
+    validation = _evaluate_specs(
+        discover_law, VALIDATION_SPECS, "validation", reset_before_first=True
+    )
     dev_exception_count = sum(spec[3] != "in_library" for spec in DEVELOPMENT_SPECS)
     val_exception_count = sum(spec[3] != "in_library" for spec in VALIDATION_SPECS)
     dev = _split_metrics(development, dev_exception_count)
@@ -423,4 +500,37 @@ def evaluate(discover_law):
             row["experiment_budget_units"] for row in all_records
         ])),
         "per_world": all_records,
+    }
+
+
+def evaluate_with_context(discover_law, context):
+    """Evaluate a frozen method once on a fresh trusted confirmation panel."""
+    panel_id, _ = _validate_confirmation_context(context)
+    specs = _confirmation_specs(context)
+    records = _evaluate_specs(discover_law, specs, "confirmation")
+    exception_count = sum(spec[3] != "in_library" for spec in specs)
+    metrics = _split_metrics(records, exception_count)
+    valid = metrics["valid_count"] == len(records)
+    return {
+        "combined_score": metrics["normalized_mechanism"] if valid else 0.0,
+        "raw_score": metrics["normalized_mechanism"] if valid else 0.0,
+        "valid": 1.0 if valid else 0.0,
+        "feasibility_rate": metrics["valid_count"] / len(records),
+        "confirmation_panel_id": panel_id,
+        "confirmation_generator": CONFIRMATION_GENERATOR,
+        "confirmation_world_count": len(records),
+        "confirmation_normalized_mechanism_score": metrics["normalized_mechanism"],
+        "confirmation_raw_mechanism_score": metrics["raw_mechanism"],
+        "confirmation_prediction_score": metrics["prediction"],
+        "confirmation_false_discoveries": metrics["false_discoveries"],
+        "confirmation_correct_abstentions": metrics["correct_abstentions"],
+        "mean_experiment_calls": float(np.mean([
+            row["experiment_calls"] for row in records
+        ])),
+        "mean_experiment_budget_units": float(np.mean([
+            row["experiment_budget_units"] for row in records
+        ])),
+        "candidate_instance_call_count": len(records),
+        "candidate_instance_valid_rate": metrics["valid_count"] / len(records),
+        "per_confirmation_world": records,
     }

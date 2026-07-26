@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-import json
 import hashlib
+import json
 import math
 import os
 import signal
@@ -95,10 +95,17 @@ def evaluate_candidate(
             context_path = Path(tmp) / "trusted_context.json"
             context_path.write_bytes(context_payload)
             cmd += ["--trusted-context", str(context_path)]
+        trusted_environment = dict(os.environ)
+        trusted_environment.update({
+            "OPENBLAS_NUM_THREADS": "1",
+            "OMP_NUM_THREADS": "1",
+            "MKL_NUM_THREADS": "1",
+            "NUMEXPR_NUM_THREADS": "1",
+        })
         proc = subprocess.Popen(
             cmd, cwd=str(Path(__file__).resolve().parent.parent),
             stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE,
-            text=True, start_new_session=True,
+            text=True, start_new_session=True, env=trusted_environment,
         )
         try:
             _, stderr = proc.communicate(timeout=timeout_s + 2.0)

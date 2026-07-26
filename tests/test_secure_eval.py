@@ -264,6 +264,40 @@ class SecureEvaluationTests(unittest.TestCase):
         self.assertEqual(result["trusted_context_sha256"], expected)
         self.assertNotIn(marker, json.dumps(result, sort_keys=True))
 
+    def test_trusted_host_numeric_threads_are_fixed(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            task = root / "task"
+            (task / "verification").mkdir(parents=True)
+            (task / "verification" / "evaluator.py").write_text(textwrap.dedent("""
+                import os
+
+                def evaluate(candidate):
+                    candidate()
+                    keys = (
+                        "OPENBLAS_NUM_THREADS", "OMP_NUM_THREADS",
+                        "MKL_NUM_THREADS", "NUMEXPR_NUM_THREADS",
+                    )
+                    fixed = all(os.environ.get(key) == "1" for key in keys)
+                    return {"combined_score": 1.0 if fixed else 0.0, "valid": 1.0}
+            """), encoding="utf-8")
+            candidate = root / "candidate.py"
+            candidate.write_text("def noop(): return None\n", encoding="utf-8")
+            spec = load_task_spec(BENCHMARKS / "Optoelectronics" / "LaserCavityDesign")
+            spec.task_dir = task
+            spec.entrypoint = "noop"
+            with patch.dict(
+                "os.environ",
+                {
+                    "OPENBLAS_NUM_THREADS": "8",
+                    "OMP_NUM_THREADS": "8",
+                    "MKL_NUM_THREADS": "8",
+                    "NUMEXPR_NUM_THREADS": "8",
+                },
+            ):
+                result = evaluate_candidate(spec, candidate, timeout_s=10)
+        self.assertEqual(result["combined_score"], 1.0, result)
+
     def test_trusted_context_requires_explicit_oracle_entrypoint(self):
         result = evaluate_candidate(
             self.spec,

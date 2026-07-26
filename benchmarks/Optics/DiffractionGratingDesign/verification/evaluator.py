@@ -179,6 +179,10 @@ SHIFT_SPECS = (
     },
 )
 
+CONFIRMATION_CONTEXT_SCHEMA_VERSION = 1
+CONFIRMATION_GENERATOR = "diffraction_grating_fresh_v1"
+CONFIRMATION_WORLD_COUNT = 3
+
 
 def _public_problem(spec: dict[str, Any]) -> dict[str, Any]:
     period = float(spec["period_um"])
@@ -537,13 +541,55 @@ def _normalized_score(baseline: float, reference: float, value: float) -> float:
     return float(np.clip((float(value) - float(baseline)) / denominator, 0.0, 1.0))
 
 
-def _make_world(spec: dict[str, Any]) -> dict[str, Any]:
+def _design_utilities(
+    design: np.ndarray,
+    problem: dict[str, Any],
+    shift_specs: tuple[dict[str, Any], ...],
+) -> tuple[float, float]:
+    nominal_values, _ = _condition_efficiencies(design, problem)
+    nominal_utility = _utility(nominal_values)
+    shifted_utilities = []
+    for shift in shift_specs:
+        realized = _shifted_design(design, problem, shift)
+        if not _realized_geometry_feasible(realized, problem):
+            shifted_utilities.append(0.0)
+            continue
+        shifted_values, _ = _condition_efficiencies(
+            realized,
+            problem,
+            ridge_index_scale=float(shift["ridge_index_scale"]),
+            angle_offset_deg=float(shift["angle_offset_deg"]),
+        )
+        shifted_utilities.append(_utility(shifted_values))
+    return nominal_utility, min(shifted_utilities)
+
+
+def _make_world(
+    spec: dict[str, Any],
+    shift_specs: tuple[dict[str, Any], ...] = SHIFT_SPECS,
+) -> dict[str, Any]:
     problem = _public_problem(spec)
     baseline_design = _validate_design(_weak_baseline_design(problem), problem)
     reference_design = _reference_design(problem, spec)
-    anchors = tuple(float(value) for value in spec["anchors"])
+    anchors_value = spec.get("anchors")
+    if anchors_value is None:
+        baseline_utility, baseline_robust = _design_utilities(
+            baseline_design, problem, shift_specs
+        )
+        reference_utility, reference_robust = _design_utilities(
+            reference_design, problem, shift_specs
+        )
+        anchors_value = (
+            baseline_utility, reference_utility,
+            baseline_robust, reference_robust,
+        )
+    anchors = tuple(float(value) for value in anchors_value)
     if len(anchors) != 4:
         raise ValueError("world anchors must contain four utilities")
+    if anchors[1] <= anchors[0] + 0.05:
+        raise ValueError("confirmation reference has insufficient nominal headroom")
+    if anchors[3] <= anchors[2] + 0.05:
+        raise ValueError("confirmation reference has insufficient robust headroom")
     world = copy.deepcopy(spec)
     world.update({
         "problem": problem,
@@ -553,8 +599,205 @@ def _make_world(spec: dict[str, Any]) -> dict[str, Any]:
         "reference_utility": anchors[1],
         "baseline_robust_utility": anchors[2],
         "reference_robust_utility": anchors[3],
+        "shift_specs": copy.deepcopy(shift_specs),
     })
     return world
+
+
+def _validate_confirmation_context(context: dict[str, Any]) -> tuple[str, int]:
+    required = {
+        "schema_version", "purpose", "task_id", "generator", "panel_id",
+        "master_seed", "world_count", "worlds", "shifts",
+    }
+    if not isinstance(context, dict) or set(context) != required:
+        raise ValueError("invalid diffraction confirmation context fields")
+    if context["schema_version"] != CONFIRMATION_CONTEXT_SCHEMA_VERSION:
+        raise ValueError("unsupported diffraction confirmation context schema")
+    if context["purpose"] != "fresh_confirmation":
+        raise ValueError("invalid diffraction confirmation purpose")
+    if context["task_id"] != "Optics/DiffractionGratingDesign":
+        raise ValueError("diffraction confirmation task mismatch")
+    if context["generator"] != CONFIRMATION_GENERATOR:
+        raise ValueError("diffraction confirmation generator mismatch")
+    panel_id = context["panel_id"]
+    if (
+        not isinstance(panel_id, str)
+        or not 1 <= len(panel_id) <= 64
+        or any(character not in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_.-"
+               for character in panel_id)
+    ):
+        raise ValueError("invalid diffraction confirmation panel_id")
+    seed = context["master_seed"]
+    if isinstance(seed, bool) or not isinstance(seed, int) or not 0 <= seed < 2**63:
+        raise ValueError("invalid diffraction confirmation master_seed")
+    if context["world_count"] != CONFIRMATION_WORLD_COUNT:
+        raise ValueError("diffraction confirmation world_count mismatch")
+    expected_specs, expected_shifts = _confirmation_blueprint(int(seed))
+    worlds = context["worlds"]
+    shifts = context["shifts"]
+    if not isinstance(worlds, list) or len(worlds) != CONFIRMATION_WORLD_COUNT:
+        raise ValueError("invalid diffraction confirmation worlds")
+    if shifts != [copy.deepcopy(value) for value in expected_shifts]:
+        raise ValueError("diffraction confirmation shifts do not match master_seed")
+    for actual, expected in zip(worlds, expected_specs):
+        if not isinstance(actual, dict) or set(actual) != set(expected) | {"anchors"}:
+            raise ValueError("invalid diffraction confirmation world fields")
+        for key, value in expected.items():
+            expected_value = list(value) if isinstance(value, tuple) else value
+            if key == "reference_parameters":
+                expected_value = [list(row) for row in value]
+            if actual[key] != expected_value:
+                raise ValueError(
+                    "diffraction confirmation world does not match master_seed"
+                )
+        anchors = actual["anchors"]
+        if (
+            not isinstance(anchors, list)
+            or len(anchors) != 4
+            or any(
+                isinstance(value, bool)
+                or not isinstance(value, (int, float))
+                or not math.isfinite(float(value))
+                for value in anchors
+            )
+            or float(anchors[1]) <= float(anchors[0]) + 0.05
+            or float(anchors[3]) <= float(anchors[2]) + 0.05
+        ):
+            raise ValueError("invalid diffraction confirmation anchors")
+    return panel_id, int(seed)
+
+
+def _confirmation_blueprint(
+    master_seed: int,
+) -> tuple[tuple[dict[str, Any], ...], tuple[dict[str, Any], ...]]:
+    """Generate an answer-disjoint material/wavelength/fabrication panel."""
+    rng = np.random.default_rng(np.random.SeedSequence([
+        master_seed & 0xFFFFFFFF,
+        (master_seed >> 32) & 0xFFFFFFFF,
+        0xD1FFAC7,
+    ]))
+    base_depth_ratios = np.array([0.180, 0.190, 0.130, 0.160, 0.150])
+    base_fills = np.array([0.732, 0.338, 0.292, 0.688, 0.842])
+    base_offsets = np.array([0.230, 0.570, 0.540, 0.370, 0.750])
+    specs = []
+    for index in range(CONFIRMATION_WORLD_COUNT):
+        wavelength = float(rng.uniform(0.52, 1.48))
+        period = wavelength * float(rng.uniform(1.275, 1.335))
+        angle = float(rng.uniform(5.5, 10.5))
+        spread = float(rng.uniform(0.026, 0.039))
+        depth_ratios = base_depth_ratios * rng.uniform(0.97, 1.03, size=5)
+        fills = np.clip(base_fills + rng.normal(0.0, 0.008, size=5), 0.20, 0.88)
+        offsets = np.mod(base_offsets + rng.normal(0.0, 0.008, size=5), 1.0)
+        specs.append({
+            "name": "confirmation_%d" % index,
+            "split": "confirmation",
+            "period_um": period,
+            "center_wavelength_um": wavelength,
+            "incident_index": 1.0,
+            "substrate_index": float(rng.uniform(1.43, 1.54)),
+            "ridge_index": float(rng.uniform(2.02, 2.38)),
+            "angles_deg": (-angle, 0.0, angle),
+            "wavelength_scales": (1.0 - spread, 1.0, 1.0 + spread),
+            "reference_parameters": (
+                tuple(float(value) for value in wavelength * depth_ratios),
+                tuple(float(value) for value in fills),
+                tuple(float(value) for value in offsets),
+            ),
+        })
+    depth_delta = float(rng.uniform(0.045, 0.065))
+    fill_delta = float(rng.uniform(0.010, 0.018))
+    lateral_delta = float(rng.uniform(0.008, 0.015))
+    index_delta = float(rng.uniform(0.012, 0.020))
+    angle_delta = float(rng.uniform(2.5, 4.0))
+    shifts = (
+        {
+            "name": "fresh_etch_shallow_overlay",
+            "depth_scale": 1.0 - depth_delta,
+            "fill_offset": fill_delta,
+            "lateral_offset": lateral_delta,
+            "ridge_index_scale": 1.0,
+            "angle_offset_deg": 0.0,
+        },
+        {
+            "name": "fresh_etch_deep_underlay",
+            "depth_scale": 1.0 + depth_delta,
+            "fill_offset": -fill_delta,
+            "lateral_offset": -lateral_delta,
+            "ridge_index_scale": 1.0,
+            "angle_offset_deg": 0.0,
+        },
+        {
+            "name": "fresh_material_index_low",
+            "depth_scale": 1.0,
+            "fill_offset": 0.0,
+            "lateral_offset": 0.0,
+            "ridge_index_scale": 1.0 - index_delta,
+            "angle_offset_deg": angle_delta,
+        },
+        {
+            "name": "fresh_material_index_high",
+            "depth_scale": 1.0,
+            "fill_offset": 0.0,
+            "lateral_offset": 0.0,
+            "ridge_index_scale": 1.0 + index_delta,
+            "angle_offset_deg": -angle_delta,
+        },
+    )
+    return tuple(specs), shifts
+
+
+def build_confirmation_context(panel_id: str, master_seed: int) -> dict[str, Any]:
+    """Resolve and calibrate one private panel before its commitment is frozen."""
+    base = {
+        "schema_version": CONFIRMATION_CONTEXT_SCHEMA_VERSION,
+        "purpose": "fresh_confirmation",
+        "task_id": "Optics/DiffractionGratingDesign",
+        "generator": CONFIRMATION_GENERATOR,
+        "panel_id": panel_id,
+        "master_seed": master_seed,
+        "world_count": CONFIRMATION_WORLD_COUNT,
+    }
+    # Validate scalar header fields without accepting an uncalibrated runtime context.
+    if (
+        not isinstance(panel_id, str)
+        or not 1 <= len(panel_id) <= 64
+        or any(character not in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_.-"
+               for character in panel_id)
+        or isinstance(master_seed, bool)
+        or not isinstance(master_seed, int)
+        or not 0 <= master_seed < 2**63
+    ):
+        raise ValueError("invalid diffraction confirmation panel header")
+    specs, shifts = _confirmation_blueprint(master_seed)
+    resolved_worlds = []
+    for spec in specs:
+        world = _make_world(spec, shifts)
+        resolved = copy.deepcopy(spec)
+        resolved["angles_deg"] = list(resolved["angles_deg"])
+        resolved["wavelength_scales"] = list(resolved["wavelength_scales"])
+        resolved["reference_parameters"] = [
+            list(row) for row in resolved["reference_parameters"]
+        ]
+        resolved["anchors"] = [
+            float(world["baseline_utility"]),
+            float(world["reference_utility"]),
+            float(world["baseline_robust_utility"]),
+            float(world["reference_robust_utility"]),
+        ]
+        resolved_worlds.append(resolved)
+    context = {
+        **base,
+        "worlds": resolved_worlds,
+        "shifts": [copy.deepcopy(value) for value in shifts],
+    }
+    _validate_confirmation_context(context)
+    return context
+
+
+def _confirmation_worlds(context: dict[str, Any]) -> tuple[dict[str, Any], ...]:
+    _validate_confirmation_context(context)
+    shifts = tuple(copy.deepcopy(value) for value in context["shifts"])
+    return tuple(_make_world(copy.deepcopy(spec), shifts) for spec in context["worlds"])
 
 
 WORLDS = tuple(_make_world(spec) for spec in WORLD_SPECS)
@@ -576,7 +819,7 @@ def _evaluate_world(design_grating, world: dict[str, Any]) -> dict[str, Any]:
         )
         shift_records = []
         shift_utilities = []
-        for shift in SHIFT_SPECS:
+        for shift in world.get("shift_specs", SHIFT_SPECS):
             realized = _shifted_design(design, problem, shift)
             geometry_feasible = _realized_geometry_feasible(realized, problem)
             if geometry_feasible:
@@ -722,6 +965,47 @@ def evaluate(design_grating) -> dict[str, Any]:
         "per_instance": records,
     }
     return result
+
+
+def evaluate_with_context(
+    design_grating, context: dict[str, Any]
+) -> dict[str, Any]:
+    """Evaluate one frozen design method on a fresh trusted RCWA panel."""
+    panel_id, _ = _validate_confirmation_context(context)
+    worlds = _confirmation_worlds(context)
+    records = []
+    for index, world in enumerate(worlds):
+        if index and hasattr(design_grating, "reset_session"):
+            design_grating.reset_session()
+        records.append(_evaluate_world(design_grating, world))
+    valid = all(row["valid"] for row in records)
+    nominal = _mean(records, "score") if valid else 0.0
+    robust = _mean(records, "robustness_score") if valid else 0.0
+    return {
+        "combined_score": nominal,
+        "raw_score": nominal,
+        "valid": 1.0 if valid else 0.0,
+        "feasibility_rate": float(np.mean([row["valid"] for row in records])),
+        "confirmation_panel_id": panel_id,
+        "confirmation_generator": CONFIRMATION_GENERATOR,
+        "confirmation_world_count": len(records),
+        "confirmation_policy_score": nominal,
+        "confirmation_robustness_score": robust,
+        "confirmation_mean_target_efficiency": _mean(
+            records, "mean_target_efficiency"
+        ),
+        "confirmation_minimum_target_efficiency": _mean(
+            records, "minimum_target_efficiency"
+        ),
+        "confirmation_shift_geometry_feasibility": float(np.mean([
+            row["all_shift_geometries_feasible"] for row in records
+        ])),
+        "candidate_instance_call_count": len(records),
+        "candidate_instance_valid_rate": float(np.mean([
+            row["valid"] for row in records
+        ])),
+        "per_confirmation_instance": records,
+    }
 
 
 def baseline_policy(problem: dict[str, Any]) -> np.ndarray:
