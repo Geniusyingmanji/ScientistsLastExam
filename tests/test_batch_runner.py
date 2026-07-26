@@ -117,6 +117,37 @@ class BatchAggregationTests(unittest.TestCase):
             self.assertIn("wall_seconds", snapshot["events"][0])
             self.assertIn("cumulative_wall_seconds", snapshot["events"][0])
 
+    def test_preregistration_is_hash_bound_into_config(self):
+        client = type("Client", (), {"config": self.Config()})()
+        clean = {"git_available": True, "git_revision": "abc",
+                 "source_tree_dirty": False, "source_changes": []}
+        with tempfile.TemporaryDirectory() as tmp, patch.object(
+            MODULE, "load_llm_client", return_value=client
+        ), patch.object(MODULE, "source_provenance", return_value=clean):
+            root = Path(tmp)
+            preregistration = root / "prereg.json"
+            preregistration.write_text('{"version":3}\n', encoding="utf-8")
+            output = root / "report.json"
+            self.assertEqual(MODULE.main([
+                "--tasks", "LennardJonesCluster", "--budget", "0", "--seeds", "0",
+                "--timeout", "20", "--workdir", str(root / "runs"),
+                "--output", str(output), "--preregistration", str(preregistration),
+            ]), 0)
+            report = json.loads(output.read_text(encoding="utf-8"))
+            bound = report["config"]["preregistration"]
+            self.assertEqual(bound["path"], str(preregistration.resolve()))
+            self.assertEqual(bound["bytes"], len(preregistration.read_bytes()))
+            self.assertEqual(len(bound["sha256"]), 64)
+
+            preregistration.write_text('{"version":4}\n', encoding="utf-8")
+            with self.assertRaisesRegex(SystemExit, "config does not match"):
+                MODULE.main([
+                    "--tasks", "LennardJonesCluster", "--budget", "0", "--seeds", "0",
+                    "--timeout", "20", "--workdir", str(root / "runs"),
+                    "--output", str(output), "--preregistration", str(preregistration),
+                    "--resume",
+                ])
+
     def test_resume_rejects_changed_experiment_config(self):
         client = type("Client", (), {"config": self.Config()})()
 

@@ -57,6 +57,26 @@ def _condition_order(feedback_modes: list[str], seed: int) -> list[str]:
     return list(reversed(modes)) if int(seed) % 2 else modes
 
 
+def _preregistration_record(path: Path | None) -> dict[str, Any] | None:
+    """Bind an optional preregistration artifact into the run configuration."""
+
+    if path is None:
+        return None
+    resolved = path.expanduser().resolve()
+    if not resolved.is_file():
+        raise SystemExit("--preregistration must name a regular file")
+    payload = resolved.read_bytes()
+    try:
+        recorded_path = str(resolved.relative_to(ROOT))
+    except ValueError:
+        recorded_path = str(resolved)
+    return {
+        "path": recorded_path,
+        "sha256": hashlib.sha256(payload).hexdigest(),
+        "bytes": len(payload),
+    }
+
+
 def _latest_runs(runs: list[dict[str, Any]]) -> list[dict[str, Any]]:
     latest: dict[str, dict[str, Any]] = {}
     for run in runs:
@@ -180,6 +200,10 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--budget", type=int, default=30)
     parser.add_argument("--timeout", type=float, default=300.0)
     parser.add_argument("--llm-config", default=None)
+    parser.add_argument(
+        "--preregistration", type=Path, default=None,
+        help="immutable preregistration artifact to hash-bind into the report",
+    )
     parser.add_argument("--workdir", type=Path, default=ROOT / "runs" / "experiments")
     parser.add_argument("--output", type=Path, default=None)
     parser.add_argument("--resume", action="store_true", help="resume individual runs and result file")
@@ -241,6 +265,7 @@ def main(argv: list[str] | None = None) -> int:
             mode: feedback_scope(mode) for mode in feedback_modes
         },
         "condition_order": "as_listed_for_even_seeds_reversed_for_odd_seeds",
+        "preregistration": _preregistration_record(args.preregistration),
         "seeds": args.seeds,
         "replicate_identifier_scope": (
             "controls local Python/random ordering only; the endpoint exposes no "
