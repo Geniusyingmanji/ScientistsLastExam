@@ -1,0 +1,224 @@
+{
+  "schema_version": 1,
+  "preregistration_version": 3,
+  "frozen_at_utc": "2026-07-26",
+  "purpose": "feedback_measurement_calibration_pilot",
+  "claim_limit": "descriptive_measurement_calibration_not_feedback_causal",
+  "supersedes": ".research/feedback_measurement_pilot_prereg_2026-07-26_v2.md",
+  "revision_record": {
+    "v2_not_run": true,
+    "reason_v2_is_invalid_for_new_cells": "The source revision changed after v2 through trajectory lineage/versioning work, an Alloy hash-order determinism fix, a source-migration audit gate, preregistration binding in the batch runner, and a dedicated four-condition analyzer. No nonzero-budget v2 pilot cell may be pooled with v3.",
+    "negative_evidence": [
+      {
+        "report": "experiments/full_test_suite_2026-07-26_v16.json",
+        "sha256": "e6732621830fcdf7011d3c7890143f974333a10e1f30c205186a9719ea10f322",
+        "source_revision": "2052d25d76aad726d9f94baab4563b4b66c55047",
+        "test_count": 473,
+        "errors": 13,
+        "failures": 1,
+        "status": "FAILED_FULL_TEST_SUITE_DO_NOT_USE_AS_PASSING_EVIDENCE",
+        "root_cause": "An unversioned portable snapshot projection broke historical report binding, and one analysis used an overbroad historical runtime scope."
+      },
+      {
+        "report": "experiments/full_test_suite_2026-07-26_v17.json",
+        "sha256": "5e924e94522dd8a2b7be1461142901854a085a97604635256c6051a6c40730c3",
+        "source_revision": "ad5be899b990ab0617bd80c1b6a955de53bfd440",
+        "test_count": 507,
+        "errors": 0,
+        "failures": 2,
+        "status": "FAILED_FULL_TEST_SUITE_DO_NOT_USE_AS_PASSING_EVIDENCE",
+        "root_cause": "Alloy composition-distance reduction iterated over sets, so the trusted host and isolated candidate could differ by last-bit floating-point order under different hash seeds."
+      },
+      {
+        "report": "experiments/alloy_hash_order_migration_audit_2026-07-26.json",
+        "sha256": "bea6d21e542c27903a31ee9bdb0d9fced6a4a7014b41c6df4ec8f224512672bb",
+        "status": "TRUSTED_SOURCE_MIGRATION_AUDIT",
+        "result": "Five old hash-seed landscapes collapse to one stabilized landscape; all optimal rows, baseline/reference metrics and four retained proposal sources remain unchanged; three unretained proposal sources remain explicitly unreplayable."
+      }
+    ]
+  },
+  "frozen_source": {
+    "revision": "ae6090ffcfb19b3c0ae64f04b0c8bc7d650d549b",
+    "runtime_source_sha256": "9895f96c63e1d63c3f9c2270a3eae759d072da238ef14e0fb84005a61ca9c51e",
+    "file_sha256": {
+      "scripts/batch_evolve.py": "8bc4a2e0d1b70dfe518179f16b297ed0c47ac2eb1f2638ef3d338072617be026",
+      "scripts/analyze_feedback_measurement_pilot.py": "6c74779039be568786d81f8688bf569527188f22a5cce27366d1ddbac1e2c1b2",
+      "frontier_science/algorithms/common.py": "2be92366a803e1688a5e76fb1dbfee958d8697bece685b445a0210c20b3bab71",
+      "frontier_science/algorithms/evolve.py": "ad14f64398e0fb65c54557c867df971c17426d7d5f4610b721aeeecefc3b0fe0",
+      "frontier_science/metric_visibility.py": "29c1a2794f27c9ca749b5e0e614059e9573147735900ff45b71e1e5ab38081dc",
+      "frontier_science/protocol.py": "8d9b4f2c15accaabec6c089af256bf578cb9f67ff9a7f5503bf85a1177d62157"
+    },
+    "trajectory_schema_version": 2,
+    "portable_snapshot_schema_version": 2,
+    "source_change_rule": "Any change within source_provenance SOURCE_SCOPE after the frozen revision requires a new preregistration version. Reports produced by a descendant commit are accepted only when git diff over SOURCE_SCOPE is empty."
+  },
+  "model_condition": {
+    "llm_condition_sha256": "5b0df4671481f6b3505155bc6c5654a64c4da5591422fb806904e7d0f44fc4d2",
+    "wire": "responses",
+    "endpoint_sha256": "b22995a1fcaf8ad713ac37716f006c717313dfdebd357ac02a077a5582650bb6",
+    "model": "gpt-5.5",
+    "max_output_tokens": 16000,
+    "temperature": null,
+    "reasoning_effort": "low",
+    "server_side_seed_control": false,
+    "replicate_identifier_limit": "The local identifier controls Python/random ordering only; equal identifiers across feedback modes do not share provider-side model randomness."
+  },
+  "design": {
+    "tasks": [
+      {
+        "task": "DynamicalSystems/ActiveLawDiscovery",
+        "task_contract_sha256": "6a08897ce2c685ca30db0b3be957838576816fc85dd24803d9e4bf1ec9a4eb4e",
+        "scientific_role": "active mechanism recovery, prediction, false discovery and unsupported-model refusal"
+      },
+      {
+        "task": "Optics/DiffractionGratingDesign",
+        "task_contract_sha256": "8af05515bbe25350e3e543cd2751f76e195125c8db8eab80dacaebd64700ff27",
+        "scientific_role": "Maxwell-solver nominal design, held-out transfer and sealed fabrication/angle robustness"
+      }
+    ],
+    "algorithm": "greedy_rewrite",
+    "feedback_modes": [
+      "normal",
+      "score_only",
+      "delayed_replay",
+      "selection_blind"
+    ],
+    "feedback_semantics": {
+      "normal": "Online strict-improvement parent selection; the prompt sees allowlisted search metrics for the current incumbent.",
+      "score_only": "Online strict-improvement parent selection remains active, but each prompt sees only combined_score; this is a feedback-bandwidth treatment, not a no-feedback control.",
+      "delayed_replay": "Proposal k sees the best valid artifact released only through proposal k-2; observer-side best selection still retains all evaluated candidates.",
+      "selection_blind": "Every proposal receives the frozen baseline artifact and baseline allowlisted metrics; scores affect only observer-side best-of-batch selection."
+    },
+    "replicate_identifiers": [
+      0,
+      1
+    ],
+    "condition_order": "as_listed_for_even_seeds_reversed_for_odd_seeds",
+    "proposal_budget": 3,
+    "evaluator_timeout_seconds": 300.0,
+    "scheduled_cell_count": 16,
+    "primary_command": [
+      "python3",
+      "scripts/batch_evolve.py",
+      "--all",
+      "--tasks",
+      "ActiveLawDiscovery,DiffractionGratingDesign",
+      "--algorithms",
+      "greedy_rewrite",
+      "--feedback-modes",
+      "normal,score_only,delayed_replay,selection_blind",
+      "--seeds",
+      "0,1",
+      "--budget",
+      "3",
+      "--timeout",
+      "300",
+      "--preregistration",
+      ".research/feedback_measurement_pilot_prereg_2026-07-26_v3.json",
+      "--workdir",
+      "runs/feedback_measurement_pilot_2026-07-26_v1",
+      "--output",
+      "experiments/feedback_measurement_pilot_2026-07-26_v1.json"
+    ]
+  },
+  "outcomes": {
+    "primary_measurement": [
+      "intent_to_evaluate_completion",
+      "valid_proposal_rate",
+      "lineage_conformance",
+      "prompt_sha256_and_utf8_bytes",
+      "prompt_program_and_metric_payload_utf8_bytes",
+      "provider_input_output_and_total_tokens",
+      "oracle_calls",
+      "wall_seconds"
+    ],
+    "primary_performance": [
+      "terminal_best_combined_score",
+      "best_so_far_auc_over_proposal_budget",
+      "best_score_at_common_realized_total_token_horizon",
+      "best_so_far_auc_over_common_realized_total_token_horizon"
+    ],
+    "science_axes": {
+      "DynamicalSystems/ActiveLawDiscovery": [
+        "mechanism_score",
+        "development_prediction_score",
+        "validation_prediction_score",
+        "robustness_score",
+        "development_false_discoveries",
+        "validation_false_discoveries",
+        "development_correct_abstentions",
+        "validation_correct_abstentions"
+      ],
+      "Optics/DiffractionGratingDesign": [
+        "robustness_score",
+        "heldout_policy_score",
+        "heldout_robustness_score",
+        "development_minimum_target_efficiency",
+        "development_mean_target_efficiency",
+        "heldout_minimum_target_efficiency",
+        "heldout_mean_target_efficiency",
+        "development_shift_geometry_feasibility",
+        "heldout_shift_geometry_feasibility"
+      ]
+    }
+  },
+  "analysis": {
+    "contrast_direction": "normal_minus_control",
+    "controls": [
+      "score_only",
+      "delayed_replay",
+      "selection_blind"
+    ],
+    "configured_horizon": "All three proposal slots; report terminal best and charged-budget best-so-far AUC.",
+    "common_token_horizon": "For each task and replicate identifier, use the minimum completed provider total-token count among the four conditions. A proposal contributes only after its entire provider call completes. The baseline exists at token zero. Missing, nonintegral, negative or input-plus-output-inconsistent usage fails the analysis; no imputation is allowed.",
+    "science_axis_rule": "Keep evaluator-only science axes task-specific. Do not average them into a cross-task discovery score.",
+    "interval_rule": "With two uncontrolled local replicate identifiers, Student-t intervals and means are diagnostics only; no significance test, multiplicity claim or population inference is permitted.",
+    "minimum_score_range": 0.01,
+    "variation_gate": "At least one task must have a full-horizon combined-score range of at least 0.01 across the eight cells and at least one interior score strictly between 0.01 and 0.99."
+  },
+  "failure_retry_and_stopping": {
+    "risk_set": "Run all 16 scheduled cells regardless of apparent positive, negative or saturated results.",
+    "retry": "Retain every failed outer attempt. Retry only the same cell with --resume after manifest and checkpoint equality checks; never silently replace history.",
+    "terminal_failure": "Report completion over the frozen 16-cell denominator plus a paired-completer sensitivity. Candidate invalidity or unparsable output is an outcome, not an exclusion.",
+    "fail_closed": "Missing trajectory/artifact, manifest/checkpoint mismatch, parent or prompt mismatch, absent selected science axis, incomplete provider usage, prerequisite failure or source/model drift invalidates derived analysis.",
+    "stopping": "Stop only after all 16 cells have a terminal attempt, or when endpoint/evaluator unavailability prevents execution. Do not stop based on observed outcome direction."
+  },
+  "prerequisites": {
+    "full_test_suite": {
+      "path": "experiments/full_test_suite_2026-07-26_v18.json",
+      "minimum_test_count": 519,
+      "required": "execution_passed=true, unittest_ok=true, trusted_evidence=true, zero failures/errors on frozen-source-equivalent revision"
+    },
+    "protocol_smoke": {
+      "path": "experiments/feedback_protocol_smoke_2026-07-26_v3.json",
+      "task": "Chemistry/LennardJonesCluster",
+      "scheduled_cell_count": 8,
+      "budget": 0,
+      "required": "all four modes x two identifiers complete with schema-v2 snapshots, clean provenance, matching model condition and exact preregistration hash binding"
+    },
+    "execution_order": [
+      "Commit this preregistration on top of frozen source ae6090f.",
+      "Run and commit full-test-suite v18.",
+      "Run and commit feedback protocol smoke v3 with --preregistration binding.",
+      "Only then run the 16-cell nonzero-budget pilot."
+    ]
+  },
+  "track_f_gate": {
+    "pilot_may_inform_design_only_if": [
+      "all 16 terminal cells and all retry history are retained",
+      "all four feedback lineage and prompt contracts pass",
+      "provider token accounting is complete",
+      "at least one task passes the preregistered non-saturated variation gate"
+    ],
+    "feedback_claim_still_requires": [
+      "a separately preregistered confirmatory cohort",
+      "at least ten independent runs per condition",
+      "server-controlled randomness if available or explicit unpaired randomization otherwise",
+      "pilot-based precision planning and multiplicity control",
+      "fresh or server-held scientific worlds",
+      "independent domain-scientist validation and prospective or orthogonal replication"
+    ],
+    "pilot_alone_can_support_feedback_causal_claim": false,
+    "pilot_alone_can_support_autonomous_discovery_claim": false
+  }
+}
