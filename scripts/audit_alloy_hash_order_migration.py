@@ -36,6 +36,10 @@ from frontier_science.provenance import (  # noqa: E402
     source_provenance,
 )
 from frontier_science.registry import find_task  # noqa: E402
+from frontier_science.runtime_migration import (  # noqa: E402
+    RUNTIME_PATHS,
+    runtime_migration_status,
+)
 
 
 TASK_ID = "MaterialsScience/AlloyHardnessOptimization"
@@ -558,11 +562,19 @@ def audit_source_contract(current_revision: str) -> dict[str, Any]:
             ),
         })
     changes = _source_changes(INPUT_SOURCE_REVISION, current_revision)
+    alloy_changes = [value for value in changes if value not in RUNTIME_PATHS]
+    runtime_changes = [value for value in changes if value in RUNTIME_PATHS]
+    runtime_migration = runtime_migration_status(
+        INPUT_SOURCE_REVISION, current_revision, runtime_changes,
+    ) if runtime_changes else None
     result = {
         "input_source_revision": INPUT_SOURCE_REVISION,
         "audited_target_revision": current_revision,
         "task_runtime_source_changes": changes,
         "allowed_task_runtime_source_changes": list(ALLOWED_RUNTIME_CHANGES),
+        "alloy_task_runtime_source_changes": alloy_changes,
+        "shared_runtime_source_changes": runtime_changes,
+        "shared_runtime_migration": runtime_migration,
         "source_hash_records": records,
         "frozen_data_sha256": _sha256(DATA),
         "semantic_change": (
@@ -572,7 +584,11 @@ def audit_source_contract(current_revision: str) -> dict[str, Any]:
         ),
     }
     result["passed"] = bool(
-        changes == list(ALLOWED_RUNTIME_CHANGES)
+        alloy_changes == list(ALLOWED_RUNTIME_CHANGES)
+        and (
+            not runtime_changes
+            or (runtime_migration or {}).get("accepted") is True
+        )
         and all(record["hash_contract_passed"] for record in records)
         and result["frozen_data_sha256"] == DATA_SHA256
     )

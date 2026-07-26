@@ -31,9 +31,14 @@ class AlloyHashOrderMigrationTests(unittest.TestCase):
         report = module.audit_source_contract(revision)
         self.assertTrue(report["passed"], report)
         self.assertEqual(
-            report["task_runtime_source_changes"],
+            report["alloy_task_runtime_source_changes"],
             list(module.ALLOWED_RUNTIME_CHANGES),
         )
+        self.assertEqual(
+            report["shared_runtime_source_changes"],
+            list(module.RUNTIME_PATHS),
+        )
+        self.assertTrue(report["shared_runtime_migration"]["accepted"])
         self.assertTrue(all(
             record["hash_contract_passed"]
             for record in report["source_hash_records"]

@@ -153,7 +153,11 @@ class RANSAnalysisTests(unittest.TestCase):
         ).splitlines()
         self.assertEqual(
             changed,
-            ["frontier_science/evaluate.py", "frontier_science/secure_eval.py"],
+            [
+                "frontier_science/evaluate.py",
+                "frontier_science/secure_eval.py",
+                "frontier_science/trusted_driver.py",
+            ],
         )
 
     def test_integrity_gate_does_not_require_desired_model_outcome(self):
@@ -214,7 +218,11 @@ class RANSAnalysisTests(unittest.TestCase):
         self.assertTrue(report["input_task_runtime_source_equivalent"])
         self.assertEqual(
             report["input_task_runtime_source_changes"],
-            ["frontier_science/evaluate.py", "frontier_science/secure_eval.py"],
+            [
+                "frontier_science/evaluate.py",
+                "frontier_science/secure_eval.py",
+                "frontier_science/trusted_driver.py",
+            ],
         )
         self.assertTrue(
             report["input_task_runtime_source_migration"]["accepted"]

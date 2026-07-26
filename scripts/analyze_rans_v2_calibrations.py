@@ -48,6 +48,7 @@ EXPECTED_MODEL_SOURCE_REVISION = (
 TASK_RUNTIME_SCOPE = (
     "frontier_science/evaluate.py",
     "frontier_science/secure_eval.py",
+    "frontier_science/trusted_driver.py",
     "frontier_science/candidate_worker.py",
     "frontier_science/rpc_codec.py",
     "frontier_science/spec.py",
