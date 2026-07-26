@@ -1,6 +1,6 @@
 # Cross-task science calibration findings
 
-Date: 2026-07-23 (UTC), updated 2026-07-25. These findings use trusted GPT-5.5 `greedy_rewrite` calibrations on
+Date: 2026-07-23 (UTC), updated 2026-07-26. These findings use trusted GPT-5.5 `greedy_rewrite` calibrations on
 OED-v2, Pendulum-v2, GateSynthesis-v2, ActiveLawDiscovery, OPF-v2, Truss-v2, Antenna-v2,
 NMR-v2, HeatExchanger-v2, ReactionMechanismFitting-v2, GravityInversion-v2,
 OceanCurrentInversion-v2, RadiativeTransferFit-v2, LowThrustTransfer-v2,
@@ -10,14 +10,14 @@ ConvectionDiffusionOpt-v2, SeismicWaveInversion-v2, RankineCycleOpt-v2 and MOSFE
 list now also includes RANSCalibration-v2, GeneNetworkIntervention-v1, RNAInverseDesign-v1,
 ProteinStabilityDesign-v1, ElectrolyteConductivityDesign-v1, DemographicSFS-v2 and
 CalorimeterDesign-v2, ProspectiveMetaAnalysis-v1, PhotovoltaicTandemDesign-v1,
-CatalystDeactivationLab-v1 and QuartzCrystalMicrobalanceLab-v1. The 69 normal-feedback model
-conditions across these 35 tasks each
+CatalystDeactivationLab-v1, QuartzCrystalMicrobalanceLab-v1 and
+ForceFieldCalibration-v2. The 71 normal-feedback model conditions across these 36 tasks each
 contain one seed and proposal budget one or three. They calibrate tasks and motivate experiments;
 they are not a model leaderboard, a causal feedback study or population evidence.
 
 The portable machine record
-`experiments/science_calibration_summary_2026-07-25_v28.json` retains every top-level scalar metric,
-candidate lineage hash and raw trajectory SHA-256 for all 69 normal conditions.
+`experiments/science_calibration_summary_2026-07-26_v29.json` retains every top-level scalar metric,
+candidate lineage hash and raw trajectory SHA-256 for all 71 normal conditions.
 Additional strict diagnostics for Distillation-v2, Hartree--Fock and room acoustics are bound
 separately by `experiments/distillation_v2_calibration_analysis_2026-07-23.json`,
 `experiments/hartree_fock_v2_calibration_analysis_2026-07-23.json` and
@@ -36,7 +36,8 @@ separately by `experiments/distillation_v2_calibration_analysis_2026-07-23.json`
 `experiments/prospective_meta_analysis_calibration_analysis_2026-07-25.json` and
 `experiments/photovoltaic_tandem_v1_calibration_analysis_2026-07-25.json` and
 `experiments/catalyst_deactivation_lab_v1_calibration_analysis_2026-07-25.json` and
-`experiments/qcm_raw_pipeline_v1_calibration_analysis_2026-07-25.json`. Strict selection-blind
+`experiments/qcm_raw_pipeline_v1_calibration_analysis_2026-07-25.json` and
+`experiments/force_field_hypothesis_v2_calibration_analysis_2026-07-26.json`. Strict selection-blind
 diagnostics remain in task-specific analysis because they are not normal-feedback calibrations.
 The underlying reports bind the task-specific source revision. Pendulum's initial budget-one
 run on revision `57c0e1b` is
@@ -129,6 +130,8 @@ by the corrected-contract run on `2557adb`.
 | CatalystDeactivationLab-v1, selection-blind budget 3 | one invalid submission, one nonzero proposal at `0.041417` and one legal all-refusal proposal; offline selection keeps step 2 | selected supported coverage `1/1`, unsupported refusal `0/0`, false discovery `0.40/0.333`; only this selected artifact uses out-of-order batches | Out-of-order state handling does not by itself imply calibrated model checking. The one-run normal/open-loop contrast is unseeded, token- and wall-time-mismatched, and non-causal. |
 | QuartzCrystalMicrobalanceLab-v1, truth-blind reference | development/held-out nominal `0.995228/0.996343`; calibration `0.984700/0.982371`; extraction `0.996593/0.995665` | sealed robustness `0.940278/0.949282`; supported coverage, unsupported refusal and fault diagnosis `1/1`; false discovery `0/0` | The registered raw-I/Q calibration, BVD extraction, rigid-film inference and fault/model checking are internally recoverable. This is a synthetic task witness, not a physical QCM or thin-film result. |
 | QuartzCrystalMicrobalanceLab-v1, three GPT-5.5 conditions | all seven proposals are valid but score zero; five are all-refusal, one claims every world and one has development-only partial coverage; all three conditions retain the baseline | all proposals have zero normalized calibration, extraction, mechanism, prediction and decision; the all-claim proposal has false discovery `0.5/0.5`, while the partial proposal has held-out coverage `0` | Executable structure is not raw-signal competence. Normal and blind match four oracle calls but use 18,662/17,797 tokens and uncontrolled sampling, so their equal zero scores do not identify a feedback effect. |
+| ForceFieldCalibration-v2, truth-blind reference | development/held-out nominal `0.964178/0.949851`; supported-family selection and supported coverage `1/1`; interval coverage `1/1` | robustness `0.964290/0.949894`; unsupported refusal `1/1`; false discovery `0/0`; true-hypothesis retention `1/1` | Diverse distance, geometry and temperature queries resolve the registered Mie/Morse versus unsupported alternatives without early elimination. This is a deterministic three-particle calibration witness, not a material force field or thermodynamic measurement. |
+| ForceFieldCalibration-v2, three GPT-5.5 conditions | all seven proposals are invalid and all three conditions retain the zero-score baseline | one proposal reaches all twelve worlds but returns invalid submissions; five are sanitized candidate runtime errors and one has a blocked or missing import; infrastructure failures are zero | None of the model proposals crosses the executable scientific-workflow hurdle. Normal and blind match four oracle calls and 6,789 input tokens but differ in output tokens, source and wall time, so the one-run contrast is descriptive rather than causal. |
 
 OPF's `robustness_score` combines security-constrained economic quality with overload penalties.
 It is not a pure safety probability. The proportional baseline is feasible for every tested
@@ -777,12 +780,13 @@ far-offset prediction, model-class adequacy and geological interpretation remain
 The current synthetic primary-reflection laboratory is an active-acquisition/model-checking
 on-ramp, not field FWI or autonomous geological discovery.
 
-The present source manifest contains 47 internally admissible certified or candidate packages:
-seven certified and 40 candidate, with 12 quarantined after adding
-QuartzCrystalMicrobalanceLab-v1. The remaining admissible gap is approximately 3 tasks. The QCM
-task passes clean-revision calibration, wave-8 admission, 59-package certification, 18/18 security,
-59-by-2 baseline determinism and 438/438 full-suite tests. Its reduced-order raw-signal results
-are not QCM instrument, film, material or experimental-discovery evidence.
+The present source manifest contains 48 internally admissible certified or candidate packages:
+seven certified and 41 candidate, with 11 quarantined after rebuilding
+ForceFieldCalibration-v2. The remaining admissible gap is approximately 2 tasks. ForceField
+passes clean-revision calibration, wave-9 admission, 59-package certification, 18/18 security,
+59-by-2 baseline determinism and 459/459 full-suite tests. Its reduced-order energy/force and
+virial results are not molecular dynamics, a material potential, a thermodynamic measurement or
+experimental-discovery evidence.
 Expansion should use procedural families spanning
 design, inverse problems, control, multifidelity validation, mechanism discovery and exact
 mathematical construction rather than cloning one scalar optimization template across domains.

@@ -654,7 +654,10 @@ midpoint, speed or doubling-time claim.
   with preregistered milestone sampling, component/leave-one-out/rollback replay, key interactions
   and separate new-evidence attribution, before describing a score jump as a scientific insight.
 - One HP1 competing-hypothesis pilot on a mechanism family with deliberately ambiguous early
-  observations, and one FR1 fallible-feedback pilot with source identity crossed against source
+  observations. ForceFieldCalibration-v2 supplies the deterministic contract and reference
+  smoke, but all seven GPT-5.5 proposals are invalid; repeated single-incumbent, portfolio,
+  model-averaging and diverse-branch treatments plus fresh server-held confirmation remain
+  unrun. Add one FR1 fallible-feedback pilot with source identity crossed against source
   reliability, before claiming that persistent state constitutes scientific reasoning under
   uncertainty or that external feedback is epistemically authoritative.
 

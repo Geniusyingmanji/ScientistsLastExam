@@ -20,7 +20,7 @@ The repository contains **59 task packages in 55 metadata domains**:
 
 - **7 certified core tasks**: Lennard–Jones clusters, spin glass, Poisson solver,
   matrix-multiplication rank, Cap Set, circle packing, and multilayer thin films.
-- **40 candidate tasks** pending scientific certification, including intervention-based causal
+- **41 candidate tasks** pending scientific certification, including intervention-based causal
   and active dynamical-law laboratories whose prediction and mechanism metrics are reported
   separately, a multi-spectrum NMR peak-mechanism/refusal task, and a multi-fidelity
   heat-exchanger Pareto-design task, a full-field lid-driven-cavity solver, active
@@ -43,8 +43,10 @@ The repository contains **59 task packages in 55 metadata domains**:
   completion, retry lineage, model refusal and a sealed fresh-batch operating decision, and a
   raw-I/Q quartz-crystal-microbalance pipeline that separates complex calibration, BVD resonance
   extraction, rigid-film inference, physical-model mismatch, instrument faults and a sealed stop
-  decision.
-- **12 quarantined tasks** retain reproduced scientific-oracle, identifiability, provenance or
+  decision, and an active three-particle pair-potential laboratory that preregisters competing
+  Mie, Morse and unsupported hypotheses before energy/force queries and scores parameter
+  intervals, sealed prediction, second-virial/Boyle inference and model refusal separately.
+- **11 quarantined tasks** retain reproduced scientific-oracle, identifiability, provenance or
   shortcut defects.
   Quarantined packages remain inventory artifacts but are not admissible benchmark tasks.
 
@@ -61,16 +63,16 @@ controlled exception text is reduced to a fixed label-blind failure taxonomy bef
 search feedback, preventing observations from being carried between worlds through exceptions.
 The current audit reports:
 
-- Trusted certification v53 and security v37 bind clean revision `e516d56`. Certification covers
-  `7/40/12` over 59 packages with no missing manifest records, orphaned records or task-level
-  admission issues; it retains one known duplicate-oracle group containing five quarantined
-  packages. Security passes 18/18 adversarial tests. The 59×2 baseline v42 reports 59/59
+- Trusted certification v54 and security v38 bind clean revision `0f8a43d`. Certification covers
+  `7/41/11` over 59 packages with no missing manifest records, orphaned records or task-level
+  admission issues; it retains one known duplicate-oracle group containing four quarantined
+  packages. Security passes 18/18 adversarial tests. The 59×2 baseline v43 reports 59/59
   deterministic, valid and fail-closed tasks with zero infrastructure failures. The latest
-  full-suite v10 binds clean revision `e516d56` and passes 438/438 tests in 1272.433 seconds.
-  Cross-task summary v28 (SHA-256
-  `940495a9cb64e717e6395b3cb7e4ec1d8d5b8d13232618a05c43e20f68edded4`) binds clean
-  revision `577e66a` and contains 69 normal single-run conditions over 35 tasks.
-- Current source manifest: 7 certified / 40 candidate / 12 quarantined. ProteinStabilityDesign
+  full-suite v11 binds clean revision `0f8a43d` and passes 459/459 tests in 1444.069 seconds.
+  Cross-task summary v29 (SHA-256
+  `851fdac2bd9f24b69c7b5d6c75009c9b8d4209e902600cb44e4707290e208d0f`) binds clean
+  revision `22f1519` and contains 71 normal single-run conditions over 36 tasks.
+- Current source manifest: 7 certified / 41 candidate / 11 quarantined. ProteinStabilityDesign
   rebuilds 2,756 reliable double-mutant records across five
   development and three held-out domains from hash-bound ProteinGym v1.3/Tsuboyama sources.
   It separates additive proxy, charged assay, diversity, top-decile, trypsin, chymotrypsin,
@@ -260,12 +262,12 @@ the post-repair 50-package audits bind revision `47c3613`; the subsequent wave-2
 audit quarantines seven additional defective candidates. The two P2 smokes are baseline-only; the repository does not yet contain
 credible multi-seed model-performance evidence. A clean-revision GPT-5.5 budget-one core pilot
 is recorded as task calibration, not a benchmark leaderboard.
-The latest closeout certification/security/baseline audits are v53/v37/v42 and bind clean
-source revision `e516d56`; full-suite v10 binds the same revision and passes 438/438 tests.
+The latest closeout certification/security/baseline audits are v54/v38/v43 and bind clean
+source revision `0f8a43d`; full-suite v11 binds the same revision and passes 459/459 tests.
 CalorimeterDesign-v2's task calibration and wave-4 admission
-audit also bind `f6a7b73`. After the internally admitted QuartzCrystalMicrobalanceLab addition,
-the current source manifest is 7/40/12 and contains 47 internally admissible tasks, leaving an
-approximate gap of 3 to the roughly 50-task target. The preceding photovoltaic calibration reproduces
+audit also bind `f6a7b73`. After rebuilding and admitting ForceFieldCalibration-v2, the current
+source manifest is 7/41/11 and contains 48 internally admissible tasks, leaving an approximate
+gap of 2 to the roughly 50-task target. The preceding photovoltaic calibration reproduces
 ideal one-through-four-junction efficiencies `0.33695/0.45735/0.51291/0.55329`, with nominal
 reference score `1.000/1.000` and minimax-reference nominal/robust score
 `0.963/0.965` and `1.000/1.000`; these are reduced-order task anchors, not device records.
@@ -347,6 +349,16 @@ zero: five refuse every supported world, one claims every world with false-disco
 conditions retain the weak baseline. This is a synthetic raw-instrument task calibration, not a
 QCM, thin-film, material or autonomous-discovery result. Cross-task summary v28 contains 69
 normal conditions over 35 tasks; the selection-blind run remains in the task-specific analysis.
+ForceFieldCalibration-v2 then replaces a generic trigonometric clone with twelve procedural
+three-particle worlds. Its truth-blind reference reaches development/held-out nominal
+`0.964178/0.949851` and robustness `0.964290/0.949894`, with complete supported-family
+selection, unsupported-world refusal, 90% interval coverage and zero false discovery. All seven
+GPT-5.5 proposals are invalid: one reaches all twelve worlds but returns invalid submissions,
+five are sanitized candidate runtime errors and one has a blocked or missing import. No
+infrastructure failure occurs, and all conditions retain the weak baseline. Cross-task summary
+v29 contains 71 normal conditions over 36 tasks; the frozen-parent run remains task-specific.
+These single synthetic calibrations support neither a feedback effect nor a molecular-dynamics,
+material, thermodynamic or autonomous-discovery claim.
 
 The latest EdgeBench re-audit keeps its upstream facts at arXiv `2607.05155v1`, SForge
 `a87350a` and public dataset `47846a4`. In addition to E1--E36, the science plan now preregisters

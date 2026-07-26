@@ -1,9 +1,9 @@
 # Scientific task portfolio audit
 
-Audit date: 2026-07-24 (UTC), updated 2026-07-25 through QuartzCrystalMicrobalanceLab-v1. The original
+Audit date: 2026-07-24 (UTC), updated 2026-07-26 through ForceFieldCalibration-v2. The original
 inventory contained 50 discoverable task packages. The current registry contains 59 packages in
-55 metadata domains, with `7 certified / 40 candidate / 12 quarantined`. The certified and
-candidate total is 47, leaving an approximate gap of 3 to the target of about 50 internally
+55 metadata domains, with `7 certified / 41 candidate / 11 quarantined`. The certified and
+candidate total is 48, leaving an approximate gap of 2 to the target of about 50 internally
 admissible open tasks. Directory count and candidate status are not external scientific
 validation or evidence of long-horizon headroom.
 
@@ -261,6 +261,13 @@ The first review tranche contains real scientific topics but several narrow eval
   over-refuse, one claims every world and one has development-only partial coverage. Retain as an
   I6 synthetic on-ramp pending real traces, server-held cohorts, uncertainty calibration and
   independent review; it is not physical QCM or thin-film discovery evidence.
+- ForceFieldCalibration-v2 replaces a generic trigonometric clone with a mandatory ambiguous
+  first query, preregistered Mie/Morse/unsupported weights, active three-particle energy/force
+  acquisition, uncertainty intervals, sealed predictions, virial/Boyle consequences and explicit
+  library-inadequacy refusal. Its reference is internally recoverable, while all seven GPT-5.5
+  proposals are invalid. Retain as an HP1 active-hypothesis on-ramp pending server-held worlds,
+  many-particle or ab-initio replication and independent molecular-simulation review; it is not
+  a material potential or thermodynamic discovery result.
 
 ## Expansion rule
 
@@ -274,8 +281,8 @@ The target is approximately 50 **admissible** open scientific optimization tasks
 5. run frontier-model budget-one screening before expensive budget 30/100/300 studies.
 
 After complete original-inventory triage, repair waves and additions through
-QuartzCrystalMicrobalanceLab-v1, the registry contains 47 internally admissible certified or candidate
-packages. The net expansion gap is therefore approximately 3 tasks rather than the earlier
+ForceFieldCalibration-v2, the registry contains 48 internally admissible certified or candidate
+packages. The net expansion gap is therefore approximately 2 tasks rather than the earlier
 51-folder snapshot's gap of 15. New work should emphasize procedural task families, server-held
 regimes and independent replication rather than one-off fixed instances or scientific names around
 hand-written scalar objectives.

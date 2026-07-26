@@ -2683,3 +2683,55 @@ Cross-task summary v28 (SHA-256
 and three; the frozen-parent diagnostic remains task-specific and heterogeneous science axes are
 not averaged. None of this evidence supports a population, feedback-causal, physical-instrument,
 thin-film, material or autonomous-discovery claim.
+
+## 2026-07-26 — ForceFieldCalibration-v2 active-hypothesis evidence
+
+ForceFieldCalibration-v2 replaces the remaining generic trigonometric clone with twelve
+procedural three-particle energy/force worlds. The public library contains Mie 12-6 and Morse
+pair laws; Buckingham, Axilrod–Teller three-body and temperature-dependent interactions require
+refusal. Every query preregisters Mie/Morse/unsupported weights and a monotone retained set. The
+first query is restricted to one near-equilibrium equilateral configuration, while later distance,
+geometry and temperature choices determine hypothesis retention and information gain.
+
+The trusted calibration (SHA-256
+`d2f1a433bae7d2c1a5c1682095180d560301dc49d611eacd30b3a8589b622324`) and wave-9 admission
+(`b02fa9e9837240b39e0867313b9bdff97eacd91bca90356c634a897968ebd933`) bind clean source
+`0f8a43d`. The truth-blind reference reaches development/held-out nominal
+`0.964178/0.949851` and robustness `0.964290/0.949894`. It selects every supported family,
+refuses every unsupported world, covers every registered 90% parameter interval, retains the
+true hypothesis and has zero false discovery. Independent energy/force invariance and
+second-virial/Boyle checks pass. These are reduced-order calibration anchors, not molecular
+dynamics, a material potential or a thermodynamic measurement.
+
+Three GPT-5.5 reports also bind `0f8a43d`: budget one (SHA-256
+`c5c9ad78f25981fc44433e30aa5d8f8483abb6151ff3642b13a42dbae6d828f9`), normal budget three
+(`7224e6bae131be535e9ecc2e085334a291d40ff8d00b483f1b37e5795019de76`) and frozen-parent
+budget three (`a992b903a2c594eefde7a37a36049cf4a0e4618d07517c3e5691e4b78f78f442`). All seven
+proposals are invalid, so every condition retains the valid zero-score baseline. One proposal
+reaches all twelve worlds using three query calls and eleven configuration units per world but
+returns invalid submissions. Five proposals have the sanitized `candidate_runtime_error` class,
+and one has `blocked_or_missing_import`. None is an infrastructure failure.
+
+The trusted derived analysis (SHA-256
+`1f5f6af3e437eb949f3a5075673ba1122ef61f9fffc2b4734b9d2d160d171360`) binds clean analysis
+source `74d59f7`. It verifies reports, raw trajectories, manifests, checkpoints, summaries,
+online-incumbent and frozen-parent lineage, source hashes and failure accounting. Three terminal
+proposal bodies are retained and parse without evaluator/world shortcuts; the blind terminal
+source contains the invalid `scipy.optimize.quad` import. Four intermediate proposal bodies are
+not retained, so their hashes and sanitized classes do not justify narrower diagnoses.
+
+Certification v54 (SHA-256
+`85442a20c031ddeed988e41b471a2d337d1bf0e729cf9dd615288f01331b3ce4`) records 59 packages at
+`7/41/11`, or 48 internally admissible tasks. Security v38
+(`b0fe56708f6679f0a2dcbdbed6682191f7312bc5f8614c6c624a5eb372e86e16`) passes 18/18 tests.
+Baseline v43 (`3d1632568568cb2c8784edf44e0a821d6f0f9994d7dcd741291c6988a7082a56`) reports 59/59
+deterministic, valid and fail-closed tasks over two repetitions with no infrastructure failure.
+Full-suite v11 (`156f7468d9067c4677bedf5c164f71f1384ead1b1aba3f53463497e0f3d37616`) passes 459/459 in
+1444.069 seconds. These four reports bind clean task source `0f8a43d`.
+
+Cross-task summary v29 (SHA-256
+`851fdac2bd9f24b69c7b5d6c75009c9b8d4209e902600cb44e4707290e208d0f`) binds clean source
+`22f1519` and validates 71 normal single-run conditions across 36 tasks. It adds ForceField
+budgets one and three; the frozen-parent diagnostic remains task-specific and heterogeneous
+science axes are not averaged. The one-run normal/blind comparison is descriptive rather than
+causal, and none of this evidence supports a physical or autonomous-discovery claim.

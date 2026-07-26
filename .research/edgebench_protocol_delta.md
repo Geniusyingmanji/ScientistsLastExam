@@ -631,8 +631,8 @@ Source hashes, experiment distinctions and claim limits are stored in
    only science curves; no causal claim unless compute/information balance and run coverage pass.
 6. **Population budget curves:** primary long trajectories with preregistered checkpoints at
    30/100/300 proposal units; independent fixed-horizon runs on a smaller subset to test whether
-   horizon knowledge changes behavior. Do not fit a scaling law to the present 47 internally
-   admissible tasks or the 69 single-run normal calibrations.
+   horizon knowledge changes behavior. Do not fit a scaling law to the present 48 internally
+   admissible tasks or the 71 single-run normal calibrations.
 7. **Endpoint-policy audit:** replay existing trajectories and compare committed, terminal and
    evaluator-only oracle-best artifacts on visible, sealed and mechanism metrics; add atomic
    snapshot hashes before long runs.
@@ -826,6 +826,29 @@ This smoke does not complete item 38. It lacks repeated randomized preprocessing
 calibrated output intervals, server-held/raw physical traces and independent thin-film or sensing
 review. It is evidence for a synthetic instrument-to-claim benchmark path, not a QCM instrument,
 coating, material or autonomous scientific discovery.
+
+## ForceFieldCalibration-v2 implementation update
+
+ForceFieldCalibration-v2 now implements the deterministic task-contract portion of item 51.
+The first energy/force query is restricted to one near-equilibrium equilateral configuration.
+Every later query preregisters Mie, Morse and unsupported weights plus a monotone retained set.
+The evaluator records information gain, design coverage, true-hypothesis retention, premature
+elimination, model choice, parameter intervals, sealed predictions, second-virial/Boyle
+consequences, unsupported refusal and evidence lineage on separate axes.
+
+The truth-blind reference reaches development/held-out nominal `0.964178/0.949851` and robustness
+`0.964290/0.949894`, with complete supported-family selection, unsupported refusal, interval
+coverage and true-hypothesis retention, and zero false discovery. Across the three GPT-5.5
+conditions, all seven proposals are invalid and every condition retains the baseline. One
+proposal reaches all twelve worlds but returns invalid submissions; five fail with the sanitized
+candidate-runtime category and one has a blocked or missing import.
+
+This smoke does not complete item 51. The current search still maintains one incumbent program,
+the hypothesis portfolio exists inside the candidate contract rather than as a randomized search
+condition, and there are no repeated portfolio, model-averaging or diverse-branch controls or
+fresh server-held confirmation worlds. The normal and frozen-parent conditions each contain one
+run and lack server-side generation seeds, so their equal zero outcomes do not estimate a
+feedback effect.
 
 ## Claim boundary
 

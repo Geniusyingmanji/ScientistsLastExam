@@ -1,0 +1,4240 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_TASK_CALIBRATION",
+  "evidence_scope": "SYNTHETIC_REDUCED_ORDER_ACTIVE_PAIR_POTENTIAL_HYPOTHESIS_CALIBRATION_NOT_MOLECULAR_DYNAMICS_MATERIAL_THERMODYNAMIC_OR_AUTONOMOUS_DISCOVERY_EVIDENCE",
+  "created_at": "2026-07-26T00:50:01.694715+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "0f8a43d404df2834bcbc461ac9391c7695e71f1a",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/calibrate_force_field_hypothesis_lab.py",
+      "--output",
+      "experiments/force_field_hypothesis_lab_v2_calibration_2026-07-26.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "numpy": "1.24.4",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "task": "MolecularDynamics/ForceFieldCalibration",
+  "task_source_sha256": {
+    "benchmarks/MolecularDynamics/ForceFieldCalibration/Task.md": "9dae315d9c7f64e33c351a1b81ee7eef8d3f2190b49b6b4facbbe8f92617332b",
+    "benchmarks/MolecularDynamics/ForceFieldCalibration/TASK_CARD.yaml": "6d89a61f61bc1829e555aeb8f662ae1066d8b9965b1d814b3615ffeaed9c6971",
+    "benchmarks/MolecularDynamics/ForceFieldCalibration/solution.py": "8edee96aeb0ee22f10838110e0d600c1e540d2fba411ced0e13ca27721eab23b",
+    "benchmarks/MolecularDynamics/ForceFieldCalibration/verification/evaluator.py": "bc7e5ba7a2d3f9dcd1a1f3fafb6cbfdf5ef2d515f9619128ae144fe6b3e16559",
+    "benchmarks/MolecularDynamics/ForceFieldCalibration/frontier_eval/metadata.yaml": "40c2ec803c8798c16101b632a2d612e2892e33ad5def21ab8dc93eb38353bfac",
+    "benchmarks/MolecularDynamics/ForceFieldCalibration/frontier_eval/run_eval.py": "2b0632a8824630f00402c7f0c25cd9dcd5926a35d8350fae9bcd7f6ca3800f6f",
+    "scripts/calibrate_force_field_hypothesis_lab.py": "3e4dcf18462ff01fa1d8fd780265ee85d9f4ec6a9553741c519685363bd44298"
+  },
+  "task_dimensions": {
+    "development_world_count": 7,
+    "heldout_world_count": 5,
+    "supported_world_count": 6,
+    "unsupported_world_count": 6,
+    "supported_family_count": 2,
+    "unsupported_kind_count": 3,
+    "query_budget_units": 24,
+    "maximum_query_calls": 6,
+    "first_query_max_configurations": 1
+  },
+  "independent_pair_energy_force_checks": {
+    "records": [
+      {
+        "family": "mie",
+        "translation_rotation_energy_abs_gap_ev": 1.4710455076283324e-15,
+        "rotation_force_max_abs_gap_ev_per_a": 7.549516567451064e-15,
+        "net_force_norm_ev_per_a": 2.220446049250313e-16,
+        "finite_difference_force_max_abs_gap_ev_per_a": 1.5621237636764818e-10,
+        "passed": true
+      },
+      {
+        "family": "morse",
+        "translation_rotation_energy_abs_gap_ev": 4.440892098500626e-16,
+        "rotation_force_max_abs_gap_ev_per_a": 1.942890293094024e-15,
+        "net_force_norm_ev_per_a": 4.163336342344337e-17,
+        "finite_difference_force_max_abs_gap_ev_per_a": 4.062139513649754e-11,
+        "passed": true
+      }
+    ],
+    "passed": true
+  },
+  "independent_second_virial_boyle_checks": {
+    "records": [
+      {
+        "family": "mie",
+        "boyle_temperature_k": 4164.657806570949,
+        "root_second_virial_cm3_mol": -8.401774018951104e-16,
+        "below_root_second_virial_cm3_mol": -0.24994313466524887,
+        "above_root_second_virial_cm3_mol": 0.24449952176853468,
+        "independent_quadrature_boyle_temperature_k": 4164.657806570949,
+        "independent_quadrature_root_second_virial_cm3_mol": -1.6803548037902208e-15,
+        "boyle_temperature_abs_gap_k": 0.0,
+        "passed": true
+      },
+      {
+        "family": "morse",
+        "boyle_temperature_k": 4264.727056978433,
+        "root_second_virial_cm3_mol": -0.0,
+        "below_root_second_virial_cm3_mol": -0.1721506866550171,
+        "above_root_second_virial_cm3_mol": 0.16831873020269567,
+        "independent_quadrature_boyle_temperature_k": 4264.727056978433,
+        "independent_quadrature_root_second_virial_cm3_mol": -0.0,
+        "boyle_temperature_abs_gap_k": 0.0,
+        "passed": true
+      }
+    ],
+    "passed": true
+  },
+  "screening_hypothesis_and_reference_checks": {
+    "records": [
+      {
+        "split": "development",
+        "world_index": 0,
+        "seed": 52011,
+        "kind": "mie",
+        "screening_posterior": {
+          "mie": 0.5152243536967324,
+          "morse": 0.4756120229539435,
+          "unsupported": 0.009163623349324046
+        },
+        "screening_mie_morse_absolute_gap": 0.03961233074278886,
+        "reference_selected_model": "mie",
+        "reference_joint_quality": 0.981866,
+        "reference_robust_joint_quality": 0.981957,
+        "reference_true_hypothesis_retention_rate": 1.0,
+        "reference_premature_elimination": false,
+        "reference_interval_coverage": 1.0,
+        "passed": true
+      },
+      {
+        "split": "development",
+        "world_index": 1,
+        "seed": 52021,
+        "kind": "morse",
+        "screening_posterior": {
+          "mie": 0.515641814076309,
+          "morse": 0.47599738745429954,
+          "unsupported": 0.00836079846939141
+        },
+        "screening_mie_morse_absolute_gap": 0.03964442662200951,
+        "reference_selected_model": "morse",
+        "reference_joint_quality": 0.978509,
+        "reference_robust_joint_quality": 0.978587,
+        "reference_true_hypothesis_retention_rate": 1.0,
+        "reference_premature_elimination": false,
+        "reference_interval_coverage": 1.0,
+        "passed": true
+      },
+      {
+        "split": "development",
+        "world_index": 2,
+        "seed": 52027,
+        "kind": "mie",
+        "screening_posterior": {
+          "mie": 0.5125666376301113,
+          "morse": 0.47315864180879785,
+          "unsupported": 0.014274720561090882
+        },
+        "screening_mie_morse_absolute_gap": 0.03940799582131349,
+        "reference_selected_model": "mie",
+        "reference_joint_quality": 0.981941,
+        "reference_robust_joint_quality": 0.981962,
+        "reference_true_hypothesis_retention_rate": 1.0,
+        "reference_premature_elimination": false,
+        "reference_interval_coverage": 1.0,
+        "passed": true
+      },
+      {
+        "split": "development",
+        "world_index": 3,
+        "seed": 52039,
+        "kind": "morse",
+        "screening_posterior": {
+          "mie": 0.514735893489977,
+          "morse": 0.47516111735252936,
+          "unsupported": 0.01010298915749377
+        },
+        "screening_mie_morse_absolute_gap": 0.03957477613744759,
+        "reference_selected_model": "morse",
+        "reference_joint_quality": 0.975403,
+        "reference_robust_joint_quality": 0.97566,
+        "reference_true_hypothesis_retention_rate": 1.0,
+        "reference_premature_elimination": false,
+        "reference_interval_coverage": 1.0,
+        "passed": true
+      },
+      {
+        "split": "development",
+        "world_index": 4,
+        "seed": 52051,
+        "kind": "buckingham",
+        "screening_posterior": {
+          "mie": 0.5147085138050284,
+          "morse": 0.475135842717793,
+          "unsupported": 0.010155643477178605
+        },
+        "screening_mie_morse_absolute_gap": 0.039572671087235334,
+        "reference_selected_model": "unsupported",
+        "reference_joint_quality": 0.979701,
+        "reference_robust_joint_quality": 0.979701,
+        "reference_true_hypothesis_retention_rate": 1.0,
+        "reference_premature_elimination": false,
+        "reference_interval_coverage": null,
+        "passed": true
+      },
+      {
+        "split": "development",
+        "world_index": 5,
+        "seed": 52057,
+        "kind": "three_body",
+        "screening_posterior": {
+          "mie": 0.5154240301725554,
+          "morse": 0.47579634757276384,
+          "unsupported": 0.008779622254680817
+        },
+        "screening_mie_morse_absolute_gap": 0.0396276825997916,
+        "reference_selected_model": "unsupported",
+        "reference_joint_quality": 0.979657,
+        "reference_robust_joint_quality": 0.979657,
+        "reference_true_hypothesis_retention_rate": 1.0,
+        "reference_premature_elimination": false,
+        "reference_interval_coverage": null,
+        "passed": true
+      },
+      {
+        "split": "development",
+        "world_index": 6,
+        "seed": 52067,
+        "kind": "state_dependent",
+        "screening_posterior": {
+          "mie": 0.5157641362900286,
+          "morse": 0.47611030508931096,
+          "unsupported": 0.00812555862066045
+        },
+        "screening_mie_morse_absolute_gap": 0.03965383120071764,
+        "reference_selected_model": "unsupported",
+        "reference_joint_quality": 0.979636,
+        "reference_robust_joint_quality": 0.979636,
+        "reference_true_hypothesis_retention_rate": 1.0,
+        "reference_premature_elimination": false,
+        "reference_interval_coverage": null,
+        "passed": true
+      },
+      {
+        "split": "heldout",
+        "world_index": 0,
+        "seed": 62003,
+        "kind": "morse",
+        "screening_posterior": {
+          "mie": 0.5053712640863243,
+          "morse": 0.4665164748721633,
+          "unsupported": 0.028112261041512418
+        },
+        "screening_mie_morse_absolute_gap": 0.03885478921416097,
+        "reference_selected_model": "morse",
+        "reference_joint_quality": 0.978507,
+        "reference_robust_joint_quality": 0.978557,
+        "reference_true_hypothesis_retention_rate": 1.0,
+        "reference_premature_elimination": false,
+        "reference_interval_coverage": 1.0,
+        "passed": true
+      },
+      {
+        "split": "heldout",
+        "world_index": 1,
+        "seed": 62011,
+        "kind": "mie",
+        "screening_posterior": {
+          "mie": 0.5153157164036454,
+          "morse": 0.4756963613621454,
+          "unsupported": 0.008987922234209328
+        },
+        "screening_mie_morse_absolute_gap": 0.03961935504149999,
+        "reference_selected_model": "mie",
+        "reference_joint_quality": 0.981934,
+        "reference_robust_joint_quality": 0.98197,
+        "reference_true_hypothesis_retention_rate": 1.0,
+        "reference_premature_elimination": false,
+        "reference_interval_coverage": 1.0,
+        "passed": true
+      },
+      {
+        "split": "heldout",
+        "world_index": 2,
+        "seed": 62017,
+        "kind": "buckingham",
+        "screening_posterior": {
+          "mie": 0.5147901178312385,
+          "morse": 0.4752111727283186,
+          "unsupported": 0.00999870944044299
+        },
+        "screening_mie_morse_absolute_gap": 0.03957894510291993,
+        "reference_selected_model": "unsupported",
+        "reference_joint_quality": 0.979696,
+        "reference_robust_joint_quality": 0.979696,
+        "reference_true_hypothesis_retention_rate": 1.0,
+        "reference_premature_elimination": false,
+        "reference_interval_coverage": null,
+        "passed": true
+      },
+      {
+        "split": "heldout",
+        "world_index": 3,
+        "seed": 62029,
+        "kind": "three_body",
+        "screening_posterior": {
+          "mie": 0.5134076387448449,
+          "morse": 0.473934983685131,
+          "unsupported": 0.012657377570024159
+        },
+        "screening_mie_morse_absolute_gap": 0.03947265505971387,
+        "reference_selected_model": "unsupported",
+        "reference_joint_quality": 0.97978,
+        "reference_robust_joint_quality": 0.97978,
+        "reference_true_hypothesis_retention_rate": 1.0,
+        "reference_premature_elimination": false,
+        "reference_interval_coverage": null,
+        "passed": true
+      },
+      {
+        "split": "heldout",
+        "world_index": 4,
+        "seed": 62039,
+        "kind": "state_dependent",
+        "screening_posterior": {
+          "mie": 0.5133181777559437,
+          "morse": 0.4738524007839124,
+          "unsupported": 0.012829421460144024
+        },
+        "screening_mie_morse_absolute_gap": 0.0394657769720313,
+        "reference_selected_model": "unsupported",
+        "reference_joint_quality": 0.979785,
+        "reference_robust_joint_quality": 0.979785,
+        "reference_true_hypothesis_retention_rate": 1.0,
+        "reference_premature_elimination": false,
+        "reference_interval_coverage": null,
+        "passed": true
+      }
+    ],
+    "early_ambiguity_passed": true,
+    "supported_model_discrimination_passed": true,
+    "unsupported_refusal_passed": true,
+    "interval_coverage_passed": true,
+    "hypothesis_retention_passed": true,
+    "passed": true
+  },
+  "acquisition_contrast_checks": {
+    "records": [
+      {
+        "seed": 52011,
+        "kind": "mie",
+        "narrow_design_coverage": 0.38888888888888884,
+        "narrow_acquisition_quality": 0.6236095391627362,
+        "discriminating_design_coverage": 1.0,
+        "discriminating_acquisition_quality": 0.9999999666010014,
+        "acquisition_quality_gain": 0.37639042743826523,
+        "passed": true
+      },
+      {
+        "seed": 52021,
+        "kind": "morse",
+        "narrow_design_coverage": 0.38888888888888884,
+        "narrow_acquisition_quality": 0.6236095243236242,
+        "discriminating_design_coverage": 1.0,
+        "discriminating_acquisition_quality": 0.9999999559612949,
+        "acquisition_quality_gain": 0.3763904316376707,
+        "passed": true
+      },
+      {
+        "seed": 52027,
+        "kind": "mie",
+        "narrow_design_coverage": 0.38888888888888884,
+        "narrow_acquisition_quality": 0.6236095037070121,
+        "discriminating_design_coverage": 1.0,
+        "discriminating_acquisition_quality": 0.9999998636105739,
+        "acquisition_quality_gain": 0.37639035990356184,
+        "passed": true
+      },
+      {
+        "seed": 52039,
+        "kind": "morse",
+        "narrow_design_coverage": 0.38888888888888884,
+        "narrow_acquisition_quality": 0.6236095090435468,
+        "discriminating_design_coverage": 1.0,
+        "discriminating_acquisition_quality": 0.999999930487576,
+        "acquisition_quality_gain": 0.3763904214440291,
+        "passed": true
+      },
+      {
+        "seed": 52051,
+        "kind": "buckingham",
+        "narrow_design_coverage": 0.38888888888888884,
+        "narrow_acquisition_quality": 0.6234863425442935,
+        "discriminating_design_coverage": 1.0,
+        "discriminating_acquisition_quality": 0.9999999802266312,
+        "acquisition_quality_gain": 0.3765136376823377,
+        "passed": true
+      },
+      {
+        "seed": 52057,
+        "kind": "three_body",
+        "narrow_design_coverage": 0.38888888888888884,
+        "narrow_acquisition_quality": 0.6236093120052851,
+        "discriminating_design_coverage": 1.0,
+        "discriminating_acquisition_quality": 0.9999999802266312,
+        "acquisition_quality_gain": 0.37639066822134604,
+        "passed": true
+      },
+      {
+        "seed": 52067,
+        "kind": "state_dependent",
+        "narrow_design_coverage": 0.38888888888888884,
+        "narrow_acquisition_quality": 0.6236095271442319,
+        "discriminating_design_coverage": 1.0,
+        "discriminating_acquisition_quality": 0.9999999802266312,
+        "acquisition_quality_gain": 0.37639045308239927,
+        "passed": true
+      },
+      {
+        "seed": 62003,
+        "kind": "morse",
+        "narrow_design_coverage": 0.38888888888888884,
+        "narrow_acquisition_quality": 0.6236089222365149,
+        "discriminating_design_coverage": 1.0,
+        "discriminating_acquisition_quality": 0.999999790184447,
+        "acquisition_quality_gain": 0.3763908679479321,
+        "passed": true
+      },
+      {
+        "seed": 62011,
+        "kind": "mie",
+        "narrow_design_coverage": 0.38888888888888884,
+        "narrow_acquisition_quality": 0.6236093611086471,
+        "discriminating_design_coverage": 1.0,
+        "discriminating_acquisition_quality": 0.9999995334771117,
+        "acquisition_quality_gain": 0.3763901723684646,
+        "passed": true
+      },
+      {
+        "seed": 62017,
+        "kind": "buckingham",
+        "narrow_design_coverage": 0.38888888888888884,
+        "narrow_acquisition_quality": 0.6235001943170326,
+        "discriminating_design_coverage": 1.0,
+        "discriminating_acquisition_quality": 0.9999999802266312,
+        "acquisition_quality_gain": 0.37649978590959854,
+        "passed": true
+      },
+      {
+        "seed": 62029,
+        "kind": "three_body",
+        "narrow_design_coverage": 0.38888888888888884,
+        "narrow_acquisition_quality": 0.6235940366059536,
+        "discriminating_design_coverage": 1.0,
+        "discriminating_acquisition_quality": 0.9999999802266312,
+        "acquisition_quality_gain": 0.3764059436206776,
+        "passed": true
+      },
+      {
+        "seed": 62039,
+        "kind": "state_dependent",
+        "narrow_design_coverage": 0.38888888888888884,
+        "narrow_acquisition_quality": 0.623609449489218,
+        "discriminating_design_coverage": 1.0,
+        "discriminating_acquisition_quality": 0.9999999802266312,
+        "acquisition_quality_gain": 0.37639053073741313,
+        "passed": true
+      }
+    ],
+    "minimum_acquisition_quality_gain": 0.3763901723684646,
+    "passed": true
+  },
+  "secure_isolation_and_failure_checks": {
+    "records": [
+      {
+        "mode": "valid",
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "candidate_instance_call_count": 12,
+        "candidate_instance_valid_rate": 1.0,
+        "passed": true
+      },
+      {
+        "mode": "extra_field",
+        "combined_score": 0.0,
+        "valid": 0.0,
+        "candidate_instance_call_count": 12,
+        "candidate_instance_valid_rate": 0.0,
+        "passed": true
+      },
+      {
+        "mode": "nonfinite",
+        "combined_score": -1e+18,
+        "valid": 0.0,
+        "candidate_instance_call_count": null,
+        "candidate_instance_valid_rate": null,
+        "passed": true
+      },
+      {
+        "mode": "fabricated_evidence",
+        "combined_score": 0.0,
+        "valid": 0.0,
+        "candidate_instance_call_count": 12,
+        "candidate_instance_valid_rate": 0.0,
+        "passed": true
+      },
+      {
+        "mode": "malformed_interval",
+        "combined_score": 0.0,
+        "valid": 0.0,
+        "candidate_instance_call_count": 12,
+        "candidate_instance_valid_rate": 0.0,
+        "passed": true
+      },
+      {
+        "mode": "overspend",
+        "combined_score": 0.0,
+        "valid": 0.0,
+        "candidate_instance_call_count": 12,
+        "candidate_instance_valid_rate": 0.0,
+        "passed": true
+      },
+      {
+        "mode": "restore",
+        "combined_score": 0.0,
+        "valid": 0.0,
+        "candidate_instance_call_count": 12,
+        "candidate_instance_valid_rate": 0.0,
+        "passed": true
+      }
+    ],
+    "fresh_process_per_world_passed": true,
+    "fail_closed_passed": true,
+    "passed": true
+  },
+  "direct_weak_baseline": {
+    "combined_score": 0.0,
+    "valid": 1.0,
+    "feasibility_rate": 1.0,
+    "robustness_score": 0.0,
+    "heldout_policy_score": 0.0,
+    "heldout_robustness_score": 0.0,
+    "heldout_feasibility_rate": 1.0,
+    "development_raw_joint_score": 0.0,
+    "heldout_raw_joint_score": 0.0,
+    "development_raw_robust_joint_score": 0.0,
+    "heldout_raw_robust_joint_score": 0.0,
+    "development_abstention_baseline": 0.42857142857142855,
+    "heldout_abstention_baseline": 0.6,
+    "development_lineage_score": 1.0,
+    "heldout_lineage_score": 1.0,
+    "development_acquisition_score": 0.35295885714285713,
+    "heldout_acquisition_score": 0.34160240000000003,
+    "development_information_gain": 0.320382,
+    "heldout_information_gain": 0.3005522,
+    "development_design_coverage": 0.38888899999999993,
+    "heldout_design_coverage": 0.388889,
+    "development_hypothesis_score": 0.3743914285714286,
+    "heldout_hypothesis_score": 0.5241480000000001,
+    "development_true_hypothesis_retention_rate": 0.7142857142857143,
+    "heldout_true_hypothesis_retention_rate": 0.8,
+    "development_premature_elimination_rate": 0.5714285714285714,
+    "heldout_premature_elimination_rate": 0.4,
+    "development_model_selection_score": 0.42857142857142855,
+    "heldout_model_selection_score": 0.6,
+    "development_parameter_score": 0.0,
+    "heldout_parameter_score": 0.0,
+    "development_interval_score": 0.0,
+    "heldout_interval_score": 0.0,
+    "development_interval_coverage": 0.0,
+    "heldout_interval_coverage": 0.0,
+    "development_prediction_score": 0.0,
+    "heldout_prediction_score": 0.0,
+    "development_robust_prediction_score": 0.0,
+    "heldout_robust_prediction_score": 0.0,
+    "development_virial_score": 0.0,
+    "heldout_virial_score": 0.0,
+    "development_boyle_decision_score": 0.0,
+    "heldout_boyle_decision_score": 0.0,
+    "development_confidence_score": 0.5714285714285714,
+    "heldout_confidence_score": 0.4,
+    "development_supported_claim_coverage": 0.0,
+    "heldout_supported_claim_coverage": 0.0,
+    "development_supported_correct_model_rate": 0.0,
+    "heldout_supported_correct_model_rate": 0.0,
+    "development_unsupported_refusal_rate": 1.0,
+    "heldout_unsupported_refusal_rate": 1.0,
+    "development_false_discovery_rate": 0.0,
+    "heldout_false_discovery_rate": 0.0,
+    "development_mean_query_calls": 1.0,
+    "heldout_mean_query_calls": 1.0,
+    "development_mean_query_budget_units": 1.0,
+    "heldout_mean_query_budget_units": 1.0,
+    "development_reference_policy_score": 0.9795304285714286,
+    "heldout_reference_policy_score": 0.9799403999999999,
+    "development_oracle_clean_score": 1.0,
+    "heldout_oracle_clean_score": 1.0,
+    "candidate_instance_call_count": 12,
+    "candidate_instance_valid_rate": 1.0,
+    "per_world": [
+      {
+        "split": "development",
+        "world_index": 0,
+        "kind": "mie",
+        "valid": true,
+        "failure_kind": null,
+        "supported": true,
+        "true_hypothesis": "mie",
+        "selected_model": "unsupported",
+        "lineage_quality": 1.0,
+        "information_gain": 0.330375,
+        "distance_coverage": 0.333333,
+        "temperature_coverage": 0.333333,
+        "shape_coverage": 0.5,
+        "design_coverage": 0.388889,
+        "acquisition_quality": 0.35844,
+        "information_per_query_unit": 0.330375,
+        "mean_positive_batch_information_gain": 0.330375,
+        "trajectory_weight_quality": 0.666667,
+        "final_weight_quality": 0.0,
+        "true_hypothesis_retention_rate": 0.5,
+        "premature_elimination": true,
+        "hypothesis_quality": 0.0,
+        "selection_quality": 0.0,
+        "parameter_quality": null,
+        "interval_quality": null,
+        "interval_coverage": null,
+        "prediction_quality": null,
+        "robust_prediction_quality": null,
+        "virial_quality": null,
+        "decision_quality": null,
+        "confidence_score": 1.0,
+        "joint_quality": 0.0,
+        "robust_joint_quality": 0.0,
+        "correct_refusal": false,
+        "false_discovery": false,
+        "abstained": true,
+        "confidence": 0.0,
+        "query_calls": 1,
+        "query_budget_units": 1,
+        "evidence_count": 2,
+        "available_evidence_count": 2,
+        "hypothesis_state_history": [
+          {
+            "call_index": 0,
+            "weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.5155429943557971,
+              "morse": 0.4759061653549496,
+              "unsupported": 0.008550840289253304
+            },
+            "batch_information_gain": 0.33037468685827753
+          }
+        ],
+        "reference_policy_joint_quality": 0.981866,
+        "oracle_clean_joint_quality": 1.0
+      },
+      {
+        "split": "development",
+        "world_index": 1,
+        "kind": "morse",
+        "valid": true,
+        "failure_kind": null,
+        "supported": true,
+        "true_hypothesis": "morse",
+        "selected_model": "unsupported",
+        "lineage_quality": 1.0,
+        "information_gain": 0.317116,
+        "distance_coverage": 0.333333,
+        "temperature_coverage": 0.333333,
+        "shape_coverage": 0.5,
+        "design_coverage": 0.388889,
+        "acquisition_quality": 0.351173,
+        "information_per_query_unit": 0.317116,
+        "mean_positive_batch_information_gain": 0.317116,
+        "trajectory_weight_quality": 0.666667,
+        "final_weight_quality": 0.0,
+        "true_hypothesis_retention_rate": 0.5,
+        "premature_elimination": true,
+        "hypothesis_quality": 0.0,
+        "selection_quality": 0.0,
+        "parameter_quality": null,
+        "interval_quality": null,
+        "interval_coverage": null,
+        "prediction_quality": null,
+        "robust_prediction_quality": null,
+        "virial_quality": null,
+        "decision_quality": null,
+        "confidence_score": 1.0,
+        "joint_quality": 0.0,
+        "robust_joint_quality": 0.0,
+        "correct_refusal": false,
+        "false_discovery": false,
+        "abstained": true,
+        "confidence": 0.0,
+        "query_calls": 1,
+        "query_budget_units": 1,
+        "evidence_count": 2,
+        "available_evidence_count": 2,
+        "hypothesis_state_history": [
+          {
+            "call_index": 0,
+            "weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.5135833578415141,
+              "morse": 0.4740971928556389,
+              "unsupported": 0.012319449302847042
+            },
+            "batch_information_gain": 0.31711566427029414
+          }
+        ],
+        "reference_policy_joint_quality": 0.978509,
+        "oracle_clean_joint_quality": 1.0
+      },
+      {
+        "split": "development",
+        "world_index": 2,
+        "kind": "mie",
+        "valid": true,
+        "failure_kind": null,
+        "supported": true,
+        "true_hypothesis": "mie",
+        "selected_model": "unsupported",
+        "lineage_quality": 1.0,
+        "information_gain": 0.31989,
+        "distance_coverage": 0.333333,
+        "temperature_coverage": 0.333333,
+        "shape_coverage": 0.5,
+        "design_coverage": 0.388889,
+        "acquisition_quality": 0.352706,
+        "information_per_query_unit": 0.31989,
+        "mean_positive_batch_information_gain": 0.31989,
+        "trajectory_weight_quality": 0.666667,
+        "final_weight_quality": 0.0,
+        "true_hypothesis_retention_rate": 0.5,
+        "premature_elimination": true,
+        "hypothesis_quality": 0.0,
+        "selection_quality": 0.0,
+        "parameter_quality": null,
+        "interval_quality": null,
+        "interval_coverage": null,
+        "prediction_quality": null,
+        "robust_prediction_quality": null,
+        "virial_quality": null,
+        "decision_quality": null,
+        "confidence_score": 1.0,
+        "joint_quality": 0.0,
+        "robust_joint_quality": 0.0,
+        "correct_refusal": false,
+        "false_discovery": false,
+        "abstained": true,
+        "confidence": 0.0,
+        "query_calls": 1,
+        "query_budget_units": 1,
+        "evidence_count": 2,
+        "available_evidence_count": 2,
+        "hypothesis_state_history": [
+          {
+            "call_index": 0,
+            "weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.5140086213374596,
+              "morse": 0.47448976054026887,
+              "unsupported": 0.011501618122271625
+            },
+            "batch_information_gain": 0.3198895286559903
+          }
+        ],
+        "reference_policy_joint_quality": 0.981941,
+        "oracle_clean_joint_quality": 1.0
+      },
+      {
+        "split": "development",
+        "world_index": 3,
+        "kind": "morse",
+        "valid": true,
+        "failure_kind": null,
+        "supported": true,
+        "true_hypothesis": "morse",
+        "selected_model": "unsupported",
+        "lineage_quality": 1.0,
+        "information_gain": 0.313302,
+        "distance_coverage": 0.333333,
+        "temperature_coverage": 0.333333,
+        "shape_coverage": 0.5,
+        "design_coverage": 0.388889,
+        "acquisition_quality": 0.349055,
+        "information_per_query_unit": 0.313302,
+        "mean_positive_batch_information_gain": 0.313302,
+        "trajectory_weight_quality": 0.666667,
+        "final_weight_quality": 0.0,
+        "true_hypothesis_retention_rate": 0.5,
+        "premature_elimination": true,
+        "hypothesis_quality": 0.0,
+        "selection_quality": 0.0,
+        "parameter_quality": null,
+        "interval_quality": null,
+        "interval_coverage": null,
+        "prediction_quality": null,
+        "robust_prediction_quality": null,
+        "virial_quality": null,
+        "decision_quality": null,
+        "confidence_score": 1.0,
+        "joint_quality": 0.0,
+        "robust_joint_quality": 0.0,
+        "correct_refusal": false,
+        "false_discovery": false,
+        "abstained": true,
+        "confidence": 0.0,
+        "query_calls": 1,
+        "query_budget_units": 1,
+        "evidence_count": 2,
+        "available_evidence_count": 2,
+        "hypothesis_state_history": [
+          {
+            "call_index": 0,
+            "weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.5129857901375675,
+              "morse": 0.4735455683400528,
+              "unsupported": 0.013468641522379752
+            },
+            "batch_information_gain": 0.3133018081798331
+          }
+        ],
+        "reference_policy_joint_quality": 0.975403,
+        "oracle_clean_joint_quality": 1.0
+      },
+      {
+        "split": "development",
+        "world_index": 4,
+        "kind": "buckingham",
+        "valid": true,
+        "failure_kind": null,
+        "supported": false,
+        "true_hypothesis": "unsupported",
+        "selected_model": "unsupported",
+        "lineage_quality": 1.0,
+        "information_gain": 0.327162,
+        "distance_coverage": 0.333333,
+        "temperature_coverage": 0.333333,
+        "shape_coverage": 0.5,
+        "design_coverage": 0.388889,
+        "acquisition_quality": 0.356692,
+        "information_per_query_unit": 0.327162,
+        "mean_positive_batch_information_gain": 0.327162,
+        "trajectory_weight_quality": 0.666667,
+        "final_weight_quality": 1.0,
+        "true_hypothesis_retention_rate": 1.0,
+        "premature_elimination": false,
+        "hypothesis_quality": 0.87358,
+        "selection_quality": 1.0,
+        "parameter_quality": null,
+        "interval_quality": null,
+        "interval_coverage": null,
+        "prediction_quality": null,
+        "robust_prediction_quality": null,
+        "virial_quality": null,
+        "decision_quality": null,
+        "confidence_score": 0.0,
+        "joint_quality": 0.0,
+        "robust_joint_quality": 0.0,
+        "correct_refusal": true,
+        "false_discovery": false,
+        "abstained": true,
+        "confidence": 0.0,
+        "query_calls": 1,
+        "query_budget_units": 1,
+        "evidence_count": 2,
+        "available_evidence_count": 2,
+        "hypothesis_state_history": [
+          {
+            "call_index": 0,
+            "weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.5150853158098151,
+              "morse": 0.47548367480776305,
+              "unsupported": 0.009431009382421817
+            },
+            "batch_information_gain": 0.32716156904662463
+          }
+        ],
+        "reference_policy_joint_quality": 0.979701,
+        "oracle_clean_joint_quality": 1.0
+      },
+      {
+        "split": "development",
+        "world_index": 5,
+        "kind": "three_body",
+        "valid": true,
+        "failure_kind": null,
+        "supported": false,
+        "true_hypothesis": "unsupported",
+        "selected_model": "unsupported",
+        "lineage_quality": 1.0,
+        "information_gain": 0.323437,
+        "distance_coverage": 0.333333,
+        "temperature_coverage": 0.333333,
+        "shape_coverage": 0.5,
+        "design_coverage": 0.388889,
+        "acquisition_quality": 0.354656,
+        "information_per_query_unit": 0.323437,
+        "mean_positive_batch_information_gain": 0.323437,
+        "trajectory_weight_quality": 0.666667,
+        "final_weight_quality": 1.0,
+        "true_hypothesis_retention_rate": 1.0,
+        "premature_elimination": false,
+        "hypothesis_quality": 0.87358,
+        "selection_quality": 1.0,
+        "parameter_quality": null,
+        "interval_quality": null,
+        "interval_coverage": null,
+        "prediction_quality": null,
+        "robust_prediction_quality": null,
+        "virial_quality": null,
+        "decision_quality": null,
+        "confidence_score": 0.0,
+        "joint_quality": 0.0,
+        "robust_joint_quality": 0.0,
+        "correct_refusal": true,
+        "false_discovery": false,
+        "abstained": true,
+        "confidence": 0.0,
+        "query_calls": 1,
+        "query_budget_units": 1,
+        "evidence_count": 2,
+        "available_evidence_count": 2,
+        "hypothesis_state_history": [
+          {
+            "call_index": 0,
+            "weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.5145408024928649,
+              "morse": 0.47498102566406136,
+              "unsupported": 0.010478171843073644
+            },
+            "batch_information_gain": 0.32343674862032523
+          }
+        ],
+        "reference_policy_joint_quality": 0.979657,
+        "oracle_clean_joint_quality": 1.0
+      },
+      {
+        "split": "development",
+        "world_index": 6,
+        "kind": "state_dependent",
+        "valid": true,
+        "failure_kind": null,
+        "supported": false,
+        "true_hypothesis": "unsupported",
+        "selected_model": "unsupported",
+        "lineage_quality": 1.0,
+        "information_gain": 0.311392,
+        "distance_coverage": 0.333333,
+        "temperature_coverage": 0.333333,
+        "shape_coverage": 0.5,
+        "design_coverage": 0.388889,
+        "acquisition_quality": 0.34799,
+        "information_per_query_unit": 0.311392,
+        "mean_positive_batch_information_gain": 0.311392,
+        "trajectory_weight_quality": 0.666667,
+        "final_weight_quality": 1.0,
+        "true_hypothesis_retention_rate": 1.0,
+        "premature_elimination": false,
+        "hypothesis_quality": 0.87358,
+        "selection_quality": 1.0,
+        "parameter_quality": null,
+        "interval_quality": null,
+        "interval_coverage": null,
+        "prediction_quality": null,
+        "robust_prediction_quality": null,
+        "virial_quality": null,
+        "decision_quality": null,
+        "confidence_score": 0.0,
+        "joint_quality": 0.0,
+        "robust_joint_quality": 0.0,
+        "correct_refusal": true,
+        "false_discovery": false,
+        "abstained": true,
+        "confidence": 0.0,
+        "query_calls": 1,
+        "query_budget_units": 1,
+        "evidence_count": 2,
+        "available_evidence_count": 2,
+        "hypothesis_state_history": [
+          {
+            "call_index": 0,
+            "weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.5126810060992315,
+              "morse": 0.4732642172121472,
+              "unsupported": 0.014054776688621337
+            },
+            "batch_information_gain": 0.31139193604606336
+          }
+        ],
+        "reference_policy_joint_quality": 0.979636,
+        "oracle_clean_joint_quality": 1.0
+      },
+      {
+        "split": "heldout",
+        "world_index": 0,
+        "kind": "morse",
+        "valid": true,
+        "failure_kind": null,
+        "supported": true,
+        "true_hypothesis": "morse",
+        "selected_model": "unsupported",
+        "lineage_quality": 1.0,
+        "information_gain": 0.307415,
+        "distance_coverage": 0.333333,
+        "temperature_coverage": 0.333333,
+        "shape_coverage": 0.5,
+        "design_coverage": 0.388889,
+        "acquisition_quality": 0.345761,
+        "information_per_query_unit": 0.307415,
+        "mean_positive_batch_information_gain": 0.307415,
+        "trajectory_weight_quality": 0.666667,
+        "final_weight_quality": 0.0,
+        "true_hypothesis_retention_rate": 0.5,
+        "premature_elimination": true,
+        "hypothesis_quality": 0.0,
+        "selection_quality": 0.0,
+        "parameter_quality": null,
+        "interval_quality": null,
+        "interval_coverage": null,
+        "prediction_quality": null,
+        "robust_prediction_quality": null,
+        "virial_quality": null,
+        "decision_quality": null,
+        "confidence_score": 1.0,
+        "joint_quality": 0.0,
+        "robust_joint_quality": 0.0,
+        "correct_refusal": false,
+        "false_discovery": false,
+        "abstained": true,
+        "confidence": 0.0,
+        "query_calls": 1,
+        "query_budget_units": 1,
+        "evidence_count": 2,
+        "available_evidence_count": 2,
+        "hypothesis_state_history": [
+          {
+            "call_index": 0,
+            "weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.5120346385932675,
+              "morse": 0.4726675448016186,
+              "unsupported": 0.015297816605113916
+            },
+            "batch_information_gain": 0.3074151945519203
+          }
+        ],
+        "reference_policy_joint_quality": 0.978507,
+        "oracle_clean_joint_quality": 1.0
+      },
+      {
+        "split": "heldout",
+        "world_index": 1,
+        "kind": "mie",
+        "valid": true,
+        "failure_kind": null,
+        "supported": true,
+        "true_hypothesis": "mie",
+        "selected_model": "unsupported",
+        "lineage_quality": 1.0,
+        "information_gain": 0.25602,
+        "distance_coverage": 0.333333,
+        "temperature_coverage": 0.333333,
+        "shape_coverage": 0.5,
+        "design_coverage": 0.388889,
+        "acquisition_quality": 0.315536,
+        "information_per_query_unit": 0.25602,
+        "mean_positive_batch_information_gain": 0.25602,
+        "trajectory_weight_quality": 0.666667,
+        "final_weight_quality": 0.0,
+        "true_hypothesis_retention_rate": 0.5,
+        "premature_elimination": true,
+        "hypothesis_quality": 0.0,
+        "selection_quality": 0.0,
+        "parameter_quality": null,
+        "interval_quality": null,
+        "interval_coverage": null,
+        "prediction_quality": null,
+        "robust_prediction_quality": null,
+        "virial_quality": null,
+        "decision_quality": null,
+        "confidence_score": 1.0,
+        "joint_quality": 0.0,
+        "robust_joint_quality": 0.0,
+        "correct_refusal": false,
+        "false_discovery": false,
+        "abstained": true,
+        "confidence": 0.0,
+        "query_calls": 1,
+        "query_budget_units": 1,
+        "evidence_count": 2,
+        "available_evidence_count": 2,
+        "hypothesis_state_history": [
+          {
+            "call_index": 0,
+            "weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.5022792990460385,
+              "morse": 0.463662231401022,
+              "unsupported": 0.03405846955293952
+            },
+            "batch_information_gain": 0.2560196961581861
+          }
+        ],
+        "reference_policy_joint_quality": 0.981934,
+        "oracle_clean_joint_quality": 1.0
+      },
+      {
+        "split": "heldout",
+        "world_index": 2,
+        "kind": "buckingham",
+        "valid": true,
+        "failure_kind": null,
+        "supported": false,
+        "true_hypothesis": "unsupported",
+        "selected_model": "unsupported",
+        "lineage_quality": 1.0,
+        "information_gain": 0.299517,
+        "distance_coverage": 0.333333,
+        "temperature_coverage": 0.333333,
+        "shape_coverage": 0.5,
+        "design_coverage": 0.388889,
+        "acquisition_quality": 0.34129,
+        "information_per_query_unit": 0.299517,
+        "mean_positive_batch_information_gain": 0.299517,
+        "trajectory_weight_quality": 0.666667,
+        "final_weight_quality": 1.0,
+        "true_hypothesis_retention_rate": 1.0,
+        "premature_elimination": false,
+        "hypothesis_quality": 0.87358,
+        "selection_quality": 1.0,
+        "parameter_quality": null,
+        "interval_quality": null,
+        "interval_coverage": null,
+        "prediction_quality": null,
+        "robust_prediction_quality": null,
+        "virial_quality": null,
+        "decision_quality": null,
+        "confidence_score": 0.0,
+        "joint_quality": 0.0,
+        "robust_joint_quality": 0.0,
+        "correct_refusal": true,
+        "false_discovery": false,
+        "abstained": true,
+        "confidence": 0.0,
+        "query_calls": 1,
+        "query_budget_units": 1,
+        "evidence_count": 2,
+        "available_evidence_count": 2,
+        "hypothesis_state_history": [
+          {
+            "call_index": 0,
+            "weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.5107043616649496,
+              "morse": 0.47143954442386754,
+              "unsupported": 0.01785609391118288
+            },
+            "batch_information_gain": 0.299517196823522
+          }
+        ],
+        "reference_policy_joint_quality": 0.979696,
+        "oracle_clean_joint_quality": 1.0
+      },
+      {
+        "split": "heldout",
+        "world_index": 3,
+        "kind": "three_body",
+        "valid": true,
+        "failure_kind": null,
+        "supported": false,
+        "true_hypothesis": "unsupported",
+        "selected_model": "unsupported",
+        "lineage_quality": 1.0,
+        "information_gain": 0.322117,
+        "distance_coverage": 0.333333,
+        "temperature_coverage": 0.333333,
+        "shape_coverage": 0.5,
+        "design_coverage": 0.388889,
+        "acquisition_quality": 0.353932,
+        "information_per_query_unit": 0.322117,
+        "mean_positive_batch_information_gain": 0.322117,
+        "trajectory_weight_quality": 0.666667,
+        "final_weight_quality": 1.0,
+        "true_hypothesis_retention_rate": 1.0,
+        "premature_elimination": false,
+        "hypothesis_quality": 0.87358,
+        "selection_quality": 1.0,
+        "parameter_quality": null,
+        "interval_quality": null,
+        "interval_coverage": null,
+        "prediction_quality": null,
+        "robust_prediction_quality": null,
+        "virial_quality": null,
+        "decision_quality": null,
+        "confidence_score": 0.0,
+        "joint_quality": 0.0,
+        "robust_joint_quality": 0.0,
+        "correct_refusal": true,
+        "false_discovery": false,
+        "abstained": true,
+        "confidence": 0.0,
+        "query_calls": 1,
+        "query_budget_units": 1,
+        "evidence_count": 2,
+        "available_evidence_count": 2,
+        "hypothesis_state_history": [
+          {
+            "call_index": 0,
+            "weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.5143442724263713,
+              "morse": 0.4747996055471243,
+              "unsupported": 0.010856122026504475
+            },
+            "batch_information_gain": 0.32211652942673147
+          }
+        ],
+        "reference_policy_joint_quality": 0.97978,
+        "oracle_clean_joint_quality": 1.0
+      },
+      {
+        "split": "heldout",
+        "world_index": 4,
+        "kind": "state_dependent",
+        "valid": true,
+        "failure_kind": null,
+        "supported": false,
+        "true_hypothesis": "unsupported",
+        "selected_model": "unsupported",
+        "lineage_quality": 1.0,
+        "information_gain": 0.317692,
+        "distance_coverage": 0.333333,
+        "temperature_coverage": 0.333333,
+        "shape_coverage": 0.5,
+        "design_coverage": 0.388889,
+        "acquisition_quality": 0.351493,
+        "information_per_query_unit": 0.317692,
+        "mean_positive_batch_information_gain": 0.317692,
+        "trajectory_weight_quality": 0.666667,
+        "final_weight_quality": 1.0,
+        "true_hypothesis_retention_rate": 1.0,
+        "premature_elimination": false,
+        "hypothesis_quality": 0.87358,
+        "selection_quality": 1.0,
+        "parameter_quality": null,
+        "interval_quality": null,
+        "interval_coverage": null,
+        "prediction_quality": null,
+        "robust_prediction_quality": null,
+        "virial_quality": null,
+        "decision_quality": null,
+        "confidence_score": 0.0,
+        "joint_quality": 0.0,
+        "robust_joint_quality": 0.0,
+        "correct_refusal": true,
+        "false_discovery": false,
+        "abstained": true,
+        "confidence": 0.0,
+        "query_calls": 1,
+        "query_budget_units": 1,
+        "evidence_count": 2,
+        "available_evidence_count": 2,
+        "hypothesis_state_history": [
+          {
+            "call_index": 0,
+            "weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.5136724140338103,
+              "morse": 0.4741794020824942,
+              "unsupported": 0.012148183883695485
+            },
+            "batch_information_gain": 0.31769229542083766
+          }
+        ],
+        "reference_policy_joint_quality": 0.979785,
+        "oracle_clean_joint_quality": 1.0
+      }
+    ]
+  },
+  "secure_weak_baseline": {
+    "combined_score": 0.0,
+    "valid": 1.0,
+    "feasibility_rate": 1.0,
+    "robustness_score": 0.0,
+    "heldout_policy_score": 0.0,
+    "heldout_robustness_score": 0.0,
+    "heldout_feasibility_rate": 1.0,
+    "development_raw_joint_score": 0.0,
+    "heldout_raw_joint_score": 0.0,
+    "development_raw_robust_joint_score": 0.0,
+    "heldout_raw_robust_joint_score": 0.0,
+    "development_abstention_baseline": 0.42857142857142855,
+    "heldout_abstention_baseline": 0.6,
+    "development_lineage_score": 1.0,
+    "heldout_lineage_score": 1.0,
+    "development_acquisition_score": 0.35295885714285713,
+    "heldout_acquisition_score": 0.34160240000000003,
+    "development_information_gain": 0.320382,
+    "heldout_information_gain": 0.3005522,
+    "development_design_coverage": 0.38888899999999993,
+    "heldout_design_coverage": 0.388889,
+    "development_hypothesis_score": 0.3743914285714286,
+    "heldout_hypothesis_score": 0.5241480000000001,
+    "development_true_hypothesis_retention_rate": 0.7142857142857143,
+    "heldout_true_hypothesis_retention_rate": 0.8,
+    "development_premature_elimination_rate": 0.5714285714285714,
+    "heldout_premature_elimination_rate": 0.4,
+    "development_model_selection_score": 0.42857142857142855,
+    "heldout_model_selection_score": 0.6,
+    "development_parameter_score": 0.0,
+    "heldout_parameter_score": 0.0,
+    "development_interval_score": 0.0,
+    "heldout_interval_score": 0.0,
+    "development_interval_coverage": 0.0,
+    "heldout_interval_coverage": 0.0,
+    "development_prediction_score": 0.0,
+    "heldout_prediction_score": 0.0,
+    "development_robust_prediction_score": 0.0,
+    "heldout_robust_prediction_score": 0.0,
+    "development_virial_score": 0.0,
+    "heldout_virial_score": 0.0,
+    "development_boyle_decision_score": 0.0,
+    "heldout_boyle_decision_score": 0.0,
+    "development_confidence_score": 0.5714285714285714,
+    "heldout_confidence_score": 0.4,
+    "development_supported_claim_coverage": 0.0,
+    "heldout_supported_claim_coverage": 0.0,
+    "development_supported_correct_model_rate": 0.0,
+    "heldout_supported_correct_model_rate": 0.0,
+    "development_unsupported_refusal_rate": 1.0,
+    "heldout_unsupported_refusal_rate": 1.0,
+    "development_false_discovery_rate": 0.0,
+    "heldout_false_discovery_rate": 0.0,
+    "development_mean_query_calls": 1.0,
+    "heldout_mean_query_calls": 1.0,
+    "development_mean_query_budget_units": 1.0,
+    "heldout_mean_query_budget_units": 1.0,
+    "development_reference_policy_score": 0.9795304285714286,
+    "heldout_reference_policy_score": 0.9799403999999999,
+    "development_oracle_clean_score": 1.0,
+    "heldout_oracle_clean_score": 1.0,
+    "candidate_instance_call_count": 12,
+    "candidate_instance_valid_rate": 1.0,
+    "per_world": [
+      {
+        "split": "development",
+        "world_index": 0,
+        "kind": "mie",
+        "valid": true,
+        "failure_kind": null,
+        "supported": true,
+        "true_hypothesis": "mie",
+        "selected_model": "unsupported",
+        "lineage_quality": 1.0,
+        "information_gain": 0.330375,
+        "distance_coverage": 0.333333,
+        "temperature_coverage": 0.333333,
+        "shape_coverage": 0.5,
+        "design_coverage": 0.388889,
+        "acquisition_quality": 0.35844,
+        "information_per_query_unit": 0.330375,
+        "mean_positive_batch_information_gain": 0.330375,
+        "trajectory_weight_quality": 0.666667,
+        "final_weight_quality": 0.0,
+        "true_hypothesis_retention_rate": 0.5,
+        "premature_elimination": true,
+        "hypothesis_quality": 0.0,
+        "selection_quality": 0.0,
+        "parameter_quality": null,
+        "interval_quality": null,
+        "interval_coverage": null,
+        "prediction_quality": null,
+        "robust_prediction_quality": null,
+        "virial_quality": null,
+        "decision_quality": null,
+        "confidence_score": 1.0,
+        "joint_quality": 0.0,
+        "robust_joint_quality": 0.0,
+        "correct_refusal": false,
+        "false_discovery": false,
+        "abstained": true,
+        "confidence": 0.0,
+        "query_calls": 1,
+        "query_budget_units": 1,
+        "evidence_count": 2,
+        "available_evidence_count": 2,
+        "hypothesis_state_history": [
+          {
+            "call_index": 0,
+            "weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.5155429943557971,
+              "morse": 0.4759061653549496,
+              "unsupported": 0.008550840289253304
+            },
+            "batch_information_gain": 0.33037468685827753
+          }
+        ],
+        "reference_policy_joint_quality": 0.981866,
+        "oracle_clean_joint_quality": 1.0
+      },
+      {
+        "split": "development",
+        "world_index": 1,
+        "kind": "morse",
+        "valid": true,
+        "failure_kind": null,
+        "supported": true,
+        "true_hypothesis": "morse",
+        "selected_model": "unsupported",
+        "lineage_quality": 1.0,
+        "information_gain": 0.317116,
+        "distance_coverage": 0.333333,
+        "temperature_coverage": 0.333333,
+        "shape_coverage": 0.5,
+        "design_coverage": 0.388889,
+        "acquisition_quality": 0.351173,
+        "information_per_query_unit": 0.317116,
+        "mean_positive_batch_information_gain": 0.317116,
+        "trajectory_weight_quality": 0.666667,
+        "final_weight_quality": 0.0,
+        "true_hypothesis_retention_rate": 0.5,
+        "premature_elimination": true,
+        "hypothesis_quality": 0.0,
+        "selection_quality": 0.0,
+        "parameter_quality": null,
+        "interval_quality": null,
+        "interval_coverage": null,
+        "prediction_quality": null,
+        "robust_prediction_quality": null,
+        "virial_quality": null,
+        "decision_quality": null,
+        "confidence_score": 1.0,
+        "joint_quality": 0.0,
+        "robust_joint_quality": 0.0,
+        "correct_refusal": false,
+        "false_discovery": false,
+        "abstained": true,
+        "confidence": 0.0,
+        "query_calls": 1,
+        "query_budget_units": 1,
+        "evidence_count": 2,
+        "available_evidence_count": 2,
+        "hypothesis_state_history": [
+          {
+            "call_index": 0,
+            "weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.5135833578415141,
+              "morse": 0.4740971928556389,
+              "unsupported": 0.012319449302847042
+            },
+            "batch_information_gain": 0.31711566427029414
+          }
+        ],
+        "reference_policy_joint_quality": 0.978509,
+        "oracle_clean_joint_quality": 1.0
+      },
+      {
+        "split": "development",
+        "world_index": 2,
+        "kind": "mie",
+        "valid": true,
+        "failure_kind": null,
+        "supported": true,
+        "true_hypothesis": "mie",
+        "selected_model": "unsupported",
+        "lineage_quality": 1.0,
+        "information_gain": 0.31989,
+        "distance_coverage": 0.333333,
+        "temperature_coverage": 0.333333,
+        "shape_coverage": 0.5,
+        "design_coverage": 0.388889,
+        "acquisition_quality": 0.352706,
+        "information_per_query_unit": 0.31989,
+        "mean_positive_batch_information_gain": 0.31989,
+        "trajectory_weight_quality": 0.666667,
+        "final_weight_quality": 0.0,
+        "true_hypothesis_retention_rate": 0.5,
+        "premature_elimination": true,
+        "hypothesis_quality": 0.0,
+        "selection_quality": 0.0,
+        "parameter_quality": null,
+        "interval_quality": null,
+        "interval_coverage": null,
+        "prediction_quality": null,
+        "robust_prediction_quality": null,
+        "virial_quality": null,
+        "decision_quality": null,
+        "confidence_score": 1.0,
+        "joint_quality": 0.0,
+        "robust_joint_quality": 0.0,
+        "correct_refusal": false,
+        "false_discovery": false,
+        "abstained": true,
+        "confidence": 0.0,
+        "query_calls": 1,
+        "query_budget_units": 1,
+        "evidence_count": 2,
+        "available_evidence_count": 2,
+        "hypothesis_state_history": [
+          {
+            "call_index": 0,
+            "weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.5140086213374596,
+              "morse": 0.47448976054026887,
+              "unsupported": 0.011501618122271625
+            },
+            "batch_information_gain": 0.3198895286559903
+          }
+        ],
+        "reference_policy_joint_quality": 0.981941,
+        "oracle_clean_joint_quality": 1.0
+      },
+      {
+        "split": "development",
+        "world_index": 3,
+        "kind": "morse",
+        "valid": true,
+        "failure_kind": null,
+        "supported": true,
+        "true_hypothesis": "morse",
+        "selected_model": "unsupported",
+        "lineage_quality": 1.0,
+        "information_gain": 0.313302,
+        "distance_coverage": 0.333333,
+        "temperature_coverage": 0.333333,
+        "shape_coverage": 0.5,
+        "design_coverage": 0.388889,
+        "acquisition_quality": 0.349055,
+        "information_per_query_unit": 0.313302,
+        "mean_positive_batch_information_gain": 0.313302,
+        "trajectory_weight_quality": 0.666667,
+        "final_weight_quality": 0.0,
+        "true_hypothesis_retention_rate": 0.5,
+        "premature_elimination": true,
+        "hypothesis_quality": 0.0,
+        "selection_quality": 0.0,
+        "parameter_quality": null,
+        "interval_quality": null,
+        "interval_coverage": null,
+        "prediction_quality": null,
+        "robust_prediction_quality": null,
+        "virial_quality": null,
+        "decision_quality": null,
+        "confidence_score": 1.0,
+        "joint_quality": 0.0,
+        "robust_joint_quality": 0.0,
+        "correct_refusal": false,
+        "false_discovery": false,
+        "abstained": true,
+        "confidence": 0.0,
+        "query_calls": 1,
+        "query_budget_units": 1,
+        "evidence_count": 2,
+        "available_evidence_count": 2,
+        "hypothesis_state_history": [
+          {
+            "call_index": 0,
+            "weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.5129857901375675,
+              "morse": 0.4735455683400528,
+              "unsupported": 0.013468641522379752
+            },
+            "batch_information_gain": 0.3133018081798331
+          }
+        ],
+        "reference_policy_joint_quality": 0.975403,
+        "oracle_clean_joint_quality": 1.0
+      },
+      {
+        "split": "development",
+        "world_index": 4,
+        "kind": "buckingham",
+        "valid": true,
+        "failure_kind": null,
+        "supported": false,
+        "true_hypothesis": "unsupported",
+        "selected_model": "unsupported",
+        "lineage_quality": 1.0,
+        "information_gain": 0.327162,
+        "distance_coverage": 0.333333,
+        "temperature_coverage": 0.333333,
+        "shape_coverage": 0.5,
+        "design_coverage": 0.388889,
+        "acquisition_quality": 0.356692,
+        "information_per_query_unit": 0.327162,
+        "mean_positive_batch_information_gain": 0.327162,
+        "trajectory_weight_quality": 0.666667,
+        "final_weight_quality": 1.0,
+        "true_hypothesis_retention_rate": 1.0,
+        "premature_elimination": false,
+        "hypothesis_quality": 0.87358,
+        "selection_quality": 1.0,
+        "parameter_quality": null,
+        "interval_quality": null,
+        "interval_coverage": null,
+        "prediction_quality": null,
+        "robust_prediction_quality": null,
+        "virial_quality": null,
+        "decision_quality": null,
+        "confidence_score": 0.0,
+        "joint_quality": 0.0,
+        "robust_joint_quality": 0.0,
+        "correct_refusal": true,
+        "false_discovery": false,
+        "abstained": true,
+        "confidence": 0.0,
+        "query_calls": 1,
+        "query_budget_units": 1,
+        "evidence_count": 2,
+        "available_evidence_count": 2,
+        "hypothesis_state_history": [
+          {
+            "call_index": 0,
+            "weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.5150853158098151,
+              "morse": 0.47548367480776305,
+              "unsupported": 0.009431009382421817
+            },
+            "batch_information_gain": 0.32716156904662463
+          }
+        ],
+        "reference_policy_joint_quality": 0.979701,
+        "oracle_clean_joint_quality": 1.0
+      },
+      {
+        "split": "development",
+        "world_index": 5,
+        "kind": "three_body",
+        "valid": true,
+        "failure_kind": null,
+        "supported": false,
+        "true_hypothesis": "unsupported",
+        "selected_model": "unsupported",
+        "lineage_quality": 1.0,
+        "information_gain": 0.323437,
+        "distance_coverage": 0.333333,
+        "temperature_coverage": 0.333333,
+        "shape_coverage": 0.5,
+        "design_coverage": 0.388889,
+        "acquisition_quality": 0.354656,
+        "information_per_query_unit": 0.323437,
+        "mean_positive_batch_information_gain": 0.323437,
+        "trajectory_weight_quality": 0.666667,
+        "final_weight_quality": 1.0,
+        "true_hypothesis_retention_rate": 1.0,
+        "premature_elimination": false,
+        "hypothesis_quality": 0.87358,
+        "selection_quality": 1.0,
+        "parameter_quality": null,
+        "interval_quality": null,
+        "interval_coverage": null,
+        "prediction_quality": null,
+        "robust_prediction_quality": null,
+        "virial_quality": null,
+        "decision_quality": null,
+        "confidence_score": 0.0,
+        "joint_quality": 0.0,
+        "robust_joint_quality": 0.0,
+        "correct_refusal": true,
+        "false_discovery": false,
+        "abstained": true,
+        "confidence": 0.0,
+        "query_calls": 1,
+        "query_budget_units": 1,
+        "evidence_count": 2,
+        "available_evidence_count": 2,
+        "hypothesis_state_history": [
+          {
+            "call_index": 0,
+            "weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.5145408024928649,
+              "morse": 0.47498102566406136,
+              "unsupported": 0.010478171843073644
+            },
+            "batch_information_gain": 0.32343674862032523
+          }
+        ],
+        "reference_policy_joint_quality": 0.979657,
+        "oracle_clean_joint_quality": 1.0
+      },
+      {
+        "split": "development",
+        "world_index": 6,
+        "kind": "state_dependent",
+        "valid": true,
+        "failure_kind": null,
+        "supported": false,
+        "true_hypothesis": "unsupported",
+        "selected_model": "unsupported",
+        "lineage_quality": 1.0,
+        "information_gain": 0.311392,
+        "distance_coverage": 0.333333,
+        "temperature_coverage": 0.333333,
+        "shape_coverage": 0.5,
+        "design_coverage": 0.388889,
+        "acquisition_quality": 0.34799,
+        "information_per_query_unit": 0.311392,
+        "mean_positive_batch_information_gain": 0.311392,
+        "trajectory_weight_quality": 0.666667,
+        "final_weight_quality": 1.0,
+        "true_hypothesis_retention_rate": 1.0,
+        "premature_elimination": false,
+        "hypothesis_quality": 0.87358,
+        "selection_quality": 1.0,
+        "parameter_quality": null,
+        "interval_quality": null,
+        "interval_coverage": null,
+        "prediction_quality": null,
+        "robust_prediction_quality": null,
+        "virial_quality": null,
+        "decision_quality": null,
+        "confidence_score": 0.0,
+        "joint_quality": 0.0,
+        "robust_joint_quality": 0.0,
+        "correct_refusal": true,
+        "false_discovery": false,
+        "abstained": true,
+        "confidence": 0.0,
+        "query_calls": 1,
+        "query_budget_units": 1,
+        "evidence_count": 2,
+        "available_evidence_count": 2,
+        "hypothesis_state_history": [
+          {
+            "call_index": 0,
+            "weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.5126810060992315,
+              "morse": 0.4732642172121472,
+              "unsupported": 0.014054776688621337
+            },
+            "batch_information_gain": 0.31139193604606336
+          }
+        ],
+        "reference_policy_joint_quality": 0.979636,
+        "oracle_clean_joint_quality": 1.0
+      },
+      {
+        "split": "heldout",
+        "world_index": 0,
+        "kind": "morse",
+        "valid": true,
+        "failure_kind": null,
+        "supported": true,
+        "true_hypothesis": "morse",
+        "selected_model": "unsupported",
+        "lineage_quality": 1.0,
+        "information_gain": 0.307415,
+        "distance_coverage": 0.333333,
+        "temperature_coverage": 0.333333,
+        "shape_coverage": 0.5,
+        "design_coverage": 0.388889,
+        "acquisition_quality": 0.345761,
+        "information_per_query_unit": 0.307415,
+        "mean_positive_batch_information_gain": 0.307415,
+        "trajectory_weight_quality": 0.666667,
+        "final_weight_quality": 0.0,
+        "true_hypothesis_retention_rate": 0.5,
+        "premature_elimination": true,
+        "hypothesis_quality": 0.0,
+        "selection_quality": 0.0,
+        "parameter_quality": null,
+        "interval_quality": null,
+        "interval_coverage": null,
+        "prediction_quality": null,
+        "robust_prediction_quality": null,
+        "virial_quality": null,
+        "decision_quality": null,
+        "confidence_score": 1.0,
+        "joint_quality": 0.0,
+        "robust_joint_quality": 0.0,
+        "correct_refusal": false,
+        "false_discovery": false,
+        "abstained": true,
+        "confidence": 0.0,
+        "query_calls": 1,
+        "query_budget_units": 1,
+        "evidence_count": 2,
+        "available_evidence_count": 2,
+        "hypothesis_state_history": [
+          {
+            "call_index": 0,
+            "weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.5120346385932675,
+              "morse": 0.4726675448016186,
+              "unsupported": 0.015297816605113916
+            },
+            "batch_information_gain": 0.3074151945519203
+          }
+        ],
+        "reference_policy_joint_quality": 0.978507,
+        "oracle_clean_joint_quality": 1.0
+      },
+      {
+        "split": "heldout",
+        "world_index": 1,
+        "kind": "mie",
+        "valid": true,
+        "failure_kind": null,
+        "supported": true,
+        "true_hypothesis": "mie",
+        "selected_model": "unsupported",
+        "lineage_quality": 1.0,
+        "information_gain": 0.25602,
+        "distance_coverage": 0.333333,
+        "temperature_coverage": 0.333333,
+        "shape_coverage": 0.5,
+        "design_coverage": 0.388889,
+        "acquisition_quality": 0.315536,
+        "information_per_query_unit": 0.25602,
+        "mean_positive_batch_information_gain": 0.25602,
+        "trajectory_weight_quality": 0.666667,
+        "final_weight_quality": 0.0,
+        "true_hypothesis_retention_rate": 0.5,
+        "premature_elimination": true,
+        "hypothesis_quality": 0.0,
+        "selection_quality": 0.0,
+        "parameter_quality": null,
+        "interval_quality": null,
+        "interval_coverage": null,
+        "prediction_quality": null,
+        "robust_prediction_quality": null,
+        "virial_quality": null,
+        "decision_quality": null,
+        "confidence_score": 1.0,
+        "joint_quality": 0.0,
+        "robust_joint_quality": 0.0,
+        "correct_refusal": false,
+        "false_discovery": false,
+        "abstained": true,
+        "confidence": 0.0,
+        "query_calls": 1,
+        "query_budget_units": 1,
+        "evidence_count": 2,
+        "available_evidence_count": 2,
+        "hypothesis_state_history": [
+          {
+            "call_index": 0,
+            "weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.5022792990460385,
+              "morse": 0.463662231401022,
+              "unsupported": 0.03405846955293952
+            },
+            "batch_information_gain": 0.2560196961581861
+          }
+        ],
+        "reference_policy_joint_quality": 0.981934,
+        "oracle_clean_joint_quality": 1.0
+      },
+      {
+        "split": "heldout",
+        "world_index": 2,
+        "kind": "buckingham",
+        "valid": true,
+        "failure_kind": null,
+        "supported": false,
+        "true_hypothesis": "unsupported",
+        "selected_model": "unsupported",
+        "lineage_quality": 1.0,
+        "information_gain": 0.299517,
+        "distance_coverage": 0.333333,
+        "temperature_coverage": 0.333333,
+        "shape_coverage": 0.5,
+        "design_coverage": 0.388889,
+        "acquisition_quality": 0.34129,
+        "information_per_query_unit": 0.299517,
+        "mean_positive_batch_information_gain": 0.299517,
+        "trajectory_weight_quality": 0.666667,
+        "final_weight_quality": 1.0,
+        "true_hypothesis_retention_rate": 1.0,
+        "premature_elimination": false,
+        "hypothesis_quality": 0.87358,
+        "selection_quality": 1.0,
+        "parameter_quality": null,
+        "interval_quality": null,
+        "interval_coverage": null,
+        "prediction_quality": null,
+        "robust_prediction_quality": null,
+        "virial_quality": null,
+        "decision_quality": null,
+        "confidence_score": 0.0,
+        "joint_quality": 0.0,
+        "robust_joint_quality": 0.0,
+        "correct_refusal": true,
+        "false_discovery": false,
+        "abstained": true,
+        "confidence": 0.0,
+        "query_calls": 1,
+        "query_budget_units": 1,
+        "evidence_count": 2,
+        "available_evidence_count": 2,
+        "hypothesis_state_history": [
+          {
+            "call_index": 0,
+            "weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.5107043616649496,
+              "morse": 0.47143954442386754,
+              "unsupported": 0.01785609391118288
+            },
+            "batch_information_gain": 0.299517196823522
+          }
+        ],
+        "reference_policy_joint_quality": 0.979696,
+        "oracle_clean_joint_quality": 1.0
+      },
+      {
+        "split": "heldout",
+        "world_index": 3,
+        "kind": "three_body",
+        "valid": true,
+        "failure_kind": null,
+        "supported": false,
+        "true_hypothesis": "unsupported",
+        "selected_model": "unsupported",
+        "lineage_quality": 1.0,
+        "information_gain": 0.322117,
+        "distance_coverage": 0.333333,
+        "temperature_coverage": 0.333333,
+        "shape_coverage": 0.5,
+        "design_coverage": 0.388889,
+        "acquisition_quality": 0.353932,
+        "information_per_query_unit": 0.322117,
+        "mean_positive_batch_information_gain": 0.322117,
+        "trajectory_weight_quality": 0.666667,
+        "final_weight_quality": 1.0,
+        "true_hypothesis_retention_rate": 1.0,
+        "premature_elimination": false,
+        "hypothesis_quality": 0.87358,
+        "selection_quality": 1.0,
+        "parameter_quality": null,
+        "interval_quality": null,
+        "interval_coverage": null,
+        "prediction_quality": null,
+        "robust_prediction_quality": null,
+        "virial_quality": null,
+        "decision_quality": null,
+        "confidence_score": 0.0,
+        "joint_quality": 0.0,
+        "robust_joint_quality": 0.0,
+        "correct_refusal": true,
+        "false_discovery": false,
+        "abstained": true,
+        "confidence": 0.0,
+        "query_calls": 1,
+        "query_budget_units": 1,
+        "evidence_count": 2,
+        "available_evidence_count": 2,
+        "hypothesis_state_history": [
+          {
+            "call_index": 0,
+            "weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.5143442724263713,
+              "morse": 0.4747996055471243,
+              "unsupported": 0.010856122026504475
+            },
+            "batch_information_gain": 0.32211652942673147
+          }
+        ],
+        "reference_policy_joint_quality": 0.97978,
+        "oracle_clean_joint_quality": 1.0
+      },
+      {
+        "split": "heldout",
+        "world_index": 4,
+        "kind": "state_dependent",
+        "valid": true,
+        "failure_kind": null,
+        "supported": false,
+        "true_hypothesis": "unsupported",
+        "selected_model": "unsupported",
+        "lineage_quality": 1.0,
+        "information_gain": 0.317692,
+        "distance_coverage": 0.333333,
+        "temperature_coverage": 0.333333,
+        "shape_coverage": 0.5,
+        "design_coverage": 0.388889,
+        "acquisition_quality": 0.351493,
+        "information_per_query_unit": 0.317692,
+        "mean_positive_batch_information_gain": 0.317692,
+        "trajectory_weight_quality": 0.666667,
+        "final_weight_quality": 1.0,
+        "true_hypothesis_retention_rate": 1.0,
+        "premature_elimination": false,
+        "hypothesis_quality": 0.87358,
+        "selection_quality": 1.0,
+        "parameter_quality": null,
+        "interval_quality": null,
+        "interval_coverage": null,
+        "prediction_quality": null,
+        "robust_prediction_quality": null,
+        "virial_quality": null,
+        "decision_quality": null,
+        "confidence_score": 0.0,
+        "joint_quality": 0.0,
+        "robust_joint_quality": 0.0,
+        "correct_refusal": true,
+        "false_discovery": false,
+        "abstained": true,
+        "confidence": 0.0,
+        "query_calls": 1,
+        "query_budget_units": 1,
+        "evidence_count": 2,
+        "available_evidence_count": 2,
+        "hypothesis_state_history": [
+          {
+            "call_index": 0,
+            "weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.5136724140338103,
+              "morse": 0.4741794020824942,
+              "unsupported": 0.012148183883695485
+            },
+            "batch_information_gain": 0.31769229542083766
+          }
+        ],
+        "reference_policy_joint_quality": 0.979785,
+        "oracle_clean_joint_quality": 1.0
+      }
+    ],
+    "raw_score": 0.0
+  },
+  "secure_baseline_exactly_matches_direct": true,
+  "truth_blind_reference": {
+    "combined_score": 0.96417825,
+    "valid": 1.0,
+    "feasibility_rate": 1.0,
+    "robustness_score": 0.9642899999999999,
+    "heldout_policy_score": 0.9498509999999999,
+    "heldout_robustness_score": 0.949894,
+    "heldout_feasibility_rate": 1.0,
+    "development_raw_joint_score": 0.9795304285714286,
+    "heldout_raw_joint_score": 0.9799403999999999,
+    "development_raw_robust_joint_score": 0.9795942857142856,
+    "heldout_raw_robust_joint_score": 0.9799576,
+    "development_abstention_baseline": 0.42857142857142855,
+    "heldout_abstention_baseline": 0.6,
+    "development_lineage_score": 1.0,
+    "heldout_lineage_score": 1.0,
+    "development_acquisition_score": 1.0,
+    "heldout_acquisition_score": 1.0,
+    "development_information_gain": 1.0,
+    "heldout_information_gain": 0.9999998,
+    "development_design_coverage": 1.0,
+    "heldout_design_coverage": 1.0,
+    "development_hypothesis_score": 0.9289410000000001,
+    "heldout_hypothesis_score": 0.9213203999999999,
+    "development_true_hypothesis_retention_rate": 1.0,
+    "heldout_true_hypothesis_retention_rate": 1.0,
+    "development_premature_elimination_rate": 0.0,
+    "heldout_premature_elimination_rate": 0.0,
+    "development_model_selection_score": 1.0,
+    "heldout_model_selection_score": 1.0,
+    "development_parameter_score": 0.998243,
+    "heldout_parameter_score": 0.9995205,
+    "development_interval_score": 0.865532,
+    "heldout_interval_score": 0.865532,
+    "development_interval_coverage": 1.0,
+    "heldout_interval_coverage": 1.0,
+    "development_prediction_score": 0.9970312499999999,
+    "heldout_prediction_score": 0.999211,
+    "development_robust_prediction_score": 0.99817125,
+    "heldout_robust_prediction_score": 0.999647,
+    "development_virial_score": 0.9979085,
+    "heldout_virial_score": 0.999625,
+    "development_boyle_decision_score": 0.9966732500000001,
+    "heldout_boyle_decision_score": 0.9995674999999999,
+    "development_confidence_score": 0.9996,
+    "heldout_confidence_score": 0.9996,
+    "development_supported_claim_coverage": 1.0,
+    "heldout_supported_claim_coverage": 1.0,
+    "development_supported_correct_model_rate": 1.0,
+    "heldout_supported_correct_model_rate": 1.0,
+    "development_unsupported_refusal_rate": 1.0,
+    "heldout_unsupported_refusal_rate": 1.0,
+    "development_false_discovery_rate": 0.0,
+    "heldout_false_discovery_rate": 0.0,
+    "development_mean_query_calls": 4.0,
+    "heldout_mean_query_calls": 4.0,
+    "development_mean_query_budget_units": 24.0,
+    "heldout_mean_query_budget_units": 24.0,
+    "development_reference_policy_score": 0.9795304285714286,
+    "heldout_reference_policy_score": 0.9799403999999999,
+    "development_oracle_clean_score": 1.0,
+    "heldout_oracle_clean_score": 1.0,
+    "candidate_instance_call_count": 12,
+    "candidate_instance_valid_rate": 1.0,
+    "per_world": [
+      {
+        "split": "development",
+        "world_index": 0,
+        "kind": "mie",
+        "valid": true,
+        "failure_kind": null,
+        "supported": true,
+        "true_hypothesis": "mie",
+        "selected_model": "mie",
+        "lineage_quality": 1.0,
+        "information_gain": 1.0,
+        "distance_coverage": 1.0,
+        "temperature_coverage": 1.0,
+        "shape_coverage": 1.0,
+        "design_coverage": 1.0,
+        "acquisition_quality": 1.0,
+        "information_per_query_unit": 0.041667,
+        "mean_positive_batch_information_gain": 0.25,
+        "trajectory_weight_quality": 0.85866,
+        "final_weight_quality": 0.9997,
+        "true_hypothesis_retention_rate": 1.0,
+        "premature_elimination": false,
+        "hypothesis_quality": 0.950379,
+        "selection_quality": 1.0,
+        "parameter_quality": 0.999546,
+        "interval_quality": 0.878704,
+        "interval_coverage": 1.0,
+        "prediction_quality": 0.998792,
+        "robust_prediction_quality": 0.999724,
+        "virial_quality": 0.999653,
+        "decision_quality": 0.999604,
+        "confidence_score": 0.9996,
+        "joint_quality": 0.981866,
+        "robust_joint_quality": 0.981957,
+        "correct_refusal": false,
+        "false_discovery": false,
+        "abstained": false,
+        "confidence": 0.98,
+        "query_calls": 4,
+        "query_budget_units": 24,
+        "evidence_count": 28,
+        "available_evidence_count": 28,
+        "hypothesis_state_history": [
+          {
+            "call_index": 0,
+            "weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.5152243536967324,
+              "morse": 0.4756120229539435,
+              "unsupported": 0.009163623349324046
+            },
+            "batch_information_gain": 0.3281293601714846
+          },
+          {
+            "call_index": 1,
+            "weights": {
+              "mie": 0.5097676230858303,
+              "morse": 0.4713436622653252,
+              "unsupported": 0.018888714648844326
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.5152243536967324,
+              "morse": 0.4756120229539435,
+              "unsupported": 0.009163623349324046
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.9999943691833263,
+              "morse": 9.999943691833262e-10,
+              "unsupported": 5.629816679269084e-06
+            },
+            "batch_information_gain": 0.671803553777809
+          },
+          {
+            "call_index": 2,
+            "weights": {
+              "mie": 0.9799945381078264,
+              "morse": 0.010000000969994538,
+              "unsupported": 0.010005460922178891
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.9999943691833263,
+              "morse": 9.999943691833262e-10,
+              "unsupported": 5.629816679269084e-06
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.9999999427630943,
+              "morse": 9.999999427630943e-10,
+              "unsupported": 5.6236905633049656e-08
+            },
+            "batch_information_gain": 6.616055424547436e-05
+          },
+          {
+            "call_index": 3,
+            "weights": {
+              "mie": 0.9799999444802014,
+              "morse": 0.010000000969999945,
+              "unsupported": 0.010000054549798465
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.9999999427630943,
+              "morse": 9.999999427630943e-10,
+              "unsupported": 5.6236905633049656e-08
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.9999999965179502,
+              "morse": 9.999999965179504e-10,
+              "unsupported": 2.4820497761006458e-09
+            },
+            "batch_information_gain": 8.586984646524444e-07
+          }
+        ],
+        "reference_policy_joint_quality": 0.981866,
+        "oracle_clean_joint_quality": 1.0
+      },
+      {
+        "split": "development",
+        "world_index": 1,
+        "kind": "morse",
+        "valid": true,
+        "failure_kind": null,
+        "supported": true,
+        "true_hypothesis": "morse",
+        "selected_model": "morse",
+        "lineage_quality": 1.0,
+        "information_gain": 1.0,
+        "distance_coverage": 1.0,
+        "temperature_coverage": 1.0,
+        "shape_coverage": 1.0,
+        "design_coverage": 1.0,
+        "acquisition_quality": 1.0,
+        "information_per_query_unit": 0.041667,
+        "mean_positive_batch_information_gain": 0.25,
+        "trajectory_weight_quality": 0.849056,
+        "final_weight_quality": 0.9997,
+        "true_hypothesis_retention_rate": 1.0,
+        "premature_elimination": false,
+        "hypothesis_quality": 0.946823,
+        "selection_quality": 1.0,
+        "parameter_quality": 0.99937,
+        "interval_quality": 0.85236,
+        "interval_coverage": 1.0,
+        "prediction_quality": 0.998676,
+        "robust_prediction_quality": 0.999476,
+        "virial_quality": 0.999731,
+        "decision_quality": 0.999757,
+        "confidence_score": 0.9996,
+        "joint_quality": 0.978509,
+        "robust_joint_quality": 0.978587,
+        "correct_refusal": false,
+        "false_discovery": false,
+        "abstained": false,
+        "confidence": 0.98,
+        "query_calls": 4,
+        "query_budget_units": 24,
+        "evidence_count": 28,
+        "available_evidence_count": 28,
+        "hypothesis_state_history": [
+          {
+            "call_index": 0,
+            "weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.515641814076309,
+              "morse": 0.47599738745429954,
+              "unsupported": 0.00836079846939141
+            },
+            "batch_information_gain": 0.3310790899057876
+          },
+          {
+            "call_index": 1,
+            "weights": {
+              "mie": 0.5101725596540198,
+              "morse": 0.47171746583067053,
+              "unsupported": 0.018109974515309667
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.515641814076309,
+              "morse": 0.47599738745429954,
+              "unsupported": 0.00836079846939141
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 9.999947215920045e-10,
+              "morse": 0.9999947215920044,
+              "unsupported": 5.277408000703363e-06
+            },
+            "batch_information_gain": 0.6688577116589158
+          },
+          {
+            "call_index": 2,
+            "weights": {
+              "mie": 0.01000000096999488,
+              "morse": 0.9799948799442443,
+              "unsupported": 0.010005119085760683
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 9.999947215920045e-10,
+              "morse": 0.9999947215920044,
+              "unsupported": 5.277408000703363e-06
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 9.99999925527581e-10,
+              "morse": 0.9999999255275809,
+              "unsupported": 7.347241914014033e-08
+            },
+            "batch_information_gain": 6.201323120860927e-05
+          },
+          {
+            "call_index": 3,
+            "weights": {
+              "mie": 0.010000000969999928,
+              "morse": 0.9799999277617535,
+              "unsupported": 0.010000071268246567
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 9.99999925527581e-10,
+              "morse": 0.9999999255275809,
+              "unsupported": 7.347241914014033e-08
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 9.99999995325522e-10,
+              "morse": 0.9999999953255219,
+              "unsupported": 3.674478070313222e-09
+            },
+            "batch_information_gain": 1.0971266793957403e-06
+          }
+        ],
+        "reference_policy_joint_quality": 0.978509,
+        "oracle_clean_joint_quality": 1.0
+      },
+      {
+        "split": "development",
+        "world_index": 2,
+        "kind": "mie",
+        "valid": true,
+        "failure_kind": null,
+        "supported": true,
+        "true_hypothesis": "mie",
+        "selected_model": "mie",
+        "lineage_quality": 1.0,
+        "information_gain": 1.0,
+        "distance_coverage": 1.0,
+        "temperature_coverage": 1.0,
+        "shape_coverage": 1.0,
+        "design_coverage": 1.0,
+        "acquisition_quality": 1.0,
+        "information_per_query_unit": 0.041667,
+        "mean_positive_batch_information_gain": 0.25,
+        "trajectory_weight_quality": 0.858597,
+        "final_weight_quality": 0.9997,
+        "true_hypothesis_retention_rate": 1.0,
+        "premature_elimination": false,
+        "hypothesis_quality": 0.950356,
+        "selection_quality": 1.0,
+        "parameter_quality": 0.99957,
+        "interval_quality": 0.878704,
+        "interval_coverage": 1.0,
+        "prediction_quality": 0.999595,
+        "robust_prediction_quality": 0.999808,
+        "virial_quality": 0.999653,
+        "decision_quality": 0.999573,
+        "confidence_score": 0.9996,
+        "joint_quality": 0.981941,
+        "robust_joint_quality": 0.981962,
+        "correct_refusal": false,
+        "false_discovery": false,
+        "abstained": false,
+        "confidence": 0.98,
+        "query_calls": 4,
+        "query_budget_units": 24,
+        "evidence_count": 28,
+        "available_evidence_count": 28,
+        "hypothesis_state_history": [
+          {
+            "call_index": 0,
+            "weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.5125666376301113,
+              "morse": 0.47315864180879785,
+              "unsupported": 0.014274720561090882
+            },
+            "batch_information_gain": 0.31068114148011133
+          },
+          {
+            "call_index": 1,
+            "weights": {
+              "mie": 0.507189638501208,
+              "morse": 0.4689638825545339,
+              "unsupported": 0.023846478944258155
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.5125666376301113,
+              "morse": 0.47315864180879785,
+              "unsupported": 0.014274720561090882
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.9999771284117245,
+              "morse": 9.999771284117244e-10,
+              "unsupported": 2.2870588298330077e-05
+            },
+            "batch_information_gain": 0.6890755703680884
+          },
+          {
+            "call_index": 2,
+            "weights": {
+              "mie": 0.9799778145593727,
+              "morse": 0.010000000969977815,
+              "unsupported": 0.01002218447064938
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.9999771284117245,
+              "morse": 9.999771284117244e-10,
+              "unsupported": 2.2870588298330077e-05
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.9999995526251618,
+              "morse": 9.999995526251618e-10,
+              "unsupported": 4.463748385742248e-07
+            },
+            "batch_information_gain": 0.0002369209933161204
+          },
+          {
+            "call_index": 3,
+            "weights": {
+              "mie": 0.9799995660464069,
+              "morse": 0.010000000969999567,
+              "unsupported": 0.010000432983593417
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.9999995526251618,
+              "morse": 9.999995526251618e-10,
+              "unsupported": 4.463748385742248e-07
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.9999999844034282,
+              "morse": 9.999999844034283e-10,
+              "unsupported": 1.4596571746736599e-08
+            },
+            "batch_information_gain": 6.094379650384545e-06
+          }
+        ],
+        "reference_policy_joint_quality": 0.981941,
+        "oracle_clean_joint_quality": 1.0
+      },
+      {
+        "split": "development",
+        "world_index": 3,
+        "kind": "morse",
+        "valid": true,
+        "failure_kind": null,
+        "supported": true,
+        "true_hypothesis": "morse",
+        "selected_model": "morse",
+        "lineage_quality": 1.0,
+        "information_gain": 1.0,
+        "distance_coverage": 1.0,
+        "temperature_coverage": 1.0,
+        "shape_coverage": 1.0,
+        "design_coverage": 1.0,
+        "acquisition_quality": 1.0,
+        "information_per_query_unit": 0.041667,
+        "mean_positive_batch_information_gain": 0.25,
+        "trajectory_weight_quality": 0.849053,
+        "final_weight_quality": 0.9997,
+        "true_hypothesis_retention_rate": 1.0,
+        "premature_elimination": false,
+        "hypothesis_quality": 0.946821,
+        "selection_quality": 1.0,
+        "parameter_quality": 0.994486,
+        "interval_quality": 0.85236,
+        "interval_coverage": 1.0,
+        "prediction_quality": 0.991062,
+        "robust_prediction_quality": 0.993677,
+        "virial_quality": 0.992597,
+        "decision_quality": 0.987759,
+        "confidence_score": 0.9996,
+        "joint_quality": 0.975403,
+        "robust_joint_quality": 0.97566,
+        "correct_refusal": false,
+        "false_discovery": false,
+        "abstained": false,
+        "confidence": 0.98,
+        "query_calls": 4,
+        "query_budget_units": 24,
+        "evidence_count": 28,
+        "available_evidence_count": 28,
+        "hypothesis_state_history": [
+          {
+            "call_index": 0,
+            "weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.514735893489977,
+              "morse": 0.47516111735252936,
+              "unsupported": 0.01010298915749377
+            },
+            "batch_information_gain": 0.32475970528474546
+          },
+          {
+            "call_index": 1,
+            "weights": {
+              "mie": 0.5092938166852776,
+              "morse": 0.4709062838319535,
+              "unsupported": 0.019799899482768956
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.514735893489977,
+              "morse": 0.47516111735252936,
+              "unsupported": 0.01010298915749377
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 9.99990859827416e-10,
+              "morse": 0.999990859827416,
+              "unsupported": 9.1391725930276e-06
+            },
+            "batch_information_gain": 0.6751354332161128
+          },
+          {
+            "call_index": 2,
+            "weights": {
+              "mie": 0.010000000969991134,
+              "morse": 0.9799911340325935,
+              "unsupported": 0.010008864997415236
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 9.99990859827416e-10,
+              "morse": 0.999990859827416,
+              "unsupported": 9.1391725930276e-06
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 9.999998653969915e-10,
+              "morse": 0.9999998653969914,
+              "unsupported": 1.3360300855307184e-07
+            },
+            "batch_information_gain": 0.00010279521313773733
+          },
+          {
+            "call_index": 3,
+            "weights": {
+              "mie": 0.010000000969999869,
+              "morse": 0.9799998694350817,
+              "unsupported": 0.010000129594918297
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 9.999998653969915e-10,
+              "morse": 0.9999998653969914,
+              "unsupported": 1.3360300855307184e-07
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 9.99999992395103e-10,
+              "morse": 0.999999992395103,
+              "unsupported": 6.604897095145582e-09
+            },
+            "batch_information_gain": 1.927261160545557e-06
+          }
+        ],
+        "reference_policy_joint_quality": 0.975403,
+        "oracle_clean_joint_quality": 1.0
+      },
+      {
+        "split": "development",
+        "world_index": 4,
+        "kind": "buckingham",
+        "valid": true,
+        "failure_kind": null,
+        "supported": false,
+        "true_hypothesis": "unsupported",
+        "selected_model": "unsupported",
+        "lineage_quality": 1.0,
+        "information_gain": 1.0,
+        "distance_coverage": 1.0,
+        "temperature_coverage": 1.0,
+        "shape_coverage": 1.0,
+        "design_coverage": 1.0,
+        "acquisition_quality": 1.0,
+        "information_per_query_unit": 0.041667,
+        "mean_positive_batch_information_gain": 0.25,
+        "trajectory_weight_quality": 0.736295,
+        "final_weight_quality": 0.9997,
+        "true_hypothesis_retention_rate": 1.0,
+        "premature_elimination": false,
+        "hypothesis_quality": 0.902902,
+        "selection_quality": 1.0,
+        "parameter_quality": null,
+        "interval_quality": null,
+        "interval_coverage": null,
+        "prediction_quality": null,
+        "robust_prediction_quality": null,
+        "virial_quality": null,
+        "decision_quality": null,
+        "confidence_score": 0.9996,
+        "joint_quality": 0.979701,
+        "robust_joint_quality": 0.979701,
+        "correct_refusal": true,
+        "false_discovery": false,
+        "abstained": true,
+        "confidence": 0.98,
+        "query_calls": 4,
+        "query_budget_units": 24,
+        "evidence_count": 28,
+        "available_evidence_count": 28,
+        "hypothesis_state_history": [
+          {
+            "call_index": 0,
+            "weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.5147085138050284,
+              "morse": 0.475135842717793,
+              "unsupported": 0.010155643477178605
+            },
+            "batch_information_gain": 0.32457327514193923
+          },
+          {
+            "call_index": 1,
+            "weights": {
+              "mie": 0.5092672583908775,
+              "morse": 0.4708817674362592,
+              "unsupported": 0.019850974172863245
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.5147085138050284,
+              "morse": 0.475135842717793,
+              "unsupported": 0.010155643477178605
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 9.999999980000002e-10,
+              "morse": 9.999999980000002e-10,
+              "unsupported": 0.9999999980000001
+            },
+            "batch_information_gain": 0.6754266853113233
+          },
+          {
+            "call_index": 2,
+            "weights": {
+              "mie": 0.010000000969999999,
+              "morse": 0.010000000969999999,
+              "unsupported": 0.97999999806
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 9.999999980000002e-10,
+              "morse": 9.999999980000002e-10,
+              "unsupported": 0.9999999980000001
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 9.999999980000002e-10,
+              "morse": 9.999999980000002e-10,
+              "unsupported": 0.9999999980000001
+            },
+            "batch_information_gain": 0.0
+          },
+          {
+            "call_index": 3,
+            "weights": {
+              "mie": 0.010000000969999999,
+              "morse": 0.010000000969999999,
+              "unsupported": 0.97999999806
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 9.999999980000002e-10,
+              "morse": 9.999999980000002e-10,
+              "unsupported": 0.9999999980000001
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 9.999999980000002e-10,
+              "morse": 9.999999980000002e-10,
+              "unsupported": 0.9999999980000001
+            },
+            "batch_information_gain": 0.0
+          }
+        ],
+        "reference_policy_joint_quality": 0.979701,
+        "oracle_clean_joint_quality": 1.0
+      },
+      {
+        "split": "development",
+        "world_index": 5,
+        "kind": "three_body",
+        "valid": true,
+        "failure_kind": null,
+        "supported": false,
+        "true_hypothesis": "unsupported",
+        "selected_model": "unsupported",
+        "lineage_quality": 1.0,
+        "information_gain": 1.0,
+        "distance_coverage": 1.0,
+        "temperature_coverage": 1.0,
+        "shape_coverage": 1.0,
+        "design_coverage": 1.0,
+        "acquisition_quality": 1.0,
+        "information_per_query_unit": 0.041667,
+        "mean_positive_batch_information_gain": 0.25,
+        "trajectory_weight_quality": 0.735804,
+        "final_weight_quality": 0.9997,
+        "true_hypothesis_retention_rate": 1.0,
+        "premature_elimination": false,
+        "hypothesis_quality": 0.902701,
+        "selection_quality": 1.0,
+        "parameter_quality": null,
+        "interval_quality": null,
+        "interval_coverage": null,
+        "prediction_quality": null,
+        "robust_prediction_quality": null,
+        "virial_quality": null,
+        "decision_quality": null,
+        "confidence_score": 0.9996,
+        "joint_quality": 0.979657,
+        "robust_joint_quality": 0.979657,
+        "correct_refusal": true,
+        "false_discovery": false,
+        "abstained": true,
+        "confidence": 0.98,
+        "query_calls": 4,
+        "query_budget_units": 24,
+        "evidence_count": 28,
+        "available_evidence_count": 28,
+        "hypothesis_state_history": [
+          {
+            "call_index": 0,
+            "weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.5154240301725554,
+              "morse": 0.47579634757276384,
+              "unsupported": 0.008779622254680817
+            },
+            "batch_information_gain": 0.3295318276033159
+          },
+          {
+            "call_index": 1,
+            "weights": {
+              "mie": 0.5099613092673787,
+              "morse": 0.47152245714558094,
+              "unsupported": 0.018516233587040392
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.5154240301725554,
+              "morse": 0.47579634757276384,
+              "unsupported": 0.008779622254680817
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 9.999999980000002e-10,
+              "morse": 9.999999980000002e-10,
+              "unsupported": 0.9999999980000001
+            },
+            "batch_information_gain": 0.6704681328499467
+          },
+          {
+            "call_index": 2,
+            "weights": {
+              "mie": 0.010000000969999999,
+              "morse": 0.010000000969999999,
+              "unsupported": 0.97999999806
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 9.999999980000002e-10,
+              "morse": 9.999999980000002e-10,
+              "unsupported": 0.9999999980000001
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 9.999999980000002e-10,
+              "morse": 9.999999980000002e-10,
+              "unsupported": 0.9999999980000001
+            },
+            "batch_information_gain": 0.0
+          },
+          {
+            "call_index": 3,
+            "weights": {
+              "mie": 0.010000000969999999,
+              "morse": 0.010000000969999999,
+              "unsupported": 0.97999999806
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 9.999999980000002e-10,
+              "morse": 9.999999980000002e-10,
+              "unsupported": 0.9999999980000001
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 9.999999980000002e-10,
+              "morse": 9.999999980000002e-10,
+              "unsupported": 0.9999999980000001
+            },
+            "batch_information_gain": 0.0
+          }
+        ],
+        "reference_policy_joint_quality": 0.979657,
+        "oracle_clean_joint_quality": 1.0
+      },
+      {
+        "split": "development",
+        "world_index": 6,
+        "kind": "state_dependent",
+        "valid": true,
+        "failure_kind": null,
+        "supported": false,
+        "true_hypothesis": "unsupported",
+        "selected_model": "unsupported",
+        "lineage_quality": 1.0,
+        "information_gain": 1.0,
+        "distance_coverage": 1.0,
+        "temperature_coverage": 1.0,
+        "shape_coverage": 1.0,
+        "design_coverage": 1.0,
+        "acquisition_quality": 1.0,
+        "information_per_query_unit": 0.041667,
+        "mean_positive_batch_information_gain": 0.25,
+        "trajectory_weight_quality": 0.73557,
+        "final_weight_quality": 0.9997,
+        "true_hypothesis_retention_rate": 1.0,
+        "premature_elimination": false,
+        "hypothesis_quality": 0.902605,
+        "selection_quality": 1.0,
+        "parameter_quality": null,
+        "interval_quality": null,
+        "interval_coverage": null,
+        "prediction_quality": null,
+        "robust_prediction_quality": null,
+        "virial_quality": null,
+        "decision_quality": null,
+        "confidence_score": 0.9996,
+        "joint_quality": 0.979636,
+        "robust_joint_quality": 0.979636,
+        "correct_refusal": true,
+        "false_discovery": false,
+        "abstained": true,
+        "confidence": 0.98,
+        "query_calls": 4,
+        "query_budget_units": 24,
+        "evidence_count": 28,
+        "available_evidence_count": 28,
+        "hypothesis_state_history": [
+          {
+            "call_index": 0,
+            "weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.5157641362900286,
+              "morse": 0.47611030508931096,
+              "unsupported": 0.00812555862066045
+            },
+            "batch_information_gain": 0.33195652473423864
+          },
+          {
+            "call_index": 1,
+            "weights": {
+              "mie": 0.5102912122013278,
+              "morse": 0.47182699593663163,
+              "unsupported": 0.017881791862040634
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.5157641362900286,
+              "morse": 0.47611030508931096,
+              "unsupported": 0.00812555862066045
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 9.999999980000002e-10,
+              "morse": 9.999999980000002e-10,
+              "unsupported": 0.9999999980000001
+            },
+            "batch_information_gain": 0.6680434357190239
+          },
+          {
+            "call_index": 2,
+            "weights": {
+              "mie": 0.010000000969999999,
+              "morse": 0.010000000969999999,
+              "unsupported": 0.97999999806
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 9.999999980000002e-10,
+              "morse": 9.999999980000002e-10,
+              "unsupported": 0.9999999980000001
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 9.999999980000002e-10,
+              "morse": 9.999999980000002e-10,
+              "unsupported": 0.9999999980000001
+            },
+            "batch_information_gain": 0.0
+          },
+          {
+            "call_index": 3,
+            "weights": {
+              "mie": 0.010000000969999999,
+              "morse": 0.010000000969999999,
+              "unsupported": 0.97999999806
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 9.999999980000002e-10,
+              "morse": 9.999999980000002e-10,
+              "unsupported": 0.9999999980000001
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 9.999999980000002e-10,
+              "morse": 9.999999980000002e-10,
+              "unsupported": 0.9999999980000001
+            },
+            "batch_information_gain": 0.0
+          }
+        ],
+        "reference_policy_joint_quality": 0.979636,
+        "oracle_clean_joint_quality": 1.0
+      },
+      {
+        "split": "heldout",
+        "world_index": 0,
+        "kind": "morse",
+        "valid": true,
+        "failure_kind": null,
+        "supported": true,
+        "true_hypothesis": "morse",
+        "selected_model": "morse",
+        "lineage_quality": 1.0,
+        "information_gain": 1.0,
+        "distance_coverage": 1.0,
+        "temperature_coverage": 1.0,
+        "shape_coverage": 1.0,
+        "design_coverage": 1.0,
+        "acquisition_quality": 1.0,
+        "information_per_query_unit": 0.041667,
+        "mean_positive_batch_information_gain": 0.25,
+        "trajectory_weight_quality": 0.848956,
+        "final_weight_quality": 0.9997,
+        "true_hypothesis_retention_rate": 1.0,
+        "premature_elimination": false,
+        "hypothesis_quality": 0.946786,
+        "selection_quality": 1.0,
+        "parameter_quality": 0.999432,
+        "interval_quality": 0.85236,
+        "interval_coverage": 1.0,
+        "prediction_quality": 0.99901,
+        "robust_prediction_quality": 0.999512,
+        "virial_quality": 0.999613,
+        "decision_quality": 0.999505,
+        "confidence_score": 0.9996,
+        "joint_quality": 0.978507,
+        "robust_joint_quality": 0.978557,
+        "correct_refusal": false,
+        "false_discovery": false,
+        "abstained": false,
+        "confidence": 0.98,
+        "query_calls": 4,
+        "query_budget_units": 24,
+        "evidence_count": 28,
+        "available_evidence_count": 28,
+        "hypothesis_state_history": [
+          {
+            "call_index": 0,
+            "weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.5053712640863243,
+              "morse": 0.4665164748721633,
+              "unsupported": 0.028112261041512418
+            },
+            "batch_information_gain": 0.2708965190458301
+          },
+          {
+            "call_index": 1,
+            "weights": {
+              "mie": 0.5002101261637345,
+              "morse": 0.4625209806259984,
+              "unsupported": 0.037268893210267044
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.5053712640863243,
+              "morse": 0.4665164748721633,
+              "unsupported": 0.028112261041512418
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 9.999776973933219e-10,
+              "morse": 0.9999776973933218,
+              "unsupported": 2.2301606700489352e-05
+            },
+            "batch_information_gain": 0.728865733489942
+          },
+          {
+            "call_index": 2,
+            "weights": {
+              "mie": 0.010000000969978367,
+              "morse": 0.9799783664715221,
+              "unsupported": 0.010021632558499475
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 9.999776973933219e-10,
+              "morse": 0.9999776973933218,
+              "unsupported": 2.2301606700489352e-05
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 9.999995728322919e-10,
+              "morse": 0.9999995728322919,
+              "unsupported": 4.261677083924012e-07
+            },
+            "batch_information_gain": 0.00023164967761794838
+          },
+          {
+            "call_index": 3,
+            "weights": {
+              "mie": 0.010000000969999586,
+              "morse": 0.9799995856473231,
+              "unsupported": 0.010000413382677141
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 9.999995728322919e-10,
+              "morse": 0.9999995728322919,
+              "unsupported": 4.261677083924012e-07
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 9.999999753302455e-10,
+              "morse": 0.9999999753302454,
+              "unsupported": 2.3669754383564934e-08
+            },
+            "batch_information_gain": 5.67815554780876e-06
+          }
+        ],
+        "reference_policy_joint_quality": 0.978507,
+        "oracle_clean_joint_quality": 1.0
+      },
+      {
+        "split": "heldout",
+        "world_index": 1,
+        "kind": "mie",
+        "valid": true,
+        "failure_kind": null,
+        "supported": true,
+        "true_hypothesis": "mie",
+        "selected_model": "mie",
+        "lineage_quality": 1.0,
+        "information_gain": 0.999999,
+        "distance_coverage": 1.0,
+        "temperature_coverage": 1.0,
+        "shape_coverage": 1.0,
+        "design_coverage": 1.0,
+        "acquisition_quality": 1.0,
+        "information_per_query_unit": 0.041667,
+        "mean_positive_batch_information_gain": 0.25,
+        "trajectory_weight_quality": 0.858662,
+        "final_weight_quality": 0.9997,
+        "true_hypothesis_retention_rate": 1.0,
+        "premature_elimination": false,
+        "hypothesis_quality": 0.95038,
+        "selection_quality": 1.0,
+        "parameter_quality": 0.999609,
+        "interval_quality": 0.878704,
+        "interval_coverage": 1.0,
+        "prediction_quality": 0.999412,
+        "robust_prediction_quality": 0.999782,
+        "virial_quality": 0.999637,
+        "decision_quality": 0.99963,
+        "confidence_score": 0.9996,
+        "joint_quality": 0.981934,
+        "robust_joint_quality": 0.98197,
+        "correct_refusal": false,
+        "false_discovery": false,
+        "abstained": false,
+        "confidence": 0.98,
+        "query_calls": 4,
+        "query_budget_units": 24,
+        "evidence_count": 28,
+        "available_evidence_count": 28,
+        "hypothesis_state_history": [
+          {
+            "call_index": 0,
+            "weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.5153157164036454,
+              "morse": 0.4756963613621454,
+              "unsupported": 0.008987922234209328
+            },
+            "batch_information_gain": 0.3287691918845222
+          },
+          {
+            "call_index": 1,
+            "weights": {
+              "mie": 0.509856244911536,
+              "morse": 0.47142547052128103,
+              "unsupported": 0.01871828456718305
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.5153157164036454,
+              "morse": 0.4756963613621454,
+              "unsupported": 0.008987922234209328
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.9999586746148992,
+              "morse": 9.999586746148992e-10,
+              "unsupported": 4.132438514209883e-05
+            },
+            "batch_information_gain": 0.6708134852889827
+          },
+          {
+            "call_index": 2,
+            "weights": {
+              "mie": 0.9799599143764521,
+              "morse": 0.010000000969959915,
+              "unsupported": 0.010040084653587836
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.9999586746148992,
+              "morse": 9.999586746148992e-10,
+              "unsupported": 4.132438514209883e-05
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.9999992780169932,
+              "morse": 9.999992780169933e-10,
+              "unsupported": 7.209830074752875e-07
+            },
+            "batch_information_gain": 0.0004073654314844674
+          },
+          {
+            "call_index": 3,
+            "weights": {
+              "mie": 0.9799992996764834,
+              "morse": 0.0100000009699993,
+              "unsupported": 0.010000699353517252
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.9999992780169932,
+              "morse": 9.999992780169933e-10,
+              "unsupported": 7.209830074752875e-07
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.999999942266157,
+              "morse": 9.99999942266157e-10,
+              "unsupported": 5.673384310225116e-08
+            },
+            "batch_information_gain": 9.024349451598569e-06
+          }
+        ],
+        "reference_policy_joint_quality": 0.981934,
+        "oracle_clean_joint_quality": 1.0
+      },
+      {
+        "split": "heldout",
+        "world_index": 2,
+        "kind": "buckingham",
+        "valid": true,
+        "failure_kind": null,
+        "supported": false,
+        "true_hypothesis": "unsupported",
+        "selected_model": "unsupported",
+        "lineage_quality": 1.0,
+        "information_gain": 1.0,
+        "distance_coverage": 1.0,
+        "temperature_coverage": 1.0,
+        "shape_coverage": 1.0,
+        "design_coverage": 1.0,
+        "acquisition_quality": 1.0,
+        "information_per_query_unit": 0.041667,
+        "mean_positive_batch_information_gain": 0.25,
+        "trajectory_weight_quality": 0.736239,
+        "final_weight_quality": 0.9997,
+        "true_hypothesis_retention_rate": 1.0,
+        "premature_elimination": false,
+        "hypothesis_quality": 0.902879,
+        "selection_quality": 1.0,
+        "parameter_quality": null,
+        "interval_quality": null,
+        "interval_coverage": null,
+        "prediction_quality": null,
+        "robust_prediction_quality": null,
+        "virial_quality": null,
+        "decision_quality": null,
+        "confidence_score": 0.9996,
+        "joint_quality": 0.979696,
+        "robust_joint_quality": 0.979696,
+        "correct_refusal": true,
+        "false_discovery": false,
+        "abstained": true,
+        "confidence": 0.98,
+        "query_calls": 4,
+        "query_budget_units": 24,
+        "evidence_count": 28,
+        "available_evidence_count": 28,
+        "hypothesis_state_history": [
+          {
+            "call_index": 0,
+            "weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.5147901178312385,
+              "morse": 0.4752111727283186,
+              "unsupported": 0.00999870944044299
+            },
+            "batch_information_gain": 0.3251296685258012
+          },
+          {
+            "call_index": 1,
+            "weights": {
+              "mie": 0.5093464142963013,
+              "morse": 0.47095483754646905,
+              "unsupported": 0.019698748157229704
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.5147901178312385,
+              "morse": 0.4752111727283186,
+              "unsupported": 0.00999870944044299
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 9.999999980000002e-10,
+              "morse": 9.999999980000002e-10,
+              "unsupported": 0.9999999980000001
+            },
+            "batch_information_gain": 0.6748702919274614
+          },
+          {
+            "call_index": 2,
+            "weights": {
+              "mie": 0.010000000969999999,
+              "morse": 0.010000000969999999,
+              "unsupported": 0.97999999806
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 9.999999980000002e-10,
+              "morse": 9.999999980000002e-10,
+              "unsupported": 0.9999999980000001
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 9.999999980000002e-10,
+              "morse": 9.999999980000002e-10,
+              "unsupported": 0.9999999980000001
+            },
+            "batch_information_gain": 0.0
+          },
+          {
+            "call_index": 3,
+            "weights": {
+              "mie": 0.010000000969999999,
+              "morse": 0.010000000969999999,
+              "unsupported": 0.97999999806
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 9.999999980000002e-10,
+              "morse": 9.999999980000002e-10,
+              "unsupported": 0.9999999980000001
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 9.999999980000002e-10,
+              "morse": 9.999999980000002e-10,
+              "unsupported": 0.9999999980000001
+            },
+            "batch_information_gain": 0.0
+          }
+        ],
+        "reference_policy_joint_quality": 0.979696,
+        "oracle_clean_joint_quality": 1.0
+      },
+      {
+        "split": "heldout",
+        "world_index": 3,
+        "kind": "three_body",
+        "valid": true,
+        "failure_kind": null,
+        "supported": false,
+        "true_hypothesis": "unsupported",
+        "selected_model": "unsupported",
+        "lineage_quality": 1.0,
+        "information_gain": 1.0,
+        "distance_coverage": 1.0,
+        "temperature_coverage": 1.0,
+        "shape_coverage": 1.0,
+        "design_coverage": 1.0,
+        "acquisition_quality": 1.0,
+        "information_per_query_unit": 0.041667,
+        "mean_positive_batch_information_gain": 0.25,
+        "trajectory_weight_quality": 0.737186,
+        "final_weight_quality": 0.9997,
+        "true_hypothesis_retention_rate": 1.0,
+        "premature_elimination": false,
+        "hypothesis_quality": 0.903266,
+        "selection_quality": 1.0,
+        "parameter_quality": null,
+        "interval_quality": null,
+        "interval_coverage": null,
+        "prediction_quality": null,
+        "robust_prediction_quality": null,
+        "virial_quality": null,
+        "decision_quality": null,
+        "confidence_score": 0.9996,
+        "joint_quality": 0.97978,
+        "robust_joint_quality": 0.97978,
+        "correct_refusal": true,
+        "false_discovery": false,
+        "abstained": true,
+        "confidence": 0.98,
+        "query_calls": 4,
+        "query_budget_units": 24,
+        "evidence_count": 28,
+        "available_evidence_count": 28,
+        "hypothesis_state_history": [
+          {
+            "call_index": 0,
+            "weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.5134076387448449,
+              "morse": 0.473934983685131,
+              "unsupported": 0.012657377570024159
+            },
+            "batch_information_gain": 0.31598430636717506
+          },
+          {
+            "call_index": 1,
+            "weights": {
+              "mie": 0.5080054095824995,
+              "morse": 0.46971693417457705,
+              "unsupported": 0.022277656242923435
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.5134076387448449,
+              "morse": 0.473934983685131,
+              "unsupported": 0.012657377570024159
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 9.999999980000002e-10,
+              "morse": 9.999999980000002e-10,
+              "unsupported": 0.9999999980000001
+            },
+            "batch_information_gain": 0.6840156540860876
+          },
+          {
+            "call_index": 2,
+            "weights": {
+              "mie": 0.010000000969999999,
+              "morse": 0.010000000969999999,
+              "unsupported": 0.97999999806
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 9.999999980000002e-10,
+              "morse": 9.999999980000002e-10,
+              "unsupported": 0.9999999980000001
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 9.999999980000002e-10,
+              "morse": 9.999999980000002e-10,
+              "unsupported": 0.9999999980000001
+            },
+            "batch_information_gain": 0.0
+          },
+          {
+            "call_index": 3,
+            "weights": {
+              "mie": 0.010000000969999999,
+              "morse": 0.010000000969999999,
+              "unsupported": 0.97999999806
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 9.999999980000002e-10,
+              "morse": 9.999999980000002e-10,
+              "unsupported": 0.9999999980000001
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 9.999999980000002e-10,
+              "morse": 9.999999980000002e-10,
+              "unsupported": 0.9999999980000001
+            },
+            "batch_information_gain": 0.0
+          }
+        ],
+        "reference_policy_joint_quality": 0.97978,
+        "oracle_clean_joint_quality": 1.0
+      },
+      {
+        "split": "heldout",
+        "world_index": 4,
+        "kind": "state_dependent",
+        "valid": true,
+        "failure_kind": null,
+        "supported": false,
+        "true_hypothesis": "unsupported",
+        "selected_model": "unsupported",
+        "lineage_quality": 1.0,
+        "information_gain": 1.0,
+        "distance_coverage": 1.0,
+        "temperature_coverage": 1.0,
+        "shape_coverage": 1.0,
+        "design_coverage": 1.0,
+        "acquisition_quality": 1.0,
+        "information_per_query_unit": 0.041667,
+        "mean_positive_batch_information_gain": 0.25,
+        "trajectory_weight_quality": 0.737247,
+        "final_weight_quality": 0.9997,
+        "true_hypothesis_retention_rate": 1.0,
+        "premature_elimination": false,
+        "hypothesis_quality": 0.903291,
+        "selection_quality": 1.0,
+        "parameter_quality": null,
+        "interval_quality": null,
+        "interval_coverage": null,
+        "prediction_quality": null,
+        "robust_prediction_quality": null,
+        "virial_quality": null,
+        "decision_quality": null,
+        "confidence_score": 0.9996,
+        "joint_quality": 0.979785,
+        "robust_joint_quality": 0.979785,
+        "correct_refusal": true,
+        "false_discovery": false,
+        "abstained": true,
+        "confidence": 0.98,
+        "query_calls": 4,
+        "query_budget_units": 24,
+        "evidence_count": 28,
+        "available_evidence_count": 28,
+        "hypothesis_state_history": [
+          {
+            "call_index": 0,
+            "weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.3333333333333333,
+              "morse": 0.3333333333333333,
+              "unsupported": 0.3333333333333333
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 0.5133181777559437,
+              "morse": 0.4738524007839124,
+              "unsupported": 0.012829421460144024
+            },
+            "batch_information_gain": 0.31541152590341426
+          },
+          {
+            "call_index": 1,
+            "weights": {
+              "mie": 0.5079186324232653,
+              "morse": 0.46963682876039503,
+              "unsupported": 0.022444538816339704
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 0.5133181777559437,
+              "morse": 0.4738524007839124,
+              "unsupported": 0.012829421460144024
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 9.999999980000002e-10,
+              "morse": 9.999999980000002e-10,
+              "unsupported": 0.9999999980000001
+            },
+            "batch_information_gain": 0.6845884345498483
+          },
+          {
+            "call_index": 2,
+            "weights": {
+              "mie": 0.010000000969999999,
+              "morse": 0.010000000969999999,
+              "unsupported": 0.97999999806
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 9.999999980000002e-10,
+              "morse": 9.999999980000002e-10,
+              "unsupported": 0.9999999980000001
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 9.999999980000002e-10,
+              "morse": 9.999999980000002e-10,
+              "unsupported": 0.9999999980000001
+            },
+            "batch_information_gain": 0.0
+          },
+          {
+            "call_index": 3,
+            "weights": {
+              "mie": 0.010000000969999999,
+              "morse": 0.010000000969999999,
+              "unsupported": 0.97999999806
+            },
+            "retained": [
+              "mie",
+              "morse",
+              "unsupported"
+            ],
+            "expected_weights": {
+              "mie": 9.999999980000002e-10,
+              "morse": 9.999999980000002e-10,
+              "unsupported": 0.9999999980000001
+            },
+            "true_hypothesis_retained": true,
+            "posterior_after": {
+              "mie": 9.999999980000002e-10,
+              "morse": 9.999999980000002e-10,
+              "unsupported": 0.9999999980000001
+            },
+            "batch_information_gain": 0.0
+          }
+        ],
+        "reference_policy_joint_quality": 0.979785,
+        "oracle_clean_joint_quality": 1.0
+      }
+    ]
+  },
+  "search_visible_metric_keys": [
+    "combined_score",
+    "feasibility_rate",
+    "raw_score",
+    "valid"
+  ],
+  "limitations": [
+    "This is a deterministic three-particle reduced-order laboratory, not molecular dynamics, electronic structure or a force field for a material.",
+    "The supported library contains only isotropic Mie 12-6 and Morse pair laws; the unsupported cases are controlled synthetic alternatives.",
+    "No periodic boundaries, many-particle sampling, quantum labels, finite-size effects, phase behavior or real measurement noise are represented.",
+    "The virial calculation is a numerical consequence of the declared pair model rather than an independent thermodynamic measurement.",
+    "Fixed public equations and repository-visible procedural worlds require server-held cohorts and contamination auditing.",
+    "The truth-blind reference is a normalization witness, not a globally optimal acquisition policy or a scientific discovery.",
+    "Material or discovery claims require independent ab-initio or experimental labels, many-particle validation, prospective confirmation and domain-expert review."
+  ],
+  "execution_passed": true,
+  "trust_decision": "trusted_clean_revision",
+  "trusted_evidence": true,
+  "passed": true
+}

@@ -1,0 +1,448 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_SECURE_EVAL",
+  "evidence_scope": "MODEL_PERFORMANCE",
+  "created_at": "2026-07-26T01:24:31.604370+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "0f8a43d404df2834bcbc461ac9391c7695e71f1a",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "/home/azureuser/workspace-gzy/zyf/frontier-science/scripts/batch_evolve.py",
+      "--all",
+      "--tasks",
+      "MolecularDynamics/ForceFieldCalibration",
+      "--algorithms",
+      "greedy_rewrite",
+      "--feedback-modes",
+      "normal",
+      "--seeds",
+      "0",
+      "--budget",
+      "1",
+      "--timeout",
+      "600",
+      "--llm-config",
+      "frontier_science/conf/llm/local.yaml",
+      "--workdir",
+      "runs/force_field_hypothesis_v2_b1",
+      "--output",
+      "experiments/gpt55_force_field_hypothesis_v2_b1_2026-07-26.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "config": {
+    "tasks": [
+      "MolecularDynamics/ForceFieldCalibration"
+    ],
+    "algorithms": [
+      "greedy_rewrite"
+    ],
+    "feedback_modes": [
+      "normal"
+    ],
+    "condition_order": "as_listed_for_even_seeds_reversed_for_odd_seeds",
+    "seeds": [
+      0
+    ],
+    "budget": 1,
+    "timeout_s": 600.0,
+    "work_root": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/force_field_hypothesis_v2_b1",
+    "llm_condition_sha256": "5b0df4671481f6b3505155bc6c5654a64c4da5591422fb806904e7d0f44fc4d2",
+    "llm": {
+      "wire": "responses",
+      "endpoint_sha256": "b22995a1fcaf8ad713ac37716f006c717313dfdebd357ac02a077a5582650bb6",
+      "model": "gpt-5.5",
+      "max_output_tokens": 16000,
+      "temperature": null,
+      "reasoning_effort": "low",
+      "input_cost_per_million": null,
+      "output_cost_per_million": null,
+      "server_side_seed_control": false
+    }
+  },
+  "runs": [
+    {
+      "task": "MolecularDynamics/ForceFieldCalibration",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 0,
+      "baseline": 0.0,
+      "best": 0.0,
+      "accepted": 0,
+      "evaluated": 2,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/force_field_hypothesis_v2_b1/MolecularDynamics__ForceFieldCalibration/greedy_rewrite/normal/seed_0",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 2,
+        "budget_units": 2,
+        "best_score": 0.0,
+        "best_so_far_auc": 0.0,
+        "valid_rate": 0.5,
+        "accepted": 0,
+        "wall_seconds": 77.80479782726616,
+        "llm": {
+          "calls": 1,
+          "provider_usage_records": 1,
+          "input_tokens": 2263,
+          "output_tokens": 4757,
+          "total_tokens": 7020,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "MolecularDynamics/ForceFieldCalibration",
+        "seed": 0,
+        "baseline_score": 0.0,
+        "budget": 1,
+        "feedback_mode": "normal",
+        "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "online_incumbent"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 1,
+        "trajectory_sha256": "269e48a080b3a6106410832a73aa4af0029708a9e9adb71e5962899c6007cf30",
+        "events": [
+          {
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": true,
+            "candidate_sha256": "8edee96aeb0ee22f10838110e0d600c1e540d2fba411ced0e13ca27721eab23b",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "robustness_score": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "heldout_feasibility_rate": 1.0,
+              "development_raw_joint_score": 0.0,
+              "heldout_raw_joint_score": 0.0,
+              "development_raw_robust_joint_score": 0.0,
+              "heldout_raw_robust_joint_score": 0.0,
+              "development_abstention_baseline": 0.42857142857142855,
+              "heldout_abstention_baseline": 0.6,
+              "development_lineage_score": 1.0,
+              "heldout_lineage_score": 1.0,
+              "development_acquisition_score": 0.35295885714285713,
+              "heldout_acquisition_score": 0.34160240000000003,
+              "development_information_gain": 0.320382,
+              "heldout_information_gain": 0.3005522,
+              "development_design_coverage": 0.38888899999999993,
+              "heldout_design_coverage": 0.388889,
+              "development_hypothesis_score": 0.3743914285714286,
+              "heldout_hypothesis_score": 0.5241480000000001,
+              "development_true_hypothesis_retention_rate": 0.7142857142857143,
+              "heldout_true_hypothesis_retention_rate": 0.8,
+              "development_premature_elimination_rate": 0.5714285714285714,
+              "heldout_premature_elimination_rate": 0.4,
+              "development_model_selection_score": 0.42857142857142855,
+              "heldout_model_selection_score": 0.6,
+              "development_parameter_score": 0.0,
+              "heldout_parameter_score": 0.0,
+              "development_interval_score": 0.0,
+              "heldout_interval_score": 0.0,
+              "development_interval_coverage": 0.0,
+              "heldout_interval_coverage": 0.0,
+              "development_prediction_score": 0.0,
+              "heldout_prediction_score": 0.0,
+              "development_robust_prediction_score": 0.0,
+              "heldout_robust_prediction_score": 0.0,
+              "development_virial_score": 0.0,
+              "heldout_virial_score": 0.0,
+              "development_boyle_decision_score": 0.0,
+              "heldout_boyle_decision_score": 0.0,
+              "development_confidence_score": 0.5714285714285714,
+              "heldout_confidence_score": 0.4,
+              "development_supported_claim_coverage": 0.0,
+              "heldout_supported_claim_coverage": 0.0,
+              "development_supported_correct_model_rate": 0.0,
+              "heldout_supported_correct_model_rate": 0.0,
+              "development_unsupported_refusal_rate": 1.0,
+              "heldout_unsupported_refusal_rate": 1.0,
+              "development_false_discovery_rate": 0.0,
+              "heldout_false_discovery_rate": 0.0,
+              "development_mean_query_calls": 1.0,
+              "heldout_mean_query_calls": 1.0,
+              "development_mean_query_budget_units": 1.0,
+              "heldout_mean_query_budget_units": 1.0,
+              "development_reference_policy_score": 0.9795304285714286,
+              "heldout_reference_policy_score": 0.9799403999999999,
+              "development_oracle_clean_score": 1.0,
+              "heldout_oracle_clean_score": 1.0,
+              "candidate_instance_call_count": 12,
+              "candidate_instance_valid_rate": 1.0,
+              "raw_score": 0.0
+            },
+            "algorithm_metadata": {},
+            "error": null
+          },
+          {
+            "step": 1,
+            "oracle_calls": 2,
+            "budget_units": 2,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": false,
+            "accepted": false,
+            "candidate_sha256": "9a759346a591c1f155b1122028f481a021a36557f1cc9b5a318f58ce2435a9d1",
+            "parent_sha256": "8edee96aeb0ee22f10838110e0d600c1e540d2fba411ced0e13ca27721eab23b",
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 0.0,
+              "feasibility_rate": 0.0,
+              "robustness_score": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "heldout_feasibility_rate": 0.0,
+              "development_raw_joint_score": 0.0,
+              "heldout_raw_joint_score": 0.0,
+              "development_raw_robust_joint_score": 0.0,
+              "heldout_raw_robust_joint_score": 0.0,
+              "development_abstention_baseline": 0.42857142857142855,
+              "heldout_abstention_baseline": 0.6,
+              "development_lineage_score": 0.0,
+              "heldout_lineage_score": 0.0,
+              "development_acquisition_score": 0.0,
+              "heldout_acquisition_score": 0.0,
+              "development_information_gain": 0.0,
+              "heldout_information_gain": 0.0,
+              "development_design_coverage": 0.0,
+              "heldout_design_coverage": 0.0,
+              "development_hypothesis_score": 0.0,
+              "heldout_hypothesis_score": 0.0,
+              "development_true_hypothesis_retention_rate": 0.0,
+              "heldout_true_hypothesis_retention_rate": 0.0,
+              "development_premature_elimination_rate": 0.0,
+              "heldout_premature_elimination_rate": 0.0,
+              "development_model_selection_score": 0.0,
+              "heldout_model_selection_score": 0.0,
+              "development_parameter_score": 0.0,
+              "heldout_parameter_score": 0.0,
+              "development_interval_score": 0.0,
+              "heldout_interval_score": 0.0,
+              "development_interval_coverage": 0.0,
+              "heldout_interval_coverage": 0.0,
+              "development_prediction_score": 0.0,
+              "heldout_prediction_score": 0.0,
+              "development_robust_prediction_score": 0.0,
+              "heldout_robust_prediction_score": 0.0,
+              "development_virial_score": 0.0,
+              "heldout_virial_score": 0.0,
+              "development_boyle_decision_score": 0.0,
+              "heldout_boyle_decision_score": 0.0,
+              "development_confidence_score": 0.0,
+              "heldout_confidence_score": 0.0,
+              "development_supported_claim_coverage": 0.0,
+              "heldout_supported_claim_coverage": 0.0,
+              "development_supported_correct_model_rate": 0.0,
+              "heldout_supported_correct_model_rate": 0.0,
+              "development_unsupported_refusal_rate": 0.0,
+              "heldout_unsupported_refusal_rate": 0.0,
+              "development_false_discovery_rate": 0.0,
+              "heldout_false_discovery_rate": 0.0,
+              "development_mean_query_calls": 3.0,
+              "heldout_mean_query_calls": 3.0,
+              "development_mean_query_budget_units": 11.0,
+              "heldout_mean_query_budget_units": 11.0,
+              "development_reference_policy_score": 0.0,
+              "heldout_reference_policy_score": 0.0,
+              "development_oracle_clean_score": 1.0,
+              "heldout_oracle_clean_score": 1.0,
+              "candidate_instance_call_count": 12,
+              "candidate_instance_valid_rate": 0.0,
+              "raw_score": 0.0
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 1
+            },
+            "error": null
+          }
+        ]
+      }
+    }
+  ],
+  "aggregate": {
+    "attempt_count": 1,
+    "superseded_attempts": 0,
+    "failed_attempts": 0,
+    "attempt_failure_rate": 0.0,
+    "recovered_runs": 0,
+    "successful_runs": 1,
+    "failed_runs": 0,
+    "intent_to_evaluate": {
+      "scheduled_runs": 1,
+      "successful_runs": 1,
+      "terminal_failed_runs": 0,
+      "completion_rate": 1.0,
+      "run_cells_with_any_failed_attempt": 0,
+      "recovered_runs": 0
+    },
+    "quality_metrics_scope": "latest successful runs only; interpret jointly with intent_to_evaluate and failed_attempts",
+    "by_condition": {
+      "MolecularDynamics/ForceFieldCalibration|greedy_rewrite|normal": {
+        "n": 1,
+        "scheduled_n": 1,
+        "successful_runs": 1,
+        "terminal_failed_runs": 0,
+        "completion_rate": 1.0,
+        "attempt_count": 1,
+        "failed_attempts": 0,
+        "recovered_runs": 0,
+        "best_score": {
+          "n": 1,
+          "mean": 0.0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.0
+        },
+        "best_so_far_auc": {
+          "n": 1,
+          "mean": 0.0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.0
+        },
+        "budget_units": {
+          "n": 1,
+          "mean": 2.0,
+          "ci95_low": 2.0,
+          "ci95_high": 2.0
+        },
+        "oracle_calls": {
+          "n": 1,
+          "mean": 2.0,
+          "ci95_low": 2.0,
+          "ci95_high": 2.0
+        },
+        "wall_seconds": {
+          "n": 1,
+          "mean": 77.80479782726616,
+          "ci95_low": 77.80479782726616,
+          "ci95_high": 77.80479782726616
+        },
+        "total_tokens": {
+          "n": 1,
+          "mean": 7020.0,
+          "ci95_low": 7020.0,
+          "ci95_high": 7020.0
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      }
+    },
+    "overall": {
+      "best_score": {
+        "n": 1,
+        "mean": 0.0,
+        "ci95_low": 0.0,
+        "ci95_high": 0.0
+      },
+      "best_so_far_auc": {
+        "n": 1,
+        "mean": 0.0,
+        "ci95_low": 0.0,
+        "ci95_high": 0.0
+      },
+      "budget_units": {
+        "n": 1,
+        "mean": 2.0,
+        "ci95_low": 2.0,
+        "ci95_high": 2.0
+      },
+      "oracle_calls": {
+        "n": 1,
+        "mean": 2.0,
+        "ci95_low": 2.0,
+        "ci95_high": 2.0
+      },
+      "wall_seconds": {
+        "n": 1,
+        "mean": 77.80479782726616,
+        "ci95_low": 77.80479782726616,
+        "ci95_high": 77.80479782726616
+      },
+      "total_tokens": {
+        "n": 1,
+        "mean": 7020.0,
+        "ci95_low": 7020.0,
+        "ci95_high": 7020.0
+      },
+      "estimated_cost_usd": {
+        "n": 0,
+        "mean": null,
+        "ci95_low": null,
+        "ci95_high": null
+      }
+    },
+    "overall_valid_only": {
+      "best_score": {
+        "n": 1,
+        "mean": 0.0,
+        "ci95_low": 0.0,
+        "ci95_high": 0.0
+      },
+      "best_so_far_auc": {
+        "n": 1,
+        "mean": 0.0,
+        "ci95_low": 0.0,
+        "ci95_high": 0.0
+      },
+      "budget_units": {
+        "n": 1,
+        "mean": 2.0,
+        "ci95_low": 2.0,
+        "ci95_high": 2.0
+      },
+      "oracle_calls": {
+        "n": 1,
+        "mean": 2.0,
+        "ci95_low": 2.0,
+        "ci95_high": 2.0
+      },
+      "wall_seconds": {
+        "n": 1,
+        "mean": 77.80479782726616,
+        "ci95_low": 77.80479782726616,
+        "ci95_high": 77.80479782726616
+      },
+      "total_tokens": {
+        "n": 1,
+        "mean": 7020.0,
+        "ci95_low": 7020.0,
+        "ci95_high": 7020.0
+      },
+      "estimated_cost_usd": {
+        "n": 0,
+        "mean": null,
+        "ci95_low": null,
+        "ci95_high": null
+      }
+    }
+  },
+  "completed_at": "2026-07-26T01:25:49.419166+00:00",
+  "execution_passed": true,
+  "trust_decision": "trusted_clean_revision",
+  "trusted_evidence": true,
+  "passed": true
+}

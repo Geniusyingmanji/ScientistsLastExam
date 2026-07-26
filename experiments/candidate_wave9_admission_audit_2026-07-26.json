@@ -1,0 +1,99 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_CANDIDATE_ADMISSION_AUDIT",
+  "evidence_scope": "INTERNAL_SYNTHETIC_ACTIVE_PAIR_POTENTIAL_HYPOTHESIS_ADMISSION_NOT_MOLECULAR_DYNAMICS_MATERIAL_THERMODYNAMIC_OR_AUTONOMOUS_DISCOVERY_EVIDENCE",
+  "created_at": "2026-07-26T00:51:56.394744+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "0f8a43d404df2834bcbc461ac9391c7695e71f1a",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/audit_candidate_wave9.py",
+      "--output",
+      "experiments/candidate_wave9_admission_audit_2026-07-26.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "records": [
+    {
+      "task": "MolecularDynamics/ForceFieldCalibration",
+      "admission": "candidate",
+      "resolved_capability_gap": "replaces a generic trigonometric clone with an HP1-style active model-discrimination laboratory: preregistered Mie/Morse/unsupported hypothesis weights and monotone retention, informative three-particle energy/force acquisition, parameter intervals, sealed short/tail and temperature prediction, second-virial/Boyle decisions, immutable evidence lineage and Buckingham/three-body/state-dependent refusal",
+      "development_world_count": 7,
+      "heldout_world_count": 5,
+      "supported_world_count": 6,
+      "unsupported_world_count": 6,
+      "supported_family_count": 2,
+      "unsupported_kind_count": 3,
+      "query_budget_units": 24,
+      "maximum_query_calls": 6,
+      "first_query_max_configurations": 1,
+      "baseline_score": 0.0,
+      "truth_blind_development_score": 0.96417825,
+      "truth_blind_heldout_score": 0.9498509999999999,
+      "truth_blind_development_robustness": 0.9642899999999999,
+      "truth_blind_heldout_robustness": 0.949894,
+      "development_supported_claim_coverage": 1.0,
+      "heldout_supported_claim_coverage": 1.0,
+      "development_supported_correct_model_rate": 1.0,
+      "heldout_supported_correct_model_rate": 1.0,
+      "development_unsupported_refusal_rate": 1.0,
+      "heldout_unsupported_refusal_rate": 1.0,
+      "development_false_discovery_rate": 0.0,
+      "heldout_false_discovery_rate": 0.0,
+      "development_interval_coverage": 1.0,
+      "heldout_interval_coverage": 1.0,
+      "development_true_hypothesis_retention_rate": 1.0,
+      "heldout_true_hypothesis_retention_rate": 1.0,
+      "development_premature_elimination_rate": 0.0,
+      "heldout_premature_elimination_rate": 0.0,
+      "pair_energy_force_invariants_passed": true,
+      "second_virial_boyle_checks_passed": true,
+      "early_ambiguity_passed": true,
+      "supported_model_discrimination_passed": true,
+      "hypothesis_retention_passed": true,
+      "acquisition_contrast_passed": true,
+      "minimum_acquisition_quality_gain": 0.3763901723684646,
+      "fresh_process_per_world_passed": true,
+      "fail_closed_passed": true,
+      "search_visible_metric_keys": [
+        "combined_score",
+        "feasibility_rate",
+        "raw_score",
+        "valid"
+      ],
+      "limitations": [
+        "This is a deterministic three-particle reduced-order laboratory, not molecular dynamics, electronic structure or a force field for a material.",
+        "The supported library contains only isotropic Mie 12-6 and Morse pair laws; the unsupported cases are controlled synthetic alternatives.",
+        "No periodic boundaries, many-particle sampling, quantum labels, finite-size effects, phase behavior or real measurement noise are represented.",
+        "The virial calculation is a numerical consequence of the declared pair model rather than an independent thermodynamic measurement.",
+        "Fixed public equations and repository-visible procedural worlds require server-held cohorts and contamination auditing.",
+        "The truth-blind reference is a normalization witness, not a globally optimal acquisition policy or a scientific discovery.",
+        "Material or discovery claims require independent ab-initio or experimental labels, many-particle validation, prospective confirmation and domain-expert review."
+      ],
+      "passed": true
+    }
+  ],
+  "summary": {
+    "task_count": 1,
+    "recommended_candidate_count": 1,
+    "recommended_quarantine_count": 0,
+    "resolved_capability_gap_count": 1
+  },
+  "execution_passed": true,
+  "trust_decision": "trusted_clean_revision",
+  "trusted_evidence": true,
+  "passed": true
+}
