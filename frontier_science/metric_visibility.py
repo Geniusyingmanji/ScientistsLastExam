@@ -26,6 +26,8 @@ SEARCH_VISIBLE_KEYS = (
     "timeout",
 )
 
+SCORE_ONLY_KEYS = ("combined_score",)
+
 METRIC_VISIBILITY_SCOPE = (
     "search receives only allowlisted feasibility/selection metrics; evaluator-only "
     "validation, mechanism, robustness and per-instance metrics remain in the trusted trace"
@@ -41,6 +43,18 @@ def search_visible_metrics(metrics: Mapping[str, Any]) -> dict[str, Any]:
     if not isinstance(metrics, Mapping):
         raise TypeError("metrics must be a mapping")
     return {key: metrics[key] for key in SEARCH_VISIBLE_KEYS if key in metrics}
+
+
+def score_only_metrics(metrics: Mapping[str, Any]) -> dict[str, Any]:
+    """Return the scalar objective-only prompt view.
+
+    This is a feedback-bandwidth treatment, not a no-feedback treatment: search may
+    still select the next parent with the trusted objective, but the proposal prompt
+    receives only ``combined_score``.  Filtering through the closed search-visible
+    allowlist first keeps future evaluator-only fields sealed by default.
+    """
+    visible = search_visible_metrics(metrics)
+    return {key: visible[key] for key in SCORE_ONLY_KEYS if key in visible}
 
 
 def source_sha256(source: str) -> str:

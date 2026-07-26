@@ -93,6 +93,7 @@ def compact_trajectory_snapshot(path: Path) -> dict[str, Any]:
                 "candidate_sha256": event["candidate_sha256"],
                 "parent_sha256": event["parent_sha256"],
                 "metrics": compact_scalar_metrics(event.get("metrics") or {}),
+                "llm": compact_scalar_metrics(event.get("llm") or {}),
                 "algorithm_metadata": compact_scalar_metrics(
                     event.get("algorithm_metadata") or {}
                 ),
@@ -223,6 +224,97 @@ def summarize_trajectory(events: list[dict[str, Any]], budget: int | None = None
         "accepted": sum(bool(e.get("accepted")) for e in events[1:]),
         "wall_seconds": float(final["cumulative_wall_seconds"]),
         "llm": llm_totals,
+    }
+
+
+def realized_token_curve(
+    events: list[dict[str, Any]], *, token_key: str = "total_tokens"
+) -> list[dict[str, int | float]]:
+    """Build a best-so-far curve on provider-reported realized tokens.
+
+    The baseline is available at token zero.  A proposal's score becomes available only
+    after all tokens reported for that call have been spent.  Missing, Boolean, negative,
+    non-integral or inconsistent usage fails closed instead of being treated as zero.
+    """
+    if token_key not in {"input_tokens", "output_tokens", "total_tokens"}:
+        raise ValueError("unsupported token key %r" % token_key)
+    validate_trajectory(events)
+    cumulative = 0
+    curve: list[dict[str, int | float]] = [{
+        "step": 0,
+        "cumulative_tokens": 0,
+        "best_score": float(events[0]["best_score"]),
+    }]
+    for event in events[1:]:
+        value = (event.get("llm") or {}).get(token_key)
+        if (
+            not isinstance(value, (int, float))
+            or isinstance(value, bool)
+            or not math.isfinite(float(value))
+            or float(value) < 0
+            or int(value) != float(value)
+        ):
+            raise ValueError(
+                "trajectory step %d lacks finite non-negative integer %s usage"
+                % (int(event["step"]), token_key)
+            )
+        if token_key == "total_tokens":
+            input_tokens = (event.get("llm") or {}).get("input_tokens")
+            output_tokens = (event.get("llm") or {}).get("output_tokens")
+            if all(
+                isinstance(item, (int, float)) and not isinstance(item, bool)
+                for item in (input_tokens, output_tokens)
+            ) and int(value) != int(input_tokens) + int(output_tokens):
+                raise ValueError(
+                    "trajectory step %d total_tokens disagrees with input plus output"
+                    % int(event["step"])
+                )
+        cumulative += int(value)
+        curve.append({
+            "step": int(event["step"]),
+            "cumulative_tokens": cumulative,
+            "best_score": float(event["best_score"]),
+        })
+    return curve
+
+
+def summarize_at_token_horizon(
+    events: list[dict[str, Any]],
+    horizon: int,
+    *,
+    token_key: str = "total_tokens",
+) -> dict[str, int | float]:
+    """Summarize a trajectory at one common realized-token horizon.
+
+    Calls that finish after ``horizon`` are excluded.  The normalized AUC integrates the
+    incumbent available *before* each call across the tokens spent on that call, matching
+    the information actually available at each point on the token clock.
+    """
+    if isinstance(horizon, bool) or not isinstance(horizon, int) or horizon < 0:
+        raise ValueError("token horizon must be a non-negative integer")
+    curve = realized_token_curve(events, token_key=token_key)
+    selected = curve[0]
+    area = 0.0
+    prior_tokens = 0
+    prior_best = float(curve[0]["best_score"])
+    for point in curve[1:]:
+        completed = int(point["cumulative_tokens"])
+        if completed > horizon:
+            break
+        area += prior_best * (completed - prior_tokens)
+        prior_tokens = completed
+        prior_best = float(point["best_score"])
+        selected = point
+    area += prior_best * (horizon - prior_tokens)
+    return {
+        "token_key": token_key,
+        "token_horizon": horizon,
+        "selected_step": int(selected["step"]),
+        "tokens_spent_by_selected_step": int(selected["cumulative_tokens"]),
+        "best_score": float(selected["best_score"]),
+        "best_so_far_token_auc": (
+            area / horizon if horizon > 0 else float(selected["best_score"])
+        ),
     }
 
 

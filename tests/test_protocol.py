@@ -16,10 +16,12 @@ from frontier_science.algorithms.common import require_evaluation_budget
 from frontier_science.algorithms.common import llm_condition_sha256
 from frontier_science.llm import LLMClient, LLMConfig
 from frontier_science.metric_visibility import (load_full_metrics, search_visible_metrics,
-                                                source_sha256, store_full_metrics)
+                                                score_only_metrics, source_sha256,
+                                                store_full_metrics)
 from frontier_science.protocol import (TrajectoryEvent, append_event, best_so_far_auc,
                                        load_trajectory, mean_confidence_interval,
-                                       sha256_text, summarize_trajectory)
+                                       realized_token_curve, sha256_text,
+                                       summarize_at_token_horizon, summarize_trajectory)
 from frontier_science.registry import find_task
 from frontier_science import upstream_evaluator
 from frontier_science.upstream_evaluator import write_configured_wrapper
@@ -107,6 +109,40 @@ class ProtocolMetricTests(unittest.TestCase):
         ))
         priced._record_usage({"prompt_tokens": 100, "completion_tokens": 20})
         self.assertAlmostEqual(priced.last_usage["estimated_cost_usd"], 0.00028)
+
+    def test_realized_token_curve_and_common_horizon_exclude_unfinished_calls(self):
+        events = self.events()
+        events[1]["llm"] = {
+            "input_tokens": 7, "output_tokens": 3, "total_tokens": 10,
+        }
+        events[2]["llm"] = {
+            "input_tokens": 12, "output_tokens": 8, "total_tokens": 20,
+        }
+        curve = realized_token_curve(events)
+        self.assertEqual(
+            [point["cumulative_tokens"] for point in curve], [0, 10, 30]
+        )
+        at_25 = summarize_at_token_horizon(events, 25)
+        self.assertEqual(at_25["selected_step"], 1)
+        self.assertEqual(at_25["tokens_spent_by_selected_step"], 10)
+        self.assertEqual(at_25["best_score"], 0.5)
+        self.assertAlmostEqual(at_25["best_so_far_token_auc"], 0.3)
+        at_30 = summarize_at_token_horizon(events, 30)
+        self.assertEqual(at_30["selected_step"], 2)
+        self.assertAlmostEqual(at_30["best_so_far_token_auc"], 1 / 3)
+
+    def test_realized_token_curve_fails_closed_on_missing_or_inconsistent_usage(self):
+        events = self.events()
+        with self.assertRaisesRegex(ValueError, "lacks.*total_tokens"):
+            realized_token_curve(events)
+        events[1]["llm"] = {
+            "input_tokens": 7, "output_tokens": 3, "total_tokens": 11,
+        }
+        events[2]["llm"] = {
+            "input_tokens": 12, "output_tokens": 8, "total_tokens": 20,
+        }
+        with self.assertRaisesRegex(ValueError, "disagrees"):
+            realized_token_curve(events)
 
     def test_resume_discards_uncommitted_and_partial_trajectory_tail(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -209,6 +245,17 @@ class ProtocolMetricTests(unittest.TestCase):
             "per_scenario", "unexpected_future_science_metric",
         ):
             self.assertNotIn(key, visible)
+
+    def test_score_only_view_is_scalar_and_still_seals_unknown_metrics(self):
+        full = {
+            "combined_score": 0.7,
+            "valid": 1.0,
+            "feasibility_rate": 0.8,
+            "raw_score": 4.2,
+            "robustness_score": 0.1,
+            "unexpected_future_science_metric": 0.4,
+        }
+        self.assertEqual(score_only_metrics(full), {"combined_score": 0.7})
 
     def test_trusted_metric_sidecar_roundtrip_and_public_consistency(self):
         source = "def solve():\n    return 1\n"
@@ -370,6 +417,152 @@ class GreedyRewriteTests(unittest.TestCase):
         self.assertIn('"combined_score": 0.0', llm.prompts[1])
         self.assertIn("proposal 1 of 2", llm.prompts[0])
         self.assertIn("proposal 2 of 2", llm.prompts[1])
+
+    def test_score_only_hides_other_metrics_but_keeps_online_parent_selection(self):
+        spec = find_task("LennardJonesCluster")
+        baseline = spec.initial_program_path.read_text(encoding="utf-8")
+        proposal_one = "# SCORE_ONLY_ONE\ndef optimize_cluster(n_atoms):\n    return []\n"
+        proposal_two = "# SCORE_ONLY_TWO\ndef optimize_cluster(n_atoms):\n    return []\n"
+        llm = FakeLLM([
+            "```python\n%s\n```" % proposal_one,
+            "```python\n%s\n```" % proposal_two,
+        ])
+        metrics = [
+            {
+                "combined_score": 0.0, "valid": 1.0,
+                "feasibility_rate": 0.5, "raw_score": 2.0,
+                "robustness_score": 0.9,
+            },
+            {
+                "combined_score": 0.8, "valid": 1.0,
+                "feasibility_rate": 1.0, "raw_score": 3.0,
+                "robustness_score": 0.1,
+            },
+            {"combined_score": 0.7, "valid": 1.0},
+        ]
+        with tempfile.TemporaryDirectory() as tmp, patch(
+            "frontier_science.algorithms.evolve.evaluate_candidate",
+            side_effect=metrics,
+        ):
+            result = greedy_rewrite(
+                spec, llm, budget=2, timeout_s=20, workdir=Path(tmp),
+                feedback_mode="score_only", log_fn=lambda _: None,
+            )
+            events = load_trajectory(Path(tmp) / "trajectory.jsonl")
+
+        self.assertEqual(result.best_score, 0.8)
+        self.assertIn(baseline, llm.prompts[0])
+        self.assertIn(proposal_one.strip(), llm.prompts[1])
+        self.assertIn('"combined_score": 0.0', llm.prompts[0])
+        self.assertIn('"combined_score": 0.8', llm.prompts[1])
+        for hidden in ("valid", "feasibility_rate", "raw_score", "robustness_score"):
+            self.assertNotIn('"%s"' % hidden, llm.prompts[0])
+            self.assertNotIn('"%s"' % hidden, llm.prompts[1])
+        self.assertEqual(events[2]["parent_sha256"], sha256_text(proposal_one.strip()))
+        self.assertEqual(
+            events[2]["algorithm_metadata"]["prompt_metric_keys"],
+            "combined_score",
+        )
+        self.assertEqual(result.summary["selection_policy"], "online_incumbent")
+        self.assertIn("not a no-feedback control", result.summary["feedback_scope"])
+
+    def test_delayed_replay_releases_parent_on_fixed_one_proposal_lag(self):
+        spec = find_task("LennardJonesCluster")
+        baseline = spec.initial_program_path.read_text(encoding="utf-8")
+        proposals = [
+            "# DELAYED_ONE\ndef optimize_cluster(n_atoms):\n    return []\n",
+            "# DELAYED_TWO\ndef optimize_cluster(n_atoms):\n    return []\n",
+            "# DELAYED_THREE\ndef optimize_cluster(n_atoms):\n    return []\n",
+        ]
+        llm = FakeLLM(["```python\n%s\n```" % proposal for proposal in proposals])
+        metrics = [
+            {"combined_score": 0.0, "valid": 1.0, "raw_score": 0.0},
+            {"combined_score": 0.8, "valid": 1.0, "raw_score": 8.0},
+            {"combined_score": 0.7, "valid": 1.0, "raw_score": 7.0},
+            {"combined_score": 0.6, "valid": 1.0, "raw_score": 6.0},
+        ]
+        with tempfile.TemporaryDirectory() as tmp, patch(
+            "frontier_science.algorithms.evolve.evaluate_candidate",
+            side_effect=metrics,
+        ):
+            result = greedy_rewrite(
+                spec, llm, budget=3, timeout_s=20, workdir=Path(tmp),
+                feedback_mode="delayed_replay", log_fn=lambda _: None,
+            )
+            events = load_trajectory(Path(tmp) / "trajectory.jsonl")
+
+        self.assertIn(baseline, llm.prompts[0])
+        self.assertIn(baseline, llm.prompts[1])
+        self.assertNotIn("DELAYED_ONE", llm.prompts[1])
+        self.assertIn(proposals[0].strip(), llm.prompts[2])
+        self.assertEqual(
+            [event["parent_sha256"] for event in events[1:]],
+            [
+                sha256_text(baseline),
+                sha256_text(baseline),
+                sha256_text(proposals[0].strip()),
+            ],
+        )
+        self.assertEqual(
+            [event["algorithm_metadata"]["prompt_source_step"] for event in events[1:]],
+            [0, 0, 1],
+        )
+        self.assertEqual(
+            [
+                event["algorithm_metadata"]["feedback_released_through_step"]
+                for event in events[1:]
+            ],
+            [0, 0, 1],
+        )
+        self.assertEqual(result.best_score, 0.8)
+        self.assertEqual(
+            result.summary["selection_policy"],
+            "delayed_online_parent_offline_final_best",
+        )
+
+    def test_delayed_replay_resume_restores_unreleased_candidate_state(self):
+        spec = find_task("LennardJonesCluster")
+        baseline = spec.initial_program_path.read_text(encoding="utf-8")
+        proposal_one = "# RESUME_DELAYED_ONE\ndef optimize_cluster(n_atoms):\n    return []\n"
+        proposal_two = "# RESUME_DELAYED_TWO\ndef optimize_cluster(n_atoms):\n    return []\n"
+        proposal_three = "# RESUME_DELAYED_THREE\ndef optimize_cluster(n_atoms):\n    return []\n"
+        with tempfile.TemporaryDirectory() as tmp:
+            work = Path(tmp)
+            with patch(
+                "frontier_science.algorithms.evolve.evaluate_candidate",
+                side_effect=[
+                    {"combined_score": 0.0, "valid": 1.0},
+                    {"combined_score": 0.8, "valid": 1.0},
+                    {"combined_score": 0.7, "valid": 1.0},
+                ],
+            ):
+                greedy_rewrite(
+                    spec,
+                    FakeLLM([
+                        "```python\n%s\n```" % proposal_one,
+                        "```python\n%s\n```" % proposal_two,
+                    ]),
+                    budget=2,
+                    timeout_s=20,
+                    workdir=work,
+                    feedback_mode="delayed_replay",
+                    log_fn=lambda _: None,
+                )
+            resumed_llm = FakeLLM(["```python\n%s\n```" % proposal_three])
+            with patch(
+                "frontier_science.algorithms.evolve.evaluate_candidate",
+                return_value={"combined_score": 0.6, "valid": 1.0},
+            ):
+                resumed = greedy_rewrite(
+                    spec, resumed_llm, budget=3, timeout_s=20, workdir=work,
+                    feedback_mode="delayed_replay", resume=True,
+                    log_fn=lambda _: None,
+                )
+            events = load_trajectory(work / "trajectory.jsonl")
+
+        self.assertIn(proposal_one.strip(), resumed_llm.prompts[0])
+        self.assertEqual(events[3]["parent_sha256"], sha256_text(proposal_one.strip()))
+        self.assertEqual(resumed.best_score, 0.8)
 
 
 class AlgorithmAdapterTests(unittest.TestCase):

@@ -48,6 +48,20 @@ def feedback_scope(feedback_mode: str) -> str:
             "proposal prompts omit metrics, but true combined_score still selects the next "
             "incumbent program; " + METRIC_VISIBILITY_SCOPE
         )
+    if feedback_mode == "score_only":
+        return (
+            "proposal prompts receive only the scalar combined_score for the true-score-selected "
+            "current incumbent; validity, feasibility, raw-score and diagnostic fields are "
+            "omitted; evaluator-only metrics remain sealed; this is a feedback-bandwidth "
+            "treatment, not a no-feedback control"
+        )
+    if feedback_mode == "delayed_replay":
+        return (
+            "one-proposal delayed replay: proposal k sees the best program and allowlisted "
+            "metrics released only through proposal k-2 (the baseline is available at start); "
+            "each evaluated proposal is released on that fixed lag, while the observer retains "
+            "all scores for offline final selection; " + METRIC_VISIBILITY_SCOPE
+        )
     if feedback_mode == "shuffled":
         return (
             "proposal prompts receive a randomly selected prior allowlisted metric record, "

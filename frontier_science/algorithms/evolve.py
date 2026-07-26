@@ -18,7 +18,7 @@ from typing import Callable, Optional
 
 from ..evaluate import evaluate_candidate, INVALID_SCORE
 from ..llm import LLMClient
-from ..metric_visibility import search_visible_metrics
+from ..metric_visibility import score_only_metrics, search_visible_metrics
 from ..spec import TaskSpec
 from ..protocol import TrajectoryEvent, append_event, load_trajectory, sha256_text, summarize_trajectory
 from .common import (
@@ -38,6 +38,15 @@ SYSTEM_PROMPT = (
 )
 
 _CODE_RE = re.compile(r"```(?:python)?\s*\n(.*?)```", re.DOTALL)
+
+GREEDY_FEEDBACK_MODES = {
+    "normal",
+    "none",
+    "shuffled",
+    "score_only",
+    "delayed_replay",
+    "selection_blind",
+}
 
 
 def extract_code(text: str) -> Optional[str]:
@@ -89,9 +98,9 @@ def greedy_rewrite(
     resume: bool = False,
     feedback_mode: str = "normal",
 ) -> EvolveResult:
-    if feedback_mode not in {"normal", "none", "shuffled", "selection_blind"}:
+    if feedback_mode not in GREEDY_FEEDBACK_MODES:
         raise ValueError(
-            "feedback_mode must be normal, none, shuffled, or selection_blind"
+            "feedback_mode must be one of: %s" % ", ".join(sorted(GREEDY_FEEDBACK_MODES))
         )
     if budget < 0:
         raise ValueError("budget must be non-negative")
@@ -129,8 +138,25 @@ def greedy_rewrite(
             raise ValueError("checkpoint best program hash mismatch")
         # Checkpoints are search state and therefore contain only search-visible metrics.
         best_metrics = search_visible_metrics(dict(checkpoint["best_metrics"]))
-        if feedback_mode == "selection_blind" and "baseline_metrics" not in checkpoint:
-            raise ValueError("selection_blind checkpoint is missing frozen baseline metrics")
+        if feedback_mode in {"selection_blind", "delayed_replay"}:
+            if "baseline_metrics" not in checkpoint:
+                raise ValueError(
+                    "%s checkpoint is missing frozen baseline metrics" % feedback_mode
+                )
+            if "evaluated_candidates" not in checkpoint:
+                raise ValueError(
+                    "%s checkpoint is missing evaluated candidate state" % feedback_mode
+                )
+        evaluated_candidates = list(checkpoint.get("evaluated_candidates") or [])
+        if not evaluated_candidates:
+            evaluated_candidates = [{
+                "step": 0,
+                "program": baseline_src,
+                "sha256": sha256_text(baseline_src),
+                "score": baseline_score,
+                "valid": True,
+                "metrics": baseline_metrics,
+            }]
         start_iter = int(checkpoint["next_iter"])
         if budget + 1 < start_iter:
             raise ValueError("requested budget is smaller than the committed checkpoint")
@@ -151,6 +177,14 @@ def greedy_rewrite(
         best_score, best_program = baseline_score, baseline_src
         best_metrics = search_visible_metrics(metrics)
         baseline_metrics = dict(best_metrics)
+        evaluated_candidates = [{
+            "step": 0,
+            "program": baseline_src,
+            "sha256": sha256_text(baseline_src),
+            "score": baseline_score,
+            "valid": float(metrics.get("valid", 0.0)) >= 1.0,
+            "metrics": baseline_metrics,
+        }]
         log_fn(f"[{spec.task_id}] baseline combined_score={baseline_score:.6f} valid={metrics.get('valid')}")
         result = EvolveResult(spec.task_id, best_score, baseline_score, best_program,
                               algorithm="greedy_rewrite", seed=seed)
@@ -172,6 +206,7 @@ def greedy_rewrite(
             "baseline_metrics": baseline_metrics,
             "best_score": best_score, "best_metrics": best_metrics,
             "best_program": best_program, "best_sha256": sha256_text(best_program),
+            "evaluated_candidates": evaluated_candidates,
         }, indent=2, allow_nan=False) + "\n")
         atomic_write_text(workdir / "best_program.py", best_program)
 
@@ -181,25 +216,55 @@ def greedy_rewrite(
         step_started = time.monotonic()
         prompt_program = best_program
         prompt_metrics = best_metrics
+        prompt_source_step = max(
+            (int(row["step"]) for row in evaluated_candidates
+             if row.get("sha256") == sha256_text(prompt_program)),
+            default=0,
+        )
+        feedback_released_through_step = it - 1
         if feedback_mode == "none":
             prompt_metrics = {}
+        elif feedback_mode == "score_only":
+            prompt_metrics = score_only_metrics(best_metrics)
         elif feedback_mode == "shuffled":
             shuffled = load_trajectory(trajectory_path)
             prior = [e.get("metrics", {}) for e in shuffled if int(e.get("step", 0)) < it]
             prompt_metrics = random.choice(prior) if prior else best_metrics
+        elif feedback_mode == "delayed_replay":
+            feedback_released_through_step = max(0, it - 2)
+            eligible = [
+                row for row in evaluated_candidates
+                if int(row["step"]) <= feedback_released_through_step
+                and bool(row.get("valid"))
+            ]
+            if not eligible:
+                raise RuntimeError("delayed_replay has no valid released parent")
+            released_best = max(
+                eligible,
+                key=lambda row: (float(row["score"]), -int(row["step"])),
+            )
+            prompt_program = str(released_best["program"])
+            prompt_metrics = dict(released_best["metrics"])
+            prompt_source_step = int(released_best["step"])
         elif feedback_mode == "selection_blind":
             prompt_program = baseline_src
             prompt_metrics = baseline_metrics
+            prompt_source_step = 0
+            feedback_released_through_step = 0
         parent_sha = sha256_text(prompt_program)
+        prompt_metrics_rendered = json.dumps(
+            search_visible_metrics(prompt_metrics), indent=2
+        )
+        prompt = _build_prompt(
+            spec,
+            prompt_program,
+            prompt_metrics,
+            proposal_slot=it,
+            proposal_budget=budget,
+        )
         try:
             reply = llm.complete(
-                _build_prompt(
-                    spec,
-                    prompt_program,
-                    prompt_metrics,
-                    proposal_slot=it,
-                    proposal_budget=budget,
-                ),
+                prompt,
                 system=SYSTEM_PROMPT,
             )
             llm_usage = dict(getattr(llm, "last_usage", {}) or {})
@@ -225,6 +290,15 @@ def greedy_rewrite(
             accepted = bool(valid and score > best_score)
             candidate_sha = sha256_text(code)
             error = m.get("error_message")
+        if code:
+            evaluated_candidates.append({
+                "step": it,
+                "program": code,
+                "sha256": candidate_sha,
+                "score": score,
+                "valid": valid,
+                "metrics": search_visible_metrics(m),
+            })
         if accepted:
             best_score, best_program = score, code
             best_metrics = search_visible_metrics(m)
@@ -246,14 +320,26 @@ def greedy_rewrite(
                 "selection_policy": (
                     "offline_best_of_open_loop_batch"
                     if feedback_mode == "selection_blind"
+                    else "delayed_online_parent_offline_final_best"
+                    if feedback_mode == "delayed_replay"
                     else "online_incumbent"
                 ),
                 "accepted_semantics": (
                     "offline_best_update"
                     if feedback_mode == "selection_blind"
+                    else "observer_best_update_not_immediate_parent_release"
+                    if feedback_mode == "delayed_replay"
                     else "online_incumbent_update"
                 ),
                 "proposal_slot": it,
+                "prompt_source_step": prompt_source_step,
+                "feedback_released_through_step": feedback_released_through_step,
+                "prompt_sha256": sha256_text(prompt),
+                "prompt_utf8_bytes": len(prompt.encode("utf-8")),
+                "prompt_program_utf8_bytes": len(prompt_program.encode("utf-8")),
+                "prompt_metrics_sha256": sha256_text(prompt_metrics_rendered),
+                "prompt_metrics_utf8_bytes": len(prompt_metrics_rendered.encode("utf-8")),
+                "prompt_metric_keys": ",".join(sorted(search_visible_metrics(prompt_metrics))),
             },
         ))
         save_checkpoint(it + 1)
@@ -269,6 +355,8 @@ def greedy_rewrite(
                            "selection_policy": (
                                "offline_best_of_open_loop_batch"
                                if feedback_mode == "selection_blind"
+                               else "delayed_online_parent_offline_final_best"
+                               if feedback_mode == "delayed_replay"
                                else "online_incumbent"
                            )})
     atomic_write_text(

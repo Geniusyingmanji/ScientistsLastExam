@@ -153,14 +153,17 @@ class BatchAggregationTests(unittest.TestCase):
             self.assertFalse(report["trusted_evidence"])
             self.assertFalse(report["passed"])
 
-    def test_selection_blind_rejects_unsupported_backend_mix(self):
-        with self.assertRaisesRegex(SystemExit, "only for greedy_rewrite"):
-            MODULE.main([
-                "--tasks", "LennardJonesCluster",
-                "--algorithms", "greedy_rewrite,openevolve",
-                "--feedback-modes", "selection_blind",
-                "--budget", "0",
-            ])
+    def test_greedy_only_controls_reject_unsupported_backend_mix(self):
+        for mode in ("score_only", "delayed_replay", "selection_blind"):
+            with self.subTest(mode=mode), self.assertRaisesRegex(
+                SystemExit, "only for greedy_rewrite"
+            ):
+                MODULE.main([
+                    "--tasks", "LennardJonesCluster",
+                    "--algorithms", "greedy_rewrite,openevolve",
+                    "--feedback-modes", mode,
+                    "--budget", "0",
+                ])
 
 
 if __name__ == "__main__":

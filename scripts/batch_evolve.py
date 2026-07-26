@@ -25,6 +25,7 @@ sys.path.insert(0, str(ROOT))
 from frontier_science.algorithms import ALGORITHMS, get_algorithm  # noqa: E402
 from frontier_science.algorithms.common import llm_condition_sha256  # noqa: E402
 from frontier_science.algorithms.common import atomic_write_text  # noqa: E402
+from frontier_science.algorithms.common import feedback_scope  # noqa: E402
 from frontier_science.config import load_llm_client  # noqa: E402
 from frontier_science.protocol import mean_confidence_interval  # noqa: E402
 from frontier_science.protocol import compact_trajectory_snapshot  # noqa: E402
@@ -72,8 +73,12 @@ def aggregate_runs(runs: list[dict[str, Any]]) -> dict[str, Any]:
         "budget_units": lambda run: run["summary"]["budget_units"],
         "oracle_calls": lambda run: run["summary"]["oracle_calls"],
         "wall_seconds": lambda run: run["summary"]["wall_seconds"],
-        "total_tokens": lambda run: run["summary"]["llm"]["total_tokens"],
-        "estimated_cost_usd": lambda run: run["summary"]["llm"]["estimated_cost_usd"],
+        "input_tokens": lambda run: run["summary"]["llm"].get("input_tokens"),
+        "output_tokens": lambda run: run["summary"]["llm"].get("output_tokens"),
+        "total_tokens": lambda run: run["summary"]["llm"].get("total_tokens"),
+        "estimated_cost_usd": lambda run: run["summary"]["llm"].get(
+            "estimated_cost_usd"
+        ),
     }
     current = _latest_runs(runs)
     attempts_by_run: dict[str, list[dict[str, Any]]] = {}
@@ -166,7 +171,10 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--algorithms", default="greedy_rewrite", help="comma-separated algorithms")
     parser.add_argument(
         "--feedback-modes", default="normal",
-        help="normal,none,shuffled,selection_blind (selection_blind is greedy-only)",
+        help=(
+            "normal,none,shuffled,score_only,delayed_replay,selection_blind "
+            "(the last three protocol controls are greedy-only)"
+        ),
     )
     parser.add_argument("--seeds", type=_seeds, default=[0, 1, 2, 3, 4])
     parser.add_argument("--budget", type=int, default=30)
@@ -189,14 +197,19 @@ def main(argv: list[str] | None = None) -> int:
         raise SystemExit("unknown algorithms: %s" % ", ".join(unknown))
     feedback_modes = _csv(args.feedback_modes)
     unknown_modes = sorted(
-        set(feedback_modes) - {"normal", "none", "shuffled", "selection_blind"}
+        set(feedback_modes) - {
+            "normal", "none", "shuffled", "score_only", "delayed_replay",
+            "selection_blind",
+        }
     )
     if unknown_modes:
         raise SystemExit("unknown feedback modes: %s" % ", ".join(unknown_modes))
-    if "selection_blind" in feedback_modes and set(algorithms) != {"greedy_rewrite"}:
+    greedy_only_modes = {"score_only", "delayed_replay", "selection_blind"}
+    requested_greedy_only = sorted(set(feedback_modes) & greedy_only_modes)
+    if requested_greedy_only and set(algorithms) != {"greedy_rewrite"}:
         raise SystemExit(
-            "selection_blind is implemented only for greedy_rewrite; run upstream "
-            "backend controls as separately named conditions"
+            "%s implemented only for greedy_rewrite; run upstream backend controls "
+            "as separately named conditions" % ", ".join(requested_greedy_only)
         )
 
     include_uncertified = bool(args.all)
@@ -223,8 +236,22 @@ def main(argv: list[str] | None = None) -> int:
         "tasks": [spec.task_id for spec in specs],
         "algorithms": algorithms,
         "feedback_modes": feedback_modes,
+        "feedback_protocols": {
+            mode: feedback_scope(mode) for mode in feedback_modes
+        },
         "condition_order": "as_listed_for_even_seeds_reversed_for_odd_seeds",
         "seeds": args.seeds,
+        "replicate_identifier_scope": (
+            "controls local Python/random ordering only; the endpoint exposes no "
+            "server-side generation seed, so same-number cells do not share model draws"
+        ),
+        "resource_matching": {
+            "proposal_budget_and_max_output_tokens": "matched by configuration",
+            "realized_input_output_and_total_tokens": (
+                "measured per event; not assumed matched; use a preregistered common-token "
+                "horizon or model token imbalance explicitly"
+            ),
+        },
         "budget": args.budget,
         "timeout_s": args.timeout,
         "work_root": str(work_root),

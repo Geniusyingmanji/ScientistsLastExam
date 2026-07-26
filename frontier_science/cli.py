@@ -91,7 +91,10 @@ def main(argv=None) -> int:
     pr.add_argument("--workdir", default=None)
     pr.add_argument(
         "--feedback-mode",
-        choices=("normal", "none", "shuffled", "selection_blind"),
+        choices=(
+            "normal", "none", "shuffled", "score_only", "delayed_replay",
+            "selection_blind",
+        ),
         default="normal",
     )
     pr.add_argument("--allow-uncertified", action="store_true")
