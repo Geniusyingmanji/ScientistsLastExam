@@ -98,6 +98,8 @@ DEFAULT_REPORTS = (
     "experiments/gpt55_force_field_hypothesis_v2_b3_2026-07-26.json",
     "experiments/gpt55_alloy_hardness_v1_b1_2026-07-26.json",
     "experiments/gpt55_alloy_hardness_v1_b3_2026-07-26.json",
+    "experiments/gpt55_diffraction_grating_v2_b1_2026-07-26.json",
+    "experiments/gpt55_diffraction_grating_v2_b3_2026-07-26.json",
 )
 
 
