@@ -1,0 +1,339 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_SOURCE_MIGRATION_AUDIT",
+  "evidence_scope": "ALLOY_HASH_ORDER_NUMERICAL_STABILIZATION_MIGRATION_RETAINED_ARTIFACT_REPLAY_NOT_UNRETAINED_INTERMEDIATE_SOURCE_REPLAY_PROSPECTIVE_ALLOY_OR_AUTONOMOUS_DISCOVERY_EVIDENCE",
+  "created_at": "2026-07-26T11:35:41.701874+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "89e3345db57e15b5bbfe10e36f5c06bd260b9293",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/audit_alloy_hash_order_migration.py",
+      "--csv",
+      "/tmp/MPEA_dataset.csv",
+      "--output",
+      "experiments/alloy_hash_order_migration_audit_2026-07-26.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "task": "MaterialsScience/AlloyHardnessOptimization",
+  "source_contract": {
+    "input_source_revision": "52dcec0c1a4df2d7f92cdef1d6d2bafa2e81f18e",
+    "audited_target_revision": "89e3345db57e15b5bbfe10e36f5c06bd260b9293",
+    "task_runtime_source_changes": [
+      "benchmarks/MaterialsScience/AlloyHardnessOptimization/solution.py",
+      "benchmarks/MaterialsScience/AlloyHardnessOptimization/verification/evaluator.py"
+    ],
+    "allowed_task_runtime_source_changes": [
+      "benchmarks/MaterialsScience/AlloyHardnessOptimization/solution.py",
+      "benchmarks/MaterialsScience/AlloyHardnessOptimization/verification/evaluator.py"
+    ],
+    "source_hash_records": [
+      {
+        "path": "benchmarks/MaterialsScience/AlloyHardnessOptimization/solution.py",
+        "old_sha256": "fab66bd9e0f98ca7457cac075b102544355f7d4d4d4008185e942a4d3139117e",
+        "expected_old_sha256": "fab66bd9e0f98ca7457cac075b102544355f7d4d4d4008185e942a4d3139117e",
+        "new_sha256": "9079971176c51f75a0363e59286f29d0f42bf3b78310c8bc65a515b376165bc5",
+        "expected_new_sha256": "9079971176c51f75a0363e59286f29d0f42bf3b78310c8bc65a515b376165bc5",
+        "hash_contract_passed": true
+      },
+      {
+        "path": "benchmarks/MaterialsScience/AlloyHardnessOptimization/verification/evaluator.py",
+        "old_sha256": "bbe175f8ac7b5914fcb815b7ad19030a3efb4bd738fb5e3055108cc4fcf00b6e",
+        "expected_old_sha256": "bbe175f8ac7b5914fcb815b7ad19030a3efb4bd738fb5e3055108cc4fcf00b6e",
+        "new_sha256": "6a2ac322d7cb67818ad4fabca24bfc9a21dc0ddb05c3037c91e9f9fab70537ae",
+        "expected_new_sha256": "6a2ac322d7cb67818ad4fabca24bfc9a21dc0ddb05c3037c91e9f9fab70537ae",
+        "hash_contract_passed": true
+      },
+      {
+        "path": "scripts/calibrate_alloy_hardness_optimization.py",
+        "old_sha256": "f4ca504251fd26044c5ffcb24848acecc7356e579b4c7ffdc98bf240b5fbb8b9",
+        "expected_old_sha256": "f4ca504251fd26044c5ffcb24848acecc7356e579b4c7ffdc98bf240b5fbb8b9",
+        "new_sha256": "97a2e47b048ad3d9ac28576dafe74329485b2bf5a25ded4dee135b30aa8b8ef4",
+        "expected_new_sha256": "97a2e47b048ad3d9ac28576dafe74329485b2bf5a25ded4dee135b30aa8b8ef4",
+        "hash_contract_passed": true
+      }
+    ],
+    "frozen_data_sha256": "a55effd2a4077b63a19a45a91729698e07b1bd9e89a72da79b87f2528a09d003",
+    "semantic_change": "Sort the union of composition element keys before summing absolute differences in the public baseline, trusted evaluator, and frozen calibration witness.",
+    "passed": true
+  },
+  "finite_landscape_audit": {
+    "hash_seeds": [
+      "0",
+      "1",
+      "2",
+      "17",
+      "123456"
+    ],
+    "world_count": 13,
+    "pair_count_per_seed": 137,
+    "three_alloy_utility_count_per_seed": 318,
+    "old_unique_landscape_sha256_count": 5,
+    "new_unique_landscape_sha256_count": 1,
+    "old_cross_seed_bit_exact": false,
+    "new_cross_seed_bit_exact": true,
+    "records": [
+      {
+        "python_hash_seed": "0",
+        "old_landscape_sha256": "3581048edfa91eccbc164a5c88cc95783bbf0270b72956471776753d37fb3130",
+        "new_landscape_sha256": "c7b05eff06cb92a1c8e3d878a55e90c688654221df077d3a793f1f37997cc571",
+        "pair_count": 137,
+        "changed_pair_count": 7,
+        "maximum_pair_distance_absolute_difference": 1.1102230246251565e-16,
+        "three_alloy_utility_count": 318,
+        "changed_three_alloy_utility_count": 3,
+        "maximum_three_alloy_utility_absolute_difference": 2.7755575615628914e-17,
+        "proxy_and_truth_optimal_rows_exactly_match": true,
+        "baseline_metrics_exactly_match": true,
+        "reference_metrics_exactly_match": true
+      },
+      {
+        "python_hash_seed": "1",
+        "old_landscape_sha256": "09a3414450fd9956572d697603384342d74c69051ae5ef5bff923882f9e1e0f5",
+        "new_landscape_sha256": "c7b05eff06cb92a1c8e3d878a55e90c688654221df077d3a793f1f37997cc571",
+        "pair_count": 137,
+        "changed_pair_count": 10,
+        "maximum_pair_distance_absolute_difference": 1.1102230246251565e-16,
+        "three_alloy_utility_count": 318,
+        "changed_three_alloy_utility_count": 3,
+        "maximum_three_alloy_utility_absolute_difference": 5.551115123125783e-17,
+        "proxy_and_truth_optimal_rows_exactly_match": true,
+        "baseline_metrics_exactly_match": true,
+        "reference_metrics_exactly_match": true
+      },
+      {
+        "python_hash_seed": "2",
+        "old_landscape_sha256": "77340aeb8b09f395842eb84cb27dbc5d8b7b2c719dc0c961085e23728b47c26d",
+        "new_landscape_sha256": "c7b05eff06cb92a1c8e3d878a55e90c688654221df077d3a793f1f37997cc571",
+        "pair_count": 137,
+        "changed_pair_count": 13,
+        "maximum_pair_distance_absolute_difference": 1.1102230246251565e-16,
+        "three_alloy_utility_count": 318,
+        "changed_three_alloy_utility_count": 5,
+        "maximum_three_alloy_utility_absolute_difference": 5.551115123125783e-17,
+        "proxy_and_truth_optimal_rows_exactly_match": true,
+        "baseline_metrics_exactly_match": true,
+        "reference_metrics_exactly_match": true
+      },
+      {
+        "python_hash_seed": "17",
+        "old_landscape_sha256": "75016ffcefe12e0f2eceba8b6b473c2ea3c53fe27c4525700fd316cd0e9d73ad",
+        "new_landscape_sha256": "c7b05eff06cb92a1c8e3d878a55e90c688654221df077d3a793f1f37997cc571",
+        "pair_count": 137,
+        "changed_pair_count": 19,
+        "maximum_pair_distance_absolute_difference": 1.1102230246251565e-16,
+        "three_alloy_utility_count": 318,
+        "changed_three_alloy_utility_count": 9,
+        "maximum_three_alloy_utility_absolute_difference": 1.1102230246251565e-16,
+        "proxy_and_truth_optimal_rows_exactly_match": true,
+        "baseline_metrics_exactly_match": true,
+        "reference_metrics_exactly_match": true
+      },
+      {
+        "python_hash_seed": "123456",
+        "old_landscape_sha256": "7f16f57a86f3eb77dd37cfa37cf379f9d5850b20198b75c24651e8798bd95049",
+        "new_landscape_sha256": "c7b05eff06cb92a1c8e3d878a55e90c688654221df077d3a793f1f37997cc571",
+        "pair_count": 137,
+        "changed_pair_count": 14,
+        "maximum_pair_distance_absolute_difference": 1.1102230246251565e-16,
+        "three_alloy_utility_count": 318,
+        "changed_three_alloy_utility_count": 4,
+        "maximum_three_alloy_utility_absolute_difference": 5.551115123125783e-17,
+        "proxy_and_truth_optimal_rows_exactly_match": true,
+        "baseline_metrics_exactly_match": true,
+        "reference_metrics_exactly_match": true
+      }
+    ],
+    "passed": true
+  },
+  "clean_calibration_audit": {
+    "frozen_report": "experiments/alloy_hardness_v1_calibration_2026-07-26.json",
+    "frozen_report_sha256": "4698c739038ab32d6258096d21f26d1ddb2501f8f4b4ff3c121c77ad2c8943c7",
+    "current_calibration_source_revision": "89e3345db57e15b5bbfe10e36f5c06bd260b9293",
+    "current_calibration_source_clean": true,
+    "current_calibration_execution_passed": true,
+    "current_calibration_trusted_evidence": true,
+    "exact_section_matches": {
+      "data_rebuild": true,
+      "counts": true,
+      "anchors": true,
+      "baseline_metrics": true,
+      "reference_metrics": true,
+      "secure_baseline_metrics": true,
+      "search_visible_metric_keys": true,
+      "checks": true
+    },
+    "truth_blind_aggregate_metrics_exactly_match": true,
+    "truth_blind_per_world_differences": [
+      {
+        "path": "/8/batch_diversity",
+        "old": 0.743386706296,
+        "new": 0.7433867062959999,
+        "absolute_difference": 1.1102230246251565e-16
+      }
+    ],
+    "truth_blind_per_world_difference_count": 1,
+    "expected_roundoff_path": "/8/batch_diversity",
+    "maximum_truth_blind_absolute_difference": 1.1102230246251565e-16,
+    "data_sha256": "a55effd2a4077b63a19a45a91729698e07b1bd9e89a72da79b87f2528a09d003",
+    "passed": true
+  },
+  "retained_artifact_audit": {
+    "input_reports": [
+      {
+        "condition": "budget_one",
+        "path": "experiments/gpt55_alloy_hardness_v1_b1_2026-07-26.json",
+        "report_sha256": "01cca0c342aec5027e05d56d5b162abe66382f8b3c8f4869a5d9e2632db7d750",
+        "source_revision": "52dcec0c1a4df2d7f92cdef1d6d2bafa2e81f18e",
+        "trajectory_event_count": 2
+      },
+      {
+        "condition": "normal_budget_three",
+        "path": "experiments/gpt55_alloy_hardness_v1_b3_2026-07-26.json",
+        "report_sha256": "54faaf56551f1e1a2c18f13fc7f5051342cbb984df22b43e3caf0b340f665ff6",
+        "source_revision": "52dcec0c1a4df2d7f92cdef1d6d2bafa2e81f18e",
+        "trajectory_event_count": 4
+      },
+      {
+        "condition": "blind_budget_three",
+        "path": "experiments/gpt55_alloy_hardness_v1_blind_b3_2026-07-26.json",
+        "report_sha256": "96ebf5a214041f53de8edb974f08b61cd5e4f0dd194cedaf03c36ea7a2584209",
+        "source_revision": "52dcec0c1a4df2d7f92cdef1d6d2bafa2e81f18e",
+        "trajectory_event_count": 4
+      }
+    ],
+    "artifact_instances": [
+      {
+        "condition": "budget_one",
+        "artifact": "selected_best",
+        "path": "runs/alloy_hardness_v1_b1/MaterialsScience__AlloyHardnessOptimization/greedy_rewrite/normal/seed_0/best_program.py",
+        "source_sha256": "572f1dc9aaf4ed66ef0c25635e88ee464970c85b181eb37c910ee1cb70066a98",
+        "trajectory_step": 1,
+        "bound_metrics_sha256": "8a8980ac9bd8a24b0ddd2d44a5ba89b62ad91fa5e15e732fe89a579a76dc875d",
+        "stabilized_metrics_sha256": "8a8980ac9bd8a24b0ddd2d44a5ba89b62ad91fa5e15e732fe89a579a76dc875d",
+        "metrics_exactly_match_bound_trajectory": true,
+        "valid": 1.0,
+        "combined_score": 0.1516323663787704,
+        "heldout_policy_score": 0.0
+      },
+      {
+        "condition": "budget_one",
+        "artifact": "terminal",
+        "path": "runs/alloy_hardness_v1_b1/MaterialsScience__AlloyHardnessOptimization/greedy_rewrite/normal/seed_0/solution.py",
+        "source_sha256": "572f1dc9aaf4ed66ef0c25635e88ee464970c85b181eb37c910ee1cb70066a98",
+        "trajectory_step": 1,
+        "bound_metrics_sha256": "8a8980ac9bd8a24b0ddd2d44a5ba89b62ad91fa5e15e732fe89a579a76dc875d",
+        "stabilized_metrics_sha256": "8a8980ac9bd8a24b0ddd2d44a5ba89b62ad91fa5e15e732fe89a579a76dc875d",
+        "metrics_exactly_match_bound_trajectory": true,
+        "valid": 1.0,
+        "combined_score": 0.1516323663787704,
+        "heldout_policy_score": 0.0
+      },
+      {
+        "condition": "normal_budget_three",
+        "artifact": "selected_best",
+        "path": "runs/alloy_hardness_v1_b3/MaterialsScience__AlloyHardnessOptimization/greedy_rewrite/normal/seed_1/best_program.py",
+        "source_sha256": "aafad4905559c999ba07fb9efc755788dc256acc2fa3154607b1d913ff59b398",
+        "trajectory_step": 3,
+        "bound_metrics_sha256": "b67b3990921c15a87010f2cd9c8a9ec6b4ea978b14fe1c463216fbc6f23f7390",
+        "stabilized_metrics_sha256": "b67b3990921c15a87010f2cd9c8a9ec6b4ea978b14fe1c463216fbc6f23f7390",
+        "metrics_exactly_match_bound_trajectory": true,
+        "valid": 1.0,
+        "combined_score": 0.1516323663787704,
+        "heldout_policy_score": 0.0
+      },
+      {
+        "condition": "normal_budget_three",
+        "artifact": "terminal",
+        "path": "runs/alloy_hardness_v1_b3/MaterialsScience__AlloyHardnessOptimization/greedy_rewrite/normal/seed_1/solution.py",
+        "source_sha256": "aafad4905559c999ba07fb9efc755788dc256acc2fa3154607b1d913ff59b398",
+        "trajectory_step": 3,
+        "bound_metrics_sha256": "b67b3990921c15a87010f2cd9c8a9ec6b4ea978b14fe1c463216fbc6f23f7390",
+        "stabilized_metrics_sha256": "b67b3990921c15a87010f2cd9c8a9ec6b4ea978b14fe1c463216fbc6f23f7390",
+        "metrics_exactly_match_bound_trajectory": true,
+        "valid": 1.0,
+        "combined_score": 0.1516323663787704,
+        "heldout_policy_score": 0.0
+      },
+      {
+        "condition": "blind_budget_three",
+        "artifact": "selected_best",
+        "path": "runs/alloy_hardness_v1_blind_b3/MaterialsScience__AlloyHardnessOptimization/greedy_rewrite/selection_blind/seed_1/best_program.py",
+        "source_sha256": "8b5676cb6f2d0d82804a0fc0eed6d6fb9ce6db43120e256c01589e8e673f5f68",
+        "trajectory_step": 1,
+        "bound_metrics_sha256": "1b580bef97d5001ca68ad8a033e08c2bc6c581c53e87e615b0b38a09b926b94a",
+        "stabilized_metrics_sha256": "1b580bef97d5001ca68ad8a033e08c2bc6c581c53e87e615b0b38a09b926b94a",
+        "metrics_exactly_match_bound_trajectory": true,
+        "valid": 1.0,
+        "combined_score": 0.1516323663787704,
+        "heldout_policy_score": 0.0
+      },
+      {
+        "condition": "blind_budget_three",
+        "artifact": "terminal",
+        "path": "runs/alloy_hardness_v1_blind_b3/MaterialsScience__AlloyHardnessOptimization/greedy_rewrite/selection_blind/seed_1/solution.py",
+        "source_sha256": "4e9b197999c5d4561beec2fef6f5d2969d69899f113e6fb9cd5a033490d0aab7",
+        "trajectory_step": 3,
+        "bound_metrics_sha256": "a1c8028bedfce82b71b6ba2fd4d443b6a2b730e60dc7cfa1a128f87bb5790b6f",
+        "stabilized_metrics_sha256": "a1c8028bedfce82b71b6ba2fd4d443b6a2b730e60dc7cfa1a128f87bb5790b6f",
+        "metrics_exactly_match_bound_trajectory": true,
+        "valid": 1.0,
+        "combined_score": 0.1516323663787704,
+        "heldout_policy_score": 0.0
+      }
+    ],
+    "artifact_instance_count": 6,
+    "unique_retained_source_count": 4,
+    "proposal_record_count": 7,
+    "unique_proposal_count": 7,
+    "retained_unique_proposal_count": 4,
+    "unretained_unique_proposal_count": 3,
+    "unretained_proposal_sha256": [
+      "6fd97cb43a6046319b1c8015d437029bc2700e3e340adb6221f082d29778430e",
+      "94a90a7b65c144fa5abc304186c66ac705c7023a8c7f31cc06976e3f72614467",
+      "c46c5757018c1d31dbfcea903b8c6f086dd9b3d78fadc2514193a23f782fffdd"
+    ],
+    "baseline_replay": {
+      "old_source_sha256": "fab66bd9e0f98ca7457cac075b102544355f7d4d4d4008185e942a4d3139117e",
+      "new_source_sha256": "9079971176c51f75a0363e59286f29d0f42bf3b78310c8bc65a515b376165bc5",
+      "frozen_metrics_sha256": "8da339ff9e5ab07249733e8dc7fb55abb4ac67d95bd502073fef8de4828d3935",
+      "old_source_on_stabilized_evaluator_metrics_sha256": "8da339ff9e5ab07249733e8dc7fb55abb4ac67d95bd502073fef8de4828d3935",
+      "new_source_on_stabilized_evaluator_metrics_sha256": "8da339ff9e5ab07249733e8dc7fb55abb4ac67d95bd502073fef8de4828d3935",
+      "old_source_exactly_matches_frozen_metrics": true,
+      "new_source_exactly_matches_frozen_metrics": true,
+      "old_and_new_source_metrics_exactly_match": true
+    },
+    "evidence_limit": "Only selected-best and terminal source artifacts were retained. Three unique intermediate proposals remain trajectory-hash-bound but cannot be source-replayed under the stabilized evaluator.",
+    "passed": true
+  },
+  "conclusion": {
+    "migration_accepted": true,
+    "scientific_selection_space_changed": false,
+    "baseline_or_reference_metrics_changed": false,
+    "retained_source_metrics_changed": false,
+    "intermediate_unretained_sources_replayed": false,
+    "historical_trajectory_claim_scope": "Historical trajectory accounting and retained selected/terminal results remain supported. Three intermediate candidates cannot be source-replayed; their stored trajectory metrics remain historical records and must not be presented as current-revision reruns."
+  },
+  "limitations": [
+    "Three of seven unique proposal sources were not retained and cannot be rerun.",
+    "The finite public replay cannot establish prospective alloy discovery.",
+    "The migration audit establishes numerical/source compatibility for this exact patch, not equivalence for future evaluator edits."
+  ],
+  "execution_passed": true,
+  "trust_decision": "trusted_clean_revision",
+  "trusted_evidence": true,
+  "passed": true
+}
