@@ -382,7 +382,7 @@ class RemoteCandidateCallable:
         return self.owner._invoke(self.handle, *args, **kwargs)
 
 
-def load_oracle(task_dir: Path):
+def load_oracle(task_dir: Path, *, with_trusted_context: bool = False):
     path = task_dir / "verification/evaluator.py"
     unique = "frontier_science_oracle_%x" % hash(str(path))
     spec = importlib.util.spec_from_file_location(unique, str(path))
@@ -390,9 +390,10 @@ def load_oracle(task_dir: Path):
         raise ImportError("cannot load task oracle")
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
-    evaluate = getattr(module, "evaluate")
+    entrypoint = "evaluate_with_context" if with_trusted_context else "evaluate"
+    evaluate = getattr(module, entrypoint, None)
     if not callable(evaluate):
-        raise TypeError("oracle evaluate is not callable")
+        raise TypeError("oracle %s is not callable" % entrypoint)
     return evaluate
 
 
@@ -432,10 +433,17 @@ def validate_metrics(value: Any, score_mode: str) -> dict[str, Any]:
 
 
 def trusted_evaluate(task_dir: Path, candidate: Path, entrypoint: str, score_mode: str,
-                     timeout_s: float) -> dict[str, Any]:
-    oracle = load_oracle(task_dir)
+                     timeout_s: float,
+                     trusted_context: dict[str, Any] | None = None) -> dict[str, Any]:
+    oracle = load_oracle(
+        task_dir, with_trusted_context=trusted_context is not None
+    )
     with CandidateProxy(candidate, entrypoint, timeout_s) as proxy:
-        result = oracle(proxy)
+        result = (
+            oracle(proxy, trusted_context)
+            if trusted_context is not None
+            else oracle(proxy)
+        )
         if proxy.failure is not None:
             raise proxy.failure
     return validate_metrics(result, score_mode)

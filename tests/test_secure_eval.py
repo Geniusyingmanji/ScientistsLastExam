@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import json
+import hashlib
+import math
 import tempfile
 import textwrap
 import unittest
@@ -9,7 +11,9 @@ from unittest.mock import patch
 
 import numpy as np
 
-from frontier_science.evaluate import INVALID_SCORE, evaluate_candidate
+from frontier_science.evaluate import (
+    INVALID_SCORE, canonical_trusted_context, evaluate_candidate,
+)
 from frontier_science.rpc_codec import CodecError, decode, encode
 from frontier_science.secure_eval import (
     CandidateProxy, _seccomp_no_processes, validate_metrics,
@@ -202,6 +206,117 @@ class SecureEvaluationTests(unittest.TestCase):
                 proxy.reset_session()
                 second_controller = proxy(20)
                 self.assertEqual(second_controller(3), [1, False, 0, 23])
+
+    def test_trusted_context_is_hash_bound_and_not_mounted_in_candidate(self):
+        marker = "SERVER_HELD_WORLD_MARKER_9f42d117"
+        context = {
+            "schema_version": 1,
+            "purpose": "test_fresh_confirmation",
+            "secret_marker": marker,
+            "world_seeds": [71011, 71023],
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            task = root / "task"
+            (task / "verification").mkdir(parents=True)
+            (task / "verification" / "evaluator.py").write_text(textwrap.dedent("""
+                def evaluate(candidate):
+                    return {"combined_score": 0.0, "valid": 1.0}
+
+                def evaluate_with_context(candidate, context):
+                    leaked = bool(candidate(context["secret_marker"][:0]))
+                    return {
+                        "combined_score": 0.0 if leaked else 1.0,
+                        "valid": 1.0,
+                        "context_schema_version": context["schema_version"],
+                    }
+            """), encoding="utf-8")
+            candidate = root / "candidate.py"
+            candidate.write_text(textwrap.dedent("""
+                import os
+                import sys
+
+                def inspect_context(_public_value):
+                    marker = "SERVER_HELD_" + "WORLD_MARKER_" + "9f42d117"
+                    visible = "\\n".join([
+                        " ".join(sys.argv),
+                        repr(sorted(os.environ.items())),
+                        open("/proc/self/cmdline", "rb").read().decode("utf-8", "ignore"),
+                        open("/proc/self/environ", "rb").read().decode("utf-8", "ignore"),
+                    ])
+                    for path in ("/work", "/tmp", "/runner"):
+                        for base, _, files in os.walk(path):
+                            for name in files:
+                                try:
+                                    visible += open(os.path.join(base, name), errors="ignore").read()
+                                except Exception:
+                                    pass
+                    return marker in visible
+            """), encoding="utf-8")
+            spec = load_task_spec(BENCHMARKS / "Optoelectronics" / "LaserCavityDesign")
+            spec.task_dir = task
+            spec.entrypoint = "inspect_context"
+            result = evaluate_candidate(
+                spec, candidate, timeout_s=10, trusted_context=context
+            )
+        expected = hashlib.sha256(canonical_trusted_context(context)).hexdigest()
+        self.assertEqual(result["combined_score"], 1.0, result)
+        self.assertEqual(result["trusted_context_sha256"], expected)
+        self.assertNotIn(marker, json.dumps(result, sort_keys=True))
+
+    def test_trusted_context_requires_explicit_oracle_entrypoint(self):
+        result = evaluate_candidate(
+            self.spec,
+            self.spec.initial_program_path,
+            timeout_s=5,
+            trusted_context={"schema_version": 1},
+        )
+        self.assert_rejected(result)
+        self.assertEqual(result.get("infrastructure_failure"), 1.0)
+        self.assertNotIn("evaluate_with_context", result["error_message"])
+
+    def test_candidate_failure_under_trusted_context_remains_candidate_outcome(self):
+        context = {"schema_version": 1, "world_seeds": [72019]}
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            task = root / "task"
+            (task / "verification").mkdir(parents=True)
+            (task / "verification" / "evaluator.py").write_text(textwrap.dedent("""
+                def evaluate(candidate):
+                    return {"combined_score": 0.0, "valid": 1.0}
+
+                def evaluate_with_context(candidate, context):
+                    return candidate(context["world_seeds"][0])
+            """), encoding="utf-8")
+            candidate = root / "candidate.py"
+            candidate.write_text(textwrap.dedent("""
+                def fail(_value):
+                    raise RuntimeError("candidate-owned failure")
+            """), encoding="utf-8")
+            spec = load_task_spec(BENCHMARKS / "Optoelectronics" / "LaserCavityDesign")
+            spec.task_dir = task
+            spec.entrypoint = "fail"
+            result = evaluate_candidate(
+                spec, candidate, timeout_s=10, trusted_context=context
+            )
+        self.assert_rejected(result)
+        self.assertEqual(result["candidate_failure_kind"], "candidate_runtime_error")
+        self.assertNotIn("infrastructure_failure", result)
+        self.assertEqual(
+            result["trusted_context_sha256"],
+            hashlib.sha256(canonical_trusted_context(context)).hexdigest(),
+        )
+
+    def test_non_json_trusted_context_fails_as_infrastructure(self):
+        for context in ({"value": math.nan}, {"value": object()}):
+            result = evaluate_candidate(
+                self.spec,
+                self.spec.initial_program_path,
+                timeout_s=5,
+                trusted_context=context,
+            )
+            self.assert_rejected(result)
+            self.assertEqual(result.get("infrastructure_failure"), 1.0)
 
 
 class CodecTests(unittest.TestCase):
