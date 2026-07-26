@@ -13,6 +13,7 @@ import argparse
 import hashlib
 import json
 import platform
+import random
 import sys
 import time
 from datetime import datetime, timezone
@@ -73,6 +74,34 @@ def _condition_order(
         index = int(seed) if schedule_index is None else int(schedule_index)
         return [modes[position] for position in rows[index % len(rows)]]
     raise ValueError("unknown condition order design %r" % design)
+
+
+def _condition_schedule(
+    feedback_modes: list[str], seeds: list[int], design: str,
+    randomization_seed: int | None,
+) -> list[list[str]]:
+    """Build and freeze the full within-block condition schedule."""
+    if design == "balanced_williams":
+        if randomization_seed is None:
+            raise ValueError(
+                "balanced_williams requires --condition-order-randomization-seed"
+            )
+        row_indices = [index % 4 for index in range(len(seeds))]
+        random.Random(int(randomization_seed)).shuffle(row_indices)
+        return [
+            _condition_order(
+                feedback_modes, seed, design, schedule_index=row_index
+            )
+            for seed, row_index in zip(seeds, row_indices)
+        ]
+    if randomization_seed is not None:
+        raise ValueError(
+            "--condition-order-randomization-seed requires balanced_williams"
+        )
+    return [
+        _condition_order(feedback_modes, seed, design)
+        for seed in seeds
+    ]
 
 
 def _preregistration_record(path: Path | None) -> dict[str, Any] | None:
@@ -214,6 +243,10 @@ def build_parser() -> argparse.ArgumentParser:
             "(the last three protocol controls are greedy-only)"
         ),
     )
+    parser.add_argument(
+        "--condition-order-randomization-seed", type=int, default=None,
+        help="preregistered seed that randomizes balanced Williams rows over blocks",
+    )
     parser.add_argument("--seeds", type=_seeds, default=[0, 1, 2, 3, 4])
     parser.add_argument(
         "--condition-order-design",
@@ -259,6 +292,15 @@ def main(argv: list[str] | None = None) -> int:
             "%s implemented only for greedy_rewrite; run upstream backend controls "
             "as separately named conditions" % ", ".join(requested_greedy_only)
         )
+    try:
+        condition_schedule = _condition_schedule(
+            feedback_modes,
+            args.seeds,
+            args.condition_order_design,
+            args.condition_order_randomization_seed,
+        )
+    except ValueError as exc:
+        raise SystemExit(str(exc)) from exc
 
     include_uncertified = bool(args.all)
     if args.tasks:
@@ -289,6 +331,13 @@ def main(argv: list[str] | None = None) -> int:
             mode: feedback_scope(mode) for mode in feedback_modes
         },
         "condition_order": args.condition_order_design,
+        "condition_order_randomization_seed": (
+            args.condition_order_randomization_seed
+        ),
+        "condition_order_schedule": [
+            {"replicate_identifier": seed, "feedback_modes": order}
+            for seed, order in zip(args.seeds, condition_schedule)
+        ],
         "preregistration": _preregistration_record(args.preregistration),
         "seeds": args.seeds,
         "replicate_identifier_scope": (
@@ -360,11 +409,8 @@ def main(argv: list[str] | None = None) -> int:
     for spec in specs:
         for algorithm_name in algorithms:
             algorithm = get_algorithm(algorithm_name)
-            for schedule_index, seed in enumerate(args.seeds):
-                for feedback_mode in _condition_order(
-                    feedback_modes, seed, args.condition_order_design,
-                    schedule_index=schedule_index,
-                ):
+            for seed, ordered_modes in zip(args.seeds, condition_schedule):
+                for feedback_mode in ordered_modes:
                     counter += 1
                     key = _run_key(spec.task_id, algorithm_name, feedback_mode, seed)
                     if key in done:

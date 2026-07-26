@@ -76,12 +76,54 @@ class BatchAggregationTests(unittest.TestCase):
                 mode: sum(row[position] == mode for row in repeated)
                 for mode in modes
             }
-            self.assertEqual(set(counts.values()), {3})
+        self.assertEqual(set(counts.values()), {3})
+
+        schedule = MODULE._condition_schedule(
+            modes,
+            list(range(24)),
+            "balanced_williams",
+            randomization_seed=834721,
+        )
+        self.assertEqual(
+            schedule,
+            MODULE._condition_schedule(
+                modes,
+                list(range(24)),
+                "balanced_williams",
+                randomization_seed=834721,
+            ),
+        )
+        self.assertNotEqual(
+            schedule,
+            MODULE._condition_schedule(
+                modes,
+                list(range(24)),
+                "balanced_williams",
+                randomization_seed=834722,
+            ),
+        )
+        for position in range(4):
+            counts = {
+                mode: sum(row[position] == mode for row in schedule)
+                for mode in modes
+            }
+            self.assertEqual(set(counts.values()), {6})
 
     def test_williams_order_rejects_non_four_mode_design(self):
         with self.assertRaisesRegex(ValueError, "exactly four"):
             MODULE._condition_order(
                 ["normal", "selection_blind"], 0, "balanced_williams"
+            )
+        with self.assertRaisesRegex(ValueError, "requires"):
+            MODULE._condition_schedule(
+                ["normal", "score_only", "delayed_replay", "selection_blind"],
+                list(range(4)),
+                "balanced_williams",
+                randomization_seed=None,
+            )
+        with self.assertRaisesRegex(ValueError, "requires balanced_williams"):
+            MODULE._condition_schedule(
+                ["normal"], [0], "reverse_parity", randomization_seed=1
             )
 
     def test_aggregation_uses_latest_attempt_without_dropping_history(self):
