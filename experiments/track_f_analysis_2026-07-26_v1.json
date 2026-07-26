@@ -1,0 +1,878 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_DERIVED_EVIDENCE / TRACK_F_CONFIRMATORY_ANALYSIS",
+  "evidence_scope": "PREREGISTERED_ACTIVE_LAW_FEEDBACK_PRIMARY_WITH_DIFFRACTION_SECONDARY_NOT_CROSS_TASK_GENERAL_PHYSICAL_OR_AUTONOMOUS_DISCOVERY_EVIDENCE",
+  "created_at": "2026-07-26T22:16:36.331493+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "5020db4e52ea0d64afeec23afbd1cb13f3393c5c",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/analyze_track_f_confirmation.py",
+      "--preregistration",
+      "experiments/track_f_preregistration_2026-07-26_v1.json",
+      "--search-report",
+      "experiments/track_f_search_2026-07-26_v1.json",
+      "--confirmation-report",
+      "experiments/track_f_confirmation_2026-07-26_v1.json",
+      "--output",
+      "experiments/track_f_analysis_2026-07-26_v1.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29",
+    "scipy": "1.10.1"
+  },
+  "inputs": {
+    "preregistration": {
+      "path": "/home/azureuser/workspace-gzy/zyf/frontier-science/experiments/track_f_preregistration_2026-07-26_v1.json",
+      "sha256": "c26d39d35386f295192d369a3948002b5c40b967aa922a45fb1d1bab8e729d32"
+    },
+    "search_report": {
+      "path": "/home/azureuser/workspace-gzy/zyf/frontier-science/experiments/track_f_search_2026-07-26_v1.json",
+      "sha256": "c67ed2146f5e833e7c3619253f6c0d5bd997a38ee7d943bc611df923596d6bf0"
+    },
+    "confirmation_report": {
+      "path": "/home/azureuser/workspace-gzy/zyf/frontier-science/experiments/track_f_confirmation_2026-07-26_v1.json",
+      "sha256": "b4ff678c5868dd493453ea3f52fda7c41a8f6ff216cc28fde95060000c2142da"
+    }
+  },
+  "fixed_design": {
+    "tasks": [
+      "DynamicalSystems/ActiveLawDiscovery",
+      "Optics/DiffractionGratingDesign"
+    ],
+    "feedback_modes": [
+      "normal",
+      "score_only",
+      "delayed_replay",
+      "selection_blind"
+    ],
+    "replicate_identifiers": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47
+    ],
+    "provider_draw_assumption": "independent_unpaired",
+    "candidate_invalid_score": 0.0,
+    "minimum_important_difference": 0.15,
+    "two_sided_alpha": 0.05
+  },
+  "risk_set": {
+    "search_cell_count": 384,
+    "confirmation_endpoint_count": 768,
+    "candidate_invalid_endpoint_count": 7,
+    "candidate_invalid_endpoints_retained": true,
+    "stochastic_artifact_count": 0,
+    "infrastructure_failed_evaluation_count": 0
+  },
+  "condition_summaries": [
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "endpoint": "full_proposal_horizon",
+      "condition": "normal",
+      "science_axis": "confirmation_normalized_mechanism_score",
+      "failure_inclusive_score": {
+        "n": 48,
+        "mean": 0.791949775,
+        "sample_sd": 0.10253944871011685,
+        "minimum": 0.5408142,
+        "maximum": 0.9974651999999998
+      },
+      "candidate_valid_count": 48,
+      "candidate_invalid_count": 0,
+      "candidate_valid_rate": 1.0,
+      "mean_completed_through_step": 3,
+      "mean_tokens_spent_by_completed_step": 21458.1875
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "endpoint": "full_proposal_horizon",
+      "condition": "score_only",
+      "science_axis": "confirmation_normalized_mechanism_score",
+      "failure_inclusive_score": {
+        "n": 48,
+        "mean": 0.7842283416666667,
+        "sample_sd": 0.06234671917845016,
+        "minimum": 0.5562086,
+        "maximum": 0.997752
+      },
+      "candidate_valid_count": 48,
+      "candidate_invalid_count": 0,
+      "candidate_valid_rate": 1.0,
+      "mean_completed_through_step": 3,
+      "mean_tokens_spent_by_completed_step": 21340.5625
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "endpoint": "full_proposal_horizon",
+      "condition": "delayed_replay",
+      "science_axis": "confirmation_normalized_mechanism_score",
+      "failure_inclusive_score": {
+        "n": 48,
+        "mean": 0.794653825,
+        "sample_sd": 0.08032569291579604,
+        "minimum": 0.5390641999999999,
+        "maximum": 0.9972147999999998
+      },
+      "candidate_valid_count": 48,
+      "candidate_invalid_count": 0,
+      "candidate_valid_rate": 1.0,
+      "mean_completed_through_step": 3,
+      "mean_tokens_spent_by_completed_step": 17941.583333333332
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "endpoint": "full_proposal_horizon",
+      "condition": "selection_blind",
+      "science_axis": "confirmation_normalized_mechanism_score",
+      "failure_inclusive_score": {
+        "n": 48,
+        "mean": 0.7973377625,
+        "sample_sd": 0.06964078727201932,
+        "minimum": 0.5884846,
+        "maximum": 0.9966954
+      },
+      "candidate_valid_count": 48,
+      "candidate_invalid_count": 0,
+      "candidate_valid_rate": 1.0,
+      "mean_completed_through_step": 3,
+      "mean_tokens_spent_by_completed_step": 14480
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "endpoint": "common_total_token_horizon",
+      "condition": "normal",
+      "science_axis": "confirmation_normalized_mechanism_score",
+      "failure_inclusive_score": {
+        "n": 48,
+        "mean": 0.7814176625,
+        "sample_sd": 0.09034316373781066,
+        "minimum": 0.5598359999999999,
+        "maximum": 0.9979222000000001
+      },
+      "candidate_valid_count": 48,
+      "candidate_invalid_count": 0,
+      "candidate_valid_rate": 1.0,
+      "mean_completed_through_step": 1.9583333333333333,
+      "mean_tokens_spent_by_completed_step": 12567.895833333334
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "endpoint": "common_total_token_horizon",
+      "condition": "score_only",
+      "science_axis": "confirmation_normalized_mechanism_score",
+      "failure_inclusive_score": {
+        "n": 48,
+        "mean": 0.7811086416666667,
+        "sample_sd": 0.0642129059285239,
+        "minimum": 0.5562086,
+        "maximum": 0.997752
+      },
+      "candidate_valid_count": 48,
+      "candidate_invalid_count": 0,
+      "candidate_valid_rate": 1.0,
+      "mean_completed_through_step": 1.9583333333333333,
+      "mean_tokens_spent_by_completed_step": 12297.895833333334
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "endpoint": "common_total_token_horizon",
+      "condition": "delayed_replay",
+      "science_axis": "confirmation_normalized_mechanism_score",
+      "failure_inclusive_score": {
+        "n": 48,
+        "mean": 0.7830684208333333,
+        "sample_sd": 0.07686995869236249,
+        "minimum": 0.5390641999999999,
+        "maximum": 0.9962672000000001
+      },
+      "candidate_valid_count": 48,
+      "candidate_invalid_count": 0,
+      "candidate_valid_rate": 1.0,
+      "mean_completed_through_step": 2,
+      "mean_tokens_spent_by_completed_step": 9740.958333333334
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "endpoint": "common_total_token_horizon",
+      "condition": "selection_blind",
+      "science_axis": "confirmation_normalized_mechanism_score",
+      "failure_inclusive_score": {
+        "n": 48,
+        "mean": 0.7973377625,
+        "sample_sd": 0.06964078727201932,
+        "minimum": 0.5884846,
+        "maximum": 0.9966954
+      },
+      "candidate_valid_count": 48,
+      "candidate_invalid_count": 0,
+      "candidate_valid_rate": 1.0,
+      "mean_completed_through_step": 3,
+      "mean_tokens_spent_by_completed_step": 14480
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "endpoint": "full_proposal_horizon",
+      "condition": "normal",
+      "science_axis": "confirmation_robustness_score",
+      "failure_inclusive_score": {
+        "n": 48,
+        "mean": 0.4123217543467576,
+        "sample_sd": 0.3719407694803599,
+        "minimum": 0.0,
+        "maximum": 1.0
+      },
+      "candidate_valid_count": 48,
+      "candidate_invalid_count": 0,
+      "candidate_valid_rate": 1.0,
+      "mean_completed_through_step": 3,
+      "mean_tokens_spent_by_completed_step": 15026.479166666666
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "endpoint": "full_proposal_horizon",
+      "condition": "score_only",
+      "science_axis": "confirmation_robustness_score",
+      "failure_inclusive_score": {
+        "n": 48,
+        "mean": 0.29152853210144447,
+        "sample_sd": 0.2816752156872923,
+        "minimum": 0.0,
+        "maximum": 1.0
+      },
+      "candidate_valid_count": 48,
+      "candidate_invalid_count": 0,
+      "candidate_valid_rate": 1.0,
+      "mean_completed_through_step": 3,
+      "mean_tokens_spent_by_completed_step": 15638.145833333334
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "endpoint": "full_proposal_horizon",
+      "condition": "delayed_replay",
+      "science_axis": "confirmation_robustness_score",
+      "failure_inclusive_score": {
+        "n": 48,
+        "mean": 0.4028753015236414,
+        "sample_sd": 0.34439256985046046,
+        "minimum": 0.0,
+        "maximum": 1.0
+      },
+      "candidate_valid_count": 47,
+      "candidate_invalid_count": 1,
+      "candidate_valid_rate": 0.9791666666666666,
+      "mean_completed_through_step": 3,
+      "mean_tokens_spent_by_completed_step": 13459.041666666666
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "endpoint": "full_proposal_horizon",
+      "condition": "selection_blind",
+      "science_axis": "confirmation_robustness_score",
+      "failure_inclusive_score": {
+        "n": 48,
+        "mean": 0.3419995808861221,
+        "sample_sd": 0.3404384440843751,
+        "minimum": 0.0,
+        "maximum": 1.0
+      },
+      "candidate_valid_count": 46,
+      "candidate_invalid_count": 2,
+      "candidate_valid_rate": 0.9583333333333334,
+      "mean_completed_through_step": 3,
+      "mean_tokens_spent_by_completed_step": 11802.0625
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "endpoint": "common_total_token_horizon",
+      "condition": "normal",
+      "science_axis": "confirmation_robustness_score",
+      "failure_inclusive_score": {
+        "n": 48,
+        "mean": 0.3740270220976311,
+        "sample_sd": 0.36452980151199393,
+        "minimum": 0.0,
+        "maximum": 1.0
+      },
+      "candidate_valid_count": 48,
+      "candidate_invalid_count": 0,
+      "candidate_valid_rate": 1.0,
+      "mean_completed_through_step": 2,
+      "mean_tokens_spent_by_completed_step": 8763.1875
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "endpoint": "common_total_token_horizon",
+      "condition": "score_only",
+      "science_axis": "confirmation_robustness_score",
+      "failure_inclusive_score": {
+        "n": 48,
+        "mean": 0.2325665406817103,
+        "sample_sd": 0.281738980512781,
+        "minimum": 0.0,
+        "maximum": 0.9868738643123734
+      },
+      "candidate_valid_count": 48,
+      "candidate_invalid_count": 0,
+      "candidate_valid_rate": 1.0,
+      "mean_completed_through_step": 1.9166666666666667,
+      "mean_tokens_spent_by_completed_step": 8422.770833333334
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "endpoint": "common_total_token_horizon",
+      "condition": "delayed_replay",
+      "science_axis": "confirmation_robustness_score",
+      "failure_inclusive_score": {
+        "n": 48,
+        "mean": 0.31593905244396353,
+        "sample_sd": 0.3400605577054976,
+        "minimum": 0.0,
+        "maximum": 1.0
+      },
+      "candidate_valid_count": 47,
+      "candidate_invalid_count": 1,
+      "candidate_valid_rate": 0.9791666666666666,
+      "mean_completed_through_step": 2.1458333333333335,
+      "mean_tokens_spent_by_completed_step": 8557.125
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "endpoint": "common_total_token_horizon",
+      "condition": "selection_blind",
+      "science_axis": "confirmation_robustness_score",
+      "failure_inclusive_score": {
+        "n": 48,
+        "mean": 0.30793807461431594,
+        "sample_sd": 0.3236971170452687,
+        "minimum": 0.0,
+        "maximum": 1.0
+      },
+      "candidate_valid_count": 45,
+      "candidate_invalid_count": 3,
+      "candidate_valid_rate": 0.9375,
+      "mean_completed_through_step": 2.6875,
+      "mean_tokens_spent_by_completed_step": 10532.833333333334
+    }
+  ],
+  "contrasts": [
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "endpoint": "full_proposal_horizon",
+      "contrast": "normal_minus_score_only",
+      "inference_scope": "descriptive_secondary_no_multiplicity_claim",
+      "treatment": {
+        "n": 48,
+        "mean": 0.791949775,
+        "sample_sd": 0.10253944871011685,
+        "minimum": 0.5408142,
+        "maximum": 0.9974651999999998
+      },
+      "control": {
+        "n": 48,
+        "mean": 0.7842283416666667,
+        "sample_sd": 0.06234671917845016,
+        "minimum": 0.5562086,
+        "maximum": 0.997752
+      },
+      "difference_treatment_minus_control": 0.007721433333333305,
+      "standard_error": 0.01732138125632307,
+      "welch_degrees_of_freedom": 77.57289941716141,
+      "welch_t_statistic": 0.4457746884657158,
+      "two_sided_p_value": 0.6570017003965234,
+      "confidence_level": 0.95,
+      "confidence_interval": [
+        -0.026765778557054316,
+        0.04220864522372093
+      ],
+      "variance_degenerate": false,
+      "cohen_d_pooled": 0.0909933772490948,
+      "hedges_g_pooled": 0.09026543023110205
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "endpoint": "full_proposal_horizon",
+      "contrast": "normal_minus_delayed_replay",
+      "inference_scope": "descriptive_secondary_no_multiplicity_claim",
+      "treatment": {
+        "n": 48,
+        "mean": 0.791949775,
+        "sample_sd": 0.10253944871011685,
+        "minimum": 0.5408142,
+        "maximum": 0.9974651999999998
+      },
+      "control": {
+        "n": 48,
+        "mean": 0.794653825,
+        "sample_sd": 0.08032569291579604,
+        "minimum": 0.5390641999999999,
+        "maximum": 0.9972147999999998
+      },
+      "difference_treatment_minus_control": -0.002704050000000069,
+      "standard_error": 0.018800795353398313,
+      "welch_degrees_of_freedom": 88.9038850435207,
+      "welch_t_statistic": -0.1438263620858626,
+      "two_sided_p_value": 0.8859630994205625,
+      "confidence_level": 0.95,
+      "confidence_interval": [
+        -0.0400613863923648,
+        0.03465328639236466
+      ],
+      "variance_degenerate": false,
+      "cohen_d_pooled": -0.02935843322259499,
+      "hedges_g_pooled": -0.02912356575681423
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "endpoint": "full_proposal_horizon",
+      "contrast": "normal_minus_selection_blind",
+      "inference_scope": "descriptive_secondary_no_multiplicity_claim",
+      "treatment": {
+        "n": 48,
+        "mean": 0.791949775,
+        "sample_sd": 0.10253944871011685,
+        "minimum": 0.5408142,
+        "maximum": 0.9974651999999998
+      },
+      "control": {
+        "n": 48,
+        "mean": 0.7973377625,
+        "sample_sd": 0.06964078727201932,
+        "minimum": 0.5884846,
+        "maximum": 0.9966954
+      },
+      "difference_treatment_minus_control": -0.005387987500000024,
+      "standard_error": 0.017890976422977246,
+      "welch_degrees_of_freedom": 82.75182680168439,
+      "welch_t_statistic": -0.30115670450944604,
+      "two_sided_p_value": 0.7640504272357058,
+      "confidence_level": 0.95,
+      "confidence_interval": [
+        -0.04097399833973866,
+        0.03019802333973861
+      ],
+      "variance_degenerate": false,
+      "cohen_d_pooled": -0.061473354888856045,
+      "hedges_g_pooled": -0.060981568049745194
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "endpoint": "common_total_token_horizon",
+      "contrast": "normal_minus_score_only",
+      "inference_scope": "descriptive_secondary_no_multiplicity_claim",
+      "treatment": {
+        "n": 48,
+        "mean": 0.7814176625,
+        "sample_sd": 0.09034316373781066,
+        "minimum": 0.5598359999999999,
+        "maximum": 0.9979222000000001
+      },
+      "control": {
+        "n": 48,
+        "mean": 0.7811086416666667,
+        "sample_sd": 0.0642129059285239,
+        "minimum": 0.5562086,
+        "maximum": 0.997752
+      },
+      "difference_treatment_minus_control": 0.00030902083333328445,
+      "standard_error": 0.01599816690146505,
+      "welch_degrees_of_freedom": 84.83235714215094,
+      "welch_t_statistic": 0.01931601509326581,
+      "two_sided_p_value": 0.9846343674932063,
+      "confidence_level": 0.95,
+      "confidence_interval": [
+        -0.031500528464194884,
+        0.03211857013086145
+      ],
+      "variance_degenerate": false,
+      "cohen_d_pooled": 0.003942865070199971,
+      "hedges_g_pooled": 0.003911322149638371
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "endpoint": "common_total_token_horizon",
+      "contrast": "normal_minus_delayed_replay",
+      "inference_scope": "descriptive_secondary_no_multiplicity_claim",
+      "treatment": {
+        "n": 48,
+        "mean": 0.7814176625,
+        "sample_sd": 0.09034316373781066,
+        "minimum": 0.5598359999999999,
+        "maximum": 0.9979222000000001
+      },
+      "control": {
+        "n": 48,
+        "mean": 0.7830684208333333,
+        "sample_sd": 0.07686995869236249,
+        "minimum": 0.5390641999999999,
+        "maximum": 0.9962672000000001
+      },
+      "difference_treatment_minus_control": -0.0016507583333332798,
+      "standard_error": 0.017121427719577486,
+      "welch_degrees_of_freedom": 91.65050232410339,
+      "welch_t_statistic": -0.0964147593512731,
+      "two_sided_p_value": 0.9234016860048901,
+      "confidence_level": 0.95,
+      "confidence_interval": [
+        -0.03565711948072977,
+        0.03235560281406321
+      ],
+      "variance_degenerate": false,
+      "cohen_d_pooled": -0.019680580340320997,
+      "hedges_g_pooled": -0.019523135697598427
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "endpoint": "common_total_token_horizon",
+      "contrast": "normal_minus_selection_blind",
+      "inference_scope": "powered_confirmatory_primary",
+      "treatment": {
+        "n": 48,
+        "mean": 0.7814176625,
+        "sample_sd": 0.09034316373781066,
+        "minimum": 0.5598359999999999,
+        "maximum": 0.9979222000000001
+      },
+      "control": {
+        "n": 48,
+        "mean": 0.7973377625,
+        "sample_sd": 0.06964078727201932,
+        "minimum": 0.5884846,
+        "maximum": 0.9966954
+      },
+      "difference_treatment_minus_control": -0.015920099999999993,
+      "standard_error": 0.016464435463309696,
+      "welch_degrees_of_freedom": 88.28012759745627,
+      "welch_t_statistic": -0.9669387107427563,
+      "two_sided_p_value": 0.33621622034750687,
+      "confidence_level": 0.95,
+      "confidence_interval": [
+        -0.04863825872420721,
+        0.016798058724207227
+      ],
+      "variance_degenerate": false,
+      "cohen_d_pooled": -0.19737553782203102,
+      "hedges_g_pooled": -0.19579653351945478
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "endpoint": "full_proposal_horizon",
+      "contrast": "normal_minus_score_only",
+      "inference_scope": "descriptive_secondary_no_multiplicity_claim",
+      "treatment": {
+        "n": 48,
+        "mean": 0.4123217543467576,
+        "sample_sd": 0.3719407694803599,
+        "minimum": 0.0,
+        "maximum": 1.0
+      },
+      "control": {
+        "n": 48,
+        "mean": 0.29152853210144447,
+        "sample_sd": 0.2816752156872923,
+        "minimum": 0.0,
+        "maximum": 1.0
+      },
+      "difference_treatment_minus_control": 0.12079322224531314,
+      "standard_error": 0.06734254214061818,
+      "welch_degrees_of_freedom": 87.56733323177168,
+      "welch_t_statistic": 1.7937134299605801,
+      "two_sided_p_value": 0.07631075533056669,
+      "confidence_level": 0.95,
+      "confidence_interval": [
+        -0.013045145955757287,
+        0.25463159044638356
+      ],
+      "variance_degenerate": false,
+      "cohen_d_pooled": 0.3661402206817394,
+      "hedges_g_pooled": 0.3632110989162855
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "endpoint": "full_proposal_horizon",
+      "contrast": "normal_minus_delayed_replay",
+      "inference_scope": "descriptive_secondary_no_multiplicity_claim",
+      "treatment": {
+        "n": 48,
+        "mean": 0.4123217543467576,
+        "sample_sd": 0.3719407694803599,
+        "minimum": 0.0,
+        "maximum": 1.0
+      },
+      "control": {
+        "n": 48,
+        "mean": 0.4028753015236414,
+        "sample_sd": 0.34439256985046046,
+        "minimum": 0.0,
+        "maximum": 1.0
+      },
+      "difference_treatment_minus_control": 0.00944645282311618,
+      "standard_error": 0.07316450900907126,
+      "welch_degrees_of_freedom": 93.44880382683309,
+      "welch_t_statistic": 0.12911250210050568,
+      "two_sided_p_value": 0.8975461143008834,
+      "confidence_level": 0.95,
+      "confidence_interval": [
+        -0.13583456651942957,
+        0.15472747216566193
+      ],
+      "variance_degenerate": false,
+      "cohen_d_pooled": 0.02635497913002169,
+      "hedges_g_pooled": 0.026144139296981516
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "endpoint": "full_proposal_horizon",
+      "contrast": "normal_minus_selection_blind",
+      "inference_scope": "descriptive_secondary_no_multiplicity_claim",
+      "treatment": {
+        "n": 48,
+        "mean": 0.4123217543467576,
+        "sample_sd": 0.3719407694803599,
+        "minimum": 0.0,
+        "maximum": 1.0
+      },
+      "control": {
+        "n": 48,
+        "mean": 0.3419995808861221,
+        "sample_sd": 0.3404384440843751,
+        "minimum": 0.0,
+        "maximum": 1.0
+      },
+      "difference_treatment_minus_control": 0.07032217346063552,
+      "standard_error": 0.07277795428164706,
+      "welch_degrees_of_freedom": 93.27325344910754,
+      "welch_t_statistic": 0.9662565285703444,
+      "two_sided_p_value": 0.33641452795925164,
+      "confidence_level": 0.95,
+      "confidence_interval": [
+        -0.07419484055730888,
+        0.2148391874785799
+      ],
+      "variance_degenerate": false,
+      "cohen_d_pooled": 0.19723628796919496,
+      "hedges_g_pooled": 0.1956583976654414
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "endpoint": "common_total_token_horizon",
+      "contrast": "normal_minus_score_only",
+      "inference_scope": "descriptive_secondary_no_multiplicity_claim",
+      "treatment": {
+        "n": 48,
+        "mean": 0.3740270220976311,
+        "sample_sd": 0.36452980151199393,
+        "minimum": 0.0,
+        "maximum": 1.0
+      },
+      "control": {
+        "n": 48,
+        "mean": 0.2325665406817103,
+        "sample_sd": 0.281738980512781,
+        "minimum": 0.0,
+        "maximum": 0.9868738643123734
+      },
+      "difference_treatment_minus_control": 0.14146048141592082,
+      "standard_error": 0.06649856347614382,
+      "welch_degrees_of_freedom": 88.38392998330448,
+      "welch_t_statistic": 2.127271237470707,
+      "two_sided_p_value": 0.036183151291413,
+      "confidence_level": 0.95,
+      "confidence_interval": [
+        0.009316560623402553,
+        0.27360440220843907
+      ],
+      "variance_degenerate": false,
+      "cohen_d_pooled": 0.43422742302518136,
+      "hedges_g_pooled": 0.4307536036409799
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "endpoint": "common_total_token_horizon",
+      "contrast": "normal_minus_delayed_replay",
+      "inference_scope": "descriptive_secondary_no_multiplicity_claim",
+      "treatment": {
+        "n": 48,
+        "mean": 0.3740270220976311,
+        "sample_sd": 0.36452980151199393,
+        "minimum": 0.0,
+        "maximum": 1.0
+      },
+      "control": {
+        "n": 48,
+        "mean": 0.31593905244396353,
+        "sample_sd": 0.3400605577054976,
+        "minimum": 0.0,
+        "maximum": 1.0
+      },
+      "difference_treatment_minus_control": 0.05808796965366758,
+      "standard_error": 0.0719553042834792,
+      "welch_degrees_of_freedom": 93.54978129449599,
+      "welch_t_statistic": 0.8072784936718622,
+      "two_sided_p_value": 0.4215538541272159,
+      "confidence_level": 0.95,
+      "confidence_interval": [
+        -0.08478993813609206,
+        0.20096587744342723
+      ],
+      "variance_degenerate": false,
+      "cohen_d_pooled": 0.16478503248489013,
+      "hedges_g_pooled": 0.163466752225011
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "endpoint": "common_total_token_horizon",
+      "contrast": "normal_minus_selection_blind",
+      "inference_scope": "descriptive_secondary_no_multiplicity_claim",
+      "treatment": {
+        "n": 48,
+        "mean": 0.3740270220976311,
+        "sample_sd": 0.36452980151199393,
+        "minimum": 0.0,
+        "maximum": 1.0
+      },
+      "control": {
+        "n": 48,
+        "mean": 0.30793807461431594,
+        "sample_sd": 0.3236971170452687,
+        "minimum": 0.0,
+        "maximum": 1.0
+      },
+      "difference_treatment_minus_control": 0.06608894748331517,
+      "standard_error": 0.07036538563304642,
+      "welch_degrees_of_freedom": 92.70384140818608,
+      "welch_t_statistic": 0.9392252581115272,
+      "two_sided_p_value": 0.350055867502729,
+      "confidence_level": 0.95,
+      "confidence_interval": [
+        -0.07364864621164008,
+        0.20582654117827043
+      ],
+      "variance_degenerate": false,
+      "cohen_d_pooled": 0.19171855299225574,
+      "hedges_g_pooled": 0.19018480456831768
+    }
+  ],
+  "primary_result": {
+    "task": "DynamicalSystems/ActiveLawDiscovery",
+    "endpoint": "common_total_token_horizon",
+    "contrast": "normal_minus_selection_blind",
+    "inference_scope": "powered_confirmatory_primary",
+    "treatment": {
+      "n": 48,
+      "mean": 0.7814176625,
+      "sample_sd": 0.09034316373781066,
+      "minimum": 0.5598359999999999,
+      "maximum": 0.9979222000000001
+    },
+    "control": {
+      "n": 48,
+      "mean": 0.7973377625,
+      "sample_sd": 0.06964078727201932,
+      "minimum": 0.5884846,
+      "maximum": 0.9966954
+    },
+    "difference_treatment_minus_control": -0.015920099999999993,
+    "standard_error": 0.016464435463309696,
+    "welch_degrees_of_freedom": 88.28012759745627,
+    "welch_t_statistic": -0.9669387107427563,
+    "two_sided_p_value": 0.33621622034750687,
+    "confidence_level": 0.95,
+    "confidence_interval": [
+      -0.04863825872420721,
+      0.016798058724207227
+    ],
+    "variance_degenerate": false,
+    "cohen_d_pooled": -0.19737553782203102,
+    "hedges_g_pooled": -0.19579653351945478
+  },
+  "primary_claim_gate": {
+    "risk_set_complete": true,
+    "fixed_n_per_condition": 48,
+    "candidate_invalidity_included_at_score_floor": true,
+    "independent_provider_draw_analysis": true,
+    "two_sided_alpha": 0.05,
+    "rejects_zero_effect_null": false,
+    "effect_direction_is_preregistered_positive": false,
+    "point_estimate_reaches_design_mde": false,
+    "mde_is_power_target_not_additional_significance_threshold": true,
+    "supports_specific_active_law_feedback_effect": false
+  },
+  "claims": {
+    "preregistered_primary_hypothesis_test_completed": true,
+    "specific_active_law_feedback_causal_effect_identified": false,
+    "active_law_procedural_population_effect_estimated": true,
+    "diffraction_confirmatory_significance_claim_supported": false,
+    "cross_task_general_scientific_agent_effect_identified": false,
+    "independent_laboratory_or_physical_validation_completed": false,
+    "autonomous_scientific_discovery_demonstrated": false
+  },
+  "limitations": [
+    "The primary identifies only the frozen GPT-5.5/algorithm/task/procedural-context treatment effect.",
+    "Local replicate identifiers do not pair provider-side model randomness; the primary uses independent draws.",
+    "Diffraction is a high-variance descriptive stress test and has no confirmatory significance claim.",
+    "No heterogeneous task axes are averaged into a cross-task science or discovery score.",
+    "Fresh panels are locally sealed procedural simulations, not independent laboratory or physical validation.",
+    "A positive primary would not by itself demonstrate autonomous scientific discovery."
+  ],
+  "execution_passed": true,
+  "trust_decision": "trusted_clean_revision",
+  "trusted_evidence": true,
+  "passed": true
+}
