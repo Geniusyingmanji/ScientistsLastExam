@@ -1,3 +1,5 @@
-1) Only edit solution.py. Keep the design_alloy() signature.
-2) numpy/scipy/stdlib only. CPU, seconds. No network.
-3) Do not read verification/ or frontier_eval/.
+1) Only edit solution.py. Keep design_alloy_batch(problem, assay).
+2) Return exactly three distinct supplied IDs plus finite 90% point/interval predictions keyed by exactly those IDs.
+3) Use at most two charged assays per study; repeats consume budget and caught callback violations still fail.
+4) Candidate code gets a fresh sandbox for every DOI-held study. Do not branch on evaluator-only labels or read verification/frontier_eval.
+5) NumPy/SciPy/standard library only. Deterministic CPU code. No network or process creation.

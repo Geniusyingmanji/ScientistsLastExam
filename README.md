@@ -265,9 +265,13 @@ is recorded as task calibration, not a benchmark leaderboard.
 The latest closeout certification/security/baseline audits are v54/v38/v43 and bind clean
 source revision `0f8a43d`; full-suite v11 binds the same revision and passes 459/459 tests.
 CalorimeterDesign-v2's task calibration and wave-4 admission
-audit also bind `f6a7b73`. After rebuilding and admitting ForceFieldCalibration-v2, the current
-source manifest is 7/41/11 and contains 48 internally admissible tasks, leaving an approximate
-gap of 2 to the roughly 50-task target. The preceding photovoltaic calibration reproduces
+audit also bind `f6a7b73`. After rebuilding and admitting ForceFieldCalibration-v2 and the
+DOI-held AlloyHardnessOptimization-v1 replay, the current source manifest is 7/42/10 and contains
+49 internally admissible tasks, leaving an approximate gap of 1 to the roughly 50-task target.
+Alloy's frozen two-assay residual-smoothing witness reaches 0.658 development and 0.878
+citation-hash-held utility over thirteen later MPEA studies; only six of 65 target recipes have
+any cross-DOI exact composition/process record, so this is retrospective active design rather
+than alloy discovery or independent replication. The preceding photovoltaic calibration reproduces
 ideal one-through-four-junction efficiencies `0.33695/0.45735/0.51291/0.55329`, with nominal
 reference score `1.000/1.000` and minimax-reference nominal/robust score
 `0.963/0.965` and `1.000/1.000`; these are reduced-order task anchors, not device records.

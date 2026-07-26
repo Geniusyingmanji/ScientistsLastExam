@@ -113,9 +113,12 @@ class SecureEvaluationTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             candidate = Path(tmp) / "candidate.py"
             candidate.write_text(textwrap.dedent("""
-                def design_alloy(n, elements, predict, budget):
+                def design_alloy_batch(problem, assay):
                     while True:
-                        predict([[0.2] * n])
+                        try:
+                            assay(problem['candidates'][0]['id'])
+                        except Exception:
+                            pass
             """), encoding="utf-8")
             result = evaluate_candidate(spec, candidate, timeout_s=0.5)
         self.assert_rejected(result)

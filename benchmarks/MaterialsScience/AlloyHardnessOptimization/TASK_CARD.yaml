@@ -1,0 +1,31 @@
+schema_version: 1
+scientific_question: Under two study-replay hardness assays, can a policy select a compositionally diverse three-alloy batch with high room-temperature Vickers hardness, calibrated uncertainty, transfer across DOI-held composition series, and honest sparse independent confirmation?
+artifact: A deterministic active-design policy that chooses charged alloy assays and returns three candidate IDs with 90 percent hardness prediction intervals.
+oracle:
+  model: hash-bound replay of DOI-grouped room-temperature Vickers-hardness records in the Borg et al. MPEA dataset, with a leakage-free historical composition/process ridge proxy
+  feasibility: exactly three distinct declared candidate IDs, an ordered finite point-containing interval for each, and no more than two charged assays per fresh study session
+  deterministic: true
+normalization:
+  baseline: diversity-aware three-alloy batch selected only by the degree-two ridge proxy fitted to 197 recipes from 44 papers published through 2016, with equal total weight per DOI
+  reference: exhaustive three-alloy search over each later paper's finite reported series; a normalization witness rather than a global alloy or processing optimum
+  score: development study-held reported-hardness quality plus composition diversity; held-out DOI transfer, prediction intervals, proxy false promotion, assay behavior, and sparse exact-recipe confirmation remain separate
+citations:
+  - id: doi:10.1038/s41597-020-00768-9
+    title: Expanded dataset of mechanical properties and observed phases of multi-principal element alloys
+  - id: doi:10.6084/m9.figshare.12642953.v9
+    title: Expanded dataset of mechanical properties and observed phases of multi-principal element alloys
+invariants:
+  - the exact 332126-byte Figshare v9 CSV is checked by MD5 and SHA-256 before parsing
+  - all 1545 source rows are scanned, while only finite room-temperature hardness rows with reported processing and at least four elements are eligible
+  - full lowercase DOI is the study-level independence unit and no target DOI or source line enters the historical proxy
+  - exact composition plus processing matches to target recipes are removed from proxy fitting and reserved as independent-source confirmation
+  - the historical proxy gives each DOI equal total regression weight rather than treating literature rows as IID measurements
+  - the ridge strength is chosen only by equal-study-weight leave-one-DOI-out RMSE over historical proxy studies; target hardness labels never select the proxy hyperparameter
+  - all thirteen later DOI studies satisfying the frozen minimum-size and vocabulary rule are retained, then sorted by the SHA-256 of their normalized doi citation identifier into eight development and five heldout worlds
+  - batch size three exceeds assay budget two, forcing at least one unmeasured selected prediction when assays are unique and selected
+  - candidate code receives a fresh sandbox process and private tmpfs for every DOI-held study
+  - heldout, prediction, interval, proxy-failure, confirmation, assay and per-study metrics remain evaluator-only
+known_shortcuts: The benchmark design and its frozen selection rules were developed after inspecting this public compilation; they were not prospectively preregistered. The landscapes and cited papers are public and finite, so memorization or pretraining contamination cannot be ruled out. The compilation incompletely records detailed processing, microstructure and indentation protocol; matching composition and a coarse process category is not an experimental replicate. The replay does not demonstrate synthesis, prospective discovery, toughness, strength, ductility, phase stability, corrosion resistance, manufacturability, safety or application performance.
+review:
+  domain: pending_external_materials_science
+  evaluator_security: automated_hash_bound_source_rebuild_doi_partition_exact_recipe_proxy_exclusion_fresh_sandbox_budget_metric_sealing_malformed_artifact_uncertainty_and_sparse_confirmation_tests

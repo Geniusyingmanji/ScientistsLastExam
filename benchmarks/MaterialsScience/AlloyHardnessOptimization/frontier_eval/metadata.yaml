@@ -1,11 +1,12 @@
 domain: MaterialsScience
 task: AlloyHardnessOptimization
 difficulty: hard
-oracle_type: dataset_oracle
+tier: T2
+oracle_type: real_data_replay
 score_mode: clipped
 gpu_required: false
-eval_time_seconds: 5
-science_metric: max_hardness_found
-reference_baseline: "random_composition"
-reference_sota: "pareto_optimal_hardness"
-citation: "Miracle & Senkov 2017; Wen et al. 2019 (HEA)"
+eval_time_seconds: 90
+science_metric: budgeted_study_held_hardness_diversity_proxy_failure_uncertainty_source_transfer_and_sparse_independent_confirmation
+reference_baseline: three-alloy batch selected only by the leakage-free historical composition/process ridge proxy
+reference_sota: exhaustive full-study three-alloy replay witness; finite public landscape, not a global materials optimum
+citation: "Borg et al., Scientific Data 2020, DOI 10.1038/s41597-020-00768-9; Figshare dataset v9, DOI 10.6084/m9.figshare.12642953.v9"

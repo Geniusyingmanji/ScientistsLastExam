@@ -32,6 +32,10 @@ class CertificationPolicyTests(unittest.TestCase):
             certification_status("ProteinEngineering/ProteinStabilityDesign"),
             "candidate",
         )
+        self.assertEqual(
+            certification_status("MaterialsScience/AlloyHardnessOptimization"),
+            "candidate",
+        )
 
     def test_manifest_explicitly_covers_inventory(self):
         inventory_ids = {spec.task_id for spec in list_tasks(None)}

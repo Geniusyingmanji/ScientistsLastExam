@@ -226,8 +226,12 @@ tasks:
       - doi:10.1016/S0045-7930(98)00002-4
       - doi:10.1002/fld.953
   MaterialsScience/AlloyHardnessOptimization:
-    status: quarantined
-    reason: claimed experimental-data surrogate is a hand-written pseudo-physical polynomial with no dataset provenance
+    status: candidate
+    reason: >-
+      v1 replaces the source-free five-element polynomial with a hash-bound replay of the Borg MPEA literature compilation: 197 historical recipes from 44 full DOI groups train an equal-study-weight composition/process proxy after exact target recipe matches are removed, all thirteen eligible 2018-2019 composition-series studies form eight development and five citation-hash-held worlds, two charged hardness assays support a three-alloy batch with forced unmeasured 90 percent prediction intervals, and separate axes retain proxy false promotion, DOI-held transfer and nine sparse cross-DOI exact-recipe records; a frozen residual-smoothing witness reaches approximately 0.66 development and 0.88 heldout utility, pending repeated paired controls, server-held prospective alloys, harmonized processing/microstructure/indentation, independent synthesis and materials-science review
+    citation_ids:
+      - doi:10.1038/s41597-020-00768-9
+      - doi:10.6084/m9.figshare.12642953.v9
   Optics/DiffractionGratingDesign:
     status: quarantined
     reason: claimed RCWA is a scalar phase FFT with an analytic unit-efficiency phase-ramp shortcut

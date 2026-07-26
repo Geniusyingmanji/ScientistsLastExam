@@ -288,17 +288,47 @@ def _cavity_audit():
 
 def _alloy_audit():
     task = ROOT / "benchmarks/MaterialsScience/AlloyHardnessOptimization"
-    source = (task / "verification/evaluator.py").read_text(encoding="utf-8")
-    has_dataset = any((task / name).is_file() for name in (
-        "data.csv", "data.npz", "dataset.csv", "dataset.npz"
-    ))
+    oracle = _oracle("MaterialsScience/AlloyHardnessOptimization")
+    baseline = oracle.evaluate(oracle._baseline_policy)
+    reference = oracle.evaluate(oracle._reference_policy)
+    data = task / "verification/alloy_hardness_v1.json"
+    anchors = oracle._anchors()
     return {
         "task": "MaterialsScience/AlloyHardnessOptimization",
-        "admission": "quarantine",
-        "defect": "the claimed experimental-data surrogate is a hand-written pseudo-physical polynomial with no dataset artifact",
-        "oracle_self_labels_pseudo_physical": "pseudo-physical" in source,
-        "dataset_artifact_present": has_dataset,
-        "passed": "pseudo-physical" in source and not has_dataset,
+        "admission": "candidate",
+        "superseded_v1_defect": (
+            "the removed task claimed an experimental-data surrogate but used a "
+            "hand-written pseudo-physical polynomial without a dataset artifact"
+        ),
+        "resolved_defect": (
+            "the current task is a hash-bound Borg MPEA replay with complete DOI "
+            "grouping, a leakage-free historical proxy, charged study assays, "
+            "citation-hash-held transfer, uncertainty and sparse independent "
+            "exact-recipe confirmation"
+        ),
+        "dataset_artifact_present": data.is_file(),
+        "development_world_count": len(oracle.DEVELOPMENT_WORLDS),
+        "heldout_world_count": len(oracle.HELDOUT_WORLDS),
+        "baseline_score": float(baseline["combined_score"]),
+        "baseline_heldout_score": float(baseline["heldout_policy_score"]),
+        "reference_score": float(reference["combined_score"]),
+        "reference_heldout_score": float(reference["heldout_policy_score"]),
+        "rebuild_passed": True,
+        "passed": bool(
+            oracle.ALLOY_HARDNESS_OPTIMIZATION_V1
+            and data.is_file()
+            and len(oracle.DEVELOPMENT_WORLDS) == 8
+            and len(oracle.HELDOUT_WORLDS) == 5
+            and baseline["valid"] == 1.0
+            and baseline["combined_score"] == 0.0
+            and baseline["heldout_policy_score"] == 0.0
+            and reference["combined_score"] == 1.0
+            and reference["heldout_policy_score"] == 1.0
+            and anchors["split_development"]["reference_utility"]
+            > anchors["split_development"]["baseline_utility"] + 0.05
+            and anchors["split_heldout"]["reference_utility"]
+            > anchors["split_heldout"]["baseline_utility"] + 0.05
+        ),
     }
 
 

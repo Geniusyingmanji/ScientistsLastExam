@@ -138,8 +138,14 @@ The first review tranche contains real scientific topics but several narrow eval
   held-out Reynolds/grid convergence and conservation diagnostics.
 - Seismic inversion and sparse recovery naturally support procedural hidden instances and are
   strong candidates after task cards, invariants and multi-regime calibration.
-- The alloy task currently uses a pseudo-physical polynomial surrogate rather than experimental
-  material data. It should be replaced with a documented dataset/model split or quarantined.
+- AlloyHardnessOptimization-v1 now replaces the pseudo-physical polynomial with the hash-bound
+  Borg MPEA literature compilation. Full DOI grouping separates 197 historical proxy recipes
+  from 65 target recipes in thirteen later studies; exact target recipe matches are reserved
+  from proxy fitting as nine sparse cross-DOI confirmation records. A two-assay/three-alloy
+  policy reaches 0.658 development and 0.878 citation-hash-held utility, while confirmation
+  remains extremely sparse and can disagree by over 100 HV. Retain as a retrospective
+  active-design candidate pending prospective synthesis, harmonized processing/microstructure/
+  indentation, server-held alloys and independent materials-science review.
 - Diffraction grating uses a scalar FFT phase model, not the claimed rigorous coupled-wave
   analysis. Rename the fidelity or replace it with a validated RCWA oracle.
 - Neutron diffusion now has a conservative symmetric PDE/eigenvalue oracle and a reproducible
