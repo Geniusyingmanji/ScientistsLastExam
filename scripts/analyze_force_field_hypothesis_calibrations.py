@@ -33,6 +33,7 @@ from frontier_science.provenance import (  # noqa: E402
     finalize_report_trust,
     source_provenance,
 )
+from frontier_science.runtime_migration import runtime_migration_status  # noqa: E402
 
 
 TASK = "MolecularDynamics/ForceFieldCalibration"
@@ -826,6 +827,7 @@ def _analyze_records(
     records: dict[str, dict[str, Any]],
     runtime_source_equivalent: bool = True,
     runtime_source_changes: list[str] | None = None,
+    runtime_migration: dict[str, Any] | None = None,
     calibration_source_revision: str = INPUT_SOURCE_REVISION,
     model_source_revision: str = INPUT_SOURCE_REVISION,
 ) -> dict[str, Any]:
@@ -969,6 +971,7 @@ def _analyze_records(
         "model_source_revision": model_source_revision,
         "input_task_runtime_source_equivalent": runtime_source_equivalent,
         "input_task_runtime_source_changes": runtime_source_changes or [],
+        "input_task_runtime_source_migration": runtime_migration,
         "input_source_scope_equivalent": len(scopes) == 1,
         "input_llm_condition_equivalent": len(conditions) == 1,
         "input_task_contract_equivalent": len(contracts) == 1,
@@ -1120,11 +1123,16 @@ def analyze() -> dict[str, Any]:
         ["git", "rev-parse", "HEAD"], cwd=str(ROOT), text=True
     ).strip()
     changes = _source_changes(INPUT_SOURCE_REVISION, current_revision)
+    migration = runtime_migration_status(
+        INPUT_SOURCE_REVISION, current_revision, changes,
+    ) if changes else None
+    equivalent = bool(not changes or (migration or {}).get("accepted") is True)
     return _analyze_records(
         calibration,
         records,
-        runtime_source_equivalent=not changes,
+        runtime_source_equivalent=equivalent,
         runtime_source_changes=changes,
+        runtime_migration=migration,
     )
 
 

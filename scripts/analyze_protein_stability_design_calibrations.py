@@ -27,6 +27,7 @@ sys.path.insert(0, str(ROOT))
 
 from frontier_science.protocol import compact_trajectory_snapshot, load_trajectory  # noqa: E402
 from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402
+from frontier_science.runtime_migration import runtime_migration_status  # noqa: E402
 
 
 TASK = "ProteinEngineering/ProteinStabilityDesign"
@@ -505,6 +506,7 @@ def _analyze_records(
     expected_source_revision: str = INPUT_SOURCE_REVISION,
     runtime_source_equivalent: bool = True,
     runtime_source_changes: list[str] | None = None,
+    runtime_migration: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     one = records["budget_one"]
     normal = records["normal_budget_three"]
@@ -593,6 +595,7 @@ def _analyze_records(
         "input_source_revision": expected_source_revision,
         "input_task_runtime_source_equivalent": runtime_source_equivalent,
         "input_task_runtime_source_changes": runtime_source_changes or [],
+        "input_task_runtime_source_migration": runtime_migration,
         "input_source_scope_equivalent": len(scopes) == 1,
         "input_llm_condition_equivalent": len(conditions) == 1,
         "task_calibration": calibration,
@@ -695,11 +698,16 @@ def analyze() -> dict[str, Any]:
     }
     current_revision = source_provenance(ROOT).get("git_revision")
     changes = _source_changes(INPUT_SOURCE_REVISION, current_revision)
+    migration = runtime_migration_status(
+        INPUT_SOURCE_REVISION, current_revision, changes,
+    ) if changes else None
+    equivalent = bool(not changes or (migration or {}).get("accepted") is True)
     return _analyze_records(
         calibration,
         records,
-        runtime_source_equivalent=not changes,
+        runtime_source_equivalent=equivalent,
         runtime_source_changes=changes,
+        runtime_migration=migration,
     )
 
 

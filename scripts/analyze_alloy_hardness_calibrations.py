@@ -38,6 +38,10 @@ from frontier_science.provenance import (  # noqa: E402
     source_provenance,
 )
 from frontier_science.registry import find_task  # noqa: E402
+from frontier_science.runtime_migration import (  # noqa: E402
+    RUNTIME_PATHS,
+    runtime_migration_status,
+)
 
 
 TASK = "MaterialsScience/AlloyHardnessOptimization"
@@ -225,6 +229,13 @@ def _source_migration_status(
     """
 
     path = ROOT / SOURCE_MIGRATION
+    alloy_changes = [value for value in changes if value not in RUNTIME_PATHS]
+    runtime_changes = [value for value in changes if value in RUNTIME_PATHS]
+    runtime_migration = runtime_migration_status(
+        INPUT_SOURCE_REVISION, current_revision, changes,
+        additional_allowed_changes=SOURCE_MIGRATION_CHANGES,
+        additional_checks={"alloy_hash_order_migration": True},
+    ) if runtime_changes else None
     status: dict[str, Any] = {
         "required": bool(changes),
         "report": SOURCE_MIGRATION,
@@ -234,6 +245,9 @@ def _source_migration_status(
         "current_revision": current_revision,
         "task_runtime_source_changes": list(changes),
         "expected_task_runtime_source_changes": list(SOURCE_MIGRATION_CHANGES),
+        "alloy_task_runtime_source_changes": alloy_changes,
+        "shared_runtime_source_changes": runtime_changes,
+        "shared_runtime_migration": runtime_migration,
         "current_source_sha256": {
             relative: _sha256(ROOT / relative)
             for relative in SOURCE_MIGRATION_HASHES
@@ -280,7 +294,11 @@ def _source_migration_status(
             SOURCE_MIGRATION_REVISION, current_revision,
         ),
         "runtime_change_scope_matches": bool(
-            changes == list(SOURCE_MIGRATION_CHANGES)
+            alloy_changes == list(SOURCE_MIGRATION_CHANGES)
+            and (
+                not runtime_changes
+                or (runtime_migration or {}).get("accepted") is True
+            )
             and source.get("input_source_revision") == INPUT_SOURCE_REVISION
             and source.get("audited_target_revision")
             == SOURCE_MIGRATION_REVISION

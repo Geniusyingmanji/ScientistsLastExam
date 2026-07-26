@@ -30,6 +30,7 @@ from frontier_science.provenance import (  # noqa: E402
     finalize_report_trust,
     source_provenance,
 )
+from frontier_science.runtime_migration import runtime_migration_status  # noqa: E402
 
 
 TASK = "Turbulence/RANSCalibration"
@@ -366,6 +367,7 @@ def _analyze_records(
     records: dict[str, dict[str, Any]],
     runtime_source_equivalent: bool = True,
     expected_model_source_revision: str = EXPECTED_MODEL_SOURCE_REVISION,
+    runtime_migration: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     one = records["budget_one"]
     normal = records["normal_budget_three"]
@@ -435,6 +437,7 @@ def _analyze_records(
         ),
         "expected_model_source_revision": expected_model_source_revision,
         "input_task_runtime_source_equivalent": bool(runtime_source_equivalent),
+        "input_task_runtime_source_migration": runtime_migration,
         "input_source_scope_equivalent": len(scopes) == 1,
         "input_llm_condition_equivalent": len(conditions) == 1,
         "task_calibration": calibration,
@@ -500,9 +503,20 @@ def analyze() -> dict[str, Any]:
             calibration["source_revision"], next(iter(revisions))
         )
         runtime_source_equivalent = not runtime_changes
+    current_revision = source_provenance(ROOT).get("git_revision")
+    current_changes = _source_changes(EXPECTED_MODEL_SOURCE_REVISION, current_revision)
+    migration = runtime_migration_status(
+        EXPECTED_MODEL_SOURCE_REVISION, current_revision, current_changes,
+    ) if current_changes else None
+    runtime_source_equivalent = bool(
+        runtime_source_equivalent
+        and (not current_changes or (migration or {}).get("accepted") is True)
+    )
+    runtime_changes = sorted(set(runtime_changes + current_changes))
     report = _analyze_records(
         calibration, records, runtime_source_equivalent,
         expected_model_source_revision=EXPECTED_MODEL_SOURCE_REVISION,
+        runtime_migration=migration,
     )
     report["input_task_runtime_source_changes"] = runtime_changes
     return report

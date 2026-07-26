@@ -28,6 +28,7 @@ sys.path.insert(0, str(ROOT))
 
 from frontier_science.protocol import compact_trajectory_snapshot, load_trajectory  # noqa: E402
 from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402
+from frontier_science.runtime_migration import runtime_migration_status  # noqa: E402
 
 
 TASK = "Electrochemistry/ElectrolyteConductivityDesign"
@@ -510,6 +511,7 @@ def _analyze_records(
     records: dict[str, dict[str, Any]],
     task_runtime_source_equivalent: bool = True,
     task_runtime_source_changes: list[str] | None = None,
+    runtime_migration: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     one = records["budget_one"]
     normal = records["normal_budget_three"]
@@ -634,6 +636,7 @@ def _analyze_records(
         "input_model_source_revision": MODEL_SOURCE_REVISION,
         "input_task_runtime_source_equivalent": task_runtime_source_equivalent,
         "input_task_runtime_source_changes": task_runtime_source_changes or [],
+        "input_task_runtime_source_migration": runtime_migration,
         "input_source_scope_equivalent": len(scopes) == 1,
         "input_llm_condition_equivalent": len(conditions) == 1,
         "input_task_contract_equivalent": len(task_contracts) == 1,
@@ -759,11 +762,16 @@ def analyze() -> dict[str, Any]:
     }
     current_revision = source_provenance(ROOT).get("git_revision")
     changes = _source_changes(TASK_SOURCE_REVISION, current_revision)
+    migration = runtime_migration_status(
+        TASK_SOURCE_REVISION, current_revision, changes,
+    ) if changes else None
+    equivalent = bool(not changes or (migration or {}).get("accepted") is True)
     return _analyze_records(
         calibration,
         records,
-        task_runtime_source_equivalent=not changes,
+        task_runtime_source_equivalent=equivalent,
         task_runtime_source_changes=changes,
+        runtime_migration=migration,
     )
 
 

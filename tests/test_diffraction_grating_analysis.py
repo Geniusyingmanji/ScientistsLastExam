@@ -46,7 +46,16 @@ class DiffractionGratingAnalysisTests(unittest.TestCase):
             report["model_to_analysis_task_runtime_source_equivalent"]
         )
         self.assertEqual(
-            report["model_to_analysis_task_runtime_source_changes"], []
+            report["model_to_analysis_task_runtime_source_changes"],
+            [
+                "benchmarks/Optics/DiffractionGratingDesign/verification/evaluator.py",
+                "frontier_science/evaluate.py",
+                "frontier_science/secure_eval.py",
+                "frontier_science/trusted_driver.py",
+            ],
+        )
+        self.assertTrue(
+            report["model_to_analysis_task_runtime_source_migration"]["accepted"]
         )
         self.assertTrue(report["input_source_scope_equivalent"])
         self.assertTrue(report["input_llm_condition_equivalent"])
@@ -66,7 +75,7 @@ class DiffractionGratingAnalysisTests(unittest.TestCase):
             for scan in record["retained_artifact_scans"].values()
         ))
         self.assertTrue(all(
-            replay["metrics_exactly_match_bound_trajectory"]
+            replay["metrics_numerically_equivalent_to_bound_trajectory"]
             for record in report["records"].values()
             for replay in record["retained_artifact_replays"].values()
         ))

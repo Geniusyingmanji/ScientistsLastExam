@@ -39,6 +39,10 @@ from frontier_science.provenance import (  # noqa: E402
     source_provenance,
 )
 from frontier_science.registry import find_task  # noqa: E402
+from frontier_science.runtime_migration import (  # noqa: E402
+    compare_json_values,
+    runtime_migration_status,
+)
 
 
 TASK = "Optics/DiffractionGratingDesign"
@@ -89,6 +93,16 @@ CALIBRATION_SHA256 = (
 CROSSCHECK_SHA256 = (
     "4ca80525aed02cf613b60a5cc94ba632c51335057def94b3b7794f413671f8dc"
 )
+TASK_CONFIRMATION_MIGRATION_PATH = (
+    "benchmarks/Optics/DiffractionGratingDesign/verification/evaluator.py"
+)
+TASK_CONFIRMATION_BASE_SHA256 = (
+    "b2662c9b531d969dcba58e9e40a51ea868a64cda9d47070d9b71ca89f124706a"
+)
+TASK_CONFIRMATION_CURRENT_SHA256 = (
+    "6b02d2e25baa0c272d4eb568880dd5df8b373d25db6080f8dc5fba07f1b78a23"
+)
+REPLAY_NUMERIC_TOLERANCE = 5.0e-10
 TASK_RUNTIME_SCOPE = (
     "frontier_science/evaluate.py",
     "frontier_science/trusted_driver.py",
@@ -555,6 +569,10 @@ def _replay_retained_sources(
         if source_hash not in by_hash:
             metrics = evaluate_candidate(spec, path, timeout_s=120)
             target = expected[source_hash]
+            comparison = compare_json_values(
+                target, metrics,
+                numeric_tolerance=REPLAY_NUMERIC_TOLERANCE,
+            )
             by_hash[source_hash] = {
                 "source_sha256": source_hash,
                 "valid": metrics.get("valid"),
@@ -565,6 +583,15 @@ def _replay_retained_sources(
                     "heldout_robustness_score"
                 ),
                 "metrics_exactly_match_bound_trajectory": metrics == target,
+                "metrics_numerically_equivalent_to_bound_trajectory": (
+                    comparison["equivalent"]
+                ),
+                "non_numeric_difference_count": comparison[
+                    "non_numeric_difference_count"
+                ],
+                "maximum_absolute_numeric_difference": comparison[
+                    "maximum_absolute_numeric_difference"
+                ],
             }
         results[name] = dict(by_hash[source_hash])
     return results
@@ -782,7 +809,7 @@ def _load_model(
         and (
             not replay_retained_sources
             or all(
-                item["metrics_exactly_match_bound_trajectory"]
+                item["metrics_numerically_equivalent_to_bound_trajectory"]
                 for item in replay.values()
             )
         )
@@ -808,6 +835,7 @@ def _analyze_records(
     calibration_to_model_source_changes: list[str] | None = None,
     model_to_runtime_source_equivalent: bool = True,
     model_to_runtime_source_changes: list[str] | None = None,
+    model_to_runtime_migration: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     one = records["budget_one"]
     normal = records["normal_budget_three"]
@@ -917,6 +945,9 @@ def _analyze_records(
         ),
         "model_to_analysis_task_runtime_source_changes": (
             model_to_runtime_source_changes or []
+        ),
+        "model_to_analysis_task_runtime_source_migration": (
+            model_to_runtime_migration
         ),
         "input_source_scope_equivalent": len(scopes) == 1,
         "input_llm_condition_equivalent": len(conditions) == 1,
@@ -1030,7 +1061,7 @@ def _analyze_records(
                 for scan in record["retained_artifact_scans"].values()
             ),
             "retained_artifact_replays_are_deterministic": all(
-                replay["metrics_exactly_match_bound_trajectory"]
+                replay["metrics_numerically_equivalent_to_bound_trajectory"]
                 for record in records.values()
                 for replay in record["retained_artifact_replays"].values()
             ),
@@ -1072,14 +1103,41 @@ def analyze(replay_retained_sources: bool = True) -> dict[str, Any]:
         TASK_CALIBRATION_SOURCE_REVISION, MODEL_SOURCE_REVISION
     )
     model_to_runtime_changes = _source_changes(MODEL_SOURCE_REVISION, current_revision)
+    old_evaluator_sha256 = hashlib.sha256(subprocess.check_output(
+        ["git", "show", MODEL_SOURCE_REVISION + ":" + TASK_CONFIRMATION_MIGRATION_PATH],
+        cwd=str(ROOT),
+    )).hexdigest()
+    current_evaluator_sha256 = _sha256(ROOT / TASK_CONFIRMATION_MIGRATION_PATH)
+    confirmation_checks = {
+        "old_evaluator_hash_matches": (
+            old_evaluator_sha256 == TASK_CONFIRMATION_BASE_SHA256
+        ),
+        "current_evaluator_hash_matches": (
+            current_evaluator_sha256 == TASK_CONFIRMATION_CURRENT_SHA256
+        ),
+        "legacy_replays_are_equivalent": all(
+            replay["metrics_numerically_equivalent_to_bound_trajectory"]
+            for record in records.values()
+            for replay in record["retained_artifact_replays"].values()
+        ),
+    }
+    migration = runtime_migration_status(
+        MODEL_SOURCE_REVISION, current_revision, model_to_runtime_changes,
+        additional_allowed_changes=(TASK_CONFIRMATION_MIGRATION_PATH,),
+        additional_checks=confirmation_checks,
+    ) if model_to_runtime_changes else None
+    model_to_runtime_equivalent = bool(
+        not model_to_runtime_changes or (migration or {}).get("accepted") is True
+    )
     return _analyze_records(
         calibration,
         crosscheck,
         records,
         calibration_to_model_source_equivalent=not calibration_to_model_changes,
         calibration_to_model_source_changes=calibration_to_model_changes,
-        model_to_runtime_source_equivalent=not model_to_runtime_changes,
+        model_to_runtime_source_equivalent=model_to_runtime_equivalent,
         model_to_runtime_source_changes=model_to_runtime_changes,
+        model_to_runtime_migration=migration,
     )
 
 

@@ -40,7 +40,10 @@ class AlloyHardnessAnalysisTests(unittest.TestCase):
         self.assertFalse(report["input_task_runtime_source_unchanged"])
         self.assertEqual(
             report["input_task_runtime_source_changes"],
-            list(self.module.SOURCE_MIGRATION_CHANGES),
+            sorted(
+                list(self.module.SOURCE_MIGRATION_CHANGES)
+                + list(self.module.RUNTIME_PATHS)
+            ),
         )
         migration = report["input_task_runtime_source_migration"]
         self.assertTrue(migration["accepted"], migration)
@@ -229,9 +232,7 @@ class AlloyHardnessAnalysisTests(unittest.TestCase):
 
         extra = self.module._source_migration_status(
             revision,
-            list(self.module.SOURCE_MIGRATION_CHANGES) + [
-                "frontier_science/evaluate.py"
-            ],
+            list(self.module.SOURCE_MIGRATION_CHANGES) + ["frontier_science/change.py"],
         )
         self.assertFalse(extra["accepted"])
         self.assertFalse(extra["checks"]["runtime_change_scope_matches"])

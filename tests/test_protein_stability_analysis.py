@@ -39,7 +39,15 @@ class ProteinStabilityAnalysisTests(unittest.TestCase):
         self.assertTrue(report["input_source_scope_equivalent"])
         self.assertTrue(report["input_llm_condition_equivalent"])
         self.assertTrue(report["input_task_runtime_source_equivalent"])
-        self.assertEqual(report["input_task_runtime_source_changes"], [])
+        self.assertEqual(
+            report["input_task_runtime_source_changes"],
+            [
+                "frontier_science/evaluate.py",
+                "frontier_science/secure_eval.py",
+                "frontier_science/trusted_driver.py",
+            ],
+        )
+        self.assertTrue(report["input_task_runtime_source_migration"]["accepted"])
         self.assertEqual(
             set(report["records"]),
             {"budget_one", "normal_budget_three", "blind_budget_three"},
