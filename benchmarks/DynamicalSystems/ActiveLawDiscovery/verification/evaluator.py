@@ -201,6 +201,30 @@ def build_confirmation_context(panel_id, master_seed):
     return context
 
 
+def audit_confirmation_context(context):
+    specs = _confirmation_specs(context)
+    kinds = [spec[3] for spec in specs]
+    templates = [spec[1] for spec in specs if spec[3] == "in_library"]
+    seeds = [spec[0] for spec in specs]
+    passed = bool(
+        len(specs) == CONFIRMATION_WORLD_COUNT
+        and sorted(kinds) == ["in_library"] * 5 + ["misspecified", "null"]
+        and sorted(templates) == list(range(5))
+        and len(set(seeds)) == len(seeds)
+        and set(seeds).isdisjoint(_STATIC_WORLD_SEEDS)
+    )
+    if not passed:
+        raise ValueError("ActiveLaw confirmation panel audit failed")
+    return {
+        "passed": True,
+        "world_count": len(specs),
+        "in_library_count": kinds.count("in_library"),
+        "null_count": kinds.count("null"),
+        "misspecified_count": kinds.count("misspecified"),
+        "static_seed_overlap_count": len(set(seeds) & _STATIC_WORLD_SEEDS),
+    }
+
+
 def _derivative(world, state, control):
     value = _library(state, control) @ world["coefficients"]
     if world["kind"] == "misspecified":

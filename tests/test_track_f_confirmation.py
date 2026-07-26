@@ -69,6 +69,9 @@ class ActiveLawConfirmationTests(unittest.TestCase):
         self.assertTrue(
             {spec[0] for spec in first}.isdisjoint(ACTIVE._STATIC_WORLD_SEEDS)
         )
+        audit = ACTIVE.audit_confirmation_context(_active_context())
+        self.assertTrue(audit["passed"])
+        self.assertEqual(audit["static_seed_overlap_count"], 0)
 
     def test_baseline_and_exact_oracle_calibrate_fresh_panel(self):
         context = _active_context()
@@ -222,6 +225,14 @@ class DiffractionConfirmationTests(unittest.TestCase):
             canonical_trusted_context(plausible),
             canonical_trusted_context(self.context),
         )
+        with self.assertRaisesRegex(ValueError, "anchor audit"):
+            DIFFRACTION.audit_confirmation_context(plausible)
+
+        audit = DIFFRACTION.audit_confirmation_context(self.context)
+        self.assertTrue(audit["passed"])
+        self.assertLessEqual(audit["maximum_anchor_error"], 1.0e-12)
+        self.assertGreater(audit["minimum_nominal_headroom"], 0.05)
+        self.assertGreater(audit["minimum_robust_headroom"], 0.05)
 
     def test_secure_baseline_binds_private_resolved_context(self):
         spec = find_task(

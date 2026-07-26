@@ -794,6 +794,43 @@ def build_confirmation_context(panel_id: str, master_seed: int) -> dict[str, Any
     return context
 
 
+def audit_confirmation_context(context: dict[str, Any]) -> dict[str, Any]:
+    """Recompute every private normalization anchor before outcome evaluation."""
+    _validate_confirmation_context(context)
+    expected_specs, expected_shifts = _confirmation_blueprint(
+        int(context["master_seed"])
+    )
+    maximum_anchor_error = 0.0
+    nominal_headrooms = []
+    robust_headrooms = []
+    for stored, expected in zip(context["worlds"], expected_specs):
+        recalculated = _make_world(expected, expected_shifts)
+        expected_anchors = (
+            recalculated["baseline_utility"],
+            recalculated["reference_utility"],
+            recalculated["baseline_robust_utility"],
+            recalculated["reference_robust_utility"],
+        )
+        observed_anchors = tuple(float(value) for value in stored["anchors"])
+        maximum_anchor_error = max(
+            maximum_anchor_error,
+            max(abs(left - right) for left, right in zip(
+                observed_anchors, expected_anchors
+            )),
+        )
+        nominal_headrooms.append(expected_anchors[1] - expected_anchors[0])
+        robust_headrooms.append(expected_anchors[3] - expected_anchors[2])
+    if maximum_anchor_error > 1.0e-12:
+        raise ValueError("diffraction confirmation anchor audit failed")
+    return {
+        "passed": True,
+        "world_count": len(expected_specs),
+        "maximum_anchor_error": maximum_anchor_error,
+        "minimum_nominal_headroom": min(nominal_headrooms),
+        "minimum_robust_headroom": min(robust_headrooms),
+    }
+
+
 def _confirmation_worlds(context: dict[str, Any]) -> tuple[dict[str, Any], ...]:
     _validate_confirmation_context(context)
     shifts = tuple(copy.deepcopy(value) for value in context["shifts"])
