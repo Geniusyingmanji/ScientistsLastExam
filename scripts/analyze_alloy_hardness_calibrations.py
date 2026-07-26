@@ -43,6 +43,25 @@ from frontier_science.registry import find_task  # noqa: E402
 TASK = "MaterialsScience/AlloyHardnessOptimization"
 INPUT_SOURCE_REVISION = "52dcec0c1a4df2d7f92cdef1d6d2bafa2e81f18e"
 CALIBRATION = "experiments/alloy_hardness_v1_calibration_2026-07-26.json"
+SOURCE_MIGRATION = (
+    "experiments/alloy_hash_order_migration_audit_2026-07-26.json"
+)
+SOURCE_MIGRATION_SHA256 = (
+    "bea6d21e542c27903a31ee9bdb0d9fced6a4a7014b41c6df4ec8f224512672bb"
+)
+SOURCE_MIGRATION_REVISION = "89e3345db57e15b5bbfe10e36f5c06bd260b9293"
+SOURCE_MIGRATION_CHANGES = (
+    "benchmarks/MaterialsScience/AlloyHardnessOptimization/solution.py",
+    "benchmarks/MaterialsScience/AlloyHardnessOptimization/verification/evaluator.py",
+)
+SOURCE_MIGRATION_HASHES = {
+    "benchmarks/MaterialsScience/AlloyHardnessOptimization/solution.py": (
+        "9079971176c51f75a0363e59286f29d0f42bf3b78310c8bc65a515b376165bc5"
+    ),
+    "benchmarks/MaterialsScience/AlloyHardnessOptimization/verification/evaluator.py": (
+        "6a2ac322d7cb67818ad4fabca24bfc9a21dc0ddb05c3037c91e9f9fab70537ae"
+    ),
+}
 DATA = (
     ROOT
     / "benchmarks/MaterialsScience/AlloyHardnessOptimization/verification/"
@@ -184,6 +203,162 @@ def _source_changes(left: str, right: str) -> list[str]:
         stderr=subprocess.DEVNULL,
     )
     return [line for line in output.splitlines() if line.strip()]
+
+
+def _is_ancestor(left: str, right: str) -> bool:
+    return subprocess.run(
+        ["git", "merge-base", "--is-ancestor", left, right],
+        cwd=str(ROOT), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+        check=False,
+    ).returncode == 0
+
+
+def _source_migration_status(
+    current_revision: str, changes: list[str],
+) -> dict[str, Any]:
+    """Accept only the hash-bound Alloy sorting migration audit.
+
+    The audit was generated on a clean revision after enumerating the complete
+    finite landscape and replaying all retained source artifacts.  Descendant
+    analysis revisions are accepted only while the two runtime files remain
+    byte-identical and no additional task-runtime path has changed.
+    """
+
+    path = ROOT / SOURCE_MIGRATION
+    status: dict[str, Any] = {
+        "required": bool(changes),
+        "report": SOURCE_MIGRATION,
+        "expected_report_sha256": SOURCE_MIGRATION_SHA256,
+        "report_sha256": _sha256(path) if path.is_file() else None,
+        "audited_revision": SOURCE_MIGRATION_REVISION,
+        "current_revision": current_revision,
+        "task_runtime_source_changes": list(changes),
+        "expected_task_runtime_source_changes": list(SOURCE_MIGRATION_CHANGES),
+        "current_source_sha256": {
+            relative: _sha256(ROOT / relative)
+            for relative in SOURCE_MIGRATION_HASHES
+            if (ROOT / relative).is_file()
+        },
+        "accepted": False,
+    }
+    if not path.is_file():
+        status["failure_reason"] = "migration_report_missing"
+        return status
+    try:
+        report = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        status["failure_reason"] = "migration_report_invalid_json"
+        return status
+    provenance = report.get("source_provenance") or {}
+    source = report.get("source_contract") or {}
+    landscape = report.get("finite_landscape_audit") or {}
+    calibration = report.get("clean_calibration_audit") or {}
+    retained = report.get("retained_artifact_audit") or {}
+    conclusion = report.get("conclusion") or {}
+    source_records = source.get("source_hash_records") or []
+    source_record_hashes = {
+        row.get("path"): row.get("new_sha256")
+        for row in source_records if isinstance(row, dict)
+    }
+    artifact_records = retained.get("artifact_instances") or []
+    baseline = retained.get("baseline_replay") or {}
+    checks = {
+        "report_hash_matches": status["report_sha256"]
+        == SOURCE_MIGRATION_SHA256,
+        "report_passed_clean": bool(
+            report.get("schema_version") == 1
+            and report.get("task") == TASK
+            and report.get("execution_passed") is True
+            and report.get("passed") is True
+            and report.get("trusted_evidence") is True
+            and report.get("trust_decision") == "trusted_clean_revision"
+            and provenance.get("git_revision") == SOURCE_MIGRATION_REVISION
+            and provenance.get("source_tree_dirty") is False
+            and provenance.get("source_changes") == []
+        ),
+        "audited_revision_is_ancestor": _is_ancestor(
+            SOURCE_MIGRATION_REVISION, current_revision,
+        ),
+        "runtime_change_scope_matches": bool(
+            changes == list(SOURCE_MIGRATION_CHANGES)
+            and source.get("input_source_revision") == INPUT_SOURCE_REVISION
+            and source.get("audited_target_revision")
+            == SOURCE_MIGRATION_REVISION
+            and source.get("task_runtime_source_changes")
+            == list(SOURCE_MIGRATION_CHANGES)
+            and source.get("allowed_task_runtime_source_changes")
+            == list(SOURCE_MIGRATION_CHANGES)
+            and source.get("passed") is True
+        ),
+        "current_runtime_hashes_match": bool(
+            status["current_source_sha256"] == SOURCE_MIGRATION_HASHES
+            and all(
+                source_record_hashes.get(relative) == expected
+                for relative, expected in SOURCE_MIGRATION_HASHES.items()
+            )
+        ),
+        "finite_landscape_passed": bool(
+            landscape.get("passed") is True
+            and landscape.get("world_count") == 13
+            and landscape.get("pair_count_per_seed") == 137
+            and landscape.get("three_alloy_utility_count_per_seed") == 318
+            and landscape.get("old_cross_seed_bit_exact") is False
+            and landscape.get("new_cross_seed_bit_exact") is True
+            and landscape.get("old_unique_landscape_sha256_count") == 5
+            and landscape.get("new_unique_landscape_sha256_count") == 1
+            and all(
+                row.get("proxy_and_truth_optimal_rows_exactly_match") is True
+                and row.get("baseline_metrics_exactly_match") is True
+                and row.get("reference_metrics_exactly_match") is True
+                for row in (landscape.get("records") or [])
+            )
+            and len(landscape.get("records") or []) == 5
+        ),
+        "clean_calibration_passed": bool(
+            calibration.get("passed") is True
+            and calibration.get("current_calibration_source_revision")
+            == SOURCE_MIGRATION_REVISION
+            and calibration.get("current_calibration_source_clean") is True
+            and calibration.get("current_calibration_execution_passed") is True
+            and calibration.get("current_calibration_trusted_evidence") is True
+            and calibration.get("truth_blind_aggregate_metrics_exactly_match")
+            is True
+            and calibration.get("truth_blind_per_world_difference_count") == 1
+            and float(calibration.get(
+                "maximum_truth_blind_absolute_difference", math.inf,
+            )) <= 2.0e-16
+            and calibration.get("data_sha256") == DATA_SHA256
+        ),
+        "retained_replay_passed": bool(
+            retained.get("passed") is True
+            and retained.get("artifact_instance_count") == 6
+            and retained.get("unique_retained_source_count") == 4
+            and retained.get("proposal_record_count") == 7
+            and retained.get("unique_proposal_count") == 7
+            and retained.get("retained_unique_proposal_count") == 4
+            and retained.get("unretained_unique_proposal_count") == 3
+            and len(artifact_records) == 6
+            and all(
+                row.get("metrics_exactly_match_bound_trajectory") is True
+                for row in artifact_records
+            )
+            and baseline.get("old_source_exactly_matches_frozen_metrics") is True
+            and baseline.get("new_source_exactly_matches_frozen_metrics") is True
+            and baseline.get("old_and_new_source_metrics_exactly_match") is True
+        ),
+        "conclusion_is_scoped": bool(
+            conclusion.get("migration_accepted") is True
+            and conclusion.get("scientific_selection_space_changed") is False
+            and conclusion.get("baseline_or_reference_metrics_changed") is False
+            and conclusion.get("retained_source_metrics_changed") is False
+            and conclusion.get("intermediate_unretained_sources_replayed") is False
+        ),
+    }
+    status["checks"] = checks
+    status["accepted"] = all(checks.values())
+    if not status["accepted"]:
+        status["failure_reason"] = "migration_gate_failed"
+    return status
 
 
 def _failure_kind(event: dict[str, Any]) -> str | None:
@@ -689,6 +864,7 @@ def _analyze_records(
     records: dict[str, dict[str, Any]],
     runtime_source_equivalent: bool = True,
     runtime_source_changes: list[str] | None = None,
+    source_migration: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     one = records["budget_one"]
     normal = records["normal_budget_three"]
@@ -707,6 +883,10 @@ def _analyze_records(
     selected = {
         label: record["selected_metrics"] for label, record in records.items()
     }
+    migration_equivalent = bool(
+        not runtime_source_changes
+        or (source_migration or {}).get("accepted") is True
+    )
     contrast = {
         field: normal["selected_metrics"][field]
         - blind["selected_metrics"][field]
@@ -765,6 +945,7 @@ def _analyze_records(
         calibration["source_revision"] == INPUT_SOURCE_REVISION
         and revisions == {INPUT_SOURCE_REVISION}
         and runtime_source_equivalent
+        and migration_equivalent
         and len(scopes) == 1
         and tuple(calibration.get("source_scope") or []) in scopes
         and len(conditions) == 1
@@ -808,7 +989,12 @@ def _analyze_records(
         "environment": {"python": sys.version, "platform": platform.platform()},
         "input_source_revision": INPUT_SOURCE_REVISION,
         "input_task_runtime_source_equivalent": runtime_source_equivalent,
+        "input_task_runtime_source_unchanged": not bool(
+            runtime_source_changes
+        ),
         "input_task_runtime_source_changes": runtime_source_changes or [],
+        "input_task_runtime_source_migration": source_migration,
+        "input_task_runtime_source_migration_equivalent": migration_equivalent,
         "input_source_scope_equivalent": len(scopes) == 1,
         "input_llm_condition_equivalent": len(conditions) == 1,
         "input_task_contract_equivalent": len(task_contracts) == 1,
@@ -1007,11 +1193,18 @@ def analyze(replay_retained_sources: bool = True) -> dict[str, Any]:
     }
     current_revision = source_provenance(ROOT).get("git_revision")
     changes = _source_changes(INPUT_SOURCE_REVISION, current_revision)
+    source_migration = (
+        _source_migration_status(current_revision, changes) if changes else None
+    )
+    runtime_source_equivalent = bool(
+        not changes or (source_migration or {}).get("accepted") is True
+    )
     return _analyze_records(
         calibration,
         records,
-        runtime_source_equivalent=not changes,
+        runtime_source_equivalent=runtime_source_equivalent,
         runtime_source_changes=changes,
+        source_migration=source_migration,
     )
 
 

@@ -37,7 +37,17 @@ class AlloyHardnessAnalysisTests(unittest.TestCase):
         )
         self.assertEqual(report["passed"], report["trusted_evidence"])
         self.assertTrue(report["input_task_runtime_source_equivalent"])
-        self.assertEqual(report["input_task_runtime_source_changes"], [])
+        self.assertFalse(report["input_task_runtime_source_unchanged"])
+        self.assertEqual(
+            report["input_task_runtime_source_changes"],
+            list(self.module.SOURCE_MIGRATION_CHANGES),
+        )
+        migration = report["input_task_runtime_source_migration"]
+        self.assertTrue(migration["accepted"], migration)
+        self.assertTrue(all(migration["checks"].values()))
+        self.assertTrue(
+            report["input_task_runtime_source_migration_equivalent"]
+        )
         self.assertTrue(report["input_source_scope_equivalent"])
         self.assertTrue(report["input_llm_condition_equivalent"])
         self.assertTrue(report["input_task_contract_equivalent"])
@@ -200,6 +210,31 @@ class AlloyHardnessAnalysisTests(unittest.TestCase):
             self.report["task_calibration"], records,
         )
         self.assertFalse(failed["execution_passed"])
+
+        failed = self.module._analyze_records(
+            self.report["task_calibration"],
+            copy.deepcopy(self.report["records"]),
+            runtime_source_equivalent=True,
+            runtime_source_changes=list(self.module.SOURCE_MIGRATION_CHANGES),
+            source_migration={"accepted": False},
+        )
+        self.assertFalse(failed["execution_passed"])
+
+    def test_source_migration_is_hash_bound_and_scoped(self):
+        revision = self.module.source_provenance(ROOT)["git_revision"]
+        accepted = self.module._source_migration_status(
+            revision, list(self.module.SOURCE_MIGRATION_CHANGES),
+        )
+        self.assertTrue(accepted["accepted"], accepted)
+
+        extra = self.module._source_migration_status(
+            revision,
+            list(self.module.SOURCE_MIGRATION_CHANGES) + [
+                "frontier_science/evaluate.py"
+            ],
+        )
+        self.assertFalse(extra["accepted"])
+        self.assertFalse(extra["checks"]["runtime_change_scope_matches"])
 
         failed = self.module._analyze_records(
             self.report["task_calibration"],
