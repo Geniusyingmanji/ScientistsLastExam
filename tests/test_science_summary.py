@@ -18,7 +18,7 @@ def load_summary_module():
 class ScienceCalibrationSummaryTests(unittest.TestCase):
     def test_default_reports_cover_all_normal_science_calibrations(self):
         module = load_summary_module()
-        self.assertEqual(len(module.DEFAULT_REPORTS), 71)
+        self.assertEqual(len(module.DEFAULT_REPORTS), 73)
         self.assertTrue(any("truss_v2_b3" in path for path in module.DEFAULT_REPORTS))
         self.assertTrue(any("antenna_v2_b3" in path for path in module.DEFAULT_REPORTS))
         self.assertTrue(any("nmr_v2_b3" in path for path in module.DEFAULT_REPORTS))
@@ -197,14 +197,22 @@ class ScienceCalibrationSummaryTests(unittest.TestCase):
             "force_field_hypothesis_v2_b3" in path
             for path in module.DEFAULT_REPORTS
         ))
+        self.assertTrue(any(
+            "alloy_hardness_v1_b1" in path
+            for path in module.DEFAULT_REPORTS
+        ))
+        self.assertTrue(any(
+            "alloy_hardness_v1_b3" in path
+            for path in module.DEFAULT_REPORTS
+        ))
         self.assertFalse(any("blind" in path for path in module.DEFAULT_REPORTS))
 
         report = module.build_report([
             Path(__file__).resolve().parents[1] / path
             for path in module.DEFAULT_REPORTS
         ])
-        self.assertEqual(report["normal_condition_count"], 71)
-        self.assertEqual(report["task_count"], 36)
+        self.assertEqual(report["normal_condition_count"], 73)
+        self.assertEqual(report["task_count"], 37)
 
     def test_scalar_metric_filter_rejects_nonfinite_and_omits_nested(self):
         from frontier_science.protocol import compact_scalar_metrics
