@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_DERIVED_EVIDENCE / DESIGN_ONLY",
+  "evidence_scope": "PILOT_BASED_TRACK_F_PRECISION_PLANNING_NOT_FEEDBACK_EFFECT_OR_AUTONOMOUS_DISCOVERY_EVIDENCE",
+  "created_at": "2026-07-26T15:38:20.735271+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "ddfeed4bb753480740c34b6799cb909eb82c12ae",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/plan_track_f_precision.py",
+      "--pilot",
+      "experiments/feedback_measurement_pilot_analysis_2026-07-26_v1.json",
+      "--output",
+      "experiments/track_f_precision_plan_2026-07-26_v1.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29",
+    "scipy": "1.10.1"
+  },
+  "input": {
+    "path": "/home/azureuser/workspace-gzy/zyf/frontier-science/experiments/feedback_measurement_pilot_analysis_2026-07-26_v1.json",
+    "sha256": "dbb392acb89fe36da243765f8be92a55ad1039e7c2b9cbc8e0930559e2c4aa5e"
+  },
+  "design": {
+    "primary_contrast": "normal_minus_selection_blind",
+    "primary_horizon": "common_total_token_horizon",
+    "primary_task": "DynamicalSystems/ActiveLawDiscovery",
+    "primary_pilot_proxy_axis": "robustness_score",
+    "primary_fresh_confirmation_axis": "confirmation_normalized_mechanism_score",
+    "secondary_stress_test_task": "Optics/DiffractionGratingDesign",
+    "secondary_pilot_axis": "heldout_robustness_score",
+    "secondary_fresh_confirmation_axis": "confirmation_robustness_score",
+    "minimum_important_difference": 0.15,
+    "two_sided_alpha": 0.05,
+    "confirmatory_primary_hypothesis_count": 1,
+    "target_power": 0.8,
+    "power_method": "two_sided_equal_n_independent_two_sample_noncentral_t",
+    "provider_draw_assumption": "independent_unpaired",
+    "same_local_identifier_is_paired_seed": false,
+    "design_per_condition_sd": 0.25,
+    "balance_multiple": 4,
+    "sensitivity_per_condition_sds": [
+      0.2,
+      0.25,
+      0.3,
+      0.35
+    ]
+  },
+  "pilot_diagnostics": {
+    "DynamicalSystems/ActiveLawDiscovery": {
+      "axis": "robustness_score",
+      "pilot_local_identifier_differences": [
+        -0.003126500000000032,
+        0.03030250000000001
+      ],
+      "pilot_n": 2,
+      "pilot_difference_sample_sd": 0.023637872588285126,
+      "unstable_two_identifier_diagnostic_only": true,
+      "implied_independent_draw_minimum_n_per_condition": 4,
+      "implied_power_at_minimum_n": 0.9999999131585121
+    },
+    "Optics/DiffractionGratingDesign": {
+      "axis": "heldout_robustness_score",
+      "pilot_local_identifier_differences": [
+        -0.5066703167001724,
+        0.3636837627258458
+      ],
+      "pilot_n": 2,
+      "pilot_difference_sample_sd": 0.6154332715955124,
+      "unstable_two_identifier_diagnostic_only": true,
+      "implied_independent_draw_minimum_n_per_condition": 266,
+      "implied_power_at_minimum_n": 0.8011629545103669
+    }
+  },
+  "design_sigma_scenarios": [
+    {
+      "assumed_per_condition_sd": 0.2,
+      "minimum_unrounded_n_per_condition": 29,
+      "power_at_minimum_unrounded_n": 0.8014082688439583,
+      "balanced_n_per_condition": 32,
+      "power_at_balanced_n": 0.839708923742289
+    },
+    {
+      "assumed_per_condition_sd": 0.25,
+      "minimum_unrounded_n_per_condition": 45,
+      "power_at_minimum_unrounded_n": 0.8036969228992279,
+      "balanced_n_per_condition": 48,
+      "power_at_balanced_n": 0.8287579953705383
+    },
+    {
+      "assumed_per_condition_sd": 0.3,
+      "minimum_unrounded_n_per_condition": 64,
+      "power_at_minimum_unrounded_n": 0.8014595579287099,
+      "balanced_n_per_condition": 64,
+      "power_at_balanced_n": 0.8014595579287099
+    },
+    {
+      "assumed_per_condition_sd": 0.35,
+      "minimum_unrounded_n_per_condition": 87,
+      "power_at_minimum_unrounded_n": 0.8025725364886431,
+      "balanced_n_per_condition": 88,
+      "power_at_balanced_n": 0.8070663579258925
+    }
+  ],
+  "fixed_balanced_blocks_per_condition": 48,
+  "power_at_fixed_n_under_design_sigma": 0.8287579953705383,
+  "scheduled_search_cells": 384,
+  "scheduled_model_proposals": 1152,
+  "fixed_sample_rule": {
+    "sample_size_adaptation": false,
+    "interim_efficacy_or_futility_analysis": false,
+    "early_stopping_from_outcomes": false,
+    "reason": "the search report exposes condition-labelled trajectories and aggregates; therefore a post-stage-1 blinded variance reassessment would not be a credible operational blind"
+  },
+  "limitations": [
+    "The pilot has only two uncontrolled local identifiers per task.",
+    "The endpoint exposes no server-side seed; same-number conditions are not paired model draws.",
+    "The design standard deviation is preregistered rather than estimated from two unstable pilot differences.",
+    "Diffraction fresh robustness is a high-variance secondary stress test and receives no confirmatory significance claim.",
+    "The sole confirmatory primary is ActiveLaw normal versus selection-blind fresh mechanism at the common-token endpoint.",
+    "The design does not justify a cross-task science score or a general scientific-agent effect.",
+    "Power is a design calculation, not evidence that the future effect exists."
+  ],
+  "claims": {
+    "fixed_sample_size_planned": true,
+    "feedback_effect_identified": false,
+    "population_effect_estimated": false,
+    "autonomous_discovery_demonstrated": false
+  },
+  "execution_passed": true,
+  "trust_decision": "trusted_clean_revision",
+  "trusted_evidence": true,
+  "passed": true
+}
