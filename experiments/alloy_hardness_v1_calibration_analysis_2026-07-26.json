@@ -2,10 +2,10 @@
   "schema_version": 1,
   "trust_status": "TRUSTED_DERIVED_EVIDENCE",
   "evidence_scope": "RETROSPECTIVE_PUBLIC_DOI_GROUPED_ALLOY_HARDNESS_REPLAY_SINGLE_RUN_CALIBRATION_NOT_FEEDBACK_CAUSAL_PRETRAINING_CLEAN_PROSPECTIVE_SYNTHESIS_MECHANICAL_VALIDATION_OR_AUTONOMOUS_DISCOVERY_EVIDENCE",
-  "created_at": "2026-07-26T05:13:16.783638+00:00",
+  "created_at": "2026-07-26T11:41:44.447066+00:00",
   "source_provenance": {
     "git_available": true,
-    "git_revision": "e98d3fe43042d190f78499a9084845959c6a7123",
+    "git_revision": "88716ad01654f3f83bd5cbd3f5b0b23322c4fb59",
     "source_tree_dirty": false,
     "source_changes": [],
     "source_scope": [
@@ -28,7 +28,44 @@
   },
   "input_source_revision": "52dcec0c1a4df2d7f92cdef1d6d2bafa2e81f18e",
   "input_task_runtime_source_equivalent": true,
-  "input_task_runtime_source_changes": [],
+  "input_task_runtime_source_unchanged": false,
+  "input_task_runtime_source_changes": [
+    "benchmarks/MaterialsScience/AlloyHardnessOptimization/solution.py",
+    "benchmarks/MaterialsScience/AlloyHardnessOptimization/verification/evaluator.py"
+  ],
+  "input_task_runtime_source_migration": {
+    "required": true,
+    "report": "experiments/alloy_hash_order_migration_audit_2026-07-26.json",
+    "expected_report_sha256": "bea6d21e542c27903a31ee9bdb0d9fced6a4a7014b41c6df4ec8f224512672bb",
+    "report_sha256": "bea6d21e542c27903a31ee9bdb0d9fced6a4a7014b41c6df4ec8f224512672bb",
+    "audited_revision": "89e3345db57e15b5bbfe10e36f5c06bd260b9293",
+    "current_revision": "88716ad01654f3f83bd5cbd3f5b0b23322c4fb59",
+    "task_runtime_source_changes": [
+      "benchmarks/MaterialsScience/AlloyHardnessOptimization/solution.py",
+      "benchmarks/MaterialsScience/AlloyHardnessOptimization/verification/evaluator.py"
+    ],
+    "expected_task_runtime_source_changes": [
+      "benchmarks/MaterialsScience/AlloyHardnessOptimization/solution.py",
+      "benchmarks/MaterialsScience/AlloyHardnessOptimization/verification/evaluator.py"
+    ],
+    "current_source_sha256": {
+      "benchmarks/MaterialsScience/AlloyHardnessOptimization/solution.py": "9079971176c51f75a0363e59286f29d0f42bf3b78310c8bc65a515b376165bc5",
+      "benchmarks/MaterialsScience/AlloyHardnessOptimization/verification/evaluator.py": "6a2ac322d7cb67818ad4fabca24bfc9a21dc0ddb05c3037c91e9f9fab70537ae"
+    },
+    "accepted": true,
+    "checks": {
+      "report_hash_matches": true,
+      "report_passed_clean": true,
+      "audited_revision_is_ancestor": true,
+      "runtime_change_scope_matches": true,
+      "current_runtime_hashes_match": true,
+      "finite_landscape_passed": true,
+      "clean_calibration_passed": true,
+      "retained_replay_passed": true,
+      "conclusion_is_scoped": true
+    }
+  },
+  "input_task_runtime_source_migration_equivalent": true,
   "input_source_scope_equivalent": true,
   "input_llm_condition_equivalent": true,
   "input_task_contract_equivalent": true,
