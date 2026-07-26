@@ -1,0 +1,1635 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_SECURE_EVAL",
+  "evidence_scope": "PROTOCOL_SMOKE_ONLY",
+  "created_at": "2026-07-26T19:36:22.082379+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "641bacc2a3f698a608b468c63b91aaebd42237d2",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "/home/azureuser/workspace-gzy/zyf/frontier-science/scripts/batch_evolve.py",
+      "--all",
+      "--tasks",
+      "Chemistry/LennardJonesCluster",
+      "--algorithms",
+      "greedy_rewrite",
+      "--feedback-modes",
+      "normal,score_only,delayed_replay,selection_blind",
+      "--seeds",
+      "0,1,2,3",
+      "--budget",
+      "0",
+      "--timeout",
+      "300",
+      "--condition-order-design",
+      "balanced_williams",
+      "--condition-order-randomization-seed",
+      "2678395752421634827",
+      "--preregistration",
+      "experiments/track_f_preregistration_2026-07-26_v1.json",
+      "--workdir",
+      "runs/track_f_protocol_smoke_v1",
+      "--block-workers",
+      "8",
+      "--output",
+      "experiments/track_f_protocol_smoke_2026-07-26_v1.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "config": {
+    "tasks": [
+      "Chemistry/LennardJonesCluster"
+    ],
+    "algorithms": [
+      "greedy_rewrite"
+    ],
+    "feedback_modes": [
+      "normal",
+      "score_only",
+      "delayed_replay",
+      "selection_blind"
+    ],
+    "trajectory_snapshot_schema_version": 2,
+    "feedback_protocols": {
+      "normal": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+      "score_only": "proposal prompts receive only the scalar combined_score for the true-score-selected current incumbent; validity, feasibility, raw-score and diagnostic fields are omitted; evaluator-only metrics remain sealed; this is a feedback-bandwidth treatment, not a no-feedback control",
+      "delayed_replay": "one-proposal delayed replay: proposal k sees the best program and allowlisted metrics released only through proposal k-2 (the baseline is available at start); each evaluated proposal is released on that fixed lag, while the observer retains all scores for offline final selection; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+      "selection_blind": "open-loop proposal batch: every proposal sees the frozen baseline program and its allowlisted baseline metrics; evaluated scores are retained only for offline best-of-batch analysis and never change a later parent or prompt; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace"
+    },
+    "condition_order": "balanced_williams",
+    "condition_order_randomization_seed": 2678395752421634827,
+    "condition_order_schedule": [
+      {
+        "replicate_identifier": 0,
+        "feedback_modes": [
+          "normal",
+          "score_only",
+          "selection_blind",
+          "delayed_replay"
+        ]
+      },
+      {
+        "replicate_identifier": 1,
+        "feedback_modes": [
+          "delayed_replay",
+          "selection_blind",
+          "score_only",
+          "normal"
+        ]
+      },
+      {
+        "replicate_identifier": 2,
+        "feedback_modes": [
+          "selection_blind",
+          "normal",
+          "delayed_replay",
+          "score_only"
+        ]
+      },
+      {
+        "replicate_identifier": 3,
+        "feedback_modes": [
+          "score_only",
+          "delayed_replay",
+          "normal",
+          "selection_blind"
+        ]
+      }
+    ],
+    "preregistration": {
+      "path": "experiments/track_f_preregistration_2026-07-26_v1.json",
+      "sha256": "c26d39d35386f295192d369a3948002b5c40b967aa922a45fb1d1bab8e729d32",
+      "bytes": 20172
+    },
+    "seeds": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "replicate_identifier_scope": "controls local Python/random ordering only; the endpoint exposes no server-side generation seed, so same-number cells do not share model draws",
+    "resource_matching": {
+      "proposal_budget_and_max_output_tokens": "matched by configuration",
+      "realized_input_output_and_total_tokens": "measured per event; not assumed matched; use a preregistered common-token horizon or model token imbalance explicitly"
+    },
+    "budget": 0,
+    "timeout_s": 300.0,
+    "block_workers": 8,
+    "block_parallelism": {
+      "unit": "task_algorithm_replicate",
+      "within_block_conditions": "serial_in_condition_order_schedule",
+      "cross_block_scheduling": "fixed_submission_order_nonadaptive",
+      "maximum_concurrent_blocks": 8
+    },
+    "work_root": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/track_f_protocol_smoke_v1",
+    "llm_condition_sha256": "5b0df4671481f6b3505155bc6c5654a64c4da5591422fb806904e7d0f44fc4d2",
+    "llm": {
+      "wire": "responses",
+      "endpoint_sha256": "b22995a1fcaf8ad713ac37716f006c717313dfdebd357ac02a077a5582650bb6",
+      "model": "gpt-5.5",
+      "max_output_tokens": 16000,
+      "temperature": null,
+      "reasoning_effort": "low",
+      "input_cost_per_million": null,
+      "output_cost_per_million": null,
+      "server_side_seed_control": false
+    }
+  },
+  "runs": [
+    {
+      "task": "Chemistry/LennardJonesCluster",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "delayed_replay",
+      "seed": 1,
+      "baseline": 0.041930443440283925,
+      "best": 0.041930443440283925,
+      "accepted": 0,
+      "evaluated": 1,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/track_f_protocol_smoke_v1/Chemistry__LennardJonesCluster/greedy_rewrite/delayed_replay/seed_1",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 1,
+        "budget_units": 1,
+        "best_score": 0.041930443440283925,
+        "best_so_far_auc": 0.041930443440283925,
+        "valid_rate": 1.0,
+        "accepted": 0,
+        "wall_seconds": 0.7124588275328279,
+        "llm": {
+          "calls": 0,
+          "provider_usage_records": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "total_tokens": 0,
+          "estimated_cost_usd": 0.0
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "Chemistry/LennardJonesCluster",
+        "seed": 1,
+        "baseline_score": 0.041930443440283925,
+        "budget": 0,
+        "feedback_mode": "delayed_replay",
+        "feedback_scope": "one-proposal delayed replay: proposal k sees the best program and allowlisted metrics released only through proposal k-2 (the baseline is available at start); each evaluated proposal is released on that fixed lag, while the observer retains all scores for offline final selection; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "delayed_online_parent_offline_final_best"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 2,
+        "trajectory_sha256": "63fd3b20e2761f72978bb9b0ec560fdb66f432babd9748e05da609303610c412",
+        "events": [
+          {
+            "schema_version": 2,
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.041930443440283925,
+            "best_score": 0.041930443440283925,
+            "valid": true,
+            "accepted": true,
+            "wall_seconds": 0.7124588275328279,
+            "cumulative_wall_seconds": 0.7124588275328279,
+            "candidate_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.041930443440283925,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.041930443440283925
+            },
+            "llm": {},
+            "algorithm_metadata": {},
+            "error": null
+          }
+        ]
+      },
+      "execution_block_index": 2,
+      "within_block_position": 1
+    },
+    {
+      "task": "Chemistry/LennardJonesCluster",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "selection_blind",
+      "seed": 1,
+      "baseline": 0.041930443440283925,
+      "best": 0.041930443440283925,
+      "accepted": 0,
+      "evaluated": 1,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/track_f_protocol_smoke_v1/Chemistry__LennardJonesCluster/greedy_rewrite/selection_blind/seed_1",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 1,
+        "budget_units": 1,
+        "best_score": 0.041930443440283925,
+        "best_so_far_auc": 0.041930443440283925,
+        "valid_rate": 1.0,
+        "accepted": 0,
+        "wall_seconds": 0.6603445401415229,
+        "llm": {
+          "calls": 0,
+          "provider_usage_records": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "total_tokens": 0,
+          "estimated_cost_usd": 0.0
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "Chemistry/LennardJonesCluster",
+        "seed": 1,
+        "baseline_score": 0.041930443440283925,
+        "budget": 0,
+        "feedback_mode": "selection_blind",
+        "feedback_scope": "open-loop proposal batch: every proposal sees the frozen baseline program and its allowlisted baseline metrics; evaluated scores are retained only for offline best-of-batch analysis and never change a later parent or prompt; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "offline_best_of_open_loop_batch"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 2,
+        "trajectory_sha256": "64dce864a6d604418e587a60a45a5c6fb99ae690b8ed65892b34e4ca50e3ce67",
+        "events": [
+          {
+            "schema_version": 2,
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.041930443440283925,
+            "best_score": 0.041930443440283925,
+            "valid": true,
+            "accepted": true,
+            "wall_seconds": 0.6603445401415229,
+            "cumulative_wall_seconds": 0.6603445401415229,
+            "candidate_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.041930443440283925,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.041930443440283925
+            },
+            "llm": {},
+            "algorithm_metadata": {},
+            "error": null
+          }
+        ]
+      },
+      "execution_block_index": 2,
+      "within_block_position": 2
+    },
+    {
+      "task": "Chemistry/LennardJonesCluster",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "score_only",
+      "seed": 1,
+      "baseline": 0.041930443440283925,
+      "best": 0.041930443440283925,
+      "accepted": 0,
+      "evaluated": 1,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/track_f_protocol_smoke_v1/Chemistry__LennardJonesCluster/greedy_rewrite/score_only/seed_1",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 1,
+        "budget_units": 1,
+        "best_score": 0.041930443440283925,
+        "best_so_far_auc": 0.041930443440283925,
+        "valid_rate": 1.0,
+        "accepted": 0,
+        "wall_seconds": 0.6762142516672611,
+        "llm": {
+          "calls": 0,
+          "provider_usage_records": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "total_tokens": 0,
+          "estimated_cost_usd": 0.0
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "Chemistry/LennardJonesCluster",
+        "seed": 1,
+        "baseline_score": 0.041930443440283925,
+        "budget": 0,
+        "feedback_mode": "score_only",
+        "feedback_scope": "proposal prompts receive only the scalar combined_score for the true-score-selected current incumbent; validity, feasibility, raw-score and diagnostic fields are omitted; evaluator-only metrics remain sealed; this is a feedback-bandwidth treatment, not a no-feedback control",
+        "selection_policy": "online_incumbent"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 2,
+        "trajectory_sha256": "a7438d5c91269a62d5c71eccadd6221e6f4d1987e07b4903990562f5fe913054",
+        "events": [
+          {
+            "schema_version": 2,
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.041930443440283925,
+            "best_score": 0.041930443440283925,
+            "valid": true,
+            "accepted": true,
+            "wall_seconds": 0.6762142516672611,
+            "cumulative_wall_seconds": 0.6762142516672611,
+            "candidate_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.041930443440283925,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.041930443440283925
+            },
+            "llm": {},
+            "algorithm_metadata": {},
+            "error": null
+          }
+        ]
+      },
+      "execution_block_index": 2,
+      "within_block_position": 3
+    },
+    {
+      "task": "Chemistry/LennardJonesCluster",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 1,
+      "baseline": 0.041930443440283925,
+      "best": 0.041930443440283925,
+      "accepted": 0,
+      "evaluated": 1,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/track_f_protocol_smoke_v1/Chemistry__LennardJonesCluster/greedy_rewrite/normal/seed_1",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 1,
+        "budget_units": 1,
+        "best_score": 0.041930443440283925,
+        "best_so_far_auc": 0.041930443440283925,
+        "valid_rate": 1.0,
+        "accepted": 0,
+        "wall_seconds": 0.7009043972939253,
+        "llm": {
+          "calls": 0,
+          "provider_usage_records": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "total_tokens": 0,
+          "estimated_cost_usd": 0.0
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "Chemistry/LennardJonesCluster",
+        "seed": 1,
+        "baseline_score": 0.041930443440283925,
+        "budget": 0,
+        "feedback_mode": "normal",
+        "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "online_incumbent"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 2,
+        "trajectory_sha256": "590d39a71449fee29c85360d438042c77bcc95f3af07116eabd407260a82865c",
+        "events": [
+          {
+            "schema_version": 2,
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.041930443440283925,
+            "best_score": 0.041930443440283925,
+            "valid": true,
+            "accepted": true,
+            "wall_seconds": 0.7009043972939253,
+            "cumulative_wall_seconds": 0.7009043972939253,
+            "candidate_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.041930443440283925,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.041930443440283925
+            },
+            "llm": {},
+            "algorithm_metadata": {},
+            "error": null
+          }
+        ]
+      },
+      "execution_block_index": 2,
+      "within_block_position": 4
+    },
+    {
+      "task": "Chemistry/LennardJonesCluster",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "selection_blind",
+      "seed": 2,
+      "baseline": 0.041930443440283925,
+      "best": 0.041930443440283925,
+      "accepted": 0,
+      "evaluated": 1,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/track_f_protocol_smoke_v1/Chemistry__LennardJonesCluster/greedy_rewrite/selection_blind/seed_2",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 1,
+        "budget_units": 1,
+        "best_score": 0.041930443440283925,
+        "best_so_far_auc": 0.041930443440283925,
+        "valid_rate": 1.0,
+        "accepted": 0,
+        "wall_seconds": 0.7121028685942292,
+        "llm": {
+          "calls": 0,
+          "provider_usage_records": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "total_tokens": 0,
+          "estimated_cost_usd": 0.0
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "Chemistry/LennardJonesCluster",
+        "seed": 2,
+        "baseline_score": 0.041930443440283925,
+        "budget": 0,
+        "feedback_mode": "selection_blind",
+        "feedback_scope": "open-loop proposal batch: every proposal sees the frozen baseline program and its allowlisted baseline metrics; evaluated scores are retained only for offline best-of-batch analysis and never change a later parent or prompt; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "offline_best_of_open_loop_batch"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 2,
+        "trajectory_sha256": "9657c81bf47c0e77fa415c65c7fe3bcbb65d58146a07515f1638cd0409bc2f22",
+        "events": [
+          {
+            "schema_version": 2,
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.041930443440283925,
+            "best_score": 0.041930443440283925,
+            "valid": true,
+            "accepted": true,
+            "wall_seconds": 0.7121028685942292,
+            "cumulative_wall_seconds": 0.7121028685942292,
+            "candidate_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.041930443440283925,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.041930443440283925
+            },
+            "llm": {},
+            "algorithm_metadata": {},
+            "error": null
+          }
+        ]
+      },
+      "execution_block_index": 3,
+      "within_block_position": 1
+    },
+    {
+      "task": "Chemistry/LennardJonesCluster",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 2,
+      "baseline": 0.041930443440283925,
+      "best": 0.041930443440283925,
+      "accepted": 0,
+      "evaluated": 1,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/track_f_protocol_smoke_v1/Chemistry__LennardJonesCluster/greedy_rewrite/normal/seed_2",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 1,
+        "budget_units": 1,
+        "best_score": 0.041930443440283925,
+        "best_so_far_auc": 0.041930443440283925,
+        "valid_rate": 1.0,
+        "accepted": 0,
+        "wall_seconds": 0.6956280851736665,
+        "llm": {
+          "calls": 0,
+          "provider_usage_records": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "total_tokens": 0,
+          "estimated_cost_usd": 0.0
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "Chemistry/LennardJonesCluster",
+        "seed": 2,
+        "baseline_score": 0.041930443440283925,
+        "budget": 0,
+        "feedback_mode": "normal",
+        "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "online_incumbent"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 2,
+        "trajectory_sha256": "4d5b63b2890ba4c45faa18f00e4683d2a80a988a9efe271756b0f552e5c37afb",
+        "events": [
+          {
+            "schema_version": 2,
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.041930443440283925,
+            "best_score": 0.041930443440283925,
+            "valid": true,
+            "accepted": true,
+            "wall_seconds": 0.6956280851736665,
+            "cumulative_wall_seconds": 0.6956280851736665,
+            "candidate_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.041930443440283925,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.041930443440283925
+            },
+            "llm": {},
+            "algorithm_metadata": {},
+            "error": null
+          }
+        ]
+      },
+      "execution_block_index": 3,
+      "within_block_position": 2
+    },
+    {
+      "task": "Chemistry/LennardJonesCluster",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "delayed_replay",
+      "seed": 2,
+      "baseline": 0.041930443440283925,
+      "best": 0.041930443440283925,
+      "accepted": 0,
+      "evaluated": 1,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/track_f_protocol_smoke_v1/Chemistry__LennardJonesCluster/greedy_rewrite/delayed_replay/seed_2",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 1,
+        "budget_units": 1,
+        "best_score": 0.041930443440283925,
+        "best_so_far_auc": 0.041930443440283925,
+        "valid_rate": 1.0,
+        "accepted": 0,
+        "wall_seconds": 0.6993845626711845,
+        "llm": {
+          "calls": 0,
+          "provider_usage_records": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "total_tokens": 0,
+          "estimated_cost_usd": 0.0
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "Chemistry/LennardJonesCluster",
+        "seed": 2,
+        "baseline_score": 0.041930443440283925,
+        "budget": 0,
+        "feedback_mode": "delayed_replay",
+        "feedback_scope": "one-proposal delayed replay: proposal k sees the best program and allowlisted metrics released only through proposal k-2 (the baseline is available at start); each evaluated proposal is released on that fixed lag, while the observer retains all scores for offline final selection; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "delayed_online_parent_offline_final_best"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 2,
+        "trajectory_sha256": "17bf5b9e92267bb394b1f0f96fb344717a1b6aa516987489149b61307dd757b2",
+        "events": [
+          {
+            "schema_version": 2,
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.041930443440283925,
+            "best_score": 0.041930443440283925,
+            "valid": true,
+            "accepted": true,
+            "wall_seconds": 0.6993845626711845,
+            "cumulative_wall_seconds": 0.6993845626711845,
+            "candidate_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.041930443440283925,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.041930443440283925
+            },
+            "llm": {},
+            "algorithm_metadata": {},
+            "error": null
+          }
+        ]
+      },
+      "execution_block_index": 3,
+      "within_block_position": 3
+    },
+    {
+      "task": "Chemistry/LennardJonesCluster",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "score_only",
+      "seed": 2,
+      "baseline": 0.041930443440283925,
+      "best": 0.041930443440283925,
+      "accepted": 0,
+      "evaluated": 1,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/track_f_protocol_smoke_v1/Chemistry__LennardJonesCluster/greedy_rewrite/score_only/seed_2",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 1,
+        "budget_units": 1,
+        "best_score": 0.041930443440283925,
+        "best_so_far_auc": 0.041930443440283925,
+        "valid_rate": 1.0,
+        "accepted": 0,
+        "wall_seconds": 0.6731649115681648,
+        "llm": {
+          "calls": 0,
+          "provider_usage_records": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "total_tokens": 0,
+          "estimated_cost_usd": 0.0
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "Chemistry/LennardJonesCluster",
+        "seed": 2,
+        "baseline_score": 0.041930443440283925,
+        "budget": 0,
+        "feedback_mode": "score_only",
+        "feedback_scope": "proposal prompts receive only the scalar combined_score for the true-score-selected current incumbent; validity, feasibility, raw-score and diagnostic fields are omitted; evaluator-only metrics remain sealed; this is a feedback-bandwidth treatment, not a no-feedback control",
+        "selection_policy": "online_incumbent"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 2,
+        "trajectory_sha256": "2dd6c32f8e6a91ee35e3862dde244ead6897c3c1638103b268ef102e9a80e477",
+        "events": [
+          {
+            "schema_version": 2,
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.041930443440283925,
+            "best_score": 0.041930443440283925,
+            "valid": true,
+            "accepted": true,
+            "wall_seconds": 0.6731649115681648,
+            "cumulative_wall_seconds": 0.6731649115681648,
+            "candidate_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.041930443440283925,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.041930443440283925
+            },
+            "llm": {},
+            "algorithm_metadata": {},
+            "error": null
+          }
+        ]
+      },
+      "execution_block_index": 3,
+      "within_block_position": 4
+    },
+    {
+      "task": "Chemistry/LennardJonesCluster",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "score_only",
+      "seed": 3,
+      "baseline": 0.041930443440283925,
+      "best": 0.041930443440283925,
+      "accepted": 0,
+      "evaluated": 1,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/track_f_protocol_smoke_v1/Chemistry__LennardJonesCluster/greedy_rewrite/score_only/seed_3",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 1,
+        "budget_units": 1,
+        "best_score": 0.041930443440283925,
+        "best_so_far_auc": 0.041930443440283925,
+        "valid_rate": 1.0,
+        "accepted": 0,
+        "wall_seconds": 0.7115089725703001,
+        "llm": {
+          "calls": 0,
+          "provider_usage_records": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "total_tokens": 0,
+          "estimated_cost_usd": 0.0
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "Chemistry/LennardJonesCluster",
+        "seed": 3,
+        "baseline_score": 0.041930443440283925,
+        "budget": 0,
+        "feedback_mode": "score_only",
+        "feedback_scope": "proposal prompts receive only the scalar combined_score for the true-score-selected current incumbent; validity, feasibility, raw-score and diagnostic fields are omitted; evaluator-only metrics remain sealed; this is a feedback-bandwidth treatment, not a no-feedback control",
+        "selection_policy": "online_incumbent"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 2,
+        "trajectory_sha256": "833a998987cb83398c119597cd484badbb8444a858b628685bace8af89d2a566",
+        "events": [
+          {
+            "schema_version": 2,
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.041930443440283925,
+            "best_score": 0.041930443440283925,
+            "valid": true,
+            "accepted": true,
+            "wall_seconds": 0.7115089725703001,
+            "cumulative_wall_seconds": 0.7115089725703001,
+            "candidate_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.041930443440283925,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.041930443440283925
+            },
+            "llm": {},
+            "algorithm_metadata": {},
+            "error": null
+          }
+        ]
+      },
+      "execution_block_index": 4,
+      "within_block_position": 1
+    },
+    {
+      "task": "Chemistry/LennardJonesCluster",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "delayed_replay",
+      "seed": 3,
+      "baseline": 0.041930443440283925,
+      "best": 0.041930443440283925,
+      "accepted": 0,
+      "evaluated": 1,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/track_f_protocol_smoke_v1/Chemistry__LennardJonesCluster/greedy_rewrite/delayed_replay/seed_3",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 1,
+        "budget_units": 1,
+        "best_score": 0.041930443440283925,
+        "best_so_far_auc": 0.041930443440283925,
+        "valid_rate": 1.0,
+        "accepted": 0,
+        "wall_seconds": 0.7533997120335698,
+        "llm": {
+          "calls": 0,
+          "provider_usage_records": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "total_tokens": 0,
+          "estimated_cost_usd": 0.0
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "Chemistry/LennardJonesCluster",
+        "seed": 3,
+        "baseline_score": 0.041930443440283925,
+        "budget": 0,
+        "feedback_mode": "delayed_replay",
+        "feedback_scope": "one-proposal delayed replay: proposal k sees the best program and allowlisted metrics released only through proposal k-2 (the baseline is available at start); each evaluated proposal is released on that fixed lag, while the observer retains all scores for offline final selection; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "delayed_online_parent_offline_final_best"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 2,
+        "trajectory_sha256": "161a4fb5562de8a1596ed6274d7fce46cbb752ab2b8a737c882caa83ee1b3d6b",
+        "events": [
+          {
+            "schema_version": 2,
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.041930443440283925,
+            "best_score": 0.041930443440283925,
+            "valid": true,
+            "accepted": true,
+            "wall_seconds": 0.7533997120335698,
+            "cumulative_wall_seconds": 0.7533997120335698,
+            "candidate_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.041930443440283925,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.041930443440283925
+            },
+            "llm": {},
+            "algorithm_metadata": {},
+            "error": null
+          }
+        ]
+      },
+      "execution_block_index": 4,
+      "within_block_position": 2
+    },
+    {
+      "task": "Chemistry/LennardJonesCluster",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 3,
+      "baseline": 0.041930443440283925,
+      "best": 0.041930443440283925,
+      "accepted": 0,
+      "evaluated": 1,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/track_f_protocol_smoke_v1/Chemistry__LennardJonesCluster/greedy_rewrite/normal/seed_3",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 1,
+        "budget_units": 1,
+        "best_score": 0.041930443440283925,
+        "best_so_far_auc": 0.041930443440283925,
+        "valid_rate": 1.0,
+        "accepted": 0,
+        "wall_seconds": 0.6778819989413023,
+        "llm": {
+          "calls": 0,
+          "provider_usage_records": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "total_tokens": 0,
+          "estimated_cost_usd": 0.0
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "Chemistry/LennardJonesCluster",
+        "seed": 3,
+        "baseline_score": 0.041930443440283925,
+        "budget": 0,
+        "feedback_mode": "normal",
+        "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "online_incumbent"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 2,
+        "trajectory_sha256": "e1016a6ce1b64155854e65b211fb9a05085b35fb963c5ecaee3cc84b446dce1c",
+        "events": [
+          {
+            "schema_version": 2,
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.041930443440283925,
+            "best_score": 0.041930443440283925,
+            "valid": true,
+            "accepted": true,
+            "wall_seconds": 0.6778819989413023,
+            "cumulative_wall_seconds": 0.6778819989413023,
+            "candidate_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.041930443440283925,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.041930443440283925
+            },
+            "llm": {},
+            "algorithm_metadata": {},
+            "error": null
+          }
+        ]
+      },
+      "execution_block_index": 4,
+      "within_block_position": 3
+    },
+    {
+      "task": "Chemistry/LennardJonesCluster",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "selection_blind",
+      "seed": 3,
+      "baseline": 0.041930443440283925,
+      "best": 0.041930443440283925,
+      "accepted": 0,
+      "evaluated": 1,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/track_f_protocol_smoke_v1/Chemistry__LennardJonesCluster/greedy_rewrite/selection_blind/seed_3",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 1,
+        "budget_units": 1,
+        "best_score": 0.041930443440283925,
+        "best_so_far_auc": 0.041930443440283925,
+        "valid_rate": 1.0,
+        "accepted": 0,
+        "wall_seconds": 0.6716482499614358,
+        "llm": {
+          "calls": 0,
+          "provider_usage_records": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "total_tokens": 0,
+          "estimated_cost_usd": 0.0
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "Chemistry/LennardJonesCluster",
+        "seed": 3,
+        "baseline_score": 0.041930443440283925,
+        "budget": 0,
+        "feedback_mode": "selection_blind",
+        "feedback_scope": "open-loop proposal batch: every proposal sees the frozen baseline program and its allowlisted baseline metrics; evaluated scores are retained only for offline best-of-batch analysis and never change a later parent or prompt; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "offline_best_of_open_loop_batch"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 2,
+        "trajectory_sha256": "cb1183f879a540aab04aef5e227845ff0032727af3830c622ea640f16134065c",
+        "events": [
+          {
+            "schema_version": 2,
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.041930443440283925,
+            "best_score": 0.041930443440283925,
+            "valid": true,
+            "accepted": true,
+            "wall_seconds": 0.6716482499614358,
+            "cumulative_wall_seconds": 0.6716482499614358,
+            "candidate_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.041930443440283925,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.041930443440283925
+            },
+            "llm": {},
+            "algorithm_metadata": {},
+            "error": null
+          }
+        ]
+      },
+      "execution_block_index": 4,
+      "within_block_position": 4
+    },
+    {
+      "task": "Chemistry/LennardJonesCluster",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 0,
+      "baseline": 0.041930443440283925,
+      "best": 0.041930443440283925,
+      "accepted": 0,
+      "evaluated": 1,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/track_f_protocol_smoke_v1/Chemistry__LennardJonesCluster/greedy_rewrite/normal/seed_0",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 1,
+        "budget_units": 1,
+        "best_score": 0.041930443440283925,
+        "best_so_far_auc": 0.041930443440283925,
+        "valid_rate": 1.0,
+        "accepted": 0,
+        "wall_seconds": 0.7610915852710605,
+        "llm": {
+          "calls": 0,
+          "provider_usage_records": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "total_tokens": 0,
+          "estimated_cost_usd": 0.0
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "Chemistry/LennardJonesCluster",
+        "seed": 0,
+        "baseline_score": 0.041930443440283925,
+        "budget": 0,
+        "feedback_mode": "normal",
+        "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "online_incumbent"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 2,
+        "trajectory_sha256": "ed4dc690147e2dfd6b79ec83d4d8c33bee01cee5e7ce854596a4722515797ea7",
+        "events": [
+          {
+            "schema_version": 2,
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.041930443440283925,
+            "best_score": 0.041930443440283925,
+            "valid": true,
+            "accepted": true,
+            "wall_seconds": 0.7610915852710605,
+            "cumulative_wall_seconds": 0.7610915852710605,
+            "candidate_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.041930443440283925,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.041930443440283925
+            },
+            "llm": {},
+            "algorithm_metadata": {},
+            "error": null
+          }
+        ]
+      },
+      "execution_block_index": 1,
+      "within_block_position": 1
+    },
+    {
+      "task": "Chemistry/LennardJonesCluster",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "score_only",
+      "seed": 0,
+      "baseline": 0.041930443440283925,
+      "best": 0.041930443440283925,
+      "accepted": 0,
+      "evaluated": 1,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/track_f_protocol_smoke_v1/Chemistry__LennardJonesCluster/greedy_rewrite/score_only/seed_0",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 1,
+        "budget_units": 1,
+        "best_score": 0.041930443440283925,
+        "best_so_far_auc": 0.041930443440283925,
+        "valid_rate": 1.0,
+        "accepted": 0,
+        "wall_seconds": 0.7200481286272407,
+        "llm": {
+          "calls": 0,
+          "provider_usage_records": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "total_tokens": 0,
+          "estimated_cost_usd": 0.0
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "Chemistry/LennardJonesCluster",
+        "seed": 0,
+        "baseline_score": 0.041930443440283925,
+        "budget": 0,
+        "feedback_mode": "score_only",
+        "feedback_scope": "proposal prompts receive only the scalar combined_score for the true-score-selected current incumbent; validity, feasibility, raw-score and diagnostic fields are omitted; evaluator-only metrics remain sealed; this is a feedback-bandwidth treatment, not a no-feedback control",
+        "selection_policy": "online_incumbent"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 2,
+        "trajectory_sha256": "e0d6c531692117c6b3168e9d3945bf83eec88ee7a16c98ec1e151af1cc02ba1b",
+        "events": [
+          {
+            "schema_version": 2,
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.041930443440283925,
+            "best_score": 0.041930443440283925,
+            "valid": true,
+            "accepted": true,
+            "wall_seconds": 0.7200481286272407,
+            "cumulative_wall_seconds": 0.7200481286272407,
+            "candidate_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.041930443440283925,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.041930443440283925
+            },
+            "llm": {},
+            "algorithm_metadata": {},
+            "error": null
+          }
+        ]
+      },
+      "execution_block_index": 1,
+      "within_block_position": 2
+    },
+    {
+      "task": "Chemistry/LennardJonesCluster",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "selection_blind",
+      "seed": 0,
+      "baseline": 0.041930443440283925,
+      "best": 0.041930443440283925,
+      "accepted": 0,
+      "evaluated": 1,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/track_f_protocol_smoke_v1/Chemistry__LennardJonesCluster/greedy_rewrite/selection_blind/seed_0",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 1,
+        "budget_units": 1,
+        "best_score": 0.041930443440283925,
+        "best_so_far_auc": 0.041930443440283925,
+        "valid_rate": 1.0,
+        "accepted": 0,
+        "wall_seconds": 0.7049394799396396,
+        "llm": {
+          "calls": 0,
+          "provider_usage_records": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "total_tokens": 0,
+          "estimated_cost_usd": 0.0
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "Chemistry/LennardJonesCluster",
+        "seed": 0,
+        "baseline_score": 0.041930443440283925,
+        "budget": 0,
+        "feedback_mode": "selection_blind",
+        "feedback_scope": "open-loop proposal batch: every proposal sees the frozen baseline program and its allowlisted baseline metrics; evaluated scores are retained only for offline best-of-batch analysis and never change a later parent or prompt; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "offline_best_of_open_loop_batch"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 2,
+        "trajectory_sha256": "9ea30da7e9b3fc436ebfecfc6ed9423082b3eb91075b6a0adc79545c86d19a4e",
+        "events": [
+          {
+            "schema_version": 2,
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.041930443440283925,
+            "best_score": 0.041930443440283925,
+            "valid": true,
+            "accepted": true,
+            "wall_seconds": 0.7049394799396396,
+            "cumulative_wall_seconds": 0.7049394799396396,
+            "candidate_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.041930443440283925,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.041930443440283925
+            },
+            "llm": {},
+            "algorithm_metadata": {},
+            "error": null
+          }
+        ]
+      },
+      "execution_block_index": 1,
+      "within_block_position": 3
+    },
+    {
+      "task": "Chemistry/LennardJonesCluster",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "delayed_replay",
+      "seed": 0,
+      "baseline": 0.041930443440283925,
+      "best": 0.041930443440283925,
+      "accepted": 0,
+      "evaluated": 1,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/track_f_protocol_smoke_v1/Chemistry__LennardJonesCluster/greedy_rewrite/delayed_replay/seed_0",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 1,
+        "budget_units": 1,
+        "best_score": 0.041930443440283925,
+        "best_so_far_auc": 0.041930443440283925,
+        "valid_rate": 1.0,
+        "accepted": 0,
+        "wall_seconds": 0.6907925410196185,
+        "llm": {
+          "calls": 0,
+          "provider_usage_records": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "total_tokens": 0,
+          "estimated_cost_usd": 0.0
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "Chemistry/LennardJonesCluster",
+        "seed": 0,
+        "baseline_score": 0.041930443440283925,
+        "budget": 0,
+        "feedback_mode": "delayed_replay",
+        "feedback_scope": "one-proposal delayed replay: proposal k sees the best program and allowlisted metrics released only through proposal k-2 (the baseline is available at start); each evaluated proposal is released on that fixed lag, while the observer retains all scores for offline final selection; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "delayed_online_parent_offline_final_best"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 2,
+        "trajectory_sha256": "60cf7c65f80c217e5411f495c65487a8feeb67a9eeeda90cfd09e5b1cba05042",
+        "events": [
+          {
+            "schema_version": 2,
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.041930443440283925,
+            "best_score": 0.041930443440283925,
+            "valid": true,
+            "accepted": true,
+            "wall_seconds": 0.6907925410196185,
+            "cumulative_wall_seconds": 0.6907925410196185,
+            "candidate_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.041930443440283925,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.041930443440283925
+            },
+            "llm": {},
+            "algorithm_metadata": {},
+            "error": null
+          }
+        ]
+      },
+      "execution_block_index": 1,
+      "within_block_position": 4
+    }
+  ],
+  "warning": "Baseline-only multi-seed smoke: validates protocol/artifacts, not search performance.",
+  "aggregate": {
+    "attempt_count": 16,
+    "superseded_attempts": 0,
+    "failed_attempts": 0,
+    "attempt_failure_rate": 0.0,
+    "recovered_runs": 0,
+    "successful_runs": 16,
+    "failed_runs": 0,
+    "intent_to_evaluate": {
+      "scheduled_runs": 16,
+      "successful_runs": 16,
+      "terminal_failed_runs": 0,
+      "completion_rate": 1.0,
+      "run_cells_with_any_failed_attempt": 0,
+      "recovered_runs": 0
+    },
+    "quality_metrics_scope": "latest successful runs only; interpret jointly with intent_to_evaluate and failed_attempts",
+    "by_condition": {
+      "Chemistry/LennardJonesCluster|greedy_rewrite|delayed_replay": {
+        "n": 4,
+        "scheduled_n": 4,
+        "successful_runs": 4,
+        "terminal_failed_runs": 0,
+        "completion_rate": 1.0,
+        "attempt_count": 4,
+        "failed_attempts": 0,
+        "recovered_runs": 0,
+        "best_score": {
+          "n": 4,
+          "mean": 0.041930443440283925,
+          "ci95_low": 0.041930443440283925,
+          "ci95_high": 0.041930443440283925
+        },
+        "best_so_far_auc": {
+          "n": 4,
+          "mean": 0.041930443440283925,
+          "ci95_low": 0.041930443440283925,
+          "ci95_high": 0.041930443440283925
+        },
+        "budget_units": {
+          "n": 4,
+          "mean": 1.0,
+          "ci95_low": 1.0,
+          "ci95_high": 1.0
+        },
+        "oracle_calls": {
+          "n": 4,
+          "mean": 1.0,
+          "ci95_low": 1.0,
+          "ci95_high": 1.0
+        },
+        "wall_seconds": {
+          "n": 4,
+          "mean": 0.7140089108143002,
+          "ci95_low": 0.6698899963457943,
+          "ci95_high": 0.7581278252828061
+        },
+        "input_tokens": {
+          "n": 4,
+          "mean": 0.0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.0
+        },
+        "output_tokens": {
+          "n": 4,
+          "mean": 0.0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.0
+        },
+        "total_tokens": {
+          "n": 4,
+          "mean": 0.0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.0
+        },
+        "estimated_cost_usd": {
+          "n": 4,
+          "mean": 0.0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.0
+        }
+      },
+      "Chemistry/LennardJonesCluster|greedy_rewrite|normal": {
+        "n": 4,
+        "scheduled_n": 4,
+        "successful_runs": 4,
+        "terminal_failed_runs": 0,
+        "completion_rate": 1.0,
+        "attempt_count": 4,
+        "failed_attempts": 0,
+        "recovered_runs": 0,
+        "best_score": {
+          "n": 4,
+          "mean": 0.041930443440283925,
+          "ci95_low": 0.041930443440283925,
+          "ci95_high": 0.041930443440283925
+        },
+        "best_so_far_auc": {
+          "n": 4,
+          "mean": 0.041930443440283925,
+          "ci95_low": 0.041930443440283925,
+          "ci95_high": 0.041930443440283925
+        },
+        "budget_units": {
+          "n": 4,
+          "mean": 1.0,
+          "ci95_low": 1.0,
+          "ci95_high": 1.0
+        },
+        "oracle_calls": {
+          "n": 4,
+          "mean": 1.0,
+          "ci95_low": 1.0,
+          "ci95_high": 1.0
+        },
+        "wall_seconds": {
+          "n": 4,
+          "mean": 0.7088765166699886,
+          "ci95_low": 0.6513202059007324,
+          "ci95_high": 0.7664328274392449
+        },
+        "input_tokens": {
+          "n": 4,
+          "mean": 0.0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.0
+        },
+        "output_tokens": {
+          "n": 4,
+          "mean": 0.0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.0
+        },
+        "total_tokens": {
+          "n": 4,
+          "mean": 0.0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.0
+        },
+        "estimated_cost_usd": {
+          "n": 4,
+          "mean": 0.0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.0
+        }
+      },
+      "Chemistry/LennardJonesCluster|greedy_rewrite|score_only": {
+        "n": 4,
+        "scheduled_n": 4,
+        "successful_runs": 4,
+        "terminal_failed_runs": 0,
+        "completion_rate": 1.0,
+        "attempt_count": 4,
+        "failed_attempts": 0,
+        "recovered_runs": 0,
+        "best_score": {
+          "n": 4,
+          "mean": 0.041930443440283925,
+          "ci95_low": 0.041930443440283925,
+          "ci95_high": 0.041930443440283925
+        },
+        "best_so_far_auc": {
+          "n": 4,
+          "mean": 0.041930443440283925,
+          "ci95_low": 0.041930443440283925,
+          "ci95_high": 0.041930443440283925
+        },
+        "budget_units": {
+          "n": 4,
+          "mean": 1.0,
+          "ci95_low": 1.0,
+          "ci95_high": 1.0
+        },
+        "oracle_calls": {
+          "n": 4,
+          "mean": 1.0,
+          "ci95_low": 1.0,
+          "ci95_high": 1.0
+        },
+        "wall_seconds": {
+          "n": 4,
+          "mean": 0.6952340661082417,
+          "ci95_low": 0.6570344774623414,
+          "ci95_high": 0.7334336547541419
+        },
+        "input_tokens": {
+          "n": 4,
+          "mean": 0.0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.0
+        },
+        "output_tokens": {
+          "n": 4,
+          "mean": 0.0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.0
+        },
+        "total_tokens": {
+          "n": 4,
+          "mean": 0.0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.0
+        },
+        "estimated_cost_usd": {
+          "n": 4,
+          "mean": 0.0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.0
+        }
+      },
+      "Chemistry/LennardJonesCluster|greedy_rewrite|selection_blind": {
+        "n": 4,
+        "scheduled_n": 4,
+        "successful_runs": 4,
+        "terminal_failed_runs": 0,
+        "completion_rate": 1.0,
+        "attempt_count": 4,
+        "failed_attempts": 0,
+        "recovered_runs": 0,
+        "best_score": {
+          "n": 4,
+          "mean": 0.041930443440283925,
+          "ci95_low": 0.041930443440283925,
+          "ci95_high": 0.041930443440283925
+        },
+        "best_so_far_auc": {
+          "n": 4,
+          "mean": 0.041930443440283925,
+          "ci95_low": 0.041930443440283925,
+          "ci95_high": 0.041930443440283925
+        },
+        "budget_units": {
+          "n": 4,
+          "mean": 1.0,
+          "ci95_low": 1.0,
+          "ci95_high": 1.0
+        },
+        "oracle_calls": {
+          "n": 4,
+          "mean": 1.0,
+          "ci95_low": 1.0,
+          "ci95_high": 1.0
+        },
+        "wall_seconds": {
+          "n": 4,
+          "mean": 0.6872587846592069,
+          "ci95_low": 0.6472416202357333,
+          "ci95_high": 0.7272759490826805
+        },
+        "input_tokens": {
+          "n": 4,
+          "mean": 0.0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.0
+        },
+        "output_tokens": {
+          "n": 4,
+          "mean": 0.0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.0
+        },
+        "total_tokens": {
+          "n": 4,
+          "mean": 0.0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.0
+        },
+        "estimated_cost_usd": {
+          "n": 4,
+          "mean": 0.0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.0
+        }
+      }
+    },
+    "overall": {
+      "best_score": {
+        "n": 16,
+        "mean": 0.041930443440283925,
+        "ci95_low": 0.041930443440283925,
+        "ci95_high": 0.041930443440283925
+      },
+      "best_so_far_auc": {
+        "n": 16,
+        "mean": 0.041930443440283925,
+        "ci95_low": 0.041930443440283925,
+        "ci95_high": 0.041930443440283925
+      },
+      "budget_units": {
+        "n": 16,
+        "mean": 1.0,
+        "ci95_low": 1.0,
+        "ci95_high": 1.0
+      },
+      "oracle_calls": {
+        "n": 16,
+        "mean": 1.0,
+        "ci95_low": 1.0,
+        "ci95_high": 1.0
+      },
+      "wall_seconds": {
+        "n": 16,
+        "mean": 0.7013445695629343,
+        "ci95_low": 0.6864835983307636,
+        "ci95_high": 0.7162055407951051
+      },
+      "input_tokens": {
+        "n": 16,
+        "mean": 0.0,
+        "ci95_low": 0.0,
+        "ci95_high": 0.0
+      },
+      "output_tokens": {
+        "n": 16,
+        "mean": 0.0,
+        "ci95_low": 0.0,
+        "ci95_high": 0.0
+      },
+      "total_tokens": {
+        "n": 16,
+        "mean": 0.0,
+        "ci95_low": 0.0,
+        "ci95_high": 0.0
+      },
+      "estimated_cost_usd": {
+        "n": 16,
+        "mean": 0.0,
+        "ci95_low": 0.0,
+        "ci95_high": 0.0
+      }
+    },
+    "overall_valid_only": {
+      "best_score": {
+        "n": 16,
+        "mean": 0.041930443440283925,
+        "ci95_low": 0.041930443440283925,
+        "ci95_high": 0.041930443440283925
+      },
+      "best_so_far_auc": {
+        "n": 16,
+        "mean": 0.041930443440283925,
+        "ci95_low": 0.041930443440283925,
+        "ci95_high": 0.041930443440283925
+      },
+      "budget_units": {
+        "n": 16,
+        "mean": 1.0,
+        "ci95_low": 1.0,
+        "ci95_high": 1.0
+      },
+      "oracle_calls": {
+        "n": 16,
+        "mean": 1.0,
+        "ci95_low": 1.0,
+        "ci95_high": 1.0
+      },
+      "wall_seconds": {
+        "n": 16,
+        "mean": 0.7013445695629343,
+        "ci95_low": 0.6864835983307636,
+        "ci95_high": 0.7162055407951051
+      },
+      "input_tokens": {
+        "n": 16,
+        "mean": 0.0,
+        "ci95_low": 0.0,
+        "ci95_high": 0.0
+      },
+      "output_tokens": {
+        "n": 16,
+        "mean": 0.0,
+        "ci95_low": 0.0,
+        "ci95_high": 0.0
+      },
+      "total_tokens": {
+        "n": 16,
+        "mean": 0.0,
+        "ci95_low": 0.0,
+        "ci95_high": 0.0
+      },
+      "estimated_cost_usd": {
+        "n": 16,
+        "mean": 0.0,
+        "ci95_low": 0.0,
+        "ci95_high": 0.0
+      }
+    }
+  },
+  "completed_at": "2026-07-26T19:36:25.362031+00:00",
+  "execution_passed": true,
+  "trust_decision": "trusted_clean_revision",
+  "trusted_evidence": true,
+  "passed": true
+}
