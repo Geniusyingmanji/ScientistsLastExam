@@ -1,0 +1,26 @@
+# RCWA and 50-task closeout claim–evidence audit
+
+Audit date: 2026-07-26 (UTC). No `.paper/claims.yml` exists in this repository, so this audit
+uses the frozen machine-readable reports below as the authoritative evidence layer. It covers the
+new current-state claims added to README, portfolio, gap, common-findings, experiment-plan, LOG and
+TRUST documents; it does not reinterpret historical snapshots.
+
+| Claim | Evidence source | Evidence type | Allowed wording | Disposition |
+|---|---|---|---|---|
+| The current inventory has 59 packages at `7 certified / 43 candidate / 9 quarantined`, hence 50 internally admissible packages. | `experiments/task_certification_audit_2026-07-26_v56.json`, SHA-256 `e47aec74fc1959e844460a9edf3cd56517fa2775467174e2391544753a6ebefe`; `inventory_count=59`, `status_counts={7,43,9}`, no missing/orphaned records. | Clean-revision internal certification audit. | “internally admissible”; never “externally certified” or “50 scientific discoveries”. | Keep with external-validation caveat. |
+| Security passes 18/18, all 59 baselines are deterministic/valid/fail-closed over two repeats, and infrastructure failures are zero. | `security_audit_2026-07-26_v40.json`, SHA-256 `a7b329cbbc3cdac33f201f19a320a87d1f96fa3fe9d8469c6d9146d26b831c60`; `secure_baseline_determinism_2026-07-26_v45.json`, SHA-256 `e626a29071c88fdd58b0997ea956209b35ca63867fcd4f695327fa67a96287e9`. | Executable clean-revision regression and baseline audit. | Direct counts, scoped to registered tests/tasks and this Linux environment. | Keep; retain CI/portability limitation. |
+| Full suite v15 passes 499/499 in 1843.875 seconds; v14 is negative evidence with three exact-zero RCWA assertion failures. | `full_test_suite_2026-07-26_v15.json`, SHA-256 `e84103a1d3606329cd457f074f5351c5f283cb07040cbb46f2677cc0458e37b4`; v14 SHA-256 `d1035f77fe561c9243693e75667b7810f04e27297cf91a353d4ab1a7c152e8b5`. | Complete unittest run on clean revisions. | Direct test result; v14 must remain `DO_NOT_USE_AS_PASSING_EVIDENCE`. | Keep both; v15 supersedes v14 only after the tolerance fix. |
+| RCWA baseline/reference headroom is at least `0.265762` nominal and `0.246092` under shifts; order-13/19 utility differs by at most `0.001697`. | `diffraction_grating_v2_calibration_2026-07-26.json`, SHA-256 `ea8e74b609fca6c4d01a6f7ca75861d71babdc22260c7a7d5cb2abbcae2ab4d6`. | Deterministic simulation calibration. | “the registered solver/calibration reports”; not physical efficiency, global optimality or a device record. | Keep with computational scope. |
+| Independent `grcwa 0.1.2` comparison over 72 conditions has maximum/mean/95th-percentile absolute efficiency differences `0.007846/0.001688/0.005837`. | `diffraction_grating_v2_grcwa_crosscheck_2026-07-26.json`, SHA-256 `4ca80525aed02cf613b60a5cc94ba632c51335057def94b3b7794f413671f8dc`. | Independent software implementation in the same RCWA method family. | “numerical cross-check/agreement”; never “experimental validation” or “fabrication confirmation”. | Keep with method-family and truncation caveats. |
+| One of seven GPT-5.5 proposals is nominally valid; four fail only the non-titania transfer worlds and two fail all six worlds. | `diffraction_grating_v2_calibration_analysis_2026-07-26_v2.json`, SHA-256 `c5bfe01b7a6d63f69720e1763f625577c938dc467a9c5e153b0885302260ac4e`; proposal and per-world failure summaries. | Three single-run task calibrations with trajectory-bound failure records. | Direct within-run counts; no model population rate. | Keep denominator and single-run caveat. |
+| Frozen-parent step two reaches development/held-out `0.187130/0.173008`, development robustness `0.108832`, and held-out robustness zero; both held-out worlds have shift-infeasible geometry. | Same derived analysis v2; `selected_science_axes` and `selected_blind_robustness_gap`. | Deterministic evaluator output for one selected artifact. | Direct artifact result; not a fabricated-device result or global optimum. | Keep with nominal-versus-shift distinction. |
+| The normal and frozen-parent budget-three ordering is not a feedback effect. | Same derived analysis v2; one run per condition, no server-side generation seed, matched four oracle calls and 2,523 input tokens but different output/total tokens, prompts, histories and artifacts. | Uncontrolled descriptive contrast. | “descriptive”, “happens to”; never causal “feedback helps/hurts”. | Reject causal interpretation. |
+| Cross-task summary v31 has 75 normal single-run conditions over 38 tasks. | `science_calibration_summary_2026-07-26_v31.json`, SHA-256 `b3b3983423f1978b3ddf63fe73f3a34f41eb9a450190fdd7a4c78a0b88028c32`. | Portable descriptive calibration summary. | Calibration coverage only; no leaderboard, population estimate or common averaged science score. | Keep with heterogeneous-metric caveat. |
+
+## Audit outcome
+
+Every precise current-state number above traces to a clean-revision report or to the explicitly
+retained negative v14 report. The wording permits claims about registered computational behavior,
+internal admission and calibration coverage. It does not permit claims of feedback causality,
+external scientific certification, fabricated-device performance, a global optimum, population
+model performance or autonomous scientific discovery.

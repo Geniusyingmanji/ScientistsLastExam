@@ -2793,3 +2793,62 @@ remains task-specific. Normal and frozen-parent budget three match four oracle c
 input tokens but use 13,720/14,822 total tokens, different prompts and different source artifacts;
 the endpoint exposes no server-side generation seed. No feedback-causal, population, prospective
 synthesis, mechanical-validation or autonomous-discovery claim is supported.
+
+## 2026-07-26 — DiffractionGratingDesign-v2 RCWA evidence and 50-task closeout
+
+DiffractionGratingDesign-v2 replaces the scalar phase FFT proxy with a five-layer,
+one-dimensional Fourier-modal Maxwell solver. The six worlds span four development and two
+held-out material/wavelength families, TE/TM polarization, three wavelengths, three angles and
+four sealed etch/overlay/index/angle shifts. The trusted task calibration (SHA-256
+`ea8e74b609fca6c4d01a6f7ca75861d71babdc22260c7a7d5cb2abbcae2ab4d6`) binds clean source
+`e920e1c`. Minimum reference headroom is `0.265762` nominal and `0.246092` under shifts;
+order-13 versus order-19 utility differs by at most `0.001697`, and the largest per-condition
+efficiency difference is `0.015535`. Uniform-interface Fresnel limits and lossless energy
+conservation pass.
+
+The pinned independent `grcwa 0.1.2` cross-check (SHA-256
+`4ca80525aed02cf613b60a5cc94ba632c51335057def94b3b7794f413671f8dc`) covers 72
+baseline/reference center-wavelength conditions. Maximum, mean and 95th-percentile absolute target
+efficiency differences are `0.007846`, `0.001688` and `0.005837`; both implementations conserve
+energy within the registered tolerances. This is independent software agreement within the RCWA
+method family, not physical experimental validation.
+
+Three trusted GPT-5.5 reports bind clean source `aa92618`: budget one (SHA-256
+`706f940f044ddd17fe023d20a4e107b38a6f91af575a3b979ff7400f269d42b9`), normal budget
+three (`b6d7b7b16cb2b5faf91b18c16a166ea44a2abbc24896e4f8a5da67225aa436eb`) and frozen-parent
+budget three (`493fe7298973b15ba09d5566c7fe734d92a82543c7d21b02298494affd3a718f`). Six of seven
+proposals are invalid: four execute only on the three titania development worlds, and two fail on
+all six worlds. Frozen-parent step two is the only nominally valid proposal and reaches
+development/held-out `0.187130/0.173008` with development robustness `0.108832`. Both held-out
+worlds have at least one infeasible sealed-shift geometry, so held-out robustness is zero.
+
+The trusted derived analysis v2 (SHA-256
+`c5bfe01b7a6d63f69720e1763f625577c938dc467a9c5e153b0885302260ac4e`) binds clean
+analysis source `108322f`. It verifies both task-calibration reports, all three model reports, raw
+trajectories, manifests, online/frozen-parent lineage, retained source scans and deterministic
+re-evaluation. Normal and frozen-parent budget three match four oracle calls and 2,523 input tokens
+but use 11,902/11,437 total tokens, different prompts and different source artifacts; Azure exposes
+no server-side generation seed. Their ordering is descriptive rather than feedback-causal.
+
+Cross-task summary v31 (SHA-256
+`b3b3983423f1978b3ddf63fe73f3a34f41eb9a450190fdd7a4c78a0b88028c32`) binds clean source
+`4be5d4d` and validates 75 normal single-run conditions over 38 tasks. The frozen-parent RCWA run
+remains task-specific and heterogeneous science axes are not averaged.
+
+Certification v56 (SHA-256
+`e47aec74fc1959e844460a9edf3cd56517fa2775467174e2391544753a6ebefe`) records 59 packages at
+`7/43/9`, or 50 internally admissible tasks, with no missing or orphaned records. Security v40
+(`a7b329cbbc3cdac33f201f19a320a87d1f96fa3fe9d8469c6d9146d26b831c60`) passes 18/18.
+Baseline v45 (`e626a29071c88fdd58b0997ea956209b35ca63867fcd4f695327fa67a96287e9`) reports 59/59
+deterministic, valid and fail-closed tasks over two repetitions with zero infrastructure failures.
+Full-suite v14 (`d1035f77fe561c9243693e75667b7810f04e27297cf91a353d4ab1a7c152e8b5`) retained a clean
+negative run with 496/499 passing: three RCWA assertions required exact zero although supported
+NumPy/LAPACK builds leave an `O(1e-16)` normalization residue. After replacing exact-zero gates
+with a `1e-12` tolerance, full-suite v15
+(`e84103a1d3606329cd457f074f5351c5f283cb07040cbb46f2677cc0458e37b4`) passes 499/499 in
+1843.875 seconds on clean source `108322f`.
+
+The 50-task count is an internal admission milestone, not evidence that the tasks are externally
+certified or that GPT-5.5 made a scientific discovery. DiffractionGratingDesign-v2 remains a
+computational candidate pending repeated paired controls, server-held regimes, independent
+full-wave replication, fabrication, optical measurement and photonics review.

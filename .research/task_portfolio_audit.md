@@ -1,11 +1,10 @@
 # Scientific task portfolio audit
 
-Audit date: 2026-07-24 (UTC), updated 2026-07-26 through AlloyHardnessOptimization-v1. The original
+Audit date: 2026-07-24 (UTC), updated 2026-07-26 through DiffractionGratingDesign-v2. The original
 inventory contained 50 discoverable task packages. The current registry contains 59 packages in
-55 metadata domains, with `7 certified / 42 candidate / 10 quarantined`. The certified and
-candidate total is 49, leaving an approximate gap of 1 to the target of about 50 internally
-admissible open tasks. Directory count and candidate status are not external scientific
-validation or evidence of long-horizon headroom.
+55 metadata domains, with `7 certified / 43 candidate / 9 quarantined`. The certified and
+candidate total is 50, meeting the approximate internal portfolio-size target. Directory count
+and candidate status are not external scientific validation or evidence of long-horizon headroom.
 
 ## Admission dimensions
 
@@ -28,11 +27,14 @@ meaning.
 ## Current inventory triage
 
 The bullets below retain the chronological triage findings from the original inventory and repair
-waves. The current machine-counted snapshot is 7 certified, 42 candidate and 10 quarantined.
-AlloyHardnessOptimization-v1 is the latest re-admitted candidate. It supplies DOI-grouped
-historical/target separation, charged target-study assays, predictions with intervals and sparse
-cross-DOI exact-recipe confirmation. It still requires prospective synthesis, harmonized
-processing/measurement, server-held alloys and independent materials-science review.
+waves. The current machine-counted snapshot is 7 certified, 43 candidate and 9 quarantined.
+DiffractionGratingDesign-v2 is the latest re-admitted candidate. It replaces the scalar FFT phase
+proxy with a five-layer one-dimensional Fourier-modal Maxwell solver over four development and two
+held-out material/wavelength worlds, TE/TM polarization, wavelength/angle grids and four sealed
+fabrication/index/angle shifts. Frozen anchors have at least 0.266 nominal and 0.246 robust utility
+headroom, and an independent `grcwa 0.1.2` implementation agrees within 0.00785 target efficiency
+over 72 registered conditions. It still requires server-held regimes, scattering-matrix or
+full-wave replication, fabrication, optical measurement and independent photonics review.
 
 - **7 certified core tasks.** Secure and documented, but the 2026-07-21 GPT-5.5 pilot shows
   that Poisson and Spin Glass saturate in one proposal and Lennard-Jones nearly saturates.
@@ -63,8 +65,9 @@ processing/measurement, server-held alloys and independent materials-science rev
   low-thrust propagation, centerline-spoofable cavity scoring, pseudo-data alloy hardness and
   scalar-FFT pseudo-RCWA. HeatExchanger-v2 and LowThrustTransfer-v2 were subsequently rebuilt
   as multifidelity Pareto and long-horizon trajectory-optimization candidates, respectively;
-  RoomImpulseResponse-v2 has now also been substantively rebuilt; the remaining three stay
-  quarantined.
+  RoomImpulseResponse-v2, LidDrivenCavity-v2, AlloyHardnessOptimization-v1 and
+  DiffractionGratingDesign-v2 have also been substantively rebuilt and re-admitted; their
+  candidate status records the new evidence rather than erasing the original failures.
 - **At the wave-4 snapshot, no original unscreened candidates remained and 28 candidates were
   recorded.** They included
   SCM, Lyapunov control, neutron criticality, seismic refraction, pendulum control, sparse
@@ -101,7 +104,7 @@ processing/measurement, server-held alloys and independent materials-science rev
   that do not implement the claimed science. BroadbandAbsorber-v2, Distillation-v2 and
   HartreeFockSCF-v2, ConvectionDiffusionOpt-v2 and RankineCycleOpt-v2 now resolve five of those
   twelve; the other seven retain their reproduced
-  defects. Subsequent substantive rebuilds reduced the current quarantined count to 12.
+  defects. Subsequent substantive rebuilds reduced the current quarantined count to 9.
 
 ## Priority review findings
 
@@ -145,8 +148,14 @@ The first review tranche contains real scientific topics but several narrow eval
   remains extremely sparse and can disagree by over 100 HV. Retain as a retrospective
   active-design candidate pending prospective synthesis, harmonized processing/microstructure/
   indentation, server-held alloys and independent materials-science review.
-- Diffraction grating uses a scalar FFT phase model, not the claimed rigorous coupled-wave
-  analysis. Rename the fidelity or replace it with a validated RCWA oracle.
+- DiffractionGratingDesign-v2 now uses a one-dimensional RCWA/Fourier-modal Maxwell solver rather
+  than the former scalar FFT phase proxy. Energy conservation, uniform-interface Fresnel limits,
+  order-13 versus order-19 convergence and an independent `grcwa 0.1.2` cross-check pass. Across
+  three single-run GPT-5.5 conditions, one of seven proposals is nominally valid. The selected
+  frozen-parent design reaches development/held-out `0.187/0.173`, but its held-out robustness is
+  zero because both held-out worlds contain infeasible sealed-shift geometries. Retain as a
+  computational design candidate pending paired repetitions, server-held worlds, independent
+  full-wave replication, fabrication, measurement and photonics review.
 - Neutron diffusion now has a conservative symmetric PDE/eigenvalue oracle and a reproducible
   optimization/eigenvalue witness, but still exposes only one geometry/loading regime; add
   hidden material/geometry shifts before treating it as more than an on-ramp.
@@ -286,11 +295,11 @@ The target is approximately 50 **admissible** open scientific optimization tasks
 5. run frontier-model budget-one screening before expensive budget 30/100/300 studies.
 
 After complete original-inventory triage, repair waves and additions through
-ForceFieldCalibration-v2, the registry contains 48 internally admissible certified or candidate
-packages. The net expansion gap is therefore approximately 2 tasks rather than the earlier
-51-folder snapshot's gap of 15. New work should emphasize procedural task families, server-held
-regimes and independent replication rather than one-off fixed instances or scientific names around
-hand-written scalar objectives.
+DiffractionGratingDesign-v2, the registry contains 50 internally admissible certified or candidate
+packages. The approximate portfolio-size target is therefore met. New work should improve
+procedural families, server-held regimes, independent replication and long-horizon measurement
+quality rather than increase the folder count with one-off fixed instances or scientific names
+around hand-written scalar objectives.
 
 A candidate that saturates across seeds at budget one is a calibration/on-ramp task, not an
 open-optimization headline task. A candidate that improves development score without sealed

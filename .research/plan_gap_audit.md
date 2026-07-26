@@ -1,15 +1,16 @@
 # Frontier-Science plan gap audit
 
 Audit date: 2026-07-19 (UTC), with the experiment roadmap extended after repeated full-text
-EdgeBench comparison and the task inventory updated on 2026-07-25 through
-QuartzCrystalMicrobalanceLab-v1.
+EdgeBench comparison and the task inventory updated on 2026-07-26 through
+DiffractionGratingDesign-v2 and the 50-task internal-admission closeout.
 Evidence base: `literature_matrix.md`,
 `science_experiment_plan.md`, current source/tests, and the dated artifacts in `experiments/`.
 
 ## Executive decision
 
-Keep the breadth-first expansion freeze: improve the admissible count by rebuilding high-value
-quarantined packages one at a time, not by adding unchecked directories. P0 integrity and a
+Keep the breadth-first expansion freeze: the approximate 50-task internal target is met, so improve
+scientific depth by rebuilding high-value quarantined packages and strengthening existing
+candidates, not by adding unchecked directories. P0 integrity and a
 narrow P1 certification gate are now implemented, but the project has not passed the empirical
 evidence gate needed for a benchmark release. The defensible current description is:
 
@@ -25,18 +26,18 @@ physical validation, and auditable claim–evidence provenance.
 
 | Capability | Current status | Evidence | Remaining acceptance criterion |
 |---|---|---|---|
-| Candidate/oracle isolation | Implemented | Clean-revision security v39: 18/18 adversarial tests; Bubblewrap, no network, read-only mounts, resource/seccomp limits, typed RPC, fresh multi-world sessions and candidate-exception sanitization | Reproduce in clean Linux CI; document portability/non-Linux behavior |
-| Fail-closed trusted metrics | Implemented | Clean-revision 59×2 v44: 59 deterministic, 59 valid, 59 fail-closed and zero infrastructure failures | Repair or quarantine every future invalid candidate oracle before certification |
-| Task admission policy | Implemented, narrow | Trusted certification v55 records 7/42/10; ProspectiveMetaAnalysis-v1, PhotovoltaicTandemDesign-v1, CatalystDeactivationLab-v1, QuartzCrystalMicrobalanceLab-v1, ForceFieldCalibration-v2 and AlloyHardnessOptimization-v1 pass task-specific integrity, finite-output, sandbox and metric-sealing gates | External domain review, server-held corpora/regimes and genuinely independent physical or prospective replication remain incomplete |
-| Scientific validity of inventory | Audited, sparse | All original 50 packages were adversarially audited; later substantive rebuilds and additions plus clean-revision-admitted ForceFieldCalibration-v2 and AlloyHardnessOptimization-v1 leave 49 internally admissible packages in the 59-package inventory | Add approximately 1 net admissible task to reach about 50; hidden/generated instances and shortcut analysis remain mandatory |
+| Candidate/oracle isolation | Implemented | Clean-revision security v40: 18/18 adversarial tests; Bubblewrap, no network, read-only mounts, resource/seccomp limits, typed RPC, fresh multi-world sessions and candidate-exception sanitization | Reproduce in clean Linux CI; document portability/non-Linux behavior |
+| Fail-closed trusted metrics | Implemented | Clean-revision 59×2 v45: 59 deterministic, 59 valid, 59 fail-closed and zero infrastructure failures | Repair or quarantine every future invalid candidate oracle before certification |
+| Task admission policy | Implemented, narrow | Trusted certification v56 records 7/43/9; ProspectiveMetaAnalysis-v1, PhotovoltaicTandemDesign-v1, CatalystDeactivationLab-v1, QuartzCrystalMicrobalanceLab-v1, ForceFieldCalibration-v2, AlloyHardnessOptimization-v1 and DiffractionGratingDesign-v2 pass task-specific integrity, finite-output, sandbox and metric-sealing gates | External domain review, server-held corpora/regimes and genuinely independent physical or prospective replication remain incomplete |
+| Scientific validity of inventory | Audited, sparse | All original 50 packages were adversarially audited; later substantive rebuilds and additions leave 50 internally admissible packages in the 59-package inventory | Maintain the 50-task admission manifest; hidden/generated instances, shortcut analysis and external validation remain mandatory |
 | Unified trajectory/accounting | Implemented, protocol-smoked | Clean-revision two-seed baseline smoke; trajectory schema v2, hashes, AUC over `budget_units`, separate `oracle_calls`, wall/token/cost, seed, checkpoint/resume | Validate nonzero-budget schema-v2 artifact replay in CI and version future changes |
 | Feedback controls | Implemented; strict pilot run | None/shuffled prompt-metric modes disclose true-score selection; strict selection-blind freezes parent/metrics; four-task n=3 pilot has no direction-stable lift and is not token-matched | Run token-matched ≥10 paired seeds with score-only, delayed/replayed and strict open-loop controls |
-| Evaluator-only metric sealing | Implemented and integration-verified | Closed search-visible allowlist; search-state redaction/hash-keyed sidecars; candidate-controlled exception text mapped to a finite label-blind taxonomy; clean-revision full-suite v12 passes 479/479; clean pinned OpenEvolve/TreeQuest/Shinka no-leak report `aff026d` | Extend from baseline smoke to nonzero-budget upstream runs before comparative claims |
+| Evaluator-only metric sealing | Implemented and integration-verified | Closed search-visible allowlist; search-state redaction/hash-keyed sidecars; candidate-controlled exception text mapped to a finite label-blind taxonomy; clean-revision full-suite v15 passes 499/499; clean pinned OpenEvolve/TreeQuest/Shinka no-leak report `aff026d` | Extend from baseline smoke to nonzero-budget upstream runs before comparative claims |
 | Official OpenEvolve adapter | Implemented, trusted baseline smoke | Explicit 0.2.26 adapter; clean-revision secure baseline passed under Python 3.10 | Run nonzero-budget/checkpoint integration and multi-seed study |
 | TreeQuest AB-MCTS | Implemented, trusted baseline smoke | Real TreeQuest AB-MCTS-A ask/tell adapter; clean-revision secure baseline passed under Python 3.12 | Run nonzero-budget/checkpoint integration and multi-seed study |
 | ShinkaEvolve | Implemented, trusted baseline smoke | Official runner/database adapter at pinned commit; clean-revision secure baseline passed under Python 3.10 | Run nonzero-budget/resume integration and token accounting audit |
 | Classical/domain baselines | Partial | NMR, HeatExchanger, Reaction, Gravity, Ocean, Radiative, LowThrust, Climate and DemographicSFS rebuilds have truth-blind domain baselines exposing reconstruction/proxy/prediction, terminal-feasibility, experiment-design or mechanism/refusal gaps | Add random/quasi-random plus BO/CMA-ES/DE and one domain heuristic for each meaningful task family |
-| Multi-seed benchmark evidence | Missing | Keyless GPT-5.5 Responses path is operational; 73 trusted normal single-run conditions cover 37 tasks and a separate four-task n=3 control pilot is negative/inconclusive | Certified-core and science-subset reports with paired uncertainty and portable raw trajectories |
+| Multi-seed benchmark evidence | Missing | Keyless GPT-5.5 Responses path is operational; 75 trusted normal single-run conditions cover 38 tasks and a separate four-task n=3 control pilot is negative/inconclusive | Certified-core and science-subset reports with paired uncertainty and portable raw trajectories |
 | Multifidelity/Pareto | Candidate-level | HeatExchanger-v2 implements proxy/exact Pareto archives, measured false promotion and physical shifts | Add independent high-fidelity review/replication and at least one certified multifidelity task |
 | Feedback learning claim | Negative pilot only | A strict open-loop control and three-replicate four-task pilot are complete; no direction-stable visible or sealed lift, and normal uses more tokens | Token-matched preregistered ≥10-replicate study with delayed/replayed and score-only controls |
 | Mechanistic discovery | Candidate-level | ActiveLaw, NMR, Reaction, Gravity, Ocean, Radiative, Climate, DemographicSFS, ProspectiveMetaAnalysis and CatalystDeactivationLab tasks separately score mechanisms or evidence integrity, prediction, coverage, hidden shifts, confirmation, false discovery and refusal | Add paired repeated studies, harder regimes and independent scientific validation |
@@ -666,8 +667,8 @@ not whether a reduced-order design is physically validated.
 
 - [x] Trusted oracle / isolated candidate architecture and adversarial regression suite.
 - [x] Current 59-package deterministic secure baseline and certification audit; all 59 weak
-  baselines are valid, deterministic and fail closed. Certification v55 records `7/42/10`,
-  security v39 passes 18/18 and full-suite v12 passes 479/479.
+  baselines are valid, deterministic and fail closed. Certification v56 records `7/43/9`,
+  security v40 passes 18/18 and full-suite v15 passes 499/499.
 - [x] Re-run the deterministic secure baseline, certification and security audits on the clean
   53-task RNAInverseDesign revision (v30/v40/v24).
 - [x] Re-run full 332-test regression plus deterministic baseline, certification and security on
@@ -711,12 +712,13 @@ not whether a reduced-order design is physically validated.
   cross-DOI exact-recipe records; bind two-assay prediction/interval metrics, study-held transfer,
   fail-closed isolation and three GPT-5.5 conditions. Keep the scope retrospective and do not call
   the post-inspection freeze preregistration or the replay prospective alloy discovery.
-- [ ] Add one more internally admissible task to reach approximately 50. First choice is a
-  substantive `Optics/DiffractionGratingDesign` rebuild using an independently validated RCWA
-  oracle rather than the current scalar FFT phase model. Require wavelength/polarization/angle
-  transfer, material dispersion, fabrication shifts, energy-conservation/convergence checks,
-  at least 4 development + 2 held-out regimes, metric sealing, shortcut audit and the standard
-  budget-one/normal-budget-three/selection-blind calibration trio.
+- [x] Reach approximately 50 internally admissible tasks by rebuilding
+  `Optics/DiffractionGratingDesign` around a one-dimensional RCWA/Fourier-modal Maxwell oracle.
+  The admitted task has four development and two held-out material/wavelength regimes, TE/TM and
+  angle/wavelength grids, four sealed shifts, energy/Fresnel/convergence checks, a 72-condition
+  independent `grcwa` comparison, metric sealing, retained-source shortcut scans and the standard
+  budget-one/normal-budget-three/selection-blind calibration trio. Keep it candidate-only pending
+  paired repetitions, server-held regimes, full-wave replication, fabrication and measurement.
 
 ### P2a — reproducible protocol release
 

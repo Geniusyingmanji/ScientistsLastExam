@@ -1020,6 +1020,11 @@ log-sigmoid 仅作为候选模型之一，与 log-linear、raw-time logistic、G
 - [x] clean revision `2f647d9` 生成 MOSFET 派生分析与 47-condition/24-task summary v17；
 - [x] 当前全量回归 293/293；clean revision `d775e9a` 的 certification/security/baseline 刷新为
   v37/v21/v27，当前准入为 7/30/14，49 个 normal conditions 覆盖 25 个任务。
+- [x] 2026-07-26 closeout：59 个 package 的当前准入为 `7/43/9`，即 50 个 internally
+  admissible task；summary v31 覆盖 75 个 normal single-run conditions / 38 tasks；clean
+  revision `108322f` 上 security `18/18`、59×2 baseline `59/59/59/0`、full suite
+  `499/499`。这些是内部准入与 calibration 证据，不是 multi-seed scaling、feedback causal
+  或 autonomous-discovery 结果。
 
 ### P1 — Long-horizon pilot
 

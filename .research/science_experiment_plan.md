@@ -1,10 +1,16 @@
 # Science-specific experiment plan
 
-Date: 2026-07-23 (UTC), updated 2026-07-25 after the EdgeBench re-audit and
-QuartzCrystalMicrobalanceLab-v1 calibration.
+Date: 2026-07-23 (UTC), updated 2026-07-26 after the EdgeBench re-audit and
+the 50-task internally admissible portfolio closeout.
 This plan complements the Frontier-Eng-style optimization study and the EdgeBench-style
 long-horizon trajectory study. It does not assume that optimization, feedback learning,
 mechanism recovery, and scientific validation are interchangeable.
+
+Current execution status: 59 packages are inventoried at `7 certified / 43 candidate / 9
+quarantined`, so the internal admissible count is 50. Cross-task summary v31 contains 75 normal
+single-run GPT-5.5 conditions over 38 tasks; these calibrations are not multi-seed performance or
+feedback-causal evidence. The next bottleneck is therefore the preregistered paired experiment
+matrix below, not adding folders to increase the portfolio count.
 
 ## Central experimental distinction
 

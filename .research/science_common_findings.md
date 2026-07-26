@@ -11,14 +11,14 @@ list now also includes RANSCalibration-v2, GeneNetworkIntervention-v1, RNAInvers
 ProteinStabilityDesign-v1, ElectrolyteConductivityDesign-v1, DemographicSFS-v2 and
 CalorimeterDesign-v2, ProspectiveMetaAnalysis-v1, PhotovoltaicTandemDesign-v1,
 CatalystDeactivationLab-v1, QuartzCrystalMicrobalanceLab-v1,
-ForceFieldCalibration-v2 and AlloyHardnessOptimization-v1. The 73 normal-feedback model
-conditions across these 37 tasks each
+ForceFieldCalibration-v2, AlloyHardnessOptimization-v1 and DiffractionGratingDesign-v2. The 75
+normal-feedback model conditions across these 38 tasks each
 contain one seed and proposal budget one or three. They calibrate tasks and motivate experiments;
 they are not a model leaderboard, a causal feedback study or population evidence.
 
 The portable machine record
-`experiments/science_calibration_summary_2026-07-26_v30.json` retains every top-level scalar metric,
-candidate lineage hash and raw trajectory SHA-256 for all 73 normal conditions.
+`experiments/science_calibration_summary_2026-07-26_v31.json` retains every top-level scalar metric,
+candidate lineage hash and raw trajectory SHA-256 for all 75 normal conditions.
 Additional strict diagnostics for Distillation-v2, Hartree--Fock and room acoustics are bound
 separately by `experiments/distillation_v2_calibration_analysis_2026-07-23.json`,
 `experiments/hartree_fock_v2_calibration_analysis_2026-07-23.json` and
@@ -39,7 +39,8 @@ separately by `experiments/distillation_v2_calibration_analysis_2026-07-23.json`
 `experiments/catalyst_deactivation_lab_v1_calibration_analysis_2026-07-25.json` and
 `experiments/qcm_raw_pipeline_v1_calibration_analysis_2026-07-25.json` and
 `experiments/force_field_hypothesis_v2_calibration_analysis_2026-07-26.json` and
-`experiments/alloy_hardness_v1_calibration_analysis_2026-07-26.json`. Strict selection-blind
+`experiments/alloy_hardness_v1_calibration_analysis_2026-07-26.json` and
+`experiments/diffraction_grating_v2_calibration_analysis_2026-07-26_v2.json`. Strict selection-blind
 diagnostics remain in task-specific analysis because they are not normal-feedback calibrations.
 The underlying reports bind the task-specific source revision. Pendulum's initial budget-one
 run on revision `57c0e1b` is
@@ -136,6 +137,8 @@ by the corrected-contract run on `2557adb`.
 | ForceFieldCalibration-v2, three GPT-5.5 conditions | all seven proposals are invalid and all three conditions retain the zero-score baseline | one proposal reaches all twelve worlds but returns invalid submissions; five are sanitized candidate runtime errors and one has a blocked or missing import; infrastructure failures are zero | None of the model proposals crosses the executable scientific-workflow hurdle. Normal and blind match four oracle calls and 6,789 input tokens but differ in output tokens, source and wall time, so the one-run contrast is descriptive rather than causal. |
 | AlloyHardnessOptimization-v1, truth-blind two-assay policy | development/held-out DOI-held utility `0.657516/0.877774`; prediction `0.670267/0.652544` | full interval coverage; only six of 65 target recipes have any exact composition/process record from another DOI | Charged target-study assays can improve a frozen historical ridge proxy in this retrospective replay. Sparse cross-DOI agreement does not establish prospective synthesis, harmonized processing or independent replication. |
 | AlloyHardnessOptimization-v1, three GPT-5.5 conditions | all seven proposals are valid; each selected artifact scores `0.151632` on development and `0` held out | selected prediction spans `0.800608–0.818232` development and `0.739175–0.753396` held out with interval coverage `1/1`, but confirmation coverage is only `0.0833/0.0667` and held-out confirmation MAE is `144.6 HV` | Assays improve prediction and uncertainty without improving selected DOI-held utility. The one-run normal/open-loop contrast is not causal, and the public-data replay is not alloy discovery. |
+| DiffractionGratingDesign-v2, task calibration | baseline/reference utility headroom is at least `0.265762` nominal and `0.246092` under sealed shifts; order-13 versus order-19 utility differs by at most `0.001697` | independent `grcwa 0.1.2` target efficiency differs by maximum/mean/95th percentile `0.007846/0.001688/0.005837` over 72 conditions | The registered one-dimensional Maxwell solver is numerically cross-checked within the frozen tolerances. Agreement between two RCWA implementations is not fabrication or experimental validation. |
+| DiffractionGratingDesign-v2, three GPT-5.5 conditions | one of seven proposals is nominally valid; budget-one and normal budget-three retain the baseline, while frozen-parent step two scores `0.187130` | selected frozen-parent held-out score is `0.173008`, development robustness `0.108832`, and held-out robustness `0`; both held-out worlds contain infeasible sealed-shift geometry | Nominal development and held-out improvement can coexist with complete held-out robustness failure. The one-run normal/open-loop contrast is unseeded and non-causal. |
 
 OPF's `robustness_score` combines security-constrained economic quality with overload penalties.
 It is not a pure safety probability. The proportional baseline is feasible for every tested
@@ -796,16 +799,16 @@ far-offset prediction, model-class adequacy and geological interpretation remain
 The current synthetic primary-reflection laboratory is an active-acquisition/model-checking
 on-ramp, not field FWI or autonomous geological discovery.
 
-The present source manifest contains 49 internally admissible certified or candidate packages:
-seven certified and 42 candidate, with 10 quarantined after rebuilding
-ForceFieldCalibration-v2 and AlloyHardnessOptimization-v1. The remaining admissible gap is
-approximately one task. Alloy passes clean-revision data reconstruction, task calibration,
-wave-10 admission, 59-package certification, 18/18 security, 59-by-2 baseline determinism and
-479/479 full-suite tests. Its 197 historical proxy recipes, 65 target recipes in thirteen later
-DOI studies and nine sparse exact-recipe confirmation records support a retrospective replay,
-not prospective materials discovery. Cross-task summary v30 adds the two normal Alloy conditions
-and now binds 73 normal conditions over 37 tasks; the frozen-parent diagnostic remains
-task-specific.
+The present source manifest contains 50 internally admissible certified or candidate packages:
+seven certified and 43 candidate, with nine quarantined after rebuilding
+ForceFieldCalibration-v2, AlloyHardnessOptimization-v1 and DiffractionGratingDesign-v2. The
+approximate portfolio-size target is met, but this is an internal admission count rather than
+external scientific certification. The clean closeout records certification `7/43/9`, security
+`18/18`, baseline `59/59` deterministic/valid/fail-closed with zero infrastructure failures, and
+full-suite `499/499`. Cross-task summary v31 adds the two normal RCWA conditions and binds 75
+normal conditions over 38 tasks; the frozen-parent diagnostic remains task-specific. The RCWA
+task itself remains computational: independent software agreement does not establish fabrication,
+measured optical performance, a global optimum or prospective scientific discovery.
 Expansion should use procedural families spanning
 design, inverse problems, control, multifidelity validation, mechanism discovery and exact
 mathematical construction rather than cloning one scalar optimization template across domains.
