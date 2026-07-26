@@ -126,6 +126,29 @@ class BatchAggregationTests(unittest.TestCase):
                 ["normal"], [0], "reverse_parity", randomization_seed=1
             )
 
+    def test_execution_blocks_keep_conditions_serial_with_fixed_indices(self):
+        modes = ["normal", "score_only", "delayed_replay", "selection_blind"]
+        seeds = [3, 7, 11, 15]
+        schedule = MODULE._condition_schedule(
+            modes, seeds, "balanced_williams", randomization_seed=834721
+        )
+        blocks = MODULE._execution_blocks(
+            ["T/A", "T/B"], ["greedy_rewrite"], seeds, schedule
+        )
+        self.assertEqual(len(blocks), 8)
+        self.assertEqual(
+            [row["block_index"] for row in blocks], list(range(1, 9))
+        )
+        self.assertEqual(
+            [(row["task"], row["seed"]) for row in blocks[:4]],
+            [("T/A", seed) for seed in seeds],
+        )
+        for block in blocks:
+            self.assertEqual(
+                block["feedback_modes"], schedule[seeds.index(block["seed"])]
+            )
+            self.assertEqual(set(block["feedback_modes"]), set(modes))
+
     def test_aggregation_uses_latest_attempt_without_dropping_history(self):
         failed = {"task": "T/X", "algorithm": "greedy_rewrite",
                   "feedback_mode": "normal", "seed": 0, "error": "offline"}

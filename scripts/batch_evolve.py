@@ -10,8 +10,10 @@ Only the seven certified tasks are selected unless ``--all`` is explicit.
 from __future__ import annotations
 
 import argparse
+import concurrent.futures
 import hashlib
 import json
+import multiprocessing
 import platform
 import random
 import sys
@@ -27,7 +29,10 @@ from frontier_science.algorithms import ALGORITHMS, get_algorithm  # noqa: E402
 from frontier_science.algorithms.common import llm_condition_sha256  # noqa: E402
 from frontier_science.algorithms.common import atomic_write_text  # noqa: E402
 from frontier_science.algorithms.common import feedback_scope  # noqa: E402
-from frontier_science.config import load_llm_client  # noqa: E402
+from frontier_science.config import (  # noqa: E402
+    load_llm_client,
+    resolve_llm_config_path,
+)
 from frontier_science.protocol import mean_confidence_interval  # noqa: E402
 from frontier_science.protocol import compact_trajectory_snapshot  # noqa: E402
 from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402
@@ -121,6 +126,111 @@ def _preregistration_record(path: Path | None) -> dict[str, Any] | None:
         "path": recorded_path,
         "sha256": hashlib.sha256(payload).hexdigest(),
         "bytes": len(payload),
+    }
+
+
+def _execution_blocks(
+    task_ids: list[str], algorithms: list[str], seeds: list[int],
+    condition_schedule: list[list[str]],
+) -> list[dict[str, Any]]:
+    if len(seeds) != len(condition_schedule):
+        raise ValueError("condition schedule does not match replicate identifiers")
+    blocks = []
+    for task_id in task_ids:
+        for algorithm in algorithms:
+            for seed, ordered_modes in zip(seeds, condition_schedule):
+                blocks.append({
+                    "block_index": len(blocks) + 1,
+                    "task": task_id,
+                    "algorithm": algorithm,
+                    "seed": int(seed),
+                    "feedback_modes": list(ordered_modes),
+                })
+    return blocks
+
+
+def _execute_block(payload: dict[str, Any]) -> dict[str, Any]:
+    """Execute one task/algorithm/replicate block in an isolated process.
+
+    Conditions remain serial in their frozen Williams order.  Only distinct
+    blocks may be scheduled concurrently, so Python RNG state, environment
+    changes and LLM client accounting cannot leak between blocks.
+    """
+    task_id = str(payload["task"])
+    algorithm_name = str(payload["algorithm"])
+    seed = int(payload["seed"])
+    spec = find_task(task_id, include_uncertified=True)
+    algorithm = get_algorithm(algorithm_name)
+    llm = load_llm_client(str(payload["llm_config_path"]))
+    work_root = Path(payload["work_root"])
+    skip_keys = set(payload.get("skip_keys") or [])
+    entries = []
+    logs = []
+    for position, feedback_mode in enumerate(payload["feedback_modes"], 1):
+        key = _run_key(task_id, algorithm_name, feedback_mode, seed)
+        if key in skip_keys:
+            logs.append("skip completed %s" % key)
+            continue
+        run_dir = (
+            work_root / task_id.replace("/", "__") / algorithm_name
+            / feedback_mode / ("seed_%d" % seed)
+        )
+        started = time.monotonic()
+        cell_logs = []
+        try:
+            result = algorithm(
+                spec,
+                llm,
+                budget=int(payload["budget"]),
+                timeout_s=float(payload["timeout_s"]),
+                workdir=run_dir,
+                seed=seed,
+                resume=bool(payload["resume"]),
+                feedback_mode=feedback_mode,
+                log_fn=cell_logs.append,
+            )
+            entry = {
+                "task": spec.task_id,
+                "algorithm": result.algorithm,
+                "feedback_mode": feedback_mode,
+                "seed": seed,
+                "baseline": result.baseline_score,
+                "best": result.best_score,
+                "accepted": result.accepted,
+                "evaluated": result.evaluated,
+                "workdir": str(run_dir),
+                "summary": result.summary,
+                "trajectory_snapshot": compact_trajectory_snapshot(
+                    run_dir / "trajectory.jsonl", schema_version=2
+                ),
+            }
+        except Exception as exc:  # noqa: BLE001 - retain failed conditions
+            entry = {
+                "task": spec.task_id,
+                "algorithm": algorithm_name,
+                "feedback_mode": feedback_mode,
+                "seed": seed,
+                "workdir": str(run_dir),
+                "error": "%s: %s" % (type(exc).__name__, exc),
+                "wall_seconds": time.monotonic() - started,
+            }
+        entry["execution_block_index"] = int(payload["block_index"])
+        entry["within_block_position"] = position
+        entries.append(entry)
+        logs.extend("[%s] %s" % (feedback_mode, line) for line in cell_logs)
+        if entry.get("error"):
+            logs.append(
+                "[%s] block halted before later conditions after outer error"
+                % feedback_mode
+            )
+            break
+    return {
+        "block_index": int(payload["block_index"]),
+        "task": task_id,
+        "algorithm": algorithm_name,
+        "seed": seed,
+        "entries": entries,
+        "logs": logs,
     }
 
 
@@ -256,6 +366,13 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("--budget", type=int, default=30)
     parser.add_argument("--timeout", type=float, default=300.0)
+    parser.add_argument(
+        "--block-workers", type=int, default=1,
+        help=(
+            "maximum concurrent task/algorithm/replicate blocks; conditions "
+            "inside each block remain serial in the frozen order"
+        ),
+    )
     parser.add_argument("--llm-config", default=None)
     parser.add_argument(
         "--preregistration", type=Path, default=None,
@@ -272,6 +389,8 @@ def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(raw_argv)
     if args.budget < 0:
         raise SystemExit("--budget must be non-negative")
+    if args.block_workers < 1:
+        raise SystemExit("--block-workers must be >= 1")
     algorithms = _csv(args.algorithms)
     unknown = sorted(set(algorithms) - set(ALGORITHMS))
     if unknown:
@@ -317,6 +436,7 @@ def main(argv: list[str] | None = None) -> int:
     output.parent.mkdir(parents=True, exist_ok=True)
     work_root.mkdir(parents=True, exist_ok=True)
     llm = load_llm_client(args.llm_config)
+    llm_config_path = resolve_llm_config_path(args.llm_config)
     provenance = source_provenance(
         ROOT, command=[sys.executable, str(Path(__file__).resolve()), *raw_argv]
     )
@@ -353,6 +473,13 @@ def main(argv: list[str] | None = None) -> int:
         },
         "budget": args.budget,
         "timeout_s": args.timeout,
+        "block_workers": args.block_workers,
+        "block_parallelism": {
+            "unit": "task_algorithm_replicate",
+            "within_block_conditions": "serial_in_condition_order_schedule",
+            "cross_block_scheduling": "fixed_submission_order_nonadaptive",
+            "maximum_concurrent_blocks": args.block_workers,
+        },
         "work_root": str(work_root),
         "llm_condition_sha256": llm_condition_sha256(llm),
         "llm": {
@@ -405,58 +532,95 @@ def main(argv: list[str] | None = None) -> int:
         if not run.get("error")
     }
     total = len(specs) * len(algorithms) * len(feedback_modes) * len(args.seeds)
-    counter = 0
-    for spec in specs:
-        for algorithm_name in algorithms:
-            algorithm = get_algorithm(algorithm_name)
-            for seed, ordered_modes in zip(args.seeds, condition_schedule):
-                for feedback_mode in ordered_modes:
-                    counter += 1
-                    key = _run_key(spec.task_id, algorithm_name, feedback_mode, seed)
-                    if key in done:
-                        print("[%d/%d] skip completed %s" % (counter, total, key), flush=True)
-                        continue
-                    run_dir = work_root / spec.task_id.replace("/", "__") / algorithm_name / feedback_mode / ("seed_%d" % seed)
-                    print("[%d/%d] %s" % (counter, total, key), flush=True)
-                    started = time.monotonic()
-                    try:
-                        result = algorithm(
-                            spec, llm, budget=args.budget, timeout_s=args.timeout,
-                            workdir=run_dir, seed=seed, resume=args.resume,
-                            feedback_mode=feedback_mode, log_fn=lambda line: print("  " + line),
-                        )
-                        entry = {
-                            "task": spec.task_id,
-                            "algorithm": result.algorithm,
-                            "feedback_mode": feedback_mode,
-                            "seed": seed,
-                            "baseline": result.baseline_score,
-                            "best": result.best_score,
-                            "accepted": result.accepted,
-                            "evaluated": result.evaluated,
-                            "workdir": str(run_dir),
-                            "summary": result.summary,
-                            # Generated only after the backend returns. Sealed science
-                            # metrics remain outside all agent/search-owned state.
-                            "trajectory_snapshot": compact_trajectory_snapshot(
-                                run_dir / "trajectory.jsonl", schema_version=2
-                            ),
-                        }
-                    except Exception as exc:  # noqa: BLE001 - retain failed conditions
-                        entry = {
-                            "task": spec.task_id,
-                            "algorithm": algorithm_name,
-                            "feedback_mode": feedback_mode,
-                            "seed": seed,
-                            "workdir": str(run_dir),
-                            "error": "%s: %s" % (type(exc).__name__, exc),
-                            "wall_seconds": time.monotonic() - started,
-                        }
-                    document.setdefault("runs", []).append(entry)
-                    document["aggregate"] = aggregate_runs(document["runs"])
-                    atomic_write_text(
-                        output, json.dumps(document, indent=2, allow_nan=False) + "\n"
+    blocks = _execution_blocks(
+        [spec.task_id for spec in specs], algorithms, args.seeds,
+        condition_schedule,
+    )
+    payloads = [
+        {
+            **block,
+            "llm_config_path": str(llm_config_path),
+            "work_root": str(work_root),
+            "budget": args.budget,
+            "timeout_s": args.timeout,
+            "resume": args.resume,
+            "skip_keys": sorted(done),
+        }
+        for block in blocks
+        if any(
+            _run_key(
+                block["task"], block["algorithm"], mode, block["seed"]
+            ) not in done
+            for mode in block["feedback_modes"]
+        )
+    ]
+    # Persist the cohort plan and source provenance before any worker can make
+    # an LLM call. A process interruption can then be resumed without
+    # reconstructing an unrecorded design.
+    document["aggregate"] = aggregate_runs(document.get("runs") or [])
+    atomic_write_text(
+        output, json.dumps(document, indent=2, allow_nan=False) + "\n"
+    )
+
+    def retain_block(result: dict[str, Any]) -> None:
+        for line in result.get("logs") or []:
+            print("  " + line, flush=True)
+        document.setdefault("runs", []).extend(result.get("entries") or [])
+        document["aggregate"] = aggregate_runs(document["runs"])
+        atomic_write_text(
+            output, json.dumps(document, indent=2, allow_nan=False) + "\n"
+        )
+        print(
+            "[block %d/%d] complete %s|%s|%d" % (
+                result["block_index"], len(blocks), result["task"],
+                result["algorithm"], result["seed"],
+            ),
+            flush=True,
+        )
+
+    if args.block_workers == 1:
+        for payload in payloads:
+            retain_block(_execute_block(payload))
+    else:
+        context = multiprocessing.get_context("spawn")
+        with concurrent.futures.ProcessPoolExecutor(
+            max_workers=args.block_workers, mp_context=context,
+        ) as executor:
+            future_payload = {
+                executor.submit(_execute_block, payload): payload
+                for payload in payloads
+            }
+            for future in concurrent.futures.as_completed(future_payload):
+                payload = future_payload[future]
+                try:
+                    result = future.result()
+                except Exception as exc:  # noqa: BLE001 - retain crashed blocks
+                    document.setdefault("block_failures", []).append({
+                        "block_index": payload["block_index"],
+                        "task": payload["task"],
+                        "algorithm": payload["algorithm"],
+                        "seed": payload["seed"],
+                        "feedback_modes": payload["feedback_modes"],
+                        "error": "BlockWorkerError: %s" % type(exc).__name__,
+                        "completed_at": datetime.now(timezone.utc).isoformat(),
+                    })
+                    document["aggregate"] = aggregate_runs(
+                        document.get("runs") or []
                     )
+                    atomic_write_text(
+                        output,
+                        json.dumps(document, indent=2, allow_nan=False) + "\n",
+                    )
+                    print(
+                        "[block %d/%d] worker failed %s|%s|%d" % (
+                            payload["block_index"], len(blocks),
+                            payload["task"], payload["algorithm"],
+                            payload["seed"],
+                        ),
+                        flush=True,
+                    )
+                    continue
+                retain_block(result)
 
     document["completed_at"] = datetime.now(timezone.utc).isoformat()
     document["aggregate"] = aggregate_runs(document["runs"])
