@@ -7,6 +7,8 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
+from frontier_science.llm import LLMConfig
+
 
 SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "batch_evolve.py"
 SPEC = importlib.util.spec_from_file_location("batch_evolve_for_test", SCRIPT)
@@ -148,6 +150,72 @@ class BatchAggregationTests(unittest.TestCase):
                 block["feedback_modes"], schedule[seeds.index(block["seed"])]
             )
             self.assertEqual(set(block["feedback_modes"]), set(modes))
+
+    def test_block_resume_retries_started_cell_then_runs_unstarted_cells(self):
+        task = "Chemistry/LennardJonesCluster"
+        modes = ["normal", "score_only"]
+        source = MODULE.find_task(
+            task, include_uncertified=True
+        ).initial_program_path.read_text(encoding="utf-8")
+        fenced = "```python\n%s\n```" % source
+        config = LLMConfig(
+            wire="chat", base_url="https://example.invalid/v1",
+            model="fixture", max_output_tokens=20, temperature=0.0,
+            timeout_seconds=1,
+        )
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            payload = {
+                "block_index": 1,
+                "task": task,
+                "algorithm": "greedy_rewrite",
+                "seed": 0,
+                "feedback_modes": modes,
+                "llm_config": config,
+                "work_root": str(root),
+                "budget": 1,
+                "timeout_s": 20.0,
+                "resume": False,
+                "skip_keys": [],
+            }
+            failing = type("Failing", (), {
+                "config": config,
+                "last_usage": {},
+                "complete": lambda self, prompt, system=None: (
+                    (_ for _ in ()).throw(RuntimeError("offline"))
+                ),
+            })()
+            with patch.object(MODULE, "LLMClient", return_value=failing):
+                first = MODULE._execute_block(payload)
+            self.assertEqual(len(first["entries"]), 1)
+            self.assertIn("LLMInfrastructureError", first["entries"][0]["error"])
+            normal_dir = (
+                root / "Chemistry__LennardJonesCluster" / "greedy_rewrite"
+                / "normal" / "seed_0"
+            )
+            self.assertTrue((normal_dir / "checkpoint.json").is_file())
+            self.assertEqual(
+                len((normal_dir / "trajectory.jsonl").read_text().splitlines()), 1
+            )
+
+            replies = iter([fenced, fenced])
+            recovered = type("Recovered", (), {
+                "config": config,
+                "last_usage": {},
+                "complete": lambda self, prompt, system=None: next(replies),
+            })()
+            payload["resume"] = True
+            with patch.object(MODULE, "LLMClient", return_value=recovered):
+                second = MODULE._execute_block(payload)
+            self.assertEqual(len(second["entries"]), 2)
+            self.assertFalse(any(row.get("error") for row in second["entries"]))
+            self.assertEqual(
+                [row["within_block_position"] for row in second["entries"]],
+                [1, 2],
+            )
+            self.assertEqual(
+                len((normal_dir / "trajectory.jsonl").read_text().splitlines()), 2
+            )
 
     def test_aggregation_uses_latest_attempt_without_dropping_history(self):
         failed = {"task": "T/X", "algorithm": "greedy_rewrite",

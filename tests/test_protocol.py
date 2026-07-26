@@ -372,14 +372,85 @@ class GreedyRewriteTests(unittest.TestCase):
                                workdir=work, seed=17, resume=True,
                                log_fn=lambda _: None)
 
-    def test_llm_failure_is_recorded_without_unbound_reply(self):
+    def test_llm_transport_failure_does_not_consume_proposal_slot(self):
         spec = find_task("LennardJonesCluster")
         with tempfile.TemporaryDirectory() as tmp:
-            result = greedy_rewrite(spec, FakeLLM([RuntimeError("offline")]), budget=1,
-                                    timeout_s=20, workdir=Path(tmp), log_fn=lambda _: None)
-            self.assertEqual(result.evaluated, 1)
+            work = Path(tmp)
+            with self.assertRaisesRegex(
+                RuntimeError, "provider request failed"
+            ):
+                greedy_rewrite(
+                    spec, FakeLLM([RuntimeError("offline")]), budget=1,
+                    timeout_s=20, workdir=work, log_fn=lambda _: None,
+                )
             events = load_trajectory(Path(tmp) / "trajectory.jsonl")
-            self.assertEqual(events[-1]["error"], "LLM error: offline")
+            self.assertEqual(len(events), 1)
+            checkpoint = json.loads(
+                (work / "checkpoint.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual(checkpoint["next_iter"], 1)
+            self.assertIsNone(checkpoint["pending_proposal"])
+            fenced = "```python\n" + spec.initial_program_path.read_text(
+                encoding="utf-8"
+            ) + "\n```"
+            resumed = greedy_rewrite(
+                spec, FakeLLM([fenced]), budget=1, timeout_s=20,
+                workdir=work, resume=True, log_fn=lambda _: None,
+            )
+            self.assertEqual(len(load_trajectory(work / "trajectory.jsonl")), 2)
+            self.assertEqual(resumed.evaluated, 2)
+
+    def test_evaluator_infrastructure_failure_does_not_consume_proposal_slot(self):
+        spec = find_task("LennardJonesCluster")
+        baseline = spec.initial_program_path.read_text(encoding="utf-8")
+        fenced = "```python\n" + baseline + "\n```"
+        baseline_metrics = {
+            "combined_score": 0.1, "valid": 1.0,
+        }
+        infrastructure = {
+            "combined_score": -1.0e18,
+            "valid": 0.0,
+            "infrastructure_failure": 1.0,
+            "error_message": "trusted evaluator process failure",
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            work = Path(tmp)
+            with patch(
+                "frontier_science.algorithms.evolve.evaluate_candidate",
+                side_effect=[baseline_metrics, infrastructure],
+            ):
+                with self.assertRaisesRegex(
+                    RuntimeError, "candidate trusted evaluator"
+                ):
+                    greedy_rewrite(
+                        spec, FakeLLM([fenced]), budget=1, timeout_s=20,
+                        workdir=work, log_fn=lambda _: None,
+                    )
+            self.assertEqual(len(load_trajectory(work / "trajectory.jsonl")), 1)
+            checkpoint = json.loads(
+                (work / "checkpoint.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual(checkpoint["next_iter"], 1)
+            pending = checkpoint["pending_proposal"]
+            self.assertEqual(pending["parse_status"], "parsed_code")
+            self.assertEqual(pending["program"].rstrip(), baseline.rstrip())
+            self.assertEqual(
+                pending["candidate_sha256"], sha256_text(pending["program"])
+            )
+            with patch(
+                "frontier_science.algorithms.evolve.evaluate_candidate",
+                return_value={"combined_score": 0.2, "valid": 1.0},
+            ):
+                resumed = greedy_rewrite(
+                    spec, FakeLLM([]), budget=1, timeout_s=20,
+                    workdir=work, resume=True, log_fn=lambda _: None,
+                )
+            self.assertEqual(resumed.evaluated, 2)
+            self.assertEqual(len(load_trajectory(work / "trajectory.jsonl")), 2)
+            completed = json.loads(
+                (work / "checkpoint.json").read_text(encoding="utf-8")
+            )
+            self.assertIsNone(completed["pending_proposal"])
 
     def test_checkpoint_search_state_does_not_store_sealed_metrics(self):
         spec = find_task("ControlTheory/InvertedPendulumSwingUp", include_uncertified=True)

@@ -254,6 +254,8 @@ class TrackFConfirmationRunnerTests(unittest.TestCase):
                 "trajectory_snapshot": compact_trajectory_snapshot(
                     workdir / "trajectory.jsonl", schema_version=2
                 ),
+                "execution_block_index": 1,
+                "within_block_position": 1,
             }
             config = {
                 "work_root": str(Path(temporary) / "runs"),
@@ -287,6 +289,24 @@ class TrackFConfirmationRunnerTests(unittest.TestCase):
                 spec,
                 "normal",
                 1,
+            )
+
+        pending_checkpoint = {
+            "pending_proposal": {"schema_version": 1},
+            "evaluated_candidates": [{
+                "step": 0,
+                "program": baseline,
+                "sha256": MODULE.sha256_text(baseline),
+                "score": loaded["events"][0]["score"],
+                "valid": loaded["events"][0]["valid"],
+                "metrics": MODULE.search_visible_metrics(
+                    loaded["events"][0]["metrics"]
+                ),
+            }],
+        }
+        with self.assertRaisesRegex(ValueError, "pending proposal"):
+            MODULE._source_rows(
+                loaded["events"][:1], pending_checkpoint, baseline
             )
 
     def _context_artifact_fixture(self, root: Path):
@@ -499,6 +519,10 @@ class TrackFConfirmationRunnerTests(unittest.TestCase):
                         "algorithm": "greedy_rewrite",
                         "feedback_mode": mode,
                         "seed": replicate,
+                        "execution_block_index": replicate + 1,
+                        "within_block_position": (
+                            schedule[replicate]["feedback_modes"].index(mode) + 1
+                        ),
                     })
             smoke = {
                 "schema_version": 1,
@@ -514,6 +538,13 @@ class TrackFConfirmationRunnerTests(unittest.TestCase):
                     "condition_order": "balanced_williams",
                     "condition_order_randomization_seed": seed,
                     "condition_order_schedule": schedule,
+                    "block_workers": 2,
+                    "block_parallelism": {
+                        "maximum_concurrent_blocks": 2,
+                        "within_block_conditions": (
+                            "serial_in_condition_order_schedule"
+                        ),
+                    },
                     "budget": 0,
                     "trajectory_snapshot_schema_version": 2,
                     "llm_condition_sha256": "c" * 64,
@@ -538,6 +569,7 @@ class TrackFConfirmationRunnerTests(unittest.TestCase):
                 "condition_order": "balanced_williams",
                 "condition_order_randomization_seed": seed,
                 "condition_order_schedule": schedule,
+                "block_workers": 2,
                 "scheduled_cell_count": 16,
             }
             prereg = {
@@ -671,6 +703,66 @@ class TrackFConfirmationRunnerTests(unittest.TestCase):
             MODULE._validate_attempt_ledger(
                 {"attempts": [missing_context]}, [evaluation]
             )
+
+    def test_parallel_worker_results_do_not_define_look_order(self):
+        context = _context()
+        context_sha = hashlib.sha256(
+            MODULE.canonical_trusted_context(context)
+        ).hexdigest()
+        source = "def solve(): return 1\n"
+        source_sha = MODULE.sha256_text(source)
+        evaluations = [
+            {
+                "evaluation_id": "evaluation-%d" % index,
+                "artifact_id": "artifact-%d" % index,
+                "replay_index": 0,
+                "task": TASK,
+                "replicate_id": index,
+                "candidate_sha256": source_sha,
+                "context_sha256": context_sha,
+            }
+            for index in range(3)
+        ]
+        attempts = [
+            {
+                **evaluation,
+                "attempt_index": 1,
+                "confirmation_look_index": index + 1,
+                "status": "started",
+                "started_at": "2026-07-26T00:00:0%d+00:00" % index,
+                "completed_at": None,
+                "wall_seconds": None,
+                "metrics": None,
+            }
+            for index, evaluation in enumerate(evaluations)
+        ]
+        document = {"attempts": attempts}
+        MODULE._validate_attempt_ledger(document, evaluations)
+        # Simulate reverse completion order. Mutating outcome fields in place
+        # must not reorder the write-ahead list or its look indices.
+        for evaluation in reversed(evaluations):
+            attempt = next(
+                row for row in attempts
+                if row["evaluation_id"] == evaluation["evaluation_id"]
+            )
+            attempt.update({
+                "status": "completed",
+                "completed_at": "2026-07-26T00:01:00+00:00",
+                "wall_seconds": 1.0,
+                "metrics": {
+                    "combined_score": 0.5,
+                    "valid": 1.0,
+                    "trusted_context_sha256": context_sha,
+                },
+            })
+        MODULE._validate_attempt_ledger(document, evaluations)
+        self.assertEqual(
+            [row["evaluation_id"] for row in attempts],
+            [row["evaluation_id"] for row in evaluations],
+        )
+        self.assertEqual(
+            [row["confirmation_look_index"] for row in attempts], [1, 2, 3]
+        )
 
     def test_incomplete_search_fails_before_private_read_or_confirmation_call(self):
         with patch.object(

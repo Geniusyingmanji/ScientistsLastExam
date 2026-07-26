@@ -29,10 +29,8 @@ from frontier_science.algorithms import ALGORITHMS, get_algorithm  # noqa: E402
 from frontier_science.algorithms.common import llm_condition_sha256  # noqa: E402
 from frontier_science.algorithms.common import atomic_write_text  # noqa: E402
 from frontier_science.algorithms.common import feedback_scope  # noqa: E402
-from frontier_science.config import (  # noqa: E402
-    load_llm_client,
-    resolve_llm_config_path,
-)
+from frontier_science.config import load_llm_client  # noqa: E402
+from frontier_science.llm import LLMClient  # noqa: E402
 from frontier_science.protocol import mean_confidence_interval  # noqa: E402
 from frontier_science.protocol import compact_trajectory_snapshot  # noqa: E402
 from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402
@@ -161,7 +159,9 @@ def _execute_block(payload: dict[str, Any]) -> dict[str, Any]:
     seed = int(payload["seed"])
     spec = find_task(task_id, include_uncertified=True)
     algorithm = get_algorithm(algorithm_name)
-    llm = load_llm_client(str(payload["llm_config_path"]))
+    # The parent hashes this exact config object before dispatch.  Do not
+    # re-read a mutable git-ignored YAML file inside the worker.
+    llm = LLMClient(payload["llm_config"])
     work_root = Path(payload["work_root"])
     skip_keys = set(payload.get("skip_keys") or [])
     entries = []
@@ -175,9 +175,26 @@ def _execute_block(payload: dict[str, Any]) -> dict[str, Any]:
             work_root / task_id.replace("/", "__") / algorithm_name
             / feedback_mode / ("seed_%d" % seed)
         )
+        checkpoint = run_dir / "checkpoint.json"
+        trajectory = run_dir / "trajectory.jsonl"
+        manifest = run_dir / "run_manifest.json"
+        full_resume = bool(
+            checkpoint.is_file() and trajectory.is_file() and manifest.is_file()
+        )
+        baseline_retry = bool(
+            manifest.is_file() and not checkpoint.exists()
+            and not trajectory.exists()
+        )
+        resume_cell = bool(payload["resume"] and (full_resume or baseline_retry))
+        partial_resume_state = bool(payload["resume"] and run_dir.exists()
+                                    and any(run_dir.iterdir()) and not resume_cell)
         started = time.monotonic()
         cell_logs = []
         try:
+            if partial_resume_state:
+                raise ValueError(
+                    "incomplete cell state lacks the full resume artifact set"
+                )
             result = algorithm(
                 spec,
                 llm,
@@ -185,7 +202,7 @@ def _execute_block(payload: dict[str, Any]) -> dict[str, Any]:
                 timeout_s=float(payload["timeout_s"]),
                 workdir=run_dir,
                 seed=seed,
-                resume=bool(payload["resume"]),
+                resume=resume_cell,
                 feedback_mode=feedback_mode,
                 log_fn=cell_logs.append,
             )
@@ -436,7 +453,6 @@ def main(argv: list[str] | None = None) -> int:
     output.parent.mkdir(parents=True, exist_ok=True)
     work_root.mkdir(parents=True, exist_ok=True)
     llm = load_llm_client(args.llm_config)
-    llm_config_path = resolve_llm_config_path(args.llm_config)
     provenance = source_provenance(
         ROOT, command=[sys.executable, str(Path(__file__).resolve()), *raw_argv]
     )
@@ -539,7 +555,7 @@ def main(argv: list[str] | None = None) -> int:
     payloads = [
         {
             **block,
-            "llm_config_path": str(llm_config_path),
+            "llm_config": llm.config,
             "work_root": str(work_root),
             "budget": args.budget,
             "timeout_s": args.timeout,

@@ -13,11 +13,13 @@ scientific outcome and replay disagreement quarantines a stochastic artifact.
 from __future__ import annotations
 
 import argparse
+import concurrent.futures
 import hashlib
 import hmac
 import importlib.util
 import json
 import math
+import multiprocessing
 import platform
 import random
 import subprocess
@@ -153,6 +155,8 @@ def _observer_best_step(events: list[dict[str, Any]], through_step: int) -> int:
 def _source_rows(
     events: list[dict[str, Any]], checkpoint: dict[str, Any], baseline: str,
 ) -> dict[int, str]:
+    if checkpoint.get("pending_proposal") is not None:
+        raise ValueError("completed search checkpoint retains a pending proposal")
     rows = checkpoint.get("evaluated_candidates") or []
     if not rows:
         raise ValueError("checkpoint has no retained evaluated candidates")
@@ -346,6 +350,8 @@ def _load_cell(
         == sum(bool(event["accepted"]) for event in events[1:])
         and int(run["evaluated"]) == int(events[-1]["oracle_calls"])
         and summary.get("selection_policy") == treatment["selection_policy"]
+        and run.get("execution_block_index") is not None
+        and run.get("within_block_position") is not None
     ):
         raise ValueError("search checkpoint/full-horizon selection differs")
     curve = realized_token_curve(events)
@@ -593,6 +599,7 @@ def _validate_presearch_prerequisites(
         expected_replicates, smoke_randomization_seed
     )
     expected_cells = int(smoke_binding.get("scheduled_cell_count", -1))
+    expected_block_workers = smoke_binding.get("block_workers")
     exact_binding = config.get("preregistration") or {}
     latest = _latest_runs(smoke.get("runs") or [])
     expected_keys = {
@@ -618,6 +625,13 @@ def _validate_presearch_prerequisites(
         == smoke_randomization_seed
         and expected_schedule == reconstructed_schedule
         and config.get("condition_order_schedule") == expected_schedule
+        and config.get("block_workers") == expected_block_workers
+        and (config.get("block_parallelism") or {}).get(
+            "maximum_concurrent_blocks"
+        ) == expected_block_workers
+        and (config.get("block_parallelism") or {}).get(
+            "within_block_conditions"
+        ) == "serial_in_condition_order_schedule"
         and config.get("budget") == smoke_binding.get("budget") == 0
         and config.get("trajectory_snapshot_schema_version") == 2
         and config.get("llm_condition_sha256") == model_condition_sha256
@@ -630,6 +644,18 @@ def _validate_presearch_prerequisites(
         and aggregate.get("failed_runs") == 0
     ):
         raise ValueError("protocol smoke prerequisite differs from preregistration")
+    for replicate_index, replicate in enumerate(expected_replicates):
+        modes = expected_schedule[replicate_index]["feedback_modes"]
+        for position, mode in enumerate(modes, 1):
+            key = "%s|%s|%s|%d" % (
+                smoke_binding["task"], EXPECTED_ALGORITHM, mode, replicate
+            )
+            run = latest[key]
+            if not (
+                run.get("execution_block_index") == replicate_index + 1
+                and run.get("within_block_position") == position
+            ):
+                raise ValueError("protocol smoke block execution order differs")
     records.append({
         "name": "protocol_smoke",
         "path": str(smoke_path),
@@ -663,6 +689,8 @@ def _validate_preregistration_and_search(
     confirmation_replays = int(
         design.get("confirmation_replays_per_artifact", -1)
     )
+    search_block_workers = design.get("search_block_workers")
+    confirmation_workers = design.get("confirmation_workers")
     condition_randomization_seed = design.get(
         "condition_order_randomization_seed"
     )
@@ -688,6 +716,19 @@ def _validate_preregistration_and_search(
         and len(expected_schedule) == len(replicates)
         and expected_schedule == reconstructed_schedule
         and confirmation_replays == 2
+        and isinstance(search_block_workers, int)
+        and not isinstance(search_block_workers, bool)
+        and search_block_workers > 0
+        and isinstance(confirmation_workers, int)
+        and not isinstance(confirmation_workers, bool)
+        and confirmation_workers > 0
+        and design.get("search_parallelism_unit")
+        == "task_algorithm_replicate"
+        and design.get("search_within_block_conditions")
+        == "serial_in_condition_order_schedule"
+        and design.get("confirmation_worker_isolation") == "spawn_process"
+        and design.get("confirmation_look_assignment")
+        == "planned_order_before_dispatch"
         and isinstance(design.get("confirmation_randomization_seed"), int)
         and not isinstance(design.get("confirmation_randomization_seed"), bool)
         and budget > 0
@@ -716,6 +757,18 @@ def _validate_preregistration_and_search(
         and config.get("seeds") == replicates
         and config.get("budget") == budget
         and float(config.get("timeout_s", -1)) == timeout
+        and config.get("block_workers") == search_block_workers
+        and (config.get("block_parallelism") or {}).get("unit")
+        == "task_algorithm_replicate"
+        and (config.get("block_parallelism") or {}).get(
+            "within_block_conditions"
+        ) == "serial_in_condition_order_schedule"
+        and (config.get("block_parallelism") or {}).get(
+            "cross_block_scheduling"
+        ) == "fixed_submission_order_nonadaptive"
+        and (config.get("block_parallelism") or {}).get(
+            "maximum_concurrent_blocks"
+        ) == search_block_workers
         and model_condition.get("llm_condition_sha256")
         == config.get("llm_condition_sha256")
         and model_condition.get("server_side_seed_control") is False
@@ -763,6 +816,20 @@ def _validate_preregistration_and_search(
     }
     if set(latest) != expected_keys or any(run.get("error") for run in latest.values()):
         raise ValueError("complete search risk set is not available")
+    for task_index, task in enumerate(tasks):
+        for replicate_index, replicate in enumerate(replicates):
+            block_index = task_index * len(replicates) + replicate_index + 1
+            schedule = expected_schedule[replicate_index]["feedback_modes"]
+            for position, mode in enumerate(schedule, 1):
+                key = "%s|%s|%s|%d" % (
+                    task, EXPECTED_ALGORITHM, mode, replicate
+                )
+                run = latest[key]
+                if not (
+                    run.get("execution_block_index") == block_index
+                    and run.get("within_block_position") == position
+                ):
+                    raise ValueError("search block execution order differs")
     cells = [
         _load_cell(latest[key], config, source_binding, budget)
         for key in sorted(latest)
@@ -776,6 +843,7 @@ def _validate_preregistration_and_search(
         "confirmation_randomization_seed": design[
             "confirmation_randomization_seed"
         ],
+        "confirmation_workers": confirmation_workers,
         "source_binding": source_binding,
         "current_provenance": current,
         "prerequisite_audits": prerequisite_audits,
@@ -893,6 +961,59 @@ def _terminal_evaluation(attempt: dict[str, Any] | None) -> bool:
         return False
     metrics = attempt.get("metrics") or {}
     return not bool(metrics.get("infrastructure_failure"))
+
+
+def _evaluate_confirmation_worker(payload: dict[str, Any]) -> dict[str, Any]:
+    """Evaluate one frozen artifact/context pair in an isolated worker."""
+    started = time.monotonic()
+    evaluation_id = str(payload["evaluation_id"])
+    expected_candidate_sha = str(payload["candidate_sha256"])
+    expected_context_sha = str(payload["context_sha256"])
+    source = str(payload["source"])
+    if sha256_text(source) != expected_candidate_sha:
+        return {
+            "evaluation_id": evaluation_id,
+            "completed_at": datetime.now(timezone.utc).isoformat(),
+            "wall_seconds": time.monotonic() - started,
+            "metrics": {
+                "combined_score": -1.0e18,
+                "valid": 0.0,
+                "error_message": "planned confirmation candidate binding mismatch",
+                "infrastructure_failure": 1.0,
+            },
+        }
+    try:
+        with tempfile.TemporaryDirectory(
+            prefix="fs_track_f_confirmation_"
+        ) as temporary:
+            candidate = Path(temporary) / "candidate.py"
+            candidate.write_text(source, encoding="utf-8")
+            metrics = evaluate_candidate(
+                find_task(str(payload["task"]), include_uncertified=True),
+                candidate,
+                timeout_s=float(payload["timeout"]),
+                trusted_context=payload["context"],
+            )
+    except Exception:  # noqa: BLE001 - fixed infrastructure record, no leakage
+        metrics = {
+            "combined_score": -1.0e18,
+            "valid": 0.0,
+            "error_message": "confirmation worker infrastructure failure",
+            "infrastructure_failure": 1.0,
+        }
+    if metrics.get("trusted_context_sha256") != expected_context_sha:
+        metrics = {
+            "combined_score": -1.0e18,
+            "valid": 0.0,
+            "error_message": "trusted context binding mismatch after confirmation",
+            "infrastructure_failure": 1.0,
+        }
+    return {
+        "evaluation_id": evaluation_id,
+        "completed_at": datetime.now(timezone.utc).isoformat(),
+        "wall_seconds": time.monotonic() - started,
+        "metrics": metrics,
+    }
 
 
 def _validate_attempt_ledger(
@@ -1078,6 +1199,7 @@ def run_confirmation(
     public_commitment_path: Path,
     output_path: Path,
     resume: bool,
+    workers: int | None = None,
     command: list[str] | None = None,
 ) -> dict[str, Any]:
     preregistration, search, cells, design = _validate_preregistration_and_search(
@@ -1094,6 +1216,10 @@ def run_confirmation(
         design["confirmation_replays"],
         design["confirmation_randomization_seed"],
     )
+    preregistered_workers = int(design.get("confirmation_workers", 1))
+    effective_workers = preregistered_workers if workers is None else int(workers)
+    if effective_workers < 1 or effective_workers != preregistered_workers:
+        raise ValueError("confirmation worker count differs from preregistration")
     input_binding = {
         "preregistration": {
             "path": str(preregistration_path.resolve()),
@@ -1112,6 +1238,13 @@ def run_confirmation(
         ).hexdigest(),
     }
     current_environment = {"python": sys.version, "platform": platform.platform()}
+    parallelism = {
+        "workers": effective_workers,
+        "worker_isolation": "spawn_process",
+        "submission_order": "planned_evaluations",
+        "look_indices_assigned_before_dispatch": True,
+        "completion_order_affects_analysis": False,
+    }
     if resume:
         if not output_path.is_file():
             raise ValueError("--resume requires an existing confirmation report")
@@ -1122,6 +1255,7 @@ def run_confirmation(
             and document.get("planned_endpoints") == endpoints
             and document.get("planned_evaluations") == evaluations
             and document.get("panel_audits") == panel_audits
+            and document.get("confirmation_parallelism") == parallelism
         ):
             raise ValueError("confirmation resume inputs or plan differ")
     else:
@@ -1156,6 +1290,7 @@ def run_confirmation(
                 "all_panels_audited_before_model_evaluation": True,
             },
             "panel_audits": panel_audits,
+            "confirmation_parallelism": parallelism,
             "planned_endpoints": endpoints,
             "planned_evaluations": evaluations,
             "attempts": [],
@@ -1166,17 +1301,16 @@ def run_confirmation(
         )
     _validate_attempt_ledger(document, evaluations)
     latest = _latest_evaluation_attempts(document.get("attempts") or [])
+    pending = []
+    attempt_by_evaluation = {}
     for evaluation in evaluations:
         evaluation_id = evaluation["evaluation_id"]
         if _terminal_evaluation(latest.get(evaluation_id)):
             continue
-        task = evaluation["task"]
-        replicate_id = int(evaluation["replicate_id"])
         source = sources[evaluation["artifact_id"]]
         if sha256_text(source) != evaluation["candidate_sha256"]:
             raise ValueError("planned confirmation candidate source hash differs")
         started_at = datetime.now(timezone.utc).isoformat()
-        started = time.monotonic()
         prior_attempts = sum(
             attempt["evaluation_id"] == evaluation_id
             for attempt in document.get("attempts") or []
@@ -1187,8 +1321,8 @@ def run_confirmation(
             "confirmation_look_index": len(document.get("attempts") or []) + 1,
             "artifact_id": evaluation["artifact_id"],
             "replay_index": evaluation["replay_index"],
-            "task": task,
-            "replicate_id": replicate_id,
+            "task": evaluation["task"],
+            "replicate_id": int(evaluation["replicate_id"]),
             "candidate_sha256": evaluation["candidate_sha256"],
             "context_sha256": evaluation["context_sha256"],
             "status": "started",
@@ -1199,36 +1333,69 @@ def run_confirmation(
         }
         document.setdefault("attempts", []).append(attempt)
         latest[evaluation_id] = attempt
-        _render_results(document, endpoints)
-        atomic_write_text(
-            output_path, json.dumps(document, indent=2, allow_nan=False) + "\n"
-        )
-        with tempfile.TemporaryDirectory(prefix="fs_track_f_confirmation_") as temporary:
-            candidate = Path(temporary) / "candidate.py"
-            candidate.write_text(source, encoding="utf-8")
-            metrics = evaluate_candidate(
-                find_task(task, include_uncertified=True),
-                candidate,
-                timeout_s=design["timeout"],
-                trusted_context=contexts[(task, replicate_id)],
-            )
-        if metrics.get("trusted_context_sha256") != evaluation["context_sha256"]:
-            metrics = {
-                "combined_score": -1.0e18,
-                "valid": 0.0,
-                "error_message": "trusted context binding mismatch after confirmation",
-                "infrastructure_failure": 1.0,
-            }
+        attempt_by_evaluation[evaluation_id] = attempt
+        pending.append({
+            **evaluation,
+            "source": source,
+            "timeout": design["timeout"],
+            "context": contexts[
+                (evaluation["task"], int(evaluation["replicate_id"]))
+            ],
+        })
+
+    # Write all attempt/look assignments before dispatching any worker.  If the
+    # parent or host fails, resume retains those incomplete attempts and adds
+    # explicit retry rows instead of silently replacing them.
+    _render_results(document, endpoints)
+    atomic_write_text(
+        output_path, json.dumps(document, indent=2, allow_nan=False) + "\n"
+    )
+
+    def retain_result(result: dict[str, Any]) -> None:
+        evaluation_id = result["evaluation_id"]
+        attempt = attempt_by_evaluation[evaluation_id]
         attempt.update({
             "status": "completed",
-            "completed_at": datetime.now(timezone.utc).isoformat(),
-            "wall_seconds": time.monotonic() - started,
-            "metrics": metrics,
+            "completed_at": result["completed_at"],
+            "wall_seconds": result["wall_seconds"],
+            "metrics": result["metrics"],
         })
         _render_results(document, endpoints)
         atomic_write_text(
             output_path, json.dumps(document, indent=2, allow_nan=False) + "\n"
         )
+
+    if effective_workers == 1:
+        for payload in pending:
+            retain_result(_evaluate_confirmation_worker(payload))
+    elif pending:
+        context = multiprocessing.get_context("spawn")
+        with concurrent.futures.ProcessPoolExecutor(
+            max_workers=effective_workers, mp_context=context,
+        ) as executor:
+            future_payload = {
+                executor.submit(_evaluate_confirmation_worker, payload): payload
+                for payload in pending
+            }
+            for future in concurrent.futures.as_completed(future_payload):
+                payload = future_payload[future]
+                try:
+                    result = future.result()
+                except Exception:  # noqa: BLE001 - fixed infrastructure record
+                    result = {
+                        "evaluation_id": payload["evaluation_id"],
+                        "completed_at": datetime.now(timezone.utc).isoformat(),
+                        "wall_seconds": 0.0,
+                        "metrics": {
+                            "combined_score": -1.0e18,
+                            "valid": 0.0,
+                            "error_message": (
+                                "confirmation worker process failure"
+                            ),
+                            "infrastructure_failure": 1.0,
+                        },
+                    }
+                retain_result(result)
     document["completed_at"] = datetime.now(timezone.utc).isoformat()
     _render_results(document, endpoints)
     atomic_write_text(
@@ -1245,6 +1412,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--public-commitment", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--resume", action="store_true")
+    parser.add_argument("--workers", type=int, default=None)
     return parser
 
 
@@ -1259,6 +1427,7 @@ def main(argv: list[str] | None = None) -> int:
             public_commitment_path=args.public_commitment.expanduser().resolve(),
             output_path=args.output.expanduser().resolve(),
             resume=args.resume,
+            workers=args.workers,
             command=[sys.executable, str(Path(__file__).resolve()), *raw_argv],
         )
     except (OSError, ValueError, TypeError, KeyError) as exc:

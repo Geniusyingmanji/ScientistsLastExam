@@ -79,6 +79,8 @@ class TrackFPreregistrationTests(unittest.TestCase):
                     "--search-work-root", str(root / "runs"),
                     "--condition-order-randomization-seed", "1",
                     "--confirmation-randomization-seed", "2",
+                    "--search-block-workers", "2",
+                    "--confirmation-workers", "2",
                     "--output", str(output),
                 ])
 
@@ -214,12 +216,16 @@ class TrackFPreregistrationTests(unittest.TestCase):
                     search_work_root=root / "future_runs",
                     condition_order_randomization_seed=71923,
                     confirmation_randomization_seed=89123,
+                    search_block_workers=8,
+                    confirmation_workers=8,
                     llm_config=None,
                 )
         self.assertEqual(document["frozen_source"]["revision"], revision)
         self.assertEqual(document["design"]["fixed_blocks_per_condition"], 48)
         self.assertEqual(document["design"]["scheduled_cell_count"], 384)
         self.assertEqual(document["confirmation_commitment"]["block_count"], 96)
+        self.assertEqual(document["design"]["search_block_workers"], 8)
+        self.assertEqual(document["design"]["confirmation_workers"], 8)
         self.assertEqual(
             document["analysis_implementation"]["sha256"],
             hashlib.sha256(MODULE.ANALYZER.read_bytes()).hexdigest(),

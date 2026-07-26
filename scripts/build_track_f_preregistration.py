@@ -126,6 +126,8 @@ def build(
     search_work_root: Path,
     condition_order_randomization_seed: int,
     confirmation_randomization_seed: int,
+    search_block_workers: int,
+    confirmation_workers: int,
     llm_config: str | None,
 ) -> dict[str, Any]:
     provenance = source_provenance(ROOT)
@@ -134,6 +136,15 @@ def build(
         and provenance.get("source_tree_dirty") is False
     ):
         raise ValueError("Track F preregistration requires a clean source revision")
+    if (
+        not isinstance(search_block_workers, int)
+        or isinstance(search_block_workers, bool)
+        or search_block_workers < 1
+        or not isinstance(confirmation_workers, int)
+        or isinstance(confirmation_workers, bool)
+        or confirmation_workers < 1
+    ):
+        raise ValueError("Track F worker counts must be positive integers")
     revision = provenance["git_revision"]
     precision, precision_binding = _trusted_report(
         precision_path, "precision plan", revision
@@ -329,6 +340,14 @@ def build(
             "scheduled_model_proposals": len(TASKS) * len(MODES) * fixed_n * 3,
             "confirmation_replays_per_artifact": 2,
             "confirmation_randomization_seed": confirmation_randomization_seed,
+            "search_block_workers": search_block_workers,
+            "search_parallelism_unit": "task_algorithm_replicate",
+            "search_within_block_conditions": (
+                "serial_in_condition_order_schedule"
+            ),
+            "confirmation_workers": confirmation_workers,
+            "confirmation_worker_isolation": "spawn_process",
+            "confirmation_look_assignment": "planned_order_before_dispatch",
             "confirmation_endpoint_count": (
                 len(TASKS) * len(MODES) * fixed_n * 2
             ),
@@ -394,6 +413,7 @@ def build(
                 "condition_order_schedule": condition_schedule(
                     [0, 1, 2, 3], condition_order_randomization_seed
                 ),
+                "block_workers": search_block_workers,
                 "scheduled_cell_count": 16,
                 "required": (
                     "trusted clean-source report with exact preregistration hash "
@@ -413,7 +433,8 @@ def build(
                 "balanced_williams", "--condition-order-randomization-seed",
                 str(condition_order_randomization_seed), "--preregistration",
                 "<this_preregistration>", "--workdir",
-                _relative_or_absolute(search_work_root), "--output",
+                _relative_or_absolute(search_work_root), "--block-workers",
+                str(search_block_workers), "--output",
                 _relative_or_absolute(search_report_path),
             ],
             "order": [
@@ -432,7 +453,17 @@ def build(
                 "--condition-order-randomization-seed",
                 str(condition_order_randomization_seed), "--preregistration",
                 "<this_preregistration>", "--workdir", "<smoke_work_root>",
-                "--output", _relative_or_absolute(smoke_path),
+                "--block-workers", str(search_block_workers), "--output",
+                _relative_or_absolute(smoke_path),
+            ],
+            "confirmation_command": [
+                "python3", "scripts/run_track_f_confirmation.py",
+                "--preregistration", "<this_preregistration>",
+                "--search-report", _relative_or_absolute(search_report_path),
+                "--private-contexts", "<private_context_manifest>",
+                "--public-commitment", _relative_or_absolute(commitment_path),
+                "--workers", str(confirmation_workers), "--output",
+                "<confirmation_report>",
             ],
         },
         "claims_before_outcomes": {
@@ -459,6 +490,8 @@ def build_parser() -> argparse.ArgumentParser:
         "--condition-order-randomization-seed", type=int, required=True
     )
     parser.add_argument("--confirmation-randomization-seed", type=int, required=True)
+    parser.add_argument("--search-block-workers", type=int, required=True)
+    parser.add_argument("--confirmation-workers", type=int, required=True)
     parser.add_argument("--llm-config", default=None)
     parser.add_argument("--output", type=Path, required=True)
     return parser
@@ -483,6 +516,8 @@ def main(argv: list[str] | None = None) -> int:
                 args.condition_order_randomization_seed
             ),
             confirmation_randomization_seed=args.confirmation_randomization_seed,
+            search_block_workers=args.search_block_workers,
+            confirmation_workers=args.confirmation_workers,
             llm_config=args.llm_config,
         )
     except (OSError, ValueError, TypeError, KeyError) as exc:

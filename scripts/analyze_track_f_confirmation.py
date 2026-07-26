@@ -208,6 +208,12 @@ def _validate_inputs(
         and design.get("proposal_budget") == 3
         and design.get("scheduled_cell_count")
         == len(tasks) * len(EXPECTED_MODES) * len(replicates)
+        and isinstance(design.get("confirmation_workers"), int)
+        and not isinstance(design.get("confirmation_workers"), bool)
+        and design.get("confirmation_workers") > 0
+        and design.get("confirmation_worker_isolation") == "spawn_process"
+        and design.get("confirmation_look_assignment")
+        == "planned_order_before_dispatch"
         and analysis.get("primary_task") == PRIMARY_TASK
         and analysis.get("primary_condition") == PRIMARY_CONDITION
         and analysis.get("primary_control") == PRIMARY_CONTROL
@@ -282,6 +288,19 @@ def _validate_inputs(
         ) == expected_cells
     ):
         raise ValueError("Track F search risk set is incomplete")
+    confirmation_parallelism = confirmation.get("confirmation_parallelism") or {}
+    if not (
+        confirmation_parallelism.get("workers")
+        == design.get("confirmation_workers")
+        and confirmation_parallelism.get("worker_isolation") == "spawn_process"
+        and confirmation_parallelism.get("submission_order")
+        == "planned_evaluations"
+        and confirmation_parallelism.get("look_indices_assigned_before_dispatch")
+        is True
+        and confirmation_parallelism.get("completion_order_affects_analysis")
+        is False
+    ):
+        raise ValueError("Track F confirmation parallelism differs from plan")
     return prereg, search, confirmation, {
         "tasks": tasks,
         "replicates": replicates,
