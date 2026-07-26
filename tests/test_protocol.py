@@ -321,6 +321,7 @@ class GreedyRewriteTests(unittest.TestCase):
             self.assertIn("evaluator-only validation", result.summary["feedback_scope"])
             checkpoint = json.loads((work / "checkpoint.json").read_text())
             self.assertEqual(checkpoint["next_iter"], 2)
+            self.assertEqual(checkpoint["best_source_step"], 0)
             manifest = json.loads((work / "run_manifest.json").read_text())
             self.assertEqual(manifest["task_id"], spec.task_id)
             self.assertEqual(manifest["seed"], 17)
@@ -465,6 +466,34 @@ class GreedyRewriteTests(unittest.TestCase):
         )
         self.assertEqual(result.summary["selection_policy"], "online_incumbent")
         self.assertIn("not a no-feedback control", result.summary["feedback_scope"])
+
+    def test_repeated_source_hash_does_not_reassign_parent_lineage(self):
+        spec = find_task("LennardJonesCluster")
+        baseline = spec.initial_program_path.read_text(encoding="utf-8")
+        improved = "# UNIQUE_BEST\ndef optimize_cluster(n_atoms):\n    return []\n"
+        llm = FakeLLM([
+            "```python\n%s\n```" % improved,
+            "```python\n%s\n```" % baseline,
+            "```python\n%s\n```" % improved,
+        ])
+        metrics = [
+            {"combined_score": 0.0, "valid": 1.0},
+            {"combined_score": 0.8, "valid": 1.0},
+            {"combined_score": 0.1, "valid": 1.0},
+            {"combined_score": 0.8, "valid": 1.0},
+        ]
+        with tempfile.TemporaryDirectory() as tmp, patch(
+            "frontier_science.algorithms.evolve.evaluate_candidate",
+            side_effect=metrics,
+        ):
+            greedy_rewrite(
+                spec, llm, budget=3, timeout_s=20, workdir=Path(tmp),
+                feedback_mode="normal", log_fn=lambda _: None,
+            )
+            events = load_trajectory(Path(tmp) / "trajectory.jsonl")
+        self.assertEqual(events[2]["algorithm_metadata"]["prompt_source_step"], 1)
+        self.assertEqual(events[3]["algorithm_metadata"]["prompt_source_step"], 1)
+        self.assertEqual(events[3]["parent_sha256"], sha256_text(improved.strip()))
 
     def test_delayed_replay_releases_parent_on_fixed_one_proposal_lag(self):
         spec = find_task("LennardJonesCluster")

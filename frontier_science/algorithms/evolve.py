@@ -136,6 +136,9 @@ def greedy_rewrite(
         best_program = str(checkpoint["best_program"])
         if sha256_text(best_program) != checkpoint.get("best_sha256"):
             raise ValueError("checkpoint best program hash mismatch")
+        if "best_source_step" not in checkpoint:
+            raise ValueError("checkpoint is missing best_source_step lineage")
+        best_source_step = int(checkpoint["best_source_step"])
         # Checkpoints are search state and therefore contain only search-visible metrics.
         best_metrics = search_visible_metrics(dict(checkpoint["best_metrics"]))
         if feedback_mode in {"selection_blind", "delayed_replay"}:
@@ -175,6 +178,7 @@ def greedy_rewrite(
         eval_wall = time.monotonic() - eval_started
         baseline_score = float(metrics.get("combined_score", INVALID_SCORE))
         best_score, best_program = baseline_score, baseline_src
+        best_source_step = 0
         best_metrics = search_visible_metrics(metrics)
         baseline_metrics = dict(best_metrics)
         evaluated_candidates = [{
@@ -206,6 +210,7 @@ def greedy_rewrite(
             "baseline_metrics": baseline_metrics,
             "best_score": best_score, "best_metrics": best_metrics,
             "best_program": best_program, "best_sha256": sha256_text(best_program),
+            "best_source_step": best_source_step,
             "evaluated_candidates": evaluated_candidates,
         }, indent=2, allow_nan=False) + "\n")
         atomic_write_text(workdir / "best_program.py", best_program)
@@ -216,11 +221,7 @@ def greedy_rewrite(
         step_started = time.monotonic()
         prompt_program = best_program
         prompt_metrics = best_metrics
-        prompt_source_step = max(
-            (int(row["step"]) for row in evaluated_candidates
-             if row.get("sha256") == sha256_text(prompt_program)),
-            default=0,
-        )
+        prompt_source_step = best_source_step
         feedback_released_through_step = it - 1
         if feedback_mode == "none":
             prompt_metrics = {}
@@ -301,6 +302,7 @@ def greedy_rewrite(
             })
         if accepted:
             best_score, best_program = score, code
+            best_source_step = it
             best_metrics = search_visible_metrics(m)
             result.best_score, result.best_program = best_score, best_program
             result.accepted += 1
