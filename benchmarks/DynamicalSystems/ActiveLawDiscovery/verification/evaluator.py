@@ -185,6 +185,22 @@ def _confirmation_specs(context):
     return tuple(specs)
 
 
+def build_confirmation_context(panel_id, master_seed):
+    """Build and validate one private procedural confirmation context."""
+    context = {
+        "schema_version": CONFIRMATION_CONTEXT_SCHEMA_VERSION,
+        "purpose": "fresh_confirmation",
+        "task_id": "DynamicalSystems/ActiveLawDiscovery",
+        "generator": CONFIRMATION_GENERATOR,
+        "panel_id": panel_id,
+        "master_seed": master_seed,
+        "world_count": CONFIRMATION_WORLD_COUNT,
+    }
+    _validate_confirmation_context(context)
+    _confirmation_specs(context)
+    return context
+
+
 def _derivative(world, state, control):
     value = _library(state, control) @ world["coefficients"]
     if world["kind"] == "misspecified":
