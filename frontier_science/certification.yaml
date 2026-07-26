@@ -233,8 +233,15 @@ tasks:
       - doi:10.1038/s41597-020-00768-9
       - doi:10.6084/m9.figshare.12642953.v9
   Optics/DiffractionGratingDesign:
-    status: quarantined
-    reason: claimed RCWA is a scalar phase FFT with an analytic unit-efficiency phase-ramp shortcut
+    status: candidate
+    reason: >-
+      v2 replaces the scalar phase FFT and analytic phase-ramp shortcut with a one-dimensional Fourier-modal Maxwell solver over four development and two held-out material/wavelength regimes, both TE and TM polarization, angle and wavelength grids, and four sealed etch/overlay/index/angle shifts; frozen baseline/reference anchors reproduce with at least 0.266 nominal and 0.246 robust utility headroom, lossless energy conservation and Fresnel limits pass, order-13 versus order-19 utility differs by at most 0.00170, and a pinned external grcwa cross-check agrees within 0.00785 efficiency over 72 conditions, pending paired GPT-5.5 calibration, server-held regimes, independent photonics review, scattering-matrix or full-wave replication, fabrication and optical measurement
+    citation_ids:
+      - doi:10.1364/JOSA.71.000811
+      - doi:10.1364/JOSAA.12.001077
+      - doi:10.1364/JOSAA.13.000779
+      - doi:10.1364/JOSAA.13.001870
+      - doi:10.1021/acsphotonics.0c00768
   Thermodynamics/HeatExchangerDesign:
     status: candidate
     reason: v2 replaces the monotone single-point objective with six fluid/operating regimes and bounded cost-versus-duty Pareto archives, separates a public constant-property proxy from a sealed temperature-dependent segmented oracle, and evaluates proxy false promotion, held-out transfer plus fouling/manufacturing/blockage robustness; GPT-5.5 budget three reaches only 0.126 development exact quality and 0.130 robustness with improvement concentrated in a subset of regimes, leaving graded multifidelity headroom pending repeated controls, server-held regimes, independent thermal-engineering review and CFD or experimental replication

@@ -1,0 +1,27 @@
+task_id: Optics/DiffractionGratingDesign
+version: 2
+status: candidate
+scientific_scope: deterministic lossless isotropic one-dimensional Fourier-modal grating design
+artifact: five-layer binary dielectric relief with depth, fill fraction and lateral offset per layer
+objective: target transmitted order efficiency across wavelengths, angles and TE/TM polarization
+development_worlds: 4
+heldout_worlds: 2
+sealed_shifts: 4
+evidence_axes:
+  - nominal target-order efficiency
+  - held-out material and wavelength transfer
+  - TE/TM polarization balance
+  - minimum-condition efficiency
+  - etch and overlay robustness
+  - refractive-index and incidence-angle robustness
+  - energy conservation and Fourier-order convergence
+limitations:
+  - isotropic, lossless, one-dimensional periodic geometry
+  - finite Fourier truncation and dense boundary matching
+  - no substrate roughness, absorption, finite aperture, fabrication or measurement
+  - calibrated witness is not a global optimum
+references:
+  - doi: 10.1364/JOSA.71.000811
+  - doi: 10.1364/JOSAA.12.001077
+  - doi: 10.1364/JOSAA.13.000779
+  - doi: 10.1364/JOSAA.13.001870

@@ -1,11 +1,12 @@
 domain: Optics
 task: DiffractionGratingDesign
-difficulty: hard
-oracle_type: physical_sim
+difficulty: flagship
+tier: T2
+oracle_type: fourier_modal_rcwa
 score_mode: clipped
 gpu_required: false
-eval_time_seconds: 10
-science_metric: diffraction_efficiency
-reference_baseline: "uniform_grating"
-reference_sota: "optimized_blazed_grating"
-citation: "Born & Wolf 1999; Moharam & Gaylord 1981"
+eval_time_seconds: 120
+science_metric: development_and_study_held_target_order_efficiency_with_polarization_angle_wavelength_and_fabrication_robustness
+reference_baseline: aligned half-duty five-layer dielectric relief
+reference_sota: calibrated five-layer RCWA witness; not a global optimum or fabricated-device record
+citation: "Moharam and Gaylord 1981, DOI 10.1364/JOSA.71.000811; Moharam et al. 1995, DOI 10.1364/JOSAA.12.001077; Lalanne and Morris 1996, DOI 10.1364/JOSAA.13.000779; Li 1996, DOI 10.1364/JOSAA.13.001870"

@@ -334,18 +334,52 @@ def _alloy_audit():
 
 def _diffraction_audit():
     oracle = _oracle("Optics/DiffractionGratingDesign")
-
-    def analytic_phase_ramp(wavelength, _period, index, order, grooves):
-        return (np.arange(grooves) * order % grooves) / grooves * wavelength / index
-
-    metrics = oracle.evaluate(analytic_phase_ramp)
+    baseline = oracle.evaluate(oracle.baseline_policy)
+    reference = oracle.evaluate(oracle.reference_policy)
+    minimum_nominal_headroom = min(
+        world["reference_utility"] - world["baseline_utility"]
+        for world in oracle.WORLDS
+    )
+    minimum_robust_headroom = min(
+        world["reference_robust_utility"] - world["baseline_robust_utility"]
+        for world in oracle.WORLDS
+    )
     return {
         "task": "Optics/DiffractionGratingDesign",
-        "admission": "quarantine",
-        "defect": "the oracle is a scalar phase FFT, not RCWA, and a disclosed analytic phase ramp gives unit efficiency",
-        "analytic_phase_ramp_score": float(metrics["combined_score"]),
-        "efficiencies": [float(row["efficiency"]) for row in metrics["per_scenario"]],
-        "passed": metrics["combined_score"] == 1.0,
+        "admission": "candidate",
+        "resolved_defect": (
+            "v2 replaces the scalar phase FFT and analytic phase-ramp shortcut "
+            "with a one-dimensional Fourier-modal Maxwell solve over six "
+            "material/wavelength worlds, both polarizations, incidence angles "
+            "and sealed fabrication/material shifts"
+        ),
+        "development_world_count": len(oracle.DEVELOPMENT_WORLDS),
+        "heldout_world_count": len(oracle.HELDOUT_WORLDS),
+        "sealed_shift_count": len(oracle.SHIFT_SPECS),
+        "minimum_nominal_headroom": minimum_nominal_headroom,
+        "minimum_robust_headroom": minimum_robust_headroom,
+        "baseline_score": float(baseline["combined_score"]),
+        "reference_score": float(reference["combined_score"]),
+        "reference_heldout_score": float(reference["heldout_policy_score"]),
+        "reference_robustness": float(reference["robustness_score"]),
+        "reference_heldout_robustness": float(
+            reference["heldout_robustness_score"]
+        ),
+        "passed": bool(
+            oracle.RCWA_GRATING_V2
+            and len(oracle.DEVELOPMENT_WORLDS) == 4
+            and len(oracle.HELDOUT_WORLDS) == 2
+            and len(oracle.SHIFT_SPECS) == 4
+            and baseline["valid"] == 1.0
+            and baseline["combined_score"] == 0.0
+            and reference["valid"] == 1.0
+            and reference["combined_score"] == 1.0
+            and reference["heldout_policy_score"] == 1.0
+            and reference["robustness_score"] == 1.0
+            and reference["heldout_robustness_score"] == 1.0
+            and minimum_nominal_headroom > 0.25
+            and minimum_robust_headroom > 0.24
+        ),
     }
 
 
@@ -452,6 +486,9 @@ def audit() -> dict:
             "task_count": len(records),
             "check_pass_count": sum(bool(row["passed"]) for row in records),
             "resolved_rebuild_count": sum(bool(row.get("rebuild_passed")) for row in records),
+            "recommended_candidate_count": sum(
+                row["admission"] == "candidate" for row in records
+            ),
             "recommended_quarantine_count": sum(row["admission"] == "quarantine" for row in records),
         },
     }
