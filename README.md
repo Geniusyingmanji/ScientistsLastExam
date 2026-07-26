@@ -68,12 +68,13 @@ controlled exception text is reduced to a fixed label-blind failure taxonomy bef
 search feedback, preventing observations from being carried between worlds through exceptions.
 The current audit reports:
 
-- Trusted certification v56 and security v40 bind clean revision `108322f`. Certification covers
-  `7/43/9` over 59 packages with no missing manifest records, orphaned records or task-level
-  admission issues; it retains one known duplicate-oracle group containing four quarantined
-  packages. Security passes 18/18 adversarial tests. The 59×2 baseline v45 reports 59/59
-  deterministic, valid and fail-closed tasks with zero infrastructure failures. The latest
-  full-suite v15 binds clean revision `108322f` and passes 499/499 tests in 1843.875 seconds.
+- Trusted certification v57 binds clean revision `f31d5ea` and covers `7/43/9` over 59 packages
+  with no missing manifest records, orphaned records or task-level admission issues; it retains
+  one known duplicate-oracle group containing four quarantined packages. Security v41 binds
+  clean revision `08ec441` and passes
+  18/18 adversarial tests. The 59×2 baseline v46 reports 59/59 deterministic, valid and
+  fail-closed tasks with zero infrastructure failures. Full-suite v18 binds clean revision
+  `c6d1c10` and passes 519/519 tests in 2012.772 seconds.
   Cross-task summary v31 (SHA-256
   `b3b3983423f1978b3ddf63fe73f3a34f41eb9a450190fdd7a4c78a0b88028c32`) binds clean
   revision `4be5d4d` and contains 75 normal single-run conditions over 38 tasks.
@@ -389,6 +390,17 @@ held-out robustness score is zero. The task calibration has minimum nominal/robu
 95th-percentile absolute efficiency differences `0.007846/0.001688/0.005837`. These are
 computational calibration results, not a feedback effect, fabricated-device measurement, global
 optimum or autonomous scientific discovery.
+
+The preregistered four-condition feedback measurement pilot then completes 16/16 cells over
+ActiveLawDiscovery and DiffractionGratingDesign, with four feedback modes, two local identifiers
+and three proposals per cell. All 48 provider usage records and all prompt, lineage, manifest,
+checkpoint and task-specific science-axis checks pass. ActiveLaw has 24/24 evaluator-valid
+proposals and Diffraction has 9/24. Realized cell totals range from 10,663 to 22,937 tokens, and
+condition ordering changes across identifiers and resource horizons. The result calibrates the
+measurement pipeline; it is not a causal feedback estimate, population model ranking, cross-task
+discovery score or autonomous-discovery result. See the
+[pilot findings](.research/feedback_measurement_pilot_findings_2026-07-26.md) and hash-bound
+[analysis](experiments/feedback_measurement_pilot_analysis_2026-07-26_v1.json).
 
 The latest EdgeBench re-audit keeps its upstream facts at arXiv `2607.05155v1`, SForge
 `a87350a` and public dataset `47846a4`. In addition to E1--E36, the science plan now preregisters

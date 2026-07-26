@@ -2852,3 +2852,41 @@ The 50-task count is an internal admission milestone, not evidence that the task
 certified or that GPT-5.5 made a scientific discovery. DiffractionGratingDesign-v2 remains a
 computational candidate pending repeated paired controls, server-held regimes, independent
 full-wave replication, fabrication, optical measurement and photonics review.
+
+## 2026-07-26 — preregistered four-condition feedback measurement pilot
+
+The v3 preregistration (SHA-256
+`13278d14205209c3e904212597fce800b81e32b7e3eb1eabf26c9d7faf870b02`) freezes source
+`ae6090f`, two tasks, four feedback modes, two local replicate identifiers and three proposals per
+cell. Full-suite v18 (SHA-256
+`d624bb9a3568849676c0dc2598c7929e1215390db05e4291eac972d45d61c35d`) passes 519/519
+tests, and protocol smoke v3 (`d5bc921af2b9eb8010a8187bf2fad5632b61e46115b7b31993b598f34a96c7a6`)
+passes all eight zero-budget mode-by-identifier cells before nonzero-budget execution.
+
+The raw pilot (SHA-256
+`5e543cdfd36bc560b6f79601c1ab92dec6ecd3f2457abdb46a6d878c034cf15f`) completes all
+16/16 scheduled cells with no failed or recovered attempt. All 48 provider usage records are
+complete. ActiveLawDiscovery has 24/24 evaluator-valid proposals; DiffractionGratingDesign has
+9/24, for 33/48 overall. Full-horizon best scores for identifiers 0/1 are `0.797390/0.798314`,
+`0.760925/0.798230`, `0.998551/0.797921` and `0.796497/0.793914` for ActiveLaw normal,
+score-only, delayed-replay and selection-blind modes. The corresponding Diffraction scores are
+`0.077897/0.198820`, `0.320060/~0`, `0.090693/0.195027` and `0.244893/~0`.
+
+The strict derived analysis (SHA-256
+`dbb392acb89fe36da243765f8be92a55ad1039e7c2b9cbc8e0930559e2c4aa5e`) validates every
+prompt hash/byte count, parent and delayed-release rule, manifest, checkpoint, retained source,
+schema-v2 trajectory, science axis and common-token calculation. Common total-token horizons are
+14,395/14,472 for ActiveLaw and 11,491/10,663 for Diffraction; full cell totals span
+10,663--22,937. Resource matching changes several reported endpoints, and Diffraction condition
+directions reverse between identifiers. The evidence therefore calibrates the measurement
+pipeline and allows design of a later Track F study, but identifies no causal feedback or
+population effect, supplies no model ranking or cross-task science score, and does not demonstrate
+autonomous scientific discovery. Confirmatory Track F still requires a new preregistration, at
+least ten independent runs per condition, precision and multiplicity planning, fresh or
+server-held worlds, and independent scientific validation. The narrative claim audit is in
+`.research/feedback_measurement_pilot_findings_2026-07-26.md`.
+
+Post-pilot security audit v41 (SHA-256
+`d2082abe9a2f23604a426fc831126b548374d5a9c4ea5a5a00c4c9c60e1dcb8e`) binds clean source
+`08ec441` and passes all 18 adversarial tests in 10.805 seconds. This refresh covers the current
+four-condition runner and analyzer source without changing the preregistered runtime scope.
