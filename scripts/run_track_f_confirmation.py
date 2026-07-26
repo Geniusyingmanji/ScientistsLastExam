@@ -487,6 +487,160 @@ def _validate_context_artifacts(
     return contexts, public, audits
 
 
+def _load_bound_json(path_value: Any, label: str) -> tuple[Path, dict[str, Any]]:
+    if not isinstance(path_value, str) or not path_value:
+        raise ValueError("%s path is missing" % label)
+    path = Path(path_value)
+    if not path.is_absolute():
+        path = ROOT / path
+    path = path.resolve()
+    try:
+        document = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ValueError("cannot load %s" % label) from exc
+    if not isinstance(document, dict):
+        raise ValueError("%s must be a JSON object" % label)
+    return path, document
+
+
+def _validate_presearch_prerequisites(
+    preregistration: dict[str, Any], preregistration_path: Path,
+    frozen_revision: str, model_condition_sha256: str,
+) -> list[dict[str, Any]]:
+    """Validate all frozen prerequisites before any private context is read."""
+    prerequisites = preregistration.get("prerequisites") or {}
+    records = []
+    for key in ("full_test_suite", "security_audit", "certification_audit"):
+        binding = prerequisites.get(key) or {}
+        path, report = _load_bound_json(binding.get("path"), key)
+        provenance = report.get("source_provenance") or {}
+        if not (
+            binding.get("sha256") == _sha256(path)
+            and binding.get("bytes") == len(path.read_bytes())
+            and report.get("schema_version") == 1
+            and report.get("execution_passed") is True
+            and report.get("trusted_evidence") is True
+            and report.get("passed") is True
+            and provenance.get("source_tree_dirty") is False
+            and _source_equivalent(
+                frozen_revision, provenance.get("git_revision")
+            )
+        ):
+            raise ValueError("%s prerequisite differs from preregistration" % key)
+        if key == "full_test_suite" and not (
+            report.get("unittest_ok") is True
+            and int(report.get("test_count", 0)) > 0
+        ):
+            raise ValueError("full test suite prerequisite did not pass")
+        if key == "security_audit" and int(report.get("test_count", 0)) <= 0:
+            raise ValueError("security audit prerequisite has no tests")
+        if key == "certification_audit" and not (
+            report.get("inventory_count") == 59
+            and report.get("status_counts")
+            == {"certified": 7, "candidate": 43, "quarantined": 9}
+        ):
+            raise ValueError("certification prerequisite inventory differs")
+        records.append({
+            "name": key,
+            "path": str(path),
+            "sha256": binding["sha256"],
+            "source_revision": provenance["git_revision"],
+        })
+    precision_binding = preregistration.get("precision_plan") or {}
+    precision_path, precision = _load_bound_json(
+        precision_binding.get("path"), "precision plan"
+    )
+    precision_provenance = precision.get("source_provenance") or {}
+    design = preregistration.get("design") or {}
+    if not (
+        precision_binding.get("sha256") == _sha256(precision_path)
+        and precision_binding.get("bytes") == len(precision_path.read_bytes())
+        and precision.get("execution_passed") is True
+        and precision.get("trusted_evidence") is True
+        and precision.get("passed") is True
+        and precision_provenance.get("source_tree_dirty") is False
+        and _source_equivalent(
+            frozen_revision, precision_provenance.get("git_revision")
+        )
+        and precision.get("fixed_balanced_blocks_per_condition")
+        == design.get("fixed_blocks_per_condition")
+        and precision.get("scheduled_search_cells")
+        == design.get("scheduled_cell_count")
+        and precision.get("scheduled_model_proposals")
+        == design.get("scheduled_model_proposals")
+    ):
+        raise ValueError("precision plan prerequisite differs from preregistration")
+    records.append({
+        "name": "precision_plan",
+        "path": str(precision_path),
+        "sha256": precision_binding["sha256"],
+        "source_revision": precision_provenance["git_revision"],
+    })
+    smoke_binding = prerequisites.get("protocol_smoke") or {}
+    smoke_path, smoke = _load_bound_json(
+        smoke_binding.get("path"), "protocol smoke"
+    )
+    smoke_provenance = smoke.get("source_provenance") or {}
+    config = smoke.get("config") or {}
+    aggregate = smoke.get("aggregate") or {}
+    expected_replicates = list(smoke_binding.get("replicate_identifiers") or [])
+    expected_modes = list(smoke_binding.get("feedback_modes") or [])
+    smoke_randomization_seed = smoke_binding.get(
+        "condition_order_randomization_seed"
+    )
+    expected_schedule = smoke_binding.get("condition_order_schedule")
+    reconstructed_schedule = _reconstruct_condition_schedule(
+        expected_replicates, smoke_randomization_seed
+    )
+    expected_cells = int(smoke_binding.get("scheduled_cell_count", -1))
+    exact_binding = config.get("preregistration") or {}
+    latest = _latest_runs(smoke.get("runs") or [])
+    expected_keys = {
+        "%s|%s|%s|%d" % (
+            smoke_binding.get("task"), EXPECTED_ALGORITHM, mode, replicate
+        )
+        for mode in expected_modes for replicate in expected_replicates
+    }
+    if not (
+        smoke.get("schema_version") == 1
+        and smoke.get("execution_passed") is True
+        and smoke.get("trusted_evidence") is True
+        and smoke.get("passed") is True
+        and smoke_provenance.get("source_tree_dirty") is False
+        and _source_equivalent(frozen_revision, smoke_provenance.get("git_revision"))
+        and config.get("tasks") == [smoke_binding.get("task")]
+        and config.get("algorithms") == [EXPECTED_ALGORITHM]
+        and config.get("feedback_modes") == expected_modes == list(EXPECTED_MODES)
+        and config.get("seeds") == expected_replicates
+        and smoke_binding.get("condition_order") == "balanced_williams"
+        and config.get("condition_order") == "balanced_williams"
+        and config.get("condition_order_randomization_seed")
+        == smoke_randomization_seed
+        and expected_schedule == reconstructed_schedule
+        and config.get("condition_order_schedule") == expected_schedule
+        and config.get("budget") == smoke_binding.get("budget") == 0
+        and config.get("trajectory_snapshot_schema_version") == 2
+        and config.get("llm_condition_sha256") == model_condition_sha256
+        and exact_binding.get("sha256") == _sha256(preregistration_path)
+        and exact_binding.get("bytes") == len(preregistration_path.read_bytes())
+        and expected_cells == len(expected_keys)
+        and set(latest) == expected_keys
+        and all(not run.get("error") for run in latest.values())
+        and aggregate.get("successful_runs") == expected_cells
+        and aggregate.get("failed_runs") == 0
+    ):
+        raise ValueError("protocol smoke prerequisite differs from preregistration")
+    records.append({
+        "name": "protocol_smoke",
+        "path": str(smoke_path),
+        "sha256": _sha256(smoke_path),
+        "source_revision": smoke_provenance["git_revision"],
+        "exact_preregistration_binding": True,
+        "scheduled_cell_count": expected_cells,
+    })
+    return records
+
+
 def _validate_preregistration_and_search(
     preregistration_path: Path,
     search_report_path: Path,
@@ -581,6 +735,12 @@ def _validate_preregistration_and_search(
         and _source_equivalent(frozen.get("revision"), source_revision)
     ):
         raise ValueError("confirmation/search source differs from frozen source")
+    prerequisite_audits = _validate_presearch_prerequisites(
+        preregistration,
+        preregistration_path,
+        frozen["revision"],
+        model_condition["llm_condition_sha256"],
+    )
     source_binding = {
         "git_revision": frozen["revision"],
         "runtime_source_sha256": frozen["runtime_source_sha256"],
@@ -618,6 +778,7 @@ def _validate_preregistration_and_search(
         ],
         "source_binding": source_binding,
         "current_provenance": current,
+        "prerequisite_audits": prerequisite_audits,
     }
 
 
@@ -987,6 +1148,7 @@ def run_confirmation(
                 "search_source_revision": (
                     search.get("source_provenance") or {}
                 ).get("git_revision"),
+                "presearch_prerequisites": design["prerequisite_audits"],
             },
             "private_reveal_gate": {
                 "public_block_count": public["block_count"],

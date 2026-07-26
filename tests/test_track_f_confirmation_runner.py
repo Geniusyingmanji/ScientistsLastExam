@@ -429,6 +429,148 @@ class TrackFConfirmationRunnerTests(unittest.TestCase):
                     private_path, public_path, prereg, [TASK], [0], source_binding
                 )
 
+    def test_presearch_prerequisites_require_exact_smoke_prereg_binding(self):
+        revision = "a" * 40
+        clean = {
+            "git_available": True,
+            "git_revision": revision,
+            "source_tree_dirty": False,
+            "source_changes": [],
+        }
+        seed = 71923
+        smoke_replicates = [0, 1, 2, 3]
+        schedule = MODULE._reconstruct_condition_schedule(
+            smoke_replicates, seed
+        )
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            prereg_path = root / "prereg.json"
+            prereg_path.write_text('{"fixture":true}\n', encoding="utf-8")
+            prerequisites = {}
+            for name in (
+                "full_test_suite", "security_audit", "certification_audit"
+            ):
+                report = {
+                    "schema_version": 1,
+                    "execution_passed": True,
+                    "trusted_evidence": True,
+                    "passed": True,
+                    "source_provenance": clean,
+                }
+                if name == "full_test_suite":
+                    report.update({"unittest_ok": True, "test_count": 100})
+                elif name == "security_audit":
+                    report["test_count"] = 20
+                else:
+                    report.update({
+                        "inventory_count": 59,
+                        "status_counts": {
+                            "certified": 7,
+                            "candidate": 43,
+                            "quarantined": 9,
+                        },
+                    })
+                path = root / (name + ".json")
+                path.write_text(json.dumps(report) + "\n", encoding="utf-8")
+                prerequisites[name] = {
+                    "path": str(path),
+                    "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+                    "bytes": len(path.read_bytes()),
+                }
+            precision = {
+                "schema_version": 1,
+                "execution_passed": True,
+                "trusted_evidence": True,
+                "passed": True,
+                "source_provenance": clean,
+                "fixed_balanced_blocks_per_condition": 48,
+                "scheduled_search_cells": 384,
+                "scheduled_model_proposals": 1152,
+            }
+            precision_path = root / "precision.json"
+            precision_path.write_text(
+                json.dumps(precision) + "\n", encoding="utf-8"
+            )
+            smoke_runs = []
+            for replicate in smoke_replicates:
+                for mode in MODES:
+                    smoke_runs.append({
+                        "task": "Chemistry/LennardJonesCluster",
+                        "algorithm": "greedy_rewrite",
+                        "feedback_mode": mode,
+                        "seed": replicate,
+                    })
+            smoke = {
+                "schema_version": 1,
+                "execution_passed": True,
+                "trusted_evidence": True,
+                "passed": True,
+                "source_provenance": clean,
+                "config": {
+                    "tasks": ["Chemistry/LennardJonesCluster"],
+                    "algorithms": ["greedy_rewrite"],
+                    "feedback_modes": list(MODES),
+                    "seeds": smoke_replicates,
+                    "condition_order": "balanced_williams",
+                    "condition_order_randomization_seed": seed,
+                    "condition_order_schedule": schedule,
+                    "budget": 0,
+                    "trajectory_snapshot_schema_version": 2,
+                    "llm_condition_sha256": "c" * 64,
+                    "preregistration": {
+                        "sha256": hashlib.sha256(
+                            prereg_path.read_bytes()
+                        ).hexdigest(),
+                        "bytes": len(prereg_path.read_bytes()),
+                    },
+                },
+                "aggregate": {"successful_runs": 16, "failed_runs": 0},
+                "runs": smoke_runs,
+            }
+            smoke_path = root / "smoke.json"
+            smoke_path.write_text(json.dumps(smoke) + "\n", encoding="utf-8")
+            prerequisites["protocol_smoke"] = {
+                "path": str(smoke_path),
+                "task": "Chemistry/LennardJonesCluster",
+                "budget": 0,
+                "replicate_identifiers": smoke_replicates,
+                "feedback_modes": list(MODES),
+                "condition_order": "balanced_williams",
+                "condition_order_randomization_seed": seed,
+                "condition_order_schedule": schedule,
+                "scheduled_cell_count": 16,
+            }
+            prereg = {
+                "prerequisites": prerequisites,
+                "precision_plan": {
+                    "path": str(precision_path),
+                    "sha256": hashlib.sha256(
+                        precision_path.read_bytes()
+                    ).hexdigest(),
+                    "bytes": len(precision_path.read_bytes()),
+                },
+                "design": {
+                    "fixed_blocks_per_condition": 48,
+                    "scheduled_cell_count": 384,
+                    "scheduled_model_proposals": 1152,
+                },
+            }
+            with patch.object(MODULE, "_source_equivalent", return_value=True):
+                audits = MODULE._validate_presearch_prerequisites(
+                    prereg, prereg_path, revision, "c" * 64
+                )
+                self.assertEqual(len(audits), 5)
+                self.assertTrue(audits[-1]["exact_preregistration_binding"])
+
+                smoke["config"]["preregistration"]["sha256"] = "0" * 64
+                smoke_path.write_text(
+                    json.dumps(smoke) + "\n", encoding="utf-8"
+                )
+                with self.assertRaisesRegex(ValueError, "protocol smoke"):
+                    MODULE._validate_presearch_prerequisites(
+                        prereg, prereg_path, revision, "c" * 64
+                    )
+
     def test_render_quarantines_stochastic_replays(self):
         context_sha = "a" * 64
         candidate_sha = "b" * 64
@@ -569,6 +711,7 @@ class TrackFConfirmationRunnerTests(unittest.TestCase):
             "confirmation_replays": 2,
             "confirmation_randomization_seed": 12345,
             "source_binding": {},
+            "prerequisite_audits": [],
         }
         clean = {
             "git_available": True,
@@ -666,6 +809,7 @@ class TrackFConfirmationRunnerTests(unittest.TestCase):
             "tasks": [TASK], "replicates": [0], "budget": 3,
             "timeout": 10.0, "confirmation_replays": 2, "source_binding": {},
             "confirmation_randomization_seed": 12345,
+            "prerequisite_audits": [],
         }
         clean = {
             "git_available": True, "git_revision": "a" * 40,
