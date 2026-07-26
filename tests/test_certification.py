@@ -42,7 +42,7 @@ class CertificationPolicyTests(unittest.TestCase):
         default_ids = {s.task_id for s in list_tasks()}
         records = load_certification()["tasks"]
         clone_ids = {k for k, v in records.items() if v.get("duplicate_group") == "generic_trig_8d_v1"}
-        self.assertEqual(len(clone_ids), 5)
+        self.assertEqual(len(clone_ids), 4)
         self.assertTrue(clone_ids.isdisjoint(default_ids))
         self.assertTrue(all(certification_status(task) == "quarantined" for task in clone_ids))
 

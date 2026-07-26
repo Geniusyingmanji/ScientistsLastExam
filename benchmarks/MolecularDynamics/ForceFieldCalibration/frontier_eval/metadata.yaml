@@ -1,7 +1,12 @@
 domain: MolecularDynamics
 task: ForceFieldCalibration
-difficulty: hard
-oracle_type: physical_sim
+difficulty: flagship
+tier: T3
+oracle_type: active_pair_potential_hypothesis_laboratory
 score_mode: clipped
 gpu_required: false
-eval_time_seconds: 30
+eval_time_seconds: 90
+science_metric: active_competing_hypothesis_retention_model_discrimination_parameter_interval_recovery_sealed_energy_force_prediction_virial_decision_and_model_refusal
+reference_baseline: one valid configuration query followed by an always-refuse artifact
+reference_sota: truth-blind diverse-query nonlinear model comparison and covariance intervals; normalization witness only, not molecular dynamics, a material potential or autonomous-discovery result
+citation: "Ercolessi and Adams, DOI 10.1209/0295-5075/26/8/005; Wang et al., DOI 10.1021/jz500737m; Shell, DOI 10.1063/1.2992060; Frederiksen et al., DOI 10.1103/PhysRevLett.93.165501; Henderson, DOI 10.1016/0375-9601(74)90847-0; Axilrod and Teller, DOI 10.1063/1.1723844"

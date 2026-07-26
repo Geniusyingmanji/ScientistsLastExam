@@ -1,3 +1,5 @@
-1) Only edit solution.py. Keep the calibrate_forcefield() signature.
-2) numpy/scipy only. CPU, seconds. No network.
-3) Do not read verification/ or frontier_eval/.
+1) Only edit solution.py. Keep calibrate_forcefield(problem, query).
+2) Every query must include pre-observation weights and a retained hypothesis set; retained weights are at least the public minimum, omitted weights are zero, and eliminated hypotheses cannot be restored.
+3) Respect the first-query equilateral geometry and screening temperature plus coordinate, distance, batch and total-configuration budgets; caught callback violations still fail closed.
+4) Return exact finite bounded hypothesis, model, parameter/interval, second-virial, Boyle-decision, confidence, refusal and evidence fields.
+5) NumPy/SciPy only. CPU, seconds. No network. Do not read verification/ or frontier_eval/.

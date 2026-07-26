@@ -392,9 +392,15 @@ tasks:
     reason: claimed FEM/Mohr-Coulomb model is a generic eight-variable trigonometric objective
     duplicate_group: generic_trig_8d_v1
   MolecularDynamics/ForceFieldCalibration:
-    status: quarantined
-    reason: claimed Monte Carlo/RDF model is a generic eight-variable trigonometric objective
-    duplicate_group: generic_trig_8d_v1
+    status: candidate
+    reason: v2 replaces the falsely labeled Monte Carlo/RDF trigonometric clone with twelve procedural active three-particle energy/force worlds spanning public Mie and Morse hypotheses plus Buckingham, Axilrod-Teller and temperature-dependent misspecification; every query preregisters monotone hypothesis weights and a retained set, while separate axes score acquisition information, proper-score hypothesis calibration, true-family retention, model discrimination, parameter intervals, sealed short/long-range prediction, second virial and Boyle-temperature decisions, evidence lineage and unsupported refusal; a truth-blind nonlinear reference covers every supported world, refuses every unsupported world and reaches approximately 0.96/0.95 normalized development/held-out joint quality, pending server-held worlds, repeated controls, periodic many-particle or ab-initio replication and independent molecular-simulation review
+    citation_ids:
+      - doi:10.1209/0295-5075/26/8/005
+      - doi:10.1021/jz500737m
+      - doi:10.1063/1.2992060
+      - doi:10.1103/PhysRevLett.93.165501
+      - doi:10.1016/0375-9601(74)90847-0
+      - doi:10.1063/1.1723844
   Optoelectronics/LaserCavityDesign:
     status: quarantined
     reason: claimed ABCD laser model is a generic eight-variable trigonometric objective
