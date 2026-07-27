@@ -1,0 +1,69 @@
+{
+  "schema_version": 2,
+  "purpose": "recovery_aware_frozen_exploratory_cohort_measurement_health_preflight",
+  "base_spec": {
+    "path": ".research/measurement_health_preflight_spec_2026-07-27_v1.json",
+    "sha256": "674192b55f49460cad23f9e2b48c8f4ae054aa63c4a2fe2f1b2934eff5d5e4f7"
+  },
+  "top_level_overrides": {
+    "purpose": "recovery_aware_frozen_exploratory_cohort_measurement_health_preflight",
+    "claim_limit": "mechanical_and_logical_recovery_preflight_only_not_post_2h_headroom_not_physical_exactly_once_not_confirmatory_not_external_validation_not_autonomous_discovery",
+    "shared_policy": {
+      "exactly_once_recovery": "requires a hash-bound clean-revision process fault audit, unchanged recovery runtime, and oracle.deterministic true; establishes logical outcomes and oracle-budget accounting only"
+    }
+  },
+  "shared_task_overrides": {
+    "exactly_once_recovery": {
+      "evidence": {
+        "path": "experiments/evaluation_recovery_fault_audit_2026-07-27_v1.json",
+        "sha256": "19287238e6976d4a3a640f1c303e34a96e1b548e77f4499ea16977585bff0e49"
+      },
+      "predicates": [
+        {
+          "pointer": "/execution_passed",
+          "operator": "eq",
+          "value": true
+        },
+        {
+          "pointer": "/checks/all_fault_scenarios_passed",
+          "operator": "eq",
+          "value": true
+        },
+        {
+          "pointer": "/checks/four_search_commit_windows_exercised",
+          "operator": "eq",
+          "value": true
+        },
+        {
+          "pointer": "/checks/request_before_receipt_retry_is_reason_coded",
+          "operator": "eq",
+          "value": true
+        },
+        {
+          "pointer": "/checks/receipt_before_attempt_completion_reuses_result",
+          "operator": "eq",
+          "value": true
+        },
+        {
+          "pointer": "/checks/concurrent_run_writer_is_rejected",
+          "operator": "eq",
+          "value": true
+        },
+        {
+          "pointer": "/checks/receipt_tampering_is_rejected",
+          "operator": "eq",
+          "value": true
+        }
+      ],
+      "runtime_paths": [
+        "frontier_science/algorithms/common.py",
+        "frontier_science/algorithms/evolve.py",
+        "frontier_science/evaluation_ledger.py",
+        "frontier_science/protocol.py",
+        "scripts/audit_evaluation_recovery.py",
+        "scripts/run_recovery_fault_worker.py"
+      ]
+    }
+  },
+  "task_overrides": []
+}

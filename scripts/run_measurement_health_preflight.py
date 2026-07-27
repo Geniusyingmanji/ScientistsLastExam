@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import argparse
 import ast
+import copy
 import hashlib
 import json
 import math
@@ -23,6 +24,8 @@ import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Callable, Dict, Iterable, Optional
+
+import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
@@ -38,7 +41,8 @@ from frontier_science.spec import load_task_spec  # noqa: E402
 
 SCHEMA_VERSION = 1
 DEFAULT_MANIFEST = ROOT / ".research/exploratory_2h_cohort_manifest_2026-07-27_v1.json"
-DEFAULT_SPEC = ROOT / ".research/measurement_health_preflight_spec_2026-07-27_v1.json"
+LEGACY_SPEC = ROOT / ".research/measurement_health_preflight_spec_2026-07-27_v1.json"
+DEFAULT_SPEC = ROOT / ".research/measurement_health_preflight_spec_2026-07-27_v2.json"
 STATUS_VALUES = {"pass", "fail", "missing"}
 
 Evaluator = Callable[[Any, Path, float], Dict[str, Any]]
@@ -80,6 +84,84 @@ def _load_object(path: Path) -> dict[str, Any]:
     if not isinstance(value, dict):
         raise ValueError("%s must contain a JSON object" % path)
     return value
+
+
+def _deep_merge(base: dict[str, Any], patch: dict[str, Any]) -> dict[str, Any]:
+    """Return a recursive object merge without mutating either input."""
+
+    result = copy.deepcopy(base)
+    for key, value in patch.items():
+        if isinstance(value, dict) and isinstance(result.get(key), dict):
+            result[key] = _deep_merge(result[key], value)
+        else:
+            result[key] = copy.deepcopy(value)
+    return result
+
+
+def _resolve_preflight_spec(
+    path: Path,
+) -> tuple[dict[str, Any], list[dict[str, Any]], list[str]]:
+    """Resolve an immutable v1 spec or a hash-bound v2 overlay.
+
+    The overlay format lets a later gate add shared protocol evidence without
+    copying hundreds of task-specific evidence bindings.  Both the overlay and
+    its base are retained as report inputs, and a missing or changed base fails
+    closed before any evaluator call.
+    """
+
+    document = _load_object(path)
+    inputs = [{"path": _recorded_path(path), "sha256": _sha256(path)}]
+    if document.get("schema_version") == 1:
+        return document, inputs, []
+    if document.get("schema_version") != 2:
+        return {}, inputs, ["unsupported measurement-health spec schema"]
+
+    binding = document.get("base_spec") or {}
+    raw_base_path = binding.get("path")
+    expected_hash = binding.get("sha256")
+    if not isinstance(raw_base_path, str) or not isinstance(expected_hash, str):
+        return {}, inputs, ["v2 preflight base-spec binding is incomplete"]
+    base_path = (ROOT / raw_base_path).resolve()
+    if not base_path.is_file():
+        return {}, inputs, ["v2 preflight base spec is missing"]
+    actual_hash = _sha256(base_path)
+    inputs.append({"path": _recorded_path(base_path), "sha256": actual_hash})
+    if actual_hash != expected_hash:
+        return {}, inputs, ["v2 preflight base-spec hash differs"]
+    base = _load_object(base_path)
+    if base.get("schema_version") != 1:
+        return {}, inputs, ["v2 preflight base spec is not schema v1"]
+
+    top_level = document.get("top_level_overrides") or {}
+    shared_task = document.get("shared_task_overrides") or {}
+    task_overrides = document.get("task_overrides") or []
+    if not isinstance(top_level, dict) or not isinstance(shared_task, dict):
+        return {}, inputs, ["v2 preflight shared overrides are invalid"]
+    if not isinstance(task_overrides, list):
+        return {}, inputs, ["v2 preflight task overrides are invalid"]
+
+    resolved = _deep_merge(base, top_level)
+    resolved["schema_version"] = 2
+    tasks = []
+    for row in resolved.get("tasks") or []:
+        if not isinstance(row, dict):
+            return {}, inputs, ["v2 preflight base task record is invalid"]
+        tasks.append(_deep_merge(row, shared_task))
+    override_by_task = {}
+    for override in task_overrides:
+        if not isinstance(override, dict) or not isinstance(override.get("task"), str):
+            return {}, inputs, ["v2 preflight task override lacks a task id"]
+        task_id = override["task"]
+        if task_id in override_by_task:
+            return {}, inputs, ["v2 preflight task overrides contain duplicates"]
+        override_by_task[task_id] = override
+    known = {row.get("task") for row in tasks}
+    if set(override_by_task) - known:
+        return {}, inputs, ["v2 preflight task override is outside the frozen cohort"]
+    resolved["tasks"] = [
+        _deep_merge(row, override_by_task.get(row["task"], {})) for row in tasks
+    ]
+    return resolved, inputs, []
 
 
 def _json_pointer(value: Any, pointer: str) -> Any:
@@ -476,6 +558,130 @@ def _bound_boolean_check(config: dict[str, Any], label: str) -> dict[str, Any]:
     )
 
 
+def _revision_paths_compatibility(
+    source_revision: Any, relative_paths: Iterable[str],
+) -> dict[str, Any]:
+    paths = sorted(set(relative_paths))
+    changed = []
+    missing = []
+    if not isinstance(source_revision, str) or not source_revision:
+        return {
+            "source_revision": source_revision,
+            "runtime_files_unchanged": False,
+            "paths": paths,
+            "changed_paths": [],
+            "missing_at_source_revision": [],
+            "reason": "evidence source revision is missing",
+        }
+    for relative in paths:
+        current = ROOT / relative
+        if not current.is_file():
+            missing.append(relative)
+            continue
+        try:
+            historical = subprocess.check_output(
+                ["git", "show", "%s:%s" % (source_revision, relative)],
+                cwd=str(ROOT), stderr=subprocess.DEVNULL,
+            )
+        except (OSError, subprocess.CalledProcessError):
+            missing.append(relative)
+            continue
+        if historical != current.read_bytes():
+            changed.append(relative)
+    passed = not changed and not missing
+    return {
+        "source_revision": source_revision,
+        "runtime_files_unchanged": passed,
+        "paths": paths,
+        "changed_paths": changed,
+        "missing_at_source_revision": missing,
+        "reason": None if passed else "recovery runtime differs from the fault-audit revision",
+    }
+
+
+def _task_card(task_spec: Any) -> tuple[Optional[dict[str, Any]], Optional[str]]:
+    path = task_spec.task_dir / "TASK_CARD.yaml"
+    try:
+        value = yaml.safe_load(path.read_text(encoding="utf-8"))
+    except (OSError, yaml.YAMLError) as exc:
+        return None, "task card is unreadable: %s" % exc
+    if not isinstance(value, dict):
+        return None, "task card is not an object"
+    return value, None
+
+
+def _recovery_check(config: dict[str, Any], task_spec: Any) -> dict[str, Any]:
+    """Bind protocol fault evidence to deterministic local task execution.
+
+    This deliberately establishes logical exactly-once outcomes and oracle-budget
+    accounting only.  It never upgrades that result to physical exactly-once lab
+    execution.
+    """
+
+    predicates = config.get("predicates") or []
+    pointers = [row.get("pointer") for row in predicates]
+    if not predicates or any(not isinstance(pointer, str) for pointer in pointers):
+        return _check("missing", reason="recovery evidence predicates are incomplete")
+    values, audit = _extract_bound_values(config.get("evidence") or {}, pointers)
+    if not values:
+        return _check("missing", evidence=audit, reason="bound recovery evidence unavailable")
+    rows = []
+    predicates_passed = True
+    for predicate, value in zip(predicates, values):
+        operator = str(predicate.get("operator", "eq"))
+        expected = predicate.get("value", True)
+        matched = _comparison(value, operator, expected)
+        rows.append({
+            "pointer": predicate["pointer"], "operator": operator,
+            "expected": expected, "observed": value, "passed": matched,
+        })
+        predicates_passed = predicates_passed and matched
+
+    compatibility = _revision_paths_compatibility(
+        audit.get("source_revision"), config.get("runtime_paths") or []
+    )
+    card, card_error = _task_card(task_spec)
+    deterministic = (
+        ((card or {}).get("oracle") or {}).get("deterministic") is True
+    )
+    expected_scope = (
+        "PROCESS_CRASH_DURABLE_RECEIPT_LOGICAL_EXACTLY_ONCE_OUTCOME_AND_"
+        "ORACLE_BUDGET_FOR_DETERMINISTIC_LOCAL_EVALUATORS_NOT_PHYSICAL_"
+        "EXACTLY_ONCE_LIVE_LAB_EXECUTION"
+    )
+    document, _ = _bound_document(config.get("evidence") or {})
+    scope_matches = bool(document and document.get("evidence_scope") == expected_scope)
+    passed = bool(
+        predicates_passed
+        and compatibility["runtime_files_unchanged"]
+        and deterministic
+        and scope_matches
+    )
+    reasons = []
+    if not predicates_passed:
+        reasons.append("one or more recovery fault predicates failed")
+    if not compatibility["runtime_files_unchanged"]:
+        reasons.append("recovery runtime differs from the fault-audit revision")
+    if not deterministic:
+        reasons.append(card_error or "task oracle is not declared deterministic")
+    if not scope_matches:
+        reasons.append("recovery evidence scope is missing or broader than allowed")
+    return _check(
+        "pass" if passed else "fail",
+        predicates=rows,
+        evidence=audit,
+        runtime_compatibility=compatibility,
+        task_card_path=_recorded_path(task_spec.task_dir / "TASK_CARD.yaml"),
+        oracle_deterministic=deterministic,
+        evidence_scope_matches=scope_matches,
+        claim=(
+            "logical exactly-once outcome and oracle-budget accounting for a "
+            "deterministic local evaluator; not physical exactly-once execution"
+        ),
+        reason=None if passed else "; ".join(reasons),
+    )
+
+
 def _trajectory_resolution_check(
     config: dict[str, Any], noise_span: Optional[float], task_spec: Any,
 ) -> dict[str, Any]:
@@ -746,8 +952,8 @@ def _task_preflight(
             "content_addressed_atomic_capture": _protocol_check(
                 config.get("content_addressed_atomic_capture") or {}
             ),
-            "exactly_once_recovery": _bound_boolean_check(
-                config.get("exactly_once_recovery") or {}, "exactly-once recovery"
+            "exactly_once_recovery": _recovery_check(
+                config.get("exactly_once_recovery") or {}, task_spec
             ),
         }
     gate_passed = all(row["status"] == "pass" for row in checks.values())
@@ -775,8 +981,7 @@ def build_report(
     manifest_path = manifest_path.resolve()
     spec_path = spec_path.resolve()
     manifest = _load_object(manifest_path)
-    evidence_spec = _load_object(spec_path)
-    issues = []
+    evidence_spec, spec_inputs, issues = _resolve_preflight_spec(spec_path)
 
     expected_manifest_hash = evidence_spec.get("cohort_manifest_sha256")
     if _sha256(manifest_path) != expected_manifest_hash:
@@ -818,7 +1023,7 @@ def build_report(
         "environment": {"python": sys.version, "platform": platform.platform()},
         "inputs": [
             {"path": _recorded_path(manifest_path), "sha256": _sha256(manifest_path)},
-            {"path": _recorded_path(spec_path), "sha256": _sha256(spec_path)},
+            *spec_inputs,
         ],
         "policy": {
             "fail_closed": True,
@@ -840,6 +1045,7 @@ def build_report(
             "Historical calibration witnesses establish baseline/reference separation only under their bound contracts.",
             "Source scans are narrow shortcut checks, not evidence against every form of benchmark overfitting or contamination.",
             "This preflight cannot demonstrate material improvement after two hours; that requires completed sentinel trajectories.",
+            "Recovery evidence establishes logical exactly-once outcomes only for deterministic local evaluators, not physical exactly-once live-lab execution.",
             "No task passing this audit becomes confirmatory, externally validated, or autonomous-discovery evidence.",
         ],
     }

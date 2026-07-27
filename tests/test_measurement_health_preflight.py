@@ -33,7 +33,14 @@ class MeasurementHealthPreflightTests(unittest.TestCase):
         for row in self.report["tasks"]:
             self.assertFalse(row["long_horizon_run_permitted"])
             self.assertEqual(row["checks"]["scientific_materiality"]["status"], "missing")
-            self.assertEqual(row["checks"]["exactly_once_recovery"]["status"], "missing")
+            self.assertEqual(row["checks"]["exactly_once_recovery"]["status"], "pass")
+            self.assertTrue(
+                row["checks"]["exactly_once_recovery"]["oracle_deterministic"]
+            )
+            self.assertIn(
+                "not physical exactly-once",
+                row["checks"]["exactly_once_recovery"]["claim"],
+            )
 
     def test_fixed_artifact_noise_is_actually_remeasured(self):
         for row in self.report["tasks"]:
@@ -126,7 +133,7 @@ class MeasurementHealthPreflightTests(unittest.TestCase):
 
     def test_tampered_spec_binding_prevents_execution(self):
         document = json.loads(MODULE.DEFAULT_SPEC.read_text(encoding="utf-8"))
-        document["cohort_manifest_sha256"] = "0" * 64
+        document["top_level_overrides"]["cohort_manifest_sha256"] = "0" * 64
         with tempfile.TemporaryDirectory() as temporary:
             path = Path(temporary) / "spec.json"
             path.write_text(json.dumps(document), encoding="utf-8")
@@ -139,7 +146,7 @@ class MeasurementHealthPreflightTests(unittest.TestCase):
         )
 
     def test_portable_artifact_pack_hash_is_fail_closed(self):
-        document = json.loads(MODULE.DEFAULT_SPEC.read_text(encoding="utf-8"))
+        document = json.loads(MODULE.LEGACY_SPEC.read_text(encoding="utf-8"))
         document["tasks"][0]["portable_artifact"]["evidence"]["sha256"] = "0" * 64
         with tempfile.TemporaryDirectory() as temporary:
             path = Path(temporary) / "spec.json"
@@ -148,6 +155,42 @@ class MeasurementHealthPreflightTests(unittest.TestCase):
         first = report["tasks"][0]
         self.assertEqual(first["checks"]["fixed_artifact_binding"]["status"], "fail")
         self.assertEqual(first["checks"]["fixed_artifact_noise"]["status"], "missing")
+
+    def test_v2_overlay_base_hash_is_fail_closed_before_evaluation(self):
+        document = json.loads(MODULE.DEFAULT_SPEC.read_text(encoding="utf-8"))
+        document["base_spec"]["sha256"] = "0" * 64
+        calls = {"count": 0}
+
+        def evaluator(*_args):
+            calls["count"] += 1
+            return stable_evaluator(*_args)
+
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / "spec.json"
+            path.write_text(json.dumps(document), encoding="utf-8")
+            report = MODULE.build_report(spec_path=path, evaluator=evaluator)
+        self.assertEqual(calls["count"], 0)
+        self.assertFalse(report["execution_passed"])
+        self.assertIn("v2 preflight base-spec hash differs", report["issues"])
+
+    def test_recovery_requires_a_deterministic_task_card(self):
+        config = self.report["tasks"][0]["checks"]["exactly_once_recovery"]
+        self.assertEqual(config["status"], "pass")
+        spec = MODULE.load_task_spec(
+            MODULE.ROOT / "benchmarks/Electrochemistry/ElectrolyteConductivityDesign"
+        )
+        original = MODULE._task_card
+        try:
+            MODULE._task_card = lambda _spec: ({"oracle": {"deterministic": False}}, None)
+            resolved, _inputs, issues = MODULE._resolve_preflight_spec(MODULE.DEFAULT_SPEC)
+            self.assertEqual(issues, [])
+            failed = MODULE._recovery_check(
+                resolved["tasks"][0]["exactly_once_recovery"], spec
+            )
+        finally:
+            MODULE._task_card = original
+        self.assertEqual(failed["status"], "fail")
+        self.assertIn("not declared deterministic", failed["reason"])
 
 
 if __name__ == "__main__":
