@@ -27,7 +27,10 @@ from typing import Any, Callable, Dict, Iterable, Optional
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from frontier_science.algorithms.common import task_contract_sha256  # noqa: E402
+from frontier_science.algorithms.common import (  # noqa: E402
+    task_contract_sha256,
+    task_package_sha256,
+)
 from frontier_science.evaluate import evaluate_candidate  # noqa: E402
 from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402
 from frontier_science.spec import load_task_spec  # noqa: E402
@@ -43,23 +46,6 @@ Evaluator = Callable[[Any, Path, float], Dict[str, Any]]
 
 def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
-
-
-def _task_package_sha256(task_dir: Path) -> str:
-    """Bind every source/data contract file while excluding generated caches."""
-
-    digest = hashlib.sha256()
-    paths = sorted(
-        path for path in task_dir.rglob("*")
-        if path.is_file()
-        and "__pycache__" not in path.parts
-        and path.suffix not in {".pyc", ".pyo"}
-    )
-    for path in paths:
-        relative = path.relative_to(task_dir).as_posix()
-        digest.update(relative.encode("utf-8") + b"\0")
-        digest.update(path.read_bytes() + b"\0")
-    return digest.hexdigest()
 
 
 def _task_runtime_paths(task_spec: Any) -> list[Path]:
@@ -676,7 +662,7 @@ def _task_preflight(
     task_dir = ROOT / "benchmarks" / task_id
     task_spec = load_task_spec(task_dir)
     current_contract = task_contract_sha256(task_spec)
-    current_package = _task_package_sha256(task_dir)
+    current_package = task_package_sha256(task_spec)
     expected_artifact_hash = config.get("fixed_artifact_sha256")
     contract_binding_passed = current_contract == manifest_row.get("runtime_contract_sha256")
     package_binding_passed = current_package == config.get("task_package_sha256")

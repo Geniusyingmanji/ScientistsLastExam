@@ -52,8 +52,17 @@ def _canonical_json(value: Any) -> bytes:
 def _atomic_write_bytes(path: Path, payload: bytes) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_name(".%s.tmp" % path.name)
-    temporary.write_bytes(payload)
+    with temporary.open("wb") as handle:
+        handle.write(payload)
+        handle.flush()
+        os.fsync(handle.fileno())
     os.replace(str(temporary), str(path))
+    flags = os.O_RDONLY | getattr(os, "O_DIRECTORY", 0)
+    directory_fd = os.open(str(path.parent), flags)
+    try:
+        os.fsync(directory_fd)
+    finally:
+        os.close(directory_fd)
 
 
 def _durable_append(path: Path, value: dict[str, Any]) -> None:
@@ -65,6 +74,12 @@ def _durable_append(path: Path, value: dict[str, Any]) -> None:
         handle.write(payload)
         handle.flush()
         os.fsync(handle.fileno())
+    flags = os.O_RDONLY | getattr(os, "O_DIRECTORY", 0)
+    directory_fd = os.open(str(path.parent), flags)
+    try:
+        os.fsync(directory_fd)
+    finally:
+        os.close(directory_fd)
 
 
 def _finite_nonnegative(value: Any, label: str) -> float:

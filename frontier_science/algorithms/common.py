@@ -94,6 +94,24 @@ def task_contract_sha256(spec: TaskSpec) -> str:
     return digest.hexdigest()
 
 
+def task_package_sha256(spec: TaskSpec) -> str:
+    """Bind every task source/data file while excluding generated caches."""
+
+    digest = hashlib.sha256()
+    paths = sorted(
+        path for path in spec.task_dir.rglob("*")
+        if path.is_file()
+        and "__pycache__" not in path.parts
+        and path.suffix not in {".pyc", ".pyo"}
+    )
+    for path in paths:
+        digest.update(
+            path.relative_to(spec.task_dir).as_posix().encode("utf-8") + b"\0"
+        )
+        digest.update(path.read_bytes() + b"\0")
+    return digest.hexdigest()
+
+
 def runtime_source_sha256() -> str:
     root = Path(__file__).resolve().parents[2]
     paths = sorted((root / "frontier_science").rglob("*.py"))
@@ -174,6 +192,7 @@ def ensure_run_manifest(
         "algorithm": algorithm,
         "task_id": spec.task_id,
         "task_contract_sha256": task_contract_sha256(spec),
+        "task_package_sha256": task_package_sha256(spec),
         "runtime_source_sha256": runtime_source_sha256(),
         "runtime_environment": {
             "python": sys.version,
@@ -208,9 +227,19 @@ def ensure_run_manifest(
 
 def atomic_write_text(path: Path, text: str) -> None:
     path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_name(".%s.tmp" % path.name)
-    temporary.write_text(text, encoding="utf-8")
+    with temporary.open("w", encoding="utf-8") as handle:
+        handle.write(text)
+        handle.flush()
+        os.fsync(handle.fileno())
     os.replace(str(temporary), str(path))
+    flags = os.O_RDONLY | getattr(os, "O_DIRECTORY", 0)
+    directory_fd = os.open(str(path.parent), flags)
+    try:
+        os.fsync(directory_fd)
+    finally:
+        os.close(directory_fd)
 
 
 def reconstruction_path(path: Path) -> Path:

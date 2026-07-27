@@ -18,6 +18,7 @@ from pathlib import Path
 from typing import Any, Callable, Optional
 
 from ..evaluate import evaluate_candidate, INVALID_SCORE
+from ..evaluation_ledger import EvaluationLedger, RunLease
 from ..llm import LLMClient
 from ..metric_visibility import score_only_metrics, search_visible_metrics
 from ..spec import TaskSpec
@@ -29,6 +30,9 @@ from .common import (
     ensure_run_manifest,
     feedback_scope,
     restore_committed_trajectory,
+    runtime_source_sha256,
+    task_contract_sha256,
+    task_package_sha256,
 )
 
 SYSTEM_PROMPT = (
@@ -244,7 +248,7 @@ def _validate_pending_proposal(
     return program, dict(usage), float(prefix_wall)
 
 
-def greedy_rewrite(
+def _greedy_rewrite_impl(
     spec: TaskSpec,
     llm: LLMClient,
     budget: int = 10,
@@ -292,11 +296,17 @@ def greedy_rewrite(
         resume and manifest_path.is_file()
         and not checkpoint_path.exists() and not trajectory_path.exists()
     )
+    baseline_commit_recovery = bool(
+        resume and manifest_path.is_file()
+        and not checkpoint_path.exists() and trajectory_path.is_file()
+    )
     ensure_run_manifest(
         workdir, spec=spec, llm=llm, algorithm="greedy_rewrite", seed=seed,
         feedback_mode=feedback_mode, resume=resume,
-        protocol=(
-            {
+        protocol={
+            "evaluator_timeout_seconds": float(timeout_s),
+            "evaluation_ledger": True,
+            **({
                 "active_wall_horizon_s": active_wall_horizon_s,
                 "sentinel_interval_s": sentinel_interval_s,
                 "boundary_sentinels": True,
@@ -306,17 +316,49 @@ def greedy_rewrite(
                 ),
                 "signed_decisions": signed_decisions,
                 "signed_decision_policy": signed_decision_policy,
-            }
-            if active_wall_horizon_s is not None else None
-        ),
+            } if active_wall_horizon_s is not None else {}),
+        },
     )
-    if resume and not (full_resume or baseline_retry):
+    if resume and not (full_resume or baseline_retry or baseline_commit_recovery):
         raise FileNotFoundError("--resume requires checkpoint.json and trajectory.jsonl")
 
+    sentinel_path = workdir / "sentinels" / "sentinel_events.jsonl"
+    sentinel_resume = bool(
+        full_resume or (baseline_commit_recovery and sentinel_path.is_file())
+    )
     sentinel_ledger = (
-        SentinelLedger(workdir, resume=full_resume)
+        SentinelLedger(workdir, resume=sentinel_resume)
         if active_wall_horizon_s is not None else None
     )
+    evaluation_ledger = EvaluationLedger(workdir)
+    frozen_task_contract = task_contract_sha256(spec)
+    frozen_task_package = task_package_sha256(spec)
+    frozen_runtime_source = runtime_source_sha256()
+
+    def validate_committed_evaluation_receipts(
+        events: list[dict[str, Any]],
+    ) -> None:
+        for event in events:
+            metadata = event.get("algorithm_metadata") or {}
+            request_id = metadata.get("evaluation_request_id")
+            # No-code contract failures have no evaluator request or receipt.
+            if not event.get("candidate_sha256"):
+                if request_id is not None:
+                    raise ValueError("no-code trajectory event has an evaluation request")
+                continue
+            bound = evaluation_ledger.require_bound_record(request_id)
+            receipt = bound["receipt"]
+            request = bound["request"]
+            if not (
+                request.get("task_id") == spec.task_id
+                and request.get("task_contract_sha256") == frozen_task_contract
+                and request.get("task_package_sha256") == frozen_task_package
+                and request.get("runtime_source_sha256") == frozen_runtime_source
+                and request.get("step") == int(event["step"])
+                and request.get("candidate_sha256") == event["candidate_sha256"]
+                and receipt["metrics"] == (event.get("metrics") or {})
+            ):
+                raise ValueError("trajectory evaluation receipt binding differs")
     system_prompt = SIGNED_SYSTEM_PROMPT if signed_decisions else SYSTEM_PROMPT
     # Seed with the initial baseline program.
     start_iter = 1
@@ -369,17 +411,90 @@ def greedy_rewrite(
         if budget + 1 < start_iter:
             raise ValueError("requested budget is smaller than the committed checkpoint")
         prior_events = restore_committed_trajectory(trajectory_path, start_iter)
+        validate_committed_evaluation_receipts(prior_events)
         active_wall = float(prior_events[-1]["cumulative_wall_seconds"])
         result = EvolveResult(spec.task_id, best_score, baseline_score, best_program,
                               algorithm="greedy_rewrite", seed=seed)
         result.evaluated = int(prior_events[-1]["oracle_calls"])
         result.accepted = sum(bool(e.get("accepted")) for e in prior_events[1:])
         log_fn(f"[{spec.task_id}] resume at iter={start_iter} best={best_score:.6f}")
+    elif baseline_commit_recovery:
+        prior_events = load_trajectory(trajectory_path)
+        if len(prior_events) != 1 or int(prior_events[0].get("step", -1)) != 0:
+            raise ValueError(
+                "checkpoint-free trajectory must contain exactly the baseline event"
+            )
+        validate_committed_evaluation_receipts(prior_events)
+        baseline_src = spec.initial_program_path.read_text(encoding="utf-8")
+        baseline_event = prior_events[0]
+        if baseline_event.get("candidate_sha256") != sha256_text(baseline_src):
+            raise ValueError("checkpoint-free baseline source binding differs")
+        metrics = dict(baseline_event.get("metrics") or {})
+        if metrics.get("infrastructure_failure") or float(metrics.get("valid", 0.0)) < 1.0:
+            raise ValueError("checkpoint-free baseline event is not a valid receipt")
+        baseline_score = float(metrics.get("combined_score", INVALID_SCORE))
+        best_score, best_program = baseline_score, baseline_src
+        best_source_step = 0
+        best_published_wall = 0.0
+        best_metrics = search_visible_metrics(metrics)
+        baseline_metrics = dict(best_metrics)
+        evaluated_candidates = [{
+            "step": 0,
+            "program": baseline_src,
+            "sha256": sha256_text(baseline_src),
+            "score": baseline_score,
+            "valid": True,
+            "metrics": baseline_metrics,
+            "published_wall_seconds": 0.0,
+        }]
+        pending_proposal = None
+        start_iter = 1
+        active_wall = float(baseline_event["cumulative_wall_seconds"])
+        result = EvolveResult(
+            spec.task_id, baseline_score, baseline_score, baseline_src,
+            algorithm="greedy_rewrite", seed=seed,
+        )
+        result.evaluated = int(baseline_event["oracle_calls"])
+        result.accepted = 0
+        if sentinel_ledger is not None and not sentinel_ledger.has_type("t0"):
+            baseline_late = active_wall > float(active_wall_horizon_s)
+            sentinel_ledger.capture(
+                "t0",
+                source=baseline_src,
+                source_step=0,
+                artifact_published_elapsed_seconds=0.0,
+                recorded_elapsed_seconds=active_wall,
+                selection_policy="baseline",
+                evaluation=metrics,
+                evaluation_status=(
+                    "completed_after_schedule" if baseline_late else "completed"
+                ),
+                evaluation_completed_elapsed_seconds=active_wall,
+                feedback_visible=not baseline_late,
+                idempotency_key="t0",
+            )
+        log_fn(
+            f"[{spec.task_id}] recover committed baseline before checkpoint "
+            f"score={baseline_score:.6f}"
+        )
     else:
         baseline_src = spec.initial_program_path.read_text(encoding="utf-8")
         cand_path.write_text(baseline_src, encoding="utf-8")
-        eval_started = time.monotonic()
-        metrics = evaluate_candidate(spec, cand_path, timeout_s=timeout_s)
+        baseline_receipt = evaluation_ledger.evaluate_once(
+            {
+                "kind": "baseline",
+                "task_id": spec.task_id,
+                "task_contract_sha256": frozen_task_contract,
+                "task_package_sha256": frozen_task_package,
+                "runtime_source_sha256": frozen_runtime_source,
+                "step": 0,
+                "candidate_sha256": sha256_text(baseline_src),
+                "evaluator_timeout_seconds": float(timeout_s),
+            },
+            lambda: evaluate_candidate(spec, cand_path, timeout_s=timeout_s),
+            clock=time.monotonic,
+        )
+        metrics = dict(baseline_receipt["metrics"])
         if metrics.get("infrastructure_failure"):
             raise EvaluatorInfrastructureError(
                 "baseline trusted evaluator infrastructure failure"
@@ -388,7 +503,7 @@ def greedy_rewrite(
             raise EvaluatorInfrastructureError(
                 "frozen baseline is invalid under the trusted evaluator"
             )
-        eval_wall = time.monotonic() - eval_started
+        eval_wall = float(baseline_receipt["evaluation_wall_seconds"])
         baseline_score = float(metrics.get("combined_score", INVALID_SCORE))
         best_score, best_program = baseline_score, baseline_src
         best_source_step = 0
@@ -415,6 +530,15 @@ def greedy_rewrite(
             candidate_sha256=sha256_text(baseline_src), parent_sha256=None,
             budget_units=1,
             metrics=metrics,
+            algorithm_metadata={
+                "evaluation_request_id": baseline_receipt["request_id"],
+                "evaluation_receipt_reused": bool(
+                    baseline_receipt["receipt_reused"]
+                ),
+                "evaluation_receipt_committed": bool(
+                    baseline_receipt.get("receipt_committed", True)
+                ),
+            },
         ))
         active_wall = eval_wall
         if sentinel_ledger is not None:
@@ -733,8 +857,10 @@ def greedy_rewrite(
                     provider_response=pending_record.get("response"),
                     idempotency_key="decision:%d" % it,
                 )
-        evaluation_started = time.monotonic()
+        evaluation_started = None
+        evaluation_receipt = None
         if not code:
+            evaluation_started = time.monotonic()
             log_fn(f"[{spec.task_id}] iter {it}: no code block parsed")
             error = "signed_decision_contract_invalid" if signed_contract_invalid else "no_code"
             m = {"combined_score": INVALID_SCORE, "valid": 0.0, "error_message": error}
@@ -742,7 +868,23 @@ def greedy_rewrite(
             candidate_sha = ""
         else:
             cand_path.write_text(code, encoding="utf-8")
-            m = evaluate_candidate(spec, cand_path, timeout_s=timeout_s)
+            evaluation_receipt = evaluation_ledger.evaluate_once(
+                {
+                    "kind": "proposal",
+                    "task_id": spec.task_id,
+                    "task_contract_sha256": frozen_task_contract,
+                    "task_package_sha256": frozen_task_package,
+                    "runtime_source_sha256": frozen_runtime_source,
+                    "step": int(it),
+                    "candidate_sha256": sha256_text(code),
+                    "parent_sha256": parent_sha,
+                    "prompt_sha256": sha256_text(prompt),
+                    "evaluator_timeout_seconds": float(timeout_s),
+                },
+                lambda: evaluate_candidate(spec, cand_path, timeout_s=timeout_s),
+                clock=time.monotonic,
+            )
+            m = dict(evaluation_receipt["metrics"])
             if m.get("infrastructure_failure"):
                 raise EvaluatorInfrastructureError(
                     "candidate trusted evaluator infrastructure failure"
@@ -756,7 +898,12 @@ def greedy_rewrite(
         # The provider result is now a terminal candidate outcome. Keep the
         # on-disk pending record until the event and next checkpoint commit.
         pending_proposal = None
-        step_wall = pre_evaluation_wall + (time.monotonic() - evaluation_started)
+        evaluation_wall = (
+            float(evaluation_receipt["evaluation_wall_seconds"])
+            if evaluation_receipt is not None
+            else time.monotonic() - float(evaluation_started)
+        )
+        step_wall = pre_evaluation_wall + evaluation_wall
         active_wall += step_wall
         completed_after_horizon = bool(
             active_wall_horizon_s is not None
@@ -823,6 +970,16 @@ def greedy_rewrite(
                     signed_decision.get("action")
                     if isinstance(signed_decision, dict) else None
                 ),
+                "evaluation_request_id": (
+                    evaluation_receipt.get("request_id")
+                    if evaluation_receipt is not None else None
+                ),
+                "evaluation_receipt_reused": bool(
+                    evaluation_receipt.get("receipt_reused")
+                ) if evaluation_receipt is not None else False,
+                "evaluation_receipt_committed": bool(
+                    evaluation_receipt.get("receipt_committed", True)
+                ) if evaluation_receipt is not None else False,
             },
         ))
         if sentinel_ledger is not None and valid and not sentinel_ledger.has_type("first_valid"):
@@ -926,6 +1083,7 @@ def greedy_rewrite(
                            "sentinel_snapshot": (
                                sentinel_ledger.snapshot() if sentinel_ledger is not None else None
                            ),
+                           "evaluation_ledger_snapshot": evaluation_ledger.snapshot(),
                            "feedback_scope": feedback_scope(feedback_mode),
                            "selection_policy": (
                                "offline_best_of_open_loop_batch"
@@ -941,6 +1099,43 @@ def greedy_rewrite(
     log_fn(f"[{spec.task_id}] DONE baseline={baseline_score:.6f} -> best={best_score:.6f} "
            f"({result.accepted}/{budget} accepted)  out={workdir}")
     return result
+
+
+def greedy_rewrite(
+    spec: TaskSpec,
+    llm: LLMClient,
+    budget: int = 10,
+    timeout_s: float = 300.0,
+    workdir: Optional[Path] = None,
+    log_fn: Callable[[str], None] = print,
+    seed: int = 0,
+    resume: bool = False,
+    feedback_mode: str = "normal",
+    active_wall_horizon_s: float | None = None,
+    sentinel_interval_s: float | None = None,
+    signed_decisions: bool = False,
+    signed_decision_policy: str = "record_only",
+) -> EvolveResult:
+    resolved = Path(
+        workdir
+        or (spec.task_dir / "runs" / time.strftime("%Y%m%d_%H%M%S"))
+    ).resolve()
+    with RunLease(resolved):
+        return _greedy_rewrite_impl(
+            spec,
+            llm,
+            budget=budget,
+            timeout_s=timeout_s,
+            workdir=resolved,
+            log_fn=log_fn,
+            seed=seed,
+            resume=resume,
+            feedback_mode=feedback_mode,
+            active_wall_horizon_s=active_wall_horizon_s,
+            sentinel_interval_s=sentinel_interval_s,
+            signed_decisions=signed_decisions,
+            signed_decision_policy=signed_decision_policy,
+        )
 
 
 # Backwards-compatible import; the public name no longer claims OpenEvolve semantics.

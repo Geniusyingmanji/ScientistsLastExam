@@ -698,6 +698,251 @@ class GreedyRewriteTests(unittest.TestCase):
             )
             self.assertIsNone(completed["pending_proposal"])
 
+    def test_baseline_receipt_survives_crash_before_trajectory_commit(self):
+        spec = find_task("LennardJonesCluster")
+        calls = {"count": 0}
+
+        def evaluate(_spec, _candidate, timeout_s):
+            calls["count"] += 1
+            return {"combined_score": 0.1, "valid": 1.0}
+
+        with tempfile.TemporaryDirectory() as temporary:
+            work = Path(temporary)
+            with patch(
+                "frontier_science.algorithms.evolve.evaluate_candidate",
+                side_effect=evaluate,
+            ), patch(
+                "frontier_science.algorithms.evolve.append_event",
+                side_effect=RuntimeError("crash after baseline receipt"),
+            ):
+                with self.assertRaisesRegex(RuntimeError, "baseline receipt"):
+                    greedy_rewrite(
+                        spec, FakeLLM([]), budget=0, timeout_s=20,
+                        workdir=work, log_fn=lambda _: None,
+                    )
+            self.assertEqual(calls["count"], 1)
+            self.assertFalse((work / "trajectory.jsonl").exists())
+            self.assertFalse((work / "checkpoint.json").exists())
+            self.assertEqual(
+                len(list((work / "evaluation_ledger/receipts").glob("*.json"))),
+                1,
+            )
+
+            with patch(
+                "frontier_science.algorithms.evolve.evaluate_candidate",
+                side_effect=AssertionError("baseline evaluator called twice"),
+            ):
+                result = greedy_rewrite(
+                    spec, FakeLLM([]), budget=0, timeout_s=20,
+                    workdir=work, resume=True, log_fn=lambda _: None,
+                )
+
+            events = load_trajectory(work / "trajectory.jsonl")
+            self.assertEqual(calls["count"], 1)
+            self.assertEqual(len(events), 1)
+            self.assertTrue(
+                events[0]["algorithm_metadata"]["evaluation_receipt_reused"]
+            )
+            self.assertEqual(
+                result.summary["evaluation_ledger_snapshot"]["request_count"], 1
+            )
+            self.assertEqual(
+                result.summary["evaluation_ledger_snapshot"]["receipt_count"], 1
+            )
+
+    def test_committed_baseline_trajectory_recovers_before_checkpoint(self):
+        spec = find_task("LennardJonesCluster")
+        calls = {"count": 0}
+
+        def evaluate(_spec, _candidate, timeout_s):
+            calls["count"] += 1
+            return {"combined_score": 0.1, "valid": 1.0}
+
+        real_append = __import__(
+            "frontier_science.algorithms.evolve", fromlist=["append_event"]
+        ).append_event
+
+        def append_then_crash(path, event):
+            real_append(path, event)
+            raise RuntimeError("crash after baseline trajectory")
+
+        with tempfile.TemporaryDirectory() as temporary:
+            work = Path(temporary)
+            with patch(
+                "frontier_science.algorithms.evolve.evaluate_candidate",
+                side_effect=evaluate,
+            ), patch(
+                "frontier_science.algorithms.evolve.append_event",
+                side_effect=append_then_crash,
+            ):
+                with self.assertRaisesRegex(RuntimeError, "baseline trajectory"):
+                    greedy_rewrite(
+                        spec, FakeLLM([]), budget=0, timeout_s=20,
+                        workdir=work, log_fn=lambda _: None,
+                    )
+            self.assertEqual(calls["count"], 1)
+            self.assertEqual(len(load_trajectory(work / "trajectory.jsonl")), 1)
+            self.assertFalse((work / "checkpoint.json").exists())
+
+            with patch(
+                "frontier_science.algorithms.evolve.evaluate_candidate",
+                side_effect=AssertionError("baseline evaluator called twice"),
+            ):
+                result = greedy_rewrite(
+                    spec, FakeLLM([]), budget=0, timeout_s=20,
+                    workdir=work, resume=True, log_fn=lambda _: None,
+                )
+
+            self.assertEqual(calls["count"], 1)
+            self.assertTrue((work / "checkpoint.json").is_file())
+            self.assertEqual(len(load_trajectory(work / "trajectory.jsonl")), 1)
+            self.assertEqual(result.evaluated, 1)
+            self.assertEqual(
+                result.summary["evaluation_ledger_snapshot"]["receipt_count"], 1
+            )
+
+    def test_proposal_receipt_survives_crash_before_trajectory_commit(self):
+        spec = find_task("LennardJonesCluster")
+        baseline = spec.initial_program_path.read_text(encoding="utf-8")
+        fenced = "```python\n" + baseline + "\n```"
+        calls = {"count": 0}
+
+        def evaluate(_spec, _candidate, timeout_s):
+            calls["count"] += 1
+            return {
+                "combined_score": 0.1 if calls["count"] == 1 else 0.2,
+                "valid": 1.0,
+            }
+
+        from frontier_science.algorithms import evolve as evolve_module
+        real_append = evolve_module.append_event
+        appends = {"count": 0}
+
+        def crash_on_proposal(path, event):
+            appends["count"] += 1
+            if appends["count"] == 2:
+                raise RuntimeError("crash after proposal receipt")
+            return real_append(path, event)
+
+        with tempfile.TemporaryDirectory() as temporary:
+            work = Path(temporary)
+            with patch(
+                "frontier_science.algorithms.evolve.evaluate_candidate",
+                side_effect=evaluate,
+            ), patch(
+                "frontier_science.algorithms.evolve.append_event",
+                side_effect=crash_on_proposal,
+            ):
+                with self.assertRaisesRegex(RuntimeError, "proposal receipt"):
+                    greedy_rewrite(
+                        spec, FakeLLM([fenced]), budget=1, timeout_s=20,
+                        workdir=work, log_fn=lambda _: None,
+                    )
+            self.assertEqual(calls["count"], 2)
+            self.assertEqual(len(load_trajectory(work / "trajectory.jsonl")), 1)
+            checkpoint = json.loads(
+                (work / "checkpoint.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual(checkpoint["next_iter"], 1)
+            self.assertIsNotNone(checkpoint["pending_proposal"])
+            self.assertEqual(
+                len(list((work / "evaluation_ledger/receipts").glob("*.json"))),
+                2,
+            )
+
+            with patch(
+                "frontier_science.algorithms.evolve.evaluate_candidate",
+                side_effect=AssertionError("proposal evaluator called twice"),
+            ):
+                result = greedy_rewrite(
+                    spec, FakeLLM([]), budget=1, timeout_s=20,
+                    workdir=work, resume=True, log_fn=lambda _: None,
+                )
+
+            events = load_trajectory(work / "trajectory.jsonl")
+            self.assertEqual(calls["count"], 2)
+            self.assertEqual(len(events), 2)
+            self.assertTrue(
+                events[1]["algorithm_metadata"]["evaluation_receipt_reused"]
+            )
+            self.assertEqual(
+                result.summary["evaluation_ledger_snapshot"]["request_count"], 2
+            )
+            self.assertEqual(
+                result.summary["evaluation_ledger_snapshot"]["receipt_count"], 2
+            )
+
+    def test_committed_proposal_trajectory_recovers_before_checkpoint(self):
+        spec = find_task("LennardJonesCluster")
+        baseline = spec.initial_program_path.read_text(encoding="utf-8")
+        proposal = baseline + "\n# recovery-proposal\n"
+        fenced = "```python\n" + proposal + "\n```"
+        calls = {"count": 0}
+
+        def evaluate(_spec, _candidate, timeout_s):
+            calls["count"] += 1
+            return {
+                "combined_score": 0.1 if calls["count"] == 1 else 0.2,
+                "valid": 1.0,
+            }
+
+        evolve_module = __import__(
+            "frontier_science.algorithms.evolve", fromlist=["append_event"]
+        )
+        real_append = evolve_module.append_event
+        appends = {"count": 0}
+
+        def append_then_crash(path, event):
+            appends["count"] += 1
+            real_append(path, event)
+            if appends["count"] == 2:
+                raise RuntimeError("crash after proposal trajectory")
+
+        with tempfile.TemporaryDirectory() as temporary:
+            work = Path(temporary)
+            with patch(
+                "frontier_science.algorithms.evolve.evaluate_candidate",
+                side_effect=evaluate,
+            ), patch(
+                "frontier_science.algorithms.evolve.append_event",
+                side_effect=append_then_crash,
+            ):
+                with self.assertRaisesRegex(RuntimeError, "proposal trajectory"):
+                    greedy_rewrite(
+                        spec, FakeLLM([fenced]), budget=1, timeout_s=20,
+                        workdir=work, log_fn=lambda _: None,
+                    )
+            self.assertEqual(calls["count"], 2)
+            self.assertEqual(len(load_trajectory(work / "trajectory.jsonl")), 2)
+            checkpoint = json.loads(
+                (work / "checkpoint.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual(checkpoint["next_iter"], 1)
+
+            with patch(
+                "frontier_science.algorithms.evolve.evaluate_candidate",
+                side_effect=AssertionError("proposal evaluator called twice"),
+            ):
+                result = greedy_rewrite(
+                    spec, FakeLLM([]), budget=1, timeout_s=20,
+                    workdir=work, resume=True, log_fn=lambda _: None,
+                )
+
+            events = load_trajectory(work / "trajectory.jsonl")
+            self.assertEqual(calls["count"], 2)
+            self.assertEqual([row["step"] for row in events], [0, 1])
+            self.assertEqual(
+                events[1]["candidate_sha256"], sha256_text(proposal.strip())
+            )
+            self.assertEqual(events[1]["score"], 0.2)
+            self.assertTrue(
+                events[1]["algorithm_metadata"]["evaluation_receipt_reused"]
+            )
+            self.assertEqual(result.evaluated, 2)
+            self.assertEqual(
+                result.summary["evaluation_ledger_snapshot"]["request_count"], 2
+            )
+
     def test_checkpoint_search_state_does_not_store_sealed_metrics(self):
         spec = find_task("ControlTheory/InvertedPendulumSwingUp", include_uncertified=True)
         baseline = spec.initial_program_path.read_text(encoding="utf-8")
