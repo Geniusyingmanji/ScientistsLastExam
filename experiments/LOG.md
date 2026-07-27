@@ -2964,3 +2964,16 @@ incumbent artifact plus agent-visible incumbent metrics; it does not isolate ful
 context, hidden provider state, a scientific notebook, raw negative-result memory or the base
 model independent of scaffold. Best-of-six restart is labeled an observer upper envelope rather
 than an autonomous endpoint, and the three tasks remain result-selected exploratory evidence.
+
+A real keyless-Azure GPT-5.5 signed-decision smoke then exercised the new wire contract on the
+known-answer Lennard-Jones on-ramp. One response strictly contains one Python block and one
+`commit` card. The provider reports 1,128 input and 3,422 output tokens (4,550 total); the
+candidate improves visible score from `0.041930` to `0.992282`. The durable submission and commit
+events occur at 37.509 active seconds with `not_evaluated` status, while evaluation completes at
+39.693 seconds, proving the decision did not see its own score. Provider response, candidate,
+evaluation and sentinel hashes replay; terminal binds the current workspace artifact, not a
+hidden snapshot selector. The 600-second run still ends `protocol_incomplete` because its
+one-proposal safety ceiling is exhausted, and the raw report is explicitly
+`PROTOCOL_SMOKE_ONLY_NOT_MODEL_PERFORMANCE`. A clean derived audit passes all 13 lineage and
+claim-scope checks. This is interface evidence on a high-contamination known-answer on-ramp, not
+population performance, fixed-duration headroom or scientific discovery.

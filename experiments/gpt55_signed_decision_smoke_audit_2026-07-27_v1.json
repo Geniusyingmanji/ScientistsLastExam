@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_SIGNED_DECISION_PROTOCOL_SMOKE_AUDIT",
+  "evidence_scope": "ONE_GPT55_KNOWN_ANSWER_ONRAMP_SIGNED_DECISION_PROTOCOL_SMOKE_NOT_POPULATION_PERFORMANCE_FIXED_DURATION_HEADROOM_FEEDBACK_CAUSAL_SCALING_LAW_OR_AUTONOMOUS_DISCOVERY_EVIDENCE",
+  "created_at": "2026-07-27T01:41:32.708920+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "001e4219748f7d2878633419cfac411ab2cf0893",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/audit_signed_decision_smoke.py",
+      "--output",
+      "experiments/gpt55_signed_decision_smoke_audit_2026-07-27_v1.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "input": {
+    "path": "experiments/gpt55_signed_decision_smoke_2026-07-27_v3.json",
+    "sha256": "0c9d679b3b4fba473be32f05d5e8410199699e4b92fdc2321971afe0ffb60d4c"
+  },
+  "checks": {
+    "raw_is_claim_bounded_protocol_smoke": true,
+    "raw_expectedly_fails_fixed_duration_completion": true,
+    "protocol_incomplete_reason_retained": true,
+    "configured_gpt55_responses": true,
+    "signed_record_only_enabled": true,
+    "provider_usage_complete": true,
+    "one_valid_improving_proposal": true,
+    "strict_signed_response_replays": true,
+    "response_content_hash_matches": true,
+    "response_candidate_hash_matches": true,
+    "commit_precedes_evaluation": true,
+    "terminal_is_workspace_not_hidden_oracle_selection": true,
+    "sentinel_ledger_hash_matches": true
+  },
+  "observed": {
+    "task": "Chemistry/LennardJonesCluster",
+    "baseline_score": 0.041930443440283925,
+    "best_score": 0.992281966042117,
+    "signed_action": "commit",
+    "input_tokens": 1128,
+    "output_tokens": 3422,
+    "total_tokens": 4550,
+    "proposal_published_elapsed_seconds": 37.50869355071336,
+    "evaluation_completed_elapsed_seconds": 39.69326357077807,
+    "response_sha256": "2bbc2e7ef7174e6017b5fbcddd6c45ab49b44d39416b311282f340ba22970e20",
+    "candidate_sha256": "5b7350d772e62b0527394d1c7fe70bd27860e68d31f189f7aa366623169d3dbb"
+  },
+  "issues": [],
+  "limitations": [
+    "LennardJonesCluster is a fixed known-answer optimization on-ramp with high pretraining and reconstruction risk.",
+    "There is one uncontrolled provider draw and no population or feedback contrast.",
+    "The proposal ceiling ends the run before 600 seconds, so the raw run is correctly protocol-incomplete.",
+    "The score improvement validates executable protocol integration only and is not scientific discovery."
+  ],
+  "execution_passed": true,
+  "trust_decision": "trusted_clean_revision",
+  "trusted_evidence": true,
+  "passed": true
+}
