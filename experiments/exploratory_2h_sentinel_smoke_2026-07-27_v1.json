@@ -1,0 +1,1739 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_SECURE_EVAL",
+  "evidence_scope": "PROTOCOL_SMOKE_ONLY",
+  "created_at": "2026-07-27T01:06:53.765236+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "0ea6a936598cf3543324ff72c2009e428179e46e",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "/home/azureuser/workspace-gzy/zyf/frontier-science/scripts/batch_evolve.py",
+      "--tasks",
+      "ElectrolyteConductivityDesign,DiffractionGratingDesign,RNAInverseDesign,MOSFETDoping,TrussWeightMinimization,HeatExchangerDesign,RANSCalibration",
+      "--all",
+      "--algorithms",
+      "greedy_rewrite",
+      "--feedback-modes",
+      "normal",
+      "--seeds",
+      "0",
+      "--budget",
+      "0",
+      "--timeout",
+      "300",
+      "--active-wall-horizon",
+      "7200",
+      "--sentinel-interval",
+      "1800",
+      "--cohort-manifest",
+      ".research/exploratory_2h_cohort_manifest_2026-07-27_v1.json",
+      "--workdir",
+      "runs/exploratory_2h_sentinel_smoke_2026-07-27_v1",
+      "--output",
+      "experiments/exploratory_2h_sentinel_smoke_2026-07-27_v1.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "config": {
+    "tasks": [
+      "Electrochemistry/ElectrolyteConductivityDesign",
+      "Optics/DiffractionGratingDesign",
+      "RNAEngineering/RNAInverseDesign",
+      "Semiconductor/MOSFETDoping",
+      "StructuralEngineering/TrussWeightMinimization",
+      "Thermodynamics/HeatExchangerDesign",
+      "Turbulence/RANSCalibration"
+    ],
+    "algorithms": [
+      "greedy_rewrite"
+    ],
+    "feedback_modes": [
+      "normal"
+    ],
+    "trajectory_snapshot_schema_version": 2,
+    "feedback_protocols": {
+      "normal": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace"
+    },
+    "condition_order": "reverse_parity",
+    "condition_order_randomization_seed": null,
+    "condition_order_schedule": [
+      {
+        "replicate_identifier": 0,
+        "feedback_modes": [
+          "normal"
+        ]
+      }
+    ],
+    "preregistration": null,
+    "cohort_manifest": {
+      "path": ".research/exploratory_2h_cohort_manifest_2026-07-27_v1.json",
+      "sha256": "2d4cb9dfb0ba566ac924ffc8b537516f358999e734bfd01af831ad22770b0d98",
+      "bytes": 6147,
+      "manifest_id": "frontier_science_exploratory_2h_v1",
+      "analysis_role": "result_selected_exploratory_measurement_screen",
+      "claim_limit": "not_confirmatory_not_long_horizon_ready_not_feedback_causal_not_scaling_law_not_external_validation_not_autonomous_discovery",
+      "confirmatory_reuse_permitted": false,
+      "task_count": 7
+    },
+    "seeds": [
+      0
+    ],
+    "replicate_identifier_scope": "controls local Python/random ordering only; the endpoint exposes no server-side generation seed, so same-number cells do not share model draws",
+    "resource_matching": {
+      "proposal_budget_and_max_output_tokens": "matched by configuration",
+      "realized_input_output_and_total_tokens": "measured per event; not assumed matched; use a preregistered common-token horizon or model token imbalance explicitly"
+    },
+    "budget": 0,
+    "timeout_s": 300.0,
+    "active_wall_horizon_s": 7200.0,
+    "sentinel_interval_s": 1800.0,
+    "boundary_sentinel_policy": {
+      "required": [
+        "t0",
+        "first_valid",
+        "submission",
+        "commit_or_abstain",
+        "fixed_grid",
+        "terminal"
+      ],
+      "implemented_by_runner": [
+        "t0",
+        "first_valid",
+        "submission",
+        "fixed_grid",
+        "terminal"
+      ],
+      "commit_or_abstain": "no signed agent action protocol yet; not synthesized",
+      "late_result_policy": "retain result but prevent post-cutoff incumbent or feedback update"
+    },
+    "block_workers": 1,
+    "block_parallelism": {
+      "unit": "task_algorithm_replicate",
+      "within_block_conditions": "serial_in_condition_order_schedule",
+      "cross_block_scheduling": "fixed_submission_order_nonadaptive",
+      "maximum_concurrent_blocks": 1
+    },
+    "work_root": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/exploratory_2h_sentinel_smoke_2026-07-27_v1",
+    "llm_condition_sha256": "5b0df4671481f6b3505155bc6c5654a64c4da5591422fb806904e7d0f44fc4d2",
+    "llm": {
+      "wire": "responses",
+      "endpoint_sha256": "b22995a1fcaf8ad713ac37716f006c717313dfdebd357ac02a077a5582650bb6",
+      "model": "gpt-5.5",
+      "max_output_tokens": 16000,
+      "temperature": null,
+      "reasoning_effort": "low",
+      "input_cost_per_million": null,
+      "output_cost_per_million": null,
+      "server_side_seed_control": false
+    }
+  },
+  "runs": [
+    {
+      "task": "Electrochemistry/ElectrolyteConductivityDesign",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 0,
+      "baseline": 0.0,
+      "best": 0.0,
+      "accepted": 0,
+      "evaluated": 1,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/exploratory_2h_sentinel_smoke_2026-07-27_v1/Electrochemistry__ElectrolyteConductivityDesign/greedy_rewrite/normal/seed_0",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 1,
+        "budget_units": 1,
+        "best_score": 0.0,
+        "best_so_far_auc": 0.0,
+        "valid_rate": 1.0,
+        "accepted": 0,
+        "wall_seconds": 11.060251753777266,
+        "llm": {
+          "calls": 0,
+          "provider_usage_records": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "total_tokens": 0,
+          "estimated_cost_usd": 0.0
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "Electrochemistry/ElectrolyteConductivityDesign",
+        "seed": 0,
+        "baseline_score": 0.0,
+        "budget": 0,
+        "feedback_mode": "normal",
+        "active_wall_horizon_s": 7200.0,
+        "sentinel_interval_s": 1800.0,
+        "horizon_reached": false,
+        "baseline_crossed_horizon": false,
+        "sentinel_snapshot": {
+          "schema_version": 1,
+          "ledger_path": "sentinels/sentinel_events.jsonl",
+          "ledger_sha256": "1ab3b711958cf088c850de654195cc6bcd986ee34bf1e46769089bea0a325b96",
+          "event_count": 2,
+          "type_counts": {
+            "abstain": 0,
+            "commit": 0,
+            "first_valid": 0,
+            "fixed_grid": 0,
+            "submission": 0,
+            "t0": 1,
+            "terminal": 1
+          },
+          "has_terminal": true,
+          "events": [
+            {
+              "artifact_path": "sentinels/artifacts/a55e04a4239e8f469a908f41924c0555041b432793cab89ac589a43dc4b1772f/candidate.py",
+              "artifact_published_elapsed_seconds": 0.0,
+              "artifact_sha256": "a55e04a4239e8f469a908f41924c0555041b432793cab89ac589a43dc4b1772f",
+              "artifact_utf8_bytes": 1713,
+              "capture_lag_seconds": null,
+              "capture_method": "atomic_state_transition",
+              "evaluation": {
+                "path": "sentinels/evaluations/be48e52cbc492af0f316d2724ece92807d276f5c6989b899ae0c28a5122b2299.json",
+                "sha256": "be48e52cbc492af0f316d2724ece92807d276f5c6989b899ae0c28a5122b2299",
+                "status": "completed"
+              },
+              "evaluation_completed_elapsed_seconds": 11.060251753777266,
+              "feedback_visible": true,
+              "idempotency_key": "t0",
+              "reason": null,
+              "recorded_at_utc": "2026-07-27T01:07:04.920202+00:00",
+              "recorded_elapsed_seconds": 11.060251753777266,
+              "scheduled_elapsed_seconds": null,
+              "schema_version": 1,
+              "selection_policy": "baseline",
+              "sentinel_type": "t0",
+              "sequence": 0,
+              "source_step": 0
+            },
+            {
+              "artifact_path": "sentinels/artifacts/a55e04a4239e8f469a908f41924c0555041b432793cab89ac589a43dc4b1772f/candidate.py",
+              "artifact_published_elapsed_seconds": 0.0,
+              "artifact_sha256": "a55e04a4239e8f469a908f41924c0555041b432793cab89ac589a43dc4b1772f",
+              "artifact_utf8_bytes": 1713,
+              "capture_lag_seconds": 0.0,
+              "capture_method": "atomic_state_transition",
+              "evaluation": {
+                "path": "sentinels/evaluations/be48e52cbc492af0f316d2724ece92807d276f5c6989b899ae0c28a5122b2299.json",
+                "sha256": "be48e52cbc492af0f316d2724ece92807d276f5c6989b899ae0c28a5122b2299",
+                "status": "reused_deterministic"
+              },
+              "evaluation_completed_elapsed_seconds": 11.060251753777266,
+              "feedback_visible": false,
+              "idempotency_key": "terminal",
+              "reason": "proposal_budget_exhausted_before_active_wall_horizon",
+              "recorded_at_utc": "2026-07-27T01:07:04.927845+00:00",
+              "recorded_elapsed_seconds": 11.060251753777266,
+              "scheduled_elapsed_seconds": 7200.0,
+              "schema_version": 1,
+              "selection_policy": "terminal_workspace_incumbent",
+              "sentinel_type": "terminal",
+              "sequence": 1,
+              "source_step": 0
+            }
+          ]
+        },
+        "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "online_incumbent"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 2,
+        "trajectory_sha256": "fdf5f2aaad19c192489e67463233dead3e585debd1dbf725d5e6f0a7dc045ec6",
+        "events": [
+          {
+            "schema_version": 2,
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": true,
+            "wall_seconds": 11.060251753777266,
+            "cumulative_wall_seconds": 11.060251753777266,
+            "candidate_sha256": "a55e04a4239e8f469a908f41924c0555041b432793cab89ac589a43dc4b1772f",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.0,
+              "development_batch_utility": 0.5672711111595915,
+              "development_mean_weighted_conductivity_s_cm": 0.004436281850337042,
+              "development_minimum_weighted_conductivity_s_cm": 0.0038555524193415467,
+              "development_top_quartile_hit_rate": 0.26666666666666666,
+              "development_confirmation_mean_weighted_conductivity_s_cm": 0.004672329446913198,
+              "development_confirmation_minimum_weighted_conductivity_s_cm": 0.004206285933571046,
+              "development_confirmation_top_quartile_hit_rate": 0.5333333333333333,
+              "development_proxy_false_promotion_rate": 0.7666666666666666,
+              "development_batch_diversity": 0.36731119050311045,
+              "development_mean_eis_fit_quality": 0.7070290008517579,
+              "development_mean_arrhenius_r2": 0.9856586380289716,
+              "development_mean_campaign_count": 1.8,
+              "robustness_score": 0.0,
+              "confirmation_score": 0.0,
+              "confirmation_robustness_score": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "heldout_confirmation_score": 0.0,
+              "heldout_confirmation_robustness_score": 0.0,
+              "heldout_mean_weighted_conductivity_s_cm": 0.004669127561634929,
+              "heldout_minimum_weighted_conductivity_s_cm": 0.0043214305500411596,
+              "heldout_top_quartile_hit_rate": 0.1111111111111111,
+              "heldout_confirmation_mean_weighted_conductivity_s_cm": 0.0049236041135549856,
+              "heldout_confirmation_minimum_weighted_conductivity_s_cm": 0.0042740212014111935,
+              "heldout_confirmation_top_quartile_hit_rate": 0.6666666666666666,
+              "heldout_proxy_false_promotion_rate": 1.0,
+              "heldout_batch_diversity": 0.5814571534955739,
+              "heldout_mean_eis_fit_quality": 0.7135706511964025,
+              "heldout_mean_arrhenius_r2": 0.9830215529720632,
+              "heldout_mean_campaign_count": 2.0,
+              "heldout_feasibility_rate": 1.0,
+              "development_mean_assay_calls": 0.0,
+              "heldout_mean_assay_calls": 0.0,
+              "development_assay_unique_rate": 0.0,
+              "heldout_assay_unique_rate": 0.0,
+              "development_selected_assayed_fraction": 0.0,
+              "heldout_selected_assayed_fraction": 0.0,
+              "development_normalized_gain_per_assay": 0.0,
+              "heldout_normalized_gain_per_assay": 0.0,
+              "candidate_world_call_count": 8,
+              "candidate_world_valid_rate": 1.0
+            },
+            "llm": {},
+            "algorithm_metadata": {},
+            "error": null
+          }
+        ]
+      },
+      "protocol_incomplete": "proposal_budget_exhausted_before_active_wall_horizon",
+      "execution_block_index": 1,
+      "within_block_position": 1
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 0,
+      "baseline": 0.0,
+      "best": 0.0,
+      "accepted": 0,
+      "evaluated": 1,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/exploratory_2h_sentinel_smoke_2026-07-27_v1/Optics__DiffractionGratingDesign/greedy_rewrite/normal/seed_0",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 1,
+        "budget_units": 1,
+        "best_score": 0.0,
+        "best_so_far_auc": 0.0,
+        "valid_rate": 1.0,
+        "accepted": 0,
+        "wall_seconds": 8.79507860634476,
+        "llm": {
+          "calls": 0,
+          "provider_usage_records": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "total_tokens": 0,
+          "estimated_cost_usd": 0.0
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "Optics/DiffractionGratingDesign",
+        "seed": 0,
+        "baseline_score": 0.0,
+        "budget": 0,
+        "feedback_mode": "normal",
+        "active_wall_horizon_s": 7200.0,
+        "sentinel_interval_s": 1800.0,
+        "horizon_reached": false,
+        "baseline_crossed_horizon": false,
+        "sentinel_snapshot": {
+          "schema_version": 1,
+          "ledger_path": "sentinels/sentinel_events.jsonl",
+          "ledger_sha256": "ddfcdc80f2ba84c959dec5871a3d90adef76750eead4933129faabbc62415a16",
+          "event_count": 2,
+          "type_counts": {
+            "abstain": 0,
+            "commit": 0,
+            "first_valid": 0,
+            "fixed_grid": 0,
+            "submission": 0,
+            "t0": 1,
+            "terminal": 1
+          },
+          "has_terminal": true,
+          "events": [
+            {
+              "artifact_path": "sentinels/artifacts/f2abe37d10285154574c5805325f5a0fdcc863e058e8503a5087359fdeba3046/candidate.py",
+              "artifact_published_elapsed_seconds": 0.0,
+              "artifact_sha256": "f2abe37d10285154574c5805325f5a0fdcc863e058e8503a5087359fdeba3046",
+              "artifact_utf8_bytes": 383,
+              "capture_lag_seconds": null,
+              "capture_method": "atomic_state_transition",
+              "evaluation": {
+                "path": "sentinels/evaluations/43984992a113c4922e0b64c58ea28e97f938beaa92d0c48ad872ca0f293bc178.json",
+                "sha256": "43984992a113c4922e0b64c58ea28e97f938beaa92d0c48ad872ca0f293bc178",
+                "status": "completed"
+              },
+              "evaluation_completed_elapsed_seconds": 8.79507860634476,
+              "feedback_visible": true,
+              "idempotency_key": "t0",
+              "reason": null,
+              "recorded_at_utc": "2026-07-27T01:07:13.830806+00:00",
+              "recorded_elapsed_seconds": 8.79507860634476,
+              "scheduled_elapsed_seconds": null,
+              "schema_version": 1,
+              "selection_policy": "baseline",
+              "sentinel_type": "t0",
+              "sequence": 0,
+              "source_step": 0
+            },
+            {
+              "artifact_path": "sentinels/artifacts/f2abe37d10285154574c5805325f5a0fdcc863e058e8503a5087359fdeba3046/candidate.py",
+              "artifact_published_elapsed_seconds": 0.0,
+              "artifact_sha256": "f2abe37d10285154574c5805325f5a0fdcc863e058e8503a5087359fdeba3046",
+              "artifact_utf8_bytes": 383,
+              "capture_lag_seconds": 0.0,
+              "capture_method": "atomic_state_transition",
+              "evaluation": {
+                "path": "sentinels/evaluations/43984992a113c4922e0b64c58ea28e97f938beaa92d0c48ad872ca0f293bc178.json",
+                "sha256": "43984992a113c4922e0b64c58ea28e97f938beaa92d0c48ad872ca0f293bc178",
+                "status": "reused_deterministic"
+              },
+              "evaluation_completed_elapsed_seconds": 8.79507860634476,
+              "feedback_visible": false,
+              "idempotency_key": "terminal",
+              "reason": "proposal_budget_exhausted_before_active_wall_horizon",
+              "recorded_at_utc": "2026-07-27T01:07:13.839658+00:00",
+              "recorded_elapsed_seconds": 8.79507860634476,
+              "scheduled_elapsed_seconds": 7200.0,
+              "schema_version": 1,
+              "selection_policy": "terminal_workspace_incumbent",
+              "sentinel_type": "terminal",
+              "sequence": 1,
+              "source_step": 0
+            }
+          ]
+        },
+        "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "online_incumbent"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 2,
+        "trajectory_sha256": "7da7e0d3187c09e121dc28ac8d412f4324ec770b5574dab794409f4dd2f2e1d3",
+        "events": [
+          {
+            "schema_version": 2,
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": true,
+            "wall_seconds": 8.79507860634476,
+            "cumulative_wall_seconds": 8.79507860634476,
+            "candidate_sha256": "f2abe37d10285154574c5805325f5a0fdcc863e058e8503a5087359fdeba3046",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.0,
+              "robustness_score": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "development_mean_target_efficiency": 0.22119642065217407,
+              "heldout_mean_target_efficiency": 0.2925978310069373,
+              "development_minimum_target_efficiency": 0.030937455874890493,
+              "heldout_minimum_target_efficiency": 0.008650390501823084,
+              "development_te_mean_target_efficiency": 0.16595279735126334,
+              "heldout_te_mean_target_efficiency": 0.21627649834722756,
+              "development_tm_mean_target_efficiency": 0.27644004395308475,
+              "heldout_tm_mean_target_efficiency": 0.36891916366664695,
+              "development_maximum_energy_residual": 5.10702591327572e-15,
+              "heldout_maximum_energy_residual": 6.217248937900877e-15,
+              "development_shift_geometry_feasibility": 1.0,
+              "heldout_shift_geometry_feasibility": 1.0,
+              "heldout_feasibility_rate": 1.0,
+              "candidate_instance_call_count": 6,
+              "candidate_instance_valid_rate": 1.0
+            },
+            "llm": {},
+            "algorithm_metadata": {},
+            "error": null
+          }
+        ]
+      },
+      "protocol_incomplete": "proposal_budget_exhausted_before_active_wall_horizon",
+      "execution_block_index": 2,
+      "within_block_position": 1
+    },
+    {
+      "task": "RNAEngineering/RNAInverseDesign",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 0,
+      "baseline": 0.0,
+      "best": 0.0,
+      "accepted": 0,
+      "evaluated": 1,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/exploratory_2h_sentinel_smoke_2026-07-27_v1/RNAEngineering__RNAInverseDesign/greedy_rewrite/normal/seed_0",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 1,
+        "budget_units": 1,
+        "best_score": 0.0,
+        "best_so_far_auc": 0.0,
+        "valid_rate": 1.0,
+        "accepted": 0,
+        "wall_seconds": 3.6053113490343094,
+        "llm": {
+          "calls": 0,
+          "provider_usage_records": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "total_tokens": 0,
+          "estimated_cost_usd": 0.0
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "RNAEngineering/RNAInverseDesign",
+        "seed": 0,
+        "baseline_score": 0.0,
+        "budget": 0,
+        "feedback_mode": "normal",
+        "active_wall_horizon_s": 7200.0,
+        "sentinel_interval_s": 1800.0,
+        "horizon_reached": false,
+        "baseline_crossed_horizon": false,
+        "sentinel_snapshot": {
+          "schema_version": 1,
+          "ledger_path": "sentinels/sentinel_events.jsonl",
+          "ledger_sha256": "2933deb26877f661d953826b1f1e8832c4598964615d6127a6dd87e1a048f861",
+          "event_count": 2,
+          "type_counts": {
+            "abstain": 0,
+            "commit": 0,
+            "first_valid": 0,
+            "fixed_grid": 0,
+            "submission": 0,
+            "t0": 1,
+            "terminal": 1
+          },
+          "has_terminal": true,
+          "events": [
+            {
+              "artifact_path": "sentinels/artifacts/323cf61512a5763b12bdf7c97e1b85ed84f6c1d690c38db77f0b0b53269bb48f/candidate.py",
+              "artifact_published_elapsed_seconds": 0.0,
+              "artifact_sha256": "323cf61512a5763b12bdf7c97e1b85ed84f6c1d690c38db77f0b0b53269bb48f",
+              "artifact_utf8_bytes": 330,
+              "capture_lag_seconds": null,
+              "capture_method": "atomic_state_transition",
+              "evaluation": {
+                "path": "sentinels/evaluations/ab26cde6a29dbcdcde77aaf6415d4856f6a4f584c24df4bbf257a4ad94283bf6.json",
+                "sha256": "ab26cde6a29dbcdcde77aaf6415d4856f6a4f584c24df4bbf257a4ad94283bf6",
+                "status": "completed"
+              },
+              "evaluation_completed_elapsed_seconds": 3.6053113490343094,
+              "feedback_visible": true,
+              "idempotency_key": "t0",
+              "reason": null,
+              "recorded_at_utc": "2026-07-27T01:07:17.547841+00:00",
+              "recorded_elapsed_seconds": 3.6053113490343094,
+              "scheduled_elapsed_seconds": null,
+              "schema_version": 1,
+              "selection_policy": "baseline",
+              "sentinel_type": "t0",
+              "sequence": 0,
+              "source_step": 0
+            },
+            {
+              "artifact_path": "sentinels/artifacts/323cf61512a5763b12bdf7c97e1b85ed84f6c1d690c38db77f0b0b53269bb48f/candidate.py",
+              "artifact_published_elapsed_seconds": 0.0,
+              "artifact_sha256": "323cf61512a5763b12bdf7c97e1b85ed84f6c1d690c38db77f0b0b53269bb48f",
+              "artifact_utf8_bytes": 330,
+              "capture_lag_seconds": 0.0,
+              "capture_method": "atomic_state_transition",
+              "evaluation": {
+                "path": "sentinels/evaluations/ab26cde6a29dbcdcde77aaf6415d4856f6a4f584c24df4bbf257a4ad94283bf6.json",
+                "sha256": "ab26cde6a29dbcdcde77aaf6415d4856f6a4f584c24df4bbf257a4ad94283bf6",
+                "status": "reused_deterministic"
+              },
+              "evaluation_completed_elapsed_seconds": 3.6053113490343094,
+              "feedback_visible": false,
+              "idempotency_key": "terminal",
+              "reason": "proposal_budget_exhausted_before_active_wall_horizon",
+              "recorded_at_utc": "2026-07-27T01:07:17.555770+00:00",
+              "recorded_elapsed_seconds": 3.6053113490343094,
+              "scheduled_elapsed_seconds": 7200.0,
+              "schema_version": 1,
+              "selection_policy": "terminal_workspace_incumbent",
+              "sentinel_type": "terminal",
+              "sequence": 1,
+              "source_step": 0
+            }
+          ]
+        },
+        "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "online_incumbent"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 2,
+        "trajectory_sha256": "6d171bcd1b905b7410c059f01b25c10eb7ca75ad7daf32c1a5aaeac8a7f00eed",
+        "events": [
+          {
+            "schema_version": 2,
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": true,
+            "wall_seconds": 3.6053113490343094,
+            "cumulative_wall_seconds": 3.6053113490343094,
+            "candidate_sha256": "323cf61512a5763b12bdf7c97e1b85ed84f6c1d690c38db77f0b0b53269bb48f",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.0,
+              "development_exact_utility": 0.0,
+              "development_target_probability": 6e-10,
+              "development_ensemble_correctness": 0.2827200474,
+              "development_mfe_f1": 0.2451578948,
+              "development_proxy_compatibility": 0.6380952383999999,
+              "development_proxy_false_promotion_rate": 0.2,
+              "robustness_score": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "heldout_target_probability": 0.0,
+              "heldout_ensemble_correctness": 0.12906594533333335,
+              "heldout_mfe_f1": 0.04597701133333334,
+              "heldout_proxy_compatibility": 0.255892256,
+              "heldout_proxy_false_promotion_rate": 0.0,
+              "heldout_feasibility_rate": 1.0,
+              "candidate_problem_call_count": 8,
+              "candidate_problem_valid_rate": 1.0
+            },
+            "llm": {},
+            "algorithm_metadata": {},
+            "error": null
+          }
+        ]
+      },
+      "protocol_incomplete": "proposal_budget_exhausted_before_active_wall_horizon",
+      "execution_block_index": 3,
+      "within_block_position": 1
+    },
+    {
+      "task": "Semiconductor/MOSFETDoping",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 0,
+      "baseline": 0.0,
+      "best": 0.0,
+      "accepted": 0,
+      "evaluated": 1,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/exploratory_2h_sentinel_smoke_2026-07-27_v1/Semiconductor__MOSFETDoping/greedy_rewrite/normal/seed_0",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 1,
+        "budget_units": 1,
+        "best_score": 0.0,
+        "best_so_far_auc": 0.0,
+        "valid_rate": 1.0,
+        "accepted": 0,
+        "wall_seconds": 2.534014431759715,
+        "llm": {
+          "calls": 0,
+          "provider_usage_records": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "total_tokens": 0,
+          "estimated_cost_usd": 0.0
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "Semiconductor/MOSFETDoping",
+        "seed": 0,
+        "baseline_score": 0.0,
+        "budget": 0,
+        "feedback_mode": "normal",
+        "active_wall_horizon_s": 7200.0,
+        "sentinel_interval_s": 1800.0,
+        "horizon_reached": false,
+        "baseline_crossed_horizon": false,
+        "sentinel_snapshot": {
+          "schema_version": 1,
+          "ledger_path": "sentinels/sentinel_events.jsonl",
+          "ledger_sha256": "240a351a51266eae3cdc083c6335ab921d4ea9addb9f4c747704a0d6d478a06f",
+          "event_count": 2,
+          "type_counts": {
+            "abstain": 0,
+            "commit": 0,
+            "first_valid": 0,
+            "fixed_grid": 0,
+            "submission": 0,
+            "t0": 1,
+            "terminal": 1
+          },
+          "has_terminal": true,
+          "events": [
+            {
+              "artifact_path": "sentinels/artifacts/243f1a3fe6bca79989c47a8945e69dc9de419544c02f5f737a754ec56acac5e6/candidate.py",
+              "artifact_published_elapsed_seconds": 0.0,
+              "artifact_sha256": "243f1a3fe6bca79989c47a8945e69dc9de419544c02f5f737a754ec56acac5e6",
+              "artifact_utf8_bytes": 461,
+              "capture_lag_seconds": null,
+              "capture_method": "atomic_state_transition",
+              "evaluation": {
+                "path": "sentinels/evaluations/5b8d68af172b3fd4856fb491945be0308e45189954660c570c00729d28b7a78c.json",
+                "sha256": "5b8d68af172b3fd4856fb491945be0308e45189954660c570c00729d28b7a78c",
+                "status": "completed"
+              },
+              "evaluation_completed_elapsed_seconds": 2.534014431759715,
+              "feedback_visible": true,
+              "idempotency_key": "t0",
+              "reason": null,
+              "recorded_at_utc": "2026-07-27T01:07:20.194062+00:00",
+              "recorded_elapsed_seconds": 2.534014431759715,
+              "scheduled_elapsed_seconds": null,
+              "schema_version": 1,
+              "selection_policy": "baseline",
+              "sentinel_type": "t0",
+              "sequence": 0,
+              "source_step": 0
+            },
+            {
+              "artifact_path": "sentinels/artifacts/243f1a3fe6bca79989c47a8945e69dc9de419544c02f5f737a754ec56acac5e6/candidate.py",
+              "artifact_published_elapsed_seconds": 0.0,
+              "artifact_sha256": "243f1a3fe6bca79989c47a8945e69dc9de419544c02f5f737a754ec56acac5e6",
+              "artifact_utf8_bytes": 461,
+              "capture_lag_seconds": 0.0,
+              "capture_method": "atomic_state_transition",
+              "evaluation": {
+                "path": "sentinels/evaluations/5b8d68af172b3fd4856fb491945be0308e45189954660c570c00729d28b7a78c.json",
+                "sha256": "5b8d68af172b3fd4856fb491945be0308e45189954660c570c00729d28b7a78c",
+                "status": "reused_deterministic"
+              },
+              "evaluation_completed_elapsed_seconds": 2.534014431759715,
+              "feedback_visible": false,
+              "idempotency_key": "terminal",
+              "reason": "proposal_budget_exhausted_before_active_wall_horizon",
+              "recorded_at_utc": "2026-07-27T01:07:20.200590+00:00",
+              "recorded_elapsed_seconds": 2.534014431759715,
+              "scheduled_elapsed_seconds": 7200.0,
+              "schema_version": 1,
+              "selection_policy": "terminal_workspace_incumbent",
+              "sentinel_type": "terminal",
+              "sequence": 1,
+              "source_step": 0
+            }
+          ]
+        },
+        "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "online_incumbent"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 2,
+        "trajectory_sha256": "db3f721e1114d6c597f1d2e05b0b23ed063865eab63278b7c71e84be8fdbe715",
+        "events": [
+          {
+            "schema_version": 2,
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": true,
+            "wall_seconds": 2.534014431759715,
+            "cumulative_wall_seconds": 2.534014431759715,
+            "candidate_sha256": "243f1a3fe6bca79989c47a8945e69dc9de419544c02f5f737a754ec56acac5e6",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.0,
+              "robustness_score": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "heldout_feasibility_rate": 1.0,
+              "development_shift_feasibility_rate": 0.9895833333333334,
+              "heldout_shift_feasibility_rate": 0.9166666666666666,
+              "development_mean_nominal_feasible_rate": 1.0,
+              "heldout_mean_nominal_feasible_rate": 1.0,
+              "candidate_instance_call_count": 6,
+              "candidate_instance_valid_rate": 1.0
+            },
+            "llm": {},
+            "algorithm_metadata": {},
+            "error": null
+          }
+        ]
+      },
+      "protocol_incomplete": "proposal_budget_exhausted_before_active_wall_horizon",
+      "execution_block_index": 4,
+      "within_block_position": 1
+    },
+    {
+      "task": "StructuralEngineering/TrussWeightMinimization",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 0,
+      "baseline": 0.0,
+      "best": 0.0,
+      "accepted": 0,
+      "evaluated": 1,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/exploratory_2h_sentinel_smoke_2026-07-27_v1/StructuralEngineering__TrussWeightMinimization/greedy_rewrite/normal/seed_0",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 1,
+        "budget_units": 1,
+        "best_score": 0.0,
+        "best_so_far_auc": 0.0,
+        "valid_rate": 1.0,
+        "accepted": 0,
+        "wall_seconds": 0.4935786472633481,
+        "llm": {
+          "calls": 0,
+          "provider_usage_records": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "total_tokens": 0,
+          "estimated_cost_usd": 0.0
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "StructuralEngineering/TrussWeightMinimization",
+        "seed": 0,
+        "baseline_score": 0.0,
+        "budget": 0,
+        "feedback_mode": "normal",
+        "active_wall_horizon_s": 7200.0,
+        "sentinel_interval_s": 1800.0,
+        "horizon_reached": false,
+        "baseline_crossed_horizon": false,
+        "sentinel_snapshot": {
+          "schema_version": 1,
+          "ledger_path": "sentinels/sentinel_events.jsonl",
+          "ledger_sha256": "7b17201907aacae31f57d5e2aca9bf8e652cff9445922189a638d7736ca3dca3",
+          "event_count": 2,
+          "type_counts": {
+            "abstain": 0,
+            "commit": 0,
+            "first_valid": 0,
+            "fixed_grid": 0,
+            "submission": 0,
+            "t0": 1,
+            "terminal": 1
+          },
+          "has_terminal": true,
+          "events": [
+            {
+              "artifact_path": "sentinels/artifacts/dd89ba5c3aff3d54eb84802cd80cb9da210e60811085a0dcdcf70c4a5e735661/candidate.py",
+              "artifact_published_elapsed_seconds": 0.0,
+              "artifact_sha256": "dd89ba5c3aff3d54eb84802cd80cb9da210e60811085a0dcdcf70c4a5e735661",
+              "artifact_utf8_bytes": 554,
+              "capture_lag_seconds": null,
+              "capture_method": "atomic_state_transition",
+              "evaluation": {
+                "path": "sentinels/evaluations/eef02e6eb1a6c5d4874cd3a3cc7622505cc38f037d9b826f1bc43f66d5d1e724.json",
+                "sha256": "eef02e6eb1a6c5d4874cd3a3cc7622505cc38f037d9b826f1bc43f66d5d1e724",
+                "status": "completed"
+              },
+              "evaluation_completed_elapsed_seconds": 0.4935786472633481,
+              "feedback_visible": true,
+              "idempotency_key": "t0",
+              "reason": null,
+              "recorded_at_utc": "2026-07-27T01:07:20.796367+00:00",
+              "recorded_elapsed_seconds": 0.4935786472633481,
+              "scheduled_elapsed_seconds": null,
+              "schema_version": 1,
+              "selection_policy": "baseline",
+              "sentinel_type": "t0",
+              "sequence": 0,
+              "source_step": 0
+            },
+            {
+              "artifact_path": "sentinels/artifacts/dd89ba5c3aff3d54eb84802cd80cb9da210e60811085a0dcdcf70c4a5e735661/candidate.py",
+              "artifact_published_elapsed_seconds": 0.0,
+              "artifact_sha256": "dd89ba5c3aff3d54eb84802cd80cb9da210e60811085a0dcdcf70c4a5e735661",
+              "artifact_utf8_bytes": 554,
+              "capture_lag_seconds": 0.0,
+              "capture_method": "atomic_state_transition",
+              "evaluation": {
+                "path": "sentinels/evaluations/eef02e6eb1a6c5d4874cd3a3cc7622505cc38f037d9b826f1bc43f66d5d1e724.json",
+                "sha256": "eef02e6eb1a6c5d4874cd3a3cc7622505cc38f037d9b826f1bc43f66d5d1e724",
+                "status": "reused_deterministic"
+              },
+              "evaluation_completed_elapsed_seconds": 0.4935786472633481,
+              "feedback_visible": false,
+              "idempotency_key": "terminal",
+              "reason": "proposal_budget_exhausted_before_active_wall_horizon",
+              "recorded_at_utc": "2026-07-27T01:07:20.804762+00:00",
+              "recorded_elapsed_seconds": 0.4935786472633481,
+              "scheduled_elapsed_seconds": 7200.0,
+              "schema_version": 1,
+              "selection_policy": "terminal_workspace_incumbent",
+              "sentinel_type": "terminal",
+              "sequence": 1,
+              "source_step": 0
+            }
+          ]
+        },
+        "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "online_incumbent"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 2,
+        "trajectory_sha256": "d7ac1f0ab395a9a3629ae16d81c0b45137f4ae84c00bcb267f125e94037d90e6",
+        "events": [
+          {
+            "schema_version": 2,
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": true,
+            "wall_seconds": 0.4935786472633481,
+            "cumulative_wall_seconds": 0.4935786472633481,
+            "candidate_sha256": "dd89ba5c3aff3d54eb84802cd80cb9da210e60811085a0dcdcf70c4a5e735661",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_score": 0.0,
+              "robustness_score": 0.0,
+              "development_validation_gap": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "heldout_feasibility_rate": 1.0,
+              "mean_shifted_case_feasibility_rate": 1.0,
+              "mean_shifted_constraint_feasibility_rate": 1.0,
+              "raw_score": 0.0
+            },
+            "llm": {},
+            "algorithm_metadata": {},
+            "error": null
+          }
+        ]
+      },
+      "protocol_incomplete": "proposal_budget_exhausted_before_active_wall_horizon",
+      "execution_block_index": 5,
+      "within_block_position": 1
+    },
+    {
+      "task": "Thermodynamics/HeatExchangerDesign",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 0,
+      "baseline": 0.0,
+      "best": 0.0,
+      "accepted": 0,
+      "evaluated": 1,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/exploratory_2h_sentinel_smoke_2026-07-27_v1/Thermodynamics__HeatExchangerDesign/greedy_rewrite/normal/seed_0",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 1,
+        "budget_units": 1,
+        "best_score": 0.0,
+        "best_so_far_auc": 0.0,
+        "valid_rate": 1.0,
+        "accepted": 0,
+        "wall_seconds": 2.850754886865616,
+        "llm": {
+          "calls": 0,
+          "provider_usage_records": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "total_tokens": 0,
+          "estimated_cost_usd": 0.0
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "Thermodynamics/HeatExchangerDesign",
+        "seed": 0,
+        "baseline_score": 0.0,
+        "budget": 0,
+        "feedback_mode": "normal",
+        "active_wall_horizon_s": 7200.0,
+        "sentinel_interval_s": 1800.0,
+        "horizon_reached": false,
+        "baseline_crossed_horizon": false,
+        "sentinel_snapshot": {
+          "schema_version": 1,
+          "ledger_path": "sentinels/sentinel_events.jsonl",
+          "ledger_sha256": "5b6f905555441458d26b93468de4c563b9c3bfe0ef08e8068f4519cb2f1ccea2",
+          "event_count": 2,
+          "type_counts": {
+            "abstain": 0,
+            "commit": 0,
+            "first_valid": 0,
+            "fixed_grid": 0,
+            "submission": 0,
+            "t0": 1,
+            "terminal": 1
+          },
+          "has_terminal": true,
+          "events": [
+            {
+              "artifact_path": "sentinels/artifacts/104eaeb22cc15acfb50eda224ceb260e5fbb567cae918729cdb78ee5632ca4c4/candidate.py",
+              "artifact_published_elapsed_seconds": 0.0,
+              "artifact_sha256": "104eaeb22cc15acfb50eda224ceb260e5fbb567cae918729cdb78ee5632ca4c4",
+              "artifact_utf8_bytes": 800,
+              "capture_lag_seconds": null,
+              "capture_method": "atomic_state_transition",
+              "evaluation": {
+                "path": "sentinels/evaluations/301c24b06d3d493ad2801d76a80b15d495b7afabd74e7539c465f96c2d004d60.json",
+                "sha256": "301c24b06d3d493ad2801d76a80b15d495b7afabd74e7539c465f96c2d004d60",
+                "status": "completed"
+              },
+              "evaluation_completed_elapsed_seconds": 2.850754886865616,
+              "feedback_visible": true,
+              "idempotency_key": "t0",
+              "reason": null,
+              "recorded_at_utc": "2026-07-27T01:07:23.759002+00:00",
+              "recorded_elapsed_seconds": 2.850754886865616,
+              "scheduled_elapsed_seconds": null,
+              "schema_version": 1,
+              "selection_policy": "baseline",
+              "sentinel_type": "t0",
+              "sequence": 0,
+              "source_step": 0
+            },
+            {
+              "artifact_path": "sentinels/artifacts/104eaeb22cc15acfb50eda224ceb260e5fbb567cae918729cdb78ee5632ca4c4/candidate.py",
+              "artifact_published_elapsed_seconds": 0.0,
+              "artifact_sha256": "104eaeb22cc15acfb50eda224ceb260e5fbb567cae918729cdb78ee5632ca4c4",
+              "artifact_utf8_bytes": 800,
+              "capture_lag_seconds": 0.0,
+              "capture_method": "atomic_state_transition",
+              "evaluation": {
+                "path": "sentinels/evaluations/301c24b06d3d493ad2801d76a80b15d495b7afabd74e7539c465f96c2d004d60.json",
+                "sha256": "301c24b06d3d493ad2801d76a80b15d495b7afabd74e7539c465f96c2d004d60",
+                "status": "reused_deterministic"
+              },
+              "evaluation_completed_elapsed_seconds": 2.850754886865616,
+              "feedback_visible": false,
+              "idempotency_key": "terminal",
+              "reason": "proposal_budget_exhausted_before_active_wall_horizon",
+              "recorded_at_utc": "2026-07-27T01:07:23.767957+00:00",
+              "recorded_elapsed_seconds": 2.850754886865616,
+              "scheduled_elapsed_seconds": 7200.0,
+              "schema_version": 1,
+              "selection_policy": "terminal_workspace_incumbent",
+              "sentinel_type": "terminal",
+              "sequence": 1,
+              "source_step": 0
+            }
+          ]
+        },
+        "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "online_incumbent"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 2,
+        "trajectory_sha256": "715cd17ad66c2d9b9bcf95f06864ade8d580f3fe325326406905e1db11548800",
+        "events": [
+          {
+            "schema_version": 2,
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": true,
+            "wall_seconds": 2.850754886865616,
+            "cumulative_wall_seconds": 2.850754886865616,
+            "candidate_sha256": "104eaeb22cc15acfb50eda224ceb260e5fbb567cae918729cdb78ee5632ca4c4",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "development_exact_score": 0.0,
+              "heldout_exact_score": 0.0,
+              "robustness_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "development_proxy_score": 0.0,
+              "heldout_proxy_score": 0.0,
+              "development_proxy_exact_rank_correlation": 0.9807692307692308,
+              "heldout_proxy_exact_rank_correlation": 0.9965034965034965,
+              "development_false_promotion_rate": 0.0,
+              "heldout_false_promotion_rate": 0.25,
+              "heldout_feasibility_rate": 1.0,
+              "heldout_structural_validity_rate": 1.0,
+              "raw_score": 0.0
+            },
+            "llm": {},
+            "algorithm_metadata": {},
+            "error": null
+          }
+        ]
+      },
+      "protocol_incomplete": "proposal_budget_exhausted_before_active_wall_horizon",
+      "execution_block_index": 6,
+      "within_block_position": 1
+    },
+    {
+      "task": "Turbulence/RANSCalibration",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 0,
+      "baseline": 0.0,
+      "best": 0.0,
+      "accepted": 0,
+      "evaluated": 1,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/exploratory_2h_sentinel_smoke_2026-07-27_v1/Turbulence__RANSCalibration/greedy_rewrite/normal/seed_0",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 1,
+        "budget_units": 1,
+        "best_score": 0.0,
+        "best_so_far_auc": 0.0,
+        "valid_rate": 1.0,
+        "accepted": 0,
+        "wall_seconds": 0.4725400637835264,
+        "llm": {
+          "calls": 0,
+          "provider_usage_records": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "total_tokens": 0,
+          "estimated_cost_usd": 0.0
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "Turbulence/RANSCalibration",
+        "seed": 0,
+        "baseline_score": 0.0,
+        "budget": 0,
+        "feedback_mode": "normal",
+        "active_wall_horizon_s": 7200.0,
+        "sentinel_interval_s": 1800.0,
+        "horizon_reached": false,
+        "baseline_crossed_horizon": false,
+        "sentinel_snapshot": {
+          "schema_version": 1,
+          "ledger_path": "sentinels/sentinel_events.jsonl",
+          "ledger_sha256": "520e49c26a3d61b763d752a38f0e3b07d1ca5208ec1869ef52bf72b0e4969b42",
+          "event_count": 2,
+          "type_counts": {
+            "abstain": 0,
+            "commit": 0,
+            "first_valid": 0,
+            "fixed_grid": 0,
+            "submission": 0,
+            "t0": 1,
+            "terminal": 1
+          },
+          "has_terminal": true,
+          "events": [
+            {
+              "artifact_path": "sentinels/artifacts/08d77d5949beb6d20b7459805f4834306fd6daebc982cc38e1f38c03b7d371e5/candidate.py",
+              "artifact_published_elapsed_seconds": 0.0,
+              "artifact_sha256": "08d77d5949beb6d20b7459805f4834306fd6daebc982cc38e1f38c03b7d371e5",
+              "artifact_utf8_bytes": 217,
+              "capture_lag_seconds": null,
+              "capture_method": "atomic_state_transition",
+              "evaluation": {
+                "path": "sentinels/evaluations/8c7750f4154b5894c0b0b45b90ef1b0776d376dc22626aa2c04849f5a38bab01.json",
+                "sha256": "8c7750f4154b5894c0b0b45b90ef1b0776d376dc22626aa2c04849f5a38bab01",
+                "status": "completed"
+              },
+              "evaluation_completed_elapsed_seconds": 0.4725400637835264,
+              "feedback_visible": true,
+              "idempotency_key": "t0",
+              "reason": null,
+              "recorded_at_utc": "2026-07-27T01:07:24.345755+00:00",
+              "recorded_elapsed_seconds": 0.4725400637835264,
+              "scheduled_elapsed_seconds": null,
+              "schema_version": 1,
+              "selection_policy": "baseline",
+              "sentinel_type": "t0",
+              "sequence": 0,
+              "source_step": 0
+            },
+            {
+              "artifact_path": "sentinels/artifacts/08d77d5949beb6d20b7459805f4834306fd6daebc982cc38e1f38c03b7d371e5/candidate.py",
+              "artifact_published_elapsed_seconds": 0.0,
+              "artifact_sha256": "08d77d5949beb6d20b7459805f4834306fd6daebc982cc38e1f38c03b7d371e5",
+              "artifact_utf8_bytes": 217,
+              "capture_lag_seconds": 0.0,
+              "capture_method": "atomic_state_transition",
+              "evaluation": {
+                "path": "sentinels/evaluations/8c7750f4154b5894c0b0b45b90ef1b0776d376dc22626aa2c04849f5a38bab01.json",
+                "sha256": "8c7750f4154b5894c0b0b45b90ef1b0776d376dc22626aa2c04849f5a38bab01",
+                "status": "reused_deterministic"
+              },
+              "evaluation_completed_elapsed_seconds": 0.4725400637835264,
+              "feedback_visible": false,
+              "idempotency_key": "terminal",
+              "reason": "proposal_budget_exhausted_before_active_wall_horizon",
+              "recorded_at_utc": "2026-07-27T01:07:24.351522+00:00",
+              "recorded_elapsed_seconds": 0.4725400637835264,
+              "scheduled_elapsed_seconds": 7200.0,
+              "schema_version": 1,
+              "selection_policy": "terminal_workspace_incumbent",
+              "sentinel_type": "terminal",
+              "sequence": 1,
+              "source_step": 0
+            }
+          ]
+        },
+        "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "online_incumbent"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 2,
+        "trajectory_sha256": "df3b27cbad4a33398943e181e9d91769e4474275ac79b483242fbf77334c5b4e",
+        "events": [
+          {
+            "schema_version": 2,
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.0,
+            "best_score": 0.0,
+            "valid": true,
+            "accepted": true,
+            "wall_seconds": 0.4725400637835264,
+            "cumulative_wall_seconds": 0.4725400637835264,
+            "candidate_sha256": "08d77d5949beb6d20b7459805f4834306fd6daebc982cc38e1f38c03b7d371e5",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.0,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.0,
+              "robustness_score": 0.0,
+              "heldout_policy_score": 0.0,
+              "heldout_robustness_score": 0.0,
+              "heldout_feasibility_rate": 1.0,
+              "development_raw_loss": 1.0041455593279376,
+              "heldout_raw_loss": 0.9924611424883841,
+              "development_worst_shift_loss": 1.2038265711931302,
+              "heldout_worst_shift_loss": 1.1703085734791872,
+              "development_velocity_rmse_plus": 0.3713543249510964,
+              "heldout_velocity_rmse_plus": 0.36907561526738775,
+              "development_reynolds_shear_rmse_plus": 0.01515194939003935,
+              "heldout_reynolds_shear_rmse_plus": 0.013954420863982945,
+              "candidate_parameter_count": 4,
+              "physics_gate_passed": true,
+              "data_source_doi": "10.5281/zenodo.5749302",
+              "data_source_license": "CC-BY-4.0"
+            },
+            "llm": {},
+            "algorithm_metadata": {},
+            "error": null
+          }
+        ]
+      },
+      "protocol_incomplete": "proposal_budget_exhausted_before_active_wall_horizon",
+      "execution_block_index": 7,
+      "within_block_position": 1
+    }
+  ],
+  "warning": "Baseline-only multi-seed smoke: validates protocol/artifacts, not search performance.",
+  "aggregate": {
+    "attempt_count": 7,
+    "superseded_attempts": 0,
+    "failed_attempts": 0,
+    "protocol_incomplete_attempts": 7,
+    "attempt_failure_rate": 0.0,
+    "recovered_runs": 0,
+    "successful_runs": 0,
+    "failed_runs": 7,
+    "intent_to_evaluate": {
+      "scheduled_runs": 7,
+      "successful_runs": 0,
+      "terminal_failed_runs": 7,
+      "completion_rate": 0.0,
+      "run_cells_with_any_failed_attempt": 0,
+      "run_cells_with_protocol_incomplete_attempt": 7,
+      "recovered_runs": 0
+    },
+    "quality_metrics_scope": "latest successful runs only; interpret jointly with intent_to_evaluate and failed_attempts",
+    "by_condition": {
+      "Electrochemistry/ElectrolyteConductivityDesign|greedy_rewrite|normal": {
+        "n": 0,
+        "scheduled_n": 1,
+        "successful_runs": 0,
+        "terminal_failed_runs": 1,
+        "completion_rate": 0.0,
+        "attempt_count": 1,
+        "failed_attempts": 0,
+        "protocol_incomplete_attempts": 1,
+        "recovered_runs": 0,
+        "best_score": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "best_so_far_auc": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "budget_units": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "oracle_calls": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "wall_seconds": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "input_tokens": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "output_tokens": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "total_tokens": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      },
+      "Optics/DiffractionGratingDesign|greedy_rewrite|normal": {
+        "n": 0,
+        "scheduled_n": 1,
+        "successful_runs": 0,
+        "terminal_failed_runs": 1,
+        "completion_rate": 0.0,
+        "attempt_count": 1,
+        "failed_attempts": 0,
+        "protocol_incomplete_attempts": 1,
+        "recovered_runs": 0,
+        "best_score": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "best_so_far_auc": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "budget_units": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "oracle_calls": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "wall_seconds": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "input_tokens": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "output_tokens": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "total_tokens": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      },
+      "RNAEngineering/RNAInverseDesign|greedy_rewrite|normal": {
+        "n": 0,
+        "scheduled_n": 1,
+        "successful_runs": 0,
+        "terminal_failed_runs": 1,
+        "completion_rate": 0.0,
+        "attempt_count": 1,
+        "failed_attempts": 0,
+        "protocol_incomplete_attempts": 1,
+        "recovered_runs": 0,
+        "best_score": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "best_so_far_auc": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "budget_units": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "oracle_calls": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "wall_seconds": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "input_tokens": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "output_tokens": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "total_tokens": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      },
+      "Semiconductor/MOSFETDoping|greedy_rewrite|normal": {
+        "n": 0,
+        "scheduled_n": 1,
+        "successful_runs": 0,
+        "terminal_failed_runs": 1,
+        "completion_rate": 0.0,
+        "attempt_count": 1,
+        "failed_attempts": 0,
+        "protocol_incomplete_attempts": 1,
+        "recovered_runs": 0,
+        "best_score": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "best_so_far_auc": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "budget_units": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "oracle_calls": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "wall_seconds": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "input_tokens": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "output_tokens": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "total_tokens": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      },
+      "StructuralEngineering/TrussWeightMinimization|greedy_rewrite|normal": {
+        "n": 0,
+        "scheduled_n": 1,
+        "successful_runs": 0,
+        "terminal_failed_runs": 1,
+        "completion_rate": 0.0,
+        "attempt_count": 1,
+        "failed_attempts": 0,
+        "protocol_incomplete_attempts": 1,
+        "recovered_runs": 0,
+        "best_score": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "best_so_far_auc": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "budget_units": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "oracle_calls": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "wall_seconds": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "input_tokens": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "output_tokens": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "total_tokens": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      },
+      "Thermodynamics/HeatExchangerDesign|greedy_rewrite|normal": {
+        "n": 0,
+        "scheduled_n": 1,
+        "successful_runs": 0,
+        "terminal_failed_runs": 1,
+        "completion_rate": 0.0,
+        "attempt_count": 1,
+        "failed_attempts": 0,
+        "protocol_incomplete_attempts": 1,
+        "recovered_runs": 0,
+        "best_score": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "best_so_far_auc": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "budget_units": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "oracle_calls": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "wall_seconds": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "input_tokens": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "output_tokens": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "total_tokens": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      },
+      "Turbulence/RANSCalibration|greedy_rewrite|normal": {
+        "n": 0,
+        "scheduled_n": 1,
+        "successful_runs": 0,
+        "terminal_failed_runs": 1,
+        "completion_rate": 0.0,
+        "attempt_count": 1,
+        "failed_attempts": 0,
+        "protocol_incomplete_attempts": 1,
+        "recovered_runs": 0,
+        "best_score": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "best_so_far_auc": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "budget_units": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "oracle_calls": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "wall_seconds": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "input_tokens": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "output_tokens": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "total_tokens": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      }
+    },
+    "overall": {},
+    "overall_valid_only": {}
+  },
+  "completed_at": "2026-07-27T01:07:24.359522+00:00",
+  "execution_passed": false,
+  "trust_decision": "execution_failed",
+  "trusted_evidence": false,
+  "passed": false
+}
