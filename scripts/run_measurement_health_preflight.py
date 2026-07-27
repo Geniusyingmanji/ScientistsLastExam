@@ -1145,8 +1145,8 @@ def render_markdown(report: dict[str, Any]) -> str:
     lines.extend([
         "",
         "Numerical evaluator resolution is reported separately from domain-grounded scientific",
-        "materiality. Missing materiality declarations and missing crash-recovery evidence remain",
-        "explicit blockers even when fixed-artifact replay is deterministic.",
+        "materiality. Any missing materiality declaration or crash-recovery evidence remains an",
+        "explicit blocker even when fixed-artifact replay is deterministic; this run has none.",
         "",
     ])
     return "\n".join(lines)
