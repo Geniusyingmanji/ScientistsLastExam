@@ -1,0 +1,277 @@
+{
+  "schema_version": 1,
+  "purpose": "frozen_exploratory_cohort_measurement_health_preflight",
+  "cohort_manifest_sha256": "2d4cb9dfb0ba566ac924ffc8b537516f358999e734bfd01af831ad22770b0d98",
+  "claim_limit": "mechanical_preflight_only_not_post_2h_headroom_not_confirmatory_not_external_validation_not_autonomous_discovery",
+  "shared_policy": {
+    "fixed_artifact_repetitions": 3,
+    "maximum_fixed_artifact_score_span": 1e-12,
+    "baseline_reference_minimum_score_gap": 0.05,
+    "numerical_resolution_minimum_noise_multiplier": 10.0,
+    "numerical_resolution_absolute_floor": 1e-12,
+    "scientific_materiality": "must be independently declared and hash-bound; score resolution and a normalized 0.05 gap are insufficient",
+    "missing_evidence": "fail_closed"
+  },
+  "tasks": [
+    {
+      "task": "Electrochemistry/ElectrolyteConductivityDesign",
+      "task_package_sha256": "a57fe86e2770a88add277c8e1d4391095407c2e56e868a697ff47e099dd8513c",
+      "fixed_artifact_sha256": "2e3e95b75b33e87664b71ff1b9c0c10703317b06de8a653903b129a6f3e947a8",
+      "portable_artifact": {"evidence": {"path": ".research/measurement_health_preflight_artifacts_2026-07-27_v1.json", "sha256": "9d49d613cccf5f3b5b770ce7f4a5f6a2169a96ceeaf5e44f29224eeaa74a8f9c"}, "artifact_pointer": "/artifacts/0"},
+      "fixed_artifact_repetitions": 3,
+      "evaluation_timeout_seconds": 180,
+      "baseline_reference": {
+        "evidence": {"path": "experiments/electrolyte_conductivity_design_calibration_2026-07-25.json", "sha256": "b16bb89861bfb154b46595406302e98a0a5b22b040c61c17e87454cb551eb2b6"},
+        "baseline_score_pointer": "/direct_baseline/combined_score",
+        "baseline_valid_pointer": "/direct_baseline/valid",
+        "reference_score_pointer": "/direct_reference/combined_score",
+        "reference_valid_pointer": "/direct_reference/valid",
+        "minimum_score_gap": 0.05
+      },
+      "numerical_resolution": {
+        "evidence": {"path": "experiments/electrolyte_conductivity_design_calibration_analysis_2026-07-25.json", "sha256": "2f3fa9d7b0d57375ddfa1f5699129421fae3931895f6f6e3b3d8894db864bb31"},
+        "trajectory_pointer": "/records/normal_budget_three/trajectory",
+        "minimum_noise_multiplier": 10.0,
+        "absolute_resolution_floor": 1e-12
+      },
+      "scientific_materiality": null,
+      "shortcut_resistance": {
+        "mode": "bound_evidence",
+        "evidence": {"path": "experiments/electrolyte_conductivity_design_calibration_analysis_2026-07-25.json", "sha256": "2f3fa9d7b0d57375ddfa1f5699129421fae3931895f6f6e3b3d8894db864bb31"},
+        "predicates": [
+          {"pointer": "/records/normal_budget_three/fixed_instance_shortcut_scans/selected_best/source_sha256", "operator": "eq", "value": "2e3e95b75b33e87664b71ff1b9c0c10703317b06de8a653903b129a6f3e947a8"},
+          {"pointer": "/records/normal_budget_three/fixed_instance_shortcut_scans/selected_best/passed", "operator": "eq", "value": true}
+        ]
+      },
+      "content_addressed_atomic_capture": {
+        "evidence": {"path": "experiments/exploratory_2h_sentinel_smoke_audit_2026-07-27_v1.json", "sha256": "92009260e300ebd9a1731bd5f862e63654d4065c6000b7d0c42552e891ffb7cb"},
+        "predicates": [
+          {"pointer": "/task_audits/0/checks/sentinel_snapshot_hash_matches", "operator": "eq", "value": true},
+          {"pointer": "/task_audits/0/checks/sentinel_snapshot_events_match", "operator": "eq", "value": true},
+          {"pointer": "/task_audits/0/checks/exact_t0_and_terminal", "operator": "eq", "value": true}
+        ]
+      },
+      "exactly_once_recovery": null
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "task_package_sha256": "b50d01433e8aa712066e1dec6fad2f5333f373b107d45a9a5aeb77f8ed1fc300",
+      "fixed_artifact_sha256": "d1aef652e4c0a4a936f138d3db8401276095d1660b41521613036b38781505f9",
+      "portable_artifact": {"evidence": {"path": ".research/measurement_health_preflight_artifacts_2026-07-27_v1.json", "sha256": "9d49d613cccf5f3b5b770ce7f4a5f6a2169a96ceeaf5e44f29224eeaa74a8f9c"}, "artifact_pointer": "/artifacts/1"},
+      "fixed_artifact_repetitions": 3,
+      "evaluation_timeout_seconds": 240,
+      "baseline_reference": {
+        "evidence": {"path": "experiments/diffraction_grating_v2_calibration_2026-07-26.json", "sha256": "ea8e74b609fca6c4d01a6f7ca75861d71babdc22260c7a7d5cb2abbcae2ab4d6"},
+        "baseline_score_pointer": "/direct_weak_baseline/combined_score",
+        "baseline_valid_pointer": "/direct_weak_baseline/valid",
+        "reference_score_pointer": "/direct_reference/combined_score",
+        "reference_valid_pointer": "/direct_reference/valid",
+        "minimum_score_gap": 0.05
+      },
+      "numerical_resolution": {
+        "evidence": {"path": "experiments/track_f_search_2026-07-26_v1.json", "sha256": "c67ed2146f5e833e7c3619253f6c0d5bd997a38ee7d943bc611df923596d6bf0"},
+        "trajectory_pointer": "/runs/209/trajectory_snapshot/events",
+        "minimum_noise_multiplier": 10.0,
+        "absolute_resolution_floor": 1e-12
+      },
+      "scientific_materiality": null,
+      "shortcut_resistance": {
+        "mode": "source_scan",
+        "forbidden_literals": ["dev_visible_titania", "heldout_red_silicon_nitride", "heldout_telecom_silicon", "verification/evaluator", "_reference_design", "_anchors"]
+      },
+      "content_addressed_atomic_capture": {
+        "evidence": {"path": "experiments/exploratory_2h_sentinel_smoke_audit_2026-07-27_v1.json", "sha256": "92009260e300ebd9a1731bd5f862e63654d4065c6000b7d0c42552e891ffb7cb"},
+        "predicates": [
+          {"pointer": "/task_audits/1/checks/sentinel_snapshot_hash_matches", "operator": "eq", "value": true},
+          {"pointer": "/task_audits/1/checks/sentinel_snapshot_events_match", "operator": "eq", "value": true},
+          {"pointer": "/task_audits/1/checks/exact_t0_and_terminal", "operator": "eq", "value": true}
+        ]
+      },
+      "exactly_once_recovery": null
+    },
+    {
+      "task": "RNAEngineering/RNAInverseDesign",
+      "task_package_sha256": "0455755f51ae9de88beccb842176e5b309765b86805a9bb1e7909aa91b6757e7",
+      "fixed_artifact_sha256": "7a8d6e3060c3a667b16677fce3651e30babec2bfb8f5d159a5f660eebb05f2d4",
+      "portable_artifact": {"evidence": {"path": ".research/measurement_health_preflight_artifacts_2026-07-27_v1.json", "sha256": "9d49d613cccf5f3b5b770ce7f4a5f6a2169a96ceeaf5e44f29224eeaa74a8f9c"}, "artifact_pointer": "/artifacts/2"},
+      "fixed_artifact_repetitions": 3,
+      "evaluation_timeout_seconds": 240,
+      "baseline_reference": {
+        "evidence": {"path": "experiments/rna_inverse_design_calibration_2026-07-24.json", "sha256": "015a27373c8938f9d8c77b64f7e9ae82b14b825b15bf30ba537d70356debf4c4"},
+        "baseline_score_pointer": "/direct_baseline/combined_score",
+        "baseline_valid_pointer": "/direct_baseline/valid",
+        "reference_score_pointer": "/reference/combined_score",
+        "reference_valid_pointer": "/reference/valid",
+        "minimum_score_gap": 0.05
+      },
+      "numerical_resolution": {
+        "evidence": {"path": "experiments/rna_inverse_design_calibration_analysis_2026-07-24.json", "sha256": "760e0f9b20b0deeb7d32c3fecb3c1671b324db70f3d57130ef250e1db84f79df"},
+        "trajectory_pointer": "/records/normal_budget_three/trajectory",
+        "minimum_noise_multiplier": 10.0,
+        "absolute_resolution_floor": 1e-12
+      },
+      "scientific_materiality": null,
+      "shortcut_resistance": {
+        "mode": "bound_evidence",
+        "evidence": {"path": "experiments/rna_inverse_design_calibration_analysis_2026-07-24.json", "sha256": "760e0f9b20b0deeb7d32c3fecb3c1671b324db70f3d57130ef250e1db84f79df"},
+        "predicates": [
+          {"pointer": "/records/normal_budget_three/fixed_instance_shortcut_scan/source_sha256", "operator": "eq", "value": "7a8d6e3060c3a667b16677fce3651e30babec2bfb8f5d159a5f660eebb05f2d4"},
+          {"pointer": "/records/normal_budget_three/fixed_instance_shortcut_scan/passed", "operator": "eq", "value": true}
+        ]
+      },
+      "content_addressed_atomic_capture": {
+        "evidence": {"path": "experiments/exploratory_2h_sentinel_smoke_audit_2026-07-27_v1.json", "sha256": "92009260e300ebd9a1731bd5f862e63654d4065c6000b7d0c42552e891ffb7cb"},
+        "predicates": [
+          {"pointer": "/task_audits/2/checks/sentinel_snapshot_hash_matches", "operator": "eq", "value": true},
+          {"pointer": "/task_audits/2/checks/sentinel_snapshot_events_match", "operator": "eq", "value": true},
+          {"pointer": "/task_audits/2/checks/exact_t0_and_terminal", "operator": "eq", "value": true}
+        ]
+      },
+      "exactly_once_recovery": null
+    },
+    {
+      "task": "Semiconductor/MOSFETDoping",
+      "task_package_sha256": "b9af1b4be57f58640afc339226aaef522ff06ea0f68417b23ecbd79ba0444b40",
+      "fixed_artifact_sha256": "d5af76e6256f27c5dcf2623b852c8d4fdc7907e7807368ea17555289d516af0e",
+      "portable_artifact": {"evidence": {"path": ".research/measurement_health_preflight_artifacts_2026-07-27_v1.json", "sha256": "9d49d613cccf5f3b5b770ce7f4a5f6a2169a96ceeaf5e44f29224eeaa74a8f9c"}, "artifact_pointer": "/artifacts/3"},
+      "fixed_artifact_repetitions": 3,
+      "evaluation_timeout_seconds": 120,
+      "baseline_reference": {
+        "evidence": {"path": "experiments/mosfet_doping_v2_calibration_2026-07-24.json", "sha256": "c9eef85a4f870aa1066223ad5f09053b7db70d3d15a4c1dda548a050732d30d2"},
+        "baseline_score_pointer": "/witness_metrics/baseline/combined_score",
+        "baseline_valid_pointer": "/witness_metrics/baseline/valid",
+        "reference_score_pointer": "/witness_metrics/nominal/combined_score",
+        "reference_valid_pointer": "/witness_metrics/nominal/valid",
+        "minimum_score_gap": 0.05
+      },
+      "numerical_resolution": {
+        "evidence": {"path": "experiments/mosfet_v2_calibration_analysis_2026-07-24.json", "sha256": "733b86d364f0ee497719753123de086bdea081abe9c89451b4858bbbe9630f8f"},
+        "trajectory_pointer": "/records/normal_budget_three/trajectory",
+        "minimum_noise_multiplier": 10.0,
+        "absolute_resolution_floor": 1e-12
+      },
+      "scientific_materiality": null,
+      "shortcut_resistance": {
+        "mode": "source_scan",
+        "forbidden_literals": ["dev_reference_40nm", "heldout_short_low_v", "verification/evaluator", "_reference_archive", "REFERENCE_SOBOL"]
+      },
+      "content_addressed_atomic_capture": {
+        "evidence": {"path": "experiments/exploratory_2h_sentinel_smoke_audit_2026-07-27_v1.json", "sha256": "92009260e300ebd9a1731bd5f862e63654d4065c6000b7d0c42552e891ffb7cb"},
+        "predicates": [
+          {"pointer": "/task_audits/3/checks/sentinel_snapshot_hash_matches", "operator": "eq", "value": true},
+          {"pointer": "/task_audits/3/checks/sentinel_snapshot_events_match", "operator": "eq", "value": true},
+          {"pointer": "/task_audits/3/checks/exact_t0_and_terminal", "operator": "eq", "value": true}
+        ]
+      },
+      "exactly_once_recovery": null
+    },
+    {
+      "task": "StructuralEngineering/TrussWeightMinimization",
+      "task_package_sha256": "0db30b79e58fe218223188c53eb05b3a90e2a1cb77171f8f0a61059b2fb715ee",
+      "fixed_artifact_sha256": "61d1073ad2b6d62ce8fd4a70c2c8dace00082b959f2b554ca9b87e6ca66382bf",
+      "portable_artifact": {"evidence": {"path": ".research/measurement_health_preflight_artifacts_2026-07-27_v1.json", "sha256": "9d49d613cccf5f3b5b770ce7f4a5f6a2169a96ceeaf5e44f29224eeaa74a8f9c"}, "artifact_pointer": "/artifacts/4"},
+      "fixed_artifact_repetitions": 3,
+      "evaluation_timeout_seconds": 120,
+      "baseline_reference": {
+        "evidence": {"path": "experiments/truss_v2_calibration_2026-07-21.json", "sha256": "0950fc98a2a93f0c8a1db051484b2e5db8b5325448dc4b710c1b28170d632d26"},
+        "baseline_score_pointer": "/baseline/combined_score",
+        "baseline_valid_pointer": "/baseline/valid",
+        "reference_score_pointer": "/nominal_reference_policy/combined_score",
+        "reference_valid_pointer": "/nominal_reference_policy/valid",
+        "minimum_score_gap": 0.05
+      },
+      "numerical_resolution": {
+        "evidence": {"path": "experiments/truss_v2_calibration_analysis_2026-07-21.json", "sha256": "c05aa24d6c4c15e759d39de18cc6e3a151877f8f2183abb1ef84ddc9e9f17223"},
+        "trajectory_pointer": "/records/normal_budget_three/trajectory",
+        "minimum_noise_multiplier": 10.0,
+        "absolute_resolution_floor": 1e-12
+      },
+      "scientific_materiality": null,
+      "shortcut_resistance": {
+        "mode": "source_scan",
+        "forbidden_literals": ["verification/evaluator", "_nominal_reference", "_robust_reference", "heldout_"]
+      },
+      "content_addressed_atomic_capture": {
+        "evidence": {"path": "experiments/exploratory_2h_sentinel_smoke_audit_2026-07-27_v1.json", "sha256": "92009260e300ebd9a1731bd5f862e63654d4065c6000b7d0c42552e891ffb7cb"},
+        "predicates": [
+          {"pointer": "/task_audits/4/checks/sentinel_snapshot_hash_matches", "operator": "eq", "value": true},
+          {"pointer": "/task_audits/4/checks/sentinel_snapshot_events_match", "operator": "eq", "value": true},
+          {"pointer": "/task_audits/4/checks/exact_t0_and_terminal", "operator": "eq", "value": true}
+        ]
+      },
+      "exactly_once_recovery": null
+    },
+    {
+      "task": "Thermodynamics/HeatExchangerDesign",
+      "task_package_sha256": "1e40c98b286e1ea868910ee67635780005a993de08293160bb70c650e00ffc24",
+      "fixed_artifact_sha256": "5ef7f3122546589af264e52a00abb2cf5538aeac991ddcc051ce6198d562dfd8",
+      "portable_artifact": {"evidence": {"path": ".research/measurement_health_preflight_artifacts_2026-07-27_v1.json", "sha256": "9d49d613cccf5f3b5b770ce7f4a5f6a2169a96ceeaf5e44f29224eeaa74a8f9c"}, "artifact_pointer": "/artifacts/5"},
+      "fixed_artifact_repetitions": 3,
+      "evaluation_timeout_seconds": 120,
+      "baseline_reference": {
+        "evidence": {"path": "experiments/heat_exchanger_v2_calibration_2026-07-22.json", "sha256": "b60f135066b341515c9ec3e53cc43937d8bfdfa840a7bf427e7a908e47859859"},
+        "baseline_score_pointer": "/baseline/combined_score",
+        "baseline_valid_pointer": "/baseline/valid",
+        "reference_score_pointer": "/nominal_reference_policy/combined_score",
+        "reference_valid_pointer": "/nominal_reference_policy/valid",
+        "minimum_score_gap": 0.05
+      },
+      "numerical_resolution": {
+        "evidence": {"path": "experiments/heat_exchanger_v2_calibration_analysis_2026-07-22.json", "sha256": "4607a9c8f4700ce9c43fb511f6b9166de3e19dfda72c7367d14f30079a0f6fd3"},
+        "trajectory_pointer": "/records/normal_budget_three/trajectory",
+        "minimum_noise_multiplier": 10.0,
+        "absolute_resolution_floor": 1e-12
+      },
+      "scientific_materiality": null,
+      "shortcut_resistance": {
+        "mode": "source_scan",
+        "forbidden_literals": ["dev_water_process", "heldout_viscous_oil", "verification/evaluator", "REFERENCE_SOBOL", "_reference_archive"]
+      },
+      "content_addressed_atomic_capture": {
+        "evidence": {"path": "experiments/exploratory_2h_sentinel_smoke_audit_2026-07-27_v1.json", "sha256": "92009260e300ebd9a1731bd5f862e63654d4065c6000b7d0c42552e891ffb7cb"},
+        "predicates": [
+          {"pointer": "/task_audits/5/checks/sentinel_snapshot_hash_matches", "operator": "eq", "value": true},
+          {"pointer": "/task_audits/5/checks/sentinel_snapshot_events_match", "operator": "eq", "value": true},
+          {"pointer": "/task_audits/5/checks/exact_t0_and_terminal", "operator": "eq", "value": true}
+        ]
+      },
+      "exactly_once_recovery": null
+    },
+    {
+      "task": "Turbulence/RANSCalibration",
+      "task_package_sha256": "8f1b7ab64cfafba91c160ffa7e10e378a01285448cf084baa672f9b67d7c7b57",
+      "fixed_artifact_sha256": "401c81126a27e4d998f3d8519c74eeb8b4b88dfa6fbafd1fcdb44a3b04b9dba6",
+      "portable_artifact": {"evidence": {"path": ".research/measurement_health_preflight_artifacts_2026-07-27_v1.json", "sha256": "9d49d613cccf5f3b5b770ce7f4a5f6a2169a96ceeaf5e44f29224eeaa74a8f9c"}, "artifact_pointer": "/artifacts/6"},
+      "fixed_artifact_repetitions": 3,
+      "evaluation_timeout_seconds": 120,
+      "baseline_reference": {
+        "evidence": {"path": "experiments/rans_v2_calibration_2026-07-24.json", "sha256": "62054f7ec2b8cba27a03d1046ce4e23ea3d317edf2c60d6ea194ff362c4766c3"},
+        "baseline_score_pointer": "/witness_metrics/baseline/combined_score",
+        "baseline_valid_pointer": "/witness_metrics/baseline/valid",
+        "reference_score_pointer": "/witness_metrics/nominal/combined_score",
+        "reference_valid_pointer": "/witness_metrics/nominal/valid",
+        "minimum_score_gap": 0.05
+      },
+      "numerical_resolution": {
+        "evidence": {"path": "experiments/rans_v2_calibration_analysis_2026-07-24.json", "sha256": "bf4357b7e543492f27973249fb96cb94a714296cf3542c2d9f9f395dd165be7e"},
+        "trajectory_pointer": "/records/normal_budget_three/trajectory",
+        "minimum_noise_multiplier": 10.0,
+        "absolute_resolution_floor": 1e-12
+      },
+      "scientific_materiality": null,
+      "shortcut_resistance": {
+        "mode": "source_scan",
+        "forbidden_literals": ["channel_dns_profiles_v1", "verification/evaluator", "_reference_parameters", "Re_tau_590", "Re_tau_950"]
+      },
+      "content_addressed_atomic_capture": {
+        "evidence": {"path": "experiments/exploratory_2h_sentinel_smoke_audit_2026-07-27_v1.json", "sha256": "92009260e300ebd9a1731bd5f862e63654d4065c6000b7d0c42552e891ffb7cb"},
+        "predicates": [
+          {"pointer": "/task_audits/6/checks/sentinel_snapshot_hash_matches", "operator": "eq", "value": true},
+          {"pointer": "/task_audits/6/checks/sentinel_snapshot_events_match", "operator": "eq", "value": true},
+          {"pointer": "/task_audits/6/checks/exact_t0_and_terminal", "operator": "eq", "value": true}
+        ]
+      },
+      "exactly_once_recovery": null
+    }
+  ]
+}
