@@ -457,6 +457,75 @@ def _score_summary(values: Iterable[float]) -> Optional[dict[str, Any]]:
     }
 
 
+def _proposal_trajectory_health(runs: list[dict[str, Any]]) -> dict[str, Any]:
+    """Summarize observed proposal validity and floor/ceiling mass.
+
+    These are descriptive run diagnostics, not estimates of a provider-side
+    first-valid probability.  The Azure endpoint does not expose generation
+    seeds, and most task/condition cells currently contain only one run.
+    """
+
+    proposal_event_count = 0
+    valid_proposal_event_count = 0
+    runs_with_proposals = 0
+    runs_with_valid_proposals = 0
+    first_valid_scores: list[float] = []
+    best_scores: list[float] = []
+    for run in runs:
+        proposals = []
+        for event in run.get("events", []):
+            try:
+                step = int(event.get("step", 0))
+            except (TypeError, ValueError):
+                continue
+            if step < 1:
+                continue
+            proposals.append(event)
+        if proposals:
+            runs_with_proposals += 1
+        proposal_event_count += len(proposals)
+        valid = []
+        for event in proposals:
+            score = _finite_score(event.get("score"))
+            if event.get("valid") is True and score is not None:
+                valid.append(score)
+        valid_proposal_event_count += len(valid)
+        if valid:
+            runs_with_valid_proposals += 1
+            first_valid_scores.append(valid[0])
+        best = _finite_score(run.get("best_score"))
+        if best is not None:
+            best_scores.append(best)
+
+    run_count = len(runs)
+    floor_threshold = 0.01
+    ceiling_threshold = 0.95
+    return {
+        "run_count": run_count,
+        "runs_with_proposals": runs_with_proposals,
+        "runs_with_valid_proposals": runs_with_valid_proposals,
+        "observed_first_valid_run_rate": (
+            runs_with_valid_proposals / run_count if run_count else None
+        ),
+        "proposal_event_count": proposal_event_count,
+        "valid_proposal_event_count": valid_proposal_event_count,
+        "observed_valid_proposal_rate": (
+            valid_proposal_event_count / proposal_event_count
+            if proposal_event_count else None
+        ),
+        "first_valid_score": _score_summary(first_valid_scores),
+        "best_score": _score_summary(best_scores),
+        "floor_threshold": floor_threshold,
+        "ceiling_threshold": ceiling_threshold,
+        "best_at_or_below_floor_count": sum(
+            score <= floor_threshold for score in best_scores
+        ),
+        "best_at_or_above_ceiling_count": sum(
+            score >= ceiling_threshold for score in best_scores
+        ),
+    }
+
+
 def _measurement_state(runs: list[dict[str, Any]]) -> dict[str, Any]:
     usable = [
         run for run in runs
@@ -527,6 +596,11 @@ def _measurement_state(runs: list[dict[str, Any]]) -> dict[str, Any]:
         "selection_blind_budget_three": _score_summary(
             run["best_score"] for run in blind3 if run.get("best_score") is not None
         ),
+        "proposal_trajectory_health": {
+            "normal_budget_one": _proposal_trajectory_health(b1),
+            "normal_budget_three": _proposal_trajectory_health(b3),
+            "selection_blind_budget_three": _proposal_trajectory_health(blind3),
+        },
         "matched_control_cohorts": matched[:3],
         "maximum_matched_control_replicates": (
             matched[0]["matched_replicate_count"] if matched else 0
