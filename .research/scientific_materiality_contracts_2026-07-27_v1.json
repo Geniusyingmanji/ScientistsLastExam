@@ -1,0 +1,565 @@
+{
+  "schema_version": 1,
+  "purpose": "domain_grounded_scientific_materiality_contracts_for_the_frozen_seven_task_exploratory_cohort",
+  "cohort_manifest": {
+    "path": ".research/exploratory_2h_cohort_manifest_2026-07-27_v1.json",
+    "sha256": "2d4cb9dfb0ba566ac924ffc8b537516f358999e734bfd01af831ad22770b0d98"
+  },
+  "claim_limit": "calibrated_task_landscape_materiality_only_not_agent_improvement_post_2h_headroom_external_validation_or_autonomous_discovery",
+  "policy": {
+    "threshold_basis_required": "benchmark_preregistered_operational_threshold_not_field_consensus",
+    "same_witness_required": true,
+    "normalized_combined_score_is_insufficient": true,
+    "development_only_improvement_is_insufficient": true,
+    "heldout_or_independent_confirmation_required": true,
+    "robustness_or_shift_evidence_required": true,
+    "citation_role": "citations justify the scientific relevance of the measured quantity; they do not turn the operational threshold into a literature consensus",
+    "negative_result_policy": "a failed criterion remains a task blocker and must not be relabelled as material headroom"
+  },
+  "tasks": [
+    {
+      "task": "Electrochemistry/ElectrolyteConductivityDesign",
+      "scientific_quantity": "independent-repeat temperature-profile ionic conductivity of the selected three-formulation batch",
+      "units": ["S/cm", "relative_fraction"],
+      "improvement_direction": "increase repeat-robust batch conductivity without sacrificing the batch mean",
+      "threshold_basis": "benchmark_preregistered_operational_threshold_not_field_consensus",
+      "required_axes": ["development", "heldout", "robustness", "independent_confirmation"],
+      "applicability": "EC/PC/EMC/LiPF6 formulations and the committed EIS replay only; no claim about electrochemical stability, cells, safety or new chemistry",
+      "citation": {
+        "doi": "10.1038/s41597-023-01936-3",
+        "title": "Conductivity experiments for electrolyte formulations and their automated analysis",
+        "verified_title": "Conductivity experiments for electrolyte formulations and their automated analysis",
+        "issued_year": 2023,
+        "metadata_source": "doi.org CSL JSON",
+        "retrieved_on": "2026-07-27"
+      },
+      "evidence": {
+        "path": "experiments/electrolyte_conductivity_design_calibration_2026-07-27_v2.json",
+        "sha256": "cf78202f073d6297179660139b609257f4725278204723dffb689fd2a8a157aa"
+      },
+      "baseline_pointer": "/direct_baseline",
+      "material_witness_pointer": "/direct_confirmation_robust_reference",
+      "criteria": [
+        {
+          "id": "development_confirmation_minimum_conductivity",
+          "kind": "paired_scalar",
+          "baseline_pointer": "/direct_baseline/development_confirmation_minimum_weighted_conductivity_s_cm",
+          "witness_pointer": "/direct_confirmation_robust_reference/development_confirmation_minimum_weighted_conductivity_s_cm",
+          "direction": "increase",
+          "minimum_relative_change": 0.05,
+          "unit": "S/cm",
+          "axes": ["development", "robustness", "independent_confirmation"]
+        },
+        {
+          "id": "heldout_confirmation_minimum_conductivity",
+          "kind": "paired_scalar",
+          "baseline_pointer": "/direct_baseline/heldout_confirmation_minimum_weighted_conductivity_s_cm",
+          "witness_pointer": "/direct_confirmation_robust_reference/heldout_confirmation_minimum_weighted_conductivity_s_cm",
+          "direction": "increase",
+          "minimum_relative_change": 0.05,
+          "unit": "S/cm",
+          "axes": ["heldout", "robustness", "independent_confirmation"]
+        },
+        {
+          "id": "development_confirmation_mean_noninferiority",
+          "kind": "paired_scalar",
+          "baseline_pointer": "/direct_baseline/development_confirmation_mean_weighted_conductivity_s_cm",
+          "witness_pointer": "/direct_confirmation_robust_reference/development_confirmation_mean_weighted_conductivity_s_cm",
+          "direction": "increase",
+          "minimum_relative_change": 0.0,
+          "unit": "S/cm",
+          "axes": ["development", "independent_confirmation"]
+        },
+        {
+          "id": "heldout_confirmation_mean_conductivity",
+          "kind": "paired_scalar",
+          "baseline_pointer": "/direct_baseline/heldout_confirmation_mean_weighted_conductivity_s_cm",
+          "witness_pointer": "/direct_confirmation_robust_reference/heldout_confirmation_mean_weighted_conductivity_s_cm",
+          "direction": "increase",
+          "minimum_relative_change": 0.05,
+          "unit": "S/cm",
+          "axes": ["heldout", "independent_confirmation"]
+        },
+        {
+          "id": "development_confirmation_robust_anchor",
+          "kind": "values_bound",
+          "source_pointer": "/direct_confirmation_robust_reference/confirmation_robustness_score",
+          "operator": "gte",
+          "threshold": 0.99,
+          "axes": ["development", "robustness", "independent_confirmation"]
+        },
+        {
+          "id": "heldout_confirmation_robust_anchor",
+          "kind": "values_bound",
+          "source_pointer": "/direct_confirmation_robust_reference/heldout_confirmation_robustness_score",
+          "operator": "gte",
+          "threshold": 0.99,
+          "axes": ["heldout", "robustness", "independent_confirmation"]
+        }
+      ]
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "scientific_quantity": "plus-one transmitted diffraction efficiency across wavelength, incidence angle and TE/TM polarization",
+      "units": ["absolute_efficiency_fraction"],
+      "improvement_direction": "increase mean and worst-condition efficiency while retaining shift-feasible geometry",
+      "threshold_basis": "benchmark_preregistered_operational_threshold_not_field_consensus",
+      "required_axes": ["development", "heldout", "robustness"],
+      "applicability": "lossless isotropic one-dimensional RCWA worlds only; no fabricated-device, finite-aperture, absorption or global-optimality claim",
+      "citation": {
+        "doi": "10.1364/JOSA.71.000811",
+        "title": "Rigorous coupled-wave analysis of planar-grating diffraction",
+        "verified_title": "Rigorous coupled-wave analysis of planar-grating diffraction",
+        "issued_year": 1981,
+        "metadata_source": "doi.org CSL JSON",
+        "retrieved_on": "2026-07-27"
+      },
+      "evidence": {
+        "path": "experiments/diffraction_grating_v2_calibration_2026-07-27_v2.json",
+        "sha256": "5b2386cdc9ec13fb1b5dbcbb901134048a2a5413bdb352abea284bcd73f7e8bd"
+      },
+      "baseline_pointer": "/direct_weak_baseline",
+      "material_witness_pointer": "/direct_reference",
+      "criteria": [
+        {
+          "id": "development_mean_target_efficiency",
+          "kind": "paired_scalar",
+          "baseline_pointer": "/direct_weak_baseline/development_mean_target_efficiency",
+          "witness_pointer": "/direct_reference/development_mean_target_efficiency",
+          "direction": "increase",
+          "minimum_absolute_change": 0.10,
+          "unit": "absolute_efficiency_fraction",
+          "axes": ["development"]
+        },
+        {
+          "id": "heldout_mean_target_efficiency",
+          "kind": "paired_scalar",
+          "baseline_pointer": "/direct_weak_baseline/heldout_mean_target_efficiency",
+          "witness_pointer": "/direct_reference/heldout_mean_target_efficiency",
+          "direction": "increase",
+          "minimum_absolute_change": 0.10,
+          "unit": "absolute_efficiency_fraction",
+          "axes": ["heldout"]
+        },
+        {
+          "id": "development_minimum_target_efficiency",
+          "kind": "paired_scalar",
+          "baseline_pointer": "/direct_weak_baseline/development_minimum_target_efficiency",
+          "witness_pointer": "/direct_reference/development_minimum_target_efficiency",
+          "direction": "increase",
+          "minimum_absolute_change": 0.05,
+          "unit": "absolute_efficiency_fraction",
+          "axes": ["development", "robustness"]
+        },
+        {
+          "id": "heldout_minimum_target_efficiency",
+          "kind": "paired_scalar",
+          "baseline_pointer": "/direct_weak_baseline/heldout_minimum_target_efficiency",
+          "witness_pointer": "/direct_reference/heldout_minimum_target_efficiency",
+          "direction": "increase",
+          "minimum_absolute_change": 0.05,
+          "unit": "absolute_efficiency_fraction",
+          "axes": ["heldout", "robustness"]
+        },
+        {
+          "id": "per_world_shift_robust_utility",
+          "kind": "paired_records",
+          "baseline_pointer": "/direct_weak_baseline/per_instance",
+          "witness_pointer": "/direct_reference/per_instance",
+          "record_key": "name",
+          "value_pointer": "/robust_utility",
+          "split_field": "split",
+          "required_splits": ["development", "heldout"],
+          "direction": "increase",
+          "minimum_absolute_change": 0.05,
+          "unit": "absolute_efficiency_utility",
+          "axes": ["development", "heldout", "robustness"]
+        },
+        {
+          "id": "all_shift_geometries_feasible",
+          "kind": "values_bound",
+          "source_pointer": "/direct_reference/per_instance",
+          "value_pointer": "/all_shift_geometries_feasible",
+          "operator": "eq",
+          "threshold": true,
+          "axes": ["development", "heldout", "robustness"]
+        }
+      ]
+    },
+    {
+      "task": "RNAEngineering/RNAInverseDesign",
+      "scientific_quantity": "target-secondary-structure ensemble probability and nucleotide-level ensemble correctness",
+      "units": ["probability", "fraction"],
+      "improvement_direction": "increase exact thermodynamic target occupancy and correctness across unseen families and parameter shifts",
+      "threshold_basis": "benchmark_preregistered_operational_threshold_not_field_consensus",
+      "required_axes": ["development", "heldout", "robustness"],
+      "applicability": "the declared pseudoknot-free pair-and-stack ensemble only; no tertiary structure, kinetics, expression or wet-lab function claim",
+      "citation": {
+        "doi": "10.1002/bip.360290621",
+        "title": "The equilibrium partition function and base pair binding probabilities for RNA secondary structure",
+        "verified_title": "The equilibrium partition function and base pair binding probabilities for RNA secondary structure",
+        "issued_year": 1990,
+        "metadata_source": "doi.org CSL JSON",
+        "retrieved_on": "2026-07-27"
+      },
+      "evidence": {
+        "path": "experiments/rna_inverse_design_calibration_2026-07-24.json",
+        "sha256": "015a27373c8938f9d8c77b64f7e9ae82b14b825b15bf30ba537d70356debf4c4"
+      },
+      "baseline_pointer": "/direct_baseline",
+      "material_witness_pointer": "/reference",
+      "criteria": [
+        {
+          "id": "development_target_probability",
+          "kind": "paired_scalar",
+          "baseline_pointer": "/direct_baseline/development_target_probability",
+          "witness_pointer": "/reference/development_target_probability",
+          "direction": "increase",
+          "minimum_absolute_change": 0.10,
+          "unit": "probability",
+          "axes": ["development"]
+        },
+        {
+          "id": "heldout_target_probability",
+          "kind": "paired_scalar",
+          "baseline_pointer": "/direct_baseline/heldout_target_probability",
+          "witness_pointer": "/reference/heldout_target_probability",
+          "direction": "increase",
+          "minimum_absolute_change": 0.10,
+          "unit": "probability",
+          "axes": ["heldout"]
+        },
+        {
+          "id": "development_ensemble_correctness",
+          "kind": "paired_scalar",
+          "baseline_pointer": "/direct_baseline/development_ensemble_correctness",
+          "witness_pointer": "/reference/development_ensemble_correctness",
+          "direction": "increase",
+          "minimum_absolute_change": 0.10,
+          "unit": "fraction",
+          "axes": ["development", "robustness"]
+        },
+        {
+          "id": "heldout_ensemble_correctness",
+          "kind": "paired_scalar",
+          "baseline_pointer": "/direct_baseline/heldout_ensemble_correctness",
+          "witness_pointer": "/reference/heldout_ensemble_correctness",
+          "direction": "increase",
+          "minimum_absolute_change": 0.10,
+          "unit": "fraction",
+          "axes": ["heldout", "robustness"]
+        },
+        {
+          "id": "development_shift_robustness",
+          "kind": "values_bound",
+          "source_pointer": "/reference/robustness_score",
+          "operator": "gte",
+          "threshold": 0.99,
+          "axes": ["development", "robustness"]
+        },
+        {
+          "id": "heldout_shift_robustness",
+          "kind": "values_bound",
+          "source_pointer": "/reference/heldout_robustness_score",
+          "operator": "gte",
+          "threshold": 0.99,
+          "axes": ["heldout", "robustness"]
+        }
+      ]
+    },
+    {
+      "task": "Semiconductor/MOSFETDoping",
+      "scientific_quantity": "drive-current versus log-leakage Pareto hypervolume under nominal and process-shifted compact-device simulations",
+      "units": ["dimensionless_physical_objective_hypervolume"],
+      "improvement_direction": "increase the Pareto-dominated physical objective region while preserving feasibility under every sealed shift",
+      "threshold_basis": "benchmark_preregistered_operational_threshold_not_field_consensus",
+      "required_axes": ["development", "heldout", "robustness"],
+      "applicability": "the committed compact silicon nMOS model and declared objective scales only; no TCAD, process-integration or measured-device claim",
+      "citation": {
+        "doi": "10.1109/PROC.1967.6123",
+        "title": "Carrier mobilities in silicon empirically related to doping and field",
+        "verified_title": "Carrier mobilities in silicon empirically related to doping and field",
+        "issued_year": 1967,
+        "metadata_source": "doi.org CSL JSON",
+        "retrieved_on": "2026-07-27"
+      },
+      "evidence": {
+        "path": "experiments/mosfet_doping_v2_calibration_2026-07-24.json",
+        "sha256": "c9eef85a4f870aa1066223ad5f09053b7db70d3d15a4c1dda548a050732d30d2"
+      },
+      "baseline_pointer": "/witness_metrics/baseline",
+      "material_witness_pointer": "/witness_metrics/robust",
+      "criteria": [
+        {
+          "id": "per_device_nominal_hypervolume",
+          "kind": "paired_records",
+          "baseline_pointer": "/witness_metrics/baseline/per_instance",
+          "witness_pointer": "/witness_metrics/robust/per_instance",
+          "record_key": "name",
+          "value_pointer": "/raw_nominal_hypervolume",
+          "split_field": "split",
+          "required_splits": ["development", "heldout"],
+          "direction": "increase",
+          "minimum_absolute_change": 0.05,
+          "unit": "dimensionless_physical_objective_hypervolume",
+          "axes": ["development", "heldout"]
+        },
+        {
+          "id": "per_device_per_shift_hypervolume",
+          "kind": "paired_records",
+          "baseline_pointer": "/witness_metrics/baseline/per_instance",
+          "witness_pointer": "/witness_metrics/robust/per_instance",
+          "record_key": "name",
+          "value_pointer": "/raw_shifted_hypervolumes",
+          "split_field": "split",
+          "required_splits": ["development", "heldout"],
+          "direction": "increase",
+          "minimum_absolute_change": 0.05,
+          "unit": "dimensionless_physical_objective_hypervolume",
+          "axes": ["development", "heldout", "robustness"]
+        },
+        {
+          "id": "all_shifted_profiles_feasible",
+          "kind": "values_bound",
+          "source_pointer": "/witness_metrics/robust/per_instance",
+          "value_pointer": "/shift_feasibility_rates",
+          "operator": "eq",
+          "threshold": 1.0,
+          "axes": ["development", "heldout", "robustness"]
+        }
+      ]
+    },
+    {
+      "task": "StructuralEngineering/TrussWeightMinimization",
+      "scientific_quantity": "structural weight subject to stress, displacement and Euler-buckling feasibility",
+      "units": ["lb", "relative_fraction"],
+      "improvement_direction": "decrease weight on every geometry/material family while retaining feasibility under every declared shift",
+      "threshold_basis": "benchmark_preregistered_operational_threshold_not_field_consensus",
+      "required_axes": ["development", "heldout", "robustness"],
+      "applicability": "linear pin-jointed finite-element instances and declared shifts only; no nonlinear, fatigue, connection-design or building-code claim",
+      "citation": {
+        "doi": "10.1007/BF01376857",
+        "title": "Difficulties in truss topology optimization with stress and local buckling constraints",
+        "verified_title": "Difficulties in truss topology optimization with stress and local buckling constraints",
+        "issued_year": 1996,
+        "metadata_source": "doi.org CSL JSON",
+        "retrieved_on": "2026-07-27"
+      },
+      "evidence": {
+        "path": "experiments/truss_v2_calibration_2026-07-21.json",
+        "sha256": "0950fc98a2a93f0c8a1db051484b2e5db8b5325448dc4b710c1b28170d632d26"
+      },
+      "baseline_pointer": "/baseline",
+      "material_witness_pointer": "/robust_reference_policy",
+      "criteria": [
+        {
+          "id": "per_instance_weight_reduction",
+          "kind": "paired_records",
+          "baseline_pointer": "/baseline/per_instance",
+          "witness_pointer": "/robust_reference_policy/per_instance",
+          "record_key": "name",
+          "value_pointer": "/weight_lbs",
+          "split_field": "split",
+          "required_splits": ["development", "heldout"],
+          "direction": "decrease",
+          "minimum_relative_change": 0.10,
+          "unit": "lb",
+          "axes": ["development", "heldout"]
+        },
+        {
+          "id": "all_shift_cases_feasible",
+          "kind": "values_bound",
+          "source_pointer": "/robust_reference_policy/per_instance",
+          "value_pointer": "/shifted_case_feasibility_rate",
+          "operator": "eq",
+          "threshold": 1.0,
+          "axes": ["development", "heldout", "robustness"]
+        },
+        {
+          "id": "all_shift_utilizations_bounded",
+          "kind": "values_bound",
+          "source_pointer": "/robust_reference_policy/per_instance",
+          "value_pointer": "/max_shifted_utilization",
+          "operator": "lte",
+          "threshold": 1.0000001,
+          "axes": ["development", "heldout", "robustness"]
+        }
+      ]
+    },
+    {
+      "task": "Thermodynamics/HeatExchangerDesign",
+      "scientific_quantity": "exact-model heat-duty versus annualized-cost Pareto hypervolume",
+      "units": ["dimensionless_physical_objective_hypervolume"],
+      "improvement_direction": "increase exact nominal and worst-shift Pareto hypervolume with fully feasible archives",
+      "threshold_basis": "benchmark_preregistered_operational_threshold_not_field_consensus",
+      "required_axes": ["development", "heldout", "robustness"],
+      "applicability": "the committed steady-state correlation model and declared fluids/shifts only; no CFD, vibration, corrosion, fabrication-code or experimental claim",
+      "citation": {
+        "doi": "10.1016/j.applthermaleng.2010.04.018",
+        "title": "Multi-objective optimization of shell and tube heat exchangers",
+        "verified_title": "Multi-objective optimization of shell and tube heat exchangers",
+        "issued_year": 2010,
+        "metadata_source": "doi.org CSL JSON",
+        "retrieved_on": "2026-07-27"
+      },
+      "evidence": {
+        "path": "experiments/heat_exchanger_v2_calibration_2026-07-22.json",
+        "sha256": "b60f135066b341515c9ec3e53cc43937d8bfdfa840a7bf427e7a908e47859859"
+      },
+      "baseline_pointer": "/baseline",
+      "material_witness_pointer": "/robust_reference_policy",
+      "criteria": [
+        {
+          "id": "per_instance_exact_hypervolume",
+          "kind": "paired_records",
+          "baseline_pointer": "/baseline/per_instance",
+          "witness_pointer": "/robust_reference_policy/per_instance",
+          "record_key": "name",
+          "value_pointer": "/raw_exact_hypervolume",
+          "split_field": "split",
+          "required_splits": ["development", "heldout"],
+          "direction": "increase",
+          "minimum_absolute_change": 0.05,
+          "unit": "dimensionless_physical_objective_hypervolume",
+          "axes": ["development", "heldout"]
+        },
+        {
+          "id": "per_instance_worst_shift_hypervolume",
+          "kind": "paired_records",
+          "baseline_pointer": "/baseline/per_instance",
+          "witness_pointer": "/robust_reference_policy/per_instance",
+          "record_key": "name",
+          "value_pointer": "/worst_shifted_raw_hypervolume",
+          "split_field": "split",
+          "required_splits": ["development", "heldout"],
+          "direction": "increase",
+          "minimum_absolute_change": 0.05,
+          "unit": "dimensionless_physical_objective_hypervolume",
+          "axes": ["development", "heldout", "robustness"]
+        },
+        {
+          "id": "all_exact_archives_feasible",
+          "kind": "values_bound",
+          "source_pointer": "/robust_reference_policy/per_instance",
+          "value_pointer": "/exact_feasibility_rate",
+          "operator": "eq",
+          "threshold": 1.0,
+          "axes": ["development", "heldout", "robustness"]
+        }
+      ]
+    },
+    {
+      "task": "Turbulence/RANSCalibration",
+      "scientific_quantity": "real-DNS mean-velocity and Reynolds-shear closure loss across Reynolds number and wall-coordinate shifts",
+      "units": ["dimensionless_composite_loss", "wall_units_rmse"],
+      "improvement_direction": "decrease nominal and worst-shift DNS discrepancy without violating the mean-momentum physics gate",
+      "threshold_basis": "benchmark_preregistered_operational_threshold_not_field_consensus",
+      "required_axes": ["development", "heldout", "robustness"],
+      "applicability": "the committed turbulent-channel DNS profiles and four-parameter algebraic closure only; no separated-flow or universal-RANS claim",
+      "citation": {
+        "doi": "10.1063/1.3005862",
+        "title": "Reynolds number effects on the Reynolds-stress budgets in turbulent channels",
+        "verified_title": "Reynolds number effects on the Reynolds-stress budgets in turbulent channels",
+        "issued_year": 2008,
+        "metadata_source": "doi.org CSL JSON",
+        "retrieved_on": "2026-07-27"
+      },
+      "evidence": {
+        "path": "experiments/rans_v2_calibration_2026-07-24.json",
+        "sha256": "62054f7ec2b8cba27a03d1046ce4e23ea3d317edf2c60d6ea194ff362c4766c3"
+      },
+      "baseline_pointer": "/witness_metrics/baseline",
+      "material_witness_pointer": "/witness_metrics/nominal",
+      "criteria": [
+        {
+          "id": "development_raw_loss",
+          "kind": "paired_scalar",
+          "baseline_pointer": "/witness_metrics/baseline/development_raw_loss",
+          "witness_pointer": "/witness_metrics/nominal/development_raw_loss",
+          "direction": "decrease",
+          "minimum_relative_change": 0.20,
+          "unit": "dimensionless_composite_loss",
+          "axes": ["development"]
+        },
+        {
+          "id": "heldout_raw_loss",
+          "kind": "paired_scalar",
+          "baseline_pointer": "/witness_metrics/baseline/heldout_raw_loss",
+          "witness_pointer": "/witness_metrics/nominal/heldout_raw_loss",
+          "direction": "decrease",
+          "minimum_relative_change": 0.20,
+          "unit": "dimensionless_composite_loss",
+          "axes": ["heldout"]
+        },
+        {
+          "id": "development_worst_shift_loss",
+          "kind": "paired_scalar",
+          "baseline_pointer": "/witness_metrics/baseline/development_worst_shift_loss",
+          "witness_pointer": "/witness_metrics/nominal/development_worst_shift_loss",
+          "direction": "decrease",
+          "minimum_relative_change": 0.20,
+          "unit": "dimensionless_composite_loss",
+          "axes": ["development", "robustness"]
+        },
+        {
+          "id": "heldout_worst_shift_loss",
+          "kind": "paired_scalar",
+          "baseline_pointer": "/witness_metrics/baseline/heldout_worst_shift_loss",
+          "witness_pointer": "/witness_metrics/nominal/heldout_worst_shift_loss",
+          "direction": "decrease",
+          "minimum_relative_change": 0.20,
+          "unit": "dimensionless_composite_loss",
+          "axes": ["heldout", "robustness"]
+        },
+        {
+          "id": "development_velocity_rmse",
+          "kind": "paired_scalar",
+          "baseline_pointer": "/witness_metrics/baseline/development_velocity_rmse_plus",
+          "witness_pointer": "/witness_metrics/nominal/development_velocity_rmse_plus",
+          "direction": "decrease",
+          "minimum_relative_change": 0.20,
+          "unit": "wall_units_rmse",
+          "axes": ["development"]
+        },
+        {
+          "id": "heldout_velocity_rmse",
+          "kind": "paired_scalar",
+          "baseline_pointer": "/witness_metrics/baseline/heldout_velocity_rmse_plus",
+          "witness_pointer": "/witness_metrics/nominal/heldout_velocity_rmse_plus",
+          "direction": "decrease",
+          "minimum_relative_change": 0.20,
+          "unit": "wall_units_rmse",
+          "axes": ["heldout"]
+        },
+        {
+          "id": "development_reynolds_shear_rmse",
+          "kind": "paired_scalar",
+          "baseline_pointer": "/witness_metrics/baseline/development_reynolds_shear_rmse_plus",
+          "witness_pointer": "/witness_metrics/nominal/development_reynolds_shear_rmse_plus",
+          "direction": "decrease",
+          "minimum_relative_change": 0.05,
+          "unit": "wall_units_rmse",
+          "axes": ["development"]
+        },
+        {
+          "id": "heldout_reynolds_shear_rmse",
+          "kind": "paired_scalar",
+          "baseline_pointer": "/witness_metrics/baseline/heldout_reynolds_shear_rmse_plus",
+          "witness_pointer": "/witness_metrics/nominal/heldout_reynolds_shear_rmse_plus",
+          "direction": "decrease",
+          "minimum_relative_change": 0.05,
+          "unit": "wall_units_rmse",
+          "axes": ["heldout"]
+        },
+        {
+          "id": "mean_momentum_physics_gate",
+          "kind": "values_bound",
+          "source_pointer": "/witness_metrics/nominal/physics_gate_passed",
+          "operator": "eq",
+          "threshold": true,
+          "axes": ["development", "heldout", "robustness"]
+        }
+      ]
+    }
+  ]
+}
