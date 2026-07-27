@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "preregistration_id": "frontier_science_continuous_vs_restart_v1",
+  "frozen_at_utc": "2026-07-27",
+  "purpose": "exploratory_equal_active_time_continuous_vs_fresh_restart_ablation",
+  "claim_limit": "result_selected_three_task_exploratory_artifact_plus_visible_metrics_continuation_not_full_context_memory_causal_population_scaling_law_or_discovery_evidence",
+  "source_cohort_manifest": {
+    "path": ".research/exploratory_2h_cohort_manifest_2026-07-27_v1.json",
+    "sha256": "2d4cb9dfb0ba566ac924ffc8b537516f358999e734bfd01af831ad22770b0d98",
+    "confirmatory_reuse_permitted": false
+  },
+  "selection": {
+    "selected_before_long_horizon_execution": true,
+    "selected_after_inspecting_short_budget_gpt55_results": true,
+    "rule": "Use the pre-randomized unconditional 12h audit tranche from the frozen exploratory cohort manifest.",
+    "tasks": [
+      "Optics/DiffractionGratingDesign",
+      "Electrochemistry/ElectrolyteConductivityDesign",
+      "Thermodynamics/HeatExchangerDesign"
+    ]
+  },
+  "system_condition": {
+    "algorithm": "greedy_rewrite",
+    "feedback_mode": "normal",
+    "model": "gpt-5.5",
+    "wire": "responses",
+    "reasoning_effort": "low",
+    "max_output_tokens": 16000,
+    "server_side_seed_control": false,
+    "replicate_identifier_scope": "Local identifiers do not pair provider randomness. Contrasts are unpaired exploratory system-level comparisons unless the provider later exposes controlled randomness."
+  },
+  "arms": [
+    {
+      "arm": "continuous_12h",
+      "run_count_per_task": 1,
+      "active_wall_seconds_per_run": 43200,
+      "total_active_wall_seconds_per_task": 43200,
+      "initial_state": "frozen task baseline",
+      "state_continuity": "one greedy process retains its selected incumbent artifact and agent-visible incumbent metrics throughout the run",
+      "signed_decision_policy": "record_only"
+    },
+    {
+      "arm": "fresh_restart_6x2h",
+      "run_count_per_task": 6,
+      "active_wall_seconds_per_run": 7200,
+      "total_active_wall_seconds_per_task": 43200,
+      "initial_state": "each restart begins from the identical frozen task baseline",
+      "state_continuity": "no artifact, visible metrics, prompt history, provider context, or workspace transfers between restarts",
+      "signed_decision_policy": "record_only"
+    }
+  ],
+  "proposal_budget": {
+    "configured_upper_bound_per_run": 100000,
+    "interpretation": "safety ceiling only; any run exhausting it before its wall horizon is protocol_incomplete and not a completed arm",
+    "evaluator_timeout_seconds": 300
+  },
+  "sentinels": {
+    "fixed_grid_interval_seconds": 1800,
+    "required": [
+      "t0",
+      "first_valid",
+      "every_submission",
+      "every_signed_commit_or_abstention",
+      "fixed_grid",
+      "terminal"
+    ],
+    "late_result_policy": "Retain a result completing after cutoff, but prevent it from changing the in-horizon incumbent or feedback.",
+    "hidden_snapshot_policy": "No post-hoc hidden-snapshot winner may replace committed or terminal endpoints."
+  },
+  "endpoint_estimands": {
+    "primary": [
+      "terminal_in_horizon_best_score",
+      "latest_signed_commit_or_abstention_utility",
+      "sealed_validation_and_robustness_at_terminal",
+      "oracle_calls_tokens_and_active_wall_time"
+    ],
+    "restart_aggregation": "For fresh_restart_6x2h, report all six terminal outcomes and a separately labeled observer best-of-six upper envelope. The upper envelope is not an autonomous deployable endpoint.",
+    "continuous_comparison": "Compare continuous terminal with the distribution, mean and observer best-of-six restart endpoints; retain task-level results and do not infer a population effect from three result-selected tasks."
+  },
+  "what_the_ablation_isolates": "Continuation of the online incumbent artifact plus agent-visible incumbent metrics under the greedy scaffold, jointly with new provider draws.",
+  "what_the_ablation_does_not_isolate": [
+    "full conversational context",
+    "hidden provider state",
+    "a structured scientific notebook or hypothesis ledger",
+    "raw observation or negative-result memory",
+    "workspace files beyond the incumbent artifact",
+    "the base model independent of scaffold and service",
+    "causal scientific discovery"
+  ],
+  "failure_and_stopping": {
+    "risk_set": "Run every scheduled continuous and restart cell regardless of early score direction.",
+    "infrastructure_retry": "Resume only the identical hash-bound cell and pending provider result; retain all failed attempts.",
+    "candidate_invalidity": "Retained as an outcome and consumes a proposal slot.",
+    "signed_stop": "record_only: a commit or abstain is retained as an endpoint decision but forced continuation proceeds to the wall horizon.",
+    "protocol_incomplete": "Proposal-ceiling exhaustion, baseline exceeding horizon, missing sentinel, contract drift, or non-equivalent total active time fails the affected cell closed."
+  },
+  "analysis_restrictions": [
+    "This three-task cohort was selected after current GPT-5.5 calibration outcomes and is not confirmatory.",
+    "A 2h restart told its true horizon is not interchangeable with a 2h prefix of a 12h-aware continuous run.",
+    "Same-number local identifiers do not create paired model randomness.",
+    "Do not average heterogeneous mechanism, robustness and validation axes into a single discovery score.",
+    "Do not call a continuous advantage evidence that long context caused learning; the retained state is specifically artifact plus visible metrics."
+  ],
+  "preflight_requirements": [
+    "fixed-artifact evaluator noise and deterministic replay",
+    "evaluator resolution and scientific materiality thresholds",
+    "baseline/reference separation",
+    "sentinel and exactly-once recovery smoke",
+    "cohort and runtime contract hash verification",
+    "local keyless endpoint availability and model-condition hash",
+    "sufficient proposal safety ceiling to reach every wall horizon"
+  ]
+}
