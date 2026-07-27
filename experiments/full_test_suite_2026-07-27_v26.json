@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_FULL_TEST_SUITE",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "7ea99e38fd21c3b87144aa19e038dfc1152631e0",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/run_full_test_suite.py",
+      "--output",
+      "experiments/full_test_suite_2026-07-27_v26.json"
+    ]
+  },
+  "started_at": "2026-07-27T06:13:02.899098+00:00",
+  "completed_at": "2026-07-27T06:52:00.832407+00:00",
+  "command": [
+    "/usr/bin/python3",
+    "-W",
+    "error::ResourceWarning",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-q"
+  ],
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "wall_seconds": 2337.933282081969,
+  "unittest_seconds": 2337.229,
+  "returncode": 1,
+  "test_count": 649,
+  "unittest_ok": false,
+  "stdout": "  [normal] [Chemistry/LennardJonesCluster] baseline combined_score=0.041930 valid=1.0\n  [normal] [Chemistry/LennardJonesCluster] DONE baseline=0.041930 -> best=0.041930 (0/0 accepted)  out=/tmp/tmp2pp0l45l/runs/Chemistry__LennardJonesCluster/greedy_rewrite/normal/seed_0\n[block 1/1] complete Chemistry/LennardJonesCluster|greedy_rewrite|0\nResults: /tmp/tmp2pp0l45l/report.json\n  [normal] [Chemistry/LennardJonesCluster] baseline combined_score=0.041930 valid=1.0\n  [normal] [Chemistry/LennardJonesCluster] DONE baseline=0.041930 -> best=0.041930 (0/0 accepted)  out=/tmp/tmp90lvj4g3/runs/Chemistry__LennardJonesCluster/greedy_rewrite/normal/seed_0\n[block 1/1] complete Chemistry/LennardJonesCluster|greedy_rewrite|0\nResults: /tmp/tmp90lvj4g3/report.json\n  [normal] [Chemistry/LennardJonesCluster] baseline combined_score=0.041930 valid=1.0\n  [normal] [Chemistry/LennardJonesCluster] DONE baseline=0.041930 -> best=0.041930 (0/0 accepted)  out=/tmp/tmpdujsjlkg/runs/Chemistry__LennardJonesCluster/greedy_rewrite/normal/seed_0\n[block 1/1] complete Chemistry/LennardJonesCluster|greedy_rewrite|0\nResults: /tmp/tmpdujsjlkg/report.json\n  [normal] [Chemistry/LennardJonesCluster] baseline combined_score=0.041930 valid=1.0\n  [normal] [Chemistry/LennardJonesCluster] DONE baseline=0.041930 -> best=0.041930 (0/0 accepted)  out=/tmp/tmp4htc9abi/runs/Chemistry__LennardJonesCluster/greedy_rewrite/normal/seed_0\n[block 1/1] complete Chemistry/LennardJonesCluster|greedy_rewrite|0\nResults: /tmp/tmp4htc9abi/report.json\n  [normal] [Chemistry/LennardJonesCluster] baseline combined_score=0.041930 valid=1.0\n  [normal] [Chemistry/LennardJonesCluster] DONE baseline=0.041930 -> best=0.041930 (0/0 accepted)  out=/tmp/tmpfm0mi240/runs/Chemistry__LennardJonesCluster/greedy_rewrite/normal/seed_0\n[block 1/1] complete Chemistry/LennardJonesCluster|greedy_rewrite|0\nResults: /tmp/tmpfm0mi240/report.json\n",
+  "stderr": "======================================================================\nFAIL: test_frozen_cohort_is_covered_and_all_bound_evidence_passes (test_measurement_health_preflight.MeasurementHealthPreflightTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/azureuser/workspace-gzy/zyf/frontier-science/tests/test_measurement_health_preflight.py\", line 31, in test_frozen_cohort_is_covered_and_all_bound_evidence_passes\n    self.assertEqual(self.report[\"preflight_passed_count\"], 7)\nAssertionError: 0 != 7\n\n======================================================================\nFAIL: test_recovery_requires_a_deterministic_task_card (test_measurement_health_preflight.MeasurementHealthPreflightTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/azureuser/workspace-gzy/zyf/frontier-science/tests/test_measurement_health_preflight.py\", line 187, in test_recovery_requires_a_deterministic_task_card\n    self.assertEqual(config[\"status\"], \"pass\")\nAssertionError: 'fail' != 'pass'\n- fail\n+ pass\n\n\n----------------------------------------------------------------------\nRan 649 tests in 2337.229s\n\nFAILED (failures=2)\n",
+  "execution_passed": false,
+  "trust_decision": "execution_failed",
+  "trusted_evidence": false,
+  "passed": false
+}
