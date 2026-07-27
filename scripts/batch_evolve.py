@@ -29,7 +29,9 @@ from frontier_science.algorithms import ALGORITHMS, get_algorithm  # noqa: E402
 from frontier_science.algorithms.common import llm_condition_sha256  # noqa: E402
 from frontier_science.algorithms.common import atomic_write_text  # noqa: E402
 from frontier_science.algorithms.common import feedback_scope  # noqa: E402
+from frontier_science.algorithms.common import task_contract_sha256  # noqa: E402
 from frontier_science.config import load_llm_client  # noqa: E402
+from frontier_science.certification import certification_status  # noqa: E402
 from frontier_science.llm import LLMClient  # noqa: E402
 from frontier_science.protocol import mean_confidence_interval  # noqa: E402
 from frontier_science.protocol import compact_trajectory_snapshot  # noqa: E402
@@ -124,6 +126,75 @@ def _preregistration_record(path: Path | None) -> dict[str, Any] | None:
         "path": recorded_path,
         "sha256": hashlib.sha256(payload).hexdigest(),
         "bytes": len(payload),
+    }
+
+
+def _cohort_manifest_record(
+    path: Path | None, specs: list[Any], *, include_uncertified: bool,
+) -> dict[str, Any] | None:
+    """Validate and bind an exact task cohort before any model call.
+
+    A cohort manifest is stricter than a generic preregistration: task order,
+    runtime contracts and task-card hashes must all match the requested run.
+    """
+
+    if path is None:
+        return None
+    resolved = path.expanduser().resolve()
+    if not resolved.is_file():
+        raise SystemExit("--cohort-manifest must name a regular JSON file")
+    payload = resolved.read_bytes()
+    try:
+        document = json.loads(payload)
+    except ValueError as exc:
+        raise SystemExit("--cohort-manifest is not valid JSON") from exc
+    if document.get("schema_version") != 1:
+        raise SystemExit("unsupported cohort manifest schema")
+    rows = document.get("tasks")
+    if not isinstance(rows, list) or not rows:
+        raise SystemExit("cohort manifest must contain a nonempty tasks list")
+    manifest_ids = [row.get("task") for row in rows if isinstance(row, dict)]
+    requested_ids = [spec.task_id for spec in specs]
+    if manifest_ids != requested_ids:
+        raise SystemExit(
+            "cohort manifest task order does not match the requested task cohort"
+        )
+    for row, spec in zip(rows, specs):
+        expected_runtime = row.get("runtime_contract_sha256")
+        if expected_runtime != task_contract_sha256(spec):
+            raise SystemExit(
+                "cohort manifest runtime contract differs for %s" % spec.task_id
+            )
+        card = spec.task_dir / "TASK_CARD.yaml"
+        actual_card = (
+            hashlib.sha256(card.read_bytes()).hexdigest()
+            if card.is_file() else None
+        )
+        if row.get("task_card_sha256") != actual_card:
+            raise SystemExit(
+                "cohort manifest task card differs for %s" % spec.task_id
+            )
+    if not include_uncertified and any(
+        certification_status(spec.task_id) != "certified" for spec in specs
+    ):
+        raise SystemExit(
+            "cohort manifest includes non-certified tasks; pass --all explicitly"
+        )
+    try:
+        recorded_path = str(resolved.relative_to(ROOT))
+    except ValueError:
+        recorded_path = str(resolved)
+    return {
+        "path": recorded_path,
+        "sha256": hashlib.sha256(payload).hexdigest(),
+        "bytes": len(payload),
+        "manifest_id": document.get("manifest_id"),
+        "analysis_role": document.get("analysis_role"),
+        "claim_limit": document.get("claim_limit"),
+        "confirmatory_reuse_permitted": (
+            (document.get("selection") or {}).get("confirmatory_reuse_permitted")
+        ),
+        "task_count": len(rows),
     }
 
 
@@ -395,6 +466,10 @@ def build_parser() -> argparse.ArgumentParser:
         "--preregistration", type=Path, default=None,
         help="immutable preregistration artifact to hash-bind into the report",
     )
+    parser.add_argument(
+        "--cohort-manifest", type=Path, default=None,
+        help="exact ordered task cohort with runtime-contract and task-card hashes",
+    )
     parser.add_argument("--workdir", type=Path, default=ROOT / "runs" / "experiments")
     parser.add_argument("--output", type=Path, default=None)
     parser.add_argument("--resume", action="store_true", help="resume individual runs and result file")
@@ -445,6 +520,9 @@ def main(argv: list[str] | None = None) -> int:
         specs = list_tasks(None if args.all else "certified")
     if not specs:
         raise SystemExit("no tasks selected")
+    cohort_manifest = _cohort_manifest_record(
+        args.cohort_manifest, specs, include_uncertified=include_uncertified
+    )
 
     timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     output = args.output or (ROOT / "experiments" / ("protocol_%s.json" % timestamp))
@@ -475,6 +553,7 @@ def main(argv: list[str] | None = None) -> int:
             for seed, order in zip(args.seeds, condition_schedule)
         ],
         "preregistration": _preregistration_record(args.preregistration),
+        "cohort_manifest": cohort_manifest,
         "seeds": args.seeds,
         "replicate_identifier_scope": (
             "controls local Python/random ordering only; the endpoint exposes no "

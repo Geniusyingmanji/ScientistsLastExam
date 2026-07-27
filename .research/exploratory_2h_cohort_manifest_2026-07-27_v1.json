@@ -21,49 +21,56 @@
   "tasks": [
     {
       "task": "Electrochemistry/ElectrolyteConductivityDesign",
-      "task_contract_sha256": "4fe717ae4d393e6e443eb8583371d4f4ae1a75a51c1f3d0e145260033d5a0563",
+      "maturity_contract_sha256": "4fe717ae4d393e6e443eb8583371d4f4ae1a75a51c1f3d0e145260033d5a0563",
+      "runtime_contract_sha256": "f334c386ec9021cc5f4a13a75abbefce4a4e49f24c7f103f86e7a7f4a594c355",
       "task_card_sha256": "aaaa34f20954cce55180ea56b1c7ef9285a377194df3fbb89ff9822fafbdca61",
       "provenance_class": "public_data_replay",
       "role": "real-data optimization, Goodhart and repeatability screen"
     },
     {
       "task": "Optics/DiffractionGratingDesign",
-      "task_contract_sha256": "e57461d2ff8496157427b98238eb0292877111f7e4cf667b71d5b38b860bb6ac",
+      "maturity_contract_sha256": "e57461d2ff8496157427b98238eb0292877111f7e4cf667b71d5b38b860bb6ac",
+      "runtime_contract_sha256": "476d23427837de38f663802bd512cea25483ba2e5f8b162f71af08624f1f1dd2",
       "task_card_sha256": "22c22a90b2940063a37488fc1cadc31445713c27fe8661e14cd868a384d9b8b4",
       "provenance_class": "procedural",
       "role": "high-variance Maxwell design, transfer and robustness screen"
     },
     {
       "task": "RNAEngineering/RNAInverseDesign",
-      "task_contract_sha256": "240a17c17e600d7f2a61c4a1016e8a08675ba0e921f2d35ec1915323a4ce989b",
+      "maturity_contract_sha256": "240a17c17e600d7f2a61c4a1016e8a08675ba0e921f2d35ec1915323a4ce989b",
+      "runtime_contract_sha256": "9a9abd18da5b93e3fe04d816be731429ace1d7b4ae6e8d858436cb7ba3769e62",
       "task_card_sha256": "84dae5b35ca582a19391ea2f04b8a64dbee2682c88ef72635f4bf5bf7346119b",
       "provenance_class": "procedural",
       "role": "ensemble inverse-design and proxy-false-promotion screen"
     },
     {
       "task": "Semiconductor/MOSFETDoping",
-      "task_contract_sha256": "e31e47512cc25cdbfc98143cf1db28966d9d6fce9e1025e4b38c55c0ad22831a",
+      "maturity_contract_sha256": "e31e47512cc25cdbfc98143cf1db28966d9d6fce9e1025e4b38c55c0ad22831a",
+      "runtime_contract_sha256": "c52459ac88c51fd4e6a77f4830e9594a2cefa3920225dacf55dd1373e2dec257",
       "task_card_sha256": "45a615a06c1b0c6db599d502373fed7007175d84f078d7009d05fd7764c3c36a",
       "provenance_class": "procedural",
       "role": "device Pareto, transfer and worst-shift robustness screen"
     },
     {
       "task": "StructuralEngineering/TrussWeightMinimization",
-      "task_contract_sha256": "d42f081dc49107f845e328d00859165489fdefc4953b078d3c7d387110a5729e",
+      "maturity_contract_sha256": "d42f081dc49107f845e328d00859165489fdefc4953b078d3c7d387110a5729e",
+      "runtime_contract_sha256": "ea318d1cd2af57c5d92283c37c83a0da3101bace10dfb92739001922e5bc8e48",
       "task_card_sha256": "fb34670aeb0b25b361ac40dd12b6588dc8853ffdacdd65660bac1f0831033901",
       "provenance_class": "procedural",
       "role": "structural optimization versus sealed physical robustness screen"
     },
     {
       "task": "Thermodynamics/HeatExchangerDesign",
-      "task_contract_sha256": "143482d56caafabaa60064018acc6c346927645c5b5171bdf46285b165df4a56",
+      "maturity_contract_sha256": "143482d56caafabaa60064018acc6c346927645c5b5171bdf46285b165df4a56",
+      "runtime_contract_sha256": "2f43dd188db50935077e4094c574e71bcd2683e4ce0e147a0b98e66b357b7b7a",
       "task_card_sha256": "a21c3338555c0b64c460e6d7bd241b7e0d5bfc6d974477dda4bb047e37cf8cdf",
       "provenance_class": "procedural",
       "role": "multifidelity Pareto and fouling/manufacturing robustness screen"
     },
     {
       "task": "Turbulence/RANSCalibration",
-      "task_contract_sha256": "1e60a829c671003ec64a9a6a5c59a571be824495b99f26f4394bba2ac1a4fc7c",
+      "maturity_contract_sha256": "1e60a829c671003ec64a9a6a5c59a571be824495b99f26f4394bba2ac1a4fc7c",
+      "runtime_contract_sha256": "f7bfb7a0bcb351dddd3a0ba387c30691ddbb6b60e25598fb1ab45d70b46cb561",
       "task_card_sha256": "78e3a26b06428658f6a9c74b8c1c870b6afa3a072c43488deccad6d23c044271",
       "provenance_class": "public_data_replay",
       "role": "real-DNS closure calibration and higher-Re transfer screen"

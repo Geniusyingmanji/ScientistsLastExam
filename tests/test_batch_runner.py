@@ -320,6 +320,72 @@ class BatchAggregationTests(unittest.TestCase):
                     "--resume",
                 ])
 
+    def test_cohort_manifest_binds_order_contract_and_task_card(self):
+        tasks = [
+            "Electrochemistry/ElectrolyteConductivityDesign",
+            "Optics/DiffractionGratingDesign",
+        ]
+        specs = [
+            MODULE.find_task(task, include_uncertified=True) for task in tasks
+        ]
+        rows = []
+        for spec in specs:
+            rows.append({
+                "task": spec.task_id,
+                "runtime_contract_sha256": MODULE.task_contract_sha256(spec),
+                "task_card_sha256": MODULE.hashlib.sha256(
+                    (spec.task_dir / "TASK_CARD.yaml").read_bytes()
+                ).hexdigest(),
+            })
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "cohort.json"
+            document = {
+                "schema_version": 1,
+                "manifest_id": "fixture",
+                "analysis_role": "exploratory",
+                "claim_limit": "not_confirmatory",
+                "selection": {"confirmatory_reuse_permitted": False},
+                "tasks": rows,
+            }
+            path.write_text(json.dumps(document), encoding="utf-8")
+            record = MODULE._cohort_manifest_record(
+                path, specs, include_uncertified=True
+            )
+            self.assertEqual(record["task_count"], 2)
+            self.assertFalse(record["confirmatory_reuse_permitted"])
+            self.assertEqual(record["manifest_id"], "fixture")
+
+            with self.assertRaisesRegex(SystemExit, "task order"):
+                MODULE._cohort_manifest_record(
+                    path, list(reversed(specs)), include_uncertified=True
+                )
+            document["tasks"][0]["runtime_contract_sha256"] = "0" * 64
+            path.write_text(json.dumps(document), encoding="utf-8")
+            with self.assertRaisesRegex(SystemExit, "runtime contract"):
+                MODULE._cohort_manifest_record(
+                    path, specs, include_uncertified=True
+                )
+
+    def test_frozen_exploratory_manifest_matches_current_contracts(self):
+        path = (
+            Path(__file__).resolve().parents[1]
+            / ".research/exploratory_2h_cohort_manifest_2026-07-27_v1.json"
+        )
+        document = json.loads(path.read_text(encoding="utf-8"))
+        specs = [
+            MODULE.find_task(row["task"], include_uncertified=True)
+            for row in document["tasks"]
+        ]
+        record = MODULE._cohort_manifest_record(
+            path, specs, include_uncertified=True
+        )
+        self.assertEqual(record["task_count"], 7)
+        self.assertEqual(
+            record["analysis_role"],
+            "result_selected_exploratory_measurement_screen",
+        )
+        self.assertFalse(record["confirmatory_reuse_permitted"])
+
     def test_resume_rejects_changed_experiment_config(self):
         client = type("Client", (), {"config": self.Config()})()
 
