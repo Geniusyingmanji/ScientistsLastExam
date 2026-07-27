@@ -42,6 +42,7 @@ from frontier_science.registry import find_task  # noqa: E402
 from frontier_science.runtime_migration import (  # noqa: E402
     compare_json_values,
     runtime_migration_status,
+    runtime_source_changes,
 )
 
 
@@ -201,13 +202,7 @@ def _science_metrics(metrics: dict[str, Any]) -> dict[str, Any]:
 
 
 def _source_changes(left: str, right: str) -> list[str]:
-    output = subprocess.check_output(
-        ["git", "diff", "--name-only", left, right, "--", *TASK_RUNTIME_SCOPE],
-        cwd=str(ROOT),
-        text=True,
-        stderr=subprocess.DEVNULL,
-    )
-    return [line for line in output.splitlines() if line.strip()]
+    return runtime_source_changes(left, right, TASK_RUNTIME_SCOPE, root=ROOT)
 
 
 def _source_scan(path: Path) -> dict[str, Any]:

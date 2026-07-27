@@ -4,7 +4,10 @@ import importlib.util
 import unittest
 from pathlib import Path
 
-from frontier_science.runtime_migration import compare_json_values
+from frontier_science.runtime_migration import (
+    compare_json_values,
+    filter_runtime_source_changes,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -21,6 +24,24 @@ def _audit_module():
 
 
 class RuntimeMigrationTests(unittest.TestCase):
+    def test_task_card_metadata_is_the_only_filtered_task_path(self):
+        changes = [
+            "benchmarks/ExampleDomain/ExampleTask/TASK_CARD.yaml",
+            "benchmarks/ExampleDomain/ExampleTask/Task.md",
+            "benchmarks/ExampleDomain/ExampleTask/solution.py",
+            "benchmarks/ExampleDomain/ExampleTask/verification/evaluator.py",
+            "benchmarks/ExampleDomain/ExampleTask/verification/data.json",
+            "benchmarks/ExampleDomain/ExampleTask/frontier_eval/__init__.py",
+            "frontier_science/evaluate.py",
+            "frontier_science/TASK_CARD.yaml",
+            "benchmarks/ExampleDomain/ExampleTask/verification/TASK_CARD.yaml",
+        ]
+
+        self.assertEqual(
+            filter_runtime_source_changes(changes),
+            changes[1:],
+        )
+
     def test_numeric_comparison_never_hides_structure_or_categories(self):
         accepted = compare_json_values(
             {"valid": 1.0, "rows": [{"score": 0.5}]},

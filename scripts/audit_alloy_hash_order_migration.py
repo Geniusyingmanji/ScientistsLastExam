@@ -39,6 +39,7 @@ from frontier_science.registry import find_task  # noqa: E402
 from frontier_science.runtime_migration import (  # noqa: E402
     RUNTIME_PATHS,
     runtime_migration_status,
+    runtime_source_changes,
 )
 
 
@@ -155,11 +156,7 @@ def _git_show(revision: str, relative: str) -> bytes:
 
 
 def _source_changes(left: str, right: str) -> list[str]:
-    output = subprocess.check_output(
-        ["git", "diff", "--name-only", left, right, "--", *TASK_RUNTIME_SCOPE],
-        cwd=str(ROOT), text=True,
-    )
-    return [line for line in output.splitlines() if line.strip()]
+    return runtime_source_changes(left, right, TASK_RUNTIME_SCOPE, root=ROOT)
 
 
 def _load(path: Path, name: str):

@@ -33,7 +33,10 @@ from frontier_science.provenance import (  # noqa: E402
     finalize_report_trust,
     source_provenance,
 )
-from frontier_science.runtime_migration import runtime_migration_status  # noqa: E402
+from frontier_science.runtime_migration import (  # noqa: E402
+    runtime_migration_status,
+    runtime_source_changes,
+)
 
 
 TASK = "MolecularDynamics/ForceFieldCalibration"
@@ -202,13 +205,7 @@ def _world_summary(metrics: dict[str, Any]) -> list[dict[str, Any]]:
 
 
 def _source_changes(left: str, right: str) -> list[str]:
-    output = subprocess.check_output(
-        ["git", "diff", "--name-only", left, right, "--", *TASK_RUNTIME_SCOPE],
-        cwd=str(ROOT),
-        text=True,
-        stderr=subprocess.DEVNULL,
-    )
-    return [line for line in output.splitlines() if line.strip()]
+    return runtime_source_changes(left, right, TASK_RUNTIME_SCOPE, root=ROOT)
 
 
 def _failure_kind(event: dict[str, Any]) -> str | None:

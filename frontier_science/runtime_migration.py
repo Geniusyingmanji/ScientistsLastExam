@@ -13,7 +13,7 @@ import hashlib
 import json
 import math
 import subprocess
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from typing import Any, Sequence
 
 
@@ -156,6 +156,51 @@ def _is_ancestor(left: str, right: str, root: Path = REPO_ROOT) -> bool:
         cwd=str(root), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
         check=False,
     ).returncode == 0
+
+
+def filter_runtime_source_changes(changes: Sequence[str]) -> list[str]:
+    """Remove task-card metadata, while retaining every executable input.
+
+    ``TASK_CARD.yaml`` documents a benchmark for reviewers but is not loaded by
+    the candidate, task specification, evaluator, or trusted runtime.  Older
+    analysis scripts scoped ``git diff`` to the whole task directory, so adding
+    these cards incorrectly looked like a runtime migration.  Keep the
+    exception deliberately exact: only ``benchmarks/<domain>/<task>/`` task
+    cards are metadata.  A same-named file anywhere else remains runtime-visible.
+    """
+
+    retained: list[str] = []
+    for value in changes:
+        relative = str(value).strip()
+        if not relative:
+            continue
+        parts = PurePosixPath(relative).parts
+        is_task_card = bool(
+            len(parts) == 4
+            and parts[0] == "benchmarks"
+            and parts[-1] == "TASK_CARD.yaml"
+        )
+        if not is_task_card:
+            retained.append(relative)
+    return retained
+
+
+def runtime_source_changes(
+    left: str,
+    right: str,
+    scope: Sequence[str],
+    *,
+    root: Path = REPO_ROOT,
+) -> list[str]:
+    """Return runtime-relevant paths changed between two revisions."""
+
+    output = subprocess.check_output(
+        ["git", "diff", "--name-only", left, right, "--", *scope],
+        cwd=str(root),
+        text=True,
+        stderr=subprocess.DEVNULL,
+    )
+    return filter_runtime_source_changes(output.splitlines())
 
 
 def runtime_migration_status(
