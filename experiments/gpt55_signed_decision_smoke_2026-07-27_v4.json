@@ -1,0 +1,565 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_SECURE_EVAL",
+  "evidence_scope": "PROTOCOL_SMOKE_ONLY_NOT_MODEL_PERFORMANCE",
+  "created_at": "2026-07-27T07:56:22.809918+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "9edab225b3cd85e5754fd778190a34d17ea65a6f",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "/home/azureuser/workspace-gzy/zyf/frontier-science/scripts/batch_evolve.py",
+      "--tasks",
+      "LennardJonesCluster",
+      "--algorithms",
+      "greedy_rewrite",
+      "--feedback-modes",
+      "normal",
+      "--seeds",
+      "0",
+      "--budget",
+      "1",
+      "--timeout",
+      "60",
+      "--active-wall-horizon",
+      "600",
+      "--sentinel-interval",
+      "300",
+      "--signed-decisions",
+      "--signed-decision-policy",
+      "record_only",
+      "--run-role",
+      "protocol_smoke",
+      "--workdir",
+      "runs/gpt55_signed_decision_smoke_2026-07-27_v4",
+      "--output",
+      "experiments/gpt55_signed_decision_smoke_2026-07-27_v4.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "config": {
+    "tasks": [
+      "Chemistry/LennardJonesCluster"
+    ],
+    "algorithms": [
+      "greedy_rewrite"
+    ],
+    "feedback_modes": [
+      "normal"
+    ],
+    "trajectory_snapshot_schema_version": 2,
+    "feedback_protocols": {
+      "normal": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace"
+    },
+    "condition_order": "reverse_parity",
+    "condition_order_randomization_seed": null,
+    "condition_order_schedule": [
+      {
+        "replicate_identifier": 0,
+        "feedback_modes": [
+          "normal"
+        ]
+      }
+    ],
+    "preregistration": null,
+    "cohort_manifest": null,
+    "run_role": "protocol_smoke",
+    "seeds": [
+      0
+    ],
+    "replicate_identifier_scope": "controls local Python/random ordering only; the endpoint exposes no server-side generation seed, so same-number cells do not share model draws",
+    "resource_matching": {
+      "proposal_budget_and_max_output_tokens": "matched by configuration",
+      "realized_input_output_and_total_tokens": "measured per event; not assumed matched; use a preregistered common-token horizon or model token imbalance explicitly"
+    },
+    "budget": 1,
+    "timeout_s": 60.0,
+    "active_wall_horizon_s": 600.0,
+    "sentinel_interval_s": 300.0,
+    "signed_decisions": true,
+    "signed_decision_policy": "record_only",
+    "boundary_sentinel_policy": {
+      "required": [
+        "t0",
+        "first_valid",
+        "submission",
+        "commit_or_abstain",
+        "fixed_grid",
+        "terminal"
+      ],
+      "implemented_by_runner": [
+        "t0",
+        "first_valid",
+        "submission",
+        "fixed_grid",
+        "terminal",
+        "commit_or_abstain"
+      ],
+      "commit_or_abstain": "record_only",
+      "late_result_policy": "retain result but prevent post-cutoff incumbent or feedback update"
+    },
+    "block_workers": 1,
+    "block_parallelism": {
+      "unit": "task_algorithm_replicate",
+      "within_block_conditions": "serial_in_condition_order_schedule",
+      "cross_block_scheduling": "fixed_submission_order_nonadaptive",
+      "maximum_concurrent_blocks": 1
+    },
+    "work_root": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/gpt55_signed_decision_smoke_2026-07-27_v4",
+    "llm_condition_sha256": "5b0df4671481f6b3505155bc6c5654a64c4da5591422fb806904e7d0f44fc4d2",
+    "llm": {
+      "wire": "responses",
+      "endpoint_sha256": "b22995a1fcaf8ad713ac37716f006c717313dfdebd357ac02a077a5582650bb6",
+      "model": "gpt-5.5",
+      "max_output_tokens": 16000,
+      "temperature": null,
+      "reasoning_effort": "low",
+      "input_cost_per_million": null,
+      "output_cost_per_million": null,
+      "server_side_seed_control": false
+    }
+  },
+  "runs": [
+    {
+      "task": "Chemistry/LennardJonesCluster",
+      "algorithm": "greedy_rewrite",
+      "feedback_mode": "normal",
+      "seed": 0,
+      "baseline": 0.041930443440283925,
+      "best": 0.9769435729119924,
+      "accepted": 1,
+      "evaluated": 2,
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/gpt55_signed_decision_smoke_2026-07-27_v4/Chemistry__LennardJonesCluster/greedy_rewrite/normal/seed_0",
+      "summary": {
+        "schema_version": 2,
+        "oracle_calls": 2,
+        "budget_units": 2,
+        "best_score": 0.9769435729119924,
+        "best_so_far_auc": 0.5094370081761381,
+        "valid_rate": 1.0,
+        "accepted": 1,
+        "wall_seconds": 52.22329416684806,
+        "llm": {
+          "calls": 1,
+          "provider_usage_records": 1,
+          "input_tokens": 1144,
+          "output_tokens": 3400,
+          "total_tokens": 4544,
+          "estimated_cost_usd": null
+        },
+        "algorithm": "greedy_rewrite",
+        "task_id": "Chemistry/LennardJonesCluster",
+        "seed": 0,
+        "baseline_score": 0.041930443440283925,
+        "budget": 1,
+        "feedback_mode": "normal",
+        "active_wall_horizon_s": 600.0,
+        "sentinel_interval_s": 300.0,
+        "horizon_reached": false,
+        "baseline_crossed_horizon": false,
+        "signed_decisions": true,
+        "signed_decision_policy": "record_only",
+        "latest_signed_endpoint_action": "commit",
+        "honored_signed_stop_action": null,
+        "sentinel_snapshot": {
+          "schema_version": 1,
+          "ledger_path": "sentinels/sentinel_events.jsonl",
+          "ledger_sha256": "4a29279d4a2ab60827a6daefbd763411e276e30eddc85a26f42af0822790c180",
+          "event_count": 5,
+          "type_counts": {
+            "abstain": 0,
+            "commit": 1,
+            "first_valid": 1,
+            "fixed_grid": 0,
+            "submission": 1,
+            "t0": 1,
+            "terminal": 1
+          },
+          "has_terminal": true,
+          "events": [
+            {
+              "artifact_path": "sentinels/artifacts/f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60/candidate.py",
+              "artifact_published_elapsed_seconds": 0.0,
+              "artifact_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+              "artifact_utf8_bytes": 760,
+              "capture_lag_seconds": null,
+              "capture_method": "atomic_state_transition",
+              "evaluation": {
+                "path": "sentinels/evaluations/c8c7b8a8caa56055da7655f74c5879ed6b4e546be2b694f3945ef0f3fe096fce.json",
+                "sha256": "c8c7b8a8caa56055da7655f74c5879ed6b4e546be2b694f3945ef0f3fe096fce",
+                "status": "completed"
+              },
+              "evaluation_completed_elapsed_seconds": 0.49032734613865614,
+              "feedback_visible": true,
+              "idempotency_key": "t0",
+              "metadata": {},
+              "provider_response": {
+                "path": null,
+                "sha256": null,
+                "utf8_bytes": null
+              },
+              "reason": null,
+              "recorded_at_utc": "2026-07-27T07:56:23.475570+00:00",
+              "recorded_elapsed_seconds": 0.49032734613865614,
+              "scheduled_elapsed_seconds": null,
+              "schema_version": 1,
+              "selection_policy": "baseline",
+              "sentinel_type": "t0",
+              "sequence": 0,
+              "source_step": 0
+            },
+            {
+              "artifact_path": "sentinels/artifacts/7c35c964d87702763f7ab28f2df53633a79766ddbee394bfbdbbb03403596715/candidate.py",
+              "artifact_published_elapsed_seconds": 50.05660507641733,
+              "artifact_sha256": "7c35c964d87702763f7ab28f2df53633a79766ddbee394bfbdbbb03403596715",
+              "artifact_utf8_bytes": 6908,
+              "capture_lag_seconds": null,
+              "capture_method": "atomic_state_transition",
+              "evaluation": {
+                "path": null,
+                "sha256": null,
+                "status": "not_evaluated"
+              },
+              "evaluation_completed_elapsed_seconds": null,
+              "feedback_visible": false,
+              "idempotency_key": "submission:1",
+              "metadata": {
+                "decision_made_before_evaluation": true,
+                "response_sha256": "b6273b5cf2c00b36d7281ebdace28bfa4772fe8a4b276a9bca8a6909219c57d1",
+                "signed_decision": {
+                  "action": "commit",
+                  "rationale": "The program replaces the weak random baseline with deterministic motif generation plus analytic-gradient L-BFGS relaxation. It explicitly includes Mackay icosahedral clusters and multiple FCC variants to target difficult cases such as N=38, while remaining self-contained and bounded in runtime."
+                }
+              },
+              "provider_response": {
+                "path": "sentinels/responses/b6273b5cf2c00b36d7281ebdace28bfa4772fe8a4b276a9bca8a6909219c57d1.txt",
+                "sha256": "b6273b5cf2c00b36d7281ebdace28bfa4772fe8a4b276a9bca8a6909219c57d1",
+                "utf8_bytes": 7268
+              },
+              "reason": null,
+              "recorded_at_utc": "2026-07-27T07:57:13.093045+00:00",
+              "recorded_elapsed_seconds": 50.05660507641733,
+              "scheduled_elapsed_seconds": null,
+              "schema_version": 1,
+              "selection_policy": "agent_submission_before_evaluation",
+              "sentinel_type": "submission",
+              "sequence": 1,
+              "source_step": 1
+            },
+            {
+              "artifact_path": "sentinels/artifacts/7c35c964d87702763f7ab28f2df53633a79766ddbee394bfbdbbb03403596715/candidate.py",
+              "artifact_published_elapsed_seconds": 50.05660507641733,
+              "artifact_sha256": "7c35c964d87702763f7ab28f2df53633a79766ddbee394bfbdbbb03403596715",
+              "artifact_utf8_bytes": 6908,
+              "capture_lag_seconds": null,
+              "capture_method": "atomic_state_transition",
+              "evaluation": {
+                "path": null,
+                "sha256": null,
+                "status": "not_evaluated"
+              },
+              "evaluation_completed_elapsed_seconds": null,
+              "feedback_visible": false,
+              "idempotency_key": "decision:1",
+              "metadata": {
+                "decision_made_before_evaluation": true,
+                "decision_policy": "record_only",
+                "evaluation_not_visible_when_deciding": true,
+                "evaluation_result_bound_by_trajectory_step": 1,
+                "rationale": "The program replaces the weak random baseline with deterministic motif generation plus analytic-gradient L-BFGS relaxation. It explicitly includes Mackay icosahedral clusters and multiple FCC variants to target difficult cases such as N=38, while remaining self-contained and bounded in runtime.",
+                "response_sha256": "b6273b5cf2c00b36d7281ebdace28bfa4772fe8a4b276a9bca8a6909219c57d1"
+              },
+              "provider_response": {
+                "path": "sentinels/responses/b6273b5cf2c00b36d7281ebdace28bfa4772fe8a4b276a9bca8a6909219c57d1.txt",
+                "sha256": "b6273b5cf2c00b36d7281ebdace28bfa4772fe8a4b276a9bca8a6909219c57d1",
+                "utf8_bytes": 7268
+              },
+              "reason": null,
+              "recorded_at_utc": "2026-07-27T07:57:13.096798+00:00",
+              "recorded_elapsed_seconds": 50.05660507641733,
+              "scheduled_elapsed_seconds": null,
+              "schema_version": 1,
+              "selection_policy": "signed_agent_commit_before_evaluation",
+              "sentinel_type": "commit",
+              "sequence": 2,
+              "source_step": 1
+            },
+            {
+              "artifact_path": "sentinels/artifacts/7c35c964d87702763f7ab28f2df53633a79766ddbee394bfbdbbb03403596715/candidate.py",
+              "artifact_published_elapsed_seconds": 50.05660507641733,
+              "artifact_sha256": "7c35c964d87702763f7ab28f2df53633a79766ddbee394bfbdbbb03403596715",
+              "artifact_utf8_bytes": 6908,
+              "capture_lag_seconds": null,
+              "capture_method": "atomic_state_transition",
+              "evaluation": {
+                "path": "sentinels/evaluations/818d44932af6f931abdcdbbf583f61c6c8674aa43e5e4e24f5dd6eed76d8c61e.json",
+                "sha256": "818d44932af6f931abdcdbbf583f61c6c8674aa43e5e4e24f5dd6eed76d8c61e",
+                "status": "completed"
+              },
+              "evaluation_completed_elapsed_seconds": 52.22329416684806,
+              "feedback_visible": true,
+              "idempotency_key": "first_valid",
+              "metadata": {},
+              "provider_response": {
+                "path": null,
+                "sha256": null,
+                "utf8_bytes": null
+              },
+              "reason": null,
+              "recorded_at_utc": "2026-07-27T07:57:15.318286+00:00",
+              "recorded_elapsed_seconds": 52.22329416684806,
+              "scheduled_elapsed_seconds": null,
+              "schema_version": 1,
+              "selection_policy": "first_valid",
+              "sentinel_type": "first_valid",
+              "sequence": 3,
+              "source_step": 1
+            },
+            {
+              "artifact_path": "sentinels/artifacts/7c35c964d87702763f7ab28f2df53633a79766ddbee394bfbdbbb03403596715/candidate.py",
+              "artifact_published_elapsed_seconds": 50.05660507641733,
+              "artifact_sha256": "7c35c964d87702763f7ab28f2df53633a79766ddbee394bfbdbbb03403596715",
+              "artifact_utf8_bytes": 6908,
+              "capture_lag_seconds": 0.0,
+              "capture_method": "atomic_state_transition",
+              "evaluation": {
+                "path": "sentinels/evaluations/818d44932af6f931abdcdbbf583f61c6c8674aa43e5e4e24f5dd6eed76d8c61e.json",
+                "sha256": "818d44932af6f931abdcdbbf583f61c6c8674aa43e5e4e24f5dd6eed76d8c61e",
+                "status": "reused_deterministic"
+              },
+              "evaluation_completed_elapsed_seconds": 52.22329416684806,
+              "feedback_visible": false,
+              "idempotency_key": "terminal",
+              "metadata": {},
+              "provider_response": {
+                "path": null,
+                "sha256": null,
+                "utf8_bytes": null
+              },
+              "reason": "proposal_budget_exhausted_before_active_wall_horizon",
+              "recorded_at_utc": "2026-07-27T07:57:15.336940+00:00",
+              "recorded_elapsed_seconds": 52.22329416684806,
+              "scheduled_elapsed_seconds": 600.0,
+              "schema_version": 1,
+              "selection_policy": "terminal_workspace_artifact",
+              "sentinel_type": "terminal",
+              "sequence": 4,
+              "source_step": 1
+            }
+          ]
+        },
+        "evaluation_ledger_snapshot": {
+          "schema_version": 1,
+          "semantics": "exactly_once_logical_scientific_outcome_and_oracle_budget_for_deterministic_local_evaluators_not_physical_exactly_once_execution",
+          "request_count": 2,
+          "receipt_count": 2,
+          "attempt_count": 2,
+          "incomplete_attempt_count": 0,
+          "infrastructure_failure_attempt_count": 0,
+          "open_request_ids": [],
+          "request_ids": [
+            "396e67c45ef5c4d279505fc74163e11565d219046bd9a5d6550f48106cfa256d",
+            "e167ba76c6102ce272db1bfcccb18ab5bced506a9aece7062c42ccb1d6e9aa1e"
+          ],
+          "receipt_ids": [
+            "396e67c45ef5c4d279505fc74163e11565d219046bd9a5d6550f48106cfa256d",
+            "e167ba76c6102ce272db1bfcccb18ab5bced506a9aece7062c42ccb1d6e9aa1e"
+          ]
+        },
+        "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+        "selection_policy": "online_incumbent"
+      },
+      "trajectory_snapshot": {
+        "schema_version": 2,
+        "trajectory_sha256": "269abd8a738cd78a8d4c2a0e648e04767512dc23dd24db829dfcfce9ab52ddf1",
+        "events": [
+          {
+            "schema_version": 2,
+            "step": 0,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "score": 0.041930443440283925,
+            "best_score": 0.041930443440283925,
+            "valid": true,
+            "accepted": true,
+            "wall_seconds": 0.49032734613865614,
+            "cumulative_wall_seconds": 0.49032734613865614,
+            "candidate_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+            "parent_sha256": null,
+            "metrics": {
+              "combined_score": 0.041930443440283925,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.041930443440283925,
+              "valid": 1.0
+            },
+            "llm": {},
+            "algorithm_metadata": {
+              "evaluation_request_id": "e167ba76c6102ce272db1bfcccb18ab5bced506a9aece7062c42ccb1d6e9aa1e",
+              "evaluation_receipt_reused": false,
+              "evaluation_receipt_committed": true
+            },
+            "error": null
+          },
+          {
+            "schema_version": 2,
+            "step": 1,
+            "oracle_calls": 2,
+            "budget_units": 2,
+            "score": 0.9769435729119924,
+            "best_score": 0.9769435729119924,
+            "valid": true,
+            "accepted": true,
+            "wall_seconds": 51.73296682070941,
+            "cumulative_wall_seconds": 52.22329416684806,
+            "candidate_sha256": "7c35c964d87702763f7ab28f2df53633a79766ddbee394bfbdbbb03403596715",
+            "parent_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+            "metrics": {
+              "combined_score": 0.9769435729119924,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.9769435729119924,
+              "valid": 1.0
+            },
+            "llm": {
+              "usage_available": true,
+              "pricing_available": false,
+              "input_tokens": 1144,
+              "output_tokens": 3400,
+              "total_tokens": 4544,
+              "estimated_cost_usd": null
+            },
+            "algorithm_metadata": {
+              "selection_policy": "online_incumbent",
+              "accepted_semantics": "online_incumbent_update",
+              "proposal_slot": 1,
+              "prompt_source_step": 0,
+              "feedback_released_through_step": 0,
+              "prompt_sha256": "4b247bcc6e0e997e5fcc0d7af672f57efee82f50dcff5d54e78a72994af74aa2",
+              "prompt_utf8_bytes": 4290,
+              "prompt_program_utf8_bytes": 760,
+              "prompt_metrics_sha256": "8c21d80e455be2b77cf42c48fde07d304e4f26a6b7ed74f708291582bc380323",
+              "prompt_metrics_utf8_bytes": 124,
+              "prompt_metric_keys": "combined_score,feasibility_rate,raw_score,valid",
+              "proposal_published_wall_seconds": 50.05660507641733,
+              "completed_after_active_wall_horizon": false,
+              "signed_decision_action": "commit",
+              "evaluation_request_id": "396e67c45ef5c4d279505fc74163e11565d219046bd9a5d6550f48106cfa256d",
+              "evaluation_receipt_reused": false,
+              "evaluation_receipt_committed": true
+            },
+            "error": null
+          }
+        ]
+      },
+      "protocol_incomplete": "proposal_budget_exhausted_before_active_wall_horizon",
+      "execution_block_index": 1,
+      "within_block_position": 1
+    }
+  ],
+  "warning": "Protocol/calibration run: validates configured artifacts and accounting; do not treat it as population model performance.",
+  "aggregate": {
+    "attempt_count": 1,
+    "superseded_attempts": 0,
+    "failed_attempts": 0,
+    "protocol_incomplete_attempts": 1,
+    "attempt_failure_rate": 0.0,
+    "recovered_runs": 0,
+    "successful_runs": 0,
+    "failed_runs": 1,
+    "intent_to_evaluate": {
+      "scheduled_runs": 1,
+      "successful_runs": 0,
+      "terminal_failed_runs": 1,
+      "completion_rate": 0.0,
+      "run_cells_with_any_failed_attempt": 0,
+      "run_cells_with_protocol_incomplete_attempt": 1,
+      "recovered_runs": 0
+    },
+    "quality_metrics_scope": "latest successful runs only; interpret jointly with intent_to_evaluate and failed_attempts",
+    "by_condition": {
+      "Chemistry/LennardJonesCluster|greedy_rewrite|normal": {
+        "n": 0,
+        "scheduled_n": 1,
+        "successful_runs": 0,
+        "terminal_failed_runs": 1,
+        "completion_rate": 0.0,
+        "attempt_count": 1,
+        "failed_attempts": 0,
+        "protocol_incomplete_attempts": 1,
+        "recovered_runs": 0,
+        "best_score": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "best_so_far_auc": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "budget_units": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "oracle_calls": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "wall_seconds": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "input_tokens": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "output_tokens": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "total_tokens": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        },
+        "estimated_cost_usd": {
+          "n": 0,
+          "mean": null,
+          "ci95_low": null,
+          "ci95_high": null
+        }
+      }
+    },
+    "overall": {},
+    "overall_valid_only": {}
+  },
+  "completed_at": "2026-07-27T07:57:15.367628+00:00",
+  "execution_passed": false,
+  "trust_decision": "execution_failed",
+  "trusted_evidence": false,
+  "passed": false
+}
