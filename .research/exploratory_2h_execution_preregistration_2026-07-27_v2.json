@@ -1,0 +1,235 @@
+{
+  "schema_version": 1,
+  "preregistration_id": "frontier_science_exploratory_2h_execution_v2",
+  "frozen_at_utc": "2026-07-27",
+  "purpose": "seven_task_gpt55_exploratory_fixed_duration_measurement_screen",
+  "claim_limit": "result_selected_single_trajectory_per_task_exploratory_calibration_not_population_model_ranking_feedback_causality_scaling_law_confirmatory_science_external_validation_or_autonomous_discovery",
+  "supersedes": ".research/exploratory_2h_execution_preregistration_2026-07-27_v1.json",
+  "supersession_reason": "v1 was never executed; pre-execution review found that the proposal safety ceiling was exposed as an intended iteration count and that generic preregistration binding did not enforce the exact command, task packages, model condition, prerequisites or clean committed source. v2 binds the repaired runner and refreshed gates before any seven-task model call.",
+  "source_cohort": {
+    "path": ".research/exploratory_2h_cohort_manifest_2026-07-27_v1.json",
+    "sha256": "2d4cb9dfb0ba566ac924ffc8b537516f358999e734bfd01af831ad22770b0d98",
+    "selected_after_inspecting_short_budget_gpt55_results": true,
+    "confirmatory_reuse_permitted": false
+  },
+  "frozen_source": {
+    "parent_revision": "66ca453252c5c72d41cf83c911e238729edd3ebc",
+    "runtime_source_sha256": "b96f9971b53474dc2150ec2d658d2afff6406338e90f06e045582f32167654b8",
+    "source_change_rule": "The execution commit may descend from parent_revision only through files outside frontier_science, scripts, tests, benchmarks and requirements-upstream.txt. Any scoped source change requires a new preregistration and refreshed full-suite, security, recovery and measurement-health gates."
+  },
+  "model_condition": {
+    "llm_condition_sha256": "5b0df4671481f6b3505155bc6c5654a64c4da5591422fb806904e7d0f44fc4d2",
+    "wire": "responses",
+    "endpoint_sha256": "b22995a1fcaf8ad713ac37716f006c717313dfdebd357ac02a077a5582650bb6",
+    "model": "gpt-5.5",
+    "max_output_tokens": 16000,
+    "temperature": null,
+    "reasoning_effort": "low",
+    "provider_request_timeout_seconds": 900,
+    "server_side_seed_control": false,
+    "replicate_identifier_limit": "The local identifier controls local Python ordering only and does not control the provider draw."
+  },
+  "design": {
+    "analysis_role": "result_selected_exploratory_measurement_screen",
+    "task_count": 7,
+    "scheduled_cell_count": 7,
+    "algorithm": "greedy_rewrite",
+    "feedback_mode": "normal",
+    "local_replicate_identifiers": [0],
+    "run_count_per_task": 1,
+    "active_wall_horizon_seconds": 7200,
+    "proposal_budget_upper_bound": 100000,
+    "proposal_budget_interpretation": "Operational safety ceiling only. It is not exposed as an intended iteration count. Exhausting it before 7200 active seconds is protocol_incomplete, not a completed two-hour run.",
+    "evaluator_timeout_seconds": 300,
+    "sentinel_interval_seconds": 1800,
+    "required_sentinels": [
+      "t0",
+      "first_valid",
+      "every_submission",
+      "every_signed_commit_or_abstention",
+      "fixed_grid_1800_3600_5400_7200",
+      "terminal"
+    ],
+    "signed_decisions": true,
+    "signed_decision_policy": "record_only",
+    "block_workers": 3,
+    "parallelism_unit": "task_algorithm_replicate",
+    "within_cell_execution": "serial",
+    "cross_cell_submission_order": "frozen_task_order_nonadaptive",
+    "completion_order_changes_analysis": false,
+    "tasks": [
+      {
+        "task": "Electrochemistry/ElectrolyteConductivityDesign",
+        "scientific_role": "real_data_optimization_goodhart_repeatability_and_untouched_confirmation",
+        "task_contract_sha256": "f334c386ec9021cc5f4a13a75abbefce4a4e49f24c7f103f86e7a7f4a594c355",
+        "task_package_sha256": "a57fe86e2770a88add277c8e1d4391095407c2e56e868a697ff47e099dd8513c",
+        "task_card_sha256": "aaaa34f20954cce55180ea56b1c7ef9285a377194df3fbb89ff9822fafbdca61"
+      },
+      {
+        "task": "Optics/DiffractionGratingDesign",
+        "scientific_role": "maxwell_design_transfer_fabrication_angle_robustness_and_confirmation",
+        "task_contract_sha256": "476d23427837de38f663802bd512cea25483ba2e5f8b162f71af08624f1f1dd2",
+        "task_package_sha256": "b50d01433e8aa712066e1dec6fad2f5333f373b107d45a9a5aeb77f8ed1fc300",
+        "task_card_sha256": "22c22a90b2940063a37488fc1cadc31445713c27fe8661e14cd868a384d9b8b4"
+      },
+      {
+        "task": "RNAEngineering/RNAInverseDesign",
+        "scientific_role": "ensemble_inverse_design_proxy_false_promotion_and_heldout_transfer",
+        "task_contract_sha256": "9a9abd18da5b93e3fe04d816be731429ace1d7b4ae6e8d858436cb7ba3769e62",
+        "task_package_sha256": "0455755f51ae9de88beccb842176e5b309765b86805a9bb1e7909aa91b6757e7",
+        "task_card_sha256": "84dae5b35ca582a19391ea2f04b8a64dbee2682c88ef72635f4bf5bf7346119b"
+      },
+      {
+        "task": "Semiconductor/MOSFETDoping",
+        "scientific_role": "device_pareto_transfer_and_worst_shift_robustness",
+        "task_contract_sha256": "c52459ac88c51fd4e6a77f4830e9594a2cefa3920225dacf55dd1373e2dec257",
+        "task_package_sha256": "b9af1b4be57f58640afc339226aaef522ff06ea0f68417b23ecbd79ba0444b40",
+        "task_card_sha256": "45a615a06c1b0c6db599d502373fed7007175d84f078d7009d05fd7764c3c36a"
+      },
+      {
+        "task": "StructuralEngineering/TrussWeightMinimization",
+        "scientific_role": "structural_optimization_feasibility_and_sealed_physical_robustness",
+        "task_contract_sha256": "ea318d1cd2af57c5d92283c37c83a0da3101bace10dfb92739001922e5bc8e48",
+        "task_package_sha256": "0db30b79e58fe218223188c53eb05b3a90e2a1cb77171f8f0a61059b2fb715ee",
+        "task_card_sha256": "fb34670aeb0b25b361ac40dd12b6588dc8853ffdacdd65660bac1f0831033901"
+      },
+      {
+        "task": "Thermodynamics/HeatExchangerDesign",
+        "scientific_role": "multifidelity_pareto_fouling_manufacturing_robustness_and_confirmation",
+        "task_contract_sha256": "2f43dd188db50935077e4094c574e71bcd2683e4ce0e147a0b98e66b357b7b7a",
+        "task_package_sha256": "1e40c98b286e1ea868910ee67635780005a993de08293160bb70c650e00ffc24",
+        "task_card_sha256": "a21c3338555c0b64c460e6d7bd241b7e0d5bfc6d974477dda4bb047e37cf8cdf"
+      },
+      {
+        "task": "Turbulence/RANSCalibration",
+        "scientific_role": "public_dns_closure_calibration_higher_re_transfer_and_minimax_robustness",
+        "task_contract_sha256": "f7bfb7a0bcb351dddd3a0ba387c30691ddbb6b60e25598fb1ab45d70b46cb561",
+        "task_package_sha256": "8f1b7ab64cfafba91c160ffa7e10e378a01285448cf084baa672f9b67d7c7b57",
+        "task_card_sha256": "78e3a26b06428658f6a9c74b8c1c870b6afa3a072c43488deccad6d23c044271"
+      }
+    ],
+    "primary_command": [
+      "python3",
+      "scripts/batch_evolve.py",
+      "--all",
+      "--tasks",
+      "Electrochemistry/ElectrolyteConductivityDesign,Optics/DiffractionGratingDesign,RNAEngineering/RNAInverseDesign,Semiconductor/MOSFETDoping,StructuralEngineering/TrussWeightMinimization,Thermodynamics/HeatExchangerDesign,Turbulence/RANSCalibration",
+      "--algorithms",
+      "greedy_rewrite",
+      "--feedback-modes",
+      "normal",
+      "--seeds",
+      "0",
+      "--budget",
+      "100000",
+      "--timeout",
+      "300",
+      "--active-wall-horizon",
+      "7200",
+      "--sentinel-interval",
+      "1800",
+      "--signed-decisions",
+      "--signed-decision-policy",
+      "record_only",
+      "--block-workers",
+      "3",
+      "--llm-config",
+      "frontier_science/conf/llm/local.yaml",
+      "--run-role",
+      "calibration",
+      "--preregistration",
+      ".research/exploratory_2h_execution_preregistration_2026-07-27_v2.json",
+      "--cohort-manifest",
+      ".research/exploratory_2h_cohort_manifest_2026-07-27_v1.json",
+      "--workdir",
+      "runs/exploratory_2h_gpt55_2026-07-27_v2",
+      "--output",
+      "experiments/exploratory_2h_gpt55_2026-07-27_v2.json"
+    ]
+  },
+  "prerequisites": [
+    {
+      "role": "full_test_suite",
+      "path": "experiments/full_test_suite_2026-07-27_v27.json",
+      "sha256": "eb3ddc735d3d6e70ab96c3a837f8c3fd632fa7af0e7c123a9f22a1619251a4c1",
+      "required": "execution_passed=true, trusted_evidence=true, test_count=649, returncode=0"
+    },
+    {
+      "role": "secure_eval_audit",
+      "path": "experiments/security_audit_2026-07-27_v49.json",
+      "sha256": "c5c1b7476f5dcd40644c722fbdf90578be0a19cedc423e390ddc101bdc42b4cc",
+      "required": "execution_passed=true, trusted_evidence=true, test_count=23, returncode=0"
+    },
+    {
+      "role": "measurement_health_preflight",
+      "path": "experiments/measurement_health_preflight_2026-07-27_v3.json",
+      "sha256": "9e4192ee93808a48a55da2e8a99c75ab7247ffdfc3e94a4bcf9d6f725db72771",
+      "required": "7/7 tasks pass, 70 pass, 0 fail, 0 missing"
+    },
+    {
+      "role": "scientific_materiality_audit",
+      "path": "experiments/scientific_materiality_audit_2026-07-27_v1.json",
+      "sha256": "26d4df326d7307c1274f01554822a48f3b3cdc49ac9fdb2be7bacf668ed1f460",
+      "required": "7/7 task contracts pass with raw-domain development, held-out or confirmation, and robustness witnesses"
+    },
+    {
+      "role": "evaluation_recovery_fault_audit",
+      "path": "experiments/evaluation_recovery_fault_audit_2026-07-27_v2.json",
+      "sha256": "efa7bd6618541e7be49d4e4c6e839c412a2241ee8d93e103e79538bcd97c7e74",
+      "required": "execution_passed=true, trusted_evidence=true, all eight fault scenarios pass with no issues"
+    },
+    {
+      "role": "fixed_duration_sentinel_negative_smoke",
+      "path": "experiments/exploratory_2h_sentinel_smoke_audit_2026-07-27_v1.json",
+      "sha256": "92009260e300ebd9a1731bd5f862e63654d4065c6000b7d0c42552e891ffb7cb",
+      "required": "expected-negative fail-closed horizon and sentinel accounting audit passes"
+    },
+    {
+      "role": "keyless_gpt55_fixed_duration_signed_decision_smoke",
+      "path": "experiments/gpt55_signed_decision_smoke_audit_2026-07-27_v2.json",
+      "sha256": "9d48e90e99957424c4dcb9f21306873645fd642a32f3cd42269f9a6fe55d0ab9",
+      "required": "current real endpoint fixed-duration prompt, signed submission, commit-before-evaluation and sentinel lineage audit passes"
+    }
+  ],
+  "analysis": {
+    "intent_to_evaluate_denominator": 7,
+    "primary_time_grid_seconds": [0, 1800, 3600, 5400, 7200],
+    "endpoint_policies": [
+      "terminal_in_horizon_incumbent",
+      "latest_signed_commit_or_abstention",
+      "observer_best_so_far_envelope"
+    ],
+    "endpoint_separation": "Never replace terminal or signed autonomous endpoints with a post-hoc best hidden snapshot.",
+    "primary_measurement_outcomes": [
+      "scheduled_started_captured_judged_valid_terminal_counts",
+      "first_valid_time_and_probability_as_observed_not_provider_seed_controlled",
+      "best_so_far_curve_and_wall_time_auc",
+      "oracle_calls_provider_tokens_active_wall_time_and_failure_taxonomy",
+      "regression_recovery_commit_and_abstention_events"
+    ],
+    "scientific_outcome_rule": "Keep every task's raw-domain nominal, held-out or confirmation, robustness, feasibility, proxy-false-promotion and failure axes separate. Apply the frozen scientific materiality contract to the same witness; combined_score alone cannot establish scientific materiality.",
+    "cross_task_summary_rule": "Equal-task descriptive completion and event summaries are allowed. Do not average heterogeneous raw scientific axes into one discovery score.",
+    "headroom_rule": "This study describes behavior through two hours only. It cannot establish material post-2h headroom; that requires the preselected unconditional 12h audit tranche.",
+    "uncertainty_rule": "One uncontrolled provider trajectory per task supports no sampling interval, significance test, task-population effect, scaling law or model ranking.",
+    "common_conclusion_rule": "A cross-task pattern may be called a hypothesis-generating commonality only when the task-level direction is shown explicitly and alternative explanations from validity, feasibility, measurement noise, proxy promotion, selection, transfer, robustness and confirmation are retained."
+  },
+  "failure_retry_and_stopping": {
+    "risk_set": "Run all seven scheduled cells to their declared horizon regardless of apparent score direction or signed commit/abstention.",
+    "outer_infrastructure_retry": "Resume only the identical hash-bound cell and pending provider response. Retain every failed outer attempt; never redraw or silently replace history.",
+    "candidate_invalidity": "Consumes a proposal slot and remains an outcome.",
+    "late_result": "Retain it, but do not allow it to change the in-horizon incumbent or feedback.",
+    "protocol_incomplete": "Proposal ceiling exhaustion, baseline exceeding horizon, missing required sentinel, contract drift or unrecoverable infrastructure failure fails the cell closed.",
+    "outcome_adaptive_stopping": false
+  },
+  "unconditional_12h_followup": {
+    "selection_source": ".research/exploratory_2h_cohort_manifest_2026-07-27_v1.json",
+    "tasks": [
+      "Optics/DiffractionGratingDesign",
+      "Electrochemistry/ElectrolyteConductivityDesign",
+      "Thermodynamics/HeatExchangerDesign"
+    ],
+    "execution_plan": ".research/continuous_restart_preregistration_2026-07-27_v1.json",
+    "membership_must_not_change_after_two_hour_results": true,
+    "interpretation": "The separately disclosed 12h trajectories estimate a 12h-aware policy and their matched prefixes. The independent 2h runs in this preregistration estimate a disclosed 2h policy; the two estimands must not be conflated."
+  }
+}
