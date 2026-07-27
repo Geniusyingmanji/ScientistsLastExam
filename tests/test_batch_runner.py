@@ -322,6 +322,33 @@ class BatchAggregationTests(unittest.TestCase):
             self.assertIn("wall_seconds", snapshot["events"][0])
             self.assertIn("cumulative_wall_seconds", snapshot["events"][0])
 
+    def test_nonzero_protocol_smoke_cannot_be_labelled_model_performance(self):
+        client = type("Client", (), {"config": self.Config()})()
+        clean = {"git_available": True, "git_revision": "abc",
+                 "source_tree_dirty": False, "source_changes": []}
+        with tempfile.TemporaryDirectory() as tmp, patch.object(
+            MODULE, "load_llm_client", return_value=client
+        ), patch.object(MODULE, "source_provenance", return_value=clean):
+            root = Path(tmp)
+            output = root / "report.json"
+            # Budget zero keeps this fixture offline, while run-role exercises
+            # the same evidence-scope branch used by a nonzero protocol smoke.
+            MODULE.main([
+                "--tasks", "LennardJonesCluster",
+                "--budget", "0",
+                "--seeds", "0",
+                "--run-role", "protocol_smoke",
+                "--workdir", str(root / "runs"),
+                "--output", str(output),
+            ])
+            report = json.loads(output.read_text(encoding="utf-8"))
+        self.assertEqual(
+            report["evidence_scope"],
+            "PROTOCOL_SMOKE_ONLY_NOT_MODEL_PERFORMANCE",
+        )
+        self.assertEqual(report["config"]["run_role"], "protocol_smoke")
+        self.assertIn("do not treat", report["warning"])
+
     def test_preregistration_is_hash_bound_into_config(self):
         client = type("Client", (), {"config": self.Config()})()
         clean = {"git_available": True, "git_revision": "abc",

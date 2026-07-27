@@ -560,6 +560,12 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("--llm-config", default=None)
     parser.add_argument(
+        "--run-role",
+        choices=("performance", "calibration", "protocol_smoke"),
+        default="performance",
+        help="claim-bounded role recorded in evidence_scope",
+    )
+    parser.add_argument(
         "--preregistration", type=Path, default=None,
         help="immutable preregistration artifact to hash-bind into the report",
     )
@@ -665,6 +671,7 @@ def main(argv: list[str] | None = None) -> int:
         ],
         "preregistration": _preregistration_record(args.preregistration),
         "cohort_manifest": cohort_manifest,
+        "run_role": args.run_role,
         "seeds": args.seeds,
         "replicate_identifier_scope": (
             "controls local Python/random ordering only; the endpoint exposes no "
@@ -746,16 +753,23 @@ def main(argv: list[str] | None = None) -> int:
         document = {
             "schema_version": 1,
             "trust_status": "TRUSTED_SECURE_EVAL",
-            "evidence_scope": "PROTOCOL_SMOKE_ONLY" if args.budget == 0 else "MODEL_PERFORMANCE",
+            "evidence_scope": (
+                "PROTOCOL_SMOKE_ONLY_NOT_MODEL_PERFORMANCE"
+                if args.run_role == "protocol_smoke"
+                else "MODEL_CALIBRATION_NOT_POPULATION_PERFORMANCE"
+                if args.run_role == "calibration"
+                else "MODEL_PERFORMANCE"
+            ),
             "created_at": datetime.now(timezone.utc).isoformat(),
             "source_provenance": provenance,
             "environment": current_environment,
             "config": experiment_config,
             "runs": [],
         }
-        if args.budget == 0:
+        if args.run_role == "protocol_smoke" or args.budget == 0:
             document["warning"] = (
-                "Baseline-only multi-seed smoke: validates protocol/artifacts, not search performance."
+                "Protocol/calibration run: validates configured artifacts and accounting; "
+                "do not treat it as population model performance."
             )
     done = {
         _run_key(run["task"], run["algorithm"], run["feedback_mode"], int(run["seed"]))
