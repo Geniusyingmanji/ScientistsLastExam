@@ -139,11 +139,19 @@ def _build_prompt(
     shown = search_visible_metrics(metrics)
     slot = ""
     if proposal_slot is not None and proposal_budget is not None:
-        slot = (
-            "## Preregistered proposal slot\n"
-            f"This is proposal {proposal_slot} of {proposal_budget}. Explore a concrete "
-            "implementation improvement appropriate to this slot.\n\n"
-        )
+        if active_wall_horizon_s is None:
+            slot = (
+                "## Preregistered proposal slot\n"
+                f"This is proposal {proposal_slot} of {proposal_budget}. Explore a concrete "
+                "implementation improvement appropriate to this slot.\n\n"
+            )
+        else:
+            slot = (
+                "## Current fixed-duration attempt\n"
+                f"This is proposal {proposal_slot} in a fixed-duration run. The configured "
+                "proposal ceiling is an operational safety bound, not an intended iteration "
+                "count. Plan only against the active-time horizon below.\n\n"
+            )
     horizon = ""
     if active_wall_horizon_s is not None and active_wall_elapsed_s is not None:
         remaining = max(0.0, active_wall_horizon_s - active_wall_elapsed_s)

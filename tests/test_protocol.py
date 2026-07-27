@@ -499,6 +499,9 @@ class GreedyRewriteTests(unittest.TestCase):
         self.assertIsNone(submission["evaluation"]["sha256"])
         self.assertIn("Preregistered active-time horizon", llm.prompts[0])
         self.assertIn("10.000 active wall seconds", llm.prompts[0])
+        self.assertIn("proposal 1 in a fixed-duration run", llm.prompts[0])
+        self.assertIn("operational safety bound", llm.prompts[0])
+        self.assertNotIn("proposal 1 of 1", llm.prompts[0])
 
     def test_late_result_is_retained_but_cannot_update_incumbent(self):
         spec = find_task("LennardJonesCluster")

@@ -16,6 +16,7 @@ import json
 import multiprocessing
 import platform
 import random
+import subprocess
 import sys
 import time
 from datetime import datetime, timezone
@@ -29,13 +30,19 @@ from frontier_science.algorithms import ALGORITHMS, get_algorithm  # noqa: E402
 from frontier_science.algorithms.common import llm_condition_sha256  # noqa: E402
 from frontier_science.algorithms.common import atomic_write_text  # noqa: E402
 from frontier_science.algorithms.common import feedback_scope  # noqa: E402
+from frontier_science.algorithms.common import runtime_source_sha256  # noqa: E402
 from frontier_science.algorithms.common import task_contract_sha256  # noqa: E402
+from frontier_science.algorithms.common import task_package_sha256  # noqa: E402
 from frontier_science.config import load_llm_client  # noqa: E402
 from frontier_science.certification import certification_status  # noqa: E402
 from frontier_science.llm import LLMClient  # noqa: E402
 from frontier_science.protocol import mean_confidence_interval  # noqa: E402
 from frontier_science.protocol import compact_trajectory_snapshot  # noqa: E402
-from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402
+from frontier_science.provenance import (  # noqa: E402
+    SOURCE_SCOPE,
+    finalize_report_trust,
+    source_provenance,
+)
 from frontier_science.registry import find_task, list_tasks  # noqa: E402
 
 
@@ -109,8 +116,65 @@ def _condition_schedule(
     ]
 
 
-def _preregistration_record(path: Path | None) -> dict[str, Any] | None:
-    """Bind an optional preregistration artifact into the run configuration."""
+def _execution_preregistration_is_committed(path: Path) -> bool:
+    """Return whether ``path`` exactly matches its blob at the current HEAD."""
+
+    resolved = Path(path).resolve()
+    try:
+        repository_relative = resolved.relative_to(ROOT).as_posix()
+    except ValueError:
+        return False
+    tracked = subprocess.run(
+        ["git", "ls-files", "--error-unmatch", repository_relative],
+        cwd=str(ROOT), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+        check=False,
+    ).returncode == 0
+    if not tracked:
+        return False
+    committed_payload = subprocess.check_output(
+        ["git", "show", "HEAD:" + repository_relative],
+        cwd=str(ROOT), stderr=subprocess.DEVNULL,
+    )
+    return committed_payload == resolved.read_bytes()
+
+
+def _bound_repository_file(binding: dict[str, Any], role: str) -> Path:
+    """Resolve and hash-check one immutable preregistration input."""
+
+    if not isinstance(binding, dict):
+        raise SystemExit("preregistration %s binding is invalid" % role)
+    relative = binding.get("path")
+    expected_hash = binding.get("sha256")
+    if not isinstance(relative, str) or not isinstance(expected_hash, str):
+        raise SystemExit("preregistration %s binding is incomplete" % role)
+    resolved = (ROOT / relative).resolve()
+    try:
+        resolved.relative_to(ROOT)
+    except ValueError as exc:
+        raise SystemExit(
+            "preregistration %s binding escapes the repository" % role
+        ) from exc
+    if not resolved.is_file():
+        raise SystemExit("preregistration %s input is missing" % role)
+    if hashlib.sha256(resolved.read_bytes()).hexdigest() != expected_hash:
+        raise SystemExit("preregistration %s hash differs" % role)
+    return resolved
+
+
+def _preregistration_record(
+    path: Path | None,
+    *,
+    raw_argv: list[str] | None = None,
+    specs: list[Any] | None = None,
+    llm: LLMClient | None = None,
+) -> dict[str, Any] | None:
+    """Bind and, when declared, enforce an execution preregistration.
+
+    Legacy narrative preregistrations remain hash-bound. A document declaring
+    ``design.primary_command`` is an executable contract and fails closed before
+    worker dispatch if its command, model, source, task package, or prerequisite
+    evidence differs. ``--resume`` is the sole permitted command suffix.
+    """
 
     if path is None:
         return None
@@ -119,14 +183,145 @@ def _preregistration_record(path: Path | None) -> dict[str, Any] | None:
         raise SystemExit("--preregistration must name a regular file")
     payload = resolved.read_bytes()
     try:
+        document = json.loads(payload)
+    except ValueError:
+        document = None
+    try:
         recorded_path = str(resolved.relative_to(ROOT))
     except ValueError:
         recorded_path = str(resolved)
-    return {
+    record = {
         "path": recorded_path,
         "sha256": hashlib.sha256(payload).hexdigest(),
         "bytes": len(payload),
     }
+    if not isinstance(document, dict):
+        record["execution_contract_validated"] = False
+        return record
+    design = document.get("design") or {}
+    expected_command = (
+        design.get("primary_command") if isinstance(design, dict) else None
+    )
+    if expected_command is None:
+        record["execution_contract_validated"] = False
+        return record
+    if not (
+        isinstance(expected_command, list)
+        and len(expected_command) >= 2
+        and all(isinstance(value, str) for value in expected_command)
+        and Path(expected_command[1]).name == Path(__file__).name
+    ):
+        raise SystemExit("preregistration primary_command is invalid")
+    if not _execution_preregistration_is_committed(resolved):
+        raise SystemExit(
+            "execution preregistration must be tracked and match HEAD"
+        )
+    if raw_argv is None or specs is None or llm is None:
+        raise SystemExit("execution preregistration lacks runtime validation inputs")
+    expected_argv = expected_command[2:]
+    command_matches = raw_argv == expected_argv
+    resume_matches = raw_argv == expected_argv + ["--resume"]
+    if not (command_matches or resume_matches):
+        raise SystemExit("runtime command differs from preregistration primary_command")
+
+    model = document.get("model_condition") or {}
+    expected_llm = model.get("llm_condition_sha256")
+    if expected_llm and expected_llm != llm_condition_sha256(llm):
+        raise SystemExit("runtime model condition differs from preregistration")
+    frozen_source = document.get("frozen_source") or {}
+    expected_runtime = frozen_source.get("runtime_source_sha256")
+    if expected_runtime and expected_runtime != runtime_source_sha256():
+        raise SystemExit("runtime source differs from preregistration")
+    parent_revision = frozen_source.get("parent_revision")
+    if parent_revision:
+        current_provenance = source_provenance(ROOT)
+        if current_provenance.get("source_tree_dirty") is not False:
+            raise SystemExit("scoped source tree is dirty at execution")
+        ancestor = subprocess.run(
+            ["git", "merge-base", "--is-ancestor", str(parent_revision), "HEAD"],
+            cwd=str(ROOT), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+            check=False,
+        ).returncode == 0
+        if not ancestor:
+            raise SystemExit("preregistration parent revision is not an ancestor")
+        changes = subprocess.check_output(
+            [
+                "git", "diff", "--name-only", str(parent_revision), "HEAD",
+                "--", *SOURCE_SCOPE,
+            ],
+            cwd=str(ROOT), text=True, stderr=subprocess.DEVNULL,
+        ).splitlines()
+        if any(value.strip() for value in changes):
+            raise SystemExit("scoped source changed after preregistration parent")
+
+    task_rows = design.get("tasks")
+    if task_rows is not None:
+        if not isinstance(task_rows, list) or [
+            row.get("task") if isinstance(row, dict) else None for row in task_rows
+        ] != [spec.task_id for spec in specs]:
+            raise SystemExit("runtime task cohort differs from preregistration")
+        for row, spec in zip(task_rows, specs):
+            actual = {
+                "task_contract_sha256": task_contract_sha256(spec),
+                "task_package_sha256": task_package_sha256(spec),
+                "task_card_sha256": (
+                    hashlib.sha256(
+                        (spec.task_dir / "TASK_CARD.yaml").read_bytes()
+                    ).hexdigest()
+                    if (spec.task_dir / "TASK_CARD.yaml").is_file() else None
+                ),
+            }
+            for field, value in actual.items():
+                if row.get(field) != value:
+                    raise SystemExit(
+                        "%s differs from preregistration for %s"
+                        % (field, spec.task_id)
+                    )
+
+    source_cohort = document.get("source_cohort")
+    if source_cohort is not None:
+        _bound_repository_file(source_cohort, "source_cohort")
+
+    prerequisites = document.get("prerequisites") or []
+    if not isinstance(prerequisites, list):
+        raise SystemExit("preregistration prerequisites must be a list")
+    for prerequisite in prerequisites:
+        if not isinstance(prerequisite, dict):
+            raise SystemExit("preregistration prerequisite is invalid")
+        evidence_path = _bound_repository_file(prerequisite, "prerequisite")
+        try:
+            evidence = json.loads(evidence_path.read_text(encoding="utf-8"))
+        except ValueError as exc:
+            raise SystemExit("preregistration prerequisite is not valid JSON") from exc
+        if not (
+            isinstance(evidence, dict)
+            and evidence.get("execution_passed") is True
+            and evidence.get("trusted_evidence") is True
+            and evidence.get("passed") is True
+        ):
+            raise SystemExit("preregistration prerequisite is not trusted passing evidence")
+
+    record.update({
+        "preregistration_id": document.get("preregistration_id"),
+        "claim_limit": document.get("claim_limit"),
+        "execution_contract_validated": True,
+        "command_contract_matches": True,
+        "resume_suffix_permitted": True,
+        "model_condition_matches": not expected_llm or bool(
+            expected_llm == llm_condition_sha256(llm)
+        ),
+        "runtime_source_matches": not expected_runtime or bool(
+            expected_runtime == runtime_source_sha256()
+        ),
+        "scoped_source_tree_clean": bool(
+            not parent_revision
+            or current_provenance.get("source_tree_dirty") is False
+        ),
+        "task_count": len(specs),
+        "prerequisite_count": len(prerequisites),
+        "source_cohort_matches": source_cohort is not None,
+    })
+    return record
 
 
 def _maturity_contract_sha256(spec: Any) -> str:
@@ -645,6 +840,8 @@ def main(argv: list[str] | None = None) -> int:
     output = args.output or (ROOT / "experiments" / ("protocol_%s.json" % timestamp))
     output = output.expanduser().resolve()
     work_root = args.workdir.expanduser().resolve()
+    if output.exists() and not args.resume:
+        raise SystemExit("refusing to overwrite an existing output; use --resume")
     output.parent.mkdir(parents=True, exist_ok=True)
     work_root.mkdir(parents=True, exist_ok=True)
     llm = load_llm_client(args.llm_config)
@@ -669,7 +866,12 @@ def main(argv: list[str] | None = None) -> int:
             {"replicate_identifier": seed, "feedback_modes": order}
             for seed, order in zip(args.seeds, condition_schedule)
         ],
-        "preregistration": _preregistration_record(args.preregistration),
+        "preregistration": _preregistration_record(
+            args.preregistration,
+            raw_argv=raw_argv,
+            specs=specs,
+            llm=llm,
+        ),
         "cohort_manifest": cohort_manifest,
         "run_role": args.run_role,
         "seeds": args.seeds,

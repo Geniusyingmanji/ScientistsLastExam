@@ -380,6 +380,111 @@ class BatchAggregationTests(unittest.TestCase):
                     "--resume",
                 ])
 
+    def test_execution_preregistration_enforces_command_model_and_task_package(self):
+        spec = MODULE.find_task("LennardJonesCluster", include_uncertified=True)
+        client = type("Client", (), {"config": self.Config()})()
+        with tempfile.TemporaryDirectory() as tmp, patch.object(
+            MODULE, "_execution_preregistration_is_committed", return_value=True
+        ):
+            path = Path(tmp) / "execution_prereg.json"
+            cohort = (
+                MODULE.ROOT
+                / ".research/exploratory_2h_cohort_manifest_2026-07-27_v1.json"
+            )
+            document = {
+                "schema_version": 1,
+                "preregistration_id": "test_execution_contract",
+                "source_cohort": {
+                    "path": str(cohort.relative_to(MODULE.ROOT)),
+                    "sha256": MODULE.hashlib.sha256(cohort.read_bytes()).hexdigest(),
+                },
+                "model_condition": {
+                    "llm_condition_sha256": MODULE.llm_condition_sha256(client),
+                },
+                "design": {
+                    "primary_command": [
+                        "python3", "scripts/batch_evolve.py",
+                        "--tasks", "LennardJonesCluster",
+                    ],
+                    "tasks": [{
+                        "task": spec.task_id,
+                        "task_contract_sha256": MODULE.task_contract_sha256(spec),
+                        "task_package_sha256": MODULE.task_package_sha256(spec),
+                        "task_card_sha256": MODULE.hashlib.sha256(
+                            (spec.task_dir / "TASK_CARD.yaml").read_bytes()
+                        ).hexdigest(),
+                    }],
+                },
+                "prerequisites": [],
+            }
+            path.write_text(json.dumps(document), encoding="utf-8")
+            record = MODULE._preregistration_record(
+                path,
+                raw_argv=["--tasks", "LennardJonesCluster"],
+                specs=[spec],
+                llm=client,
+            )
+            self.assertTrue(record["execution_contract_validated"])
+            self.assertTrue(record["command_contract_matches"])
+            resumed = MODULE._preregistration_record(
+                path,
+                raw_argv=["--tasks", "LennardJonesCluster", "--resume"],
+                specs=[spec],
+                llm=client,
+            )
+            self.assertEqual(record, resumed)
+
+            with self.assertRaisesRegex(SystemExit, "runtime command differs"):
+                MODULE._preregistration_record(
+                    path,
+                    raw_argv=["--tasks", "LennardJonesCluster", "--budget", "1"],
+                    specs=[spec],
+                    llm=client,
+                )
+
+            document["source_cohort"]["sha256"] = "0" * 64
+            path.write_text(json.dumps(document), encoding="utf-8")
+            with self.assertRaisesRegex(SystemExit, "source_cohort hash differs"):
+                MODULE._preregistration_record(
+                    path,
+                    raw_argv=["--tasks", "LennardJonesCluster"],
+                    specs=[spec],
+                    llm=client,
+                )
+            document["source_cohort"]["sha256"] = MODULE.hashlib.sha256(
+                cohort.read_bytes()
+            ).hexdigest()
+            document["design"]["tasks"][0]["task_package_sha256"] = "0" * 64
+            path.write_text(json.dumps(document), encoding="utf-8")
+            with self.assertRaisesRegex(SystemExit, "task_package_sha256 differs"):
+                MODULE._preregistration_record(
+                    path,
+                    raw_argv=["--tasks", "LennardJonesCluster"],
+                    specs=[spec],
+                    llm=client,
+                )
+
+    def test_execution_preregistration_rejects_uncommitted_file(self):
+        spec = MODULE.find_task("LennardJonesCluster", include_uncertified=True)
+        client = type("Client", (), {"config": self.Config()})()
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "execution_prereg.json"
+            path.write_text(json.dumps({
+                "design": {
+                    "primary_command": [
+                        "python3", "scripts/batch_evolve.py",
+                        "--tasks", "LennardJonesCluster",
+                    ],
+                },
+            }), encoding="utf-8")
+            with self.assertRaisesRegex(SystemExit, "tracked and match HEAD"):
+                MODULE._preregistration_record(
+                    path,
+                    raw_argv=["--tasks", "LennardJonesCluster"],
+                    specs=[spec],
+                    llm=client,
+                )
+
     def test_cohort_manifest_binds_order_contract_and_task_card(self):
         tasks = [
             "Electrochemistry/ElectrolyteConductivityDesign",
