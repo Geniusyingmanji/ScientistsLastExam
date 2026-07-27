@@ -1,0 +1,295 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_DERIVED_EVIDENCE",
+  "evidence_scope": "THREE_TASK_CURRENT_CONTRACT_SINGLE_SEED_HEADROOM_CALIBRATION_NOT_FEEDBACK_CAUSAL_POPULATION_LONG_HORIZON_EXTERNAL_VALIDATION_OR_DISCOVERY_EVIDENCE",
+  "created_at": "2026-07-27T00:01:01.256029+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "c98e28c944abe9a9f214015e2a96d36717f82aa3",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/analyze_maturity_gap_calibrations.py",
+      "--output",
+      "experiments/maturity_gap_calibration_analysis_2026-07-26_v1.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "inputs": [
+    {
+      "path": "experiments/gpt55_maturity_gap_b1_current_v1_2026-07-26.json",
+      "sha256": "3bb7055198df5a7d76610e109b08e953de63284ca14b2b0243a3dd67a87c84dd",
+      "source_revision": "03e3cae6456aa28e0e052430186be52197211f55"
+    },
+    {
+      "path": "experiments/gpt55_maturity_gap_current_v1_2026-07-26.json",
+      "sha256": "6eaee7dc1a5f4a0e1c7c24af7150c1229c878ee8674df9b50d97a4ef04cc9af0",
+      "source_revision": "a646d89ed064451b9d8c93cfb60e7c5a364e3091"
+    }
+  ],
+  "records": [
+    {
+      "task": "NuclearEngineering/NeutronDiffusionCriticality",
+      "feedback_mode": "normal",
+      "seed": 1,
+      "baseline_score": 0.0,
+      "best_score": 0.9392365165082688,
+      "proposal_count": 1,
+      "valid_proposal_count": 1,
+      "first_valid_proposal_score": 0.9392365165082688,
+      "proposal_scores": [
+        0.9392365165082688
+      ],
+      "oracle_calls": 2,
+      "total_tokens": 2328,
+      "wall_seconds": 26.73819507844746,
+      "selection_policy": "online_incumbent",
+      "trajectory_sha256": "0af48c2648fd634c75ef62fdb4fff2b1b65bf7ec6eed6b72e88e19e13a94c1f7"
+    },
+    {
+      "task": "DynamicalSystems/LyapunovControl",
+      "feedback_mode": "normal",
+      "seed": 1,
+      "baseline_score": 0.0,
+      "best_score": 1.0,
+      "proposal_count": 1,
+      "valid_proposal_count": 1,
+      "first_valid_proposal_score": 1.0,
+      "proposal_scores": [
+        1.0
+      ],
+      "oracle_calls": 2,
+      "total_tokens": 2731,
+      "wall_seconds": 42.95826996676624,
+      "selection_policy": "online_incumbent",
+      "trajectory_sha256": "ec05e4c1641083bbd4f0d681d4d157eed31e251abb9c3b193143defb1bebeb79"
+    },
+    {
+      "task": "Geophysics/SeismicInversion",
+      "feedback_mode": "normal",
+      "seed": 1,
+      "baseline_score": 0.0,
+      "best_score": 0.9981442528035113,
+      "proposal_count": 1,
+      "valid_proposal_count": 1,
+      "first_valid_proposal_score": 0.9981442528035113,
+      "proposal_scores": [
+        0.9981442528035113
+      ],
+      "oracle_calls": 2,
+      "total_tokens": 4202,
+      "wall_seconds": 43.82656988874078,
+      "selection_policy": "online_incumbent",
+      "trajectory_sha256": "065643d98a9d4490e94d2800f2c03a725aa5d1ea586582465624817d90dd0a14"
+    },
+    {
+      "task": "NuclearEngineering/NeutronDiffusionCriticality",
+      "feedback_mode": "normal",
+      "seed": 0,
+      "baseline_score": 0.0,
+      "best_score": 0.9626035489157967,
+      "proposal_count": 3,
+      "valid_proposal_count": 3,
+      "first_valid_proposal_score": 0.8317226704655009,
+      "proposal_scores": [
+        0.8317226704655009,
+        0.8618159987510107,
+        0.9626035489157967
+      ],
+      "oracle_calls": 4,
+      "total_tokens": 8870,
+      "wall_seconds": 74.68806968908757,
+      "selection_policy": "online_incumbent",
+      "trajectory_sha256": "ac8b36909d9917008c304ccb27ab41fd6c05128327feb664044f33a7099a59e9"
+    },
+    {
+      "task": "NuclearEngineering/NeutronDiffusionCriticality",
+      "feedback_mode": "selection_blind",
+      "seed": 0,
+      "baseline_score": 0.0,
+      "best_score": 0.982123096818268,
+      "proposal_count": 3,
+      "valid_proposal_count": 3,
+      "first_valid_proposal_score": 0.7897617722870411,
+      "proposal_scores": [
+        0.7897617722870411,
+        0.9756079285870652,
+        0.982123096818268
+      ],
+      "oracle_calls": 4,
+      "total_tokens": 6406,
+      "wall_seconds": 72.59648298379034,
+      "selection_policy": "offline_best_of_open_loop_batch",
+      "trajectory_sha256": "1f6cc5aa56ce7077e6124017665b9fa64544f3154c9e833b3d7bd75e863fa07b"
+    },
+    {
+      "task": "DynamicalSystems/LyapunovControl",
+      "feedback_mode": "normal",
+      "seed": 0,
+      "baseline_score": 0.0,
+      "best_score": 1.0,
+      "proposal_count": 3,
+      "valid_proposal_count": 3,
+      "first_valid_proposal_score": 1.0,
+      "proposal_scores": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "oracle_calls": 4,
+      "total_tokens": 8452,
+      "wall_seconds": 101.45740211941302,
+      "selection_policy": "online_incumbent",
+      "trajectory_sha256": "7db0e542630ff59f27bce8416c9927888283561dadae586ae6d928c0c3362c23"
+    },
+    {
+      "task": "DynamicalSystems/LyapunovControl",
+      "feedback_mode": "selection_blind",
+      "seed": 0,
+      "baseline_score": 0.0,
+      "best_score": 1.0,
+      "proposal_count": 3,
+      "valid_proposal_count": 3,
+      "first_valid_proposal_score": 1.0,
+      "proposal_scores": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "oracle_calls": 4,
+      "total_tokens": 6622,
+      "wall_seconds": 95.70184928085655,
+      "selection_policy": "offline_best_of_open_loop_batch",
+      "trajectory_sha256": "9a89ccc7eceb3dedaecde3fe1f406d11373f07d771f4041881d6cc7a2efb1d41"
+    },
+    {
+      "task": "Geophysics/SeismicInversion",
+      "feedback_mode": "normal",
+      "seed": 0,
+      "baseline_score": 0.0,
+      "best_score": 0.9981442528035114,
+      "proposal_count": 3,
+      "valid_proposal_count": 3,
+      "first_valid_proposal_score": 0.9981442528035113,
+      "proposal_scores": [
+        0.9981442528035113,
+        0.9981442528035114,
+        0.9981442528035114
+      ],
+      "oracle_calls": 4,
+      "total_tokens": 21428,
+      "wall_seconds": 156.08258271217346,
+      "selection_policy": "online_incumbent",
+      "trajectory_sha256": "4e3c0763e4db0b6e874348288a3808e94010dd9d1468b9462e271c8326217fcc"
+    },
+    {
+      "task": "Geophysics/SeismicInversion",
+      "feedback_mode": "selection_blind",
+      "seed": 0,
+      "baseline_score": 0.0,
+      "best_score": 0.9981442528035113,
+      "proposal_count": 3,
+      "valid_proposal_count": 3,
+      "first_valid_proposal_score": 0.9981442528035113,
+      "proposal_scores": [
+        0.9981442528035113,
+        0.9981442528018022,
+        0.9981442528035113
+      ],
+      "oracle_calls": 4,
+      "total_tokens": 11553,
+      "wall_seconds": 108.91538193728775,
+      "selection_policy": "offline_best_of_open_loop_batch",
+      "trajectory_sha256": "a53aa66fb567bfb0f9e809eed30f32fcb115386704684793bb8b2a1e2731d8e0"
+    }
+  ],
+  "task_findings": {
+    "DynamicalSystems/LyapunovControl": {
+      "budget_one_score": 1.0,
+      "normal_budget_three_scores": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "normal_budget_three_best": 1.0,
+      "selection_blind_budget_three_scores": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "selection_blind_budget_three_best": 1.0,
+      "normal_minus_selection_blind_best": 0.0,
+      "normal_total_tokens": 8452,
+      "selection_blind_total_tokens": 6622,
+      "all_proposals_valid": true,
+      "current_disposition": "one_step_saturated_on_ramp"
+    },
+    "Geophysics/SeismicInversion": {
+      "budget_one_score": 0.9981442528035113,
+      "normal_budget_three_scores": [
+        0.9981442528035113,
+        0.9981442528035114,
+        0.9981442528035114
+      ],
+      "normal_budget_three_best": 0.9981442528035114,
+      "selection_blind_budget_three_scores": [
+        0.9981442528035113,
+        0.9981442528018022,
+        0.9981442528035113
+      ],
+      "selection_blind_budget_three_best": 0.9981442528035113,
+      "normal_minus_selection_blind_best": 1.1102230246251565e-16,
+      "normal_total_tokens": 21428,
+      "selection_blind_total_tokens": 11553,
+      "all_proposals_valid": true,
+      "current_disposition": "one_step_saturated_on_ramp"
+    },
+    "NuclearEngineering/NeutronDiffusionCriticality": {
+      "budget_one_score": 0.9392365165082688,
+      "normal_budget_three_scores": [
+        0.8317226704655009,
+        0.8618159987510107,
+        0.9626035489157967
+      ],
+      "normal_budget_three_best": 0.9626035489157967,
+      "selection_blind_budget_three_scores": [
+        0.7897617722870411,
+        0.9756079285870652,
+        0.982123096818268
+      ],
+      "selection_blind_budget_three_best": 0.982123096818268,
+      "normal_minus_selection_blind_best": -0.019519547902471346,
+      "normal_total_tokens": 8870,
+      "selection_blind_total_tokens": 6406,
+      "all_proposals_valid": true,
+      "current_disposition": "fixed_single_regime_near_ceiling_on_ramp"
+    }
+  },
+  "portfolio_implications": [
+    "LyapunovControl and SeismicInversion reproduce known numerical workflows at or near the score ceiling in the first proposal; they are on-ramps, not long-horizon headline tasks.",
+    "NeutronDiffusion shows within-run normal improvement, but the selection-blind batch scores higher with fewer tokens; one single-seed contrast supports no feedback-effect claim.",
+    "NeutronDiffusion still exposes one fixed public reduced-order slab and therefore lacks procedural transfer and post-two-hour headroom evidence even though its normal trajectory is nonflat.",
+    "All three tasks need substantive procedural redesign rather than additional sampling of the same fixed contract before long-horizon allocation."
+  ],
+  "limitations": [
+    "Each condition has one independent provider draw; the Azure endpoint exposes no server-side generation seed.",
+    "Normal and selection-blind runs match proposal and oracle-call budgets but not realized tokens, context, or wall time.",
+    "Budget-one and budget-three conditions are independent runs, not prefixes of one trajectory.",
+    "A clipped or near-ceiling score on these fixed public tasks is not evidence of scientific novelty or external validity."
+  ],
+  "execution_passed": true,
+  "trust_decision": "trusted_clean_revision",
+  "trusted_evidence": true,
+  "passed": true
+}
