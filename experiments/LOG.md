@@ -2890,3 +2890,29 @@ Post-pilot security audit v41 (SHA-256
 `d2082abe9a2f23604a426fc831126b548374d5a9c4ea5a5a00c4c9c60e1dcb8e`) binds clean source
 `08ec441` and passes all 18 adversarial tests in 10.805 seconds. This refresh covers the current
 four-condition runner and analyzer source without changing the preregistered runtime scope.
+
+## 2026-07-27 — measurement-health allocation
+
+The task-maturity audit now retains condition-specific proposal counts, observed first-valid
+run rates, valid-proposal rates and floor/ceiling mass. These are descriptive observations, not
+provider-side probability estimates: most cells contain one run and the Azure endpoint exposes
+no generation seed. The v4 maturity ledger still records 59 packages at `7 certified / 43
+candidate / 9 quarantined`, 50 internal admissions and zero open-release, externally validated
+or long-horizon-ready tasks.
+
+The first measurement-health allocation classifies the inventory as `7 exploratory long-horizon
+screen / 24 repair-first / 17 saturated-on-ramp / 2 control-only / 9 quarantined`. The frozen
+exploratory screen contains ElectrolyteConductivityDesign, DiffractionGratingDesign,
+RNAInverseDesign, MOSFETDoping, TrussWeightMinimization, HeatExchangerDesign and RANSCalibration.
+ActiveLawDiscovery is retained separately as a mechanism/refusal and feedback-protocol control;
+the repeated common-token analysis did not identify a normal-feedback advantage.
+
+No task passes the complete measurement-health gate, and no task is eligible for a confirmatory
+cohort. Fixed-artifact noise, evaluator resolution and materiality, baseline/reference
+separation, shortcut resistance and material post-2h headroom remain unmeasured. Moreover, the
+seven-task screen was chosen after inspecting current GPT-5.5 outcomes, so it may allocate a
+sentinel-complete 2h pilot but cannot double as an unbiased confirmatory cohort. The next study
+must freeze sentinel capture, retain a random tranche through 12h, and choose confirmation tasks
+independently of these outcomes. The full allocation and claim limits are recorded in
+`.research/measurement_health_allocation_2026-07-27_v1.md` and the corresponding machine-readable
+audit.

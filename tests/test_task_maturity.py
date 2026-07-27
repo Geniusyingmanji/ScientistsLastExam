@@ -80,6 +80,25 @@ class TaskMaturityAuditTests(unittest.TestCase):
                 for item in items:
                     self.assertIn(item["contract_binding"], allowed)
 
+    def test_proposal_health_is_observed_and_condition_specific(self):
+        rna = self.tasks["RNAEngineering/RNAInverseDesign"]["model_measurement"]
+        b3 = rna["proposal_trajectory_health"]["normal_budget_three"]
+        self.assertEqual(b3["run_count"], 1)
+        self.assertEqual(b3["proposal_event_count"], 3)
+        self.assertEqual(b3["runs_with_valid_proposals"], 1)
+        self.assertEqual(b3["observed_first_valid_run_rate"], 1.0)
+
+        matrix = self.tasks["Algorithm/MatrixMultiplicationRank"]["model_measurement"]
+        self.assertEqual(
+            matrix["proposal_trajectory_health"]["normal_budget_three"]["run_count"],
+            0,
+        )
+        self.assertIsNone(
+            matrix["proposal_trajectory_health"]["normal_budget_three"][
+                "observed_first_valid_run_rate"
+            ]
+        )
+
     def test_untracked_historical_reports_are_excluded(self):
         paths = {
             item["path"]
