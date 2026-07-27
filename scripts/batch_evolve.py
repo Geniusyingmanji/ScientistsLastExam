@@ -341,6 +341,7 @@ def _execute_block(payload: dict[str, Any]) -> dict[str, Any]:
                     result.summary.get("horizon_reached") is not True
                     or result.summary.get("baseline_crossed_horizon") is True
                 )
+                and result.summary.get("honored_signed_stop_action") is None
             ):
                 entry["protocol_incomplete"] = (
                     "baseline_evaluation_exceeds_active_wall_horizon"

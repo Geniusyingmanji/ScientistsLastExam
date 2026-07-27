@@ -537,7 +537,22 @@ def greedy_rewrite(
 
     capture_due_grid(active_wall)
 
+    prior_signed_actions = [
+        row["sentinel_type"]
+        for row in (sentinel_ledger.events if sentinel_ledger is not None else [])
+        if row["sentinel_type"] in {"commit", "abstain"}
+    ]
+    honored_signed_stop_action = (
+        prior_signed_actions[-1]
+        if signed_decisions
+        and signed_decision_policy == "honor_stop"
+        and prior_signed_actions
+        else None
+    )
+
     for it in range(start_iter, budget + 1):
+        if honored_signed_stop_action is not None:
+            break
         if active_wall_horizon_s is not None and active_wall >= active_wall_horizon_s:
             horizon_reached = True
             break
@@ -849,6 +864,7 @@ def greedy_rewrite(
             and isinstance(signed_decision, dict)
             and signed_decision.get("action") in {"commit", "abstain"}
         ):
+            honored_signed_stop_action = str(signed_decision["action"])
             break
 
     if active_wall_horizon_s is not None and active_wall >= active_wall_horizon_s:
@@ -895,6 +911,8 @@ def greedy_rewrite(
             reason=(
                 "baseline_evaluation_completed_after_active_wall_horizon"
                 if baseline_crossed_horizon
+                else "signed_%s_honored_before_horizon" % honored_signed_stop_action
+                if honored_signed_stop_action is not None
                 else "active_wall_horizon_reached"
                 if horizon_reached
                 else "proposal_budget_exhausted_before_active_wall_horizon"
@@ -913,7 +931,7 @@ def greedy_rewrite(
                            "baseline_crossed_horizon": baseline_crossed_horizon,
                            "signed_decisions": signed_decisions,
                            "signed_decision_policy": signed_decision_policy,
-                           "signed_stop_action": next(
+                           "latest_signed_endpoint_action": next(
                                (
                                    row["sentinel_type"]
                                    for row in reversed(sentinel_ledger.events)
@@ -921,6 +939,7 @@ def greedy_rewrite(
                                ),
                                None,
                            ) if sentinel_ledger is not None else None,
+                           "honored_signed_stop_action": honored_signed_stop_action,
                            "sentinel_snapshot": (
                                sentinel_ledger.snapshot() if sentinel_ledger is not None else None
                            ),

@@ -412,7 +412,12 @@ class GreedyRewriteTests(unittest.TestCase):
             trajectory[1]["algorithm_metadata"]["signed_decision_action"],
             "commit",
         )
-        self.assertEqual(result.summary["signed_stop_action"], "commit")
+        self.assertEqual(result.summary["latest_signed_endpoint_action"], "commit")
+        self.assertEqual(result.summary["honored_signed_stop_action"], "commit")
+        self.assertEqual(
+            result.summary["sentinel_snapshot"]["events"][-1]["reason"],
+            "signed_commit_honored_before_horizon",
+        )
         sentinels = result.summary["sentinel_snapshot"]["events"]
         commit = next(row for row in sentinels if row["sentinel_type"] == "commit")
         submission = next(
@@ -452,7 +457,8 @@ class GreedyRewriteTests(unittest.TestCase):
                 log_fn=lambda _: None,
             )
         self.assertEqual(len(result.history), 2)
-        self.assertEqual(result.summary["signed_stop_action"], "abstain")
+        self.assertEqual(result.summary["latest_signed_endpoint_action"], "abstain")
+        self.assertIsNone(result.summary["honored_signed_stop_action"])
         abstain = next(
             row for row in result.summary["sentinel_snapshot"]["events"]
             if row["sentinel_type"] == "abstain"
