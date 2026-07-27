@@ -1,0 +1,5668 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_MEASUREMENT_HEALTH_CLASSIFICATION",
+  "evidence_scope": "RESULT_SELECTED_EXPLORATORY_LONG_HORIZON_ALLOCATION_AUDIT_NOT_CONFIRMATORY_COHORT_POST_2H_HEADROOM_FEEDBACK_CAUSAL_SCALING_LAW_EXTERNAL_VALIDATION_OR_AUTONOMOUS_DISCOVERY_EVIDENCE",
+  "created_at": "2026-07-27T00:26:33.001520+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "aa950e82ebf953f01136ce45c9db952f509c12b0",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/audit_measurement_health.py",
+      "--output",
+      "experiments/measurement_health_audit_2026-07-27_v1.json",
+      "--markdown-output",
+      ".research/measurement_health_allocation_2026-07-27_v1.md"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "input": {
+    "path": "experiments/task_maturity_audit_2026-07-27_v4.json",
+    "sha256": "edd0a983d953ce586a8a78c9b6c2fea400d306a5b9d591b227b3c744fab1afb9",
+    "source_revision": "55f07f88663b38326147285143766b6967776f76",
+    "head_revision": "55f07f88663b38326147285143766b6967776f76"
+  },
+  "policy": {
+    "classification_order": [
+      "exploratory_long_horizon_screen",
+      "repair_first",
+      "saturated_on_ramp",
+      "control_only",
+      "quarantined"
+    ],
+    "score_floor_warning": 0.01,
+    "score_ceiling_warning": 0.95,
+    "material_short_run_gain": 0.05,
+    "complete_gate_requires": [
+      "observed first-valid behavior",
+      "baseline/reference separation",
+      "fixed-artifact evaluator noise",
+      "evaluator resolution and scientific materiality",
+      "floor and ceiling mass",
+      "shortcut resistance",
+      "material headroom after two hours"
+    ],
+    "selection_rule": "exploratory roles are frozen after inspecting current GPT-5.5 results; they allocate pilots only and cannot support an unbiased confirmatory cohort"
+  },
+  "inventory_count": 59,
+  "classification_counts": {
+    "exploratory_long_horizon_screen": 7,
+    "repair_first": 24,
+    "saturated_on_ramp": 17,
+    "control_only": 2,
+    "quarantined": 9
+  },
+  "complete_measurement_health_passed_count": 0,
+  "confirmatory_cohort_eligible_count": 0,
+  "exploratory_cohort": [
+    "Electrochemistry/ElectrolyteConductivityDesign",
+    "Optics/DiffractionGratingDesign",
+    "RNAEngineering/RNAInverseDesign",
+    "Semiconductor/MOSFETDoping",
+    "StructuralEngineering/TrussWeightMinimization",
+    "Thermodynamics/HeatExchangerDesign",
+    "Turbulence/RANSCalibration"
+  ],
+  "confirmatory_cohort": [],
+  "tasks": [
+    {
+      "task": "AcousticMetamaterials/BroadbandAbsorber",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "procedural",
+      "classification": "repair_first",
+      "classification_reasons": [
+        "current contract lacks sufficient non-saturated, valid, repeated trajectory evidence",
+        "repair contract or run a short measurement calibration before allocating 2--12 h"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 3
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "normal_budget_three_observed": {
+          "passed": true,
+          "value": 0.9147583093200831
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": true,
+          "value": 0.9172608982996071
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": true,
+          "value": 1.0,
+          "run_count": 1
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": true,
+          "value": 0.0,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": true,
+          "value": 0.9147583093200831,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.05,
+          "supporting_run_count": 0,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "Acoustics/RoomImpulseResponse",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "procedural",
+      "classification": "repair_first",
+      "classification_reasons": [
+        "current contract lacks sufficient non-saturated, valid, repeated trajectory evidence",
+        "repair contract or run a short measurement calibration before allocating 2--12 h"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 3
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "normal_budget_three_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": true,
+          "value": 0.7536835650077495
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": false,
+          "value": 0.0,
+          "run_count": 1
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": true,
+          "value": 0.0,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": false,
+          "value": 0.0,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.05,
+          "supporting_run_count": 0,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "observed_first_valid_in_normal_budget_three",
+        "normal_budget_three_above_floor",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "Algorithm/MatrixMultiplicationRank",
+      "certification_status": "certified",
+      "internal_science_admission": true,
+      "provenance_class": "known_answer",
+      "classification": "repair_first",
+      "classification_reasons": [
+        "current contract lacks sufficient non-saturated, valid, repeated trajectory evidence",
+        "repair contract or run a short measurement calibration before allocating 2--12 h"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 1
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.6458333333333334
+        },
+        "normal_budget_three_observed": {
+          "passed": false,
+          "value": null
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": false,
+          "value": null
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": false,
+          "value": null,
+          "run_count": 0
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": true,
+          "value": 0.6458333333333334,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.05,
+          "supporting_run_count": 0,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "observed_first_valid_in_normal_budget_three",
+        "normal_budget_three_above_floor",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "Astrodynamics/LowThrustTransfer",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "procedural",
+      "classification": "repair_first",
+      "classification_reasons": [
+        "current contract lacks sufficient non-saturated, valid, repeated trajectory evidence",
+        "repair contract or run a short measurement calibration before allocating 2--12 h"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 3
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.00773569734584156
+        },
+        "normal_budget_three_observed": {
+          "passed": true,
+          "value": 0.005079415893977348
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": true,
+          "value": 0.005490986746310112
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": true,
+          "value": 1.0,
+          "run_count": 1
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": true,
+          "value": 0.00773569734584156,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": false,
+          "value": 0.005079415893977348,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": -0.00032921986328163667,
+          "threshold": 0.05,
+          "supporting_run_count": 1,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "normal_budget_three_above_floor",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "AtmosphericScience/RadiativeTransferFit",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "procedural",
+      "classification": "repair_first",
+      "classification_reasons": [
+        "current contract lacks sufficient non-saturated, valid, repeated trajectory evidence",
+        "repair contract or run a short measurement calibration before allocating 2--12 h"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 3
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "normal_budget_three_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": true,
+          "value": 1.0,
+          "run_count": 1
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": true,
+          "value": 0.0,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": false,
+          "value": 0.0,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": 0.0,
+          "threshold": 0.05,
+          "supporting_run_count": 1,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "normal_budget_three_above_floor",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "BayesianInference/OptimalExperimentDesign",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "known_answer",
+      "classification": "saturated_on_ramp",
+      "classification_reasons": [
+        "observed one-step or near-ceiling behavior, or retained as a known-answer/on-ramp control",
+        "requires a harder procedural or multifidelity contract before long-horizon allocation"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 1
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.9906153361079914
+        },
+        "normal_budget_three_observed": {
+          "passed": false,
+          "value": null
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": false,
+          "value": null
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": false,
+          "value": null,
+          "run_count": 0
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": false,
+          "value": 0.9906153361079914,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.05,
+          "supporting_run_count": 0,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "observed_first_valid_in_normal_budget_three",
+        "normal_budget_three_above_floor",
+        "budget_one_below_observed_ceiling_warning",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "Biomechanics/ProstheticJointDesign",
+      "certification_status": "quarantined",
+      "internal_science_admission": false,
+      "provenance_class": "undeclared",
+      "classification": "quarantined",
+      "classification_reasons": [
+        "internal science admission failed"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": false,
+          "value": 0
+        },
+        "normal_budget_one_observed": {
+          "passed": false,
+          "value": null
+        },
+        "normal_budget_three_observed": {
+          "passed": false,
+          "value": null
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": false,
+          "value": null
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": false,
+          "value": null,
+          "run_count": 0
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.05,
+          "supporting_run_count": 0,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "observed_first_valid_in_normal_budget_three",
+        "normal_budget_three_above_floor",
+        "budget_one_below_observed_ceiling_warning",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "Catalysis/CatalystDeactivationLab",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "procedural",
+      "classification": "repair_first",
+      "classification_reasons": [
+        "current contract lacks sufficient non-saturated, valid, repeated trajectory evidence",
+        "repair contract or run a short measurement calibration before allocating 2--12 h"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 3
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "normal_budget_three_observed": {
+          "passed": true,
+          "value": 0.07518966666666664
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": true,
+          "value": 0.04141699999999989
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": true,
+          "value": 1.0,
+          "run_count": 1
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": true,
+          "value": 0.0,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": true,
+          "value": 0.07518966666666664,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": 0.002213333333333331,
+          "threshold": 0.05,
+          "supporting_run_count": 1,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "CausalDiscovery/InterventionalSCM",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "procedural",
+      "classification": "saturated_on_ramp",
+      "classification_reasons": [
+        "observed one-step or near-ceiling behavior, or retained as a known-answer/on-ramp control",
+        "requires a harder procedural or multifidelity contract before long-horizon allocation"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 1
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.9830167254550423
+        },
+        "normal_budget_three_observed": {
+          "passed": false,
+          "value": null
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": false,
+          "value": null
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": false,
+          "value": null,
+          "run_count": 0
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": false,
+          "value": 0.9830167254550423,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.05,
+          "supporting_run_count": 0,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "observed_first_valid_in_normal_budget_three",
+        "normal_budget_three_above_floor",
+        "budget_one_below_observed_ceiling_warning",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "ChemicalKinetics/ReactionMechanismFitting",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "procedural",
+      "classification": "repair_first",
+      "classification_reasons": [
+        "current contract lacks sufficient non-saturated, valid, repeated trajectory evidence",
+        "repair contract or run a short measurement calibration before allocating 2--12 h"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 3
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "normal_budget_three_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": true,
+          "value": 0.342579
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": true,
+          "value": 1.0,
+          "run_count": 1
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": true,
+          "value": 0.0,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": false,
+          "value": 0.0,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": 0.0,
+          "threshold": 0.05,
+          "supporting_run_count": 1,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "normal_budget_three_above_floor",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "ChemicalProcess/DistillationColumnDesign",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "procedural",
+      "classification": "repair_first",
+      "classification_reasons": [
+        "current contract lacks sufficient non-saturated, valid, repeated trajectory evidence",
+        "repair contract or run a short measurement calibration before allocating 2--12 h"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 3
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "normal_budget_three_observed": {
+          "passed": true,
+          "value": 0.6130902025625943
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": true,
+          "value": 1.0,
+          "run_count": 1
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": true,
+          "value": 0.0,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": true,
+          "value": 0.6130902025625943,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.05,
+          "supporting_run_count": 0,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "Chemistry/LennardJonesCluster",
+      "certification_status": "certified",
+      "internal_science_admission": true,
+      "provenance_class": "known_answer",
+      "classification": "saturated_on_ramp",
+      "classification_reasons": [
+        "observed one-step or near-ceiling behavior, or retained as a known-answer/on-ramp control",
+        "requires a harder procedural or multifidelity contract before long-horizon allocation"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 17
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.9816946393977908
+        },
+        "normal_budget_three_observed": {
+          "passed": false,
+          "value": null
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": false,
+          "value": null
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": false,
+          "value": null,
+          "run_count": 0
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": false,
+          "value": 0.9816946393977908,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.05,
+          "supporting_run_count": 0,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "observed_first_valid_in_normal_budget_three",
+        "normal_budget_three_above_floor",
+        "budget_one_below_observed_ceiling_warning",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "ClimateScience/EnergyBalanceModel",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "procedural",
+      "classification": "repair_first",
+      "classification_reasons": [
+        "current contract lacks sufficient non-saturated, valid, repeated trajectory evidence",
+        "repair contract or run a short measurement calibration before allocating 2--12 h"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 3
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "normal_budget_three_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": true,
+          "value": 0.6179313376819263
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": false,
+          "value": 0.0,
+          "run_count": 1
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": true,
+          "value": 0.0,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": false,
+          "value": 0.0,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.05,
+          "supporting_run_count": 0,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "observed_first_valid_in_normal_budget_three",
+        "normal_budget_three_above_floor",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "Combustion/FlameSpeedOptimization",
+      "certification_status": "quarantined",
+      "internal_science_admission": false,
+      "provenance_class": "undeclared",
+      "classification": "quarantined",
+      "classification_reasons": [
+        "internal science admission failed"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": false,
+          "value": 0
+        },
+        "normal_budget_one_observed": {
+          "passed": false,
+          "value": null
+        },
+        "normal_budget_three_observed": {
+          "passed": false,
+          "value": null
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": false,
+          "value": null
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": false,
+          "value": null,
+          "run_count": 0
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.05,
+          "supporting_run_count": 0,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "observed_first_valid_in_normal_budget_three",
+        "normal_budget_three_above_floor",
+        "budget_one_below_observed_ceiling_warning",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "ControlTheory/InvertedPendulumSwingUp",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "known_answer",
+      "classification": "control_only",
+      "classification_reasons": [
+        "known-answer positive control with three matched short-budget repetitions"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 6
+        },
+        "normal_budget_one_observed": {
+          "passed": false,
+          "value": null
+        },
+        "normal_budget_three_observed": {
+          "passed": true,
+          "value": 0.5593260035991142
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": true,
+          "value": 0.8072222789121634
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": true,
+          "value": 1.0,
+          "run_count": 3
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": true,
+          "value": 0.5593260035991142,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": true,
+          "value": 0.15443621213098338,
+          "threshold": 0.05,
+          "supporting_run_count": 3,
+          "material_gain_run_count": 2
+        },
+        "at_least_three_matched_controls": {
+          "passed": true,
+          "value": 3
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "budget_one_below_observed_ceiling_warning",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "CrystalGrowth/CzochralskiProcess",
+      "certification_status": "quarantined",
+      "internal_science_admission": false,
+      "provenance_class": "undeclared",
+      "classification": "quarantined",
+      "classification_reasons": [
+        "internal science admission failed"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": false,
+          "value": 0
+        },
+        "normal_budget_one_observed": {
+          "passed": false,
+          "value": null
+        },
+        "normal_budget_three_observed": {
+          "passed": false,
+          "value": null
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": false,
+          "value": null
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": false,
+          "value": null,
+          "run_count": 0
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.05,
+          "supporting_run_count": 0,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "observed_first_valid_in_normal_budget_three",
+        "normal_budget_three_above_floor",
+        "budget_one_below_observed_ceiling_warning",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "procedural",
+      "classification": "control_only",
+      "classification_reasons": [
+        "repeated mechanism/refusal and feedback-protocol control; the current normal-minus-selection-blind contrast identifies no normal-feedback advantage"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 192
+        },
+        "normal_budget_one_observed": {
+          "passed": false,
+          "value": null
+        },
+        "normal_budget_three_observed": {
+          "passed": true,
+          "value": 0.793833383333333
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": true,
+          "value": 0.8036959958333334
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": true,
+          "value": 1.0,
+          "run_count": 48
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": true,
+          "value": 0.793833383333333,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": true,
+          "value": 0.48694759999999987,
+          "threshold": 0.05,
+          "supporting_run_count": 48,
+          "material_gain_run_count": 7
+        },
+        "at_least_three_matched_controls": {
+          "passed": true,
+          "value": 48
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": true,
+          "value": 1
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "budget_one_below_observed_ceiling_warning",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "DynamicalSystems/LyapunovControl",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "known_answer",
+      "classification": "saturated_on_ramp",
+      "classification_reasons": [
+        "observed one-step or near-ceiling behavior, or retained as a known-answer/on-ramp control",
+        "requires a harder procedural or multifidelity contract before long-horizon allocation"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 3
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 1.0
+        },
+        "normal_budget_three_observed": {
+          "passed": true,
+          "value": 1.0
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": true,
+          "value": 1.0
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": true,
+          "value": 1.0,
+          "run_count": 1
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": false,
+          "value": 1.0,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": true,
+          "value": 1.0,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": 0.0,
+          "threshold": 0.05,
+          "supporting_run_count": 1,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 1
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "budget_one_below_observed_ceiling_warning",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "Electrochemistry/ElectrolyteConductivityDesign",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "public_data_replay",
+      "classification": "exploratory_long_horizon_screen",
+      "classification_reasons": [
+        "result-selected current-contract task for an exploratory 2 h measurement screen",
+        "not eligible for a confirmatory cohort selected independently of current GPT-5.5 outcomes",
+        "observed at least one material within-three-proposal gain"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 3
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.26281603078999327
+        },
+        "normal_budget_three_observed": {
+          "passed": true,
+          "value": 0.8781836795033664
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": true,
+          "value": 0.645851680100704
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": true,
+          "value": 1.0,
+          "run_count": 1
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": true,
+          "value": 0.26281603078999327,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": true,
+          "value": 0.8781836795033664,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": true,
+          "value": 0.3858300143782415,
+          "threshold": 0.05,
+          "supporting_run_count": 1,
+          "material_gain_run_count": 1
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "Electromagnetics/AntennaArraySynthesis",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "procedural",
+      "classification": "saturated_on_ramp",
+      "classification_reasons": [
+        "observed one-step or near-ceiling behavior, or retained as a known-answer/on-ramp control",
+        "requires a harder procedural or multifidelity contract before long-horizon allocation"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 2
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.9992629057519586
+        },
+        "normal_budget_three_observed": {
+          "passed": true,
+          "value": 1.0
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": false,
+          "value": null
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": true,
+          "value": 1.0,
+          "run_count": 1
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": false,
+          "value": 0.9992629057519586,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": true,
+          "value": 1.0,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": true,
+          "value": 0.15482996460875098,
+          "threshold": 0.05,
+          "supporting_run_count": 1,
+          "material_gain_run_count": 1
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "budget_one_below_observed_ceiling_warning",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "Electromagnetics/WaveguideModeSolver",
+      "certification_status": "quarantined",
+      "internal_science_admission": false,
+      "provenance_class": "undeclared",
+      "classification": "quarantined",
+      "classification_reasons": [
+        "internal science admission failed"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": false,
+          "value": 0
+        },
+        "normal_budget_one_observed": {
+          "passed": false,
+          "value": null
+        },
+        "normal_budget_three_observed": {
+          "passed": false,
+          "value": null
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": false,
+          "value": null
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": false,
+          "value": null,
+          "run_count": 0
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.05,
+          "supporting_run_count": 0,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "observed_first_valid_in_normal_budget_three",
+        "normal_budget_three_above_floor",
+        "budget_one_below_observed_ceiling_warning",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "EvidenceSynthesis/ProspectiveMetaAnalysis",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "procedural",
+      "classification": "repair_first",
+      "classification_reasons": [
+        "current contract lacks sufficient non-saturated, valid, repeated trajectory evidence",
+        "repair contract or run a short measurement calibration before allocating 2--12 h"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 3
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "normal_budget_three_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": true,
+          "value": 1.0,
+          "run_count": 1
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": true,
+          "value": 0.0,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": false,
+          "value": 0.0,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": 0.0,
+          "threshold": 0.05,
+          "supporting_run_count": 1,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "normal_budget_three_above_floor",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "FluidDynamics/LidDrivenCavity",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "known_answer",
+      "classification": "saturated_on_ramp",
+      "classification_reasons": [
+        "observed one-step or near-ceiling behavior, or retained as a known-answer/on-ramp control",
+        "requires a harder procedural or multifidelity contract before long-horizon allocation"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 3
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.9999999902701524
+        },
+        "normal_budget_three_observed": {
+          "passed": true,
+          "value": 0.8980617923070123
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": true,
+          "value": 0.9999999902972876
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": true,
+          "value": 1.0,
+          "run_count": 1
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": false,
+          "value": 0.9999999902701524,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": true,
+          "value": 0.8980617923070123,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": 0.028146389381517367,
+          "threshold": 0.05,
+          "supporting_run_count": 1,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "budget_one_below_observed_ceiling_warning",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "FluidMechanics/StokesShapeDrag",
+      "certification_status": "quarantined",
+      "internal_science_admission": false,
+      "provenance_class": "undeclared",
+      "classification": "quarantined",
+      "classification_reasons": [
+        "internal science admission failed"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": false,
+          "value": 0
+        },
+        "normal_budget_one_observed": {
+          "passed": false,
+          "value": null
+        },
+        "normal_budget_three_observed": {
+          "passed": false,
+          "value": null
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": false,
+          "value": null
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": false,
+          "value": null,
+          "run_count": 0
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.05,
+          "supporting_run_count": 0,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "observed_first_valid_in_normal_budget_three",
+        "normal_budget_three_above_floor",
+        "budget_one_below_observed_ceiling_warning",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "Geomechanics/TunnelSupportDesign",
+      "certification_status": "quarantined",
+      "internal_science_admission": false,
+      "provenance_class": "undeclared",
+      "classification": "quarantined",
+      "classification_reasons": [
+        "internal science admission failed"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": false,
+          "value": 0
+        },
+        "normal_budget_one_observed": {
+          "passed": false,
+          "value": null
+        },
+        "normal_budget_three_observed": {
+          "passed": false,
+          "value": null
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": false,
+          "value": null
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": false,
+          "value": null,
+          "run_count": 0
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.05,
+          "supporting_run_count": 0,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "observed_first_valid_in_normal_budget_three",
+        "normal_budget_three_above_floor",
+        "budget_one_below_observed_ceiling_warning",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "Geophysics/GravityInversion",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "procedural",
+      "classification": "saturated_on_ramp",
+      "classification_reasons": [
+        "observed one-step or near-ceiling behavior, or retained as a known-answer/on-ramp control",
+        "requires a harder procedural or multifidelity contract before long-horizon allocation"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 2
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "normal_budget_three_observed": {
+          "passed": true,
+          "value": 0.9942257499999999
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": false,
+          "value": null
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": true,
+          "value": 1.0,
+          "run_count": 1
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": true,
+          "value": 0.0,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": true,
+          "value": 0.9942257499999999,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": 0.0002575000000000216,
+          "threshold": 0.05,
+          "supporting_run_count": 1,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "Geophysics/SeismicInversion",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "known_answer",
+      "classification": "saturated_on_ramp",
+      "classification_reasons": [
+        "observed one-step or near-ceiling behavior, or retained as a known-answer/on-ramp control",
+        "requires a harder procedural or multifidelity contract before long-horizon allocation"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 3
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.9981442528035113
+        },
+        "normal_budget_three_observed": {
+          "passed": true,
+          "value": 0.9981442528035114
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": true,
+          "value": 0.9981442528035113
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": true,
+          "value": 1.0,
+          "run_count": 1
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": false,
+          "value": 0.9981442528035113,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": true,
+          "value": 0.9981442528035114,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": 1.1102230246251565e-16,
+          "threshold": 0.05,
+          "supporting_run_count": 1,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 1
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "budget_one_below_observed_ceiling_warning",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "HeatTransfer/ConvectionDiffusionOpt",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "procedural",
+      "classification": "repair_first",
+      "classification_reasons": [
+        "current contract lacks sufficient non-saturated, valid, repeated trajectory evidence",
+        "repair contract or run a short measurement calibration before allocating 2--12 h"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 3
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "normal_budget_three_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": true,
+          "value": 1.0,
+          "run_count": 1
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": true,
+          "value": 0.0,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": false,
+          "value": 0.0,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.05,
+          "supporting_run_count": 0,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "normal_budget_three_above_floor",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "InventoryManagement/MultiEchelonStock",
+      "certification_status": "quarantined",
+      "internal_science_admission": false,
+      "provenance_class": "undeclared",
+      "classification": "quarantined",
+      "classification_reasons": [
+        "internal science admission failed"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": false,
+          "value": 0
+        },
+        "normal_budget_one_observed": {
+          "passed": false,
+          "value": null
+        },
+        "normal_budget_three_observed": {
+          "passed": false,
+          "value": null
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": false,
+          "value": null
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": false,
+          "value": null,
+          "run_count": 0
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.05,
+          "supporting_run_count": 0,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "observed_first_valid_in_normal_budget_three",
+        "normal_budget_three_above_floor",
+        "budget_one_below_observed_ceiling_warning",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "MaterialsScience/AlloyHardnessOptimization",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "public_data_replay",
+      "classification": "repair_first",
+      "classification_reasons": [
+        "current contract lacks sufficient non-saturated, valid, repeated trajectory evidence",
+        "repair contract or run a short measurement calibration before allocating 2--12 h"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 3
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.1516323663787704
+        },
+        "normal_budget_three_observed": {
+          "passed": true,
+          "value": 0.1516323663787704
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": true,
+          "value": 0.1516323663787704
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": true,
+          "value": 1.0,
+          "run_count": 1
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": true,
+          "value": 0.1516323663787704,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": true,
+          "value": 0.1516323663787704,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": true,
+          "value": 0.1516323663787704,
+          "threshold": 0.05,
+          "supporting_run_count": 1,
+          "material_gain_run_count": 1
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "Mathematics/CapSet",
+      "certification_status": "certified",
+      "internal_science_admission": true,
+      "provenance_class": "known_answer",
+      "classification": "repair_first",
+      "classification_reasons": [
+        "current contract lacks sufficient non-saturated, valid, repeated trajectory evidence",
+        "repair contract or run a short measurement calibration before allocating 2--12 h"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 1
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.6495726495726496
+        },
+        "normal_budget_three_observed": {
+          "passed": false,
+          "value": null
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": false,
+          "value": null
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": false,
+          "value": null,
+          "run_count": 0
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": true,
+          "value": 0.6495726495726496,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.05,
+          "supporting_run_count": 0,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "observed_first_valid_in_normal_budget_three",
+        "normal_budget_three_above_floor",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "MolecularDynamics/ForceFieldCalibration",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "procedural",
+      "classification": "repair_first",
+      "classification_reasons": [
+        "current contract lacks sufficient non-saturated, valid, repeated trajectory evidence",
+        "repair contract or run a short measurement calibration before allocating 2--12 h"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 3
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "normal_budget_three_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": false,
+          "value": 0.0,
+          "run_count": 1
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": true,
+          "value": 0.0,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": false,
+          "value": 0.0,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.05,
+          "supporting_run_count": 0,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "observed_first_valid_in_normal_budget_three",
+        "normal_budget_three_above_floor",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "NuclearEngineering/NeutronDiffusionCriticality",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "known_answer",
+      "classification": "saturated_on_ramp",
+      "classification_reasons": [
+        "observed one-step or near-ceiling behavior, or retained as a known-answer/on-ramp control",
+        "requires a harder procedural or multifidelity contract before long-horizon allocation"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 3
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.9392365165082688
+        },
+        "normal_budget_three_observed": {
+          "passed": true,
+          "value": 0.9626035489157967
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": true,
+          "value": 0.982123096818268
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": true,
+          "value": 1.0,
+          "run_count": 1
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": true,
+          "value": 0.9392365165082688,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": true,
+          "value": 0.9626035489157967,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": true,
+          "value": 0.13088087845029583,
+          "threshold": 0.05,
+          "supporting_run_count": 1,
+          "material_gain_run_count": 1
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 1
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "Oceanography/OceanCurrentInversion",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "procedural",
+      "classification": "repair_first",
+      "classification_reasons": [
+        "current contract lacks sufficient non-saturated, valid, repeated trajectory evidence",
+        "repair contract or run a short measurement calibration before allocating 2--12 h"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 3
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "normal_budget_three_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": true,
+          "value": 1.0,
+          "run_count": 1
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": true,
+          "value": 0.0,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": false,
+          "value": 0.0,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.05,
+          "supporting_run_count": 0,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "normal_budget_three_above_floor",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "procedural",
+      "classification": "exploratory_long_horizon_screen",
+      "classification_reasons": [
+        "result-selected current-contract task for an exploratory 2 h measurement screen",
+        "not eligible for a confirmatory cohort selected independently of current GPT-5.5 outcomes",
+        "observed at least one material within-three-proposal gain",
+        "has repeated controls and fresh procedural confirmation but high short-run variance"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 203
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 7.461434153565229e-17
+        },
+        "normal_budget_three_observed": {
+          "passed": true,
+          "value": 0.294428578982211
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": true,
+          "value": 0.24740931439443414
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": false,
+          "value": 0.8823529411764706,
+          "run_count": 51
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": true,
+          "value": 7.461434153565229e-17,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": true,
+          "value": 0.294428578982211,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": true,
+          "value": 0.3106030535165347,
+          "threshold": 0.05,
+          "supporting_run_count": 32,
+          "material_gain_run_count": 11
+        },
+        "at_least_three_matched_controls": {
+          "passed": true,
+          "value": 48
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": true,
+          "value": 1
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "observed_first_valid_in_normal_budget_three",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "Optimization/CirclePacking",
+      "certification_status": "certified",
+      "internal_science_admission": true,
+      "provenance_class": "known_answer",
+      "classification": "repair_first",
+      "classification_reasons": [
+        "current contract lacks sufficient non-saturated, valid, repeated trajectory evidence",
+        "repair contract or run a short measurement calibration before allocating 2--12 h"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 1
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "normal_budget_three_observed": {
+          "passed": false,
+          "value": null
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": false,
+          "value": null
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": false,
+          "value": null,
+          "run_count": 0
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": true,
+          "value": 0.0,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.05,
+          "supporting_run_count": 0,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "observed_first_valid_in_normal_budget_three",
+        "normal_budget_three_above_floor",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "Optoelectronics/LaserCavityDesign",
+      "certification_status": "quarantined",
+      "internal_science_admission": false,
+      "provenance_class": "undeclared",
+      "classification": "quarantined",
+      "classification_reasons": [
+        "internal science admission failed"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": false,
+          "value": 0
+        },
+        "normal_budget_one_observed": {
+          "passed": false,
+          "value": null
+        },
+        "normal_budget_three_observed": {
+          "passed": false,
+          "value": null
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": false,
+          "value": null
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": false,
+          "value": null,
+          "run_count": 0
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.05,
+          "supporting_run_count": 0,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "observed_first_valid_in_normal_budget_three",
+        "normal_budget_three_above_floor",
+        "budget_one_below_observed_ceiling_warning",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "ParticlePhysics/CalorimeterDesign",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "procedural",
+      "classification": "repair_first",
+      "classification_reasons": [
+        "current contract lacks sufficient non-saturated, valid, repeated trajectory evidence",
+        "repair contract or run a short measurement calibration before allocating 2--12 h"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 3
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "normal_budget_three_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": false,
+          "value": 0.0,
+          "run_count": 1
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": true,
+          "value": 0.0,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": false,
+          "value": 0.0,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.05,
+          "supporting_run_count": 0,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "observed_first_valid_in_normal_budget_three",
+        "normal_budget_three_above_floor",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "Photonics/MultilayerThinFilm",
+      "certification_status": "certified",
+      "internal_science_admission": true,
+      "provenance_class": "known_answer",
+      "classification": "repair_first",
+      "classification_reasons": [
+        "current contract lacks sufficient non-saturated, valid, repeated trajectory evidence",
+        "repair contract or run a short measurement calibration before allocating 2--12 h"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 1
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.8904980946848123
+        },
+        "normal_budget_three_observed": {
+          "passed": false,
+          "value": null
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": false,
+          "value": null
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": false,
+          "value": null,
+          "run_count": 0
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": true,
+          "value": 0.8904980946848123,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.05,
+          "supporting_run_count": 0,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "observed_first_valid_in_normal_budget_three",
+        "normal_budget_three_above_floor",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "Photovoltaics/PhotovoltaicTandemDesign",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "procedural",
+      "classification": "saturated_on_ramp",
+      "classification_reasons": [
+        "observed one-step or near-ceiling behavior, or retained as a known-answer/on-ramp control",
+        "requires a harder procedural or multifidelity contract before long-horizon allocation"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 3
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.9945708150967405
+        },
+        "normal_budget_three_observed": {
+          "passed": true,
+          "value": 0.9938209332027605
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": true,
+          "value": 0.9999255712906745
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": true,
+          "value": 1.0,
+          "run_count": 1
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": false,
+          "value": 0.9945708150967405,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": true,
+          "value": 0.9938209332027605,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": 0.0189833633611447,
+          "threshold": 0.05,
+          "supporting_run_count": 1,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "budget_one_below_observed_ceiling_warning",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "Physics/SpinGlassGroundState",
+      "certification_status": "certified",
+      "internal_science_admission": true,
+      "provenance_class": "known_answer",
+      "classification": "saturated_on_ramp",
+      "classification_reasons": [
+        "observed one-step or near-ceiling behavior, or retained as a known-answer/on-ramp control",
+        "requires a harder procedural or multifidelity contract before long-horizon allocation"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 1
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.9999999980244798
+        },
+        "normal_budget_three_observed": {
+          "passed": false,
+          "value": null
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": false,
+          "value": null
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": false,
+          "value": null,
+          "run_count": 0
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": false,
+          "value": 0.9999999980244798,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.05,
+          "supporting_run_count": 0,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "observed_first_valid_in_normal_budget_three",
+        "normal_budget_three_above_floor",
+        "budget_one_below_observed_ceiling_warning",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "PopulationGenetics/DemographicSFS",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "procedural",
+      "classification": "repair_first",
+      "classification_reasons": [
+        "current contract lacks sufficient non-saturated, valid, repeated trajectory evidence",
+        "repair contract or run a short measurement calibration before allocating 2--12 h"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 3
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "normal_budget_three_observed": {
+          "passed": true,
+          "value": 0.6395338209709723
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": true,
+          "value": 1.0,
+          "run_count": 1
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": true,
+          "value": 0.0,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": true,
+          "value": 0.6395338209709723,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": -0.0024796346043806095,
+          "threshold": 0.05,
+          "supporting_run_count": 1,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "PowerSystems/OptimalPowerFlow",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "procedural",
+      "classification": "saturated_on_ramp",
+      "classification_reasons": [
+        "observed one-step or near-ceiling behavior, or retained as a known-answer/on-ramp control",
+        "requires a harder procedural or multifidelity contract before long-horizon allocation"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 8
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.9999999999998589
+        },
+        "normal_budget_three_observed": {
+          "passed": true,
+          "value": 0.9999999999999668
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": true,
+          "value": 0.9999999688058758
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": false,
+          "value": 0.75,
+          "run_count": 4
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": false,
+          "value": 0.9999999999998589,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": true,
+          "value": 0.9999999999999668,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": 1.723693177080321e-08,
+          "threshold": 0.05,
+          "supporting_run_count": 3,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": true,
+          "value": 3
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "observed_first_valid_in_normal_budget_three",
+        "budget_one_below_observed_ceiling_warning",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "ProteinEngineering/ProteinStabilityDesign",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "public_data_replay",
+      "classification": "repair_first",
+      "classification_reasons": [
+        "current contract lacks sufficient non-saturated, valid, repeated trajectory evidence",
+        "repair contract or run a short measurement calibration before allocating 2--12 h"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 3
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.6143749993289187
+        },
+        "normal_budget_three_observed": {
+          "passed": true,
+          "value": 0.5345850949884275
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": true,
+          "value": 0.5463993590393126
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": true,
+          "value": 1.0,
+          "run_count": 1
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": true,
+          "value": 0.6143749993289187,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": true,
+          "value": 0.5345850949884275,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": true,
+          "value": 0.0576781010979579,
+          "threshold": 0.05,
+          "supporting_run_count": 1,
+          "material_gain_run_count": 1
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "QuantumChemistry/HartreeFockSCF",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "known_answer",
+      "classification": "saturated_on_ramp",
+      "classification_reasons": [
+        "observed one-step or near-ceiling behavior, or retained as a known-answer/on-ramp control",
+        "requires a harder procedural or multifidelity contract before long-horizon allocation"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 3
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.9999999999991211
+        },
+        "normal_budget_three_observed": {
+          "passed": true,
+          "value": 0.9999999999998224
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": true,
+          "value": 0.9999999999515471
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": true,
+          "value": 1.0,
+          "run_count": 1
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": false,
+          "value": 0.9999999999991211,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": true,
+          "value": 0.9999999999998224,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": 9.103828801926284e-15,
+          "threshold": 0.05,
+          "supporting_run_count": 1,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "budget_one_below_observed_ceiling_warning",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "QuantumControl/GateSynthesis",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "procedural",
+      "classification": "saturated_on_ramp",
+      "classification_reasons": [
+        "observed one-step or near-ceiling behavior, or retained as a known-answer/on-ramp control",
+        "requires a harder procedural or multifidelity contract before long-horizon allocation"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 8
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.9998716210528881
+        },
+        "normal_budget_three_observed": {
+          "passed": true,
+          "value": 0.9999999999999906
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": true,
+          "value": 0.9999981382187952
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": false,
+          "value": 0.75,
+          "run_count": 4
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": false,
+          "value": 0.9998716210528881,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": true,
+          "value": 0.9999999999999906,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": 6.199492352809699e-08,
+          "threshold": 0.05,
+          "supporting_run_count": 3,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": true,
+          "value": 3
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "observed_first_valid_in_normal_budget_three",
+        "budget_one_below_observed_ceiling_warning",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "RNAEngineering/RNAInverseDesign",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "procedural",
+      "classification": "exploratory_long_horizon_screen",
+      "classification_reasons": [
+        "result-selected current-contract task for an exploratory 2 h measurement screen",
+        "not eligible for a confirmatory cohort selected independently of current GPT-5.5 outcomes",
+        "observed at least one material within-three-proposal gain"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 3
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "normal_budget_three_observed": {
+          "passed": true,
+          "value": 0.720397352
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": true,
+          "value": 0.8935226274
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": true,
+          "value": 1.0,
+          "run_count": 1
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": true,
+          "value": 0.0,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": true,
+          "value": 0.720397352,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": true,
+          "value": 0.4811543412,
+          "threshold": 0.05,
+          "supporting_run_count": 1,
+          "material_gain_run_count": 1
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "ScientificComputing/PoissonSolver2D",
+      "certification_status": "certified",
+      "internal_science_admission": true,
+      "provenance_class": "known_answer",
+      "classification": "saturated_on_ramp",
+      "classification_reasons": [
+        "observed one-step or near-ceiling behavior, or retained as a known-answer/on-ramp control",
+        "requires a harder procedural or multifidelity contract before long-horizon allocation"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 1
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 1.0
+        },
+        "normal_budget_three_observed": {
+          "passed": false,
+          "value": null
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": false,
+          "value": null
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": false,
+          "value": null,
+          "run_count": 0
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": false,
+          "value": 1.0,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.05,
+          "supporting_run_count": 0,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "observed_first_valid_in_normal_budget_three",
+        "normal_budget_three_above_floor",
+        "budget_one_below_observed_ceiling_warning",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "Semiconductor/MOSFETDoping",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "procedural",
+      "classification": "exploratory_long_horizon_screen",
+      "classification_reasons": [
+        "result-selected current-contract task for an exploratory 2 h measurement screen",
+        "not eligible for a confirmatory cohort selected independently of current GPT-5.5 outcomes",
+        "observed at least one material within-three-proposal gain"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 3
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.7796977003981657
+        },
+        "normal_budget_three_observed": {
+          "passed": true,
+          "value": 0.45739953664973576
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": true,
+          "value": 0.7703221705827237
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": true,
+          "value": 1.0,
+          "run_count": 1
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": true,
+          "value": 0.7796977003981657,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": true,
+          "value": 0.45739953664973576,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": true,
+          "value": 0.26465805353822347,
+          "threshold": 0.05,
+          "supporting_run_count": 1,
+          "material_gain_run_count": 1
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "Sensors/QuartzCrystalMicrobalanceLab",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "procedural",
+      "classification": "repair_first",
+      "classification_reasons": [
+        "current contract lacks sufficient non-saturated, valid, repeated trajectory evidence",
+        "repair contract or run a short measurement calibration before allocating 2--12 h"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 3
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "normal_budget_three_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": true,
+          "value": 1.0,
+          "run_count": 1
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": true,
+          "value": 0.0,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": false,
+          "value": 0.0,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": 0.0,
+          "threshold": 0.05,
+          "supporting_run_count": 1,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "normal_budget_three_above_floor",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "SignalProcessing/SparseRecovery",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "known_answer",
+      "classification": "saturated_on_ramp",
+      "classification_reasons": [
+        "observed one-step or near-ceiling behavior, or retained as a known-answer/on-ramp control",
+        "requires a harder procedural or multifidelity contract before long-horizon allocation"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 1
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.9583008265612911
+        },
+        "normal_budget_three_observed": {
+          "passed": false,
+          "value": null
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": false,
+          "value": null
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": false,
+          "value": null,
+          "run_count": 0
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": false,
+          "value": 0.9583008265612911,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.05,
+          "supporting_run_count": 0,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "observed_first_valid_in_normal_budget_three",
+        "normal_budget_three_above_floor",
+        "budget_one_below_observed_ceiling_warning",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "Spectroscopy/NMRSpectrumFitting",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "procedural",
+      "classification": "repair_first",
+      "classification_reasons": [
+        "current contract lacks sufficient non-saturated, valid, repeated trajectory evidence",
+        "repair contract or run a short measurement calibration before allocating 2--12 h"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 2
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.4279984826743954
+        },
+        "normal_budget_three_observed": {
+          "passed": true,
+          "value": 0.3754396537421269
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": false,
+          "value": null
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": true,
+          "value": 1.0,
+          "run_count": 1
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": true,
+          "value": 0.4279984826743954,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": true,
+          "value": 0.3754396537421269,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": -0.16274791176240638,
+          "threshold": 0.05,
+          "supporting_run_count": 1,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "StructuralEngineering/TrussWeightMinimization",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "procedural",
+      "classification": "exploratory_long_horizon_screen",
+      "classification_reasons": [
+        "result-selected current-contract task for an exploratory 2 h measurement screen",
+        "not eligible for a confirmatory cohort selected independently of current GPT-5.5 outcomes",
+        "observed at least one material within-three-proposal gain"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 3
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "normal_budget_three_observed": {
+          "passed": true,
+          "value": 0.6114935558376748
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": true,
+          "value": 0.08462868264136335
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": true,
+          "value": 1.0,
+          "run_count": 1
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": true,
+          "value": 0.0,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": true,
+          "value": 0.6114935558376748,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": true,
+          "value": 0.19591437427152464,
+          "threshold": 0.05,
+          "supporting_run_count": 1,
+          "material_gain_run_count": 1
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "SystemsBiology/GeneNetworkIntervention",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "procedural",
+      "classification": "repair_first",
+      "classification_reasons": [
+        "current contract lacks sufficient non-saturated, valid, repeated trajectory evidence",
+        "repair contract or run a short measurement calibration before allocating 2--12 h"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 3
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "normal_budget_three_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": false,
+          "value": 0.0,
+          "run_count": 1
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": true,
+          "value": 0.0,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": false,
+          "value": 0.0,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.05,
+          "supporting_run_count": 0,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "observed_first_valid_in_normal_budget_three",
+        "normal_budget_three_above_floor",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "Thermodynamics/HeatExchangerDesign",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "procedural",
+      "classification": "exploratory_long_horizon_screen",
+      "classification_reasons": [
+        "result-selected current-contract task for an exploratory 2 h measurement screen",
+        "not eligible for a confirmatory cohort selected independently of current GPT-5.5 outcomes",
+        "observed at least one material within-three-proposal gain"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 3
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "normal_budget_three_observed": {
+          "passed": true,
+          "value": 0.12605369117948312
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": true,
+          "value": 0.2937046033170183
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": true,
+          "value": 1.0,
+          "run_count": 1
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": true,
+          "value": 0.0,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": true,
+          "value": 0.12605369117948312,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": true,
+          "value": 0.117660861106055,
+          "threshold": 0.05,
+          "supporting_run_count": 1,
+          "material_gain_run_count": 1
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "Thermodynamics/RankineCycleOpt",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "procedural",
+      "classification": "saturated_on_ramp",
+      "classification_reasons": [
+        "observed one-step or near-ceiling behavior, or retained as a known-answer/on-ramp control",
+        "requires a harder procedural or multifidelity contract before long-horizon allocation"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 3
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.9635609362627
+        },
+        "normal_budget_three_observed": {
+          "passed": true,
+          "value": 1.0
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": true,
+          "value": 1.0
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": true,
+          "value": 1.0,
+          "run_count": 1
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": false,
+          "value": 0.9635609362627,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": true,
+          "value": 1.0,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": 0.0,
+          "threshold": 0.05,
+          "supporting_run_count": 1,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "budget_one_below_observed_ceiling_warning",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "Transportation/TrafficSignalTiming",
+      "certification_status": "quarantined",
+      "internal_science_admission": false,
+      "provenance_class": "undeclared",
+      "classification": "quarantined",
+      "classification_reasons": [
+        "internal science admission failed"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": false,
+          "value": 0
+        },
+        "normal_budget_one_observed": {
+          "passed": false,
+          "value": null
+        },
+        "normal_budget_three_observed": {
+          "passed": false,
+          "value": null
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": false,
+          "value": null
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": false,
+          "value": null,
+          "run_count": 0
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": null,
+          "threshold": 0.05,
+          "supporting_run_count": 0,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "observed_first_valid_in_normal_budget_three",
+        "normal_budget_three_above_floor",
+        "budget_one_below_observed_ceiling_warning",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "Turbulence/RANSCalibration",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "public_data_replay",
+      "classification": "exploratory_long_horizon_screen",
+      "classification_reasons": [
+        "result-selected current-contract task for an exploratory 2 h measurement screen",
+        "not eligible for a confirmatory cohort selected independently of current GPT-5.5 outcomes",
+        "observed at least one material within-three-proposal gain"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 3
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "normal_budget_three_observed": {
+          "passed": true,
+          "value": 0.35593547918473717
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": true,
+          "value": 1.0,
+          "run_count": 1
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": true,
+          "value": 0.0,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": true,
+          "value": 0.35593547918473717,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": true,
+          "value": 0.35593547918473717,
+          "threshold": 0.05,
+          "supporting_run_count": 1,
+          "material_gain_run_count": 1
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    },
+    {
+      "task": "WavePropagation/SeismicWaveInversion",
+      "certification_status": "candidate",
+      "internal_science_admission": true,
+      "provenance_class": "procedural",
+      "classification": "repair_first",
+      "classification_reasons": [
+        "current contract lacks sufficient non-saturated, valid, repeated trajectory evidence",
+        "repair contract or run a short measurement calibration before allocating 2--12 h"
+      ],
+      "checks": {
+        "current_model_measurement": {
+          "passed": true,
+          "value": 3
+        },
+        "normal_budget_one_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "normal_budget_three_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "selection_blind_budget_three_observed": {
+          "passed": true,
+          "value": 0.0
+        },
+        "observed_first_valid_in_normal_budget_three": {
+          "passed": true,
+          "value": 1.0,
+          "run_count": 1
+        },
+        "budget_one_below_observed_ceiling_warning": {
+          "passed": true,
+          "value": 0.0,
+          "threshold": 0.95
+        },
+        "normal_budget_three_above_floor": {
+          "passed": false,
+          "value": 0.0,
+          "threshold": 0.01
+        },
+        "material_short_run_post_first_valid_gain": {
+          "passed": false,
+          "value": 0.0,
+          "threshold": 0.05,
+          "supporting_run_count": 1,
+          "material_gain_run_count": 0
+        },
+        "at_least_three_matched_controls": {
+          "passed": false,
+          "value": 0
+        },
+        "fresh_postcommit_confirmation": {
+          "passed": false,
+          "value": 0
+        },
+        "fixed_artifact_noise_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "evaluator_resolution_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "baseline_reference_separation_quantified": {
+          "passed": false,
+          "value": null
+        },
+        "shortcut_resistance_for_long_horizon_passed": {
+          "passed": false,
+          "value": null
+        },
+        "material_post_2h_headroom_demonstrated": {
+          "passed": false,
+          "value": null
+        }
+      },
+      "complete_measurement_health_passed": false,
+      "missing_complete_gate_checks": [
+        "normal_budget_three_above_floor",
+        "fixed_artifact_noise_quantified",
+        "evaluator_resolution_quantified",
+        "baseline_reference_separation_quantified",
+        "shortcut_resistance_for_long_horizon_passed",
+        "material_post_2h_headroom_demonstrated"
+      ],
+      "confirmatory_cohort_eligible": false,
+      "confirmatory_ineligibility_reasons": [
+        "current portfolio roles were assigned after inspecting current GPT-5.5 calibration outcomes",
+        "no task demonstrates material post-2h headroom",
+        "no task has a complete measurement-health gate"
+      ]
+    }
+  ],
+  "issues": [],
+  "next_actions": [
+    "Freeze the seven-task result-selected exploratory cohort before any 2 h run.",
+    "Measure fixed-artifact noise, evaluator resolution, first-valid rate, and baseline/reference separation before long runs.",
+    "Run every exploratory task for 2 h with t=0, first-valid, submission, fixed-grid, commit, and terminal sentinels.",
+    "Retain a random audit tranche to 12 h; do not deterministically stop all apparent 2 h failures.",
+    "Select any confirmatory cohort independently of these GPT-5.5 outcomes, ideally with sealed tasks or a different builder/model split."
+  ],
+  "important_limits": [
+    "Short proposal-budget gain is not evidence of material post-2h headroom.",
+    "A single observed run is not a provider-side probability or variance estimate.",
+    "Known-answer and public-data tasks may measure optimization or reconstruction without scientific discovery.",
+    "No current task is long-horizon-ready, externally validated, or autonomous-discovery evidence."
+  ],
+  "execution_passed": true,
+  "trust_decision": "trusted_clean_revision",
+  "trusted_evidence": true,
+  "passed": true
+}
