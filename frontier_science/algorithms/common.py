@@ -167,6 +167,7 @@ def ensure_run_manifest(
     feedback_mode: str,
     resume: bool,
     upstream: Optional[dict[str, Any]] = None,
+    protocol: Optional[dict[str, Any]] = None,
 ) -> dict[str, Any]:
     expected = {
         "schema_version": 1,
@@ -185,6 +186,8 @@ def ensure_run_manifest(
         "llm_condition_sha256": llm_condition_sha256(llm),
         "upstream": upstream,
     }
+    if protocol is not None:
+        expected["protocol"] = protocol
     path = Path(workdir) / "run_manifest.json"
     if resume:
         if not path.is_file():

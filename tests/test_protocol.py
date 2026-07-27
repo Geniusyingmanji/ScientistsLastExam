@@ -330,6 +330,108 @@ class ProtocolMetricTests(unittest.TestCase):
 
 
 class GreedyRewriteTests(unittest.TestCase):
+    def test_fixed_duration_sentinels_capture_boundary_artifacts(self):
+        spec = find_task("LennardJonesCluster")
+        baseline = spec.initial_program_path.read_text(encoding="utf-8")
+        fenced = "```python\n" + baseline + "\n```"
+        llm = FakeLLM([fenced])
+        with tempfile.TemporaryDirectory() as tmp:
+            work = Path(tmp)
+            result = greedy_rewrite(
+                spec,
+                llm,
+                budget=1,
+                timeout_s=20,
+                workdir=work,
+                active_wall_horizon_s=10.0,
+                sentinel_interval_s=2.0,
+                log_fn=lambda _: None,
+            )
+            snapshot = result.summary["sentinel_snapshot"]
+            events = snapshot["events"]
+
+        self.assertFalse(result.summary["horizon_reached"])
+        self.assertEqual(events[0]["sentinel_type"], "t0")
+        self.assertEqual(events[-1]["sentinel_type"], "terminal")
+        self.assertEqual(events[-1]["reason"], "proposal_budget_exhausted_before_active_wall_horizon")
+        self.assertEqual(snapshot["type_counts"]["submission"], 1)
+        self.assertEqual(snapshot["type_counts"]["terminal"], 1)
+        submission = next(
+            row for row in events if row["sentinel_type"] == "submission"
+        )
+        self.assertEqual(submission["evaluation"]["status"], "completed")
+        self.assertIsNotNone(submission["evaluation"]["sha256"])
+        self.assertIn("Preregistered active-time horizon", llm.prompts[0])
+        self.assertIn("10.000 active wall seconds", llm.prompts[0])
+
+    def test_late_result_is_retained_but_cannot_update_incumbent(self):
+        spec = find_task("LennardJonesCluster")
+        improved = "def optimize_cluster(n_atoms):\n    return []\n"
+        llm = FakeLLM(["```python\n%s\n```" % improved])
+        metrics = [
+            {"combined_score": 0.1, "valid": 1.0},
+            {"combined_score": 0.9, "valid": 1.0},
+        ]
+        clock = iter([0.0, 0.1, 0.1, 0.2, 0.2, 0.3, 2.0])
+        with tempfile.TemporaryDirectory() as tmp, patch(
+            "frontier_science.algorithms.evolve.evaluate_candidate",
+            side_effect=metrics,
+        ), patch(
+            "frontier_science.algorithms.evolve.time.monotonic",
+            side_effect=lambda: next(clock),
+        ):
+            result = greedy_rewrite(
+                spec,
+                llm,
+                budget=1,
+                timeout_s=20,
+                workdir=Path(tmp),
+                active_wall_horizon_s=1.0,
+                sentinel_interval_s=0.5,
+                log_fn=lambda _: None,
+            )
+            events = load_trajectory(Path(tmp) / "trajectory.jsonl")
+
+        self.assertEqual(result.best_score, 0.1)
+        self.assertEqual(result.best_program, spec.initial_program_path.read_text(encoding="utf-8"))
+        self.assertFalse(events[1]["accepted"])
+        self.assertTrue(
+            events[1]["algorithm_metadata"]["completed_after_active_wall_horizon"]
+        )
+        self.assertEqual(result.summary["sentinel_snapshot"]["events"][-1]["source_step"], 0)
+        self.assertTrue(result.summary["horizon_reached"])
+
+    def test_baseline_crossing_horizon_is_explicit_protocol_failure(self):
+        spec = find_task("LennardJonesCluster")
+        clock = iter([0.0, 2.0])
+        with tempfile.TemporaryDirectory() as tmp, patch(
+            "frontier_science.algorithms.evolve.evaluate_candidate",
+            return_value={"combined_score": 0.1, "valid": 1.0},
+        ), patch(
+            "frontier_science.algorithms.evolve.time.monotonic",
+            side_effect=lambda: next(clock),
+        ):
+            result = greedy_rewrite(
+                spec,
+                FakeLLM([]),
+                budget=0,
+                timeout_s=20,
+                workdir=Path(tmp),
+                active_wall_horizon_s=1.0,
+                sentinel_interval_s=0.5,
+                log_fn=lambda _: None,
+            )
+
+        self.assertTrue(result.summary["horizon_reached"])
+        self.assertTrue(result.summary["baseline_crossed_horizon"])
+        sentinel_events = result.summary["sentinel_snapshot"]["events"]
+        self.assertEqual(sentinel_events[0]["evaluation"]["status"], "completed_after_schedule")
+        self.assertFalse(sentinel_events[0]["feedback_visible"])
+        self.assertEqual(
+            sentinel_events[-1]["reason"],
+            "baseline_evaluation_completed_after_active_wall_horizon",
+        )
+
     def test_trace_cost_and_resume(self):
         spec = find_task("LennardJonesCluster")
         baseline = spec.initial_program_path.read_text(encoding="utf-8")

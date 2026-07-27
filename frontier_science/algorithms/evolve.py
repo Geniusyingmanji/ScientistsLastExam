@@ -9,6 +9,7 @@ agent only ever sees the task text, the current best program, and the returned m
 from __future__ import annotations
 
 import json
+import math
 import os
 import random
 import re
@@ -21,6 +22,7 @@ from ..llm import LLMClient
 from ..metric_visibility import score_only_metrics, search_visible_metrics
 from ..spec import TaskSpec
 from ..protocol import TrajectoryEvent, append_event, load_trajectory, sha256_text, summarize_trajectory
+from ..sentinels import SentinelLedger
 from .common import (
     EvolveResult,
     atomic_write_text,
@@ -75,6 +77,8 @@ def _build_prompt(
     *,
     proposal_slot: int | None = None,
     proposal_budget: int | None = None,
+    active_wall_horizon_s: float | None = None,
+    active_wall_elapsed_s: float | None = None,
 ) -> str:
     shown = search_visible_metrics(metrics)
     slot = ""
@@ -84,9 +88,21 @@ def _build_prompt(
             f"This is proposal {proposal_slot} of {proposal_budget}. Explore a concrete "
             "implementation improvement appropriate to this slot.\n\n"
         )
+    horizon = ""
+    if active_wall_horizon_s is not None and active_wall_elapsed_s is not None:
+        remaining = max(0.0, active_wall_horizon_s - active_wall_elapsed_s)
+        horizon = (
+            "## Preregistered active-time horizon\n"
+            f"This run stops at {active_wall_horizon_s:.3f} active wall seconds. "
+            f"At prompt construction, {active_wall_elapsed_s:.3f} seconds have "
+            f"elapsed and approximately {remaining:.3f} seconds remain. A response "
+            "or evaluation completing after the cutoff cannot update the in-horizon "
+            "incumbent.\n\n"
+        )
     return (
         f"{spec.agent_visible_text()}\n\n"
         f"{slot}"
+        f"{horizon}"
         f"## Parent program (`{spec.candidate_destination}`)\n"
         f"```python\n{program}\n```\n\n"
         f"## Its measured metrics\n```json\n{json.dumps(shown, indent=2)}\n```\n\n"
@@ -150,6 +166,14 @@ def _validate_pending_proposal(
         and float(prefix_wall) >= 0.0
     ):
         raise ValueError("pending proposal accounting is invalid")
+    published = pending.get("proposal_published_wall_seconds")
+    if published is not None and (
+        not isinstance(published, (int, float))
+        or isinstance(published, bool)
+        or not math.isfinite(float(published))
+        or float(published) < float(prefix_wall)
+    ):
+        raise ValueError("pending proposal publication time is invalid")
     if extract_code(response) != program:
         raise ValueError("pending proposal parse result differs from response")
     return program, dict(usage), float(prefix_wall)
@@ -165,6 +189,8 @@ def greedy_rewrite(
     seed: int = 0,
     resume: bool = False,
     feedback_mode: str = "normal",
+    active_wall_horizon_s: float | None = None,
+    sentinel_interval_s: float | None = None,
 ) -> EvolveResult:
     if feedback_mode not in GREEDY_FEEDBACK_MODES:
         raise ValueError(
@@ -172,6 +198,12 @@ def greedy_rewrite(
         )
     if budget < 0:
         raise ValueError("budget must be non-negative")
+    if active_wall_horizon_s is not None and active_wall_horizon_s <= 0:
+        raise ValueError("active_wall_horizon_s must be positive")
+    if sentinel_interval_s is not None and sentinel_interval_s <= 0:
+        raise ValueError("sentinel_interval_s must be positive")
+    if sentinel_interval_s is not None and active_wall_horizon_s is None:
+        raise ValueError("sentinel_interval_s requires active_wall_horizon_s")
     random.seed(seed)
     os.environ["PYTHONHASHSEED"] = str(seed)
     workdir = Path(workdir or (spec.task_dir / "runs" / time.strftime("%Y%m%d_%H%M%S"))).resolve()
@@ -192,10 +224,26 @@ def greedy_rewrite(
     ensure_run_manifest(
         workdir, spec=spec, llm=llm, algorithm="greedy_rewrite", seed=seed,
         feedback_mode=feedback_mode, resume=resume,
+        protocol=(
+            {
+                "active_wall_horizon_s": active_wall_horizon_s,
+                "sentinel_interval_s": sentinel_interval_s,
+                "boundary_sentinels": True,
+                "cutoff_policy": (
+                    "artifact_published_by_cutoff; late results cannot update "
+                    "in-horizon incumbent"
+                ),
+            }
+            if active_wall_horizon_s is not None else None
+        ),
     )
     if resume and not (full_resume or baseline_retry):
         raise FileNotFoundError("--resume requires checkpoint.json and trajectory.jsonl")
 
+    sentinel_ledger = (
+        SentinelLedger(workdir, resume=full_resume)
+        if active_wall_horizon_s is not None else None
+    )
     # Seed with the initial baseline program.
     start_iter = 1
     pending_proposal: dict[str, Any] | None = None
@@ -215,6 +263,9 @@ def greedy_rewrite(
         if "best_source_step" not in checkpoint:
             raise ValueError("checkpoint is missing best_source_step lineage")
         best_source_step = int(checkpoint["best_source_step"])
+        best_published_wall = float(
+            checkpoint.get("best_published_wall_seconds", 0.0)
+        )
         # Checkpoints are search state and therefore contain only search-visible metrics.
         best_metrics = search_visible_metrics(dict(checkpoint["best_metrics"]))
         if feedback_mode in {"selection_blind", "delayed_replay"}:
@@ -267,6 +318,7 @@ def greedy_rewrite(
         baseline_score = float(metrics.get("combined_score", INVALID_SCORE))
         best_score, best_program = baseline_score, baseline_src
         best_source_step = 0
+        best_published_wall = 0.0
         best_metrics = search_visible_metrics(metrics)
         baseline_metrics = dict(best_metrics)
         evaluated_candidates = [{
@@ -290,6 +342,23 @@ def greedy_rewrite(
             metrics=metrics,
         ))
         active_wall = eval_wall
+        if sentinel_ledger is not None:
+            baseline_late = active_wall > float(active_wall_horizon_s)
+            sentinel_ledger.capture(
+                "t0",
+                source=baseline_src,
+                source_step=0,
+                artifact_published_elapsed_seconds=0.0,
+                recorded_elapsed_seconds=active_wall,
+                selection_policy="baseline",
+                evaluation=metrics,
+                evaluation_status=(
+                    "completed_after_schedule" if baseline_late else "completed"
+                ),
+                evaluation_completed_elapsed_seconds=active_wall,
+                feedback_visible=not baseline_late,
+                idempotency_key="t0",
+            )
 
     def save_checkpoint(next_iter: int) -> None:
         atomic_write_text(checkpoint_path, json.dumps({
@@ -299,6 +368,7 @@ def greedy_rewrite(
             "best_score": best_score, "best_metrics": best_metrics,
             "best_program": best_program, "best_sha256": sha256_text(best_program),
             "best_source_step": best_source_step,
+            "best_published_wall_seconds": best_published_wall,
             "evaluated_candidates": evaluated_candidates,
             "pending_proposal": pending_proposal,
         }, indent=2, allow_nan=False) + "\n")
@@ -306,7 +376,97 @@ def greedy_rewrite(
 
     save_checkpoint(start_iter)
 
+    horizon_reached = bool(
+        active_wall_horizon_s is not None
+        and active_wall >= active_wall_horizon_s
+    )
+    baseline_crossed_horizon = bool(
+        active_wall_horizon_s is not None
+        and len(load_trajectory(trajectory_path)) == 1
+        and float(load_trajectory(trajectory_path)[0]["cumulative_wall_seconds"])
+        > active_wall_horizon_s
+    )
+    existing_grid_times = [
+        float(row["scheduled_elapsed_seconds"])
+        for row in (sentinel_ledger.events if sentinel_ledger is not None else [])
+        if row["sentinel_type"] == "fixed_grid"
+    ]
+    next_grid = (
+        float(sentinel_interval_s)
+        if sentinel_ledger is not None and sentinel_interval_s is not None
+        else None
+    )
+    if next_grid is not None and existing_grid_times:
+        next_grid = max(existing_grid_times) + float(sentinel_interval_s)
+
+    def artifact_at_elapsed(
+        grid: float,
+    ) -> tuple[str, int, float, dict[str, Any], float]:
+        source_by_step = {
+            int(row["step"]): str(row["program"])
+            for row in evaluated_candidates
+            if row.get("program") is not None
+        }
+        source = baseline_src
+        source_step = 0
+        published = 0.0
+        events = load_trajectory(trajectory_path)
+        evaluation = dict(events[0].get("metrics") or {})
+        completed = float(events[0]["cumulative_wall_seconds"])
+        for event in events[1:]:
+            if float(event["cumulative_wall_seconds"]) > grid:
+                break
+            if event.get("accepted") is True:
+                step = int(event["step"])
+                if step in source_by_step:
+                    source = source_by_step[step]
+                    source_step = step
+                    published = float(
+                        (event.get("algorithm_metadata") or {}).get(
+                            "proposal_published_wall_seconds",
+                            event["cumulative_wall_seconds"],
+                        )
+                    )
+                    evaluation = dict(event.get("metrics") or {})
+                    completed = float(event["cumulative_wall_seconds"])
+        return source, source_step, published, evaluation, completed
+
+    def capture_due_grid(now: float) -> None:
+        nonlocal next_grid
+        if sentinel_ledger is None or next_grid is None:
+            return
+        horizon = float(active_wall_horizon_s)
+        while next_grid <= min(now, horizon):
+            source, source_step, published, evaluation, completed = (
+                artifact_at_elapsed(next_grid)
+            )
+            sentinel_ledger.capture(
+                "fixed_grid",
+                source=source,
+                source_step=source_step,
+                scheduled_elapsed_seconds=next_grid,
+                artifact_published_elapsed_seconds=published,
+                recorded_elapsed_seconds=now,
+                selection_policy="workspace_incumbent_at_grid",
+                evaluation=evaluation,
+                evaluation_status=(
+                    "reused_deterministic"
+                    if completed <= next_grid else "completed_after_schedule"
+                ),
+                evaluation_completed_elapsed_seconds=completed,
+                feedback_visible=False,
+                capture_method="post_call_capture_of_stable_incumbent",
+                reason="deterministic evaluation reused; capture may lag a blocking call",
+                idempotency_key="grid:%.9f" % next_grid,
+            )
+            next_grid += float(sentinel_interval_s)
+
+    capture_due_grid(active_wall)
+
     for it in range(start_iter, budget + 1):
+        if active_wall_horizon_s is not None and active_wall >= active_wall_horizon_s:
+            horizon_reached = True
+            break
         step_started = time.monotonic()
         prompt_program = best_program
         prompt_metrics = best_metrics
@@ -351,6 +511,8 @@ def greedy_rewrite(
             prompt_metrics,
             proposal_slot=it,
             proposal_budget=budget,
+            active_wall_horizon_s=active_wall_horizon_s,
+            active_wall_elapsed_s=active_wall,
         )
         if pending_proposal is None:
             try:
@@ -371,6 +533,7 @@ def greedy_rewrite(
                     "provider request failed after transport retries"
                 ) from exc
             code = extract_code(reply)
+            proposal_published_wall = active_wall + (time.monotonic() - step_started)
             pending_proposal = {
                 "schema_version": 1,
                 "step": it,
@@ -390,6 +553,7 @@ def greedy_rewrite(
                 "system_prompt_sha256": sha256_text(SYSTEM_PROMPT),
                 "llm_usage": llm_usage,
                 "pre_evaluation_wall_seconds": time.monotonic() - step_started,
+                "proposal_published_wall_seconds": proposal_published_wall,
             }
             # Commit the provider draw before evaluating it. An evaluator
             # outage then replays this exact source/result instead of drawing a
@@ -403,6 +567,12 @@ def greedy_rewrite(
             prompt_source_step=prompt_source_step,
             feedback_released_through_step=feedback_released_through_step,
             prompt_metrics_rendered=prompt_metrics_rendered,
+        )
+        proposal_published_wall = float(
+            pending_proposal.get(
+                "proposal_published_wall_seconds",
+                active_wall + pre_evaluation_wall,
+            )
         )
         evaluation_started = time.monotonic()
         if not code:
@@ -427,6 +597,37 @@ def greedy_rewrite(
         # The provider result is now a terminal candidate outcome. Keep the
         # on-disk pending record until the event and next checkpoint commit.
         pending_proposal = None
+        step_wall = pre_evaluation_wall + (time.monotonic() - evaluation_started)
+        active_wall += step_wall
+        completed_after_horizon = bool(
+            active_wall_horizon_s is not None
+            and active_wall > active_wall_horizon_s
+        )
+        if sentinel_ledger is not None:
+            sentinel_ledger.capture(
+                "submission",
+                source=code,
+                source_step=it,
+                artifact_published_elapsed_seconds=proposal_published_wall,
+                recorded_elapsed_seconds=active_wall,
+                selection_policy="agent_submission",
+                evaluation=m if code else None,
+                evaluation_status=(
+                    "completed_after_schedule"
+                    if code and completed_after_horizon
+                    else "completed" if code
+                    else "not_applicable"
+                ),
+                evaluation_completed_elapsed_seconds=(
+                    active_wall if code else None
+                ),
+                feedback_visible=bool(code and not completed_after_horizon),
+                reason=(
+                    None if code
+                    else "provider response contained no executable code"
+                ),
+                idempotency_key="submission:%d" % it,
+            )
         if code:
             evaluated_candidates.append({
                 "step": it,
@@ -436,17 +637,19 @@ def greedy_rewrite(
                 "valid": valid,
                 "metrics": search_visible_metrics(m),
             })
+        # A result can be scientifically retained after cutoff, but it cannot
+        # become the in-horizon incumbent or visible feedback.
+        accepted = bool(accepted and not completed_after_horizon)
         if accepted:
             best_score, best_program = score, code
             best_source_step = it
+            best_published_wall = proposal_published_wall
             best_metrics = search_visible_metrics(m)
             result.best_score, result.best_program = best_score, best_program
             result.accepted += 1
         entry = {"iter": it, "score": score, "best": best_score, "accepted": accepted,
                  "metrics": {k: m.get(k) for k in ("combined_score", "valid", "raw_score", "error_message")}}
         result.history.append(entry)
-        step_wall = pre_evaluation_wall + (time.monotonic() - evaluation_started)
-        active_wall += step_wall
         append_event(trajectory_path, TrajectoryEvent(
             step=it, oracle_calls=result.evaluated, score=score, best_score=best_score,
             valid=valid, accepted=accepted, wall_seconds=step_wall,
@@ -479,17 +682,97 @@ def greedy_rewrite(
                 "prompt_metrics_sha256": sha256_text(prompt_metrics_rendered),
                 "prompt_metrics_utf8_bytes": len(prompt_metrics_rendered.encode("utf-8")),
                 "prompt_metric_keys": ",".join(sorted(search_visible_metrics(prompt_metrics))),
+                "proposal_published_wall_seconds": proposal_published_wall,
+                "completed_after_active_wall_horizon": completed_after_horizon,
             },
         ))
+        if sentinel_ledger is not None and valid and not sentinel_ledger.has_type("first_valid"):
+            sentinel_ledger.capture(
+                "first_valid",
+                source=code,
+                source_step=it,
+                artifact_published_elapsed_seconds=proposal_published_wall,
+                recorded_elapsed_seconds=active_wall,
+                selection_policy="first_valid",
+                evaluation=m,
+                evaluation_status=(
+                    "completed_after_schedule" if completed_after_horizon else "completed"
+                ),
+                evaluation_completed_elapsed_seconds=active_wall,
+                feedback_visible=not completed_after_horizon,
+                idempotency_key="first_valid",
+            )
+        capture_due_grid(active_wall)
         save_checkpoint(it + 1)
         log_fn(f"[{spec.task_id}] iter {it}: score={score:.6f} best={best_score:.6f} "
                f"{'ACCEPT' if accepted else 'reject'}")
+        if completed_after_horizon:
+            horizon_reached = True
+            break
+
+    if active_wall_horizon_s is not None and active_wall >= active_wall_horizon_s:
+        horizon_reached = True
+    if sentinel_ledger is not None and not sentinel_ledger.has_type("terminal"):
+        terminal_recorded = active_wall
+        capture_due_grid(terminal_recorded)
+        terminal_event = next(
+            (
+                row for row in reversed(load_trajectory(trajectory_path))
+                if int(row.get("step", -1)) == best_source_step
+            ),
+            None,
+        )
+        terminal_evaluation = (
+            dict(terminal_event.get("metrics") or {})
+            if terminal_event is not None else None
+        )
+        terminal_evaluation_completed = (
+            float(terminal_event["cumulative_wall_seconds"])
+            if terminal_event is not None else None
+        )
+        sentinel_ledger.capture(
+            "terminal",
+            source=best_program,
+            source_step=best_source_step,
+            scheduled_elapsed_seconds=float(active_wall_horizon_s),
+            artifact_published_elapsed_seconds=best_published_wall,
+            recorded_elapsed_seconds=terminal_recorded,
+            selection_policy="terminal_workspace_incumbent",
+            evaluation=terminal_evaluation,
+            evaluation_status=(
+                (
+                    "reused_deterministic"
+                    if terminal_evaluation_completed <= float(active_wall_horizon_s)
+                    else "completed_after_schedule"
+                ) if terminal_evaluation is not None
+                else "not_evaluated"
+            ),
+            evaluation_completed_elapsed_seconds=(
+                terminal_evaluation_completed
+            ),
+            feedback_visible=False,
+            reason=(
+                "baseline_evaluation_completed_after_active_wall_horizon"
+                if baseline_crossed_horizon
+                else "active_wall_horizon_reached"
+                if horizon_reached
+                else "proposal_budget_exhausted_before_active_wall_horizon"
+            ),
+            idempotency_key="terminal",
+        )
 
     atomic_write_text(workdir / "best_program.py", best_program)
     result.summary = summarize_trajectory(load_trajectory(trajectory_path), budget=budget + 1)
     result.summary.update({"algorithm": "greedy_rewrite", "task_id": spec.task_id,
                            "seed": seed, "baseline_score": baseline_score,
                            "budget": budget, "feedback_mode": feedback_mode,
+                           "active_wall_horizon_s": active_wall_horizon_s,
+                           "sentinel_interval_s": sentinel_interval_s,
+                           "horizon_reached": horizon_reached,
+                           "baseline_crossed_horizon": baseline_crossed_horizon,
+                           "sentinel_snapshot": (
+                               sentinel_ledger.snapshot() if sentinel_ledger is not None else None
+                           ),
                            "feedback_scope": feedback_scope(feedback_mode),
                            "selection_policy": (
                                "offline_best_of_open_loop_batch"

@@ -129,6 +129,35 @@ def _preregistration_record(path: Path | None) -> dict[str, Any] | None:
     }
 
 
+def _maturity_contract_sha256(spec: Any) -> str:
+    """Match the broader contract used by the task-maturity ledger."""
+
+    paths: list[Path] = []
+    for suffix in (
+        "Task.md", "solution.py", "verification/evaluator.py", "frontier_eval",
+    ):
+        path = spec.task_dir / suffix
+        if path.is_dir():
+            paths.extend(
+                child for child in path.rglob("*")
+                if child.is_file() and "__pycache__" not in child.parts
+            )
+        elif path.is_file():
+            paths.append(path)
+    card = spec.task_dir / "TASK_CARD.yaml"
+    if card.is_file():
+        paths.append(card)
+    digest = hashlib.sha256()
+    for path in sorted(set(paths)):
+        relative = path.relative_to(spec.task_dir).as_posix().encode("utf-8")
+        payload = path.read_bytes()
+        digest.update(len(relative).to_bytes(4, "big"))
+        digest.update(relative)
+        digest.update(len(payload).to_bytes(8, "big"))
+        digest.update(payload)
+    return digest.hexdigest()
+
+
 def _cohort_manifest_record(
     path: Path | None, specs: list[Any], *, include_uncertified: bool,
 ) -> dict[str, Any] | None:
@@ -160,6 +189,10 @@ def _cohort_manifest_record(
             "cohort manifest task order does not match the requested task cohort"
         )
     for row, spec in zip(rows, specs):
+        if row.get("maturity_contract_sha256") != _maturity_contract_sha256(spec):
+            raise SystemExit(
+                "cohort manifest maturity contract differs for %s" % spec.task_id
+            )
         expected_runtime = row.get("runtime_contract_sha256")
         if expected_runtime != task_contract_sha256(spec):
             raise SystemExit(
@@ -266,17 +299,23 @@ def _execute_block(payload: dict[str, Any]) -> dict[str, Any]:
                 raise ValueError(
                     "incomplete cell state lacks the full resume artifact set"
                 )
-            result = algorithm(
-                spec,
-                llm,
-                budget=int(payload["budget"]),
-                timeout_s=float(payload["timeout_s"]),
-                workdir=run_dir,
-                seed=seed,
-                resume=resume_cell,
-                feedback_mode=feedback_mode,
-                log_fn=cell_logs.append,
-            )
+            algorithm_kwargs = {
+                "spec": spec,
+                "llm": llm,
+                "budget": int(payload["budget"]),
+                "timeout_s": float(payload["timeout_s"]),
+                "workdir": run_dir,
+                "seed": seed,
+                "resume": resume_cell,
+                "feedback_mode": feedback_mode,
+                "log_fn": cell_logs.append,
+            }
+            if algorithm_name == "greedy_rewrite":
+                algorithm_kwargs.update({
+                    "active_wall_horizon_s": payload.get("active_wall_horizon_s"),
+                    "sentinel_interval_s": payload.get("sentinel_interval_s"),
+                })
+            result = algorithm(**algorithm_kwargs)
             entry = {
                 "task": spec.task_id,
                 "algorithm": result.algorithm,
@@ -292,6 +331,18 @@ def _execute_block(payload: dict[str, Any]) -> dict[str, Any]:
                     run_dir / "trajectory.jsonl", schema_version=2
                 ),
             }
+            if (
+                payload.get("active_wall_horizon_s") is not None
+                and (
+                    result.summary.get("horizon_reached") is not True
+                    or result.summary.get("baseline_crossed_horizon") is True
+                )
+            ):
+                entry["protocol_incomplete"] = (
+                    "baseline_evaluation_exceeds_active_wall_horizon"
+                    if result.summary.get("baseline_crossed_horizon") is True
+                    else "proposal_budget_exhausted_before_active_wall_horizon"
+                )
         except Exception as exc:  # noqa: BLE001 - retain failed conditions
             entry = {
                 "task": spec.task_id,
@@ -358,7 +409,10 @@ def aggregate_runs(runs: list[dict[str, Any]]) -> dict[str, Any]:
 
     by_condition = {}
     for key, group in sorted(groups.items()):
-        successful_group = [run for run in group if not run.get("error")]
+        successful_group = [
+            run for run in group
+            if not run.get("error") and not run.get("protocol_incomplete")
+        ]
         group_attempts = [
             attempt
             for run in group
@@ -367,7 +421,7 @@ def aggregate_runs(runs: list[dict[str, Any]]) -> dict[str, Any]:
             )]
         ]
         recovered = sum(
-            not run.get("error") and any(
+            not run.get("error") and not run.get("protocol_incomplete") and any(
                 attempt.get("error") for attempt in attempts_by_run[_run_key(
                     run["task"], run["algorithm"], run["feedback_mode"], int(run["seed"])
                 )]
@@ -385,16 +439,26 @@ def aggregate_runs(runs: list[dict[str, Any]]) -> dict[str, Any]:
             "completion_rate": len(successful_group) / len(group),
             "attempt_count": len(group_attempts),
             "failed_attempts": sum(bool(run.get("error")) for run in group_attempts),
+            "protocol_incomplete_attempts": sum(
+                bool(run.get("protocol_incomplete")) for run in group_attempts
+            ),
             "recovered_runs": recovered,
             **{name: mean_confidence_interval(getter(run) for run in successful_group)
                for name, getter in fields.items()},
         }
-    successful = [run for run in current if not run.get("error")]
+    successful = [
+        run for run in current
+        if not run.get("error") and not run.get("protocol_incomplete")
+    ]
     failed_attempts = sum(bool(run.get("error")) for run in runs)
     recovered_run_keys = {
         key
         for key, attempts in attempts_by_run.items()
-        if not attempts[-1].get("error") and any(run.get("error") for run in attempts)
+        if (
+            not attempts[-1].get("error")
+            and not attempts[-1].get("protocol_incomplete")
+            and any(run.get("error") for run in attempts)
+        )
     }
     valid_only = {
         name: mean_confidence_interval(getter(run) for run in successful)
@@ -404,6 +468,9 @@ def aggregate_runs(runs: list[dict[str, Any]]) -> dict[str, Any]:
         "attempt_count": len(runs),
         "superseded_attempts": len(runs) - len(current),
         "failed_attempts": failed_attempts,
+        "protocol_incomplete_attempts": sum(
+            bool(run.get("protocol_incomplete")) for run in runs
+        ),
         "attempt_failure_rate": failed_attempts / len(runs) if runs else 0.0,
         "recovered_runs": len(recovered_run_keys),
         "successful_runs": len(successful),
@@ -415,6 +482,10 @@ def aggregate_runs(runs: list[dict[str, Any]]) -> dict[str, Any]:
             "completion_rate": len(successful) / len(current) if current else 0.0,
             "run_cells_with_any_failed_attempt": sum(
                 any(run.get("error") for run in attempts)
+                for attempts in attempts_by_run.values()
+            ),
+            "run_cells_with_protocol_incomplete_attempt": sum(
+                any(run.get("protocol_incomplete") for run in attempts)
                 for attempts in attempts_by_run.values()
             ),
             "recovered_runs": len(recovered_run_keys),
@@ -455,6 +526,17 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--budget", type=int, default=30)
     parser.add_argument("--timeout", type=float, default=300.0)
     parser.add_argument(
+        "--active-wall-horizon", type=float, default=None,
+        help=(
+            "per-run active wall-clock cutoff in seconds; currently supported "
+            "only by greedy_rewrite"
+        ),
+    )
+    parser.add_argument(
+        "--sentinel-interval", type=float, default=None,
+        help="fixed-grid boundary sentinel interval in active wall seconds",
+    )
+    parser.add_argument(
         "--block-workers", type=int, default=1,
         help=(
             "maximum concurrent task/algorithm/replicate blocks; conditions "
@@ -481,12 +563,22 @@ def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(raw_argv)
     if args.budget < 0:
         raise SystemExit("--budget must be non-negative")
+    if args.active_wall_horizon is not None and args.active_wall_horizon <= 0:
+        raise SystemExit("--active-wall-horizon must be positive")
+    if args.sentinel_interval is not None and args.sentinel_interval <= 0:
+        raise SystemExit("--sentinel-interval must be positive")
+    if args.sentinel_interval is not None and args.active_wall_horizon is None:
+        raise SystemExit("--sentinel-interval requires --active-wall-horizon")
     if args.block_workers < 1:
         raise SystemExit("--block-workers must be >= 1")
     algorithms = _csv(args.algorithms)
     unknown = sorted(set(algorithms) - set(ALGORITHMS))
     if unknown:
         raise SystemExit("unknown algorithms: %s" % ", ".join(unknown))
+    if args.active_wall_horizon is not None and set(algorithms) != {"greedy_rewrite"}:
+        raise SystemExit(
+            "--active-wall-horizon is currently implemented only for greedy_rewrite"
+        )
     feedback_modes = _csv(args.feedback_modes)
     unknown_modes = sorted(
         set(feedback_modes) - {
@@ -568,6 +660,24 @@ def main(argv: list[str] | None = None) -> int:
         },
         "budget": args.budget,
         "timeout_s": args.timeout,
+        "active_wall_horizon_s": args.active_wall_horizon,
+        "sentinel_interval_s": args.sentinel_interval,
+        "boundary_sentinel_policy": (
+            {
+                "required": [
+                    "t0", "first_valid", "submission", "commit_or_abstain",
+                    "fixed_grid", "terminal",
+                ],
+                "implemented_by_runner": [
+                    "t0", "first_valid", "submission", "fixed_grid", "terminal",
+                ],
+                "commit_or_abstain": "no signed agent action protocol yet; not synthesized",
+                "late_result_policy": (
+                    "retain result but prevent post-cutoff incumbent or feedback update"
+                ),
+            }
+            if args.active_wall_horizon is not None else None
+        ),
         "block_workers": args.block_workers,
         "block_parallelism": {
             "unit": "task_algorithm_replicate",
@@ -624,6 +734,9 @@ def main(argv: list[str] | None = None) -> int:
     done = {
         _run_key(run["task"], run["algorithm"], run["feedback_mode"], int(run["seed"]))
         for run in _latest_runs(document.get("runs", []))
+        # A protocol-incomplete terminal attempt is a retained outcome, not a
+        # retryable infrastructure failure. Its config cannot be changed under
+        # --resume, so rerunning it would only duplicate the same stopped cell.
         if not run.get("error")
     }
     total = len(specs) * len(algorithms) * len(feedback_modes) * len(args.seeds)
@@ -638,6 +751,8 @@ def main(argv: list[str] | None = None) -> int:
             "work_root": str(work_root),
             "budget": args.budget,
             "timeout_s": args.timeout,
+            "active_wall_horizon_s": args.active_wall_horizon,
+            "sentinel_interval_s": args.sentinel_interval,
             "resume": args.resume,
             "skip_keys": sorted(done),
         }

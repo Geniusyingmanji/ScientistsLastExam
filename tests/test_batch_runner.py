@@ -241,6 +241,7 @@ class BatchAggregationTests(unittest.TestCase):
             "terminal_failed_runs": 0,
             "completion_rate": 1.0,
             "run_cells_with_any_failed_attempt": 1,
+            "run_cells_with_protocol_incomplete_attempt": 0,
             "recovered_runs": 1,
         })
         condition = got["by_condition"]["T/X|greedy_rewrite|normal"]
@@ -261,6 +262,38 @@ class BatchAggregationTests(unittest.TestCase):
         self.assertEqual(got["failed_attempts"], 1)
         self.assertEqual(got["intent_to_evaluate"]["completion_rate"], 0.0)
         self.assertEqual(got["overall_valid_only"], {})
+
+    def test_fixed_duration_budget_exhaustion_is_protocol_incomplete(self):
+        incomplete = {
+            "task": "T/X",
+            "algorithm": "greedy_rewrite",
+            "feedback_mode": "normal",
+            "seed": 0,
+            "best": 0.8,
+            "protocol_incomplete": (
+                "proposal_budget_exhausted_before_active_wall_horizon"
+            ),
+            "summary": {
+                "best_so_far_auc": 0.7,
+                "budget_units": 4,
+                "oracle_calls": 4,
+                "wall_seconds": 20,
+                "llm": {"total_tokens": 100, "estimated_cost_usd": None},
+            },
+        }
+        got = MODULE.aggregate_runs([incomplete])
+        condition = got["by_condition"]["T/X|greedy_rewrite|normal"]
+        self.assertEqual(condition["n"], 0)
+        self.assertEqual(condition["protocol_incomplete_attempts"], 1)
+        self.assertEqual(got["successful_runs"], 0)
+        self.assertEqual(got["failed_runs"], 1)
+        self.assertEqual(got["protocol_incomplete_attempts"], 1)
+        self.assertEqual(
+            got["intent_to_evaluate"][
+                "run_cells_with_protocol_incomplete_attempt"
+            ],
+            1,
+        )
 
     def test_complete_smoke_writes_passed_status(self):
         client = type("Client", (), {"config": self.Config()})()
@@ -332,6 +365,7 @@ class BatchAggregationTests(unittest.TestCase):
         for spec in specs:
             rows.append({
                 "task": spec.task_id,
+                "maturity_contract_sha256": MODULE._maturity_contract_sha256(spec),
                 "runtime_contract_sha256": MODULE.task_contract_sha256(spec),
                 "task_card_sha256": MODULE.hashlib.sha256(
                     (spec.task_dir / "TASK_CARD.yaml").read_bytes()
@@ -362,6 +396,15 @@ class BatchAggregationTests(unittest.TestCase):
             document["tasks"][0]["runtime_contract_sha256"] = "0" * 64
             path.write_text(json.dumps(document), encoding="utf-8")
             with self.assertRaisesRegex(SystemExit, "runtime contract"):
+                MODULE._cohort_manifest_record(
+                    path, specs, include_uncertified=True
+                )
+            document["tasks"][0]["maturity_contract_sha256"] = "0" * 64
+            document["tasks"][0]["runtime_contract_sha256"] = (
+                MODULE.task_contract_sha256(specs[0])
+            )
+            path.write_text(json.dumps(document), encoding="utf-8")
+            with self.assertRaisesRegex(SystemExit, "maturity contract"):
                 MODULE._cohort_manifest_record(
                     path, specs, include_uncertified=True
                 )
@@ -438,6 +481,21 @@ class BatchAggregationTests(unittest.TestCase):
                     "--feedback-modes", mode,
                     "--budget", "0",
                 ])
+
+    def test_active_wall_horizon_is_greedy_only_and_interval_requires_horizon(self):
+        with self.assertRaisesRegex(SystemExit, "requires --active-wall-horizon"):
+            MODULE.main([
+                "--tasks", "LennardJonesCluster",
+                "--sentinel-interval", "30",
+                "--budget", "0",
+            ])
+        with self.assertRaisesRegex(SystemExit, "only for greedy_rewrite"):
+            MODULE.main([
+                "--tasks", "LennardJonesCluster",
+                "--algorithms", "abmcts",
+                "--active-wall-horizon", "120",
+                "--budget", "0",
+            ])
 
 
 if __name__ == "__main__":
