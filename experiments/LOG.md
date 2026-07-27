@@ -2946,3 +2946,21 @@ protocol-incomplete cells. The separate clean-revision derived audit replays eve
 ledger and content hash, confirms terminal-to-baseline binding, cohort-manifest binding and the
 7/7 intent-to-evaluate denominator, and passes. This validates fail-closed boundary accounting;
 it is not GPT-5.5 performance, a completed 2h run, post-2h headroom or discovery evidence.
+
+The fixed-duration runner now also supports a strict signed endpoint card. When enabled, each
+provider response must contain exactly one Python block and one JSON `continue`, `commit` or
+`abstain` decision with a rationale; extra prose, multiple code blocks and malformed cards are
+candidate contract failures. `record_only` retains signed decisions while forced continuation
+proceeds, whereas `honor_stop` treats commit/abstain as a completed autonomous stop. Signed
+artifact/abstention endpoints remain separate from the terminal online incumbent and bind the
+full response, evaluator payload and sentinel ledger.
+
+The EdgeBench-inspired continuation ablation is frozen separately before long execution. It uses
+the pre-randomized Diffraction, Electrolyte and HeatExchanger audit tranche and matches exactly
+43,200 active seconds per task between one disclosed 12h continuous run and six independently
+disclosed, fresh 2h restarts. The compiled plan has 21 cells and verifies equal arm time plus
+current task/runtime hashes. This ablation isolates only continuation of the greedy online
+incumbent artifact plus agent-visible incumbent metrics; it does not isolate full conversational
+context, hidden provider state, a scientific notebook, raw negative-result memory or the base
+model independent of scaffold. Best-of-six restart is labeled an observer upper envelope rather
+than an autonomous endpoint, and the three tasks remain result-selected exploratory evidence.
