@@ -24,15 +24,21 @@ class MeasurementHealthPreflightTests(unittest.TestCase):
         cls.report = MODULE.build_report(evaluator=stable_evaluator)
         cls.tasks = {row["task"]: row for row in cls.report["tasks"]}
 
-    def test_frozen_cohort_is_covered_and_missing_evidence_fails_closed(self):
+    def test_frozen_cohort_is_covered_and_all_bound_evidence_passes(self):
         self.assertEqual(self.report["task_count"], 7)
         self.assertEqual(self.report["issues"], [])
         self.assertTrue(self.report["execution_passed"])
-        self.assertEqual(self.report["preflight_passed_count"], 0)
-        self.assertEqual(self.report["long_horizon_run_permitted_count"], 0)
+        self.assertEqual(self.report["preflight_passed_count"], 7)
+        self.assertEqual(self.report["long_horizon_run_permitted_count"], 7)
         for row in self.report["tasks"]:
-            self.assertFalse(row["long_horizon_run_permitted"])
-            self.assertEqual(row["checks"]["scientific_materiality"]["status"], "missing")
+            self.assertTrue(row["long_horizon_run_permitted"])
+            self.assertEqual(row["not_permitted_reasons"], [])
+            materiality = row["checks"]["scientific_materiality"]
+            self.assertEqual(materiality["status"], "pass")
+            self.assertTrue(materiality["criteria_complete"])
+            self.assertTrue(materiality["axes_covered"])
+            self.assertTrue(materiality["same_witness_enforced"])
+            self.assertIn("not agent improvement", materiality["claim"])
             self.assertEqual(row["checks"]["exactly_once_recovery"]["status"], "pass")
             self.assertTrue(
                 row["checks"]["exactly_once_recovery"]["oracle_deterministic"]
@@ -64,14 +70,12 @@ class MeasurementHealthPreflightTests(unittest.TestCase):
                 artifact["actual_sha256"],
             )
 
-    def test_calibration_contract_drift_is_not_silently_accepted(self):
+    def test_diffraction_uses_current_contract_calibration(self):
         diffraction = self.tasks["Optics/DiffractionGratingDesign"]
         check = diffraction["checks"]["baseline_reference_separation"]
-        self.assertEqual(check["status"], "missing")
-        self.assertIn(
-            "verification/evaluator.py",
-            " ".join(check["contract_compatibility"]["changed_paths"]),
-        )
+        self.assertEqual(check["status"], "pass")
+        self.assertTrue(check["contract_compatibility"]["runtime_files_unchanged"])
+        self.assertIn("2026-07-27_v2", check["evidence"]["path"])
         for task in (
             "Electrochemistry/ElectrolyteConductivityDesign",
             "RNAEngineering/RNAInverseDesign",
@@ -85,12 +89,17 @@ class MeasurementHealthPreflightTests(unittest.TestCase):
                 "pass",
             )
 
-    def test_numerical_resolution_is_not_relabelled_as_materiality(self):
+    def test_numerical_resolution_and_materiality_remain_separate(self):
         for row in self.report["tasks"]:
             resolution = row["checks"]["evaluator_numerical_resolution"]
             self.assertEqual(resolution["status"], "pass")
             self.assertGreater(resolution["minimum_nonzero_score_gap"], 0.0)
-            self.assertEqual(row["checks"]["scientific_materiality"]["status"], "missing")
+            materiality = row["checks"]["scientific_materiality"]
+            self.assertEqual(materiality["status"], "pass")
+            self.assertNotIn("minimum_nonzero_score_gap", materiality)
+            self.assertNotEqual(
+                materiality["evidence"]["path"], resolution["evidence"]["path"]
+            )
 
     def test_noisy_or_invalid_replay_fails_the_noise_gate(self):
         calls = {"count": 0}
@@ -191,6 +200,41 @@ class MeasurementHealthPreflightTests(unittest.TestCase):
             MODULE._task_card = original
         self.assertEqual(failed["status"], "fail")
         self.assertIn("not declared deterministic", failed["reason"])
+
+    def test_materiality_task_identity_mismatch_fails_closed(self):
+        resolved, _inputs, issues = MODULE._resolve_preflight_spec(MODULE.DEFAULT_SPEC)
+        self.assertEqual(issues, [])
+        spec = MODULE.load_task_spec(
+            MODULE.ROOT / "benchmarks/Electrochemistry/ElectrolyteConductivityDesign"
+        )
+        config = dict(resolved["tasks"][0]["scientific_materiality"])
+        config["task_pointer"] = "/tasks/1"
+        check = MODULE._scientific_materiality_check(
+            config, "Electrochemistry/ElectrolyteConductivityDesign", spec
+        )
+        self.assertEqual(check["status"], "fail")
+        self.assertFalse(check["task_identity_matches"])
+
+    def test_materiality_runtime_drift_fails_closed(self):
+        resolved, _inputs, issues = MODULE._resolve_preflight_spec(MODULE.DEFAULT_SPEC)
+        self.assertEqual(issues, [])
+        spec = MODULE.load_task_spec(
+            MODULE.ROOT / "benchmarks/Electrochemistry/ElectrolyteConductivityDesign"
+        )
+        original = MODULE._contract_compatibility
+        try:
+            MODULE._contract_compatibility = lambda *_args: {
+                "runtime_files_unchanged": False,
+                "changed_paths": ["verification/evaluator.py"],
+            }
+            check = MODULE._scientific_materiality_check(
+                resolved["tasks"][0]["scientific_materiality"],
+                "Electrochemistry/ElectrolyteConductivityDesign",
+                spec,
+            )
+        finally:
+            MODULE._contract_compatibility = original
+        self.assertEqual(check["status"], "fail")
 
 
 if __name__ == "__main__":

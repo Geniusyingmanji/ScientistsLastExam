@@ -737,7 +737,9 @@ def _trajectory_resolution_check(
     )
 
 
-def _scientific_materiality_check(config: Any) -> dict[str, Any]:
+def _scientific_materiality_check(
+    config: Any, task_id: str, task_spec: Any,
+) -> dict[str, Any]:
     if not isinstance(config, dict):
         return _check(
             "missing",
@@ -747,18 +749,83 @@ def _scientific_materiality_check(config: Any) -> dict[str, Any]:
             ),
         )
     binding = config.get("evidence") or {}
-    pointer = config.get("declaration_pointer")
+    pointer = config.get("task_pointer")
     if not isinstance(pointer, str):
-        return _check("missing", reason="scientific materiality declaration pointer is missing")
-    values, audit = _extract_bound_values(binding, [pointer])
-    if not values:
-        return _check("missing", evidence=audit, reason="bound scientific materiality declaration unavailable")
-    expected = config.get("expected", True)
-    passed = values[0] == expected
+        return _check("missing", reason="scientific materiality task pointer is missing")
+    document, audit = _bound_document(binding)
+    if document is None or not audit["hash_matches"] or not audit["trusted_evidence"]:
+        return _check(
+            "missing", evidence=audit,
+            reason="bound scientific materiality audit is unavailable",
+        )
+    expected_scope = (
+        "SEVEN_TASK_CALIBRATED_LANDSCAPE_SAME_WITNESS_RAW_SCIENTIFIC_"
+        "MATERIALITY_NOT_AGENT_PERFORMANCE_POST_2H_HEADROOM_EXTERNAL_"
+        "VALIDATION_OR_AUTONOMOUS_DISCOVERY_EVIDENCE"
+    )
+    try:
+        row = _json_pointer(document, pointer)
+    except (KeyError, IndexError, TypeError, ValueError):
+        return _check(
+            "missing", evidence=audit,
+            reason="bound scientific materiality task record is unavailable",
+        )
+    if not isinstance(row, dict):
+        return _check("missing", evidence=audit, reason="materiality task record is invalid")
+    required_axes = row.get("required_axes")
+    covered_axes = row.get("covered_axes")
+    axes_covered = bool(
+        isinstance(required_axes, list)
+        and isinstance(covered_axes, list)
+        and set(required_axes) <= set(covered_axes)
+    )
+    identity_matches = row.get("task") == task_id
+    criteria_complete = bool(
+        isinstance(row.get("criterion_count"), int)
+        and row.get("criterion_count") > 0
+        and row.get("criteria_passed_count") == row.get("criterion_count")
+        and isinstance(row.get("criteria"), list)
+        and len(row["criteria"]) == row["criterion_count"]
+        and all(criterion.get("passed") is True for criterion in row["criteria"])
+    )
+    same_witness = bool(
+        row.get("same_witness_enforced") is True
+        and row.get("baseline_pointer") != row.get("material_witness_pointer")
+    )
+    scope_matches = document.get("evidence_scope") == expected_scope
+    compatibility = _contract_compatibility(audit.get("source_revision"), task_spec)
+    passed = bool(
+        identity_matches
+        and row.get("materiality_contract_passed") is True
+        and criteria_complete
+        and axes_covered
+        and same_witness
+        and scope_matches
+        and compatibility["runtime_files_unchanged"]
+    )
     return _check(
-        "pass" if passed else "fail", evidence=audit,
-        declared_value=values[0], expected=expected,
-        reason=None if passed else "scientific materiality declaration did not pass",
+        "pass" if passed else "fail",
+        evidence=audit,
+        task_pointer=pointer,
+        task_identity_matches=identity_matches,
+        criterion_count=row.get("criterion_count"),
+        criteria_passed_count=row.get("criteria_passed_count"),
+        criteria_complete=criteria_complete,
+        required_axes=required_axes,
+        covered_axes=covered_axes,
+        axes_covered=axes_covered,
+        same_witness_enforced=same_witness,
+        threshold_basis=row.get("threshold_basis"),
+        scientific_quantity=row.get("scientific_quantity"),
+        units=row.get("units"),
+        criteria=row.get("criteria"),
+        evidence_scope_matches=scope_matches,
+        contract_compatibility=compatibility,
+        claim=(
+            "calibrated landscape materiality only; not agent improvement, "
+            "post-2h headroom, external validation, or autonomous discovery"
+        ),
+        reason=None if passed else "scientific materiality task evidence did not pass every bound condition",
     )
 
 
@@ -946,7 +1013,7 @@ def _task_preflight(
                 config.get("numerical_resolution") or {}, noise_span, task_spec
             ),
             "scientific_materiality": _scientific_materiality_check(
-                config.get("scientific_materiality")
+                config.get("scientific_materiality"), task_id, task_spec
             ),
             "shortcut_resistance": shortcut,
             "content_addressed_atomic_capture": _protocol_check(

@@ -13,6 +13,12 @@
     }
   },
   "shared_task_overrides": {
+    "scientific_materiality": {
+      "evidence": {
+        "path": "experiments/scientific_materiality_audit_2026-07-27_v1.json",
+        "sha256": "26d4df326d7307c1274f01554822a48f3b3cdc49ac9fdb2be7bacf668ed1f460"
+      }
+    },
     "exactly_once_recovery": {
       "evidence": {
         "path": "experiments/evaluation_recovery_fault_audit_2026-07-27_v1.json",
@@ -65,5 +71,40 @@
       ]
     }
   },
-  "task_overrides": []
+  "task_overrides": [
+    {
+      "task": "Electrochemistry/ElectrolyteConductivityDesign",
+      "scientific_materiality": {"task_pointer": "/tasks/0"}
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "scientific_materiality": {"task_pointer": "/tasks/1"},
+      "baseline_reference": {
+        "evidence": {
+          "path": "experiments/diffraction_grating_v2_calibration_2026-07-27_v2.json",
+          "sha256": "5b2386cdc9ec13fb1b5dbcbb901134048a2a5413bdb352abea284bcd73f7e8bd"
+        }
+      }
+    },
+    {
+      "task": "RNAEngineering/RNAInverseDesign",
+      "scientific_materiality": {"task_pointer": "/tasks/2"}
+    },
+    {
+      "task": "Semiconductor/MOSFETDoping",
+      "scientific_materiality": {"task_pointer": "/tasks/3"}
+    },
+    {
+      "task": "StructuralEngineering/TrussWeightMinimization",
+      "scientific_materiality": {"task_pointer": "/tasks/4"}
+    },
+    {
+      "task": "Thermodynamics/HeatExchangerDesign",
+      "scientific_materiality": {"task_pointer": "/tasks/5"}
+    },
+    {
+      "task": "Turbulence/RANSCalibration",
+      "scientific_materiality": {"task_pointer": "/tasks/6"}
+    }
+  ]
 }
