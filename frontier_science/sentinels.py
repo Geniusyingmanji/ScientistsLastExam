@@ -87,6 +87,7 @@ class SentinelLedger:
         self.path = self.root / "sentinel_events.jsonl"
         self.artifact_root = self.root / "artifacts"
         self.evaluation_root = self.root / "evaluations"
+        self.response_root = self.root / "responses"
         if resume:
             if not self.path.is_file():
                 raise FileNotFoundError(
@@ -153,6 +154,24 @@ class SentinelLedger:
             "path": relative.as_posix(),
         }
 
+    def _store_response(self, response: Optional[str]) -> dict[str, Any]:
+        if response is None:
+            return {"sha256": None, "utf8_bytes": None, "path": None}
+        payload = response.encode("utf-8")
+        digest = _sha256(payload)
+        relative = Path("sentinels") / "responses" / (digest + ".txt")
+        target = self.workdir / relative
+        if target.is_file():
+            if target.read_bytes() != payload:
+                raise ValueError("content-addressed provider response differs")
+        else:
+            _atomic_write_bytes(target, payload)
+        return {
+            "sha256": digest,
+            "utf8_bytes": len(payload),
+            "path": relative.as_posix(),
+        }
+
     def capture(
         self,
         sentinel_type: str,
@@ -171,6 +190,7 @@ class SentinelLedger:
         reason: Optional[str] = None,
         idempotency_key: Optional[str] = None,
         metadata: Optional[dict[str, Any]] = None,
+        provider_response: Optional[str] = None,
     ) -> dict[str, Any]:
         if sentinel_type not in SENTINEL_TYPES:
             raise ValueError("unknown sentinel type %r" % sentinel_type)
@@ -209,6 +229,7 @@ class SentinelLedger:
                 raise ValueError("evaluation cannot complete before artifact publication")
         artifact = self._store_artifact(source)
         evaluation_ref = self._store_evaluation(evaluation, evaluation_status)
+        response_ref = self._store_response(provider_response)
         if idempotency_key is not None:
             if not isinstance(idempotency_key, str) or not idempotency_key.strip():
                 raise ValueError("sentinel idempotency_key must be a nonempty string")
@@ -228,6 +249,7 @@ class SentinelLedger:
                     "artifact_sha256": artifact["artifact_sha256"],
                     "selection_policy": str(selection_policy),
                     "evaluation": evaluation_ref,
+                    "provider_response": response_ref,
                     "metadata": dict(metadata or {}),
                 }
                 if any(existing.get(key) != value for key, value in expected.items()):
@@ -251,6 +273,7 @@ class SentinelLedger:
             "selection_policy": str(selection_policy),
             "capture_method": str(capture_method),
             "evaluation": evaluation_ref,
+            "provider_response": response_ref,
             "evaluation_completed_elapsed_seconds": completed,
             "feedback_visible": bool(feedback_visible),
             "reason": reason,
@@ -356,6 +379,21 @@ def load_sentinel_events(
             if _sha256(payload) != evaluation_hash:
                 raise ValueError("sentinel evaluation hash differs")
             json.loads(payload)
+        response = event.get("provider_response")
+        if response is not None:
+            if not isinstance(response, dict):
+                raise ValueError("sentinel provider response reference is invalid")
+            response_hash = response.get("sha256")
+            response_path = response.get("path")
+            if response_hash is None:
+                if response_path is not None or response.get("utf8_bytes") is not None:
+                    raise ValueError("null provider response has non-null metadata")
+            else:
+                payload = (root / str(response_path)).read_bytes()
+                if _sha256(payload) != response_hash:
+                    raise ValueError("sentinel provider response hash differs")
+                if len(payload) != response.get("utf8_bytes"):
+                    raise ValueError("sentinel provider response byte count differs")
         if event["sentinel_type"] == "t0" and events:
             raise ValueError("t0 sentinel is not first")
         if event["sentinel_type"] == "terminal":

@@ -402,6 +402,7 @@ def greedy_rewrite(
             "score": baseline_score,
             "valid": float(metrics.get("valid", 0.0)) >= 1.0,
             "metrics": baseline_metrics,
+            "published_wall_seconds": 0.0,
         }]
         log_fn(f"[{spec.task_id}] baseline combined_score={baseline_score:.6f} valid={metrics.get('valid')}")
         result = EvolveResult(spec.task_id, best_score, baseline_score, best_program,
@@ -488,21 +489,19 @@ def greedy_rewrite(
         evaluation = dict(events[0].get("metrics") or {})
         completed = float(events[0]["cumulative_wall_seconds"])
         for event in events[1:]:
-            if float(event["cumulative_wall_seconds"]) > grid:
-                break
-            if event.get("accepted") is True:
-                step = int(event["step"])
-                if step in source_by_step:
-                    source = source_by_step[step]
-                    source_step = step
-                    published = float(
-                        (event.get("algorithm_metadata") or {}).get(
-                            "proposal_published_wall_seconds",
-                            event["cumulative_wall_seconds"],
-                        )
-                    )
-                    evaluation = dict(event.get("metrics") or {})
-                    completed = float(event["cumulative_wall_seconds"])
+            step = int(event["step"])
+            event_published = float(
+                (event.get("algorithm_metadata") or {}).get(
+                    "proposal_published_wall_seconds",
+                    event["cumulative_wall_seconds"],
+                )
+            )
+            if event_published <= grid and step in source_by_step:
+                source = source_by_step[step]
+                source_step = step
+                published = event_published
+                evaluation = dict(event.get("metrics") or {})
+                completed = float(event["cumulative_wall_seconds"])
         return source, source_step, published, evaluation, completed
 
     def capture_due_grid(now: float) -> None:
@@ -683,6 +682,57 @@ def greedy_rewrite(
         signed_contract_invalid = bool(
             signed_decisions and pending_record.get("parse_status") == "contract_invalid"
         )
+        if sentinel_ledger is not None:
+            sentinel_ledger.capture(
+                "submission",
+                source=code,
+                source_step=it,
+                artifact_published_elapsed_seconds=proposal_published_wall,
+                recorded_elapsed_seconds=proposal_published_wall,
+                selection_policy="agent_submission_before_evaluation",
+                evaluation_status="not_evaluated" if code else "not_applicable",
+                feedback_visible=False,
+                reason=(
+                    None if code
+                    else "provider response violated code or signed-decision contract"
+                ),
+                metadata={
+                    "signed_decision": signed_decision,
+                    "response_sha256": pending_record.get("response_sha256"),
+                    "decision_made_before_evaluation": True,
+                },
+                provider_response=pending_record.get("response"),
+                idempotency_key="submission:%d" % it,
+            )
+            if (
+                isinstance(signed_decision, dict)
+                and signed_decision.get("action") in {"commit", "abstain"}
+            ):
+                decision_action = str(signed_decision["action"])
+                sentinel_ledger.capture(
+                    decision_action,
+                    source=code if decision_action == "commit" else None,
+                    source_step=it if decision_action == "commit" else None,
+                    artifact_published_elapsed_seconds=proposal_published_wall,
+                    recorded_elapsed_seconds=proposal_published_wall,
+                    selection_policy="signed_agent_%s_before_evaluation" % decision_action,
+                    evaluation_status=(
+                        "not_evaluated"
+                        if decision_action == "commit" and code
+                        else "not_applicable"
+                    ),
+                    feedback_visible=False,
+                    metadata={
+                        "rationale": signed_decision["rationale"],
+                        "response_sha256": pending_record.get("response_sha256"),
+                        "decision_policy": signed_decision_policy,
+                        "decision_made_before_evaluation": True,
+                        "evaluation_not_visible_when_deciding": True,
+                        "evaluation_result_bound_by_trajectory_step": it,
+                    },
+                    provider_response=pending_record.get("response"),
+                    idempotency_key="decision:%d" % it,
+                )
         evaluation_started = time.monotonic()
         if not code:
             log_fn(f"[{spec.task_id}] iter {it}: no code block parsed")
@@ -712,35 +762,6 @@ def greedy_rewrite(
             active_wall_horizon_s is not None
             and active_wall > active_wall_horizon_s
         )
-        if sentinel_ledger is not None:
-            sentinel_ledger.capture(
-                "submission",
-                source=code,
-                source_step=it,
-                artifact_published_elapsed_seconds=proposal_published_wall,
-                recorded_elapsed_seconds=active_wall,
-                selection_policy="agent_submission",
-                evaluation=m if code else None,
-                evaluation_status=(
-                    "completed_after_schedule"
-                    if code and completed_after_horizon
-                    else "completed" if code
-                    else "not_applicable"
-                ),
-                evaluation_completed_elapsed_seconds=(
-                    active_wall if code else None
-                ),
-                feedback_visible=bool(code and not completed_after_horizon),
-                reason=(
-                    None if code
-                    else "provider response violated code or signed-decision contract"
-                ),
-                metadata={
-                    "signed_decision": signed_decision,
-                    "response_sha256": pending_record.get("response_sha256"),
-                },
-                idempotency_key="submission:%d" % it,
-            )
         if code:
             evaluated_candidates.append({
                 "step": it,
@@ -749,6 +770,7 @@ def greedy_rewrite(
                 "score": score,
                 "valid": valid,
                 "metrics": search_visible_metrics(m),
+                "published_wall_seconds": proposal_published_wall,
             })
         # A result can be scientifically retained after cutoff, but it cannot
         # become the in-horizon incumbent or visible feedback.
@@ -803,38 +825,6 @@ def greedy_rewrite(
                 ),
             },
         ))
-        if (
-            sentinel_ledger is not None
-            and isinstance(signed_decision, dict)
-            and signed_decision.get("action") in {"commit", "abstain"}
-        ):
-            decision_action = str(signed_decision["action"])
-            sentinel_ledger.capture(
-                decision_action,
-                source=code if decision_action == "commit" else None,
-                source_step=it if decision_action == "commit" else None,
-                artifact_published_elapsed_seconds=proposal_published_wall,
-                recorded_elapsed_seconds=active_wall,
-                selection_policy="signed_agent_%s" % decision_action,
-                evaluation=m if decision_action == "commit" and code else None,
-                evaluation_status=(
-                    "completed_after_schedule"
-                    if decision_action == "commit" and code and completed_after_horizon
-                    else "completed"
-                    if decision_action == "commit" and code
-                    else "not_applicable"
-                ),
-                evaluation_completed_elapsed_seconds=(
-                    active_wall if decision_action == "commit" and code else None
-                ),
-                feedback_visible=False,
-                metadata={
-                    "rationale": signed_decision["rationale"],
-                    "response_sha256": pending_record.get("response_sha256"),
-                    "decision_policy": signed_decision_policy,
-                },
-                idempotency_key="decision:%d" % it,
-            )
         if sentinel_ledger is not None and valid and not sentinel_ledger.has_type("first_valid"):
             sentinel_ledger.capture(
                 "first_valid",
@@ -863,6 +853,7 @@ def greedy_rewrite(
             and signed_decision_policy == "honor_stop"
             and isinstance(signed_decision, dict)
             and signed_decision.get("action") in {"commit", "abstain"}
+            and proposal_published_wall <= float(active_wall_horizon_s)
         ):
             honored_signed_stop_action = str(signed_decision["action"])
             break
@@ -872,29 +863,21 @@ def greedy_rewrite(
     if sentinel_ledger is not None and not sentinel_ledger.has_type("terminal"):
         terminal_recorded = active_wall
         capture_due_grid(terminal_recorded)
-        terminal_event = next(
-            (
-                row for row in reversed(load_trajectory(trajectory_path))
-                if int(row.get("step", -1)) == best_source_step
-            ),
-            None,
-        )
-        terminal_evaluation = (
-            dict(terminal_event.get("metrics") or {})
-            if terminal_event is not None else None
-        )
-        terminal_evaluation_completed = (
-            float(terminal_event["cumulative_wall_seconds"])
-            if terminal_event is not None else None
-        )
+        (
+            terminal_program,
+            terminal_source_step,
+            terminal_published_wall,
+            terminal_evaluation,
+            terminal_evaluation_completed,
+        ) = artifact_at_elapsed(float(active_wall_horizon_s))
         sentinel_ledger.capture(
             "terminal",
-            source=best_program,
-            source_step=best_source_step,
+            source=terminal_program,
+            source_step=terminal_source_step,
             scheduled_elapsed_seconds=float(active_wall_horizon_s),
-            artifact_published_elapsed_seconds=best_published_wall,
+            artifact_published_elapsed_seconds=terminal_published_wall,
             recorded_elapsed_seconds=terminal_recorded,
-            selection_policy="terminal_workspace_incumbent",
+            selection_policy="terminal_workspace_artifact",
             evaluation=terminal_evaluation,
             evaluation_status=(
                 (

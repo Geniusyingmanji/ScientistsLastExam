@@ -495,8 +495,8 @@ class GreedyRewriteTests(unittest.TestCase):
         submission = next(
             row for row in events if row["sentinel_type"] == "submission"
         )
-        self.assertEqual(submission["evaluation"]["status"], "completed")
-        self.assertIsNotNone(submission["evaluation"]["sha256"])
+        self.assertEqual(submission["evaluation"]["status"], "not_evaluated")
+        self.assertIsNone(submission["evaluation"]["sha256"])
         self.assertIn("Preregistered active-time horizon", llm.prompts[0])
         self.assertIn("10.000 active wall seconds", llm.prompts[0])
 
@@ -534,7 +534,15 @@ class GreedyRewriteTests(unittest.TestCase):
         self.assertTrue(
             events[1]["algorithm_metadata"]["completed_after_active_wall_horizon"]
         )
-        self.assertEqual(result.summary["sentinel_snapshot"]["events"][-1]["source_step"], 0)
+        terminal = result.summary["sentinel_snapshot"]["events"][-1]
+        self.assertEqual(terminal["source_step"], 1)
+        self.assertEqual(
+            terminal["selection_policy"], "terminal_workspace_artifact"
+        )
+        self.assertEqual(
+            terminal["evaluation"]["status"], "completed_after_schedule"
+        )
+        self.assertFalse(terminal["feedback_visible"])
         self.assertTrue(result.summary["horizon_reached"])
 
     def test_baseline_crossing_horizon_is_explicit_protocol_failure(self):
