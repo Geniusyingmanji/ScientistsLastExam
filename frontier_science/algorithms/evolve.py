@@ -38,8 +38,23 @@ SYSTEM_PROMPT = (
     "Keep the required entrypoint/signature and output contract intact. Optimize the reported "
     "combined_score. Respond with exactly one fenced ```python code block and nothing else."
 )
+SIGNED_SYSTEM_PROMPT = (
+    "You are an expert computational scientist improving a Python program that solves a "
+    "scientific optimization problem. You will be given the task, the current best program, "
+    "its measured metrics, and the remaining active-time horizon. Return ONE improved, "
+    "complete, self-contained Python file followed by ONE signed decision JSON block. Keep "
+    "the required entrypoint/signature and output contract intact. Do not include prose "
+    "outside the two required fenced blocks."
+)
 
 _CODE_RE = re.compile(r"```(?:python)?\s*\n(.*?)```", re.DOTALL)
+_DECISION_RE = re.compile(r"```decision\s*\n(.*?)```", re.DOTALL)
+_SIGNED_RESPONSE_RE = re.compile(
+    r"\A\s*```(?:python)?\s*\n(.*?)```\s*"
+    r"```decision\s*\n(.*?)```\s*\Z",
+    re.DOTALL,
+)
+SIGNED_DECISIONS = {"continue", "commit", "abstain"}
 
 GREEDY_FEEDBACK_MODES = {
     "normal",
@@ -70,6 +85,42 @@ def extract_code(text: str) -> Optional[str]:
     return None
 
 
+def extract_signed_decision(text: str) -> Optional[dict[str, Any]]:
+    matches = _DECISION_RE.findall(text or "")
+    if len(matches) != 1:
+        return None
+    try:
+        value = json.loads(matches[0])
+    except ValueError:
+        return None
+    if not isinstance(value, dict) or set(value) != {"action", "rationale"}:
+        return None
+    action = value.get("action")
+    rationale = value.get("rationale")
+    if action not in SIGNED_DECISIONS or not isinstance(rationale, str):
+        return None
+    if not rationale.strip() or len(rationale.encode("utf-8")) > 4096:
+        return None
+    return {"action": action, "rationale": rationale.strip()}
+
+
+def extract_signed_submission(
+    text: str,
+) -> Optional[tuple[str, dict[str, Any]]]:
+    match = _SIGNED_RESPONSE_RE.fullmatch(text or "")
+    if match is None:
+        return None
+    code = match.group(1).strip()
+    if not code or "```" in code:
+        return None
+    decision = extract_signed_decision(
+        "```decision\n%s\n```" % match.group(2)
+    )
+    if decision is None:
+        return None
+    return code, decision
+
+
 def _build_prompt(
     spec: TaskSpec,
     program: str,
@@ -79,6 +130,7 @@ def _build_prompt(
     proposal_budget: int | None = None,
     active_wall_horizon_s: float | None = None,
     active_wall_elapsed_s: float | None = None,
+    signed_decisions: bool = False,
 ) -> str:
     shown = search_visible_metrics(metrics)
     slot = ""
@@ -99,6 +151,15 @@ def _build_prompt(
             "or evaluation completing after the cutoff cannot update the in-horizon "
             "incumbent.\n\n"
         )
+    response_contract = (
+        "Return exactly one complete ```python``` file followed by one "
+        "```decision``` JSON object with exactly two fields: "
+        '`{"action":"continue|commit|abstain","rationale":"..."}`. '
+        "Use commit only when you would defend this submitted artifact now; "
+        "use abstain when no artifact should be defended; otherwise continue."
+        if signed_decisions else
+        "Return one complete ```python``` file implementing the same entrypoint."
+    )
     return (
         f"{spec.agent_visible_text()}\n\n"
         f"{slot}"
@@ -106,8 +167,8 @@ def _build_prompt(
         f"## Parent program (`{spec.candidate_destination}`)\n"
         f"```python\n{program}\n```\n\n"
         f"## Its measured metrics\n```json\n{json.dumps(shown, indent=2)}\n```\n\n"
-        "Propose a complete program intended to increase `combined_score`. Return one complete "
-        "```python``` file implementing the same entrypoint."
+        "Propose a complete program intended to increase `combined_score`. "
+        + response_contract
     )
 
 
@@ -115,6 +176,7 @@ def _validate_pending_proposal(
     pending: dict[str, Any], *, step: int, prompt: str,
     parent_sha256: str, prompt_source_step: int,
     feedback_released_through_step: int, prompt_metrics_rendered: str,
+    system_prompt: str = SYSTEM_PROMPT,
 ) -> tuple[Optional[str], dict[str, Any], float]:
     """Validate and return a write-ahead provider result for evaluator retry."""
     expected = {
@@ -125,7 +187,7 @@ def _validate_pending_proposal(
         "feedback_released_through_step": feedback_released_through_step,
         "prompt_sha256": sha256_text(prompt),
         "prompt_metrics_sha256": sha256_text(prompt_metrics_rendered),
-        "system_prompt_sha256": sha256_text(SYSTEM_PROMPT),
+        "system_prompt_sha256": sha256_text(system_prompt),
     }
     if not isinstance(pending, dict) or any(
         pending.get(key) != value for key, value in expected.items()
@@ -141,7 +203,7 @@ def _validate_pending_proposal(
             and candidate_sha == sha256_text(program)
         ):
             raise ValueError("pending proposal source binding differs")
-    elif status == "no_code":
+    elif status in {"no_code", "contract_invalid"}:
         if program is not None or candidate_sha != "":
             raise ValueError("pending no-code proposal unexpectedly retains source")
     else:
@@ -174,7 +236,10 @@ def _validate_pending_proposal(
         or float(published) < float(prefix_wall)
     ):
         raise ValueError("pending proposal publication time is invalid")
-    if extract_code(response) != program:
+    parsed_code = extract_code(response)
+    if status == "parsed_code" and parsed_code != program:
+        raise ValueError("pending proposal parse result differs from response")
+    if status == "no_code" and parsed_code is not None:
         raise ValueError("pending proposal parse result differs from response")
     return program, dict(usage), float(prefix_wall)
 
@@ -191,6 +256,8 @@ def greedy_rewrite(
     feedback_mode: str = "normal",
     active_wall_horizon_s: float | None = None,
     sentinel_interval_s: float | None = None,
+    signed_decisions: bool = False,
+    signed_decision_policy: str = "record_only",
 ) -> EvolveResult:
     if feedback_mode not in GREEDY_FEEDBACK_MODES:
         raise ValueError(
@@ -204,6 +271,10 @@ def greedy_rewrite(
         raise ValueError("sentinel_interval_s must be positive")
     if sentinel_interval_s is not None and active_wall_horizon_s is None:
         raise ValueError("sentinel_interval_s requires active_wall_horizon_s")
+    if signed_decision_policy not in {"record_only", "honor_stop"}:
+        raise ValueError("signed_decision_policy must be record_only or honor_stop")
+    if signed_decisions and active_wall_horizon_s is None:
+        raise ValueError("signed_decisions requires active_wall_horizon_s")
     random.seed(seed)
     os.environ["PYTHONHASHSEED"] = str(seed)
     workdir = Path(workdir or (spec.task_dir / "runs" / time.strftime("%Y%m%d_%H%M%S"))).resolve()
@@ -233,6 +304,8 @@ def greedy_rewrite(
                     "artifact_published_by_cutoff; late results cannot update "
                     "in-horizon incumbent"
                 ),
+                "signed_decisions": signed_decisions,
+                "signed_decision_policy": signed_decision_policy,
             }
             if active_wall_horizon_s is not None else None
         ),
@@ -244,6 +317,7 @@ def greedy_rewrite(
         SentinelLedger(workdir, resume=full_resume)
         if active_wall_horizon_s is not None else None
     )
+    system_prompt = SIGNED_SYSTEM_PROMPT if signed_decisions else SYSTEM_PROMPT
     # Seed with the initial baseline program.
     start_iter = 1
     pending_proposal: dict[str, Any] | None = None
@@ -513,12 +587,13 @@ def greedy_rewrite(
             proposal_budget=budget,
             active_wall_horizon_s=active_wall_horizon_s,
             active_wall_elapsed_s=active_wall,
+            signed_decisions=signed_decisions,
         )
         if pending_proposal is None:
             try:
                 reply = llm.complete(
                     prompt,
-                    system=SYSTEM_PROMPT,
+                    system=system_prompt,
                 )
                 llm_usage = dict(getattr(llm, "last_usage", {}) or {})
             except Exception as exc:  # noqa: BLE001
@@ -532,12 +607,24 @@ def greedy_rewrite(
                 raise LLMInfrastructureError(
                     "provider request failed after transport retries"
                 ) from exc
-            code = extract_code(reply)
+            if signed_decisions:
+                signed_submission = extract_signed_submission(reply)
+                if signed_submission is None:
+                    code = None
+                    signed_decision = None
+                    parse_status = "contract_invalid"
+                else:
+                    code, signed_decision = signed_submission
+                    parse_status = "parsed_code"
+            else:
+                code = extract_code(reply)
+                signed_decision = None
+                parse_status = "parsed_code" if code else "no_code"
             proposal_published_wall = active_wall + (time.monotonic() - step_started)
             pending_proposal = {
                 "schema_version": 1,
                 "step": it,
-                "parse_status": "parsed_code" if code else "no_code",
+                "parse_status": parse_status,
                 "program": code,
                 "candidate_sha256": sha256_text(code) if code else "",
                 "response_sha256": sha256_text(reply),
@@ -550,10 +637,11 @@ def greedy_rewrite(
                 ),
                 "prompt_sha256": sha256_text(prompt),
                 "prompt_metrics_sha256": sha256_text(prompt_metrics_rendered),
-                "system_prompt_sha256": sha256_text(SYSTEM_PROMPT),
+                "system_prompt_sha256": sha256_text(system_prompt),
                 "llm_usage": llm_usage,
                 "pre_evaluation_wall_seconds": time.monotonic() - step_started,
                 "proposal_published_wall_seconds": proposal_published_wall,
+                "signed_decision": signed_decision,
             }
             # Commit the provider draw before evaluating it. An evaluator
             # outage then replays this exact source/result instead of drawing a
@@ -567,6 +655,7 @@ def greedy_rewrite(
             prompt_source_step=prompt_source_step,
             feedback_released_through_step=feedback_released_through_step,
             prompt_metrics_rendered=prompt_metrics_rendered,
+            system_prompt=system_prompt,
         )
         proposal_published_wall = float(
             pending_proposal.get(
@@ -574,10 +663,15 @@ def greedy_rewrite(
                 active_wall + pre_evaluation_wall,
             )
         )
+        pending_record = dict(pending_proposal)
+        signed_decision = pending_record.get("signed_decision")
+        signed_contract_invalid = bool(
+            signed_decisions and pending_record.get("parse_status") == "contract_invalid"
+        )
         evaluation_started = time.monotonic()
         if not code:
             log_fn(f"[{spec.task_id}] iter {it}: no code block parsed")
-            error = "no_code"
+            error = "signed_decision_contract_invalid" if signed_contract_invalid else "no_code"
             m = {"combined_score": INVALID_SCORE, "valid": 0.0, "error_message": error}
             score, valid, accepted = INVALID_SCORE, False, False
             candidate_sha = ""
@@ -624,8 +718,12 @@ def greedy_rewrite(
                 feedback_visible=bool(code and not completed_after_horizon),
                 reason=(
                     None if code
-                    else "provider response contained no executable code"
+                    else "provider response violated code or signed-decision contract"
                 ),
+                metadata={
+                    "signed_decision": signed_decision,
+                    "response_sha256": pending_record.get("response_sha256"),
+                },
                 idempotency_key="submission:%d" % it,
             )
         if code:
@@ -684,8 +782,44 @@ def greedy_rewrite(
                 "prompt_metric_keys": ",".join(sorted(search_visible_metrics(prompt_metrics))),
                 "proposal_published_wall_seconds": proposal_published_wall,
                 "completed_after_active_wall_horizon": completed_after_horizon,
+                "signed_decision_action": (
+                    signed_decision.get("action")
+                    if isinstance(signed_decision, dict) else None
+                ),
             },
         ))
+        if (
+            sentinel_ledger is not None
+            and isinstance(signed_decision, dict)
+            and signed_decision.get("action") in {"commit", "abstain"}
+        ):
+            decision_action = str(signed_decision["action"])
+            sentinel_ledger.capture(
+                decision_action,
+                source=code if decision_action == "commit" else None,
+                source_step=it if decision_action == "commit" else None,
+                artifact_published_elapsed_seconds=proposal_published_wall,
+                recorded_elapsed_seconds=active_wall,
+                selection_policy="signed_agent_%s" % decision_action,
+                evaluation=m if decision_action == "commit" and code else None,
+                evaluation_status=(
+                    "completed_after_schedule"
+                    if decision_action == "commit" and code and completed_after_horizon
+                    else "completed"
+                    if decision_action == "commit" and code
+                    else "not_applicable"
+                ),
+                evaluation_completed_elapsed_seconds=(
+                    active_wall if decision_action == "commit" and code else None
+                ),
+                feedback_visible=False,
+                metadata={
+                    "rationale": signed_decision["rationale"],
+                    "response_sha256": pending_record.get("response_sha256"),
+                    "decision_policy": signed_decision_policy,
+                },
+                idempotency_key="decision:%d" % it,
+            )
         if sentinel_ledger is not None and valid and not sentinel_ledger.has_type("first_valid"):
             sentinel_ledger.capture(
                 "first_valid",
@@ -708,6 +842,13 @@ def greedy_rewrite(
                f"{'ACCEPT' if accepted else 'reject'}")
         if completed_after_horizon:
             horizon_reached = True
+            break
+        if (
+            signed_decisions
+            and signed_decision_policy == "honor_stop"
+            and isinstance(signed_decision, dict)
+            and signed_decision.get("action") in {"commit", "abstain"}
+        ):
             break
 
     if active_wall_horizon_s is not None and active_wall >= active_wall_horizon_s:
@@ -770,6 +911,16 @@ def greedy_rewrite(
                            "sentinel_interval_s": sentinel_interval_s,
                            "horizon_reached": horizon_reached,
                            "baseline_crossed_horizon": baseline_crossed_horizon,
+                           "signed_decisions": signed_decisions,
+                           "signed_decision_policy": signed_decision_policy,
+                           "signed_stop_action": next(
+                               (
+                                   row["sentinel_type"]
+                                   for row in reversed(sentinel_ledger.events)
+                                   if row["sentinel_type"] in {"commit", "abstain"}
+                               ),
+                               None,
+                           ) if sentinel_ledger is not None else None,
                            "sentinel_snapshot": (
                                sentinel_ledger.snapshot() if sentinel_ledger is not None else None
                            ),

@@ -314,6 +314,10 @@ def _execute_block(payload: dict[str, Any]) -> dict[str, Any]:
                 algorithm_kwargs.update({
                     "active_wall_horizon_s": payload.get("active_wall_horizon_s"),
                     "sentinel_interval_s": payload.get("sentinel_interval_s"),
+                    "signed_decisions": payload.get("signed_decisions", False),
+                    "signed_decision_policy": payload.get(
+                        "signed_decision_policy", "record_only"
+                    ),
                 })
             result = algorithm(**algorithm_kwargs)
             entry = {
@@ -537,6 +541,16 @@ def build_parser() -> argparse.ArgumentParser:
         help="fixed-grid boundary sentinel interval in active wall seconds",
     )
     parser.add_argument(
+        "--signed-decisions", action="store_true",
+        help="require continue/commit/abstain decision JSON after every proposal",
+    )
+    parser.add_argument(
+        "--signed-decision-policy",
+        choices=("record_only", "honor_stop"),
+        default="record_only",
+        help="record decisions during forced continuation, or stop on commit/abstain",
+    )
+    parser.add_argument(
         "--block-workers", type=int, default=1,
         help=(
             "maximum concurrent task/algorithm/replicate blocks; conditions "
@@ -569,6 +583,10 @@ def main(argv: list[str] | None = None) -> int:
         raise SystemExit("--sentinel-interval must be positive")
     if args.sentinel_interval is not None and args.active_wall_horizon is None:
         raise SystemExit("--sentinel-interval requires --active-wall-horizon")
+    if args.signed_decisions and args.active_wall_horizon is None:
+        raise SystemExit("--signed-decisions requires --active-wall-horizon")
+    if not args.signed_decisions and args.signed_decision_policy != "record_only":
+        raise SystemExit("--signed-decision-policy requires --signed-decisions")
     if args.block_workers < 1:
         raise SystemExit("--block-workers must be >= 1")
     algorithms = _csv(args.algorithms)
@@ -662,6 +680,8 @@ def main(argv: list[str] | None = None) -> int:
         "timeout_s": args.timeout,
         "active_wall_horizon_s": args.active_wall_horizon,
         "sentinel_interval_s": args.sentinel_interval,
+        "signed_decisions": args.signed_decisions,
+        "signed_decision_policy": args.signed_decision_policy,
         "boundary_sentinel_policy": (
             {
                 "required": [
@@ -670,8 +690,13 @@ def main(argv: list[str] | None = None) -> int:
                 ],
                 "implemented_by_runner": [
                     "t0", "first_valid", "submission", "fixed_grid", "terminal",
+                    *(["commit_or_abstain"] if args.signed_decisions else []),
                 ],
-                "commit_or_abstain": "no signed agent action protocol yet; not synthesized",
+                "commit_or_abstain": (
+                    args.signed_decision_policy
+                    if args.signed_decisions
+                    else "disabled; not synthesized"
+                ),
                 "late_result_policy": (
                     "retain result but prevent post-cutoff incumbent or feedback update"
                 ),
@@ -753,6 +778,8 @@ def main(argv: list[str] | None = None) -> int:
             "timeout_s": args.timeout,
             "active_wall_horizon_s": args.active_wall_horizon,
             "sentinel_interval_s": args.sentinel_interval,
+            "signed_decisions": args.signed_decisions,
+            "signed_decision_policy": args.signed_decision_policy,
             "resume": args.resume,
             "skip_keys": sorted(done),
         }

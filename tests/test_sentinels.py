@@ -34,6 +34,7 @@ class SentinelLedgerTests(unittest.TestCase):
                 recorded_elapsed_seconds=1.0,
                 selection_policy="agent_submission",
                 idempotency_key="submission:1",
+                metadata={"decision": "continue"},
             )
             duplicate = ledger.capture(
                 "submission",
@@ -43,6 +44,7 @@ class SentinelLedgerTests(unittest.TestCase):
                 recorded_elapsed_seconds=1.1,
                 selection_policy="agent_submission",
                 idempotency_key="submission:1",
+                metadata={"decision": "continue"},
             )
             self.assertEqual(duplicate["sequence"], 1)
             ledger.capture(

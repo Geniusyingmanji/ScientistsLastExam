@@ -170,6 +170,7 @@ class SentinelLedger:
         capture_method: str = "atomic_state_transition",
         reason: Optional[str] = None,
         idempotency_key: Optional[str] = None,
+        metadata: Optional[dict[str, Any]] = None,
     ) -> dict[str, Any]:
         if sentinel_type not in SENTINEL_TYPES:
             raise ValueError("unknown sentinel type %r" % sentinel_type)
@@ -227,6 +228,7 @@ class SentinelLedger:
                     "artifact_sha256": artifact["artifact_sha256"],
                     "selection_policy": str(selection_policy),
                     "evaluation": evaluation_ref,
+                    "metadata": dict(metadata or {}),
                 }
                 if any(existing.get(key) != value for key, value in expected.items()):
                     raise ValueError(
@@ -253,6 +255,7 @@ class SentinelLedger:
             "feedback_visible": bool(feedback_visible),
             "reason": reason,
             "idempotency_key": idempotency_key,
+            "metadata": dict(metadata or {}),
         }
         if sentinel_type == "t0" and self.events:
             raise ValueError("t0 sentinel must be the first ledger event")
@@ -314,6 +317,8 @@ def load_sentinel_events(
             raise ValueError("sentinel sequence is not contiguous")
         if event.get("sentinel_type") not in SENTINEL_TYPES:
             raise ValueError("unknown sentinel type")
+        if not isinstance(event.get("metadata", {}), dict):
+            raise ValueError("sentinel metadata must be an object")
         key = event.get("idempotency_key")
         if key is not None:
             if not isinstance(key, str) or not key or key in idempotency_keys:

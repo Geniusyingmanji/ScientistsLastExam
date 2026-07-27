@@ -489,6 +489,19 @@ class BatchAggregationTests(unittest.TestCase):
                 "--sentinel-interval", "30",
                 "--budget", "0",
             ])
+        with self.assertRaisesRegex(SystemExit, "requires --active-wall-horizon"):
+            MODULE.main([
+                "--tasks", "LennardJonesCluster",
+                "--signed-decisions",
+                "--budget", "0",
+            ])
+        with self.assertRaisesRegex(SystemExit, "requires --signed-decisions"):
+            MODULE.main([
+                "--tasks", "LennardJonesCluster",
+                "--active-wall-horizon", "120",
+                "--signed-decision-policy", "honor_stop",
+                "--budget", "0",
+            ])
         with self.assertRaisesRegex(SystemExit, "only for greedy_rewrite"):
             MODULE.main([
                 "--tasks", "LennardJonesCluster",

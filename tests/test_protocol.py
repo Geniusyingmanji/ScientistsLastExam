@@ -8,7 +8,9 @@ from pathlib import Path
 from unittest.mock import patch
 
 from frontier_science.algorithms import ALGORITHMS, get_algorithm
-from frontier_science.algorithms.evolve import greedy_rewrite
+from frontier_science.algorithms.evolve import (extract_signed_decision,
+                                                extract_signed_submission,
+                                                greedy_rewrite)
 from frontier_science.algorithms.abmcts_backend import abmcts
 from frontier_science.algorithms.shinkaevolve_backend import _evaluation_rows
 from frontier_science.algorithms.common import restore_committed_trajectory
@@ -330,6 +332,134 @@ class ProtocolMetricTests(unittest.TestCase):
 
 
 class GreedyRewriteTests(unittest.TestCase):
+    def test_signed_decision_parser_is_strict(self):
+        self.assertEqual(
+            extract_signed_decision(
+                '```decision\n{"action":"commit","rationale":"stable result"}\n```'
+            ),
+            {"action": "commit", "rationale": "stable result"},
+        )
+        self.assertIsNone(extract_signed_decision("commit"))
+        self.assertIsNone(extract_signed_decision(
+            '```decision\n{"action":"stop","rationale":"x"}\n```'
+        ))
+        self.assertIsNone(extract_signed_decision(
+            '```decision\n{"action":"commit","rationale":"x","score":1}\n```'
+        ))
+        valid = (
+            "```python\nx = 1\n```\n"
+            '```decision\n{"action":"continue","rationale":"test"}\n```'
+        )
+        self.assertIsNotNone(extract_signed_submission(valid))
+        self.assertIsNone(extract_signed_submission("prose\n" + valid))
+        self.assertIsNone(extract_signed_submission(valid + "\nprose"))
+        self.assertIsNone(extract_signed_submission(valid.replace(
+            "```python\n", "```python\nx = 0\n```\n```python\n", 1
+        )))
+
+    def test_invalid_signed_contract_is_candidate_failure(self):
+        spec = find_task("LennardJonesCluster")
+        baseline = spec.initial_program_path.read_text(encoding="utf-8")
+        invalid = "```python\n%s\n```\nmissing decision" % baseline
+        with tempfile.TemporaryDirectory() as tmp:
+            result = greedy_rewrite(
+                spec,
+                FakeLLM([invalid]),
+                budget=1,
+                timeout_s=20,
+                workdir=Path(tmp),
+                active_wall_horizon_s=60,
+                signed_decisions=True,
+                log_fn=lambda _: None,
+            )
+            trajectory = load_trajectory(Path(tmp) / "trajectory.jsonl")
+        self.assertEqual(trajectory[1]["error"], "signed_decision_contract_invalid")
+        self.assertFalse(trajectory[1]["valid"])
+        self.assertEqual(result.evaluated, 1)
+        submission = next(
+            row for row in result.summary["sentinel_snapshot"]["events"]
+            if row["sentinel_type"] == "submission"
+        )
+        self.assertEqual(submission["evaluation"]["status"], "not_applicable")
+
+    def test_signed_commit_is_bound_and_honor_stop_ends_proposals(self):
+        spec = find_task("LennardJonesCluster")
+        baseline = spec.initial_program_path.read_text(encoding="utf-8")
+        response = (
+            "```python\n%s\n```\n"
+            "```decision\n"
+            '{"action":"commit","rationale":"I would defend this artifact now."}\n'
+            "```" % baseline
+        )
+        llm = FakeLLM([response])
+        with tempfile.TemporaryDirectory() as tmp:
+            result = greedy_rewrite(
+                spec,
+                llm,
+                budget=3,
+                timeout_s=20,
+                workdir=Path(tmp),
+                active_wall_horizon_s=60,
+                sentinel_interval_s=30,
+                signed_decisions=True,
+                signed_decision_policy="honor_stop",
+                log_fn=lambda _: None,
+            )
+            trajectory = load_trajectory(Path(tmp) / "trajectory.jsonl")
+
+        self.assertEqual(len(trajectory), 2)
+        self.assertEqual(
+            trajectory[1]["algorithm_metadata"]["signed_decision_action"],
+            "commit",
+        )
+        self.assertEqual(result.summary["signed_stop_action"], "commit")
+        sentinels = result.summary["sentinel_snapshot"]["events"]
+        commit = next(row for row in sentinels if row["sentinel_type"] == "commit")
+        submission = next(
+            row for row in sentinels if row["sentinel_type"] == "submission"
+        )
+        self.assertEqual(commit["artifact_sha256"], submission["artifact_sha256"])
+        self.assertEqual(commit["metadata"]["decision_policy"], "honor_stop")
+        self.assertEqual(
+            commit["metadata"]["response_sha256"],
+            submission["metadata"]["response_sha256"],
+        )
+        self.assertIn("```decision``` JSON object", llm.prompts[0])
+
+    def test_signed_abstain_can_be_recorded_without_stopping(self):
+        spec = find_task("LennardJonesCluster")
+        baseline = spec.initial_program_path.read_text(encoding="utf-8")
+        responses = [
+            (
+                "```python\n%s\n```\n```decision\n"
+                '{"action":"abstain","rationale":"insufficient evidence"}\n```'
+            ) % baseline,
+            (
+                "```python\n%s\n```\n```decision\n"
+                '{"action":"continue","rationale":"continue search"}\n```'
+            ) % baseline,
+        ]
+        with tempfile.TemporaryDirectory() as tmp:
+            result = greedy_rewrite(
+                spec,
+                FakeLLM(responses),
+                budget=2,
+                timeout_s=20,
+                workdir=Path(tmp),
+                active_wall_horizon_s=60,
+                signed_decisions=True,
+                signed_decision_policy="record_only",
+                log_fn=lambda _: None,
+            )
+        self.assertEqual(len(result.history), 2)
+        self.assertEqual(result.summary["signed_stop_action"], "abstain")
+        abstain = next(
+            row for row in result.summary["sentinel_snapshot"]["events"]
+            if row["sentinel_type"] == "abstain"
+        )
+        self.assertIsNone(abstain["artifact_sha256"])
+        self.assertEqual(abstain["evaluation"]["status"], "not_applicable")
+
     def test_fixed_duration_sentinels_capture_boundary_artifacts(self):
         spec = find_task("LennardJonesCluster")
         baseline = spec.initial_program_path.read_text(encoding="utf-8")
