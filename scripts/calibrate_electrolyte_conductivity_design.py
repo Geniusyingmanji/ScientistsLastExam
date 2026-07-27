@@ -105,6 +105,25 @@ def truth_blind_assay_policy(problem, assay):
     return {"formulation_ids": ids}
 
 
+def _frozen_anchor_policy(oracle, anchor_key):
+    """Build a policy for one explicitly named, evaluator-sealed witness."""
+
+    def policy(problem, assay):
+        oracle._consume_unique_assays(problem, assay)
+        weights = np.asarray(problem["application_weights"], dtype=float)
+        world = next(
+            row for row in oracle.WORLDS
+            if np.allclose(row["weights"], weights, atol=0, rtol=0)
+        )
+        return {
+            "formulation_ids": list(
+                oracle._anchors()[world["name"]][anchor_key]
+            )
+        }
+
+    return policy
+
+
 def _rebuild_data(builder, csv_path, expected):
     rebuilt = builder.build(Path(csv_path))
     rendered = json.dumps(
@@ -169,6 +188,12 @@ def calibrate(csv_path):
     direct_baseline = oracle.evaluate(oracle._baseline_policy)
     direct_reference = oracle.evaluate(oracle._reference_policy)
     direct_robust_reference = oracle.evaluate(oracle._robust_reference_policy)
+    direct_confirmation_reference = oracle.evaluate(_frozen_anchor_policy(
+        oracle, "confirmation_reference_ids"
+    ))
+    direct_confirmation_robust_reference = oracle.evaluate(_frozen_anchor_policy(
+        oracle, "confirmation_robust_reference_ids"
+    ))
     truth_blind = oracle.evaluate(truth_blind_assay_policy)
     rebuild = _rebuild_data(builder, csv_path, oracle.DATA_PATH)
     arrhenius = _independent_arrhenius_checks(oracle.DATA_DOCUMENT)
@@ -230,6 +255,20 @@ def calibrate(csv_path):
         and direct_reference["heldout_policy_score"] == 1.0
         and direct_robust_reference["robustness_score"] == 1.0
         and direct_robust_reference["heldout_robustness_score"] == 1.0
+        and direct_confirmation_reference["confirmation_score"] == 1.0
+        and direct_confirmation_reference["heldout_confirmation_score"] == 1.0
+        and direct_confirmation_robust_reference["confirmation_robustness_score"] == 1.0
+        and direct_confirmation_robust_reference["heldout_confirmation_robustness_score"] == 1.0
+        and direct_confirmation_reference[
+            "development_confirmation_mean_weighted_conductivity_s_cm"
+        ] >= direct_baseline[
+            "development_confirmation_mean_weighted_conductivity_s_cm"
+        ] * 1.05
+        and direct_confirmation_reference[
+            "heldout_confirmation_mean_weighted_conductivity_s_cm"
+        ] >= direct_baseline[
+            "heldout_confirmation_mean_weighted_conductivity_s_cm"
+        ] * 1.05
         and truth_blind["valid"] == 1.0
         and truth_blind["development_mean_assay_calls"] == 8.0
         and truth_blind["heldout_mean_assay_calls"] == 8.0
@@ -268,6 +307,10 @@ def calibrate(csv_path):
         "direct_baseline": direct_baseline,
         "direct_reference": direct_reference,
         "direct_robust_reference": direct_robust_reference,
+        "direct_confirmation_reference": direct_confirmation_reference,
+        "direct_confirmation_robust_reference": (
+            direct_confirmation_robust_reference
+        ),
         "truth_blind_assay_policy": {
             "method": (
                 "assay the eight leading historical-proxy candidates and select "
@@ -285,6 +328,18 @@ def calibrate(csv_path):
             "untouched_confirmation_supports_the_selected_policy": (
                 truth_blind["confirmation_score"] > 0.0
                 and truth_blind["heldout_confirmation_score"] > 0.0
+            ),
+            "untouched_confirmation_landscape_has_material_headroom": (
+                direct_confirmation_reference[
+                    "development_confirmation_mean_weighted_conductivity_s_cm"
+                ] >= direct_baseline[
+                    "development_confirmation_mean_weighted_conductivity_s_cm"
+                ] * 1.05
+                and direct_confirmation_reference[
+                    "heldout_confirmation_mean_weighted_conductivity_s_cm"
+                ] >= direct_baseline[
+                    "heldout_confirmation_mean_weighted_conductivity_s_cm"
+                ] * 1.05
             ),
             "nominal_and_repeat_robust_reference_batches_differ": any(
                 row["reference_ids"] != row["robust_reference_ids"]

@@ -211,13 +211,9 @@ def audit():
     spec = find_task("Optics/DiffractionGratingDesign", include_uncertified=True)
     secure = evaluate_candidate(spec, spec.initial_program_path, timeout_s=120)
     baseline = copy.deepcopy(secure)
-    reference = {
-        "combined_score": 1.0,
-        "robustness_score": 1.0,
-        "heldout_policy_score": 1.0,
-        "heldout_robustness_score": 1.0,
-        "valid": 1.0,
-    }
+    # Retain the evaluator's complete physical diagnostics.  A hand-written
+    # normalized score of one cannot establish target-efficiency materiality.
+    reference = oracle.evaluate(oracle.reference_policy)
     visible = search_visible_metrics(secure)
     anchors = _anchor_recalculation(oracle)
     convergence, max_utility_delta, max_point_delta = _convergence_records(oracle)
@@ -252,10 +248,22 @@ def audit():
         and abs(float(baseline["heldout_policy_score"])) < 1.0e-12
         and abs(float(baseline["heldout_robustness_score"])) < 1.0e-12
         and reference["valid"] == 1.0
-        and reference["combined_score"] == 1.0
-        and reference["robustness_score"] == 1.0
-        and reference["heldout_policy_score"] == 1.0
-        and reference["heldout_robustness_score"] == 1.0
+        and abs(float(reference["combined_score"]) - 1.0) < 1.0e-12
+        and abs(float(reference["robustness_score"]) - 1.0) < 1.0e-12
+        and abs(float(reference["heldout_policy_score"]) - 1.0) < 1.0e-12
+        and abs(float(reference["heldout_robustness_score"]) - 1.0) < 1.0e-12
+        and reference["development_mean_target_efficiency"] > (
+            baseline["development_mean_target_efficiency"] + 0.10
+        )
+        and reference["heldout_mean_target_efficiency"] > (
+            baseline["heldout_mean_target_efficiency"] + 0.10
+        )
+        and reference["development_minimum_target_efficiency"] > (
+            baseline["development_minimum_target_efficiency"] + 0.05
+        )
+        and reference["heldout_minimum_target_efficiency"] > (
+            baseline["heldout_minimum_target_efficiency"] + 0.05
+        )
         and secure == baseline
         and secure["candidate_instance_call_count"] == 6
         and anchors["maximum_anchor_error"] < 1.0e-12
