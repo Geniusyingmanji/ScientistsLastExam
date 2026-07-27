@@ -2916,3 +2916,33 @@ must freeze sentinel capture, retain a random tranche through 12h, and choose co
 independently of these outcomes. The full allocation and claim limits are recorded in
 `.research/measurement_health_allocation_2026-07-27_v1.md` and the corresponding machine-readable
 audit.
+
+## 2026-07-27 — frozen exploratory cohort and fixed-duration sentinel smoke
+
+The result-selected exploratory cohort is frozen in
+`.research/exploratory_2h_cohort_manifest_2026-07-27_v1.json`. It binds the exact ordered seven
+task set, both the maturity-wide and runtime task contracts, task cards, equal task weights,
+intent-to-evaluate failure policy and the prohibition on confirmatory reuse. A Python
+`random.Random(2026072701)` draw made before any 2h run assigns DiffractionGratingDesign,
+ElectrolyteConductivityDesign and HeatExchangerDesign to the unconditional 12h audit tranche;
+their continuation cannot depend on their 2h outcome.
+
+The greedy runner now has a distinct active-wall horizon rather than overloading evaluator
+timeout. It discloses the true horizon in every proposal prompt, records content-addressed `t0`,
+first-valid, submission, fixed-grid and terminal sentinels, binds complete evaluator payloads,
+and marks results completing after cutoff as retained but ineligible to update the in-horizon
+incumbent. Sentinel artifact/evaluation stores and event ledgers are hash-checked and use
+idempotency keys. A proposal budget that ends before the declared wall horizon is a
+`protocol_incomplete` terminal outcome and is excluded from successful fixed-duration quality
+rows rather than silently relabeled as a 2h run. The current greedy prompt has no signed
+commit/abstain action, so that required sentinel remains explicitly unimplemented rather than
+synthetically inferred.
+
+The seven-task budget-zero smoke is intentionally negative: every baseline evaluates and every
+run produces a `t0` plus terminal sentinel, but all seven terminate with
+`proposal_budget_exhausted_before_active_wall_horizon`. Consequently the raw report correctly has
+`execution_passed=false`, zero successful fixed-duration cells and seven retained
+protocol-incomplete cells. The separate clean-revision derived audit replays every sentinel
+ledger and content hash, confirms terminal-to-baseline binding, cohort-manifest binding and the
+7/7 intent-to-evaluate denominator, and passes. This validates fail-closed boundary accounting;
+it is not GPT-5.5 performance, a completed 2h run, post-2h headroom or discovery evidence.

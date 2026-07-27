@@ -1,0 +1,183 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_NEGATIVE_PROTOCOL_AUDIT",
+  "evidence_scope": "BASELINE_ONLY_EXPECTED_FAIL_FIXED_DURATION_SENTINEL_AND_COHORT_BINDING_AUDIT_NOT_MODEL_PERFORMANCE_LONG_HORIZON_HEADROOM_OR_DISCOVERY_EVIDENCE",
+  "created_at": "2026-07-27T01:10:10.210148+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "ba566537f42ae1827ca784d95c5daa3250469e98",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/audit_sentinel_smoke.py",
+      "--output",
+      "experiments/exploratory_2h_sentinel_smoke_audit_2026-07-27_v1.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "inputs": [
+    {
+      "path": "experiments/exploratory_2h_sentinel_smoke_2026-07-27_v1.json",
+      "sha256": "c51fab1caff518f7ab2a9ec8909535b594883d60f7aec6e21073363ab2a65346"
+    },
+    {
+      "path": ".research/exploratory_2h_cohort_manifest_2026-07-27_v1.json",
+      "sha256": "2d4cb9dfb0ba566ac924ffc8b537516f358999e734bfd01af831ad22770b0d98"
+    }
+  ],
+  "expected_negative_outcome": {
+    "raw_execution_passed": false,
+    "protocol_incomplete_attempts": 7,
+    "reason": "proposal_budget_exhausted_before_active_wall_horizon"
+  },
+  "task_count": 7,
+  "task_audits": [
+    {
+      "task": "Electrochemistry/ElectrolyteConductivityDesign",
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/exploratory_2h_sentinel_smoke_2026-07-27_v1/Electrochemistry__ElectrolyteConductivityDesign/greedy_rewrite/normal/seed_0",
+      "checks": {
+        "protocol_incomplete_is_expected": true,
+        "horizon_not_reached": true,
+        "baseline_did_not_cross_horizon": true,
+        "sentinel_snapshot_hash_matches": true,
+        "sentinel_snapshot_events_match": true,
+        "exact_t0_and_terminal": true,
+        "terminal_binds_baseline": true,
+        "terminal_reason_is_expected": true,
+        "terminal_feedback_hidden": true
+      },
+      "sentinel_ledger_sha256": "1ab3b711958cf088c850de654195cc6bcd986ee34bf1e46769089bea0a325b96",
+      "t0_artifact_sha256": "a55e04a4239e8f469a908f41924c0555041b432793cab89ac589a43dc4b1772f",
+      "terminal_artifact_sha256": "a55e04a4239e8f469a908f41924c0555041b432793cab89ac589a43dc4b1772f"
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/exploratory_2h_sentinel_smoke_2026-07-27_v1/Optics__DiffractionGratingDesign/greedy_rewrite/normal/seed_0",
+      "checks": {
+        "protocol_incomplete_is_expected": true,
+        "horizon_not_reached": true,
+        "baseline_did_not_cross_horizon": true,
+        "sentinel_snapshot_hash_matches": true,
+        "sentinel_snapshot_events_match": true,
+        "exact_t0_and_terminal": true,
+        "terminal_binds_baseline": true,
+        "terminal_reason_is_expected": true,
+        "terminal_feedback_hidden": true
+      },
+      "sentinel_ledger_sha256": "ddfcdc80f2ba84c959dec5871a3d90adef76750eead4933129faabbc62415a16",
+      "t0_artifact_sha256": "f2abe37d10285154574c5805325f5a0fdcc863e058e8503a5087359fdeba3046",
+      "terminal_artifact_sha256": "f2abe37d10285154574c5805325f5a0fdcc863e058e8503a5087359fdeba3046"
+    },
+    {
+      "task": "RNAEngineering/RNAInverseDesign",
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/exploratory_2h_sentinel_smoke_2026-07-27_v1/RNAEngineering__RNAInverseDesign/greedy_rewrite/normal/seed_0",
+      "checks": {
+        "protocol_incomplete_is_expected": true,
+        "horizon_not_reached": true,
+        "baseline_did_not_cross_horizon": true,
+        "sentinel_snapshot_hash_matches": true,
+        "sentinel_snapshot_events_match": true,
+        "exact_t0_and_terminal": true,
+        "terminal_binds_baseline": true,
+        "terminal_reason_is_expected": true,
+        "terminal_feedback_hidden": true
+      },
+      "sentinel_ledger_sha256": "2933deb26877f661d953826b1f1e8832c4598964615d6127a6dd87e1a048f861",
+      "t0_artifact_sha256": "323cf61512a5763b12bdf7c97e1b85ed84f6c1d690c38db77f0b0b53269bb48f",
+      "terminal_artifact_sha256": "323cf61512a5763b12bdf7c97e1b85ed84f6c1d690c38db77f0b0b53269bb48f"
+    },
+    {
+      "task": "Semiconductor/MOSFETDoping",
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/exploratory_2h_sentinel_smoke_2026-07-27_v1/Semiconductor__MOSFETDoping/greedy_rewrite/normal/seed_0",
+      "checks": {
+        "protocol_incomplete_is_expected": true,
+        "horizon_not_reached": true,
+        "baseline_did_not_cross_horizon": true,
+        "sentinel_snapshot_hash_matches": true,
+        "sentinel_snapshot_events_match": true,
+        "exact_t0_and_terminal": true,
+        "terminal_binds_baseline": true,
+        "terminal_reason_is_expected": true,
+        "terminal_feedback_hidden": true
+      },
+      "sentinel_ledger_sha256": "240a351a51266eae3cdc083c6335ab921d4ea9addb9f4c747704a0d6d478a06f",
+      "t0_artifact_sha256": "243f1a3fe6bca79989c47a8945e69dc9de419544c02f5f737a754ec56acac5e6",
+      "terminal_artifact_sha256": "243f1a3fe6bca79989c47a8945e69dc9de419544c02f5f737a754ec56acac5e6"
+    },
+    {
+      "task": "StructuralEngineering/TrussWeightMinimization",
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/exploratory_2h_sentinel_smoke_2026-07-27_v1/StructuralEngineering__TrussWeightMinimization/greedy_rewrite/normal/seed_0",
+      "checks": {
+        "protocol_incomplete_is_expected": true,
+        "horizon_not_reached": true,
+        "baseline_did_not_cross_horizon": true,
+        "sentinel_snapshot_hash_matches": true,
+        "sentinel_snapshot_events_match": true,
+        "exact_t0_and_terminal": true,
+        "terminal_binds_baseline": true,
+        "terminal_reason_is_expected": true,
+        "terminal_feedback_hidden": true
+      },
+      "sentinel_ledger_sha256": "7b17201907aacae31f57d5e2aca9bf8e652cff9445922189a638d7736ca3dca3",
+      "t0_artifact_sha256": "dd89ba5c3aff3d54eb84802cd80cb9da210e60811085a0dcdcf70c4a5e735661",
+      "terminal_artifact_sha256": "dd89ba5c3aff3d54eb84802cd80cb9da210e60811085a0dcdcf70c4a5e735661"
+    },
+    {
+      "task": "Thermodynamics/HeatExchangerDesign",
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/exploratory_2h_sentinel_smoke_2026-07-27_v1/Thermodynamics__HeatExchangerDesign/greedy_rewrite/normal/seed_0",
+      "checks": {
+        "protocol_incomplete_is_expected": true,
+        "horizon_not_reached": true,
+        "baseline_did_not_cross_horizon": true,
+        "sentinel_snapshot_hash_matches": true,
+        "sentinel_snapshot_events_match": true,
+        "exact_t0_and_terminal": true,
+        "terminal_binds_baseline": true,
+        "terminal_reason_is_expected": true,
+        "terminal_feedback_hidden": true
+      },
+      "sentinel_ledger_sha256": "5b6f905555441458d26b93468de4c563b9c3bfe0ef08e8068f4519cb2f1ccea2",
+      "t0_artifact_sha256": "104eaeb22cc15acfb50eda224ceb260e5fbb567cae918729cdb78ee5632ca4c4",
+      "terminal_artifact_sha256": "104eaeb22cc15acfb50eda224ceb260e5fbb567cae918729cdb78ee5632ca4c4"
+    },
+    {
+      "task": "Turbulence/RANSCalibration",
+      "workdir": "/home/azureuser/workspace-gzy/zyf/frontier-science/runs/exploratory_2h_sentinel_smoke_2026-07-27_v1/Turbulence__RANSCalibration/greedy_rewrite/normal/seed_0",
+      "checks": {
+        "protocol_incomplete_is_expected": true,
+        "horizon_not_reached": true,
+        "baseline_did_not_cross_horizon": true,
+        "sentinel_snapshot_hash_matches": true,
+        "sentinel_snapshot_events_match": true,
+        "exact_t0_and_terminal": true,
+        "terminal_binds_baseline": true,
+        "terminal_reason_is_expected": true,
+        "terminal_feedback_hidden": true
+      },
+      "sentinel_ledger_sha256": "520e49c26a3d61b763d752a38f0e3b07d1ca5208ec1869ef52bf72b0e4969b42",
+      "t0_artifact_sha256": "08d77d5949beb6d20b7459805f4834306fd6daebc982cc38e1f38c03b7d371e5",
+      "terminal_artifact_sha256": "08d77d5949beb6d20b7459805f4834306fd6daebc982cc38e1f38c03b7d371e5"
+    }
+  ],
+  "issues": [],
+  "limitations": [
+    "Budget zero exercises baseline and terminal capture only; no GPT-5.5 proposal is requested.",
+    "No first-valid, submission, commit, abstain or fixed-grid event occurs in this negative smoke.",
+    "Passing this audit validates fail-closed protocol accounting, not a completed two-hour run."
+  ],
+  "execution_passed": true,
+  "trust_decision": "trusted_clean_revision",
+  "trusted_evidence": true,
+  "passed": true
+}
