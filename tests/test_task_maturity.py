@@ -44,6 +44,17 @@ class TaskMaturityAuditTests(unittest.TestCase):
             self.report["evidence_coverage"]["builder_lineage_complete_task_count"], 0
         )
 
+    def test_every_admissible_task_has_current_or_migration_safe_model_measurement(self):
+        self.assertEqual(
+            self.report["evidence_coverage"]["current_model_measurement_count"], 50
+        )
+        missing = [
+            row["task"] for row in self.report["tasks"]
+            if row["certification_status"] in {"certified", "candidate"}
+            and row["model_measurement"]["current_or_migrated_run_count"] == 0
+        ]
+        self.assertEqual(missing, [])
+
     def test_track_f_tasks_have_repeated_controls_and_fresh_confirmation(self):
         for task_id in (
             "DynamicalSystems/ActiveLawDiscovery",
