@@ -166,20 +166,20 @@ tasks:
 
   DynamicalSystems/LyapunovControl:
     status: candidate
-    reason: corrected closed-loop MLE oracle is scientifically valid but known equilibrium feedback saturates at budget one; retain as an on-ramp pending hidden regimes and a nontrivial energy-stability frontier
+    reason: corrected closed-loop MLE oracle is scientifically valid, but a current-contract independent GPT-5.5 budget-one run reaches the clipped ceiling of 1.0 and both normal and selection-blind budget-three runs also reach 1.0 on their first proposal; retain as an on-ramp, not a long-horizon task, pending procedural hidden plants and a nontrivial energy-stability frontier
     citation_ids:
       - doi:10.1103/PhysRevLett.64.1196
       - doi:10.1016/0375-9601(92)90745-8
 
   NuclearEngineering/NeutronDiffusionCriticality:
     status: candidate
-    reason: corrected conservative two-group diffusion oracle and reproducible numerical anchor; awaiting procedural reactor regimes and independent domain review
+    reason: corrected conservative two-group diffusion oracle and reproducible numerical anchor; current-contract GPT-5.5 reaches 0.939 at budget one, normal budget three improves 0.832 to 0.963 and a selection-blind batch reaches 0.982 with fewer tokens, so the single fixed public slab remains an on-ramp rather than long-horizon evidence pending procedural reactor regimes, transport replication and independent review
     citation_ids:
       - isbn:9780471223634
 
   Geophysics/SeismicInversion:
     status: candidate
-    reason: identifiable refraction inverse and useful on-ramp, but GPT-5.5 reaches 0.994 at budget one with standard global/local optimization; harder model-mismatch and survey-design regimes plus independent review are required
+    reason: identifiable refraction inverse and useful on-ramp, but a current-contract independent GPT-5.5 budget-one run reaches 0.998 and both normal and selection-blind budget-three conditions reach the same 0.998 in their first proposal using standard global/local optimization; harder model-mismatch and survey-design regimes plus independent review are required before long-horizon use
     citation_ids:
       - isbn:9780521708425
       - isbn:9780931830149

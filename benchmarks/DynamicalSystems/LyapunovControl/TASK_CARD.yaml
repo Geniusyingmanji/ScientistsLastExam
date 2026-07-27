@@ -40,6 +40,8 @@ lineage:
   calibrator_model_ids:
   - azure-responses:gpt-5.5
   calibration_runs:
+  - experiments/gpt55_maturity_gap_b1_current_v1_2026-07-26.json
+  - experiments/gpt55_maturity_gap_current_v1_2026-07-26.json
   - experiments/gpt55_candidate_wave1_b1_2026-07-21.json
   calibration_evidence_status: current_or_migration_replayed
   edits_triggered_by_model: Not exhaustively reconstructed; use the task certification reason, dated calibration analyses, and Git history as the retained record.
@@ -47,10 +49,12 @@ lineage:
   frozen_before_eval: false
   freeze_timestamp: null
 long_horizon:
-  status: not_tested
+  status: excluded_current_contract_one_step_saturation
   measurement_health_passed: false
   material_headroom_after_2h: false
-  evidence: []
+  evidence:
+  - experiments/gpt55_maturity_gap_b1_current_v1_2026-07-26.json
+  - experiments/gpt55_maturity_gap_current_v1_2026-07-26.json
 construction_audit:
   status: incomplete_legacy
   author_domain: unknown_legacy
