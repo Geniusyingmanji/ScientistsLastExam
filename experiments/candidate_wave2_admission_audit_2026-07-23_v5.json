@@ -1,0 +1,157 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_ADMISSION_AUDIT",
+  "created_at": "2026-07-23T14:32:37.903927+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "9fcc13a7dd80d2a157be30e8632918cdef293b5e",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/audit_candidate_wave2.py",
+      "--output",
+      "experiments/candidate_wave2_admission_audit_2026-07-23_v5.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "records": [
+    {
+      "task": "Acoustics/RoomImpulseResponse",
+      "admission": "candidate",
+      "superseded_v1_defect": "the removed fixed-RIR reconstruction task crashed reference-length candidates against a shorter order-zero baseline and exposed only two fixed scenes",
+      "resolved_defect": "v2 optimizes a physical loudspeaker position and six treatment areas over four development and two held-out rooms; order-10 image energy, Eyring decay, C50, spatial uniformity, a first-order proxy and five sealed shifts remain separate",
+      "development_instance_count": 4,
+      "heldout_instance_count": 2,
+      "shift_count": 5,
+      "baseline_score": 0.0,
+      "baseline_valid": true,
+      "nominal_reference_score": 1.0,
+      "nominal_heldout_score": 1.0,
+      "robust_reference_score": 0.9743105333386063,
+      "robust_reference_robustness": 1.0,
+      "robust_heldout_robustness": 1.0,
+      "nonfinite_score": 0.0,
+      "nonfinite_valid": false,
+      "all_reference_axes_have_headroom": true,
+      "rebuild_passed": true,
+      "passed": true
+    },
+    {
+      "task": "Astrodynamics/LowThrustTransfer",
+      "admission": "candidate",
+      "superseded_v1_defect": "the removed v1 task used one 30-day Cartesian trajectory, 1000 Euler steps, silent thrust clipping and unsupported fuel anchors",
+      "resolved_defect": "v2 uses six multi-regime MEE+J2 transfers, bounded harmonic controls, rocket-equation mass depletion, explicit terminal feasibility and sealed held-out/execution robustness; current numerical evidence is delegated to scripts/calibrate_low_thrust_v2.py",
+      "baseline_score": 0.0,
+      "baseline_valid": true,
+      "reference_score": 0.734751120657575,
+      "reference_robustness": 0.7043094948025597,
+      "reference_development_feasibility": 1.0,
+      "reference_heldout_feasibility": 1.0,
+      "rebuild_passed": true,
+      "passed": true
+    },
+    {
+      "task": "ControlTheory/InvertedPendulumSwingUp",
+      "admission": "candidate",
+      "resolved_defect": "v2 uses the documented down-zero convention: theta=0 is the stable hanging equilibrium, theta=pi is the unstable upright equilibrium, and shifted plant and disturbance robustness is reported separately",
+      "d_theta_acceleration_at_zero": -7.895853658534692,
+      "d_theta_acceleration_at_pi": 7.89585365963836,
+      "development_scenario_count": 5,
+      "validation_scenario_count": 4,
+      "rebuild_passed": true,
+      "passed": true
+    },
+    {
+      "task": "FluidDynamics/LidDrivenCavity",
+      "admission": "candidate",
+      "superseded_v1_defect": "the removed v1 task used one Re/grid and scored only two sparse centerlines, so injected nonphysical velocity stripes could score above 0.99 while boundary, continuity, momentum and pressure were unchecked",
+      "resolved_defect": "v2 returns streamfunction/vorticity, spans six Reynolds/grid cases plus two independent refinement calls, derives velocity in trusted code, and separately checks full-field agreement, Poisson/transport/wall residuals, held-out transfer, grid convergence and corrected Ghia Re=100 profiles",
+      "baseline_score": 0.0,
+      "baseline_valid": true,
+      "baseline_physics_feasibility": 0.0,
+      "reference_score": 0.9999999978178575,
+      "reference_heldout_score": 0.9999999909968893,
+      "reference_grid_score": 0.9999999973746342,
+      "reference_heldout_grid_score": 0.9999999955969529,
+      "reference_development_physics_feasibility": 1.0,
+      "reference_heldout_physics_feasibility": 1.0,
+      "maximum_reference_grid_difference": 0.042681560167764865,
+      "reference_ghia_re100": {
+        "u_centerline_rmse": 0.009788573607718645,
+        "v_centerline_rmse": 0.012070035100907534,
+        "u_centerline_max_error": 0.016567478944382125,
+        "v_centerline_max_error": 0.02188802011065963
+      },
+      "nonphysical_injection_score": 0.0,
+      "nonphysical_injection_physics_feasibility": 0.0,
+      "attenuated_reference_ungated_score": 0.8570262397348241,
+      "attenuated_reference_gated_score": 0.0,
+      "attenuated_reference_physics_feasibility": 0.0,
+      "instance_count": 6,
+      "refinement_pair_count": 2,
+      "rebuild_passed": true,
+      "passed": true
+    },
+    {
+      "task": "MaterialsScience/AlloyHardnessOptimization",
+      "admission": "quarantine",
+      "defect": "the claimed experimental-data surrogate is a hand-written pseudo-physical polynomial with no dataset artifact",
+      "oracle_self_labels_pseudo_physical": true,
+      "dataset_artifact_present": false,
+      "passed": true
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "admission": "quarantine",
+      "defect": "the oracle is a scalar phase FFT, not RCWA, and a disclosed analytic phase ramp gives unit efficiency",
+      "analytic_phase_ramp_score": 1.0,
+      "efficiencies": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "passed": true
+    },
+    {
+      "task": "Thermodynamics/HeatExchangerDesign",
+      "admission": "candidate",
+      "resolved_defect": "v2 replaces the monotone single geometry with six bounded multi-fluid Pareto problems, a public cheap proxy, a sealed segmented exact oracle, fixed-seed reproducible references and separate held-out/physical-shift diagnostics",
+      "instance_count": 6,
+      "development_instance_count": 4,
+      "heldout_instance_count": 2,
+      "baseline_score": 0.0,
+      "baseline_valid": true,
+      "nominal_reference_score": 1.0,
+      "nominal_heldout_score": 1.0,
+      "robust_reference_score": 0.9915646658885515,
+      "robust_reference_robustness": 1.0,
+      "nonfinite_score": 0.0,
+      "nonfinite_valid": false,
+      "maximum_anchor_reproduction_error": 0.0,
+      "baseline_feasible_under_every_shift": true,
+      "robust_reference_feasible_under_every_shift": true,
+      "rebuild_passed": true,
+      "passed": true
+    }
+  ],
+  "summary": {
+    "task_count": 7,
+    "check_pass_count": 7,
+    "resolved_rebuild_count": 5,
+    "recommended_quarantine_count": 2
+  },
+  "execution_passed": true,
+  "trusted_evidence": true,
+  "passed": true
+}
