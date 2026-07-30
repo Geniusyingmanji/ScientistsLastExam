@@ -68,13 +68,14 @@ controlled exception text is reduced to a fixed label-blind failure taxonomy bef
 search feedback, preventing observations from being carried between worlds through exceptions.
 The current audit reports:
 
-- Trusted certification v57 binds clean revision `f31d5ea` and covers `7/43/9` over 59 packages
+- Trusted certification v65 binds clean revision `c98e28c` and covers `7/43/9` over 59 packages
   with no missing manifest records, orphaned records or task-level admission issues; it retains
-  one known duplicate-oracle group containing four quarantined packages. Security v41 binds
-  clean revision `08ec441` and passes
-  18/18 adversarial tests. The 59×2 baseline v46 reports 59/59 deterministic, valid and
-  fail-closed tasks with zero infrastructure failures. Full-suite v18 binds clean revision
-  `c6d1c10` and passes 519/519 tests in 2012.772 seconds.
+  one known duplicate-oracle group containing four quarantined packages. Security v49 binds
+  clean revision `ab0c393` and passes
+  23/23 adversarial tests. The 59×2 baseline v46 reports 59/59 deterministic, valid and
+  fail-closed tasks with zero infrastructure failures. Full-suite v28 (SHA-256
+  `e6e2bc7235a3556882d764a0474bfbc3ba411c3bd379c0adb84bfe4644b510f2`) binds clean
+  revision `549d588` and passes 653/653 tests in 2182.054 seconds.
   Cross-task summary v31 (SHA-256
   `b3b3983423f1978b3ddf63fe73f3a34f41eb9a450190fdd7a4c78a0b88028c32`) binds clean
   revision `4be5d4d` and contains 75 normal single-run conditions over 38 tasks.
@@ -402,6 +403,23 @@ discovery score or autonomous-discovery result. See the
 [pilot findings](.research/feedback_measurement_pilot_findings_2026-07-26.md) and hash-bound
 [analysis](experiments/feedback_measurement_pilot_analysis_2026-07-26_v1.json).
 
+The frozen seven-task GPT-5.5 exploratory screen subsequently completes all 7/7 declared
+two-hour cells with no infrastructure failure, retry or protocol-incomplete outcome. Across
+1,033 proposals, 790 are evaluator-valid and provider usage totals 7,740,876 tokens; pricing was
+not configured. The online incumbent reaches combined scores `0.9402` Electrolyte, `0.6055`
+Diffraction, `1.0000` RNAInverse, `0.7877` MOSFET, `0.0525` Truss, `0.8583` HeatExchanger and
+`0.6682` RANS. Only Diffraction, RNAInverse and RANS clear their frozen task-specific operational
+raw-science materiality contracts; this is not external validation. The terminal boundary stores
+the last workspace artifact rather than the online incumbent: all seven terminal artifacts differ
+from their online incumbents, only five are evaluator-valid and only one clears its materiality
+contract. The final in-horizon signed actions are six commits and one abstention, all made before
+their own evaluator result under forced continuation. The trusted derived analysis binds clean
+revision `549d588`; see the [result note](.research/exploratory_2h_results_2026-07-30_v1.md) and
+[machine-readable analysis](experiments/exploratory_2h_analysis_2026-07-30_v1.json). This
+result-selected single-trajectory screen is not population performance, a feedback effect,
+post-two-hour headroom, confirmatory science, external validation or autonomous discovery. The
+preselected Diffraction/Electrolyte/HeatExchanger 12-hour tranche remains unexecuted.
+
 The latest EdgeBench re-audit keeps its upstream facts at arXiv `2607.05155v1`, SForge
 `a87350a` and public dataset `47846a4`. In addition to E1--E36, the science plan now preregisters
 nineteen scope/protocol tests. I6/E37 has a synthetic QCM implementation smoke, while its paired
@@ -520,6 +538,9 @@ python scripts/audit_inverse_candidates.py --output /tmp/inverse-admission.json
 python scripts/audit_candidate_wave3.py --output /tmp/candidate-wave3.json
 python scripts/audit_candidate_wave4.py --output /tmp/candidate-wave4.json
 python scripts/run_secure_baseline.py --repeats 2 --output /tmp/baselines.json
+python scripts/analyze_exploratory_2h.py \
+  --output /tmp/exploratory-2h-analysis.json \
+  --markdown-output /tmp/exploratory-2h-results.md
 python -m unittest discover -v -s tests
 # From each compatible optional-backend venv:
 python scripts/smoke_upstream_backends.py --backend openevolve --output /tmp/openevolve.json

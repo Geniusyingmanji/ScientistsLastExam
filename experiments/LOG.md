@@ -2977,3 +2977,50 @@ one-proposal safety ceiling is exhausted, and the raw report is explicitly
 `PROTOCOL_SMOKE_ONLY_NOT_MODEL_PERFORMANCE`. A clean derived audit passes all 13 lineage and
 claim-scope checks. This is interface evidence on a high-contamination known-answer on-ramp, not
 population performance, fixed-duration headroom or scientific discovery.
+
+## 2026-07-30 — seven-task two-hour exploratory result audit
+
+The raw GPT-5.5 screen (SHA-256
+`93fd1e42206bf65c711c59c06a205d3d724b79905b2196e00f042247abf1490a`) completes all
+7/7 preregistered fixed-duration cells with no failed, recovered or protocol-incomplete attempt.
+The trusted derived analysis v1 (SHA-256
+`c612bded02d2c2dc0ab1edee98d10131c8151d5b72a782147ea357029ca138f5`) binds clean
+analysis revision `549d588`. It replays every schema-v2 trajectory, exactly-once evaluation
+request and receipt, checkpoint, run manifest, content-addressed artifact/evaluation/provider
+response, sentinel ledger, cohort hash, task package and prerequisite hash.
+
+The fixed risk set contains 1,033 proposals and 1,040 oracle calls including baselines. There are
+790 evaluator-valid proposals (`76.476%`) and 7,740,876 provider-reported tokens; provider pricing
+was not configured. Online incumbent combined scores are `0.940217` Electrolyte, `0.605535`
+Diffraction, `1.000000` RNAInverse, `0.787717` MOSFET, `0.052457` Truss, `0.858258`
+HeatExchanger and `0.668239` RANS. Proposal validity is especially weak for Truss (`2/201`) and
+Diffraction (`46/85`). The 30-minute-to-120-minute online-score change is positive on five tasks,
+but only materially large on Diffraction (`+0.445506`); Electrolyte and Truss are flat, and the
+remaining positive changes are `0.000039--0.012410`.
+
+Applying each frozen raw-domain materiality contract to the same online incumbent yields passes
+for Diffraction, RNAInverse and RANS only (`3/7`). Electrolyte fails independent-confirmation
+criteria despite a high visible score; MOSFET and HeatExchanger fail full feasibility/robustness
+criteria; Truss fails the structural contract. These are benchmark-preregistered operational
+thresholds, not field consensus or external validation.
+
+The endpoint audit exposes an important policy distinction. The preregistration names a
+`terminal_in_horizon_incumbent`, while the runner's sentinel explicitly implements
+`terminal_workspace_artifact`: the last artifact published by the cutoff. The terminal artifact
+differs from the online incumbent on all seven tasks, only five terminal artifacts are valid and
+only one clears its materiality contract. The report therefore keeps online incumbent, terminal
+workspace, latest signed commit/abstention and observer best-so-far separate. The last in-horizon
+signed actions are six commits and one abstention; only one of six committed artifacts clears its
+materiality contract. Every action was recorded before its own evaluator result under forced
+continuation, so it is not a score-aware autonomous stopping decision.
+
+The study remains a result-selected, single uncontrolled provider trajectory per task. It
+supports a complete hash-bound two-hour exploratory record, not population model performance,
+feedback causality, a scaling law, material post-two-hour headroom, confirmatory science,
+external/physical validation or autonomous discovery. The preselected Diffraction, Electrolyte
+and HeatExchanger unconditional 12-hour tranche remains required and unexecuted. The concise
+claim--evidence note is `.research/exploratory_2h_results_2026-07-30_v1.md`.
+
+The post-analysis full-suite v28 report (SHA-256
+`e6e2bc7235a3556882d764a0474bfbc3ba411c3bd379c0adb84bfe4644b510f2`) binds clean revision
+`549d588` and passes all 653/653 tests in 2182.054 seconds with no skips or failures.
