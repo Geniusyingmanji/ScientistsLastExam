@@ -162,7 +162,7 @@ class ProteinStabilityAnalysisTests(unittest.TestCase):
             self.report["task_calibration"],
             copy.deepcopy(self.report["records"]),
             runtime_source_equivalent=False,
-            runtime_source_changes=["benchmarks/ProteinEngineering/change.py"],
+            runtime_source_changes=["benchmarks/Biology/ProteinStabilityDesign/change.py"],
         )
         self.assertFalse(failed["execution_passed"])
 

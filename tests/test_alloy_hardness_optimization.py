@@ -17,7 +17,7 @@ from frontier_science.registry import find_task
 
 
 ROOT = Path(__file__).resolve().parents[1]
-TASK = ROOT / "benchmarks/MaterialsScience/AlloyHardnessOptimization"
+TASK = ROOT / "benchmarks/Chemistry/AlloyHardnessOptimization"
 DATA = TASK / "verification/alloy_hardness_v1.json"
 DATA_SHA256 = "a55effd2a4077b63a19a45a91729698e07b1bd9e89a72da79b87f2528a09d003"
 

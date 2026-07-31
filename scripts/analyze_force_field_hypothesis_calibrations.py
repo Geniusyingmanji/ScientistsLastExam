@@ -66,7 +66,7 @@ TASK_RUNTIME_SCOPE = (
     "frontier_science/rpc_codec.py",
     "frontier_science/spec.py",
     "frontier_science/registry.py",
-    "benchmarks/MolecularDynamics/ForceFieldCalibration",
+    "benchmarks/Chemistry/ForceFieldCalibration",
     "requirements-upstream.txt",
 )
 SCIENCE_FIELDS = (
@@ -439,13 +439,14 @@ def _load_calibration(relative: str) -> dict[str, Any]:
     virial_checks = document.get("independent_second_virial_boyle_checks") or {}
     isolation = document.get("secure_isolation_and_failure_checks") or {}
     task_hashes = document.get("task_source_sha256") or {}
+    historical_task_path = "benchmarks/MolecularDynamics/ForceFieldCalibration"
     expected_hash_paths = {
-        "benchmarks/MolecularDynamics/ForceFieldCalibration/Task.md",
-        "benchmarks/MolecularDynamics/ForceFieldCalibration/TASK_CARD.yaml",
-        "benchmarks/MolecularDynamics/ForceFieldCalibration/solution.py",
-        "benchmarks/MolecularDynamics/ForceFieldCalibration/verification/evaluator.py",
-        "benchmarks/MolecularDynamics/ForceFieldCalibration/frontier_eval/metadata.yaml",
-        "benchmarks/MolecularDynamics/ForceFieldCalibration/frontier_eval/run_eval.py",
+        historical_task_path + "/Task.md",
+        historical_task_path + "/TASK_CARD.yaml",
+        historical_task_path + "/solution.py",
+        historical_task_path + "/verification/evaluator.py",
+        historical_task_path + "/frontier_eval/metadata.yaml",
+        historical_task_path + "/frontier_eval/run_eval.py",
         "scripts/calibrate_force_field_hypothesis_lab.py",
     }
     if not (
@@ -515,7 +516,7 @@ def _load_calibration(relative: str) -> dict[str, Any]:
         and len(isolation.get("records") or []) == 7
         and set(task_hashes) == expected_hash_paths
         and task_hashes.get(
-            "benchmarks/MolecularDynamics/ForceFieldCalibration/solution.py"
+            historical_task_path + "/solution.py"
         ) == BASELINE_SHA256
     ):
         raise ValueError("ForceFieldCalibration-v2 task calibration gate failed")

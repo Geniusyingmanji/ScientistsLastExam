@@ -17,7 +17,7 @@ import numpy as np
 from scipy.stats import qmc
 
 ROOT = Path(__file__).resolve().parent.parent
-TASK = ROOT / "benchmarks/Thermodynamics/HeatExchangerDesign"
+TASK = ROOT / "benchmarks/Engineering/HeatExchangerDesign"
 sys.path.insert(0, str(ROOT))
 
 from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402

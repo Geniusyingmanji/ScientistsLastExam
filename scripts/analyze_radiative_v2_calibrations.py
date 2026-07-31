@@ -13,7 +13,6 @@ import argparse
 import hashlib
 import json
 import platform
-import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -24,6 +23,7 @@ sys.path.insert(0, str(ROOT))
 
 from frontier_science.protocol import compact_trajectory_snapshot, load_trajectory  # noqa: E402
 from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402
+from frontier_science.runtime_migration import runtime_source_changes  # noqa: E402
 
 
 CALIBRATION = "experiments/radiative_transfer_v2_calibration_2026-07-22.json"
@@ -66,11 +66,7 @@ def _sha256(path: Path) -> str:
 
 
 def _source_changes(left: str, right: str) -> list[str]:
-    output = subprocess.check_output(
-        ["git", "diff", "--name-only", left, right, "--", *SOURCE_SCOPE],
-        cwd=str(ROOT), text=True, stderr=subprocess.DEVNULL,
-    )
-    return [line for line in output.splitlines() if line.strip()]
+    return runtime_source_changes(left, right, SOURCE_SCOPE, root=ROOT)
 
 
 def _scalar(metrics: dict[str, Any]) -> dict[str, Any]:

@@ -16,7 +16,7 @@ from frontier_science.registry import find_task
 
 
 ROOT = Path(__file__).resolve().parents[1]
-TASK = ROOT / "benchmarks/RNAEngineering/RNAInverseDesign"
+TASK = ROOT / "benchmarks/Biology/RNAInverseDesign"
 
 
 def _load_oracle():

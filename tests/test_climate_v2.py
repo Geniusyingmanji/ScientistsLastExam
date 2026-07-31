@@ -31,7 +31,7 @@ def _load_module(name: str, path: Path):
 def _oracle():
     return _load_module(
         "climate_v2_test_oracle",
-        ROOT / "benchmarks/ClimateScience/EnergyBalanceModel/verification/evaluator.py",
+        ROOT / "benchmarks/EarthScience/EnergyBalanceModel/verification/evaluator.py",
     )
 
 
@@ -257,7 +257,7 @@ class EnergyBalanceModelV2Tests(unittest.TestCase):
         ))
 
     def test_legacy_frontier_eval_driver_uses_v2_entrypoint(self):
-        task = ROOT / "benchmarks/ClimateScience/EnergyBalanceModel"
+        task = ROOT / "benchmarks/EarthScience/EnergyBalanceModel"
         with tempfile.TemporaryDirectory() as tmp:
             metrics_path = Path(tmp) / "metrics.json"
             process = subprocess.run(

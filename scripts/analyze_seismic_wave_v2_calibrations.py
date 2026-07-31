@@ -13,7 +13,6 @@ import argparse
 import hashlib
 import json
 import platform
-import subprocess
 import sys
 from collections import Counter
 from datetime import datetime, timezone
@@ -32,6 +31,7 @@ from frontier_science.provenance import (  # noqa: E402
     finalize_report_trust,
     source_provenance,
 )
+from frontier_science.runtime_migration import runtime_source_changes  # noqa: E402
 
 
 TASK = "WavePropagation/SeismicWaveInversion"
@@ -66,7 +66,7 @@ TASK_RUNTIME_SCOPE = (
     "frontier_science/rpc_codec.py",
     "frontier_science/spec.py",
     "frontier_science/registry.py",
-    "benchmarks/WavePropagation/SeismicWaveInversion",
+    "benchmarks/EarthScience/SeismicWaveInversion",
     "requirements-upstream.txt",
 )
 FIELDS = (
@@ -98,11 +98,7 @@ def _sha256(path: Path) -> str:
 
 
 def _source_changes(left: str, right: str) -> list[str]:
-    output = subprocess.check_output(
-        ["git", "diff", "--name-only", left, right, "--", *TASK_RUNTIME_SCOPE],
-        cwd=str(ROOT), text=True, stderr=subprocess.DEVNULL,
-    )
-    return [line for line in output.splitlines() if line.strip()]
+    return runtime_source_changes(left, right, TASK_RUNTIME_SCOPE, root=ROOT)
 
 
 def _scalar(metrics: dict[str, Any]) -> dict[str, Any]:

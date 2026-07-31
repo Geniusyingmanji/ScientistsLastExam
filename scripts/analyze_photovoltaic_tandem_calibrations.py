@@ -14,7 +14,6 @@ import hashlib
 import json
 import math
 import platform
-import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -32,6 +31,7 @@ from frontier_science.provenance import (  # noqa: E402
     finalize_report_trust,
     source_provenance,
 )
+from frontier_science.runtime_migration import runtime_source_changes  # noqa: E402
 
 
 TASK = "Photovoltaics/PhotovoltaicTandemDesign"
@@ -51,7 +51,7 @@ INPUT_SOURCE_REVISION = "e57bb682930d65c39699b2153e8743063587b97e"
 CALIBRATION_SOURCE_REVISION = "0c0ca5ea21e6be5a58929e336b4c5dfbf0eddb55"
 TASK_RUNTIME_SCOPE = (
     ":(glob)frontier_science/**/*.py",
-    "benchmarks/Photovoltaics/PhotovoltaicTandemDesign",
+    "benchmarks/Chemistry/PhotovoltaicTandemDesign",
     "requirements-upstream.txt",
 )
 SCIENCE_FIELDS = (
@@ -94,13 +94,7 @@ def _science(metrics: dict[str, Any]) -> dict[str, Any]:
 
 
 def _source_changes(left: str, right: str) -> list[str]:
-    output = subprocess.check_output(
-        ["git", "diff", "--name-only", left, right, "--", *TASK_RUNTIME_SCOPE],
-        cwd=str(ROOT),
-        text=True,
-        stderr=subprocess.DEVNULL,
-    )
-    return [line for line in output.splitlines() if line.strip()]
+    return runtime_source_changes(left, right, TASK_RUNTIME_SCOPE, root=ROOT)
 
 
 def _failure_kind(event: dict[str, Any]) -> str | None:

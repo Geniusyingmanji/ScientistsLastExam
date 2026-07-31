@@ -40,7 +40,7 @@ MODEL_SOURCE_REVISION = "489789a5de4265dba308f95b5a808324d2248048"
 CALIBRATION = "experiments/electrolyte_conductivity_design_calibration_2026-07-25.json"
 DATA = (
     ROOT
-    / "benchmarks/Electrochemistry/ElectrolyteConductivityDesign/verification/"
+    / "benchmarks/Chemistry/ElectrolyteConductivityDesign/verification/"
     "electrolyte_conductivity_v1.json"
 )
 REPORTS = {
@@ -69,7 +69,7 @@ TASK_RUNTIME_SCOPE = (
     "frontier_science/rpc_codec.py",
     "frontier_science/spec.py",
     "frontier_science/registry.py",
-    "benchmarks/Electrochemistry/ElectrolyteConductivityDesign",
+    "benchmarks/Chemistry/ElectrolyteConductivityDesign",
     "requirements-upstream.txt",
 )
 SCIENCE_FIELDS = (

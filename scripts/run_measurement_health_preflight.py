@@ -36,6 +36,7 @@ from frontier_science.algorithms.common import (  # noqa: E402
 )
 from frontier_science.evaluate import evaluate_candidate  # noqa: E402
 from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402
+from frontier_science.registry import find_task  # noqa: E402
 from frontier_science.spec import load_task_spec  # noqa: E402
 
 
@@ -284,10 +285,10 @@ def _contract_compatibility(
             "missing_at_source_revision": [],
             "reason": "evidence source revision is missing",
         }
-    current_relatives = {
-        path.relative_to(ROOT).as_posix(): path for path in paths
-    }
+    current_relatives = {path.relative_to(ROOT).as_posix(): path for path in paths}
     task_relative = task_spec.task_dir.relative_to(ROOT).as_posix()
+    historical_task_relative = "benchmarks/%s" % task_spec.task_id
+    source_task_relative = task_relative
     try:
         historical_names = subprocess.check_output(
             ["git", "ls-tree", "-r", "--name-only", source_revision, "--", task_relative],
@@ -295,23 +296,47 @@ def _contract_compatibility(
         ).splitlines()
     except (OSError, subprocess.CalledProcessError):
         historical_names = []
+    if not historical_names and historical_task_relative != task_relative:
+        source_task_relative = historical_task_relative
+        try:
+            historical_names = subprocess.check_output(
+                ["git", "ls-tree", "-r", "--name-only", source_revision, "--", source_task_relative],
+                cwd=str(ROOT), text=True, stderr=subprocess.DEVNULL,
+            ).splitlines()
+        except (OSError, subprocess.CalledProcessError):
+            historical_names = []
     historical_runtime = {
         name for name in historical_names
         if (
-            name == "%s/Task.md" % task_relative
-            or name == task_spec.initial_program_path.relative_to(ROOT).as_posix()
-            or name.startswith("%s/verification/" % task_relative)
-            or name.startswith("%s/frontier_eval/" % task_relative)
+            name == "%s/Task.md" % source_task_relative
+            or name == "%s/%s" % (
+                source_task_relative,
+                task_spec.initial_program_path.relative_to(task_spec.task_dir).as_posix(),
+            )
+            or name.startswith("%s/verification/" % source_task_relative)
+            or name.startswith("%s/frontier_eval/" % source_task_relative)
         )
         and "__pycache__" not in Path(name).parts
         and Path(name).suffix not in {".pyc", ".pyo"}
     }
-    extra_at_source = sorted(historical_runtime - set(current_relatives))
-    added_since_source = sorted(set(current_relatives) - historical_runtime)
-    for relative, path in current_relatives.items():
+    historical_by_suffix = {
+        str(Path(name).relative_to(source_task_relative)): name
+        for name in historical_runtime
+    }
+    current_by_suffix = {
+        str(Path(relative).relative_to(task_relative)): (relative, path)
+        for relative, path in current_relatives.items()
+    }
+    extra_at_source = sorted(set(historical_by_suffix) - set(current_by_suffix))
+    added_since_source = sorted(set(current_by_suffix) - set(historical_by_suffix))
+    for suffix, (relative, path) in current_by_suffix.items():
+        historical_relative = historical_by_suffix.get(suffix)
+        if historical_relative is None:
+            missing.append(relative)
+            continue
         try:
             historical = subprocess.check_output(
-                ["git", "show", "%s:%s" % (source_revision, relative)],
+                ["git", "show", "%s:%s" % (source_revision, historical_relative)],
                 cwd=str(ROOT), stderr=subprocess.DEVNULL,
             )
         except (OSError, subprocess.CalledProcessError):
@@ -327,6 +352,8 @@ def _contract_compatibility(
         "missing_at_source_revision": missing,
         "extra_at_source_revision": extra_at_source,
         "added_since_source_revision": added_since_source,
+        "source_task_path": source_task_relative,
+        "current_task_path": task_relative,
         "compared_file_count": len(paths),
         "reason": None if passed else "task runtime differs from the calibration evidence revision",
     }
@@ -932,8 +959,7 @@ def _task_preflight(
     evaluator: Evaluator,
 ) -> dict[str, Any]:
     task_id = manifest_row["task"]
-    task_dir = ROOT / "benchmarks" / task_id
-    task_spec = load_task_spec(task_dir)
+    task_spec = find_task(task_id, include_uncertified=True)
     current_contract = task_contract_sha256(task_spec)
     current_package = task_package_sha256(task_spec)
     expected_artifact_hash = config.get("fixed_artifact_sha256")

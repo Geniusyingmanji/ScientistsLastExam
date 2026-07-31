@@ -17,7 +17,7 @@ import numpy as np
 
 
 ROOT = Path(__file__).resolve().parent.parent
-TASK = ROOT / "benchmarks/ProteinEngineering/ProteinStabilityDesign"
+TASK = ROOT / "benchmarks/Biology/ProteinStabilityDesign"
 VERIFICATION = TASK / "verification"
 BUILDER_PATH = ROOT / "scripts/build_protein_stability_data.py"
 sys.path.insert(0, str(ROOT))

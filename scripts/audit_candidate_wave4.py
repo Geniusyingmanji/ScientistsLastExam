@@ -18,10 +18,11 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402
+from frontier_science.registry import find_task  # noqa: E402
 
 
 def _oracle(task_id: str):
-    path = ROOT / "benchmarks" / task_id / "verification/evaluator.py"
+    path = find_task(task_id, include_uncertified=True).task_dir / "verification/evaluator.py"
     spec = importlib.util.spec_from_file_location(
         "wave4_audit_" + task_id.replace("/", "_"), path
     )
@@ -33,7 +34,7 @@ def _oracle(task_id: str):
 
 
 def _candidate_module(task_id: str):
-    path = ROOT / "benchmarks" / task_id / "solution.py"
+    path = find_task(task_id, include_uncertified=True).task_dir / "solution.py"
     spec = importlib.util.spec_from_file_location(
         "wave4_candidate_" + task_id.replace("/", "_"), path
     )
@@ -255,7 +256,9 @@ def _stokes_drag():
     radius, theta = oracle._body_from_fourier(circle)
     circle_area = oracle._compute_area(radius, theta)
     circle_drag = oracle._compute_drag(radius, theta)
-    source = (ROOT / "benchmarks/FluidMechanics/StokesShapeDrag/verification/evaluator.py").read_text(
+    source = (find_task(
+        "FluidMechanics/StokesShapeDrag", include_uncertified=True
+    ).task_dir / "verification/evaluator.py").read_text(
         encoding="utf-8"
     )
     with np.errstate(all="ignore"):

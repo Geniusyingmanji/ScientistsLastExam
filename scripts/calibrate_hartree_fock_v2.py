@@ -25,7 +25,7 @@ import numpy as np
 
 
 ROOT = Path(__file__).resolve().parent.parent
-TASK = ROOT / "benchmarks/QuantumChemistry/HartreeFockSCF"
+TASK = ROOT / "benchmarks/Chemistry/HartreeFockSCF"
 DATA_PATH = TASK / "verification/rhf_instances_v2.npz"
 sys.path.insert(0, str(ROOT))
 

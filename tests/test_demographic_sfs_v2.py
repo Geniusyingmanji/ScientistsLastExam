@@ -31,7 +31,7 @@ def _load_module(name, path):
 def _oracle():
     return _load_module(
         "demographic_sfs_v2_test_oracle",
-        ROOT / "benchmarks/PopulationGenetics/DemographicSFS/verification/evaluator.py",
+        ROOT / "benchmarks/Biology/DemographicSFS/verification/evaluator.py",
     )
 
 
@@ -267,7 +267,7 @@ class DemographicSFSV2Tests(unittest.TestCase):
         ))
 
     def test_legacy_frontier_eval_driver_uses_v2_entrypoint(self):
-        task = ROOT / "benchmarks/PopulationGenetics/DemographicSFS"
+        task = ROOT / "benchmarks/Biology/DemographicSFS"
         with tempfile.TemporaryDirectory() as tmp:
             metrics_path = Path(tmp) / "metrics.json"
             process = subprocess.run(

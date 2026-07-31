@@ -26,7 +26,7 @@ sys.path.insert(0, str(ROOT))
 
 from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402
 
-TASK = ROOT / "benchmarks/NuclearEngineering/NeutronDiffusionCriticality"
+TASK = ROOT / "benchmarks/Engineering/NeutronDiffusionCriticality"
 
 
 def _load_oracle():

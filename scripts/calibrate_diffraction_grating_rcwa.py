@@ -20,7 +20,7 @@ import numpy as np
 
 
 ROOT = Path(__file__).resolve().parent.parent
-TASK = ROOT / "benchmarks/Optics/DiffractionGratingDesign"
+TASK = ROOT / "benchmarks/Physics/DiffractionGratingDesign"
 sys.path.insert(0, str(ROOT))
 
 from frontier_science.evaluate import evaluate_candidate  # noqa: E402

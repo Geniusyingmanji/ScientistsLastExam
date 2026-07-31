@@ -150,7 +150,7 @@ class PhotovoltaicTandemAnalysisTests(unittest.TestCase):
         report = ANALYSIS._analyze_records(
             {"source_revision": "calibration"}, records,
             runtime_source_equivalent=False,
-            runtime_source_changes=["benchmarks/Photovoltaics/x.py"],
+            runtime_source_changes=["benchmarks/Chemistry/PhotovoltaicTandemDesign/x.py"],
             calibration_source_revision="calibration",
             model_source_revision="input",
         )

@@ -48,7 +48,7 @@ class DiffractionGratingAnalysisTests(unittest.TestCase):
         self.assertEqual(
             report["model_to_analysis_task_runtime_source_changes"],
             [
-                "benchmarks/Optics/DiffractionGratingDesign/verification/evaluator.py",
+                "benchmarks/Physics/DiffractionGratingDesign/verification/evaluator.py",
                 "frontier_science/evaluate.py",
                 "frontier_science/secure_eval.py",
                 "frontier_science/trusted_driver.py",
@@ -238,7 +238,7 @@ class DiffractionGratingAnalysisTests(unittest.TestCase):
             copy.deepcopy(self.report["records"]),
             model_to_runtime_source_equivalent=False,
             model_to_runtime_source_changes=[
-                "benchmarks/Optics/DiffractionGratingDesign/change.py"
+                "benchmarks/Physics/DiffractionGratingDesign/change.py"
             ],
         )
         self.assertFalse(failed["execution_passed"])

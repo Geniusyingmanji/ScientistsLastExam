@@ -29,11 +29,11 @@ def _load(relative: str, name: str):
 
 
 ACTIVE = _load(
-    "benchmarks/DynamicalSystems/ActiveLawDiscovery/verification/evaluator.py",
+    "benchmarks/Mathematics/ActiveLawDiscovery/verification/evaluator.py",
     "track_f_active_law_oracle",
 )
 DIFFRACTION = _load(
-    "benchmarks/Optics/DiffractionGratingDesign/verification/evaluator.py",
+    "benchmarks/Physics/DiffractionGratingDesign/verification/evaluator.py",
     "track_f_diffraction_oracle",
 )
 

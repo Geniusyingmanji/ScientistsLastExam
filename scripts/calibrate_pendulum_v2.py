@@ -18,7 +18,7 @@ sys.path.insert(0, str(ROOT))
 
 from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402
 
-TASK = ROOT / "benchmarks/ControlTheory/InvertedPendulumSwingUp"
+TASK = ROOT / "benchmarks/Engineering/InvertedPendulumSwingUp"
 
 
 def _load_oracle():

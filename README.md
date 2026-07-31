@@ -1,558 +1,278 @@
 # Frontier-Science
 
 Frontier-Science is a research prototype for **cross-domain, executable,
-budget-constrained scientific generative optimization**. An agent edits one runnable
-program; a frozen deterministic oracle scores each candidate, and the benchmark measures
-both the best feasible artifact and its cost-aware discovery trajectory.
+budget-constrained scientific generative optimization**. An agent edits a runnable program,
+a frozen deterministic oracle evaluates each candidate, and the benchmark records both the
+best feasible artifact and the cost-aware trajectory used to find it.
 
 This repository is inspired by
-[Frontier-Engineering](https://github.com/EinsiaLab/Frontier-Engineering). It is not the
-text-question benchmark named *FrontierScience* in
+[Frontier-Engineering](https://github.com/EinsiaLab/Frontier-Engineering). It is unrelated to
+the text-question benchmark named *FrontierScience* in
 [arXiv:2601.21165](https://arxiv.org/abs/2601.21165).
 
-> Scope: an improved simulator/verifier score supports a claim of computational scientific
-> optimization within the registered oracle. It is not, by itself, autonomous scientific
-> discovery. Mechanism recovery, hidden-shift or physical validation, and claim–evidence
-> provenance are separate future gates.
+> A higher simulator or verifier score demonstrates optimization only within the registered
+> oracle. It does not by itself establish autonomous scientific discovery, mechanism recovery,
+> physical validation, or real-world utility.
 
-## Current status
+## At a glance
 
-The repository contains **59 task packages in 55 metadata domains**:
+- **59 task packages** across **55 logical domains** and **7 broad disciplines**.
+- **7 certified**, **43 candidate**, and **9 quarantined** tasks.
+- Deterministic black-box evaluation through a networkless Bubblewrap sandbox.
+- A built-in iterative rewrite baseline plus optional OpenEvolve, AB-MCTS, and
+  ShinkaEvolve backends.
+- Hash-bound experiment reports with Git revision, command, source-tree state, and explicit
+  trust decisions.
 
-- **7 certified core tasks**: Lennard–Jones clusters, spin glass, Poisson solver,
-  matrix-multiplication rank, Cap Set, circle packing, and multilayer thin films.
-- **43 candidate tasks** pending scientific certification, including intervention-based causal
-  and active dynamical-law laboratories whose prediction and mechanism metrics are reported
-  separately, a multi-spectrum NMR peak-mechanism/refusal task, and a multi-fidelity
-  heat-exchanger Pareto-design task, a full-field lid-driven-cavity solver, active
-  climate-response identification with explicit model-mismatch refusal, and a robust
-  broadband acoustic-absorber design task, and a robust mixed-integer equilibrium-stage
-  distillation design task, a multi-system stable finite-basis Hartree–Fock task, an IAPWS-IF97
-  single-reheat Pareto-cycle task, robust room
-  acoustics design, active convection--diffusion identification/design, active layered
-  reflection acquisition/inversion with explicit model-inadequacy refusal, constrained RNA
-  inverse design with exact ensemble scoring and proxy-false-promotion diagnostics, and a
-  real-data protein-stability assay-allocation replay, and a real-data electrolyte-conductivity
-  assay-allocation replay with discovery and untouched-repeat confirmation reported separately,
-  active demographic-SFS inference with finite-information and model-refusal diagnostics, and
-  cost-conditioned sampling-calorimeter design with sealed fabrication margins, and prospective
-  evidence synthesis with registry screening, participant-lineage de-duplication, selective-report
-  detection, heterogeneous inference, pre-result commitment and fresh simulated confirmation,
-  budget-conditioned finite-absorption tandem-photovoltaic design with held-out spectra and
-  sealed thermal, process and optical perturbations, and a stateful catalyst-deactivation
-  laboratory with instrument drift, finite coupons, irreversible reactions, out-of-order batch
-  completion, retry lineage, model refusal and a sealed fresh-batch operating decision, and a
-  raw-I/Q quartz-crystal-microbalance pipeline that separates complex calibration, BVD resonance
-  extraction, rigid-film inference, physical-model mismatch, instrument faults and a sealed stop
-  decision, and an active three-particle pair-potential laboratory that preregisters competing
-  Mie, Morse and unsupported hypotheses before energy/force queries and scores parameter
-  intervals, sealed prediction, second-virial/Boyle inference and model refusal separately, and a
-  DOI-grouped retrospective MPEA-hardness active-design replay with charged assays, prediction
-  intervals and sparse cross-DOI exact-recipe confirmation, and a five-layer one-dimensional
-  RCWA grating-design task with TE/TM, wavelength/angle transfer, sealed fabrication shifts and
-  an independent `grcwa` numerical cross-check.
-- **9 quarantined tasks** retain reproduced scientific-oracle, identifiability, provenance or
-  shortcut defects.
-  Quarantined packages remain inventory artifacts but are not admissible benchmark tasks.
+The default CLI exposes only certified tasks. Candidates remain visible for research and
+calibration, while quarantined packages preserve known defects for auditability; neither group
+is benchmark-admissible by default.
 
-The default CLI exposes only the certified core. `--all` explicitly shows the full
-inventory. Certification status is not a difficulty claim: the inventory metadata contains
-50 `hard` and 9 `flagship` packages, but only certified tasks are benchmark-admissible.
+## Benchmark organization
 
-All candidate code runs in a networkless Bubblewrap sandbox with read-only mounts, resource
-and process limits, and a typed JSON RPC boundary. The trusted parent alone imports the
-oracle and validates metrics. Multi-world evaluators can explicitly reset the candidate
-session at scientific-world boundaries; the active multi-world inverse tasks do so to prevent
-module, imported-package or private-tmpfs state from revealing hidden world order. Candidate-
-controlled exception text is reduced to a fixed label-blind failure taxonomy before it can enter
-search feedback, preventing observations from being carried between worlds through exceptions.
-The current audit reports:
+Tasks are grouped on disk by broad discipline, while their stable public IDs retain the more
+specific metadata domain:
 
-- Trusted certification v65 binds clean revision `c98e28c` and covers `7/43/9` over 59 packages
-  with no missing manifest records, orphaned records or task-level admission issues; it retains
-  one known duplicate-oracle group containing four quarantined packages. Security v49 binds
-  clean revision `ab0c393` and passes
-  23/23 adversarial tests. The 59×2 baseline v46 reports 59/59 deterministic, valid and
-  fail-closed tasks with zero infrastructure failures. Full-suite v28 (SHA-256
-  `e6e2bc7235a3556882d764a0474bfbc3ba411c3bd379c0adb84bfe4644b510f2`) binds clean
-  revision `549d588` and passes 653/653 tests in 2182.054 seconds.
-  Cross-task summary v31 (SHA-256
-  `b3b3983423f1978b3ddf63fe73f3a34f41eb9a450190fdd7a4c78a0b88028c32`) binds clean
-  revision `4be5d4d` and contains 75 normal single-run conditions over 38 tasks.
-- Current source manifest: 7 certified / 43 candidate / 9 quarantined. ProteinStabilityDesign
-  rebuilds 2,756 reliable double-mutant records across five
-  development and three held-out domains from hash-bound ProteinGym v1.3/Tsuboyama sources.
-  It separates additive proxy, charged assay, diversity, top-decile, trypsin, chymotrypsin,
-  uncertainty and held-out metrics. Source reconstruction, secure baseline and shortcut audits
-  pass, and all seven GPT-5.5 proposals are executable. It was counted among 44 internally
-  admissible tasks but remains an offline public-data candidate, not prospective protein
-  discovery. D-optimal design, quantum
-  gate synthesis, DC optimal power flow, truss sizing, antenna synthesis and NMR peak fitting have been rebuilt with separate sealed
-  validation or robustness metrics and re-admitted as candidates. HeatExchanger-v2 additionally
-  separates a public constant-property proxy from a sealed segmented temperature-dependent
-  oracle and scores cost-versus-duty Pareto archives, held-out fluids, false promotion and
-  fouling/manufacturing/blockage shifts. It remains a correlation-based optimization task, not
-  experimental validation. A proxy-only classical archive reaches 0.997 development exact
-  hypervolume but has only 0.948 exact feasibility, 0.094 false-promotion rate and 0.942 sealed
-  robustness. An independent GPT-5.5 budget-three trajectory improves 0.000→0.008→0.126 while
-  its final proxy score is 0.173 and two of four development regimes remain at zero; a strict
-  open-loop diagnostic reaches 0.294 but has 0.174 false promotion and is not token- or
-  model-randomness-matched. ReactionMechanismFitting-v2 adds active partial-species assays, twelve possible
-  reactions, null/model-mismatch refusal and held-out topologies: its truth-blind classical fit
-  reaches 0.482/0.404 development/held-out mechanism quality and 0.860 development interpolation,
-  but falsely reports an in-library mechanism in half of unsupported worlds. Independent GPT-5.5
-  budget-one and normal budget-three runs remain at zero because every proposal performs only one
-  or two under-informative assays and abstains. A same-local-identifier strict open-loop batch
-  contains a 0.343 development/0.363 held-out mechanism solution, but still falsely claims a
-  mechanism in half of unsupported worlds. The single-run, non-token-matched conditions have no
-  server-side random seed and support no causal feedback conclusion.
-  GravityInversion-v2 replaces two duplicate noise-dominated grids with active multi-height
-  surveys and seven procedural signed-body topologies. Its truth-blind BIC fit reaches
-  0.786/0.775 development/held-out mechanism and approximately 0.99 sealed field prediction;
-  the gap on one topology illustrates that external-field fit does not uniquely establish an
-  internal geological mechanism. GPT-5.5 budget one fails the callback dictionary protocol;
-  an independent budget-three run instead reaches 0.994 development and 0.767 held-out
-  mechanism, with one topology at 0.975 field prediction but only 0.346 body mechanism. It is
-  therefore a valid algorithm-synthesis on-ramp, not a long-horizon headline task.
-  OceanCurrentInversion-v2 replaces a sub-metre-signal fixed raster with charged active
-  drifter deployment over thirty public divergence-free, time-dependent streamfunction modes,
-  plus null and out-of-library refusal. Its truth-blind two-release sparse fit scores
-  0.707/0.406 on development/held-out mechanism quality with zero false discovery; all seven
-  in-library trajectory Jacobians are full rank, and the weakest best-of-four-start bounded
-  nonlinear public-library fit to an out-of-library world has reduced chi-square 10.53 versus
-  the refusal threshold 3.0; all four starts converge to the same score within `4e-10`.
-  Field/drifter prediction and mechanism remain separate. GPT-5.5 budget one and normal budget
-  three both remain at zero. The only valid non-baseline proposal spends the full 12-unit budget
-  but refuses every in-library world, giving zero in-library discovery coverage and mechanism
-  recovery; the other normal proposals fail the public experiment/callback protocol. A
-  same-seed-label selection-blind batch also remains at zero, with all proposals failing the
-  callback schema. These single runs diagnose protocol following and sparse credit assignment,
-  not a causal feedback effect or field-oceanography capability.
-  RankineCycleOpt-v2 uses a self-contained IAPWS-IF97 single-reheat cycle over four development
-  and two held-out regimes. GPT-5.5 budget one reaches nominal development/held-out
-  `0.9636/0.9574`; normal and strict selection-blind budget three both reach `1.0/1.0`, yet all
-  selected artifacts retain robustness `0.0/0.0` and shift feasibility `0.6/0.6`. This is strong
-  nominal algorithm synthesis with a sealed material/combined-shift failure. Single, token/wall-
-  time-mismatched runs with no server-side generation seed support neither a feedback-effect nor
-  plant-validation claim.
-  RadiativeTransferFit-v2 replaces an underdetermined fixed-profile retrieval with charged
-  channel/view selection over a public five-parameter thermal-emission family. All seven
-  supported worlds have full-rank sounding sensitivities with worst condition number 28; a
-  truth-blind two-view fit reaches 0.614/0.491 development/held-out mechanism and 0.855/0.812
-  radiance prediction while correctly refusing null, extra-absorber and cloud worlds. Across
-  budget-one, normal budget-three and strict open-loop budget-three calibrations, all seven
-  GPT-5.5 proposals are protocol-valid, but every proposal refuses every supported atmosphere.
-  Their perfect unsupported-world refusal and zero false-discovery rate therefore coexist with
-  zero discovery coverage and zero supported-world mechanism recovery. These single runs are
-  synthetic task calibration, not a causal feedback, satellite-retrieval or discovery claim.
-  LowThrustTransfer-v2 replaces a single unstable 30-day Euler trajectory and unsupported fuel
-  anchors with six raising, lowering, eccentricity and plane-change MEE+J2 transfers. A compact
-  28-parameter harmonic guidance artifact is checked against a continuous thrust bound,
-  rocket-equation mass depletion, terminal feasibility, held-out missions and sealed execution
-  shifts. A public-input-only Gauss--Newton calibration reaches `0.711/0.719`
-  development/held-out utility and `0.682/0.660` shifted robustness with full nominal terminal
-  feasibility. The production propagator agrees with an independent Cartesian DOP853 path
-  within `0.00288` of a public terminal tolerance. Across budget-one, normal budget-three and
-  strict open-loop budget-three GPT-5.5 calibrations, all seven generated artifacts are valid,
-  but none reaches nominal or shifted terminal feasibility. Their development scores span
-  `2.1e-6–0.00774`, and the maximum held-out score is only `5.8e-9`, versus `0.711/0.719` for
-  the public Gauss--Newton policy. The normal and open-loop best scores are `0.00508/0.00549`;
-  this one-run, non-token-matched contrast is not a feedback effect. Server-held missions and
-  independent review remain pending.
-  LidDrivenCavity-v2 replaces sparse Re=100 centerline matching with six Reynolds/grid cases,
-  two refinement calls, full streamfunction-vorticity fields and hard Poisson, transport and
-  wall-residual gates. Its trusted continuation reference agrees with Ghia Re=100 profiles at
-  velocity RMSE `0.00979/0.01207`; a near-reference field with 0.857 ungated similarity utility
-  scores zero when it violates transport feasibility. GPT-5.5 reaches `0.99999999` at budget
-  one. An independent normal budget-three trajectory rises `0.8699→0.8949→0.8981`, while a
-  strict open-loop batch produces another `0.99999999` solver. The budget-one and
-  open-loop programs remain above `0.99999995` full-field similarity on three post-hoc Re/grid
-  probes; the normal program is feasible on all three but has minimum similarity 0.845. These
-  runs support general numerical solver synthesis within the same discrete model and also expose
-  an on-ramp with a ceiling risk. They do not support a feedback, continuum CFD or discovery claim.
-  EnergyBalanceModel-v2 replaces an unstable explicit-diffusion toy with a charged active
-  two-layer climate-response laboratory. Candidates choose at most eight budget units of forcing
-  experiments and infer five response parameters or refuse a null, state-dependent-feedback or
-  three-layer-ocean world. A truth-blind long multiscale design reaches `0.809/0.942`
-  development/held-out mechanism quality, approximately `0.999/0.999` response prediction,
-  full supported-world coverage and zero false discovery. A short under-informative design still
-  predicts at `0.968/0.990` but has only `0.0039/0.0` mechanism quality and makes false model
-  claims. GPT-5.5 budget one and normal budget three stay at zero because all four proposals are
-  invalid return artifacts. A strict open-loop batch contains a valid `0.618/0.282`
-  development/held-out mechanism solution with `0.977/0.994` prediction, but false-discovery
-  rates are `0.20/0.25`; on twelve post-hoc procedural worlds it predicts supported responses at
-  0.995 while mechanism quality falls to 0.370 and it falsely claims the public model in four of
-  six unsupported worlds. Those post-hoc worlds are neither preregistered hidden tests nor
-  independent Earth-system validation, and the one-run conditions support no feedback claim.
-  BroadbandAbsorber-v2 replaces a fail-open single-resonator proxy with six variable-band,
-  variable-cell-count panel instances, a Stinson dynamic-density/finite-cavity distributed
-  model, a separately reported low-order public proxy, and sealed angle, air-property and
-  manufacturing shifts. The budget-one GPT-5.5 proposal times out and leaves score zero. In an
-  independent normal budget-three run, the first proposal reaches development/held-out nominal
-  scores `0.9148/0.8588` and sealed robustness `0.9118/0.8583`; two later rewrites time out. A
-  same-local-seed-label strict open-loop batch reaches nominal `0.9173/0.9574` but robustness
-  only `0.4519/0.4491`, because manufacturing perturbations leave the hard panel envelope in
-  three split-instance cases. Normal/open-loop use 24,179/15,152 tokens and Azure exposes no
-  server-side generation seed, so this one-run contrast is descriptive, not a feedback effect.
-  DistillationColumnDesign-v2 replaces fixed 0.99 product purity and missing material balances
-  with six varying binary separations, exact tray/feed-stage decisions and closed
-  total-condenser/feed-stage/partial-reboiler light-component balances. Fixed-seed nominal
-  witnesses cost 35--47% of the conservative baseline but usually fail sealed operation;
-  robust witnesses cost 37--52%, retain all five volatility/feed/quality/reflux shifts and score
-  0.963/0.903 nominal development/held-out plus 1.0/1.0 robustness. Independent bounded
-  least-squares MESH solves agree below `1.1e-11` on product composition. This validates the
-  reduced-order task, not a rate-based process model or plant design. GPT-5.5 budget one times
-  out. In the normal budget-three run, its only valid proposal reaches nominal
-  development/held-out `0.6131/0.5407`, yet only the richer-feed shift remains feasible:
-  shift feasibility is `0.20/0.20` and robustness is zero. The other six proposals across all
-  three conditions time out. A post-hoc public-cost probe reverses the ordering between the
-  selected 8-stage/high-reflux design and a feasible 13-stage/low-reflux witness, but the
-  selected program returns the same design because it does not read the public tray/vapour cost
-  fields. Thus the observed success is nominal feasibility/cost reduction, not demonstrated
-  mastery of the capital--energy tradeoff or robust process design.
-  HartreeFockSCF-v2 replaces an inconsistent two-coefficient H2 toy with seven reproducible
-  STO-3G/6-31G finite-basis Hamiltonians, a valid zero-score single-start DIIS policy, stable
-  fixed-seed multistart witnesses, a different-size held-out symmetry-breaking ring, freshly
-  generated 3% geometry shifts, AO-representation invariance and occupied--virtual stability.
-  The conventional policy is self-consistent but internally unstable on development H8 and
-  held-out H4 rings, lying 0.0375 and 0.0619 Ha above stable witnesses. Independent NumPy/SciPy
-  equations reproduce all frozen energies within `4.3e-14` Ha, and the data archive is
-  byte-reproducible. GPT-5.5 reaches approximately unit nominal and sealed scores in one proposal
-  through deterministic multistart/stability search. In a normal budget-three trajectory, a
-  `9.1e-15` selection-score increase changes development/held-out robustness from
-  `1.000/0.902` to `0.707/1.000`; a `1e-12` materiality replay keeps the earlier non-dominated
-  artifact. A strict open-loop batch also reaches approximately unit score, so these single,
-  token-mismatched runs do not show feedback necessity. The weak single-start baseline's held-out
-  geometry score is BLAS-thread sensitive (`0.667` in the authoritative secure one-thread path
-  versus approximately `1.0` at 2/4/8 threads), while secure and explicit one-thread execution
-  agree across all scalar/sealed axes. Independent quantum-chemistry review remains pending.
-  GPT-5.5 reaches nominal OPF score 1.0
-  at budget one while sealed N-1 robustness is only 0.031 on development and approximately
-  zero on held-out networks. On Truss-v2, a separate budget-three run improves development
-  `0.000 -> 0.416 -> 0.548 -> 0.611`, while its final accepted step increases held-out nominal
-  transfer and decreases sealed held-out robustness; these are calibration trajectories, not
-  multi-seed feedback claims. On Antenna-v2, budget one nearly saturates nominal pattern quality,
-  while a budget-three nominal curve `0.845 -> 0.993 -> 1.000` coincides with decreasing sealed
-  hardware robustness `0.705 -> 0.636 -> 0.576`. NMR-v2 separates peak-mechanism recovery from
-  reconstruction and refusal: a truth-blind classical fit reconstructs clean signals at
-  `0.887/0.851` on development/held-out spectra, but scores only `0.271/0.146` on normalized
-  mechanism/refusal quality and falsely fits the development phase-distorted spectrum. GPT-5.5
-  reaches `0.428/0.176` development/held-out mechanism/refusal at budget one; at budget three,
-  the two later rewrites score lower and falsely fit every unsupported spectrum.
-  ConvectionDiffusionOpt-v2 adds a charged anisotropic transport laboratory: a truth-blind
-  complementary two-experiment policy reaches development/held-out joint quality
-  `0.896/0.892` and shifted robustness `0.894/0.890`, whereas one nearly singular symmetric
-  experiment scores approximately zero. Across budget-one, normal budget-three and strict
-  open-loop GPT-5.5 calibration, four proposals fail the executable contract and all three valid
-  proposals abstain on every supported world—even one that spends all 12 units on two
-  experiments. This separates experiment spend, identifiability, mechanism recovery and
-  conservative refusal; the single-run normal/open-loop contrast is not causal evidence.
-  SeismicWaveInversion-v2 replaces an evidence-free fixed velocity guess with charged active
-  CMP/offset/frequency acquisition over three-layer, null and resolvable four-layer worlds. A
-  truth-blind NMO/Dix plus waveform policy reaches development/held-out joint quality
-  `0.9977/0.9944`, full supported-world coverage and zero false discovery. Its complementary
-  reference acquisition has rank nine with worst condition number 246, while one centered
-  narrow-offset experiment has rank five and zero information score. This is a controlled
-  ray-theoretical acquisition/model-checking on-ramp, not field FWI or geological discovery.
-  Under the now-explicit acquisition return contract, three formal GPT-5.5 conditions yield
-  six executable proposals and one timeout. Five executable proposals abstain on every
-  supported world even though their experiment-information score is `0.974–1.0`; the remaining
-  budget-one proposal claims only one of three held-out supported worlds and none in development.
-  Thus high-information acquisition is not mechanism recovery, while the shared scalar zero
-  conflates timeout, over-refusal and weak transfer. Three earlier runs are retained only as
-  superseded contract diagnostics because `acquire()` returned an undocumented dictionary at
-  that revision; they are excluded from formal model-performance counts.
+```text
+benchmarks/<Discipline>/<Task>/
+task id: <Domain>/<Task>
+```
 
-Machine-readable evidence lives in [`experiments/`](experiments/).
-The original five dated P0–P2 reports were regenerated from clean source revision `f48b101`;
-the post-repair 50-package audits bind revision `47c3613`; the subsequent wave-2 admission
-audit quarantines seven additional defective candidates. The two P2 smokes are baseline-only; the repository does not yet contain
-credible multi-seed model-performance evidence. A clean-revision GPT-5.5 budget-one core pilot
-is recorded as task calibration, not a benchmark leaderboard.
-The latest closeout certification/security/baseline audits are v56/v40/v45 and bind clean
-source revision `108322f`; full-suite v15 binds the same revision and passes 499/499 tests.
-CalorimeterDesign-v2's task calibration and wave-4 admission
-audit also bind `f6a7b73`. After rebuilding and admitting ForceFieldCalibration-v2 and the
-DOI-held AlloyHardnessOptimization-v1 replay and the independently cross-checked RCWA grating
-rebuild, the current source manifest is 7/43/9 and contains 50 internally admissible tasks. This
-meets the approximate portfolio-size target but does not imply external scientific certification.
-Alloy's frozen two-assay residual-smoothing witness reaches 0.658 development and 0.878
-citation-hash-held utility over thirteen later MPEA studies; only six of 65 target recipes have
-any cross-DOI exact composition/process record, so this is retrospective active design rather
-than alloy discovery or independent replication. Across the three GPT-5.5 conditions, all seven
-proposals are protocol-valid and every selected artifact scores `0.151632` on development but
-zero on held-out study utility. Prediction scores remain `0.801–0.818` development and
-`0.739–0.753` held out with full interval coverage, while selected exact-recipe confirmation
-coverage is only `0.083/0.067`. Normal step one is rejected at development score zero despite
-held-out utility `0.159906`; a frozen-parent same-score proposal is also discarded despite better
-prediction and narrower intervals. These are selection-axis counterexamples from a public replay,
-not a feedback-causal comparison. The trusted derived analysis has SHA-256
-`a893054dce58713069fd657e9d894e53cd02a014864f9fa614052bab182ff12b`.
-The preceding photovoltaic calibration reproduces
-ideal one-through-four-junction efficiencies `0.33695/0.45735/0.51291/0.55329`, with nominal
-reference score `1.000/1.000` and minimax-reference nominal/robust score
-`0.963/0.965` and `1.000/1.000`; these are reduced-order task anchors, not device records.
-Three same-model GPT-5.5 calibrations bind clean revision `e57bb68`. Budget one reaches
-development/held-out nominal `0.994571/0.993728` but development/held-out robustness
-`0.862800/0.806769`. Normal budget three accepts `0.974838→0.993821`, while its selected
-held-out robustness is `0.814356`; a frozen-parent batch selects nominal `0.999926` with held-out
-robustness `0.824565`. Across seven proposals, five are valid and two have sanitized candidate
-runtime errors, with no infrastructure failure. These one-run conditions are not token- or
-wall-time-matched and the endpoint has no generation seed, so their ordering is not a feedback-
-effect estimate. The selected programs optimize a known public detailed-balance model; they are
-not photovoltaic device records, new materials or autonomous discovery.
-The budget-one, normal budget-three and frozen-parent reports have SHA-256
-`6402d412916e5d4b252a1d5b7a4a483cfe2c6b0a070f5b8e6c1dac34f5b607c5`,
-`581a668727b27a4d621ebf3bb6b2f057595098b98478d706f709183a22428aaa` and
-`07d3a6d37afa04791eac0dc38b17cf9857be70f77e561a3cf131fb08438538f2`; the derived
-analysis has SHA-256 `e938f0bc635ec1569a2276a9041995ee957eeb89248db008dc5a48a5e8658607`.
-GeneNetworkIntervention adds an active nonlinear signed-network, protected-readout intervention,
-sealed-transfer and null/latent-regulator refusal candidate. Its truth-blind nonlinear reference
-scores `0.9053/0.8932` development/held-out joint quality with zero false discovery. Across the
-budget-one, normal budget-three and selection-blind budget-three GPT-5.5 calibrations, six of
-seven proposals are invalid and the only valid proposal refuses every supported world; no valid
-nonzero scientific proposal is observed. RNAInverseDesign adds five development and three held-out
-secondary-structure families under a transparent exact pair-stack-loop ensemble. Normal budget
-three improves development exact utility `0.239→0.507→0.720`, with held-out utility `0.500`, but
-retains proxy false promotions; a pair-compatible counterexample has target probability `3e-9`.
-This is simplified computational ensemble design, not full Turner thermodynamics, a synthesized
-RNA or biological discovery. ProteinStabilityDesign adds two normal runs and one strict
-selection-blind diagnostic over a public DMS replay. Budget one reaches development/held-out
-`0.614/0.412`; normal budget three reaches `0.535/0.559`; the frozen-parent batch selects
-`0.546/0.519`, while a rejected candidate reaches held-out policy/robustness `0.652/0.753`.
-These single runs are calibration evidence, not a leaderboard, feedback-effect estimate,
-pretraining-contamination audit, prospective experiment or biological discovery.
-ElectrolyteConductivityDesign adds two normal runs and one strict selection-blind diagnostic over public EIS
-measurements. Its normal budget-three selected artifact reaches development/held-out visible
-scores `0.878/0.926` and discovery-repeat robustness `0.826/0.896`, while untouched-repeat
-confirmation and confirmation robustness are `0/0` on both splits. This is offline optimization
-and repeatability-gap evidence, not a prospective formulation or complete-cell result.
-DemographicSFS-v2 adds two normal runs and a strict selection-blind diagnostic. Its normal
-budget-three selected policy reaches development/held-out mechanism `0.640/0.397` and
-sample-size prediction `0.883/0.939`, with full supported coverage, full resolvable-mismatch
-refusal and zero false discovery. A rejected proposal reaches higher held-out mechanism `0.603`
-at lower development mechanism `0.521`. Budget one and all three frozen-parent proposals fail
-the executable protocol; the normal/open-loop contrast is unseeded and non-causal.
-CalorimeterDesign-v2 adds three cost-conditioned detector curves per regime. Its nominal
-reference reaches `1.0/1.0` development/held-out score but only `0.483/0.467` shifted-geometry
-feasibility; leaving 1.913 percentage points of development cost headroom yields unit robustness
-and shift feasibility at nominal score `0.798/0.754`. All seven GPT-5.5 proposals are runtime-
-invalid, so this is a task/reference calibration, not model success or detector validation. The
-prospective evidence-synthesis task adds ten registered-study worlds with duplicated participant
-lineages, selectively highlighted outcomes, heterogeneous linear effects, resolvable nonlinear
-misspecification, an immutable forecast/design commit and one fresh simulated study. Its truth-
-blind reference scores `0.934/0.886` development/held-out with zero false discovery and complete
-unsupported-world refusal. Across budget-one, normal budget-three and selection-blind budget-
-three GPT-5.5 runs, four proposals are schema-invalid and three are valid empty abstentions; none
-screens evidence or requests confirmation. Normal iteration repairs executable validity after its
-first proposal but does not cross the scientific-workflow hurdle. The single-run normal/open-loop
-contrast remains non-causal. CatalystDeactivationLab-v1 then adds a deterministic reduced-order
-state machine with gain/offset drift, four finite coupons, irreversible deactivation, out-of-order
-batch completion and exact-retry idempotency. Its truth-blind reference reaches
-`0.958034/0.951263` development/held-out nominal score and `0.883174/0.942773` robustness while
-covering all supported worlds, refusing every unsupported world and producing no false discovery.
-Across the three GPT-5.5 calibration conditions, six of seven proposals are valid and four obtain
-nonzero scores. Budget one conservatively refuses every world. Normal and frozen-parent budget
-three cover all supported worlds but refuse none of the unsupported worlds, with false-discovery
-rates `0.40/0.333` and zero development decision score. The frozen-parent selected artifact uses
-out-of-order batches; no model proposal exercises exact retry. These single synthetic runs do not
-support feedback-causal, reactor, catalyst, instrument or autonomous-discovery claims. Cross-task
-summary v27 contains 67 normal conditions over 34 tasks and adds CatalystDeactivationLab-v1
-budgets one and three without averaging task-specific science axes into a common score.
-QuartzCrystalMicrobalanceLab-v1 then adds nine raw I/Q sweeps per world, two complex calibration
-blocks, three harmonics, missing samples, viscoelastic/rate anomalies, I/Q conjugation and ADC
-clipping. Its truth-blind reference reaches development/held-out nominal
-`0.995228/0.996343` and sealed robustness `0.940278/0.949282`, with full supported coverage,
-unsupported refusal and fault diagnosis and zero false discovery. Across budget one, normal
-budget three and selection-blind budget three, all seven GPT-5.5 proposals are valid but score
-zero: five refuse every supported world, one claims every world with false-discovery rate
-`0.5/0.5`, and one obtains partial development coverage without held-out transfer. All three
-conditions retain the weak baseline. This is a synthetic raw-instrument task calibration, not a
-QCM, thin-film, material or autonomous-discovery result. Cross-task summary v28 contains 69
-normal conditions over 35 tasks; the selection-blind run remains in the task-specific analysis.
-ForceFieldCalibration-v2 then replaces a generic trigonometric clone with twelve procedural
-three-particle worlds. Its truth-blind reference reaches development/held-out nominal
-`0.964178/0.949851` and robustness `0.964290/0.949894`, with complete supported-family
-selection, unsupported-world refusal, 90% interval coverage and zero false discovery. All seven
-GPT-5.5 proposals are invalid: one reaches all twelve worlds but returns invalid submissions,
-five are sanitized candidate runtime errors and one has a blocked or missing import. No
-infrastructure failure occurs, and all conditions retain the weak baseline. Cross-task summary
-v29 contains 71 normal conditions over 36 tasks; the frozen-parent run remains task-specific.
-These single synthetic calibrations support neither a feedback effect nor a molecular-dynamics,
-material, thermodynamic or autonomous-discovery claim.
-AlloyHardnessOptimization-v1 adds two normal conditions to cross-task summary v30, which contains
-73 normal conditions over 37 tasks. Its strict frozen-parent diagnostic remains task-specific.
-DiffractionGratingDesign-v2 adds two normal conditions to cross-task summary v31, which contains
-75 normal conditions over 38 tasks. Across its three task-specific GPT-5.5 conditions, only one of
-seven proposals is nominally valid. That frozen-parent step reaches development/held-out scores
-`0.187130/0.173008`, but both held-out worlds have at least one infeasible sealed geometry and the
-held-out robustness score is zero. The task calibration has minimum nominal/robust anchor headroom
-`0.265762/0.246092`; an independent `grcwa 0.1.2` comparison over 72 conditions has maximum/mean/
-95th-percentile absolute efficiency differences `0.007846/0.001688/0.005837`. These are
-computational calibration results, not a feedback effect, fabricated-device measurement, global
-optimum or autonomous scientific discovery.
+For example, `benchmarks/Physics/DiffractionGratingDesign/` has the stable task ID
+`Optics/DiffractionGratingDesign`. Code and reports should use the task ID; filesystem tooling
+should use the discipline path.
 
-The preregistered four-condition feedback measurement pilot then completes 16/16 cells over
-ActiveLawDiscovery and DiffractionGratingDesign, with four feedback modes, two local identifiers
-and three proposals per cell. All 48 provider usage records and all prompt, lineage, manifest,
-checkpoint and task-specific science-axis checks pass. ActiveLaw has 24/24 evaluator-valid
-proposals and Diffraction has 9/24. Realized cell totals range from 10,663 to 22,937 tokens, and
-condition ordering changes across identifiers and resource horizons. The result calibrates the
-measurement pipeline; it is not a causal feedback estimate, population model ranking, cross-task
-discovery score or autonomous-discovery result. See the
-[pilot findings](.research/feedback_measurement_pilot_findings_2026-07-26.md) and hash-bound
-[analysis](experiments/feedback_measurement_pilot_analysis_2026-07-26_v1.json).
+| Discipline | Tasks | Certified | Candidate | Quarantined |
+|---|---:|---:|---:|---:|
+| Biology | 6 | 0 | 5 | 1 |
+| Chemistry | 12 | 1 | 9 | 2 |
+| Computer Science | 4 | 2 | 2 | 0 |
+| Earth Science | 6 | 0 | 6 | 0 |
+| Engineering | 18 | 0 | 14 | 4 |
+| Mathematics | 5 | 2 | 3 | 0 |
+| Physics | 8 | 2 | 4 | 2 |
+| **Total** | **59** | **7** | **43** | **9** |
 
-The frozen seven-task GPT-5.5 exploratory screen subsequently completes all 7/7 declared
-two-hour cells with no infrastructure failure, retry or protocol-incomplete outcome. Across
-1,033 proposals, 790 are evaluator-valid and provider usage totals 7,740,876 tokens; pricing was
-not configured. The online incumbent reaches combined scores `0.9402` Electrolyte, `0.6055`
-Diffraction, `1.0000` RNAInverse, `0.7877` MOSFET, `0.0525` Truss, `0.8583` HeatExchanger and
-`0.6682` RANS. Only Diffraction, RNAInverse and RANS clear their frozen task-specific operational
-raw-science materiality contracts; this is not external validation. The terminal boundary stores
-the last workspace artifact rather than the online incumbent: all seven terminal artifacts differ
-from their online incumbents, only five are evaluator-valid and only one clears its materiality
-contract. The final in-horizon signed actions are six commits and one abstention, all made before
-their own evaluator result under forced continuation. The trusted derived analysis binds clean
-revision `549d588`; see the [result note](.research/exploratory_2h_results_2026-07-30_v1.md) and
-[machine-readable analysis](experiments/exploratory_2h_analysis_2026-07-30_v1.json). This
-result-selected single-trajectory screen is not population performance, a feedback effect,
-post-two-hour headroom, confirmatory science, external validation or autonomous discovery. The
-preselected Diffraction/Electrolyte/HeatExchanger 12-hour tranche remains unexecuted.
+The certified core currently consists of:
 
-The latest EdgeBench re-audit keeps its upstream facts at arXiv `2607.05155v1`, SForge
-`a87350a` and public dataset `47846a4`. In addition to E1--E36, the science plan now preregisters
-nineteen scope/protocol tests. I6/E37 has a synthetic QCM implementation smoke, while its paired
-repeated treatment and real-instrument stratum remain unrun; the other tests include unit/coordinate/
-representation metamorphic invariance (V4/E38), independent investigators with blinded synthesis
-(T1/E39), post-commit sealed downstream utilities (U1/E40), independently disclosed research
-horizons rather than long-run prefixes (HZ1/E41), and pinned/calibrated rubric or model judges
-(J1/E42), calibrated acquisition of costly authoritative feedback (F9/E43), plus randomized
-continuation auditing to retain delayed scientific takeoff (CA1/E44), rotating open/sealed/delayed-
-release cohorts (G1/E45), builder--solver cross-fitting (G2/E46), evidence-effective-sample-size
-accounting (EVI1/E47), observation-kernel/interval-censoring sensitivity with a separate
-live-state stratum (OBS1/E48), policy-aware inference after endogenous experiment selection
-(AD1/E49), complete reporting of null/contradictory/failed local experiments (NR1/E50), and
-conditional checkpoint forks that separate same-history continuation randomness from matched-score
-research-history lock-in (CF1/E51), plus preregistered single-factor/factorial replay that separates
-new evidence, method edits and their interactions at narrated breakthroughs (MA1/E52), explicit
-retention and falsification of competing hypotheses rather than only one incumbent (HP1/E53), and
-calibration of biased, drifting or conflicting feedback sources (FR1/E54), and preregistered
-performance–cost–constraint-margin sweeps for scientific instruments (CM1/E55). A separate M2
-protocol gate freezes the checkpoint risk set and replays single-run best-so-far monotonicity.
-These are proposed experiments, not new EdgeBench or Frontier-
-Science performance results. The expansion plan also prioritizes one prospective evidence-synthesis task over another
-near-duplicate clean-simulator scalar task.
+- `Chemistry/LennardJonesCluster`
+- `Algorithm/MatrixMultiplicationRank`
+- `ScientificComputing/PoissonSolver2D`
+- `Mathematics/CapSet`
+- `Optimization/CirclePacking`
+- `Photonics/MultilayerThinFilm`
+- `Physics/SpinGlassGroundState`
 
-An implementation-level OBS1 micro-pilot now replays the three trusted MOSFET trajectories on a
-common 120-second horizon. Dense AUC ordering survives 15/30/60-second fixed grids, while the
-120-second fixed grid collapses all three trajectories to a zero-AUC tie and its seeded-random-phase
-variant produces one pairwise reversal. This is a trusted short-run measurement-sensitivity report,
-not the planned multi-hour OBS1 experiment and not evidence for a feedback or model effect.
+Run `python -m frontier_science list --all` for the authoritative live inventory, including
+discipline, logical domain, certification status, difficulty, and oracle type. The domain-to-
+discipline mapping is defined in
+[`frontier_science/benchmark_layout.py`](frontier_science/benchmark_layout.py), and admission
+status is defined in
+[`frontier_science/certification.yaml`](frontier_science/certification.yaml).
 
 ## Quickstart
 
+Run commands from the repository root. Core evaluation requires Python, PyYAML, NumPy, SciPy,
+and Linux Bubblewrap (`bwrap`). The checked-in environment used for the latest trusted reports
+is Python 3.8; optional search backends have newer Python requirements.
+
 ```bash
+# Show certified tasks, then the complete inventory.
 python -m frontier_science list
 python -m frontier_science list --all
-python -m frontier_science eval --task LennardJonesCluster
-python -m frontier_science run --task LennardJonesCluster \
-  --algorithm greedy_rewrite --budget 10 --seed 0 --workdir runs/lj/seed-0
+
+# Evaluate the bundled baseline for a certified task.
+python -m frontier_science eval --task Chemistry/LennardJonesCluster
+
+# Evaluate another candidate implementation.
+python -m frontier_science eval \
+  --task Chemistry/LennardJonesCluster \
+  --candidate /path/to/solution.py
 ```
 
-Resume the exact work directory with `--resume`. Available algorithm names are:
+Task names are accepted when unambiguous, so `--task LennardJonesCluster` also works. Candidate
+and quarantined packages require the explicit `--allow-uncertified` flag.
 
-- `greedy_rewrite`: the built-in single-incumbent full-file baseline.
-- `openevolve`: official OpenEvolve 0.2.26 population/MAP-Elites backend (optional,
-  Python ≥3.10).
-- `abmcts`: official TreeQuest AB-MCTS-A backend (optional, Python ≥3.11).
-- `shinkaevolve`: official ShinkaEvolve backend (optional, Python ≥3.10).
+### Configure an LLM
 
-Named optional backends fail explicitly when their upstream package or supported wire is
-unavailable; they never silently substitute the greedy baseline. Every backend routes
-candidate scoring through the same secure evaluator and writes the unified
-trajectory-schema-v2 `trajectory.jsonl`/`summary.json`, plus `checkpoint` and
-`best_program.py` artifacts. Pinned optional dependencies are listed in
-[`requirements-upstream.txt`](requirements-upstream.txt); TreeQuest needs a Python 3.11
-environment, so it cannot share this host's Python 3.8 runtime.
+Copy the public OpenAI-compatible example and provide credentials through the environment:
 
-`greedy_rewrite` additionally supports `--feedback-mode selection_blind`. In this open-loop
-control, every proposal sees the frozen baseline program and baseline public metrics; evaluation
-results are retained only for offline best-of-batch analysis and never alter a later prompt or
-parent. Local run seeds label paired replicates and control local sampling, but the current Azure
-Responses endpoint does not expose a server-side random seed.
+```bash
+cp frontier_science/conf/llm/openai_compatible.example.yaml \
+   frontier_science/conf/llm/local.yaml
+export OPENAI_API_KEY=your_key_here
+# Edit local.yaml for the endpoint, wire protocol, and model.
+python -m frontier_science smoke
+```
 
-Run a preregistered multi-seed experiment with:
+`local.yaml` is git-ignored. Configuration resolution is:
+
+1. `--llm-config <path>`
+2. `FS_LLM_CONFIG`
+3. `frontier_science/conf/llm/local.yaml`
+4. the committed example
+
+The built-in client supports OpenAI-compatible Chat Completions and Responses endpoints.
+Never commit credentials.
+
+### Run an optimization trajectory
+
+```bash
+python -m frontier_science run \
+  --task Chemistry/LennardJonesCluster \
+  --algorithm greedy_rewrite \
+  --budget 10 \
+  --seed 0 \
+  --workdir runs/lj/seed-0
+```
+
+Use `--resume` with the same work directory to continue an interrupted run. Every backend
+routes candidate scoring through the same trusted evaluator and writes unified trajectory,
+summary, checkpoint, and best-program artifacts.
+
+Available algorithms are:
+
+- `greedy_rewrite`: built-in single-incumbent full-file rewriting.
+- `openevolve`: OpenEvolve 0.2.26; optional, Python 3.10 or newer.
+- `abmcts`: TreeQuest AB-MCTS-A; optional, Python 3.11 or newer.
+- `shinkaevolve`: ShinkaEvolve; optional, Python 3.10 or newer.
+
+Pinned optional dependencies are in
+[`requirements-upstream.txt`](requirements-upstream.txt). A named backend fails explicitly if
+its dependency or supported interface is unavailable; it never silently falls back to
+`greedy_rewrite`.
+
+### Run a multi-seed study
 
 ```bash
 python scripts/batch_evolve.py \
   --algorithms greedy_rewrite \
   --feedback-modes normal,selection_blind \
-  --seeds 0,1,2,3,4 --budget 30
+  --seeds 0,1,2,3,4 \
+  --budget 30
 ```
 
-The runner reports terminal best score, best-so-far AUC over charged proposal/benchmark
-`budget_units`, actual `oracle_calls` as a separate count, wall time, token/cost fields, and
-Student-t 95% confidence intervals. Thus, for example, an unparsable proposal consumes a
-budget unit without fabricating an oracle call. Here `none`/`shuffled` control only the metrics
-shown in the proposal prompt; incumbent/parent selection still uses true oracle scores, and each
-summary records that scope. They are diagnostic prompt-feedback ablations; `selection_blind` is
-the strict open-loop control for the whole iterative-feedback package. Unsupported combinations
-fail rather than changing semantics.
+The batch runner records best score, best-so-far AUC over charged budget units, actual oracle
+calls, wall time, token usage, configured cost, and confidence intervals. `selection_blind` is
+the strict open-loop control: proposals always see the frozen baseline and its public metrics,
+while evaluation results are retained only for offline selection. Other feedback modes are
+diagnostic prompt ablations and do not imply the same causal control.
 
-## LLM configuration
+Local seeds control local sampling and identify replicates. They are not server-side model
+seeds unless the provider explicitly exposes and honors such a control.
 
-Copy the public example and provide an OpenAI-compatible endpoint:
+## Evaluation and security model
 
-```bash
-cp frontier_science/conf/llm/openai_compatible.example.yaml \
-   frontier_science/conf/llm/local.yaml
-# edit base_url / api_key / model, or export OPENAI_API_KEY
-python -m frontier_science smoke
+The trusted parent process imports each hidden oracle. Candidate code runs separately through a
+typed JSON-RPC boundary inside Bubblewrap with:
+
+- no network namespace access;
+- read-only runtime and candidate mounts;
+- a private temporary filesystem;
+- CPU, memory, file, descriptor, and process limits;
+- seccomp blocking process and thread creation;
+- fixed numerical thread counts; and
+- a label-blind failure taxonomy that removes candidate-controlled exception text from search
+  feedback.
+
+Multi-world evaluators can reset the candidate process and private temporary filesystem at world
+boundaries, preventing state from revealing hidden execution order. The trusted runtime alone
+validates metric shape and finiteness.
+
+This design reduces common leakage and host-access risks; it does not prove absence of training-
+data contamination, semantic shortcuts, simulator error, or hidden scientific confounding.
+
+## Task package contract
+
+Each package is auto-discovered at `benchmarks/<Discipline>/<Task>/` and normally contains:
+
+```text
+<Task>/
+├── Task.md                       # agent-visible task description
+├── TASK_CARD.yaml                # scientific evidence and review record
+├── solution.py                   # weak but valid baseline
+├── frontier_eval/
+│   ├── metadata.yaml             # logical domain and task metadata
+│   ├── initial_program.txt
+│   ├── candidate_destination.txt
+│   ├── entrypoint.txt
+│   ├── constraints.txt
+│   ├── agent_files.txt
+│   └── readonly_files.txt
+└── verification/
+    └── evaluator.py              # hidden frozen oracle
 ```
 
-`local.yaml` is git-ignored. Resolution order is `--llm-config` / `FS_LLM_CONFIG`, then
-`conf/llm/local.yaml`, then the committed example. The built-in client supports Chat
-Completions and Responses; optional upstream frameworks currently require Chat Completions.
+The evaluator returns at least finite numeric `combined_score` and `valid` fields. Adding a
+package makes it discoverable, not certified. Certification also requires deterministic
+behavior, sandbox compatibility, scientific invariants, defensible normalization, stable
+citations, a task card, and independent review evidence.
 
-## Task contract and certification
+See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the complete contract, task generator workflow,
+review checklist, and certification requirements.
 
-A task package has `Task.md`, an editable baseline, a hidden
-`verification/evaluator.py`, and a `frontier_eval/` contract containing `metadata.yaml`,
-`initial_program.txt`, `candidate_destination.txt`, `entrypoint.txt`, and
-`constraints.txt`. Adding a directory makes it discoverable, but does **not** make it
-certified.
+## Certification and evidence
 
-Certification additionally requires a task card, stable citation identifiers, a trusted
-sandbox entrypoint, deterministic baseline, scientific invariants, defensible normalization
-anchors, and reviewer evidence. See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the admission
-process and [`frontier_science/certification.yaml`](frontier_science/certification.yaml) for
-current status.
+Certification status describes evidence quality, not task difficulty:
 
-## Reproduce audits
+- `certified`: admitted to the default benchmark after all required gates pass.
+- `candidate`: retained for calibration or research but still missing one or more external,
+  scientific, robustness, contamination, or review gates.
+- `quarantined`: a reproduced material defect makes the package inadmissible until repaired and
+  re-audited.
+
+The inventory contains 50 `hard` and 9 `flagship` packages, but those labels do not override
+certification.
+
+Key trusted artifacts include:
+
+| Evidence | Result | Scope |
+|---|---|---|
+| [Certification audit v65](experiments/task_certification_audit_2026-07-26_v65.json) | 7 certified / 43 candidate / 9 quarantined | Inventory and admission gates at clean revision `c98e28c` |
+| [Secure baseline v46](experiments/secure_baseline_determinism_2026-07-26_v46.json) | 59/59 deterministic, valid, and fail-closed | Two baseline evaluations per task at clean revision `1565e22` |
+| [Security audit v49](experiments/security_audit_2026-07-27_v49.json) | 23/23 tests passed | Sandbox and protocol regressions at clean revision `ab0c393` |
+| [Full suite v28](experiments/full_test_suite_2026-07-30_v28.json) | 653/653 tests passed | Hash-bound historical test report at clean revision `549d588` |
+| [Science summary v28](experiments/science_calibration_summary_2026-07-25_v28.json) | 69 normal single-run conditions across 35 tasks | Calibration only; heterogeneous science axes are not averaged |
+| [Two-hour exploratory analysis](experiments/exploratory_2h_analysis_2026-07-30_v1.json) | 7/7 declared cells completed | Result-selected exploratory screen, not confirmatory or population evidence |
+
+The current discipline-layout branch additionally passes 662/662 local tests. Because those
+tests ran on a source-dirty pre-commit tree, they are implementation verification rather than a
+new trusted dated evidence artifact.
+
+[`experiments/TRUST.md`](experiments/TRUST.md) is the append-only trust manifest and the primary
+index for dated reports. Detailed study plans and interpretations live in [`.research/`](.research/),
+including the [two-hour result note](.research/exploratory_2h_results_2026-07-30_v1.md) and
+[task maturity ledger](.research/task_maturity_ledger_2026-07-27_v4.md).
+
+Historical pre-sandbox reports are retained for provenance but classified
+`UNTRUSTED_PRE_SANDBOX`; they must not be used as benchmark evidence.
+
+## Reproduce checks
+
+Fast structural and security checks:
 
 ```bash
+python -m unittest -v tests.test_benchmark_layout tests.test_runtime_migration
 python scripts/run_security_audit.py --output /tmp/security.json
 python scripts/audit_tasks.py --output /tmp/certification.json
-python scripts/audit_inverse_candidates.py --output /tmp/inverse-admission.json
-python scripts/audit_candidate_wave3.py --output /tmp/candidate-wave3.json
-python scripts/audit_candidate_wave4.py --output /tmp/candidate-wave4.json
-python scripts/run_secure_baseline.py --repeats 2 --output /tmp/baselines.json
-python scripts/analyze_exploratory_2h.py \
-  --output /tmp/exploratory-2h-analysis.json \
-  --markdown-output /tmp/exploratory-2h-results.md
-python -m unittest discover -v -s tests
-# From each compatible optional-backend venv:
-python scripts/smoke_upstream_backends.py --backend openevolve --output /tmp/openevolve.json
-# Repeat for abmcts and shinkaevolve, then validate/merge all three:
-python scripts/merge_upstream_smokes.py \
-  --input /tmp/openevolve.json --input /tmp/abmcts.json --input /tmp/shinkaevolve.json \
-  --output /tmp/upstream-smokes.json
 ```
 
-Every new machine-readable report includes its command, Git revision, scoped source-dirty state,
-and changed source paths. Trusted dated evidence must report a clean source tree.
+Longer inventory and full-suite checks:
 
-Historical results produced before sandboxing are retained unchanged for provenance and are
-classified `UNTRUSTED_PRE_SANDBOX` in [`experiments/TRUST.md`](experiments/TRUST.md); they must
-not be used as benchmark evidence.
+```bash
+python scripts/run_secure_baseline.py \
+  --repeats 2 \
+  --output /tmp/baselines.json
+python -m unittest discover -s tests -q
+```
+
+Task-family admission audits and analysis scripts are kept in [`scripts/`](scripts/). New
+machine-readable reports include their command, Git revision, scoped source-tree state, changed
+paths, execution status, and trust decision. A dated artifact is trusted evidence only when its
+declared checks pass on a clean, known revision.
+
+## Contributing
+
+The current priority is hardening and independently reviewing the existing inventory. Fixes,
+scientific tests, task cards, and carefully justified new tasks are welcome. Start with
+[`CONTRIBUTING.md`](CONTRIBUTING.md); new tasks enter as candidates and cannot self-certify.

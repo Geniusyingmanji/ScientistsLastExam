@@ -12,7 +12,6 @@ import argparse
 import hashlib
 import json
 import platform
-import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -24,6 +23,7 @@ sys.path.insert(0, str(ROOT))
 
 from frontier_science.protocol import compact_trajectory_snapshot, load_trajectory  # noqa: E402
 from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402
+from frontier_science.runtime_migration import runtime_source_changes  # noqa: E402
 
 
 TASK = "SystemsBiology/GeneNetworkIntervention"
@@ -40,7 +40,7 @@ EXPECTED_MODEL_SOURCE_REVISION = "a46d254f56978afdd92ee4400abbc7fc457c1720"
 TASK_RUNTIME_SCOPE = (
     "frontier_science",
     ":(exclude)frontier_science/certification.yaml",
-    "benchmarks/SystemsBiology/GeneNetworkIntervention",
+    "benchmarks/Biology/GeneNetworkIntervention",
     "requirements-upstream.txt",
 )
 SCIENCE_FIELDS = (
@@ -79,11 +79,7 @@ def _finite_number(value: Any) -> bool:
 
 
 def _source_changes(left: str, right: str) -> list[str]:
-    output = subprocess.check_output(
-        ["git", "diff", "--name-only", left, right, "--", *TASK_RUNTIME_SCOPE],
-        cwd=str(ROOT), text=True, stderr=subprocess.DEVNULL,
-    )
-    return [line for line in output.splitlines() if line.strip()]
+    return runtime_source_changes(left, right, TASK_RUNTIME_SCOPE, root=ROOT)
 
 
 def _science_metrics(metrics: dict[str, Any]) -> dict[str, Any]:

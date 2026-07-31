@@ -17,7 +17,7 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 def _oracle():
-    path = ROOT / "benchmarks/FluidDynamics/LidDrivenCavity/verification/evaluator.py"
+    path = ROOT / "benchmarks/Engineering/LidDrivenCavity/verification/evaluator.py"
     spec = importlib.util.spec_from_file_location("cavity_v2_test", path)
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)

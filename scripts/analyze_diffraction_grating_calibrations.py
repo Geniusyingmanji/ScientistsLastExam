@@ -47,7 +47,7 @@ from frontier_science.runtime_migration import (  # noqa: E402
 
 
 TASK = "Optics/DiffractionGratingDesign"
-TASK_DIR = ROOT / "benchmarks/Optics/DiffractionGratingDesign"
+TASK_DIR = ROOT / "benchmarks/Physics/DiffractionGratingDesign"
 TASK_CALIBRATION_SOURCE_REVISION = (
     "e920e1c1c045bb20d1104e8b4f9a6188a34fbff5"
 )
@@ -97,6 +97,9 @@ CROSSCHECK_SHA256 = (
 TASK_CONFIRMATION_MIGRATION_PATH = (
     "benchmarks/Optics/DiffractionGratingDesign/verification/evaluator.py"
 )
+CURRENT_EVALUATOR_PATH = (
+    "benchmarks/Physics/DiffractionGratingDesign/verification/evaluator.py"
+)
 TASK_CONFIRMATION_BASE_SHA256 = (
     "b2662c9b531d969dcba58e9e40a51ea868a64cda9d47070d9b71ca89f124706a"
 )
@@ -112,7 +115,7 @@ TASK_RUNTIME_SCOPE = (
     "frontier_science/rpc_codec.py",
     "frontier_science/spec.py",
     "frontier_science/registry.py",
-    "benchmarks/Optics/DiffractionGratingDesign",
+    "benchmarks/Physics/DiffractionGratingDesign",
     "requirements-upstream.txt",
 )
 SCIENCE_FIELDS = (
@@ -343,13 +346,14 @@ def _load_calibration(relative: str) -> dict[str, Any]:
     invalid = document.get("invalid_submission_checks") or {}
     visible = (document.get("metric_sealing") or {}).get("visible_metric_keys")
     hashes = document.get("task_source_sha256") or {}
+    historical_task_path = "benchmarks/Optics/DiffractionGratingDesign"
     expected_hash_paths = {
-        "benchmarks/Optics/DiffractionGratingDesign/Task.md",
-        "benchmarks/Optics/DiffractionGratingDesign/TASK_CARD.yaml",
-        "benchmarks/Optics/DiffractionGratingDesign/solution.py",
-        "benchmarks/Optics/DiffractionGratingDesign/verification/evaluator.py",
-        "benchmarks/Optics/DiffractionGratingDesign/frontier_eval/metadata.yaml",
-        "benchmarks/Optics/DiffractionGratingDesign/frontier_eval/run_eval.py",
+        historical_task_path + "/Task.md",
+        historical_task_path + "/TASK_CARD.yaml",
+        historical_task_path + "/solution.py",
+        historical_task_path + "/verification/evaluator.py",
+        historical_task_path + "/frontier_eval/metadata.yaml",
+        historical_task_path + "/frontier_eval/run_eval.py",
         "scripts/calibrate_diffraction_grating_rcwa.py",
     }
     if not (
@@ -402,7 +406,7 @@ def _load_calibration(relative: str) -> dict[str, Any]:
         and all(row.get("valid") == 0.0 for row in invalid.values())
         and set(hashes) == expected_hash_paths
         and hashes.get(
-            "benchmarks/Optics/DiffractionGratingDesign/solution.py"
+            historical_task_path + "/solution.py"
         ) == BASELINE_SHA256
     ):
         raise ValueError("DiffractionGratingDesign RCWA calibration gate failed")
@@ -1102,7 +1106,7 @@ def analyze(replay_retained_sources: bool = True) -> dict[str, Any]:
         ["git", "show", MODEL_SOURCE_REVISION + ":" + TASK_CONFIRMATION_MIGRATION_PATH],
         cwd=str(ROOT),
     )).hexdigest()
-    current_evaluator_sha256 = _sha256(ROOT / TASK_CONFIRMATION_MIGRATION_PATH)
+    current_evaluator_sha256 = _sha256(ROOT / CURRENT_EVALUATOR_PATH)
     confirmation_checks = {
         "old_evaluator_hash_matches": (
             old_evaluator_sha256 == TASK_CONFIRMATION_BASE_SHA256
@@ -1118,7 +1122,7 @@ def analyze(replay_retained_sources: bool = True) -> dict[str, Any]:
     }
     migration = runtime_migration_status(
         MODEL_SOURCE_REVISION, current_revision, model_to_runtime_changes,
-        additional_allowed_changes=(TASK_CONFIRMATION_MIGRATION_PATH,),
+        additional_allowed_changes=(CURRENT_EVALUATOR_PATH,),
         additional_checks=confirmation_checks,
     ) if model_to_runtime_changes else None
     model_to_runtime_equivalent = bool(

@@ -9,7 +9,6 @@ import hashlib
 import importlib.util
 import json
 import platform
-import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -27,11 +26,12 @@ from frontier_science.provenance import (  # noqa: E402
     finalize_report_trust,
     source_provenance,
 )
+from frontier_science.runtime_migration import runtime_source_changes  # noqa: E402
 from frontier_science.secure_eval import CandidateProxy  # noqa: E402
 
 
 TASK = "ChemicalProcess/DistillationColumnDesign"
-TASK_DIR = ROOT / "benchmarks/ChemicalProcess/DistillationColumnDesign"
+TASK_DIR = ROOT / "benchmarks/Chemistry/DistillationColumnDesign"
 CALIBRATION = "experiments/distillation_v2_calibration_2026-07-23.json"
 REPORTS = {
     "budget_one": "experiments/gpt55_distillation_v2_b1_2026-07-23.json",
@@ -67,11 +67,7 @@ def _sha256(path: Path) -> str:
 
 
 def _source_changes(left: str, right: str) -> list[str]:
-    output = subprocess.check_output(
-        ["git", "diff", "--name-only", left, right, "--", *SOURCE_SCOPE],
-        cwd=str(ROOT), text=True, stderr=subprocess.DEVNULL,
-    )
-    return [line for line in output.splitlines() if line.strip()]
+    return runtime_source_changes(left, right, SOURCE_SCOPE, root=ROOT)
 
 
 def _load_oracle():

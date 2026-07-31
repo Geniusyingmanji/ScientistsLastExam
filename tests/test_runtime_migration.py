@@ -1,12 +1,14 @@
 from __future__ import annotations
 
 import importlib.util
+import subprocess
 import unittest
 from pathlib import Path
 
 from frontier_science.runtime_migration import (
     compare_json_values,
     filter_runtime_source_changes,
+    runtime_source_changes,
 )
 
 
@@ -26,15 +28,15 @@ def _audit_module():
 class RuntimeMigrationTests(unittest.TestCase):
     def test_task_card_metadata_is_the_only_filtered_task_path(self):
         changes = [
-            "benchmarks/ExampleDomain/ExampleTask/TASK_CARD.yaml",
-            "benchmarks/ExampleDomain/ExampleTask/Task.md",
-            "benchmarks/ExampleDomain/ExampleTask/solution.py",
-            "benchmarks/ExampleDomain/ExampleTask/verification/evaluator.py",
-            "benchmarks/ExampleDomain/ExampleTask/verification/data.json",
-            "benchmarks/ExampleDomain/ExampleTask/frontier_eval/__init__.py",
+            "benchmarks/Engineering/ExampleTask/TASK_CARD.yaml",
+            "benchmarks/Engineering/ExampleTask/Task.md",
+            "benchmarks/Engineering/ExampleTask/solution.py",
+            "benchmarks/Engineering/ExampleTask/verification/evaluator.py",
+            "benchmarks/Engineering/ExampleTask/verification/data.json",
+            "benchmarks/Engineering/ExampleTask/frontier_eval/__init__.py",
             "frontier_science/evaluate.py",
             "frontier_science/TASK_CARD.yaml",
-            "benchmarks/ExampleDomain/ExampleTask/verification/TASK_CARD.yaml",
+            "benchmarks/Engineering/ExampleTask/verification/TASK_CARD.yaml",
         ]
 
         self.assertEqual(
@@ -71,6 +73,19 @@ class RuntimeMigrationTests(unittest.TestCase):
         semantics = module.audit_legacy_path_semantics()
         self.assertTrue(source["passed"], source)
         self.assertTrue(semantics["passed"], semantics)
+
+    def test_runtime_diff_normalizes_legacy_and_discipline_task_paths(self):
+        revision = subprocess.check_output(
+            ["git", "rev-parse", "HEAD"], cwd=ROOT, text=True
+        ).strip()
+        for scope in (
+            ["benchmarks/Optics/DiffractionGratingDesign"],
+            ["benchmarks/Physics/DiffractionGratingDesign"],
+        ):
+            self.assertEqual(
+                runtime_source_changes(revision, revision, scope, root=ROOT),
+                [],
+            )
 
 
 if __name__ == "__main__":

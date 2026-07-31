@@ -19,7 +19,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 ORACLE_PATH = (
-    ROOT / "benchmarks/RNAEngineering/RNAInverseDesign/verification/evaluator.py"
+    ROOT / "benchmarks/Biology/RNAInverseDesign/verification/evaluator.py"
 )
 PAIR_TYPES = (("G", "C"), ("C", "G"), ("A", "U"), ("U", "A"),
               ("G", "U"), ("U", "G"))

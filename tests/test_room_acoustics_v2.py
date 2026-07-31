@@ -22,7 +22,7 @@ ROOT = Path(__file__).resolve().parent.parent
 
 def _oracle():
     path = (
-        ROOT / "benchmarks/Acoustics/RoomImpulseResponse/verification/evaluator.py"
+        ROOT / "benchmarks/Engineering/RoomImpulseResponse/verification/evaluator.py"
     )
     spec = importlib.util.spec_from_file_location("room_acoustics_v2_test", path)
     if spec is None or spec.loader is None:
@@ -291,7 +291,7 @@ class RoomAcousticsV2Tests(unittest.TestCase):
         self.assertTrue(all(row["valid"] for row in metrics["per_instance"]))
 
     def test_legacy_driver_uses_v2_entrypoint(self):
-        task = ROOT / "benchmarks/Acoustics/RoomImpulseResponse"
+        task = ROOT / "benchmarks/Engineering/RoomImpulseResponse"
         with tempfile.TemporaryDirectory() as tmp:
             metrics_path = Path(tmp) / "metrics.json"
             process = subprocess.run(

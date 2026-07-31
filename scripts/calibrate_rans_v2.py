@@ -17,7 +17,7 @@ from scipy.optimize import differential_evolution
 
 
 ROOT = Path(__file__).resolve().parent.parent
-TASK = ROOT / "benchmarks/Turbulence/RANSCalibration"
+TASK = ROOT / "benchmarks/Engineering/RANSCalibration"
 VERIFICATION = TASK / "verification"
 sys.path.insert(0, str(ROOT))
 

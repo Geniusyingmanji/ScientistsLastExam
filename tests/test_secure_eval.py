@@ -27,7 +27,7 @@ BENCHMARKS = Path(__file__).resolve().parents[1] / "benchmarks"
 class SecureEvaluationTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.spec = load_task_spec(BENCHMARKS / "Optoelectronics" / "LaserCavityDesign")
+        cls.spec = load_task_spec(BENCHMARKS / "Physics" / "LaserCavityDesign")
 
     def evaluate_source(self, source: str, timeout: float = 5.0):
         with tempfile.TemporaryDirectory() as tmp:
@@ -99,7 +99,7 @@ class SecureEvaluationTests(unittest.TestCase):
         self.assertEqual(result.get("timeout"), 1.0)
 
     def test_caught_multi_instance_timeout_is_not_masked_by_closed_worker(self):
-        spec = load_task_spec(BENCHMARKS / "Optimization" / "CirclePacking")
+        spec = load_task_spec(BENCHMARKS / "Mathematics" / "CirclePacking")
         with tempfile.TemporaryDirectory() as tmp:
             candidate = Path(tmp) / "candidate.py"
             candidate.write_text(textwrap.dedent("""
@@ -113,7 +113,7 @@ class SecureEvaluationTests(unittest.TestCase):
         self.assertNotIn("closed file", result["error_message"])
 
     def test_trusted_callback_is_also_wall_time_supervised(self):
-        spec = load_task_spec(BENCHMARKS / "MaterialsScience" / "AlloyHardnessOptimization")
+        spec = load_task_spec(BENCHMARKS / "Chemistry" / "AlloyHardnessOptimization")
         with tempfile.TemporaryDirectory() as tmp:
             candidate = Path(tmp) / "candidate.py"
             candidate.write_text(textwrap.dedent("""
@@ -253,7 +253,7 @@ class SecureEvaluationTests(unittest.TestCase):
                                     pass
                     return marker in visible
             """), encoding="utf-8")
-            spec = load_task_spec(BENCHMARKS / "Optoelectronics" / "LaserCavityDesign")
+            spec = load_task_spec(BENCHMARKS / "Physics" / "LaserCavityDesign")
             spec.task_dir = task
             spec.entrypoint = "inspect_context"
             result = evaluate_candidate(
@@ -283,7 +283,7 @@ class SecureEvaluationTests(unittest.TestCase):
             """), encoding="utf-8")
             candidate = root / "candidate.py"
             candidate.write_text("def noop(): return None\n", encoding="utf-8")
-            spec = load_task_spec(BENCHMARKS / "Optoelectronics" / "LaserCavityDesign")
+            spec = load_task_spec(BENCHMARKS / "Physics" / "LaserCavityDesign")
             spec.task_dir = task
             spec.entrypoint = "noop"
             with patch.dict(
@@ -327,7 +327,7 @@ class SecureEvaluationTests(unittest.TestCase):
                 def fail(_value):
                     raise RuntimeError("candidate-owned failure")
             """), encoding="utf-8")
-            spec = load_task_spec(BENCHMARKS / "Optoelectronics" / "LaserCavityDesign")
+            spec = load_task_spec(BENCHMARKS / "Physics" / "LaserCavityDesign")
             spec.task_dir = task
             spec.entrypoint = "fail"
             result = evaluate_candidate(

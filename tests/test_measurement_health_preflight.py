@@ -186,7 +186,7 @@ class MeasurementHealthPreflightTests(unittest.TestCase):
         config = self.report["tasks"][0]["checks"]["exactly_once_recovery"]
         self.assertEqual(config["status"], "pass")
         spec = MODULE.load_task_spec(
-            MODULE.ROOT / "benchmarks/Electrochemistry/ElectrolyteConductivityDesign"
+            MODULE.ROOT / "benchmarks/Chemistry/ElectrolyteConductivityDesign"
         )
         original = MODULE._task_card
         try:
@@ -205,7 +205,7 @@ class MeasurementHealthPreflightTests(unittest.TestCase):
         resolved, _inputs, issues = MODULE._resolve_preflight_spec(MODULE.DEFAULT_SPEC)
         self.assertEqual(issues, [])
         spec = MODULE.load_task_spec(
-            MODULE.ROOT / "benchmarks/Electrochemistry/ElectrolyteConductivityDesign"
+            MODULE.ROOT / "benchmarks/Chemistry/ElectrolyteConductivityDesign"
         )
         config = dict(resolved["tasks"][0]["scientific_materiality"])
         config["task_pointer"] = "/tasks/1"
@@ -219,7 +219,7 @@ class MeasurementHealthPreflightTests(unittest.TestCase):
         resolved, _inputs, issues = MODULE._resolve_preflight_spec(MODULE.DEFAULT_SPEC)
         self.assertEqual(issues, [])
         spec = MODULE.load_task_spec(
-            MODULE.ROOT / "benchmarks/Electrochemistry/ElectrolyteConductivityDesign"
+            MODULE.ROOT / "benchmarks/Chemistry/ElectrolyteConductivityDesign"
         )
         original = MODULE._contract_compatibility
         try:

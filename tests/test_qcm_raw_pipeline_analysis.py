@@ -200,7 +200,7 @@ class QCMRawPipelineAnalysisTests(unittest.TestCase):
             {"source_revision": "calibration"},
             _records(),
             runtime_source_equivalent=False,
-            runtime_source_changes=["benchmarks/Sensors/x.py"],
+            runtime_source_changes=["benchmarks/Engineering/QuartzCrystalMicrobalanceLab/x.py"],
             calibration_source_revision="calibration",
             model_source_revision="model",
         )

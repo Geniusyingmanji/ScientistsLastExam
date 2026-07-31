@@ -19,7 +19,7 @@ sys.path.insert(0, str(ROOT))
 
 from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402
 
-TASK = ROOT / "benchmarks/Geophysics/SeismicInversion"
+TASK = ROOT / "benchmarks/EarthScience/SeismicInversion"
 
 
 def _load_oracle():

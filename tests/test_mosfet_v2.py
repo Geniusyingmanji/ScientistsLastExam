@@ -18,7 +18,7 @@ from frontier_science.registry import find_task
 
 
 ROOT = Path(__file__).resolve().parent.parent
-TASK = ROOT / "benchmarks/Semiconductor/MOSFETDoping"
+TASK = ROOT / "benchmarks/Engineering/MOSFETDoping"
 VERIFICATION = TASK / "verification"
 CALIBRATION = ROOT / "scripts/calibrate_mosfet_v2.py"
 

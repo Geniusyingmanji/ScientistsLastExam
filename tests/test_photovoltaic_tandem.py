@@ -18,7 +18,7 @@ from frontier_science.registry import find_task
 
 
 ROOT = Path(__file__).resolve().parents[1]
-TASK = ROOT / "benchmarks/Photovoltaics/PhotovoltaicTandemDesign"
+TASK = ROOT / "benchmarks/Chemistry/PhotovoltaicTandemDesign"
 DATA = TASK / "verification/astm_g173_v1.json"
 DATA_SHA256 = "eeb37120e14ad2fbb5e986d63b5f7711fbf622a03ebf67edabea618df397a728"
 

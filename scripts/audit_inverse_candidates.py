@@ -49,10 +49,11 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402
+from frontier_science.registry import find_task  # noqa: E402
 
 
 def _oracle(task_id: str):
-    path = ROOT / "benchmarks" / task_id / "verification/evaluator.py"
+    path = find_task(task_id, include_uncertified=True).task_dir / "verification/evaluator.py"
     spec = importlib.util.spec_from_file_location(
         "inverse_audit_" + task_id.replace("/", "_"), path
     )

@@ -19,7 +19,7 @@ from scipy.sparse.linalg import spsolve
 
 
 ROOT = Path(__file__).resolve().parent.parent
-TASK = ROOT / "benchmarks/HeatTransfer/ConvectionDiffusionOpt"
+TASK = ROOT / "benchmarks/Engineering/ConvectionDiffusionOpt"
 sys.path.insert(0, str(ROOT))
 
 from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402

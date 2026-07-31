@@ -16,7 +16,7 @@ from scipy.linalg import expm_frechet
 from scipy.optimize import minimize
 
 ROOT = Path(__file__).resolve().parent.parent
-TASK = ROOT / "benchmarks/QuantumControl/GateSynthesis"
+TASK = ROOT / "benchmarks/Physics/GateSynthesis"
 sys.path.insert(0, str(ROOT))
 
 from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402

@@ -16,7 +16,7 @@ import numpy as np
 from scipy.optimize import least_squares
 
 ROOT = Path(__file__).resolve().parent.parent
-TASK = ROOT / "benchmarks/Oceanography/OceanCurrentInversion"
+TASK = ROOT / "benchmarks/EarthScience/OceanCurrentInversion"
 sys.path.insert(0, str(ROOT))
 
 from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402

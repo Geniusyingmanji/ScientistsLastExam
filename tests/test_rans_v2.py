@@ -18,7 +18,7 @@ from frontier_science.registry import find_task
 
 
 ROOT = Path(__file__).resolve().parent.parent
-TASK = ROOT / "benchmarks/Turbulence/RANSCalibration"
+TASK = ROOT / "benchmarks/Engineering/RANSCalibration"
 VERIFICATION = TASK / "verification"
 CALIBRATION = ROOT / "scripts/calibrate_rans_v2.py"
 DATA = VERIFICATION / "channel_dns_profiles_v1.json"
@@ -157,7 +157,7 @@ class RANSV2Tests(unittest.TestCase):
 
             def calibrate_rans():
                 try:
-                    open('/workspace/benchmarks/Turbulence/RANSCalibration/verification/evaluator.py').read()
+                    open('/workspace/benchmarks/Engineering/RANSCalibration/verification/evaluator.py').read()
                     return [0.48663474137035673, 35.262103882288415, 0.63124557167500384, -1.2612246455851348]
                 except Exception:
                     pass

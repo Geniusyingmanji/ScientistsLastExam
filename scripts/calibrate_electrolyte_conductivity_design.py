@@ -18,7 +18,7 @@ import numpy as np
 
 
 ROOT = Path(__file__).resolve().parent.parent
-TASK = ROOT / "benchmarks/Electrochemistry/ElectrolyteConductivityDesign"
+TASK = ROOT / "benchmarks/Chemistry/ElectrolyteConductivityDesign"
 VERIFICATION = TASK / "verification"
 BUILDER_PATH = ROOT / "scripts/build_electrolyte_conductivity_data.py"
 sys.path.insert(0, str(ROOT))

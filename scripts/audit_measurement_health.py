@@ -260,9 +260,9 @@ def build_report(maturity_path: Path = DEFAULT_MATURITY) -> dict[str, Any]:
     current_maturity = build_maturity_report()
     if current_maturity.get("execution_passed") is not True:
         raise ValueError("current maturity reconstruction failed")
-    if [row["task"] for row in maturity["tasks"]] != [
+    if {row["task"] for row in maturity["tasks"]} != {
         row["task"] for row in current_maturity["tasks"]
-    ]:
+    }:
         raise ValueError("frozen and reconstructed maturity inventories differ")
 
     task_records = []

@@ -26,9 +26,9 @@ def _cmd_list(args) -> int:
     if not specs:
         print("No tasks found under benchmarks/.")
         return 0
-    print(f"{'TASK':45} {'STATUS':12} {'DOMAIN':22} {'DIFF':8} ORACLE")
+    print(f"{'TASK':45} {'STATUS':12} {'DISCIPLINE':16} {'DOMAIN':22} {'DIFF':8} ORACLE")
     for s in specs:
-        print(f"{s.task_id:45} {certification_status(s.task_id):12} {s.domain:22} "
+        print(f"{s.task_id:45} {certification_status(s.task_id):12} {s.discipline:16} {s.domain:22} "
               f"{s.difficulty:8} {s.metadata.get('oracle_type','-')}")
     return 0
 

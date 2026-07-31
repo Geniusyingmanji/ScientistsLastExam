@@ -17,10 +17,11 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402
+from frontier_science.registry import find_task  # noqa: E402
 
 
 def _oracle(task_id: str):
-    path = ROOT / "benchmarks" / task_id / "verification/evaluator.py"
+    path = find_task(task_id, include_uncertified=True).task_dir / "verification/evaluator.py"
     spec = importlib.util.spec_from_file_location(
         "wave2_" + task_id.replace("/", "_"), path
     )
@@ -287,7 +288,9 @@ def _cavity_audit():
 
 
 def _alloy_audit():
-    task = ROOT / "benchmarks/MaterialsScience/AlloyHardnessOptimization"
+    task = find_task(
+        "MaterialsScience/AlloyHardnessOptimization", include_uncertified=True
+    ).task_dir
     oracle = _oracle("MaterialsScience/AlloyHardnessOptimization")
     baseline = oracle.evaluate(oracle._baseline_policy)
     reference = oracle.evaluate(oracle._reference_policy)

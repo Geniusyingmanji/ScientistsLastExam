@@ -239,7 +239,7 @@ class CatalystDeactivationAnalysisTests(unittest.TestCase):
             {"source_revision": "calibration"},
             _records(),
             runtime_source_equivalent=False,
-            runtime_source_changes=["benchmarks/Catalysis/x.py"],
+            runtime_source_changes=["benchmarks/Chemistry/CatalystDeactivationLab/x.py"],
             calibration_source_revision="calibration",
             model_source_revision="model",
         )

@@ -110,6 +110,16 @@ class TaskMaturityAuditTests(unittest.TestCase):
             "experiments/task_certification_audit_2026-07-26_v60.json", paths
         )
 
+    def test_contract_binding_is_independent_of_discipline_path(self):
+        task = "Optics/DiffractionGratingDesign"
+        tree = self.module._contract_tree("HEAD", task)
+        self.assertTrue(tree)
+        self.assertTrue(self.module._contract_equal("HEAD", "HEAD", task))
+        self.assertIn(
+            "benchmarks/Physics/DiffractionGratingDesign",
+            self.module._task_contract_bases(task),
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

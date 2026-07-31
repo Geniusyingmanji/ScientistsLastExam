@@ -16,6 +16,8 @@ import subprocess
 from pathlib import Path, PurePosixPath
 from typing import Any, Sequence
 
+import yaml
+
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 BASE_RUNTIME_REVISION = "20c6b780828c1ec53ddafbbde8fbf4579ff7801a"
@@ -165,7 +167,7 @@ def filter_runtime_source_changes(changes: Sequence[str]) -> list[str]:
     the candidate, task specification, evaluator, or trusted runtime.  Older
     analysis scripts scoped ``git diff`` to the whole task directory, so adding
     these cards incorrectly looked like a runtime migration.  Keep the
-    exception deliberately exact: only ``benchmarks/<domain>/<task>/`` task
+    exception deliberately exact: only ``benchmarks/<discipline>/<task>/`` task
     cards are metadata.  A same-named file anywhere else remains runtime-visible.
     """
 
@@ -192,15 +194,82 @@ def runtime_source_changes(
     *,
     root: Path = REPO_ROOT,
 ) -> list[str]:
-    """Return runtime-relevant paths changed between two revisions."""
+    """Return runtime changes, treating a byte-identical task move as layout-only.
 
-    output = subprocess.check_output(
-        ["git", "diff", "--name-only", left, right, "--", *scope],
-        cwd=str(root),
-        text=True,
-        stderr=subprocess.DEVNULL,
+    Task ids historically doubled as ``benchmarks/<domain>/<task>`` paths.  The
+    discipline layout decouples those identities, so source comparisons must key task
+    files by their task-relative path rather than by their physical parent directory.
+    The spelling supplied in ``scope`` remains the spelling returned to older audits.
+    """
+
+    root = Path(root).resolve()
+    aliases: list[tuple[str, str]] = []
+    for metadata in sorted(root.glob("benchmarks/*/*/frontier_eval/metadata.yaml")):
+        document = yaml.safe_load(metadata.read_text(encoding="utf-8")) or {}
+        domain = document.get("domain")
+        if not isinstance(domain, str) or not domain:
+            continue
+        task_dir = metadata.parent.parent
+        canonical = task_dir.relative_to(root).as_posix()
+        legacy = "benchmarks/%s/%s" % (domain, task_dir.name)
+        aliases.append((canonical, legacy))
+
+    preferred: dict[tuple[str, str], str] = {}
+    expanded: list[str] = []
+    for raw in scope:
+        value = PurePosixPath(str(raw)).as_posix()
+        matched = False
+        for canonical, legacy in aliases:
+            for base in dict.fromkeys((canonical, legacy)):
+                if value == base or value.startswith(base + "/"):
+                    group = (canonical, legacy)
+                    preferred.setdefault(group, base)
+                    suffix = value[len(base):]
+                    expanded.extend(
+                        alias + suffix for alias in dict.fromkeys(group)
+                    )
+                    matched = True
+                    break
+            if matched:
+                break
+        if not matched:
+            expanded.append(value)
+
+    def tree(revision: str) -> dict[str, str]:
+        output = subprocess.check_output(
+            ["git", "ls-tree", "-r", revision, "--", *dict.fromkeys(expanded)],
+            cwd=str(root), text=True, stderr=subprocess.DEVNULL,
+        )
+        result: dict[str, str] = {}
+        for line in output.splitlines():
+            if "\t" not in line:
+                continue
+            metadata, name = line.split("\t", 1)
+            fields = metadata.split()
+            if len(fields) < 3:
+                continue
+            normalized = name
+            for group, target in preferred.items():
+                for base in dict.fromkeys(group):
+                    if name == base or name.startswith(base + "/"):
+                        normalized = target + name[len(base):]
+                        break
+                if normalized != name:
+                    break
+            previous = result.get(normalized)
+            if previous is not None and previous != fields[2]:
+                # Both layouts existing with different content is an unsafe ambiguity.
+                normalized = name
+            result[normalized] = fields[2]
+        return result
+
+    before = tree(left)
+    after = tree(right)
+    changes = sorted(
+        path for path in set(before) | set(after)
+        if before.get(path) != after.get(path)
     )
-    return filter_runtime_source_changes(output.splitlines())
+    return filter_runtime_source_changes(changes)
 
 
 def runtime_migration_status(

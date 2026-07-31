@@ -26,9 +26,13 @@ Usage:
 from __future__ import annotations
 
 import os
+import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(REPO))
+
+from frontier_science.benchmark_layout import discipline_for_domain  # noqa: E402
 
 RUN_EVAL_TEMPLATE = '''from __future__ import annotations
 import argparse, importlib.util, json, sys
@@ -70,7 +74,14 @@ def create_task(spec: dict, repo: Path = REPO) -> Path:
             "Frontier-Science tasks must be PhD/expert difficulty: "
             "set difficulty to 'hard' or 'flagship'."
         )
-    task_dir = repo / "benchmarks" / domain / task
+    discipline = discipline_for_domain(domain)
+    requested_discipline = spec.get("discipline")
+    if requested_discipline not in {None, discipline}:
+        raise ValueError(
+            "Domain %r belongs to discipline %r, not %r."
+            % (domain, discipline, requested_discipline)
+        )
+    task_dir = repo / "benchmarks" / discipline / task
     eval_dir = task_dir / "frontier_eval"
     ver_dir = task_dir / "verification"
 

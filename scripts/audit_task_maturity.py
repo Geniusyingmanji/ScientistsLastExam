@@ -18,6 +18,7 @@ import subprocess
 import sys
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
+from functools import lru_cache
 from pathlib import Path
 from typing import Any, Iterable, Optional
 
@@ -27,6 +28,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from frontier_science.certification import certification_record  # noqa: E402
+from frontier_science.benchmark_layout import task_path  # noqa: E402
 from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402
 from frontier_science.registry import list_tasks  # noqa: E402
 from scripts.audit_tasks import _task_card_issues  # noqa: E402
@@ -170,20 +172,54 @@ def _kind(path: Path) -> str:
     return "other"
 
 
-def _task_contract_args(task_id: str) -> list[str]:
-    base = "benchmarks/%s" % task_id
-    return ["%s/%s" % (base, suffix) for suffix in TASK_CONTRACT_PATHS]
+def _task_contract_bases(task_id: str) -> tuple[str, ...]:
+    domain, task = task_id.split("/", 1)
+    canonical = task_path(Path("benchmarks"), domain, task).as_posix()
+    legacy = "benchmarks/%s" % task_id
+    return tuple(dict.fromkeys((canonical, legacy)))
+
+
+@lru_cache(maxsize=None)
+def _contract_tree(revision: str, task_id: str) -> tuple[tuple[str, str], ...]:
+    """Return task-relative runtime paths and blob ids, independent of layout."""
+
+    bases = _task_contract_bases(task_id)
+    result = subprocess.run(
+        ["git", "ls-tree", "-r", revision, "--", *bases],
+        cwd=str(ROOT), text=True, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
+    )
+    if result.returncode:
+        return ()
+    grouped: dict[str, dict[str, str]] = {base: {} for base in bases}
+    for line in result.stdout.splitlines():
+        if "\t" not in line:
+            continue
+        metadata, name = line.split("\t", 1)
+        fields = metadata.split()
+        if len(fields) < 3:
+            continue
+        for base in bases:
+            prefix = base + "/"
+            if not name.startswith(prefix):
+                continue
+            relative = name[len(prefix):]
+            if (
+                relative in {"Task.md", "solution.py", "verification/evaluator.py"}
+                or relative.startswith("frontier_eval/")
+            ):
+                grouped[base][relative] = fields[2]
+            break
+    populated = [entries for entries in grouped.values() if entries]
+    if len(populated) != 1:
+        return ()
+    return tuple(sorted(populated[0].items()))
 
 
 def _contract_equal(left_revision: str, right_revision: str, task_id: str) -> bool:
     if not left_revision or not right_revision:
         return False
-    result = subprocess.run(
-        ["git", "diff", "--quiet", "%s..%s" % (left_revision, right_revision),
-         "--", *_task_contract_args(task_id)],
-        cwd=str(ROOT), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
-    )
-    return result.returncode == 0
+    left = _contract_tree(left_revision, task_id)
+    return bool(left) and left == _contract_tree(right_revision, task_id)
 
 
 def _contract_sha256(task_dir: Path) -> str:

@@ -18,7 +18,7 @@ from scipy.optimize import minimize
 
 
 ROOT = Path(__file__).resolve().parent.parent
-TASK = ROOT / "benchmarks/Acoustics/RoomImpulseResponse"
+TASK = ROOT / "benchmarks/Engineering/RoomImpulseResponse"
 sys.path.insert(0, str(ROOT))
 
 from frontier_science.provenance import (  # noqa: E402

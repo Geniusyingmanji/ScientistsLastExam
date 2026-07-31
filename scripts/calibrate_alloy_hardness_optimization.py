@@ -27,7 +27,7 @@ from frontier_science.registry import find_task  # noqa: E402
 
 
 ROOT = Path(__file__).resolve().parent.parent
-TASK = ROOT / "benchmarks/MaterialsScience/AlloyHardnessOptimization"
+TASK = ROOT / "benchmarks/Chemistry/AlloyHardnessOptimization"
 DATA = TASK / "verification/alloy_hardness_v1.json"
 BUILDER_PATH = ROOT / "scripts/build_alloy_hardness_data.py"
 

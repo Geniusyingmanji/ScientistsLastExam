@@ -23,7 +23,7 @@ ROOT = Path(__file__).resolve().parent.parent
 def _oracle():
     path = (
         ROOT
-        / "benchmarks/AcousticMetamaterials/BroadbandAbsorber"
+        / "benchmarks/Engineering/BroadbandAbsorber"
         / "verification/evaluator.py"
     )
     spec = importlib.util.spec_from_file_location("absorber_v2_test", path)
@@ -277,7 +277,7 @@ class BroadbandAbsorberV2Tests(unittest.TestCase):
         self.assertTrue(all(row["valid"] for row in metrics["per_instance"]))
 
     def test_legacy_driver_uses_v2_entrypoint(self):
-        task = ROOT / "benchmarks/AcousticMetamaterials/BroadbandAbsorber"
+        task = ROOT / "benchmarks/Engineering/BroadbandAbsorber"
         with tempfile.TemporaryDirectory() as tmp:
             metrics_path = Path(tmp) / "metrics.json"
             process = subprocess.run(

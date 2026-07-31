@@ -16,7 +16,7 @@ from frontier_science.registry import find_task
 
 
 ROOT = Path(__file__).resolve().parents[1]
-TASK = ROOT / "benchmarks/Electrochemistry/ElectrolyteConductivityDesign"
+TASK = ROOT / "benchmarks/Chemistry/ElectrolyteConductivityDesign"
 DATA = TASK / "verification/electrolyte_conductivity_v1.json"
 DATA_SHA256 = "0c6899d6eb1a17b9565fb55963d1f46b52ba270cf10a5ec05177a01771593f29"
 

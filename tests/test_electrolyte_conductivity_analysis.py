@@ -171,7 +171,7 @@ class ElectrolyteConductivityAnalysisTests(unittest.TestCase):
             copy.deepcopy(self.report["records"]),
             task_runtime_source_equivalent=False,
             task_runtime_source_changes=[
-                "benchmarks/Electrochemistry/ElectrolyteConductivityDesign/change.py"
+                "benchmarks/Chemistry/ElectrolyteConductivityDesign/change.py"
             ],
         )
         self.assertFalse(failed["execution_passed"])

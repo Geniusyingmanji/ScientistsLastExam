@@ -15,7 +15,7 @@ from frontier_science.registry import find_task
 
 
 ROOT = Path(__file__).resolve().parents[1]
-TASK = ROOT / "benchmarks/Catalysis/CatalystDeactivationLab"
+TASK = ROOT / "benchmarks/Chemistry/CatalystDeactivationLab"
 CALIBRATION = ROOT / "scripts/calibrate_catalyst_deactivation_lab.py"
 ADMISSION = ROOT / "scripts/audit_candidate_wave7.py"
 

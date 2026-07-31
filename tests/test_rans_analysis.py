@@ -139,7 +139,7 @@ class RANSAnalysisTests(unittest.TestCase):
     def test_runtime_scope_excludes_task_card_bibliography(self):
         module = _module()
         self.assertNotIn(
-            "benchmarks/Turbulence/RANSCalibration/TASK_CARD.yaml",
+            "benchmarks/Engineering/RANSCalibration/TASK_CARD.yaml",
             module.TASK_RUNTIME_SCOPE,
         )
         changed = subprocess.check_output(

@@ -38,12 +38,14 @@ Every certified Frontier-Science task must satisfy **all seven** of these:
 
 ## Task directory layout
 
-Each task lives at `benchmarks/<Domain>/<Task>/` and is **auto-discovered** by the harness —
-no harness code change is needed.
+Each task lives at `benchmarks/<Discipline>/<Task>/` and is **auto-discovered** by the harness.
+The broad physical discipline is intentionally separate from the finer-grained `domain` in
+`metadata.yaml`: the latter preserves the stable public task id `<Domain>/<Task>`. New metadata
+domains must first be assigned in `frontier_science/benchmark_layout.py`.
 
 ```
 benchmarks/
-└── <Domain>/                         # e.g. Chemistry, Physics, Algorithm, Mathematics
+└── <Discipline>/                     # one of the seven broad categories below
     └── <Task>/                       # e.g. LennardJonesCluster, CapSet
         ├── Task.md                   # [Required] Agent-visible task description
         ├── TASK_CARD.yaml            # [Required for certification] evidence + reviews
@@ -63,10 +65,13 @@ benchmarks/
             └── known_best.md         # Best-known values + sources (for flagship tasks)
 ```
 
+The seven top-level disciplines are `Biology`, `Chemistry`, `ComputerScience`,
+`EarthScience`, `Engineering`, `Mathematics`, and `Physics`.
+
 ### `frontier_eval/metadata.yaml`
 
 ```yaml
-domain: Chemistry                    # top-level domain directory name
+domain: Chemistry                    # stable logical domain (not the top-level directory)
 task: LennardJonesCluster            # task directory name
 difficulty: hard                     # hard | flagship
 tier: T2                             # T2 (expert) | T3 (flagship)

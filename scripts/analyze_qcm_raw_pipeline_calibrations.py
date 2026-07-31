@@ -32,6 +32,7 @@ from frontier_science.provenance import (  # noqa: E402
     finalize_report_trust,
     source_provenance,
 )
+from frontier_science.runtime_migration import runtime_source_changes  # noqa: E402
 
 
 TASK = "Sensors/QuartzCrystalMicrobalanceLab"
@@ -48,7 +49,7 @@ REPORTS = {
 INPUT_SOURCE_REVISION = "c49f5143b9b3487b9a66ec21e09fe9253a6c303b"
 TASK_RUNTIME_SCOPE = (
     ":(glob)frontier_science/**/*.py",
-    "benchmarks/Sensors/QuartzCrystalMicrobalanceLab",
+    "benchmarks/Engineering/QuartzCrystalMicrobalanceLab",
     "requirements-upstream.txt",
 )
 SCIENCE_FIELDS = (
@@ -150,13 +151,7 @@ def _world_summary(metrics: dict[str, Any]) -> list[dict[str, Any]]:
 
 
 def _source_changes(left: str, right: str) -> list[str]:
-    output = subprocess.check_output(
-        ["git", "diff", "--name-only", left, right, "--", *TASK_RUNTIME_SCOPE],
-        cwd=str(ROOT),
-        text=True,
-        stderr=subprocess.DEVNULL,
-    )
-    return [line for line in output.splitlines() if line.strip()]
+    return runtime_source_changes(left, right, TASK_RUNTIME_SCOPE, root=ROOT)
 
 
 def _failure_kind(event: dict[str, Any]) -> str | None:

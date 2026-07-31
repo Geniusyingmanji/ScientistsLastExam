@@ -16,7 +16,6 @@ import hashlib
 import importlib.util
 import json
 import platform
-import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -34,6 +33,7 @@ from frontier_science.provenance import (  # noqa: E402
     finalize_report_trust,
     source_provenance,
 )
+from frontier_science.runtime_migration import runtime_source_changes  # noqa: E402
 from frontier_science.secure_eval import CandidateProxy  # noqa: E402
 
 
@@ -46,7 +46,7 @@ REPORTS = {
 TASK = "ClimateScience/EnergyBalanceModel"
 TASK_RUNTIME_SCOPE = (
     "frontier_science",
-    "benchmarks/ClimateScience/EnergyBalanceModel",
+    "benchmarks/EarthScience/EnergyBalanceModel",
     "requirements-upstream.txt",
 )
 PROBE_SPECS = (
@@ -101,11 +101,7 @@ def _sha256(path: Path) -> str:
 
 
 def _source_changes(left: str, right: str) -> list[str]:
-    output = subprocess.check_output(
-        ["git", "diff", "--name-only", left, right, "--", *TASK_RUNTIME_SCOPE],
-        cwd=str(ROOT), text=True, stderr=subprocess.DEVNULL,
-    )
-    return [line for line in output.splitlines() if line.strip()]
+    return runtime_source_changes(left, right, TASK_RUNTIME_SCOPE, root=ROOT)
 
 
 def _scalar(metrics: dict[str, Any]) -> dict[str, Any]:
@@ -113,7 +109,7 @@ def _scalar(metrics: dict[str, Any]) -> dict[str, Any]:
 
 
 def _load_oracle():
-    path = ROOT / "benchmarks/ClimateScience/EnergyBalanceModel/verification/evaluator.py"
+    path = ROOT / "benchmarks/EarthScience/EnergyBalanceModel/verification/evaluator.py"
     spec = importlib.util.spec_from_file_location(
         "climate_v2_analysis_oracle", path
     )

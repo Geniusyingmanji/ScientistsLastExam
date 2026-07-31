@@ -69,7 +69,7 @@ SOURCE_MIGRATION_HASHES = {
 }
 DATA = (
     ROOT
-    / "benchmarks/MaterialsScience/AlloyHardnessOptimization/verification/"
+    / "benchmarks/Chemistry/AlloyHardnessOptimization/verification/"
     "alloy_hardness_v1.json"
 )
 REPORTS = {
@@ -204,6 +204,13 @@ def _source_changes(left: str, right: str) -> list[str]:
     return runtime_source_changes(left, right, TASK_RUNTIME_SCOPE, root=ROOT)
 
 
+def _current_migration_path(relative: str) -> Path:
+    prefix = "benchmarks/MaterialsScience/AlloyHardnessOptimization"
+    if relative == prefix or relative.startswith(prefix + "/"):
+        return DATA.parents[1] / Path(relative).relative_to(prefix)
+    return ROOT / relative
+
+
 def _is_ancestor(left: str, right: str) -> bool:
     return subprocess.run(
         ["git", "merge-base", "--is-ancestor", left, right],
@@ -244,9 +251,9 @@ def _source_migration_status(
         "shared_runtime_source_changes": runtime_changes,
         "shared_runtime_migration": runtime_migration,
         "current_source_sha256": {
-            relative: _sha256(ROOT / relative)
+            relative: _sha256(_current_migration_path(relative))
             for relative in SOURCE_MIGRATION_HASHES
-            if (ROOT / relative).is_file()
+            if _current_migration_path(relative).is_file()
         },
         "accepted": False,
     }
@@ -507,14 +514,15 @@ def _load_calibration(relative: str) -> dict[str, Any]:
     isolation = document.get("secure_isolation_and_failure_checks") or {}
     checks = document.get("checks") or {}
     task_hashes = document.get("task_source_sha256") or {}
+    historical_task_path = "benchmarks/MaterialsScience/AlloyHardnessOptimization"
     expected_hash_paths = {
-        "benchmarks/MaterialsScience/AlloyHardnessOptimization/Task.md",
-        "benchmarks/MaterialsScience/AlloyHardnessOptimization/TASK_CARD.yaml",
-        "benchmarks/MaterialsScience/AlloyHardnessOptimization/solution.py",
-        "benchmarks/MaterialsScience/AlloyHardnessOptimization/verification/evaluator.py",
-        "benchmarks/MaterialsScience/AlloyHardnessOptimization/verification/alloy_hardness_v1.json",
-        "benchmarks/MaterialsScience/AlloyHardnessOptimization/frontier_eval/metadata.yaml",
-        "benchmarks/MaterialsScience/AlloyHardnessOptimization/frontier_eval/run_eval.py",
+        historical_task_path + "/Task.md",
+        historical_task_path + "/TASK_CARD.yaml",
+        historical_task_path + "/solution.py",
+        historical_task_path + "/verification/evaluator.py",
+        historical_task_path + "/verification/alloy_hardness_v1.json",
+        historical_task_path + "/frontier_eval/metadata.yaml",
+        historical_task_path + "/frontier_eval/run_eval.py",
         "scripts/build_alloy_hardness_data.py",
         "scripts/calibrate_alloy_hardness_optimization.py",
     }
@@ -586,10 +594,10 @@ def _load_calibration(relative: str) -> dict[str, Any]:
         and len(isolation.get("records") or []) == 4
         and set(task_hashes) == expected_hash_paths
         and task_hashes.get(
-            "benchmarks/MaterialsScience/AlloyHardnessOptimization/solution.py"
+            historical_task_path + "/solution.py"
         ) == BASELINE_SHA256
         and task_hashes.get(
-            "benchmarks/MaterialsScience/AlloyHardnessOptimization/verification/alloy_hardness_v1.json"
+            historical_task_path + "/verification/alloy_hardness_v1.json"
         ) == DATA_SHA256
     ):
         raise ValueError("AlloyHardnessOptimization task calibration gate failed")

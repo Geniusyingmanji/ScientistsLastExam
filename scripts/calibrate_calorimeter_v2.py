@@ -20,7 +20,7 @@ from scipy.stats import gamma as gamma_distribution
 
 
 ROOT = Path(__file__).resolve().parent.parent
-TASK = ROOT / "benchmarks/ParticlePhysics/CalorimeterDesign"
+TASK = ROOT / "benchmarks/Physics/CalorimeterDesign"
 sys.path.insert(0, str(ROOT))
 
 from frontier_science.evaluate import evaluate_candidate  # noqa: E402

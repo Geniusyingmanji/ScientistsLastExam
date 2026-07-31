@@ -29,7 +29,7 @@ import numpy as np
 ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_OUTPUT = (
     ROOT
-    / "benchmarks/QuantumChemistry/HartreeFockSCF/verification"
+    / "benchmarks/Chemistry/HartreeFockSCF/verification"
     / "rhf_instances_v2.npz"
 )
 GENERATION_SEED = 20260723

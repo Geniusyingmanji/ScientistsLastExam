@@ -18,7 +18,7 @@ from scipy.optimize import brentq, differential_evolution
 
 
 ROOT = Path(__file__).resolve().parent.parent
-TASK = ROOT / "benchmarks/Photovoltaics/PhotovoltaicTandemDesign"
+TASK = ROOT / "benchmarks/Chemistry/PhotovoltaicTandemDesign"
 sys.path.insert(0, str(ROOT))
 
 from frontier_science.evaluate import evaluate_candidate  # noqa: E402

@@ -23,7 +23,7 @@ from scipy.integrate import solve_ivp
 
 
 ROOT = Path(__file__).resolve().parent.parent
-TASK = ROOT / "benchmarks/Astrodynamics/LowThrustTransfer"
+TASK = ROOT / "benchmarks/Engineering/LowThrustTransfer"
 sys.path.insert(0, str(ROOT))
 
 from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402

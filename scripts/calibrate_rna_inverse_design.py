@@ -25,7 +25,7 @@ from frontier_science.provenance import finalize_report_trust, source_provenance
 from frontier_science.registry import find_task  # noqa: E402
 
 
-TASK = ROOT / "benchmarks/RNAEngineering/RNAInverseDesign"
+TASK = ROOT / "benchmarks/Biology/RNAInverseDesign"
 GENERATOR = ROOT / "scripts/generate_rna_inverse_design_references.py"
 
 

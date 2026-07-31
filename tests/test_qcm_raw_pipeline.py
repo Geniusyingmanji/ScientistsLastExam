@@ -14,7 +14,7 @@ from frontier_science.registry import find_task
 
 
 ROOT = Path(__file__).resolve().parents[1]
-TASK = ROOT / "benchmarks/Sensors/QuartzCrystalMicrobalanceLab"
+TASK = ROOT / "benchmarks/Engineering/QuartzCrystalMicrobalanceLab"
 
 
 def _load(path, name):

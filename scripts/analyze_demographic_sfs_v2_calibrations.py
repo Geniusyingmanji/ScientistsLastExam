@@ -60,7 +60,7 @@ TASK_RUNTIME_SCOPE = (
     "frontier_science/rpc_codec.py",
     "frontier_science/spec.py",
     "frontier_science/registry.py",
-    "benchmarks/PopulationGenetics/DemographicSFS",
+    "benchmarks/Biology/DemographicSFS",
     "requirements-upstream.txt",
 )
 SCIENCE_FIELDS = (

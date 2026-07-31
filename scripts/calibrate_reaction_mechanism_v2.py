@@ -17,7 +17,7 @@ from scipy.linalg import expm
 from scipy.optimize import least_squares
 
 ROOT = Path(__file__).resolve().parent.parent
-TASK = ROOT / "benchmarks/ChemicalKinetics/ReactionMechanismFitting"
+TASK = ROOT / "benchmarks/Chemistry/ReactionMechanismFitting"
 sys.path.insert(0, str(ROOT))
 
 from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402

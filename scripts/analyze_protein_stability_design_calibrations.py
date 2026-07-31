@@ -38,7 +38,7 @@ INPUT_SOURCE_REVISION = "72301eee6237a8a4382e7489e07ed772660a59bb"
 CALIBRATION = "experiments/protein_stability_design_calibration_2026-07-25.json"
 DATA = (
     ROOT
-    / "benchmarks/ProteinEngineering/ProteinStabilityDesign/verification/"
+    / "benchmarks/Biology/ProteinStabilityDesign/verification/"
     "protein_stability_landscapes_v1.json"
 )
 REPORTS = {
@@ -65,7 +65,7 @@ TASK_RUNTIME_SCOPE = (
     "frontier_science/rpc_codec.py",
     "frontier_science/spec.py",
     "frontier_science/registry.py",
-    "benchmarks/ProteinEngineering/ProteinStabilityDesign",
+    "benchmarks/Biology/ProteinStabilityDesign",
     "requirements-upstream.txt",
 )
 SCIENCE_FIELDS = (

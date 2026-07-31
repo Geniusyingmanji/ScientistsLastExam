@@ -20,7 +20,7 @@ from scipy.optimize import brentq
 
 
 ROOT = Path(__file__).resolve().parent.parent
-TASK = ROOT / "benchmarks/MolecularDynamics/ForceFieldCalibration"
+TASK = ROOT / "benchmarks/Chemistry/ForceFieldCalibration"
 sys.path.insert(0, str(ROOT))
 
 from frontier_science.evaluate import evaluate_candidate  # noqa: E402

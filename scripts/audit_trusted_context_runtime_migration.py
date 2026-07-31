@@ -212,7 +212,7 @@ def audit_retained_artifacts() -> dict[str, Any]:
             if "oracle" in module._load_model.__code__.co_varnames:
                 oracle = module._load_module(
                     ROOT / (
-                        "benchmarks/ParticlePhysics/CalorimeterDesign/"
+                        "benchmarks/Physics/CalorimeterDesign/"
                         "verification/evaluator.py"
                     ),
                     "runtime_migration_calorimeter_oracle",

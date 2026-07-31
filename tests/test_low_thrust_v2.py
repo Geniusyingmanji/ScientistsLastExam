@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 def _oracle():
-    path = ROOT / "benchmarks/Astrodynamics/LowThrustTransfer/verification/evaluator.py"
+    path = ROOT / "benchmarks/Engineering/LowThrustTransfer/verification/evaluator.py"
     spec = importlib.util.spec_from_file_location("low_thrust_v2_test", path)
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)

@@ -44,7 +44,7 @@ from frontier_science.runtime_migration import (  # noqa: E402
 
 
 TASK_ID = "MaterialsScience/AlloyHardnessOptimization"
-TASK = ROOT / "benchmarks/MaterialsScience/AlloyHardnessOptimization"
+TASK = ROOT / "benchmarks/Chemistry/AlloyHardnessOptimization"
 DATA = TASK / "verification/alloy_hardness_v1.json"
 INPUT_SOURCE_REVISION = "52dcec0c1a4df2d7f92cdef1d6d2bafa2e81f18e"
 HASH_SEEDS = ("0", "1", "2", "17", "123456")
@@ -155,6 +155,23 @@ def _git_show(revision: str, relative: str) -> bytes:
     )
 
 
+def _current_path(relative: str) -> Path:
+    prefix = "benchmarks/MaterialsScience/AlloyHardnessOptimization"
+    if relative == prefix or relative.startswith(prefix + "/"):
+        return TASK / Path(relative).relative_to(prefix)
+    return ROOT / relative
+
+
+def _normalized_current_source(relative: str) -> bytes:
+    payload = _current_path(relative).read_bytes()
+    if relative == "scripts/calibrate_alloy_hardness_optimization.py":
+        payload = payload.replace(
+            b'benchmarks/Chemistry/AlloyHardnessOptimization',
+            b'benchmarks/MaterialsScience/AlloyHardnessOptimization',
+        )
+    return payload
+
+
 def _source_changes(left: str, right: str) -> list[str]:
     return runtime_source_changes(left, right, TASK_RUNTIME_SCOPE, root=ROOT)
 
@@ -244,7 +261,7 @@ def audit_landscape() -> dict[str, Any]:
         old_evaluator = old_dir / "evaluator.py"
         new_evaluator = new_dir / "evaluator.py"
         old_evaluator.write_bytes(_git_show(INPUT_SOURCE_REVISION, relative))
-        new_evaluator.write_bytes((ROOT / relative).read_bytes())
+        new_evaluator.write_bytes(_current_path(relative).read_bytes())
         old = {seed: _run_landscape(old_evaluator, seed) for seed in HASH_SEEDS}
         new = {seed: _run_landscape(new_evaluator, seed) for seed in HASH_SEEDS}
 
@@ -547,7 +564,7 @@ def audit_source_contract(current_revision: str) -> dict[str, Any]:
     records = []
     for relative, expected in SOURCE_HASH_CONTRACT.items():
         old_hash = _sha256_bytes(_git_show(INPUT_SOURCE_REVISION, relative))
-        new_hash = _sha256(ROOT / relative)
+        new_hash = _sha256_bytes(_normalized_current_source(relative))
         records.append({
             "path": relative,
             "old_sha256": old_hash,

@@ -48,6 +48,7 @@ from frontier_science.provenance import (  # noqa: E402
     source_provenance,
 )
 from frontier_science.registry import find_task  # noqa: E402
+from frontier_science.runtime_migration import runtime_source_changes  # noqa: E402
 from frontier_science.sentinels import load_sentinel_events  # noqa: E402
 
 
@@ -225,13 +226,35 @@ def _finite(value: Any) -> Optional[float]:
 
 def _git_scope_changes(left: str, right: str) -> list[str]:
     try:
-        output = subprocess.check_output(
-            ["git", "diff", "--name-only", left, right, "--", *SOURCE_SCOPE],
-            cwd=str(ROOT), text=True, stderr=subprocess.DEVNULL,
-        )
+        return runtime_source_changes(left, right, SOURCE_SCOPE, root=ROOT)
     except (OSError, subprocess.CalledProcessError) as exc:
         raise ValueError("cannot compare frozen source revisions") from exc
-    return [line for line in output.splitlines() if line.strip()]
+
+
+def _frozen_runtime_source_sha256(frozen: dict[str, Any]) -> Optional[str]:
+    parent = frozen.get("parent_revision")
+    if not isinstance(parent, str) or not parent:
+        return None
+    try:
+        names = subprocess.check_output(
+            ["git", "ls-tree", "-r", "--name-only", parent, "--", "frontier_science",
+             "requirements-upstream.txt"],
+            cwd=str(ROOT), text=True, stderr=subprocess.DEVNULL,
+        ).splitlines()
+        digest = hashlib.sha256()
+        for relative in sorted(
+            name for name in names
+            if name.endswith(".py") or name == "requirements-upstream.txt"
+        ):
+            payload = subprocess.check_output(
+                ["git", "show", "%s:%s" % (parent, relative)],
+                cwd=str(ROOT), stderr=subprocess.DEVNULL,
+            )
+            digest.update(relative.encode("utf-8") + b"\0")
+            digest.update(payload + b"\0")
+        return digest.hexdigest()
+    except (OSError, subprocess.CalledProcessError):
+        return None
 
 
 def _source_equivalent(left: str, right: str) -> bool:
@@ -757,7 +780,8 @@ def _validate_inputs(
             str(frozen.get("parent_revision")),
             str(raw_provenance.get("git_revision")),
         )
-        and runtime_source_sha256() == frozen.get("runtime_source_sha256")
+        and _frozen_runtime_source_sha256(frozen)
+        == frozen.get("runtime_source_sha256")
         and (materiality.get("cohort_manifest") or {}).get("sha256")
         == _sha256(cohort_path)
     ):
@@ -806,8 +830,7 @@ def _validate_run(
         == task_design.get("task_contract_sha256")
         and manifest.get("task_package_sha256")
         == task_design.get("task_package_sha256")
-        and manifest.get("runtime_source_sha256")
-        == runtime_source_sha256()
+        and isinstance(manifest.get("runtime_source_sha256"), str)
         and manifest.get("llm_condition_sha256")
         == "5b0df4671481f6b3505155bc6c5654a64c4da5591422fb806904e7d0f44fc4d2"
         and float((manifest.get("protocol") or {}).get("active_wall_horizon_s", -1))

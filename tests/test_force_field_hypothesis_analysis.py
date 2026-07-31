@@ -349,7 +349,7 @@ class ForceFieldHypothesisAnalysisTests(unittest.TestCase):
     def test_runtime_source_change_fails_closed(self):
         report = self.report(
             runtime_source_equivalent=False,
-            runtime_source_changes=["benchmarks/MolecularDynamics/x.py"],
+            runtime_source_changes=["benchmarks/Chemistry/ForceFieldCalibration/x.py"],
         )
         self.assertFalse(report["execution_passed"])
         self.assertEqual(report["trust_decision"], "execution_failed")

@@ -242,7 +242,7 @@ class AlloyHardnessAnalysisTests(unittest.TestCase):
             copy.deepcopy(self.report["records"]),
             runtime_source_equivalent=False,
             runtime_source_changes=[
-                "benchmarks/MaterialsScience/AlloyHardnessOptimization/change.py"
+                "benchmarks/Chemistry/AlloyHardnessOptimization/change.py"
             ],
         )
         self.assertFalse(failed["execution_passed"])

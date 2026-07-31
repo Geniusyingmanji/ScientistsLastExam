@@ -1,7 +1,8 @@
 """Task spec loader — reads the per-task black-box contract.
 
-A Frontier-Science task lives at ``benchmarks/<Domain>/<Task>/`` and provides a
-``frontier_eval/`` directory with the contract files. This mirrors the
+A Frontier-Science task lives at ``benchmarks/<Discipline>/<Task>/`` and provides a
+``frontier_eval/`` directory with the contract files. Its metadata ``domain`` and task
+directory name form the stable logical ``<Domain>/<Task>`` id. This mirrors the
 Frontier-Engineering ``UnifiedTask`` layout so tasks are added with no harness change.
 """
 
@@ -11,6 +12,8 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 import yaml
+
+from .benchmark_layout import discipline_for_domain
 
 
 def _read_text(p: Path) -> str | None:
@@ -66,6 +69,12 @@ class TaskSpec:
     def domain(self) -> str:
         return str(self.metadata.get("domain", self.task_id.split("/")[0]))
 
+    @property
+    def discipline(self) -> str:
+        """Broad physical directory category; not part of the stable task id."""
+
+        return self.task_dir.parent.name
+
     def agent_visible_text(self) -> str:
         """The only task context the agent is allowed to see."""
         parts = [f"# Task: {self.task_id}\n", self.task_md.strip()]
@@ -80,7 +89,16 @@ def load_task_spec(task_dir: Path) -> TaskSpec:
     if not eval_dir.is_dir():
         raise FileNotFoundError(f"No frontier_eval/ in {task_dir}")
     meta = yaml.safe_load(_read_text(eval_dir / "metadata.yaml") or "") or {}
-    domain = meta.get("domain", task_dir.parent.name)
+    domain = meta.get("domain")
+    if not isinstance(domain, str) or not domain.strip():
+        raise ValueError(f"Missing metadata domain in {eval_dir / 'metadata.yaml'}")
+    domain = domain.strip()
+    expected_discipline = discipline_for_domain(domain)
+    if task_dir.parent.name != expected_discipline:
+        raise ValueError(
+            f"Domain {domain!r} belongs under benchmarks/{expected_discipline}, "
+            f"not benchmarks/{task_dir.parent.name}"
+        )
     task_id = f"{domain}/{task_dir.name}"
     return TaskSpec(
         task_id=task_id,

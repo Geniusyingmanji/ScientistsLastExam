@@ -34,7 +34,7 @@ def _load(path, name):
 
 
 def audit():
-    task = ROOT / "benchmarks" / TASK_ID
+    task = find_task(TASK_ID, include_uncertified=True).task_dir
     oracle = _load(task / "verification/evaluator.py", "wave5_meta_oracle")
     calibration = _load(
         ROOT / "scripts/calibrate_prospective_meta_analysis.py",

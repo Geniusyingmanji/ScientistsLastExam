@@ -19,7 +19,7 @@ from scipy.optimize import least_squares
 
 
 ROOT = Path(__file__).resolve().parent.parent
-TASK = ROOT / "benchmarks/PopulationGenetics/DemographicSFS"
+TASK = ROOT / "benchmarks/Biology/DemographicSFS"
 sys.path.insert(0, str(ROOT))
 
 from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402

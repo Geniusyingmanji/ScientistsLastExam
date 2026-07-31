@@ -17,7 +17,7 @@ from numpy.polynomial.legendre import leggauss
 from scipy.optimize import least_squares
 
 ROOT = Path(__file__).resolve().parent.parent
-TASK = ROOT / "benchmarks/Geophysics/GravityInversion"
+TASK = ROOT / "benchmarks/EarthScience/GravityInversion"
 sys.path.insert(0, str(ROOT))
 G_CONST = 6.67430e-11
 

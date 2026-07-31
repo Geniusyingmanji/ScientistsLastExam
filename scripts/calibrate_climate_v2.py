@@ -18,7 +18,7 @@ from scipy.optimize import least_squares
 
 
 ROOT = Path(__file__).resolve().parent.parent
-TASK = ROOT / "benchmarks/ClimateScience/EnergyBalanceModel"
+TASK = ROOT / "benchmarks/EarthScience/EnergyBalanceModel"
 sys.path.insert(0, str(ROOT))
 
 from frontier_science.provenance import (  # noqa: E402

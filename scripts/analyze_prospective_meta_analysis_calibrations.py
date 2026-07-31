@@ -14,7 +14,6 @@ import hashlib
 import json
 import math
 import platform
-import subprocess
 import sys
 from collections import Counter
 from datetime import datetime, timezone
@@ -27,6 +26,7 @@ sys.path.insert(0, str(ROOT))
 
 from frontier_science.protocol import compact_trajectory_snapshot, load_trajectory  # noqa: E402
 from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402
+from frontier_science.runtime_migration import runtime_source_changes  # noqa: E402
 from frontier_science.algorithms.common import (  # noqa: E402
     task_contract_sha256,
 )
@@ -56,7 +56,7 @@ TASK_RUNTIME_SCOPE = (
     "frontier_science/rpc_codec.py",
     "frontier_science/spec.py",
     "frontier_science/registry.py",
-    "benchmarks/EvidenceSynthesis/ProspectiveMetaAnalysis",
+    "benchmarks/Biology/ProspectiveMetaAnalysis",
     "requirements-upstream.txt",
 )
 SCIENCE_FIELDS = (
@@ -86,11 +86,7 @@ def _sha256(path: Path) -> str:
 
 
 def _source_changes(left: str, right: str) -> list[str]:
-    output = subprocess.check_output(
-        ["git", "diff", "--name-only", left, right, "--", *TASK_RUNTIME_SCOPE],
-        cwd=str(ROOT), text=True, stderr=subprocess.DEVNULL,
-    )
-    return [line for line in output.splitlines() if line.strip()]
+    return runtime_source_changes(left, right, TASK_RUNTIME_SCOPE, root=ROOT)
 
 
 def _science(metrics: dict[str, Any]) -> dict[str, Any]:
@@ -352,7 +348,7 @@ def _load_model(label, relative):
     }
     manifest_path = workdir / "run_manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    spec = load_task_spec(ROOT / "benchmarks/EvidenceSynthesis/ProspectiveMetaAnalysis")
+    spec = load_task_spec(ROOT / "benchmarks/Biology/ProspectiveMetaAnalysis")
     best = workdir / "best_program.py"
     terminal = workdir / "solution.py"
     terminal_scan = _scan_retained_source(terminal)

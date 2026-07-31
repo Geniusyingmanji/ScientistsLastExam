@@ -17,7 +17,7 @@ from frontier_science.registry import find_task
 
 
 ROOT = Path(__file__).resolve().parent.parent
-TASK = ROOT / "benchmarks/WavePropagation/SeismicWaveInversion"
+TASK = ROOT / "benchmarks/EarthScience/SeismicWaveInversion"
 
 
 def _load(path: Path, name: str):

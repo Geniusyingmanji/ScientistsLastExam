@@ -16,7 +16,7 @@ import numpy as np
 
 
 ROOT = Path(__file__).resolve().parent.parent
-TASK = ROOT / "benchmarks/Semiconductor/MOSFETDoping"
+TASK = ROOT / "benchmarks/Engineering/MOSFETDoping"
 sys.path.insert(0, str(ROOT))
 
 from frontier_science.provenance import (  # noqa: E402

@@ -15,7 +15,7 @@ from frontier_science.registry import find_task
 
 ROOT = Path(__file__).resolve().parent.parent
 IF97_PATH = (
-    ROOT / "benchmarks/Thermodynamics/RankineCycleOpt/verification/if97.py"
+    ROOT / "benchmarks/Engineering/RankineCycleOpt/verification/if97.py"
 )
 VERIFICATION = IF97_PATH.parent
 CALIBRATION_PATH = ROOT / "scripts/calibrate_rankine_v2.py"

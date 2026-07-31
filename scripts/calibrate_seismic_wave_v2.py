@@ -18,7 +18,7 @@ from scipy.signal import find_peaks
 
 
 ROOT = Path(__file__).resolve().parent.parent
-TASK = ROOT / "benchmarks/WavePropagation/SeismicWaveInversion"
+TASK = ROOT / "benchmarks/EarthScience/SeismicWaveInversion"
 sys.path.insert(0, str(ROOT))
 
 from frontier_science.provenance import (  # noqa: E402

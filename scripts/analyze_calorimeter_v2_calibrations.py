@@ -60,7 +60,7 @@ TASK_RUNTIME_SCOPE = (
     "frontier_science/rpc_codec.py",
     "frontier_science/spec.py",
     "frontier_science/registry.py",
-    "benchmarks/ParticlePhysics/CalorimeterDesign",
+    "benchmarks/Physics/CalorimeterDesign",
     "requirements-upstream.txt",
 )
 SCIENCE_FIELDS = (
@@ -557,7 +557,7 @@ def analyze() -> dict[str, Any]:
     calibration = _load_calibration(CALIBRATION)
     oracle = _load_module(
         ROOT
-        / "benchmarks/ParticlePhysics/CalorimeterDesign/verification/evaluator.py",
+        / "benchmarks/Physics/CalorimeterDesign/verification/evaluator.py",
         "calorimeter_analysis_oracle",
     )
     records = {

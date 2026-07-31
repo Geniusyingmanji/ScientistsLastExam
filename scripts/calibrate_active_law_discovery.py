@@ -15,7 +15,7 @@ import numpy as np
 from scipy.signal import savgol_filter
 
 ROOT = Path(__file__).resolve().parent.parent
-TASK = ROOT / "benchmarks/DynamicalSystems/ActiveLawDiscovery"
+TASK = ROOT / "benchmarks/Mathematics/ActiveLawDiscovery"
 sys.path.insert(0, str(ROOT))
 
 from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402

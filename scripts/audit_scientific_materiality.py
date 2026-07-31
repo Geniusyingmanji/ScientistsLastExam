@@ -26,7 +26,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402
-from frontier_science.spec import load_task_spec  # noqa: E402
+from frontier_science.registry import find_task  # noqa: E402
 from scripts.run_measurement_health_preflight import _contract_compatibility  # noqa: E402
 
 
@@ -453,7 +453,7 @@ def _audit_task(row: dict[str, Any]) -> dict[str, Any]:
     issues = []
     if not isinstance(task_id, str):
         return {"task": task_id, "materiality_contract_passed": False, "issues": ["task id is missing"]}
-    task_spec = load_task_spec(ROOT / "benchmarks" / task_id)
+    task_spec = find_task(task_id, include_uncertified=True)
     for key in (
         "scientific_quantity", "improvement_direction", "applicability",
     ):

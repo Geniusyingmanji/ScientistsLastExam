@@ -1,4 +1,4 @@
-"""Discover tasks under ``benchmarks/`` (any dir containing ``frontier_eval/``)."""
+"""Discover discipline-grouped task packages under ``benchmarks/``."""
 
 from __future__ import annotations
 
@@ -6,6 +6,7 @@ from pathlib import Path
 
 from .spec import TaskSpec, load_task_spec
 from .certification import certification_status
+from .benchmark_layout import DISCIPLINE_DOMAINS
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 BENCHMARKS = REPO_ROOT / "benchmarks"
@@ -14,7 +15,23 @@ BENCHMARKS = REPO_ROOT / "benchmarks"
 def discover_task_dirs() -> list[Path]:
     if not BENCHMARKS.is_dir():
         return []
-    return sorted(p.parent for p in BENCHMARKS.glob("*/*/frontier_eval") if p.is_dir())
+    roots = {path.name for path in BENCHMARKS.iterdir() if path.is_dir()}
+    unexpected = roots - set(DISCIPLINE_DOMAINS)
+    if unexpected:
+        raise ValueError(
+            "Unexpected top-level benchmark directories: %s"
+            % ", ".join(sorted(unexpected))
+        )
+    task_dirs = sorted(p.parent for p in BENCHMARKS.glob("*/*/frontier_eval") if p.is_dir())
+    nested = sorted(
+        path for path in BENCHMARKS.glob("*/*/*/frontier_eval") if path.is_dir()
+    )
+    if nested:
+        raise ValueError(
+            "Benchmark tasks must be direct children of a discipline: %s"
+            % ", ".join(str(path.parent.relative_to(BENCHMARKS)) for path in nested)
+        )
+    return task_dirs
 
 
 def list_tasks(status: str | None = "certified") -> list[TaskSpec]:
