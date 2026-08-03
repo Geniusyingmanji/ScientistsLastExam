@@ -255,6 +255,7 @@ Fast structural and security checks:
 python -m unittest -v tests.test_benchmark_layout tests.test_runtime_migration
 python scripts/run_security_audit.py --output /tmp/security.json
 python scripts/audit_tasks.py --output /tmp/certification.json
+python scripts/audit_quarantined_tasks.py --output /tmp/quarantined.json
 ```
 
 Longer inventory and full-suite checks:
