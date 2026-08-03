@@ -1,0 +1,361 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_QUARANTINED_TASK_REAUDIT",
+  "created_at": "2026-08-03T11:57:50.295243+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "bce1d6c3bf35ac1b3d8adf2ab663595836c109ff",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/audit_quarantined_tasks.py",
+      "--output",
+      "experiments/quarantined_task_admission_audit_2026-08-03_v1.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "policy": {
+    "meaning": "A reproduced defect proves that quarantine remains warranted; it does not validate the task as benchmark-admissible.",
+    "required_coverage": "all manifest tasks whose status is quarantined"
+  },
+  "manifest_quarantined_tasks": [
+    "Biomechanics/ProstheticJointDesign",
+    "Combustion/FlameSpeedOptimization",
+    "CrystalGrowth/CzochralskiProcess",
+    "Electromagnetics/WaveguideModeSolver",
+    "FluidMechanics/StokesShapeDrag",
+    "Geomechanics/TunnelSupportDesign",
+    "InventoryManagement/MultiEchelonStock",
+    "Optoelectronics/LaserCavityDesign",
+    "Transportation/TrafficSignalTiming"
+  ],
+  "missing_checks": [],
+  "stale_checks": [],
+  "generic_clone_group": {
+    "tasks": [
+      "CrystalGrowth/CzochralskiProcess",
+      "Electromagnetics/WaveguideModeSolver",
+      "Geomechanics/TunnelSupportDesign",
+      "Optoelectronics/LaserCavityDesign"
+    ],
+    "unique_normalized_oracle_count": 1,
+    "normalized_oracle_sha256": "eae6c848ce99a587683ca5a83502f101ba1ebfc8e1b339adc398fa99102d8442"
+  },
+  "records": [
+    {
+      "task": "Biomechanics/ProstheticJointDesign",
+      "defect": "the hand-written rollback/conformity product is solved exactly by setting all radii to their upper bounds, which is defined to be twice baseline and full score; non-finite geometry also passes task-level validation",
+      "baseline_joint_quality": 0.23481115817620826,
+      "upper_corner_joint_quality": 0.4696223163524165,
+      "upper_to_baseline_ratio": 2.0,
+      "upper_corner_score": 1.0,
+      "nonfinite_task_score": 1.0,
+      "nonfinite_task_valid": true,
+      "certification_status": "quarantined",
+      "meets_internal_benchmark_standard": false,
+      "recommendation": "retain_quarantine_until_substantive_rebuild",
+      "audit_kind": "reproduced_adversarial_oracle_failure",
+      "failed_standard_axes": [
+        "scientific_semantics",
+        "oracle_fidelity",
+        "optimization_integrity"
+      ],
+      "defect_reproduced": true
+    },
+    {
+      "task": "Combustion/FlameSpeedOptimization",
+      "defect": "the simplified algebraic formula clips both methane baseline and claimed H2-enriched reference at 5 m/s, leaving a zero normalization denominator; most random feasible mixtures also hit the same cap",
+      "methane_baseline_speed_m_s": 5.0,
+      "claimed_reference_speed_m_s": 5.0,
+      "normalization_denominator": 0.0,
+      "sampled_cap_fraction": 0.8828125,
+      "certification_status": "quarantined",
+      "meets_internal_benchmark_standard": false,
+      "recommendation": "retain_quarantine_until_substantive_rebuild",
+      "audit_kind": "reproduced_adversarial_oracle_failure",
+      "failed_standard_axes": [
+        "oracle_fidelity",
+        "openness_headroom",
+        "optimization_continuity"
+      ],
+      "defect_reproduced": true
+    },
+    {
+      "task": "CrystalGrowth/CzochralskiProcess",
+      "certification_status": "quarantined",
+      "meets_internal_benchmark_standard": false,
+      "recommendation": "retain_quarantine_until_substantive_rebuild",
+      "audit_kind": "generic_cross_domain_oracle_clone_reproduction",
+      "defect": "The claimed one-dimensional moving-boundary Stefan heat equation is not implemented. The evaluator is the same fixed eight-variable trigonometric objective used by three unrelated domains, contains an embedded full-score vector, has no procedural/held-out/sealed axis, and accepts NaN at full score.",
+      "failed_standard_axes": [
+        "scientific_semantics",
+        "oracle_fidelity",
+        "generalization",
+        "optimization_integrity",
+        "evidence_integrity"
+      ],
+      "entrypoint": "optimize_czochralski",
+      "contract_entrypoint": "optimize_czochralski",
+      "declared_oracle_type": "physical_sim",
+      "normalized_oracle_sha256": "eae6c848ce99a587683ca5a83502f101ba1ebfc8e1b339adc398fa99102d8442",
+      "same_as_generic_clone_group": true,
+      "defined_functions": [
+        "_forward_model",
+        "evaluate"
+      ],
+      "unused_solver_imports": [
+        "minimize_scalar",
+        "solve_ivp"
+      ],
+      "has_instance_or_split_declarations": false,
+      "task_card_present": false,
+      "missing_certification_metadata": [
+        "citation",
+        "reference_baseline",
+        "reference_sota",
+        "science_metric"
+      ],
+      "parameter_count": 8,
+      "baseline_score": 0.0,
+      "embedded_target_score": 1.0,
+      "nonfinite_score": 1.0,
+      "nonfinite_valid": true,
+      "nonfinite_objective_is_finite": false,
+      "defect_reproduced": true
+    },
+    {
+      "task": "Electromagnetics/WaveguideModeSolver",
+      "certification_status": "quarantined",
+      "meets_internal_benchmark_standard": false,
+      "recommendation": "retain_quarantine_until_substantive_rebuild",
+      "audit_kind": "generic_cross_domain_oracle_clone_reproduction",
+      "defect": "The claimed TE/TM transcendental waveguide eigenmode solver is not implemented. The evaluator is the same fixed eight-variable trigonometric objective used by three unrelated domains, contains an embedded full-score vector, has no procedural/held-out/sealed axis, and accepts NaN at full score.",
+      "failed_standard_axes": [
+        "scientific_semantics",
+        "oracle_fidelity",
+        "generalization",
+        "optimization_integrity",
+        "evidence_integrity"
+      ],
+      "entrypoint": "design_waveguide",
+      "contract_entrypoint": "design_waveguide",
+      "declared_oracle_type": "physical_sim",
+      "normalized_oracle_sha256": "eae6c848ce99a587683ca5a83502f101ba1ebfc8e1b339adc398fa99102d8442",
+      "same_as_generic_clone_group": true,
+      "defined_functions": [
+        "_forward_model",
+        "evaluate"
+      ],
+      "unused_solver_imports": [
+        "minimize_scalar",
+        "solve_ivp"
+      ],
+      "has_instance_or_split_declarations": false,
+      "task_card_present": false,
+      "missing_certification_metadata": [
+        "citation",
+        "reference_baseline",
+        "reference_sota",
+        "science_metric"
+      ],
+      "parameter_count": 8,
+      "baseline_score": 0.0,
+      "embedded_target_score": 1.0,
+      "nonfinite_score": 1.0,
+      "nonfinite_valid": true,
+      "nonfinite_objective_is_finite": false,
+      "defect_reproduced": true
+    },
+    {
+      "task": "FluidMechanics/StokesShapeDrag",
+      "defect": "the oracle does not solve Stokes flow: drag is only normalized perimeter. At fixed area the isoperimetric inequality makes the circle optimal, contradicting the declared 0.85 non-circular reference; non-finite shapes pass task validation",
+      "oracle_explicitly_uses_perimeter_proxy": true,
+      "circle_area": 3.141592653589793,
+      "circle_drag": 0.9996031586350926,
+      "declared_reference_drag": 0.85,
+      "nonfinite_task_score": 1.0,
+      "nonfinite_task_valid": true,
+      "certification_status": "quarantined",
+      "meets_internal_benchmark_standard": false,
+      "recommendation": "retain_quarantine_until_substantive_rebuild",
+      "audit_kind": "reproduced_adversarial_oracle_failure",
+      "failed_standard_axes": [
+        "scientific_semantics",
+        "oracle_fidelity",
+        "optimization_integrity"
+      ],
+      "defect_reproduced": true
+    },
+    {
+      "task": "Geomechanics/TunnelSupportDesign",
+      "certification_status": "quarantined",
+      "meets_internal_benchmark_standard": false,
+      "recommendation": "retain_quarantine_until_substantive_rebuild",
+      "audit_kind": "generic_cross_domain_oracle_clone_reproduction",
+      "defect": "The claimed plane-strain FEM with Mohr-Coulomb failure is not implemented. The evaluator is the same fixed eight-variable trigonometric objective used by three unrelated domains, contains an embedded full-score vector, has no procedural/held-out/sealed axis, and accepts NaN at full score.",
+      "failed_standard_axes": [
+        "scientific_semantics",
+        "oracle_fidelity",
+        "generalization",
+        "optimization_integrity",
+        "evidence_integrity"
+      ],
+      "entrypoint": "design_support",
+      "contract_entrypoint": "design_support",
+      "declared_oracle_type": "physical_sim",
+      "normalized_oracle_sha256": "eae6c848ce99a587683ca5a83502f101ba1ebfc8e1b339adc398fa99102d8442",
+      "same_as_generic_clone_group": true,
+      "defined_functions": [
+        "_forward_model",
+        "evaluate"
+      ],
+      "unused_solver_imports": [
+        "minimize_scalar",
+        "solve_ivp"
+      ],
+      "has_instance_or_split_declarations": false,
+      "task_card_present": false,
+      "missing_certification_metadata": [
+        "citation",
+        "reference_baseline",
+        "reference_sota",
+        "science_metric"
+      ],
+      "parameter_count": 8,
+      "baseline_score": 0.0,
+      "embedded_target_score": 1.0,
+      "nonfinite_score": 1.0,
+      "nonfinite_valid": true,
+      "nonfinite_objective_is_finite": false,
+      "defect_reproduced": true
+    },
+    {
+      "task": "InventoryManagement/MultiEchelonStock",
+      "defect": "each stage receives its own previous orders without upstream fulfillment, so retailer service is exactly invariant to factory and warehouse stocks; the model does not implement a coupled multi-echelon supply chain",
+      "upstream_stock_pairs": [
+        [
+          0,
+          0
+        ],
+        [
+          200,
+          0
+        ],
+        [
+          0,
+          200
+        ],
+        [
+          200,
+          200
+        ]
+      ],
+      "service_levels_at_fixed_retailer_stock": [
+        0.995,
+        0.995,
+        0.995,
+        0.995
+      ],
+      "costs_at_fixed_retailer_stock": [
+        506.675,
+        899.675,
+        636.085,
+        583.685
+      ],
+      "service_level_range": 0.0,
+      "certification_status": "quarantined",
+      "meets_internal_benchmark_standard": false,
+      "recommendation": "retain_quarantine_until_substantive_rebuild",
+      "audit_kind": "reproduced_adversarial_oracle_failure",
+      "failed_standard_axes": [
+        "scientific_semantics",
+        "oracle_fidelity",
+        "generalization"
+      ],
+      "defect_reproduced": true
+    },
+    {
+      "task": "Optoelectronics/LaserCavityDesign",
+      "certification_status": "quarantined",
+      "meets_internal_benchmark_standard": false,
+      "recommendation": "retain_quarantine_until_substantive_rebuild",
+      "audit_kind": "generic_cross_domain_oracle_clone_reproduction",
+      "defect": "The claimed round-trip gain/loss and ABCD mode stability is not implemented. The evaluator is the same fixed eight-variable trigonometric objective used by three unrelated domains, contains an embedded full-score vector, has no procedural/held-out/sealed axis, and accepts NaN at full score.",
+      "failed_standard_axes": [
+        "scientific_semantics",
+        "oracle_fidelity",
+        "generalization",
+        "optimization_integrity",
+        "evidence_integrity"
+      ],
+      "entrypoint": "design_cavity",
+      "contract_entrypoint": "design_cavity",
+      "declared_oracle_type": "physical_sim",
+      "normalized_oracle_sha256": "eae6c848ce99a587683ca5a83502f101ba1ebfc8e1b339adc398fa99102d8442",
+      "same_as_generic_clone_group": true,
+      "defined_functions": [
+        "_forward_model",
+        "evaluate"
+      ],
+      "unused_solver_imports": [
+        "minimize_scalar",
+        "solve_ivp"
+      ],
+      "has_instance_or_split_declarations": false,
+      "task_card_present": false,
+      "missing_certification_metadata": [
+        "citation",
+        "reference_baseline",
+        "reference_sota",
+        "science_metric"
+      ],
+      "parameter_count": 8,
+      "baseline_score": 0.0,
+      "embedded_target_score": 1.0,
+      "nonfinite_score": 1.0,
+      "nonfinite_valid": true,
+      "nonfinite_objective_is_finite": false,
+      "defect_reproduced": true
+    },
+    {
+      "task": "Transportation/TrafficSignalTiming",
+      "defect": "the model has only one traffic direction and no conflicting phase or shared green-time constraint, so setting every signal to maximum green with travel-time offsets trivially clips to full score; non-finite timing also scores one",
+      "all_max_green_ideal_offset_score": 1.0,
+      "all_max_green_total_delay": 5415.0,
+      "nonfinite_task_score": 1.0,
+      "nonfinite_task_valid": true,
+      "certification_status": "quarantined",
+      "meets_internal_benchmark_standard": false,
+      "recommendation": "retain_quarantine_until_substantive_rebuild",
+      "audit_kind": "reproduced_adversarial_oracle_failure",
+      "failed_standard_axes": [
+        "scientific_semantics",
+        "oracle_fidelity",
+        "optimization_integrity"
+      ],
+      "defect_reproduced": true
+    }
+  ],
+  "summary": {
+    "manifest_quarantined_count": 9,
+    "audited_count": 9,
+    "reproduced_defect_count": 9,
+    "meets_internal_benchmark_standard_count": 0,
+    "recommended_retain_quarantine_count": 9
+  },
+  "execution_passed": true,
+  "trust_decision": "trusted_clean_revision",
+  "trusted_evidence": true,
+  "passed": true
+}

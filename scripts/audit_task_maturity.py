@@ -73,6 +73,9 @@ GLOBAL_REPORTS = {
     "track_f_search": "experiments/track_f_search_2026-07-26_v1.json",
     "track_f_confirmation": "experiments/track_f_confirmation_2026-07-26_v1.json",
     "track_f_analysis": "experiments/track_f_analysis_2026-07-26_v1.json",
+    "quarantined_reaudit": (
+        "experiments/quarantined_task_admission_audit_2026-08-03_v1.json"
+    ),
 }
 EVIDENCE_PATTERNS = (
     "experiments/gpt55*.json",
@@ -744,6 +747,19 @@ def build_report() -> dict[str, Any]:
         row.get("task"): row for row in certification_document.get("tasks", [])
         if isinstance(row, dict) and row.get("task") in inventory_ids
     }
+    quarantine_document = documents.get(
+        GLOBAL_REPORTS["quarantined_reaudit"], {}
+    )
+    quarantine_source = str(
+        (quarantine_document.get("source_provenance") or {}).get(
+            "git_revision"
+        ) or ""
+    )
+    quarantine_rows = {
+        row.get("task"): row
+        for row in quarantine_document.get("records", [])
+        if isinstance(row, dict) and row.get("task") in inventory_ids
+    }
 
     task_records = []
     for spec in specs:
@@ -785,6 +801,27 @@ def build_report() -> dict[str, Any]:
             and baseline.get("fail_closed_all") is True
             and baseline.get("infrastructure_failure") is False
         ) or track_f_baseline_fallback
+
+        quarantine_row = quarantine_rows.get(task_id)
+        quarantine_binding = "unbound"
+        quarantine_migration = None
+        if quarantine_row is not None:
+            quarantine_binding, quarantine_migration = _binding_state(
+                quarantine_source, task_id, head_revision, migrations
+            )
+        quarantine_reaudit_passed = bool(
+            certification.get("status") == "quarantined"
+            and _trusted_document(quarantine_document)
+            and quarantine_row is not None
+            and quarantine_binding in {
+                "current_contract_bound", "migration_replayed",
+            }
+            and quarantine_row.get("certification_status") == "quarantined"
+            and quarantine_row.get("defect_reproduced") is True
+            and quarantine_row.get("meets_internal_benchmark_standard") is False
+            and quarantine_row.get("recommendation")
+            == "retain_quarantine_until_substantive_rebuild"
+        )
 
         calibration_evidence = [
             row for row in evidence
@@ -875,6 +912,27 @@ def build_report() -> dict[str, Any]:
                 "track_f_current_fallback": track_f_baseline_fallback,
                 "passed": baseline_passed,
             },
+            "quarantine_reaudit": {
+                "path": (
+                    GLOBAL_REPORTS["quarantined_reaudit"]
+                    if quarantine_row is not None else None
+                ),
+                "contract_binding": quarantine_binding,
+                "migration_audit": quarantine_migration,
+                "defect_reproduced": (
+                    quarantine_row.get("defect_reproduced")
+                    if quarantine_row else None
+                ),
+                "meets_internal_benchmark_standard": (
+                    quarantine_row.get("meets_internal_benchmark_standard")
+                    if quarantine_row else None
+                ),
+                "recommendation": (
+                    quarantine_row.get("recommendation")
+                    if quarantine_row else None
+                ),
+                "passed": quarantine_reaudit_passed,
+            },
             "evidence_binding_counts": {
                 state: evidence_summary.get(state, 0) for state in sorted(BINDING_STATES)
             },
@@ -948,6 +1006,9 @@ def build_report() -> dict[str, Any]:
             not in row["gates"]["long_horizon_ready"]["blockers"]
             for row in task_records
         ),
+        "current_quarantine_defect_reproduction_count": sum(
+            row["quarantine_reaudit"]["passed"] for row in task_records
+        ),
     }
 
     issues = []
@@ -966,6 +1027,29 @@ def build_report() -> dict[str, Any]:
         status_counts.get("certified", 0) + status_counts.get("candidate", 0)
     ):
         issues.append("internal admission count diverges from audited nonquarantined risk set")
+    current_quarantined = {
+        row["task"] for row in task_records
+        if row["certification_status"] == "quarantined"
+    }
+    if not _trusted_document(quarantine_document):
+        issues.append("quarantined task reaudit is missing or untrusted")
+    if set(quarantine_rows) != current_quarantined:
+        issues.append("quarantined task reaudit coverage differs from current manifest")
+    quarantine_summary = quarantine_document.get("summary") or {}
+    if not (
+        quarantine_summary.get("manifest_quarantined_count")
+        == len(current_quarantined)
+        and quarantine_summary.get("audited_count")
+        == len(current_quarantined)
+        and quarantine_summary.get("reproduced_defect_count")
+        == len(current_quarantined)
+        and quarantine_summary.get("meets_internal_benchmark_standard_count") == 0
+    ):
+        issues.append("quarantined task reaudit summary is inconsistent")
+    if coverage["current_quarantine_defect_reproduction_count"] != len(
+        current_quarantined
+    ):
+        issues.append("not every quarantined task has current reproduced defect evidence")
 
     report: dict[str, Any] = {
         "schema_version": SCHEMA_VERSION,
@@ -1074,6 +1158,7 @@ def render_markdown(report: dict[str, Any]) -> str:
         "| Provenance class declared | %d |" % coverage["provenance_class_declared_task_count"],
         "| Novelty risk declared | %d |" % coverage["novelty_risk_declared_task_count"],
         "| Declared material post-2h headroom | %d |" % coverage["declared_post_2h_headroom_task_count"],
+        "| Current/migration-safe quarantine defect reproduction | %d |" % coverage["current_quarantine_defect_reproduction_count"],
         "",
         "## Per-task audit",
         "",

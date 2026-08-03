@@ -409,3 +409,9 @@ Raw `.out`/`.log` files predating the trusted evaluator inherit
 | `feedback_measurement_pilot_analysis_2026-07-26_v1.json` | `TRUSTED_DERIVED_EVIDENCE / FEEDBACK_MEASUREMENT_PILOT_ONLY` | SHA-256 `dbb392ac…c4aa5e`; on clean analysis source `d2dd1c6`, validates preregistration/prerequisites, prompt bytes and hashes, lineage, manifests, checkpoints, retained sources, schema-v2 trajectories, science axes and common-token horizons. It calibrates measurement only and explicitly rejects causal feedback, population, model-ranking, cross-task-score and autonomous-discovery claims. |
 | `security_audit_2026-07-26_v41.json` | `TRUSTED_SECURE_EVAL` | SHA-256 `d2082abe…1dcb8e`; all 18 sandbox and protocol adversarial tests pass in 10.805 seconds on clean post-analysis source `08ec441`. |
 | `.research/feedback_measurement_pilot_findings_2026-07-26.md` | `NARRATIVE_SUMMARY / NOT_PRIMARY_EVIDENCE` | Human-readable claim audit derived from the raw and analysis JSON. If text and machine artifacts differ, the hash-bound JSON reports govern. |
+
+## 2026-08-03 complete quarantined-task re-audit
+
+| Artifact | Trust | Scope |
+|---|---|---|
+| `quarantined_task_admission_audit_2026-08-03_v1.json` | `TRUSTED_QUARANTINED_TASK_REAUDIT` | SHA-256 `5664ba42…8fdf75`; on clean source `bce1d6c`, executable adversarial checks reproduce the material defect for all 9/9 manifest-quarantined tasks and recommend retaining all nine in quarantine. Five previously recorded task-specific failures still reproduce. The other four claimed physical tasks share one normalized eight-variable trigonometric oracle, expose its embedded full-score vector, have no procedural/held-out/sealed axis, lack task cards and required certification metadata, and return task-level valid/full score for NaN before trusted metric sealing rejects the non-finite metric. This is negative admission evidence, not validation of those tasks. |

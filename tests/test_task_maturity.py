@@ -55,6 +55,28 @@ class TaskMaturityAuditTests(unittest.TestCase):
         ]
         self.assertEqual(missing, [])
 
+    def test_every_quarantined_task_has_current_reproduced_defect_evidence(self):
+        self.assertEqual(
+            self.report["evidence_coverage"][
+                "current_quarantine_defect_reproduction_count"
+            ],
+            9,
+        )
+        quarantined = [
+            row for row in self.report["tasks"]
+            if row["certification_status"] == "quarantined"
+        ]
+        self.assertEqual(len(quarantined), 9)
+        for row in quarantined:
+            evidence = row["quarantine_reaudit"]
+            self.assertTrue(evidence["passed"], row)
+            self.assertTrue(evidence["defect_reproduced"])
+            self.assertFalse(evidence["meets_internal_benchmark_standard"])
+            self.assertIn(
+                evidence["contract_binding"],
+                {"current_contract_bound", "migration_replayed"},
+            )
+
     def test_track_f_tasks_have_repeated_controls_and_fresh_confirmation(self):
         for task_id in (
             "DynamicalSystems/ActiveLawDiscovery",

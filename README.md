@@ -234,6 +234,7 @@ Key trusted artifacts include:
 | [Full suite v28](experiments/full_test_suite_2026-07-30_v28.json) | 653/653 tests passed | Hash-bound historical test report at clean revision `549d588` |
 | [Science summary v28](experiments/science_calibration_summary_2026-07-25_v28.json) | 69 normal single-run conditions across 35 tasks | Calibration only; heterogeneous science axes are not averaged |
 | [Two-hour exploratory analysis](experiments/exploratory_2h_analysis_2026-07-30_v1.json) | 7/7 declared cells completed | Result-selected exploratory screen, not confirmatory or population evidence |
+| [Quarantined-task re-audit](experiments/quarantined_task_admission_audit_2026-08-03_v1.json) | 9/9 material defects reproduced | All quarantined packages checked at clean revision `bce1d6c`; 0/9 meet the internal benchmark standard |
 
 The current discipline-layout branch additionally passes 662/662 local tests. Because those
 tests ran on a source-dirty pre-commit tree, they are implementation verification rather than a
