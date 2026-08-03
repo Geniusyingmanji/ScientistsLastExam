@@ -29,7 +29,11 @@ sys.path.insert(0, str(ROOT))
 
 from frontier_science.certification import certification_record  # noqa: E402
 from frontier_science.benchmark_layout import task_path  # noqa: E402
-from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402
+from frontier_science.provenance import (  # noqa: E402
+    SOURCE_SCOPE,
+    finalize_report_trust,
+    source_provenance,
+)
 from frontier_science.registry import list_tasks  # noqa: E402
 from scripts.audit_tasks import _task_card_issues  # noqa: E402
 
@@ -117,9 +121,11 @@ def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def _tracked_json_paths() -> list[Path]:
+def _tracked_json_paths(
+    required_reports: Iterable[str] = GLOBAL_REPORTS.values(),
+) -> list[Path]:
     tracked = set(_git(["ls-files", "experiments/*.json"], check=True).splitlines())
-    selected = set(GLOBAL_REPORTS.values())
+    selected = set(required_reports)
     for pattern in EVIDENCE_PATTERNS:
         selected.update(str(path.relative_to(ROOT)) for path in ROOT.glob(pattern))
     return [ROOT / name for name in sorted(selected & tracked) if (ROOT / name).is_file()]
@@ -712,17 +718,48 @@ def _gate(passed: bool, blockers: list[str]) -> dict[str, Any]:
     return {"passed": bool(passed and not unique), "blockers": unique}
 
 
-def build_report() -> dict[str, Any]:
+def _current_full_suite_issues(
+    document: dict[str, Any], head_revision: str
+) -> list[str]:
+    provenance = document.get("source_provenance") or {}
+    suite_revision = str(provenance.get("git_revision") or "")
+    source_changes = _git([
+        "diff", "--name-only", suite_revision, head_revision,
+        "--", *SOURCE_SCOPE,
+    ]) if suite_revision and _git_commit_exists(suite_revision) else ""
+    suite_is_ancestor = bool(
+        suite_revision
+        and subprocess.run(
+            ["git", "merge-base", "--is-ancestor", suite_revision, head_revision],
+            cwd=str(ROOT), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+        ).returncode == 0
+    )
+    if not (
+        _trusted_document(document)
+        and document.get("unittest_ok") is True
+        and int(document.get("test_count", 0)) > 0
+        and provenance.get("source_tree_dirty") is False
+        and suite_is_ancestor
+        and source_changes == ""
+    ):
+        return ["full test suite is not trusted and bound to the audited revision"]
+    return []
+
+
+def build_report(full_test_suite: Optional[str] = None) -> dict[str, Any]:
+    global_reports = dict(GLOBAL_REPORTS)
+    if full_test_suite is not None:
+        global_reports["full_test_suite"] = str(full_test_suite)
     specs = list_tasks(None)
     inventory_ids = {spec.task_id for spec in specs}
     head_revision = _git(["rev-parse", "HEAD"], check=True)
     documents: dict[str, dict[str, Any]] = {}
-    for path in _tracked_json_paths():
+    for path in _tracked_json_paths(global_reports.values()):
         document = _load_json(path)
         if document is not None:
             documents[str(path.relative_to(ROOT))] = document
 
-    missing_global = [name for name in GLOBAL_REPORTS.values() if name not in documents]
+    missing_global = [name for name in global_reports.values() if name not in documents]
     migrations = _migration_contracts(documents)
     model_runs = _model_run_records(documents, inventory_ids, head_revision, migrations)
     fresh = _fresh_confirmation_tasks(documents, inventory_ids, head_revision, migrations)
@@ -1014,6 +1051,11 @@ def build_report() -> dict[str, Any]:
     issues = []
     if missing_global:
         issues.append("missing required global reports: %s" % ", ".join(missing_global))
+    if full_test_suite is not None:
+        issues.extend(_current_full_suite_issues(
+            documents.get(global_reports["full_test_suite"], {}),
+            head_revision,
+        ))
     if len(task_records) != len(inventory_ids):
         issues.append("task record count does not match inventory")
     if sum(status_counts.values()) != len(task_records):
@@ -1065,6 +1107,10 @@ def build_report() -> dict[str, Any]:
             "binding_states": sorted(BINDING_STATES),
             "current_contract_scope": list(TASK_CONTRACT_PATHS),
             "tracked_reports_only": True,
+            "required_current_full_test_suite": (
+                global_reports["full_test_suite"]
+                if full_test_suite is not None else None
+            ),
             "internal_science_admission": [
                 "certified or candidate status",
                 "valid task card and current certification record",
@@ -1099,7 +1145,7 @@ def build_report() -> dict[str, Any]:
         "head_revision": head_revision,
         "global_evidence": {
             key: _global_ref(relative, documents[relative])
-            for key, relative in GLOBAL_REPORTS.items() if relative in documents
+            for key, relative in global_reports.items() if relative in documents
         },
         "migration_contracts": migrations,
         "inventory_count": len(task_records),
@@ -1221,8 +1267,12 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path)
     parser.add_argument("--markdown-output", type=Path)
+    parser.add_argument(
+        "--full-test-suite",
+        help="require this tracked passing suite to match the audited revision",
+    )
     args = parser.parse_args()
-    report = build_report()
+    report = build_report(full_test_suite=args.full_test_suite)
     rendered = json.dumps(report, indent=2, allow_nan=False) + "\n"
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)

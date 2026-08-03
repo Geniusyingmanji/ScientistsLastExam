@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_FULL_TEST_SUITE",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "12f73fcfce03f94e09e73de229910c3e060d5bda",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "frontier_science",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/run_full_test_suite.py",
+      "--output",
+      "experiments/full_test_suite_2026-08-03_v30.json"
+    ]
+  },
+  "started_at": "2026-08-03T12:54:58.010407+00:00",
+  "completed_at": "2026-08-03T13:33:02.002204+00:00",
+  "command": [
+    "/usr/bin/python3",
+    "-W",
+    "error::ResourceWarning",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-q"
+  ],
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "wall_seconds": 2283.9917710153386,
+  "unittest_seconds": 2283.31,
+  "returncode": 0,
+  "test_count": 670,
+  "unittest_ok": true,
+  "stdout": "  [normal] [Chemistry/LennardJonesCluster] baseline combined_score=0.041930 valid=1.0\n  [normal] [Chemistry/LennardJonesCluster] DONE baseline=0.041930 -> best=0.041930 (0/0 accepted)  out=/tmp/tmps2f0bc9u/runs/Chemistry__LennardJonesCluster/greedy_rewrite/normal/seed_0\n[block 1/1] complete Chemistry/LennardJonesCluster|greedy_rewrite|0\nResults: /tmp/tmps2f0bc9u/report.json\n  [normal] [Chemistry/LennardJonesCluster] baseline combined_score=0.041930 valid=1.0\n  [normal] [Chemistry/LennardJonesCluster] DONE baseline=0.041930 -> best=0.041930 (0/0 accepted)  out=/tmp/tmprvfpf_2a/runs/Chemistry__LennardJonesCluster/greedy_rewrite/normal/seed_0\n[block 1/1] complete Chemistry/LennardJonesCluster|greedy_rewrite|0\nResults: /tmp/tmprvfpf_2a/report.json\n  [normal] [Chemistry/LennardJonesCluster] baseline combined_score=0.041930 valid=1.0\n  [normal] [Chemistry/LennardJonesCluster] DONE baseline=0.041930 -> best=0.041930 (0/0 accepted)  out=/tmp/tmpedzwp997/runs/Chemistry__LennardJonesCluster/greedy_rewrite/normal/seed_0\n[block 1/1] complete Chemistry/LennardJonesCluster|greedy_rewrite|0\nResults: /tmp/tmpedzwp997/report.json\n  [normal] [Chemistry/LennardJonesCluster] baseline combined_score=0.041930 valid=1.0\n  [normal] [Chemistry/LennardJonesCluster] DONE baseline=0.041930 -> best=0.041930 (0/0 accepted)  out=/tmp/tmph_yuyfy6/runs/Chemistry__LennardJonesCluster/greedy_rewrite/normal/seed_0\n[block 1/1] complete Chemistry/LennardJonesCluster|greedy_rewrite|0\nResults: /tmp/tmph_yuyfy6/report.json\n  [normal] [Chemistry/LennardJonesCluster] baseline combined_score=0.041930 valid=1.0\n  [normal] [Chemistry/LennardJonesCluster] DONE baseline=0.041930 -> best=0.041930 (0/0 accepted)  out=/tmp/tmp4d742vgg/runs/Chemistry__LennardJonesCluster/greedy_rewrite/normal/seed_0\n[block 1/1] complete Chemistry/LennardJonesCluster|greedy_rewrite|0\nResults: /tmp/tmp4d742vgg/report.json\n",
+  "stderr": "----------------------------------------------------------------------\nRan 670 tests in 2283.310s\n\nOK\n",
+  "execution_passed": true,
+  "trust_decision": "trusted_clean_revision",
+  "trusted_evidence": true,
+  "passed": true
+}

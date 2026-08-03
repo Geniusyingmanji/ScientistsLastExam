@@ -3,6 +3,7 @@ from __future__ import annotations
 import importlib.util
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 
 def load_module():
@@ -29,6 +30,31 @@ class TaskMaturityAuditTests(unittest.TestCase):
         self.assertEqual(self.report["gate_counts"]["internal_science_admission"], 50)
         self.assertEqual(self.report["issues"], [])
         self.assertTrue(self.report["execution_passed"])
+
+    def test_explicit_current_full_suite_gate_is_fail_closed(self):
+        revision = "a" * 40
+        head = "b" * 40
+        document = {
+            "trusted_evidence": True,
+            "execution_passed": True,
+            "unittest_ok": True,
+            "test_count": 1,
+            "source_provenance": {
+                "git_revision": revision,
+                "source_tree_dirty": False,
+            },
+        }
+        with patch.object(self.module, "_git_commit_exists", return_value=True):
+            with patch.object(self.module, "_git", return_value=""):
+                with patch.object(self.module.subprocess, "run") as run:
+                    run.return_value.returncode = 0
+                    self.assertEqual(
+                        self.module._current_full_suite_issues(document, head), []
+                    )
+                    run.return_value.returncode = 1
+                    self.assertEqual(len(
+                        self.module._current_full_suite_issues(document, head)
+                    ), 1)
 
     def test_maturity_is_not_inferred_from_registry_status(self):
         self.assertEqual(self.report["gate_counts"]["open_release_ready"], 0)
