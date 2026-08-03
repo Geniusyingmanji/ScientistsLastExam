@@ -231,19 +231,21 @@ Key trusted artifacts include:
 | [Certification audit v65](experiments/task_certification_audit_2026-07-26_v65.json) | 7 certified / 43 candidate / 9 quarantined | Inventory and admission gates at clean revision `c98e28c` |
 | [Secure baseline v46](experiments/secure_baseline_determinism_2026-07-26_v46.json) | 59/59 deterministic, valid, and fail-closed | Two baseline evaluations per task at clean revision `1565e22` |
 | [Security audit v49](experiments/security_audit_2026-07-27_v49.json) | 23/23 tests passed | Sandbox and protocol regressions at clean revision `ab0c393` |
-| [Full suite v28](experiments/full_test_suite_2026-07-30_v28.json) | 653/653 tests passed | Hash-bound historical test report at clean revision `549d588` |
+| [Full suite v31](experiments/full_test_suite_2026-08-03_v31.json) | 671/671 tests passed | Current hash-bound report at clean revision `90ab320` |
 | [Science summary v28](experiments/science_calibration_summary_2026-07-25_v28.json) | 69 normal single-run conditions across 35 tasks | Calibration only; heterogeneous science axes are not averaged |
 | [Two-hour exploratory analysis](experiments/exploratory_2h_analysis_2026-07-30_v1.json) | 7/7 declared cells completed | Result-selected exploratory screen, not confirmatory or population evidence |
 | [Quarantined-task re-audit](experiments/quarantined_task_admission_audit_2026-08-03_v1.json) | 9/9 material defects reproduced | All quarantined packages checked at clean revision `bce1d6c`; 0/9 meet the internal benchmark standard |
+| [Task maturity audit v5](experiments/task_maturity_audit_2026-08-03_v5.json) | 59/59 tasks evidence-bound; issues=[] | 50 admissible tasks have current/migration-safe model measurements; all 9 quarantined tasks have current defect reproduction |
 
-The current discipline-layout branch additionally passes 662/662 local tests. Because those
-tests ran on a source-dirty pre-commit tree, they are implementation verification rather than a
-new trusted dated evidence artifact.
+The current evidence-bound conclusion is deliberately split: 50 tasks pass the internal science
+admission gate, while the other 9 do not meet the internal benchmark standard and remain
+quarantined. None of the 59 currently satisfies the stronger open-release, external-validation,
+or long-horizon-readiness gates; registry status must not be read as those broader claims.
 
 [`experiments/TRUST.md`](experiments/TRUST.md) is the append-only trust manifest and the primary
 index for dated reports. Detailed study plans and interpretations live in [`.research/`](.research/),
 including the [two-hour result note](.research/exploratory_2h_results_2026-07-30_v1.md) and
-[task maturity ledger](.research/task_maturity_ledger_2026-07-27_v4.md).
+[current task maturity ledger](.research/task_maturity_ledger_2026-08-03_v5.md).
 
 Historical pre-sandbox reports are retained for provenance but classified
 `UNTRUSTED_PRE_SANDBOX`; they must not be used as benchmark evidence.
@@ -257,6 +259,9 @@ python -m unittest -v tests.test_benchmark_layout tests.test_runtime_migration
 python scripts/run_security_audit.py --output /tmp/security.json
 python scripts/audit_tasks.py --output /tmp/certification.json
 python scripts/audit_quarantined_tasks.py --output /tmp/quarantined.json
+python scripts/audit_task_maturity.py \
+  --full-test-suite experiments/full_test_suite_2026-08-03_v31.json \
+  --output /tmp/maturity.json
 ```
 
 Longer inventory and full-suite checks:
