@@ -55,6 +55,30 @@ AUDITED_RUNTIME_SHA256 = {
     ),
 }
 
+# Commit 844ba97 moved every benchmark package from its logical-domain path to
+# a broad-discipline path.  These loader changes are the corresponding,
+# repository-wide compatibility shim: task ids still come from metadata and
+# the candidate/evaluator blobs are unchanged.  Historical calibration audits
+# include ``registry.py`` and ``spec.py`` in their runtime scopes, so compare
+# these exact before/after blobs under one logical key instead of treating the
+# audited layout migration as a task-semantic change.  Any later edit (or an
+# incomplete combination of these blobs) continues to surface fail-closed.
+LAYOUT_MIGRATION_REVISION = "844ba97c4f425e4624a3c1b4b67c025c68438409"
+LAYOUT_RUNTIME_BLOBS = {
+    "frontier_science/benchmark_layout.py": (
+        None,
+        "5debce7f3f90c007a070d383297f80cdae0e2a19",
+    ),
+    "frontier_science/registry.py": (
+        "8324a7be5e684ca6e9aa1997f803dace5c1a8d36",
+        "215df53672776003acee22f85cd9564401d704ee",
+    ),
+    "frontier_science/spec.py": (
+        "206523f66f286e974b1f2e9f807415f76b21648b",
+        "b2ae45abb9cc5b3e20990245dcb0346e48c9b9c9",
+    ),
+}
+
 
 def compare_json_values(
     historical: Any,
@@ -235,6 +259,14 @@ def runtime_source_changes(
         if not matched:
             expanded.append(value)
 
+    # The post-move registry/spec loaders import benchmark_layout.  Treat the
+    # three exact blobs as one runtime unit so a later mapping edit cannot be
+    # omitted merely because historical scopes predate the new module.
+    if set(expanded) & set(LAYOUT_RUNTIME_BLOBS):
+        expanded.extend(
+            path for path in LAYOUT_RUNTIME_BLOBS if path not in expanded
+        )
+
     def tree(revision: str) -> dict[str, str]:
         output = subprocess.check_output(
             ["git", "ls-tree", "-r", revision, "--", *dict.fromkeys(expanded)],
@@ -263,8 +295,34 @@ def runtime_source_changes(
             result[normalized] = fields[2]
         return result
 
-    before = tree(left)
-    after = tree(right)
+    def normalize_layout_runtime(
+        revision: str, values: dict[str, str]
+    ) -> dict[str, str]:
+        """Normalize the exact, atomic loader side of the discipline move."""
+
+        if not _is_ancestor(LAYOUT_MIGRATION_REVISION, revision, root):
+            expected_index = 0
+        else:
+            expected_index = 1
+        scoped = {
+            path: values.get(path)
+            for path in LAYOUT_RUNTIME_BLOBS
+            if path in expanded
+        }
+        expected = {
+            path: hashes[expected_index]
+            for path, hashes in LAYOUT_RUNTIME_BLOBS.items()
+            if path in expanded
+        }
+        if scoped != expected:
+            return values
+        normalized = dict(values)
+        for path in scoped:
+            normalized[path] = "discipline-layout-runtime-v1"
+        return normalized
+
+    before = normalize_layout_runtime(left, tree(left))
+    after = normalize_layout_runtime(right, tree(right))
     changes = sorted(
         path for path in set(before) | set(after)
         if before.get(path) != after.get(path)

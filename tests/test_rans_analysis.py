@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import importlib.util
-import subprocess
 import unittest
 from pathlib import Path
 
@@ -142,15 +141,9 @@ class RANSAnalysisTests(unittest.TestCase):
             "benchmarks/Engineering/RANSCalibration/TASK_CARD.yaml",
             module.TASK_RUNTIME_SCOPE,
         )
-        changed = subprocess.check_output(
-            [
-                "git", "diff", "--name-only",
-                module.EXPECTED_MODEL_SOURCE_REVISION, "HEAD", "--",
-                *module.TASK_RUNTIME_SCOPE,
-            ],
-            cwd=ROOT,
-            text=True,
-        ).splitlines()
+        changed = module._source_changes(
+            module.EXPECTED_MODEL_SOURCE_REVISION, "HEAD"
+        )
         self.assertEqual(
             changed,
             [

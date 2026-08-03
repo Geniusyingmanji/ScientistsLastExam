@@ -415,3 +415,9 @@ Raw `.out`/`.log` files predating the trusted evaluator inherit
 | Artifact | Trust | Scope |
 |---|---|---|
 | `quarantined_task_admission_audit_2026-08-03_v1.json` | `TRUSTED_QUARANTINED_TASK_REAUDIT` | SHA-256 `5664ba42…8fdf75`; on clean source `bce1d6c`, executable adversarial checks reproduce the material defect for all 9/9 manifest-quarantined tasks and recommend retaining all nine in quarantine. Five previously recorded task-specific failures still reproduce. The other four claimed physical tasks share one normalized eight-variable trigonometric oracle, expose its embedded full-score vector, have no procedural/held-out/sealed axis, lack task cards and required certification metadata, and return task-level valid/full score for NaN before trusted metric sealing rejects the non-finite metric. This is negative admission evidence, not validation of those tasks. |
+
+## 2026-08-03 discipline-layout regression evidence
+
+| Artifact | Trust | Scope |
+|---|---|---|
+| `full_test_suite_2026-08-03_v29.json` | `FAILED_FULL_TEST_SUITE / DO_NOT_USE_AS_PASSING_EVIDENCE` | SHA-256 `8cb3061a…ae28b7`; on clean source `152af84`, 657/667 tests pass and ten historical analysis/source-equivalence tests fail. The failures expose an incomplete cross-revision normalization of the committed logical-domain-to-discipline directory migration: unchanged task blobs are moved correctly, but the exact layout loader unit is still reported as runtime drift. This negative report is retained and must be superseded by the fail-closed blob-bound fix and a passing clean-revision suite. |

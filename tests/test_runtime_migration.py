@@ -4,8 +4,10 @@ import importlib.util
 import subprocess
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from frontier_science.runtime_migration import (
+    LAYOUT_RUNTIME_BLOBS,
     compare_json_values,
     filter_runtime_source_changes,
     runtime_source_changes,
@@ -86,6 +88,81 @@ class RuntimeMigrationTests(unittest.TestCase):
                 runtime_source_changes(revision, revision, scope, root=ROOT),
                 [],
             )
+
+    def test_runtime_diff_normalizes_the_committed_cross_revision_layout_move(self):
+        legacy_revision = "3e031373cd54f4d9542076fbe42ceaee855fe825"
+        current_revision = subprocess.check_output(
+            ["git", "rev-parse", "HEAD"], cwd=ROOT, text=True
+        ).strip()
+        shared_scope = [
+            "frontier_science/registry.py",
+            "frontier_science/spec.py",
+        ]
+        for task_scope in (
+            "benchmarks/Turbulence/RANSCalibration",
+            "benchmarks/Engineering/RANSCalibration",
+        ):
+            self.assertEqual(
+                runtime_source_changes(
+                    legacy_revision,
+                    current_revision,
+                    [*shared_scope, task_scope],
+                    root=ROOT,
+                ),
+                [],
+            )
+
+    def test_layout_normalization_requires_the_exact_atomic_loader_blobs(self):
+        def tree_output(revision: str) -> str:
+            index = 0 if revision == "legacy" else 1
+            rows = []
+            for path, hashes in LAYOUT_RUNTIME_BLOBS.items():
+                blob = hashes[index]
+                if blob is None:
+                    continue
+                if revision == "changed" and path.endswith("registry.py"):
+                    blob = "f" * 40
+                rows.append("100644 blob %s\t%s" % (blob, path))
+            return "\n".join(rows) + "\n"
+
+        def ls_tree(command, **_kwargs):
+            return tree_output(command[3])
+
+        with patch(
+            "frontier_science.runtime_migration.subprocess.check_output",
+            side_effect=ls_tree,
+        ):
+            with patch(
+                "frontier_science.runtime_migration._is_ancestor",
+                side_effect=lambda _left, right, _root: right != "legacy",
+            ):
+                changes = runtime_source_changes(
+                    "legacy",
+                    "changed",
+                    ["frontier_science/registry.py"],
+                    root=ROOT,
+                )
+
+        self.assertIn("frontier_science/registry.py", changes)
+
+    def test_layout_runtime_unit_is_unchanged_at_current_revision(self):
+        legacy_revision = "3e031373cd54f4d9542076fbe42ceaee855fe825"
+        current_revision = subprocess.check_output(
+            ["git", "rev-parse", "HEAD"], cwd=ROOT, text=True
+        ).strip()
+        self.assertEqual(
+            runtime_source_changes(
+                legacy_revision,
+                current_revision,
+                [
+                    "frontier_science/benchmark_layout.py",
+                    "frontier_science/registry.py",
+                    "frontier_science/spec.py",
+                ],
+                root=ROOT,
+            ),
+            [],
+        )
 
 
 if __name__ == "__main__":
