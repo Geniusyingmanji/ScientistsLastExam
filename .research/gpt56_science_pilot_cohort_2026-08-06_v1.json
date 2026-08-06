@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "manifest_id": "frontier_science_gpt56_science_pilot_v1",
+  "frozen_at_utc": "2026-08-06",
+  "analysis_role": "cross_discipline_diagnostic_model_and_self_evolution_pilot",
+  "claim_limit": "exploratory_calibration_not_representative_population_model_ranking_feedback_causal_external_validation_or_autonomous_discovery_evidence",
+  "selection": {
+    "selected_before_any_gpt56_task_outcome": true,
+    "selected_after_inspecting_gpt55_evidence": true,
+    "confirmatory_reuse_permitted": false,
+    "rule": "Freeze four admissible tasks spanning mechanism discovery, Maxwell design, active molecular hypothesis testing, and raw scientific instrumentation. Retain all scheduled GPT-5.6 cells regardless of score or validity."
+  },
+  "task_weighting": "retain_task_level_results_do_not_average_heterogeneous_science_axes",
+  "failure_policy": "intent_to_evaluate_with_all_outer_failures_invalid_proposals_and_retry_history_retained",
+  "tasks": [
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "maturity_contract_sha256": "b5e65d29ef3516ac218c7a6e02e0db5e77c1285eacc961390618cd5ba866e712",
+      "runtime_contract_sha256": "c9fa66585d912ce33010ff4d972afbfd3da4196be4ccfe38d55d0a0fd9978593",
+      "task_package_sha256": "479b3b74fd897f76560bf91b11111e046d0746b2fc8706bb1d5fac03b44f8546",
+      "task_card_sha256": "873fe2000dc9899c05e9748be4b0853721687bedc429a284daae2105fb5cba7f",
+      "provenance_class": "procedural",
+      "role": "active mechanism recovery, prediction, unsupported-model refusal, and feedback-driven program revision"
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "maturity_contract_sha256": "e57461d2ff8496157427b98238eb0292877111f7e4cf667b71d5b38b860bb6ac",
+      "runtime_contract_sha256": "476d23427837de38f663802bd512cea25483ba2e5f8b162f71af08624f1f1dd2",
+      "task_package_sha256": "b50d01433e8aa712066e1dec6fad2f5333f373b107d45a9a5aeb77f8ed1fc300",
+      "task_card_sha256": "22c22a90b2940063a37488fc1cadc31445713c27fe8661e14cd868a384d9b8b4",
+      "provenance_class": "procedural",
+      "role": "Fourier-modal Maxwell design with held-out transfer and sealed fabrication robustness"
+    },
+    {
+      "task": "MolecularDynamics/ForceFieldCalibration",
+      "maturity_contract_sha256": "1f366222a2cdc68121ca98a67422148ce62af25c315069b3061a8b5e4fbd0f4e",
+      "runtime_contract_sha256": "0a5bb25ea6410ac183864075d1c8960ebc068023f9c5934539c66715b2c71a05",
+      "task_package_sha256": "8580e10f3e7faefad3944215abe871eaa3355d16e11567cd7870ebd8d6c4a0c8",
+      "task_card_sha256": "d51058ee1fa89fbd2df353a147d06c7789cc67e63d4d40af406a8eb491134e48",
+      "provenance_class": "procedural",
+      "role": "active pair-potential hypothesis management, parameter inference, prediction, and calibrated refusal"
+    },
+    {
+      "task": "Sensors/QuartzCrystalMicrobalanceLab",
+      "maturity_contract_sha256": "41ffbc2b4cdbd2c8f1168787c63fd5fc1616b3c74b256616072549800ba85f1d",
+      "runtime_contract_sha256": "5920742e968617b1b3a99e921900960dc4b0e194e389b180a96c9b6634206b0d",
+      "task_package_sha256": "d5d145fc546d2640599611518706fe6d79be87ab67feeaa247bebb7a8ce1d988",
+      "task_card_sha256": "7ade71847130f366cb863a1c03f752726ef5d76ecd0bc6b139ff9525b3cd7bad",
+      "provenance_class": "procedural",
+      "role": "raw complex-IQ instrument calibration, physical diagnosis, uncertainty, and robust policy design"
+    }
+  ]
+}

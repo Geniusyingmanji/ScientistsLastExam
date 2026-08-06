@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "preregistration_id": "frontier_science_gpt56_science_pilot_2026_08_06_v1",
+  "frozen_at_utc": "2026-08-06",
+  "purpose": "diagnose_scientific_challenge_discrimination_and_short_horizon_self_evolution_with_gpt56_sol",
+  "claim_limit": "exploratory_four_task_single_identifier_calibration_not_population_model_ranking_feedback_causal_external_validation_or_autonomous_discovery_evidence",
+  "source_cohort": {
+    "path": ".research/gpt56_science_pilot_cohort_2026-08-06_v1.json",
+    "sha256": "f0e2df25bb2a907f12f9f9df0d0cf0b715a08da19f423df4b076030ac0b6c67e"
+  },
+  "frozen_source": {
+    "parent_revision": "46593df5fd82ff0bf960c25f5d1f15711cb4f8c9",
+    "runtime_source_sha256": "21c1fe02540384c07786a40458e495418f00c82b3f3f4998fc724f41b263d40e",
+    "source_change_rule": "The execution revision must descend from parent_revision with no changes under frontier_science, scripts, tests, benchmarks, or requirements-upstream.txt. Research and experiment evidence commits are allowed."
+  },
+  "model_condition": {
+    "llm_condition_sha256": "60b240fdc2530ab24d202289a497dd4c2fb0ad1380a6ad9e8aca293bb8e4c34d",
+    "wire": "responses",
+    "endpoint_sha256": "b22995a1fcaf8ad713ac37716f006c717313dfdebd357ac02a077a5582650bb6",
+    "model": "gpt-5.6-sol",
+    "max_output_tokens": 16000,
+    "temperature": null,
+    "reasoning_effort": "low",
+    "server_side_seed_control": false,
+    "replicate_identifier_limit": "The single local seed controls only local ordering; it is not a provider generation seed and supports no population inference."
+  },
+  "design": {
+    "tasks": [
+      {
+        "task": "DynamicalSystems/ActiveLawDiscovery",
+        "task_contract_sha256": "c9fa66585d912ce33010ff4d972afbfd3da4196be4ccfe38d55d0a0fd9978593",
+        "task_package_sha256": "479b3b74fd897f76560bf91b11111e046d0746b2fc8706bb1d5fac03b44f8546",
+        "task_card_sha256": "873fe2000dc9899c05e9748be4b0853721687bedc429a284daae2105fb5cba7f"
+      },
+      {
+        "task": "Optics/DiffractionGratingDesign",
+        "task_contract_sha256": "476d23427837de38f663802bd512cea25483ba2e5f8b162f71af08624f1f1dd2",
+        "task_package_sha256": "b50d01433e8aa712066e1dec6fad2f5333f373b107d45a9a5aeb77f8ed1fc300",
+        "task_card_sha256": "22c22a90b2940063a37488fc1cadc31445713c27fe8661e14cd868a384d9b8b4"
+      },
+      {
+        "task": "MolecularDynamics/ForceFieldCalibration",
+        "task_contract_sha256": "0a5bb25ea6410ac183864075d1c8960ebc068023f9c5934539c66715b2c71a05",
+        "task_package_sha256": "8580e10f3e7faefad3944215abe871eaa3355d16e11567cd7870ebd8d6c4a0c8",
+        "task_card_sha256": "d51058ee1fa89fbd2df353a147d06c7789cc67e63d4d40af406a8eb491134e48"
+      },
+      {
+        "task": "Sensors/QuartzCrystalMicrobalanceLab",
+        "task_contract_sha256": "5920742e968617b1b3a99e921900960dc4b0e194e389b180a96c9b6634206b0d",
+        "task_package_sha256": "d5d145fc546d2640599611518706fe6d79be87ab67feeaa247bebb7a8ce1d988",
+        "task_card_sha256": "7ade71847130f366cb863a1c03f752726ef5d76ecd0bc6b139ff9525b3cd7bad"
+      }
+    ],
+    "algorithm": "greedy_rewrite",
+    "feedback_modes": [
+      "normal",
+      "selection_blind"
+    ],
+    "feedback_semantics": {
+      "normal": "Later proposals see the true-score-selected incumbent and only allowlisted public metrics.",
+      "selection_blind": "Every proposal sees the frozen baseline and baseline allowlisted metrics; proposal scores are used only for offline best-of-batch selection."
+    },
+    "replicate_identifiers": [
+      0
+    ],
+    "condition_order": "reverse_parity_seed_zero_normal_then_selection_blind",
+    "proposal_budget": 3,
+    "scheduled_cell_count": 8,
+    "scheduled_model_call_count": 24,
+    "evaluator_timeout_seconds": 300.0,
+    "primary_command": [
+      "python3",
+      "scripts/batch_evolve.py",
+      "--all",
+      "--tasks",
+      "DynamicalSystems/ActiveLawDiscovery,Optics/DiffractionGratingDesign,MolecularDynamics/ForceFieldCalibration,Sensors/QuartzCrystalMicrobalanceLab",
+      "--algorithms",
+      "greedy_rewrite",
+      "--feedback-modes",
+      "normal,selection_blind",
+      "--seeds",
+      "0",
+      "--budget",
+      "3",
+      "--timeout",
+      "300",
+      "--llm-config",
+      "frontier_science/conf/llm/local.gpt56.yaml",
+      "--run-role",
+      "calibration",
+      "--preregistration",
+      ".research/gpt56_science_pilot_preregistration_2026-08-06_v1.json",
+      "--cohort-manifest",
+      ".research/gpt56_science_pilot_cohort_2026-08-06_v1.json",
+      "--workdir",
+      "runs/gpt56_science_pilot_2026-08-06_v1",
+      "--output",
+      "experiments/gpt56_science_pilot_2026-08-06_v1.json"
+    ]
+  },
+  "evaluation_questions": {
+    "scientific_application": "Does the task implement a recognizable scientific design, inference, discovery, or instrument workflow rather than a generic objective with scientific naming?",
+    "professional_knowledge": "Does success require domain equations, experimental design, numerical analysis, uncertainty, mechanism, or physical constraints beyond generic code search?",
+    "scientific_tools": "Does the task naturally exercise simulation, inverse methods, dynamic programming, signal processing, optimization, statistical inference, or equivalent scientific tools?",
+    "difficulty_and_discrimination": "Are GPT-5.6-sol outcomes nontrivial, non-saturated, and separated by task or condition while retaining valid headroom?",
+    "self_evolving_fit": "Can iterative artifact revision and evaluator feedback produce measurable improvement without exposing sealed science metrics, and is the result distinct from open-loop best-of-batch generation?"
+  },
+  "predeclared_descriptive_gates": {
+    "protocol_health": "All 8 cells complete with no provider or evaluator infrastructure failure and all 24 scheduled proposal events retained.",
+    "challenge": "At least two tasks have best combined_score below 0.95 and at least one task below 0.50; a zero score counts as challenge only when at least one executable proposal was valid or a concrete proposal-failure hurdle is retained.",
+    "discrimination": "Across the four task-level best scores, the range is at least 0.10 and at least two distinct 0.10-wide score bands are occupied, or proposal-validity rates differ by at least 0.25 across tasks.",
+    "short_horizon_self_evolution_signal": "Report normal minus selection-blind and post-first-valid gains by task. Any apparent gain is descriptive only because each condition has one unseeded provider draw.",
+    "anti_saturation": "No more than two of four tasks may achieve best score at or above 0.95 in this pilot."
+  },
+  "leakage_and_failure_policy": {
+    "runtime_allowed": "Task.md, public constraints, baseline source, and the closed allowlist of feasibility/selection metrics.",
+    "runtime_prohibited": "Certification status, broad discipline, historical GPT-5.5 outcomes, task-card review labels, evaluator-only science metrics, held-out labels, ground truth, and score files.",
+    "offline_only": "Task selection rationale, task-card evidence, GPT-5.5 comparison, science-axis decomposition, and category grouping occur only after GPT-5.6 predictions are complete.",
+    "failure_retention": "Invalid code, schema failures, runtime failures, timeouts, and outer provider failures remain outcomes; do not silently replace them or relabel a valid-only cohort.",
+    "stopping": "Run all eight frozen cells unless endpoint or evaluator infrastructure prevents continuation; do not stop because scores look good, bad, saturated, or favorable to a hypothesis."
+  },
+  "prerequisites": [
+    {
+      "path": "experiments/full_test_suite_2026-08-03_v31.json",
+      "sha256": "cf580e5c0d599c622a7b10f9172d9891e5b88065295f9ccc5264fa24e318f21e"
+    },
+    {
+      "path": "experiments/task_maturity_audit_2026-08-03_v5.json",
+      "sha256": "dc7712a098be6b1d6c50dccfc709e77d5c685db0559ad7932414197b312080eb"
+    }
+  ]
+}
