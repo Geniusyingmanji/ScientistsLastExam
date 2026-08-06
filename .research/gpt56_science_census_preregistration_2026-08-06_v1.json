@@ -1,0 +1,424 @@
+{
+  "schema_version": 1,
+  "preregistration_id": "frontier_science_gpt56_science_census_2026_08_06_v1",
+  "frozen_at_utc": "2026-08-06",
+  "purpose": "measure_budget_one_gpt56_headroom_validity_and_cross_task_discrimination_over_the_complete_internally_admitted_inventory",
+  "claim_limit": "single_unseeded_provider_draw_per_task_not_population_model_ranking_feedback_causal_external_validation_recursive_self_improvement_or_autonomous_discovery_evidence",
+  "source_cohort": {
+    "path": ".research/gpt56_science_census_cohort_2026-08-06_v1.json",
+    "sha256": "dbe85bcd3a0174f4db231a6f915e62aef7a7e028ce36a956a1d316669efa110b"
+  },
+  "frozen_source": {
+    "parent_revision": "c4803f491141abc594dcba506fd5df2047b9012a",
+    "runtime_source_sha256": "21c1fe02540384c07786a40458e495418f00c82b3f3f4998fc724f41b263d40e",
+    "source_change_rule": "The execution revision must descend from parent_revision with no changes under frontier_science, scripts, tests, benchmarks, or requirements-upstream.txt. Research and experiment evidence commits are allowed."
+  },
+  "model_condition": {
+    "llm_condition_sha256": "60b240fdc2530ab24d202289a497dd4c2fb0ad1380a6ad9e8aca293bb8e4c34d",
+    "wire": "responses",
+    "endpoint_sha256": "b22995a1fcaf8ad713ac37716f006c717313dfdebd357ac02a077a5582650bb6",
+    "model": "gpt-5.6-sol",
+    "max_output_tokens": 16000,
+    "temperature": null,
+    "reasoning_effort": "low",
+    "server_side_seed_control": false,
+    "replicate_identifier_limit": "The local identifier controls only local ordering; it is not a provider generation seed and supports no population-performance inference."
+  },
+  "design": {
+    "tasks": [
+      {
+        "task": "PopulationGenetics/DemographicSFS",
+        "task_contract_sha256": "e4baefec22a5e1dd92d52c785583e624ca317ba599c810174cee24c301f63940",
+        "task_package_sha256": "1cc91a7b16b81f008523294032354e3914642c3dff62eaba1f0d7adfc71c9259",
+        "task_card_sha256": "327393d783ad094614e65b3c0100f550cd7435cb7ebc3e11ec0cda81aa291f0a"
+      },
+      {
+        "task": "SystemsBiology/GeneNetworkIntervention",
+        "task_contract_sha256": "bde602a4406a2bd8ee17d2742a108453e364bccad466122b5841fc9be1ff5068",
+        "task_package_sha256": "d6368a14674517434e97f3ac6bfc0287a90f83985ef3e041bbb6502242b0dc1b",
+        "task_card_sha256": "54ed11cb8ca6b0b33f31ebf955b650aceb206aba0393197aff82a934180e504e"
+      },
+      {
+        "task": "EvidenceSynthesis/ProspectiveMetaAnalysis",
+        "task_contract_sha256": "c011df0f32ff3efb857f4cd6123f0d323d2d23678117a33c897540d2ee23e4cf",
+        "task_package_sha256": "2e6c621050deac31a4c1e9853a323ffa43193dcb6467dc34fbd748dd4ab274bb",
+        "task_card_sha256": "7201aef90248f972629f7b41f8a1a5e0f6343a2e24c80fefbc1d1c8b288dd8ff"
+      },
+      {
+        "task": "ProteinEngineering/ProteinStabilityDesign",
+        "task_contract_sha256": "f34324f3c64e2f2c83e3ad70b1a7d9c9f98c907ba70624719075c695c86638f9",
+        "task_package_sha256": "f1def2f8a9f5b456213dceb78c5fdca2bed515924781d62699bb2c68fdcadb48",
+        "task_card_sha256": "71e3c4b227b5aec3ed21ac880a2360b69f89130878203f0ddef7a9b3ec71146c"
+      },
+      {
+        "task": "RNAEngineering/RNAInverseDesign",
+        "task_contract_sha256": "9a9abd18da5b93e3fe04d816be731429ace1d7b4ae6e8d858436cb7ba3769e62",
+        "task_package_sha256": "0455755f51ae9de88beccb842176e5b309765b86805a9bb1e7909aa91b6757e7",
+        "task_card_sha256": "84dae5b35ca582a19391ea2f04b8a64dbee2682c88ef72635f4bf5bf7346119b"
+      },
+      {
+        "task": "MaterialsScience/AlloyHardnessOptimization",
+        "task_contract_sha256": "ce3b6af3d8425d37ecea012652814f6975fba50c400c9ce405c1d88fa4cd3d30",
+        "task_package_sha256": "db991b857664074910b1ff826d67591cfdfedc862eca12a4d42a15753652a358",
+        "task_card_sha256": "58fe4c410405b7adb5f04ac7459d4754a63ff22945e886c532f4766625dbf2b4"
+      },
+      {
+        "task": "Catalysis/CatalystDeactivationLab",
+        "task_contract_sha256": "180ffec66988ee05ef87b4bc840296f9706df14aff86bd41353ef8e29ad93853",
+        "task_package_sha256": "ee48b97e0108523e362b0444b29a6f8204ff876ddb55e3659b481ab265d0e9a7",
+        "task_card_sha256": "9c8ee1dc8993332df3f257a5f3838062760e81e7facc54872ef1161709fc222f"
+      },
+      {
+        "task": "ChemicalProcess/DistillationColumnDesign",
+        "task_contract_sha256": "2e9073cb5f34456081094940156192c3e6e98e8282205af723f79d0f99d391a2",
+        "task_package_sha256": "48ccc94ad8f330c47345c0bc00364bf1f684e5570167c2c06fd933acf98556e0",
+        "task_card_sha256": "2bdf09717bad3585dc15b97716225a2f02c1c2d85efc8a0640affac83758bfbc"
+      },
+      {
+        "task": "Electrochemistry/ElectrolyteConductivityDesign",
+        "task_contract_sha256": "f334c386ec9021cc5f4a13a75abbefce4a4e49f24c7f103f86e7a7f4a594c355",
+        "task_package_sha256": "a57fe86e2770a88add277c8e1d4391095407c2e56e868a697ff47e099dd8513c",
+        "task_card_sha256": "aaaa34f20954cce55180ea56b1c7ef9285a377194df3fbb89ff9822fafbdca61"
+      },
+      {
+        "task": "MolecularDynamics/ForceFieldCalibration",
+        "task_contract_sha256": "0a5bb25ea6410ac183864075d1c8960ebc068023f9c5934539c66715b2c71a05",
+        "task_package_sha256": "8580e10f3e7faefad3944215abe871eaa3355d16e11567cd7870ebd8d6c4a0c8",
+        "task_card_sha256": "d51058ee1fa89fbd2df353a147d06c7789cc67e63d4d40af406a8eb491134e48"
+      },
+      {
+        "task": "QuantumChemistry/HartreeFockSCF",
+        "task_contract_sha256": "5134e44869048c1aaeee854ace55a8570b0cc3ee6ef8b020631fe51cd5cd1a5b",
+        "task_package_sha256": "70b7507027b8d2fe5213c001f061e025a70b147417478f2a1505cbabd01da4c7",
+        "task_card_sha256": "67aa9a9a609ca6bd3492fc2cb5e8e8d707cb9a4aedf349cc1c2a2d54119addb8"
+      },
+      {
+        "task": "Chemistry/LennardJonesCluster",
+        "task_contract_sha256": "22135de5c67c82c42f270efbc5a400b5edcb4b87be7a4bbbd8318a3947e2c214",
+        "task_package_sha256": "1fb40acd35ee06e3ad712b8e79e340c99b356cfdc1fe79e9dede10dd6f2a6076",
+        "task_card_sha256": "607eff5fb10614853bfbfacc1c2123ad15b61ab75a5f5b268480c832ef52600b"
+      },
+      {
+        "task": "Spectroscopy/NMRSpectrumFitting",
+        "task_contract_sha256": "606a335d7aaaa7c70cb3299304ae52bcf71ae3dd9cb20f1a0a0eb87887a14aa0",
+        "task_package_sha256": "63f7dd346bf8a30231c34a0e1d06a17e955a2ea000e30e53ae44164f8c8c7e9d",
+        "task_card_sha256": "202e6cbb2f00dbc1c43c7f0accc015e3870f7acc85e51d2ed90882caf91e557b"
+      },
+      {
+        "task": "Photovoltaics/PhotovoltaicTandemDesign",
+        "task_contract_sha256": "8535c278f312e035de72955a0b08f492c437022d2dc439d71d781ae509ada688",
+        "task_package_sha256": "a023b7a6cc93ca07e3a66a2e4a8e675d95d317f0934c979474a1de711c8a4393",
+        "task_card_sha256": "b27cab89a860bcd213d9d5ad534b6bbf774db9b0b1fa309bb03664640c95cdf8"
+      },
+      {
+        "task": "ChemicalKinetics/ReactionMechanismFitting",
+        "task_contract_sha256": "d546bb907ef649691671242228344bd3096e730a4f89a13696d4986087612936",
+        "task_package_sha256": "548396abe7a45e3d7d298afda72f89601035680b55743d22e29d82e98ce462f3",
+        "task_card_sha256": "2b8f66f01459ec6170020213713c46022d74885dcf264fe403418479b8d97a64"
+      },
+      {
+        "task": "CausalDiscovery/InterventionalSCM",
+        "task_contract_sha256": "529045c92a48a95deee90ed0c4c461d5792b911878fb7814e7bfa23f71299761",
+        "task_package_sha256": "67ccd2ca80259210fe102a815c14e9520ad3b144f0253b1041894d8446ed6503",
+        "task_card_sha256": "a5ce262040ef07c7800ba1bbed99b8ca876f966ee8ddf3a41e9effc22c105bb5"
+      },
+      {
+        "task": "Algorithm/MatrixMultiplicationRank",
+        "task_contract_sha256": "c58e5a075f0f8d9d170ecb3da30ff8ff77eb0ccc84c9d3580b0068c865188734",
+        "task_package_sha256": "c589c1539b651190279d976a90447c9dd2f39d8338109f01522b0aa9eba78531",
+        "task_card_sha256": "4c898591c9b0f7d7d0ad8ac06655af1f355218431e18d6fc0d9577ccb51c9294"
+      },
+      {
+        "task": "ScientificComputing/PoissonSolver2D",
+        "task_contract_sha256": "9ca2b78943ccdca9d8ae0ed5594c237d6c99a06d5c2cd0af300eec8025c4b08e",
+        "task_package_sha256": "2e8f7eb1f9764aad293e33842d0c4a0a15719313acc72d01468494dd117e8f4c",
+        "task_card_sha256": "0a5b69dd50963534cfb841e05b793e6a7a90eb67eb44a3b57d6cd93108407ed9"
+      },
+      {
+        "task": "SignalProcessing/SparseRecovery",
+        "task_contract_sha256": "f3b560aa25ecce79e9f7d031600107a82d8f22323c59ef7d6fb2db9560d15196",
+        "task_package_sha256": "c8b172484f2a79156c4815d49a43d11a709392f78d368065f03519d776527783",
+        "task_card_sha256": "d30b1f6ed62a5cd3096a1b037670d6e98da77839956c6a36bc875b46a1d25234"
+      },
+      {
+        "task": "ClimateScience/EnergyBalanceModel",
+        "task_contract_sha256": "24fceacf9d403af289b932304435377fc4e5f60b3417c8773049c262b7e7b1e7",
+        "task_package_sha256": "6e8885768832acade98bf5d4a049fc622f6e8451e04a280aa94b38c52d08f21e",
+        "task_card_sha256": "9d9afd92970cb40cace6ea335fec757dcdff64a71c6573e3c6dda59fd7bf891e"
+      },
+      {
+        "task": "Geophysics/GravityInversion",
+        "task_contract_sha256": "10463997e3dd21af25465cae5581aec7df8c715d350c522c3341f5aae264de15",
+        "task_package_sha256": "7a28f7798bbc4825726f951a679b1f6b3bb73727313468ef228e3dc291f7fa29",
+        "task_card_sha256": "d55dafdd9c39d94fa18f59fe4effb63766852d98e37b340d662e3225e3c5a50f"
+      },
+      {
+        "task": "Oceanography/OceanCurrentInversion",
+        "task_contract_sha256": "a7737d827e96e438690d5444f09fa2d15b267a97994e1b98ddd3ba5c96313062",
+        "task_package_sha256": "7681d277fa8ef1c19b0419d47d8834a33227bb10fcd911c7918fce9f31d12826",
+        "task_card_sha256": "d29b1950e6dff7f804e4566a05b58d257153cdf3cad11140e733638184c6944d"
+      },
+      {
+        "task": "AtmosphericScience/RadiativeTransferFit",
+        "task_contract_sha256": "7f36648e395f206efe6eac9e04e64b070593fbe5cc6b475636c3993dcc050d30",
+        "task_package_sha256": "97a647495babeb7658ee73b61093bd13f5a7c5600a9680101409fe8aee3f06e3",
+        "task_card_sha256": "6a5ddff101cbe99300cce57f9ba0bb1c6f41c58df995e8ca2cac5387b99d6e50"
+      },
+      {
+        "task": "Geophysics/SeismicInversion",
+        "task_contract_sha256": "11d67ef3e4ee9c6fe4be692995caa77d90ee2fc35eaa59d9b426f8905bb9404e",
+        "task_package_sha256": "f1e8df635ef138c22ac82cb4bcc1ceed2ff42b7099508158fcf854847808e166",
+        "task_card_sha256": "103d2ef63f96ac1acedd26e673bdb1e6028d2484430bbe245e873c95b7d7d99c"
+      },
+      {
+        "task": "WavePropagation/SeismicWaveInversion",
+        "task_contract_sha256": "6219afdbb8f4cb195bbf2504810ab337604bf219c012ddbf258af01da94dd601",
+        "task_package_sha256": "ebc44078f51de3436c68fd0d49f2f388ff61bc0c193b7b9b25592e2ac8c647f7",
+        "task_card_sha256": "e6400aa14e87fa82d936a3e2122bc13f2d1f248ba2cf2a373992656805a92c79"
+      },
+      {
+        "task": "AcousticMetamaterials/BroadbandAbsorber",
+        "task_contract_sha256": "6be0e66392516c3f4a0cba9d6ff977ca8fa5dec5f0e849feb8aa9d20f46cc423",
+        "task_package_sha256": "6ba66cd03e92a7be9a25a79efc10c9938437bef8b3e4b59bf48dd40af89a5813",
+        "task_card_sha256": "ead0c0a5025e309d47bdb48f14f70489788410f09418db65e437e91a6e749efc"
+      },
+      {
+        "task": "HeatTransfer/ConvectionDiffusionOpt",
+        "task_contract_sha256": "1c5285541624dfebcd32bc1cc93bbc543c6c5c1ef5f708cd7e7ed9aef5cf4521",
+        "task_package_sha256": "63efd43aad2e0172d1ca0fe15f0086e848758717bf3f36d7816720c9e1e31104",
+        "task_card_sha256": "39222651fd243ee70061e1c5ba20dda4df2cc111539c42846723824b4fd1d05f"
+      },
+      {
+        "task": "Thermodynamics/HeatExchangerDesign",
+        "task_contract_sha256": "2f43dd188db50935077e4094c574e71bcd2683e4ce0e147a0b98e66b357b7b7a",
+        "task_package_sha256": "1e40c98b286e1ea868910ee67635780005a993de08293160bb70c650e00ffc24",
+        "task_card_sha256": "a21c3338555c0b64c460e6d7bd241b7e0d5bfc6d974477dda4bb047e37cf8cdf"
+      },
+      {
+        "task": "ControlTheory/InvertedPendulumSwingUp",
+        "task_contract_sha256": "ab0617d88cd25692f52970712da27eb0490453287cf9c562ad30d7a38eca5517",
+        "task_package_sha256": "c9567d2f8454f6e28d7b3041884f82214924b51ba8104ad5ad34c14141a351cc",
+        "task_card_sha256": "3c7e9e73fb658c02d23a22855d8b5a6be42b048ba0032eba8784058c34a01282"
+      },
+      {
+        "task": "FluidDynamics/LidDrivenCavity",
+        "task_contract_sha256": "caa95ff742cd81e115c6b1548e6d23ff4f593164e0b0d4d6dfec428d4efabdbb",
+        "task_package_sha256": "a59b3360e9f82788acd9822de205064d3d4b8546164f123ead8fb3a8425d90df",
+        "task_card_sha256": "b47c6bded9ca9174e43dbd9fad2cbb8a2f285eed3a1dc6f94a79e4638b2202ba"
+      },
+      {
+        "task": "Astrodynamics/LowThrustTransfer",
+        "task_contract_sha256": "1d2da2a66090862e5334649b295fe07bfc6edc9f38850b13cc41933f47336326",
+        "task_package_sha256": "312e980798d26a0ed6160d05b3c9c6c11d3a04fc7d05f2434ca43c72ef422dc3",
+        "task_card_sha256": "9378e325b968245b386a67b301d2428dd1301fdf78942c81695e9d30addba0df"
+      },
+      {
+        "task": "Semiconductor/MOSFETDoping",
+        "task_contract_sha256": "c52459ac88c51fd4e6a77f4830e9594a2cefa3920225dacf55dd1373e2dec257",
+        "task_package_sha256": "b9af1b4be57f58640afc339226aaef522ff06ea0f68417b23ecbd79ba0444b40",
+        "task_card_sha256": "45a615a06c1b0c6db599d502373fed7007175d84f078d7009d05fd7764c3c36a"
+      },
+      {
+        "task": "NuclearEngineering/NeutronDiffusionCriticality",
+        "task_contract_sha256": "7c5f820bf39339ebf9ee10d8f77604addc0a7e6ab3dd853845fac2f30eea7c95",
+        "task_package_sha256": "848eb27036e9793e1670a1aa3a134090a69a99ed1f4f7408fd2bf995c60439a1",
+        "task_card_sha256": "74a5391bd66d93f1c49d3e9234c4acc5649ed92287e90f5758314098363bf452"
+      },
+      {
+        "task": "PowerSystems/OptimalPowerFlow",
+        "task_contract_sha256": "52c98fdc0eff79839125dc51a50bc9ff660904dfe0c7ad85487c097d664da301",
+        "task_package_sha256": "a634a4b8608b0b5cb9a4ee74cb192c006b354f95ffc4073571d557291013f329",
+        "task_card_sha256": "fba2f243ad309de9b6c5eb248e64c510f8175ec14bb1c2f8b674ead969525edd"
+      },
+      {
+        "task": "Sensors/QuartzCrystalMicrobalanceLab",
+        "task_contract_sha256": "5920742e968617b1b3a99e921900960dc4b0e194e389b180a96c9b6634206b0d",
+        "task_package_sha256": "d5d145fc546d2640599611518706fe6d79be87ab67feeaa247bebb7a8ce1d988",
+        "task_card_sha256": "7ade71847130f366cb863a1c03f752726ef5d76ecd0bc6b139ff9525b3cd7bad"
+      },
+      {
+        "task": "Turbulence/RANSCalibration",
+        "task_contract_sha256": "f7bfb7a0bcb351dddd3a0ba387c30691ddbb6b60e25598fb1ab45d70b46cb561",
+        "task_package_sha256": "8f1b7ab64cfafba91c160ffa7e10e378a01285448cf084baa672f9b67d7c7b57",
+        "task_card_sha256": "78e3a26b06428658f6a9c74b8c1c870b6afa3a072c43488deccad6d23c044271"
+      },
+      {
+        "task": "Thermodynamics/RankineCycleOpt",
+        "task_contract_sha256": "5f24e68465255f1988731fd0049de7914cfb9e3196431e0f24c991daccf6f72e",
+        "task_package_sha256": "b30ee17eeeb375582f3eca5464213d08673ff25ca5698659f9b142ff102d015e",
+        "task_card_sha256": "51565a8cf8f3c0622e213363dba90a71699896b04cbfa24025e55f62331ad4f9"
+      },
+      {
+        "task": "Acoustics/RoomImpulseResponse",
+        "task_contract_sha256": "be76857471032253bd7aa26954d1bb21cc34c631a3cc9508566bc8a31b0b8dd9",
+        "task_package_sha256": "f8c034f7b7e10c791ab5a4c8342235d79600b82d1e7a12c94f1cd5bdfa836af3",
+        "task_card_sha256": "b832a941bfd6b560f7f3b8a83f247c1bc8260eaaeb20bb347bf70ebba13955bb"
+      },
+      {
+        "task": "StructuralEngineering/TrussWeightMinimization",
+        "task_contract_sha256": "ea318d1cd2af57c5d92283c37c83a0da3101bace10dfb92739001922e5bc8e48",
+        "task_package_sha256": "0db30b79e58fe218223188c53eb05b3a90e2a1cb77171f8f0a61059b2fb715ee",
+        "task_card_sha256": "fb34670aeb0b25b361ac40dd12b6588dc8853ffdacdd65660bac1f0831033901"
+      },
+      {
+        "task": "DynamicalSystems/ActiveLawDiscovery",
+        "task_contract_sha256": "c9fa66585d912ce33010ff4d972afbfd3da4196be4ccfe38d55d0a0fd9978593",
+        "task_package_sha256": "479b3b74fd897f76560bf91b11111e046d0746b2fc8706bb1d5fac03b44f8546",
+        "task_card_sha256": "873fe2000dc9899c05e9748be4b0853721687bedc429a284daae2105fb5cba7f"
+      },
+      {
+        "task": "Mathematics/CapSet",
+        "task_contract_sha256": "69a0b30601a734f40349f5529c47ef6423275d5a4934db8a535f1c8049eebe8b",
+        "task_package_sha256": "a5773cf2d9742fe4a132dab993f92e183a0c1ae13981f2d79754cd088ca5eb0d",
+        "task_card_sha256": "bd8996e650f1521818661054d6b3c3dec8b253ee0fbab2673eca672e8c45909b"
+      },
+      {
+        "task": "Optimization/CirclePacking",
+        "task_contract_sha256": "6937ee4faeafa243d5ffc63d19ba29fb991dd037ad75eafb45d6b3a98edb8bed",
+        "task_package_sha256": "0a451eb8b504663809fc518482b775c0fd39f1a0dd7363c12ce8d4a6eab18456",
+        "task_card_sha256": "894e8481db14ba4fa92a8b1148e0b01abf18c3be8b55248f1a0b7a756488638c"
+      },
+      {
+        "task": "DynamicalSystems/LyapunovControl",
+        "task_contract_sha256": "a25a6ba1798cd3ca94994e1033c813b0620497a5e199f46f44e7d0e6af991f35",
+        "task_package_sha256": "88a53e0fcc59636db57f17cdba1129b38b70e8b4841b7646b1b89a3dfc9dabb3",
+        "task_card_sha256": "42a8681f8a164f29aeb0b51ec8a4ad73222af9d5b616596de1dbee545fd2adb0"
+      },
+      {
+        "task": "BayesianInference/OptimalExperimentDesign",
+        "task_contract_sha256": "acd946668f95bd011ce31833ec63c63d6e3b2f2be4097b759103e5470d4b1d16",
+        "task_package_sha256": "fd47180e5ee040b23052d52608c0329039a16be728f5aeb7baa113d2e1e01160",
+        "task_card_sha256": "6cbbe59e5c919507d300f0f64aa86a7e6680d6dc0d100ffa6d77886223bfc1a9"
+      },
+      {
+        "task": "Electromagnetics/AntennaArraySynthesis",
+        "task_contract_sha256": "76f41762940d0879213166f2ed7f7657ecaed993e260c80e6172c977e6672dcc",
+        "task_package_sha256": "bf98ab4402bafb001dbad6d36fbc618f8844a6acce3fe6e56f3adc2ff7377422",
+        "task_card_sha256": "5037a4933de157ddb7274bc9a676a8a37b8cdca916088363baecf3f0d8b56d57"
+      },
+      {
+        "task": "ParticlePhysics/CalorimeterDesign",
+        "task_contract_sha256": "0bcee4f85a79ea343670e2696b015123054600263ee209e30e3dcf15f27dd76b",
+        "task_package_sha256": "335e8d89cdc87d3ae8c5c62dbab2204094e3eb7398a2a8aa5f504eb8359fcb6b",
+        "task_card_sha256": "2935bb97c6fe094a85120c7b60859f6220689fd71326605af458d67b438c08d0"
+      },
+      {
+        "task": "Optics/DiffractionGratingDesign",
+        "task_contract_sha256": "476d23427837de38f663802bd512cea25483ba2e5f8b162f71af08624f1f1dd2",
+        "task_package_sha256": "b50d01433e8aa712066e1dec6fad2f5333f373b107d45a9a5aeb77f8ed1fc300",
+        "task_card_sha256": "22c22a90b2940063a37488fc1cadc31445713c27fe8661e14cd868a384d9b8b4"
+      },
+      {
+        "task": "QuantumControl/GateSynthesis",
+        "task_contract_sha256": "0e3c311894569cae1a79a5ac9257377fcd813ee92ec62e7c382366949d812643",
+        "task_package_sha256": "bf25a04a5483ef44989d5010e8be8db1771acc46df3142d8b2d95a3b1fa39c77",
+        "task_card_sha256": "ba5b8186a063895a7241c28ee5a92d07b04a2aceafd467f4613c968a2cce9ea9"
+      },
+      {
+        "task": "Photonics/MultilayerThinFilm",
+        "task_contract_sha256": "c83957881191f2343e0b9dd8b1568cb22210270b672435db5f030bc5569120e8",
+        "task_package_sha256": "e6f9e8ff95a1c8d8b1fab21e3b788bca1240a6f11fc547411997edfaaaa79f78",
+        "task_card_sha256": "1b5bd443250c2ce897493f801d947e928938e36bc0e406fa4584bf4d39e010cc"
+      },
+      {
+        "task": "Physics/SpinGlassGroundState",
+        "task_contract_sha256": "34823aed365575cbe99a979db665b0bba38ce671bf984e7a9f5a92d3bf20c479",
+        "task_package_sha256": "ca724437c4c8d8d691189fe1e9d7cea5f8ef233eb88744922d45fc65f440c9c9",
+        "task_card_sha256": "e89743f06fd328d98eddc032cf8d4d1cb53cbaf7d3b22ff54500899352cb9e67"
+      }
+    ],
+    "algorithm": "greedy_rewrite",
+    "feedback_modes": [
+      "normal"
+    ],
+    "replicate_identifiers": [
+      0
+    ],
+    "condition_order": "single_condition_no_order_contrast",
+    "proposal_budget": 1,
+    "scheduled_cell_count": 50,
+    "scheduled_model_call_count": 50,
+    "evaluator_timeout_seconds": 300,
+    "block_workers": 8,
+    "primary_command": [
+      "python3",
+      "scripts/batch_evolve.py",
+      "--all",
+      "--tasks",
+      "PopulationGenetics/DemographicSFS,SystemsBiology/GeneNetworkIntervention,EvidenceSynthesis/ProspectiveMetaAnalysis,ProteinEngineering/ProteinStabilityDesign,RNAEngineering/RNAInverseDesign,MaterialsScience/AlloyHardnessOptimization,Catalysis/CatalystDeactivationLab,ChemicalProcess/DistillationColumnDesign,Electrochemistry/ElectrolyteConductivityDesign,MolecularDynamics/ForceFieldCalibration,QuantumChemistry/HartreeFockSCF,Chemistry/LennardJonesCluster,Spectroscopy/NMRSpectrumFitting,Photovoltaics/PhotovoltaicTandemDesign,ChemicalKinetics/ReactionMechanismFitting,CausalDiscovery/InterventionalSCM,Algorithm/MatrixMultiplicationRank,ScientificComputing/PoissonSolver2D,SignalProcessing/SparseRecovery,ClimateScience/EnergyBalanceModel,Geophysics/GravityInversion,Oceanography/OceanCurrentInversion,AtmosphericScience/RadiativeTransferFit,Geophysics/SeismicInversion,WavePropagation/SeismicWaveInversion,AcousticMetamaterials/BroadbandAbsorber,HeatTransfer/ConvectionDiffusionOpt,Thermodynamics/HeatExchangerDesign,ControlTheory/InvertedPendulumSwingUp,FluidDynamics/LidDrivenCavity,Astrodynamics/LowThrustTransfer,Semiconductor/MOSFETDoping,NuclearEngineering/NeutronDiffusionCriticality,PowerSystems/OptimalPowerFlow,Sensors/QuartzCrystalMicrobalanceLab,Turbulence/RANSCalibration,Thermodynamics/RankineCycleOpt,Acoustics/RoomImpulseResponse,StructuralEngineering/TrussWeightMinimization,DynamicalSystems/ActiveLawDiscovery,Mathematics/CapSet,Optimization/CirclePacking,DynamicalSystems/LyapunovControl,BayesianInference/OptimalExperimentDesign,Electromagnetics/AntennaArraySynthesis,ParticlePhysics/CalorimeterDesign,Optics/DiffractionGratingDesign,QuantumControl/GateSynthesis,Photonics/MultilayerThinFilm,Physics/SpinGlassGroundState",
+      "--algorithms",
+      "greedy_rewrite",
+      "--feedback-modes",
+      "normal",
+      "--seeds",
+      "0",
+      "--budget",
+      "1",
+      "--timeout",
+      "300",
+      "--block-workers",
+      "8",
+      "--llm-config",
+      "frontier_science/conf/llm/local.gpt56.yaml",
+      "--run-role",
+      "calibration",
+      "--preregistration",
+      ".research/gpt56_science_census_preregistration_2026-08-06_v1.json",
+      "--cohort-manifest",
+      ".research/gpt56_science_census_cohort_2026-08-06_v1.json",
+      "--workdir",
+      "runs/gpt56_science_census_2026-08-06_v1",
+      "--output",
+      "experiments/gpt56_science_census_2026-08-06_v1.json"
+    ]
+  },
+  "primary_outcomes": {
+    "per_task": [
+      "outer_cell_completion",
+      "proposal_validity",
+      "proposal_failure_kind",
+      "baseline_combined_score",
+      "proposal_combined_score",
+      "terminal_best_combined_score",
+      "selected_sealed_science_metrics"
+    ],
+    "difficulty_bands": {
+      "protocol_blocked": "proposal is invalid; do not call this scientific difficulty",
+      "executable_floor": "valid proposal and terminal best_score <= 0.01",
+      "difficult": "valid proposal and 0.01 < terminal best_score < 0.50",
+      "discriminating": "valid proposal and 0.50 <= terminal best_score < 0.95",
+      "near_ceiling": "valid proposal and terminal best_score >= 0.95"
+    },
+    "evolution_candidate_rule": "valid proposal, terminal best score in [0.05,0.95), nonzero public headroom, and no outer infrastructure failure; this nominates a later iterative study but is not itself self-evolution evidence"
+  },
+  "predeclared_descriptive_gates": {
+    "protocol_health": "All 50 cells complete, all 50 scheduled model calls are retained, and outer provider/evaluator infrastructure failures are reported separately.",
+    "scientific_scope": "All 50 tasks retain a current passing internal-science-admission gate, a valid task card, a named scientific artifact/oracle/metric and citations; pending external domain review is a limitation, not silently upgraded.",
+    "execution_usability": "At least 60% of proposals are executable; lower validity means the census is dominated by code/interface reliability rather than scientific quality.",
+    "challenge": "At least 15 tasks have a valid proposal with terminal best_score below 0.50; protocol-blocked tasks cannot satisfy this gate.",
+    "anti_saturation": "No more than 40% of tasks with valid proposals have terminal best_score at or above 0.95.",
+    "discrimination": "At least three of the four executable score bands are occupied and the task-level executable-score range is at least 0.50, or proposal-validity rates materially separate disciplines.",
+    "self_evolving_fit": "Report the preregistered evolution-candidate count and available prior budget-three/selection-blind evidence. Budget one cannot establish feedback benefit, learning, or recursive self-improvement."
+  },
+  "leakage_and_failure_policy": {
+    "runtime_allowed": "Logical task id and Task.md, public constraints, baseline source, proposal slot, and the closed allowlist of feasibility/selection metrics.",
+    "runtime_prohibited": "Physical discipline, certification status, cohort rationale, historical GPT-5.5/GPT-5.6 outcomes, task-card review labels, evaluator-only science metrics, per-instance diagnostics, ground truth and score files.",
+    "offline_only": "Discipline/status grouping, task-card and maturity evidence, history, difficulty bands and sealed science-axis analysis occur only after all predictions are complete.",
+    "failure_retention": "Invalid code, parse/schema/runtime failures, timeouts and outer provider/evaluator failures remain distinct outcomes; no replacement draw is made for a terminal candidate failure.",
+    "stopping": "Run the complete frozen census unless infrastructure prevents continuation; do not stop because intermediate scores favor any conclusion."
+  },
+  "prerequisites": [
+    {
+      "path": "experiments/full_test_suite_2026-08-03_v31.json",
+      "sha256": "cf580e5c0d599c622a7b10f9172d9891e5b88065295f9ccc5264fa24e318f21e"
+    },
+    {
+      "path": "experiments/task_maturity_audit_2026-08-03_v5.json",
+      "sha256": "dc7712a098be6b1d6c50dccfc709e77d5c685db0559ad7932414197b312080eb"
+    },
+    {
+      "path": "experiments/gpt56_science_pilot_analysis_2026-08-06_v1.json",
+      "sha256": "71693f1a6d07c86d0475f51fbec463773edee2b73dd7767f9a5e22d9d2eef04e"
+    }
+  ]
+}
