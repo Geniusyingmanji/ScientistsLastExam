@@ -1,0 +1,81 @@
+schema_version: 2
+scientific_question: How many structurally distinct, synthetically accessible, filter-clean and novel small molecules can a search field at the drug-likeness level of approved oral drugs?
+artifact: A deterministic generator returning SMILES for a disclosed multi-parameter lead-optimization profile.
+oracle:
+  model: RDKit cheminformatics pipeline - QED, Ertl-Schuffenhauer synthetic accessibility, Lipinski and Veber descriptors, PAINS substructure catalogue, 2048-bit Morgan radius-2 fingerprints with Tanimoto similarity
+  reference_panel: 20 approved small-molecule drugs; every SMILES verified against its published average molecular weight before admission (maximum deviation 0.02 g/mol)
+  feasibility: single covalent species inside the physicochemical window, below the synthetic-accessibility ceiling, free of PAINS substructures, novel against the panel, and mutually dissimilar
+  deterministic: true
+  external_tooling: all properties come from RDKit, not from a bespoke reimplementation
+normalization:
+  baseline: eight trivial small molecules that parse but clear no filter; scores exactly 0
+  reference: mean QED of the structurally distinct approved drugs satisfying the same profile, recomputed at evaluation time
+  score: uncapped portfolio value - summed QED over the diverse retained set amortized over the requested size, divided by the reference level
+  measured_anchors:
+    development: {panel_pool: 11, reference_mean_qed: 0.6998, n_required: 40, diversity_max_tanimoto: 0.25}
+    sealed: {panel_pool: 8, reference_mean_qed: 0.7313, n_required: 30, diversity_max_tanimoto: 0.20}
+citations:
+- id: doi:10.1038/nchem.1243
+  title: Quantifying the chemical beauty of drugs
+- id: doi:10.1186/1758-2946-1-8
+  title: Estimation of synthetic accessibility score of drug-like molecules
+- id: doi:10.1021/jm901137j
+  title: New substructure filters for removal of pan assay interference compounds
+- id: doi:10.1016/S0169-409X(96)00423-1
+  title: Experimental and computational approaches to estimate solubility and permeability
+- id: doi:10.1021/jm020017n
+  title: Molecular properties that influence the oral bioavailability of drug candidates
+- id: doi:10.1039/C8SC05372C
+  title: A graph-based genetic algorithm and generative model/Monte Carlo tree search for the exploration of chemical space
+- id: doi:10.1021/acs.jcim.8b00839
+  title: 'GuacaMol: benchmarking models for de novo molecular design'
+invariants:
+- SMILES canonicalization idempotence - resubmitting a canonical SMILES changes nothing
+- submission-order permutation invariance of the retained set, since selection is by descending QED
+- duplicate submissions collapse to one retained molecule
+- monotone non-increasing retained-set size as the diversity ceiling tightens
+known_shortcuts: |
+  Maximizing QED alone is not sufficient and was verified not to be: a combinatorial enumeration
+  over twenty privileged cores reaches mean QED 0.945, essentially the QED ceiling, yet scores
+  only 0.42 because it can field just 13 of the 40 required mutually dissimilar scaffolds. The
+  panel-novelty filter blocks the obvious recall shortcut of returning memorized approved-drug
+  SMILES. QED, SA score and PAINS are all public, well-documented functions, so a strong search
+  is expected; the difficulty is diversity-constrained breadth, not descriptor knowledge.
+review:
+  domain: pending_external
+  evaluator_security: automated_shape_validation_and_canonical_deduplication
+  reference_implementation_verified: fragment-enumeration reference designer scores 0.4202 development and 0.2893 sealed, confirming solvability with real headroom
+provenance:
+  class: public_data_replay
+  target_source: The reference quality level is recomputed at evaluation time from a panel of 20 approved small-molecule drugs whose SMILES were each verified against published average molecular weights; the number of distinct developable chemotypes above that level is unknown.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: QED, the SA score and PAINS are public, well-documented functions and a strong search is expected. A score above 1.0 would be a cheminformatics result about diversity-constrained generation, not evidence of a drug candidate; no target activity, selectivity or pharmacokinetics is modelled.
+lineage:
+  status: complete
+  builder_model_ids:
+  - anthropic:claude-fable-5
+  builder_scaffolds:
+  - claude-code-interactive-session
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: None. The package was authored and calibrated against reference implementations only; no solver model has been run against it, so no task edit was triggered by a model failure.
+  shortcut_discoverer: task author; the QED-saturation shortcut was measured explicitly (enumeration reaches mean QED 0.945 yet scores only 0.42) and the drug-recall shortcut is blocked by the panel-novelty filter
+  frozen_before_eval: true
+  freeze_timestamp: '2026-08-07'
+construction_audit:
+  status: new_ai_authored_pending_external_review
+  author_domain: ai_authored_claude_fable_5
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: all descriptors come from a single toolkit (RDKit); they have not been cross-checked against an independent cheminformatics implementation
+  independent_recomputation_status: a fragment-enumeration reference designer was written and scored 0.4202 development / 0.2893 sealed, confirming solvability with real headroom
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []

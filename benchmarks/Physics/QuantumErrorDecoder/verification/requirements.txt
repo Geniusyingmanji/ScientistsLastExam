@@ -1,0 +1,3 @@
+stim>=1.15
+pymatching>=2.2
+numpy>=1.24

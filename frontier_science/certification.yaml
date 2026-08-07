@@ -10,6 +10,14 @@ policy:
   statuses: [certified, candidate, quarantined]
 
 tasks:
+  MedicinalChemistry/MolecularLeadOptimization:
+    status: candidate
+    reason: RDKit community-standard oracle with a verified approved-drug reference panel; pending external medicinal-chemistry review
+    citation_ids: [doi:10.1038/nchem.1243, doi:10.1186/1758-2946-1-8, doi:10.1021/jm901137j]
+  QuantumErrorCorrection/QuantumErrorDecoder:
+    status: candidate
+    reason: community-standard Stim oracle with a computed PyMatching anchor; pending external domain review and fresh unseeded confirmation
+    citation_ids: [doi:10.22331/q-2021-07-06-497, doi:10.22331/q-2025-01-20-1600]
   Chemistry/LennardJonesCluster:
     status: certified
     reason: analytic energy oracle; published minima and invariance tests

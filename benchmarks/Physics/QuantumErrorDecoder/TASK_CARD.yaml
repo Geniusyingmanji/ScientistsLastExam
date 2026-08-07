@@ -1,0 +1,80 @@
+schema_version: 2
+scientific_question: Convert rotated surface-code syndrome data into logical observable predictions with a lower logical error rate than minimum-weight perfect matching.
+artifact: A deterministic decoder callable mapping a graphlike detector error model plus a batch of detection-event bitstrings to predicted logical observable flips.
+oracle:
+  model: Stim-generated rotated surface-code memory-Z circuits with uniform circuit-level depolarizing, measurement-flip and reset-flip noise; seeded detector sampling; decomposed detector error model
+  reference_decoder: PyMatching 2 minimum-weight perfect matching on the same decomposed detector error model
+  feasibility: prediction array of shape (shots, num_observables) with binary entries, produced without importing the circuit simulator or the reference decoder
+  deterministic: true
+  external_tooling: oracle depends on community-standard Stim and PyMatching rather than a bespoke reimplementation
+normalization:
+  baseline: decoder that never predicts a logical flip; scores exactly 0 by construction
+  reference: measured PyMatching logical error rates on the same seeded shot sets
+  score: uncapped log-scaled logical-error-rate reduction; matching MWPM is 1.0 and beating it exceeds 1.0
+  measured_anchors:
+    d3_p0.005: {trivial: 0.10335, mwpm: 0.01790}
+    d5_p0.005: {trivial: 0.22925, mwpm: 0.01435}
+    d5_p0.010: {trivial: 0.35815, mwpm: 0.08565}
+    d7_p0.005: {trivial: 0.34235, mwpm: 0.00905}
+citations:
+- id: doi:10.1103/PhysRevA.86.032324
+  title: Surface codes - towards practical large-scale quantum computation
+- id: doi:10.22331/q-2021-07-06-497
+  title: 'Stim: a fast stabilizer circuit simulator'
+- id: doi:10.22331/q-2025-01-20-1600
+  title: 'Sparse Blossom: correcting a million errors per core second with minimum-weight matching'
+- id: doi:10.1038/s41586-022-05434-1
+  title: Suppressing quantum errors by scaling a surface code logical qubit
+- id: doi:10.1038/s41586-024-08148-8
+  title: Learning high-accuracy error decoding for quantum processors
+invariants:
+- detector relabelling consistency between the error model and the syndrome batch
+- shot-order permutation invariance of the aggregate logical error rate
+- a decoder that ignores the syndrome reproduces the trivial logical error rate exactly
+- monotone degradation of the reference anchor with increasing physical noise at fixed distance
+known_shortcuts: |
+  Importing PyMatching or Stim would reach the anchor without solving the decoding problem;
+  both runtime and module-level imports are blocked and scored invalid. The surface code and
+  MWPM decoding are extensively documented in public literature and training corpora, so a
+  strong first attempt is expected to be reproduction rather than discovery; only scores above
+  1.0, which require beating matching, are evidence of a novel decoding strategy. Fixed sampling
+  seeds mean a sufficiently long search could in principle overfit the specific shot sets, which
+  is what the sealed unseen-distance regimes are reported against.
+review:
+  domain: pending_external
+  evaluator_security: automated_import_blocking_and_shape_validation
+  reference_implementation_verified: numpy/scipy-only greedy matching decoder confirms the task is solvable within the declared constraints and does not reach the MWPM anchor
+provenance:
+  class: procedural
+  target_source: Circuits, noise realizations and the reference anchor are generated procedurally by Stim and PyMatching from fixed seeds at evaluation time; no target value is quoted from a paper.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Surface-code decoding and MWPM are extensively documented in public literature, so reproducing the anchor is expected and is not novel. Only scores above 1.0, which require beating matching, would be substantive, and those need replication on a fresh unseeded shot set.
+lineage:
+  status: complete
+  builder_model_ids:
+  - anthropic:claude-fable-5
+  builder_scaffolds:
+  - claude-code-interactive-session
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: None. The package was authored and calibrated against reference implementations only; no solver model has been run against it, so no task edit was triggered by a model failure.
+  shortcut_discoverer: task author; two concrete cheat paths (runtime and module-level import of the reference decoder) were implemented as tests and are blocked
+  frozen_before_eval: true
+  freeze_timestamp: '2026-08-07'
+construction_audit:
+  status: new_ai_authored_pending_external_review
+  author_domain: ai_authored_claude_fable_5
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 2
+  oracle_disagreement_status: the anchor is recomputed at evaluation time by PyMatching 2; it has not been cross-checked against a second independent matching implementation
+  independent_recomputation_status: a numpy/scipy-only greedy matching reference decoder was written and scored, confirming the task is solvable under the declared constraints and reaches only 0.2652 of the anchor
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []

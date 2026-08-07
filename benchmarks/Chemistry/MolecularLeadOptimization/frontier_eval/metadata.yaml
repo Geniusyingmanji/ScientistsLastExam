@@ -1,0 +1,12 @@
+domain: MedicinalChemistry
+task: MolecularLeadOptimization
+difficulty: flagship
+tier: T3
+oracle_type: rdkit_cheminformatics_property_filter
+score_mode: uncapped
+gpu_required: false
+eval_time_seconds: 90
+science_metric: diversity_constrained_novel_lead_portfolio_value_versus_approved_drugs
+reference_baseline: eight simple small molecules that parse but fail every physicochemical and novelty filter; scores 0 by construction
+reference_sota: "mean QED of the structurally distinct approved drugs satisfying each profile, computed at evaluation time from a molecular-weight-verified 20-drug panel: 0.6998 (development), 0.7313 (sealed)"
+citation: "Bickerton et al., Nat. Chem. 4, 90 (2012) [QED]; Ertl & Schuffenhauer, J. Cheminform. 1, 8 (2009) [SA score]; Baell & Holloway, J. Med. Chem. 53, 2719 (2010) [PAINS]; Lipinski et al., Adv. Drug Deliv. Rev. 23, 3 (1997); Veber et al., J. Med. Chem. 45, 2615 (2002)"

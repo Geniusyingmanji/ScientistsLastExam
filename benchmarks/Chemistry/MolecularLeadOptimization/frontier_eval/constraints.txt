@@ -1,0 +1,6 @@
+1) Only edit solution.py. Keep design_molecules(spec) -> list of SMILES strings.
+2) Deterministic CPU code. Python standard library, numpy, scipy and RDKit only. RDKit is
+   available to you on purpose: you are expected to build and run your own search loop.
+3) At most spec["max_submissions"] SMILES per call. Duplicates after canonicalization count once.
+4) Molecules too similar to the approved-drug reference panel are discarded as recall, not design.
+5) Seconds to a couple of minutes per evaluation. Do not read verification/ or frontier_eval/.

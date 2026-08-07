@@ -1,0 +1,5 @@
+1) Only edit solution.py. Keep decode(problem, detection_events) -> (shots, num_observables) 0/1 array.
+2) Deterministic CPU code, Python standard library + numpy + scipy only. Importing stim or
+   pymatching is an invalid submission: the reference decoder is the anchor, not the answer.
+3) The syndrome batch is the only evidence. True observable flips are never revealed.
+4) Seconds to a few minutes per evaluation. Do not read verification/ or frontier_eval/.
