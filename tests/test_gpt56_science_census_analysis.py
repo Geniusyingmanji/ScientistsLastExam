@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 import unittest
 from pathlib import Path
 
@@ -68,7 +69,16 @@ class GPT56ScienceCensusAnalysisTests(unittest.TestCase):
         self.assertEqual(MODULE._selected_event(events, 0.2)["step"], 0)
 
     def test_frozen_census_counts_and_negative_gate_are_retained(self):
-        report = MODULE.analyze()
+        path = (
+            Path(__file__).resolve().parents[1]
+            / "experiments/gpt56_science_census_analysis_2026-08-06_v1.json"
+        )
+        self.assertEqual(
+            MODULE._sha256(path),
+            "c40823c669ae736c2298dfe7cd6d7b469b18fdd58dd5ab1e69cd2891d5dfda03",
+        )
+        report = json.loads(path.read_text(encoding="utf-8"))
+        self.assertTrue(report["trusted_evidence"])
         self.assertEqual(report["aggregate"]["valid_proposals"], 36)
         self.assertEqual(
             report["aggregate"]["difficulty_band_counts"],

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 import unittest
 from pathlib import Path
 
@@ -17,7 +18,14 @@ SPEC.loader.exec_module(MODULE)
 class GPT56ScienceCensusPreregistrationTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.cohort, cls.preregistration = MODULE.build_documents()
+        root = Path(__file__).resolve().parents[1]
+        cls.cohort = json.loads((
+            root / ".research/gpt56_science_census_cohort_2026-08-06_v1.json"
+        ).read_text(encoding="utf-8"))
+        cls.preregistration = json.loads((
+            root
+            / ".research/gpt56_science_census_preregistration_2026-08-06_v1.json"
+        ).read_text(encoding="utf-8"))
 
     def test_complete_admitted_census_is_frozen(self):
         rows = self.cohort["tasks"]

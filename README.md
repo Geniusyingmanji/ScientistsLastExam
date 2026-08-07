@@ -18,6 +18,9 @@ the text-question benchmark named *FrontierScience* in
 
 - **59 task packages** across **55 logical domains** and **7 broad disciplines**.
 - **7 certified**, **43 candidate**, and **9 quarantined** tasks.
+- A preregistered GPT-5.6 budget-one census over all **50 internally admitted tasks**;
+  **36/50 proposals execute**, while difficulty, saturation, and protocol failures are reported
+  separately.
 - Deterministic black-box evaluation through a networkless Bubblewrap sandbox.
 - A built-in iterative rewrite baseline plus optional OpenEvolve, AB-MCTS, and
   ShinkaEvolve backends.
@@ -221,8 +224,9 @@ Certification status describes evidence quality, not task difficulty:
 - `quarantined`: a reproduced material defect makes the package inadmissible until repaired and
   re-audited.
 
-The inventory contains 50 `hard` and 9 `flagship` packages, but those labels do not override
-certification.
+The inventory contains 48 `hard` and 11 `flagship` packages. Among the 50 internally admitted
+packages, 39 are `hard` and 11 are `flagship`; these author labels do not override certification
+or measured model difficulty.
 
 Key trusted artifacts include:
 
@@ -236,11 +240,42 @@ Key trusted artifacts include:
 | [Two-hour exploratory analysis](experiments/exploratory_2h_analysis_2026-07-30_v1.json) | 7/7 declared cells completed | Result-selected exploratory screen, not confirmatory or population evidence |
 | [Quarantined-task re-audit](experiments/quarantined_task_admission_audit_2026-08-03_v1.json) | 9/9 material defects reproduced | All quarantined packages checked at clean revision `bce1d6c`; 0/9 meet the internal benchmark standard |
 | [Task maturity audit v5](experiments/task_maturity_audit_2026-08-03_v5.json) | 59/59 tasks evidence-bound; issues=[] | 50 admissible tasks have current/migration-safe model measurements; all 9 quarantined tasks have current defect reproduction |
+| [GPT-5.6 four-task pilot analysis](experiments/gpt56_science_pilot_analysis_2026-08-06_v1.json) | 8/8 cells and 24/24 calls; 16/24 valid proposals | Challenge/discrimination calibration plus strict frozen-parent audit; no positive short-horizon online-feedback signal |
+| [GPT-5.6 50-task census analysis](experiments/gpt56_science_census_analysis_2026-08-06_v1.json) | 50/50 cells; 36/50 valid proposals | Complete admitted-inventory budget-one screen; challenge gate fails, so this is not a uniformly hard model leaderboard |
 
 The current evidence-bound conclusion is deliberately split: 50 tasks pass the internal science
 admission gate, while the other 9 do not meet the internal benchmark standard and remain
 quarantined. None of the 59 currently satisfies the stronger open-release, external-validation,
 or long-horizon-readiness gates; registry status must not be read as those broader claims.
+
+### GPT-5.6 calibration result
+
+The preregistered census used `gpt-5.6-sol`, low reasoning, one normal-feedback proposal per
+task, and no provider-side generation seed. All 50 outer cells completed without provider or
+evaluator infrastructure failure. The result is intentionally not collapsed to a single mean
+score because the scientific axes are heterogeneous:
+
+| Outcome | Tasks | Interpretation |
+|---|---:|---|
+| Protocol blocked | 14 | Invalid candidate execution or submission; not counted as clean scientific difficulty |
+| Executable floor (`<=0.01`) | 6 | Runnable, but essentially no one-step progress |
+| Difficult (`0.01–0.50`) | 6 | Clean one-step challenge |
+| Discriminating (`0.50–0.95`) | 11 | Material progress with remaining nominal headroom |
+| Near ceiling (`>=0.95`) | 13 | On-ramp or candidate for a harder regime |
+
+The portfolio passes the preregistered protocol-health, internal scientific-scope,
+execution-usability, discrimination, and anti-saturation gates. It fails the stronger challenge
+gate: only 12 executable tasks score below `0.50`, versus the frozen threshold of 15. Therefore
+the current inventory is best treated as a mixed calibration portfolio, not a uniformly hard
+GPT-5.6 benchmark or one-number leaderboard.
+
+Fifteen executable tasks with scores in `[0.05, 0.95)` form the preregistered priority pool for
+later iterative normal-versus-frozen-parent studies. Budget one is not self-evolution evidence.
+The separate four-task budget-three pilot records zero normal wins, two frozen-parent wins, and
+two ties; with one unseeded provider draw per condition, it provides neither a positive online-
+feedback signal nor a causal null result. See the
+[human-readable census analysis](.research/gpt56_science_census_analysis_2026-08-06_v1.md) and
+[pilot analysis](.research/gpt56_science_pilot_analysis_2026-08-06_v1.md).
 
 [`experiments/TRUST.md`](experiments/TRUST.md) is the append-only trust manifest and the primary
 index for dated reports. Detailed study plans and interpretations live in [`.research/`](.research/),
