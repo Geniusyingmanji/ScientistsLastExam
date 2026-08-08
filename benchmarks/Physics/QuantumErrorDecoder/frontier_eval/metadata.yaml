@@ -5,7 +5,7 @@ tier: T3
 oracle_type: stim_stabilizer_circuit_sampling
 score_mode: uncapped
 gpu_required: false
-eval_time_seconds: 60
+eval_time_seconds: 20
 science_metric: log_scaled_logical_error_rate_reduction_versus_mwpm
 reference_baseline: never predict a logical flip (ignores the syndrome; scores 0 by construction)
 reference_sota: "minimum-weight perfect matching (PyMatching 2) on the decomposed detector error model; measured logical error rates d3/p0.005=0.0179, d5/p0.005=0.0146, d5/p0.010=0.0804, d7/p0.005=0.0101"

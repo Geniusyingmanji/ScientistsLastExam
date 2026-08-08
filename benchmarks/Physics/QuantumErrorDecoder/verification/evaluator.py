@@ -21,17 +21,28 @@ import sys
 import numpy as np
 
 # Development regimes visible in `combined_score`.
+#
+# Shot counts are set by two competing constraints. Statistically, the MWPM anchor must produce
+# enough logical failures for the log-ratio score to be stable: these counts give 99/84/507/55
+# anchor failures, so score noise stays near or below 4%. Computationally, the whole evaluation
+# must fit the harness default 300 s timeout including the candidate's own decoding, which is
+# the dominant cost - a competent but unvectorized decoder can be orders of magnitude slower
+# than the reference. Raising shots to reduce noise would push real decoders past the timeout,
+# which measures throughput rather than decoding quality.
 DEV_INSTANCES = (
-    {"key": "d3_p0.005", "distance": 3, "noise": 0.005, "shots": 20000, "seed": 20260807},
-    {"key": "d5_p0.005", "distance": 5, "noise": 0.005, "shots": 20000, "seed": 20260808},
-    {"key": "d5_p0.010", "distance": 5, "noise": 0.010, "shots": 20000, "seed": 20260809},
-    {"key": "d7_p0.005", "distance": 7, "noise": 0.005, "shots": 20000, "seed": 20260810},
+    {"key": "d3_p0.005", "distance": 3, "noise": 0.005, "shots": 6000, "seed": 20260807},
+    {"key": "d5_p0.005", "distance": 5, "noise": 0.005, "shots": 6000, "seed": 20260808},
+    {"key": "d5_p0.010", "distance": 5, "noise": 0.010, "shots": 6000, "seed": 20260809},
+    {"key": "d7_p0.005", "distance": 7, "noise": 0.005, "shots": 6000, "seed": 20260810},
 )
 
 # Evaluator-only regimes reported as `robustness_score`; never returned to the search state.
+# Both are at unseen noise strengths. A larger distance was tried and rejected: at d=9, p=0.004
+# the anchor fails on roughly 0.2% of shots, so an affordable shot count leaves single-digit
+# failure counts and the measurement is noise.
 SEALED_INSTANCES = (
-    {"key": "sealed_d5_p0.007", "distance": 5, "noise": 0.007, "shots": 20000, "seed": 771103},
-    {"key": "sealed_d9_p0.004", "distance": 9, "noise": 0.004, "shots": 12000, "seed": 771104},
+    {"key": "sealed_d5_p0.007", "distance": 5, "noise": 0.007, "shots": 4000, "seed": 771103},
+    {"key": "sealed_d7_p0.008", "distance": 7, "noise": 0.008, "shots": 4000, "seed": 771104},
 )
 
 # A candidate that imports the reference decoder or the circuit simulator is not solving the

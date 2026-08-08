@@ -2,4 +2,6 @@
 2) Deterministic CPU code, Python standard library + numpy + scipy only. Importing stim or
    pymatching is an invalid submission: the reference decoder is the anchor, not the answer.
 3) The syndrome batch is the only evidence. True observable flips are never revealed.
-4) Seconds to a few minutes per evaluation. Do not read verification/ or frontier_eval/.
+4) About 32000 decodes per evaluation; everything must finish inside the harness timeout
+   (300 s by default). Precompute per-regime structure once and vectorize across shots.
+5) Do not read verification/ or frontier_eval/.
