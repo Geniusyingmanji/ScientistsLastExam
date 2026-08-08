@@ -21,7 +21,7 @@ class MeasurementHealthAuditTests(unittest.TestCase):
         cls.tasks = {row["task"]: row for row in cls.report["tasks"]}
 
     def test_classification_is_exhaustive_and_claim_bounded(self):
-        self.assertEqual(self.report["inventory_count"], 59)
+        self.assertEqual(self.report["inventory_count"], 61)
         self.assertEqual(
             sum(self.report["classification_counts"].values()),
             self.report["inventory_count"],

@@ -21,7 +21,7 @@ class TaskCardAuditTests(unittest.TestCase):
                 [],
                 spec.task_id,
             )
-        self.assertEqual(checked, 50)
+        self.assertEqual(checked, 52)
 
     def test_bad_yaml_is_a_task_issue_not_an_exception(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -65,8 +65,8 @@ class TaskCardAuditTests(unittest.TestCase):
 
     def test_inventory_audit_counts_all_required_cards(self):
         report = audit()
-        self.assertEqual(report["task_card_required_count"], 50)
-        self.assertEqual(report["task_card_passed_count"], 50)
+        self.assertEqual(report["task_card_required_count"], 52)
+        self.assertEqual(report["task_card_passed_count"], 52)
         self.assertTrue(report["passed"])
 
 

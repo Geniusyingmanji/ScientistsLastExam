@@ -53,7 +53,7 @@ novelty_risk:
   level: medium
   rationale: Surface-code decoding and MWPM are extensively documented in public literature, so reproducing the anchor is expected and is not novel. Only scores above 1.0, which require beating matching, would be substantive, and those need replication on a fresh unseeded shot set.
 lineage:
-  status: complete
+  status: incomplete_legacy
   builder_model_ids:
   - anthropic:claude-fable-5
   builder_scaffolds:
@@ -64,10 +64,10 @@ lineage:
   calibration_evidence_status: historical_only
   edits_triggered_by_model: Shot counts were cut from 20000 to 6000 per development regime after a GPT-5.6 budget-one draw produced a competent decoder that could not finish inside the harness timeout, which measured throughput rather than decoding quality. The scientific contract was unchanged.
   shortcut_discoverer: task author; two concrete cheat paths (runtime and module-level import of the reference decoder) were implemented as tests and are blocked
-  frozen_before_eval: true
-  freeze_timestamp: '2026-08-07'
+  frozen_before_eval: false
+  freeze_timestamp: null
 construction_audit:
-  status: new_ai_authored_pending_external_review
+  status: incomplete_legacy
   author_domain: ai_authored_claude_fable_5
   reviewer_domain: pending_external
   expert_hours: null

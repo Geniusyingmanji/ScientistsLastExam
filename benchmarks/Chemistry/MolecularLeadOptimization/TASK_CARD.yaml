@@ -54,7 +54,7 @@ novelty_risk:
   level: medium
   rationale: QED, the SA score and PAINS are public, well-documented functions and a strong search is expected. A score above 1.0 would be a cheminformatics result about diversity-constrained generation, not evidence of a drug candidate; no target activity, selectivity or pharmacokinetics is modelled.
 lineage:
-  status: complete
+  status: incomplete_legacy
   builder_model_ids:
   - anthropic:claude-fable-5
   builder_scaffolds:
@@ -65,10 +65,10 @@ lineage:
   calibration_evidence_status: historical_only
   edits_triggered_by_model: Portfolio size was raised from 40 to 120 (sealed 30 to 60) after five GPT-5.6 budget-one draws scored 0.86-1.25 with three above 0.95; the best draw hand-wrote 53 molecules without running any search, showing 40 chemotypes sits inside one-shot recall. Constraints and scoring form were unchanged.
   shortcut_discoverer: task author; the QED-saturation shortcut was measured explicitly (enumeration reaches mean QED 0.945 yet scores only 0.42) and the drug-recall shortcut is blocked by the panel-novelty filter
-  frozen_before_eval: true
-  freeze_timestamp: '2026-08-07'
+  frozen_before_eval: false
+  freeze_timestamp: null
 construction_audit:
-  status: new_ai_authored_pending_external_review
+  status: incomplete_legacy
   author_domain: ai_authored_claude_fable_5
   reviewer_domain: pending_external
   expert_hours: null
