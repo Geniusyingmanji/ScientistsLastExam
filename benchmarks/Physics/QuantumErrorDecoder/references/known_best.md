@@ -33,11 +33,11 @@ model, so it cannot drift from the scored shot set.
 
 Both references ship under `verification/` as calibration witnesses; neither is the baseline.
 
-The reference is a deliberately simple greedy matching decoder written under the same
-numpy/scipy-only constraint imposed on candidates. It confirms the task is solvable within
-those constraints while leaving the MWPM anchor well out of reach. It scores 0 on `d3_p0.005`
-because at distance 3 the trivial decoder is already strong and a sloppy matching decoder
-introduces more logical errors than it removes.
+Both references are written under the same numpy/scipy-only constraint imposed on candidates,
+and together they confirm the task is solvable within those constraints while leaving the MWPM
+anchor out of reach. Reference A scores 0 on `d3_p0.005`: at distance 3 the trivial decoder is
+already strong, so a sloppy matcher introduces more logical errors than it removes. Reference B
+handles that regime well (0.7778) but loses ground at distance 7, where defect counts grow.
 
 ## Sizing: statistics against the timeout
 
