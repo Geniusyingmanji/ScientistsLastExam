@@ -98,6 +98,12 @@ That is the substantive claim this experiment supports: **a feedback effect is o
 tasks that leave room for one**, so feedback sensitivity is a property to establish before a task
 is admitted, not a result to hope for afterwards.
 
+> **Read this note together with `evolvability_gap_budget_dependence_2026-08-09.md`.** Repeating
+> the same protocol at budget 10 shrinks the QEC gap by 41% and reverses its sign on Molecular,
+> where the control then wins five of six paired seeds. The budget-3 gaps reported here are real
+> but are **not** budget-invariant, and the reversal is best explained by single-incumbent greedy
+> search locking into a basin while independent sampling keeps drawing from a long right tail.
+
 ## Methodological note: how not to token-match
 
 Mean token ratios were 1.33x (Molecular) and 1.26x (QEC), feedback arm over control.
@@ -117,7 +123,7 @@ without discarding data. Per-pair truncation should not be used when control cos
 | Iterative feedback beats matched open-loop sampling on these two tasks at budget 3 | Supported, both endpoints, CI excludes zero |
 | The effect generalizes to other tasks or models | Not supported; two tasks, one model, no provider seed control |
 | These tasks pass the proposed Delta admission gate | Supported at budget 3; the gate specifies N ≥ 100 with a population searcher |
-| Larger budgets preserve the gap | Untested; budget 3 only |
+| Larger budgets preserve the gap | **Tested and refuted.** At budget 10 the gap shrinks 41% on QEC and reverses sign on Molecular (control wins 5/6). See `evolvability_gap_budget_dependence_2026-08-09.md` |
 | Anything about scientific discovery | Not supported; these are simulator and cheminformatics scores |
 
 Replicate counts are 8 paired seeds per task. The intervals are normal approximations on small
