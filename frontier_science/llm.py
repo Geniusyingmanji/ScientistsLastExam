@@ -36,6 +36,10 @@ class LLMConfig:
     api_key: str = ""
     model: str = "gpt-4o"
     max_output_tokens: int = 8000
+    # Reasoning models on the chat wire reject "max_tokens" and require
+    # "max_completion_tokens"; older chat models accept only the former. Declared rather than
+    # sniffed so a request body is reproducible from the config alone.
+    chat_max_tokens_field: str = "max_tokens"
     temperature: Optional[float] = 0.7
     reasoning_effort: Optional[str] = None  # for reasoning models on the responses wire
     timeout_seconds: float = 600.0
@@ -78,7 +82,7 @@ class LLMClient:
         payload: dict[str, Any] = {
             "model": self.config.model,
             "messages": messages,
-            "max_tokens": int(self.config.max_output_tokens),
+            self.config.chat_max_tokens_field: int(self.config.max_output_tokens),
         }
         if self.config.temperature is not None:
             payload["temperature"] = float(self.config.temperature)
