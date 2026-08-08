@@ -58,10 +58,11 @@ lineage:
   - anthropic:claude-fable-5
   builder_scaffolds:
   - claude-code-interactive-session
-  calibrator_model_ids: []
+  calibrator_model_ids:
+  - azure-responses:gpt-5.6-sol
   calibration_runs: []
-  calibration_evidence_status: missing
-  edits_triggered_by_model: None. The package was authored and calibrated against reference implementations only; no solver model has been run against it, so no task edit was triggered by a model failure.
+  calibration_evidence_status: historical_only
+  edits_triggered_by_model: Shot counts were cut from 20000 to 6000 per development regime after a GPT-5.6 budget-one draw produced a competent decoder that could not finish inside the harness timeout, which measured throughput rather than decoding quality. The scientific contract was unchanged.
   shortcut_discoverer: task author; two concrete cheat paths (runtime and module-level import of the reference decoder) were implemented as tests and are blocked
   frozen_before_eval: true
   freeze_timestamp: '2026-08-07'

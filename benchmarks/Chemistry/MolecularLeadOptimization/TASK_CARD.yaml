@@ -12,8 +12,8 @@ normalization:
   reference: mean QED of the structurally distinct approved drugs satisfying the same profile, recomputed at evaluation time
   score: uncapped portfolio value - summed QED over the diverse retained set amortized over the requested size, divided by the reference level
   measured_anchors:
-    development: {panel_pool: 11, reference_mean_qed: 0.6998, n_required: 40, diversity_max_tanimoto: 0.25}
-    sealed: {panel_pool: 8, reference_mean_qed: 0.7313, n_required: 30, diversity_max_tanimoto: 0.20}
+    development: {panel_pool: 11, reference_mean_qed: 0.6998, n_required: 120, diversity_max_tanimoto: 0.25}
+    sealed: {panel_pool: 8, reference_mean_qed: 0.7313, n_required: 60, diversity_max_tanimoto: 0.20}
 citations:
 - id: doi:10.1038/nchem.1243
   title: Quantifying the chemical beauty of drugs
@@ -37,14 +37,14 @@ invariants:
 known_shortcuts: |
   Maximizing QED alone is not sufficient and was verified not to be: a combinatorial enumeration
   over twenty privileged cores reaches mean QED 0.945, essentially the QED ceiling, yet scores
-  only 0.42 because it can field just 13 of the 40 required mutually dissimilar scaffolds. The
+  only 0.14 because it can field just 13 of the 120 required mutually dissimilar scaffolds. The
   panel-novelty filter blocks the obvious recall shortcut of returning memorized approved-drug
   SMILES. QED, SA score and PAINS are all public, well-documented functions, so a strong search
   is expected; the difficulty is diversity-constrained breadth, not descriptor knowledge.
 review:
   domain: pending_external
   evaluator_security: automated_shape_validation_and_canonical_deduplication
-  reference_implementation_verified: fragment-enumeration reference designer scores 0.4202 development and 0.2893 sealed, confirming solvability with real headroom
+  reference_implementation_verified: fragment-enumeration reference designer scores 0.1401 development and 0.1447 sealed at the current sizing; five GPT-5.6 budget-one draws span 0.2873-0.5211 with 4/5 valid
 provenance:
   class: public_data_replay
   target_source: The reference quality level is recomputed at evaluation time from a panel of 20 approved small-molecule drugs whose SMILES were each verified against published average molecular weights; the number of distinct developable chemotypes above that level is unknown.
@@ -59,10 +59,11 @@ lineage:
   - anthropic:claude-fable-5
   builder_scaffolds:
   - claude-code-interactive-session
-  calibrator_model_ids: []
+  calibrator_model_ids:
+  - azure-responses:gpt-5.6-sol
   calibration_runs: []
-  calibration_evidence_status: missing
-  edits_triggered_by_model: None. The package was authored and calibrated against reference implementations only; no solver model has been run against it, so no task edit was triggered by a model failure.
+  calibration_evidence_status: historical_only
+  edits_triggered_by_model: Portfolio size was raised from 40 to 120 (sealed 30 to 60) after five GPT-5.6 budget-one draws scored 0.86-1.25 with three above 0.95; the best draw hand-wrote 53 molecules without running any search, showing 40 chemotypes sits inside one-shot recall. Constraints and scoring form were unchanged.
   shortcut_discoverer: task author; the QED-saturation shortcut was measured explicitly (enumeration reaches mean QED 0.945 yet scores only 0.42) and the drug-recall shortcut is blocked by the panel-novelty filter
   frozen_before_eval: true
   freeze_timestamp: '2026-08-07'
