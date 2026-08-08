@@ -1,2 +1,5 @@
-rdkit>=2023.9
-numpy>=1.24
+# Pinned: QED, the SA score and the PAINS catalogue are stable across these releases, but the
+# reference panel anchor should be recomputed and recorded whenever RDKit is upgraded.
+# rdkit 2024.03.5 is the last line with cp38 wheels, which the Python 3.8 benchmark host needs.
+rdkit==2024.03.5
+numpy>=1.24,<2

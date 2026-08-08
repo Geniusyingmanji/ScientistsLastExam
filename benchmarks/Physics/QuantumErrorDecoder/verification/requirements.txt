@@ -1,3 +1,7 @@
-stim>=1.15
-pymatching>=2.2
-numpy>=1.24
+# Pinned: the anchor is recomputed at evaluation time, but Stim's seeded sampling stream is not
+# stable across versions, so a different Stim shifts both the trivial and the MWPM reference by
+# roughly 1-2% in score. Pin to keep reported numbers comparable across machines.
+# stim 1.16 has no cp38 wheel and needs a C++20 toolchain to build; 1.13 ships cp38 wheels.
+stim==1.13.0
+pymatching==2.4.0
+numpy>=1.24,<2
