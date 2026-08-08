@@ -1,0 +1,3 @@
+# Domain toolkits mounted read-only into the candidate sandbox, expanded through the
+# trusted allowlist in frontier_science/secure_eval.py.
+rdkit

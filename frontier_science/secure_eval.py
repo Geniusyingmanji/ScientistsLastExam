@@ -23,6 +23,21 @@ from .rpc_codec import decode, encode
 INVALID_SCORE = -1e18
 PACKAGE_DIR = Path(__file__).resolve().parent
 
+# Packages every candidate may import.
+BASE_CANDIDATE_PACKAGES = ("numpy", "numpy.libs", "scipy", "scipy.libs")
+
+# Domain toolkits a task may additionally expose to its candidate by listing them in
+# ``frontier_eval/candidate_packages.txt``. The allowlist is fixed in trusted code so a task
+# package can never name an arbitrary host directory; each entry must also be a pure directory
+# name, and the value is only ever read from the task's own (agent-readonly) eval directory.
+#
+# Deliberately absent: verification-side anchors such as ``pymatching``. A task whose reference
+# decoder is the scoring anchor must not be able to hand that anchor to the candidate.
+ALLOWED_CANDIDATE_PACKAGES = {
+    "rdkit": ("rdkit", "PIL", "pillow.libs"),
+    "sympy": ("sympy", "mpmath"),
+}
+
 
 def _candidate_python() -> Path:
     """Use the host interpreter's major/minor when it is available under /usr.
@@ -130,7 +145,34 @@ def _seccomp_no_processes() -> int:
     return fd
 
 
-def _sandbox_command(candidate: Path, entrypoint: str, seccomp_fd: int) -> list[str]:
+def read_candidate_packages(task_dir: Path) -> tuple[str, ...]:
+    """Resolve the extra site-packages directories a task exposes to its candidate.
+
+    Reads ``frontier_eval/candidate_packages.txt`` (one toolkit name per line, ``#`` comments
+    allowed) and expands each name through ``ALLOWED_CANDIDATE_PACKAGES``. An unknown name is a
+    task-packaging error and fails closed rather than silently running without the toolkit,
+    which would otherwise show up as an unexplained candidate ImportError.
+    """
+    listing = Path(task_dir) / "frontier_eval" / "candidate_packages.txt"
+    if not listing.is_file():
+        return ()
+    resolved: list[str] = []
+    for raw in listing.read_text(encoding="utf-8").splitlines():
+        name = raw.split("#", 1)[0].strip()
+        if not name:
+            continue
+        if name not in ALLOWED_CANDIDATE_PACKAGES:
+            raise RuntimeError(
+                "task requests candidate package %r which is not in the trusted allowlist" % name
+            )
+        for directory in ALLOWED_CANDIDATE_PACKAGES[name]:
+            if directory not in resolved:
+                resolved.append(directory)
+    return tuple(resolved)
+
+
+def _sandbox_command(candidate: Path, entrypoint: str, seccomp_fd: int,
+                     packages: tuple[str, ...] = ()) -> list[str]:
     bwrap = shutil.which("bwrap")
     if not bwrap:
         raise RuntimeError("secure evaluation requires bubblewrap (bwrap)")
@@ -148,8 +190,11 @@ def _sandbox_command(candidate: Path, entrypoint: str, seccomp_fd: int) -> list[
         "--ro-bind", str(candidate), "/work/candidate.py",
     ]
     mounted: set[str] = set()
+    requested = BASE_CANDIDATE_PACKAGES + tuple(packages)
     for root in _site_package_roots():
-        for package in ("numpy", "numpy.libs", "scipy", "scipy.libs"):
+        for package in requested:
+            if "/" in package or package in (".", ".."):
+                raise RuntimeError("candidate package name must be a bare directory")
             src = root / package
             if src.exists() and package not in mounted:
                 cmd += ["--dir", "/packages/" + package, "--ro-bind", str(src), "/packages/" + package]
@@ -166,12 +211,13 @@ def _sandbox_command(candidate: Path, entrypoint: str, seccomp_fd: int) -> list[
 
 class CandidateProxy:
     def __init__(self, candidate: Path, entrypoint: str, timeout_s: float,
-                 memory_mb: int = 4096):
+                 memory_mb: int = 4096, packages: tuple[str, ...] = ()):
         self.deadline = time.monotonic() + timeout_s
         self.failure: Exception | None = None
         self.candidate = Path(candidate)
         self.entrypoint = str(entrypoint)
         self.memory_mb = int(memory_mb)
+        self.packages = tuple(packages)
         self.proc = None
         self._stdout_buffer = b""
         self._start_worker()
@@ -190,7 +236,7 @@ class CandidateProxy:
         seccomp_fd = _seccomp_no_processes()
         try:
             self.proc = subprocess.Popen(
-                _sandbox_command(self.candidate, self.entrypoint, seccomp_fd),
+                _sandbox_command(self.candidate, self.entrypoint, seccomp_fd, self.packages),
                 stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 text=True, bufsize=1, pass_fds=(seccomp_fd,), env={
                     "OPENBLAS_NUM_THREADS": "1", "OMP_NUM_THREADS": "1",
@@ -438,7 +484,9 @@ def trusted_evaluate(task_dir: Path, candidate: Path, entrypoint: str, score_mod
     oracle = load_oracle(
         task_dir, with_trusted_context=trusted_context is not None
     )
-    with CandidateProxy(candidate, entrypoint, timeout_s) as proxy:
+    with CandidateProxy(
+        candidate, entrypoint, timeout_s, packages=read_candidate_packages(task_dir)
+    ) as proxy:
         result = (
             oracle(proxy, trusted_context)
             if trusted_context is not None
