@@ -128,6 +128,43 @@ Two consequences follow directly:
    discrimination claim in the current record was calibrated against `greedy_rewrite` at budget
    one to three. This result shows that calibration can be off by the entire scoring range.
 
+## Later runs: two more backend limitations, and a censored measurement
+
+Follow-up runs on 2026-08-08/09 with the new tasks exposed two further problems and invalidated
+one number reported earlier in this note.
+
+**Blocker 5 — OpenEvolve silently discards long candidates.** On
+`QuantumErrorCorrection/QuantumErrorDecoder` at budget 40, **29 of 40 iterations were rejected
+before evaluation** with `Generated code exceeds maximum length (11784 > 10000)`, leaving only 12
+evaluated programs. The default 10,000-character cap is a configuration limit, not a scientific
+one, and it bites hardest on exactly the tasks whose solutions are long programs: a competent
+surface-code decoder does not fit. The same run on `MolecularLeadOptimization`, whose artifact is
+a list of SMILES, lost 2 iterations on one seed and 0 on another.
+
+This means the earlier reading that **OpenEvolve "plateaued" at 0.9392 on QEC was wrong** — it
+was being censored, not converging. 0.9392 is a lower bound produced by 12 evaluations, not a
+budget-40 result. Any backend comparison must first raise this cap and report how many candidates
+each backend discards, otherwise the measurement penalises long-artifact tasks by construction.
+
+**Blocker 6 — intermittent missing metric sidecar.** One of three OpenEvolve runs on Molecular
+crashed in the adapter:
+
+```text
+File "frontier_science/algorithms/openevolve_backend.py", line 191, in openevolve
+  metrics = load_full_metrics(...)
+FileNotFoundError: missing trusted metric sidecar for candidate 4ae99482...
+```
+
+A candidate was evaluated but its trusted metric sidecar could not be found afterwards. This is
+an adapter defect and it is intermittent, which makes it worse than a hard failure.
+
+**The mechanism test is inconclusive.** These runs were meant to test whether a population
+searcher avoids the budget-10 reversal that `greedy_rewrite` showed on Molecular, where the
+open-loop control reached 0.9695. OpenEvolve scored 1.0263 and 0.5932 on its two surviving seeds,
+mean 0.8098. With two usable seeds and a 0.43 spread this has no power to distinguish anything,
+and the hypothesis that populations resist lock-in **remains untested**. Repeating it needs the
+code cap raised, the sidecar crash fixed, and enough seeds to see past that variance.
+
 ## Claim boundary
 
 This note records infrastructure repair and two single-seed observations. It is **not** a backend
@@ -135,5 +172,8 @@ comparison: OpenEvolve and `greedy_rewrite` land within 0.0001 of each other on 
 by step 2 to 6, which is exactly the regime in which no comparison is possible. It is not a
 multi-seed study and not evidence about any model.
 
-What it does support: the three backends were mechanically unable to run, two of the four causes
-are now fixed, and the certified task used to check that is far too easy to measure anything.
+What it does support: the three backends were mechanically unable to run, two of the six causes
+found so far are fixed, and the certified task used to check that is far too easy to measure
+anything. The open causes are ShinkaEvolve's own request body, AB-MCTS's bandit key error,
+OpenEvolve's code-length cap and an intermittent sidecar crash. No number in this note should be
+read as a backend's capability; several are lower bounds set by configuration.
