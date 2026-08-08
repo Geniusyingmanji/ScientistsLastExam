@@ -247,7 +247,7 @@ def _score_profile(rd, design_molecules, profile) -> dict:
         return {
             "profile": profile["key"],
             "valid": False,
-            "reason": f"raised: {type(exc).__name__}: {exc}"[:200],
+            "reason": "raised: %s" % type(exc).__name__,
             "score": 0.0,
         }
 

@@ -23,8 +23,8 @@ import numpy as np
 # Development regimes visible in `combined_score`.
 #
 # Shot counts are set by two competing constraints. Statistically, the MWPM anchor must produce
-# enough logical failures for the log-ratio score to be stable: these counts give 99/84/507/55
-# anchor failures, so score noise stays near or below 4%. Computationally, the whole evaluation
+# enough logical failures for the log-ratio score to be stable: these counts give 105/80/472/40
+# measured anchor failures, so score noise stays near or below 4%. Computationally, the whole evaluation
 # must fit the harness default 300 s timeout including the candidate's own decoding, which is
 # the dominant cost - a competent but unvectorized decoder can be orders of magnitude slower
 # than the reference. Raising shots to reduce noise would push real decoders past the timeout,
@@ -229,7 +229,7 @@ def _score_instance(data: dict, decode) -> dict:
         return {
             "key": data["key"],
             "valid": False,
-            "reason": f"raised: {type(exc).__name__}: {exc}"[:200],
+            "reason": "raised: %s" % type(exc).__name__,
             "score": 0.0,
         }
     finally:
@@ -242,7 +242,8 @@ def _score_instance(data: dict, decode) -> dict:
     try:
         pred = np.asarray(raw)
     except Exception as exc:  # noqa: BLE001
-        return {"key": data["key"], "valid": False, "reason": f"bad array: {exc}", "score": 0.0}
+        return {"key": data["key"], "valid": False,
+                "reason": "bad array: %s" % type(exc).__name__, "score": 0.0}
     if pred.ndim == 1 and num_obs == 1:
         pred = pred.reshape(-1, 1)
     if pred.shape != (shots, num_obs):
