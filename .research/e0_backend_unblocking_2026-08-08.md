@@ -103,10 +103,10 @@ population, no islands, no novelty sampling — gives:
 
 | step | 0 | 1 | 2 | 3 | 6 |
 |---|---:|---:|---:|---:|---:|
-| best-so-far | 0.0000 | 0.3280 | **0.9946** | 0.9948 | **1.0000** |
+| best-so-far | 0.000000 | 0.328007 | **0.994591** | 0.994757 | **0.999989** |
 
-Greedy reaches 0.9946 at step 2 and a perfect 1.0000 by step 6, **matching and then slightly
-exceeding OpenEvolve's 0.9999**. The two search algorithms are indistinguishable here.
+Greedy reaches 0.9946 at step 2 and 0.999989 by step 6, against OpenEvolve's 0.999944. The two
+search algorithms are indistinguishable here — greedy is ahead by 4.5e-5, which is noise.
 
 That removes the reading that OpenEvolve is powerful and leaves only the reading that the task is
 easy. Any iterative loop driven by this model solves `CirclePacking` at these instance sizes
