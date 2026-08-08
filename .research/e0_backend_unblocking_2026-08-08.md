@@ -8,9 +8,9 @@ scan of every report in `experiments/` confirms the scale of it: across 2822 rec
 invocations, **the only search algorithm ever run is `greedy_rewrite`**. OpenEvolve, ShinkaEvolve
 and AB-MCTS appear zero times.
 
-That is not merely an unrun experiment. Three independent blockers made these backends unable to
+That is not merely an unrun experiment. Four independent blockers made these backends unable to
 produce a valid result, and they are recorded here because each one is invisible from the host
-default configuration.
+default configuration. Two are fixed; two remain open and are backend-side.
 
 ## Blocker 1 — the sandbox mounted no packages under any backend interpreter
 
@@ -35,7 +35,7 @@ task's shipped baseline, and the baselines it passed on need no third-party impo
 
 Fixed by resolving site-packages for the interpreter that will actually import them.
 
-## Blocker 2 — wire and parameter mismatch
+## Blocker 2 — wire and parameter mismatch (harness side)
 
 OpenEvolve 0.2.26 and ShinkaEvolve both reject anything but the OpenAI-compatible chat wire,
 while the available GPT-5.6 proxy speaks the Responses wire. A chat-completions endpoint does
@@ -45,7 +45,28 @@ models reject in favour of `max_completion_tokens`.
 Fixed by making the chat max-tokens parameter name a declared config field, plus a chat-wire
 config pointing at the chat endpoint.
 
-## Blocker 3 — AB-MCTS adapter bug (not fixed)
+## Blocker 3 — ShinkaEvolve builds its own request body (not fixed)
+
+Fixing the harness's chat wire is not sufficient for ShinkaEvolve, because it does not use the
+harness's LLM client. It constructs its own OpenAI request and hardcodes `max_tokens`, so against
+a reasoning model it enters an unbounded retry loop:
+
+```text
+Local OpenAI - Retry 19 due to error: Error code: 400 -
+  Unsupported parameter: 'max_tokens' is not supported with this model.
+  Use 'max_completion_tokens' instead.  Waiting 16.7s...
+```
+
+The run was killed after 1772 s having made no progress. OpenEvolve is unaffected: it reaches the
+same endpoint through a path that produces an acceptable body.
+
+The clean remedy is a small translating proxy in front of the endpoint that rewrites
+`max_tokens` to `max_completion_tokens` and drops unsupported `temperature` values. That would
+also be the general fix for any external framework pinned to the older chat schema. It is
+deliberately not done here: inserting a rewriting proxy into the experimental path is a
+provenance change and should be declared rather than slipped in.
+
+## Blocker 4 — AB-MCTS adapter bug (not fixed)
 
 With the wire and package issues resolved, AB-MCTS still fails. It evaluates the baseline
 successfully (`combined_score=0.000000 valid=True` on CirclePacking) and then raises inside
