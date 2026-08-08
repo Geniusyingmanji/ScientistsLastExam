@@ -113,6 +113,15 @@ def openevolve(
     config = Config()
     config.max_iterations = budget
     config.random_seed = seed
+    # OpenEvolve's default 10,000-character cap discards a candidate *before* evaluation, so a
+    # task whose solution is a long program is silently censored rather than scored. Measured on
+    # QuantumErrorDecoder at budget 40: 29 of 40 iterations were dropped this way, leaving 12
+    # evaluated programs and a best score that reads as a plateau but is a lower bound. Scale the
+    # cap with the model's output allowance, since that is what actually bounds a generation.
+    config.max_code_length = max(
+        int(getattr(config, "max_code_length", 10000) or 10000),
+        4 * int(llm.config.max_output_tokens),
+    )
     config.database.random_seed = seed
     config.database.db_path = None
     config.evaluator.timeout = max(1, int(timeout_s))
