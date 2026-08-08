@@ -81,14 +81,19 @@ DRUG_PANEL = (
 
 # Development profile, disclosed to the agent through Task.md and the spec.
 #
-# `n_required` is deliberately far above what fragment enumeration can field: the binding
+# `n_required` is deliberately far above what a single generation can write down: the binding
 # constraint is not drug-likeness (QED saturates near 0.95 for almost any well-formed
 # medicinal-chemistry scaffold) but how many *mutually dissimilar* high-quality scaffolds a
 # search can discover. Scoring is a smooth ramp in portfolio size, so partial portfolios earn
 # partial credit and there is no cliff.
+#
+# Sized against measurement, not guesswork. At an earlier n_required of 40, GPT-5.6 scored
+# 0.86-1.25 across four valid budget-one draws - three of them above 0.95 - by hand-writing
+# roughly fifty diverse molecules without running any search at all. Requiring 120 puts the
+# portfolio out of reach of recall and forces a programmatic generator.
 DEV_PROFILE = {
     "key": "oral_lead",
-    "n_required": 40,
+    "n_required": 120,
     "mw_range": [250.0, 500.0],
     "logp_range": [-1.0, 5.0],
     "tpsa_max": 140.0,
@@ -107,7 +112,7 @@ DEV_PROFILE = {
 # space should lose ground here.
 SEALED_PROFILE = {
     "key": "tight_permeable",
-    "n_required": 30,
+    "n_required": 60,
     "mw_range": [260.0, 470.0],
     "logp_range": [0.0, 5.0],
     "tpsa_max": 110.0,
