@@ -52,11 +52,20 @@ matrix cites Gurkan et al. 2026, where over 93% of mutations revisit an earlier 
 in 87% of chains. Avoiding exactly this is why AlphaEvolve-class systems maintain program
 databases and island models.
 
-Supporting contrast from the same session: OpenEvolve on QuantumErrorDecoder does not flatline
-the way greedy does. Its per-step scores over eleven steps are
-`0.831, 0.713, 0.000, 0.673, 0.779, 0.917, 0.917, 0.939, 0.939, 0.939` — real exploration,
-including failed candidates, with the incumbent climbing in three stages to 0.9392. That is what
-population search buys, and it is the arm this comparison is still missing.
+An attempted contrast from the same session **failed to settle it**. OpenEvolve on
+QuantumErrorDecoder does show real exploration — per-step scores
+`0.831, 0.713, 0.000, 0.673, 0.779, 0.917, 0.917, 0.939, 0.939, 0.939`, with the incumbent
+climbing in three stages — but that run turned out to be censored rather than converged:
+**29 of its 40 iterations were discarded before evaluation** for exceeding OpenEvolve's default
+10,000-character code cap, which a surface-code decoder does not fit under. And the direct test,
+OpenEvolve against the same open-loop control on Molecular at budget 10, produced 1.0263 and
+0.5932 on two surviving seeds (a third crashed on an adapter defect) against a control mean of
+0.9695. Two seeds with a 0.43 spread have no power.
+
+**So the population-search explanation is a hypothesis, not a finding.** It is the most natural
+reading of the lock-in evidence, and it is what AlphaEvolve-class systems are built to address,
+but this session did not test it. See `e0_backend_unblocking_2026-08-08.md` for the blockers that
+have to be cleared first.
 
 ## Consequences for the benchmark design
 
@@ -81,7 +90,7 @@ population search buys, and it is the arm this comparison is still missing.
 | The gap reverses on Molecular at budget 10 | Observed, 1/0/5, but the CI spans zero — direction is suggestive, magnitude is not established |
 | The gap survives on QEC at budget 10 | Supported at full horizon, CI excludes zero; **not** supported token-matched |
 | This is a property of feedback in general | **Not supported.** It is a property of single-incumbent greedy search |
-| A population searcher would behave differently | Untested prediction |
+| A population searcher would behave differently | **Attempted and inconclusive.** 2 usable seeds, 0.43 spread, one crash, and the comparison run was code-length censored |
 | Anything beyond budget 10 | Untested |
 
 Six paired seeds per cell at budget 10 versus eight at budget 3. Intervals are normal
