@@ -59,18 +59,36 @@ KeyError: 'baseline'
 The adapter registers the baseline evaluation as an observation against an action key that the
 bandit's action table does not contain. This is a genuine adapter defect and remains open.
 
-## First nonzero-budget result
+## First nonzero-budget result — and what it says about the certified core
 
-With blockers 1 and 2 resolved, OpenEvolve runs. On `Optimization/CirclePacking` at budget 20 it
-reaches `combined_score=0.9978` by its fourth checkpoint, against a shipped baseline of 0.0 and a
-GPT-5.6 budget-one census score of 0.727. Island statistics appear in its log, so the population
-machinery is genuinely active rather than degenerating to a single incumbent.
+With blockers 1 and 2 resolved, OpenEvolve runs. Complete trajectory on
+`Optimization/CirclePacking`, budget 20, seed 0, GPT-5.6 over the chat wire, 21 oracle calls in
+1224 s, every step valid:
 
-That single number carries a warning for the inventory. A certified task that a one-shot draw
-leaves at 0.727 is essentially solved by a real evolutionary searcher in twenty evaluations. The
-instances are too small: `CirclePacking` should move to larger `N`, where the Packomania records
-are contested, before it is used to measure anything. The same question should be asked of every
-certified task, because none of them has ever been exposed to a population-based search.
+| step | 0 | 1 | 2 | 3 | 7 | 14 | 20 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| best-so-far | 0.0000 | 0.4606 | **0.9906** | 0.9978 | 0.9997 | 0.9999 | 0.9999 |
+
+Island statistics appear in its log, so the population machinery is genuinely active rather than
+degenerating to a single incumbent.
+
+**The task is solved in three oracle calls.** The remaining seventeen evaluations buy 0.002. For
+comparison, a GPT-5.6 budget-one draw scores 0.727 and the shipped baseline scores 0.
+
+This is the most important thing E0 has produced so far, and it is a verdict on the inventory
+rather than on the backend. `Optimization/CirclePacking` is one of the seven certified tasks, and
+its instances are `N = 7, 10, 13` — sizes where the Packomania values are long settled and easy
+to approach. Against a one-shot draw it looked like a discriminating task at 0.727; against an
+actual population search it has no measurable difficulty at all.
+
+Two consequences follow directly:
+
+1. `CirclePacking` must move to larger `N`, where the best-known packings are still contested,
+   before it is used to measure anything. The same applies to any task whose instances were sized
+   against one-shot draws.
+2. **No certified task has ever been exposed to a population-based search.** Every difficulty and
+   discrimination claim in the current record was calibrated against `greedy_rewrite` at budget
+   one to three. This result shows that calibration can be off by the entire scoring range.
 
 ## Claim boundary
 
