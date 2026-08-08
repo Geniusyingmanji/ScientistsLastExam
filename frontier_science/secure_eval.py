@@ -33,8 +33,11 @@ BASE_CANDIDATE_PACKAGES = ("numpy", "numpy.libs", "scipy", "scipy.libs")
 #
 # Deliberately absent: verification-side anchors such as ``pymatching``. A task whose reference
 # decoder is the scoring anchor must not be able to hand that anchor to the candidate.
+# Wheels built by auditwheel put their bundled shared objects in a *sibling* ``<name>.libs``
+# directory and reach it through a relative RPATH, so that sibling must be mounted alongside
+# the package or every compiled extension fails to load.
 ALLOWED_CANDIDATE_PACKAGES = {
-    "rdkit": ("rdkit", "PIL", "pillow.libs"),
+    "rdkit": ("rdkit", "rdkit.libs", "PIL", "pillow.libs"),
     "sympy": ("sympy", "mpmath"),
 }
 
