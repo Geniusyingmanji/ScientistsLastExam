@@ -96,6 +96,23 @@ degenerating to a single incumbent.
 **The task is solved in three oracle calls.** The remaining seventeen evaluations buy 0.002. For
 comparison, a GPT-5.6 budget-one draw scores 0.727 and the shipped baseline scores 0.
 
+### The matched greedy control settles the interpretation
+
+Running `greedy_rewrite` at the same budget, seed and model — a single incumbent with no
+population, no islands, no novelty sampling — gives:
+
+| step | 0 | 1 | 2 | 3 | 6 |
+|---|---:|---:|---:|---:|---:|
+| best-so-far | 0.0000 | 0.3280 | **0.9946** | 0.9948 | **1.0000** |
+
+Greedy reaches 0.9946 at step 2 and a perfect 1.0000 by step 6, **matching and then slightly
+exceeding OpenEvolve's 0.9999**. The two search algorithms are indistinguishable here.
+
+That removes the reading that OpenEvolve is powerful and leaves only the reading that the task is
+easy. Any iterative loop driven by this model solves `CirclePacking` at these instance sizes
+within a handful of oracle calls, so the run says nothing about search algorithms and everything
+about the task. Comparing backends requires a task that is not already solved at step 2.
+
 This is the most important thing E0 has produced so far, and it is a verdict on the inventory
 rather than on the backend. `Optimization/CirclePacking` is one of the seven certified tasks, and
 its instances are `N = 7, 10, 13` — sizes where the Packomania values are long settled and easy
@@ -113,7 +130,10 @@ Two consequences follow directly:
 
 ## Claim boundary
 
-This note records infrastructure repair and one smoke-scale observation. It is not a backend
-comparison, not a multi-seed study, and not evidence about any model. The matched-seed
-`greedy_rewrite` control at the same budget is required before any statement about which search
-algorithm is better.
+This note records infrastructure repair and two single-seed observations. It is **not** a backend
+comparison: OpenEvolve and `greedy_rewrite` land within 0.0001 of each other on a task both solve
+by step 2 to 6, which is exactly the regime in which no comparison is possible. It is not a
+multi-seed study and not evidence about any model.
+
+What it does support: the three backends were mechanically unable to run, two of the four causes
+are now fixed, and the certified task used to check that is far too easy to measure anything.
