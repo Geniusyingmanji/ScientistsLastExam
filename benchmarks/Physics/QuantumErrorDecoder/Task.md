@@ -75,9 +75,10 @@ score = ( log L_trivial − log L_candidate ) / ( log L_trivial − log L_mwpm )
 - There is **no upper clamp**. A decoder that is genuinely better than matching scores above 1.0
   on that regime.
 
-`combined_score` is the mean over the four development regimes. Two further regimes at unseen
-distance and noise strength are evaluated only if all four development regimes are valid, and
-are reported separately as `robustness_score`; they are never returned to the search state.
+`combined_score` is the mean over the four development regimes. Two further regimes at noise
+strengths you have not seen are evaluated only if all four development regimes are valid, and
+are reported separately as `robustness_score`; they are never returned to the search state. A
+decoder whose weights are tuned to the development noise strengths will lose ground there.
 
 Note that the four regimes are not equally forgiving. At `d=3` the trivial decoder is already
 fairly good because the code protects little, so the gap to MWPM is narrow and a sloppy
