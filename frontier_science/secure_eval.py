@@ -52,8 +52,29 @@ def _candidate_python() -> Path:
     return preferred if preferred.is_file() else Path("/usr/bin/python3")
 
 
+def _candidate_python_version() -> tuple[int, int]:
+    """Major/minor of the interpreter that will actually import the mounted packages.
+
+    The parent process is not necessarily the candidate interpreter. An optional search
+    backend runs the whole harness under its own virtualenv (3.10 or 3.12 here) while the
+    sandbox still execs a ``/usr/bin`` interpreter, which may be a different minor version.
+    Site-packages must be resolved for the interpreter that imports them, not for the parent:
+    mounting 3.10 C extensions into a 3.8 candidate cannot work, and looking up a version that
+    has no site-packages tree mounts nothing at all, so every candidate fails on ``import numpy``.
+    """
+    python = _candidate_python()
+    try:
+        out = subprocess.run(
+            [str(python), "-c", "import sys; print('%d %d' % sys.version_info[:2])"],
+            capture_output=True, text=True, timeout=30, check=True,
+        ).stdout.split()
+        return int(out[0]), int(out[1])
+    except Exception:  # noqa: BLE001 - fall back to the parent's version
+        return sys.version_info[0], sys.version_info[1]
+
+
 def _site_package_roots() -> list[Path]:
-    version = "%d.%d" % sys.version_info[:2]
+    version = "%d.%d" % _candidate_python_version()
     candidates = [
         Path.home() / ".local/lib" / ("python" + version) / "site-packages",
         Path("/usr/local/lib") / ("python" + version) / "dist-packages",
