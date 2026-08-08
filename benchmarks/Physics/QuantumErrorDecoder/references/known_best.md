@@ -25,9 +25,13 @@ model, so it cannot drift from the scored shot set.
 | Decoder | combined_score | robustness_score | wall |
 |---|---:|---:|---:|
 | Shipped baseline — never predict a flip | **0.0000** | 0.0000 | 0.7 s |
-| Truth-blind reference — numpy/scipy greedy matching over the error graph | **0.2395** | 0.3380 | 10.4 s |
+| Truth-blind reference A — numpy/scipy greedy matching | **0.2395** | 0.3380 | 10.4 s |
+| Truth-blind reference B — numpy/scipy assignment-reduction matching | **0.3832** | 0.2286 | 4 s |
+| GPT-5.6, budget one, best of five draws | **0.7391** | — | — |
 | PyMatching 2 minimum-weight perfect matching | **1.0000** (by definition) | 1.0000 | — |
 | Published sub-matching decoders | **> 1.0** | — | — |
+
+Both references ship under `verification/` as calibration witnesses; neither is the baseline.
 
 The reference is a deliberately simple greedy matching decoder written under the same
 numpy/scipy-only constraint imposed on candidates. It confirms the task is solvable within
@@ -50,6 +54,24 @@ went wrong in practice. At an earlier 20000-shot sizing, GPT-5.6 produced a comp
 (shortest paths plus exact small-syndrome T-joins) that **scored nothing because it could not
 finish**, which measures decoder throughput rather than decoding quality. At the current sizing
 the reference finishes in 10.4 s, leaving roughly a 28× margin for a slower candidate.
+
+## Is the anchor reachable inside the candidate constraints?
+
+A fairness question about this task's own scoring: candidates may use only the standard library,
+NumPy and SciPy, while the anchor is a specialist C++ matching library. If 1.0 were unreachable
+under those constraints, the normalization would be misleading.
+
+Two independent numpy/scipy references were written to probe this. A greedy nearest-defect
+matcher reaches 0.2395. Reducing each shot's minimum-weight T-join to a balanced assignment
+problem and solving it with `scipy.optimize.linear_sum_assignment` reaches 0.3832, including
+0.7778 on `d3_p0.005`. Both degrade with code distance, where defect counts grow and the
+assignment reduction stops being an exact perfect matching.
+
+The gap to 1.0 is therefore an implementation-quality gap, not an impossibility: PyMatching
+implements sparse blossom, and a correct general-graph minimum-weight perfect matching is
+implementable in pure Python — substantially harder than either reference, and comfortably
+inside the timeout headroom, but real work. Supporting evidence that the anchor is approachable:
+a single GPT-5.6 budget-one draw already reaches **0.7391**, above both references.
 
 ## Cross-version note
 
