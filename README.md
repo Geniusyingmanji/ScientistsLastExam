@@ -16,14 +16,13 @@ the text-question benchmark named *FrontierScience* in
 
 ## At a glance
 
-- **59 task packages** across **55 logical domains** and **7 broad disciplines**.
-- **7 certified**, **43 candidate**, and **9 quarantined** tasks.
-- A preregistered GPT-5.6 budget-one census over all **50 internally admitted tasks**;
-  **36/50 proposals execute**, while difficulty, saturation, and protocol failures are reported
-  separately.
+- **61 task packages** across **57 logical domains** and **7 broad disciplines**.
+- **7 certified**, **45 candidate**, and **9 quarantined** tasks.
+- Two tasks whose oracles are **community-standard scientific tooling** (Stim + PyMatching,
+  RDKit) rather than a bespoke reimplementation, both scored **uncapped** against anchors
+  recomputed at evaluation time.
 - Deterministic black-box evaluation through a networkless Bubblewrap sandbox.
-- A built-in iterative rewrite baseline plus optional OpenEvolve, AB-MCTS, and
-  ShinkaEvolve backends.
+- A built-in iterative rewrite baseline plus OpenEvolve, AB-MCTS, and ShinkaEvolve backends.
 - Hash-bound experiment reports with Git revision, command, source-tree state, and explicit
   trust decisions.
 
@@ -48,13 +47,13 @@ should use the discipline path.
 | Discipline | Tasks | Certified | Candidate | Quarantined |
 |---|---:|---:|---:|---:|
 | Biology | 6 | 0 | 5 | 1 |
-| Chemistry | 12 | 1 | 9 | 2 |
+| Chemistry | 13 | 1 | 10 | 2 |
 | Computer Science | 4 | 2 | 2 | 0 |
 | Earth Science | 6 | 0 | 6 | 0 |
 | Engineering | 18 | 0 | 14 | 4 |
 | Mathematics | 5 | 2 | 3 | 0 |
-| Physics | 8 | 2 | 4 | 2 |
-| **Total** | **59** | **7** | **43** | **9** |
+| Physics | 9 | 2 | 5 | 2 |
+| **Total** | **61** | **7** | **45** | **9** |
 
 The certified core currently consists of:
 
@@ -66,18 +65,43 @@ The certified core currently consists of:
 - `Photonics/MultilayerThinFilm`
 - `Physics/SpinGlassGroundState`
 
-Run `python -m frontier_science list --all` for the authoritative live inventory, including
-discipline, logical domain, certification status, difficulty, and oracle type. The domain-to-
-discipline mapping is defined in
-[`frontier_science/benchmark_layout.py`](frontier_science/benchmark_layout.py), and admission
-status is defined in
-[`frontier_science/certification.yaml`](frontier_science/certification.yaml).
+Run `python -m frontier_science list --all` for the authoritative live inventory. The
+domain-to-discipline mapping is in
+[`frontier_science/benchmark_layout.py`](frontier_science/benchmark_layout.py); admission status
+is in [`frontier_science/certification.yaml`](frontier_science/certification.yaml).
+
+## Community-oracle tasks
+
+Every one of the original 59 evaluators depends only on NumPy, SciPy and the standard library —
+a dependency scan over all 29,087 lines of oracle code finds no RDKit, ViennaRNA, Stim, PySCF,
+ASE or BioPython. Task narratives cite real science, but the oracles are author-written
+reduced-order reimplementations, and none has completed external domain review. A score
+therefore measures agreement with the author's NumPy code, not with the science.
+
+Two tasks were added to close that gap. Both put a community-standard toolkit in the oracle and
+recompute their anchor at evaluation time rather than quoting a number from a paper.
+
+| Task | Oracle | Anchor | Scoring |
+|---|---|---|---|
+| `QuantumErrorCorrection/QuantumErrorDecoder` | **Stim** rotated surface-code circuits, seeded sampling | **PyMatching 2** minimum-weight perfect matching, recomputed per run | uncapped; matching MWPM = 1.0 |
+| `MedicinalChemistry/MolecularLeadOptimization` | **RDKit** QED, Ertl–Schuffenhauer SA score, Lipinski/Veber descriptors, PAINS catalogue, Morgan/Tanimoto | mean drug-likeness of structurally distinct approved drugs from a 20-drug panel whose SMILES were each verified against published molecular weights | uncapped; approved-drug quality = 1.0 |
+
+Calibration ladders are in each task's `references/known_best.md`. On the decoder task:
+baseline 0.0, two NumPy/SciPy reference decoders at 0.2395 and 0.3832, GPT-5.6 budget-one best
+of five draws 0.7391, OpenEvolve at budget 40 **0.9932**, PyMatching anchor 1.0.
+
+The oracle runs in the trusted parent, not the sandbox, so adding a scientific library to an
+evaluator does not touch the isolation model. A task may additionally expose a toolkit to its
+*candidate* through `frontier_eval/candidate_packages.txt`, expanded via a fixed allowlist in
+trusted code; verification-side anchors such as PyMatching are deliberately excluded from that
+allowlist.
 
 ## Quickstart
 
 Run commands from the repository root. Core evaluation requires Python, PyYAML, NumPy, SciPy,
-and Linux Bubblewrap (`bwrap`). The checked-in environment used for the latest trusted reports
-is Python 3.8; optional search backends have newer Python requirements.
+and Linux Bubblewrap (`bwrap`). The checked-in environment is Python 3.8; optional search
+backends have newer Python requirements. Per-task oracle dependencies are pinned in each
+`verification/requirements.txt`.
 
 ```bash
 # Show certified tasks, then the complete inventory.
@@ -93,30 +117,22 @@ python -m frontier_science eval \
   --candidate /path/to/solution.py
 ```
 
-Task names are accepted when unambiguous, so `--task LennardJonesCluster` also works. Candidate
-and quarantined packages require the explicit `--allow-uncertified` flag.
+Task names are accepted when unambiguous. Candidate and quarantined packages require the
+explicit `--allow-uncertified` flag.
 
 ### Configure an LLM
-
-Copy the public OpenAI-compatible example and provide credentials through the environment:
 
 ```bash
 cp frontier_science/conf/llm/openai_compatible.example.yaml \
    frontier_science/conf/llm/local.yaml
 export OPENAI_API_KEY=your_key_here
-# Edit local.yaml for the endpoint, wire protocol, and model.
 python -m frontier_science smoke
 ```
 
-`local.yaml` is git-ignored. Configuration resolution is:
-
-1. `--llm-config <path>`
-2. `FS_LLM_CONFIG`
-3. `frontier_science/conf/llm/local.yaml`
-4. the committed example
-
-The built-in client supports OpenAI-compatible Chat Completions and Responses endpoints.
-Never commit credentials.
+`local.yaml` is git-ignored. Configuration resolution is `--llm-config`, then `FS_LLM_CONFIG`,
+then `conf/llm/local.yaml`, then the committed example. Both OpenAI-compatible Chat Completions
+and Responses wires are supported. Reasoning models on the chat wire reject `max_tokens`; set
+`chat_max_tokens_field: max_completion_tokens` for those. Never commit credentials.
 
 ### Run an optimization trajectory
 
@@ -129,65 +145,30 @@ python -m frontier_science run \
   --workdir runs/lj/seed-0
 ```
 
-Use `--resume` with the same work directory to continue an interrupted run. Every backend
-routes candidate scoring through the same trusted evaluator and writes unified trajectory,
-summary, checkpoint, and best-program artifacts.
+Available algorithms are `greedy_rewrite` (built-in single-incumbent full-file rewriting),
+`openevolve` (0.2.26, Python ≥3.10), `abmcts` (TreeQuest AB-MCTS-A, Python ≥3.11) and
+`shinkaevolve`. A named backend fails explicitly if unavailable; it never silently falls back.
 
-Available algorithms are:
-
-- `greedy_rewrite`: built-in single-incumbent full-file rewriting.
-- `openevolve`: OpenEvolve 0.2.26; optional, Python 3.10 or newer.
-- `abmcts`: TreeQuest AB-MCTS-A; optional, Python 3.11 or newer.
-- `shinkaevolve`: ShinkaEvolve; optional, Python 3.10 or newer.
-
-Pinned optional dependencies are in
-[`requirements-upstream.txt`](requirements-upstream.txt). A named backend fails explicitly if
-its dependency or supported interface is unavailable; it never silently falls back to
-`greedy_rewrite`.
-
-### Run a multi-seed study
-
-```bash
-python scripts/batch_evolve.py \
-  --algorithms greedy_rewrite \
-  --feedback-modes normal,selection_blind \
-  --seeds 0,1,2,3,4 \
-  --budget 30
-```
-
-The batch runner records best score, best-so-far AUC over charged budget units, actual oracle
-calls, wall time, token usage, configured cost, and confidence intervals. `selection_blind` is
-the strict open-loop control: proposals always see the frozen baseline and its public metrics,
-while evaluation results are retained only for offline selection. Other feedback modes are
-diagnostic prompt ablations and do not imply the same causal control.
-
-Local seeds control local sampling and identify replicates. They are not server-side model
-seeds unless the provider explicitly exposes and honors such a control.
+`selection_blind` is the strict open-loop control: proposals always see the frozen baseline and
+its public metrics, while evaluation results are retained only for offline selection.
 
 ## Evaluation and security model
 
 The trusted parent process imports each hidden oracle. Candidate code runs separately through a
-typed JSON-RPC boundary inside Bubblewrap with:
+typed JSON-RPC boundary inside Bubblewrap with no network namespace, read-only mounts, a private
+temporary filesystem, CPU/memory/file/descriptor/process limits, seccomp blocking process and
+thread creation, fixed numerical thread counts, and a label-blind failure taxonomy that removes
+candidate-controlled exception text from search feedback.
 
-- no network namespace access;
-- read-only runtime and candidate mounts;
-- a private temporary filesystem;
-- CPU, memory, file, descriptor, and process limits;
-- seccomp blocking process and thread creation;
-- fixed numerical thread counts; and
-- a label-blind failure taxonomy that removes candidate-controlled exception text from search
-  feedback.
+Site-packages are resolved for the interpreter that will actually import them, not for the
+parent process — these differ whenever a search backend runs the harness inside its own
+virtualenv.
 
-Multi-world evaluators can reset the candidate process and private temporary filesystem at world
-boundaries, preventing state from revealing hidden execution order. The trusted runtime alone
-validates metric shape and finiteness.
-
-This design reduces common leakage and host-access risks; it does not prove absence of training-
-data contamination, semantic shortcuts, simulator error, or hidden scientific confounding.
+This design reduces common leakage and host-access risks; it does not prove absence of
+training-data contamination, semantic shortcuts, simulator error, or hidden scientific
+confounding.
 
 ## Task package contract
-
-Each package is auto-discovered at `benchmarks/<Discipline>/<Task>/` and normally contains:
 
 ```text
 <Task>/
@@ -201,120 +182,111 @@ Each package is auto-discovered at `benchmarks/<Discipline>/<Task>/` and normall
 │   ├── entrypoint.txt
 │   ├── constraints.txt
 │   ├── agent_files.txt
-│   └── readonly_files.txt
-└── verification/
-    └── evaluator.py              # hidden frozen oracle
+│   ├── readonly_files.txt
+│   └── candidate_packages.txt    # optional; domain toolkits exposed to the candidate
+├── verification/
+│   ├── evaluator.py              # hidden frozen oracle
+│   └── requirements.txt          # optional; pinned oracle dependencies
+└── references/
+    └── known_best.md             # required for uncapped tasks
 ```
 
 The evaluator returns at least finite numeric `combined_score` and `valid` fields. Adding a
-package makes it discoverable, not certified. Certification also requires deterministic
-behavior, sandbox compatibility, scientific invariants, defensible normalization, stable
-citations, a task card, and independent review evidence.
-
-See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the complete contract, task generator workflow,
-review checklist, and certification requirements.
+package makes it discoverable, not certified. See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the
+complete contract and certification requirements.
 
 ## Certification and evidence
 
-Certification status describes evidence quality, not task difficulty:
-
-- `certified`: admitted to the default benchmark after all required gates pass.
-- `candidate`: retained for calibration or research but still missing one or more external,
-  scientific, robustness, contamination, or review gates.
-- `quarantined`: a reproduced material defect makes the package inadmissible until repaired and
-  re-audited.
-
-The inventory contains 48 `hard` and 11 `flagship` packages. Among the 50 internally admitted
-packages, 39 are `hard` and 11 are `flagship`; these author labels do not override certification
-or measured model difficulty.
-
-Key trusted artifacts include:
+Certification status describes evidence quality, not task difficulty: `certified` is admitted to
+the default benchmark, `candidate` is retained for calibration but missing one or more gates, and
+`quarantined` marks a reproduced material defect.
 
 | Evidence | Result | Scope |
 |---|---|---|
-| [Certification audit v65](experiments/task_certification_audit_2026-07-26_v65.json) | 7 certified / 43 candidate / 9 quarantined | Inventory and admission gates at clean revision `c98e28c` |
-| [Secure baseline v46](experiments/secure_baseline_determinism_2026-07-26_v46.json) | 59/59 deterministic, valid, and fail-closed | Two baseline evaluations per task at clean revision `1565e22` |
-| [Security audit v49](experiments/security_audit_2026-07-27_v49.json) | 23/23 tests passed | Sandbox and protocol regressions at clean revision `ab0c393` |
-| [Full suite v31](experiments/full_test_suite_2026-08-03_v31.json) | 671/671 tests passed | Current hash-bound report at clean revision `90ab320` |
-| [Science summary v28](experiments/science_calibration_summary_2026-07-25_v28.json) | 69 normal single-run conditions across 35 tasks | Calibration only; heterogeneous science axes are not averaged |
-| [Two-hour exploratory analysis](experiments/exploratory_2h_analysis_2026-07-30_v1.json) | 7/7 declared cells completed | Result-selected exploratory screen, not confirmatory or population evidence |
-| [Quarantined-task re-audit](experiments/quarantined_task_admission_audit_2026-08-03_v1.json) | 9/9 material defects reproduced | All quarantined packages checked at clean revision `bce1d6c`; 0/9 meet the internal benchmark standard |
-| [Task maturity audit v5](experiments/task_maturity_audit_2026-08-03_v5.json) | 59/59 tasks evidence-bound; issues=[] | 50 admissible tasks have current/migration-safe model measurements; all 9 quarantined tasks have current defect reproduction |
-| [GPT-5.6 four-task pilot analysis](experiments/gpt56_science_pilot_analysis_2026-08-06_v1.json) | 8/8 cells and 24/24 calls; 16/24 valid proposals | Challenge/discrimination calibration plus strict frozen-parent audit; no positive short-horizon online-feedback signal |
-| [GPT-5.6 50-task census analysis](experiments/gpt56_science_census_analysis_2026-08-06_v1.json) | 50/50 cells; 36/50 valid proposals | Complete admitted-inventory budget-one screen; challenge gate fails, so this is not a uniformly hard model leaderboard |
+| [Certification audit v65](experiments/task_certification_audit_2026-07-26_v65.json) | 7 certified / 43 candidate / 9 quarantined | Inventory and admission gates at the 59-package revision |
+| [Secure baseline v46](experiments/secure_baseline_determinism_2026-07-26_v46.json) | 59/59 deterministic, valid, fail-closed | Two baseline evaluations per task |
+| [Security audit v49](experiments/security_audit_2026-07-27_v49.json) | 23/23 tests passed | Sandbox and protocol regressions |
+| [GPT-5.6 50-task census](experiments/gpt56_science_census_analysis_2026-08-06_v1.json) | 50/50 cells; 36/50 valid proposals | Budget-one screen; challenge gate fails |
+| [Track F confirmatory analysis](experiments/track_f_analysis_2026-07-26_v1.json) | no identified feedback advantage | Preregistered, n=48/arm, on ActiveLawDiscovery |
 
-The current evidence-bound conclusion is deliberately split: 50 tasks pass the internal science
-admission gate, while the other 9 do not meet the internal benchmark standard and remain
-quarantined. None of the 59 currently satisfies the stronger open-release, external-validation,
-or long-horizon-readiness gates; registry status must not be read as those broader claims.
+[`experiments/TRUST.md`](experiments/TRUST.md) is the append-only trust manifest. Study plans and
+interpretations live in [`.research/`](.research/). Historical pre-sandbox reports are classified
+`UNTRUSTED_PRE_SANDBOX` and must not be used as benchmark evidence.
 
-### GPT-5.6 calibration result
+## Recent findings
 
-The preregistered census used `gpt-5.6-sol`, low reasoning, one normal-feedback proposal per
-task, and no provider-side generation seed. All 50 outer cells completed without provider or
-evaluator infrastructure failure. The result is intentionally not collapsed to a single mean
-score because the scientific axes are heterogeneous:
+Full write-ups are in [`.research/`](.research/); each carries its own claim boundary.
 
-| Outcome | Tasks | Interpretation |
-|---|---:|---|
-| Protocol blocked | 14 | Invalid candidate execution or submission; not counted as clean scientific difficulty |
-| Executable floor (`<=0.01`) | 6 | Runnable, but essentially no one-step progress |
-| Difficult (`0.01–0.50`) | 6 | Clean one-step challenge |
-| Discriminating (`0.50–0.95`) | 11 | Material progress with remaining nominal headroom |
-| Near ceiling (`>=0.95`) | 13 | On-ramp or candidate for a harder regime |
+**The evolvability gap, and its budget dependence.** Paired `normal` versus `selection_blind`
+runs measure whether an oracle budget is better spent on a feedback loop or on independent
+draws. At budget 3 both community-oracle tasks show a positive gap whose 95% CI excludes zero at
+both the full-horizon and token-matched endpoints — the first positive feedback result in this
+project, and the opposite sign to the Track F null. **At budget 10 the gap shrinks 41% on the
+decoder task and reverses on the molecular task**, where the open-loop control wins five of six
+paired seeds. Best-of-N strengthens as N grows while a single incumbent locks into a basin, and
+feedback's token overhead compounds (1.26× → 1.52×). A `Δ > 0` admission rule is therefore
+underspecified without naming the budget and the searcher.
+See [evolvability_gap](.research/evolvability_gap_2026-08-09.md) and
+[budget dependence](.research/evolvability_gap_budget_dependence_2026-08-09.md).
 
-The portfolio passes the preregistered protocol-health, internal scientific-scope,
-execution-usability, discrimination, and anti-saturation gates. It fails the stronger challenge
-gate: only 12 executable tasks score below `0.50`, versus the frozen threshold of 15. Therefore
-the current inventory is best treated as a mixed calibration portfolio, not a uniformly hard
-GPT-5.6 benchmark or one-number leaderboard.
+**The search backends had never produced a data point, for mechanical reasons.** Across 2822
+recorded algorithm invocations the only search algorithm ever run was `greedy_rewrite`. Six
+independent blockers were found and four fixed: the sandbox mounted no packages under any
+backend virtualenv; the chat wire hardcoded `max_tokens`; OpenEvolve silently discarded
+candidates over 10,000 characters (29 of 40 iterations on the decoder task, which moved its
+reported score by 0.054); and upstream evaluator timeouts aborted whole runs. ShinkaEvolve's own
+request body and an AB-MCTS bandit key error remain open.
+See [E0 unblocking](.research/e0_backend_unblocking_2026-08-08.md).
 
-Fifteen executable tasks with scores in `[0.05, 0.95)` form the preregistered priority pool for
-later iterative normal-versus-frozen-parent studies. Budget one is not self-evolution evidence.
-The separate four-task budget-three pilot records zero normal wins, two frozen-parent wins, and
-two ties; with one unseeded provider draw per condition, it provides neither a positive online-
-feedback signal nor a causal null result. See the
-[human-readable census analysis](.research/gpt56_science_census_analysis_2026-08-06_v1.md) and
-[pilot analysis](.research/gpt56_science_pilot_analysis_2026-08-06_v1.md).
+**A certified task turned out to have no measurable difficulty.** With the backends working,
+`Optimization/CirclePacking` is solved in three oracle calls by OpenEvolve and reaches 0.999989
+under plain greedy — the two searchers are indistinguishable because the task is easy at
+`N = 7, 10, 13`, where the Packomania values are long settled. No certified task has ever been
+exposed to a population search, so every difficulty claim on record was calibrated against
+`greedy_rewrite` at budget one to three.
 
-[`experiments/TRUST.md`](experiments/TRUST.md) is the append-only trust manifest and the primary
-index for dated reports. Detailed study plans and interpretations live in [`.research/`](.research/),
-including the [two-hour result note](.research/exploratory_2h_results_2026-07-30_v1.md) and
-[current task maturity ledger](.research/task_maturity_ledger_2026-08-03_v5.md).
+**Population search does not reproduce greedy's reversal — directionally.** On the molecular task
+at budget 10 against the same open-loop control, greedy scores −0.093 (1 of 6 paired wins) while
+OpenEvolve scores +0.153 (8 of 10). Both confidence intervals span zero and the sign tests give
+p = 0.22 and p = 0.11, so this is consistent with the lock-in explanation but does not establish
+it. See [population search](.research/population_search_results_2026-08-09.md).
 
-Historical pre-sandbox reports are retained for provenance but classified
-`UNTRUSTED_PRE_SANDBOX`; they must not be used as benchmark evidence.
+## Known state before relying on this branch
+
+Two things are deliberately left open rather than papered over.
+
+**The trusted runtime changed.** `frontier_science/secure_eval.py` and `benchmark_layout.py`
+were modified, and `tests/test_runtime_migration.py` passes at the previous revision and fails
+here. The project binds frozen analysis artifacts to a `runtime_source_sha256`, so changing the
+runtime unbinds them; the remedy is to register a runtime migration audit, which re-certifies the
+trusted runtime and should be a deliberate decision. Note that this guard fires for **any** new
+task in a new domain. Nine per-task analysis tests also fail and are explicitly recorded as
+unattributed — they read `runs/` paths stored as absolute paths, so they error in a clone or
+worktree. See [runtime governance](.research/runtime_change_governance_2026-08-09.md).
+
+**The new tasks are not registered as maturity evidence.** They pass `scripts/audit_tasks.py`
+with zero task-card issues, but their GPT-5.6 measurements are not yet trusted artifacts under
+`experiments/`, so the maturity ledger still counts 50 internally admitted tasks rather than 52.
+Both task contracts have had zero contract-path commits since their runs began and each run
+records its own `task_contract_sha256`, so the groundwork is done.
+
+The sandbox itself is verified intact: `tests.test_secure_eval` passes and
+`scripts/run_security_audit.py` passes 23/23 with `trusted_evidence: true`.
 
 ## Reproduce checks
 
-Fast structural and security checks:
-
 ```bash
-python -m unittest -v tests.test_benchmark_layout tests.test_runtime_migration
+python -m unittest -v tests.test_benchmark_layout tests.test_secure_eval
 python scripts/run_security_audit.py --output /tmp/security.json
 python scripts/audit_tasks.py --output /tmp/certification.json
-python scripts/audit_quarantined_tasks.py --output /tmp/quarantined.json
-python scripts/audit_task_maturity.py \
-  --full-test-suite experiments/full_test_suite_2026-08-03_v31.json \
-  --output /tmp/maturity.json
-```
-
-Longer inventory and full-suite checks:
-
-```bash
-python scripts/run_secure_baseline.py \
-  --repeats 2 \
-  --output /tmp/baselines.json
 python -m unittest discover -s tests -q
 ```
 
-Task-family admission audits and analysis scripts are kept in [`scripts/`](scripts/). New
-machine-readable reports include their command, Git revision, scoped source-tree state, changed
-paths, execution status, and trust decision. A dated artifact is trusted evidence only when its
-declared checks pass on a clean, known revision.
+New machine-readable reports include their command, Git revision, scoped source-tree state,
+changed paths, execution status, and trust decision. A dated artifact is trusted evidence only
+when its declared checks pass on a clean, known revision.
 
 ## Contributing
 
-The current priority is hardening and independently reviewing the existing inventory. Fixes,
-scientific tests, task cards, and carefully justified new tasks are welcome. Start with
+The current priority is hardening and independently reviewing the existing inventory. Start with
 [`CONTRIBUTING.md`](CONTRIBUTING.md); new tasks enter as candidates and cannot self-certify.
