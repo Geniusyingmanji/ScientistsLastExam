@@ -217,27 +217,31 @@ interpretations live in [`.research/`](.research/). Historical pre-sandbox repor
 
 Full write-ups are in [`.research/`](.research/); each carries its own claim boundary.
 
-**The evolvability gap, and the budget window it lives in.** Paired `normal` versus
+**The evolvability gap depends on the task, not just on the budget.** Paired `normal` versus
 `selection_blind` runs measure whether an oracle budget is better spent on a feedback loop or on
-independent draws. Sweeping the budget on the molecular task, seed-paired at n=8:
+independent draws. Sweeping the budget on both community-oracle tasks, seed-paired:
 
-| budget | 3 | 5 | 7 | 10 |
-|---|---:|---:|---:|---:|
-| gap | +0.311 | **+0.371** | +0.036 | −0.093 |
-| paired W/L | 7/1 | **8/0** | 4/4 | 1/5 |
-| sign test | p=0.070 | **p=0.0078** | p=1.000 | p=0.219 |
+| budget | 3 | 5 | 7 | 10 | 15 | 20 |
+|---|---:|---:|---:|---:|---:|---:|
+| Molecular | +0.311 | **+0.371** | +0.036 | −0.093 | — | — |
+| decoder | +0.135 | +0.061 | — | +0.080 | **+0.172** | +0.111 |
 
-The gap is **not monotone**: it peaks at budget 5 — the strongest result in this project, eight
-paired wins out of eight — then collapses 90% by budget 7, sits at parity there, and turns
-negative by 10, crossing zero near budget 7.8. So feedback beats matched sampling in a real but
-**narrow window**, roughly budgets 3 to 6 for this searcher.
+On the molecular task the gap is **not monotone**: it peaks at budget 5 — the strongest result in
+this project, eight paired wins out of eight, sign test p=0.0078 — then collapses, reaches parity
+at 7, and crosses zero near **budget 7.8**. On the decoder task the gap is **positive at every
+budget through 20**, three of five intervals excluding zero, and largest at 15.
 
-The sweep also identifies what moves. The control rises monotonically across the four budgets
-(0.404 → 0.970) while the feedback arm stays inside 0.715–0.905 with no trend: the feedback arm
-saturates early and best-of-N catches up and passes it. Feedback's token overhead compounds too
-(1.26× → 1.52×). A `Δ > 0` admission rule is therefore underspecified without naming the budget
-and the searcher, and the **crossover budget** — under ten proposals here, against the 10²–10³
-evaluations AlphaEvolve-class systems run — is the sharper number.
+Same searcher, same model, same protocol. **The crossover is a task property, not a searcher
+property**, and the control arms say why: the decoder's open loop is flat from budget 5
+(0.824, 0.869, 0.824, 0.845) while the molecular one climbs 0.404 → 0.970. A molecular draw can
+land in a long right tail, so more draws keep helping; a decoder's per-draw quality is bounded by
+what one generation can write, so refining beats redrawing and the feedback arm climbs to 0.995
+against the matching anchor.
+
+That implies a sharper admission rule than `Δ > 0`, and one measurable from the control arm
+alone: **a task measures iterative improvement to the extent that its open-loop control saturates
+with budget.** If best-of-N keeps improving, independent sampling eventually overtakes any
+searcher and the gap you measured was an artefact of the budget you picked.
 See [evolvability_gap](.research/evolvability_gap_2026-08-09.md) and
 [budget dependence](.research/evolvability_gap_budget_dependence_2026-08-09.md).
 
