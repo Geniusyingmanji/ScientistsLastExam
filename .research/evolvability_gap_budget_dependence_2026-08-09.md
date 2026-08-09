@@ -62,10 +62,14 @@ OpenEvolve against the same open-loop control on Molecular at budget 10, produce
 0.5932 on two surviving seeds (a third crashed on an adapter defect) against a control mean of
 0.9695. Two seeds with a 0.43 spread have no power.
 
-**So the population-search explanation is a hypothesis, not a finding.** It is the most natural
-reading of the lock-in evidence, and it is what AlphaEvolve-class systems are built to address,
-but this session did not test it. See `e0_backend_unblocking_2026-08-08.md` for the blockers that
-have to be cleared first.
+**The population-search explanation now has directional support but is still not established.**
+Repeating the comparison with the code-length cap fixed gives OpenEvolve 0.9881 against the same
+0.9695 control — that is +0.019 where greedy was −0.093, so **the reversal did not reproduce with
+a population searcher**. That is the predicted qualitative distinction. It is not a finding: four
+usable seeds with sd 0.2958 put a 0.019 difference well inside the noise, the arms are not
+seed-paired because a third of the OpenEvolve runs crash on a reproducible adapter defect, and
+n=4 against n=6 is unbalanced. Details and the required follow-up are in
+`population_search_results_2026-08-09.md`.
 
 ## Consequences for the benchmark design
 
@@ -90,7 +94,7 @@ have to be cleared first.
 | The gap reverses on Molecular at budget 10 | Observed, 1/0/5, but the CI spans zero — direction is suggestive, magnitude is not established |
 | The gap survives on QEC at budget 10 | Supported at full horizon, CI excludes zero; **not** supported token-matched |
 | This is a property of feedback in general | **Not supported.** It is a property of single-incumbent greedy search |
-| A population searcher would behave differently | **Attempted and inconclusive.** 2 usable seeds, 0.43 spread, one crash, and the comparison run was code-length censored |
+| A population searcher would behave differently | **Directionally consistent, not established.** Re-run with the censoring fixed: OpenEvolve +0.019 versus the control where greedy was −0.093, so the reversal did not reproduce — but n=4, sd 0.30, unpaired, 33% crash rate. See `population_search_results_2026-08-09.md` |
 | Anything beyond budget 10 | Untested |
 
 Six paired seeds per cell at budget 10 versus eight at budget 3. Intervals are normal
