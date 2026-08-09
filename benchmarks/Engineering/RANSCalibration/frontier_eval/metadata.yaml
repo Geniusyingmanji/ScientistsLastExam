@@ -1,5 +1,6 @@
 domain: Turbulence
 task: RANSCalibration
+scientific_role: optimization
 difficulty: hard
 tier: T2
 oracle_type: physical_sim

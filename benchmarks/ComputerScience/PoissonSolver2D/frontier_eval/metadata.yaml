@@ -1,5 +1,6 @@
 domain: ScientificComputing
 task: PoissonSolver2D
+scientific_role: optimization
 difficulty: hard
 tier: T2
 oracle_type: analytical

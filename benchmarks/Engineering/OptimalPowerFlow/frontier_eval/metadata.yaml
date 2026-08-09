@@ -1,5 +1,6 @@
 domain: PowerSystems
 task: OptimalPowerFlow
+scientific_role: optimization
 difficulty: hard
 tier: T2
 oracle_type: analytical

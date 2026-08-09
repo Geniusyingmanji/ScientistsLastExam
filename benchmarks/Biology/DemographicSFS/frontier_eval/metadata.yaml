@@ -1,5 +1,6 @@
 domain: PopulationGenetics
 task: DemographicSFS
+scientific_role: discovery
 difficulty: hard
 tier: T2
 oracle_type: active_coalescent_inference

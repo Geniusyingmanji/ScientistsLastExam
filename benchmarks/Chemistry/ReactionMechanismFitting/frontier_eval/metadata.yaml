@@ -1,5 +1,6 @@
 domain: ChemicalKinetics
 task: ReactionMechanismFitting
+scientific_role: discovery
 difficulty: hard
 tier: T2
 oracle_type: physical_sim

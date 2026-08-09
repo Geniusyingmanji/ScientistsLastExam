@@ -1,5 +1,6 @@
 domain: Thermodynamics
 task: HeatExchangerDesign
+scientific_role: optimization
 difficulty: flagship
 tier: T2
 oracle_type: physical_sim

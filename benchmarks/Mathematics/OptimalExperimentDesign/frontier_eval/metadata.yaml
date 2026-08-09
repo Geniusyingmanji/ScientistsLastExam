@@ -1,5 +1,6 @@
 domain: BayesianInference
 task: OptimalExperimentDesign
+scientific_role: optimization
 difficulty: hard
 tier: T2
 oracle_type: analytical

@@ -1,5 +1,6 @@
 domain: Algorithm
 task: MatrixMultiplicationRank
+scientific_role: optimization
 difficulty: flagship
 tier: T3
 oracle_type: analytical

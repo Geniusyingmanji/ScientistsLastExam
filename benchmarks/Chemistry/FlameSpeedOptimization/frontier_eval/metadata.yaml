@@ -1,5 +1,6 @@
 domain: Combustion
 task: FlameSpeedOptimization
+scientific_role: optimization
 difficulty: hard
 oracle_type: physical_sim
 score_mode: clipped

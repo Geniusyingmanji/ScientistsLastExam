@@ -1,5 +1,6 @@
 domain: SystemsBiology
 task: GeneNetworkIntervention
+scientific_role: discovery
 difficulty: hard
 tier: T3
 oracle_type: physical_sim

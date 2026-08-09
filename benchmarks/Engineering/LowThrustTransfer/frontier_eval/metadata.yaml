@@ -1,5 +1,6 @@
 domain: Astrodynamics
 task: LowThrustTransfer
+scientific_role: optimization
 difficulty: flagship
 oracle_type: physical_sim
 score_mode: clipped

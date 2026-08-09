@@ -1,5 +1,6 @@
 domain: Optimization
 task: CirclePacking
+scientific_role: optimization
 difficulty: hard
 oracle_type: analytical
 score_mode: clipped

@@ -1,5 +1,6 @@
 domain: ChemicalProcess
 task: DistillationColumnDesign
+scientific_role: optimization
 difficulty: hard
 tier: T2
 oracle_type: equilibrium_stage_process_sim

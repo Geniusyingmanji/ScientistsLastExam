@@ -1,5 +1,6 @@
 domain: Chemistry
 task: LennardJonesCluster
+scientific_role: optimization
 difficulty: hard
 tier: T2
 oracle_type: analytical          # analytical | physical_sim | dataset_oracle | neural_surrogate

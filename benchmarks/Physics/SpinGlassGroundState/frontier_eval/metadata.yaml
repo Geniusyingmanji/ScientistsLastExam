@@ -1,5 +1,6 @@
 domain: Physics
 task: SpinGlassGroundState
+scientific_role: optimization
 difficulty: hard
 tier: T2
 oracle_type: analytical

@@ -1,5 +1,6 @@
 domain: ClimateScience
 task: EnergyBalanceModel
+scientific_role: discovery
 difficulty: hard
 tier: T2
 oracle_type: active_system_identification

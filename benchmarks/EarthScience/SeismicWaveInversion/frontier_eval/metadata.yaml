@@ -1,5 +1,6 @@
 domain: WavePropagation
 task: SeismicWaveInversion
+scientific_role: discovery
 difficulty: hard
 tier: T2
 oracle_type: active_physical_inverse

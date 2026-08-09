@@ -1,5 +1,6 @@
 domain: QuantumErrorCorrection
 task: QuantumErrorDecoder
+scientific_role: optimization
 difficulty: flagship
 tier: T3
 oracle_type: stim_stabilizer_circuit_sampling

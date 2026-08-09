@@ -1,5 +1,6 @@
 domain: AtmosphericScience
 task: RadiativeTransferFit
+scientific_role: discovery
 difficulty: hard
 tier: T2
 oracle_type: physical_sim

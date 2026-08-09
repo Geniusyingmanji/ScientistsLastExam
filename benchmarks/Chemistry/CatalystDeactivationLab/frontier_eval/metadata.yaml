@@ -1,5 +1,6 @@
 domain: Catalysis
 task: CatalystDeactivationLab
+scientific_role: discovery
 difficulty: flagship
 tier: T3
 oracle_type: stateful_reduced_order_kinetics

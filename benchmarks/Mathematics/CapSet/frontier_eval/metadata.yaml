@@ -1,5 +1,6 @@
 domain: Mathematics
 task: CapSet
+scientific_role: optimization
 difficulty: flagship
 tier: T3
 oracle_type: analytical

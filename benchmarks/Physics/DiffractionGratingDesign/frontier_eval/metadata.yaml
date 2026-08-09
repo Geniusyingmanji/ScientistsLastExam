@@ -1,5 +1,6 @@
 domain: Optics
 task: DiffractionGratingDesign
+scientific_role: optimization
 difficulty: flagship
 tier: T2
 oracle_type: fourier_modal_rcwa

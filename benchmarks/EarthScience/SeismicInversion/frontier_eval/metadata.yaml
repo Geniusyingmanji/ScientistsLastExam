@@ -1,5 +1,6 @@
 domain: Geophysics
 task: SeismicInversion
+scientific_role: discovery
 difficulty: hard
 oracle_type: physical_sim
 score_mode: clipped

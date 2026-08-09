@@ -1,5 +1,6 @@
 domain: MolecularDynamics
 task: ForceFieldCalibration
+scientific_role: discovery
 difficulty: flagship
 tier: T3
 oracle_type: active_pair_potential_hypothesis_laboratory

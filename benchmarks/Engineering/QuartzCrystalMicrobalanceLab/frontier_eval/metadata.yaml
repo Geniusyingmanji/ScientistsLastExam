@@ -1,5 +1,6 @@
 domain: Sensors
 task: QuartzCrystalMicrobalanceLab
+scientific_role: discovery
 difficulty: flagship
 tier: T3
 oracle_type: raw_complex_instrument_pipeline

@@ -1,5 +1,6 @@
 domain: HeatTransfer
 task: ConvectionDiffusionOpt
+scientific_role: discovery
 difficulty: hard
 tier: T2
 oracle_type: active_pde_identification_and_robust_design

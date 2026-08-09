@@ -1,5 +1,6 @@
 domain: Photovoltaics
 task: PhotovoltaicTandemDesign
+scientific_role: optimization
 difficulty: hard
 tier: T2
 oracle_type: analytical_reduced_order_physics
