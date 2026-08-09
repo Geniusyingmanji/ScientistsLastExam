@@ -217,15 +217,27 @@ interpretations live in [`.research/`](.research/). Historical pre-sandbox repor
 
 Full write-ups are in [`.research/`](.research/); each carries its own claim boundary.
 
-**The evolvability gap, and its budget dependence.** Paired `normal` versus `selection_blind`
-runs measure whether an oracle budget is better spent on a feedback loop or on independent
-draws. At budget 3 both community-oracle tasks show a positive gap whose 95% CI excludes zero at
-both the full-horizon and token-matched endpoints — the first positive feedback result in this
-project, and the opposite sign to the Track F null. **At budget 10 the gap shrinks 41% on the
-decoder task and reverses on the molecular task**, where the open-loop control wins five of six
-paired seeds. Best-of-N strengthens as N grows while a single incumbent locks into a basin, and
-feedback's token overhead compounds (1.26× → 1.52×). A `Δ > 0` admission rule is therefore
-underspecified without naming the budget and the searcher.
+**The evolvability gap, and the budget window it lives in.** Paired `normal` versus
+`selection_blind` runs measure whether an oracle budget is better spent on a feedback loop or on
+independent draws. Sweeping the budget on the molecular task, seed-paired at n=8:
+
+| budget | 3 | 5 | 7 | 10 |
+|---|---:|---:|---:|---:|
+| gap | +0.311 | **+0.371** | +0.036 | −0.093 |
+| paired W/L | 7/1 | **8/0** | 4/4 | 1/5 |
+| sign test | p=0.070 | **p=0.0078** | p=1.000 | p=0.219 |
+
+The gap is **not monotone**: it peaks at budget 5 — the strongest result in this project, eight
+paired wins out of eight — then collapses 90% by budget 7, sits at parity there, and turns
+negative by 10, crossing zero near budget 7.8. So feedback beats matched sampling in a real but
+**narrow window**, roughly budgets 3 to 6 for this searcher.
+
+The sweep also identifies what moves. The control rises monotonically across the four budgets
+(0.404 → 0.970) while the feedback arm stays inside 0.715–0.905 with no trend: the feedback arm
+saturates early and best-of-N catches up and passes it. Feedback's token overhead compounds too
+(1.26× → 1.52×). A `Δ > 0` admission rule is therefore underspecified without naming the budget
+and the searcher, and the **crossover budget** — under ten proposals here, against the 10²–10³
+evaluations AlphaEvolve-class systems run — is the sharper number.
 See [evolvability_gap](.research/evolvability_gap_2026-08-09.md) and
 [budget dependence](.research/evolvability_gap_budget_dependence_2026-08-09.md).
 
