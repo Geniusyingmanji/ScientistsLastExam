@@ -46,10 +46,13 @@ def summarize(directory: Path) -> dict | None:
         return None
     valid = [r for r in proposals if r.get("valid")]
     scores = [float(r.get("score") or 0.0) for r in valid]
-    kinds = Counter(
-        str(r.get("candidate_failure_kind") or "unspecified")
-        for r in proposals if not r.get("valid")
-    )
+    # The taxonomy lives inside the metrics payload, not at the top level of the row.
+    def _kind(row: dict) -> str:
+        metrics = row.get("metrics") or {}
+        return str(metrics.get("candidate_failure_kind")
+                   or row.get("candidate_failure_kind") or "unspecified")
+
+    kinds = Counter(_kind(r) for r in proposals if not r.get("valid"))
     return {
         "workdir": directory.name,
         "proposals": len(proposals),
