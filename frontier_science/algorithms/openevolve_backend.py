@@ -196,6 +196,9 @@ def openevolve(
     baseline_score = None
     unevaluated = 0
     history: list[dict[str, Any]] = []
+    # Recorded steps must stay contiguous from zero, so a skipped program cannot consume a step
+    # index. Track the recorded position separately from the database position.
+    step = 0
     for index, program in enumerate(programs):
         public_metrics = dict(program.metrics or {})
         try:
@@ -220,9 +223,9 @@ def openevolve(
         parent = by_id.get(program.parent_id)
         upstream_iteration = int(getattr(program, "iteration_found", index) or 0)
         recorder.record(
-            step=index,
+            step=step,
             oracle_calls=oracle_calls,
-            budget_units=index + 1,
+            budget_units=step + 1,
             program=program.code,
             metrics=metrics,
             parent_sha256=sha256_text(parent.code) if parent is not None else None,
@@ -234,6 +237,7 @@ def openevolve(
             {"iter": upstream_iteration, "score": score,
              "best": best_raw, "accepted": improved}
         )
+        step += 1
     if oracle_calls == 0:
         raise RuntimeError(
             "no OpenEvolve program carries a trusted evaluation (%d of %d timed out upstream)"
