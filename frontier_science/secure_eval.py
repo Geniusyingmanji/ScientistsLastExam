@@ -210,6 +210,9 @@ def _sandbox_command(candidate: Path, entrypoint: str, seccomp_fd: int,
         "--dir", "/runner", "--dir", "/runner/frontier_science", "--dir", "/work",
         "--ro-bind", str(PACKAGE_DIR / "candidate_worker.py"), "/runner/frontier_science/candidate_worker.py",
         "--ro-bind", str(PACKAGE_DIR / "rpc_codec.py"), "/runner/frontier_science/rpc_codec.py",
+        # Free submission-shape validation the candidate may import. It reveals no score, no
+        # hidden world and no reference value, so it costs nothing and leaks nothing.
+        "--ro-bind", str(PACKAGE_DIR / "contract_lint.py"), "/runner/frontier_science/contract_lint.py",
         "--ro-bind", str(PACKAGE_DIR / "__init__.py"), "/runner/frontier_science/__init__.py",
         "--ro-bind", str(candidate), "/work/candidate.py",
     ]
