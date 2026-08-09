@@ -4,7 +4,7 @@ scientific_role: optimization
 difficulty: hard
 tier: T2
 oracle_type: analytical          # analytical | physical_sim | dataset_oracle | neural_surrogate
-score_mode: clipped
+score_mode: uncapped
 gpu_required: false
 eval_time_seconds: 20
 science_metric: mean_gap_closed_to_global_minimum

@@ -68,7 +68,9 @@ def score_configuration(n: int, coords) -> dict:
         return {"n": n, "valid": False, "reason": "non-finite energy", "score": 0.0}
     e_min = GLOBAL_MINIMA[n]
     score = e / e_min  # both negative near optimum -> in (0, 1]
-    score = float(min(1.0, max(0.0, score)))
+    # Uncapped: the Cambridge Cluster Database minima are conjectured, not proven, for
+    # most sizes, so an energy below the listed minimum is a real result.
+    score = float(max(0.0, score))
     return {"n": n, "valid": True, "energy": e, "e_min": e_min, "score": score}
 
 

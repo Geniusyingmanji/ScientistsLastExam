@@ -3,7 +3,7 @@ task: CirclePacking
 scientific_role: optimization
 difficulty: hard
 oracle_type: analytical
-score_mode: clipped
+score_mode: uncapped
 gpu_required: false
 eval_time_seconds: 10
 science_metric: mean_gap_closed_to_best_known_packing

@@ -69,7 +69,9 @@ def score_instance(entry: dict, pack_circles) -> dict:
         score = 1.0 if side <= best_side else 0.0
     else:
         progress = (baseline_side - side) / (baseline_side - best_side)
-        score = float(min(1.0, max(0.0, progress)))
+        # Uncapped: the Packomania values are contested records, so a tighter packing
+        # than the best known is a real result and must be representable above 1.0.
+        score = float(max(0.0, progress))
     return {"n": n, "valid": True, "side": round(side, 4), "best_known": best_side,
             "baseline_side": baseline_side, "score": score}
 
