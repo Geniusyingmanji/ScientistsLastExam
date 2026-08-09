@@ -194,12 +194,22 @@ def openevolve(
     oracle_calls = 0
     best_raw = INVALID_SCORE
     baseline_score = None
+    unevaluated = 0
     history: list[dict[str, Any]] = []
     for index, program in enumerate(programs):
         public_metrics = dict(program.metrics or {})
-        metrics = load_full_metrics(
-            workdir / "trusted_full_metrics", program.code, public_metrics
-        )
+        try:
+            metrics = load_full_metrics(
+                workdir / "trusted_full_metrics", program.code, public_metrics
+            )
+        except FileNotFoundError:
+            # OpenEvolve keeps a program in its database even when its own evaluator timed out,
+            # recording {"error": 0.0, "timeout": true} from upstream. No trusted evaluation ran,
+            # so no sidecar exists. Those upstream metrics must never enter scoring, but one
+            # timed-out candidate must not destroy the whole run either: on a slow task this was
+            # 5 of 11 programs and it aborted the adapter outright.
+            unevaluated += 1
+            continue
         score, valid = metrics_score(metrics)
         oracle_calls += 1
         improved = valid and score > best_raw
@@ -224,6 +234,11 @@ def openevolve(
             {"iter": upstream_iteration, "score": score,
              "best": best_raw, "accepted": improved}
         )
+    if oracle_calls == 0:
+        raise RuntimeError(
+            "no OpenEvolve program carries a trusted evaluation (%d of %d timed out upstream)"
+            % (unevaluated, len(programs))
+        )
     if baseline_score is None:
         baseline_score = metrics_score(programs[0].metrics or {})[0]
 
@@ -246,10 +261,12 @@ def openevolve(
         {"usage_available": False, "calls": None, "input_tokens": None,
          "output_tokens": None, "total_tokens": None, "estimated_cost_usd": None}
     )
+    summary["upstream_unevaluated_programs"] = unevaluated
     os.replace(str(rebuild_path), str(trajectory_path))
     atomic_write_text(workdir / "best_program.py", best.code)
     write_summary(workdir, summary)
-    log_fn("[%s] OpenEvolve best=%.6f programs=%d" % (spec.task_id, float(best_raw), len(programs)))
+    log_fn("[%s] OpenEvolve best=%.6f programs=%d scored=%d upstream_unevaluated=%d"
+           % (spec.task_id, float(best_raw), len(programs), oracle_calls, unevaluated))
     return EvolveResult(
         task_id=spec.task_id,
         best_score=float(best_raw),
