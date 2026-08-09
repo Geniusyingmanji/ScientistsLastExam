@@ -246,10 +246,17 @@ exposed to a population search, so every difficulty claim on record was calibrat
 `greedy_rewrite` at budget one to three.
 
 **Population search does not reproduce greedy's reversal — directionally.** On the molecular task
-at budget 10 against the same open-loop control, greedy scores −0.093 (1 of 6 paired wins) while
-OpenEvolve scores +0.153 (8 of 10). Both confidence intervals span zero and the sign tests give
-p = 0.22 and p = 0.11, so this is consistent with the lock-in explanation but does not establish
-it. See [population search](.research/population_search_results_2026-08-09.md).
+at budget 10 against the same open-loop control, greedy scores −0.093 and loses five of six
+paired seeds, while OpenEvolve scores **+0.074** and wins eight of twelve. Both confidence
+intervals span zero and the sign tests give p = 0.22 and p = 0.39, so this is consistent with the
+lock-in explanation but does not establish it — the arms differ by 0.167 against a per-seed
+spread near 1.1.
+
+An interim read of the same comparison at n=10 gave +0.153, twice the final value. The two
+missing cells were missing because of a crash, not a result, but they were still not missing at
+random: OpenEvolve scored 0.990 and 1.034 on them while the control happened to draw 1.325 and
+1.336. Disappearing cells have to be recovered, not analysed around.
+See [population search](.research/population_search_results_2026-08-09.md).
 
 ## Known state before relying on this branch
 
