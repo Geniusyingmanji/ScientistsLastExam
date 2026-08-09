@@ -26,12 +26,52 @@ Linear interpolation puts the sign change near **budget 7.8**.
 So for this searcher on this task there is a real but **narrow window**, roughly budgets 3 to 6,
 in which feedback clearly beats matched independent sampling.
 
-### And on the second task
+### The second task has no crossover at all
 
-| task | budget | pairs | normal | blind | Delta | 95% CI | W/T/L | token ratio |
-|---|---:|---:|---:|---:|---:|---|---|---:|
-| QuantumErrorDecoder | 3 | 8 | 0.8814 | 0.7470 | **+0.1345** | [+0.067, +0.202] | 8/0/0 | 1.26 |
-| QuantumErrorDecoder | 10 | 6 | 0.9490 | 0.8694 | **+0.0796** | [+0.038, +0.121] | 6/0/0 | 1.52 |
+`QuantumErrorCorrection/QuantumErrorDecoder`, same searcher, same model, same protocol:
+
+| budget | pairs | normal | blind | Delta | 95% CI | W/T/L | sign test |
+|---:|---:|---:|---:|---:|---|---|---:|
+| 3 | 8 | 0.8814 | 0.7470 | **+0.1345** | [+0.067, +0.202] | 8/0/0 | p=0.0078 |
+| 5 | 6 | 0.8855 | 0.8243 | +0.0612 | [−0.080, +0.202] | 5/0/1 | p=0.219 |
+| 10 | 6 | 0.9490 | 0.8694 | **+0.0796** | [+0.038, +0.121] | 6/0/0 | p=0.031 |
+| 15 | 6 | 0.9952 | 0.8236 | **+0.1716** | [+0.112, +0.231] | 6/0/0 | p=0.031 |
+| 20 | 6 | 0.9554 | 0.8446 | **+0.1107** | [+0.028, +0.194] | 5/0/1 | p=0.219 |
+
+**The gap is positive at every budget from 3 to 20**, with three of five confidence intervals
+excluding zero, and it is *largest* at budget 15. There is no crossover in the range where
+Molecular's gap had already gone negative twice over.
+
+### So the crossover is a task property, not a searcher property
+
+That was the open question, and the answer is unambiguous. Identical searcher, identical model,
+identical protocol; one task crosses near budget 7.8 and the other has not crossed by 20.
+
+The mechanism is visible in the control arms alone:
+
+| arm | budget 3 → max budget | range | shape |
+|---|---|---:|---|
+| Molecular open loop | 0.404 → 0.970 | **0.565** | climbs throughout |
+| QEC open loop | 0.747 → 0.845 | **0.122** | **flat from budget 5**: 0.824, 0.869, 0.824, 0.845 |
+| Molecular feedback | 0.715 → 0.876 | 0.190 | no trend |
+| QEC feedback | 0.881 → 0.955 | 0.114 | climbs, peaking at 0.995 |
+
+**Best-of-N saturates on QEC and does not on Molecular.** The molecular task's per-draw
+distribution has a long right tail — single draws reach 1.33 against a control mean of 0.40 — so
+more draws keep finding better portfolios. The decoder task's per-draw quality is bounded by what
+one generation can write; drawing again does not produce a dramatically better decoder, while
+iteratively refining one does, and the feedback arm climbs toward the matching anchor.
+
+### The admission rule this implies
+
+This is sharper than `Delta > 0`, and it is measurable from the control arm alone:
+
+> **A task measures iterative improvement to the extent that its open-loop control saturates
+> with budget.** If best-of-N keeps improving, independent sampling will eventually overtake any
+> searcher, and the gap you measure is an artefact of the budget you happened to pick.
+
+That is a one-armed, cheaper test than the paired comparison, it explains both tasks, and it
+gives a structural reason for a gap to persist rather than a number that happens to be positive.
 
 At the token-matched endpoint, budget 10 gives −0.1327 on Molecular and +0.0517 on QEC, the
 latter with a CI of [−0.021, +0.124] that now includes zero.
@@ -101,13 +141,10 @@ n=4 against n=6 is unbalanced. Details and the required follow-up are in
 1. **The evolvability gap must be reported as a function of budget, not as a scalar.** A task
    admitted on a budget-3 gap can lose it entirely by budget 10. Any admission rule of the form
    "Delta > 0" is underspecified without the budget and the searcher.
-2. **The crossover point is itself the interesting measurement, and it is now measured.** For
-   `greedy_rewrite` on this task the gap peaks at budget 5 and the sign change is near budget 7.8.
-   That number characterises the searcher: a single incumbent sustains an advantage over matched
-   independent sampling for well under ten proposals. For comparison, AlphaEvolve-class systems
-   operate at 10² to 10³ evaluations, and ShinkaEvolve's published circle-packing result took 150
-   samples. Comparing this crossover across searchers is a sharper instrument than any single gap
-   number.
+2. **The crossover is measured, and it is a task property.** With `greedy_rewrite` the molecular
+   gap peaks at budget 5 and crosses near 7.8, while the decoder gap is still positive at budget
+   20. So a crossover budget characterises a task–searcher pair, never a searcher alone, and it
+   cannot be quoted as a single benchmark-wide number.
 3. **This strengthens the case for running the population backends.** The most likely reading is
    that greedy's crossover is early and a population searcher's is much later; that is a
    prediction, and it is testable with the machinery now working.
@@ -119,8 +156,11 @@ n=4 against n=6 is unbalanced. Details and the required follow-up are in
 
 | Claim | Status |
 |---|---|
-| The gap shrinks with budget on both tasks | Supported; on Molecular the full sweep is +0.311, +0.371, +0.036, −0.093 at budgets 3, 5, 7, 10 |
+| The gap shrinks with budget on both tasks | **Refuted.** Molecular: +0.311, +0.371, +0.036, −0.093 at budgets 3, 5, 7, 10. QEC: +0.135, +0.061, +0.080, +0.172, +0.111 at 3, 5, 10, 15, 20 — positive throughout |
+| The crossover is a task property, not a searcher property | Supported; identical searcher and model, one task crosses near 7.8 and the other has not crossed by 20 |
+| Open-loop saturation explains which tasks keep a gap | Supported on these two; QEC's control is flat from budget 5 (0.824, 0.869, 0.824, 0.845) while Molecular's climbs 0.404 → 0.970. Two tasks is not a law |
 | The gap reverses on Molecular at budget 10 | Observed, 1/0/5, but the CI spans zero — direction is suggestive, magnitude is not established |
+| The gap peaks mid-range rather than at the smallest budget | Supported on Molecular (peak at 5, p=0.0078) and consistent with QEC (peak at 15) |
 | The gap survives on QEC at budget 10 | Supported at full horizon, CI excludes zero; **not** supported token-matched |
 | This is a property of feedback in general | **Not supported.** It is a property of single-incumbent greedy search |
 | A population searcher would behave differently | **Directionally consistent, not established.** Re-run with the censoring fixed: OpenEvolve +0.019 versus the control where greedy was −0.093, so the reversal did not reproduce — but n=4, sd 0.30, unpaired, 33% crash rate. See `population_search_results_2026-08-09.md` |
