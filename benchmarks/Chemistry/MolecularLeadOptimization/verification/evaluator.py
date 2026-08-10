@@ -80,6 +80,55 @@ DRUG_PANEL = (
     "CC(=O)CC(c1ccccc1)c1c(O)c2ccccc2oc1=O",
 )
 
+DIFFICULTY = 1
+
+# Difficulty is a measured table rather than a formula, for the same reason as the quantum
+# decoder: the two knobs interact through the reference panel, so their joint effect has to be
+# observed. Tightening the diversity ceiling shrinks the retained portfolio and simultaneously
+# raises the anchor, because the panel is selected highest-QED-first and the survivors of a
+# stricter ceiling are the better drugs. It is doubly harder, and past a point it breaks the
+# panel outright: the sealed windows admit only four members at Tanimoto 0.12, below
+# MIN_PANEL_POOL, which forces every score to zero.
+#
+# The ladder is sized against the strongest submission this benchmark has produced, a search
+# result scoring 1.3363 against a QED ceiling near 1.35. That level 1 is effectively solved is
+# the reason this knob exists. Retained-set sizes for that submission were 879 molecules at
+# Tanimoto 0.25, 234 at 0.20 and 105 at 0.17, so the ceiling is set by the diversity constraint
+# and not by how many molecules a generator can write.
+#
+#   level   development (n, ceiling)   panel  strongest known    sealed (n, ceiling)  strongest
+#     1        (120, 0.25)              11         1.3363          (60,  0.20)         1.2765
+#     2        (320, 0.20)              10         0.8677          (160, 0.17)         0.5655
+#     3        (320, 0.17)               8         0.3750          (160, 0.16)         0.3967
+#
+# Levels beyond 3 were measured and rejected: (800, 0.17) puts the strongest known submission at
+# 0.1500, which is a floor rather than a harder task and would stop discriminating between
+# searches.
+_DEV_LADDER = {
+    1: {"n_required": 120, "diversity_max_tanimoto": 0.25, "max_submissions": 2000},
+    2: {"n_required": 320, "diversity_max_tanimoto": 0.20, "max_submissions": 4000},
+    3: {"n_required": 320, "diversity_max_tanimoto": 0.17, "max_submissions": 4000},
+}
+_SEALED_LADDER = {
+    1: {"n_required": 60, "diversity_max_tanimoto": 0.20, "max_submissions": 2000},
+    2: {"n_required": 160, "diversity_max_tanimoto": 0.17, "max_submissions": 4000},
+    3: {"n_required": 160, "diversity_max_tanimoto": 0.16, "max_submissions": 4000},
+}
+
+
+def _at_difficulty(profile: dict, ladder: dict, level: int) -> dict:
+    """Overlay the measured level onto a base profile."""
+    level = int(level)
+    if level not in ladder:
+        raise ValueError(
+            "difficulty %d has no measured ladder entry; measure the panel pool and the "
+            "strongest known submission before adding one" % level
+        )
+    out = dict(profile)
+    out.update(ladder[level])
+    return out
+
+
 # Development profile, disclosed to the agent through Task.md and the spec.
 #
 # `n_required` is deliberately far above what a single generation can write down: the binding
@@ -92,9 +141,8 @@ DRUG_PANEL = (
 # 0.86-1.25 across four valid budget-one draws - three of them above 0.95 - by hand-writing
 # roughly fifty diverse molecules without running any search at all. Requiring 120 puts the
 # portfolio out of reach of recall and forces a programmatic generator.
-DEV_PROFILE = {
+DEV_PROFILE = _at_difficulty({
     "key": "oral_lead",
-    "n_required": 120,
     "mw_range": [250.0, 500.0],
     "logp_range": [-1.0, 5.0],
     "tpsa_max": 140.0,
@@ -103,17 +151,14 @@ DEV_PROFILE = {
     "hba_max": 10,
     "sa_max": 4.5,
     "pains_allowed": False,
-    "diversity_max_tanimoto": 0.25,
     "panel_novelty_max_tanimoto": 0.40,
-    "max_submissions": 2000,
-}
+}, _DEV_LADDER, DIFFICULTY)
 
 # Evaluator-only profile: tighter physicochemical windows and a stricter diversity ceiling.
 # Never disclosed; reported as robustness_score. A search tuned to the development scaffold
 # space should lose ground here.
-SEALED_PROFILE = {
+SEALED_PROFILE = _at_difficulty({
     "key": "tight_permeable",
-    "n_required": 60,
     "mw_range": [260.0, 470.0],
     "logp_range": [0.0, 5.0],
     "tpsa_max": 110.0,
@@ -122,10 +167,8 @@ SEALED_PROFILE = {
     "hba_max": 9,
     "sa_max": 4.0,
     "pains_allowed": False,
-    "diversity_max_tanimoto": 0.20,
     "panel_novelty_max_tanimoto": 0.40,
-    "max_submissions": 2000,
-}
+}, _SEALED_LADDER, DIFFICULTY)
 
 # The reference level is a quality anchor, so the panel pool must not be a single molecule.
 MIN_PANEL_POOL = 5
