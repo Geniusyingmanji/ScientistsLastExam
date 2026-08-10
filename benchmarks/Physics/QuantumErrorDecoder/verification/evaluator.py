@@ -36,43 +36,58 @@ import numpy as np
 # keep total decode work roughly constant.
 DIFFICULTY = 1
 
-_DEV_SHAPE = ((0, 0.005), (1, 0.005), (1, 0.010), (2, 0.005))
-_SEALED_SHAPE = ((1, 0.007), (2, 0.008))
+# The ladder is an explicit measured table, not a formula, because a formula silently produces
+# unusable regimes here. Difficulty cannot be raised by code distance alone: below threshold a
+# larger code makes the logical error rate fall exponentially, so the anchor stops failing often
+# enough to measure. A first attempt that scaled distance at fixed noise left the level-3 d=9
+# regime with 9 anchor failures, which is noise rather than a harder task.
+#
+# Each level therefore raises the physical error rate toward the circuit-level threshold near 1%
+# while growing the code, keeping the anchor in a measurable band. Failure counts below were
+# measured on the benchmark host at the shot counts given.
+#
+#   level 1  (3,0.005) (5,0.005) (5,0.010) (7,0.005)   6000 shots   105 / 80 / 472 / 40
+#   level 2  (5,0.008) (7,0.008) (7,0.012) (9,0.008)   4000 shots   195 / 234 / 663 / 195
+#   level 3  (7,0.010) (9,0.010) (9,0.012) (11,0.010)  3000 shots   300 / 384 / 618 / 429
+_DEV_LADDER = {
+    1: (((3, 0.005), (5, 0.005), (5, 0.010), (7, 0.005)), 6000),
+    2: (((5, 0.008), (7, 0.008), (7, 0.012), (9, 0.008)), 4000),
+    3: (((7, 0.010), (9, 0.010), (9, 0.012), (11, 0.010)), 3000),
+}
+_SEALED_LADDER = {
+    1: (((5, 0.007), (7, 0.008)), 4000),
+    2: (((7, 0.009), (9, 0.009)), 3000),
+    3: (((9, 0.011), (11, 0.011)), 2500),
+}
 
 
-def _regimes(level: int, shape, base_seed: int, base_shots: int, prefix: str = ""):
-    """Derive concrete regimes from a difficulty level.
-
-    ``shape`` gives each regime as (distance_offset, noise). Level 1 reproduces the original
-    hand-picked instances exactly, so raising DIFFICULTY is the only thing that changes them.
-    """
-    out = []
-    for index, (offset, noise) in enumerate(shape):
-        base_distance = 3 + 2 * offset
-        distance = base_distance + 2 * (int(level) - 1)
-        # Decode work per shot grows with the detector count, itself about d^2. Scale relative to
-        # this regime's own level-1 distance so level 1 keeps the calibrated shot counts exactly,
-        # and only a harder level trades shots for size. Too few shots is not a cheap harder
-        # task: it makes the anchor fail single-digit times and the measurement becomes noise.
-        shots = max(2000, int(round(base_shots * (base_distance / distance) ** 2)))
-        out.append({
+def _regimes(level: int, ladder, base_seed: int, prefix: str = ""):
+    """Build the concrete regimes for a difficulty level from the measured ladder."""
+    level = int(level)
+    if level not in ladder:
+        raise ValueError(
+            "difficulty %d has no measured ladder entry; add one and record its anchor "
+            "failure counts before use" % level
+        )
+    shape, shots = ladder[level]
+    return tuple(
+        {
             "key": "%sd%d_p%.3f" % (prefix, distance, noise),
             "distance": distance,
             "noise": noise,
             "shots": shots,
             "seed": base_seed + index,
-        })
-    return tuple(out)
+        }
+        for index, (distance, noise) in enumerate(shape)
+    )
 
 
 # Development regimes visible in `combined_score`.
-DEV_INSTANCES = _regimes(DIFFICULTY, _DEV_SHAPE, 20260807, 6000)
+DEV_INSTANCES = _regimes(DIFFICULTY, _DEV_LADDER, 20260807)
 
 # Evaluator-only regimes reported as `robustness_score`; never returned to the search state.
-# Both sit at noise strengths absent from the development set. A larger distance at low noise was
-# tried and rejected: at d=9, p=0.004 the anchor fails on roughly 0.2% of shots, so an affordable
-# shot count leaves single-digit failure counts and the measurement is noise.
-SEALED_INSTANCES = _regimes(DIFFICULTY, _SEALED_SHAPE, 771103, 4000, prefix="sealed_")
+# Every level places these at noise strengths absent from its own development set.
+SEALED_INSTANCES = _regimes(DIFFICULTY, _SEALED_LADDER, 771103, prefix="sealed_")
 
 # A candidate that imports the reference decoder or the circuit simulator is not solving the
 # decoding problem; it is calling the anchor. Treated as an invalid submission.
