@@ -125,6 +125,40 @@ def runtime_source_sha256() -> str:
     return digest.hexdigest()
 
 
+def llm_condition_descriptor(llm: LLMClient) -> dict[str, Any]:
+    """The searcher condition in readable form, for answering 'which model produced this run'.
+
+    The hash beside it binds the condition and detects drift, but a hash cannot be read back.
+    Without this, a result can be reproduced but not attributed, and a comparison across runs
+    cannot be checked for having held the model fixed.
+
+    Credential-bearing fields are excluded: header values are covered by the hash only, and the
+    base URL is reduced to its host so a query-string token cannot reach disk.
+    """
+    config = getattr(llm, "config", None)
+    if config is None:
+        return {"client_type": type(llm).__name__}
+    base_url = getattr(config, "base_url", None)
+    host = None
+    if base_url:
+        try:
+            from urllib.parse import urlsplit
+
+            parts = urlsplit(str(base_url))
+            host = parts.netloc or None
+        except Exception:  # noqa: BLE001 - a malformed URL must not break a run
+            host = None
+    return {
+        "model": getattr(config, "model", None),
+        "wire": getattr(config, "wire", None),
+        "reasoning_effort": getattr(config, "reasoning_effort", None),
+        "temperature": getattr(config, "temperature", None),
+        "max_output_tokens": getattr(config, "max_output_tokens", None),
+        "timeout_seconds": getattr(config, "timeout_seconds", None),
+        "base_url_host": host,
+    }
+
+
 def llm_condition_sha256(llm: LLMClient) -> str:
     config = getattr(llm, "config", None)
     if config is None:
@@ -175,6 +209,10 @@ def require_distribution(
     return result
 
 
+def _without(mapping: dict[str, Any], key: str) -> dict[str, Any]:
+    return {name: value for name, value in mapping.items() if name != key}
+
+
 def ensure_run_manifest(
     workdir: Path,
     *,
@@ -203,6 +241,7 @@ def ensure_run_manifest(
         "feedback_mode": feedback_mode,
         "feedback_scope": feedback_scope(feedback_mode),
         "llm_condition_sha256": llm_condition_sha256(llm),
+        "llm_condition": llm_condition_descriptor(llm),
         "upstream": upstream,
     }
     if protocol is not None:
@@ -212,7 +251,11 @@ def ensure_run_manifest(
         if not path.is_file():
             raise FileNotFoundError("--resume requested but run_manifest.json is missing")
         actual = json.loads(path.read_text(encoding="utf-8"))
-        if actual != expected:
+        # `llm_condition` is descriptive: the binding check is `llm_condition_sha256`, which is
+        # compared below like every other field. Excluding it from the equality test keeps runs
+        # recorded before it existed resumable, and stops a purely cosmetic field from being
+        # able to invalidate a resume.
+        if _without(actual, "llm_condition") != _without(expected, "llm_condition"):
             raise ValueError("run manifest does not match the requested task/algorithm conditions")
     else:
         existing = sorted(item.name for item in Path(workdir).iterdir())
