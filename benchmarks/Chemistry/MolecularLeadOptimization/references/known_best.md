@@ -35,14 +35,39 @@ molecule for molecule.
 submission cap. Level 1 is the shipped configuration and reproduces the ladder above exactly; a
 level with no measured entry raises rather than being extrapolated.
 
-| Level | development (n, ceiling) | panel | strongest known | sealed (n, ceiling) | strongest known |
+| Level | development (n, ceiling) | panel | anchor | sealed (n, ceiling) | panel |
 |---:|---|---:|---:|---|---:|
-| 1 | (120, 0.25) | 11 | 1.3363 | (60, 0.20) | 1.2765 |
-| 2 | (320, 0.20) | 10 | 0.8677 | (160, 0.17) | 0.5655 |
-| 3 | (320, 0.17) | 8 | 0.3750 | (160, 0.16) | 0.3967 |
+| 1 | (120, 0.25) | 11 | 0.6998 | (60, 0.20) | 8 |
+| 2 | (240, 0.22) | 10 | 0.7309 | (120, 0.19) | 8 |
+| 3 | (320, 0.20) | 10 | 0.6993 | (160, 0.17) | 8 |
 
 The knob exists because level 1 is effectively solved: the strongest submission this benchmark
-has produced scores 1.3363 against a QED ceiling near 1.35.
+has produced scores 1.3363 against a QED ceiling near 1.35, and an open-loop control locks at
+0.6362 from its third draw onward.
+
+Rungs are placed by the shape of the evolvability gap against budget, not by score. Measured
+with `greedy_rewrite` at budget 12, paired `selection_blind` against `normal`:
+
+| budget | level 2 gap (n=8) | level 3 gap (n=4) |
+|---:|---:|---:|
+| 3 | −0.0110 | +0.0002 |
+| 5 | +0.0118 | +0.0045 |
+| 8 | +0.0289 | +0.0095 |
+| 10 | +0.0457 | +0.0056 |
+| 12 | +0.0620 | −0.0018 |
+
+Level 2 is the working rung: the gap grows monotonically with budget and has not crossed over by
+12. That is the opposite of level 1, whose gap peaks near budget 5 at +0.371 and turns negative
+by budget 10, meaning best-of-N overtakes the searcher and the task stops measuring iteration.
+
+The level-2 gap at budget 12 is +0.0620 with a standard error of 0.0467 over eight paired seeds,
+six wins to two. The interval includes zero, so the evidence is the monotone trend across five
+budget points, not the endpoint alone.
+
+Level 3 is a headroom reserve rather than a calibrated setting. Its gap is flat at zero because
+every proposal sits on a low plateau near 0.07 with no exploitable gradient, so a null result
+there says nothing about a searcher. Every proposal was accepted at both levels — protocol pass
+rate 1.00 — so the difficulty is scientific rather than contractual.
 
 The two parameters are not independent. `_panel_state` selects the reference panel under the
 same diversity ceiling, highest-QED-first, so tightening it shrinks the retained portfolio and
@@ -53,12 +78,7 @@ Tanimoto 0.12, below `MIN_PANEL_POOL`, which forces every score to zero.
 The ceiling is set by the diversity constraint rather than by generator throughput. The
 strongest known submission retains 879 molecules at Tanimoto 0.25, 234 at 0.20 and 105 at 0.17,
 and those counts do not move with `n_required`. Harder settings were measured and rejected:
-(800, 0.17) puts that submission at 0.1500, which is a floor rather than a harder task and stops
-discriminating between searches.
-
-These "strongest known" figures are one stored submission re-scored under each profile, not a
-fresh search at that level, so they are lower bounds — sound for ruling out floor settings, not
-for claiming a level is calibrated.
+(800, 0.17) puts that submission at 0.1500, which is a floor rather than a harder task.
 
 ## Model calibration: five GPT-5.6 budget-one draws
 

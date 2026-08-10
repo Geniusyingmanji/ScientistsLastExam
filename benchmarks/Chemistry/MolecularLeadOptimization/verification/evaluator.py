@@ -96,23 +96,33 @@ DIFFICULTY = 1
 # Tanimoto 0.25, 234 at 0.20 and 105 at 0.17, so the ceiling is set by the diversity constraint
 # and not by how many molecules a generator can write.
 #
-#   level   development (n, ceiling)   panel  strongest known    sealed (n, ceiling)  strongest
-#     1        (120, 0.25)              11         1.3363          (60,  0.20)         1.2765
-#     2        (320, 0.20)              10         0.8677          (160, 0.17)         0.5655
-#     3        (320, 0.17)               8         0.3750          (160, 0.16)         0.3967
+#   level   development (n, ceiling)   panel   sealed (n, ceiling)
+#     1        (120, 0.25)              11        (60,  0.20)
+#     2        (240, 0.22)              10        (120, 0.19)
+#     3        (320, 0.20)              10        (160, 0.17)
 #
-# Levels beyond 3 were measured and rejected: (800, 0.17) puts the strongest known submission at
-# 0.1500, which is a floor rather than a harder task and would stop discriminating between
-# searches.
+# The rungs are placed by the shape of the evolvability gap against budget, not by score alone.
+# Level 1 rewards feedback early and then stops: its gap peaks near budget 5 and turns negative
+# by budget 10, so best-of-N overtakes the searcher and the task stops measuring iteration. At
+# level 2 the gap instead grows monotonically with budget, -0.0110 at 3, +0.0118 at 5, +0.0289
+# at 8, +0.0457 at 10 and +0.0620 at 12 over eight paired seeds, with no crossover in range.
+#
+# Level 3 is deliberately past what current searches reach: its gap is flat at zero (+0.0002 to
+# -0.0018 across budgets 3 to 12, four paired seeds) because every proposal sits on a low
+# plateau near 0.07 with no exploitable gradient. It is a headroom reserve, not a calibrated
+# setting, and a null result there says nothing about a searcher.
+#
+# Harder settings were measured and rejected outright: (800, 0.17) puts the strongest known
+# submission at 0.1500, a floor rather than a harder task.
 _DEV_LADDER = {
     1: {"n_required": 120, "diversity_max_tanimoto": 0.25, "max_submissions": 2000},
-    2: {"n_required": 320, "diversity_max_tanimoto": 0.20, "max_submissions": 4000},
-    3: {"n_required": 320, "diversity_max_tanimoto": 0.17, "max_submissions": 4000},
+    2: {"n_required": 240, "diversity_max_tanimoto": 0.22, "max_submissions": 4000},
+    3: {"n_required": 320, "diversity_max_tanimoto": 0.20, "max_submissions": 4000},
 }
 _SEALED_LADDER = {
     1: {"n_required": 60, "diversity_max_tanimoto": 0.20, "max_submissions": 2000},
-    2: {"n_required": 160, "diversity_max_tanimoto": 0.17, "max_submissions": 4000},
-    3: {"n_required": 160, "diversity_max_tanimoto": 0.16, "max_submissions": 4000},
+    2: {"n_required": 120, "diversity_max_tanimoto": 0.19, "max_submissions": 4000},
+    3: {"n_required": 160, "diversity_max_tanimoto": 0.17, "max_submissions": 4000},
 }
 
 
