@@ -62,9 +62,11 @@ reads its geometry from the problem works at every level; one that assumes `d=3`
 **Budget your decoding time.** At the shipped level you are handed 6000 shots per development
 regime and 4000 per sealed regime — about 32000 decodes in total across up to 336 detectors —
 and the whole evaluation, including your decoder, must finish inside the harness timeout (300 s
-by default). Harder levels trade shots for larger codes, so the detector count per shot grows
-while the shot count falls; the total decoding work stays in the same range, but a cost that
-scales badly in the number of detectors will start to bind.
+by default). Harder levels trade shots for larger codes: the detector count per shot grows and
+the shot count falls to match, so the total decoding work is held fixed to within a few percent
+across levels. What changes is the shape of that work — fewer, much larger instances — so a cost
+that scales badly in the number of detectors will bind at a harder level even though the total
+is the same.
 A per-shot Python loop that recomputes shortest paths will not finish. Precompute whatever
 depends only on the error model once per regime, and vectorize across shots where you can. A
 correct decoder that times out scores nothing.
