@@ -46,18 +46,26 @@ DIFFICULTY = 1
 # while growing the code, keeping the anchor in a measurable band. Failure counts below were
 # measured on the benchmark host at the shot counts given.
 #
+# Shot counts hold the decoding workload fixed across levels, which is a second constraint the
+# first sizing missed. Work per level is shots times the summed detector count, and detectors
+# grow as d^2: 24, 120, 336, 720 and 1320 for d = 3, 5, 7, 9, 11. Keeping 4000 shots at level 2
+# would have raised the workload to 1.68x level 1 and level 3 to 2.58x, which converts the task
+# into a throughput test - the failure that forced level 1 down from 20000 shots, where a
+# competent decoder scored nothing because it could not finish. Measured at 4000 shots, level 2
+# was already showing it: 24 of 29 feedback-arm failures were timeouts.
+#
 #   level 1  (3,0.005) (5,0.005) (5,0.010) (7,0.005)   6000 shots   105 / 80 / 472 / 40
-#   level 2  (5,0.008) (7,0.008) (7,0.012) (9,0.008)   4000 shots   195 / 234 / 663 / 195
-#   level 3  (7,0.010) (9,0.010) (9,0.012) (11,0.010)  3000 shots   300 / 384 / 618 / 429
+#   level 2  (5,0.008) (7,0.008) (7,0.012) (9,0.008)   2400 shots   109 / 137 / 397 / 126
+#   level 3  (7,0.010) (9,0.010) (9,0.012) (11,0.010)  1200 shots   114 / 155 / 258 / 187
 _DEV_LADDER = {
     1: (((3, 0.005), (5, 0.005), (5, 0.010), (7, 0.005)), 6000),
-    2: (((5, 0.008), (7, 0.008), (7, 0.012), (9, 0.008)), 4000),
-    3: (((7, 0.010), (9, 0.010), (9, 0.012), (11, 0.010)), 3000),
+    2: (((5, 0.008), (7, 0.008), (7, 0.012), (9, 0.008)), 2400),
+    3: (((7, 0.010), (9, 0.010), (9, 0.012), (11, 0.010)), 1200),
 }
 _SEALED_LADDER = {
     1: (((5, 0.007), (7, 0.008)), 4000),
-    2: (((7, 0.009), (9, 0.009)), 3000),
-    3: (((9, 0.011), (11, 0.011)), 2500),
+    2: (((7, 0.009), (9, 0.009)), 1700),
+    3: (((9, 0.011), (11, 0.011)), 900),
 }
 
 
