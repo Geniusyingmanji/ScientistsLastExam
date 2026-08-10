@@ -29,6 +29,37 @@ molecule for molecule.
 | Full portfolio at approved-drug quality | **1.0000** (by definition) | 1.0000 |
 | Full portfolio at the QED ceiling | ≈ **1.35** | ≈ 1.30 |
 
+## Difficulty levels
+
+`DIFFICULTY` in `verification/evaluator.py` selects `n_required`, the diversity ceiling and the
+submission cap. Level 1 is the shipped configuration and reproduces the ladder above exactly; a
+level with no measured entry raises rather than being extrapolated.
+
+| Level | development (n, ceiling) | panel | strongest known | sealed (n, ceiling) | strongest known |
+|---:|---|---:|---:|---|---:|
+| 1 | (120, 0.25) | 11 | 1.3363 | (60, 0.20) | 1.2765 |
+| 2 | (320, 0.20) | 10 | 0.8677 | (160, 0.17) | 0.5655 |
+| 3 | (320, 0.17) | 8 | 0.3750 | (160, 0.16) | 0.3967 |
+
+The knob exists because level 1 is effectively solved: the strongest submission this benchmark
+has produced scores 1.3363 against a QED ceiling near 1.35.
+
+The two parameters are not independent. `_panel_state` selects the reference panel under the
+same diversity ceiling, highest-QED-first, so tightening it shrinks the retained portfolio and
+raises the anchor at the same time — the survivors of a stricter ceiling are the better drugs.
+Past a point it breaks the panel outright: the sealed windows admit only four members at
+Tanimoto 0.12, below `MIN_PANEL_POOL`, which forces every score to zero.
+
+The ceiling is set by the diversity constraint rather than by generator throughput. The
+strongest known submission retains 879 molecules at Tanimoto 0.25, 234 at 0.20 and 105 at 0.17,
+and those counts do not move with `n_required`. Harder settings were measured and rejected:
+(800, 0.17) puts that submission at 0.1500, which is a floor rather than a harder task and stops
+discriminating between searches.
+
+These "strongest known" figures are one stored submission re-scored under each profile, not a
+fresh search at that level, so they are lower bounds — sound for ruling out floor settings, not
+for claiming a level is calibrated.
+
 ## Model calibration: five GPT-5.6 budget-one draws
 
 Run on the benchmark host through the harness sandbox, `greedy_rewrite`, normal feedback,

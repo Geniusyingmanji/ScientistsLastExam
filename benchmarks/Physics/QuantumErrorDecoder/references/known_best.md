@@ -39,6 +39,30 @@ anchor out of reach. Reference A scores 0 on `d3_p0.005`: at distance 3 the triv
 already strong, so a sloppy matcher introduces more logical errors than it removes. Reference B
 handles that regime well (0.7778) but loses ground at distance 7, where defect counts grow.
 
+## Difficulty levels
+
+`DIFFICULTY` in `verification/evaluator.py` selects the regime set. Level 1 is the shipped
+configuration and reproduces the anchors above exactly; the table below is a measured ladder, and
+a level with no entry raises rather than being extrapolated.
+
+| Level | development regimes | shots | anchor failures |
+|---:|---|---:|---|
+| 1 | `(3,0.005) (5,0.005) (5,0.010) (7,0.005)` | 6000 | 105 / 80 / 472 / 40 |
+| 2 | `(5,0.008) (7,0.008) (7,0.012) (9,0.008)` | 4000 | 195 / 234 / 663 / 195 |
+| 3 | `(7,0.010) (9,0.010) (9,0.012) (11,0.010)` | 3000 | 300 / 384 / 618 / 429 |
+
+Sealed regimes move with the level and always sit at noise strengths absent from that level's
+development set: level 2 uses `(7,0.009) (9,0.009)` at 3000 shots, level 3 `(9,0.011) (11,0.011)`
+at 2500.
+
+Difficulty is raised mainly through the noise strength, not the code distance. Below threshold a
+larger code drives the logical error rate down exponentially, so distance alone makes the anchor
+stop failing often enough to measure: a first attempt that scaled distance at fixed noise left
+the level-3 `d=9` regime with 9 anchor failures, the same statistical failure that had already
+disqualified a `d=9` sealed regime. Each level therefore pushes `p` toward the circuit-level
+threshold near 1% while the code grows, which keeps the anchor measurable and simultaneously
+weakens the graph approximation that matching depends on.
+
 ## Sizing: statistics against the timeout
 
 Shot counts are pinned between two constraints.
