@@ -148,8 +148,14 @@ def _graphlike_errors(circuit) -> list[dict]:
 
 
 def _instance_data(spec: dict) -> dict:
-    """Build, sample and reference-decode one regime. Cached per process."""
-    key = spec["key"]
+    """Build, sample and reference-decode one regime. Cached per process.
+
+    The cache key is the content that determines the data, not the display name. The name is
+    `d<distance>_p<noise>`, which omits the shot count and the seed, so two levels sharing a
+    (distance, noise) pair at different shot counts would otherwise collide inside one process
+    and silently score the second against the first one's syndromes.
+    """
+    key = (spec["key"], spec["distance"], spec["noise"], spec["shots"], spec["seed"])
     if key in _CACHE:
         return _CACHE[key]
 
