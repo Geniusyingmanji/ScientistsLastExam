@@ -20,30 +20,59 @@ import sys
 
 import numpy as np
 
-# Development regimes visible in `combined_score`.
+# Instances are generated from a difficulty level rather than hardcoded, so a regime that
+# saturates can be answered by turning a knob instead of rebuilding the task. This matters
+# because the anchor is recomputed by PyMatching at evaluation time: raising DIFFICULTY moves
+# the instances and the reference together, with no external record table to look up.
 #
-# Shot counts are set by two competing constraints. Statistically, the MWPM anchor must produce
-# enough logical failures for the log-ratio score to be stable: these counts give 105/80/472/40
-# measured anchor failures, so score noise stays near or below 4%. Computationally, the whole evaluation
-# must fit the harness default 300 s timeout including the candidate's own decoding, which is
-# the dominant cost - a competent but unvectorized decoder can be orders of magnitude slower
-# than the reference. Raising shots to reduce noise would push real decoders past the timeout,
-# which measures throughput rather than decoding quality.
-DEV_INSTANCES = (
-    {"key": "d3_p0.005", "distance": 3, "noise": 0.005, "shots": 6000, "seed": 20260807},
-    {"key": "d5_p0.005", "distance": 5, "noise": 0.005, "shots": 6000, "seed": 20260808},
-    {"key": "d5_p0.010", "distance": 5, "noise": 0.010, "shots": 6000, "seed": 20260809},
-    {"key": "d7_p0.005", "distance": 7, "noise": 0.005, "shots": 6000, "seed": 20260810},
-)
+# Difficulty raises the code distance, which grows the detector graph roughly as d^2 and makes
+# matching harder, and pushes the noise strength toward the circuit-level threshold near 1%.
+#
+# Shot counts trade two constraints. Statistically the anchor must fail often enough for the
+# log-ratio score to be stable; at level 1 the counts below give 105/80/472/40 measured anchor
+# failures, holding score noise near or below 4%. Computationally the whole evaluation, candidate
+# decoding included, must fit the harness default 300 s timeout - a competent but unvectorized
+# decoder is orders of magnitude slower than the reference, so shots shrink as distance grows to
+# keep total decode work roughly constant.
+DIFFICULTY = 1
+
+_DEV_SHAPE = ((0, 0.005), (1, 0.005), (1, 0.010), (2, 0.005))
+_SEALED_SHAPE = ((1, 0.007), (2, 0.008))
+
+
+def _regimes(level: int, shape, base_seed: int, base_shots: int, prefix: str = ""):
+    """Derive concrete regimes from a difficulty level.
+
+    ``shape`` gives each regime as (distance_offset, noise). Level 1 reproduces the original
+    hand-picked instances exactly, so raising DIFFICULTY is the only thing that changes them.
+    """
+    out = []
+    for index, (offset, noise) in enumerate(shape):
+        base_distance = 3 + 2 * offset
+        distance = base_distance + 2 * (int(level) - 1)
+        # Decode work per shot grows with the detector count, itself about d^2. Scale relative to
+        # this regime's own level-1 distance so level 1 keeps the calibrated shot counts exactly,
+        # and only a harder level trades shots for size. Too few shots is not a cheap harder
+        # task: it makes the anchor fail single-digit times and the measurement becomes noise.
+        shots = max(2000, int(round(base_shots * (base_distance / distance) ** 2)))
+        out.append({
+            "key": "%sd%d_p%.3f" % (prefix, distance, noise),
+            "distance": distance,
+            "noise": noise,
+            "shots": shots,
+            "seed": base_seed + index,
+        })
+    return tuple(out)
+
+
+# Development regimes visible in `combined_score`.
+DEV_INSTANCES = _regimes(DIFFICULTY, _DEV_SHAPE, 20260807, 6000)
 
 # Evaluator-only regimes reported as `robustness_score`; never returned to the search state.
-# Both are at unseen noise strengths. A larger distance was tried and rejected: at d=9, p=0.004
-# the anchor fails on roughly 0.2% of shots, so an affordable shot count leaves single-digit
-# failure counts and the measurement is noise.
-SEALED_INSTANCES = (
-    {"key": "sealed_d5_p0.007", "distance": 5, "noise": 0.007, "shots": 4000, "seed": 771103},
-    {"key": "sealed_d7_p0.008", "distance": 7, "noise": 0.008, "shots": 4000, "seed": 771104},
-)
+# Both sit at noise strengths absent from the development set. A larger distance at low noise was
+# tried and rejected: at d=9, p=0.004 the anchor fails on roughly 0.2% of shots, so an affordable
+# shot count leaves single-digit failure counts and the measurement is noise.
+SEALED_INSTANCES = _regimes(DIFFICULTY, _SEALED_SHAPE, 771103, 4000, prefix="sealed_")
 
 # A candidate that imports the reference decoder or the circuit simulator is not solving the
 # decoding problem; it is calling the anchor. Treated as an invalid submission.
