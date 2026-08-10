@@ -17,6 +17,7 @@ before being admitted (maximum deviation 0.02 g/mol; see references/known_best.m
 
 from __future__ import annotations
 
+import json
 import os
 import sys
 
@@ -196,7 +197,13 @@ def _feasible(rd, props, profile) -> bool:
 
 def _panel_state(rd, profile):
     """Feasible panel members and the reference score for this profile. Cached per profile."""
-    key = f"panel::{profile['key']}"
+    # Key on the parameters the panel actually depends on, not the profile name. Caching on the
+    # name alone silently returns the first profile ever seen under that name, so any variant
+    # sharing a name would be scored against the wrong anchor.
+    key = "panel::" + json.dumps(
+        {k: profile[k] for k in sorted(profile) if k != "max_submissions"},
+        sort_keys=True, default=str,
+    )
     if key in _CACHE:
         return _CACHE[key]
     entries = []
