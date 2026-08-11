@@ -376,6 +376,41 @@ that every one of the first 17 flips went the same way. Judging the *median* see
 the flips then go both directions. Rows below three seeds are labelled `thin_screen` rather than
 given a verdict.
 
+## Does a task meet the benchmark's own standards
+
+Measuring iteration is one question; whether a task's science is solid is another, and the two
+are independent. `scripts/audit_benchmark_standards.py` checks nine mechanically verifiable
+properties across all 61 packages and reports them separately, because they are different kinds
+of defect and an average would hide whichever one matters.
+
+| standard | met |
+|---|---:|
+| declares specific known shortcuts | 52 / 61 |
+| states oracle invariants | 52 / 61 |
+| cites resolvable literature | 49 / 61 |
+| holds a sealed split back from the development score | 40 / 61 |
+| recomputes its anchor at evaluation time | 8 / 61 |
+| ships a reference record | 6 / 61 |
+| oracle is community-standard tooling, not a reimplementation | 2 / 61 |
+| exposes a difficulty level | 2 / 61 |
+| externally domain reviewed | 0 / 61 |
+
+The distribution is lopsided in a specific way: the documentation standards are largely met while
+the standards that decide scientific credibility are largely not. Only two tasks reach eight of
+nine, and those are the two built to these standards; nothing else exceeds five.
+
+An independent check that the standards are measuring something: the nine tasks scoring zero are
+exactly the nine the repository has quarantined, and this audit never reads `certification.yaml`.
+
+Crossing the two audits gives the honest position. `QuantumErrorCorrection/QuantumErrorDecoder` is
+the only task that both measures iteration and rests on community tooling with a recomputed
+anchor. `ProteinStabilityDesign`, `NMRSpectrumFitting` and `LowThrustTransfer` measure iteration
+but score against author-written NumPy reimplementations, so what they measure is agreement with
+that code rather than with the science. `MolecularLeadOptimization` is the reverse: solid
+grounding, but its control has not been exhausted.
+
+See [standards audit](.research/benchmark_standards_audit_2026-08-11.md).
+
 ## Difficulty ladders
 
 Both community-oracle tasks carry a `DIFFICULTY` level so that saturating one does not retire the
