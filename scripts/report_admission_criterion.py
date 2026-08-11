@@ -205,6 +205,13 @@ def verdict(sat: dict | None, gaps: list[dict]) -> tuple[str, str]:
             "exists, so it is unknown whether the headroom is climbable"
             % sat["mean_second_half_gain"]
         )
+    if len(gaps) < 2:
+        only = gaps[0]
+        return "gap_at_one_budget", (
+            "gap is %+.4f at budget %d (%d/%d, n=%d), the only budget with paired runs; a "
+            "single point cannot show whether the gap widens or closes"
+            % (only["mean"], only["budget"], only["wins"], only["losses"], only["n"])
+        )
     first, last = gaps[0], gaps[-1]
     if last["mean"] <= 0:
         return "headroom_unclimbable", (
@@ -268,8 +275,13 @@ def main() -> int:
                 cohort_gaps.append({"cohort": cohort, "gaps": gaps,
                                     "seeds": len(set(open_loop) & set(feedback))})
         sat = saturation(pooled_open.get(task, {}))
-        # Judge on the cohort with the most paired seeds; report all of them.
-        best = max(cohort_gaps, key=lambda c: c["seeds"], default=None)
+        # Judge on the cohort that covers the most budgets, breaking ties on paired seeds.
+        # Seeds alone is the wrong key: a cohort with eight seeds at a single budget cannot show
+        # a trend at all, and ranking it first produced the verdict "gap grows with budget,
+        # +0.1345 at 3 to +0.1345 at 3" - one point compared with itself.
+        best = max(
+            cohort_gaps, key=lambda c: (len(c["gaps"]), c["seeds"]), default=None
+        )
         state, why = verdict(sat, best["gaps"] if best else [])
         rows.append({
             "task": task,
@@ -294,8 +306,8 @@ def main() -> int:
 
     order = {
         "measures_iteration": 0, "crossover_in_range": 1, "headroom_unclimbable": 2,
-        "headroom_unverified": 3, "headroom_single_seed": 4, "marginal_headroom": 5,
-        "no_headroom": 6, "floor": 7, "unknown": 8,
+        "gap_at_one_budget": 3, "headroom_unverified": 4, "headroom_single_seed": 5,
+        "marginal_headroom": 6, "no_headroom": 7, "floor": 8, "unknown": 9,
     }
     rows.sort(key=lambda r: (order[r["verdict"]], r["task"]))
 
