@@ -7,8 +7,9 @@ artifact: A deterministic function mapping a dot-bracket target structure to an 
 oracle:
   model: ViennaRNA 2.7.2 partition function over the Turner 2004 nearest-neighbour model; ensemble defect
     from RNA.fold_compound.ensemble_defect; targets filtered for designability
-  reference_designer: ViennaRNA RNA.inverse_fold, best of ten restarts selected by ensemble defect, recomputed
-    by the evaluator at scoring time
+  reference_designer: ViennaRNA RNA.inverse_pf_fold, the partition-function designer, best of three restarts
+    by ensemble defect, recomputed by the evaluator at scoring time; chosen over inverse_fold which is
+    about 75x worse on this objective
   deterministic: true
   external_tooling: ViennaRNA (pinned in verification/requirements.txt)
   determinism_note: targets come from a seeded motif grammar; ViennaRNA folding and partition functions
@@ -18,7 +19,7 @@ oracle:
     the whole submission invalid
 normalization:
   baseline: unstructured poly-A sequence of the target length; ensemble defect near 0.75
-  reference: ensemble defect of the restart-matched ViennaRNA inverse_fold output, measured at evaluation
+  reference: ensemble defect of the restart-matched ViennaRNA inverse_pf_fold output, measured at evaluation
     time on the same targets
   score: uncapped log-ratio reduction in ensemble defect; matching the ViennaRNA designer is 1.0 and beating
     it exceeds 1.0
@@ -38,6 +39,7 @@ invariants:
 - ensemble defect is invariant under reversing both the sequence and the target together
 - poly-A reproduces the unstructured baseline defect for any target
 - the anchor's own ensemble defect scores exactly 1.0 by construction
+- an unbalanced dot-bracket target must never reach ViennaRNA, which segfaults rather than raising
 known_shortcuts: Calling ViennaRNA's inverse_fold is permitted. The anchor is the best of ten restarts
   of that routine, so a single call scores about 0.58 rather than 1.0 and restarting it only reaches what
   the anchor already did; repetition alone cannot exceed 1.0. Forbidding the call was considered and rejected
