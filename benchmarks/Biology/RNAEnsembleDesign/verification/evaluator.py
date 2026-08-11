@@ -43,19 +43,26 @@ import random
 DIFFICULTY = 1
 
 _LADDER = {
-    1: {"branch_counts": (1, 2, 3), "stem": (4, 7), "loop": (4, 7), "count": 6, "seed": 20260811},
-    2: {"branch_counts": (2, 3, 4), "stem": (5, 9), "loop": (4, 8), "count": 6, "seed": 20260812},
-    3: {"branch_counts": (3, 4, 5), "stem": (6, 11), "loop": (4, 9), "count": 6, "seed": 20260813},
+    1: {"branch_counts": (2, 3, 4), "stem": (3, 5), "loop": (4, 7), "bulge_rate": 0.25,
+        "count": 6, "seed": 20260811},
+    2: {"branch_counts": (3, 4, 5), "stem": (3, 5), "loop": (4, 8), "bulge_rate": 0.35,
+        "count": 6, "seed": 20260812},
+    3: {"branch_counts": (4, 5, 6), "stem": (2, 4), "loop": (4, 9), "bulge_rate": 0.45,
+        "count": 6, "seed": 20260813},
 }
 
 _SEALED_LADDER = {
-    1: {"branch_counts": (2, 3), "stem": (5, 8), "loop": (5, 8), "count": 3, "seed": 771201},
-    2: {"branch_counts": (3, 4), "stem": (6, 10), "loop": (5, 9), "count": 3, "seed": 771202},
-    3: {"branch_counts": (4, 5), "stem": (7, 12), "loop": (5, 10), "count": 3, "seed": 771203},
+    1: {"branch_counts": (3, 4), "stem": (3, 5), "loop": (5, 8), "bulge_rate": 0.30,
+        "count": 3, "seed": 771201},
+    2: {"branch_counts": (4, 5), "stem": (3, 5), "loop": (5, 9), "bulge_rate": 0.40,
+        "count": 3, "seed": 771202},
+    3: {"branch_counts": (5, 6), "stem": (2, 4), "loop": (5, 10), "bulge_rate": 0.50,
+        "count": 3, "seed": 771203},
 }
 
-# The anchor restarts the reference designer and keeps its best attempt by ensemble defect, so
-# that a candidate cannot beat it merely by restarting it more times than the evaluator did.
+# The knob is helix length and bulge density, not sequence length. Long clean helices are filled
+# with GC pairs and stop being a design problem; short helices interrupted by bulges have to be
+# stabilised against their own slipped registers, which is where inverse folding is actually hard.
 ANCHOR_RESTARTS = 10
 
 BASELINE_BASE = "A"
@@ -63,13 +70,30 @@ ALPHABET = "ACGU"
 MAX_LENGTH = 400
 
 
-def _hairpin(rng, stem, loop):
-    s = rng.randint(*stem)
-    l = rng.randint(*loop)
-    return "(" * s + "." * l + ")" * s
+def _helix(rng, length, bulge_rate):
+    """One side of a helix, with occasional single-nucleotide bulges.
+
+    A bulge breaks a helix into stacks that must each be stabilised separately, and it makes the
+    competing register - the same helix slipped by one - close in energy. Without them a helix is
+    filled with GC pairs and the design problem largely disappears, which is what happened at the
+    first shipped level: a twelve-proposal search drove the ensemble defect to 0.001.
+    """
+    left, right = [], []
+    for _ in range(length):
+        left.append("(")
+        right.append(")")
+        if bulge_rate and rng.random() < bulge_rate:
+            left.append(".")
+    return "".join(left), "".join(reversed(right))
 
 
-def _target(rng, branches, stem, loop):
+def _hairpin(rng, stem, loop, bulge_rate=0.0):
+    length = rng.randint(*stem)
+    left, right = _helix(rng, length, bulge_rate)
+    return left + "." * rng.randint(*loop) + right
+
+
+def _target(rng, branches, stem, loop, bulge_rate):
     """A closing stem enclosing `branches` hairpins, with short unpaired spacers between them.
 
     Built by construction rather than written out, because a hand-typed dot-bracket string is
@@ -80,9 +104,9 @@ def _target(rng, branches, stem, loop):
     for index in range(branches):
         if index:
             inner.append("." * rng.randint(1, 3))
-        inner.append(_hairpin(rng, stem, loop))
-    closing = rng.randint(*stem)
-    return "(" * closing + "".join(inner) + ")" * closing
+        inner.append(_hairpin(rng, stem, loop, bulge_rate))
+    left, right = _helix(rng, rng.randint(*stem), bulge_rate)
+    return left + "".join(inner) + right
 
 
 def _generate(profile):
@@ -90,7 +114,8 @@ def _generate(profile):
     out = []
     for index in range(profile["count"]):
         branches = profile["branch_counts"][index % len(profile["branch_counts"])]
-        structure = _target(rng, branches, profile["stem"], profile["loop"])
+        structure = _target(rng, branches, profile["stem"], profile["loop"],
+                            profile["bulge_rate"])
         out.append({"key": "t%d_b%d_n%d" % (index, branches, len(structure)),
                     "structure": structure})
     return tuple(out)
@@ -168,9 +193,10 @@ def _anchors(RNA, targets, tag):
 
 
 # A perfectly designed sequence can have a defect at the numerical floor, where a log is
-# undefined. The floor is one thousandth of a nucleotide, far below anything the thermodynamic
-# model resolves, and it caps the score rather than letting it run away.
-DEFECT_FLOOR = 1e-3
+# undefined. The floor exists only to keep the logarithm finite and must sit far below anything a
+# search reaches: at 1e-3 it silently capped the score at about 2.06, and a twelve-proposal search
+# was pressing against it on four of six targets.
+DEFECT_FLOOR = 1e-6
 
 
 def _log_ratio_score(defect: float, baseline: float, anchor: float) -> float:
