@@ -282,6 +282,16 @@ def main() -> int:
             "gap_by_budget": best["gaps"] if best else [],
         })
 
+    # Every verdict carries how many open-loop seeds stand behind it. Most of this inventory was
+    # screened one seed per task, and one seed misled in the case that was checked, so a verdict
+    # without its seed count reads as far more settled than it is.
+    for row in rows:
+        seeds = row["saturation"]["seeds"] if row["saturation"] else 0
+        row["confidence"] = (
+            "measured" if seeds >= MIN_SEEDS_FOR_CONFIDENT_SATURATION
+            else "single_seed_screen" if seeds else "none"
+        )
+
     order = {
         "measures_iteration": 0, "crossover_in_range": 1, "headroom_unclimbable": 2,
         "headroom_unverified": 3, "headroom_single_seed": 4, "marginal_headroom": 5,
