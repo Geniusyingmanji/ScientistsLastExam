@@ -29,7 +29,6 @@ from __future__ import annotations
 import argparse
 import json
 import math
-import re
 import statistics as st
 from collections import defaultdict
 from pathlib import Path
@@ -69,28 +68,52 @@ def best_so_far(path: Path) -> list[float] | None:
     return curve
 
 
-def parse_workdir(name: str) -> tuple[str, str, int] | None:
-    """Split a run directory name into (task prefix, feedback mode, seed)."""
-    match = re.match(r"(?P<task>.+?)_(?P<mode>selection_blind|normal|blind)(?:_b\d+)?_s(?P<seed>\d+)$", name)
-    if not match:
+def run_identity(workdir: Path) -> tuple[str, str, int] | None:
+    """Read (task, feedback mode, seed) from the run manifest.
+
+    The directory name cannot be trusted for this. Budget-sweep cohorts are named for their
+    budget rather than their task - `runs/crossover/b20_normal_s0` - so parsing the name invents
+    tasks called "b20" and silently splits one task's evidence across several fictitious ones.
+    The manifest records the task, the mode and the seed authoritatively.
+    """
+    manifest = workdir / "run_manifest.json"
+    if not manifest.is_file():
         return None
-    return match.group("task"), match.group("mode"), int(match.group("seed"))
+    try:
+        document = json.loads(manifest.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    task = document.get("task_id")
+    mode = document.get("feedback_mode")
+    seed = document.get("seed")
+    if not task or not mode or seed is None:
+        return None
+    return str(task), str(mode), int(seed)
 
 
-def collect(runs_root: Path) -> dict[str, dict[str, dict[int, list[float]]]]:
-    found: dict[str, dict[str, dict[int, list[float]]]] = defaultdict(lambda: defaultdict(dict))
+def collect(runs_root: Path) -> dict[tuple[str, str], dict[str, dict[int, list[float]]]]:
+    """Group curves by (task, cohort).
+
+    Cohorts are kept apart on purpose. A run under `runs/crossover` was made at a different
+    budget from one under `runs/saturation`, and averaging a gap across them would compare arms
+    that were never paired.
+    """
+    found: dict[tuple[str, str], dict[str, dict[int, list[float]]]] = defaultdict(
+        lambda: defaultdict(dict)
+    )
     for trajectory in runs_root.glob("*/*/trajectory.jsonl"):
-        parsed = parse_workdir(trajectory.parent.name)
-        if parsed is None:
+        workdir = trajectory.parent
+        identity = run_identity(workdir)
+        if identity is None:
             continue
-        task, mode, seed = parsed
+        task, mode, seed = identity
         curve = best_so_far(trajectory)
         if curve is None:
             continue
-        # Keep the longest curve when a seed appears in several cohorts.
-        existing = found[task][mode].get(seed)
+        key = (task, workdir.parent.name)
+        existing = found[key][mode].get(seed)
         if existing is None or len(curve) > len(existing):
-            found[task][mode][seed] = curve
+            found[key][mode][seed] = curve
     return found
 
 
@@ -181,8 +204,9 @@ def main() -> int:
 
     found = collect(Path(args.runs))
     rows = []
-    for task in sorted(found):
-        arms = found[task]
+    for key in sorted(found):
+        task, cohort = key
+        arms = found[key]
         open_loop: dict[int, list[float]] = {}
         for mode in OPEN_LOOP_MODES:
             open_loop.update(arms.get(mode, {}))
@@ -194,6 +218,7 @@ def main() -> int:
         state, why = verdict(sat, gaps)
         rows.append({
             "task": task,
+            "cohort": cohort,
             "verdict": state,
             "reason": why,
             "open_loop_seeds": len(open_loop),
@@ -202,17 +227,20 @@ def main() -> int:
             "gap_by_budget": gaps,
         })
 
+    # A task may appear under several cohorts; report each, and count distinct tasks separately
+    # so a well-sampled task does not look like several passing ones.
     order = {
         "measures_iteration": 0, "crossover_in_range": 1, "headroom_unclimbable": 2,
         "headroom_unverified": 3, "no_headroom": 4, "floor": 5, "unknown": 6,
     }
     rows.sort(key=lambda r: (order[r["verdict"]], r["task"]))
 
-    print("%-34s %-22s %6s %6s" % ("task", "verdict", "open", "fb"))
-    print("-" * 74)
+    print("%-38s %-14s %-22s %5s %4s" % ("task", "cohort", "verdict", "open", "fb"))
+    print("-" * 88)
     for row in rows:
-        print("%-34s %-22s %6d %6d" % (
-            row["task"][:34], row["verdict"], row["open_loop_seeds"], row["feedback_seeds"]))
+        print("%-38s %-14s %-22s %5d %4d" % (
+            row["task"][-38:], row["cohort"][:14], row["verdict"],
+            row["open_loop_seeds"], row["feedback_seeds"]))
         print("      %s" % row["reason"])
         for gap in row["gap_by_budget"]:
             print("        budget %2d  gap %+8.4f  se %.4f  %d/%d  n=%d" % (
@@ -222,18 +250,28 @@ def main() -> int:
     for row in rows:
         counts[row["verdict"]] += 1
     paired = sum(1 for row in rows if row["gap_by_budget"])
+    tasks = {row["task"] for row in rows}
+    tasks_paired = {row["task"] for row in rows if row["gap_by_budget"]}
+    tasks_measuring = {row["task"] for row in rows if row["verdict"] == "measures_iteration"}
     print()
-    print("verdicts:", dict(sorted(counts.items())))
-    print("tasks with paired evidence for the sufficient condition: %d of %d"
-          % (paired, len(rows)))
+    print("verdicts by (task, cohort):", dict(sorted(counts.items())))
+    print("distinct tasks: %d" % len(tasks))
+    print("distinct tasks with paired evidence for the sufficient condition: %d of %d"
+          % (len(tasks_paired), len(tasks)))
+    print("distinct tasks shown to measure iteration: %d" % len(tasks_measuring))
+    for name in sorted(tasks_measuring):
+        print("   ", name)
 
     Path(args.output).write_text(json.dumps({
-        "schema_version": 1,
+        "schema_version": 2,
         "note": "condition 1 (open-loop non-saturation) is necessary; condition 2 (a feedback "
                 "gap that does not close with budget) is what makes a task measure iteration",
         "budgets": list(BUDGETS),
-        "task_count": len(rows),
-        "paired_evidence_count": paired,
+        "row_count": len(rows),
+        "distinct_task_count": len(tasks),
+        "distinct_tasks_with_paired_evidence": len(tasks_paired),
+        "distinct_tasks_measuring_iteration": sorted(tasks_measuring),
+        "paired_evidence_row_count": paired,
         "verdict_counts": dict(counts),
         "rows": rows,
     }, indent=2), encoding="utf-8")
