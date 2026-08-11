@@ -1,0 +1,91 @@
+schema_version: 2
+scientific_question: Can a search design RNA sequences whose Boltzmann ensemble sits closer to a target
+  secondary structure than the community's own inverse-folding routine, which optimises minimum-free-energy
+  structure match rather than ensemble defect?
+artifact: A deterministic function mapping a dot-bracket target structure to an ACGU sequence of the same
+  length.
+oracle:
+  model: ViennaRNA 2.7.2 partition function over the Turner 2004 nearest-neighbour model; ensemble defect
+    computed by RNA.fold_compound.ensemble_defect
+  reference_designer: ViennaRNA RNA.inverse_fold, best of ten restarts selected by ensemble defect, recomputed
+    by the evaluator at scoring time
+  deterministic: true
+  external_tooling: ViennaRNA (pinned in verification/requirements.txt)
+  determinism_note: targets come from a seeded motif grammar; ViennaRNA folding and partition functions
+    are deterministic for a fixed sequence and parameter set
+  feasibility: an ACGU string of exactly len(structure); any other length, any character outside ACGU,
+    or a non-string return is scored invalid rather than clipped, and one invalid development target makes
+    the whole submission invalid
+normalization:
+  baseline: unstructured poly-A sequence of the target length; ensemble defect near 0.75
+  reference: ensemble defect of the restart-matched ViennaRNA inverse_fold output, measured at evaluation
+    time on the same targets
+  score: uncapped log-ratio reduction in ensemble defect; matching the ViennaRNA designer is 1.0 and beating
+    it exceeds 1.0
+  measured_anchors: recomputed per run; see references/known_best.md for the values observed on the benchmark
+    host
+citations:
+- id: doi:10.1186/1748-7188-6-26
+  title: ViennaRNA Package 2.0
+- id: doi:10.1002/jcc.21633
+  title: 'NUPACK: analysis and design of nucleic acid systems'
+- id: doi:10.1093/nar/gkp892
+  title: 'NNDB: the nearest neighbor parameter database'
+- id: doi:10.1002/bip.360290621
+  title: The equilibrium partition function and base pair binding probabilities for RNA secondary structure
+invariants:
+- a sequence whose ensemble is exactly the target has ensemble defect zero
+- ensemble defect is invariant under reversing both the sequence and the target together
+- poly-A reproduces the unstructured baseline defect for any target
+- the anchor's own ensemble defect scores exactly 1.0 by construction
+known_shortcuts: Calling ViennaRNA's inverse_fold is permitted and reaches parity with the anchor, which
+  is restart-matched to ten calls, so it cannot be used to exceed 1.0 by repetition alone. Reading verification/
+  would expose the sealed targets and is blocked by the sandbox mounts. Returning a sequence of the wrong
+  length or alphabet is scored invalid rather than clipped. RNA inverse folding is well documented in
+  public literature and training corpora, so a strong result must be confirmed on the sealed targets,
+  which use a different generator seed.
+review:
+  domain: pending_external_rna_thermodynamics_and_design
+  evaluator_security: oracle runs in the trusted parent; candidate receives ViennaRNA through the audited
+    allowlist
+  reference_implementation_verified: reference designer is truth-blind random restart scored by the same
+    oracle; it does not call inverse_fold
+provenance:
+  class: procedural
+  target_source: seeded motif grammar over hairpin branches inside a closing stem
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: sealed targets available from an unused generator seed
+novelty_risk:
+  level: medium
+  rationale: RNA inverse folding is a classical, heavily published problem and ViennaRNA is in wide public
+    use, so a model may recall design heuristics. The ensemble-defect objective with a restart-matched
+    inverse_fold anchor is not a published benchmark setting, and the targets are generated rather than
+    drawn from a known set.
+lineage:
+  status: incomplete_legacy
+  builder_model_ids:
+  - anthropic:claude-fable-5
+  builder_scaffolds:
+  - claude-code
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: None. The scoring was changed from a linear to a log defect ratio before any
+    model ran, because the linear form spent its whole range below the anchor and compressed the region
+    above it; the change came from calibrating the truth-blind reference, not from a model result.
+  shortcut_discoverer: builder
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: incomplete_legacy
+  author_domain: computational biology
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_yet_cross_checked
+  independent_recomputation_status: not_yet_recomputed
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
