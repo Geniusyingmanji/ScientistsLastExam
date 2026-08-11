@@ -353,6 +353,17 @@ control leaves: a control that has run out at 0.998 gives a searcher almost noth
 demonstrate, while `Catalysis/CatalystDeactivationLab` and `MolecularDynamics/ForceFieldCalibration`
 run out near 0.12.
 
+### A rejected proposal is not always a contract failure
+
+`scripts/report_protocol_vs_science.py` used to report one pass rate, valid proposals over total,
+and that number answered no clean question. It counted a candidate that crashed together with a
+candidate that ran to completion and was then ruled infeasible — the first never reached the
+science, the second reached it and failed there, and several of the second group carry a real
+score the oracle computed before rejecting them. Across the paired and screening cohorts the
+split is 162 that never executed against 101 that executed and were infeasible, so roughly two
+fifths of rejections are scientific rather than contractual. The report now gives
+`execution_rate` and `feasible_given_executed` separately.
+
 ### How much of this is measurement, and how much is a screen
 
 The inventory was originally swept one open-loop seed per task; 48 of 52 tasks had exactly one

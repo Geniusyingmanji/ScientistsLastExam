@@ -60,6 +60,26 @@ science_given_valid   仅在有效提案上的均值与最优
 
 剩余 47 次"未分类"是真的没有 `candidate_failure_kind`，集中在 `CatalystDeactivationLab`、`EnergyBalanceModel`、`QuartzCrystalMicrobalanceLab` —— 这三个都是回调式 oracle，失败发生在回调协议层而非候选执行层，值得单独看。
 
+## 订正（2026-08-11）：通过率把两类失败混在了一起
+
+上面的"协议通过率"定义为 有效提案 / 总提案,这个口径把两件不同的事算作同一件:
+
+1. 候选**根本没跑起来** —— 崩溃、超时、worker 退出。它从未触及科学。
+2. 候选**跑完了但被判不可行** —— oracle 正常执行、算出了 metrics(有些甚至有实分,比如 0.2385),只是没满足可行性约束。它触及了科学并在那里失败。
+
+第二类被算进"契约障碍",会高估题库被契约卡住的程度。在本轮补种子与配对的运行里:
+
+| | 数量 |
+|---|---:|
+| 从未执行 | 162 |
+| 执行了但不可行 | 101 |
+
+也就是说被拒提案里约 38% 是科学失败而非契约失败。
+
+我是在追查另一个问题时发现的:失败构成里有 135 条既无 `candidate_failure_kind` 也无 `error_message`,我先后猜过"外层超时"和"LLM 没产出代码",两次都错 —— 它们有 candidate_sha、有完整 metrics,是正常执行后被判不可行。
+
+报告已改为三个量:`execution_rate`(跑起来的比例,契约问题)、`feasible_given_executed`(跑起来的里面可行的比例,科学问题)、`science_given_valid`(可行提案的得分)。原先那个单一 `protocol_pass_rate` 已移除,因为它没有对应任何一个可回答的问题。
+
 ## 边界
 
 单 seed、budget 12、开环条件下的统计。通过率是对 `selection_blind` 提案而言的，反馈条件下可能不同（agent 看到失败反馈后有机会改正，这正是契约 linter 想提前解决的）。0.5 的阈值是本轮设定。
