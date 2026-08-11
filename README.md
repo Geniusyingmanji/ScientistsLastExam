@@ -319,12 +319,18 @@ cohorts were never paired). Over 52 tasks:
 |---|---:|
 | measures iteration | 5 |
 | measures iteration, but one paired seed carries it | 1 |
-| feedback actively harmful | 4 |
+| feedback actively harmful | 3 |
 | feedback harmful, but one paired seed carries it | 2 |
+| arms indistinguishable — gap too small to matter | 1 |
 | control exhausted, feedback arm never run | 25 |
-| control still climbing — best-of-N not exhausted | 7 |
-| judged on fewer than three seeds | 3 |
+| control still climbing — best-of-N not exhausted | 8 |
+| judged on fewer than three seeds | 2 |
 | floor — control never leaves zero | 6 |
+
+A gap counts as a difference only when it is large next to the scores being compared — at least 2%
+of the open-loop mean. Sign alone was not enough: `RNAEngineering/RNAEnsembleDesign` trailed by
+0.0021 against scores near 1.0, two parts in a thousand, and the criterion was calling that
+"harmful" with the same word it gave a task trailing by 0.37 against scores near 0.5.
 
 **Paired evidence exists for 15 of 53 tasks, and five pass:** `QuantumErrorCorrection/QuantumErrorDecoder`,
 `Spectroscopy/NMRSpectrumFitting`, `Astrodynamics/LowThrustTransfer`,
@@ -342,10 +348,10 @@ A sixth was on this list two seeds ago and is not now.
 two paired seeds and no losses; at four seeds it reversed sign and now reads as harmful, carried by
 one seed in that direction too. Nothing about the task changed — the evidence did.
 
-**Feedback is actively harmful on as many tasks as it clearly helps.** Four tasks —
-`StructuralEngineering/TrussWeightMinimization`, `Turbulence/RANSCalibration`,
-`PopulationGenetics/DemographicSFS` and `Thermodynamics/HeatExchangerDesign` — score worse with
-feedback than their own open-loop controls, and two more read that way on one seed. This is not a
+**Feedback is actively harmful on nearly as many tasks as it clearly helps.** Three tasks —
+`StructuralEngineering/TrussWeightMinimization`, `Turbulence/RANSCalibration` and
+`Thermodynamics/HeatExchangerDesign` — score materially worse with feedback than their own
+open-loop controls, and two more read that way on a single seed. This is not a
 harness fault: pass rates are comparable between the arms, and on the decoder task the mechanism is
 visible — independent draws find a long right tail that an incumbent-anchored search never
 explores. A benchmark for iterative improvement has to be able to report that iteration sometimes
