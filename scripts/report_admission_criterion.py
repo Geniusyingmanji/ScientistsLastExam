@@ -333,25 +333,34 @@ def main() -> int:
         print("   ", name)
 
     # The only pool that can add qualifying tasks: real headroom, never paired.
-    candidates = sorted(
-        ((row["saturation"]["mean_second_half_gain"], row["saturation"]["mean_final"],
-          row["saturation"]["seeds"], row["task"], row["verdict"])
-         for row in rows
-         if row["verdict"] in ("headroom_unverified", "headroom_single_seed")),
-        reverse=True,
-    )
+    # One entry per task, not per (task, cohort): saturation now pools across cohorts, so a task
+    # present in four cohorts would otherwise be listed four identical times. A task that has
+    # been paired anywhere is not a candidate, however its other cohorts happen to be labelled.
+    paired_tasks = {row["task"] for row in rows if row["gap_by_budget"]}
+    best_by_task: dict[str, tuple] = {}
+    for row in rows:
+        if row["verdict"] not in ("headroom_unverified", "headroom_single_seed"):
+            continue
+        if row["task"] in paired_tasks:
+            continue
+        sat = row["saturation"]
+        best_by_task[row["task"]] = (
+            sat["mean_second_half_gain"], sat["mean_final"], sat["seeds"],
+            row["task"], row["verdict"],
+        )
+    candidates = sorted(best_by_task.values(), reverse=True)
     print()
     print("worth pairing next (apparent headroom, no feedback arm ever run), gain floor %.2f:"
           % MATERIAL_GAIN)
     for gain, final, seeds, name, state in candidates:
-        note = "  [one-seed guess]" if state == "headroom_single_seed" else ""
+        note = "  [thin screen]" if state == "headroom_single_seed" else ""
         print("    %-34s gain %+.4f  ending at %.4f  seeds=%d%s"
               % (name.split("/")[-1], gain, final, seeds, note))
     thin = sum(1 for c in candidates if c[4] == "headroom_single_seed")
     if thin:
-        print("  %d of %d rest on fewer than %d open-loop seeds. The first such candidate that"
+        print("  %d of %d rest on fewer than %d pooled open-loop seeds. The first such candidate"
               % (thin, len(candidates), MIN_SEEDS_FOR_CONFIDENT_SATURATION))
-        print("  was actually paired, TrussWeightMinimization, showed no second-half gain at all")
+        print("  that was actually paired, TrussWeightMinimization, showed no second-half gain")
         print("  once four seeds were run, so treat the ranking as a queue, not a finding.")
 
     Path(args.output).write_text(json.dumps({
