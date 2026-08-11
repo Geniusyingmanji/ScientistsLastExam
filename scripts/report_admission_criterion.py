@@ -41,6 +41,13 @@ BUDGETS = (3, 5, 8, 10, 12)
 OPEN_LOOP_MODES = ("selection_blind", "blind")
 FEEDBACK_MODES = ("normal",)
 
+# A second-half gain has to be big enough to be worth a searcher's budget before it counts as
+# headroom. Without a floor, a control sitting at 0.9991 that drifts up by 0.0025 reads as "still
+# climbing", which is noise wearing the label of opportunity. The threshold is a judgement, so it
+# is named and printed rather than buried: a gain under this is reported as marginal, not as
+# headroom, and marginal tasks are not proposed as candidates for paired follow-up.
+MATERIAL_GAIN = 0.01
+
 
 def best_so_far(path: Path) -> list[float] | None:
     """The best-so-far curve over proposals. Invalid proposals score zero, as the harness does."""
@@ -135,6 +142,7 @@ def saturation(curves: dict[int, list[float]]) -> dict | None:
         # saturating high, and the two must not be reported as the same verdict.
         "is_floor": max(finals) <= 1e-9,
         "saturated": st.mean(gains) <= 1e-6,
+        "marginal": 1e-6 < st.mean(gains) < MATERIAL_GAIN,
     }
 
 
@@ -171,6 +179,12 @@ def verdict(sat: dict | None, gaps: list[dict]) -> tuple[str, str]:
     if sat["saturated"]:
         return "no_headroom", (
             "open-loop control gains %.4f over its second half" % sat["mean_second_half_gain"]
+        )
+    if sat["marginal"]:
+        return "marginal_headroom", (
+            "open-loop gains only %+.4f over its second half, ending at %.4f; below the %.2f "
+            "materiality threshold this is drift, not headroom"
+            % (sat["mean_second_half_gain"], sat["mean_final"], MATERIAL_GAIN)
         )
     if not gaps:
         return "headroom_unverified", (
@@ -231,7 +245,8 @@ def main() -> int:
     # so a well-sampled task does not look like several passing ones.
     order = {
         "measures_iteration": 0, "crossover_in_range": 1, "headroom_unclimbable": 2,
-        "headroom_unverified": 3, "no_headroom": 4, "floor": 5, "unknown": 6,
+        "headroom_unverified": 3, "marginal_headroom": 4, "no_headroom": 5,
+        "floor": 6, "unknown": 7,
     }
     rows.sort(key=lambda r: (order[r["verdict"]], r["task"]))
 
@@ -265,6 +280,18 @@ def main() -> int:
     print("distinct tasks shown to measure iteration: %d" % len(tasks_measuring))
     for name in sorted(tasks_measuring):
         print("   ", name)
+
+    # The only pool that can add qualifying tasks: real headroom, never paired.
+    candidates = sorted(
+        ((row["saturation"]["mean_second_half_gain"], row["saturation"]["mean_final"], row["task"])
+         for row in rows if row["verdict"] == "headroom_unverified"),
+        reverse=True,
+    )
+    print()
+    print("worth pairing next (material headroom, no feedback arm ever run), gain=%.2f floor:"
+          % MATERIAL_GAIN)
+    for gain, final, name in candidates:
+        print("    %-34s gain %+.4f  ending at %.4f" % (name.split("/")[-1], gain, final))
 
     Path(args.output).write_text(json.dumps({
         "schema_version": 2,
