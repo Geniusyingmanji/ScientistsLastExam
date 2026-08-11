@@ -375,11 +375,14 @@ def main(argv: list[str] | None = None) -> int:
     # A run can abort mid-trajectory - an evaluator infrastructure failure ends one outright -
     # and a short curve then looks like a complete run at a smaller budget. Neither the gap nor
     # the saturation test can tell the difference, so the count is surfaced rather than hidden.
-    lengths: dict[str, list[int]] = defaultdict(list)
-    for (task, _cohort), arms in found.items():
+    # Compare within a cohort, not within a task. Cohorts were run at different budgets on
+    # purpose - a budget-3 run is not a truncated budget-12 run - so comparing across them
+    # counts deliberate design as breakage.
+    lengths: dict[tuple[str, str], list[int]] = defaultdict(list)
+    for key, arms in found.items():
         for mode_curves in arms.values():
             for curve in mode_curves.values():
-                lengths[task].append(len(curve))
+                lengths[key].append(len(curve))
     truncated = sum(
         sum(1 for n in seen if n < max(seen)) for seen in lengths.values() if seen
     )
