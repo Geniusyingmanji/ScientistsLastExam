@@ -6,7 +6,7 @@ artifact: A deterministic function mapping a dot-bracket target structure to an 
   length.
 oracle:
   model: ViennaRNA 2.7.2 partition function over the Turner 2004 nearest-neighbour model; ensemble defect
-    computed by RNA.fold_compound.ensemble_defect
+    from RNA.fold_compound.ensemble_defect; targets filtered for designability
   reference_designer: ViennaRNA RNA.inverse_fold, best of ten restarts selected by ensemble defect, recomputed
     by the evaluator at scoring time
   deterministic: true
@@ -54,7 +54,8 @@ review:
     oracle; it does not call inverse_fold
 provenance:
   class: procedural
-  target_source: seeded motif grammar over hairpin branches inside a closing stem
+  target_source: seeded motif grammar, filtered so every target is designable by ViennaRNA inverse_fold
+    and its best-of-ten anchor defect falls inside a declared band
   task_contract_public_before_evaluation: true
   fresh_confirmation_status: sealed targets available from an unused generator seed
 novelty_risk:

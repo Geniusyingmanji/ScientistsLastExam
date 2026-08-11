@@ -16,49 +16,56 @@ it was produced. With the anchor taken as the best of ten restarts, calling the 
 scores 0.5763 rather than 1.0 - the routine is stochastic and one draw is not its best of ten -
 and restarting it is only doing what the anchor already did.
 
+## How the targets are chosen
+
+Structures are drawn from a motif grammar — hairpin branches inside a closing stem, with
+single-nucleotide bulges — and then filtered on two properties rather than accepted as drawn:
+
+1. **Designable.** ViennaRNA's `inverse_fold` must reach the structure exactly within a few
+   restarts. Not every dot-bracket string is designable, and scoring an undesignable target
+   measures how close a candidate gets to something impossible while making the anchor arbitrary.
+2. **Inside an anchor-defect band.** The best of ten `inverse_fold` restarts must land between
+   0.02 and 0.15 ensemble defect at the shipped level. Below the band the anchor is already near
+   perfect and cannot show a searcher doing better; above it the target is effectively
+   undesignable.
+
+Both filters exist because hand-tuning the generator failed in both directions, and the failures
+are worth recording. Long clean helices fill with GC pairs and stop being a design problem: the
+first shipped target set had anchor defects near 0.03 and a twelve-proposal search drove its own
+defects to 0.001, pressing against the numerical floor. Raising the bulge density to compensate
+produced target sets where ViennaRNA reached the target structure on **none** of them, with anchor
+defects near 0.40. Difficulty is now the band itself, which is a property of the task rather than a
+knob someone guessed.
+
 ## Anchors at the shipped level
 
-| Target | length | branches | baseline defect | anchor defect | anchor reaches target |
-|---|---:|---:|---:|---:|---|
-| `t0_b1_n24` | 24 | 1 | 0.8333 | 0.0051 | yes |
-| `t1_b2_n49` | 49 | 2 | 0.7347 | 0.0958 | yes |
-| `t2_b3_n66` | 66 | 3 | 0.7273 | 0.0451 | yes |
-| `t3_b1_n30` | 30 | 1 | — | — | yes |
-| `t4_b2_n50` | 50 | 2 | — | — | yes |
-| `t5_b3_n69` | 69 | 3 | — | — | yes |
+Measured on the benchmark host with ViennaRNA 2.7.2. Five development targets, 37 to 66
+nucleotides, two or three branches.
 
-The baseline defect near 0.75 against an anchor defect near 0.03 is why the score is a log ratio:
-a linear normalisation would spend its whole range on the gap between doing nothing and reaching
-the reference, and compress the region above 1.0 where the work is.
+| quantity | value |
+|---|---:|
+| baseline defect, poly-A | ≈ 0.75 |
+| anchor defect, best of ten `inverse_fold` restarts, median | **0.1358** |
+| fraction of targets the anchor reaches exactly | 0.80 |
+| target generation time | 18 s |
 
 ## Calibration ladder
 
-| Designer | development | sealed |
-|---|---:|---:|
-| Shipped baseline — unstructured poly-A | **0.0000** | 0.0000 |
-| Truth-blind reference — 60 random restarts scored by ensemble defect | **1.3506** | — |
-| ViennaRNA `inverse_fold`, best of ten restarts | **1.0000** (by definition) | 1.0000 |
+| Designer | development |
+|---|---:|
+| Shipped baseline — unstructured poly-A | **0.0000** |
+| A single `inverse_fold` call | **0.5020** |
+| ViennaRNA `inverse_fold`, best of ten restarts | **1.0000** (by definition) |
+| Truth-blind reference — 60 random restarts scored by ensemble defect | **1.4248** |
 
 The reference designer clears the anchor, and that is the finding rather than a defect: optimising
 the objective that is scored beats optimising a proxy for it, even with an unsophisticated search.
-This is the same reason NUPACK-style design targets ensemble defect directly. It also sets a real
-bar — the reference is 60 restarts of constrained random sampling, so a candidate has to do better
-than that to exceed 1.35.
+This is the reason NUPACK-style design targets ensemble defect directly. A single `inverse_fold`
+call scores about half, because the routine is stochastic and one draw is not its best of ten.
 
-## Difficulty levels
-
-`DIFFICULTY` in `verification/evaluator.py` selects the target generator. Level 1 is shipped. A
-level with no entry raises rather than being extrapolated.
-
-| Level | target lengths | branches | truth-blind reference |
-|---:|---|---|---:|
-| 1 | 24–69 | 1–3 | 1.3506 |
-| 2 | 59–103 | 2–4 | 1.1937 |
-| 3 | 84–146 | 3–5 | 1.1028 |
-
-The reference's margin over the anchor narrows as targets grow, which is the ladder behaving: the
-anchor stays strong (it reaches the target structure on every level) while random restart runs out
-of room. Sealed targets move with the level and use a separate generator seed.
+With the anchor near 0.136 and the numerical floor at 1e-6, a candidate reaching a defect of 0.001
+scores about 3.9, so the region above the anchor has room to discriminate. That was not true of the
+first shipped set, where the same defect scored 2.06 and was capped by the floor.
 
 ## Why the score is uncapped
 
