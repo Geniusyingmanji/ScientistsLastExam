@@ -244,42 +244,43 @@ def main() -> int:
                 if existing is None or len(curve) > len(existing):
                     pooled_open[task][key] = curve
 
+    # One row per task. Saturation pools across cohorts, so a per-cohort row would repeat the
+    # same saturation verdict once per cohort and inflate every count - after the screen cohort
+    # landed, 52 tasks were being reported as 93 rows. Gaps stay per cohort, listed inside the
+    # task's row, because two arms from different cohorts were never paired with each other.
     rows = []
-    for key in sorted(found):
-        task, cohort = key
-        arms = found[key]
-        open_loop: dict[int, list[float]] = {}
-        for mode in OPEN_LOOP_MODES:
-            open_loop.update(arms.get(mode, {}))
-        feedback: dict[int, list[float]] = {}
-        for mode in FEEDBACK_MODES:
-            feedback.update(arms.get(mode, {}))
+    tasks_seen = sorted({task for task, _ in found})
+    for task in tasks_seen:
+        cohort_gaps = []
+        for (other, cohort), arms in sorted(found.items()):
+            if other != task:
+                continue
+            open_loop: dict[int, list[float]] = {}
+            for mode in OPEN_LOOP_MODES:
+                open_loop.update(arms.get(mode, {}))
+            feedback: dict[int, list[float]] = {}
+            for mode in FEEDBACK_MODES:
+                feedback.update(arms.get(mode, {}))
+            if not open_loop or not feedback:
+                continue
+            gaps = gap_by_budget(open_loop, feedback)
+            if gaps:
+                cohort_gaps.append({"cohort": cohort, "gaps": gaps,
+                                    "seeds": len(set(open_loop) & set(feedback))})
         sat = saturation(pooled_open.get(task, {}))
-        gaps = gap_by_budget(open_loop, feedback) if open_loop and feedback else []
-        state, why = verdict(sat, gaps)
+        # Judge on the cohort with the most paired seeds; report all of them.
+        best = max(cohort_gaps, key=lambda c: c["seeds"], default=None)
+        state, why = verdict(sat, best["gaps"] if best else [])
         rows.append({
             "task": task,
-            "cohort": cohort,
             "verdict": state,
             "reason": why,
-            "open_loop_seeds": len(open_loop),
+            "judged_on_cohort": best["cohort"] if best else None,
             "pooled_open_loop_seeds": len(pooled_open.get(task, {})),
-            "feedback_seeds": len(feedback),
+            "paired_cohorts": cohort_gaps,
             "saturation": sat,
-            "gap_by_budget": gaps,
+            "gap_by_budget": best["gaps"] if best else [],
         })
-
-    # A task may appear under several cohorts; report each, and count distinct tasks separately
-    # so a well-sampled task does not look like several passing ones.
-    # Every verdict carries how many open-loop seeds stand behind it. Most of this inventory was
-    # screened one seed per task, and one seed misled in the case that was checked, so a verdict
-    # without its seed count reads as far more settled than it is.
-    for row in rows:
-        seeds = row["saturation"]["seeds"] if row["saturation"] else 0
-        row["confidence"] = (
-            "measured" if seeds >= MIN_SEEDS_FOR_CONFIDENT_SATURATION
-            else "single_seed_screen" if seeds else "none"
-        )
 
     order = {
         "measures_iteration": 0, "crossover_in_range": 1, "headroom_unclimbable": 2,
@@ -292,17 +293,21 @@ def main() -> int:
         """Drop the domain prefix; the task name is what distinguishes rows here."""
         return task_id.split("/")[-1][:34]
 
-    print("%-34s %-14s %-22s %5s %4s %s" % (
-        "task", "cohort", "verdict", "pool", "fb", "confidence"))
-    print("-" * 96)
+    print("%-34s %-22s %5s %s" % ("task", "verdict", "pool", "confidence"))
+    print("-" * 84)
     for row in rows:
-        print("%-34s %-14s %-22s %5d %4d %s" % (
-            short(row["task"]), row["cohort"][:14], row["verdict"],
-            row["pooled_open_loop_seeds"], row["feedback_seeds"], row["confidence"]))
+        print("%-34s %-22s %5d %s" % (
+            short(row["task"]), row["verdict"],
+            row["pooled_open_loop_seeds"], row["confidence"]))
         print("      %s" % row["reason"])
-        for gap in row["gap_by_budget"]:
-            print("        budget %2d  gap %+8.4f  se %.4f  %d/%d  n=%d" % (
-                gap["budget"], gap["mean"], gap["stderr"], gap["wins"], gap["losses"], gap["n"]))
+        for entry in row["paired_cohorts"]:
+            marker = " <- judged" if entry["cohort"] == row["judged_on_cohort"] else ""
+            print("      cohort %s, %d paired seeds%s" % (
+                entry["cohort"], entry["seeds"], marker))
+            for gap in entry["gaps"]:
+                print("        budget %2d  gap %+8.4f  se %.4f  %d/%d  n=%d" % (
+                    gap["budget"], gap["mean"], gap["stderr"],
+                    gap["wins"], gap["losses"], gap["n"]))
 
     counts: dict[str, int] = defaultdict(int)
     for row in rows:
@@ -314,7 +319,7 @@ def main() -> int:
     judged = [r for r in rows if r["confidence"] != "none"]
     thin_screen = [r for r in judged if r["confidence"] == "single_seed_screen"]
     print()
-    print("verdicts by (task, cohort):", dict(sorted(counts.items())))
+    print("verdicts by task:", dict(sorted(counts.items())))
     print("saturation verdicts resting on fewer than %d open-loop seeds: %d of %d (%.0f%%)"
           % (MIN_SEEDS_FOR_CONFIDENT_SATURATION, len(thin_screen), len(judged),
              100.0 * len(thin_screen) / len(judged) if judged else 0.0))
@@ -326,6 +331,7 @@ def main() -> int:
     print("  climbing, so the no_headroom and floor verdicts above may understate headroom")
     print("  just as the headroom ones overstated it.")
     print("distinct tasks: %d" % len(tasks))
+    assert len(rows) == len(tasks), "one row per task"
     print("distinct tasks with paired evidence for the sufficient condition: %d of %d"
           % (len(tasks_paired), len(tasks)))
     print("distinct tasks shown to measure iteration: %d" % len(tasks_measuring))
@@ -369,6 +375,7 @@ def main() -> int:
                 "gap that does not close with budget) is what makes a task measure iteration",
         "budgets": list(BUDGETS),
         "row_count": len(rows),
+        "note_rows": "one row per task; paired gaps listed per cohort inside each row",
         "distinct_task_count": len(tasks),
         "distinct_tasks_with_paired_evidence": len(tasks_paired),
         "distinct_tasks_measuring_iteration": sorted(tasks_measuring),
