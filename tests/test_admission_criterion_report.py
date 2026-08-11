@@ -100,18 +100,29 @@ class PoolingTests(unittest.TestCase):
             return json.loads(target.read_text(encoding="utf-8"))
 
 
+def _sat(*, seeds, median, final, is_floor=False, saturated=False, marginal=False):
+    return {
+        "seeds": seeds,
+        "median_second_half_gain": median,
+        "mean_second_half_gain": median,
+        "max_second_half_gain": median,
+        "mean_final": final,
+        "is_floor": is_floor,
+        "saturated": saturated,
+        "marginal": marginal,
+    }
+
+
 class VerdictTests(unittest.TestCase):
     def test_a_single_budget_cannot_produce_a_trend_verdict(self):
-        sat = {"seeds": 6, "mean_second_half_gain": 0.2, "mean_final": 0.5,
-               "is_floor": False, "saturated": False, "marginal": False}
+        sat = _sat(seeds=6, median=0.2, final=0.5)
         gaps = [{"budget": 3, "n": 8, "mean": 0.1345, "stderr": 0.03, "wins": 8, "losses": 0}]
         state, why = MODULE.verdict(sat, gaps)
         self.assertEqual(state, "gap_at_one_budget")
         self.assertIn("single point", why)
 
     def test_a_growing_gap_measures_iteration(self):
-        sat = {"seeds": 6, "mean_second_half_gain": 0.2, "mean_final": 0.5,
-               "is_floor": False, "saturated": False, "marginal": False}
+        sat = _sat(seeds=6, median=0.2, final=0.5)
         gaps = [
             {"budget": 3, "n": 6, "mean": 0.02, "stderr": 0.01, "wins": 4, "losses": 2},
             {"budget": 12, "n": 6, "mean": 0.13, "stderr": 0.04, "wins": 5, "losses": 1},
@@ -119,8 +130,7 @@ class VerdictTests(unittest.TestCase):
         self.assertEqual(MODULE.verdict(sat, gaps)[0], "measures_iteration")
 
     def test_a_closing_gap_is_a_crossover_not_a_pass(self):
-        sat = {"seeds": 6, "mean_second_half_gain": 0.2, "mean_final": 0.5,
-               "is_floor": False, "saturated": False, "marginal": False}
+        sat = _sat(seeds=6, median=0.2, final=0.5)
         gaps = [
             {"budget": 3, "n": 8, "mean": 0.19, "stderr": 0.05, "wins": 6, "losses": 2},
             {"budget": 12, "n": 8, "mean": 0.02, "stderr": 0.05, "wins": 4, "losses": 4},
@@ -128,8 +138,7 @@ class VerdictTests(unittest.TestCase):
         self.assertEqual(MODULE.verdict(sat, gaps)[0], "crossover_in_range")
 
     def test_a_negative_gap_means_the_headroom_is_unclimbable(self):
-        sat = {"seeds": 6, "mean_second_half_gain": 0.2, "mean_final": 0.5,
-               "is_floor": False, "saturated": False, "marginal": False}
+        sat = _sat(seeds=6, median=0.2, final=0.5)
         gaps = [
             {"budget": 3, "n": 4, "mean": -0.29, "stderr": 0.11, "wins": 1, "losses": 3},
             {"budget": 12, "n": 4, "mean": -0.37, "stderr": 0.08, "wins": 0, "losses": 4},
@@ -137,27 +146,45 @@ class VerdictTests(unittest.TestCase):
         self.assertEqual(MODULE.verdict(sat, gaps)[0], "headroom_unclimbable")
 
     def test_drift_near_the_ceiling_is_not_headroom(self):
-        sat = {"seeds": 6, "mean_second_half_gain": 0.0025, "mean_final": 0.9991,
-               "is_floor": False, "saturated": False, "marginal": True}
+        sat = _sat(seeds=6, median=0.0025, final=0.9991, marginal=True)
         self.assertEqual(MODULE.verdict(sat, [])[0], "marginal_headroom")
 
     def test_a_thin_screen_is_not_reported_as_headroom(self):
-        sat = {"seeds": 1, "mean_second_half_gain": 0.41, "mean_final": 0.41,
-               "is_floor": False, "saturated": False, "marginal": False}
+        sat = _sat(seeds=1, median=0.41, final=0.41)
         state, why = MODULE.verdict(sat, [])
         self.assertEqual(state, "headroom_single_seed")
         self.assertIn("1 seed", why)
 
     def test_a_floor_is_distinguished_from_a_saturated_control(self):
-        floor = {"seeds": 4, "mean_second_half_gain": 0.0, "mean_final": 0.0,
-                 "is_floor": True, "saturated": True, "marginal": False}
-        flat = {"seeds": 4, "mean_second_half_gain": 0.0, "mean_final": 0.87,
-                "is_floor": False, "saturated": True, "marginal": False}
+        floor = _sat(seeds=4, median=0.0, final=0.0, is_floor=True, saturated=True)
+        flat = _sat(seeds=4, median=0.0, final=0.87, saturated=True)
         self.assertEqual(MODULE.verdict(floor, [])[0], "floor")
         self.assertEqual(MODULE.verdict(flat, [])[0], "no_headroom")
 
 
 class SaturationTests(unittest.TestCase):
+    def test_saturation_is_judged_on_the_median_seed_not_the_mean(self):
+        """One climbing seed among flat ones must not read as headroom.
+
+        Best-so-far curves are monotone, so a second-half gain is never negative and the mean
+        over seeds can only rise as seeds are added. Judging on the mean made adding seeds move
+        tasks one way only: 17 of 52 in this inventory went from "no headroom" toward "headroom"
+        and none came back.
+        """
+        flat = [0.5] * 12
+        climbs = [0.1 * i for i in range(1, 13)]
+        sat = MODULE.saturation({0: flat, 1: flat, 2: climbs})
+        self.assertTrue(sat["saturated"], "median of two flat seeds and one climber is flat")
+        self.assertGreater(sat["mean_second_half_gain"], 0.0)
+        self.assertGreater(sat["max_second_half_gain"], 0.0)
+
+    def test_a_majority_climbing_still_counts_as_headroom(self):
+        flat = [0.5] * 12
+        climbs = [0.1 * i for i in range(1, 13)]
+        sat = MODULE.saturation({0: climbs, 1: climbs, 2: flat})
+        self.assertFalse(sat["saturated"])
+
+
     def test_a_control_that_never_leaves_zero_is_a_floor(self):
         sat = MODULE.saturation({0: [0.0] * 12, 1: [0.0] * 12})
         self.assertTrue(sat["is_floor"])

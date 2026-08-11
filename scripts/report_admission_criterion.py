@@ -140,15 +140,25 @@ def saturation(curves: dict[int, list[float]]) -> dict | None:
         midpoint = curve[len(curve) // 2 - 1]
         gains.append(curve[-1] - midpoint)
         finals.append(curve[-1])
+    # Judge on the median gain, not the mean. A best-so-far curve is monotone, so a second-half
+    # gain is never negative, and the mean over seeds can therefore only rise as seeds are added:
+    # one climbing seed drags a set of otherwise flat controls above the threshold. That is a
+    # property of the statistic, not of the task. It showed up as a one-way sweep — when a second
+    # and third seed were added across this inventory, 17 of 52 tasks moved from "no headroom"
+    # toward "headroom" and not one moved back. The median asks the question actually meant here:
+    # does a typical run of this control still improve.
+    median_gain = st.median(gains)
     return {
         "seeds": len(usable),
+        "median_second_half_gain": median_gain,
         "mean_second_half_gain": st.mean(gains),
+        "max_second_half_gain": max(gains),
         "mean_final": st.mean(finals),
         # A control that never leaves zero is a floor, which is a different failure from
         # saturating high, and the two must not be reported as the same verdict.
         "is_floor": max(finals) <= 1e-9,
-        "saturated": st.mean(gains) <= 1e-6,
-        "marginal": 1e-6 < st.mean(gains) < MATERIAL_GAIN,
+        "saturated": median_gain <= 1e-6,
+        "marginal": 1e-6 < median_gain < MATERIAL_GAIN,
     }
 
 
@@ -184,26 +194,28 @@ def verdict(sat: dict | None, gaps: list[dict]) -> tuple[str, str]:
         return "floor", "open-loop control never leaves zero"
     if sat["saturated"]:
         return "no_headroom", (
-            "open-loop control gains %.4f over its second half" % sat["mean_second_half_gain"]
+            "open-loop control gains %.4f over its second half at the median seed (mean %.4f, "
+            "best seed %.4f)" % (sat["median_second_half_gain"], sat["mean_second_half_gain"],
+                                 sat["max_second_half_gain"])
         )
     if sat["marginal"]:
         return "marginal_headroom", (
-            "open-loop gains only %+.4f over its second half, ending at %.4f; below the %.2f "
+            "median seed gains only %+.4f over its second half, ending at %.4f; below the %.2f "
             "materiality threshold this is drift, not headroom"
-            % (sat["mean_second_half_gain"], sat["mean_final"], MATERIAL_GAIN)
+            % (sat["median_second_half_gain"], sat["mean_final"], MATERIAL_GAIN)
         )
     if not gaps and sat["seeds"] < MIN_SEEDS_FOR_CONFIDENT_SATURATION:
         return "headroom_single_seed", (
-            "open-loop appears to climb (+%.4f over the second half, ending at %.4f) but on "
+            "open-loop appears to climb (+%.4f at the median seed, ending at %.4f) but on "
             "%d seed(s); below %d seeds this is not a saturation measurement"
-            % (sat["mean_second_half_gain"], sat["mean_final"], sat["seeds"],
+            % (sat["median_second_half_gain"], sat["mean_final"], sat["seeds"],
                MIN_SEEDS_FOR_CONFIDENT_SATURATION)
         )
     if not gaps:
         return "headroom_unverified", (
-            "open-loop still climbing (+%.4f over the second half) but no paired feedback arm "
+            "open-loop still climbing (+%.4f at the median seed) but no paired feedback arm "
             "exists, so it is unknown whether the headroom is climbable"
-            % sat["mean_second_half_gain"]
+            % sat["median_second_half_gain"]
         )
     if len(gaps) < 2:
         only = gaps[0]
@@ -373,7 +385,7 @@ def main(argv: list[str] | None = None) -> int:
             continue
         sat = row["saturation"]
         best_by_task[row["task"]] = (
-            sat["mean_second_half_gain"], sat["mean_final"], sat["seeds"],
+            sat["median_second_half_gain"], sat["mean_final"], sat["seeds"],
             row["task"], row["verdict"],
         )
     candidates = sorted(best_by_task.values(), reverse=True)
