@@ -314,9 +314,9 @@ cohorts were never paired). Over 52 tasks:
 |---|---:|
 | measures iteration | 4 |
 | feedback actively harmful | 1 |
-| control exhausted, feedback arm never run | 28 |
+| control exhausted, feedback arm never run | 31 |
 | control still climbing — best-of-N not exhausted | 8 |
-| judged on fewer than three seeds | 5 |
+| judged on fewer than three seeds | 2 |
 | floor — control never leaves zero | 6 |
 
 **Paired evidence exists for 6 of 52 tasks, and four pass:**
@@ -338,13 +338,16 @@ different things here — `NMRSpectrumFitting` has a gap four times larger than
 **One task's feedback arm is actively harmful.** `StructuralEngineering/TrussWeightMinimization`
 trails its own open-loop control by 0.37 and loses every paired seed from budget 8 onward.
 
-**28 tasks have an exhausted control and have never been paired.** That is the pool that can add
-qualifying tasks, and it is where paired runs are going next.
+**31 tasks have an exhausted control and have never been paired.** That is the pool that can add
+qualifying tasks, and it is where paired runs are going next, ordered by how much room the
+control leaves: a control that has run out at 0.998 gives a searcher almost nothing to
+demonstrate, while `Catalysis/CatalystDeactivationLab` and `MolecularDynamics/ForceFieldCalibration`
+run out near 0.12.
 
 ### How much of this is measurement, and how much is a screen
 
 The inventory was originally swept one open-loop seed per task; 48 of 52 tasks had exactly one
-seed anywhere in the repository. A seeding pass has since raised most tasks to three, and it
+seed anywhere in the repository. A seeding pass has since raised 50 of 52 to three or more, and it
 changed verdicts: 17 of 52 tasks moved category. That pass also exposed a defect in the criterion
 itself. Saturation was judged on the *mean* second-half gain across seeds, and because a
 best-so-far curve is monotone, that gain is never negative — so the mean can only rise as seeds
