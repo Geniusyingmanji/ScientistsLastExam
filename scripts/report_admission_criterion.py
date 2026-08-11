@@ -403,7 +403,7 @@ def main(argv: list[str] | None = None) -> int:
     print("  climbing, so the no_headroom and floor verdicts above may understate headroom")
     print("  just as the headroom ones overstated it.")
     print("distinct tasks: %d" % len(tasks))
-    print("runs shorter than the longest run of the same task: %d of %d"
+    print("runs that ended short of their own cohort: %d of %d"
           % (truncated, total_runs))
     assert len(rows) == len(tasks), "one row per task"
     print("distinct tasks with paired evidence for the sufficient condition: %d of %d"
