@@ -320,10 +320,10 @@ cohorts were never paired). Over 52 tasks:
 | measures iteration | 5 |
 | measures iteration, but one paired seed carries it | 1 |
 | feedback actively harmful | 3 |
-| feedback harmful, but one paired seed carries it | 2 |
+| feedback harmful, but one paired seed carries it | 3 |
 | arms indistinguishable — gap too small to matter | 1 |
 | control exhausted, feedback arm never run | 25 |
-| control still climbing — best-of-N not exhausted | 8 |
+| control still climbing — best-of-N not exhausted | 7 |
 | judged on fewer than three seeds | 2 |
 | floor — control never leaves zero | 6 |
 
@@ -451,6 +451,20 @@ that code rather than with the science. `MolecularLeadOptimization` is the rever
 grounding, but its control has not been exhausted.
 
 See [standards audit](.research/benchmark_standards_audit_2026-08-11.md).
+
+### What the newest task shows about the criterion
+
+`RNAEngineering/RNAEnsembleDesign` was built to close the community-oracle gap and then run
+through the admission criterion like anything else. Over four paired seeds its gap is +0.0135 at
+budget 3 and −0.0005 by budget 12, against an open-loop mean of 1.0062 — the searcher sits right
+at ViennaRNA's own partition-function designer and feedback neither helps nor hurts. The verdict
+is `no measurable difference`, which is the honest reading and not one the criterion could produce
+until the materiality rule was added.
+
+That is a useful negative for the benchmark: a task can have a community oracle, a recomputed
+anchor, a sealed split and a difficulty ladder — eight of nine standards — and still not measure
+iterative improvement. Scientific grounding and RSI fit are separate properties, and this task now
+demonstrates the separation from the other direction.
 
 ## Difficulty ladders
 
