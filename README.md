@@ -309,21 +309,25 @@ each run's task and arm from its manifest rather than its directory name. Over 5
 | measures iteration | 3 |
 | gap closes within the budget range | 1 |
 | headroom exists but feedback cannot climb it | 1 |
-| material headroom, feedback arm never run | 11 |
-| headroom below the 0.01 materiality floor | 3 |
+| apparent headroom on a single seed, never paired | 11 |
+| headroom below the 0.01 materiality floor | 4 |
 | no headroom — control flat over its second half | 31 |
 | floor — control never leaves zero | 7 |
-| insufficient evidence to judge | 10 |
+| insufficient evidence to judge | 11 |
 
-**Paired evidence exists for 2 of 52 tasks, and both pass.** The decoder passes in two independent
+**Paired evidence exists for 3 of 52 tasks, and two pass.** The decoder passes in two independent
 cohorts, with the gap growing from +0.052 at budget 3 to +0.080 at budget 10 (six of six paired
 seeds) in one and +0.104 to +0.129 in the other. The molecular task's verdict is split by cohort,
 which is the crossover at budget 7.8 showing up as disagreement — for that task a single gap
 number is not reportable, only the curve is.
 
-The 11 tasks with material headroom and no feedback arm are the only pool that can add qualifying
-tasks, and they are where paired runs are being added next. Everything else is a statement about
-evidence rather than about the task. See
+The 11 tasks with apparent headroom and no feedback arm are the only pool that can add qualifying
+tasks, and they are where paired runs are being added next — but every one of those verdicts rests
+on a **single** open-loop seed, and the first candidate actually paired inverted. `TrussWeightMinimization`
+was ranked strongest on a one-seed second-half gain of +0.4098; four seeds put that gain at
++0.0000, and its feedback arm lost every seed from budget 8 onward, trailing by 0.37. Feedback
+does not merely fail to help there, it hurts. Treat that ranking as a queue, not a finding.
+Everything else is a statement about evidence rather than about the task. See
 [task admission verification](.research/task_admission_verification_2026-08-11.md).
 
 ## Difficulty ladders
