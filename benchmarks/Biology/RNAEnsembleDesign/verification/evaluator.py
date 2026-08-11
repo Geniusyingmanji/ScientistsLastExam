@@ -20,10 +20,16 @@ harness cannot enforce - the oracle sees a returned sequence, not how it was pro
 anchor a best-of-restarts removes the need: a candidate that simply calls the routine once
 reaches parity and no more, and one that restarts it is doing what the anchor already does.
 
-    score = (defect_baseline - defect_candidate) / (defect_baseline - defect_anchor)
+    score = log(defect_baseline / defect_candidate) / log(defect_baseline / defect_anchor)
 
 with the baseline a fixed unstructured sequence. Matching ViennaRNA's designer scores 1.0;
 beating it scores above 1.0; doing no better than an unstructured sequence scores 0.
+
+The ratio is taken in logs for the same reason the surface-code task takes one: the baseline
+defect is near 0.75 and the anchor near 0.03, so a linear normalisation spends almost its whole
+range on the gap between "did nothing" and "reached the reference", and compresses the region
+above 1.0 where the actual work happens. On a linear scale, halving the defect below the anchor
+is worth about 0.03; in logs it is worth about 0.2.
 """
 
 from __future__ import annotations
@@ -160,6 +166,25 @@ def _anchors(RNA, targets, tag):
     return rows
 
 
+# A perfectly designed sequence can have a defect at the numerical floor, where a log is
+# undefined. The floor is one thousandth of a nucleotide, far below anything the thermodynamic
+# model resolves, and it caps the score rather than letting it run away.
+DEFECT_FLOOR = 1e-3
+
+
+def _log_ratio_score(defect: float, baseline: float, anchor: float) -> float:
+    """Log-ratio reduction in ensemble defect, 0 at the baseline and 1 at the anchor."""
+    import math
+
+    defect = max(float(defect), DEFECT_FLOOR)
+    baseline = max(float(baseline), DEFECT_FLOOR)
+    anchor = max(float(anchor), DEFECT_FLOOR)
+    span = math.log(baseline / anchor)
+    if span <= 1e-9:
+        return 0.0
+    return max(0.0, math.log(baseline / defect) / span)
+
+
 def _clean(submission, length):
     if not isinstance(submission, str):
         return None, "expected a sequence string, got %s" % type(submission).__name__
@@ -192,9 +217,7 @@ def _score_split(RNA, design_rna, targets, tag):
             scores.append(0.0)
             continue
         defect = ensemble_defect(RNA, sequence, structure)
-        span = row["baseline_defect"] - row["anchor_defect"]
-        score = 0.0 if span <= 1e-9 else (row["baseline_defect"] - defect) / span
-        score = max(0.0, score)
+        score = _log_ratio_score(defect, row["baseline_defect"], row["anchor_defect"])
         scores.append(score)
         per_target.append({
             "key": target["key"],
