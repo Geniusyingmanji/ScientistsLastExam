@@ -256,6 +256,16 @@ def main() -> int:
 
     # A task may appear under several cohorts; report each, and count distinct tasks separately
     # so a well-sampled task does not look like several passing ones.
+    # Every verdict carries how many open-loop seeds stand behind it. Most of this inventory was
+    # screened one seed per task, and one seed misled in the case that was checked, so a verdict
+    # without its seed count reads as far more settled than it is.
+    for row in rows:
+        seeds = row["saturation"]["seeds"] if row["saturation"] else 0
+        row["confidence"] = (
+            "measured" if seeds >= MIN_SEEDS_FOR_CONFIDENT_SATURATION
+            else "single_seed_screen" if seeds else "none"
+        )
+
     order = {
         "measures_iteration": 0, "crossover_in_range": 1, "headroom_unclimbable": 2,
         "headroom_unverified": 3, "headroom_single_seed": 4, "marginal_headroom": 5,
@@ -267,12 +277,13 @@ def main() -> int:
         """Drop the domain prefix; the task name is what distinguishes rows here."""
         return task_id.split("/")[-1][:34]
 
-    print("%-34s %-14s %-22s %5s %4s" % ("task", "cohort", "verdict", "open", "fb"))
-    print("-" * 84)
+    print("%-34s %-14s %-22s %5s %4s %s" % (
+        "task", "cohort", "verdict", "open", "fb", "confidence"))
+    print("-" * 96)
     for row in rows:
-        print("%-34s %-14s %-22s %5d %4d" % (
+        print("%-34s %-14s %-22s %5d %4d %s" % (
             short(row["task"]), row["cohort"][:14], row["verdict"],
-            row["open_loop_seeds"], row["feedback_seeds"]))
+            row["open_loop_seeds"], row["feedback_seeds"], row["confidence"]))
         print("      %s" % row["reason"])
         for gap in row["gap_by_budget"]:
             print("        budget %2d  gap %+8.4f  se %.4f  %d/%d  n=%d" % (
@@ -285,8 +296,20 @@ def main() -> int:
     tasks = {row["task"] for row in rows}
     tasks_paired = {row["task"] for row in rows if row["gap_by_budget"]}
     tasks_measuring = {row["task"] for row in rows if row["verdict"] == "measures_iteration"}
+    judged = [r for r in rows if r["confidence"] != "none"]
+    thin_screen = [r for r in judged if r["confidence"] == "single_seed_screen"]
     print()
     print("verdicts by (task, cohort):", dict(sorted(counts.items())))
+    print("saturation verdicts resting on fewer than %d open-loop seeds: %d of %d (%.0f%%)"
+          % (MIN_SEEDS_FOR_CONFIDENT_SATURATION, len(thin_screen), len(judged),
+             100.0 * len(thin_screen) / len(judged) if judged else 0.0))
+    thin_by_verdict: dict[str, int] = defaultdict(int)
+    for row in thin_screen:
+        thin_by_verdict[row["verdict"]] += 1
+    print("  of those:", dict(sorted(thin_by_verdict.items())))
+    print("  a single seed misread the one case that was later paired, and it misread it as")
+    print("  climbing, so the no_headroom and floor verdicts above may understate headroom")
+    print("  just as the headroom ones overstated it.")
     print("distinct tasks: %d" % len(tasks))
     print("distinct tasks with paired evidence for the sufficient condition: %d of %d"
           % (len(tasks_paired), len(tasks)))
@@ -327,6 +350,8 @@ def main() -> int:
         "distinct_tasks_measuring_iteration": sorted(tasks_measuring),
         "paired_evidence_row_count": paired,
         "verdict_counts": dict(counts),
+        "single_seed_screen_count": len(thin_screen),
+        "judged_count": len(judged),
         "rows": rows,
     }, indent=2), encoding="utf-8")
     print("report:", args.output)
