@@ -55,6 +55,27 @@
 
 Truss 的负 Δ 本身也值得记一笔：反馈不是没用，是**有害**。在这个任务上把评测结果喂回去会让搜索器系统性变差，这是本题库目前唯一一个方向明确为负的任务。
 
+## 这份核验有多少是"筛"而不是"测"
+
+查完全部行之后，问题比 Truss 一例更普遍：
+
+| 判定 | 开环 seed 数 | 行数 |
+|---|---:|---:|
+| measures_iteration | 6 | 3 |
+| crossover_in_range | 8 | 1 |
+| headroom_unclimbable | 6 | 1 |
+| marginal_headroom | 4 | 1 |
+| marginal_headroom | 1 | 3 |
+| headroom_single_seed | 1 | 11 |
+| no_headroom | 1 | 31 |
+| floor | 1 | 7 |
+
+**58 个有饱和判定的行里，52 个（90%）基于不足 3 个 seed** —— 包括全部 31 个 `no_headroom` 与全部 7 个 `floor`。真正达到 3 seed 以上的只有 6 行，而那 6 行几乎全是这两个旗舰任务。
+
+方向也值得注意：Truss 的单 seed 把平坦读成了爬升，也就是单 seed 会**高估**头部空间。若这个偏差有系统性，那么 31 个 `no_headroom` 反而可能**低估**头部空间 —— 换言之，"题库大部分任务已被 best-of-N 打穿"这个结论，其证据强度不足以支撑它被当作定论。
+
+报告现在给每行打印 seed 数与 `measured` / `single_seed_screen` 置信标签，不再让筛查结果穿着测量结果的外衣。
+
 ## 两个通过的任务
 
 QuantumErrorDecoder 在两个独立 cohort 上一致通过，这是本题库目前最强的单任务证据：

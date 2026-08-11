@@ -315,6 +315,13 @@ each run's task and arm from its manifest rather than its directory name. Over 5
 | floor — control never leaves zero | 7 |
 | insufficient evidence to judge | 11 |
 
+**Ninety percent of those verdicts rest on a single open-loop seed.** Fifty-two of the 58 rows
+with a saturation verdict — including all 31 `no headroom` and all 7 `floor` rows — come from a
+screen that ran one seed per task. The one candidate later paired at four seeds moved from
+"+0.4098 and climbing" to "+0.0000, flat", so a single seed can overstate headroom; by the same
+token the `no headroom` and `floor` rows may understate it. Every row now prints its seed count
+and a `measured` / `single_seed_screen` confidence label.
+
 **Paired evidence exists for 3 of 52 tasks, and two pass.** The decoder passes in two independent
 cohorts, with the gap growing from +0.052 at budget 3 to +0.080 at budget 10 (six of six paired
 seeds) in one and +0.104 to +0.129 in the other. The molecular task's verdict is split by cohort,
