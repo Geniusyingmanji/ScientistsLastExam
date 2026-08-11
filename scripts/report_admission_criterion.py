@@ -230,6 +230,20 @@ def main() -> int:
     args = ap.parse_args()
 
     found = collect(Path(args.runs))
+
+    # Saturation is a one-armed measurement, so open-loop seeds pool across cohorts: a seed run
+    # under `screen3` says the same thing about this task's control as one run under
+    # `saturation`. The gap does not pool - it compares two arms, and arms from different
+    # cohorts were never paired with each other.
+    pooled_open: dict[str, dict[int, list[float]]] = defaultdict(dict)
+    for (task, cohort), arms in found.items():
+        for mode in OPEN_LOOP_MODES:
+            for seed, curve in arms.get(mode, {}).items():
+                key = (cohort, seed)
+                existing = pooled_open[task].get(key)
+                if existing is None or len(curve) > len(existing):
+                    pooled_open[task][key] = curve
+
     rows = []
     for key in sorted(found):
         task, cohort = key
@@ -240,7 +254,7 @@ def main() -> int:
         feedback: dict[int, list[float]] = {}
         for mode in FEEDBACK_MODES:
             feedback.update(arms.get(mode, {}))
-        sat = saturation(open_loop)
+        sat = saturation(pooled_open.get(task, {}))
         gaps = gap_by_budget(open_loop, feedback) if open_loop and feedback else []
         state, why = verdict(sat, gaps)
         rows.append({
@@ -249,6 +263,7 @@ def main() -> int:
             "verdict": state,
             "reason": why,
             "open_loop_seeds": len(open_loop),
+            "pooled_open_loop_seeds": len(pooled_open.get(task, {})),
             "feedback_seeds": len(feedback),
             "saturation": sat,
             "gap_by_budget": gaps,
@@ -278,12 +293,12 @@ def main() -> int:
         return task_id.split("/")[-1][:34]
 
     print("%-34s %-14s %-22s %5s %4s %s" % (
-        "task", "cohort", "verdict", "open", "fb", "confidence"))
+        "task", "cohort", "verdict", "pool", "fb", "confidence"))
     print("-" * 96)
     for row in rows:
         print("%-34s %-14s %-22s %5d %4d %s" % (
             short(row["task"]), row["cohort"][:14], row["verdict"],
-            row["open_loop_seeds"], row["feedback_seeds"], row["confidence"]))
+            row["pooled_open_loop_seeds"], row["feedback_seeds"], row["confidence"]))
         print("      %s" % row["reason"])
         for gap in row["gap_by_budget"]:
             print("        budget %2d  gap %+8.4f  se %.4f  %d/%d  n=%d" % (
