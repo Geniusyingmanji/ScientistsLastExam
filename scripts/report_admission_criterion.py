@@ -4,19 +4,23 @@
 A task earns its place in this benchmark by measuring iterative improvement. That takes two
 things, and the order matters:
 
-    1. necessary   the open-loop control must not saturate with budget. If best-of-N stops
-                   paying after a few draws, there is nothing left for a searcher to add.
-    2. sufficient  the feedback arm must beat the open-loop arm, and the gap should widen with
-                   budget rather than close. Headroom that no searcher can climb is not headroom
-                   that measures anything.
+    1. necessary   the open-loop control must SATURATE with budget. A control that keeps climbing
+                   means best-of-N is not exhausted, and independent sampling will eventually
+                   overtake any searcher - so whatever gap you measured was an artefact of the
+                   budget you happened to pick.
+    2. sufficient  with best-of-N exhausted, the feedback arm must still beat it, and the gap
+                   must widen with budget rather than close.
 
-Condition 1 alone was the earlier criterion, and it is not enough. A measured counterexample is
-in this repository: MolecularLeadOptimization at (320, 0.20) has a strictly climbing open-loop
-curve and an evolvability gap that is flat at zero across budgets 3 to 12, because every proposal
-sits on a low plateau with no exploitable gradient. Passing 1 and failing 2 means the task is too
-hard to measure with, not that it is a good task.
+The sign of condition 1 is the opposite of what it first looks like, and an earlier version of
+this script had it backwards. The evidence is in the repository: the decoder's open-loop control
+is flat from budget 5 onward and its feedback arm pulls further ahead the longer it runs, while
+the molecular task's control climbs 0.404 to 0.970 and its gap crosses zero near budget 7.8.
+Refining beats redrawing precisely where redrawing has stopped paying.
 
-Condition 2 needs paired runs — the same task, same budget, `selection_blind` against `normal`.
+A saturated control is not the same as a solved task: `floor` (the control never leaves zero) is
+reported separately, because nothing can be measured there either way.
+
+Condition 2 needs paired runs - the same task, same budget, `selection_blind` against `normal`.
 Most tasks in this inventory have never had them, and this report says so rather than inferring a
 verdict from the one arm that exists. "unknown" here is a statement about the evidence, not about
 the task.
@@ -191,31 +195,26 @@ def verdict(sat: dict | None, gaps: list[dict]) -> tuple[str, str]:
     if sat is None:
         return "unknown", "no open-loop run long enough to judge saturation"
     if sat["is_floor"]:
-        return "floor", "open-loop control never leaves zero"
-    if sat["saturated"]:
-        return "no_headroom", (
-            "open-loop control gains %.4f over its second half at the median seed (mean %.4f, "
-            "best seed %.4f)" % (sat["median_second_half_gain"], sat["mean_second_half_gain"],
-                                 sat["max_second_half_gain"])
+        return "floor", "open-loop control never leaves zero, so nothing is measurable here"
+    if sat["seeds"] < MIN_SEEDS_FOR_CONFIDENT_SATURATION:
+        return "thin_screen", (
+            "judged on %d open-loop seed(s); below %d this is a screen, not a measurement "
+            "(median second-half gain %+.4f, ending at %.4f)"
+            % (sat["seeds"], MIN_SEEDS_FOR_CONFIDENT_SATURATION,
+               sat["median_second_half_gain"], sat["mean_final"])
         )
-    if sat["marginal"]:
-        return "marginal_headroom", (
-            "median seed gains only %+.4f over its second half, ending at %.4f; below the %.2f "
-            "materiality threshold this is drift, not headroom"
-            % (sat["median_second_half_gain"], sat["mean_final"], MATERIAL_GAIN)
-        )
-    if not gaps and sat["seeds"] < MIN_SEEDS_FOR_CONFIDENT_SATURATION:
-        return "headroom_single_seed", (
-            "open-loop appears to climb (+%.4f at the median seed, ending at %.4f) but on "
-            "%d seed(s); below %d seeds this is not a saturation measurement"
-            % (sat["median_second_half_gain"], sat["mean_final"], sat["seeds"],
-               MIN_SEEDS_FOR_CONFIDENT_SATURATION)
-        )
-    if not gaps:
-        return "headroom_unverified", (
-            "open-loop still climbing (+%.4f at the median seed) but no paired feedback arm "
-            "exists, so it is unknown whether the headroom is climbable"
+    if not sat["saturated"] and not sat["marginal"]:
+        return "control_not_exhausted", (
+            "open-loop control still gains %+.4f over its second half at the median seed, so "
+            "best-of-N has not run out and any gap measured here depends on the budget chosen"
             % sat["median_second_half_gain"]
+        )
+    # Best-of-N is exhausted. Whether the task measures iteration now rests entirely on the gap.
+    if not gaps:
+        return "exhausted_unpaired", (
+            "open-loop control is exhausted (median gain %+.4f, ending at %.4f) but no paired "
+            "feedback arm exists, so it is unknown whether a searcher can go further"
+            % (sat["median_second_half_gain"], sat["mean_final"])
         )
     if len(gaps) < 2:
         only = gaps[0]
@@ -226,16 +225,17 @@ def verdict(sat: dict | None, gaps: list[dict]) -> tuple[str, str]:
         )
     first, last = gaps[0], gaps[-1]
     if last["mean"] <= 0:
-        return "headroom_unclimbable", (
-            "gap is %+.4f at budget %d; headroom exists but feedback does not exploit it"
-            % (last["mean"], last["budget"])
+        return "feedback_harmful", (
+            "gap is %+.4f at budget %d (%d/%d): the feedback arm does worse than its own "
+            "open-loop control"
+            % (last["mean"], last["budget"], last["wins"], last["losses"])
         )
     if last["mean"] >= first["mean"]:
         return "measures_iteration", (
-            "gap grows with budget, %+.4f at %d to %+.4f at %d (%d/%d at the last budget)"
+            "control exhausted and the gap still grows, %+.4f at %d to %+.4f at %d "
+            "(%d/%d at the last budget, n=%d)"
             % (first["mean"], first["budget"], last["mean"], last["budget"],
-               last["wins"], last["wins"] + last["losses"])
-        )
+               last["wins"], last["wins"] + last["losses"], last["n"]))
     return "crossover_in_range", (
         "gap peaks then narrows, %+.4f at %d down to %+.4f at %d; best-of-N is catching up"
         % (first["mean"], first["budget"], last["mean"], last["budget"])
@@ -317,9 +317,9 @@ def main(argv: list[str] | None = None) -> int:
         )
 
     order = {
-        "measures_iteration": 0, "crossover_in_range": 1, "headroom_unclimbable": 2,
-        "gap_at_one_budget": 3, "headroom_unverified": 4, "headroom_single_seed": 5,
-        "marginal_headroom": 6, "no_headroom": 7, "floor": 8, "unknown": 9,
+        "measures_iteration": 0, "crossover_in_range": 1, "feedback_harmful": 2,
+        "gap_at_one_budget": 3, "exhausted_unpaired": 4, "control_not_exhausted": 5,
+        "thin_screen": 6, "floor": 7, "unknown": 8,
     }
     rows.sort(key=lambda r: (order[r["verdict"]], r["task"]))
 
@@ -379,29 +379,23 @@ def main(argv: list[str] | None = None) -> int:
     paired_tasks = {row["task"] for row in rows if row["gap_by_budget"]}
     best_by_task: dict[str, tuple] = {}
     for row in rows:
-        if row["verdict"] not in ("headroom_unverified", "headroom_single_seed"):
+        if row["verdict"] != "exhausted_unpaired":
             continue
         if row["task"] in paired_tasks:
             continue
         sat = row["saturation"]
         best_by_task[row["task"]] = (
-            sat["median_second_half_gain"], sat["mean_final"], sat["seeds"],
+            sat["mean_final"], sat["median_second_half_gain"], sat["seeds"],
             row["task"], row["verdict"],
         )
     candidates = sorted(best_by_task.values(), reverse=True)
     print()
-    print("worth pairing next (apparent headroom, no feedback arm ever run), gain floor %.2f:"
-          % MATERIAL_GAIN)
-    for gain, final, seeds, name, state in candidates:
-        note = "  [thin screen]" if state == "headroom_single_seed" else ""
-        print("    %-34s gain %+.4f  ending at %.4f  seeds=%d%s"
-              % (name.split("/")[-1], gain, final, seeds, note))
-    thin = sum(1 for c in candidates if c[4] == "headroom_single_seed")
-    if thin:
-        print("  %d of %d rest on fewer than %d pooled open-loop seeds. The first such candidate"
-              % (thin, len(candidates), MIN_SEEDS_FOR_CONFIDENT_SATURATION))
-        print("  that was actually paired, TrussWeightMinimization, showed no second-half gain")
-        print("  once four seeds were run, so treat the ranking as a queue, not a finding.")
+    print("worth pairing next (best-of-N exhausted, feedback arm never run):")
+    for final, gain, seeds, name, _state in candidates:
+        print("    %-34s control settles at %.4f  median gain %+.4f  seeds=%d"
+              % (name.split("/")[-1], final, gain, seeds))
+    if not candidates:
+        print("    none: every task with an exhausted control has already been paired")
 
     Path(args.output).write_text(json.dumps({
         "schema_version": 2,

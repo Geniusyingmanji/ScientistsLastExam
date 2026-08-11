@@ -114,52 +114,77 @@ def _sat(*, seeds, median, final, is_floor=False, saturated=False, marginal=Fals
 
 
 class VerdictTests(unittest.TestCase):
-    def test_a_single_budget_cannot_produce_a_trend_verdict(self):
-        sat = _sat(seeds=6, median=0.2, final=0.5)
-        gaps = [{"budget": 3, "n": 8, "mean": 0.1345, "stderr": 0.03, "wins": 8, "losses": 0}]
-        state, why = MODULE.verdict(sat, gaps)
-        self.assertEqual(state, "gap_at_one_budget")
-        self.assertIn("single point", why)
+    """Condition 1 requires the control to SATURATE, not to keep climbing.
 
-    def test_a_growing_gap_measures_iteration(self):
-        sat = _sat(seeds=6, median=0.2, final=0.5)
+    An earlier version had this backwards, and the inversion silently disqualified every task
+    that actually passed: a task whose control is exhausted while its feedback arm keeps pulling
+    ahead is the ideal case, and it was being reported as having no headroom.
+    """
+
+    EXHAUSTED = dict(seeds=6, median=0.0, final=0.62, saturated=True)
+
+    def test_an_exhausted_control_with_a_growing_gap_measures_iteration(self):
         gaps = [
             {"budget": 3, "n": 6, "mean": 0.02, "stderr": 0.01, "wins": 4, "losses": 2},
             {"budget": 12, "n": 6, "mean": 0.13, "stderr": 0.04, "wins": 5, "losses": 1},
         ]
-        self.assertEqual(MODULE.verdict(sat, gaps)[0], "measures_iteration")
+        state, why = MODULE.verdict(_sat(**self.EXHAUSTED), gaps)
+        self.assertEqual(state, "measures_iteration")
+        self.assertIn("control exhausted", why)
+
+    def test_a_climbing_control_is_not_admissible_however_good_the_gap(self):
+        """Best-of-N has not run out, so the gap depends on the budget that was picked."""
+        climbing = _sat(seeds=6, median=0.18, final=0.97)
+        gaps = [
+            {"budget": 3, "n": 6, "mean": 0.02, "stderr": 0.01, "wins": 4, "losses": 2},
+            {"budget": 12, "n": 6, "mean": 0.31, "stderr": 0.04, "wins": 6, "losses": 0},
+        ]
+        state, why = MODULE.verdict(climbing, gaps)
+        self.assertEqual(state, "control_not_exhausted")
+        self.assertIn("depends on the budget", why)
+
+    def test_a_single_budget_cannot_produce_a_trend_verdict(self):
+        gaps = [{"budget": 3, "n": 8, "mean": 0.1345, "stderr": 0.03, "wins": 8, "losses": 0}]
+        state, why = MODULE.verdict(_sat(**self.EXHAUSTED), gaps)
+        self.assertEqual(state, "gap_at_one_budget")
+        self.assertIn("single point", why)
 
     def test_a_closing_gap_is_a_crossover_not_a_pass(self):
-        sat = _sat(seeds=6, median=0.2, final=0.5)
         gaps = [
             {"budget": 3, "n": 8, "mean": 0.19, "stderr": 0.05, "wins": 6, "losses": 2},
             {"budget": 12, "n": 8, "mean": 0.02, "stderr": 0.05, "wins": 4, "losses": 4},
         ]
-        self.assertEqual(MODULE.verdict(sat, gaps)[0], "crossover_in_range")
+        self.assertEqual(
+            MODULE.verdict(_sat(**self.EXHAUSTED), gaps)[0], "crossover_in_range")
 
-    def test_a_negative_gap_means_the_headroom_is_unclimbable(self):
-        sat = _sat(seeds=6, median=0.2, final=0.5)
+    def test_a_negative_gap_means_feedback_is_harmful(self):
         gaps = [
             {"budget": 3, "n": 4, "mean": -0.29, "stderr": 0.11, "wins": 1, "losses": 3},
             {"budget": 12, "n": 4, "mean": -0.37, "stderr": 0.08, "wins": 0, "losses": 4},
         ]
-        self.assertEqual(MODULE.verdict(sat, gaps)[0], "headroom_unclimbable")
+        state, why = MODULE.verdict(_sat(**self.EXHAUSTED), gaps)
+        self.assertEqual(state, "feedback_harmful")
+        self.assertIn("does worse", why)
 
-    def test_drift_near_the_ceiling_is_not_headroom(self):
+    def test_an_exhausted_control_with_no_feedback_arm_is_the_pairing_queue(self):
+        self.assertEqual(
+            MODULE.verdict(_sat(**self.EXHAUSTED), [])[0], "exhausted_unpaired")
+
+    def test_drift_near_the_ceiling_counts_as_exhausted(self):
+        """A control creeping by 0.0025 at 0.9991 has run out in every sense that matters."""
         sat = _sat(seeds=6, median=0.0025, final=0.9991, marginal=True)
-        self.assertEqual(MODULE.verdict(sat, [])[0], "marginal_headroom")
+        self.assertEqual(MODULE.verdict(sat, [])[0], "exhausted_unpaired")
 
-    def test_a_thin_screen_is_not_reported_as_headroom(self):
-        sat = _sat(seeds=1, median=0.41, final=0.41)
-        state, why = MODULE.verdict(sat, [])
-        self.assertEqual(state, "headroom_single_seed")
-        self.assertIn("1 seed", why)
+    def test_a_thin_screen_is_not_a_verdict(self):
+        state, why = MODULE.verdict(_sat(seeds=1, median=0.41, final=0.41), [])
+        self.assertEqual(state, "thin_screen")
+        self.assertIn("1 open-loop seed", why)
 
-    def test_a_floor_is_distinguished_from_a_saturated_control(self):
+    def test_a_floor_is_distinguished_from_an_exhausted_control(self):
         floor = _sat(seeds=4, median=0.0, final=0.0, is_floor=True, saturated=True)
         flat = _sat(seeds=4, median=0.0, final=0.87, saturated=True)
         self.assertEqual(MODULE.verdict(floor, [])[0], "floor")
-        self.assertEqual(MODULE.verdict(flat, [])[0], "no_headroom")
+        self.assertEqual(MODULE.verdict(flat, [])[0], "exhausted_unpaired")
 
 
 class SaturationTests(unittest.TestCase):
