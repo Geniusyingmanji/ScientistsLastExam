@@ -317,17 +317,18 @@ cohorts were never paired). Over 52 tasks:
 
 | verdict | tasks |
 |---|---:|
-| measures iteration | 4 |
+| measures iteration | 5 |
 | measures iteration, but one paired seed carries it | 1 |
-| feedback actively harmful | 2 |
+| feedback actively harmful | 4 |
 | feedback harmful, but one paired seed carries it | 2 |
-| control exhausted, feedback arm never run | 26 |
-| control still climbing — best-of-N not exhausted | 9 |
-| judged on fewer than three seeds | 2 |
+| control exhausted, feedback arm never run | 25 |
+| control still climbing — best-of-N not exhausted | 7 |
+| judged on fewer than three seeds | 3 |
 | floor — control never leaves zero | 6 |
-| insufficient evidence | 1 |
 
-**Paired evidence exists for 12 of 53 tasks, and four pass:**
+**Paired evidence exists for 15 of 53 tasks, and five pass:** `QuantumErrorCorrection/QuantumErrorDecoder`,
+`Spectroscopy/NMRSpectrumFitting`, `Astrodynamics/LowThrustTransfer`,
+`ProteinEngineering/ProteinStabilityDesign` and `MaterialsScience/AlloyHardnessOptimization`.
 
 | task | gap at budget 3 → 12 | last budget | seeds | drop-one-seed |
 |---|---|---|---:|---:|
@@ -336,10 +337,19 @@ cohorts were never paired). Over 52 tasks:
 | `Astrodynamics/LowThrustTransfer` | −0.011 → +0.089 | 3/4 | 4 | +0.031 |
 | `ProteinEngineering/ProteinStabilityDesign` | +0.032 → +0.035 | 5/5 | 6 | +0.017 |
 
-A fifth was on this list two seeds ago and is not now.
+A sixth was on this list two seeds ago and is not now.
 `ChemicalKinetics/ReactionMechanismFitting` showed the largest gap in the inventory, +0.423 with
 two paired seeds and no losses; at four seeds it reversed sign and now reads as harmful, carried by
 one seed in that direction too. Nothing about the task changed — the evidence did.
+
+**Feedback is actively harmful on as many tasks as it clearly helps.** Four tasks —
+`StructuralEngineering/TrussWeightMinimization`, `Turbulence/RANSCalibration`,
+`PopulationGenetics/DemographicSFS` and `Thermodynamics/HeatExchangerDesign` — score worse with
+feedback than their own open-loop controls, and two more read that way on one seed. This is not a
+harness fault: pass rates are comparable between the arms, and on the decoder task the mechanism is
+visible — independent draws find a long right tail that an incumbent-anchored search never
+explores. A benchmark for iterative improvement has to be able to report that iteration sometimes
+costs you, and this one does.
 
 The last column is the mean after dropping whichever single seed helps the conclusion most. With
 four to six seeds a verdict can be one seed deep, so the report computes it and labels any gap it
@@ -360,8 +370,7 @@ positive under the same test. Both are reported as one-seed-deep rather than as 
 guard cuts in both directions on purpose: a harmful verdict can rest on one seed exactly as easily
 as a favourable one.
 
-**Two tasks' feedback arms are actively harmful.** `Turbulence/RANSCalibration` trails by 0.135,
-and: `StructuralEngineering/TrussWeightMinimization`
+The clearest case: `StructuralEngineering/TrussWeightMinimization`
 trails its own open-loop control by 0.37 and loses every paired seed from budget 8 onward
 (−0.30 after dropping the most favourable seed). Both arms pass roughly half their submissions —
 0.50 open-loop against 0.40 with feedback — so this is not the contract rejecting the feedback
