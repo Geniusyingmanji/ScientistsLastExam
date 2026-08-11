@@ -1,14 +1,22 @@
-# Frontier-Science
+# Scientist's Last Exam
 
-Frontier-Science is a research prototype for **cross-domain, executable,
+Scientist's Last Exam (SLE) is a research prototype for **cross-domain, executable,
 budget-constrained scientific generative optimization**. An agent edits a runnable program,
 a frozen deterministic oracle evaluates each candidate, and the benchmark records both the
 best feasible artifact and the cost-aware trajectory used to find it.
+
+The question it is built to answer is not "can a model score well once" but "does giving a model
+feedback and more budget make it better" — the agentic, self-improving regime that AlphaFold-style
+and AlphaEvolve-style results live in. Section [Does a task measure iteration](#does-a-task-measure-iteration)
+gives the criterion, and the answer for the current inventory is a small number.
 
 This repository is inspired by
 [Frontier-Engineering](https://github.com/EinsiaLab/Frontier-Engineering). It is unrelated to
 the text-question benchmark named *FrontierScience* in
 [arXiv:2601.21165](https://arxiv.org/abs/2601.21165).
+
+The Python package is still importable as `frontier_science`, which was this project's working
+name; the CLI examples below reflect that. Renaming the module is a separate mechanical change.
 
 > A higher simulator or verifier score demonstrates optimization only within the registered
 > oracle. It does not by itself establish autonomous scientific discovery, mechanism recovery,
@@ -20,7 +28,9 @@ the text-question benchmark named *FrontierScience* in
 - **7 certified**, **45 candidate**, and **9 quarantined** tasks.
 - Two tasks whose oracles are **community-standard scientific tooling** (Stim + PyMatching,
   RDKit) rather than a bespoke reimplementation, both scored **uncapped** against anchors
-  recomputed at evaluation time.
+  recomputed at evaluation time, and both carrying a measured **difficulty ladder**.
+- **2 of 52** tasks are so far shown to measure iterative improvement, against a criterion the
+  repository can now apply to any task with paired runs.
 - Deterministic black-box evaluation through a networkless Bubblewrap sandbox.
 - A built-in iterative rewrite baseline plus OpenEvolve, AB-MCTS, and ShinkaEvolve backends.
 - Hash-bound experiment reports with Git revision, command, source-tree state, and explicit
@@ -208,6 +218,7 @@ the default benchmark, `candidate` is retained for calibration but missing one o
 | [Security audit v49](experiments/security_audit_2026-07-27_v49.json) | 23/23 tests passed | Sandbox and protocol regressions |
 | [GPT-5.6 50-task census](experiments/gpt56_science_census_analysis_2026-08-06_v1.json) | 50/50 cells; 36/50 valid proposals | Budget-one screen; challenge gate fails |
 | [Track F confirmatory analysis](experiments/track_f_analysis_2026-07-26_v1.json) | no identified feedback advantage | Preregistered, n=48/arm, on ActiveLawDiscovery |
+| [Admission criterion sweep](.research/task_admission_verification_2026-08-11.md) | 2 of 52 tasks shown to measure iteration | Every recorded run, both conditions |
 
 [`experiments/TRUST.md`](experiments/TRUST.md) is the append-only trust manifest. Study plans and
 interpretations live in [`.research/`](.research/). Historical pre-sandbox reports are classified
@@ -238,10 +249,10 @@ land in a long right tail, so more draws keep helping; a decoder's per-draw qual
 what one generation can write, so refining beats redrawing and the feedback arm climbs to 0.995
 against the matching anchor.
 
-That implies a sharper admission rule than `Δ > 0`, and one measurable from the control arm
-alone: **a task measures iterative improvement to the extent that its open-loop control saturates
-with budget.** If best-of-N keeps improving, independent sampling eventually overtakes any
-searcher and the gap you measured was an artefact of the budget you picked.
+That implied a sharper admission rule than `Δ > 0`, measurable from the control arm alone: a task
+measures iterative improvement to the extent that its open-loop control saturates with budget.
+**That rule turned out to be necessary but not sufficient**, and the counterexample is in this
+repository — see [Does a task measure iteration](#does-a-task-measure-iteration).
 See [evolvability_gap](.research/evolvability_gap_2026-08-09.md) and
 [budget dependence](.research/evolvability_gap_budget_dependence_2026-08-09.md).
 
@@ -274,6 +285,81 @@ random: OpenEvolve scored 0.990 and 1.034 on them while the control happened to 
 1.336. Disappearing cells have to be recovered, not analysed around.
 See [population search](.research/population_search_results_2026-08-09.md).
 
+## Does a task measure iteration
+
+A task earns its place here by measuring iterative improvement. That takes two conditions, and
+the order matters:
+
+1. **necessary** — the open-loop control must not saturate with budget. If best-of-N stops paying
+   after a few draws, there is nothing left for a searcher to add.
+2. **sufficient** — the feedback arm must beat the open-loop arm, and the gap must widen with
+   budget rather than close.
+
+Condition 1 alone was the earlier rule and it is not enough. `MedicinalChemistry/MolecularLeadOptimization`
+at portfolio size 320 with a Tanimoto ceiling of 0.20 has a strictly climbing open-loop curve and
+an evolvability gap flat at zero from budget 3 through 12, because every proposal sits on a low
+plateau with no exploitable gradient. Passing 1 and failing 2 means a task is too hard to measure
+with, not that it is a good task.
+
+`scripts/report_admission_criterion.py` applies both conditions to every run in `runs/`, reading
+each run's task and arm from its manifest rather than its directory name. Over 52 distinct tasks:
+
+| verdict | (task, cohort) pairs |
+|---|---:|
+| measures iteration | 3 |
+| gap closes within the budget range | 1 |
+| headroom exists but feedback cannot climb it | 1 |
+| material headroom, feedback arm never run | 11 |
+| headroom below the 0.01 materiality floor | 3 |
+| no headroom — control flat over its second half | 31 |
+| floor — control never leaves zero | 7 |
+| insufficient evidence to judge | 10 |
+
+**Paired evidence exists for 2 of 52 tasks, and both pass.** The decoder passes in two independent
+cohorts, with the gap growing from +0.052 at budget 3 to +0.080 at budget 10 (six of six paired
+seeds) in one and +0.104 to +0.129 in the other. The molecular task's verdict is split by cohort,
+which is the crossover at budget 7.8 showing up as disagreement — for that task a single gap
+number is not reportable, only the curve is.
+
+The 11 tasks with material headroom and no feedback arm are the only pool that can add qualifying
+tasks, and they are where paired runs are being added next. Everything else is a statement about
+evidence rather than about the task. See
+[task admission verification](.research/task_admission_verification_2026-08-11.md).
+
+## Difficulty ladders
+
+Both community-oracle tasks carry a `DIFFICULTY` level so that saturating one does not retire the
+task. Level 1 reproduces the shipped instances and their recorded anchors exactly; a level with no
+measured entry raises rather than being extrapolated.
+
+Each ladder is a measured table rather than a formula, because both tasks punish the obvious
+formula:
+
+- On the decoder, difficulty cannot be raised by code distance. Below threshold a larger code
+  drives the logical error rate down exponentially, so the anchor stops failing often enough to
+  measure — a first attempt left a level-3 regime with 9 anchor failures. Each level instead
+  pushes the physical error rate toward the circuit-level threshold near 1%. Shot counts then hold
+  the *decoding workload* fixed, not the shot count: detectors grow as `d²`, so keeping the shots
+  high silently made level 2 a 1.68× throughput test, and 24 of 29 feedback-arm failures there
+  were timeouts.
+- On the molecular task the two knobs interact through the reference panel. Tightening the
+  diversity ceiling shrinks the retained portfolio *and* raises the anchor, because the panel is
+  selected highest-QED-first and the survivors of a stricter ceiling are the better drugs. Past a
+  point it breaks the panel outright.
+
+Rungs are placed by the shape of the evolvability gap against budget, not by score. Level 1 of the
+molecular task is effectively solved — the strongest submission this benchmark has produced scores
+1.3363 against a QED ceiling near 1.35 — and its gap turns negative by budget 10. The level-2 rung
+was chosen because its gap instead grows monotonically, −0.011 at budget 3 to +0.062 at budget 12
+over eight paired seeds. That endpoint's interval includes zero; the evidence is the monotone
+trend across five budget points, not the endpoint.
+
+All ladder measurements use `greedy_rewrite` with searcher `gpt-5.5` at `reasoning_effort: low`.
+The calibration ladders in each task's `references/known_best.md` were measured with GPT-5.6, so
+the two are not comparable, and because the crossover is a task-and-searcher property the rung
+placement is specific to this condition. Run manifests now record the model condition in readable
+form, alongside the hash that binds it, so this cannot be ambiguous again.
+
 ## Known state before relying on this branch
 
 Two things are deliberately left open rather than papered over.
@@ -288,10 +374,19 @@ unattributed — they read `runs/` paths stored as absolute paths, so they error
 worktree. See [runtime governance](.research/runtime_change_governance_2026-08-09.md).
 
 **The new tasks are not registered as maturity evidence.** They pass `scripts/audit_tasks.py`
-with zero task-card issues, but their GPT-5.6 measurements are not yet trusted artifacts under
-`experiments/`, so the maturity ledger still counts 50 internally admitted tasks rather than 52.
-Both task contracts have had zero contract-path commits since their runs began and each run
-records its own `task_contract_sha256`, so the groundwork is done.
+with zero task-card issues and appear in the live inventory, but their measurements are not yet
+trusted artifacts under `experiments/`, so the maturity ledger does not count them as internally
+admitted. Each run records its own `task_contract_sha256`, so the groundwork is done. The
+inventory guard itself was internally inconsistent — it asserted 61 packages while its status
+counts summed to 59 — and now agrees with the live inventory.
+
+**Four discovery tasks cannot report a false-discovery rate.** Their evaluators do measure it,
+but publish the numerator as a count without the world count that would make it a rate, so the
+discovery triple cannot be completed for them. `scripts/report_discovery_triple.py` now separates
+this case from an axis that was never measured, because the two need different fixes. Publishing
+the denominator edits the task package and therefore rebinds that task's analysis artifacts —
+including the Track F negative result — so it is a governance step rather than a cleanup, and has
+been left for a deliberate decision.
 
 The sandbox itself is verified intact: `tests.test_secure_eval` passes and
 `scripts/run_security_audit.py` passes 23/23 with `trusted_evidence: true`.
@@ -302,6 +397,7 @@ The sandbox itself is verified intact: `tests.test_secure_eval` passes and
 python -m unittest -v tests.test_benchmark_layout tests.test_secure_eval
 python scripts/run_security_audit.py --output /tmp/security.json
 python scripts/audit_tasks.py --output /tmp/certification.json
+python scripts/report_admission_criterion.py --runs runs --output /tmp/admission.json
 python -m unittest discover -s tests -q
 ```
 

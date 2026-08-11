@@ -1,4 +1,4 @@
-# Contributing to Frontier-Science
+# Contributing to Scientist's Last Exam
 
 The current priority is certifying and hardening the existing inventory, not increasing its
 size. We welcome fixes, task cards, scientific tests, and carefully reviewed new optimization
@@ -12,7 +12,7 @@ default benchmark requires the separate certification gate below.
 
 ## Task requirements
 
-Every certified Frontier-Science task must satisfy **all seven** of these:
+Every certified task must satisfy **all seven** of these:
 
 1. **PhD/expert difficulty floor.** The task must require doctoral-level domain knowledge,
    advanced numerical optimization, or current research heuristics. Do not submit educational
