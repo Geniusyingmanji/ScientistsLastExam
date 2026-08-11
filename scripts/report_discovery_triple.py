@@ -82,6 +82,18 @@ def best_metrics(directory: Path) -> dict | None:
     return best
 
 
+# Some evaluators publish a count where the report needs a rate, and do not publish the
+# denominator that would turn one into the other. That is a different defect from not measuring
+# the axis at all, and conflating them sends the fix to the wrong place: a count with no
+# denominator means the number is in the evaluator but unusable downstream.
+COUNT_ONLY = {
+    "fdr": ("heldout_false_discoveries", "development_false_discoveries",
+            "validation_false_discoveries"),
+    "refusal": ("heldout_correct_abstentions", "development_correct_abstentions",
+                "validation_correct_abstentions"),
+}
+
+
 def extract(metrics: dict) -> dict:
     out = {}
     for axis, candidates in AXES.items():
@@ -90,7 +102,13 @@ def extract(metrics: dict) -> dict:
                 out[axis] = {"value": float(metrics[key]), "key": key}
                 break
         else:
-            out[axis] = None
+            counted = next(
+                (key for key in COUNT_ONLY.get(axis, ()) if key in metrics), None
+            )
+            out[axis] = (
+                {"value": None, "key": counted, "status": "count_without_denominator"}
+                if counted else None
+            )
     return out
 
 
@@ -116,10 +134,18 @@ def main() -> int:
             "combined_score": metrics.get("combined_score"),
             "axes": axes,
             "missing_axes": [a for a, v in axes.items() if v is None],
+            "count_without_denominator": [
+                a for a, v in axes.items()
+                if v is not None and v.get("status") == "count_without_denominator"
+            ],
         })
 
     def cell(entry):
-        return "     -  " if entry is None else "%8.4f" % entry["value"]
+        if entry is None:
+            return "     -  "
+        if entry.get("value") is None:
+            return "  count "
+        return "%8.4f" % entry["value"]
 
     print("discovery triple, best valid proposal per task. never averaged.")
     print("%-32s %9s %9s %9s %9s" % ("task", "combined", "mechanism", "fdr", "refusal"))
@@ -134,16 +160,29 @@ def main() -> int:
             cell(a["mechanism"]), cell(a["fdr"]), cell(a["refusal"])))
 
     incomplete = [r for r in rows if r.get("missing_axes")]
+    countonly = [r for r in rows if r.get("count_without_denominator")]
     print()
-    print("tasks missing at least one axis: %d of %d" % (len(incomplete), len(rows)))
+    print("tasks missing at least one axis outright: %d of %d" % (len(incomplete), len(rows)))
     for r in incomplete:
         print("  %-32s missing %s" % (r["task"][:32], r["missing_axes"]))
+    print()
+    print("tasks publishing a count where a rate is needed: %d" % len(countonly))
+    for r in countonly:
+        keys = [v["key"] for a, v in r["axes"].items()
+                if v is not None and v.get("status") == "count_without_denominator"]
+        print("  %-32s %s -> %s" % (
+            r["task"][:32], r["count_without_denominator"], keys))
+    if countonly:
+        print("  the evaluator measures these; it publishes the numerator without the world")
+        print("  count that would make it a rate. Fixing it edits the task package and so")
+        print("  rebinds that task's analysis artifacts - a governance step, not a cleanup.")
 
     Path(args.output).write_text(json.dumps({
         "schema_version": 1,
         "note": "the three axes are reported separately and must not be averaged",
         "task_count": len(rows),
         "incomplete_count": len(incomplete),
+        "count_without_denominator_count": len(countonly),
         "rows": rows,
     }, indent=2), encoding="utf-8")
     print("report:", args.output)
