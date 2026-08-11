@@ -38,8 +38,10 @@ invariants:
 - ensemble defect is invariant under reversing both the sequence and the target together
 - poly-A reproduces the unstructured baseline defect for any target
 - the anchor's own ensemble defect scores exactly 1.0 by construction
-known_shortcuts: Calling ViennaRNA's inverse_fold is permitted and reaches parity with the anchor, which
-  is restart-matched to ten calls, so it cannot be used to exceed 1.0 by repetition alone. Reading verification/
+known_shortcuts: Calling ViennaRNA's inverse_fold is permitted. The anchor is the best of ten restarts
+  of that routine, so a single call scores about 0.58 rather than 1.0 and restarting it only reaches what
+  the anchor already did; repetition alone cannot exceed 1.0. Forbidding the call was considered and rejected
+  as unenforceable, since the oracle sees a returned sequence and not how it was made. Reading verification/
   would expose the sealed targets and is blocked by the sandbox mounts. Returning a sequence of the wrong
   length or alphabet is scored invalid rather than clipped. RNA inverse folding is well documented in
   public literature and training corpora, so a strong result must be confirmed on the sealed targets,

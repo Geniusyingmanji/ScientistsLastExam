@@ -2,8 +2,8 @@
 2) Return a sequence of exactly len(structure); anything else is an invalid submission.
 3) Deterministic CPU code. The Python standard library, NumPy, SciPy and ViennaRNA are available.
    Fold and score your own candidates with ViennaRNA as often as you like, including
-   `RNA.inverse_fold` - the anchor is the best of ten restarts of that routine, so calling it
-   once only reaches parity.
+   `RNA.inverse_fold` - the anchor is the best of ten restarts of that routine, so a single call
+   scores about 0.58 and restarting it only reaches what the anchor already did.
 4) The anchor optimises minimum-free-energy structure match. The score is ensemble defect, which
    it does not optimise, and the score is uncapped. Beating it is the task.
 5) Do not read verification/ or frontier_eval/.

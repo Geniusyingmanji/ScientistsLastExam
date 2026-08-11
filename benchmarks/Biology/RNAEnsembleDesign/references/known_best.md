@@ -13,7 +13,8 @@ minimum-free-energy structure match, and the score is ensemble defect, which it 
 Restart matching matters. Candidates are allowed to call `inverse_fold` themselves — forbidding it
 would be a rule the harness cannot enforce, since the oracle sees a returned sequence and not how
 it was produced. With the anchor taken as the best of ten restarts, calling the routine once
-reaches parity and restarting it is only doing what the anchor already did.
+scores 0.5763 rather than 1.0 - the routine is stochastic and one draw is not its best of ten -
+and restarting it is only doing what the anchor already did.
 
 ## Anchors at the shipped level
 
