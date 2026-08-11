@@ -17,8 +17,9 @@ defect is the point, and the score is uncapped so that beating it is visible.
 
 Candidates may call `inverse_fold` themselves. An earlier draft forbade it, which was a rule the
 harness cannot enforce - the oracle sees a returned sequence, not how it was produced. Making the
-anchor a best-of-restarts removes the need: a candidate that simply calls the routine once
-reaches parity and no more, and one that restarts it is doing what the anchor already does.
+anchor a best-of-restarts removes the need: a candidate that simply calls the routine once scores
+about 0.58, measured through the harness, because the routine is stochastic and one draw is not
+its best of ten. Restarting it is doing what the anchor already does.
 
     score = log(defect_baseline / defect_candidate) / log(defect_baseline / defect_anchor)
 

@@ -29,9 +29,10 @@ from a reimplementation, so a score here measures agreement with the community m
 
 The anchor is ViennaRNA's own `inverse_fold`, run by the evaluator on the same targets at scoring
 time and kept as the **best of ten restarts** by ensemble defect. You may call `inverse_fold`
-yourself — one call reaches parity, and restarting it is what the anchor already does. Beating it
-takes optimising the objective it does not: `inverse_fold` searches for MFE structure match, while
-the score is ensemble defect.
+yourself; a single call scores about **0.58**, measured, because the routine is stochastic and one
+draw is not its best of ten. Restarting it is a reasonable start and is what the anchor already
+does. Beating the anchor takes optimising the objective it does not: `inverse_fold` searches for
+MFE structure match, while the score is ensemble defect.
 
 ## Scoring
 
