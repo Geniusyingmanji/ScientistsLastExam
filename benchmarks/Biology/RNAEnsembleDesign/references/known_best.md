@@ -64,7 +64,21 @@ host with ViennaRNA 2.7.2.
 The reference designer now reaches 42% of the way to the anchor instead of clearing it, which is
 what an anchor should look like. Its ensemble defect is 0.0559 against the anchor's 0.00149.
 
-Target generation takes 33 s and the anchor is computed once per process.
+## Evaluation cost
+
+Target generation takes 33 s and the anchor another 30 s or so, both once per process. Because the
+harness evaluates each proposal in a fresh process, that overhead is paid per proposal: observed
+step wall times through the harness are 126 to 162 s against a 300 s timeout, leaving a candidate
+roughly 140 s of its own.
+
+This is the price of recomputing the anchor rather than quoting it, and it is worth stating rather
+than hiding. It also bounds the ladder: level 3 targets are longer and `inverse_pf_fold` costs
+about 10 s per target per restart, so a level beyond 3 would need either fewer targets or a
+cheaper anchor.
+
+Measured searcher behaviour at the shipped level: a `greedy_rewrite` run scores 0.91 to 0.98 by
+its ninth proposal — working right at the community reference rather than four times past it,
+which is what the same searcher did against the `inverse_fold` anchor.
 
 ## Why the score is uncapped
 
