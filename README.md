@@ -317,21 +317,29 @@ cohorts were never paired). Over 52 tasks:
 
 | verdict | tasks |
 |---|---:|
-| measures iteration | 4 |
-| feedback actively harmful | 1 |
-| control exhausted, feedback arm never run | 31 |
+| measures iteration | 5 |
+| measures iteration, but one paired seed carries it | 1 |
+| feedback actively harmful | 2 |
+| feedback harmful, but one paired seed carries it | 1 |
+| control exhausted, feedback arm never run | 27 |
 | control still climbing — best-of-N not exhausted | 8 |
 | judged on fewer than three seeds | 2 |
 | floor — control never leaves zero | 6 |
+| insufficient evidence | 1 |
 
-**Paired evidence exists for 6 of 52 tasks, and four pass:**
+**Paired evidence exists for 11 of 53 tasks, and five pass:**
 
 | task | gap at budget 3 → 12 | last budget | seeds | drop-one-seed |
 |---|---|---|---:|---:|
 | `QuantumErrorCorrection/QuantumErrorDecoder` | +0.104 → +0.129 | 5/6 | 6 | +0.133 |
 | `Spectroscopy/NMRSpectrumFitting` | +0.085 → +0.173 | 3/4 | 4 | +0.097 |
 | `Astrodynamics/LowThrustTransfer` | −0.011 → +0.089 | 3/4 | 4 | +0.031 |
-| `ProteinEngineering/ProteinStabilityDesign` | +0.035 → +0.038 | 4/4 | 4 | +0.026 |
+| `ProteinEngineering/ProteinStabilityDesign` | +0.032 → +0.035 | 5/5 | 6 | +0.017 |
+| `ChemicalKinetics/ReactionMechanismFitting` | +0.423 at budgets 3 and 5 | 2/0 | 2 | — |
+
+`ReactionMechanismFitting` has the largest gap in the inventory and the thinnest evidence for it:
+two paired seeds and two budgets. It is listed because the criterion admits it, not because it is
+settled.
 
 The last column is the mean after dropping whichever single seed helps the conclusion most. With
 four to six seeds a verdict can be one seed deep, so the report computes it and labels any gap it
@@ -345,7 +353,15 @@ carry wider intervals on four seeds and are provisional. Effect size and evidenc
 different things here — `NMRSpectrumFitting` has a gap four times larger than
 `ProteinStabilityDesign` and a weaker case for it.
 
-**One task's feedback arm is actively harmful.** `StructuralEngineering/TrussWeightMinimization`
+**The drop-one-seed guard changes two verdicts.** `MolecularDynamics/ForceFieldCalibration` reads
+a gap of +0.0367 at budget 12 that becomes +0.0000 when one seed is removed — one of its four
+paired seeds had any gap at all — and `Catalysis/CatalystDeactivationLab` reads −0.022 that flips
+positive under the same test. Both are reported as one-seed-deep rather than as findings. The
+guard cuts in both directions on purpose: a harmful verdict can rest on one seed exactly as easily
+as a favourable one.
+
+**Two tasks' feedback arms are actively harmful.** `Turbulence/RANSCalibration` trails by 0.135,
+and: `StructuralEngineering/TrussWeightMinimization`
 trails its own open-loop control by 0.37 and loses every paired seed from budget 8 onward
 (−0.30 after dropping the most favourable seed). Both arms pass roughly half their submissions —
 0.50 open-loop against 0.40 with feedback — so this is not the contract rejecting the feedback
