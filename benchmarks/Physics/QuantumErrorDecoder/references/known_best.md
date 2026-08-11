@@ -48,8 +48,15 @@ a level with no entry raises rather than being extrapolated.
 | Level | development regimes | shots | anchor failures |
 |---:|---|---:|---|
 | 1 | `(3,0.005) (5,0.005) (5,0.010) (7,0.005)` | 6000 | 105 / 80 / 472 / 40 |
-| 2 | `(5,0.008) (7,0.008) (7,0.012) (9,0.008)` | 4000 | 195 / 234 / 663 / 195 |
-| 3 | `(7,0.010) (9,0.010) (9,0.012) (11,0.010)` | 3000 | 300 / 384 / 618 / 429 |
+| 2 | `(5,0.008) (7,0.008) (7,0.012) (9,0.008)` | 2400 | 109 / 137 / 397 / 126 |
+| 3 | `(7,0.010) (9,0.010) (9,0.012) (11,0.010)` | 1200 | 114 / 155 / 258 / 187 |
+
+Shot counts hold the decoding workload fixed, not the shot count. Work is shots times the summed
+detector count, and detectors grow as `d^2` — 24, 120, 336, 720 and 1320 for `d` = 3, 5, 7, 9, 11
+— so keeping the shot count high at a larger distance silently multiplies the load. Holding 4000
+shots at level 2 would have made it 1.68x the level-1 workload and level 3 2.58x, converting the
+task into the throughput test that forced level 1 down from 20000 shots. The counts above put all
+three levels within 3% of each other, and the sealed side within 2%.
 
 All search measurements on this ladder use `greedy_rewrite` with searcher `gpt-5.5` at
 `reasoning_effort: low`. The calibration ladder above was measured with GPT-5.6, so the two are
@@ -57,8 +64,8 @@ not comparable; run manifests now record the model condition in readable form so
 ambiguous again.
 
 Sealed regimes move with the level and always sit at noise strengths absent from that level's
-development set: level 2 uses `(7,0.009) (9,0.009)` at 3000 shots, level 3 `(9,0.011) (11,0.011)`
-at 2500.
+development set: level 2 uses `(7,0.009) (9,0.009)` at 1700 shots (141 and 157 anchor failures),
+level 3 `(9,0.011) (11,0.011)` at 900 shots (147 and 177).
 
 Difficulty is raised mainly through the noise strength, not the code distance. Below threshold a
 larger code drives the logical error rate down exponentially, so distance alone makes the anchor
