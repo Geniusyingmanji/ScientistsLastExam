@@ -2,38 +2,39 @@
 
 `scripts/report_admission_criterion.py`，对 `runs/` 下全部运行轨迹逐任务判定。这是第一次用一个统一判据把整个题库过一遍。
 
-## 判据
+## 判据（含一次符号订正）
 
-任务要能测量迭代改进，需要两条，顺序不能反：
+任务要能测量迭代改进,需要两条,顺序不能反:
 
-1. 必要条件 —— 开环对照不得随预算饱和。若 best-of-N 抽几次之后不再涨，搜索器就没有可添加的东西。
-2. 充分条件 —— 反馈臂须优于开环臂，且差距应随预算扩大而非收窄。爬不上去的头部空间测不到任何东西。
+1. 必要条件 —— 开环对照必须**饱和**。对照若持续上升,说明 best-of-N 尚未耗尽,独立采样迟早反超任何搜索器,那么测到的差距只是所选预算的产物。
+2. 充分条件 —— 在 best-of-N 已耗尽的前提下,反馈臂仍须胜出,且差距随预算扩大而非收窄。
 
-第一条曾是我在 T1 里提的全部判据，它不够。反例就在本仓库：MolecularLeadOptimization 在 (320, 0.20) 上开环曲线严格上升，而 Δ 在 budget 3 到 12 全程平在零附近，因为所有提案挤在低分平原上没有梯度。**只满足第一条说明任务太难而不是任务好**。
+**第一条的符号我一开始写反了。** 本笔记与报告工具的前几版都要求"开环不得饱和",那会把所有真正合格的任务判掉 —— 事实上 NMRSpectrumFitting 与 ProteinStabilityDesign 在配对测试中明确通过,却因为控制臂饱和被判成"无头部空间"。
 
-第二条需要配对运行（同任务、同预算、`selection_blind` 对 `normal`）。绝大多数任务从未做过，报告如实标为未知，而不是拿单臂推断结论。
+正确的方向早就写在仓库里:解码器的开环从 budget 5 起就是平的(0.824, 0.869, 0.824, 0.845),而它的反馈臂越跑越领先;分子任务的开环一路从 0.404 爬到 0.970,它的差距在 budget 7.8 附近穿零。**精修胜过重抽,恰恰发生在重抽已经不再付钱的地方。**
 
-## 结果
+饱和不等于任务已解决:`floor`(对照始终为零)单独报告,因为那里两条都无从测起。
 
-52 个不同任务，按 (任务, cohort) 判定：
+第二条需要配对运行。大多数任务从未做过,报告如实标为未知而非拿单臂推断。
 
-| 判定 | (任务,cohort) 数 |
+## 结果（判据订正后）
+
+| 判定 | 任务数 |
 |---|---:|
-| measures_iteration | 3 |
-| crossover_in_range | 1 |
-| headroom_unclimbable | 1 |
-| headroom_single_seed | 11 |
-| marginal_headroom | 4 |
-| no_headroom | 31 |
-| floor | 7 |
-| unknown | 11 |
+| measures_iteration | 4 |
+| feedback_harmful | 1 |
+| exhausted_unpaired | 28 |
+| control_not_exhausted | 8 |
+| thin_screen | 5 |
+| floor | 6 |
 
-去重到任务层面：
+有配对证据 6 / 52,四个通过:QuantumErrorDecoder、NMRSpectrumFitting、LowThrustTransfer、ProteinStabilityDesign。
 
-- **有配对证据可检验充分条件的：3 / 52**
-- **被证明能测量迭代改进的：2**（MolecularLeadOptimization、QuantumErrorDecoder）
+**28 个任务"best-of-N 已耗尽但从未跑过反馈臂"** —— 这才是能新增合格任务的真实池子,比订正前那份 10 项候选清单大得多,而且性质完全不同:订正前找的是"还在爬"的任务,那恰恰是不合格的方向。
 
-## 一个把自己的候选清单推翻的实测
+MolecularLeadOptimization 现在判为 `control_not_exhausted`,与它 budget 7.8 的交叉点自洽。
+
+## 一个把自己的候选清单推翻的实测## 一个把自己的候选清单推翻的实测
 
 首轮报告把 14 个任务列为"开环仍在爬、值得优先补配对实验"，并按后半程增益排序。排第一的是 TrussWeightMinimization（增益 +0.4098）。
 
