@@ -48,6 +48,12 @@ FEEDBACK_MODES = ("normal",)
 # headroom, and marginal tasks are not proposed as candidates for paired follow-up.
 MATERIAL_GAIN = 0.01
 
+# Saturation read from a single seed is a guess. Measured: TrussWeightMinimization was ranked the
+# strongest headroom candidate in the inventory on one seed showing a +0.4098 second-half gain;
+# four paired seeds put that gain at +0.0000. A one-seed verdict is reported with the count
+# attached so it cannot be mistaken for a measurement.
+MIN_SEEDS_FOR_CONFIDENT_SATURATION = 3
+
 
 def best_so_far(path: Path) -> list[float] | None:
     """The best-so-far curve over proposals. Invalid proposals score zero, as the harness does."""
@@ -186,6 +192,13 @@ def verdict(sat: dict | None, gaps: list[dict]) -> tuple[str, str]:
             "materiality threshold this is drift, not headroom"
             % (sat["mean_second_half_gain"], sat["mean_final"], MATERIAL_GAIN)
         )
+    if not gaps and sat["seeds"] < MIN_SEEDS_FOR_CONFIDENT_SATURATION:
+        return "headroom_single_seed", (
+            "open-loop appears to climb (+%.4f over the second half, ending at %.4f) but on "
+            "%d seed(s); below %d seeds this is not a saturation measurement"
+            % (sat["mean_second_half_gain"], sat["mean_final"], sat["seeds"],
+               MIN_SEEDS_FOR_CONFIDENT_SATURATION)
+        )
     if not gaps:
         return "headroom_unverified", (
             "open-loop still climbing (+%.4f over the second half) but no paired feedback arm "
@@ -245,8 +258,8 @@ def main() -> int:
     # so a well-sampled task does not look like several passing ones.
     order = {
         "measures_iteration": 0, "crossover_in_range": 1, "headroom_unclimbable": 2,
-        "headroom_unverified": 3, "marginal_headroom": 4, "no_headroom": 5,
-        "floor": 6, "unknown": 7,
+        "headroom_unverified": 3, "headroom_single_seed": 4, "marginal_headroom": 5,
+        "no_headroom": 6, "floor": 7, "unknown": 8,
     }
     rows.sort(key=lambda r: (order[r["verdict"]], r["task"]))
 
@@ -283,15 +296,25 @@ def main() -> int:
 
     # The only pool that can add qualifying tasks: real headroom, never paired.
     candidates = sorted(
-        ((row["saturation"]["mean_second_half_gain"], row["saturation"]["mean_final"], row["task"])
-         for row in rows if row["verdict"] == "headroom_unverified"),
+        ((row["saturation"]["mean_second_half_gain"], row["saturation"]["mean_final"],
+          row["saturation"]["seeds"], row["task"], row["verdict"])
+         for row in rows
+         if row["verdict"] in ("headroom_unverified", "headroom_single_seed")),
         reverse=True,
     )
     print()
-    print("worth pairing next (material headroom, no feedback arm ever run), gain=%.2f floor:"
+    print("worth pairing next (apparent headroom, no feedback arm ever run), gain floor %.2f:"
           % MATERIAL_GAIN)
-    for gain, final, name in candidates:
-        print("    %-34s gain %+.4f  ending at %.4f" % (name.split("/")[-1], gain, final))
+    for gain, final, seeds, name, state in candidates:
+        note = "  [one-seed guess]" if state == "headroom_single_seed" else ""
+        print("    %-34s gain %+.4f  ending at %.4f  seeds=%d%s"
+              % (name.split("/")[-1], gain, final, seeds, note))
+    thin = sum(1 for c in candidates if c[4] == "headroom_single_seed")
+    if thin:
+        print("  %d of %d rest on fewer than %d open-loop seeds. The first such candidate that"
+              % (thin, len(candidates), MIN_SEEDS_FOR_CONFIDENT_SATURATION))
+        print("  was actually paired, TrussWeightMinimization, showed no second-half gain at all")
+        print("  once four seeds were run, so treat the ranking as a queue, not a finding.")
 
     Path(args.output).write_text(json.dumps({
         "schema_version": 2,
