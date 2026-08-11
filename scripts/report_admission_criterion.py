@@ -230,11 +230,11 @@ def verdict(sat: dict | None, gaps: list[dict]) -> tuple[str, str]:
     )
 
 
-def main() -> int:
+def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--runs", required=True, help="directory holding run cohorts")
     ap.add_argument("--output", required=True)
-    args = ap.parse_args()
+    args = ap.parse_args(argv)
 
     found = collect(Path(args.runs))
 
