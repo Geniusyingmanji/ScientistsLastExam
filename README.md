@@ -24,11 +24,11 @@ name; the CLI examples below reflect that. Renaming the module is a separate mec
 
 ## At a glance
 
-- **61 task packages** across **57 logical domains** and **7 broad disciplines**.
-- **7 certified**, **45 candidate**, and **9 quarantined** tasks.
-- Two tasks whose oracles are **community-standard scientific tooling** (Stim + PyMatching,
-  RDKit) rather than a bespoke reimplementation, both scored **uncapped** against anchors
-  recomputed at evaluation time, and both carrying a measured **difficulty ladder**.
+- **62 task packages** across **58 logical domains** and **7 broad disciplines**.
+- **7 certified**, **46 candidate**, and **9 quarantined** tasks.
+- Three tasks whose oracles are **community-standard scientific tooling** (Stim + PyMatching,
+  RDKit, ViennaRNA) rather than a bespoke reimplementation, all scored **uncapped** against anchors
+  recomputed at evaluation time, and all carrying a measured **difficulty ladder**.
 - **2 of 52** tasks are so far shown to measure iterative improvement, against a criterion the
   repository can now apply to any task with paired runs.
 - Deterministic black-box evaluation through a networkless Bubblewrap sandbox.
@@ -56,14 +56,14 @@ should use the discipline path.
 
 | Discipline | Tasks | Certified | Candidate | Quarantined |
 |---|---:|---:|---:|---:|
-| Biology | 6 | 0 | 5 | 1 |
+| Biology | 7 | 0 | 6 | 1 |
 | Chemistry | 13 | 1 | 10 | 2 |
 | Computer Science | 4 | 2 | 2 | 0 |
 | Earth Science | 6 | 0 | 6 | 0 |
 | Engineering | 18 | 0 | 14 | 4 |
 | Mathematics | 5 | 2 | 3 | 0 |
 | Physics | 9 | 2 | 5 | 2 |
-| **Total** | **61** | **7** | **45** | **9** |
+| **Total** | **62** | **7** | **46** | **9** |
 
 The certified core currently consists of:
 
@@ -88,12 +88,17 @@ ASE or BioPython. Task narratives cite real science, but the oracles are author-
 reduced-order reimplementations, and none has completed external domain review. A score
 therefore measures agreement with the author's NumPy code, not with the science.
 
-Two tasks were added to close that gap. Both put a community-standard toolkit in the oracle and
-recompute their anchor at evaluation time rather than quoting a number from a paper.
+Three tasks were added to close that gap. Each puts a community-standard toolkit in the oracle and
+recomputes its anchor at evaluation time rather than quoting a number from a paper. The third also
+answers a question the first two leave open: whether the anchor can be a routine the community
+actually uses rather than a value. `RNAEnsembleDesign` runs ViennaRNA's own designer inside the
+evaluator, restart-matched so a candidate cannot beat it by calling it more often — a single call
+scores 0.576, measured through the harness.
 
 | Task | Oracle | Anchor | Scoring |
 |---|---|---|---|
 | `QuantumErrorCorrection/QuantumErrorDecoder` | **Stim** rotated surface-code circuits, seeded sampling | **PyMatching 2** minimum-weight perfect matching, recomputed per run | uncapped; matching MWPM = 1.0 |
+| `RNAEngineering/RNAEnsembleDesign` | **ViennaRNA** partition function over the Turner nearest-neighbour model; ensemble defect | ViennaRNA's own `inverse_fold`, best of ten restarts by ensemble defect, recomputed per run | uncapped; matching the reference designer = 1.0 |
 | `MedicinalChemistry/MolecularLeadOptimization` | **RDKit** QED, Ertl–Schuffenhauer SA score, Lipinski/Veber descriptors, PAINS catalogue, Morgan/Tanimoto | mean drug-likeness of structurally distinct approved drugs from a 20-drug panel whose SMILES were each verified against published molecular weights | uncapped; approved-drug quality = 1.0 |
 
 Calibration ladders are in each task's `references/known_best.md`. On the decoder task:
@@ -380,24 +385,24 @@ given a verdict.
 
 Measuring iteration is one question; whether a task's science is solid is another, and the two
 are independent. `scripts/audit_benchmark_standards.py` checks nine mechanically verifiable
-properties across all 61 packages and reports them separately, because they are different kinds
+properties across all 62 packages and reports them separately, because they are different kinds
 of defect and an average would hide whichever one matters.
 
 | standard | met |
 |---|---:|
-| declares specific known shortcuts | 52 / 61 |
-| states oracle invariants | 52 / 61 |
-| cites resolvable literature | 49 / 61 |
-| holds a sealed split back from the development score | 40 / 61 |
-| recomputes its anchor at evaluation time | 8 / 61 |
-| ships a reference record | 6 / 61 |
-| oracle is community-standard tooling, not a reimplementation | 2 / 61 |
-| exposes a difficulty level | 2 / 61 |
-| externally domain reviewed | 0 / 61 |
+| declares specific known shortcuts | 53 / 62 |
+| states oracle invariants | 53 / 62 |
+| cites resolvable literature | 50 / 62 |
+| holds a sealed split back from the development score | 41 / 62 |
+| recomputes its anchor at evaluation time | 9 / 62 |
+| ships a reference record | 7 / 62 |
+| oracle is community-standard tooling, not a reimplementation | 3 / 62 |
+| exposes a difficulty level | 3 / 62 |
+| externally domain reviewed | 0 / 62 |
 
 The distribution is lopsided in a specific way: the documentation standards are largely met while
-the standards that decide scientific credibility are largely not. Only two tasks reach eight of
-nine, and those are the two built to these standards; nothing else exceeds five.
+the standards that decide scientific credibility are largely not. Only three tasks reach eight of
+nine, and those are the three built to these standards; nothing else exceeds five.
 
 An independent check that the standards are measuring something: the nine tasks scoring zero are
 exactly the nine the repository has quarantined, and this audit never reads `certification.yaml`.

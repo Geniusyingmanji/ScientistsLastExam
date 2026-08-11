@@ -22,10 +22,10 @@ class TaskMaturityAuditTests(unittest.TestCase):
         cls.tasks = {row["task"]: row for row in cls.report["tasks"]}
 
     def test_inventory_and_internal_risk_set_are_complete(self):
-        self.assertEqual(self.report["inventory_count"], 61)
+        self.assertEqual(self.report["inventory_count"], 62)
         self.assertEqual(
             self.report["status_counts"],
-            {"certified": 7, "candidate": 45, "quarantined": 9},
+            {"certified": 7, "candidate": 46, "quarantined": 9},
         )
         self.assertEqual(self.report["gate_counts"]["internal_science_admission"], 52)
         self.assertEqual(self.report["issues"], [])
