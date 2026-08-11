@@ -321,12 +321,17 @@ cohorts were never paired). Over 52 tasks:
 
 **Paired evidence exists for 6 of 52 tasks, and four pass:**
 
-| task | gap at budget 3 → 12 | last budget | paired seeds |
-|---|---|---|---:|
-| `QuantumErrorCorrection/QuantumErrorDecoder` | +0.104 → +0.129 | 5/6 | 6 |
-| `Spectroscopy/NMRSpectrumFitting` | +0.085 → +0.173 | 3/4 | 4 |
-| `Astrodynamics/LowThrustTransfer` | −0.011 → +0.089 | 3/4 | 4 |
-| `ProteinEngineering/ProteinStabilityDesign` | +0.035 → +0.038 | 4/4 | 4 |
+| task | gap at budget 3 → 12 | last budget | seeds | drop-one-seed |
+|---|---|---|---:|---:|
+| `QuantumErrorCorrection/QuantumErrorDecoder` | +0.104 → +0.129 | 5/6 | 6 | +0.133 |
+| `Spectroscopy/NMRSpectrumFitting` | +0.085 → +0.173 | 3/4 | 4 | +0.097 |
+| `Astrodynamics/LowThrustTransfer` | −0.011 → +0.089 | 3/4 | 4 | +0.031 |
+| `ProteinEngineering/ProteinStabilityDesign` | +0.035 → +0.038 | 4/4 | 4 | +0.026 |
+
+The last column is the mean after dropping whichever single seed helps the conclusion most. With
+four to six seeds a verdict can be one seed deep, so the report computes it and labels any gap it
+flips; all four survive at their final budget. `LowThrustTransfer` does flip at budget 5, which is
+visible in its curve and is why the trend across budgets is what the verdict rests on.
 
 The decoder is the strongest, passing in two independent cohorts. `ProteinStabilityDesign` has the
 smallest effect but the tightest: four of four paired seeds at budgets 8, 10 and 12 with a
@@ -336,7 +341,11 @@ different things here — `NMRSpectrumFitting` has a gap four times larger than
 `ProteinStabilityDesign` and a weaker case for it.
 
 **One task's feedback arm is actively harmful.** `StructuralEngineering/TrussWeightMinimization`
-trails its own open-loop control by 0.37 and loses every paired seed from budget 8 onward.
+trails its own open-loop control by 0.37 and loses every paired seed from budget 8 onward
+(−0.30 after dropping the most favourable seed). Both arms pass roughly half their submissions —
+0.50 open-loop against 0.40 with feedback — so this is not the contract rejecting the feedback
+arm's work. The open-loop arm reached 0.9979 on one seed while the feedback arm's best across all
+four was 0.4143: independent draws find the tail, and anchoring on an incumbent does not.
 
 **31 tasks have an exhausted control and have never been paired.** That is the pool that can add
 qualifying tasks, and it is where paired runs are going next, ordered by how much room the
