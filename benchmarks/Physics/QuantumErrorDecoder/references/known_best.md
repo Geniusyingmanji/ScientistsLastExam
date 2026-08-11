@@ -51,6 +51,11 @@ a level with no entry raises rather than being extrapolated.
 | 2 | `(5,0.008) (7,0.008) (7,0.012) (9,0.008)` | 4000 | 195 / 234 / 663 / 195 |
 | 3 | `(7,0.010) (9,0.010) (9,0.012) (11,0.010)` | 3000 | 300 / 384 / 618 / 429 |
 
+All search measurements on this ladder use `greedy_rewrite` with searcher `gpt-5.5` at
+`reasoning_effort: low`. The calibration ladder above was measured with GPT-5.6, so the two are
+not comparable; run manifests now record the model condition in readable form so this cannot be
+ambiguous again.
+
 Sealed regimes move with the level and always sit at noise strengths absent from that level's
 development set: level 2 uses `(7,0.009) (9,0.009)` at 3000 shots, level 3 `(9,0.011) (11,0.011)`
 at 2500.

@@ -46,7 +46,13 @@ has produced scores 1.3363 against a QED ceiling near 1.35, and an open-loop con
 0.6362 from its third draw onward.
 
 Rungs are placed by the shape of the evolvability gap against budget, not by score. Measured
-with `greedy_rewrite` at budget 12, paired `selection_blind` against `normal`:
+with `greedy_rewrite` at budget 12, paired `selection_blind` against `normal`, searcher
+`gpt-5.5` at `reasoning_effort: low`.
+
+That searcher is not the one behind the calibration ladder above, which was measured with
+GPT-5.6. The two sets of numbers are not comparable, and because the crossover budget is a
+property of the task and the searcher together rather than of the searcher alone, the rung
+placement below is specific to this condition and has to be re-measured for another searcher.
 
 | budget | level 2 gap (n=8) | level 3 gap (n=4) |
 |---:|---:|---:|
