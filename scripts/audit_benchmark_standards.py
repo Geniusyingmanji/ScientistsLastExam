@@ -13,9 +13,14 @@ call dressed up as a metric, and none is a proxy for difficulty:
   oracle_is_community      the evaluator imports a domain toolkit (RDKit, Stim, PySCF, ...) rather
                            than reimplementing the science in NumPy. An author reimplementation
                            means a score measures agreement with that author's code.
-  anchor_recomputed        the reference value is recomputed by the oracle at evaluation time
-                           rather than pasted in as a constant. A pasted constant cannot be
-                           checked and silently rots against library versions.
+  anchor_recomputed        the task ships a reference implementation under verification/ that the
+                           evaluator can run, rather than pasting the anchor in as a constant. A
+                           pasted constant cannot be checked and rots against library versions.
+  anchor_recomputed_claimed
+                           the card's normalization prose says the reference is recomputed. This is
+                           a claim rather than a runnable artifact, and it is reported separately
+                           because spot-checking found it matching a task whose same sentence also
+                           cites a literature value.
   has_reference_record     `references/known_best.md` exists. Required for uncapped scoring,
                            where a score above 1.0 is a claim about the state of the art.
   has_sealed_split         the evaluator holds regimes back from the development score, so a
@@ -65,6 +70,7 @@ COMMUNITY_PACKAGES = {
 STANDARDS = (
     "oracle_is_community",
     "anchor_recomputed",
+    "anchor_recomputed_claimed",
     "has_reference_record",
     "has_sealed_split",
     "declares_shortcuts",
@@ -133,13 +139,15 @@ def check(task_dir: Path, card: dict) -> dict[str, bool | None]:
 
     return {
         "oracle_is_community": bool(modules & COMMUNITY_PACKAGES),
-        # A recomputed anchor is one the evaluator derives while scoring. The signals are a
-        # reference implementation shipped under verification/, or normalization prose that says
-        # the reference is measured rather than quoted.
-        "anchor_recomputed": bool(
-            len(list((task_dir / "verification").glob("*.py"))) > 1
-            or re.search(r"recomput|measured|at evaluation time|per run",
-                         reference_text, re.IGNORECASE)
+        # Two grades of evidence, kept apart because they are not equally good. A reference
+        # implementation shipped under verification/ is something the evaluator can run; prose in
+        # the card saying the reference is "recomputed" is a claim. Spot-checking found the prose
+        # rule matching a task whose normalization sentence also cites a literature value, so a
+        # prose-only match is reported as weak rather than counted the same way.
+        "anchor_recomputed": len(list((task_dir / "verification").glob("*.py"))) > 1,
+        "anchor_recomputed_claimed": bool(
+            re.search(r"recomput|measured|at evaluation time|per run",
+                      reference_text, re.IGNORECASE)
         ),
         "has_reference_record": (task_dir / "references" / "known_best.md").is_file(),
         "has_sealed_split": bool(

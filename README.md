@@ -419,14 +419,19 @@ of defect and an average would hide whichever one matters.
 | states oracle invariants | 53 / 62 |
 | cites resolvable literature | 50 / 62 |
 | holds a sealed split back from the development score | 41 / 62 |
-| recomputes its anchor at evaluation time | 9 / 62 |
+| ships a runnable reference implementation the evaluator can re-derive its anchor from | 6 / 62 |
+| card claims the anchor is recomputed, without shipping one | 6 / 62 |
 | ships a reference record | 7 / 62 |
 | oracle is community-standard tooling, not a reimplementation | 3 / 62 |
 | exposes a difficulty level | 3 / 62 |
 | externally domain reviewed | 0 / 62 |
 
 The distribution is lopsided in a specific way: the documentation standards are largely met while
-the standards that decide scientific credibility are largely not. Only three tasks reach eight of
+the standards that decide scientific credibility are largely not. The anchor row is split on
+purpose. A reference implementation under `verification/` is something the evaluator can run; a
+sentence in the card saying the anchor is "recomputed" is a claim, and spot-checking found that
+claim on a task whose same sentence also cites a literature value. Counting them together gave 9
+of 62 where the runnable evidence is 6. Only three tasks reach eight of
 nine, and those are the three built to these standards; nothing else exceeds five.
 
 An independent check that the standards are measuring something: the nine tasks scoring zero are
