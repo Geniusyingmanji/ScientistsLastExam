@@ -105,6 +105,40 @@ MolecularLeadOptimization 的证据是分裂的，与先前测到的交叉点约
 - 7 个是 floor —— 开环对照始终为零。它们连"能不能做"都没测出来，需要先分清是契约障碍还是科学难度（T5 的分离报告已指出 `RadiativeTransferFit` 通过率 1.00 但条件科学分 0.0000，属于后者）。
 - 14 个是 headroom_unverified —— 开环仍在爬，但从未跑过反馈臂。这些是最值得优先补配对实验的，因为它们是唯一可能新增"合格任务"的池子。
 
+## 补种子进行中，判定已在翻转
+
+针对上一节的问题，正在给 52 个任务各补 2 个开环 seed（进度约一半）。已经出现的翻转：
+
+| 任务 | 单 seed 判定 | 补 seed 后 |
+|---|---|---|
+| TrussWeightMinimization | 增益 +0.4098，头号候选 | 增益 +0.0000（4 seed），且配对后 Δ ≈ −0.37 |
+| ForceFieldCalibration | floor（始终为零） | 增益 +0.0202，有可测头部空间 |
+| HeatExchangerDesign | 未入候选 | 增益 +0.2506，跃居第二候选 |
+
+方向两边都有：单 seed 既会把噪声读成头部空间，也会把有空间的任务误判为地板。这说明原来那轮全库普查的结论不能作为定论使用，只能作为待办队列。
+
+当前判定（一任务一行）：
+
+| 判定 | 任务数 |
+|---|---:|
+| measures_iteration | 3 |
+| headroom_unclimbable | 2 |
+| headroom_single_seed | 12 |
+| marginal_headroom | 9 |
+| no_headroom | 20 |
+| floor | 6 |
+
+有配对证据 5 / 52，其中 3 个通过：QuantumErrorDecoder、LowThrustTransfer、NMRSpectrumFitting。后两个分别只有 4 个与 2 个配对 seed，属临时判定。
+
+## 工具本身修掉的四个缺陷
+
+这份核验第一版有四处会误导的地方，都已修：
+
+1. **从目录名解析任务**。`runs/crossover/b20_normal_s0` 被解析成一个叫 "b20" 的任务，同一任务的证据被拆到多个虚构任务名下。改为读 manifest 里权威的 `task_id`。
+2. **饱和判定不跨 cohort 合并 seed**。饱和是单臂测量，跨 cohort 合并合法；不合并会让补种子实验白做（新 cohort 2 个 seed，旧的 1 个，谁都到不了 3）。配对仍不合并 —— 不同 cohort 的两臂从未配对过。
+3. **一任务多行**。合并 seed 后同一任务的多个 cohort 行携带完全相同的饱和结论，52 个任务被报成 93 行，计数被灌水。改为一任务一行，配对按 cohort 列为子项。
+4. **按 seed 数选判定 cohort**。QEC 因此被判在只有一个预算点的 cohort 上，理由输出成"gap grows with budget, +0.1345 at 3 to +0.1345 at 3"——拿单点与自己比。改为优先预算覆盖，并禁止单点判趋势。
+
 ## 边界
 
 判定依赖已存在的运行产物，而这些产物在预算、seed 数、搜索器上并不齐整。`unknown` 有 10 项是因为该 cohort 只有反馈臂或开环运行长度不足 6，不代表任务有问题。
