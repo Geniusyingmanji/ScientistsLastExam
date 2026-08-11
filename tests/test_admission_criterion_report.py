@@ -125,8 +125,8 @@ class VerdictTests(unittest.TestCase):
 
     def test_an_exhausted_control_with_a_growing_gap_measures_iteration(self):
         gaps = [
-            {"budget": 3, "n": 6, "mean": 0.02, "stderr": 0.01, "wins": 4, "losses": 2},
-            {"budget": 12, "n": 6, "mean": 0.13, "stderr": 0.04, "wins": 5, "losses": 1},
+            {"budget": 3, "n": 6, "mean": 0.02, "stderr": 0.01, "wins": 4, "losses": 2, "open_loop_mean": 0.5, "material": True},
+            {"budget": 12, "n": 6, "mean": 0.13, "stderr": 0.04, "wins": 5, "losses": 1, "open_loop_mean": 0.5, "material": True},
         ]
         state, why = MODULE.verdict(_sat(**self.EXHAUSTED), gaps)
         self.assertEqual(state, "measures_iteration")
@@ -136,31 +136,45 @@ class VerdictTests(unittest.TestCase):
         """Best-of-N has not run out, so the gap depends on the budget that was picked."""
         climbing = _sat(seeds=6, median=0.18, final=0.97)
         gaps = [
-            {"budget": 3, "n": 6, "mean": 0.02, "stderr": 0.01, "wins": 4, "losses": 2},
-            {"budget": 12, "n": 6, "mean": 0.31, "stderr": 0.04, "wins": 6, "losses": 0},
+            {"budget": 3, "n": 6, "mean": 0.02, "stderr": 0.01, "wins": 4, "losses": 2, "open_loop_mean": 0.5, "material": True},
+            {"budget": 12, "n": 6, "mean": 0.31, "stderr": 0.04, "wins": 6, "losses": 0, "open_loop_mean": 0.5, "material": True},
         ]
         state, why = MODULE.verdict(climbing, gaps)
         self.assertEqual(state, "control_not_exhausted")
         self.assertIn("depends on the budget", why)
 
     def test_a_single_budget_cannot_produce_a_trend_verdict(self):
-        gaps = [{"budget": 3, "n": 8, "mean": 0.1345, "stderr": 0.03, "wins": 8, "losses": 0}]
+        gaps = [{"budget": 3, "n": 8, "mean": 0.1345, "stderr": 0.03, "wins": 8, "losses": 0, "open_loop_mean": 0.5, "material": True}]
         state, why = MODULE.verdict(_sat(**self.EXHAUSTED), gaps)
         self.assertEqual(state, "gap_at_one_budget")
         self.assertIn("single point", why)
 
     def test_a_closing_gap_is_a_crossover_not_a_pass(self):
         gaps = [
-            {"budget": 3, "n": 8, "mean": 0.19, "stderr": 0.05, "wins": 6, "losses": 2},
-            {"budget": 12, "n": 8, "mean": 0.02, "stderr": 0.05, "wins": 4, "losses": 4},
+            {"budget": 3, "n": 8, "mean": 0.19, "stderr": 0.05, "wins": 6, "losses": 2, "open_loop_mean": 0.5, "material": True},
+            {"budget": 12, "n": 8, "mean": 0.02, "stderr": 0.05, "wins": 4, "losses": 4, "open_loop_mean": 0.5, "material": True},
         ]
         self.assertEqual(
             MODULE.verdict(_sat(**self.EXHAUSTED), gaps)[0], "crossover_in_range")
 
+    def test_a_gap_too_small_to_matter_is_neither_help_nor_harm(self):
+        """Sign alone made a two-parts-in-a-thousand gap read the same as a 74% one."""
+        gaps = [
+            {"budget": 3, "n": 3, "mean": 0.0119, "stderr": 0.0144, "wins": 2, "losses": 1,
+             "leave_one_out_worst": -0.0022, "robust_to_one_seed": False,
+             "open_loop_mean": 1.0, "material": False},
+            {"budget": 12, "n": 3, "mean": -0.0021, "stderr": 0.0015, "wins": 1, "losses": 2,
+             "leave_one_out_worst": -0.0007, "robust_to_one_seed": True,
+             "open_loop_mean": 1.0, "material": False},
+        ]
+        state, why = MODULE.verdict(_sat(seeds=3, median=0.0, final=1.0, saturated=True), gaps)
+        self.assertEqual(state, "no_measurable_difference")
+        self.assertIn("indistinguishable", why)
+
     def test_a_negative_gap_means_feedback_is_harmful(self):
         gaps = [
-            {"budget": 3, "n": 4, "mean": -0.29, "stderr": 0.11, "wins": 1, "losses": 3},
-            {"budget": 12, "n": 4, "mean": -0.37, "stderr": 0.08, "wins": 0, "losses": 4},
+            {"budget": 3, "n": 4, "mean": -0.29, "stderr": 0.11, "wins": 1, "losses": 3, "open_loop_mean": 0.5, "material": True},
+            {"budget": 12, "n": 4, "mean": -0.37, "stderr": 0.08, "wins": 0, "losses": 4, "open_loop_mean": 0.5, "material": True},
         ]
         state, why = MODULE.verdict(_sat(**self.EXHAUSTED), gaps)
         self.assertEqual(state, "feedback_harmful")

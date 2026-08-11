@@ -58,6 +58,13 @@ MATERIAL_GAIN = 0.01
 # attached so it cannot be mistaken for a measurement.
 MIN_SEEDS_FOR_CONFIDENT_SATURATION = 3
 
+# A gap counts as a difference only if it is large next to the scores being compared. Sign alone
+# is not enough: the RNA design task's feedback arm trailed by 0.0021 against scores near 1.0 -
+# two parts in a thousand - and the criterion called that "harmful", the same word it gave a task
+# trailing by 0.37 against scores near 0.5. Below this fraction of the open-loop mean, the arms
+# are reported as indistinguishable.
+MATERIAL_GAP_FRACTION = 0.02
+
 
 def best_so_far(path: Path) -> list[float] | None:
     """The best-so-far curve over proposals. Invalid proposals score zero, as the harness does."""
@@ -171,12 +178,13 @@ def gap_by_budget(open_loop: dict[int, list[float]], feedback: dict[int, list[fl
     shared = sorted(set(open_loop) & set(feedback))
     out = []
     for budget in BUDGETS:
-        deltas = []
+        deltas, opens = [], []
         for seed in shared:
             a, b = open_loop[seed], feedback[seed]
             if len(a) < budget or len(b) < budget:
                 continue
             deltas.append(b[budget - 1] - a[budget - 1])
+            opens.append(a[budget - 1])
         if len(deltas) < 2:
             continue
         stdev = st.stdev(deltas)
@@ -195,6 +203,8 @@ def gap_by_budget(open_loop: dict[int, list[float]], feedback: dict[int, list[fl
             "n": len(deltas),
             "mean": mean,
             "stderr": stdev / math.sqrt(len(deltas)),
+            "open_loop_mean": st.mean(opens) if opens else 0.0,
+            "material": abs(mean) >= MATERIAL_GAP_FRACTION * max(abs(st.mean(opens)), 1e-9),
             "leave_one_out_worst": loo,
             "robust_to_one_seed": None if loo is None else (loo > 0) == (mean > 0),
             "wins": sum(1 for d in deltas if d > 0),
@@ -236,6 +246,13 @@ def verdict(sat: dict | None, gaps: list[dict]) -> tuple[str, str]:
             % (only["mean"], only["budget"], only["wins"], only["losses"], only["n"])
         )
     first, last = gaps[0], gaps[-1]
+    if not last.get("material", True):
+        return "no_measurable_difference", (
+            "gap is %+.4f at budget %d against an open-loop mean of %.4f - under %.0f%% of it, "
+            "so the arms are indistinguishable rather than one being better"
+            % (last["mean"], last["budget"], last["open_loop_mean"],
+               100 * MATERIAL_GAP_FRACTION)
+        )
     if last["mean"] <= 0:
         if last.get("robust_to_one_seed") is False:
             return "feedback_harmful_one_seed_deep", (
@@ -343,9 +360,9 @@ def main(argv: list[str] | None = None) -> int:
     order = {
         "measures_iteration": 0, "measures_iteration_one_seed_deep": 1,
         "crossover_in_range": 2, "feedback_harmful": 3,
-        "feedback_harmful_one_seed_deep": 4,
-        "gap_at_one_budget": 5, "exhausted_unpaired": 6, "control_not_exhausted": 7,
-        "thin_screen": 8, "floor": 9, "unknown": 10,
+        "feedback_harmful_one_seed_deep": 4, "no_measurable_difference": 5,
+        "gap_at_one_budget": 6, "exhausted_unpaired": 7, "control_not_exhausted": 8,
+        "thin_screen": 9, "floor": 10, "unknown": 11,
     }
     rows.sort(key=lambda r: (order[r["verdict"]], r["task"]))
 
