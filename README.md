@@ -306,11 +306,11 @@ each run's task and arm from its manifest rather than its directory name. Over 5
 
 | verdict | tasks |
 |---|---:|
-| measures iteration | 3 |
+| measures iteration | 4 |
 | headroom exists but feedback cannot climb it | 2 |
-| apparent headroom, never paired | 12 |
+| apparent headroom, never paired | 15 |
 | headroom below the 0.01 materiality floor | 9 |
-| no headroom — control flat over its second half | 20 |
+| no headroom — control flat over its second half | 16 |
 | floor — control never leaves zero | 6 |
 
 One row per task: saturation pools open-loop seeds across cohorts because it is a one-armed
@@ -326,13 +326,23 @@ candidate on a one-seed gain of +0.4098 and reads +0.0000 at four seeds, while
 `ForceFieldCalibration` was a `floor` on one seed and shows measurable headroom on two. Every row
 prints its pooled seed count and a `measured` / `single_seed_screen` label.
 
-**Paired evidence exists for 5 of 52 tasks, and three pass.** The decoder passes in two independent
-cohorts, with the gap growing from +0.052 at budget 3 to +0.080 at budget 10 (six of six paired
-seeds) in one and +0.104 to +0.129 in the other. `Astrodynamics/LowThrustTransfer` and
-`Spectroscopy/NMRSpectrumFitting` also pass, both on four or fewer paired seeds, so they are
-provisional. `MedicinalChemistry/MolecularLeadOptimization` reads as headroom its feedback arm
-cannot climb — the crossover at budget 7.8 showing up as disagreement between its cohorts, which
-is why only its curve is reportable and not a single gap number.
+**Paired evidence exists for 6 of 52 tasks, and four pass:**
+
+| task | gap at budget 3 → 12 | last budget | paired seeds |
+|---|---|---|---:|
+| `QuantumErrorCorrection/QuantumErrorDecoder` | +0.104 → +0.129 | 5/6 | 6 |
+| `Spectroscopy/NMRSpectrumFitting` | +0.085 → +0.173 | 3/4 | 4 |
+| `Astrodynamics/LowThrustTransfer` | −0.011 → +0.089 | 3/4 | 4 |
+| `ProteinEngineering/ProteinStabilityDesign` | +0.035 → +0.038 | 4/4 | 4 |
+
+The decoder is the strongest, passing in two independent cohorts. `ProteinStabilityDesign` has the
+smallest effect but the tightest: four of four paired seeds at budgets 8, 10 and 12 with a
+standard error near 0.013, so its gap sits about three standard errors from zero. The other two
+carry wider intervals on four seeds and are provisional.
+
+`MedicinalChemistry/MolecularLeadOptimization` reads as headroom its feedback arm cannot climb —
+the crossover at budget 7.8 showing up as disagreement between its cohorts, which is why only its
+curve is reportable and not a single gap number.
 
 **One task's feedback arm is actively harmful.** `StructuralEngineering/TrussWeightMinimization`
 trails its open-loop control by 0.37 and loses every paired seed from budget 8 onward. Feeding
