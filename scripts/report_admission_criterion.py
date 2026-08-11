@@ -237,6 +237,12 @@ def verdict(sat: dict | None, gaps: list[dict]) -> tuple[str, str]:
         )
     first, last = gaps[0], gaps[-1]
     if last["mean"] <= 0:
+        if last.get("robust_to_one_seed") is False:
+            return "feedback_harmful_one_seed_deep", (
+                "gap is %+.4f at budget %d, but dropping a single seed takes it to %+.4f - "
+                "the conclusion that feedback hurts rests on one paired seed"
+                % (last["mean"], last["budget"], last["leave_one_out_worst"])
+            )
         return "feedback_harmful", (
             "gap is %+.4f at budget %d (%d/%d): the feedback arm does worse than its own "
             "open-loop control"
@@ -337,8 +343,9 @@ def main(argv: list[str] | None = None) -> int:
     order = {
         "measures_iteration": 0, "measures_iteration_one_seed_deep": 1,
         "crossover_in_range": 2, "feedback_harmful": 3,
-        "gap_at_one_budget": 4, "exhausted_unpaired": 5, "control_not_exhausted": 6,
-        "thin_screen": 7, "floor": 8, "unknown": 9,
+        "feedback_harmful_one_seed_deep": 4,
+        "gap_at_one_budget": 5, "exhausted_unpaired": 6, "control_not_exhausted": 7,
+        "thin_screen": 8, "floor": 9, "unknown": 10,
     }
     rows.sort(key=lambda r: (order[r["verdict"]], r["task"]))
 

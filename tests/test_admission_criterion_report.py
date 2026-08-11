@@ -211,6 +211,18 @@ class LeaveOneOutTests(unittest.TestCase):
         state, _ = MODULE.verdict(_sat(seeds=6, median=0.0, final=0.6, saturated=True), gaps)
         self.assertEqual(state, "measures_iteration")
 
+    def test_a_harmful_verdict_carried_by_one_seed_is_labelled_too(self):
+        """The guard has to cut both ways: a negative gap can rest on one seed just as easily."""
+        gaps = [
+            {"budget": 3, "n": 4, "mean": 0.04, "stderr": 0.02, "wins": 2, "losses": 1,
+             "leave_one_out_worst": 0.02, "robust_to_one_seed": True},
+            {"budget": 12, "n": 4, "mean": -0.02, "stderr": 0.02, "wins": 2, "losses": 2,
+             "leave_one_out_worst": 0.0007, "robust_to_one_seed": False},
+        ]
+        state, why = MODULE.verdict(_sat(seeds=6, median=0.0, final=0.6, saturated=True), gaps)
+        self.assertEqual(state, "feedback_harmful_one_seed_deep")
+        self.assertIn("one paired seed", why)
+
     def test_leave_one_out_drops_the_seed_that_most_helps_the_conclusion(self):
         """Four deltas, one of them carrying a positive mean."""
         open_loop = {i: [0.0] * 12 for i in range(4)}
