@@ -25,7 +25,7 @@ class TaskMaturityAuditTests(unittest.TestCase):
         self.assertEqual(self.report["inventory_count"], 61)
         self.assertEqual(
             self.report["status_counts"],
-            {"certified": 7, "candidate": 43, "quarantined": 9},
+            {"certified": 7, "candidate": 45, "quarantined": 9},
         )
         self.assertEqual(self.report["gate_counts"]["internal_science_admission"], 52)
         self.assertEqual(self.report["issues"], [])
