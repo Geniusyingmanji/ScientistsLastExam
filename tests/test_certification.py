@@ -27,7 +27,7 @@ class CertificationPolicyTests(unittest.TestCase):
         tasks = list_tasks()
         self.assertEqual(len(tasks), 7)
         self.assertTrue(all(certification_status(s.task_id) == "certified" for s in tasks))
-        self.assertEqual(len(list_tasks(None)), 61)
+        self.assertEqual(len(list_tasks(None)), 62)
         self.assertEqual(
             certification_status("ProteinEngineering/ProteinStabilityDesign"),
             "candidate",

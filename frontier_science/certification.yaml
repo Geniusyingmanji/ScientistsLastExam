@@ -79,6 +79,24 @@ tasks:
       - doi:10.1016/j.cell.2016.11.038
       - doi:10.1016/j.cell.2022.05.013
 
+  RNAEngineering/RNAEnsembleDesign:
+    status: candidate
+    reason: >-
+      inverse folding scored by ensemble defect against ViennaRNA 2.7.2 over the Turner
+      nearest-neighbour model, with the anchor being ViennaRNA's own inverse_fold recomputed at
+      evaluation time as the best of ten restarts by ensemble defect. The oracle is community
+      tooling rather than a reimplementation, which is what the RNAInverseDesign entry lists as
+      its main outstanding gap. Calibrated on the benchmark host: poly-A baseline 0.0000, a single
+      inverse_fold call through the sandbox 0.5763, a truth-blind 60-restart reference 1.3506
+      against an anchor of 1.0000 by construction; the difficulty ladder moves that reference to
+      1.1937 and 1.1028 at levels two and three. Retained as a candidate pending external RNA
+      thermodynamics review, an independent recomputation of the ensemble-defect anchor, and any
+      model measurement at all - no search has been run against it yet.
+    citation_ids:
+      - doi:10.1186/1748-7188-6-26
+      - doi:10.1002/jcc.21633
+      - doi:10.1093/nar/gkp892
+      - doi:10.1002/bip.360290621
   RNAEngineering/RNAInverseDesign:
     status: candidate
     reason: constrained inverse design over five development and three held-out hairpin, bulge, internal-loop, tandem and multibranch targets uses an exact public pair-stack-loop partition-function dynamic program, exact pair marginals, MFE agreement, target probability, ensemble defect, fixed bases, GC and motif constraints plus four sealed energy/temperature shifts; independent exhaustive enumeration and deterministic reference regeneration pass, the weak hairpin baseline has perfect pair compatibility but target probability 3e-9, normal GPT-5.5 budget three improves 0.239 to 0.507 to 0.720 while retaining proxy false promotions, and a frozen-parent batch reaches 0.894 development and 0.986 held-out; retain as a simplified ensemble-design candidate pending server-held families, complete Turner/ViennaRNA or NUPACK replication, synthesis, functional assays and independent RNA-design review
