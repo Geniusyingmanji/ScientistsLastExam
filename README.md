@@ -290,41 +290,34 @@ See [population search](.research/population_search_results_2026-08-09.md).
 A task earns its place here by measuring iterative improvement. That takes two conditions, and
 the order matters:
 
-1. **necessary** — the open-loop control must not saturate with budget. If best-of-N stops paying
-   after a few draws, there is nothing left for a searcher to add.
-2. **sufficient** — the feedback arm must beat the open-loop arm, and the gap must widen with
-   budget rather than close.
+1. **necessary** — the open-loop control must *saturate* with budget. A control that keeps
+   climbing means best-of-N is not exhausted, so independent sampling will eventually overtake
+   any searcher and whatever gap you measured was an artefact of the budget you picked.
+2. **sufficient** — with best-of-N exhausted, the feedback arm must still beat it, and the gap
+   must widen with budget rather than close.
 
-Condition 1 alone was the earlier rule and it is not enough. `MedicinalChemistry/MolecularLeadOptimization`
-at portfolio size 320 with a Tanimoto ceiling of 0.20 has a strictly climbing open-loop curve and
-an evolvability gap flat at zero from budget 3 through 12, because every proposal sits on a low
-plateau with no exploitable gradient. Passing 1 and failing 2 means a task is too hard to measure
-with, not that it is a good task.
+The sign of condition 1 reads backwards at first glance, and an earlier version of this section
+had it inverted — it asked for a control that keeps climbing, which disqualified every task that
+actually passes. The evidence sits in this repository: the decoder's control is flat from budget 5
+onward and its feedback arm pulls further ahead the longer it runs, while the molecular task's
+control climbs 0.404 → 0.970 and its gap crosses zero near budget 7.8. Refining beats redrawing
+precisely where redrawing has stopped paying. A saturated control is not a solved task — `floor`,
+where the control never leaves zero, is reported separately because nothing is measurable there
+either.
 
 `scripts/report_admission_criterion.py` applies both conditions to every run in `runs/`, reading
-each run's task and arm from its manifest rather than its directory name. Over 52 distinct tasks:
+each run's task and arm from its manifest rather than its directory name, pooling open-loop seeds
+across cohorts (saturation is one-armed) while keeping gaps within a cohort (arms from different
+cohorts were never paired). Over 52 tasks:
 
 | verdict | tasks |
 |---|---:|
 | measures iteration | 4 |
-| headroom exists but feedback cannot climb it | 2 |
-| apparent headroom, never paired | 15 |
-| headroom below the 0.01 materiality floor | 9 |
-| no headroom — control flat over its second half | 16 |
+| feedback actively harmful | 1 |
+| control exhausted, feedback arm never run | 28 |
+| control still climbing — best-of-N not exhausted | 8 |
+| judged on fewer than three seeds | 5 |
 | floor — control never leaves zero | 6 |
-
-One row per task: saturation pools open-loop seeds across cohorts because it is a one-armed
-measurement, while gaps stay within a cohort because arms from different cohorts were never
-paired with each other. Each task is judged on the cohort covering the most budgets, and all its
-cohorts are printed, because a task can disagree with itself.
-
-**Most of these verdicts still rest on a thin screen.** The inventory was originally swept one
-open-loop seed per task, and 48 of 52 tasks had exactly one seed anywhere in the repository. A
-seeding pass now under way is raising that; 5 of 52 tasks currently clear three pooled seeds.
-This matters because seeds change verdicts: `TrussWeightMinimization` was the top headroom
-candidate on a one-seed gain of +0.4098 and reads +0.0000 at four seeds, while
-`ForceFieldCalibration` was a `floor` on one seed and shows measurable headroom on two. Every row
-prints its pooled seed count and a `measured` / `single_seed_screen` label.
 
 **Paired evidence exists for 6 of 52 tasks, and four pass:**
 
@@ -338,24 +331,27 @@ prints its pooled seed count and a `measured` / `single_seed_screen` label.
 The decoder is the strongest, passing in two independent cohorts. `ProteinStabilityDesign` has the
 smallest effect but the tightest: four of four paired seeds at budgets 8, 10 and 12 with a
 standard error near 0.013, so its gap sits about three standard errors from zero. The other two
-carry wider intervals on four seeds and are provisional.
-
-`MedicinalChemistry/MolecularLeadOptimization` reads as headroom its feedback arm cannot climb —
-the crossover at budget 7.8 showing up as disagreement between its cohorts, which is why only its
-curve is reportable and not a single gap number.
+carry wider intervals on four seeds and are provisional. Effect size and evidence strength are
+different things here — `NMRSpectrumFitting` has a gap four times larger than
+`ProteinStabilityDesign` and a weaker case for it.
 
 **One task's feedback arm is actively harmful.** `StructuralEngineering/TrussWeightMinimization`
-trails its open-loop control by 0.37 and loses every paired seed from budget 8 onward. Feeding
-evaluation results back makes the searcher systematically worse there.
+trails its own open-loop control by 0.37 and loses every paired seed from budget 8 onward.
 
-The 11 tasks with apparent headroom and no feedback arm are the only pool that can add qualifying
-tasks, and they are where paired runs are being added next — but every one of those verdicts rests
-on a **single** open-loop seed, and the first candidate actually paired inverted. `TrussWeightMinimization`
-was ranked strongest on a one-seed second-half gain of +0.4098; four seeds put that gain at
-+0.0000, and its feedback arm lost every seed from budget 8 onward, trailing by 0.37. Feedback
-does not merely fail to help there, it hurts. Treat that ranking as a queue, not a finding.
-Everything else is a statement about evidence rather than about the task. See
-[task admission verification](.research/task_admission_verification_2026-08-11.md).
+**28 tasks have an exhausted control and have never been paired.** That is the pool that can add
+qualifying tasks, and it is where paired runs are going next.
+
+### How much of this is measurement, and how much is a screen
+
+The inventory was originally swept one open-loop seed per task; 48 of 52 tasks had exactly one
+seed anywhere in the repository. A seeding pass has since raised most tasks to three, and it
+changed verdicts: 17 of 52 tasks moved category. That pass also exposed a defect in the criterion
+itself. Saturation was judged on the *mean* second-half gain across seeds, and because a
+best-so-far curve is monotone, that gain is never negative — so the mean can only rise as seeds
+are added, and one climbing seed drags a set of flat controls over the threshold. The tell was
+that every one of the first 17 flips went the same way. Judging the *median* seed removes it, and
+the flips then go both directions. Rows below three seeds are labelled `thin_screen` rather than
+given a verdict.
 
 ## Difficulty ladders
 
