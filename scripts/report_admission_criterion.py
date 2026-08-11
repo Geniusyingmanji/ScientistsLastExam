@@ -372,6 +372,19 @@ def main(argv: list[str] | None = None) -> int:
     tasks = {row["task"] for row in rows}
     tasks_paired = {row["task"] for row in rows if row["gap_by_budget"]}
     tasks_measuring = {row["task"] for row in rows if row["verdict"] == "measures_iteration"}
+    # A run can abort mid-trajectory - an evaluator infrastructure failure ends one outright -
+    # and a short curve then looks like a complete run at a smaller budget. Neither the gap nor
+    # the saturation test can tell the difference, so the count is surfaced rather than hidden.
+    lengths: dict[str, list[int]] = defaultdict(list)
+    for (task, _cohort), arms in found.items():
+        for mode_curves in arms.values():
+            for curve in mode_curves.values():
+                lengths[task].append(len(curve))
+    truncated = sum(
+        sum(1 for n in seen if n < max(seen)) for seen in lengths.values() if seen
+    )
+    total_runs = sum(len(seen) for seen in lengths.values())
+
     judged = [r for r in rows if r["confidence"] != "none"]
     thin_screen = [r for r in judged if r["confidence"] == "single_seed_screen"]
     print()
@@ -387,6 +400,8 @@ def main(argv: list[str] | None = None) -> int:
     print("  climbing, so the no_headroom and floor verdicts above may understate headroom")
     print("  just as the headroom ones overstated it.")
     print("distinct tasks: %d" % len(tasks))
+    print("runs shorter than the longest run of the same task: %d of %d"
+          % (truncated, total_runs))
     assert len(rows) == len(tasks), "one row per task"
     print("distinct tasks with paired evidence for the sufficient condition: %d of %d"
           % (len(tasks_paired), len(tasks)))
@@ -430,6 +445,8 @@ def main(argv: list[str] | None = None) -> int:
         "row_count": len(rows),
         "note_rows": "one row per task; paired gaps listed per cohort inside each row",
         "distinct_task_count": len(tasks),
+        "short_run_count": truncated,
+        "total_run_count": total_runs,
         "distinct_tasks_with_paired_evidence": len(tasks_paired),
         "distinct_tasks_measuring_iteration": sorted(tasks_measuring),
         "paired_evidence_row_count": paired,
