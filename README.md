@@ -317,17 +317,17 @@ cohorts were never paired). Over 52 tasks:
 
 | verdict | tasks |
 |---|---:|
-| measures iteration | 5 |
+| measures iteration | 4 |
 | measures iteration, but one paired seed carries it | 1 |
 | feedback actively harmful | 2 |
-| feedback harmful, but one paired seed carries it | 1 |
-| control exhausted, feedback arm never run | 27 |
-| control still climbing — best-of-N not exhausted | 8 |
+| feedback harmful, but one paired seed carries it | 2 |
+| control exhausted, feedback arm never run | 26 |
+| control still climbing — best-of-N not exhausted | 9 |
 | judged on fewer than three seeds | 2 |
 | floor — control never leaves zero | 6 |
 | insufficient evidence | 1 |
 
-**Paired evidence exists for 11 of 53 tasks, and five pass:**
+**Paired evidence exists for 12 of 53 tasks, and four pass:**
 
 | task | gap at budget 3 → 12 | last budget | seeds | drop-one-seed |
 |---|---|---|---:|---:|
@@ -335,11 +335,11 @@ cohorts were never paired). Over 52 tasks:
 | `Spectroscopy/NMRSpectrumFitting` | +0.085 → +0.173 | 3/4 | 4 | +0.097 |
 | `Astrodynamics/LowThrustTransfer` | −0.011 → +0.089 | 3/4 | 4 | +0.031 |
 | `ProteinEngineering/ProteinStabilityDesign` | +0.032 → +0.035 | 5/5 | 6 | +0.017 |
-| `ChemicalKinetics/ReactionMechanismFitting` | +0.423 at budgets 3 and 5 | 2/0 | 2 | — |
 
-`ReactionMechanismFitting` has the largest gap in the inventory and the thinnest evidence for it:
-two paired seeds and two budgets. It is listed because the criterion admits it, not because it is
-settled.
+A fifth was on this list two seeds ago and is not now.
+`ChemicalKinetics/ReactionMechanismFitting` showed the largest gap in the inventory, +0.423 with
+two paired seeds and no losses; at four seeds it reversed sign and now reads as harmful, carried by
+one seed in that direction too. Nothing about the task changed — the evidence did.
 
 The last column is the mean after dropping whichever single seed helps the conclusion most. With
 four to six seeds a verdict can be one seed deep, so the report computes it and labels any gap it
