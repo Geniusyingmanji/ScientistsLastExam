@@ -58,6 +58,25 @@ shots at level 2 would have made it 1.68x the level-1 workload and level 3 2.58x
 task into the throughput test that forced level 1 down from 20000 shots. The counts above put all
 three levels within 3% of each other, and the sealed side within 2%.
 
+Level 2 measured against its own open-loop control, `greedy_rewrite`, eight paired seeds:
+
+| budget | 3 | 5 | 8 | 10 | 12 |
+|---|---:|---:|---:|---:|---:|
+| gap | +0.0441 | +0.0086 | +0.0849 | +0.0902 | +0.0789 |
+| paired wins | 7/1 | 5/3 | 6/2 | 7/1 | 6/2 |
+| sign-test p | 0.070 | 0.727 | 0.289 | 0.070 | 0.289 |
+
+Positive at every budget, largest near 10, and significant at none of them — the evidence is the
+sign of the whole curve, not any single point. An earlier four-seed read gave +0.1162 at budget 8;
+four more seeds pulled it to +0.0849, which is the usual direction for a small-n effect.
+
+A caveat that belongs with those numbers: the feedback arm passed only 37 of 96 submissions here
+against 79 of 96 for the open-loop arm, losing 35 to timeouts and 14 to worker exits. The same
+asymmetry is present at level 1 — the open-loop arm passes 9 or 10 of 10 while the feedback arm
+falls to 2 of 10 — so it is a property of this task under this searcher rather than of the
+difficulty level: given feedback, the searcher writes more ambitious decoders and more of them
+fail to finish. It does mean the gap mixes decoding quality with surviving the time limit.
+
 All search measurements on this ladder use `greedy_rewrite` with searcher `gpt-5.5` at
 `reasoning_effort: low`. The calibration ladder above was measured with GPT-5.6, so the two are
 not comparable; run manifests now record the model condition in readable form so this cannot be
