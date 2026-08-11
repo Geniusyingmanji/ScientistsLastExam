@@ -388,7 +388,10 @@ def main(argv: list[str] | None = None) -> int:
             sat["mean_final"], sat["median_second_half_gain"], sat["seeds"],
             row["task"], row["verdict"],
         )
-    candidates = sorted(best_by_task.values(), reverse=True)
+    # Lowest settling point first. A control that has run out at 0.998 leaves a searcher almost
+    # nothing to demonstrate, however exhausted it is; one that runs out at 0.12 leaves the whole
+    # range. Ranking by remaining room is the only ordering that makes this a useful queue.
+    candidates = sorted(best_by_task.values())
     print()
     print("worth pairing next (best-of-N exhausted, feedback arm never run):")
     for final, gain, seeds, name, _state in candidates:
