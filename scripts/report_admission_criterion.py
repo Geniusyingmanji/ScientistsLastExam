@@ -235,11 +235,15 @@ def main() -> int:
     }
     rows.sort(key=lambda r: (order[r["verdict"]], r["task"]))
 
-    print("%-38s %-14s %-22s %5s %4s" % ("task", "cohort", "verdict", "open", "fb"))
-    print("-" * 88)
+    def short(task_id: str) -> str:
+        """Drop the domain prefix; the task name is what distinguishes rows here."""
+        return task_id.split("/")[-1][:34]
+
+    print("%-34s %-14s %-22s %5s %4s" % ("task", "cohort", "verdict", "open", "fb"))
+    print("-" * 84)
     for row in rows:
-        print("%-38s %-14s %-22s %5d %4d" % (
-            row["task"][-38:], row["cohort"][:14], row["verdict"],
+        print("%-34s %-14s %-22s %5d %4d" % (
+            short(row["task"]), row["cohort"][:14], row["verdict"],
             row["open_loop_seeds"], row["feedback_seeds"]))
         print("      %s" % row["reason"])
         for gap in row["gap_by_budget"]:
