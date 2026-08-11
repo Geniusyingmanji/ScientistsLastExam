@@ -304,29 +304,39 @@ with, not that it is a good task.
 `scripts/report_admission_criterion.py` applies both conditions to every run in `runs/`, reading
 each run's task and arm from its manifest rather than its directory name. Over 52 distinct tasks:
 
-| verdict | (task, cohort) pairs |
+| verdict | tasks |
 |---|---:|
 | measures iteration | 3 |
-| gap closes within the budget range | 1 |
-| headroom exists but feedback cannot climb it | 1 |
-| apparent headroom on a single seed, never paired | 11 |
-| headroom below the 0.01 materiality floor | 4 |
-| no headroom — control flat over its second half | 31 |
-| floor — control never leaves zero | 7 |
-| insufficient evidence to judge | 11 |
+| headroom exists but feedback cannot climb it | 2 |
+| apparent headroom, never paired | 12 |
+| headroom below the 0.01 materiality floor | 9 |
+| no headroom — control flat over its second half | 20 |
+| floor — control never leaves zero | 6 |
 
-**Ninety percent of those verdicts rest on a single open-loop seed.** Fifty-two of the 58 rows
-with a saturation verdict — including all 31 `no headroom` and all 7 `floor` rows — come from a
-screen that ran one seed per task. The one candidate later paired at four seeds moved from
-"+0.4098 and climbing" to "+0.0000, flat", so a single seed can overstate headroom; by the same
-token the `no headroom` and `floor` rows may understate it. Every row now prints its seed count
-and a `measured` / `single_seed_screen` confidence label.
+One row per task: saturation pools open-loop seeds across cohorts because it is a one-armed
+measurement, while gaps stay within a cohort because arms from different cohorts were never
+paired with each other. Each task is judged on the cohort covering the most budgets, and all its
+cohorts are printed, because a task can disagree with itself.
 
-**Paired evidence exists for 3 of 52 tasks, and two pass.** The decoder passes in two independent
+**Most of these verdicts still rest on a thin screen.** The inventory was originally swept one
+open-loop seed per task, and 48 of 52 tasks had exactly one seed anywhere in the repository. A
+seeding pass now under way is raising that; 5 of 52 tasks currently clear three pooled seeds.
+This matters because seeds change verdicts: `TrussWeightMinimization` was the top headroom
+candidate on a one-seed gain of +0.4098 and reads +0.0000 at four seeds, while
+`ForceFieldCalibration` was a `floor` on one seed and shows measurable headroom on two. Every row
+prints its pooled seed count and a `measured` / `single_seed_screen` label.
+
+**Paired evidence exists for 5 of 52 tasks, and three pass.** The decoder passes in two independent
 cohorts, with the gap growing from +0.052 at budget 3 to +0.080 at budget 10 (six of six paired
-seeds) in one and +0.104 to +0.129 in the other. The molecular task's verdict is split by cohort,
-which is the crossover at budget 7.8 showing up as disagreement — for that task a single gap
-number is not reportable, only the curve is.
+seeds) in one and +0.104 to +0.129 in the other. `Astrodynamics/LowThrustTransfer` and
+`Spectroscopy/NMRSpectrumFitting` also pass, both on four or fewer paired seeds, so they are
+provisional. `MedicinalChemistry/MolecularLeadOptimization` reads as headroom its feedback arm
+cannot climb — the crossover at budget 7.8 showing up as disagreement between its cohorts, which
+is why only its curve is reportable and not a single gap number.
+
+**One task's feedback arm is actively harmful.** `StructuralEngineering/TrussWeightMinimization`
+trails its open-loop control by 0.37 and loses every paired seed from budget 8 onward. Feeding
+evaluation results back makes the searcher systematically worse there.
 
 The 11 tasks with apparent headroom and no feedback arm are the only pool that can add qualifying
 tasks, and they are where paired runs are being added next — but every one of those verdicts rests
