@@ -9,17 +9,20 @@ designer actually cares about, and it is what NUPACK-style design optimises.
 The oracle is ViennaRNA, the community standard for this thermodynamics, so a score here measures
 agreement with the Turner nearest-neighbour model rather than with a private reimplementation.
 
-The anchor is ViennaRNA's own `inverse_fold`, run by the evaluator on the same targets at scoring
-time and kept as the best of ANCHOR_RESTARTS restarts by ensemble defect. That routine optimises
-MFE structure match, not ensemble defect, so it is a real reference rather than an upper bound:
-on the harder targets here it does not even reach the target structure. Beating it on ensemble
-defect is the point, and the score is uncapped so that beating it is visible.
+The anchor is ViennaRNA's `inverse_pf_fold`, the routine that maximises the target's probability
+under the partition function, run by the evaluator on the same targets at scoring time and kept as
+the best of ANCHOR_RESTARTS restarts by ensemble defect. It is the community routine written for
+this objective, so reaching 1.0 means matching what the field already does rather than clearing a
+bar chosen to be clearable.
 
-Candidates may call `inverse_fold` themselves. An earlier draft forbade it, which was a rule the
-harness cannot enforce - the oracle sees a returned sequence, not how it was produced. Making the
-anchor a best-of-restarts removes the need: a candidate that simply calls the routine once scores
-about 0.58, measured through the harness, because the routine is stochastic and one draw is not
-its best of ten. Restarting it is doing what the anchor already does.
+An earlier version anchored on `inverse_fold`, which searches for MFE structure match. Measured on
+these targets that is about 75x worse on ensemble defect, and a twelve-proposal search cleared it
+four times over. Anchoring on the routine that optimises a different objective was setting the bar
+by accident.
+
+Candidates may call either routine themselves. An earlier draft forbade it, which the harness
+cannot enforce - the oracle sees a returned sequence, not how it was produced - and making the
+anchor a best-of-restarts removes the need.
 
     score = log(defect_baseline / defect_candidate) / log(defect_baseline / defect_anchor)
 
@@ -47,29 +50,35 @@ DIFFICULTY = 1
 # restarts lands inside the band. A higher level asks for targets its own designer handles worse.
 _LADDER = {
     1: {"branch_counts": (2, 3), "stem": (3, 6), "loop": (4, 7), "bulge_rate": 0.12,
-        "anchor_defect_band": (0.02, 0.15), "designability_restarts": 4,
+        "anchor_defect_band": (0.0008, 0.004), "designability_restarts": 4,
         "count": 5, "max_draws": 120, "seed": 20260811},
     2: {"branch_counts": (3, 4), "stem": (3, 5), "loop": (4, 8), "bulge_rate": 0.18,
-        "anchor_defect_band": (0.06, 0.25), "designability_restarts": 6,
+        "anchor_defect_band": (0.002, 0.010), "designability_restarts": 6,
         "count": 5, "max_draws": 200, "seed": 20260812},
     3: {"branch_counts": (4, 5), "stem": (3, 5), "loop": (4, 9), "bulge_rate": 0.22,
-        "anchor_defect_band": (0.10, 0.35), "designability_restarts": 8,
+        "anchor_defect_band": (0.004, 0.020), "designability_restarts": 8,
         "count": 5, "max_draws": 300, "seed": 20260813},
 }
 
 _SEALED_LADDER = {
     1: {"branch_counts": (2, 3), "stem": (3, 6), "loop": (5, 8), "bulge_rate": 0.12,
-        "anchor_defect_band": (0.02, 0.15), "designability_restarts": 4,
+        "anchor_defect_band": (0.0008, 0.004), "designability_restarts": 4,
         "count": 3, "max_draws": 120, "seed": 771201},
     2: {"branch_counts": (3, 4), "stem": (3, 5), "loop": (5, 9), "bulge_rate": 0.18,
-        "anchor_defect_band": (0.06, 0.25), "designability_restarts": 6,
+        "anchor_defect_band": (0.002, 0.010), "designability_restarts": 6,
         "count": 3, "max_draws": 200, "seed": 771202},
     3: {"branch_counts": (4, 5), "stem": (3, 5), "loop": (5, 10), "bulge_rate": 0.22,
-        "anchor_defect_band": (0.10, 0.35), "designability_restarts": 8,
+        "anchor_defect_band": (0.004, 0.020), "designability_restarts": 8,
         "count": 3, "max_draws": 300, "seed": 771203},
 }
 
-ANCHOR_RESTARTS = 10
+# `inverse_pf_fold` maximises the probability of the target under the partition function, which is
+# the objective this task scores. `inverse_fold` searches for MFE structure match instead, and
+# measured on this task's own targets it is about 75x worse on ensemble defect - median 0.108
+# against 0.00145 - so anchoring on it would set a bar a twelve-proposal search clears four times
+# over. The partition-function routine is also far more consistent across restarts, which is why
+# three suffice where the MFE routine needed ten.
+ANCHOR_RESTARTS = 3
 
 BASELINE_BASE = "A"
 ALPHABET = "ACGU"
@@ -153,7 +162,7 @@ def _generate(profile):
         if not _designable(RNA, structure, profile["designability_restarts"]):
             continue
         best = min(
-            ensemble_defect(RNA, RNA.inverse_fold(None, structure)[0], structure)
+            ensemble_defect(RNA, _pf_design(RNA, structure), structure)
             for _ in range(ANCHOR_RESTARTS)
         )
         if not (low <= best <= high):
@@ -220,6 +229,19 @@ def ensemble_defect(RNA, sequence: str, structure: str) -> float:
     return float(fold_compound.ensemble_defect(structure))
 
 
+def _pf_design(RNA, structure: str) -> str:
+    """ViennaRNA's partition-function designer, returning the sequence it settles on.
+
+    The structure must be balanced before this is called. ViennaRNA segfaults on an unbalanced
+    dot-bracket string rather than raising, so a malformed target takes the whole evaluator down
+    with no diagnostic - which is what a hand-typed target did during development.
+    """
+    if not balanced(structure):
+        raise ValueError("refusing to hand an unbalanced structure to ViennaRNA")
+    result = RNA.inverse_pf_fold(None, structure)
+    return result[0] if isinstance(result, (tuple, list)) else result
+
+
 def _anchors(RNA, targets, tag):
     """Baseline and ViennaRNA-designer defects, recomputed here rather than quoted."""
     key = "anchors::%s::%s" % (tag, tuple(t["structure"] for t in targets))
@@ -233,7 +255,7 @@ def _anchors(RNA, targets, tag):
         baseline_sequence = BASELINE_BASE * len(structure)
         best_sequence, best_defect = None, float("inf")
         for _restart in range(ANCHOR_RESTARTS):
-            designed, _distance = RNA.inverse_fold(None, structure)
+            designed = _pf_design(RNA, structure)
             defect = ensemble_defect(RNA, designed, structure)
             if defect < best_defect:
                 best_sequence, best_defect = designed, defect
