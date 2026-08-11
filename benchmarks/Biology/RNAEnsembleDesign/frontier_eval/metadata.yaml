@@ -1,0 +1,18 @@
+domain: RNAEngineering
+task: RNAEnsembleDesign
+scientific_role: optimization
+difficulty: flagship
+tier: T3
+oracle_type: community_thermodynamics_viennarna
+score_mode: uncapped
+gpu_required: false
+eval_time_seconds: 180
+science_metric: ensemble_defect_against_viennarna_inverse_fold_with_sealed_targets
+reference_baseline: unstructured poly-A sequence of the target length, ensemble defect near 1.0
+reference_sota: ViennaRNA inverse_fold on the same targets, recomputed by the evaluator at scoring time
+tool_level: L2
+tools_suggested:
+  - literature_search
+  - offline_dynamic_programming
+tool_rationale: The RNA design literature - probability-defect objectives, hierarchical decomposition, constraint generation - describes methods that improve materially over random restart against a thermodynamic oracle.
+citation: "Lorenz et al., Algorithms for Molecular Biology 2011, DOI 10.1186/1748-7188-6-26; Zadeh, Wolfe and Pierce, Journal of Computational Chemistry 2011, DOI 10.1002/jcc.21633; Turner and Mathews, Nucleic Acids Research 2010, DOI 10.1093/nar/gkp892"

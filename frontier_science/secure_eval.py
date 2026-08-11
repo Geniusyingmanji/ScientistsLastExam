@@ -39,6 +39,9 @@ BASE_CANDIDATE_PACKAGES = ("numpy", "numpy.libs", "scipy", "scipy.libs")
 ALLOWED_CANDIDATE_PACKAGES = {
     "rdkit": ("rdkit", "rdkit.libs", "PIL", "pillow.libs"),
     "sympy": ("sympy", "mpmath"),
+    # The ViennaRNA distribution installs an `RNA` module alongside a `ViennaRNA` package; both
+    # are needed for the import to resolve.
+    "ViennaRNA": ("RNA", "ViennaRNA"),
 }
 
 
