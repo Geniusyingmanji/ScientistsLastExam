@@ -42,27 +42,33 @@ import random
 # is a real change of regime rather than a longer list of the same thing.
 DIFFICULTY = 1
 
+# Difficulty is the anchor's own ensemble defect band, not a hand-tuned bulge rate. Targets are
+# drawn from the grammar and kept only if ViennaRNA can design them at all and if its best of ten
+# restarts lands inside the band. A higher level asks for targets its own designer handles worse.
 _LADDER = {
-    1: {"branch_counts": (2, 3, 4), "stem": (3, 5), "loop": (4, 7), "bulge_rate": 0.25,
-        "count": 6, "seed": 20260811},
-    2: {"branch_counts": (3, 4, 5), "stem": (3, 5), "loop": (4, 8), "bulge_rate": 0.35,
-        "count": 6, "seed": 20260812},
-    3: {"branch_counts": (4, 5, 6), "stem": (2, 4), "loop": (4, 9), "bulge_rate": 0.45,
-        "count": 6, "seed": 20260813},
+    1: {"branch_counts": (2, 3), "stem": (3, 6), "loop": (4, 7), "bulge_rate": 0.12,
+        "anchor_defect_band": (0.02, 0.15), "designability_restarts": 4,
+        "count": 5, "max_draws": 120, "seed": 20260811},
+    2: {"branch_counts": (3, 4), "stem": (3, 5), "loop": (4, 8), "bulge_rate": 0.18,
+        "anchor_defect_band": (0.06, 0.25), "designability_restarts": 6,
+        "count": 5, "max_draws": 200, "seed": 20260812},
+    3: {"branch_counts": (4, 5), "stem": (3, 5), "loop": (4, 9), "bulge_rate": 0.22,
+        "anchor_defect_band": (0.10, 0.35), "designability_restarts": 8,
+        "count": 5, "max_draws": 300, "seed": 20260813},
 }
 
 _SEALED_LADDER = {
-    1: {"branch_counts": (3, 4), "stem": (3, 5), "loop": (5, 8), "bulge_rate": 0.30,
-        "count": 3, "seed": 771201},
-    2: {"branch_counts": (4, 5), "stem": (3, 5), "loop": (5, 9), "bulge_rate": 0.40,
-        "count": 3, "seed": 771202},
-    3: {"branch_counts": (5, 6), "stem": (2, 4), "loop": (5, 10), "bulge_rate": 0.50,
-        "count": 3, "seed": 771203},
+    1: {"branch_counts": (2, 3), "stem": (3, 6), "loop": (5, 8), "bulge_rate": 0.12,
+        "anchor_defect_band": (0.02, 0.15), "designability_restarts": 4,
+        "count": 3, "max_draws": 120, "seed": 771201},
+    2: {"branch_counts": (3, 4), "stem": (3, 5), "loop": (5, 9), "bulge_rate": 0.18,
+        "anchor_defect_band": (0.06, 0.25), "designability_restarts": 6,
+        "count": 3, "max_draws": 200, "seed": 771202},
+    3: {"branch_counts": (4, 5), "stem": (3, 5), "loop": (5, 10), "bulge_rate": 0.22,
+        "anchor_defect_band": (0.10, 0.35), "designability_restarts": 8,
+        "count": 3, "max_draws": 300, "seed": 771203},
 }
 
-# The knob is helix length and bulge density, not sequence length. Long clean helices are filled
-# with GC pairs and stop being a design problem; short helices interrupted by bulges have to be
-# stabilised against their own slipped registers, which is where inverse folding is actually hard.
 ANCHOR_RESTARTS = 10
 
 BASELINE_BASE = "A"
@@ -109,15 +115,56 @@ def _target(rng, branches, stem, loop, bulge_rate):
     return left + "".join(inner) + right
 
 
+def _designable(RNA, structure, restarts):
+    """Does any sequence fold into this structure as its MFE?
+
+    Not every dot-bracket string is designable. Scoring an undesignable target measures how close
+    a candidate gets to something impossible, and the anchor there is arbitrary rather than a
+    reference. A first version of this task tuned bulge density by hand and produced target sets
+    where ViennaRNA's own designer reached the target on none of them; filtering for designability
+    replaces that guesswork with a property.
+    """
+    for _ in range(restarts):
+        sequence, distance = RNA.inverse_fold(None, structure)
+        if distance == 0 and RNA.fold(sequence)[0] == structure:
+            return True
+    return False
+
+
 def _generate(profile):
+    """Draw structures from the motif grammar and keep the designable, non-trivial ones.
+
+    Two filters. Designability makes the target reachable at all. The defect band keeps targets
+    that are neither solved by the reference designer on sight nor hopeless: a target whose anchor
+    already sits near zero cannot show a searcher doing better, which is what retired the first
+    shipped level after a twelve-proposal search drove its defects to 0.001.
+    """
+    RNA = _rna()
     rng = random.Random(profile["seed"])
-    out = []
-    for index in range(profile["count"]):
-        branches = profile["branch_counts"][index % len(profile["branch_counts"])]
+    low, high = profile["anchor_defect_band"]
+    out, examined = [], 0
+    while len(out) < profile["count"] and examined < profile["max_draws"]:
+        examined += 1
+        branches = profile["branch_counts"][examined % len(profile["branch_counts"])]
         structure = _target(rng, branches, profile["stem"], profile["loop"],
                             profile["bulge_rate"])
-        out.append({"key": "t%d_b%d_n%d" % (index, branches, len(structure)),
+        if not balanced(structure) or len(structure) > MAX_LENGTH:
+            continue
+        if not _designable(RNA, structure, profile["designability_restarts"]):
+            continue
+        best = min(
+            ensemble_defect(RNA, RNA.inverse_fold(None, structure)[0], structure)
+            for _ in range(ANCHOR_RESTARTS)
+        )
+        if not (low <= best <= high):
+            continue
+        out.append({"key": "t%d_b%d_n%d" % (len(out), branches, len(structure)),
                     "structure": structure})
+    if len(out) < profile["count"]:
+        raise ValueError(
+            "only %d of %d targets met the designability and defect band in %d draws"
+            % (len(out), profile["count"], examined)
+        )
     return tuple(out)
 
 
@@ -131,8 +178,17 @@ def _profile(ladder, level):
     return ladder[level]
 
 
-DEVELOPMENT_TARGETS = _generate(_profile(_LADDER, DIFFICULTY))
-SEALED_TARGETS = _generate(_profile(_SEALED_LADDER, DIFFICULTY))
+def development_targets():
+    """Built on first use: generation now folds candidate structures, so it cannot run at import."""
+    if "dev_targets" not in _CACHE:
+        _CACHE["dev_targets"] = _generate(_profile(_LADDER, DIFFICULTY))
+    return _CACHE["dev_targets"]
+
+
+def sealed_targets():
+    if "sealed_targets" not in _CACHE:
+        _CACHE["sealed_targets"] = _generate(_profile(_SEALED_LADDER, DIFFICULTY))
+    return _CACHE["sealed_targets"]
 
 _CACHE: dict = {}
 
@@ -272,7 +328,7 @@ def _score_split(RNA, design_rna, targets, tag):
 
 def evaluate(design_rna) -> dict:
     RNA = _rna()
-    development = _score_split(RNA, design_rna, DEVELOPMENT_TARGETS, "dev")
+    development = _score_split(RNA, design_rna, development_targets(), "dev")
     valid = development["valid_count"] == development["target_count"]
     result = {
         "combined_score": float(development["score"]) if valid else 0.0,
@@ -284,7 +340,7 @@ def evaluate(design_rna) -> dict:
         "difficulty": DIFFICULTY,
     }
     if valid:
-        sealed = _score_split(RNA, design_rna, SEALED_TARGETS, "sealed")
+        sealed = _score_split(RNA, design_rna, sealed_targets(), "sealed")
         result["robustness_score"] = float(sealed["score"])
         result["sealed_mfe_match_rate"] = sealed["mfe_match_rate"]
         result["sealed_per_instance"] = sealed["per_target"]
