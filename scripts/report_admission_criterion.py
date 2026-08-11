@@ -180,11 +180,23 @@ def gap_by_budget(open_loop: dict[int, list[float]], feedback: dict[int, list[fl
         if len(deltas) < 2:
             continue
         stdev = st.stdev(deltas)
+        mean = st.mean(deltas)
+        # Every paired verdict here rests on four to six seeds, where one seed can carry the
+        # result. `leave_one_out_worst` is the mean after dropping whichever single seed helps
+        # the conclusion most: if it crosses zero, the verdict is one seed deep.
+        if len(deltas) > 2:
+            drops = [st.mean([d for j, d in enumerate(deltas) if j != i])
+                     for i in range(len(deltas))]
+            loo = min(drops) if mean > 0 else max(drops)
+        else:
+            loo = None
         out.append({
             "budget": budget,
             "n": len(deltas),
-            "mean": st.mean(deltas),
+            "mean": mean,
             "stderr": stdev / math.sqrt(len(deltas)),
+            "leave_one_out_worst": loo,
+            "robust_to_one_seed": None if loo is None else (loo > 0) == (mean > 0),
             "wins": sum(1 for d in deltas if d > 0),
             "losses": sum(1 for d in deltas if d < 0),
         })
@@ -231,6 +243,12 @@ def verdict(sat: dict | None, gaps: list[dict]) -> tuple[str, str]:
             % (last["mean"], last["budget"], last["wins"], last["losses"])
         )
     if last["mean"] >= first["mean"]:
+        if last.get("robust_to_one_seed") is False:
+            return "measures_iteration_one_seed_deep", (
+                "gap grows to %+.4f at budget %d, but dropping a single seed takes it to "
+                "%+.4f - the conclusion rests on one paired seed"
+                % (last["mean"], last["budget"], last["leave_one_out_worst"])
+            )
         return "measures_iteration", (
             "control exhausted and the gap still grows, %+.4f at %d to %+.4f at %d "
             "(%d/%d at the last budget, n=%d)"
@@ -317,9 +335,10 @@ def main(argv: list[str] | None = None) -> int:
         )
 
     order = {
-        "measures_iteration": 0, "crossover_in_range": 1, "feedback_harmful": 2,
-        "gap_at_one_budget": 3, "exhausted_unpaired": 4, "control_not_exhausted": 5,
-        "thin_screen": 6, "floor": 7, "unknown": 8,
+        "measures_iteration": 0, "measures_iteration_one_seed_deep": 1,
+        "crossover_in_range": 2, "feedback_harmful": 3,
+        "gap_at_one_budget": 4, "exhausted_unpaired": 5, "control_not_exhausted": 6,
+        "thin_screen": 7, "floor": 8, "unknown": 9,
     }
     rows.sort(key=lambda r: (order[r["verdict"]], r["task"]))
 
@@ -339,9 +358,12 @@ def main(argv: list[str] | None = None) -> int:
             print("      cohort %s, %d paired seeds%s" % (
                 entry["cohort"], entry["seeds"], marker))
             for gap in entry["gaps"]:
-                print("        budget %2d  gap %+8.4f  se %.4f  %d/%d  n=%d" % (
+                loo = gap["leave_one_out_worst"]
+                tail = ("" if loo is None else
+                        "  loo %+.4f%s" % (loo, "" if gap["robust_to_one_seed"] else " FLIPS"))
+                print("        budget %2d  gap %+8.4f  se %.4f  %d/%d  n=%d%s" % (
                     gap["budget"], gap["mean"], gap["stderr"],
-                    gap["wins"], gap["losses"], gap["n"]))
+                    gap["wins"], gap["losses"], gap["n"], tail))
 
     counts: dict[str, int] = defaultdict(int)
     for row in rows:

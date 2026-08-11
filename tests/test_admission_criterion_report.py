@@ -187,6 +187,42 @@ class VerdictTests(unittest.TestCase):
         self.assertEqual(MODULE.verdict(flat, [])[0], "exhausted_unpaired")
 
 
+class LeaveOneOutTests(unittest.TestCase):
+    """Every paired verdict here has four to six seeds, so one seed can carry a conclusion."""
+
+    def test_a_gap_carried_by_one_seed_is_labelled(self):
+        gaps = [
+            {"budget": 3, "n": 4, "mean": 0.01, "stderr": 0.01, "wins": 2, "losses": 2,
+             "leave_one_out_worst": 0.005, "robust_to_one_seed": True},
+            {"budget": 12, "n": 4, "mean": 0.09, "stderr": 0.08, "wins": 2, "losses": 2,
+             "leave_one_out_worst": -0.02, "robust_to_one_seed": False},
+        ]
+        state, why = MODULE.verdict(_sat(seeds=6, median=0.0, final=0.6, saturated=True), gaps)
+        self.assertEqual(state, "measures_iteration_one_seed_deep")
+        self.assertIn("one paired seed", why)
+
+    def test_a_gap_that_survives_dropping_any_seed_passes_plainly(self):
+        gaps = [
+            {"budget": 3, "n": 4, "mean": 0.03, "stderr": 0.01, "wins": 3, "losses": 1,
+             "leave_one_out_worst": 0.02, "robust_to_one_seed": True},
+            {"budget": 12, "n": 4, "mean": 0.04, "stderr": 0.01, "wins": 4, "losses": 0,
+             "leave_one_out_worst": 0.03, "robust_to_one_seed": True},
+        ]
+        state, _ = MODULE.verdict(_sat(seeds=6, median=0.0, final=0.6, saturated=True), gaps)
+        self.assertEqual(state, "measures_iteration")
+
+    def test_leave_one_out_drops_the_seed_that_most_helps_the_conclusion(self):
+        """Four deltas, one of them carrying a positive mean."""
+        open_loop = {i: [0.0] * 12 for i in range(4)}
+        feedback = {0: [0.0] * 12, 1: [0.0] * 12, 2: [0.0] * 12,
+                    3: [0.4] * 12}
+        gaps = MODULE.gap_by_budget(open_loop, feedback)
+        last = gaps[-1]
+        self.assertAlmostEqual(last["mean"], 0.1)
+        self.assertAlmostEqual(last["leave_one_out_worst"], 0.0)
+        self.assertFalse(last["robust_to_one_seed"])
+
+
 class SaturationTests(unittest.TestCase):
     def test_saturation_is_judged_on_the_median_seed_not_the_mean(self):
         """One climbing seed among flat ones must not read as headroom.
