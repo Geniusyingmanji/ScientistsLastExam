@@ -487,6 +487,7 @@ The sandbox itself is verified intact: `tests.test_secure_eval` passes and
 python -m unittest -v tests.test_benchmark_layout tests.test_secure_eval
 python scripts/run_security_audit.py --output /tmp/security.json
 python scripts/audit_tasks.py --output /tmp/certification.json
+python scripts/audit_benchmark_standards.py --output /tmp/standards.json
 python scripts/report_admission_criterion.py --runs runs --output /tmp/admission.json
 python -m unittest discover -s tests -q
 ```
