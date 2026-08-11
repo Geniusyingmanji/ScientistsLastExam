@@ -353,12 +353,16 @@ def main(argv: list[str] | None = None) -> int:
         """Drop the domain prefix; the task name is what distinguishes rows here."""
         return task_id.split("/")[-1][:34]
 
-    print("%-34s %-22s %5s %s" % ("task", "verdict", "pool", "confidence"))
+    print("%-34s %-22s %5s %s" % ("task", "verdict", "used", "confidence"))
     print("-" * 84)
     for row in rows:
-        print("%-34s %-22s %5d %s" % (
-            short(row["task"]), row["verdict"],
-            row["pooled_open_loop_seeds"], row["confidence"]))
+        # Show the seeds the verdict actually rests on, not how many exist. A run shorter than
+        # six proposals cannot be judged for saturation and is excluded, so the two differ.
+        used = row["saturation"]["seeds"] if row["saturation"] else 0
+        extra = ("" if used == row["pooled_open_loop_seeds"]
+                 else " (%d too short to judge)" % (row["pooled_open_loop_seeds"] - used))
+        print("%-34s %-22s %5d %s%s" % (
+            short(row["task"]), row["verdict"], used, row["confidence"], extra))
         print("      %s" % row["reason"])
         for entry in row["paired_cohorts"]:
             marker = " <- judged" if entry["cohort"] == row["judged_on_cohort"] else ""
