@@ -593,12 +593,14 @@ def main(argv: list[str] | None = None) -> int:
     for name in sorted(tasks_measuring):
         print("   ", name)
     # Reported next to the qualifying list rather than folded into it. A task admitted on a
-    # saturation that one seed can overturn has not been shown to satisfy the necessary
-    # condition; it has been shown that the seeds run so far do not settle the question.
+    # saturation that a trusted-size subset of its own seeds would reverse has not been shown to
+    # satisfy the necessary condition; it has been shown that the seeds run so far do not settle
+    # the question.
     fragile_rows = [r for r in rows
                     if (r.get("saturation") or {}).get("seed_fragile")
                     and r["verdict"].startswith("measures_iteration")]
-    print("of those, resting on a saturation that one seed would overturn: %d" % len(fragile_rows))
+    print("of those, resting on a saturation that a %d-seed subset would reverse: %d"
+          % (MIN_SEEDS_FOR_CONFIDENT_SATURATION, len(fragile_rows)))
     for r in sorted(fragile_rows, key=lambda r: r["task"]):
         sat = r["saturation"]
         print("    %-30s %-16s %d seeds, median second-half gain %.4f (threshold %.2f)"
