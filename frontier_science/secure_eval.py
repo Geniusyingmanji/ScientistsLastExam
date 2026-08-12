@@ -50,6 +50,7 @@ ALLOWED_CANDIDATE_PACKAGES = {
                "importlib_metadata", "typing_extensions"),
     "networkx": ("networkx",),
     "qutip": ("qutip", "packaging"),
+    "astropy": ("astropy", "pyerfa", "erfa", "packaging", "PyYAML", "yaml"),
 }
 
 

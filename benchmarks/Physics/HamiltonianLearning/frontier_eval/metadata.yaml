@@ -1,0 +1,18 @@
+domain: QuantumDynamics
+task: HamiltonianLearning
+scientific_role: discovery
+difficulty: flagship
+tier: T3
+oracle_type: community_quantum_dynamics_qutip
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 180
+science_metric: parameter_recovery_with_separate_false_discovery_and_symmetry_refusal
+reference_baseline: initial decay slope read as each site's field, no couplings claimed
+reference_sota: forward-model least squares over the QuTiP propagator, shipped under verification/ and run at scoring time
+tool_level: L2
+tools_suggested:
+  - literature_search
+  - offline_dynamic_programming
+tool_rationale: The Hamiltonian-learning literature describes Bayesian experiment design, Trotterised likelihoods and symmetry analysis that improve materially over naive trace fitting.
+citation: "Wiebe et al., Physical Review Letters 2014, DOI 10.1103/PhysRevLett.112.190501; Johansson et al., Computer Physics Communications 2013, DOI 10.1016/j.cpc.2012.11.019"

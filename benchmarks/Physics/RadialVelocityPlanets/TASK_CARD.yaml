@@ -1,0 +1,86 @@
+schema_version: 2
+scientific_question: Can a search identify which periodic signals in a radial-velocity series are planets
+  rather than stellar rotation or cadence aliases, and recognise the systems where the period is not identifiable
+  at all?
+artifact: A deterministic function mapping a radial-velocity time series to a set of planet periods, or
+  to a refusal.
+oracle:
+  model: injected Keplerian sinusoids plus a stellar rotation signal and Gaussian noise on a nightly cadence;
+    periodograms and false-alarm probabilities from astropy 5.2.2 LombScargle
+  reference_designer: iterative pre-whitening with a false-alarm cut, shipped under verification/ and
+    run at scoring time
+  feasibility: 'a dict with a ''planets'' list of at most six positive finite periods, or {''abstain'':
+    True}; anything else is scored invalid rather than clipped'
+  deterministic: true
+  determinism_note: systems come from a seeded generator; LombScargle is deterministic for fixed input
+  external_tooling: astropy (pinned in verification/requirements.txt)
+normalization:
+  baseline: claim the three strongest periodogram peaks; scores 0.5000 mechanism with a 0.889 false-discovery
+    rate
+  reference: mechanism recovery of the shipped pre-whitening detector, measured at evaluation time
+  score: combined_score carries planet recovery alone, in [0, 1]; false-discovery rate and refusal accuracy
+    are reported beside it and must not be folded in
+  measured_anchors: recomputed per run; see references/known_best.md
+citations:
+- id: doi:10.3847/1538-4365/aab766
+  title: Understanding the Lomb-Scargle periodogram
+- id: doi:10.1051/0004-6361/201014354
+  title: The HARPS search for southern extra-solar planets
+- id: doi:10.1088/0004-637X/764/1/3
+  title: Stellar activity as a source of spurious radial-velocity signals
+- id: doi:10.1086/667697
+  title: 'Radial velocity planet searches: aliases and their consequences'
+invariants:
+- a detector returning exactly the injected periods scores 1.0 on mechanism and 0.0 on false discovery
+- shifting all observation times by a constant leaves every recovered period unchanged
+- a system with no injected planet has no recoverable mechanism, and every claim on it is a false discovery
+- abstaining on a determined system scores zero for that system, so refusing everything buys nothing
+known_shortcuts: 'astropy is available to the candidate, which is deliberate: the reference uses the same
+  periodogram and the task is about which peaks to believe. Claiming the maximum six periods is defeated
+  by the false-discovery axis. Abstaining everywhere is defeated by scoring an abstention on a determined
+  system as zero. Real exoplanet catalogues are public, so the systems here are generated rather than
+  drawn from one, and a strong result must be confirmed on the sealed systems.'
+review:
+  domain: pending_external_exoplanet_detection
+  evaluator_security: oracle runs in the trusted parent; candidate receives astropy through the audited
+    allowlist
+  reference_implementation_verified: 'truth-blind: the detector reads only the series a candidate reads'
+provenance:
+  class: procedural
+  target_source: seeded injection of Keplerian signals, a stellar rotation signal and noise on a nightly
+    cadence
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: sealed systems available from an unused generator seed
+novelty_risk:
+  level: medium
+  rationale: Periodogram analysis and pre-whitening are textbook and a model may recall them. The systems
+    are generated rather than taken from a catalogue, and the alias-refusal axis is not a published benchmark
+    setting.
+lineage:
+  status: incomplete_legacy
+  builder_model_ids:
+  - anthropic:claude-fable-5
+  builder_scaffolds:
+  - claude-code
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: 'None. The signal-to-noise regime was lowered before any model ran: at the
+    first sizing both the baseline and the reference recovered every planet and the mechanism axis reported
+    1.0 for both, so the axis was measuring nothing.'
+  shortcut_discoverer: builder
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: incomplete_legacy
+  author_domain: astronomy
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_yet_cross_checked
+  independent_recomputation_status: not_yet_recomputed
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []

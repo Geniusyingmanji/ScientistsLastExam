@@ -1,0 +1,13 @@
+1) Only edit solution.py. Keep recover_law(observation).
+2) Return {"coefficients": [c0, c1, ...]} meaning a[n] = c0*a[n-1] + c1*a[n-2] + ..., with integer
+   coefficients and order at most 6, or {"abstain": True}.
+3) A rule is scored on whether it reproduces a held-out continuation, not on whether it fits the
+   terms you were shown. Fitting the prefix and getting the continuation wrong is a false
+   discovery, which is scored on its own axis.
+4) Some prefixes are too short to determine a unique minimal rule: at least two distinct rules of
+   the same order fit every term shown. Abstaining is correct there and wrong elsewhere;
+   abstaining on a determined sequence scores zero for it.
+5) Deterministic CPU code. The standard library, NumPy, SciPy and SymPy are available. Use exact
+   arithmetic: a floating-point fit accepts coefficients that are merely close.
+6) `frontier_science.contract_lint` is importable and free to call for shape checks.
+7) Do not read verification/ or frontier_eval/.

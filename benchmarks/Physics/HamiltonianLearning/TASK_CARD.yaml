@@ -1,0 +1,86 @@
+schema_version: 2
+scientific_question: Can a search recover the fields and couplings of a quantum spin chain from its measured
+  single-site dynamics, without inventing couplings between uncoupled spins, and while recognising the
+  chains whose symmetry makes their parameters unidentifiable?
+artifact: A deterministic function mapping magnetisation traces to fields and a coupling matrix, or to
+  a refusal.
+oracle:
+  model: QuTiP 4.7.6 Schrodinger evolution of an XX-coupled spin chain with local Z fields; single-site
+    magnetisation expectation values at sampled times
+  reference_designer: forward-model least squares over the same QuTiP propagator by coordinate descent
+    with restarts, shipped under verification/ and run at scoring time
+  feasibility: 'a dict with n finite fields and an n x n symmetric coupling matrix, or {''abstain'': True};
+    anything else is scored invalid rather than clipped'
+  deterministic: true
+  determinism_note: chains come from a seeded generator; QuTiP evolution is deterministic for fixed parameters
+  external_tooling: qutip (pinned in verification/requirements.txt)
+normalization:
+  baseline: read each site's initial decay slope as its field and claim no couplings; scores 0.0833
+  reference: mechanism recovery of the shipped least-squares learner, measured at evaluation time
+  score: combined_score carries mechanism recovery alone, in [0, 1]; false-discovery rate and refusal
+    accuracy are reported beside it and must not be folded in
+  measured_anchors: recomputed per run; see references/known_best.md
+citations:
+- id: doi:10.1016/j.cpc.2012.11.019
+  title: 'QuTiP 2: A Python framework for the dynamics of open quantum systems'
+- id: doi:10.1103/PhysRevLett.112.190501
+  title: Hamiltonian learning and certification using quantum resources
+- id: doi:10.1038/s41567-021-01201-7
+  title: Practical characterization of quantum devices without tomography
+- id: doi:10.1103/RevModPhys.86.153
+  title: Quantum simulation
+invariants:
+- a Hamiltonian equal to the truth reproduces the traces exactly and scores 1.0 on mechanism
+- the traces are invariant under exchanging two spins related by the declared symmetry, so those parameters
+  are excluded from scoring
+- a chain with all couplings zero produces traces that depend only on the fields
+- abstaining on a determined chain scores zero for that chain, so refusing everything buys nothing
+known_shortcuts: 'QuTiP is available to the candidate, which is deliberate: fitting a forward model is
+  how this problem is solved and the reference does the same. Claiming a coupling on every pair is defeated
+  by the false-discovery axis, which has a denominator in every world. Abstaining everywhere is defeated
+  by scoring an abstention on a determined chain as zero. Reading verification/ would expose the sealed
+  chains and is blocked by the sandbox mounts. Hamiltonian learning is well published, so a strong result
+  must be confirmed on the sealed chains, which use a separate generator seed.'
+review:
+  domain: pending_external_quantum_dynamics
+  evaluator_security: oracle runs in the trusted parent; candidate receives QuTiP through the audited
+    allowlist
+  reference_implementation_verified: 'truth-blind: the learner reads only the traces a candidate reads'
+provenance:
+  class: procedural
+  target_source: seeded draw over fields, couplings and sparsity, with an exchange symmetry imposed on
+    part of each set
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: sealed chains available from an unused generator seed
+novelty_risk:
+  level: medium
+  rationale: Hamiltonian learning is an active published area and a model may recall fitting strategies.
+    The specific chains are generated rather than drawn from a known set, and the exchange-symmetry refusal
+    axis is not a published benchmark setting.
+lineage:
+  status: incomplete_legacy
+  builder_model_ids:
+  - anthropic:claude-fable-5
+  builder_scaffolds:
+  - claude-code
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: None. Worlds are required to contain at least one true zero coupling, added
+    before any model ran because without one the false-discovery axis has no denominator.
+  shortcut_discoverer: builder
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: incomplete_legacy
+  author_domain: quantum physics
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_yet_cross_checked
+  independent_recomputation_status: not_yet_recomputed
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []

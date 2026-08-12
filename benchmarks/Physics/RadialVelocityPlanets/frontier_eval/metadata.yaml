@@ -1,0 +1,18 @@
+domain: Exoplanets
+task: RadialVelocityPlanets
+scientific_role: discovery
+difficulty: flagship
+tier: T3
+oracle_type: community_timeseries_astropy
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 120
+science_metric: planet_recovery_with_separate_false_discovery_and_alias_refusal
+reference_baseline: three strongest periodogram peaks claimed as planets
+reference_sota: iterative pre-whitening with a false-alarm cut, shipped under verification/ and run at scoring time
+tool_level: L2
+tools_suggested:
+  - literature_search
+  - offline_dynamic_programming
+tool_rationale: The radial-velocity literature describes activity indicators, alias diagnostics and Bayesian model comparison that improve materially over peak picking.
+citation: "VanderPlas, ApJS 2018, DOI 10.3847/1538-4365/aab766; Dawson and Fabrycky, ApJ 2010, DOI 10.1088/0004-637X/722/1/937"
