@@ -48,8 +48,9 @@ name; the CLI examples below reflect that. Renaming the module is a separate mec
 - Four tasks whose oracles are **community-standard scientific tooling** (Stim + PyMatching,
   RDKit, ViennaRNA, nmrsim) rather than a bespoke reimplementation, each anchored on a value or a
   routine recomputed at evaluation time, and each carrying a measured **difficulty ladder**.
-- **2 of 52** tasks are so far shown to measure iterative improvement, against a criterion the
-  repository can now apply to any task with paired runs.
+- **5 of 53** tasks with recorded runs are so far shown to measure iterative improvement, against
+  a criterion the repository can apply to any task with paired runs. On **6** others, feedback
+  makes the searcher worse than its own control.
 - Deterministic black-box evaluation through a networkless Bubblewrap sandbox.
 - A built-in iterative rewrite baseline plus OpenEvolve, AB-MCTS, and ShinkaEvolve backends.
 - Hash-bound experiment reports with Git revision, command, source-tree state, and explicit
@@ -274,7 +275,7 @@ the default benchmark, `candidate` is retained for calibration but missing one o
 | [Security audit v49](experiments/security_audit_2026-07-27_v49.json) | 23/23 tests passed | Sandbox and protocol regressions |
 | [GPT-5.6 50-task census](experiments/gpt56_science_census_analysis_2026-08-06_v1.json) | 50/50 cells; 36/50 valid proposals | Budget-one screen; challenge gate fails |
 | [Track F confirmatory analysis](experiments/track_f_analysis_2026-07-26_v1.json) | no identified feedback advantage | Preregistered, n=48/arm, on ActiveLawDiscovery |
-| [Admission criterion sweep](.research/task_admission_verification_2026-08-11.md) | 2 of 52 tasks shown to measure iteration | Every recorded run, both conditions |
+| [Admission criterion sweep](.research/task_admission_verification_2026-08-11.md) | 5 of 53 tasks shown to measure iteration | Every recorded run, both conditions |
 
 [`experiments/TRUST.md`](experiments/TRUST.md) is the append-only trust manifest. Study plans and
 interpretations live in [`.research/`](.research/). Historical pre-sandbox reports are classified
@@ -364,7 +365,7 @@ either.
 `scripts/report_admission_criterion.py` applies both conditions to every run in `runs/`, reading
 each run's task and arm from its manifest rather than its directory name, pooling open-loop seeds
 across cohorts (saturation is one-armed) while keeping gaps within a cohort (arms from different
-cohorts were never paired). Over 52 tasks:
+cohorts were never paired). Over the 53 tasks with recorded runs:
 
 | verdict | tasks |
 |---|---:|
@@ -498,7 +499,7 @@ fifths of rejections are scientific rather than contractual. The report now give
 
 ### How much of this is measurement, and how much is a screen
 
-The inventory was originally swept one open-loop seed per task; 48 of 52 tasks had exactly one
+The inventory was originally swept one open-loop seed per task; 48 of 52 tasks then in it had exactly one
 seed anywhere in the repository. A seeding pass has since raised 50 of 52 to three or more, and it
 changed verdicts: 17 of 52 tasks moved category. That pass also exposed a defect in the criterion
 itself. Saturation was judged on the *mean* second-half gain across seeds, and because a
