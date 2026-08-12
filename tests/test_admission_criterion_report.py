@@ -35,12 +35,14 @@ MODULE = load_module()
 
 
 def write_run(root: Path, cohort: str, dirname: str, task: str, mode: str, seed: int,
-              scores: list[float], write_manifest: bool = True) -> None:
+              scores: list[float], write_manifest: bool = True,
+              model: str = "gpt-5.5") -> None:
     workdir = root / cohort / dirname
     workdir.mkdir(parents=True)
     if write_manifest:
         (workdir / "run_manifest.json").write_text(json.dumps({
             "task_id": task, "feedback_mode": mode, "seed": seed,
+            "llm_condition": {"model": model},
         }), encoding="utf-8")
     lines = [json.dumps({"step": 0, "valid": True, "score": 0.0})]
     for index, score in enumerate(scores, start=1):
@@ -54,7 +56,7 @@ class RunIdentityTests(unittest.TestCase):
             root = Path(tmp)
             write_run(root, "crossover", "b20_normal_s0", "Astro/LowThrust", "normal", 0, [0.1])
             found = MODULE.collect(root)
-            self.assertEqual(list(found), [("Astro/LowThrust", "crossover")])
+            self.assertEqual(list(found), [("Astro/LowThrust", "crossover", "gpt-5.5")])
 
     def test_a_run_without_a_manifest_is_skipped_rather_than_guessed(self):
         with TemporaryDirectory() as tmp:
@@ -111,6 +113,48 @@ def _sat(*, seeds, median, final, is_floor=False, saturated=False, marginal=Fals
         "saturated": saturated,
         "marginal": marginal,
     }
+
+
+class ModelSeparationTests(unittest.TestCase):
+    """Two model families in one run tree must not be averaged into one measurement."""
+
+    def test_the_same_task_measured_by_two_models_yields_two_rows(self):
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            climb = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8]
+            write_run(root, "a", "w1", "T/X", "selection_blind", 0, climb, model="gpt-5.5")
+            write_run(root, "b", "w2", "T/X", "selection_blind", 0, climb,
+                      model="claude-opus-4-8")
+            report = PoolingTests.run_report(root)
+            self.assertEqual(len(report["rows"]), 2)
+            self.assertEqual({r["model"] for r in report["rows"]},
+                             {"gpt-5.5", "claude-opus-4-8"})
+
+    def test_saturation_seeds_do_not_pool_across_models(self):
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            climb = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8]
+            for seed in (0, 1):
+                write_run(root, "a", "g%d" % seed, "T/X", "selection_blind", seed, climb,
+                          model="gpt-5.5")
+            write_run(root, "a", "c0", "T/X", "selection_blind", 9, climb,
+                      model="claude-opus-4-8")
+            report = PoolingTests.run_report(root)
+            by_model = {r["model"]: r["pooled_open_loop_seeds"] for r in report["rows"]}
+            self.assertEqual(by_model["gpt-5.5"], 2)
+            self.assertEqual(by_model["claude-opus-4-8"], 1)
+
+    def test_a_manifest_without_a_model_is_labelled_rather_than_assumed(self):
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            workdir = root / "old" / "w"
+            workdir.mkdir(parents=True)
+            (workdir / "run_manifest.json").write_text(
+                json.dumps({"task_id": "T/X", "feedback_mode": "normal", "seed": 0}),
+                encoding="utf-8")
+            (workdir / "trajectory.jsonl").write_text(
+                json.dumps({"step": 1, "valid": True, "score": 0.4}) + "\n", encoding="utf-8")
+            self.assertEqual(list(MODULE.collect(root)), [("T/X", "old", "unrecorded")])
 
 
 class VerdictTests(unittest.TestCase):

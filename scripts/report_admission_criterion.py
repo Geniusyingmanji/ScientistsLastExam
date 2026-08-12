@@ -115,8 +115,8 @@ def score_modes() -> dict[str, str]:
             for spec in list_tasks(None)}
 
 
-def run_identity(workdir: Path) -> tuple[str, str, int] | None:
-    """Read (task, feedback mode, seed) from the run manifest.
+def run_identity(workdir: Path) -> tuple[str, str, int, str] | None:
+    """Read (task, feedback mode, seed, model) from the run manifest.
 
     The directory name cannot be trusted for this. Budget-sweep cohorts are named for their
     budget rather than their task - `runs/crossover/b20_normal_s0` - so parsing the name invents
@@ -135,15 +135,24 @@ def run_identity(workdir: Path) -> tuple[str, str, int] | None:
     seed = document.get("seed")
     if not task or not mode or seed is None:
         return None
-    return str(task), str(mode), int(seed)
+    # Runs recorded before the manifest carried a readable model condition are labelled as such
+    # rather than silently pooled with a known model: a gap computed across two model families is
+    # not a gap, and this is the field that stops that happening by accident.
+    model = str((document.get("llm_condition") or {}).get("model") or "unrecorded")
+    return str(task), str(mode), int(seed), model
 
 
-def collect(runs_root: Path) -> dict[tuple[str, str], dict[str, dict[int, list[float]]]]:
-    """Group curves by (task, cohort).
+def collect(runs_root: Path) -> dict[tuple[str, str, str], dict[str, dict[int, list[float]]]]:
+    """Group curves by (task, cohort, model).
 
-    Cohorts are kept apart on purpose. A run under `runs/crossover` was made at a different
-    budget from one under `runs/saturation`, and averaging a gap across them would compare arms
-    that were never paired.
+    Cohorts are kept apart because a run under `runs/crossover` was made at a different budget
+    from one under `runs/saturation`, and averaging a gap across them would compare arms that
+    were never paired.
+
+    Models are kept apart for a stronger reason. The crossover budget is a property of the task
+    and the searcher together, so a gap measured with one model says nothing about another. With
+    a second model family now producing runs into the same tree, pooling would have quietly
+    averaged Claude against GPT and reported the mean as though it were one measurement.
     """
     found: dict[tuple[str, str], dict[str, dict[int, list[float]]]] = defaultdict(
         lambda: defaultdict(dict)
@@ -153,11 +162,11 @@ def collect(runs_root: Path) -> dict[tuple[str, str], dict[str, dict[int, list[f
         identity = run_identity(workdir)
         if identity is None:
             continue
-        task, mode, seed = identity
+        task, mode, seed, model = identity
         curve = best_so_far(trajectory)
         if curve is None:
             continue
-        key = (task, workdir.parent.name)
+        key = (task, workdir.parent.name, model)
         existing = found[key][mode].get(seed)
         if existing is None or len(curve) > len(existing):
             found[key][mode][seed] = curve
@@ -325,25 +334,28 @@ def main(argv: list[str] | None = None) -> int:
     # under `screen3` says the same thing about this task's control as one run under
     # `saturation`. The gap does not pool - it compares two arms, and arms from different
     # cohorts were never paired with each other.
-    pooled_open: dict[str, dict[int, list[float]]] = defaultdict(dict)
-    for (task, cohort), arms in found.items():
+    # Saturation pools across cohorts but never across models, for the same reason gaps do not.
+    pooled_open: dict[tuple[str, str], dict[tuple[str, int], list[float]]] = defaultdict(dict)
+    for (task, cohort, model), arms in found.items():
         for mode in OPEN_LOOP_MODES:
             for seed, curve in arms.get(mode, {}).items():
                 key = (cohort, seed)
-                existing = pooled_open[task].get(key)
+                existing = pooled_open[(task, model)].get(key)
                 if existing is None or len(curve) > len(existing):
-                    pooled_open[task][key] = curve
+                    pooled_open[(task, model)][key] = curve
 
     # One row per task. Saturation pools across cohorts, so a per-cohort row would repeat the
     # same saturation verdict once per cohort and inflate every count - after the screen cohort
     # landed, 52 tasks were being reported as 93 rows. Gaps stay per cohort, listed inside the
     # task's row, because two arms from different cohorts were never paired with each other.
     rows = []
-    tasks_seen = sorted({task for task, _ in found})
-    for task in tasks_seen:
+    # One row per (task, model): the same task measured by two model families is two
+    # measurements, and collapsing them would hide exactly the disagreement worth reporting.
+    pairs_seen = sorted({(task, model) for task, _cohort, model in found})
+    for task, model in pairs_seen:
         cohort_gaps = []
-        for (other, cohort), arms in sorted(found.items()):
-            if other != task:
+        for (other, cohort, other_model), arms in sorted(found.items()):
+            if other != task or other_model != model:
                 continue
             open_loop: dict[int, list[float]] = {}
             for mode in OPEN_LOOP_MODES:
@@ -357,7 +369,7 @@ def main(argv: list[str] | None = None) -> int:
             if gaps:
                 cohort_gaps.append({"cohort": cohort, "gaps": gaps,
                                     "seeds": len(set(open_loop) & set(feedback))})
-        sat = saturation(pooled_open.get(task, {}))
+        sat = saturation(pooled_open.get((task, model), {}))
         # Judge on the cohort that covers the most budgets, breaking ties on paired seeds.
         # Seeds alone is the wrong key: a cohort with eight seeds at a single budget cannot show
         # a trend at all, and ranking it first produced the verdict "gap grows with budget,
@@ -369,10 +381,11 @@ def main(argv: list[str] | None = None) -> int:
                              clipped=modes.get(task, "clipped") != "uncapped")
         rows.append({
             "task": task,
+            "model": model,
             "verdict": state,
             "reason": why,
             "judged_on_cohort": best["cohort"] if best else None,
-            "pooled_open_loop_seeds": len(pooled_open.get(task, {})),
+            "pooled_open_loop_seeds": len(pooled_open.get((task, model), {})),
             "paired_cohorts": cohort_gaps,
             "saturation": sat,
             "gap_by_budget": best["gaps"] if best else [],
@@ -400,18 +413,20 @@ def main(argv: list[str] | None = None) -> int:
 
     def short(task_id: str) -> str:
         """Drop the domain prefix; the task name is what distinguishes rows here."""
-        return task_id.split("/")[-1][:34]
+        return task_id.split("/")[-1]
 
-    print("%-34s %-22s %5s %s" % ("task", "verdict", "used", "confidence"))
-    print("-" * 84)
+    print("%-30s %-16s %-22s %5s %s" % (
+        "task", "model", "verdict", "used", "confidence"))
+    print("-" * 96)
     for row in rows:
         # Show the seeds the verdict actually rests on, not how many exist. A run shorter than
         # six proposals cannot be judged for saturation and is excluded, so the two differ.
         used = row["saturation"]["seeds"] if row["saturation"] else 0
         extra = ("" if used == row["pooled_open_loop_seeds"]
                  else " (%d too short to judge)" % (row["pooled_open_loop_seeds"] - used))
-        print("%-34s %-22s %5d %s%s" % (
-            short(row["task"]), row["verdict"], used, row["confidence"], extra))
+        print("%-30s %-16s %-22s %5d %s%s" % (
+            short(row["task"])[:30], row["model"][:16], row["verdict"], used,
+            row["confidence"], extra))
         print("      %s" % row["reason"])
         for entry in row["paired_cohorts"]:
             marker = " <- judged" if entry["cohort"] == row["judged_on_cohort"] else ""
@@ -432,6 +447,17 @@ def main(argv: list[str] | None = None) -> int:
     tasks = {row["task"] for row in rows}
     tasks_paired = {row["task"] for row in rows if row["gap_by_budget"]}
     tasks_measuring = {row["task"] for row in rows if row["verdict"] == "measures_iteration"}
+    models = sorted({row["model"] for row in rows})
+
+    # Where two models measured the same task, whether they agree is the question a single-model
+    # verdict cannot answer, so it is printed rather than left to be read off the table.
+    by_task: dict[str, dict[str, str]] = defaultdict(dict)
+    for row in rows:
+        by_task[row["task"]][row["model"]] = row["verdict"]
+    contested = {task: verdicts for task, verdicts in by_task.items()
+                 if len(verdicts) > 1 and len(set(verdicts.values())) > 1}
+    agreed = {task: verdicts for task, verdicts in by_task.items()
+              if len(verdicts) > 1 and len(set(verdicts.values())) == 1}
     # A run can abort mid-trajectory - an evaluator infrastructure failure ends one outright -
     # and a short curve then looks like a complete run at a smaller budget. Neither the gap nor
     # the saturation test can tell the difference, so the count is surfaced rather than hidden.
@@ -462,10 +488,19 @@ def main(argv: list[str] | None = None) -> int:
     print("  a single seed misread the one case that was later paired, and it misread it as")
     print("  climbing, so the no_headroom and floor verdicts above may understate headroom")
     print("  just as the headroom ones overstated it.")
+    print("models present:", ", ".join(models))
     print("distinct tasks: %d" % len(tasks))
+    if agreed or contested:
+        print("tasks measured by more than one model: %d agree, %d disagree"
+              % (len(agreed), len(contested)))
+        for task, verdicts in sorted(contested.items()):
+            print("  %-30s %s" % (
+                short(task), "; ".join("%s=%s" % kv for kv in sorted(verdicts.items()))))
     print("runs that ended short of their own cohort: %d of %d"
           % (truncated, total_runs))
-    assert len(rows) == len(tasks), "one row per task"
+    # One row per (task, model), not per task: the same task measured by two model families is
+    # two measurements.
+    assert len(rows) == len({(r["task"], r["model"]) for r in rows}), "one row per task and model"
     print("distinct tasks with paired evidence for the sufficient condition: %d of %d"
           % (len(tasks_paired), len(tasks)))
     print("distinct tasks shown to measure iteration: %d" % len(tasks_measuring))
@@ -508,6 +543,9 @@ def main(argv: list[str] | None = None) -> int:
         "row_count": len(rows),
         "note_rows": "one row per task; paired gaps listed per cohort inside each row",
         "distinct_task_count": len(tasks),
+        "models": models,
+        "cross_model_agreement": {t: v for t, v in sorted(agreed.items())},
+        "cross_model_disagreement": {t: v for t, v in sorted(contested.items())},
         "short_run_count": truncated,
         "total_run_count": total_runs,
         "distinct_tasks_with_paired_evidence": len(tasks_paired),
