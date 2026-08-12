@@ -47,7 +47,20 @@ PRICES = {
 OPEN_LOOP_MODES = ("selection_blind", "blind")
 
 
+def known_conditions() -> dict[str, str]:
+    """Condition hash to model, for manifests predating the readable field. See the YAML."""
+    import yaml
+
+    path = ROOT / "frontier_science" / "llm_conditions.yaml"
+    if not path.is_file():
+        return {}
+    document = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    return {str(h): str(entry.get("model") or "unrecorded")
+            for h, entry in (document.get("conditions") or {}).items()}
+
+
 def read_runs(runs_root: Path) -> list[dict]:
+    conditions = known_conditions()
     out = []
     for trajectory in runs_root.glob("*/*/trajectory.jsonl"):
         workdir = trajectory.parent
@@ -77,7 +90,9 @@ def read_runs(runs_root: Path) -> list[dict]:
                 break
         out.append({
             "task": str(document.get("task_id")),
-            "model": str((document.get("llm_condition") or {}).get("model") or "unrecorded"),
+            "model": (str((document.get("llm_condition") or {}).get("model") or "")
+                      or conditions.get(str(document.get("llm_condition_sha256") or ""),
+                                        "unrecorded")),
             "mode": str(document.get("feedback_mode")),
             "seed": document.get("seed"),
             "best": max(scores) if scores else 0.0,

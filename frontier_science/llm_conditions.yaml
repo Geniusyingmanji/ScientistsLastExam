@@ -1,0 +1,40 @@
+# Known searcher conditions, keyed by the `llm_condition_sha256` recorded in every run manifest.
+#
+# Why this exists. Manifests written before the readable `llm_condition` field was added carry
+# only the hash, so 222 runs in this repository had no attributable model. Separating models in
+# the admission report then split one model's evidence between its name and "unrecorded" and
+# weakened both halves. The hash is deterministic over the searcher condition, so the attribution
+# is recoverable exactly - no re-running, and no rewriting of the original artifacts, which would
+# destroy the provenance this repository depends on.
+#
+# Each entry is a claim that a hash was produced by that condition. Regenerate a hash with:
+#   python3 -c "import sys; sys.path.insert(0,'.'); \
+#     from frontier_science.config import load_llm_client; \
+#     from frontier_science.algorithms.common import llm_condition_sha256; \
+#     print(llm_condition_sha256(load_llm_client('<config path>')))"
+schema_version: 1
+conditions:
+  5b0df4671481f6b3505155bc6c5654a64c4da5591422fb806904e7d0f44fc4d2:
+    model: gpt-5.5
+    wire: responses
+    reasoning_effort: low
+    max_output_tokens: 16000
+    note: the local keyless proxy default; most runs from 2026-08-10 onward
+  60b240fdc2530ab24d202289a497dd4c2fb0ad1380a6ad9e8aca293bb8e4c34d:
+    model: gpt-5.6-sol
+    wire: responses
+    reasoning_effort: low
+    max_output_tokens: 16000
+    note: the condition behind the historical calibration ladders and the census
+  ca4e323ecfa6177a8e6b3ede23ff6df35ba459d525906cbd42d2e001f43d1dfa:
+    model: gpt-5.6-sol
+    wire: chat
+    reasoning_effort: null
+    max_output_tokens: 16000
+    note: the chat-wire variant used while the responses wire was being debugged
+  984bf38b1da12c6ab924a3ea56ab8923d8547ea18fab3868270283b4ae10055b:
+    model: claude-opus-4-8
+    wire: anthropic
+    reasoning_effort: null
+    max_output_tokens: 8000
+    note: Anthropic Messages API, extended thinking off

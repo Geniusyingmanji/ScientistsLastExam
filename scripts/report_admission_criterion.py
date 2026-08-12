@@ -115,6 +115,25 @@ def score_modes() -> dict[str, str]:
             for spec in list_tasks(None)}
 
 
+def known_conditions() -> dict[str, str]:
+    """Condition hash to model, for manifests written before the readable field existed.
+
+    Recovering the attribution rather than rewriting the manifests: the artifacts stay as they
+    were recorded, and the mapping is a separate auditable file.
+    """
+    import yaml
+
+    path = ROOT / "frontier_science" / "llm_conditions.yaml"
+    if not path.is_file():
+        return {}
+    document = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    return {str(h): str(entry.get("model") or "unrecorded")
+            for h, entry in (document.get("conditions") or {}).items()}
+
+
+_CONDITIONS: dict[str, str] | None = None
+
+
 def run_identity(workdir: Path) -> tuple[str, str, int, str] | None:
     """Read (task, feedback mode, seed, model) from the run manifest.
 
@@ -138,7 +157,12 @@ def run_identity(workdir: Path) -> tuple[str, str, int, str] | None:
     # Runs recorded before the manifest carried a readable model condition are labelled as such
     # rather than silently pooled with a known model: a gap computed across two model families is
     # not a gap, and this is the field that stops that happening by accident.
-    model = str((document.get("llm_condition") or {}).get("model") or "unrecorded")
+    model = str((document.get("llm_condition") or {}).get("model") or "")
+    if not model:
+        global _CONDITIONS
+        if _CONDITIONS is None:
+            _CONDITIONS = known_conditions()
+        model = _CONDITIONS.get(str(document.get("llm_condition_sha256") or ""), "unrecorded")
     return str(task), str(mode), int(seed), model
 
 
