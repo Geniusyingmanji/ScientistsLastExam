@@ -1,0 +1,10 @@
+1) Only edit solution.py. Keep detect_planets(observation).
+2) Return {"planets": [{"period": P}, ...]} or {"abstain": True}. At most six claims.
+3) Deterministic CPU code. The standard library, NumPy, SciPy and astropy are available;
+   astropy.timeseries.LombScargle and its false-alarm probabilities are the community tools here.
+4) Every star carries a rotation signal that is not a planet, and some systems have no planet at
+   all. Claiming those is scored as false discovery, not as a near miss.
+5) Some systems have a planet whose one-day cadence alias fits equally well. Abstaining is correct
+   there and wrong everywhere else; abstaining on a determined system scores zero for it.
+6) `frontier_science.contract_lint` is importable and free to call for shape checks.
+7) Do not read verification/ or frontier_eval/.
