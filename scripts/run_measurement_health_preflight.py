@@ -964,8 +964,11 @@ def _freeze_revision(binding: Any) -> Any:
     """The revision the frozen evidence was taken at.
 
     It lives inside the bound evidence document, not in the preflight config - the config records
-    where the evidence is and what it hashes to, and the document records where it came from. A
-    first attempt read the config and classified nothing on all seven tasks.
+    where the evidence is and what it hashes to, and the document records where it came from. Two
+    wrong turns before this: reading a `revision` key off the config, and passing the materiality
+    section rather than the `evidence` binding inside it. Both classified nothing on all seven
+    tasks, which is why this returns None rather than raising - a diagnosis that cannot be made is
+    reported as unavailable, never guessed.
     """
     if not isinstance(binding, dict):
         return None
@@ -1095,7 +1098,8 @@ def _task_preflight(
                 actual_sha256=current_package,
                 scope="all task source/data files excluding generated output",
                 mismatch=(None if package_binding_passed else _package_mismatch_explanation(
-                    task_spec, _freeze_revision(config.get("scientific_materiality")))),
+                    task_spec, _freeze_revision(
+                        (config.get("scientific_materiality") or {}).get("evidence")))),
             ),
             "fixed_artifact_binding": _check(
                 "pass" if artifact_binding_passed else "fail",
