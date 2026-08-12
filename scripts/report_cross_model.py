@@ -240,6 +240,7 @@ def main(argv: list[str] | None = None) -> int:
                  "$%.2f" % dollars if dollars is not None else "no published price"))
 
     verdicts: dict[str, dict[str, str]] = {}
+    comparable: dict[str, dict[str, str]] = {}
     if args.admission and Path(args.admission).is_file():
         report = json.loads(Path(args.admission).read_text(encoding="utf-8"))
         for row in report.get("rows", []):
@@ -249,14 +250,26 @@ def main(argv: list[str] | None = None) -> int:
             if model == "unrecorded":
                 continue
             verdicts.setdefault(row["task"], {})[model] = row["verdict"]
-        contested = {t: v for t, v in verdicts.items()
-                     if len(v) > 1 and len(set(v.values())) > 1}
-        agreed = {t: v for t, v in verdicts.items()
-                  if len(v) > 1 and len(set(v.values())) == 1}
+        # Same contract rule as the score comparison. A verdict is about a task, so two verdicts
+        # reached against different versions of that task disagree about nothing.
+        comparable, dropped = {}, 0
+        for task, per_model in verdicts.items():
+            kept = {m: v for m, v in per_model.items() if len(contracts[task][m]) == 1}
+            versions = {next(iter(contracts[task][m])) for m in kept}
+            if len(kept) > 1 and len(versions) == 1:
+                comparable[task] = kept
+            elif len(per_model) > 1:
+                dropped += 1
+        contested = {t: v for t, v in comparable.items() if len(set(v.values())) > 1}
+        agreed = {t: v for t, v in comparable.items() if len(set(v.values())) == 1}
         print()
-        print("=== verdict agreement ===")
-        print("  tasks with a verdict from more than one model: %d" % (len(agreed) + len(contested)))
+        print("=== verdict agreement, on shared task versions ===")
+        print("  tasks with a verdict from more than one model, same version: %d"
+              % (len(agreed) + len(contested)))
         print("  agree: %d   disagree: %d" % (len(agreed), len(contested)))
+        if dropped:
+            print("  %d further multi-model tasks excluded: the models ran different versions"
+                  % dropped)
         for task, per_model in sorted(contested.items()):
             print("    %-30s %s" % (task.split("/")[-1][:30],
                                     "; ".join("%s=%s" % kv for kv in sorted(per_model.items()))))
@@ -270,6 +283,7 @@ def main(argv: list[str] | None = None) -> int:
         "open_loop_scores": {m: {t: st.mean(v) for t, v in scores[m].items()} for m in scores},
         "cost": cost_rows,
         "verdicts": verdicts,
+        "verdicts_same_version": comparable,
     }, indent=2), encoding="utf-8")
     print()
     print("report:", args.output)
