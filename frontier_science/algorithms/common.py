@@ -94,14 +94,39 @@ def task_contract_sha256(spec: TaskSpec) -> str:
     return digest.hexdigest()
 
 
+# Directories a task grows by being used rather than by being written. Their contents are
+# outputs, not part of what the task asks or how it scores, and hashing them made a task's
+# identity depend on whether anyone had run it.
+GENERATED_DIRECTORIES = {"__pycache__", "runs", ".pytest_cache", ".ipynb_checkpoints"}
+
+
 def task_package_sha256(spec: TaskSpec) -> str:
-    """Bind every task source/data file while excluding generated caches."""
+    """Bind every task source/data file while excluding generated output.
+
+    `runs` is excluded for the same reason `__pycache__` is, and its absence from the original
+    exclusion list caused real damage. Several tasks accumulate a `runs/` directory inside the
+    task directory when they are executed, so the hash meant to identify the task changed every
+    time the task was run. Three consequences, all observed:
+
+    the hashes recorded in eleven tasks' manifests are reproduced by no revision in this
+    repository, because they are hashes of a tree that contained run output;
+
+    two runs of an unedited task record different `task_package_sha256` values, and the
+    comparability guard in the reports reads that as two different versions of the task and
+    refuses to compare them; and
+
+    the frozen-cohort preflight can fail its `frozen_task_package` check because somebody ran the
+    task, which is not what that check is for.
+
+    Excluding them changes the hash of any task that has been run in place. That is intended: the
+    new value is the one that identifies the task rather than the task plus its history.
+    """
 
     digest = hashlib.sha256()
     paths = sorted(
         path for path in spec.task_dir.rglob("*")
         if path.is_file()
-        and "__pycache__" not in path.parts
+        and not GENERATED_DIRECTORIES & set(path.relative_to(spec.task_dir).parts)
         and path.suffix not in {".pyc", ".pyo"}
     )
     for path in paths:
