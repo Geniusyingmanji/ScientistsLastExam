@@ -58,18 +58,28 @@ def git(*args: str) -> str:
                           check=True).stdout
 
 
-def tree_files(revision: str, task_dir: str) -> dict[str, str]:
-    """Relative path -> blob id, for the task directory at a revision."""
+def tree_files(revision: str, task_name: str) -> dict[str, str]:
+    """Relative path -> blob id, for the task directory as it stood at a revision.
+
+    Located by name rather than by today's path. Tasks were moved between domain directories
+    during a layout change, and `git log -- <current path>` does not follow a directory rename,
+    so replaying only the current path found no revision at all for eleven tasks - reported as
+    "no revision reproduces this hash" when the revisions were there under another name.
+    """
     out = {}
-    listing = git("ls-tree", "-r", revision, "--", task_dir)
+    listing = git("ls-tree", "-r", revision, "--", "benchmarks")
+    marker = "/%s/" % task_name
+    root = None
     for line in listing.splitlines():
         if not line.strip():
             continue
         meta, path = line.split("\t", 1)
         _mode, kind, blob = meta.split()
-        if kind != "blob":
+        if kind != "blob" or marker not in path:
             continue
-        relative = Path(path).relative_to(task_dir).as_posix()
+        if root is None:
+            root = path[:path.index(marker) + len(marker) - 1]
+        relative = Path(path).relative_to(root).as_posix()
         if "__pycache__" in Path(relative).parts or Path(relative).suffix in SKIP_SUFFIXES:
             continue
         out[relative] = blob
@@ -142,10 +152,12 @@ def main(argv: list[str] | None = None) -> int:
             continue
 
         # Replay every revision that touched this task and hash it as the runner would have.
-        revisions = git("log", "--format=%H", "--", task_dir).split()
+        task_name = task.split("/")[-1]
+        revisions = git("log", "--format=%H", "--",
+                        ":(glob)benchmarks/**/%s/**" % task_name).split()
         by_hash: dict[str, tuple[str, dict[str, str]]] = {}
         for revision in revisions:
-            files = tree_files(revision, task_dir)
+            files = tree_files(revision, task_name)
             if not files:
                 continue
             digest = package_hash(files)
