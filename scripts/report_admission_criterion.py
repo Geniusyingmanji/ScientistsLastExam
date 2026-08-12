@@ -47,6 +47,26 @@ sys.path.insert(0, str(ROOT))
 # best-of-N overtakes the searcher past the crossover.
 BUDGETS = (3, 5, 8, 10, 12)
 
+# Why the comparability key is `task_package_sha256` and not `task_contract_sha256`.
+#
+# Both are recorded in every manifest. The contract hash is narrower - Task.md, the initial
+# program, verification/evaluator.py and the eval metadata - and it is tempting as the key,
+# because it would not reject a comparison over a task whose only change was a note in its card.
+#
+# It is too narrow for this job. It does not cover the rest of verification/: the reference
+# implementations and frozen data that several tasks recompute their anchor from at scoring time.
+# Editing RNAEnsembleDesign's reference designer changes what a score means without moving the
+# contract hash at all.
+#
+# The two failure modes are not symmetric. Rejecting a comparison that would have been valid
+# costs a comparison and says so out loud. Accepting one that is not valid puts a task change
+# into a report as a model difference, which is the error this whole guard exists to prevent -
+# on one task it read as an eighteen-fold gap. So the broader hash wins.
+#
+# Measured, in case the narrower one ever looks tempting again: on this inventory the two agree
+# exactly. The same 20 of 54 tasks carry more than one version under either hash, so nothing is
+# currently being rejected that the contract hash would have allowed.
+
 OPEN_LOOP_MODES = ("selection_blind", "blind")
 FEEDBACK_MODES = ("normal",)
 
