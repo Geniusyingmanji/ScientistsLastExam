@@ -226,8 +226,24 @@ def saturation(curves: dict[int, list[float]]) -> dict | None:
     # toward "headroom" and not one moved back. The median asks the question actually meant here:
     # does a typical run of this control still improve.
     median_gain = st.median(gains)
+    # Leave-one-out over seeds, on the decision rather than on the number. The necessary
+    # condition is a threshold test, so what matters is whether dropping any single seed moves
+    # the median across it. This was added after a seed-matched comparison: LowThrustTransfer
+    # read as exhausted at 0.0053 over six seeds and as still climbing at 0.0193 over the first
+    # three, which means its qualifying verdict was a property of how many seeds happened to have
+    # been run. A verdict that flips on one seed is not evidence about the task.
+    exhausted = median_gain < MATERIAL_GAIN
+    fragile = False
+    if len(gains) > 2:
+        for index in range(len(gains)):
+            without = gains[:index] + gains[index + 1:]
+            if (st.median(without) < MATERIAL_GAIN) != exhausted:
+                fragile = True
+                break
     return {
         "seeds": len(usable),
+        # Undecidable with two seeds or fewer: any leave-one-out is then a single curve.
+        "seed_fragile": fragile if len(gains) > 2 else None,
         "median_second_half_gain": median_gain,
         "mean_second_half_gain": st.mean(gains),
         "max_second_half_gain": max(gains),
@@ -566,6 +582,18 @@ def main(argv: list[str] | None = None) -> int:
     print("distinct tasks shown to measure iteration: %d" % len(tasks_measuring))
     for name in sorted(tasks_measuring):
         print("   ", name)
+    # Reported next to the qualifying list rather than folded into it. A task admitted on a
+    # saturation that one seed can overturn has not been shown to satisfy the necessary
+    # condition; it has been shown that the seeds run so far do not settle the question.
+    fragile_rows = [r for r in rows
+                    if (r.get("saturation") or {}).get("seed_fragile")
+                    and r["verdict"].startswith("measures_iteration")]
+    print("of those, resting on a saturation that one seed would overturn: %d" % len(fragile_rows))
+    for r in sorted(fragile_rows, key=lambda r: r["task"]):
+        sat = r["saturation"]
+        print("    %-30s %-16s %d seeds, median second-half gain %.4f (threshold %.2f)"
+              % (short(r["task"]), r["model"][:16], sat["seeds"],
+                 sat["median_second_half_gain"], MATERIAL_GAIN))
 
     # The only pool that can add qualifying tasks: real headroom, never paired.
     # One entry per task, not per (task, cohort): saturation now pools across cohorts, so a task
@@ -605,6 +633,10 @@ def main(argv: list[str] | None = None) -> int:
         "distinct_task_count": len(tasks),
         "models": models,
         "tasks_with_more_than_one_version": split_by_version,
+        "qualifying_but_seed_fragile": [
+            {"task": r["task"], "model": r["model"], "task_version": r["task_version"]}
+            for r in rows if (r.get("saturation") or {}).get("seed_fragile")
+            and r["verdict"].startswith("measures_iteration")],
         "cross_model_agreement": {t: v for t, v in sorted(agreed.items())},
         "cross_model_disagreement": {t: v for t, v in sorted(contested.items())},
         "short_run_count": truncated,

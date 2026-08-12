@@ -135,6 +135,30 @@ class TaskVersionSeparationTests(unittest.TestCase):
             self.assertEqual(versions, {"v1" + "0" * 10, "v2" + "0" * 10})
 
 
+class SeedFragilityTests(unittest.TestCase):
+    """A necessary condition that one seed can overturn has not been established."""
+
+    def saturation_of(self, *gain_curves):
+        return MODULE.saturation({i: c for i, c in enumerate(gain_curves)})
+
+    def test_a_decision_one_seed_would_flip_is_marked_fragile(self):
+        # Two flat curves and one that climbs hard. The median over all three is flat, so the
+        # control reads as exhausted; drop a flat one and the median is the climbing curve.
+        flat = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+        climbing = [0.0, 0.1, 0.2, 0.4, 0.7, 0.9]
+        result = self.saturation_of(flat, flat, climbing)
+        self.assertTrue(result["seed_fragile"])
+
+    def test_a_decision_no_single_seed_can_flip_is_not_marked(self):
+        flat = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+        result = self.saturation_of(flat, flat, flat, flat)
+        self.assertFalse(result["seed_fragile"])
+
+    def test_fragility_is_undecidable_with_two_seeds(self):
+        flat = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+        self.assertIsNone(self.saturation_of(flat, flat)["seed_fragile"])
+
+
 class ModelSeparationTests(unittest.TestCase):
     """Two model families in one run tree must not be averaged into one measurement."""
 
