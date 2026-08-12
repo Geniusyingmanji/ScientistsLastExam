@@ -6,9 +6,23 @@ a frozen deterministic oracle evaluates each candidate, and the benchmark record
 best feasible artifact and the cost-aware trajectory used to find it.
 
 The question it is built to answer is not "can a model score well once" but "does giving a model
-feedback and more budget make it better" — the agentic, self-improving regime that AlphaFold-style
-and AlphaEvolve-style results live in. Section [Does a task measure iteration](#does-a-task-measure-iteration)
-gives the criterion, and the answer for the current inventory is a small number.
+feedback and more budget make it better **at science**" — the agentic, self-improving regime that
+AlphaFold-style and AlphaEvolve-style results live in.
+
+Both halves of that matter, and the concurrent literature splits along exactly this line. SEE
+([arXiv:2608.06931](https://arxiv.org/abs/2608.06931)) is science — expert-curated chemistry,
+biology and materials questions, 19 multimodal models, best accuracy 48.7% — but it is a static
+question set, so it cannot say whether iterating helps. OPT-BENCH
+([arXiv:2605.08904](https://arxiv.org/abs/2605.08904)) measures iterative self-optimization with a
+memory-less control arm, which is the right instrument, but its thirty environments are twenty
+machine-learning tasks and ten NP-hard problems. Neither occupies the intersection: a scientific
+problem with a frozen domain oracle, where the thing being measured is whether feedback compounds.
+
+That intersection is what this repository is for. Section
+[Does a task measure iteration](#does-a-task-measure-iteration) gives the criterion, and
+[Does a task meet the benchmark's own standards](#does-a-task-meet-the-benchmarks-own-standards)
+gives the audit of whether the science underneath is real. The honest answer today is a small
+number on both.
 
 This repository is inspired by
 [Frontier-Engineering](https://github.com/EinsiaLab/Frontier-Engineering). It is unrelated to
@@ -24,7 +38,12 @@ name; the CLI examples below reflect that. Renaming the module is a separate mec
 
 ## At a glance
 
-- **63 task packages** across **58 logical domains** and **7 broad disciplines**.
+- **63 task packages** across **57 logical domains** and **7 broad disciplines** — biology,
+  chemistry, computer science, earth science, engineering, mathematics and physics.
+- **45 scientific optimization** tasks and **18 scientific discovery** tasks, the two forms this
+  benchmark claims to cover. Discovery tasks report mechanism recovery, false-discovery rate and
+  calibrated refusal separately, because one maximised scalar cannot say whether a discovery was
+  right.
 - **7 certified**, **47 candidate**, and **9 quarantined** tasks.
 - Four tasks whose oracles are **community-standard scientific tooling** (Stim + PyMatching,
   RDKit, ViennaRNA, nmrsim) rather than a bespoke reimplementation, each anchored on a value or a
