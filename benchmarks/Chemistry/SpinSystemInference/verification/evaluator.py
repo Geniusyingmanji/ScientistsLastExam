@@ -27,13 +27,16 @@ import random
 
 DIFFICULTY = 1
 
+# Every level carries true-zero couplings. Without them the false-discovery axis has no
+# denominator and reports None, which is what the first shipped level did.
+#
 # Difficulty is the number of coupled spins and how close their shifts sit. Two spins far apart
 # are first-order and readable by inspection; three or more spins with shifts inside a few
 # couplings of each other are strongly second-order, where intensities move and the naive
 # reading fails.
 _LADDER = {
     1: {"spins": 3, "shift_span": 260.0, "min_gap": 45.0, "j_range": (3.0, 12.0),
-        "sparsity": 0.0, "count": 5, "seed": 20260812},
+        "sparsity": 0.34, "count": 5, "seed": 20260812},
     2: {"spins": 4, "shift_span": 220.0, "min_gap": 28.0, "j_range": (2.0, 14.0),
         "sparsity": 0.25, "count": 5, "seed": 20260813},
     3: {"spins": 5, "shift_span": 180.0, "min_gap": 18.0, "j_range": (1.5, 16.0),
@@ -42,7 +45,7 @@ _LADDER = {
 
 _SEALED_LADDER = {
     1: {"spins": 3, "shift_span": 240.0, "min_gap": 40.0, "j_range": (3.0, 12.0),
-        "sparsity": 0.0, "count": 3, "seed": 880101},
+        "sparsity": 0.34, "count": 3, "seed": 880101},
     2: {"spins": 4, "shift_span": 200.0, "min_gap": 25.0, "j_range": (2.0, 14.0),
         "sparsity": 0.25, "count": 3, "seed": 880102},
     3: {"spins": 5, "shift_span": 170.0, "min_gap": 16.0, "j_range": (1.5, 16.0),
@@ -64,6 +67,26 @@ def _nmrsim():
     import nmrsim
 
     return nmrsim
+
+
+class _quiet:
+    """Swallow nmrsim's Hamiltonian debug printing.
+
+    The library prints two lines to stdout on every simulation. A single calibration run produced
+    2.8 MB of it, which the harness captures verbatim; a search making thousands of simulations
+    would bury its own trajectory.
+    """
+
+    def __enter__(self):
+        import contextlib
+        import io
+
+        self._redirect = contextlib.redirect_stdout(io.StringIO())
+        self._redirect.__enter__()
+        return self
+
+    def __exit__(self, *exc):
+        return self._redirect.__exit__(*exc)
 
 
 def _profile(ladder, level):
@@ -106,11 +129,13 @@ def _simulate(world):
     nmrsim = _nmrsim()
     import numpy as np
 
-    system = nmrsim.SpinSystem(
-        list(world["shifts"]), np.array(world["couplings"], dtype=float),
-        w=LINEWIDTH, second_order=True,
-    )
-    peaks = [(float(f), float(i)) for f, i in system.peaklist() if i > 1e-6]
+    with _quiet():
+        system = nmrsim.SpinSystem(
+            list(world["shifts"]), np.array(world["couplings"], dtype=float),
+            w=LINEWIDTH, second_order=True,
+        )
+        raw = system.peaklist()
+    peaks = [(float(f), float(i)) for f, i in raw if i > 1e-6]
     peaks.sort()
     return peaks
 

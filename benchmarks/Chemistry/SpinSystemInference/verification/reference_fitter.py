@@ -38,10 +38,14 @@ def infer_spin_system(observation):
     lo = min(f for f, _ in peaks) - 5.0
     hi = max(f for f, _ in peaks) + 5.0
 
+    import contextlib, io
+
     def simulate(shifts, couplings):
-        system = nmrsim.SpinSystem(list(shifts), np.array(couplings, dtype=float),
-                                   w=width, second_order=True)
-        return [(float(f), float(i)) for f, i in system.peaklist() if i > 1e-6]
+        with contextlib.redirect_stdout(io.StringIO()):
+            system = nmrsim.SpinSystem(list(shifts), np.array(couplings, dtype=float),
+                                       w=width, second_order=True)
+            raw = system.peaklist()
+        return [(float(f), float(i)) for f, i in raw if i > 1e-6]
 
     def cost(shifts, couplings):
         return _peak_distance(peaks, simulate(shifts, couplings), width)
