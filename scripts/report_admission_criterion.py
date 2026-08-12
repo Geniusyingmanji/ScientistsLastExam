@@ -451,8 +451,13 @@ def main(argv: list[str] | None = None) -> int:
 
     # Where two models measured the same task, whether they agree is the question a single-model
     # verdict cannot answer, so it is printed rather than left to be read off the table.
+    # `unrecorded` is the absence of a model, not a third model. Counting it as one makes every
+    # task with a pre-attribution run look contested: the first cross-model report showed 16
+    # disagreements of which most were a known model against "we do not know which model".
     by_task: dict[str, dict[str, str]] = defaultdict(dict)
     for row in rows:
+        if row["model"] == "unrecorded":
+            continue
         by_task[row["task"]][row["model"]] = row["verdict"]
     contested = {task: verdicts for task, verdicts in by_task.items()
                  if len(verdicts) > 1 and len(set(verdicts.values())) > 1}

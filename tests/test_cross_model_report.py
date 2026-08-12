@@ -109,6 +109,20 @@ class ReportTests(unittest.TestCase):
             row = next(r for r in report["cost"] if r["model"] == "claude-opus-4-8")
             self.assertAlmostEqual(row["estimated_usd"], 30.0)
 
+    def test_an_unrecorded_model_is_not_treated_as_a_third_model(self):
+        """"We do not know which model" cannot agree or disagree with anything."""
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            write_run(root, "g", "w", "T/X", "gpt-5.5", "selection_blind", 0, [0.5])
+            admission = Path(tmp) / "adm.json"
+            admission.write_text(json.dumps({"rows": [
+                {"task": "T/X", "model": "gpt-5.5", "verdict": "measures_iteration"},
+                {"task": "T/X", "model": "unrecorded", "verdict": "thin_screen"},
+            ]}), encoding="utf-8")
+            report, text = self.run_report(root, admission=admission)
+            self.assertEqual(set(report["verdicts"]["T/X"]), {"gpt-5.5"})
+            self.assertIn("disagree: 0", text)
+
     def test_verdict_disagreement_is_surfaced_not_summarised_away(self):
         with TemporaryDirectory() as tmp:
             root = Path(tmp)

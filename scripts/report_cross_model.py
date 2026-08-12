@@ -140,6 +140,8 @@ def main(argv: list[str] | None = None) -> int:
     validity: dict[str, dict[str, list[float]]] = defaultdict(lambda: defaultdict(list))
     for run in runs:
         tokens[run["model"]].append((run["input_tokens"], run["output_tokens"]))
+        if run["model"] == "unrecorded":
+            continue
         if run["mode"] in OPEN_LOOP_MODES:
             scores[run["model"]][run["task"]].append(run["best"])
         validity[run["model"]][run["mode"]].append(
@@ -196,7 +198,12 @@ def main(argv: list[str] | None = None) -> int:
     if args.admission and Path(args.admission).is_file():
         report = json.loads(Path(args.admission).read_text(encoding="utf-8"))
         for row in report.get("rows", []):
-            verdicts.setdefault(row["task"], {})[row.get("model", "unrecorded")] = row["verdict"]
+            model = row.get("model", "unrecorded")
+            # Skip runs recorded before the manifest carried a model. "We do not know which model"
+            # cannot agree or disagree with anything.
+            if model == "unrecorded":
+                continue
+            verdicts.setdefault(row["task"], {})[model] = row["verdict"]
         contested = {t: v for t, v in verdicts.items()
                      if len(v) > 1 and len(set(v.values())) > 1}
         agreed = {t: v for t, v in verdicts.items()
