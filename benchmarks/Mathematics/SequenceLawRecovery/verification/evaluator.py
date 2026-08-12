@@ -85,29 +85,33 @@ def _fits(terms, coefficients):
 def _solve_recurrences(sympy, terms, order):
     """Every integer recurrence of exactly this order consistent with the terms.
 
-    Solved exactly with SymPy rather than by least squares: an integer recurrence fitted in
-    floating point accepts coefficients that are merely close, and the whole point of the task is
-    that the rule either reproduces the continuation or does not.
+    Decided by rank rather than by catching exceptions. A first version called
+    `gauss_jordan_solve(b, freevar=True)`, which returns three values in this SymPy release; the
+    two-value unpacking raised, a broad `except` swallowed it, and every order was reported as
+    impossible - so the generator accepted zero worlds out of 900 draws while looking like it had
+    simply been unlucky. Ranks make the three cases explicit:
+
+        rank([A|b]) > rank(A)   inconsistent - no rule of this order
+        rank(A) < order         underdetermined - the prefix does not pin one
+        otherwise               a unique solution, integer or not
     """
     if len(terms) < 2 * order:
         return None  # underdetermined by construction; caller treats this as "cannot decide"
-    rows = []
-    rhs = []
-    for n in range(order, len(terms)):
-        rows.append([terms[n - 1 - k] for k in range(order)])
-        rhs.append(terms[n])
+    rows = [[terms[n - 1 - k] for k in range(order)] for n in range(order, len(terms))]
+    rhs = [terms[n] for n in range(order, len(terms))]
     A = sympy.Matrix(rows)
     b = sympy.Matrix(rhs)
-    try:
-        solution, params = A.gauss_jordan_solve(A.copy() * sympy.zeros(order, 1) + b, freevar=True)
-    except Exception:  # noqa: BLE001 - an inconsistent system means no recurrence of this order
+    augmented = A.row_join(b)
+    if augmented.rank() > A.rank():
         return []
-    if params:
-        return None  # a family of solutions: the prefix does not pin a unique rule
+    if A.rank() < order:
+        return None
+    solution = A.solve_least_squares(b) if A.rows != A.cols else A.solve(b)
     coefficients = [sympy.nsimplify(v) for v in solution]
     if not all(getattr(c, "is_Integer", False) for c in coefficients):
         return []
-    return [[int(c) for c in coefficients]]
+    values = [int(c) for c in coefficients]
+    return [values] if _fits(terms, values) else []
 
 
 def _minimal_rule(sympy, terms):

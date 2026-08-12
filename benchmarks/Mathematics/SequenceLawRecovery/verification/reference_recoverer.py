@@ -23,12 +23,18 @@ def recover_law(observation):
         rows = [[terms[n - 1 - k] for k in range(order)] for n in range(order, len(terms))]
         rhs = [terms[n] for n in range(order, len(terms))]
         A, b = sympy.Matrix(rows), sympy.Matrix(rhs)
-        try:
-            solution, params = A.gauss_jordan_solve(b, freevar=True)
-        except Exception:  # noqa: BLE001 - inconsistent at this order
-            continue
-        if params:
-            return {"abstain": True}
+        # Ranks rather than exception handling: gauss_jordan_solve's return arity varies across
+        # SymPy releases, and a mis-unpacked call caught by a broad except looks exactly like an
+        # inconsistent system.
+        if A.row_join(b).rank() > A.rank():
+            continue                      # no rule of this order
+        if A.rank() < order:
+            return {"abstain": True}      # the prefix does not pin one
+        solution = A.solve_least_squares(b) if A.rows != A.cols else A.solve(b)
+        coefficients = [sympy.nsimplify(v) for v in solution]
+        if all(getattr(c, "is_Integer", False) for c in coefficients):
+            return {"coefficients": [int(c) for c in coefficients]}
+    return {"abstain": True}
         coefficients = [sympy.nsimplify(v) for v in solution]
         if all(getattr(c, "is_Integer", False) for c in coefficients):
             return {"coefficients": [int(c) for c in coefficients]}
