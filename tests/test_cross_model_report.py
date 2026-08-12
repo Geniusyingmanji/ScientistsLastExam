@@ -102,7 +102,10 @@ class ReportTests(unittest.TestCase):
                           [0.2 * (index + 1)], contract="new" + "0" * 61)
             report, text = self.run_report(root)
             self.assertEqual(report["shared_tasks"], [])
-            self.assertIn("different versions of the task", text)
+            self.assertIn("no task where both ran the same version", text)
+            pair = report["pairwise"][0]
+            self.assertEqual(len(pair["excluded_for_contract_mismatch"]), 3)
+            self.assertIsNone(pair["rho"])
 
     def test_the_same_contract_is_compared(self):
         with TemporaryDirectory() as tmp:
@@ -114,6 +117,7 @@ class ReportTests(unittest.TestCase):
                           [0.2 * (index + 1)])
             report, _ = self.run_report(root)
             self.assertEqual(len(report["shared_tasks"]), 3)
+            self.assertEqual(report["pairwise"][0]["rho"], 1.0)
 
     def test_cost_is_blank_rather_than_guessed_for_an_unpriced_model(self):
         with TemporaryDirectory() as tmp:

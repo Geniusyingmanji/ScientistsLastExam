@@ -173,47 +173,49 @@ def main(argv: list[str] | None = None) -> int:
         validity[run["model"]][run["mode"]].append(
             run["valid"] / run["proposals"] if run["proposals"] else 0.0)
 
-    print("=== open-loop score per task, by model ===")
-    candidates = sorted(set.intersection(*[set(scores[m]) for m in models]) if len(models) > 1
-                        else set())
-    # Keep only tasks where every model ran exactly the same contract as every other.
-    shared, mismatched = [], {}
-    for task in candidates:
-        seen = {model: contracts[task][model] for model in models}
-        every = set().union(*seen.values())
-        if len(every) == 1 and all(len(v) == 1 for v in seen.values()):
-            shared.append(task)
-        else:
-            mismatched[task] = {m: sorted(v) for m, v in seen.items()}
-    if mismatched:
-        print("excluded, models ran different versions of the task:")
-        for task, per_model in sorted(mismatched.items()):
-            print("  %-30s %s" % (
-                task.split("/")[-1][:30],
-                "; ".join("%s=%s" % (m[:14], ",".join(h[:8] for h in v))
-                          for m, v in sorted(per_model.items()))))
-        print()
-    if not shared:
-        print("no task has been run by more than one model on the same contract")
-    else:
-        header = "%-30s" % "task" + "".join("%16s" % m[:16] for m in models)
-        print(header)
-        print("-" * len(header))
-        columns: dict[str, list[float]] = {m: [] for m in models}
-        for task in shared:
-            cells = []
-            for model in models:
-                value = st.mean(scores[model][task])
-                columns[model].append(value)
-                cells.append("%16.4f" % value)
-            print("%-30s%s" % (task.split("/")[-1][:30], "".join(cells)))
-        print()
-        for i, first in enumerate(models):
-            for second in models[i + 1:]:
-                rho = spearman(columns[first], columns[second])
-                print("rank correlation %s vs %s over %d shared tasks: %s"
-                      % (first, second, len(shared),
-                         "not computable (fewer than 3 tasks)" if rho is None else "%.3f" % rho))
+    print("=== open-loop score, compared pairwise on shared task versions ===")
+    # Pairwise rather than across all models at once. Requiring every model to share a contract
+    # excluded every task here, because one model's runs predate a round of task edits - and that
+    # would have thrown away the one comparison that is valid.
+    def shared_tasks(first: str, second: str) -> list[str]:
+        out = []
+        for task in sorted(set(scores[first]) & set(scores[second])):
+            a_contracts = contracts[task][first]
+            b_contracts = contracts[task][second]
+            if len(a_contracts) == 1 and a_contracts == b_contracts:
+                out.append(task)
+        return out
+
+    comparisons = []
+    for i, first in enumerate(models):
+        for second in models[i + 1:]:
+            tasks_here = shared_tasks(first, second)
+            skipped = sorted((set(scores[first]) & set(scores[second])) - set(tasks_here))
+            print()
+            print("%s vs %s" % (first, second))
+            if not tasks_here:
+                print("  no task where both ran the same version"
+                      + ("; %d excluded for differing versions" % len(skipped) if skipped else ""))
+                comparisons.append({"models": [first, second], "tasks": [], "rho": None,
+                                    "excluded_for_contract_mismatch": skipped})
+                continue
+            xs, ys = [], []
+            print("  %-30s %14s %14s" % ("task", first[:14], second[:14]))
+            for task in tasks_here:
+                x, y = st.mean(scores[first][task]), st.mean(scores[second][task])
+                xs.append(x)
+                ys.append(y)
+                print("  %-30s %14.4f %14.4f" % (task.split("/")[-1][:30], x, y))
+            rho = spearman(xs, ys)
+            print("  rank correlation over %d shared-version tasks: %s"
+                  % (len(tasks_here),
+                     "not computable (fewer than 3)" if rho is None else "%.3f" % rho))
+            if skipped:
+                print("  %d further shared tasks excluded because the two ran different "
+                      "versions" % len(skipped))
+            comparisons.append({"models": [first, second], "tasks": tasks_here, "rho": rho,
+                                "excluded_for_contract_mismatch": skipped})
+    shared = sorted({t for c in comparisons for t in c["tasks"]})
 
     print()
     print("=== proposal validity by model and arm ===")
@@ -263,7 +265,8 @@ def main(argv: list[str] | None = None) -> int:
         "schema_version": 1,
         "note": "score ranking and admission verdicts are reported separately; they can disagree",
         "models": models,
-        "shared_tasks": shared if len(models) > 1 else [],
+        "shared_tasks": shared,
+        "pairwise": comparisons,
         "open_loop_scores": {m: {t: st.mean(v) for t, v in scores[m].items()} for m in scores},
         "cost": cost_rows,
         "verdicts": verdicts,
