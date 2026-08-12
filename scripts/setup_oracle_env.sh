@@ -49,11 +49,11 @@ declare -A IMPORT_NAME=(
 )
 
 site_dir() {
-  "$ORACLE_PYTHON" - <<'PY'
-import site, sys
-paths = [p for p in site.getsitepackages() + [site.getusersitepackages()] if "local" in p]
-print(paths[0] if paths else site.getusersitepackages())
-PY
+  # The user site-packages, not a system one. A first version preferred any path containing
+  # "local" and picked /usr/local/lib/python3.8/dist-packages, which needs root and is not where
+  # the existing toolkits live - a fresh host would have installed to a second location and the
+  # two would have drifted.
+  "$ORACLE_PYTHON" -c "import site; print(site.getusersitepackages())"
 }
 
 report() {
