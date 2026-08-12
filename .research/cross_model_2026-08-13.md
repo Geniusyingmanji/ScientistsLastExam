@@ -1,51 +1,81 @@
-# 第二个模型:排序一致,判据不一致
+# 第二个模型:分数排序一致,准入判据不一致
 
-Claude Opus 4.8 在 6 个任务上跑满 36 次(3 seed × 2 臂 × 6 任务,budget 12,greedy_rewrite),
-与 gpt-5.5 逐任务对照。答案分两半,而且两半的结论相反。
+Claude Opus 4.8 在 6 个任务上跑满 36 次(3 seed × 2 臂,budget 12,greedy_rewrite),与 gpt-5.5、
+gpt-5.6-sol 逐任务对照。答案分两半,而且两半相反。
 
-## 先说一个必须前置的更正
+得出这个答案之前,评测流水线里有一条**任务身份**的缺陷链必须先修 —— 修之前算出来的每一个
+相关系数都是错的,包括我一度写下的结论。下面先讲缺陷,因为它决定了数字能不能信。
 
-第一版跨模型报告给出的相关系数是错的:
+## 缺陷链:任务身份哈希不指向任务
 
-| 对比 | 修正前 | 修正后 | 可比任务数 |
-|---|---|---|---|
-| gpt-5.5 vs gpt-5.6-sol(同族) | 0.371 | **0.987** | 6 → 32 |
-| claude vs gpt-5.5(跨族) | 0.829 | 0.829 | 6 |
-| claude vs gpt-5.6-sol | 0.200 | **不可比** | 6 → 0 |
+每次运行都把 `task_package_sha256` 写进清单,报告据此拒绝跨版本比较 ——
+跨着任务改动做比较,会把改动报成模型差异。这条守卫是对的,但键取错了,而且错了两层。
 
-原因是**任务契约漂移**。清单里 54 个任务中有 **20 个带不止一个 `task_package_sha256`** ——
-任务在两批运行之间被改过。旧代码取三个模型的任务交集,再在交集上算相关,于是:
+**第一层:一行注解移动了全部 61 个任务的哈希。**
+提交"declare scientific_role on all 61 tasks"写的是 `frontier_eval/metadata.yaml`,
+而这个文件同时在 `task_package_sha256` 和更窄的 `task_contract_sha256` 的清单里。
+所以换用窄哈希救不了,窄哈希还漏掉了若干任务评分时重算所依赖的 reference 实现。
 
-- gpt-5.5 与 gpt-5.6 之间真正同版本的 32 个任务被砍到 6 个,而剩下那 6 个恰好全是版本不一致的;
-- claude 与 gpt-5.6 从来没跑过同一个版本的任何任务,却被算出了 0.200。
+**第二层:哈希把任务自己的运行产物算了进去。**
+`task_package_sha256` 是 `rglob("*")` 全量哈希,只排除 `__pycache__` 与 `.pyc`。
+而 58 个任务目录里有 **35 个含一个 `runs/` 子目录** —— 任务跑一次就往自己身上写一次产物。
 
-LowThrustTransfer 上 gpt-5.6 是 0.7428、gpt-5.5 是 0.0401 —— 18 倍,读起来像模型差异,
-实际是两个不同的任务。哈希一直记在 manifest 里,只是比较时没人查。
+实测 TrussWeightMinimization:含 `runs/` 得 `c88849722ee8`,正是清单里记录的哈希之一;
+排除后得 `3ec2334d8c85`,任何提交都不匹配。**任务的身份取决于有没有人跑过它。**
 
-现在两个报告都按 (任务, 版本) 分组,跨版本拒绝比较并显式列出被排除的部分。
+后果三条,都实际发生了:11 个任务的清单哈希没有任何 revision 能复现;
+同一个未修改任务的两次运行被记成两个版本;冻结 cohort 的 `frozen_task_package`
+检查会仅仅因为"有人跑过这个任务"而失败。
+
+**修复。** `task_package_sha256` 排除 `runs`/`__pycache__`/`.pytest_cache`/`.ipynb_checkpoints`
+(4 个测试守住,含"名为 `runs.py` 的源文件不得被排除")。这只对将来的运行有效 ——
+历史清单里的哈希已经把产物烙进去了,重放救不回。
+
+**历史怎么办。** `scripts/build_task_version_equivalence.py` 从 git 历史重放每个 revision 的
+包哈希;哈希实在无法复现的,退一步问历史:该任务自首次运行以来有没有提交改过任何
+能改变分数的文件。两条路都走完:
+
+| | 任务数 |
+|---|---:|
+| 记录下不止一个哈希 | 20 |
+| 其中确认是同一个任务 | **16** |
+| 确实改过(MolecularLead / QEC / RNAEnsemble) | 3 |
+| 未决(CirclePacking:哈希不可复现且确有一次行为提交) | 1 |
+
+报告改为在**等价类**上比较。可比任务数随之变化:gpt-5.5 vs gpt-5.6 从 6 → **50**,
+claude vs gpt-5.6 从 0 → **6**。
 
 ## 分数排序:一致
 
-claude-opus-4-8 vs gpt-5.5,6 个同版本任务,**Spearman ρ = 0.829**:
+| 对比 | ρ | 可比任务 |
+|---|---:|---:|
+| gpt-5.5 vs gpt-5.6-sol(同族) | **0.959** | 50 |
+| claude vs gpt-5.5(跨族) | **0.829** | 6 |
+| claude vs gpt-5.6-sol(跨族) | **0.200** | 6 |
+
+claude vs gpt-5.5 的 6 个任务:
+
+| 任务 | claude | gpt-5.5 | gpt-5.6 |
+|---|---:|---:|---:|
+| LowThrustTransfer | 0.1031 | 0.0401 | 0.7428 |
+| AlloyHardnessOptimization | 0.3205 | 0.1842 | 0.1993 |
+| ProteinStabilityDesign | 0.5668 | 0.5462 | 0.5332 |
+| QuantumErrorDecoder | 0.6690 | 0.7713 | 0.8163 |
+| NMRSpectrumFitting | 0.4360 | 0.4940 | 0.6759 |
+| TrussWeightMinimization | 0.6415 | 0.4736 | 0.4098 |
+
+**一条要收回的判断。** 我一度把 LowThrustTransfer 上 gpt-5.5 的 0.0401 与 gpt-5.6 的 0.7428
+这 18 倍差距归因于"任务被改过"。等价表证明这两批跑的是同一个任务,**18 倍是真实的模型差异**。
+claude vs gpt-5.6 的 ρ = 0.200 也主要由这一个任务撑开 —— 6 个点上的秩相关,证据很薄,
+不宜当作"两族排序不一致"的结论,只能说这一对还没测够。
+
+提案有效率:claude 0.90/0.89,gpt-5.5 0.79/0.76,gpt-5.6 0.74/0.84。36 次运行 **$4.01**。
+
+## 准入判据:不一致,而且方向一边倒
+
+49 个可比的 (任务, 版本) 上 **34 一致 / 15 分歧**。claude 参与的 6 个任务**全部分歧**:
 
 | 任务 | claude | gpt-5.5 |
-|---|---:|---:|
-| LowThrustTransfer | 0.1031 | 0.0401 |
-| AlloyHardnessOptimization | 0.3205 | 0.1842 |
-| ProteinStabilityDesign | 0.5668 | 0.5462 |
-| QuantumErrorDecoder | 0.6690 | 0.7713 |
-| NMRSpectrumFitting | 0.4360 | 0.4940 |
-| TrussWeightMinimization | 0.6415 | 0.4736 |
-
-任务的难易顺序在两个模型族之间基本保持。Claude 在 6 个里 4 个更高。
-提案有效率 claude 0.89/0.89,明显高于 gpt-5.5 的 0.77/0.76。
-36 次运行合计 **$4.01**。
-
-## 准入判据:完全不一致
-
-同样这 6 个任务,**6 个全部分歧**:
-
-| 任务 | claude-opus-4-8 | gpt-5.5 |
 |---|---|---|
 | LowThrustTransfer | control_not_exhausted | measures_iteration |
 | AlloyHardnessOptimization | control_not_exhausted | measures_iteration |
@@ -54,57 +84,58 @@ claude-opus-4-8 vs gpt-5.5,6 个同版本任务,**Spearman ρ = 0.829**:
 | TrussWeightMinimization | control_not_exhausted | feedback_harmful |
 | QuantumErrorDecoder | control_not_exhausted | thin_screen |
 
-方向是一边倒的:gpt-5.5 判为合格的 4 个任务,**Claude 判的是必要条件不成立**。
+gpt-5.5 判为合格的 4 个,Claude 判的都是**必要条件不成立**。机制可量化 ——
+饱和门槛是开环臂后半段中位增益 < 0.01:
 
-机制是可量化的。饱和门槛是开环臂后半段中位增益 < 0.01:
-
-| 任务 | claude(3 seed) | gpt-5.5(全部 seed) | gpt-5.5(限前 3 seed) |
+| 任务 | claude(3 seed) | gpt-5.5(全部) | gpt-5.5(限前 3 seed) |
 |---|---:|---:|---:|
 | LowThrustTransfer | 0.0165 | 0.0053 ✓ | **0.0193 ✗** |
 | AlloyHardnessOptimization | 0.0280 | 0.0000 ✓ | 0.0000 ✓ |
 | TrussWeightMinimization | 0.0242 | 0.0000 ✓ | 0.0000 ✓ |
 | NMRSpectrumFitting | 0.0092 ✓ | 0.0000 ✓ | 0.0014 ✓ |
 
-所有曲线都是 12 步,任务版本相同,搜索器相同 —— budget 与契约都不是混淆项。
-**Claude 的 best-of-N 在同样预算下还在爬,而 gpt-5.5 的已经平了。**
+曲线一律 12 步、任务版本相同、搜索器相同 —— budget 与契约都不是混淆项。
+**Claude 的 best-of-N 在同样预算下还在爬,gpt-5.5 的已经平了。**
 
-这不是判据坏了,是判据在如实报告一件真事:交叉点是任务 × 搜索器的性质,
-而模型是搜索器的一部分。**更强的模型会让任务失去准入资格** —— 因为对照臂还没被打穿。
-这一条要写进方法学:合格性是"任务 + 搜索器"的联合断言,不能只挂在任务上。
+这不是判据坏了。交叉点是任务 × 搜索器的性质,模型是搜索器的一部分,
+所以**更强的模型会让任务失去准入资格**。合格性必须写成"任务 + 搜索器"的联合断言,
+不能只挂在任务上 —— 这一条要进方法学。
 
-## 一个顺带查出来的缺陷:判据对 seed 数不稳定
+## 顺带查出:判据对 seed 数不稳定
 
-上表最后一列是关键。LowThrustTransfer 的 `measures_iteration` 依赖它恰好跑了 6 个 seed;
-只用前 3 个,后半增益是 0.0193,必要条件不成立。而报告自己声明 3 个 seed
-(`MIN_SEEDS_FOR_CONFIDENT_SATURATION`)就足以下结论。
+上表最后一列。LowThrustTransfer 的 `measures_iteration` 依赖它恰好跑了 6 个 seed;
+只用前 3 个,必要条件就不成立。而报告自己声明 3 个 seed(`MIN_SEEDS_FOR_CONFIDENT_SATURATION`)
+足以下结论。
 
-先试了留一法,太钝:6 个 seed 去掉 1 个中位数不会跨过门槛,查出来 0 个。
-改成**在判据自己信任的最小 seed 数上枚举子集**,若任一子集反转结论则标记。结果:
+先试留一法,太钝:6 个 seed 去掉 1 个中位数跨不过门槛,查出 0 个。
+改成**在判据自己信任的最小 seed 数上枚举子集**,任一子集反转结论即标记。
+结果:**5 个合格任务里 3 个 seed 脆弱** —— LowThrustTransfer、ProteinStabilityDesign、
+QuantumErrorDecoder。真正不依赖"跑了哪几个 seed"的只有 AlloyHardnessOptimization 与
+NMRSpectrumFitting。
 
-**5 个合格任务里有 3 个是 seed 脆弱的** —— LowThrustTransfer(6 seed)、
-ProteinStabilityDesign(8 seed)、QuantumErrorDecoder(12 seed,gpt-5.6)。
-真正不依赖"跑了哪几个 seed"的只有 AlloyHardnessOptimization 和 NMRSpectrumFitting。
+## pipeline 改动清单
 
-## 同期做的 pipeline 修复
+1. `task_package_sha256` 不再哈希运行产物(`frontier_science/algorithms/common.py`,4 测试)。
+2. `scripts/build_task_version_equivalence.py` + `frontier_science/task_versions.py`:
+   哈希等价表,重放优先、历史兜底,未知哈希映射到自身而非共用桶(5 测试)。
+3. 两个报告改为在等价类上比较,并列出被排除项。
+4. 准入证据按 (任务, 模型, 任务版本) 分组;此前饱和跨 cohort 池化 = 混两个版本的 seed。
+5. 判据一致性按 (任务, 版本) 分组,而非要求全模型共版本(后者会因第三个模型跑了别的版本
+   而丢掉一对本来有效的比较)。
+6. 饱和加子样本稳定性检查。
+7. `scripts/audit_task_versions.py`:哪些运行测的是已不存在的版本。
+8. `scripts/run_cohort.sh`:成组运行器,每 run 目录加锁、可续跑、以 manifest 为完成判据(9 测试)。
 
-1. 两个报告都拒绝跨 `task_package_sha256` 比较,并列出被排除项。
-2. 准入证据按 (任务, 模型, 任务版本) 分组;此前饱和证据跨 cohort 池化,
-   等于把两个版本的 seed 混在一起问"best-of-N 是否停止改进"。
-3. 判据一致性改为按 (任务, 版本) 分组,而不是要求所有模型共版本 ——
-   后者会因为第三个模型跑了别的版本而丢掉一对本来有效的比较。
-4. `scripts/run_cohort.sh`:成组运行器,锁做到每个 run 目录、可续跑、
-   完成判据是 manifest 存在。带 9 个测试。
+第 8 条的由来:Claude 那批原用两个 `/tmp` 脚本跑,各持一把**以脚本命名**的锁,互不排斥,
+两份清单都含 LowThrustTransfer,每次运行又以 `rm -rf` 开头 —— 36 次里 3 次被对方删掉 manifest。
+所有报告以 manifest 为键,这 3 次是**静默消失**而非报错;旧续跑判据"轨迹 ≥13 行"
+恰好对被删目录成立,重跑会精准跳过唯一该重跑的那几个。已补齐。
 
-第 4 条的由来:Claude 那批是用两个 `/tmp` 脚本跑的,各持一把**以脚本命名**的锁,
-互不排斥,而两份任务清单都含 LowThrustTransfer,每次运行又以 `rm -rf` 开头。
-结果 36 次运行里 3 次被对方删掉 manifest,而所有报告都以 manifest 为键 ——
-这 3 次不是报错,是**从比较里静默消失**。旧的续跑判据是"轨迹 ≥13 行",
-恰好对被删 manifest 的目录成立,所以重跑会精准跳过唯一需要重跑的那几个。
+## 未了
 
-## 边界
-
-- Claude 只跑了 6 个任务 3 个 seed。ρ = 0.829 建立在 6 个点上,置信区间很宽。
-- 上面"Claude 开环更强"的结论,seed 匹配后在 Alloy 与 Truss 上稳健,
-  在 LowThrust 上则与 gpt-5.5 自身的 seed 脆弱性纠缠,不能单独归因于模型。
-- claude 与 gpt-5.6-sol 之间仍然零可比任务。要回答这一对,
-  必须把 gpt-5.6 在当前版本的任务上重跑,而不是复用 `saturation` cohort 的旧数据。
+- 冻结 cohort preflight 7 个任务 0/7 全项失败,g450 上 745 个测试 30 失败 8 错误,
+  集中在这一处及依赖它的分析测试。根因即上面的哈希缺陷加任务改动;
+  重新绑定还是重跑属于 Track F 治理决定,未擅动。
+- claude 只有 6 个任务 3 个 seed。ρ = 0.829 与 0.200 都建立在 6 个点上,区间很宽。
+- CirclePacking 的版本等价仍未决。
+- MolecularLeadOptimization 与 RNAEnsembleDesign 的重配对在跑(当前版本证据分别只有 2 次和 0 次)。
