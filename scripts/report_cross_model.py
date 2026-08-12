@@ -100,6 +100,7 @@ def read_runs(runs_root: Path) -> list[dict]:
             "proposals": len(proposals),
             "input_tokens": int(usage.get("input_tokens", 0) or 0),
             "output_tokens": int(usage.get("output_tokens", 0) or 0),
+            "contract": str(document.get("task_package_sha256") or "")[:12],
         })
     return out
 
@@ -147,9 +148,19 @@ def main(argv: list[str] | None = None) -> int:
               % (len(models), ", ".join(models) or "none"))
         print("a cross-model comparison needs two; run the benchmark under a second model first.")
 
-    # Open-loop score per (model, task), averaged over seeds. The open-loop arm is the right axis
-    # for a ranking: it is what the task yields to independent sampling, independent of whether
-    # the searcher's feedback loop happens to help.
+    # Two models can only be compared on a task if they ran the same version of it. Twenty of the
+    # 54 tasks in this repository carry more than one `task_package_sha256` across cohorts,
+    # because tasks were edited between runs, and comparing across that difference reports a task
+    # change as a model difference - on one task the gap looked like 18x. The hash was recorded
+    # all along; nothing was checking it at comparison time.
+    contracts: dict[str, dict[str, set[str]]] = defaultdict(lambda: defaultdict(set))
+    for run in runs:
+        if run["model"] != "unrecorded" and run["mode"] in OPEN_LOOP_MODES:
+            contracts[run["task"]][run["model"]].add(run["contract"])
+
+    # Open-loop score per (model, task, contract), averaged over seeds. The open-loop arm is the
+    # right axis for a ranking: it is what the task yields to independent sampling, independent of
+    # whether the searcher's feedback loop happens to help.
     scores: dict[str, dict[str, list[float]]] = defaultdict(lambda: defaultdict(list))
     tokens: dict[str, list[tuple[int, int]]] = defaultdict(list)
     validity: dict[str, dict[str, list[float]]] = defaultdict(lambda: defaultdict(list))
@@ -163,10 +174,27 @@ def main(argv: list[str] | None = None) -> int:
             run["valid"] / run["proposals"] if run["proposals"] else 0.0)
 
     print("=== open-loop score per task, by model ===")
-    shared = sorted(set.intersection(*[set(scores[m]) for m in models]) if len(models) > 1
-                    else set())
+    candidates = sorted(set.intersection(*[set(scores[m]) for m in models]) if len(models) > 1
+                        else set())
+    # Keep only tasks where every model ran exactly the same contract as every other.
+    shared, mismatched = [], {}
+    for task in candidates:
+        seen = {model: contracts[task][model] for model in models}
+        every = set().union(*seen.values())
+        if len(every) == 1 and all(len(v) == 1 for v in seen.values()):
+            shared.append(task)
+        else:
+            mismatched[task] = {m: sorted(v) for m, v in seen.items()}
+    if mismatched:
+        print("excluded, models ran different versions of the task:")
+        for task, per_model in sorted(mismatched.items()):
+            print("  %-30s %s" % (
+                task.split("/")[-1][:30],
+                "; ".join("%s=%s" % (m[:14], ",".join(h[:8] for h in v))
+                          for m, v in sorted(per_model.items()))))
+        print()
     if not shared:
-        print("no task has been run by more than one model yet")
+        print("no task has been run by more than one model on the same contract")
     else:
         header = "%-30s" % "task" + "".join("%16s" % m[:16] for m in models)
         print(header)

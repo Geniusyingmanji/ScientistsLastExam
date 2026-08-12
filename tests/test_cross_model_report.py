@@ -25,12 +25,13 @@ def load_module():
 MODULE = load_module()
 
 
-def write_run(root, cohort, name, task, model, mode, seed, scores, usage=(0, 0)):
+def write_run(root, cohort, name, task, model, mode, seed, scores, usage=(0, 0),
+              contract="c" * 64):
     workdir = root / cohort / name
     workdir.mkdir(parents=True)
     (workdir / "run_manifest.json").write_text(json.dumps({
         "task_id": task, "feedback_mode": mode, "seed": seed,
-        "llm_condition": {"model": model},
+        "llm_condition": {"model": model}, "task_package_sha256": contract,
     }), encoding="utf-8")
     lines = []
     for index, score in enumerate(scores, start=1):
@@ -89,6 +90,30 @@ class ReportTests(unittest.TestCase):
             self.assertEqual(report["models"], ["claude-opus-4-8", "gpt-5.5"])
             self.assertEqual(len(report["shared_tasks"]), 3)
             self.assertIn("rank correlation", text)
+
+    def test_models_that_ran_different_task_versions_are_excluded(self):
+        """Comparing across a task edit reports the edit as a model difference."""
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            for index, task in enumerate(["T/A", "T/B", "T/C"]):
+                write_run(root, "g", "g%d" % index, task, "gpt-5.5", "selection_blind", 0,
+                          [0.1 * (index + 1)], contract="old" + "0" * 61)
+                write_run(root, "c", "c%d" % index, task, "claude-opus-4-8", "selection_blind", 0,
+                          [0.2 * (index + 1)], contract="new" + "0" * 61)
+            report, text = self.run_report(root)
+            self.assertEqual(report["shared_tasks"], [])
+            self.assertIn("different versions of the task", text)
+
+    def test_the_same_contract_is_compared(self):
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            for index, task in enumerate(["T/A", "T/B", "T/C"]):
+                write_run(root, "g", "g%d" % index, task, "gpt-5.5", "selection_blind", 0,
+                          [0.1 * (index + 1)])
+                write_run(root, "c", "c%d" % index, task, "claude-opus-4-8", "selection_blind", 0,
+                          [0.2 * (index + 1)])
+            report, _ = self.run_report(root)
+            self.assertEqual(len(report["shared_tasks"]), 3)
 
     def test_cost_is_blank_rather_than_guessed_for_an_unpriced_model(self):
         with TemporaryDirectory() as tmp:
