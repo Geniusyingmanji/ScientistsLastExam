@@ -333,6 +333,25 @@ of the open-loop mean. Sign alone was not enough: `RNAEngineering/RNAEnsembleDes
 0.0021 against scores near 1.0, two parts in a thousand, and the criterion was calling that
 "harmful" with the same word it gave a task trailing by 0.37 against scores near 0.5.
 
+**None of the seven certified tasks is among them.** The certified core is what the default CLI
+exposes, and measured against the criterion this benchmark exists to apply:
+
+| certified task | verdict | control settles at |
+|---|---|---:|
+| `ScientificComputing/PoissonSolver2D` | control exhausted, never paired | 1.000 |
+| `Physics/SpinGlassGroundState` | control exhausted, never paired | 1.000 |
+| `Optimization/CirclePacking` | control exhausted, never paired | 1.061 |
+| `Chemistry/LennardJonesCluster` | control exhausted, never paired | 0.998 |
+| `Algorithm/MatrixMultiplicationRank` | control exhausted, never paired | 0.979 |
+| `Photonics/MultilayerThinFilm` | control still climbing | 0.936 |
+| `Mathematics/CapSet` | control still climbing | 0.705 |
+
+`PoissonSolver2D` and `SpinGlassGroundState` are clipped and sit at exactly 1.000 — best-of-N
+reaches the anchor, so there is nothing above it to measure. The three uncapped ones are being
+paired now, and are the only certified tasks that could still qualify. Certification in this
+repository has always described evidence quality rather than difficulty, and this is what that
+distinction costs: a task can be fully certified and still not measure iterative improvement.
+
 **Paired evidence exists for 15 of 53 tasks, and five pass:** `QuantumErrorCorrection/QuantumErrorDecoder`,
 `Spectroscopy/NMRSpectrumFitting`, `Astrodynamics/LowThrustTransfer`,
 `ProteinEngineering/ProteinStabilityDesign` and `MaterialsScience/AlloyHardnessOptimization`.

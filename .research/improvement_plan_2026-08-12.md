@@ -21,6 +21,36 @@
 
 ---
 
+## P0 前置发现:认证核心本身没有一个合格
+
+7 个 certified 任务对照准入判据:
+
+| 任务 | 判定 | 对照终值 |
+|---|---|---:|
+| PoissonSolver2D | 已耗尽、从未配对 | 1.000 |
+| SpinGlassGroundState | 已耗尽、从未配对 | 1.000 |
+| CirclePacking | 已耗尽、从未配对 | 1.061 |
+| LennardJonesCluster | 已耗尽、从未配对 | 0.998 |
+| MatrixMultiplicationRank | 已耗尽、从未配对 | 0.979 |
+| MultilayerThinFilm | 对照仍在爬 | 0.936 |
+| CapSet | 对照仍在爬 | 0.705 |
+
+**没有一个被证明能测量迭代改进。** `PoissonSolver2D` 与 `SpinGlassGroundState` 是 clipped 且恰好
+1.000 —— best-of-N 已到锚点,上面没有东西可测。三个 uncapped 的正在配对中,是仅有可能翻盘的。
+
+这不是认证流程失效:认证一直定义为"证据质量"而非"难度"。但它意味着**默认 CLI 暴露的那套任务,
+恰好是最不能支撑这个 benchmark 核心主张的一套**,对外发布时必须讲清楚。
+
+## P0 分诊:15 个已打满任务的三组
+
+| 组 | 任务 | 性质 | 建议 |
+|---|---|---|---|
+| A 有确定答案 | PoissonSolver2D(62 行,参考=解析谱解)、SparseRecovery(43 行,参考=已知支撑集的最小二乘)、GateSynthesis(参考=单位保真度)、InterventionalSCM(参考=精确隐藏图)、LyapunovControl(参考=阈值指数 −0.5) | "实现一个已知方法",答案唯一 | 改标为 onramp/冒烟任务,不作为 benchmark 任务计数 |
+| B 见证值可加强 | RankineCycleOpt、AntennaArraySynthesis、OptimalPowerFlow、LidDrivenCavity、PhotovoltaicTandemDesign、SeismicInversion、GravityInversion、OptimalExperimentDesign(评测器 200–770 行,参考是计算出的见证值) | 锚点是作者算的见证值,可以换更强的 | 加难度旋钮或换社区参考 |
+| C 有现成社区替代 | HartreeFockSCF(672 行自行实现 SCF)、SpinGlassGroundState(参考=更长退火的固定能量) | 领域内有公认工具/实例集 | PySCF;已知实例集 |
+
+C 组是性价比最高的:一次改造同时修掉"已打满"与"非社区 oracle"两项。
+
 ## P0 — B 组的 15 个:重新定锚,不是配对
 
 这是最大的一块,也是最被误判的一块。`RankineCycleOpt`、`PoissonSolver2D`、`LyapunovControl`、
