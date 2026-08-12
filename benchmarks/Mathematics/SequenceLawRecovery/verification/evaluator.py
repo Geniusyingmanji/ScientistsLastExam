@@ -35,7 +35,7 @@ DIFFICULTY = 1
 # explain all but a few terms is a robust-identification problem rather than a solve. Some worlds
 # here carry a corrupted term; the continuation is always generated from the true rule.
 _LADDER = {
-    1: {"order": (2, 3), "shown": 14, "coeff": 4, "horizon": 6, "corrupt": 1,
+    1: {"order": (2, 4), "shown": 15, "coeff": 4, "horizon": 6, "corrupt": 1,
         "count": 6, "seed": 20260812},
     2: {"order": (3, 4), "shown": 15, "coeff": 5, "horizon": 6, "corrupt": 1,
         "count": 6, "seed": 20260813},
@@ -44,7 +44,7 @@ _LADDER = {
 }
 
 _SEALED_LADDER = {
-    1: {"order": (2, 3), "shown": 13, "coeff": 4, "horizon": 6, "corrupt": 1,
+    1: {"order": (2, 4), "shown": 14, "coeff": 4, "horizon": 6, "corrupt": 1,
         "count": 3, "seed": 993101},
     2: {"order": (3, 4), "shown": 14, "coeff": 5, "horizon": 6, "corrupt": 1,
         "count": 3, "seed": 993102},
