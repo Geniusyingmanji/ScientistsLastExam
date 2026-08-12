@@ -42,6 +42,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
+from frontier_science.task_versions import version_class  # noqa: E402
+
 # Budgets the gap is reported at. The shape across these matters more than any single endpoint:
 # a gap that grows is evidence of iteration paying off, one that peaks and turns over means
 # best-of-N overtakes the searcher past the crossover.
@@ -187,7 +189,8 @@ def run_identity(workdir: Path) -> tuple[str, str, int, str, str] | None:
     # The version of the task the run was made against. Twenty tasks in this tree carry more than
     # one, because tasks were edited between cohorts, and evidence from two versions is evidence
     # about two different tasks.
-    contract = str(document.get("task_package_sha256") or "unknown")[:12]
+    contract = version_class(str(task),
+                             str(document.get("task_package_sha256") or "unknown"))[:14]
     return str(task), str(mode), int(seed), model, contract
 
 

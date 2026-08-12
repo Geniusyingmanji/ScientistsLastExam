@@ -36,6 +36,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
+from frontier_science.task_versions import version_class  # noqa: E402
+
 # Published list prices per million tokens, used only to report what a comparison cost. Absent
 # for a model means the cost column is blank rather than guessed.
 PRICES = {
@@ -120,7 +122,10 @@ def read_runs(runs_root: Path) -> list[dict]:
             "proposals": len(proposals),
             "input_tokens": int(usage.get("input_tokens", 0) or 0),
             "output_tokens": int(usage.get("output_tokens", 0) or 0),
-            "contract": str(document.get("task_package_sha256") or "")[:12],
+            # The equivalence class, not the raw hash: sixteen tasks record two hashes that are
+            # the same task, and comparing on the hash discarded that evidence.
+            "contract": version_class(str(document.get("task_id")),
+                                      str(document.get("task_package_sha256") or ""))[:14],
         })
     return out
 

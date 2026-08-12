@@ -132,7 +132,7 @@ class TaskVersionSeparationTests(unittest.TestCase):
             found = MODULE.collect(root)
             self.assertEqual(len(found), 2)
             versions = {key[3] for key in found}
-            self.assertEqual(versions, {"v1" + "0" * 10, "v2" + "0" * 10})
+            self.assertEqual(versions, {"v1" + "0" * 12, "v2" + "0" * 12})
 
 
 class SeedFragilityTests(unittest.TestCase):
