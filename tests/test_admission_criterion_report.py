@@ -141,22 +141,24 @@ class SeedFragilityTests(unittest.TestCase):
     def saturation_of(self, *gain_curves):
         return MODULE.saturation({i: c for i, c in enumerate(gain_curves)})
 
-    def test_a_decision_one_seed_would_flip_is_marked_fragile(self):
-        # Two flat curves and one that climbs hard. The median over all three is flat, so the
-        # control reads as exhausted; drop a flat one and the median is the climbing curve.
+    def test_a_verdict_a_three_seed_subset_would_reverse_is_marked_fragile(self):
+        # Four seeds: three flat, one climbing hard. Over all four the median is flat and the
+        # control reads as exhausted, but the subset {flat, climbing, climbing} does not exist -
+        # so use two climbers, where the subset {flat, climb, climb} says still climbing.
         flat = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
         climbing = [0.0, 0.1, 0.2, 0.4, 0.7, 0.9]
-        result = self.saturation_of(flat, flat, climbing)
+        result = self.saturation_of(flat, flat, flat, climbing, climbing)
         self.assertTrue(result["seed_fragile"])
 
-    def test_a_decision_no_single_seed_can_flip_is_not_marked(self):
+    def test_a_verdict_no_three_seed_subset_can_reverse_is_not_marked(self):
         flat = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
         result = self.saturation_of(flat, flat, flat, flat)
         self.assertFalse(result["seed_fragile"])
 
-    def test_fragility_is_undecidable_with_two_seeds(self):
+    def test_stability_is_undecidable_at_the_minimum_seed_count(self):
+        """Three seeds cannot be checked against a smaller trusted subset, and say so."""
         flat = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
-        self.assertIsNone(self.saturation_of(flat, flat)["seed_fragile"])
+        self.assertIsNone(self.saturation_of(flat, flat, flat)["seed_fragile"])
 
 
 class ModelSeparationTests(unittest.TestCase):

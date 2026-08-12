@@ -31,6 +31,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import itertools
 import json
 import math
 import statistics as st
@@ -226,24 +227,33 @@ def saturation(curves: dict[int, list[float]]) -> dict | None:
     # toward "headroom" and not one moved back. The median asks the question actually meant here:
     # does a typical run of this control still improve.
     median_gain = st.median(gains)
-    # Leave-one-out over seeds, on the decision rather than on the number. The necessary
-    # condition is a threshold test, so what matters is whether dropping any single seed moves
-    # the median across it. This was added after a seed-matched comparison: LowThrustTransfer
-    # read as exhausted at 0.0053 over six seeds and as still climbing at 0.0193 over the first
-    # three, which means its qualifying verdict was a property of how many seeds happened to have
-    # been run. A verdict that flips on one seed is not evidence about the task.
+    # Would this decision have come out the same on the smallest seed count the criterion is
+    # willing to trust? The necessary condition is a threshold test, and this report already
+    # declares MIN_SEEDS_FOR_CONFIDENT_SATURATION seeds sufficient to decide it - so if some
+    # subset of that size disagrees with the full sample, that declaration is wrong for this task
+    # and the verdict is a property of which seeds happened to be run.
+    #
+    # Leave-one-out was tried first and is too weak to see this. LowThrustTransfer reads as
+    # exhausted at 0.0053 over six seeds and as still climbing at 0.0193 over the first three;
+    # dropping a single seed from six never moves the median far enough to flip, so leave-one-out
+    # reported zero fragile verdicts on an inventory where the seed-matched comparison had just
+    # shown one.
     exhausted = median_gain < MATERIAL_GAIN
-    fragile = False
-    if len(gains) > 2:
-        for index in range(len(gains)):
-            without = gains[:index] + gains[index + 1:]
-            if (st.median(without) < MATERIAL_GAIN) != exhausted:
-                fragile = True
-                break
+    fragile = None
+    k = MIN_SEEDS_FOR_CONFIDENT_SATURATION
+    if len(gains) > k:
+        subsets = list(itertools.combinations(gains, k))
+        # Every subset, unless there are absurdly many; the count is tiny at realistic seed
+        # numbers and a cap keeps a future large sweep from stalling here.
+        agree = sum(1 for s in subsets[:2000]
+                    if (st.median(s) < MATERIAL_GAIN) == exhausted)
+        fragile = agree < len(subsets[:2000])
     return {
         "seeds": len(usable),
         # Undecidable with two seeds or fewer: any leave-one-out is then a single curve.
-        "seed_fragile": fragile if len(gains) > 2 else None,
+        # None means undecidable: with no more seeds than the minimum, there is no smaller
+        # trusted subset to disagree, so the stability of the verdict is simply unknown.
+        "seed_fragile": fragile,
         "median_second_half_gain": median_gain,
         "mean_second_half_gain": st.mean(gains),
         "max_second_half_gain": max(gains),
