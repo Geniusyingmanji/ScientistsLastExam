@@ -181,8 +181,26 @@ class ReportTests(unittest.TestCase):
             ]}), encoding="utf-8")
             report, text = self.run_report(root, admission=admission)
             self.assertIn("disagree: 0", text)
-            self.assertIn("ran different versions", text)
+            self.assertIn("more than one version", text)
             self.assertEqual(report["verdicts_same_version"], {})
+
+    def test_a_third_model_on_another_version_does_not_hide_a_valid_pair(self):
+        """Requiring every model to agree on a version discarded real comparisons."""
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            write_run(root, "g", "w", "T/X", "gpt-5.5", "normal", 0, [0.5])
+            write_run(root, "c", "w", "T/X", "claude-opus-4-8", "normal", 0, [0.5])
+            write_run(root, "o", "w", "T/X", "gpt-5.6-sol", "normal", 0, [0.5],
+                      contract="other" + "0" * 59)
+            admission = Path(tmp) / "adm.json"
+            admission.write_text(json.dumps({"rows": [
+                {"task": "T/X", "model": "gpt-5.5", "verdict": "measures_iteration"},
+                {"task": "T/X", "model": "claude-opus-4-8", "verdict": "feedback_harmful"},
+                {"task": "T/X", "model": "gpt-5.6-sol", "verdict": "thin_screen"},
+            ]}), encoding="utf-8")
+            _, text = self.run_report(root, admission=admission)
+            # The two that share a version are still compared, and they disagree.
+            self.assertIn("disagree: 1", text)
 
     def test_a_verdict_from_a_normal_only_model_still_compares(self):
         """The verdict check spans both arms, so it must not key off the open-loop arm alone."""

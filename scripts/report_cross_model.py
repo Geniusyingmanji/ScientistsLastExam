@@ -264,36 +264,44 @@ def main(argv: list[str] | None = None) -> int:
             stated = row.get("task_version")
             if stated:
                 stated_versions.setdefault(row["task"], {})[model] = str(stated)
-        # Same contract rule as the score comparison. A verdict is about a task, so two verdicts
-        # reached against different versions of that task disagree about nothing.
-        comparable, dropped = {}, 0
+        # Grouped by task version, not filtered on global agreement across every model. An
+        # earlier version required all models to share one version and so dropped a whole task
+        # whenever a third model had run a different one - discarding the claude/gpt-5.5
+        # comparison on six tasks where those two had in fact run the same version.
+        by_version: dict[tuple[str, str], dict[str, str]] = defaultdict(dict)
+        unknown_version = 0
         for task, per_model in verdicts.items():
-            stated = stated_versions.get(task, {})
-
-            def version_of(model_name: str) -> str | None:
-                if model_name in stated:
-                    return stated[model_name]
-                seen = all_arm_contracts[task][model_name]
-                return next(iter(seen)) if len(seen) == 1 else None
-
-            kept = {m: v for m, v in per_model.items() if version_of(m) is not None}
-            versions = {version_of(m) for m in kept}
-            if len(kept) > 1 and len(versions) == 1:
-                comparable[task] = kept
-            elif len(per_model) > 1:
-                dropped += 1
-        contested = {t: v for t, v in comparable.items() if len(set(v.values())) > 1}
-        agreed = {t: v for t, v in comparable.items() if len(set(v.values())) == 1}
+            for model, state in per_model.items():
+                version = stated_versions.get(task, {}).get(model)
+                if version is None:
+                    seen = all_arm_contracts[task][model]
+                    version = next(iter(seen)) if len(seen) == 1 else None
+                if version is None:
+                    unknown_version += 1
+                    continue
+                by_version[(task, version)][model] = state
+        comparable = {"%s @%s" % (task, version): models_here
+                      for (task, version), models_here in by_version.items()
+                      if len(models_here) > 1}
+        contested = {k: v for k, v in comparable.items() if len(set(v.values())) > 1}
+        agreed = {k: v for k, v in comparable.items() if len(set(v.values())) == 1}
+        split = sorted({task for task, _v in by_version
+                        if len({v for t, v in by_version if t == task}) > 1})
         print()
-        print("=== verdict agreement, on shared task versions ===")
-        print("  tasks with a verdict from more than one model, same version: %d"
-              % (len(agreed) + len(contested)))
+        print("=== verdict agreement, within a task version ===")
+        print("  task versions carrying a verdict from more than one model: %d"
+              % len(comparable))
         print("  agree: %d   disagree: %d" % (len(agreed), len(contested)))
-        if dropped:
-            print("  %d further multi-model tasks excluded: the models ran different versions"
-                  % dropped)
+        if split:
+            print("  %d task(s) exist in more than one version here, so a pair of models that "
+                  "ran\n  different versions of one is not compared on it: %s"
+                  % (len(split), ", ".join(t.split("/")[-1] for t in split[:5])
+                     + (" ..." if len(split) > 5 else "")))
+        if unknown_version:
+            print("  %d verdict(s) skipped: the version they were reached against is not "
+                  "recorded" % unknown_version)
         for task, per_model in sorted(contested.items()):
-            print("    %-30s %s" % (task.split("/")[-1][:30],
+            print("    %-34s %s" % (task.split("/")[-1][:34],
                                     "; ".join("%s=%s" % kv for kv in sorted(per_model.items()))))
 
     Path(args.output).write_text(json.dumps({
