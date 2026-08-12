@@ -58,14 +58,19 @@ if [[ -z "${ANTHROPIC_API_KEY:-}" && "$CONFIG" == *claude* ]]; then
   exit 2
 fi
 
-mkdir -p "$ROOT/runs/$COHORT" "$ROOT/logs"
+# Locks live outside the cohort tree. Put beside the run directories they guard, they are picked
+# up by the `runs/*/*` globs every report in this repository uses, and the first repair run had a
+# lock directory reported as a run missing its manifest.
+LOCK_ROOT="$ROOT/.locks/$COHORT"
+mkdir -p "$ROOT/runs/$COHORT" "$ROOT/logs" "$LOCK_ROOT"
 IFS=',' read -r -a SEED_LIST <<< "$SEEDS"
 failures=0
 
 run_one () {
   local task="$1" short="$2" mode="$3" seed="$4"
-  local dir="$ROOT/runs/$COHORT/${short}_${mode}_s${seed}"
-  local lock="$dir.lock"
+  local name="${short}_${mode}_s${seed}"
+  local dir="$ROOT/runs/$COHORT/$name"
+  local lock="$LOCK_ROOT/$name"
 
   # Finished means the manifest is there, because that is what the reports require.
   if [[ -f "$dir/run_manifest.json" ]]; then
@@ -74,10 +79,25 @@ run_one () {
   fi
   # mkdir is the atomic primitive here; -p would succeed on an existing directory and defeat it.
   if ! mkdir "$lock" 2>/dev/null; then
-    echo "busy  $short $mode s$seed (another driver holds it)"
+    # A driver that is killed leaves its lock behind, and a lock nobody holds would block this
+    # run forever. The holder's pid is recorded so a dead one can be taken over; a live one is
+    # still respected.
+    local holder
+    holder="$(cat "$lock/pid" 2>/dev/null || true)"
+    if [[ -n "$holder" ]] && kill -0 "$holder" 2>/dev/null; then
+      echo "busy  $short $mode s$seed (held by pid $holder)"
+      return 0
+    fi
+    echo "stale $short $mode s$seed (lock left by pid ${holder:-unknown}); taking it over"
+  fi
+  echo "$$" > "$lock/pid"
+  # Two drivers can find the same stale lock at the same moment and both claim it. Whoever wrote
+  # last owns it; the other backs off rather than running a duplicate into the same directory.
+  if [[ "$(cat "$lock/pid" 2>/dev/null)" != "$$" ]]; then
+    echo "busy  $short $mode s$seed (lost the race for a stale lock)"
     return 0
   fi
-  trap 'rmdir "$lock" 2>/dev/null' RETURN
+  trap 'rm -rf "$lock" 2>/dev/null' RETURN
 
   # Safe now: the lock is held, so no concurrent driver is writing into this directory.
   rm -rf "$dir"

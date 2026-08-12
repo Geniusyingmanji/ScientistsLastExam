@@ -36,13 +36,14 @@ MODULE = load_module()
 
 def write_run(root: Path, cohort: str, dirname: str, task: str, mode: str, seed: int,
               scores: list[float], write_manifest: bool = True,
-              model: str = "gpt-5.5") -> None:
+              model: str = "gpt-5.5", contract: str | None = None) -> None:
     workdir = root / cohort / dirname
     workdir.mkdir(parents=True)
     if write_manifest:
         (workdir / "run_manifest.json").write_text(json.dumps({
             "task_id": task, "feedback_mode": mode, "seed": seed,
             "llm_condition": {"model": model},
+            **({"task_package_sha256": contract} if contract else {}),
         }), encoding="utf-8")
     lines = [json.dumps({"step": 0, "valid": True, "score": 0.0})]
     for index, score in enumerate(scores, start=1):
@@ -56,7 +57,8 @@ class RunIdentityTests(unittest.TestCase):
             root = Path(tmp)
             write_run(root, "crossover", "b20_normal_s0", "Astro/LowThrust", "normal", 0, [0.1])
             found = MODULE.collect(root)
-            self.assertEqual(list(found), [("Astro/LowThrust", "crossover", "gpt-5.5")])
+            self.assertEqual(list(found),
+                             [("Astro/LowThrust", "crossover", "gpt-5.5", "unknown")])
 
     def test_a_run_without_a_manifest_is_skipped_rather_than_guessed(self):
         with TemporaryDirectory() as tmp:
@@ -115,6 +117,24 @@ def _sat(*, seeds, median, final, is_floor=False, saturated=False, marginal=Fals
     }
 
 
+class TaskVersionSeparationTests(unittest.TestCase):
+    """Evidence taken against two versions of a task is evidence about two tasks."""
+
+    def test_saturation_does_not_pool_seeds_across_task_versions(self):
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            # Same task, same model, two versions. Each version is saturated on its own seed set
+            # only if judged separately; pooling them mixes two different measurements.
+            for cohort, contract, curve in (("a", "v1" + "0" * 62, [0.1, 0.1, 0.1]),
+                                            ("b", "v2" + "0" * 62, [0.9, 0.9, 0.9])):
+                write_run(root, cohort, "w", "T/X", "selection_blind", 0, curve,
+                          contract=contract)
+            found = MODULE.collect(root)
+            self.assertEqual(len(found), 2)
+            versions = {key[3] for key in found}
+            self.assertEqual(versions, {"v1" + "0" * 10, "v2" + "0" * 10})
+
+
 class ModelSeparationTests(unittest.TestCase):
     """Two model families in one run tree must not be averaged into one measurement."""
 
@@ -154,7 +174,8 @@ class ModelSeparationTests(unittest.TestCase):
                 encoding="utf-8")
             (workdir / "trajectory.jsonl").write_text(
                 json.dumps({"step": 1, "valid": True, "score": 0.4}) + "\n", encoding="utf-8")
-            self.assertEqual(list(MODULE.collect(root)), [("T/X", "old", "unrecorded")])
+            self.assertEqual(list(MODULE.collect(root)),
+                             [("T/X", "old", "unrecorded", "unknown")])
 
 
 class VerdictTests(unittest.TestCase):

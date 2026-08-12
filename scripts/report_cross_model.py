@@ -247,6 +247,7 @@ def main(argv: list[str] | None = None) -> int:
                  "$%.2f" % dollars if dollars is not None else "no published price"))
 
     verdicts: dict[str, dict[str, str]] = {}
+    stated_versions: dict[str, dict[str, str]] = {}
     comparable: dict[str, dict[str, str]] = {}
     if args.admission and Path(args.admission).is_file():
         report = json.loads(Path(args.admission).read_text(encoding="utf-8"))
@@ -257,13 +258,26 @@ def main(argv: list[str] | None = None) -> int:
             if model == "unrecorded":
                 continue
             verdicts.setdefault(row["task"], {})[model] = row["verdict"]
+            # The admission report now states which version of the task a verdict was reached
+            # against. Prefer it over the version inferred from the run tree: it is the same
+            # fact, recorded by the report that formed the verdict rather than reconstructed.
+            stated = row.get("task_version")
+            if stated:
+                stated_versions.setdefault(row["task"], {})[model] = str(stated)
         # Same contract rule as the score comparison. A verdict is about a task, so two verdicts
         # reached against different versions of that task disagree about nothing.
         comparable, dropped = {}, 0
         for task, per_model in verdicts.items():
-            kept = {m: v for m, v in per_model.items()
-                    if len(all_arm_contracts[task][m]) == 1}
-            versions = {next(iter(all_arm_contracts[task][m])) for m in kept}
+            stated = stated_versions.get(task, {})
+
+            def version_of(model_name: str) -> str | None:
+                if model_name in stated:
+                    return stated[model_name]
+                seen = all_arm_contracts[task][model_name]
+                return next(iter(seen)) if len(seen) == 1 else None
+
+            kept = {m: v for m, v in per_model.items() if version_of(m) is not None}
+            versions = {version_of(m) for m in kept}
             if len(kept) > 1 and len(versions) == 1:
                 comparable[task] = kept
             elif len(per_model) > 1:

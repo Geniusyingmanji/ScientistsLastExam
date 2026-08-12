@@ -30,3 +30,6 @@ docs/
 docs/*
 !docs/edgebench_science_experiment_addendum.md
 .venv-sle/
+
+# per-run locks held by scripts/run_cohort.sh
+.locks/

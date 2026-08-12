@@ -134,8 +134,8 @@ def known_conditions() -> dict[str, str]:
 _CONDITIONS: dict[str, str] | None = None
 
 
-def run_identity(workdir: Path) -> tuple[str, str, int, str] | None:
-    """Read (task, feedback mode, seed, model) from the run manifest.
+def run_identity(workdir: Path) -> tuple[str, str, int, str, str] | None:
+    """Read (task, feedback mode, seed, model, task version) from the run manifest.
 
     The directory name cannot be trusted for this. Budget-sweep cohorts are named for their
     budget rather than their task - `runs/crossover/b20_normal_s0` - so parsing the name invents
@@ -163,11 +163,16 @@ def run_identity(workdir: Path) -> tuple[str, str, int, str] | None:
         if _CONDITIONS is None:
             _CONDITIONS = known_conditions()
         model = _CONDITIONS.get(str(document.get("llm_condition_sha256") or ""), "unrecorded")
-    return str(task), str(mode), int(seed), model
+    # The version of the task the run was made against. Twenty tasks in this tree carry more than
+    # one, because tasks were edited between cohorts, and evidence from two versions is evidence
+    # about two different tasks.
+    contract = str(document.get("task_package_sha256") or "unknown")[:12]
+    return str(task), str(mode), int(seed), model, contract
 
 
-def collect(runs_root: Path) -> dict[tuple[str, str, str], dict[str, dict[int, list[float]]]]:
-    """Group curves by (task, cohort, model).
+def collect(runs_root: Path) -> dict[tuple[str, str, str, str],
+                                     dict[str, dict[int, list[float]]]]:
+    """Group curves by (task, cohort, model, task version).
 
     Cohorts are kept apart because a run under `runs/crossover` was made at a different budget
     from one under `runs/saturation`, and averaging a gap across them would compare arms that
@@ -177,8 +182,14 @@ def collect(runs_root: Path) -> dict[tuple[str, str, str], dict[str, dict[int, l
     and the searcher together, so a gap measured with one model says nothing about another. With
     a second model family now producing runs into the same tree, pooling would have quietly
     averaged Claude against GPT and reported the mean as though it were one measurement.
+
+    Task versions are kept apart for the third form of the same mistake. `task_package_sha256`
+    records which version of a task a run was made against, and twenty of the tasks here have
+    more than one across cohorts. Saturation pools open-loop seeds across cohorts, so without
+    this key it pooled seeds taken against two different versions of the task and asked whether
+    best-of-N had stopped improving on the union - a question about no task in particular.
     """
-    found: dict[tuple[str, str], dict[str, dict[int, list[float]]]] = defaultdict(
+    found: dict[tuple[str, str, str, str], dict[str, dict[int, list[float]]]] = defaultdict(
         lambda: defaultdict(dict)
     )
     for trajectory in runs_root.glob("*/*/trajectory.jsonl"):
@@ -186,11 +197,11 @@ def collect(runs_root: Path) -> dict[tuple[str, str, str], dict[str, dict[int, l
         identity = run_identity(workdir)
         if identity is None:
             continue
-        task, mode, seed, model = identity
+        task, mode, seed, model, contract = identity
         curve = best_so_far(trajectory)
         if curve is None:
             continue
-        key = (task, workdir.parent.name, model)
+        key = (task, workdir.parent.name, model, contract)
         existing = found[key][mode].get(seed)
         if existing is None or len(curve) > len(existing):
             found[key][mode][seed] = curve
@@ -359,14 +370,14 @@ def main(argv: list[str] | None = None) -> int:
     # `saturation`. The gap does not pool - it compares two arms, and arms from different
     # cohorts were never paired with each other.
     # Saturation pools across cohorts but never across models, for the same reason gaps do not.
-    pooled_open: dict[tuple[str, str], dict[tuple[str, int], list[float]]] = defaultdict(dict)
-    for (task, cohort, model), arms in found.items():
+    pooled_open: dict[tuple[str, str, str], dict[tuple[str, int], list[float]]] = defaultdict(dict)
+    for (task, cohort, model, contract), arms in found.items():
         for mode in OPEN_LOOP_MODES:
             for seed, curve in arms.get(mode, {}).items():
                 key = (cohort, seed)
-                existing = pooled_open[(task, model)].get(key)
+                existing = pooled_open[(task, model, contract)].get(key)
                 if existing is None or len(curve) > len(existing):
-                    pooled_open[(task, model)][key] = curve
+                    pooled_open[(task, model, contract)][key] = curve
 
     # One row per task. Saturation pools across cohorts, so a per-cohort row would repeat the
     # same saturation verdict once per cohort and inflate every count - after the screen cohort
@@ -375,11 +386,13 @@ def main(argv: list[str] | None = None) -> int:
     rows = []
     # One row per (task, model): the same task measured by two model families is two
     # measurements, and collapsing them would hide exactly the disagreement worth reporting.
-    pairs_seen = sorted({(task, model) for task, _cohort, model in found})
-    for task, model in pairs_seen:
+    # ... and one row per task version, for the same reason: a verdict is a statement about a
+    # particular version of a task, and two versions cannot share one.
+    pairs_seen = sorted({(task, model, contract) for task, _c, model, contract in found})
+    for task, model, contract in pairs_seen:
         cohort_gaps = []
-        for (other, cohort, other_model), arms in sorted(found.items()):
-            if other != task or other_model != model:
+        for (other, cohort, other_model, other_contract), arms in sorted(found.items()):
+            if other != task or other_model != model or other_contract != contract:
                 continue
             open_loop: dict[int, list[float]] = {}
             for mode in OPEN_LOOP_MODES:
@@ -393,7 +406,7 @@ def main(argv: list[str] | None = None) -> int:
             if gaps:
                 cohort_gaps.append({"cohort": cohort, "gaps": gaps,
                                     "seeds": len(set(open_loop) & set(feedback))})
-        sat = saturation(pooled_open.get((task, model), {}))
+        sat = saturation(pooled_open.get((task, model, contract), {}))
         # Judge on the cohort that covers the most budgets, breaking ties on paired seeds.
         # Seeds alone is the wrong key: a cohort with eight seeds at a single budget cannot show
         # a trend at all, and ranking it first produced the verdict "gap grows with budget,
@@ -406,10 +419,11 @@ def main(argv: list[str] | None = None) -> int:
         rows.append({
             "task": task,
             "model": model,
+            "task_version": contract,
             "verdict": state,
             "reason": why,
             "judged_on_cohort": best["cohort"] if best else None,
-            "pooled_open_loop_seeds": len(pooled_open.get((task, model), {})),
+            "pooled_open_loop_seeds": len(pooled_open.get((task, model, contract), {})),
             "paired_cohorts": cohort_gaps,
             "saturation": sat,
             "gap_by_budget": best["gaps"] if best else [],
