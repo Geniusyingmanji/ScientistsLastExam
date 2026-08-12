@@ -1,0 +1,17 @@
+# Anthropic Messages API. Copy to local.claude.yaml and point FS_LLM_CONFIG at it, or pass
+# --llm-config. Never commit a key: ${ANTHROPIC_API_KEY} is expanded from the environment.
+#
+# On the benchmark host the key comes from Azure Key Vault rather than a file:
+#   export ANTHROPIC_API_KEY=$(az keyvault secret show \
+#     --vault-name superauto --name superauto-eval-VM --query value -o tsv)
+wire: anthropic
+base_url: https://api.anthropic.com/v1
+api_key: ${ANTHROPIC_API_KEY}
+model: claude-opus-4-8
+max_output_tokens: 8000
+temperature: null
+timeout_seconds: 900
+anthropic_version: "2023-06-01"
+# Extended thinking is left off. A cross-family comparison has to hold the decoding condition
+# fixed, and enabling a reasoning budget on one side only compares budgets rather than models.
+# thinking_budget_tokens: 4000

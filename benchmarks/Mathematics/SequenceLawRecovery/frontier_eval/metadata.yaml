@@ -1,0 +1,18 @@
+domain: Mathematics
+task: SequenceLawRecovery
+scientific_role: discovery
+difficulty: flagship
+tier: T3
+oracle_type: community_symbolic_sympy
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 120
+science_metric: continuation_accuracy_with_separate_false_discovery_and_determinacy_refusal
+reference_baseline: guess the Fibonacci rule regardless of the terms
+reference_sota: minimal-order exact solve tolerant of up to two bad terms, shipped under verification/ and run at scoring time
+tool_level: L2
+tools_suggested:
+  - literature_search
+  - offline_dynamic_programming
+tool_rationale: The sparse-interpolation and error-correcting-decoding literature describes recurrence guessing that tolerates faulty terms, which improves materially over exact solving alone.
+citation: "Massey, IEEE Transactions on Information Theory 1969, DOI 10.1109/TIT.1969.1054260; Kaltofen and Yang, ISSAC 2018, DOI 10.1145/3208976.3209017"

@@ -79,6 +79,60 @@ tasks:
       - doi:10.1016/j.cell.2016.11.038
       - doi:10.1016/j.cell.2022.05.013
 
+  Algorithm/GraphFromDistances:
+    status: candidate
+    reason: >-
+      hidden weighted graph recovered from a budget of shortest-path queries, with networkx as the
+      distance oracle rather than a reimplementation of Dijkstra. Reports the discovery triple
+      separately: edge-recovery F1 as combined_score, with false edges and identifiability refusal
+      beside it. About half of each world set contains an edge lying on no shortest path, which no
+      query can reveal and where abstaining is the only correct answer. Calibrated on the benchmark
+      host at the shipped level: baseline 0.4308 (every queried distance read as an edge), shipped
+      triangle-inequality reconstructor 0.7900 with a 0.0444 false-discovery rate. Retained as a
+      candidate pending external review, independent recomputation, and any model measurement.
+    citation_ids:
+      - doi:10.1137/S0097539702418498
+      - doi:10.1007/BF01386390
+  QuantumDynamics/HamiltonianLearning:
+    status: candidate
+    reason: >-
+      spin-chain fields and couplings recovered from QuTiP-generated magnetisation dynamics, with the
+      full Schrodinger evolution as the oracle. Some chains carry an exchange symmetry that makes two
+      spins' parameters unidentifiable from single-site traces, and abstaining is the only correct
+      answer there. Calibrated on the benchmark host: baseline 0.0833 mechanism, shipped least-squares
+      learner 0.5833 while claiming a coupling between uncoupled spins a quarter of the time and never
+      recognising the symmetric chains. Retained as a candidate pending external review, independent
+      recomputation, and any model measurement.
+    citation_ids:
+      - doi:10.1103/PhysRevLett.112.190501
+      - doi:10.1016/j.cpc.2012.11.019
+  Exoplanets/RadialVelocityPlanets:
+    status: candidate
+    reason: >-
+      planets identified in a radial-velocity series against a stellar rotation signal and nightly
+      cadence aliases, with astropy LombScargle as the periodogram oracle. False discovery is a
+      first-class axis because that is this field's characteristic failure - the literature carries
+      retracted detections traced to activity and aliasing. Calibrated at the shipped level: baseline
+      0.5000 mechanism with a 0.889 false-discovery rate, shipped pre-whitening detector 0.8750 with
+      0.611. The signal-to-noise regime was lowered from the first sizing, where both scored 1.0 and
+      the mechanism axis measured nothing. Retained as a candidate pending external review,
+      independent recomputation, and any model measurement.
+    citation_ids:
+      - doi:10.3847/1538-4365/aab766
+      - doi:10.1088/0004-637X/764/1/3
+  Mathematics/SequenceLawRecovery:
+    status: candidate
+    reason: >-
+      linear recurrence recovered from an integer prefix containing transcription errors, verified
+      exactly with SymPy against a held-out continuation rather than against the visible terms. About
+      a third of each set is shown with too few terms to pin a unique minimal rule, where abstaining
+      is correct. Calibrated at the shipped level: baseline 0.0000 (a fixed Fibonacci guess), shipped
+      error-tolerant solver 0.7500 with a 0.50 correct-refusal rate. Corruption was added because
+      exact solving on clean prefixes is complete and left nothing above the reference. Retained as a
+      candidate pending external review, independent recomputation, and any model measurement.
+    citation_ids:
+      - doi:10.1145/3208976.3209017
+      - doi:10.1090/S0025-5718-1980-0583502-2
   Spectroscopy/SpinSystemInference:
     status: candidate
     reason: >-

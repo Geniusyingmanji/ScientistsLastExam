@@ -27,7 +27,7 @@ class CertificationPolicyTests(unittest.TestCase):
         tasks = list_tasks()
         self.assertEqual(len(tasks), 7)
         self.assertTrue(all(certification_status(s.task_id) == "certified" for s in tasks))
-        self.assertEqual(len(list_tasks(None)), 63)
+        self.assertEqual(len(list_tasks(None)), 58)
         self.assertEqual(
             certification_status("ProteinEngineering/ProteinStabilityDesign"),
             "candidate",
@@ -42,13 +42,23 @@ class CertificationPolicyTests(unittest.TestCase):
         manifest_ids = set(load_certification()["tasks"])
         self.assertEqual(manifest_ids, inventory_ids)
 
-    def test_quarantined_clone_group_is_not_default_visible(self):
-        default_ids = {s.task_id for s in list_tasks()}
+    def test_the_clone_group_is_gone_rather_than_quarantined(self):
+        """Four near-duplicate trig tasks were quarantined; they have since been deleted.
+
+        Quarantine kept them visible as defect evidence. They met none of the benchmark's nine
+        standards, and two of the nine tasks removed alongside them were not natural science at
+        all, so the set was removed rather than preserved. This guard now checks the removal held
+        instead of checking the quarantine.
+        """
         records = load_certification()["tasks"]
-        clone_ids = {k for k, v in records.items() if v.get("duplicate_group") == "generic_trig_8d_v1"}
-        self.assertEqual(len(clone_ids), 4)
-        self.assertTrue(clone_ids.isdisjoint(default_ids))
-        self.assertTrue(all(certification_status(task) == "quarantined" for task in clone_ids))
+        clone_ids = {k for k, v in records.items()
+                     if v.get("duplicate_group") == "generic_trig_8d_v1"}
+        self.assertEqual(clone_ids, set())
+        self.assertEqual(
+            {task for task, record in records.items()
+             if record.get("status") == "quarantined"},
+            set(),
+        )
 
     def test_certified_tasks_have_stable_citation_ids(self):
         records = load_certification()["tasks"]

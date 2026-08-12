@@ -1,12 +1,17 @@
 """LLM client for Frontier-Science.
 
-Supports two wire formats behind one interface:
+Supports three wire formats behind one interface:
 
 - ``chat``      : OpenAI-compatible ``POST {base_url}/chat/completions``.
                   This is the public, vendor-neutral path (base_url + api_key + model).
 - ``responses`` : OpenAI ``POST {base_url}/responses`` (Responses API). Used by our
                   local keyless proxy, which injects auth itself — selected only via a
                   git-ignored local config.
+- ``anthropic`` : Anthropic ``POST {base_url}/messages``. Different enough to need its own
+                  path: the key travels in ``x-api-key`` rather than a bearer token, the API
+                  version is a required header, ``system`` is a top-level field rather than a
+                  message, ``max_tokens`` is mandatory, and the reply is a list of content
+                  blocks of which only the ``text`` ones are the answer.
 
 The client is configured from a YAML/dict; see ``conf/llm/openai_compatible.example.yaml``.
 No endpoint or credential is hard-coded here.
@@ -31,7 +36,7 @@ def _expand(value: Any) -> Any:
 
 @dataclass
 class LLMConfig:
-    wire: str = "chat"  # "chat" | "responses"
+    wire: str = "chat"  # "chat" | "responses" | "anthropic"
     base_url: str = "https://api.openai.com/v1"
     api_key: str = ""
     model: str = "gpt-4o"
@@ -42,6 +47,14 @@ class LLMConfig:
     chat_max_tokens_field: str = "max_tokens"
     temperature: Optional[float] = 0.7
     reasoning_effort: Optional[str] = None  # for reasoning models on the responses wire
+    # Anthropic wire only. The API version header is required and pinned rather than defaulted
+    # so a recorded run says which contract it spoke.
+    anthropic_version: str = "2023-06-01"
+    # Extended thinking. Off by default: a comparison across model families has to hold the
+    # decoding condition fixed, and turning it on for one side only would compare a reasoning
+    # budget rather than a model. When set, Anthropic requires temperature to be unset and
+    # max_tokens to exceed the thinking budget.
+    thinking_budget_tokens: Optional[int] = None
     timeout_seconds: float = 600.0
     extra_headers: dict = field(default_factory=dict)
     input_cost_per_million: Optional[float] = None
@@ -71,6 +84,8 @@ class LLMClient:
     def complete(self, prompt: str, system: Optional[str] = None) -> str:
         if self.config.wire == "responses":
             return self._complete_responses(prompt, system)
+        if self.config.wire == "anthropic":
+            return self._complete_anthropic(prompt, system)
         return self._complete_chat(prompt, system)
 
     # ---- wire: chat completions ----------------------------------------
@@ -116,6 +131,51 @@ class LLMClient:
         data = self._post(url, payload, headers)
         self._record_usage(data.get("usage") or {})
         return self._extract_responses_text(data)
+
+    # ---- wire: anthropic messages ---------------------------------------
+    def _complete_anthropic(self, prompt: str, system: Optional[str]) -> str:
+        payload: dict[str, Any] = {
+            "model": self.config.model,
+            "max_tokens": int(self.config.max_output_tokens),
+            "messages": [{"role": "user", "content": prompt}],
+        }
+        if system:
+            payload["system"] = system
+        if self.config.thinking_budget_tokens:
+            budget = int(self.config.thinking_budget_tokens)
+            if budget >= int(self.config.max_output_tokens):
+                raise ValueError(
+                    "thinking_budget_tokens (%d) must be below max_output_tokens (%d)"
+                    % (budget, self.config.max_output_tokens)
+                )
+            payload["thinking"] = {"type": "enabled", "budget_tokens": budget}
+            # Anthropic rejects a temperature alongside extended thinking.
+        elif self.config.temperature is not None:
+            payload["temperature"] = float(self.config.temperature)
+        url = self.config.base_url.rstrip("/") + "/messages"
+        headers = {
+            "Content-Type": "application/json",
+            "anthropic-version": self.config.anthropic_version,
+        }
+        if self.config.api_key:
+            headers["x-api-key"] = self.config.api_key
+        headers.update(self.config.extra_headers)
+        data = self._post(url, payload, headers)
+        usage = data.get("usage") or {}
+        # Anthropic names its token fields differently from OpenAI; map them so the recorded
+        # accounting is comparable across wires rather than silently zero.
+        self._record_usage({
+            "prompt_tokens": usage.get("input_tokens", 0),
+            "completion_tokens": usage.get("output_tokens", 0),
+            "total_tokens": (usage.get("input_tokens", 0) or 0)
+                            + (usage.get("output_tokens", 0) or 0),
+        })
+        parts = [
+            block.get("text", "")
+            for block in (data.get("content") or [])
+            if isinstance(block, dict) and block.get("type") == "text"
+        ]
+        return "".join(parts)
 
     def _record_usage(self, usage: dict[str, Any]) -> None:
         input_key = "input_tokens" if "input_tokens" in usage else "prompt_tokens"

@@ -1,0 +1,87 @@
+schema_version: 2
+scientific_question: Can a search recover the linear recurrence behind an integer sequence when some terms
+  are mistranscribed, without claiming a rule that merely fits the visible prefix, and while recognising
+  the prefixes too short to pin one?
+artifact: A deterministic function mapping a sequence prefix to integer recurrence coefficients, or to
+  a refusal.
+oracle:
+  model: integer linear recurrences generated from seeded coefficients and seed terms, with a held-out
+    continuation; SymPy exact rank and linear solving decide determinacy
+  reference_designer: minimal-order exact solve tolerant of up to two bad terms, shipped under verification/
+    and run at scoring time
+  feasibility: 'a dict with a non-empty list of integer coefficients of order at most 6, or {''abstain'':
+    True}; anything else is scored invalid rather than clipped'
+  deterministic: true
+  determinism_note: sequences come from a seeded generator; SymPy exact arithmetic is deterministic
+  external_tooling: sympy (pinned in verification/requirements.txt)
+normalization:
+  baseline: guess the Fibonacci rule regardless of the terms; scores 0.0000
+  reference: continuation accuracy of the shipped error-tolerant solver, measured at evaluation time
+  score: combined_score carries continuation accuracy alone, in [0, 1]; false-discovery rate and refusal
+    accuracy are reported beside it and must not be folded in
+  measured_anchors: recomputed per run; see references/known_best.md
+citations:
+- id: doi:10.1090/S0025-5718-1980-0583502-2
+  title: The Berlekamp-Massey algorithm and linear recurrences
+- id: doi:10.1007/978-3-319-56932-1
+  title: 'Concrete Mathematics: generating functions and recurrences'
+- id: doi:10.1145/3208976.3209017
+  title: Guessing linear recurrences with errors
+- id: doi:10.1016/j.jsc.2016.11.017
+  title: Sparse interpolation and error-correcting decoding
+invariants:
+- a rule equal to the generating recurrence reproduces the continuation exactly and scores 1.0
+- a rule with a zero trailing coefficient is a lower-order rule and is scored as whatever it predicts
+- corrupting a term never changes the continuation, which is generated from the true rule
+- abstaining on a determined sequence scores zero for that sequence, so refusing everything buys nothing
+known_shortcuts: 'SymPy is available to the candidate, which is deliberate: the reference uses exact solving
+  too and the task is about corruption and identifiability, not about implementing Gaussian elimination.
+  Fitting the visible terms is defeated by scoring the held-out continuation instead. Abstaining everywhere
+  is defeated by scoring an abstention on a determined sequence as zero. Claiming the highest allowed
+  order is defeated by the same continuation check, since a high-order fit to a corrupted prefix diverges
+  immediately.'
+review:
+  domain: pending_external_symbolic_computation
+  evaluator_security: oracle runs in the trusted parent; candidate receives SymPy through the audited
+    allowlist
+  reference_implementation_verified: 'truth-blind: the solver reads only the prefix a candidate reads'
+provenance:
+  class: procedural
+  target_source: seeded draw over recurrence order, coefficients and seed terms, with a determinacy and
+    corruption quota
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: sealed sequences available from an unused generator seed
+novelty_risk:
+  level: low
+  rationale: Linear recurrence guessing is classical and Berlekamp-Massey is textbook, so a model may
+    recall the clean case. The corrupted and under-determined worlds are generated, and error-tolerant
+    guessing with an explicit refusal axis is not a published benchmark setting.
+lineage:
+  status: incomplete_legacy
+  builder_model_ids:
+  - anthropic:claude-fable-5
+  builder_scaffolds:
+  - claude-code
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: None. Two changes were made before any model ran. Corrupted terms were added
+    because exact solving on a clean prefix is complete and the reference scored 1.0, leaving nothing
+    above it. The baseline was replaced with a fixed guess because fitting order two from the last four
+    terms scored level with the reference, making it a competitor rather than a floor.
+  shortcut_discoverer: builder
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: incomplete_legacy
+  author_domain: symbolic computation
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_yet_cross_checked
+  independent_recomputation_status: not_yet_recomputed
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
