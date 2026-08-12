@@ -1,8 +1,0 @@
-domain: FluidMechanics
-task: StokesShapeDrag
-scientific_role: optimization
-difficulty: hard
-oracle_type: physical_sim
-score_mode: clipped
-gpu_required: false
-eval_time_seconds: 10

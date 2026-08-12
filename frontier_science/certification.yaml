@@ -351,9 +351,6 @@ tasks:
       - doi:10.1121/1.400379
       - doi:10.1063/1.4962328
       - doi:10.1063/1.4941338
-  Biomechanics/ProstheticJointDesign:
-    status: quarantined
-    reason: hand-written rollback/conformity objective is exactly solved by all-upper-bound radii and non-finite geometry receives full score
   ChemicalProcess/DistillationColumnDesign:
     status: candidate
     reason: v2 replaces the fixed-purity tray toy with six varying binary separations, exact mixed-integer artifacts, closed equilibrium-stage balances, purity/recovery gates, fixed-seed nominal/robust witnesses, held-out regimes and five sealed operating shifts; independent least-squares MESH solves agree below 2e-8, while one GPT-5.5 normal budget-three proposal reaches 0.613/0.541 development/held-out nominal score but only 0.20/0.20 shift feasibility and zero robustness, six of seven proposals time out, and a post-hoc public-cost counterfactual exposes no capital-versus-energy responsiveness; retain pending repeated paired calibration, server-held mixtures, rate-based process-simulator replication and independent chemical-engineering review
@@ -362,20 +359,11 @@ tasks:
       - doi:10.1002/aic.690170130
       - doi:10.1002/cjce.5450520108
       - doi:10.1021/ie0001974
-  Combustion/FlameSpeedOptimization:
-    status: quarantined
-    reason: simplified algebraic flame formula clips both methane baseline and claimed H2 reference at 5 m/s, leaving no score normalization or meaningful headroom
-  FluidMechanics/StokesShapeDrag:
-    status: quarantined
-    reason: oracle uses perimeter rather than Stokes flow, making the circle optimal by the isoperimetric inequality and contradicting its 0.85 shape anchor
   HeatTransfer/ConvectionDiffusionOpt:
     status: candidate
     reason: v2 replaces the fixed hidden-field guessing task and fail-open non-finite path with a charged active laboratory over six development and five held-out homogeneous, null and heterogeneous worlds; candidates infer five anisotropic transport/loss parameters and design four heaters against a visible target, with separate mechanism, diagnostic prediction, nominal design, four physical-shift robustness, transfer, refusal and false-discovery axes; a truth-blind complementary two-experiment policy spends all 12 units and reaches approximately 0.896/0.892 development/held-out joint quality with zero false discovery, while a symmetric one-experiment policy is near-unidentifiable and scores approximately zero; across budget-one, normal budget-three and strict open-loop GPT-5.5 calibration, four proposals fail the executable contract and all three valid proposals abstain on every supported world, including one full-budget two-experiment policy, leaving meaningful experiment-design and supported-discovery headroom; retain pending repeated paired controls, server-held procedural apparatuses, continuum/high-fidelity replication and independent heat-transfer review
     citation_ids:
       - doi:10.1007/978-1-4020-8839-1
-  InventoryManagement/MultiEchelonStock:
-    status: quarantined
-    reason: stages receive their own prior orders without upstream fulfillment, so retailer service is exactly independent of factory and warehouse stocks
   ParticlePhysics/CalorimeterDesign:
     status: candidate
     reason: v2 replaces the false fixed-10-GeV baseline and fail-open clipping path with three cost-conditioned Pb/scintillator design curves over four development and two interleaved held-out layer/energy/noise/material regimes; a transparent normalized-gamma longitudinal model separates multi-energy resolution, response linearity, containment, sampling, photoelectron, electronics, leakage, lead mass, length and readout cost, while five fabrication, calibration, dead-material, light-yield and electronics shifts remain sealed; the valid uniform baseline has development RMS resolution 0.0856 and zero normalized score, fixed-seed nominal witnesses improve it to unit development/held-out nominal score but retain only 0.483 development shifted-envelope feasibility and zero robustness, whereas minimax witnesses leave approximately two percent cost headroom, preserve every shifted envelope and trade nominal score to 0.798 development and 0.754 held-out; independent gamma-CDF quadrature, material-budget identities, reference regeneration, secure baseline replay and fail-closed archive tests pass internally, so retain as a reduced-order scientific-instrument optimization candidate pending GPT-5.5 headroom calibration, paired controls, server-held detector regimes, independent detector-physics review, GEANT4/electronics replication and test-beam validation
@@ -408,10 +396,6 @@ tasks:
     reason: v2 replaces the zero-baseline polynomial steam surrogate and unrelated 46 percent anchor with a self-contained IAPWS-IF97 Region 1/2/4 single-reheat cycle over four development and two held-out operating regimes; hard moisture, material and energy-closure gates feed efficiency-versus-specific-work Pareto hypervolume, while five sealed weather, pressure-loss, degradation and material shifts remain evaluator-only; official IAPWS verification tables and an audit-only 32-state iapws-1.5.4 implementation agree to floating-point precision, a fixed-seed 2048-point Sobol witness reaches unit nominal development/held-out score but only approximately 0.71/0.73 shift feasibility, and a robust witness trades nominal score down to approximately 0.48/0.45 while reaching unit development/held-out robustness; retain pending GPT-5.5 headroom calibration, paired controls, server-held cycles, independent thermodynamics review, process-simulator/component-map replication and plant data
     citation_ids:
       - iapws:R7-97-2012
-  Transportation/TrafficSignalTiming:
-    status: quarantined
-    reason: no conflicting phase or shared green constraint makes all-maximum greens plus travel-time offsets a trivial full-score corner; non-finite timing receives full score
-
   Spectroscopy/NMRSpectrumFitting:
     status: candidate
     reason: v2 has ten procedural multi-regime spectra, finite bounded Voigt peak artifacts, order-invariant peak-mechanism matching, separate reconstruction/confidence/false-discovery/refusal metrics and held-out overlap/noise/baseline/axis/model-inadequacy shifts; a truth-blind classical fit scores 0.271/0.146 development/held-out mechanism-refusal despite high reconstruction, while GPT-5.5 reaches 0.428/0.176 at budget one and its budget-three feedback rewrites do not repair false discoveries, leaving meaningful science-specific headroom pending paired controls, server-held spectra and independent spectroscopist review
@@ -432,18 +416,6 @@ tasks:
       - doi:10.1109/JRPROC.1946.225956
       - doi:10.1121/1.384777
 
-  CrystalGrowth/CzochralskiProcess:
-    status: quarantined
-    reason: claimed Stefan model is a generic eight-variable trigonometric objective
-    duplicate_group: generic_trig_8d_v1
-  Electromagnetics/WaveguideModeSolver:
-    status: quarantined
-    reason: claimed eigenmode solver is a generic eight-variable trigonometric objective
-    duplicate_group: generic_trig_8d_v1
-  Geomechanics/TunnelSupportDesign:
-    status: quarantined
-    reason: claimed FEM/Mohr-Coulomb model is a generic eight-variable trigonometric objective
-    duplicate_group: generic_trig_8d_v1
   MolecularDynamics/ForceFieldCalibration:
     status: candidate
     reason: v2 replaces the falsely labeled Monte Carlo/RDF trigonometric clone with twelve procedural active three-particle energy/force worlds spanning public Mie and Morse hypotheses plus Buckingham, Axilrod-Teller and temperature-dependent misspecification; every query preregisters monotone hypothesis weights and a retained set, while separate axes score acquisition information, proper-score hypothesis calibration, true-family retention, model discrimination, parameter intervals, sealed short/long-range prediction, second virial and Boyle-temperature decisions, evidence lineage and unsupported refusal; a truth-blind nonlinear reference covers every supported world, refuses every unsupported world and reaches approximately 0.96/0.95 normalized development/held-out joint quality, pending server-held worlds, repeated controls, periodic many-particle or ab-initio replication and independent molecular-simulation review
@@ -454,7 +426,3 @@ tasks:
       - doi:10.1103/PhysRevLett.93.165501
       - doi:10.1016/0375-9601(74)90847-0
       - doi:10.1063/1.1723844
-  Optoelectronics/LaserCavityDesign:
-    status: quarantined
-    reason: claimed ABCD laser model is a generic eight-variable trigonometric objective
-    duplicate_group: generic_trig_8d_v1

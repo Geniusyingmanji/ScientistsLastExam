@@ -1,3 +1,0 @@
-1) Only edit solution.py. Keep the optimize_czochralski() signature.
-2) numpy/scipy only. CPU, seconds. No network.
-3) Do not read verification/ or frontier_eval/.
