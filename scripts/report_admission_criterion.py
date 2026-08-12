@@ -34,8 +34,12 @@ import argparse
 import json
 import math
 import statistics as st
+import sys
 from collections import defaultdict
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
 
 # Budgets the gap is reported at. The shape across these matters more than any single endpoint:
 # a gap that grows is evidence of iteration paying off, one that peaks and turns over means
@@ -98,11 +102,15 @@ def best_so_far(path: Path) -> list[float] | None:
 
 
 def score_modes() -> dict[str, str]:
-    """Score mode per task, so a control at 1.000 can be read as a cap rather than a coincidence."""
-    try:
-        from frontier_science.registry import list_tasks
-    except Exception:  # noqa: BLE001 - the report still works without it
-        return {}
+    """Score mode per task, so a control at 1.000 can be read as a cap rather than a coincidence.
+
+    This must not fail quietly. An earlier version caught the import error and returned an empty
+    map, which made every task default to clipped and reported three uncapped tasks - including
+    one whose control sits at 1.061, above any cap - as solved at their ceiling. The failure was
+    invisible because the fallback was a plausible-looking answer.
+    """
+    from frontier_science.registry import list_tasks
+
     return {spec.task_id: str(spec.metadata.get("score_mode", "clipped"))
             for spec in list_tasks(None)}
 

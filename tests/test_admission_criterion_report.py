@@ -261,6 +261,16 @@ class LeaveOneOutTests(unittest.TestCase):
         self.assertFalse(last["robust_to_one_seed"])
 
 
+class ScoreModeTests(unittest.TestCase):
+    def test_score_modes_resolves_and_marks_the_uncapped_tasks(self):
+        """A silent empty map here made every task look clipped and mislabelled three as solved,
+        one of them a task whose control sits at 1.061 - above any cap there could be."""
+        modes = MODULE.score_modes()
+        self.assertGreater(len(modes), 50)
+        self.assertEqual(modes["Chemistry/LennardJonesCluster"], "uncapped")
+        self.assertEqual(modes["QuantumErrorCorrection/QuantumErrorDecoder"], "uncapped")
+
+
 class SaturationTests(unittest.TestCase):
     def test_saturation_is_judged_on_the_median_seed_not_the_mean(self):
         """One climbing seed among flat ones must not read as headroom.
