@@ -24,11 +24,11 @@ name; the CLI examples below reflect that. Renaming the module is a separate mec
 
 ## At a glance
 
-- **62 task packages** across **58 logical domains** and **7 broad disciplines**.
-- **7 certified**, **46 candidate**, and **9 quarantined** tasks.
-- Three tasks whose oracles are **community-standard scientific tooling** (Stim + PyMatching,
-  RDKit, ViennaRNA) rather than a bespoke reimplementation, all scored **uncapped** against anchors
-  recomputed at evaluation time, and all carrying a measured **difficulty ladder**.
+- **63 task packages** across **58 logical domains** and **7 broad disciplines**.
+- **7 certified**, **47 candidate**, and **9 quarantined** tasks.
+- Four tasks whose oracles are **community-standard scientific tooling** (Stim + PyMatching,
+  RDKit, ViennaRNA, nmrsim) rather than a bespoke reimplementation, each anchored on a value or a
+  routine recomputed at evaluation time, and each carrying a measured **difficulty ladder**.
 - **2 of 52** tasks are so far shown to measure iterative improvement, against a criterion the
   repository can now apply to any task with paired runs.
 - Deterministic black-box evaluation through a networkless Bubblewrap sandbox.
@@ -57,13 +57,13 @@ should use the discipline path.
 | Discipline | Tasks | Certified | Candidate | Quarantined |
 |---|---:|---:|---:|---:|
 | Biology | 7 | 0 | 6 | 1 |
-| Chemistry | 13 | 1 | 10 | 2 |
+| Chemistry | 14 | 1 | 11 | 2 |
 | Computer Science | 4 | 2 | 2 | 0 |
 | Earth Science | 6 | 0 | 6 | 0 |
 | Engineering | 18 | 0 | 14 | 4 |
 | Mathematics | 5 | 2 | 3 | 0 |
 | Physics | 9 | 2 | 5 | 2 |
-| **Total** | **62** | **7** | **46** | **9** |
+| **Total** | **63** | **7** | **47** | **9** |
 
 The certified core currently consists of:
 
@@ -98,7 +98,8 @@ scores 0.576, measured through the harness.
 | Task | Oracle | Anchor | Scoring |
 |---|---|---|---|
 | `QuantumErrorCorrection/QuantumErrorDecoder` | **Stim** rotated surface-code circuits, seeded sampling | **PyMatching 2** minimum-weight perfect matching, recomputed per run | uncapped; matching MWPM = 1.0 |
-| `RNAEngineering/RNAEnsembleDesign` | **ViennaRNA** partition function over the Turner nearest-neighbour model; ensemble defect | ViennaRNA's own `inverse_fold`, best of ten restarts by ensemble defect, recomputed per run | uncapped; matching the reference designer = 1.0 |
+| `RNAEngineering/RNAEnsembleDesign` | **ViennaRNA** partition function over the Turner nearest-neighbour model; ensemble defect | ViennaRNA's own `inverse_pf_fold`, best of three restarts by ensemble defect, recomputed per run | uncapped; matching the reference designer = 1.0 |
+| `Spectroscopy/SpinSystemInference` | **nmrsim** full Zeeman-plus-coupling Hamiltonian, diagonalised | least-squares fit of the nmrsim forward model, shipped under `verification/` and run at scoring time | clipped; mechanism recovery reported apart from false-discovery rate and refusal |
 | `MedicinalChemistry/MolecularLeadOptimization` | **RDKit** QED, Ertl–Schuffenhauer SA score, Lipinski/Veber descriptors, PAINS catalogue, Morgan/Tanimoto | mean drug-likeness of structurally distinct approved drugs from a 20-drug panel whose SMILES were each verified against published molecular weights | uncapped; approved-drug quality = 1.0 |
 
 Calibration ladders are in each task's `references/known_best.md`. On the decoder task:
@@ -416,7 +417,7 @@ given a verdict.
 
 Measuring iteration is one question; whether a task's science is solid is another, and the two
 are independent. `scripts/audit_benchmark_standards.py` checks nine mechanically verifiable
-properties across all 62 packages and reports them separately, because they are different kinds
+properties across all 63 packages and reports them separately, because they are different kinds
 of defect and an average would hide whichever one matters.
 
 | standard | met |
