@@ -1,7 +1,10 @@
 # 第二个模型:分数排序一致,准入判据不一致
 
-Claude Opus 4.8 在 6 个任务上跑满 36 次(3 seed × 2 臂,budget 12,greedy_rewrite),与 gpt-5.5、
+Claude Opus 4.8 在 12 个任务上跑满 72 次(3 seed × 2 臂,budget 12,greedy_rewrite),与 gpt-5.5、
 gpt-5.6-sol 逐任务对照。答案分两半,而且两半相反。
+
+前 6 个任务是已有配对证据的那批;后 6 个是特意挑的 —— gpt-5.5 与 gpt-5.6 都有当前版本数据、
+且分数不在天花板也不在地板,也就是有区分度的那些。
 
 得出这个答案之前,评测流水线里有一条**任务身份**的缺陷链必须先修 —— 修之前算出来的每一个
 相关系数都是错的,包括我一度写下的结论。下面先讲缺陷,因为它决定了数字能不能信。
@@ -50,30 +53,41 @@ claude vs gpt-5.6 从 0 → **6**。
 | 对比 | ρ | 可比任务 |
 |---|---:|---:|
 | gpt-5.5 vs gpt-5.6-sol(同族) | **0.959** | 50 |
-| claude vs gpt-5.5(跨族) | **0.829** | 6 |
-| claude vs gpt-5.6-sol(跨族) | **0.200** | 6 |
-
-claude vs gpt-5.5 的 6 个任务:
+| claude vs gpt-5.5(跨族) | **0.811** | 12 |
+| claude vs gpt-5.6-sol(跨族) | **0.559** | 12 |
 
 | 任务 | claude | gpt-5.5 | gpt-5.6 |
 |---|---:|---:|---:|
-| LowThrustTransfer | 0.1031 | 0.0401 | 0.7428 |
-| AlloyHardnessOptimization | 0.3205 | 0.1842 | 0.1993 |
-| ProteinStabilityDesign | 0.5668 | 0.5462 | 0.5332 |
-| QuantumErrorDecoder | 0.6690 | 0.7713 | 0.8163 |
-| NMRSpectrumFitting | 0.4360 | 0.4940 | 0.6759 |
+| HeatExchangerDesign | 0.9359 | 0.7665 | 0.9369 |
+| DistillationColumnDesign | 0.6330 | 0.5822 | 0.8049 |
 | TrussWeightMinimization | 0.6415 | 0.4736 | 0.4098 |
+| QuantumErrorDecoder | 0.6690 | 0.7713 | 0.8163 |
+| ProteinStabilityDesign | 0.5668 | 0.5462 | 0.5332 |
+| RoomImpulseResponse | 0.5623 | 0.4382 | 0.8545 |
+| NMRSpectrumFitting | 0.4360 | 0.4940 | 0.6759 |
+| EnergyBalanceModel | 0.3294 | 0.6637 | 0.9776 |
+| AlloyHardnessOptimization | 0.3205 | 0.1842 | 0.1993 |
+| LowThrustTransfer | 0.1031 | 0.0401 | 0.7428 |
+| CatalystDeactivationLab | 0.0032 | 0.0980 | 0.1722 |
+| ForceFieldCalibration | 0.0000 | 0.0601 | 0.0000 |
 
-**一条要收回的判断。** 我一度把 LowThrustTransfer 上 gpt-5.5 的 0.0401 与 gpt-5.6 的 0.7428
-这 18 倍差距归因于"任务被改过"。等价表证明这两批跑的是同一个任务,**18 倍是真实的模型差异**。
-claude vs gpt-5.6 的 ρ = 0.200 也主要由这一个任务撑开 —— 6 个点上的秩相关,证据很薄,
-不宜当作"两族排序不一致"的结论,只能说这一对还没测够。
+**两条要收回的判断。**
 
-提案有效率:claude 0.90/0.89,gpt-5.5 0.79/0.76,gpt-5.6 0.74/0.84。36 次运行 **$4.01**。
+其一:我一度把 LowThrustTransfer 上 gpt-5.5 的 0.0401 与 gpt-5.6 的 0.7428 这 18 倍差距
+归因于"任务被改过"。等价表证明这两批跑的是同一个任务,**18 倍是真实的模型差异**。
+
+其二:任务数只有 6 个时,claude vs gpt-5.6 的 ρ 是 0.200,我当时说"证据太薄不宜下结论"。
+补到 12 个任务后是 **0.559** —— 那个 0.200 确实是小样本假象,而不是两族排序不一致。
+12 个点仍然不多,但三对相关系数现在都落在"排序大体一致"的区间里。
+
+提案有效率:claude 0.75/0.72,gpt-5.5 0.78/0.76,gpt-5.6 0.74/0.84。
+Claude 在前 6 个任务上是 0.90/0.89,补的 6 个任务把它拉低了 —— 这 6 个是特意挑的有区分度的题,
+Claude 在上面产出可用提案的比例明显更低,这本身是一个值得记的观察。
+72 次运行合计 **$9.36**。
 
 ## 准入判据:不一致,而且方向一边倒
 
-49 个可比的 (任务, 版本) 上 **34 一致 / 15 分歧**。claude 参与的 6 个任务**全部分歧**:
+49 个可比的 (任务, 版本) 上 **33 一致 / 16 分歧**。claude 参与的任务**全部分歧**:
 
 | 任务 | claude | gpt-5.5 |
 |---|---|---|
@@ -109,9 +123,9 @@ gpt-5.5 判为合格的 4 个,Claude 判的都是**必要条件不成立**。机
 
 先试留一法,太钝:6 个 seed 去掉 1 个中位数跨不过门槛,查出 0 个。
 改成**在判据自己信任的最小 seed 数上枚举子集**,任一子集反转结论即标记。
-结果:**5 个合格任务里 3 个 seed 脆弱** —— LowThrustTransfer、ProteinStabilityDesign、
-QuantumErrorDecoder。真正不依赖"跑了哪几个 seed"的只有 AlloyHardnessOptimization 与
-NMRSpectrumFitting。
+结果:**7 个合格任务里 3 个 seed 脆弱** —— LowThrustTransfer、ProteinStabilityDesign、
+QuantumErrorDecoder。补跑之后合格任务从 5 个增加到 7 个
+(新增 CatalystDeactivationLab 与 EnergyBalanceModel),脆弱的仍是那 3 个。
 
 ## pipeline 改动清单
 
@@ -134,8 +148,9 @@ NMRSpectrumFitting。
 ## 未了
 
 - 冻结 cohort preflight 7 个任务 0/7 全项失败,g450 上 745 个测试 30 失败 8 错误,
-  集中在这一处及依赖它的分析测试。根因即上面的哈希缺陷加任务改动;
-  重新绑定还是重跑属于 Track F 治理决定,未擅动。
-- claude 只有 6 个任务 3 个 seed。ρ = 0.829 与 0.200 都建立在 6 个点上,区间很宽。
+  集中在这一处及依赖它的分析测试。preflight 现在会说明失败原因:**7 个任务全部是"仅声明性改动"**
+  —— 冻结时的科学证据仍然描述着这些任务,过期的只是绑定。所以该做的是刷新绑定而不是重新测量,
+  但这属于 Track F 治理决定,未擅动。
+- claude 12 个任务、每个 3 个 seed。三对 ρ 分别建立在 12、12、50 个点上,前两对区间仍宽。
 - CirclePacking 的版本等价仍未决。
-- MolecularLeadOptimization 与 RNAEnsembleDesign 的重配对在跑(当前版本证据分别只有 2 次和 0 次)。
+- MolecularLeadOptimization 与 RNAEnsembleDesign 的重配对已完成,12 次全部落盘。
