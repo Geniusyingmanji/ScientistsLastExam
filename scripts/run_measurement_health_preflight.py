@@ -960,6 +960,21 @@ DECLARATIVE_CARD_KEYS = {"scientific_role", "score_mode", "domain_reviewed", "ma
                          "difficulty_level", "notes", "description", "tags"}
 
 
+def _freeze_revision(binding: Any) -> Any:
+    """The revision the frozen evidence was taken at.
+
+    It lives inside the bound evidence document, not in the preflight config - the config records
+    where the evidence is and what it hashes to, and the document records where it came from. A
+    first attempt read the config and classified nothing on all seven tasks.
+    """
+    if not isinstance(binding, dict):
+        return None
+    document, _report = _bound_document(binding)
+    if not isinstance(document, dict):
+        return None
+    return (document.get("source_provenance") or {}).get("git_revision")
+
+
 def _package_mismatch_explanation(task_spec: Any, source_revision: Any) -> dict[str, Any]:
     """Why does the task package no longer hash to its frozen value?
 
@@ -1080,8 +1095,7 @@ def _task_preflight(
                 actual_sha256=current_package,
                 scope="all task source/data files excluding generated output",
                 mismatch=(None if package_binding_passed else _package_mismatch_explanation(
-                    task_spec, (config.get("scientific_materiality") or {}).get("revision")
-                    or manifest_row.get("source_revision"))),
+                    task_spec, _freeze_revision(config.get("scientific_materiality")))),
             ),
             "fixed_artifact_binding": _check(
                 "pass" if artifact_binding_passed else "fail",
