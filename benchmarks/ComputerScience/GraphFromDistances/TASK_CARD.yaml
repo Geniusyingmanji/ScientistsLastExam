@@ -1,0 +1,90 @@
+schema_version: 2
+scientific_question: Can a search recover a hidden weighted network from a limited budget of shortest-path
+  queries, without claiming edges that do not exist, and while recognising the graphs that distance measurements
+  cannot determine at all?
+artifact: A deterministic function mapping a query budget and a distance oracle to an edge set, or to
+  a refusal.
+oracle:
+  model: networkx 3.1 Dijkstra shortest-path lengths over generated weighted graphs; queries charged against
+    a budget smaller than the number of node pairs
+  reference_designer: triangle-inequality decomposition over the queried submatrix, shipped under verification/
+    and run at scoring time
+  feasibility: 'a dict with an ''edges'' list of (u, v, weight) triples inside the node range with positive
+    finite weights, or {''abstain'': True}; anything else is scored invalid'
+  deterministic: true
+  determinism_note: graphs come from a seeded generator; networkx shortest paths are deterministic
+  external_tooling: networkx (pinned in verification/requirements.txt)
+normalization:
+  baseline: read every queried distance as a direct edge; scores 0.4308 at the shipped level
+  reference: edge-set F1 of the shipped triangle-inequality reconstructor, measured at evaluation time
+    on the same graphs
+  score: combined_score carries edge-recovery F1 alone, in [0, 1]; false-discovery rate and refusal accuracy
+    are reported beside it and must not be folded in
+  measured_anchors: recomputed per run; see references/known_best.md
+citations:
+- id: doi:10.1109/49.839932
+  title: 'Network tomography: estimating source-destination traffic intensities'
+- id: doi:10.1137/S0097539702418498
+  title: Reconstructing a graph from its distance matrix
+- id: doi:10.1007/BF01386390
+  title: A note on two problems in connexion with graphs
+- id: doi:10.1016/j.tcs.2011.03.005
+  title: Graph reconstruction from distance queries
+invariants:
+- relabelling the nodes permutes the recovered edge set and leaves the score unchanged
+- a reconstruction equal to the hidden graph scores 1.0 on mechanism by construction
+- an edge lying on no shortest path is unobservable and is excluded from scoring rather than counted as
+  a miss
+- abstaining on an identifiable graph scores zero for that graph, so refusing everything buys nothing
+known_shortcuts: 'networkx is available to the candidate, which is deliberate: the reference uses it too
+  and the task is about which queries to make, not about reimplementing Dijkstra. Querying every pair
+  is prevented by a budget below the pair count. Claiming every queried pair is an edge is the shipped
+  baseline and is defeated by the false-discovery axis. Abstaining everywhere is defeated by scoring an
+  abstention on an identifiable graph as zero. Reading verification/ would expose the sealed graphs and
+  is blocked by the sandbox mounts.'
+review:
+  domain: pending_external_graph_algorithms
+  evaluator_security: oracle runs in the trusted parent; candidate receives networkx through the audited
+    allowlist
+  reference_implementation_verified: 'truth-blind: the reconstructor reads only the distance oracle a
+    candidate reads'
+provenance:
+  class: procedural
+  target_source: seeded random spanning tree plus chords, filtered so about half of each set is unidentifiable
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: sealed graphs available from an unused generator seed
+novelty_risk:
+  level: medium
+  rationale: Graph reconstruction from distances is a studied problem and the triangle-inequality test
+    is textbook, so a model may recall it. The budget constraint and the identifiability refusal axis
+    are not a published benchmark setting, and the graphs are generated rather than drawn from a known
+    set.
+lineage:
+  status: incomplete_legacy
+  builder_model_ids:
+  - anthropic:claude-fable-5
+  builder_scaffolds:
+  - claude-code
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: 'None. Two changes were made before any model ran: the baseline was replaced
+    because a median-distance cutoff is a heuristic rather than a baseline and scored within 0.004 of
+    the reference, and the extra-edge rate was measured per level because denser graphs are almost never
+    identifiable - at 12 nodes with 30% extra edges, none of 60 draws was.'
+  shortcut_discoverer: builder
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: incomplete_legacy
+  author_domain: algorithms
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_yet_cross_checked
+  independent_recomputation_status: not_yet_recomputed
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []

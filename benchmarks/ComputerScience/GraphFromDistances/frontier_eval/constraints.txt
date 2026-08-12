@@ -1,0 +1,11 @@
+1) Only edit solution.py. Keep reconstruct(problem, distance).
+2) `distance(u, v)` returns the shortest-path distance between two nodes and costs one unit of
+   budget per distinct unordered pair. Repeats are free. It returns None once the budget is spent,
+   and the budget is deliberately smaller than the number of pairs.
+3) Return {"edges": [(u, v, weight), ...]} or {"abstain": True}.
+4) Some graphs contain an edge lying on no shortest path between any pair. It is invisible to any
+   number of distance queries, and abstaining is the only correct answer there. Abstaining on an
+   identifiable graph scores zero for that graph.
+5) Deterministic CPU code. The standard library, NumPy, SciPy and networkx are available.
+6) `frontier_science.contract_lint` is importable and free to call for shape checks.
+7) Do not read verification/ or frontier_eval/.

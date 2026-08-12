@@ -1,0 +1,18 @@
+domain: Algorithm
+task: GraphFromDistances
+scientific_role: discovery
+difficulty: flagship
+tier: T3
+oracle_type: community_graph_algorithms_networkx
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 120
+science_metric: edge_recovery_f1_with_separate_false_discovery_and_identifiability_refusal
+reference_baseline: every queried distance read as a direct edge
+reference_sota: triangle-inequality decomposition over the queried submatrix, shipped under verification/ and run at scoring time
+tool_level: L2
+tools_suggested:
+  - literature_search
+  - offline_dynamic_programming
+tool_rationale: The network-tomography and metric-reconstruction literature describes adaptive query strategies and identifiability conditions that improve materially over querying pairs in order.
+citation: "Hakimi and Yau, Quarterly of Applied Mathematics 1965; Beerliova et al., IEEE JSAC 2006, DOI 10.1109/JSAC.2006.884015"

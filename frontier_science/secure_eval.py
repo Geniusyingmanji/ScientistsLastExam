@@ -48,6 +48,8 @@ ALLOWED_CANDIDATE_PACKAGES = {
     # which module was missing, so the full chain is enumerated here.
     "nmrsim": ("nmrsim", "sparse", "numba", "llvmlite", "numpy_groupies",
                "importlib_metadata", "typing_extensions"),
+    "networkx": ("networkx",),
+    "qutip": ("qutip", "packaging"),
 }
 
 
