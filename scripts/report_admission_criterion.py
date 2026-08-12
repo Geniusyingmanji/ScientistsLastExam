@@ -492,15 +492,25 @@ def main(argv: list[str] | None = None) -> int:
     # `unrecorded` is the absence of a model, not a third model. Counting it as one makes every
     # task with a pre-attribution run look contested: the first cross-model report showed 16
     # disagreements of which most were a known model against "we do not know which model".
-    by_task: dict[str, dict[str, str]] = defaultdict(dict)
+    # Keyed by task version as well as task. Two models that ran different versions of a task
+    # were not measuring the same thing, and reading their verdicts as a disagreement attributes
+    # a task edit to the models: before this key was added, LowThrustTransfer was reported as a
+    # three-way disagreement while only two of the three had run the same task.
+    by_version: dict[tuple[str, str], dict[str, str]] = defaultdict(dict)
     for row in rows:
         if row["model"] == "unrecorded":
             continue
-        by_task[row["task"]][row["model"]] = row["verdict"]
-    contested = {task: verdicts for task, verdicts in by_task.items()
+        by_version[(row["task"], row["task_version"])][row["model"]] = row["verdict"]
+    contested = {"%s @%s" % (task, version): verdicts
+                 for (task, version), verdicts in by_version.items()
                  if len(verdicts) > 1 and len(set(verdicts.values())) > 1}
-    agreed = {task: verdicts for task, verdicts in by_task.items()
+    agreed = {"%s @%s" % (task, version): verdicts
+              for (task, version), verdicts in by_version.items()
               if len(verdicts) > 1 and len(set(verdicts.values())) == 1}
+    # Counted so that "the models disagree less now" cannot be mistaken for better agreement when
+    # it is really less overlap.
+    split_by_version = sorted({task for task, _v in by_version
+                               if len({v for t, v in by_version if t == task}) > 1})
     # A run can abort mid-trajectory - an evaluator infrastructure failure ends one outright -
     # and a short curve then looks like a complete run at a smaller budget. Neither the gap nor
     # the saturation test can tell the difference, so the count is surfaced rather than hidden.
@@ -534,8 +544,14 @@ def main(argv: list[str] | None = None) -> int:
     print("models present:", ", ".join(models))
     print("distinct tasks: %d" % len(tasks))
     if agreed or contested:
-        print("tasks measured by more than one model: %d agree, %d disagree"
+        print("task versions measured by more than one model: %d agree, %d disagree"
               % (len(agreed), len(contested)))
+        if split_by_version:
+            print("  %d task(s) carry more than one version in this tree, so some pairs of "
+                  "models\n  have no common version to be compared on: %s"
+                  % (len(split_by_version),
+                     ", ".join(short(t) for t in split_by_version[:6])
+                     + (" ..." if len(split_by_version) > 6 else "")))
         for task, verdicts in sorted(contested.items()):
             print("  %-30s %s" % (
                 short(task), "; ".join("%s=%s" % kv for kv in sorted(verdicts.items()))))
@@ -543,7 +559,8 @@ def main(argv: list[str] | None = None) -> int:
           % (truncated, total_runs))
     # One row per (task, model), not per task: the same task measured by two model families is
     # two measurements.
-    assert len(rows) == len({(r["task"], r["model"]) for r in rows}), "one row per task and model"
+    assert len(rows) == len({(r["task"], r["model"], r["task_version"]) for r in rows}), \
+        "one row per task, model and task version"
     print("distinct tasks with paired evidence for the sufficient condition: %d of %d"
           % (len(tasks_paired), len(tasks)))
     print("distinct tasks shown to measure iteration: %d" % len(tasks_measuring))
@@ -587,6 +604,7 @@ def main(argv: list[str] | None = None) -> int:
         "note_rows": "one row per task; paired gaps listed per cohort inside each row",
         "distinct_task_count": len(tasks),
         "models": models,
+        "tasks_with_more_than_one_version": split_by_version,
         "cross_model_agreement": {t: v for t, v in sorted(agreed.items())},
         "cross_model_disagreement": {t: v for t, v in sorted(contested.items())},
         "short_run_count": truncated,
