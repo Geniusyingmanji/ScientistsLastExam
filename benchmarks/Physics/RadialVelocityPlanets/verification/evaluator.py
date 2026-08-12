@@ -31,21 +31,32 @@ DIFFICULTY = 1
 # Difficulty is how strong the planets are against the activity signal and the noise, and how
 # many nights of data there are. A 10 m/s planet in 1 m/s noise is a peak you cannot miss; a
 # 2 m/s planet under a 4 m/s activity signal is where real detections are argued about.
+# Difficulty is the planet amplitude against the activity signal and the noise, and how many
+# nights of data there are. The regime was measured rather than chosen: at 120 nights with 1.2 m/s
+# noise and 4-9 m/s planets, both the shipped baseline and the reference recover every planet and
+# the mechanism axis reports 1.0 for both - the planet is always among the three strongest peaks,
+# so there is nothing to search for. Pushed the other way, at 60 nights and 3.0 m/s noise, both
+# collapse to 0.25 and the axis stops discriminating in the other direction.
+#
+#   nights  noise  planet K     baseline  reference
+#     120    1.2    4.0-9.0       1.0000    1.0000   too easy
+#      90    2.5    2.0-3.5       0.5000    0.7500   the working regime
+#      60    3.0    1.5-2.5       0.2500    0.2500   too hard
 _LADDER = {
-    1: {"nights": 120, "noise": 1.2, "planet_k": (4.0, 9.0), "activity_k": (1.5, 3.0),
-        "count": 5, "seed": 20260812},
-    2: {"nights": 90, "noise": 1.6, "planet_k": (2.5, 6.0), "activity_k": (2.5, 4.5),
-        "count": 5, "seed": 20260813},
-    3: {"nights": 70, "noise": 2.0, "planet_k": (1.8, 4.0), "activity_k": (3.0, 5.5),
-        "count": 5, "seed": 20260814},
+    1: {"nights": 100, "noise": 2.2, "planet_k": (2.2, 4.0), "activity_k": (2.8, 4.5),
+        "count": 6, "seed": 20260812},
+    2: {"nights": 90, "noise": 2.5, "planet_k": (2.0, 3.5), "activity_k": (3.0, 5.0),
+        "count": 6, "seed": 20260813},
+    3: {"nights": 78, "noise": 2.8, "planet_k": (1.8, 3.0), "activity_k": (3.5, 5.5),
+        "count": 6, "seed": 20260814},
 }
 
 _SEALED_LADDER = {
-    1: {"nights": 110, "noise": 1.3, "planet_k": (4.0, 9.0), "activity_k": (1.5, 3.0),
+    1: {"nights": 95, "noise": 2.3, "planet_k": (2.2, 4.0), "activity_k": (2.8, 4.5),
         "count": 3, "seed": 992101},
-    2: {"nights": 85, "noise": 1.7, "planet_k": (2.5, 6.0), "activity_k": (2.5, 4.5),
+    2: {"nights": 86, "noise": 2.6, "planet_k": (2.0, 3.5), "activity_k": (3.0, 5.0),
         "count": 3, "seed": 992102},
-    3: {"nights": 65, "noise": 2.1, "planet_k": (1.8, 4.0), "activity_k": (3.0, 5.5),
+    3: {"nights": 74, "noise": 2.9, "planet_k": (1.8, 3.0), "activity_k": (3.5, 5.5),
         "count": 3, "seed": 992103},
 }
 
