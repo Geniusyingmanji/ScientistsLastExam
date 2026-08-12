@@ -1,0 +1,11 @@
+1) Only edit solution.py. Keep infer_spin_system(observation).
+2) Return {"shifts": [...], "couplings": [[...]]} with n shifts and an n x n symmetric matrix,
+   or {"abstain": True} when the spectrum does not determine the system.
+3) Deterministic CPU code. The standard library, NumPy, SciPy and nmrsim are available; simulate
+   your own candidate spin systems with nmrsim as often as you like.
+4) Shift ordering is not observable, so any permutation of a correct answer scores the same.
+5) Some worlds are magnetically equivalent and their hidden coupling has no effect on the
+   spectrum. Abstaining is correct there and wrong everywhere else; abstaining on a determined
+   world scores zero for that world.
+6) `frontier_science.contract_lint` is importable and free to call for shape checks.
+7) Do not read verification/ or frontier_eval/.

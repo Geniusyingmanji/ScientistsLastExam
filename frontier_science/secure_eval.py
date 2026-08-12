@@ -42,6 +42,9 @@ ALLOWED_CANDIDATE_PACKAGES = {
     # The ViennaRNA distribution installs an `RNA` module alongside a `ViennaRNA` package; both
     # are needed for the import to resolve.
     "ViennaRNA": ("RNA", "ViennaRNA"),
+    # nmrsim builds its Hamiltonians with sparse arrays and caches them through numba-free
+    # helpers; the sparse and numpy-groupies packages come with it.
+    "nmrsim": ("nmrsim", "sparse", "numpy_groupies"),
 }
 
 
