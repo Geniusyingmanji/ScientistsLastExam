@@ -26,19 +26,30 @@ import random
 
 DIFFICULTY = 1
 
-# Difficulty is the order of the recurrence and how many terms are shown relative to what pinning
-# it needs. A prefix comfortably longer than twice the order is a linear solve; a prefix barely
-# long enough is where the identification question bites.
+# Difficulty is the order of the recurrence, how many terms are shown, and how many of them are
+# wrong.
+#
+# Corruption is what makes this more than linear algebra. With an exact prefix, the minimal-order
+# rule is recoverable by a rank computation and the shipped reference scores 1.0 - there is
+# nothing above it. Real sequence tables contain transcription errors, and a rule that must
+# explain all but a few terms is a robust-identification problem rather than a solve. Some worlds
+# here carry a corrupted term; the continuation is always generated from the true rule.
 _LADDER = {
-    1: {"order": (2, 3), "shown": 12, "coeff": 4, "horizon": 6, "count": 5, "seed": 20260812},
-    2: {"order": (3, 4), "shown": 12, "coeff": 5, "horizon": 6, "count": 5, "seed": 20260813},
-    3: {"order": (4, 5), "shown": 13, "coeff": 6, "horizon": 6, "count": 5, "seed": 20260814},
+    1: {"order": (2, 3), "shown": 14, "coeff": 4, "horizon": 6, "corrupt": 1,
+        "count": 6, "seed": 20260812},
+    2: {"order": (3, 4), "shown": 15, "coeff": 5, "horizon": 6, "corrupt": 1,
+        "count": 6, "seed": 20260813},
+    3: {"order": (4, 5), "shown": 17, "coeff": 6, "horizon": 6, "corrupt": 2,
+        "count": 6, "seed": 20260814},
 }
 
 _SEALED_LADDER = {
-    1: {"order": (2, 3), "shown": 11, "coeff": 4, "horizon": 6, "count": 3, "seed": 993101},
-    2: {"order": (3, 4), "shown": 12, "coeff": 5, "horizon": 6, "count": 3, "seed": 993102},
-    3: {"order": (4, 5), "shown": 12, "coeff": 6, "horizon": 6, "count": 3, "seed": 993103},
+    1: {"order": (2, 3), "shown": 13, "coeff": 4, "horizon": 6, "corrupt": 1,
+        "count": 3, "seed": 993101},
+    2: {"order": (3, 4), "shown": 14, "coeff": 5, "horizon": 6, "corrupt": 1,
+        "count": 3, "seed": 993102},
+    3: {"order": (4, 5), "shown": 16, "coeff": 6, "horizon": 6, "corrupt": 2,
+        "count": 3, "seed": 993103},
 }
 
 # Orders the evaluator itself searches when deciding whether a sequence admits any rule and
@@ -129,6 +140,21 @@ def _minimal_rule(sympy, terms):
     return ("none", None, None)
 
 
+def _corrupt(rng, terms, count, order):
+    """Perturb a few interior terms, leaving the seed terms intact.
+
+    The seed terms are spared so the rule remains recoverable in principle: a corrupted seed would
+    change what the true sequence is rather than misreport it.
+    """
+    indices = [i for i in range(order, len(terms))]
+    rng.shuffle(indices)
+    corrupted = list(terms)
+    for index in indices[:count]:
+        delta = rng.choice([-3, -2, -1, 1, 2, 3])
+        corrupted[index] += delta
+    return corrupted, sorted(indices[:count])
+
+
 def _draw_world(rng, profile):
     order = rng.randint(*profile["order"])
     coefficients = [rng.randint(-profile["coeff"], profile["coeff"]) for _ in range(order)]
@@ -151,27 +177,45 @@ def _generate(profile, tag):
         order, coefficients, seed_terms = _draw_world(rng, profile)
         full = _extend(seed_terms, coefficients,
                        profile["shown"] + profile["horizon"] - order)
-        shown = full[: profile["shown"]]
+        clean = full[: profile["shown"]]
         if any(abs(v) > 10 ** 12 for v in full):
             continue  # runaway growth makes the terms unreadable rather than harder
+        corrupt_count = profile.get("corrupt", 0)
+        # Two worlds in three carry corrupted terms; the rest are clean, so a method that assumes
+        # corruption everywhere is not free either.
+        corrupt_here = corrupt_count if len(worlds) % 3 != 0 else 0
+        if corrupt_here:
+            shown, corrupted_at = _corrupt(rng, clean, corrupt_here, order)
+        else:
+            shown, corrupted_at = list(clean), []
         status, found_order, found = _minimal_rule(sympy, shown)
         # Every third world is deliberately under-determined by truncating the prefix so the
         # minimal rule is not pinned. The others must be uniquely determined.
         want_ambiguous = len(worlds) % 3 == 2
         if want_ambiguous:
-            short = shown[: 2 * order - 1]
+            # Truncate to just under what pins the rule. Corruption is not applied here: an
+            # ambiguous world tests refusal, and mixing the two failure modes would make the
+            # correct answer unclear.
+            short = list(clean[: 2 * order - 1])
             st, _o, _c = _minimal_rule(sympy, short)
             if st != "ambiguous":
                 continue
-            shown = short
-            status = "ambiguous"
+            shown, corrupted_at, status = short, [], "ambiguous"
+        elif corrupt_here:
+            # A corrupted prefix must not accidentally admit a clean low-order rule, or the world
+            # would silently be a different, easier problem.
+            if status == "unique" and _fits(shown, found):
+                continue
         elif status != "unique":
             continue
         worlds.append({
-            "key": "q%d_o%d%s" % (len(worlds), order, "_amb" if want_ambiguous else ""),
+            "key": "q%d_o%d%s" % (len(worlds), order,
+                                  "_amb" if want_ambiguous else
+                                  ("_corrupt%d" % len(corrupted_at) if corrupted_at else "")),
             "order": order,
             "coefficients": coefficients,
             "shown": shown,
+            "corrupted_at": corrupted_at,
             "continuation": full[len(shown): len(shown) + profile["horizon"]],
             "ambiguous": want_ambiguous,
             "status": status,
@@ -198,6 +242,8 @@ def _observation(world):
         "terms": list(world["shown"]),
         "horizon": len(world["continuation"]),
         "max_order": MAX_SEARCH_ORDER,
+        "note": ("some tables contain transcription errors; a rule need not reproduce every term "
+                 "shown, but it must reproduce the continuation"),
     }
 
 
