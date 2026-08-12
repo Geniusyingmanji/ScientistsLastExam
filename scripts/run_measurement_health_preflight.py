@@ -978,6 +978,29 @@ def _freeze_revision(binding: Any) -> Any:
     return (document.get("source_provenance") or {}).get("git_revision")
 
 
+def _tree_blobs(revision: str, task_name: str) -> dict[str, str]:
+    """Relative path -> blob id for a task directory at a revision, found by name."""
+    try:
+        listing = subprocess.check_output(
+            ["git", "ls-tree", "-r", revision, "--", "benchmarks"],
+            cwd=str(ROOT), text=True, stderr=subprocess.DEVNULL)
+    except (OSError, subprocess.CalledProcessError):
+        return {}
+    marker = "/%s/" % task_name
+    out, root = {}, None
+    for line in listing.splitlines():
+        if "\t" not in line:
+            continue
+        meta, path = line.split("\t", 1)
+        parts = meta.split()
+        if len(parts) < 3 or parts[1] != "blob" or marker not in path:
+            continue
+        if root is None:
+            root = path[:path.index(marker) + len(marker)]
+        out[path[len(root):]] = parts[2]
+    return out
+
+
 def _package_mismatch_explanation(task_spec: Any, source_revision: Any) -> dict[str, Any]:
     """Why does the task package no longer hash to its frozen value?
 
@@ -987,40 +1010,48 @@ def _package_mismatch_explanation(task_spec: Any, source_revision: Any) -> dict[
     Both had happened somewhere in the inventory, and they call for opposite responses - one needs
     the evidence re-measured, the other needs the binding refreshed.
 
-    So the difference is classified against the revision the frozen evidence was taken at. Only
-    the classification is added; the pass or fail is untouched, because deciding what to do about
-    a stale binding is a governance call and not this script's to make.
+    Compared by name rather than by path. Tasks were moved between domain directories after this
+    cohort was frozen, so `git diff <revision> HEAD -- <today's path>` reports every file in the
+    task as newly added: a first version of this helper announced that all seven tasks had had
+    their evaluator, card and scaffolding rewritten, when all seven had merely moved. The giveaway
+    was that the seven file lists were identical.
+
+    Only the classification is added; the pass or fail is untouched, because deciding what to do
+    about a stale binding is a governance call and not this script's to make.
     """
     if not isinstance(source_revision, str) or not source_revision:
         return {"classified": False, "reason": "no source revision recorded"}
-    task_relative = task_spec.task_dir.relative_to(ROOT).as_posix()
-    try:
-        names = subprocess.check_output(
-            ["git", "diff", "--name-only", source_revision, "HEAD", "--", task_relative],
-            cwd=str(ROOT), text=True, stderr=subprocess.DEVNULL).split()
-    except (OSError, subprocess.CalledProcessError):
-        return {"classified": False, "reason": "revision not present in this checkout"}
+    task_name = task_spec.task_id.split("/")[-1]
+    before = _tree_blobs(source_revision, task_name)
+    after = _tree_blobs("HEAD", task_name)
+    if not before:
+        return {"classified": False,
+                "reason": "task not present at the frozen revision under this name"}
 
-    card_only = [n for n in names if n.endswith("frontier_eval/metadata.yaml")]
-    behavioural = [n for n in names if n not in card_only]
+    changed = sorted(name for name in set(before) | set(after)
+                     if before.get(name) != after.get(name))
+    card = [n for n in changed if n.endswith("frontier_eval/metadata.yaml")]
+    behavioural = [n for n in changed if n not in card]
     declarative = True
-    for name in card_only:
+    for name in card:
         try:
-            before = yaml.safe_load(subprocess.check_output(
-                ["git", "show", "%s:%s" % (source_revision, name)],
+            old_doc = yaml.safe_load(subprocess.check_output(
+                ["git", "cat-file", "blob", before[name]],
                 cwd=str(ROOT), text=True, stderr=subprocess.DEVNULL)) or {}
-            after = yaml.safe_load((ROOT / name).read_text(encoding="utf-8")) or {}
-        except (OSError, subprocess.CalledProcessError, ValueError):
+            new_doc = yaml.safe_load(subprocess.check_output(
+                ["git", "cat-file", "blob", after[name]],
+                cwd=str(ROOT), text=True, stderr=subprocess.DEVNULL)) or {}
+        except (KeyError, OSError, subprocess.CalledProcessError, ValueError):
             declarative = False
             break
-        if not {k for k in set(before) | set(after)
-                if before.get(k) != after.get(k)} <= DECLARATIVE_CARD_KEYS:
+        if not {k for k in set(old_doc) | set(new_doc)
+                if old_doc.get(k) != new_doc.get(k)} <= DECLARATIVE_CARD_KEYS:
             declarative = False
             break
     return {
         "classified": True,
         "source_revision": source_revision,
-        "behavioural_files_changed": sorted(behavioural),
+        "behavioural_files_changed": behavioural,
         # True means the frozen evidence still describes this task and only the binding is stale.
         # False means something that can move a score has changed and the evidence must be remade.
         "declarative_change_only": not behavioural and declarative,
