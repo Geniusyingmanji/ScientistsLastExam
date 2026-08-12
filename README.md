@@ -655,6 +655,8 @@ python scripts/audit_tasks.py --output /tmp/certification.json
 python scripts/audit_benchmark_standards.py --output /tmp/standards.json
 python scripts/audit_theme_fit.py --output /tmp/theme.json
 python scripts/report_admission_criterion.py --runs runs --output /tmp/admission.json
+python scripts/report_cross_model.py --runs runs --output /tmp/cross_model.json \
+  --admission /tmp/admission.json
 python -m unittest discover -s tests -q
 ```
 
