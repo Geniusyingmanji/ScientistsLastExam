@@ -102,7 +102,9 @@ class InventoryTests(unittest.TestCase):
     def test_nothing_is_externally_reviewed_yet(self):
         self.assertEqual(self.report["met_counts"]["domain_reviewed"], 0)
 
-    def test_the_three_community_oracle_tasks_are_the_ones_claimed(self):
+    def test_the_community_oracle_tasks_are_the_ones_claimed(self):
+        """Named rather than counted: a task added without its toolkit on the list reads as an
+        author reimplementation, which is how SpinSystemInference first appeared here."""
         community = {
             row["task"] for row in self.report["rows"]
             if row["standards"]["oracle_is_community"]
@@ -111,6 +113,7 @@ class InventoryTests(unittest.TestCase):
             "QuantumErrorCorrection/QuantumErrorDecoder",
             "MedicinalChemistry/MolecularLeadOptimization",
             "RNAEngineering/RNAEnsembleDesign",
+            "Spectroscopy/SpinSystemInference",
         })
 
     def test_every_uncapped_task_ships_a_reference_record(self):

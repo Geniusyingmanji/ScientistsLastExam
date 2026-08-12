@@ -65,6 +65,7 @@ COMMUNITY_PACKAGES = {
     "vienna", "RNA", "cobra", "astropy", "scikit-bio", "skbio", "pysam", "gpaw", "quspin",
     "qutip", "qiskit", "cirq", "openbabel", "pybel", "networkx", "sympy", "pymatgen",
     "spglib", "phonopy", "lammps", "gromacs", "obspy", "cartopy", "metpy", "xarray",
+    "nmrsim", "nmrglue", "poliastro", "pyscf", "psi4", "deeptime", "MDAnalysis",
 }
 
 STANDARDS = (
