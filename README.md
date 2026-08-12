@@ -187,6 +187,24 @@ python -m frontier_science eval \
 Task names are accepted when unambiguous. Candidate and quarantined packages require the
 explicit `--allow-uncertified` flag.
 
+### Install the oracle toolkits
+
+Four tasks put a community toolkit in the oracle, and each pins its version in
+`verification/requirements.txt`. On the benchmark host those files cannot be installed the usual
+way: the system interpreter's pip fails at import with a pyOpenSSL binding mismatch, so
+`pip install -r` never runs. `scripts/setup_oracle_env.sh` documents the way around it — a
+virtualenv created *without* `--system-site-packages` has working pip, and `--target` points it at
+the oracle interpreter's site-packages.
+
+```bash
+bash scripts/setup_oracle_env.sh --check    # report what is present
+bash scripts/setup_oracle_env.sh            # install the pinned set
+```
+
+The oracle runs in the trusted parent, so installing a toolkit does not touch the isolation model.
+A candidate receives one only if its task lists it in `frontier_eval/candidate_packages.txt` **and**
+the name appears in the audited allowlist in `frontier_science/secure_eval.py`.
+
 ### Configure an LLM
 
 ```bash
