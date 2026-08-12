@@ -180,6 +180,18 @@ class VerdictTests(unittest.TestCase):
         self.assertEqual(state, "feedback_harmful")
         self.assertIn("does worse", why)
 
+    def test_a_clipped_control_at_its_cap_is_solved_not_awaiting_pairing(self):
+        """Pairing a task whose control already reaches the cap can only measure zero."""
+        sat = _sat(seeds=4, median=0.0, final=1.0, saturated=True)
+        state, why = MODULE.verdict(sat, [], clipped=True)
+        self.assertEqual(state, "solved_at_ceiling")
+        self.assertIn("cap", why)
+
+    def test_an_uncapped_control_at_one_still_has_room(self):
+        """Above 1.0 is where the frontier is on an uncapped task, so it is not solved."""
+        sat = _sat(seeds=4, median=0.0, final=1.061, saturated=True)
+        self.assertEqual(MODULE.verdict(sat, [], clipped=False)[0], "exhausted_unpaired")
+
     def test_an_exhausted_control_with_no_feedback_arm_is_the_pairing_queue(self):
         self.assertEqual(
             MODULE.verdict(_sat(**self.EXHAUSTED), [])[0], "exhausted_unpaired")

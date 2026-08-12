@@ -65,6 +65,11 @@ MIN_SEEDS_FOR_CONFIDENT_SATURATION = 3
 # are reported as indistinguishable.
 MATERIAL_GAP_FRACTION = 0.02
 
+# A clipped task whose control reaches its cap is not "exhausted and awaiting a feedback arm" - it
+# is solved, and pairing it can only measure zero. Seven certified tasks sit here or near it, so
+# the report names the condition rather than leaving it to be inferred from a column.
+CEILING = 0.99
+
 
 def best_so_far(path: Path) -> list[float] | None:
     """The best-so-far curve over proposals. Invalid proposals score zero, as the harness does."""
@@ -90,6 +95,16 @@ def best_so_far(path: Path) -> list[float] | None:
         best = max(best, score)
         curve.append(best)
     return curve
+
+
+def score_modes() -> dict[str, str]:
+    """Score mode per task, so a control at 1.000 can be read as a cap rather than a coincidence."""
+    try:
+        from frontier_science.registry import list_tasks
+    except Exception:  # noqa: BLE001 - the report still works without it
+        return {}
+    return {spec.task_id: str(spec.metadata.get("score_mode", "clipped"))
+            for spec in list_tasks(None)}
 
 
 def run_identity(workdir: Path) -> tuple[str, str, int] | None:
@@ -213,7 +228,7 @@ def gap_by_budget(open_loop: dict[int, list[float]], feedback: dict[int, list[fl
     return out
 
 
-def verdict(sat: dict | None, gaps: list[dict]) -> tuple[str, str]:
+def verdict(sat: dict | None, gaps: list[dict], clipped: bool = False) -> tuple[str, str]:
     if sat is None:
         return "unknown", "no open-loop run long enough to judge saturation"
     if sat["is_floor"]:
@@ -230,6 +245,12 @@ def verdict(sat: dict | None, gaps: list[dict]) -> tuple[str, str]:
             "open-loop control still gains %+.4f over its second half at the median seed, so "
             "best-of-N has not run out and any gap measured here depends on the budget chosen"
             % sat["median_second_half_gain"]
+        )
+    if clipped and sat["mean_final"] >= CEILING:
+        return "solved_at_ceiling", (
+            "clipped scoring with the open-loop control at %.4f, which is the cap; there is "
+            "nothing above the anchor for a searcher to reach and pairing can only measure zero"
+            % sat["mean_final"]
         )
     # Best-of-N is exhausted. Whether the task measures iteration now rests entirely on the gap.
     if not gaps:
@@ -290,6 +311,7 @@ def main(argv: list[str] | None = None) -> int:
     args = ap.parse_args(argv)
 
     found = collect(Path(args.runs))
+    modes = score_modes()
 
     # Saturation is a one-armed measurement, so open-loop seeds pool across cohorts: a seed run
     # under `screen3` says the same thing about this task's control as one run under
@@ -335,7 +357,8 @@ def main(argv: list[str] | None = None) -> int:
         best = max(
             cohort_gaps, key=lambda c: (len(c["gaps"]), c["seeds"]), default=None
         )
-        state, why = verdict(sat, best["gaps"] if best else [])
+        state, why = verdict(sat, best["gaps"] if best else [],
+                             clipped=modes.get(task, "clipped") != "uncapped")
         rows.append({
             "task": task,
             "verdict": state,
@@ -359,6 +382,7 @@ def main(argv: list[str] | None = None) -> int:
 
     order = {
         "measures_iteration": 0, "measures_iteration_one_seed_deep": 1,
+        "solved_at_ceiling": 90,
         "crossover_in_range": 2, "feedback_harmful": 3,
         "feedback_harmful_one_seed_deep": 4, "no_measurable_difference": 5,
         "gap_at_one_budget": 6, "exhausted_unpaired": 7, "control_not_exhausted": 8,
