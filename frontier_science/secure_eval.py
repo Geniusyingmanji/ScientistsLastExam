@@ -42,9 +42,12 @@ ALLOWED_CANDIDATE_PACKAGES = {
     # The ViennaRNA distribution installs an `RNA` module alongside a `ViennaRNA` package; both
     # are needed for the import to resolve.
     "ViennaRNA": ("RNA", "ViennaRNA"),
-    # nmrsim builds its Hamiltonians with sparse arrays and caches them through numba-free
-    # helpers; the sparse and numpy-groupies packages come with it.
-    "nmrsim": ("nmrsim", "sparse", "numpy_groupies"),
+    # nmrsim pulls in a real dependency chain: sparse for the Hamiltonian COO arrays, numba and
+    # llvmlite behind sparse, and importlib_metadata plus typing_extensions for version lookup.
+    # Listing only the obvious ones produced a bare blocked_or_missing_import with no hint of
+    # which module was missing, so the full chain is enumerated here.
+    "nmrsim": ("nmrsim", "sparse", "numba", "llvmlite", "numpy_groupies",
+               "importlib_metadata", "typing_extensions"),
 }
 
 
