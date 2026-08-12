@@ -55,6 +55,37 @@ name; the CLI examples below reflect that. Renaming the module is a separate mec
 - Hash-bound experiment reports with Git revision, command, source-tree state, and explicit
   trust decisions.
 
+### How deep the science goes, measured rather than asserted
+
+Claiming a scientific setting is easy; the audit exists because the claim is checkable. Across the
+63 packages:
+
+| | |
+|---|---:|
+| tasks citing resolvable literature (DOI or arXiv) | 51 / 63 |
+| tasks holding a sealed split back from the development score | 42 / 63 |
+| tasks whose oracle is community-standard domain tooling | **4 / 63** |
+| tasks shipping a runnable reference the anchor is re-derived from | **7 / 63** |
+| tasks reviewed by an external domain expert | **0 / 63** |
+
+The first two rows are the framing; the last three are the substance, and they are where this
+inventory is thin. Fifty-nine of 63 oracles are author-written NumPy reductions of the science
+they describe, so a score on them measures agreement with that author's code rather than with the
+field. The task narratives cite real work; the oracles mostly do not run it.
+
+Four tasks close that gap — `QuantumErrorDecoder` (Stim + PyMatching), `MolecularLeadOptimization`
+(RDKit), `RNAEnsembleDesign` (ViennaRNA) and `SpinSystemInference` (nmrsim) — and they are the
+template for the rest rather than a finished state.
+
+### Two inventory entries are not natural science
+
+`InventoryManagement/MultiEchelonStock` and `Transportation/TrafficSignalTiming` are operations
+research and traffic engineering. Both are quarantined, so neither is benchmark-admissible, but
+they are quarantined for reproduced defects rather than for being out of scope, and the two
+reasons are worth separating. They should leave the inventory when the quarantine set is next
+revised; until then they are noted here so the disciplinary claim above can be checked against
+the actual list.
+
 The default CLI exposes only certified tasks. Candidates remain visible for research and
 calibration, while quarantined packages preserve known defects for auditability; neither group
 is benchmark-admissible by default.
