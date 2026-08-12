@@ -953,6 +953,62 @@ def _evaluate_repeated(
     )
 
 
+# Keys in a task card that describe a task without changing what it computes. Kept in step with
+# scripts/build_task_version_equivalence.py, which uses the same distinction to decide whether two
+# recorded task versions are the same task.
+DECLARATIVE_CARD_KEYS = {"scientific_role", "score_mode", "domain_reviewed", "maturity",
+                         "difficulty_level", "notes", "description", "tags"}
+
+
+def _package_mismatch_explanation(task_spec: Any, source_revision: Any) -> dict[str, Any]:
+    """Why does the task package no longer hash to its frozen value?
+
+    A failing hash says the task is not what it was, and nothing more. That is the right verdict
+    and a useless diagnosis: this cohort went from seven passes to zero, and the report could not
+    say whether an evaluator had been rewritten or a one-line annotation had been added to a card.
+    Both had happened somewhere in the inventory, and they call for opposite responses - one needs
+    the evidence re-measured, the other needs the binding refreshed.
+
+    So the difference is classified against the revision the frozen evidence was taken at. Only
+    the classification is added; the pass or fail is untouched, because deciding what to do about
+    a stale binding is a governance call and not this script's to make.
+    """
+    if not isinstance(source_revision, str) or not source_revision:
+        return {"classified": False, "reason": "no source revision recorded"}
+    task_relative = task_spec.task_dir.relative_to(ROOT).as_posix()
+    try:
+        names = subprocess.check_output(
+            ["git", "diff", "--name-only", source_revision, "HEAD", "--", task_relative],
+            cwd=str(ROOT), text=True, stderr=subprocess.DEVNULL).split()
+    except (OSError, subprocess.CalledProcessError):
+        return {"classified": False, "reason": "revision not present in this checkout"}
+
+    card_only = [n for n in names if n.endswith("frontier_eval/metadata.yaml")]
+    behavioural = [n for n in names if n not in card_only]
+    declarative = True
+    for name in card_only:
+        try:
+            before = yaml.safe_load(subprocess.check_output(
+                ["git", "show", "%s:%s" % (source_revision, name)],
+                cwd=str(ROOT), text=True, stderr=subprocess.DEVNULL)) or {}
+            after = yaml.safe_load((ROOT / name).read_text(encoding="utf-8")) or {}
+        except (OSError, subprocess.CalledProcessError, ValueError):
+            declarative = False
+            break
+        if not {k for k in set(before) | set(after)
+                if before.get(k) != after.get(k)} <= DECLARATIVE_CARD_KEYS:
+            declarative = False
+            break
+    return {
+        "classified": True,
+        "source_revision": source_revision,
+        "behavioural_files_changed": sorted(behavioural),
+        # True means the frozen evidence still describes this task and only the binding is stale.
+        # False means something that can move a score has changed and the evidence must be remade.
+        "declarative_change_only": not behavioural and declarative,
+    }
+
+
 def _task_preflight(
     manifest_row: dict[str, Any],
     config: dict[str, Any],
@@ -1022,7 +1078,10 @@ def _task_preflight(
                 "pass" if package_binding_passed else "fail",
                 expected_sha256=config.get("task_package_sha256"),
                 actual_sha256=current_package,
-                scope="all task source/data files excluding generated Python caches",
+                scope="all task source/data files excluding generated output",
+                mismatch=(None if package_binding_passed else _package_mismatch_explanation(
+                    task_spec, (config.get("scientific_materiality") or {}).get("revision")
+                    or manifest_row.get("source_revision"))),
             ),
             "fixed_artifact_binding": _check(
                 "pass" if artifact_binding_passed else "fail",
