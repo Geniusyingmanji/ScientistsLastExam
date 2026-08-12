@@ -3,3 +3,6 @@
 3) If running confirmation, commit screening, preconfirmation model/claim, feasible site/sample size and 90% prediction interval before the result; return that exact immutable commit.
 4) Call confirm at most once; caught invalid or duplicate calls still invalidate the world.
 5) Python/NumPy/SciPy/stdlib only; deterministic CPU code, no network/process creation, and no reading verification/ or frontier_eval/.
+6) `frontier_science.contract_lint` is importable in the sandbox and free to call. Use it
+   to check your submission's shape before returning; a rejected submission scores the same
+   as a wrong answer.

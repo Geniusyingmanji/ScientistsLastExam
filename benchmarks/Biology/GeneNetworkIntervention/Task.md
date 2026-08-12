@@ -63,6 +63,27 @@ intervention may target at most two of the first three genes.
 The metrics are not experimental biological evidence. A good trajectory fit without a correct
 signed mechanism or a transferable phenotype intervention is not a validated discovery.
 
+## Checking your submission's shape before spending a call
+
+`frontier_science.contract_lint` is importable inside the sandbox. Calling it costs no oracle
+budget and reveals nothing about the science — every check is about form, and none touches a
+score, a hidden world or a reference value.
+
+```python
+from frontier_science.contract_lint import mapping, finite_array, in_range, explain
+
+ok, why = mapping(submission, required=["a", "b"])
+if not ok:
+    ...  # `why` names the missing or unexpected keys
+```
+
+Available: `finite_array`, `binary_array`, `mapping`, `in_range`, `probabilities`,
+`sequence_of_str`, and `explain` to join failures into one message. Each returns `(ok, reason)`
+with a specific reason — "expected shape (12000, 1), got (3, 3)" rather than "invalid submission".
+
+This exists because a rejected submission and a hard scientific problem both score zero, and this
+task is one where submissions have been rejected often enough that the distinction matters.
+
 ## Rules
 
 - Only edit `solution.py`; keep the function signature above.
