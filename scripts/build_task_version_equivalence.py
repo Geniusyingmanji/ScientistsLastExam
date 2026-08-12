@@ -117,8 +117,15 @@ def declarative_only(before: dict[str, str], after: dict[str, str]) -> bool:
     return differing <= DECLARATIVE_KEYS
 
 
-def observed_versions(runs_root: Path) -> dict[str, set[str]]:
+def observed_versions(runs_root: Path) -> tuple[dict[str, set[str]], dict[str, float]]:
+    """Recorded versions per task, and when that task was first run.
+
+    The manifest carries no timestamp, so the file's own mtime stands in for it. It is written
+    once when the run finishes and not touched again, and it is only used here to bound how far
+    back the history needs checking - an hour either way changes nothing.
+    """
     out: dict[str, set[str]] = defaultdict(set)
+    earliest: dict[str, float] = {}
     for manifest in runs_root.glob("*/*/run_manifest.json"):
         try:
             document = json.loads(manifest.read_text(encoding="utf-8"))
@@ -127,6 +134,46 @@ def observed_versions(runs_root: Path) -> dict[str, set[str]]:
         task, version = document.get("task_id"), document.get("task_package_sha256")
         if task and version:
             out[str(task)].add(str(version))
+            when = manifest.stat().st_mtime
+            earliest[str(task)] = min(earliest.get(str(task), when), when)
+    return out, earliest
+
+
+def behavioural_commits_since(task_name: str, since: float) -> list[str]:
+    """Commits after `since` that changed something able to alter what the task measures.
+
+    The fallback for tasks whose recorded hashes cannot be replayed. Eleven tasks record hashes
+    no revision reproduces, because `task_package_sha256` used to include the task's own `runs/`
+    output - so the hash is of a tree that only ever existed on the machine that ran it, and no
+    amount of replaying git will find it.
+
+    History still answers the question that matters. If nothing behavioural has been committed
+    since before the task's first run, then every version recorded for it differs only by things
+    that cannot change a score: the declarative annotation, and run output. That is a weaker
+    argument than reproducing the hashes and it is stated as such in the output.
+    """
+    stamp = "@%d" % int(since)
+    revisions = git("log", "--since", stamp, "--format=%H", "--",
+                    ":(glob)benchmarks/**/%s/**" % task_name).split()
+    out = []
+    for revision in revisions:
+        changed = [line for line in
+                   git("show", "--name-only", "--format=", revision).splitlines()
+                   if ("/%s/" % task_name) in line]
+        others = [c for c in changed if not c.endswith("frontier_eval/metadata.yaml")]
+        if others:
+            out.append(revision)
+            continue
+        # Only the card moved; behavioural unless the changed keys are all declarative.
+        for path in changed:
+            try:
+                old = yaml.safe_load(git("show", "%s^:%s" % (revision, path))) or {}
+            except subprocess.CalledProcessError:
+                old = {}
+            new = yaml.safe_load(git("show", "%s:%s" % (revision, path))) or {}
+            if not {k for k in set(old) | set(new) if old.get(k) != new.get(k)} <= DECLARATIVE_KEYS:
+                out.append(revision)
+                break
     return out
 
 
@@ -140,7 +187,7 @@ def main(argv: list[str] | None = None) -> int:
 
     directories = {spec.task_id: spec.task_dir.relative_to(ROOT).as_posix()
                    for spec in list_tasks(None)}
-    observed = observed_versions(Path(args.runs))
+    observed, earliest = observed_versions(Path(args.runs))
 
     table, unresolved = {}, []
     for task, versions in sorted(observed.items()):
@@ -165,9 +212,28 @@ def main(argv: list[str] | None = None) -> int:
 
         found = {v: by_hash[v] for v in versions if v in by_hash}
         missing = sorted(v[:12] for v in versions if v not in by_hash)
+        if missing and len(found) < 2:
+            # Nothing to replay against. Fall back to asking history whether anything that could
+            # move a score has been committed since this task was first run.
+            since = earliest.get(task)
+            if since is None:
+                unresolved.append((task, "no revision reproduces " + ", ".join(missing)))
+                continue
+            changed = behavioural_commits_since(task_name, since)
+            if changed:
+                unresolved.append((
+                    task, "hashes unreplayable and %d behavioural commit(s) since first run"
+                    % len(changed)))
+                continue
+            table[task] = {"classes": [{"id": "%s-0" % task_name,
+                                        "versions": sorted(versions),
+                                        "revision": None,
+                                        "established_by": "no behavioural commit since first run"}]}
+            print("%-34s %s" % (task_name[:34],
+                                "all %d versions are the same task (from history, not replay)"
+                                % len(versions)))
+            continue
         if missing:
-            # A hash no revision reproduces means the run was made against an uncommitted tree.
-            # Reported, never guessed at.
             unresolved.append((task, "no revision reproduces " + ", ".join(missing)))
         if len(found) < 2:
             continue
@@ -185,9 +251,10 @@ def main(argv: list[str] | None = None) -> int:
 
         table[task] = {
             "classes": [
-                {"id": "%s-%d" % (task.split("/")[-1], index),
+                {"id": "%s-%d" % (task_name, index),
                  "versions": sorted(group),
-                 "revision": found[group[0]][0]}
+                 "revision": found[group[0]][0],
+                 "established_by": "replayed from git objects"}
                 for index, group in enumerate(classes)
             ],
         }
