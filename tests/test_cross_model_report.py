@@ -156,6 +156,7 @@ class ReportTests(unittest.TestCase):
         with TemporaryDirectory() as tmp:
             root = Path(tmp)
             write_run(root, "g", "w", "T/X", "gpt-5.5", "selection_blind", 0, [0.5])
+            write_run(root, "c", "w", "T/X", "claude-opus-4-8", "normal", 0, [0.5])
             admission = Path(tmp) / "adm.json"
             admission.write_text(json.dumps({"rows": [
                 {"task": "T/X", "model": "gpt-5.5", "verdict": "measures_iteration"},
@@ -164,6 +165,38 @@ class ReportTests(unittest.TestCase):
             report, text = self.run_report(root, admission=admission)
             self.assertEqual(set(report["verdicts"]["T/X"]), {"gpt-5.5", "claude-opus-4-8"})
             self.assertIn("disagree: 1", text)
+
+    def test_verdicts_reached_against_different_task_versions_do_not_disagree(self):
+        """Two verdicts about two different versions of a task disagree about nothing."""
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            write_run(root, "g", "w", "T/X", "gpt-5.5", "selection_blind", 0, [0.5],
+                      contract="old" + "0" * 61)
+            write_run(root, "c", "w", "T/X", "claude-opus-4-8", "normal", 0, [0.5],
+                      contract="new" + "0" * 61)
+            admission = Path(tmp) / "adm.json"
+            admission.write_text(json.dumps({"rows": [
+                {"task": "T/X", "model": "gpt-5.5", "verdict": "measures_iteration"},
+                {"task": "T/X", "model": "claude-opus-4-8", "verdict": "feedback_harmful"},
+            ]}), encoding="utf-8")
+            report, text = self.run_report(root, admission=admission)
+            self.assertIn("disagree: 0", text)
+            self.assertIn("ran different versions", text)
+            self.assertEqual(report["verdicts_same_version"], {})
+
+    def test_a_verdict_from_a_normal_only_model_still_compares(self):
+        """The verdict check spans both arms, so it must not key off the open-loop arm alone."""
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            write_run(root, "g", "w", "T/X", "gpt-5.5", "normal", 0, [0.5])
+            write_run(root, "c", "w", "T/X", "claude-opus-4-8", "normal", 0, [0.5])
+            admission = Path(tmp) / "adm.json"
+            admission.write_text(json.dumps({"rows": [
+                {"task": "T/X", "model": "gpt-5.5", "verdict": "measures_iteration"},
+                {"task": "T/X", "model": "claude-opus-4-8", "verdict": "measures_iteration"},
+            ]}), encoding="utf-8")
+            _, text = self.run_report(root, admission=admission)
+            self.assertIn("agree: 1", text)
 
 
 if __name__ == "__main__":

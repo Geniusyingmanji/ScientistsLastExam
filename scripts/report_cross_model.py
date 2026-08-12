@@ -154,8 +154,15 @@ def main(argv: list[str] | None = None) -> int:
     # change as a model difference - on one task the gap looked like 18x. The hash was recorded
     # all along; nothing was checking it at comparison time.
     contracts: dict[str, dict[str, set[str]]] = defaultdict(lambda: defaultdict(set))
+    # Separately over every arm, because a verdict is computed from both arms while the score
+    # ranking uses only the open-loop one. Keying the verdict check off the open-loop map dropped
+    # every task a model had only run under `normal`.
+    all_arm_contracts: dict[str, dict[str, set[str]]] = defaultdict(lambda: defaultdict(set))
     for run in runs:
-        if run["model"] != "unrecorded" and run["mode"] in OPEN_LOOP_MODES:
+        if run["model"] == "unrecorded":
+            continue
+        all_arm_contracts[run["task"]][run["model"]].add(run["contract"])
+        if run["mode"] in OPEN_LOOP_MODES:
             contracts[run["task"]][run["model"]].add(run["contract"])
 
     # Open-loop score per (model, task, contract), averaged over seeds. The open-loop arm is the
@@ -254,8 +261,9 @@ def main(argv: list[str] | None = None) -> int:
         # reached against different versions of that task disagree about nothing.
         comparable, dropped = {}, 0
         for task, per_model in verdicts.items():
-            kept = {m: v for m, v in per_model.items() if len(contracts[task][m]) == 1}
-            versions = {next(iter(contracts[task][m])) for m in kept}
+            kept = {m: v for m, v in per_model.items()
+                    if len(all_arm_contracts[task][m]) == 1}
+            versions = {next(iter(all_arm_contracts[task][m])) for m in kept}
             if len(kept) > 1 and len(versions) == 1:
                 comparable[task] = kept
             elif len(per_model) > 1:
