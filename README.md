@@ -409,6 +409,32 @@ control leaves: a control that has run out at 0.998 gives a searcher almost noth
 demonstrate, while `Catalysis/CatalystDeactivationLab` and `MolecularDynamics/ForceFieldCalibration`
 run out near 0.12.
 
+### Is it even the right kind of problem
+
+Two audits check the science and the evidence. A third, `scripts/audit_theme_fit.py`, checks
+something they both assume: that the task poses an open-ended problem in the first place. It reads
+only the task package, so it applies to every task from the day it is written, unlike the admission
+criterion which needs paired runs.
+
+| check | met |
+|---|---|
+| open-ended — the anchor is not itself a solution a correct implementation reaches | 59 / 63 |
+| continuously scored rather than paying out on a threshold | 63 / 63 |
+| declares one of the two forms, optimization or discovery | 63 / 63 |
+| discovery tasks emitting all three axes | 15 / 18 |
+| frontier-anchored — uncapped against a reference the field would want to beat | 7 / 63 |
+
+Four tasks describe an anchor their own card calls a manufactured solution, unit fidelity or the
+optimum: `ScientificComputing/PoissonSolver2D`, `QuantumControl/GateSynthesis`,
+`ControlTheory/InvertedPendulumSwingUp` and `Optics/DiffractionGratingDesign`. They are not
+defective — they ask for a known method and have a unique answer, so iteration stops paying once
+it is found. Labelling them is more useful than measuring an evolvability gap on them, and three
+of the four already read as solved or exhausted under the admission criterion.
+
+The gap that matters is the last row. Fifty-six of 63 tasks are clipped at an anchor the author
+chose, so the best a searcher can do is match it. That is the structural reason the inventory
+saturates, and it is upstream of every individual task's difficulty.
+
 ### A rejected proposal is not always a contract failure
 
 `scripts/report_protocol_vs_science.py` used to report one pass rate, valid proposals over total,
@@ -558,6 +584,7 @@ python -m unittest -v tests.test_benchmark_layout tests.test_secure_eval
 python scripts/run_security_audit.py --output /tmp/security.json
 python scripts/audit_tasks.py --output /tmp/certification.json
 python scripts/audit_benchmark_standards.py --output /tmp/standards.json
+python scripts/audit_theme_fit.py --output /tmp/theme.json
 python scripts/report_admission_criterion.py --runs runs --output /tmp/admission.json
 python -m unittest discover -s tests -q
 ```
