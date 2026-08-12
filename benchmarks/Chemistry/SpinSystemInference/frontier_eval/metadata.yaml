@@ -1,0 +1,18 @@
+domain: Spectroscopy
+task: SpinSystemInference
+scientific_role: discovery
+difficulty: flagship
+tier: T3
+oracle_type: community_spin_dynamics_nmrsim
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 240
+science_metric: mechanism_recovery_with_separate_false_discovery_and_calibrated_refusal
+reference_baseline: n strongest peaks read as shifts with no couplings
+reference_sota: least-squares fit of the nmrsim forward model, shipped under verification/ and run at scoring time
+tool_level: L2
+tools_suggested:
+  - literature_search
+  - offline_dynamic_programming
+tool_rationale: The spectral-fitting literature describes forward-model optimisation, symmetry factorisation and coupling-network deduction that improve materially over peak-position arithmetic.
+citation: "Castillo et al., Journal of Magnetic Resonance 2011, DOI 10.1016/j.jmr.2011.08.002; Hogben et al., Journal of Magnetic Resonance 2011, DOI 10.1016/j.jmr.2010.11.008"

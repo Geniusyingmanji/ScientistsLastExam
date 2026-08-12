@@ -19,7 +19,7 @@ class BenchmarkLayoutTests(unittest.TestCase):
     def test_inventory_uses_only_declared_discipline_roots(self):
         roots = {path.parent.name for path in discover_task_dirs()}
         self.assertEqual(roots, set(DISCIPLINE_DOMAINS))
-        self.assertEqual(len(list_tasks(None)), 62)
+        self.assertEqual(len(list_tasks(None)), 63)
 
     def test_logical_domain_is_independent_of_physical_discipline(self):
         specs = {spec.task_id: spec for spec in list_tasks(None)}

@@ -79,6 +79,22 @@ tasks:
       - doi:10.1016/j.cell.2016.11.038
       - doi:10.1016/j.cell.2022.05.013
 
+  Spectroscopy/SpinSystemInference:
+    status: candidate
+    reason: >-
+      second-order spin system recovery from an nmrsim-simulated NMR spectrum, with the full
+      Zeeman-plus-coupling Hamiltonian as the oracle rather than a first-order reimplementation.
+      Reports the discovery triple separately: combined_score carries mechanism recovery alone
+      while false-discovery rate and calibrated refusal sit beside it. Calibrated on the benchmark
+      host: baseline 0.0417 mechanism, and a truth-blind least-squares fit of the nmrsim forward
+      model reaching 0.5833 mechanism while claiming a coupling on a quarter of the genuinely
+      uncoupled pairs and never recognising the magnetically equivalent world it cannot solve.
+      Retained as a candidate pending external NMR review, an independent recomputation, and any
+      model measurement at all - no search has been run against it yet.
+    citation_ids:
+      - doi:10.1016/j.pnmrs.2010.11.001
+      - doi:10.5281/zenodo.3237610
+      - doi:10.1021/ed5001895
   RNAEngineering/RNAEnsembleDesign:
     status: candidate
     reason: >-

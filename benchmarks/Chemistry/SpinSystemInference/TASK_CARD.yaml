@@ -1,0 +1,90 @@
+schema_version: 2
+scientific_question: Can a search recover the chemical shifts and scalar couplings of a second-order spin
+  system from its NMR spectrum, without inventing couplings that are not there and while recognising the
+  spectra that do not determine the system at all?
+artifact: A deterministic function mapping an NMR peak list to a set of chemical shifts and a symmetric
+  coupling matrix, or to a refusal.
+oracle:
+  model: 'nmrsim 0.6.0: full Zeeman-plus-scalar-coupling Hamiltonian, diagonalised, with transition intensities
+    from the eigenvectors; no first-order multiplet approximation'
+  reference_designer: least-squares fit of the nmrsim forward model by coordinate descent with restarts,
+    shipped under verification/ and run at scoring time
+  feasibility: 'a dict with n shifts and an n x n symmetric coupling matrix of finite numbers, or {''abstain'':
+    True}; anything else is scored invalid rather than clipped'
+  deterministic: true
+  determinism_note: worlds are drawn from a seeded generator; nmrsim's Hamiltonian diagonalisation is
+    deterministic for fixed parameters
+  external_tooling: nmrsim (pinned in verification/requirements.txt)
+normalization:
+  baseline: read the n strongest peaks as shifts and report no couplings; scores 0.0417
+  reference: mechanism recovery of the shipped least-squares fitter, measured at evaluation time on the
+    same worlds
+  score: combined_score carries mechanism recovery alone, in [0, 1]; false-discovery rate and refusal
+    accuracy are reported beside it and must not be folded in
+  measured_anchors: recomputed per run; see references/known_best.md
+citations:
+- id: doi:10.1002/9780470034590
+  title: Encyclopedia of Magnetic Resonance
+- id: doi:10.1016/j.pnmrs.2010.11.001
+  title: Spinach - a software library for simulation of spin dynamics
+- id: doi:10.5281/zenodo.3237610
+  title: 'nmrsim: an NMR simulation library'
+- id: doi:10.1021/ed5001895
+  title: Second-order effects in NMR spectra and their interpretation
+invariants:
+- any permutation of a correct answer scores identically, since shift ordering is not observable
+- a spin system reproducing the truth exactly scores 1.0 on mechanism by construction
+- the mutual coupling of two magnetically equivalent spins has no effect on the spectrum and is excluded
+  from scoring rather than counted as a miss
+- abstaining on a determined world scores zero for that world, so refusing everything cannot buy a mechanism
+  score
+known_shortcuts: 'nmrsim is available to the candidate, which is deliberate: fitting a forward model is
+  how this problem is actually solved and the reference does the same. Reading verification/ would expose
+  the sealed worlds and is blocked by the sandbox mounts. Abstaining everywhere is defeated by scoring
+  an abstention on a determined world as zero. Claiming a coupling on every pair is defeated by the false-discovery
+  axis, which has a denominator at every difficulty level. Second-order NMR analysis is well documented
+  in public literature, so a strong result must be confirmed on the sealed worlds, which use a separate
+  generator seed.'
+review:
+  domain: pending_external_nmr_spectroscopy
+  evaluator_security: oracle runs in the trusted parent; candidate receives nmrsim through the audited
+    allowlist
+  reference_implementation_verified: 'truth-blind: the fitter reads only what a candidate reads and never
+    touches the hidden world'
+provenance:
+  class: procedural
+  target_source: seeded draw over shift spacing, coupling strength and coupling sparsity
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: sealed worlds available from an unused generator seed
+novelty_risk:
+  level: medium
+  rationale: Second-order spin analysis is classical and heavily published, and a model may recall multiplet
+    heuristics. The specific worlds are generated rather than drawn from a known set, and the refusal
+    axis on magnetically equivalent spins is not a published benchmark setting.
+lineage:
+  status: incomplete_legacy
+  builder_model_ids:
+  - anthropic:claude-fable-5
+  builder_scaffolds:
+  - claude-code
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: None. Coupling sparsity was raised from zero before any model ran, because
+    with no true-zero couplings the false-discovery axis had no denominator and reported None.
+  shortcut_discoverer: builder
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: incomplete_legacy
+  author_domain: physical chemistry
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_yet_cross_checked
+  independent_recomputation_status: not_yet_recomputed
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
