@@ -493,6 +493,21 @@ def _split_metrics(records, exception_count):
         "valid_count": sum(bool(row["valid"]) for row in records),
         "false_discoveries": sum(bool(row["false_discovery"]) for row in records),
         "correct_abstentions": sum(bool(row["correct_abstention"]) for row in records),
+        # Counts alone cannot be compared across splits or tasks, and the discovery triple needs
+        # rates: two false discoveries out of three worlds and out of thirty are not the same
+        # result. The world counts each is taken over are published beside them so the rate can be
+        # formed without knowing how this evaluator partitions its records.
+        "false_discovery_worlds": sum(1 for row in records if row["kind"] != "in_library"),
+        "abstention_worlds": sum(1 for row in records if row["kind"] != "in_library"),
+        "false_discovery_rate": (
+            sum(bool(row["false_discovery"]) for row in records)
+            / max(1, sum(1 for row in records if row["kind"] != "in_library"))),
+        "correct_refusal_rate": (
+            sum(bool(row["correct_abstention"]) for row in records)
+            / max(1, sum(1 for row in records if row["kind"] != "in_library"))),
+        "discovery_coverage": (
+            sum(1 for row in records if row["kind"] == "in_library" and not row.get("abstained"))
+            / max(1, sum(1 for row in records if row["kind"] == "in_library"))),
     }
 
 
@@ -529,6 +544,12 @@ def evaluate(discover_law):
             dev["normalized_mechanism"] - val["normalized_mechanism"]
         ),
         "validation_feasibility_rate": val["valid_count"] / len(validation),
+        "development_false_discovery_rate": dev["false_discovery_rate"],
+        "development_correct_refusal_rate": dev["correct_refusal_rate"],
+        "development_discovery_coverage": dev["discovery_coverage"],
+        "validation_false_discovery_rate": val["false_discovery_rate"],
+        "validation_correct_refusal_rate": val["correct_refusal_rate"],
+        "validation_discovery_coverage": val["discovery_coverage"],
         "development_false_discoveries": dev["false_discoveries"],
         "validation_false_discoveries": val["false_discoveries"],
         "development_correct_abstentions": dev["correct_abstentions"],
