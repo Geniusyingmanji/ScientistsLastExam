@@ -29,8 +29,10 @@ This repository is inspired by
 the text-question benchmark named *FrontierScience* in
 [arXiv:2601.21165](https://arxiv.org/abs/2601.21165).
 
-The Python package is still importable as `sle`, which was this project's working
-name; the CLI examples below reflect that. Renaming the module is a separate mechanical change.
+The Python package is `sle`. It was called `frontier_science` while the project was being
+built; run manifests and frozen evidence recorded before the rename still carry the old name, and
+are deliberately left as they are — they record what the tree was called when the evidence was
+taken.
 
 > A higher simulator or verifier score demonstrates optimization only within the registered
 > oracle. It does not by itself establish autonomous scientific discovery, mechanism recovery,
@@ -38,58 +40,80 @@ name; the CLI examples below reflect that. Renaming the module is a separate mec
 
 ## At a glance
 
-- **63 task packages** across **57 logical domains** and **7 broad disciplines** — biology,
-  chemistry, computer science, earth science, engineering, mathematics and physics.
-- **45 scientific optimization** tasks and **18 scientific discovery** tasks, the two forms this
+- **43 task packages** across **7 broad disciplines** — biology, chemistry, computer science,
+  earth science, engineering, mathematics and physics.
+- **24 scientific optimization** tasks and **19 scientific discovery** tasks, the two forms this
   benchmark claims to cover. Discovery tasks report mechanism recovery, false-discovery rate and
   calibrated refusal separately, because one maximised scalar cannot say whether a discovery was
   right.
-- **7 certified**, **47 candidate**, and **9 quarantined** tasks.
-- Four tasks whose oracles are **community-standard scientific tooling** (Stim + PyMatching,
-  RDKit, ViennaRNA, nmrsim) rather than a bespoke reimplementation, each anchored on a value or a
-  routine recomputed at evaluation time, and each carrying a measured **difficulty ladder**.
-- **5 of 53** tasks with recorded runs are so far shown to measure iterative improvement, against
-  a criterion the repository can apply to any task with paired runs. On **6** others, feedback
-  makes the searcher worse than its own control.
+- **5 certified** and **38 candidate** tasks; the quarantine set is empty.
+- **8 tasks whose oracles are community-standard scientific tooling** — Stim + PyMatching, RDKit,
+  ViennaRNA, nmrsim, networkx, SymPy, QuTiP, Astropy — rather than a bespoke reimplementation,
+  each anchored on a value or a routine recomputed at evaluation time.
+- **7 tasks** are so far shown to measure iterative improvement, against a criterion the
+  repository can apply to any task with paired runs. Three of the seven rest on a saturation
+  result that a three-seed subset of their own runs would reverse, and are reported as such.
+- **Three models** have been run — one Claude family, two GPT family. They rank the tasks
+  consistently (Spearman 0.959 within a family over 50 tasks, 0.811 and 0.559 across families
+  over 12) and **disagree on every admission verdict**: see
+  [Does a task measure iteration](#does-a-task-measure-iteration).
 - Deterministic black-box evaluation through a networkless Bubblewrap sandbox.
 - A built-in iterative rewrite baseline plus OpenEvolve, AB-MCTS, and ShinkaEvolve backends.
 - Hash-bound experiment reports with Git revision, command, source-tree state, and explicit
   trust decisions.
 
+### Fifteen tasks were retired for having no room left
+
+A task every searcher drives to its cap no longer separates anything, while still consuming a
+share of every evaluation budget. Fifteen were retired on that basis: `BroadbandAbsorber`,
+`AntennaArraySynthesis`, `LidDrivenCavity`, `GateSynthesis`, `HartreeFockSCF`, `PoissonSolver2D`,
+`OptimalPowerFlow`, `RankineCycleOpt`, `SpinGlassGroundState`, `LyapunovControl`,
+`OptimalExperimentDesign`, `PhotovoltaicTandemDesign`, `SeismicInversion`, `OceanCurrentInversion`
+and `SeismicWaveInversion`.
+
+The rule is *every* model at or above 0.99, not *any*. A task only one model has maxed is still
+separating models and stays: `RNAInverseDesign` scores 0.8948 for one and 0.9996 for another.
+
+Scores **above** 1.0 stay too. On an uncapped task, exceeding the anchor is the intended result
+rather than saturation — `CirclePacking` is at 1.09 and `RNAEnsembleDesign` at 1.01. Retiring
+those would be treating success as a fault.
+
+Two of the fifteen were certified. Certification says the task is sound; it says nothing about
+whether the task has any headroom left, and the two need separate accounting.
+
 ### How deep the science goes, measured rather than asserted
 
 Claiming a scientific setting is easy; the audit exists because the claim is checkable. Across the
-63 packages:
+43 packages:
 
 | | |
 |---|---:|
-| tasks citing resolvable literature (DOI or arXiv) | 51 / 63 |
-| tasks holding a sealed split back from the development score | 42 / 63 |
-| tasks whose oracle is community-standard domain tooling | **4 / 63** |
-| tasks shipping a runnable reference the anchor is re-derived from | **7 / 63** |
-| tasks reviewed by an external domain expert | **0 / 63** |
+| tasks stating their shortcut-resistance argument | 43 / 43 |
+| tasks stating scientific invariants | 43 / 43 |
+| tasks citing resolvable literature (DOI or arXiv) | 42 / 43 |
+| tasks holding a sealed split back from the development score | 35 / 43 |
+| tasks whose anchor is recomputed rather than quoted | **10 / 43** |
+| tasks whose oracle is community-standard domain tooling | **8 / 43** |
+| tasks shipping a runnable reference the anchor is re-derived from | **8 / 43** |
+| tasks carrying a difficulty ladder | **8 / 43** |
+| tasks reviewed by an external domain expert | **0 / 43** |
 
-The first two rows are the framing; the last three are the substance, and they are where this
-inventory is thin. Fifty-nine of 63 oracles are author-written NumPy reductions of the science
+The first rows are the framing; the bolded ones are the substance, and they are where this
+inventory is thin. Thirty-five of 43 oracles are author-written NumPy reductions of the science
 they describe, so a score on them measures agreement with that author's code rather than with the
-field. The task narratives cite real work; the oracles mostly do not run it.
+field. The task narratives cite real work; most of the oracles do not run it.
 
-Four tasks close that gap — `QuantumErrorDecoder` (Stim + PyMatching), `MolecularLeadOptimization`
-(RDKit), `RNAEnsembleDesign` (ViennaRNA) and `SpinSystemInference` (nmrsim) — and they are the
-template for the rest rather than a finished state.
+The eight community-oracle tasks close that gap and are the template for the rest rather than a
+finished state.
 
-### Two inventory entries are not natural science
+### Scope
 
-`InventoryManagement/MultiEchelonStock` and `Transportation/TrafficSignalTiming` are operations
-research and traffic engineering. Both are quarantined, so neither is benchmark-admissible, but
-they are quarantined for reproduced defects rather than for being out of scope, and the two
-reasons are worth separating. They should leave the inventory when the quarantine set is next
-revised; until then they are noted here so the disciplinary claim above can be checked against
-the actual list.
+Every remaining task is natural science or its mathematics. Two operations-research entries
+(`MultiEchelonStock`, `TrafficSignalTiming`) that had been quarantined for reproduced defects
+have since left the inventory, and the quarantine set is now empty.
 
 The default CLI exposes only certified tasks. Candidates remain visible for research and
-calibration, while quarantined packages preserve known defects for auditability; neither group
-is benchmark-admissible by default.
+calibration; neither group beyond the certified core is benchmark-admissible by default.
 
 ## Benchmark organization
 
@@ -105,26 +129,24 @@ For example, `benchmarks/Physics/DiffractionGratingDesign/` has the stable task 
 `Optics/DiffractionGratingDesign`. Code and reports should use the task ID; filesystem tooling
 should use the discipline path.
 
-| Discipline | Tasks | Certified | Candidate | Quarantined |
-|---|---:|---:|---:|---:|
-| Biology | 7 | 0 | 6 | 1 |
-| Chemistry | 14 | 1 | 11 | 2 |
-| Computer Science | 4 | 2 | 2 | 0 |
-| Earth Science | 6 | 0 | 6 | 0 |
-| Engineering | 18 | 0 | 14 | 4 |
-| Mathematics | 5 | 2 | 3 | 0 |
-| Physics | 9 | 2 | 5 | 2 |
-| **Total** | **63** | **7** | **47** | **9** |
+| Discipline | Tasks | Certified | Candidate |
+|---|---:|---:|---:|
+| Biology | 6 | 0 | 6 |
+| Chemistry | 10 | 1 | 9 |
+| Computer Science | 4 | 1 | 3 |
+| Earth Science | 3 | 0 | 3 |
+| Engineering | 10 | 0 | 10 |
+| Mathematics | 4 | 2 | 2 |
+| Physics | 6 | 1 | 5 |
+| **Total** | **43** | **5** | **38** |
 
 The certified core currently consists of:
 
 - `Chemistry/LennardJonesCluster`
 - `Algorithm/MatrixMultiplicationRank`
-- `ScientificComputing/PoissonSolver2D`
 - `Mathematics/CapSet`
 - `Optimization/CirclePacking`
 - `Photonics/MultilayerThinFilm`
-- `Physics/SpinGlassGroundState`
 
 Run `python -m sle list --all` for the authoritative live inventory. The
 domain-to-discipline mapping is in
@@ -133,25 +155,32 @@ is in [`sle/certification.yaml`](sle/certification.yaml).
 
 ## Community-oracle tasks
 
-Every one of the original 59 evaluators depends only on NumPy, SciPy and the standard library —
-a dependency scan over all 29,087 lines of oracle code finds no RDKit, ViennaRNA, Stim, PySCF,
-ASE or BioPython. Task narratives cite real science, but the oracles are author-written
-reduced-order reimplementations, and none has completed external domain review. A score
-therefore measures agreement with the author's NumPy code, not with the science.
+Most evaluators depend only on NumPy, SciPy and the standard library. Task narratives cite real
+science, but those oracles are author-written reduced-order reimplementations, and none has
+completed external domain review. A score on them measures agreement with the author's NumPy
+code, not with the science.
 
-Three tasks were added to close that gap. Each puts a community-standard toolkit in the oracle and
-recomputes its anchor at evaluation time rather than quoting a number from a paper. The third also
-answers a question the first two leave open: whether the anchor can be a routine the community
-actually uses rather than a value. `RNAEnsembleDesign` runs ViennaRNA's own designer inside the
-evaluator, restart-matched so a candidate cannot beat it by calling it more often — a single call
-scores 0.576, measured through the harness.
+Eight tasks close that gap. Each puts a community-standard toolkit in the oracle and recomputes
+its anchor at evaluation time rather than quoting a number from a paper. `RNAEnsembleDesign` goes
+one step further and makes the anchor a routine the community actually uses rather than a value:
+it runs ViennaRNA's own designer inside the evaluator, restart-matched so a candidate cannot beat
+it by calling it more often.
 
-| Task | Oracle | Anchor | Scoring |
+| Task | Oracle | Form | Anchor |
 |---|---|---|---|
-| `QuantumErrorCorrection/QuantumErrorDecoder` | **Stim** rotated surface-code circuits, seeded sampling | **PyMatching 2** minimum-weight perfect matching, recomputed per run | uncapped; matching MWPM = 1.0 |
-| `RNAEngineering/RNAEnsembleDesign` | **ViennaRNA** partition function over the Turner nearest-neighbour model; ensemble defect | ViennaRNA's own `inverse_pf_fold`, best of three restarts by ensemble defect, recomputed per run | uncapped; matching the reference designer = 1.0 |
-| `Spectroscopy/SpinSystemInference` | **nmrsim** full Zeeman-plus-coupling Hamiltonian, diagonalised | least-squares fit of the nmrsim forward model, shipped under `verification/` and run at scoring time | clipped; mechanism recovery reported apart from false-discovery rate and refusal |
-| `MedicinalChemistry/MolecularLeadOptimization` | **RDKit** QED, Ertl–Schuffenhauer SA score, Lipinski/Veber descriptors, PAINS catalogue, Morgan/Tanimoto | mean drug-likeness of structurally distinct approved drugs from a 20-drug panel whose SMILES were each verified against published molecular weights | uncapped; approved-drug quality = 1.0 |
+| `QuantumErrorCorrection/QuantumErrorDecoder` | **Stim** rotated surface-code circuits, seeded sampling | Opt | **PyMatching 2** minimum-weight perfect matching, recomputed per run; uncapped |
+| `RNAEngineering/RNAEnsembleDesign` | **ViennaRNA** partition function over the Turner nearest-neighbour model; ensemble defect | Opt | ViennaRNA's `inverse_pf_fold`, best of three restarts, recomputed per run; uncapped |
+| `MedicinalChemistry/MolecularLeadOptimization` | **RDKit** QED, Ertl–Schuffenhauer SA, Lipinski/Veber, PAINS, Morgan/Tanimoto | Opt | mean drug-likeness of structurally distinct approved drugs from a 20-drug panel, each SMILES verified against published molecular weights; uncapped |
+| `Spectroscopy/SpinSystemInference` | **nmrsim** full Zeeman-plus-coupling Hamiltonian, diagonalised | Disc | least-squares fit of the nmrsim forward model, run at scoring time |
+| `Algorithm/GraphFromDistances` | **networkx** | Disc | truth-blind domain reference strategy, run at scoring time |
+| `Mathematics/SequenceLawRecovery` | **SymPy** | Disc | truth-blind reference recoverer; correct-refusal rate 0.50 by construction |
+| `QuantumDynamics/HamiltonianLearning` | **QuTiP** | Disc | truth-blind reference identifier |
+| `Exoplanets/RadialVelocityPlanets` | **Astropy** | Disc | truth-blind periodogram reference; baseline recovers 0.50 of the mechanism at a false-discovery rate of 0.889 |
+
+The discovery entries all ship their reference under `verification/` and run it at scoring time,
+and each reference is deliberately imperfect — a reference that scores 1.0 leaves the task no
+headroom. `SpinSystemInference`'s reference recovers 0.5833 of the mechanism at a false-discovery
+rate of 0.250.
 
 Calibration ladders are in each task's `references/known_best.md`. On the decoder task:
 baseline 0.0, two NumPy/SciPy reference decoders at 0.2395 and 0.3832, GPT-5.6 budget-one best
@@ -189,7 +218,7 @@ explicit `--allow-uncertified` flag.
 
 ### Install the oracle toolkits
 
-Four tasks put a community toolkit in the oracle, and each pins its version in
+Eight tasks put a community toolkit in the oracle, and each pins its version in
 `verification/requirements.txt`. On the benchmark host those files cannot be installed the usual
 way: the system interpreter's pip fails at import with a pyOpenSSL binding mismatch, so
 `pip install -r` never runs. `scripts/setup_oracle_env.sh` documents the way around it — a
@@ -293,7 +322,8 @@ the default benchmark, `candidate` is retained for calibration but missing one o
 | [Security audit v49](experiments/security_audit_2026-07-27_v49.json) | 23/23 tests passed | Sandbox and protocol regressions |
 | [GPT-5.6 50-task census](experiments/gpt56_science_census_analysis_2026-08-06_v1.json) | 50/50 cells; 36/50 valid proposals | Budget-one screen; challenge gate fails |
 | [Track F confirmatory analysis](experiments/track_f_analysis_2026-07-26_v1.json) | no identified feedback advantage | Preregistered, n=48/arm, on ActiveLawDiscovery |
-| [Admission criterion sweep](.research/task_admission_verification_2026-08-11.md) | 5 of 53 tasks shown to measure iteration | Every recorded run, both conditions |
+| [Admission criterion sweep](.research/task_admission_verification_2026-08-11.md) | 7 tasks shown to measure iteration; 3 of the 7 seed-fragile | Every recorded run, both conditions |
+| [Cross-model comparison](.research/cross_model_2026-08-13.md) | ranking consistent, admission verdicts not | Three models, 12 shared tasks |
 
 [`experiments/TRUST.md`](experiments/TRUST.md) is the append-only trust manifest. Study plans and
 interpretations live in [`.research/`](.research/). Historical pre-sandbox reports are classified
@@ -302,6 +332,33 @@ interpretations live in [`.research/`](.research/). Historical pre-sandbox repor
 ## Recent findings
 
 Full write-ups are in [`.research/`](.research/); each carries its own claim boundary.
+
+**Three models rank the tasks the same way and disagree on every admission verdict.** Spearman
+over the open-loop scores is 0.959 within one model family (50 shared tasks) and 0.811 and 0.559
+across families (12 each). On the 12 tasks two families both ran, the admission verdict differs
+every time, and one-sidedly: tasks one model qualifies, the other reads as
+`control_not_exhausted`, because its best-of-N is still climbing at the same budget — second-half
+gains of 0.028, 0.024 and 0.017 against 0.000. Curve length, task version and searcher are all
+matched, so this is a model effect rather than an artefact.
+
+The consequence is structural. The crossover budget is a property of the task *and* the searcher,
+and the model is part of the searcher, so **a stronger model can disqualify a task**. Admission
+has to be stated as a joint claim about a task and a searcher; it cannot be a property of the
+task alone. That is a direct cost of the criterion, not a defect in it.
+
+**A hash that decides what is comparable must cover only what can change a score.** Runs record
+`task_package_sha256`, and the reports refuse to compare across a difference. Two defects made
+that guard reject valid evidence: a one-line `scientific_role` annotation added to every task's
+card moved every hash, and the hash covered the task's own `runs/` output, so a task's recorded
+identity changed whenever anyone ran it — 35 of the directories accumulate one.
+
+The identity hash now excludes generated output, and
+[`scripts/build_task_version_equivalence.py`](scripts/build_task_version_equivalence.py) recovers
+the history: it replays each revision's package hash from git objects, and where a recorded hash
+cannot be reproduced it asks instead whether anything behavioural has been committed since the
+task's first run. Of 20 tasks recorded under more than one hash, **16 are the same task**; three
+were genuinely edited and one is unresolved. Without that table, cross-model comparison drops
+from 50 shared tasks to 6.
 
 **The evolvability gap depends on the task, not just on the budget.** Paired `normal` versus
 `selection_blind` runs measure whether an oracle budget is better spent on a feedback loop or on
@@ -421,9 +478,10 @@ paired now, and are the only certified tasks that could still qualify. Certifica
 repository has always described evidence quality rather than difficulty, and this is what that
 distinction costs: a task can be fully certified and still not measure iterative improvement.
 
-**Paired evidence exists for 15 of 53 tasks, and five pass:** `QuantumErrorCorrection/QuantumErrorDecoder`,
+**Paired evidence exists for 19 tasks, and seven pass:** `QuantumErrorCorrection/QuantumErrorDecoder`,
 `Spectroscopy/NMRSpectrumFitting`, `Astrodynamics/LowThrustTransfer`,
-`ProteinEngineering/ProteinStabilityDesign` and `MaterialsScience/AlloyHardnessOptimization`.
+`ProteinEngineering/ProteinStabilityDesign`, `MaterialsScience/AlloyHardnessOptimization`,
+`Catalysis/CatalystDeactivationLab` and `ClimateScience/EnergyBalanceModel`.
 
 | task | gap at budget 3 → 12 | last budget | seeds | drop-one-seed |
 |---|---|---|---:|---:|
@@ -431,6 +489,17 @@ distinction costs: a task can be fully certified and still not measure iterative
 | `Spectroscopy/NMRSpectrumFitting` | +0.085 → +0.173 | 3/4 | 4 | +0.097 |
 | `Astrodynamics/LowThrustTransfer` | −0.011 → +0.089 | 3/4 | 4 | +0.031 |
 | `ProteinEngineering/ProteinStabilityDesign` | +0.032 → +0.035 | 5/5 | 6 | +0.017 |
+
+**Three of the seven rest on a saturation their own seeds would reverse.** The necessary
+condition is a threshold test on the open-loop control's second-half gain, and the report already
+declares three seeds enough to decide it. Enumerating three-seed subsets of the runs that exist
+shows `LowThrustTransfer`, `ProteinStabilityDesign` and `QuantumErrorDecoder` flipping:
+`LowThrustTransfer` reads 0.0053 over six seeds, which is exhausted, and 0.0193 over the first
+three, which is not.
+
+Leave-one-out does not find this — dropping a single seed from six never moves the median across
+the threshold, and it reported zero fragile verdicts on an inventory where the seed-matched
+comparison had just shown one. The subset has to be as small as the criterion claims to trust.
 
 A sixth was on this list two seeds ago and is not now.
 `ChemicalKinetics/ReactionMechanismFitting` showed the largest gap in the inventory, +0.423 with
@@ -487,22 +556,23 @@ criterion which needs paired runs.
 
 | check | met |
 |---|---|
-| open-ended — the anchor is not itself a solution a correct implementation reaches | 59 / 63 |
-| continuously scored rather than paying out on a threshold | 63 / 63 |
-| declares one of the two forms, optimization or discovery | 63 / 63 |
-| discovery tasks emitting all three axes | 15 / 18 |
-| frontier-anchored — uncapped against a reference the field would want to beat | 7 / 63 |
+| continuously scored rather than paying out on a threshold | 43 / 43 |
+| declares one of the two forms, optimization or discovery | 43 / 43 |
+| open-ended — the anchor is not itself a solution a correct implementation reaches | 41 / 43 |
+| discovery tasks emitting all three axes | 17 / 19 |
+| frontier-anchored — uncapped against a reference the field would want to beat | 7 / 43 |
 
-Four tasks describe an anchor their own card calls a manufactured solution, unit fidelity or the
-optimum: `ScientificComputing/PoissonSolver2D`, `QuantumControl/GateSynthesis`,
+Two tasks describe an anchor their own card calls a manufactured solution or the optimum:
 `ControlTheory/InvertedPendulumSwingUp` and `Optics/DiffractionGratingDesign`. They are not
 defective — they ask for a known method and have a unique answer, so iteration stops paying once
-it is found. Labelling them is more useful than measuring an evolvability gap on them, and three
-of the four already read as solved or exhausted under the admission criterion.
+it is found. Labelling them is more useful than measuring an evolvability gap on them. Two others
+that failed this check, `PoissonSolver2D` and `GateSynthesis`, have since been retired for having
+no headroom left, which is the same problem arriving through a different door.
 
-The gap that matters is the last row. Fifty-six of 63 tasks are clipped at an anchor the author
+The gap that matters is the last row. Thirty-six of 43 tasks are clipped at an anchor the author
 chose, so the best a searcher can do is match it. That is the structural reason the inventory
-saturates, and it is upstream of every individual task's difficulty.
+saturates, and it is upstream of every individual task's difficulty. It is also why retiring
+saturated tasks is a treatment of the symptom: the cure is uncapped anchors.
 
 ### A rejected proposal is not always a contract failure
 
@@ -531,7 +601,7 @@ given a verdict.
 
 Measuring iteration is one question; whether a task's science is solid is another, and the two
 are independent. `scripts/audit_benchmark_standards.py` checks nine mechanically verifiable
-properties across all 63 packages and reports them separately, because they are different kinds
+properties across all 43 packages and reports them separately, because they are different kinds
 of defect and an average would hide whichever one matters.
 
 | standard | met |
@@ -617,7 +687,15 @@ form, alongside the hash that binds it, so this cannot be ambiguous again.
 
 ## Known state before relying on this branch
 
-Two things are deliberately left open rather than papered over.
+Several things are deliberately left open rather than papered over.
+
+**The frozen measurement-health cohort is failing, and the reason is now known.** All seven
+frozen tasks fail every preflight check, because each check requires the task package to hash to
+its frozen value and the tasks were annotated and relocated after freezing. The preflight now
+classifies the mismatch instead of only reporting two hashes, and for all seven the difference is
+**declarative only** — the scientific evidence still describes these tasks; the binding is what
+went stale. Refreshing a binding re-signs frozen evidence, so it is a governance decision and has
+been left as one. Most of the remaining test failures on this branch are downstream of it.
 
 **The trusted runtime changed.** `sle/secure_eval.py` and `benchmark_layout.py`
 were modified, and `tests/test_runtime_migration.py` passes at the previous revision and fails
