@@ -299,6 +299,13 @@ def _score_split(design_fn, worlds):
             sum(1 for r in valid if r.get("abstained") and not r["degenerate"])
             / max(1, sum(1 for r in valid if not r["degenerate"]))
         ),
+        # The same quantity the other way round, published because that is the one the discovery
+        # report needs: whether a discovery was attempted where one was available. A task on which
+        # every proposal declines every world otherwise looks exactly like a task nobody could do.
+        "discovery_coverage": (
+            sum(1 for r in valid if not r.get("abstained") and not r["degenerate"])
+            / max(1, sum(1 for r in valid if not r["degenerate"]))
+        ),
     }
 
 
@@ -313,6 +320,7 @@ def evaluate(infer_spin_system) -> dict:
         "development_mechanism_score": development["mechanism"],
         "development_false_discovery_rate": development["false_discovery_rate"],
         "development_correct_refusal_rate": development["correct_refusal_rate"],
+        "development_discovery_coverage": development["discovery_coverage"],
         "development_unwarranted_refusal_rate": development["unwarranted_refusal_rate"],
         "development_determined_world_count": sum(
             1 for w in development_worlds() if not w["degenerate"]),
@@ -328,6 +336,7 @@ def evaluate(infer_spin_system) -> dict:
             "heldout_mechanism_score": sealed["mechanism"],
             "heldout_false_discovery_rate": sealed["false_discovery_rate"],
             "heldout_correct_refusal_rate": sealed["correct_refusal_rate"],
+            "heldout_discovery_coverage": sealed["discovery_coverage"],
             "sealed_per_instance": sealed["rows"],
         })
     else:
