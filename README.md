@@ -354,20 +354,24 @@ science:
 
 | task | valid before | valid after | best score before | after |
 |---|---:|---:|---:|---:|
-| `CalorimeterDesign` | 0% | **74%** | 0.0000 | **1.0000** |
-| `HeatExchangerDesign` | 66% | **100%** | 0.7665 | **1.0000** |
-| `RoomImpulseResponse` | 69% | **95%** | 0.4382 | 0.4002 |
-| `QuartzCrystalMicrobalanceLab` | 58% | **93%** | 0.0000 | 0.0000 |
-| `DistillationColumnDesign` | 38% | 33% | 0.5822 | **0.8920** |
-| `ForceFieldCalibration` | 5% | **21%** | 0.0600 | **0.4340** |
+| `CalorimeterDesign` | 0% | **77%** | 0.0000 | **1.0000** |
+| `HeatExchangerDesign` | 66% | **96%** | 0.7665 | **1.0000** |
+| `QuartzCrystalMicrobalanceLab` | 58% | **83%** | 0.0000 | 0.0000 |
+| `RoomImpulseResponse` | 69% | 73% | 0.4382 | **0.6824** |
+| `DistillationColumnDesign` | 38% | 29% | 0.5822 | **0.9960** |
+| `ForceFieldCalibration` | 5% | **17%** | 0.0600 | **0.8288** |
+
+Each row is 48 proposals after the fix against 36-204 before, same model and budget.
 
 `CalorimeterDesign` had been on the list of floor tasks needing recalibration. That diagnosis was
 wrong: it was never too hard, it just never said what its inputs were called.
 `QuartzCrystalMicrobalanceLab` separates the two failure modes cleanly — its contract problem is
-fixed, 58% valid to 93%, and its score is still 0.0000, because what remains is the blanket
-abstention below and not the contract. `ForceFieldCalibration` improved but is still mostly
-rejected, and one thing about it stays unexplained: the same rejected candidate raises inside the
-sandbox and returns cleanly outside it in 0.3s, with scipy importable in both. Full write-up in
+fixed, 58% valid to 83%, and its score is still 0.0000, because what remains is the blanket
+abstention below and not the contract. `ForceFieldCalibration` still rejects most proposals, but
+the ones that land now score 0.8288 against 0.0600 before, so what was read as a floor task was a
+contract that let almost nothing through. One thing about it stays unexplained: the same rejected
+candidate raises inside the sandbox and returns cleanly outside it in 0.3s, with scipy importable
+in both. Full write-up in
 [.research/contract_burden_2026-08-14.md](.research/contract_burden_2026-08-14.md).
 
 Two things made this findable and are worth keeping. Rejected candidates are now retained (five
