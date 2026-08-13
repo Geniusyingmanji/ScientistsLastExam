@@ -633,10 +633,21 @@ it is found. Labelling them is more useful than measuring an evolvability gap on
 that failed this check, `PoissonSolver2D` and `GateSynthesis`, have since been retired for having
 no headroom left, which is the same problem arriving through a different door.
 
-The gap that matters is the last row. Thirty-six of 43 tasks are clipped at an anchor the author
-chose, so the best a searcher can do is match it. That is the structural reason the inventory
-saturates, and it is upstream of every individual task's difficulty. It is also why retiring
-saturated tasks is a treatment of the symptom: the cure is uncapped anchors.
+The gap that matters is the last row, but it needs narrowing. Thirty-six of 43 tasks are clipped,
+and it is tempting to read that as the structural cause of saturation. Split by role:
+
+| | clipped | uncapped |
+|---|---:|---:|
+| discovery | 19 | 0 |
+| optimization | 17 | 7 |
+
+The 19 clipped discovery tasks are clipped **correctly**. Their `combined_score` is the fraction
+of the hidden mechanism recovered, so 1.0 means the truth was recovered, not that a reference was
+matched — nobody can recover more than all of it, and uncapping would mean nothing. Uncapping is
+a prescription for optimization tasks whose anchor is a human record.
+
+So the real surface is **17 optimization tasks**, not 36. That is still the structural reason the
+optimization half saturates, and retiring a maxed task treats the symptom rather than the cause.
 
 ### A rejected proposal is not always a contract failure
 
