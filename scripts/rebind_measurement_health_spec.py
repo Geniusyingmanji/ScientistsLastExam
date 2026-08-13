@@ -57,7 +57,11 @@ def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--spec", type=Path, default=_module.DEFAULT_SPEC,
                     help="the spec being superseded")
+    ap.add_argument("--manifest", type=Path,
+                    default=_module.DEFAULT_MANIFEST.relative_to(ROOT),
+                    help="the frozen cohort manifest being superseded")
     ap.add_argument("--output", type=Path, required=True)
+    ap.add_argument("--manifest-output", type=Path, required=True)
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args(argv)
 
@@ -65,6 +69,11 @@ def main(argv: list[str] | None = None) -> int:
     if issues:
         print("cannot read the current spec:", "; ".join(issues), file=sys.stderr)
         return 1
+
+    raw_spec = json.loads(args.spec.read_text(encoding="utf-8"))
+    base_binding = raw_spec.get("base_spec") or {}
+    manifest_path = (ROOT / args.manifest).resolve()
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
 
     rows = resolved.get("tasks") or []
     updates, refused = [], []
@@ -116,6 +125,24 @@ def main(argv: list[str] | None = None) -> int:
         print("dry run: nothing written")
         return 0
 
+    # The runtime contract lives in the cohort manifest, not the spec, so rebinding one without
+    # the other leaves the preflight failing on the half that was not touched. A first attempt
+    # updated only the spec and left every task still failing `frozen_runtime_contract`.
+    contracts = {u["task"]: u["runtime_contract_sha256"] for u in updates}
+    new_manifest = dict(manifest)
+    new_manifest["supersedes"] = {
+        "path": manifest_path.relative_to(ROOT).as_posix(),
+        "sha256": sha256_of(manifest_path),
+    }
+    new_manifest["tasks"] = [
+        dict(row, runtime_contract_sha256=contracts[row["task"]],
+             superseded_runtime_contract_sha256=row.get("runtime_contract_sha256"))
+        if row.get("task") in contracts else row
+        for row in manifest.get("tasks") or []
+    ]
+    args.manifest_output.write_text(json.dumps(new_manifest, indent=2) + "\n", encoding="utf-8")
+    print("wrote", args.manifest_output)
+
     document = {
         "schema_version": 2,
         "purpose": "Rebind the frozen cohort after a package rename and a declarative card "
@@ -125,14 +152,24 @@ def main(argv: list[str] | None = None) -> int:
             "path": args.spec.relative_to(ROOT).as_posix(),
             "sha256": sha256_of(args.spec),
         },
-        "base_spec": resolved.get("__base_spec__") or {},
+        "base_spec": base_binding,
         "source_provenance": {
             "git_revision": git_revision(),
             "source_tree_dirty": not tree_is_clean(),
         },
-        "top_level_overrides": {},
-        "shared_task_overrides": {},
-        "task_overrides": updates,
+        "top_level_overrides": {
+            # The spec binds the manifest by hash, so a new manifest needs a new binding here or
+            # the preflight fails closed on "does not bind the current cohort manifest".
+            "cohort_manifest_sha256": sha256_of(args.manifest_output),
+        },
+        "shared_task_overrides": raw_spec.get("shared_task_overrides") or {},
+        # Carry the previous overlay's per-task overrides forward; this layer only adds hashes.
+        "task_overrides": [
+            dict(prev, **{k: v for k, v in next((u for u in updates
+                                                 if u["task"] == prev["task"]), {}).items()
+                          if k != "task"})
+            for prev in raw_spec.get("task_overrides") or []
+        ] or updates,
     }
     args.output.write_text(json.dumps(document, indent=2) + "\n", encoding="utf-8")
     print("wrote", args.output)
