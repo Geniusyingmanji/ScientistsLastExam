@@ -328,6 +328,15 @@ interpretations live in [`.research/`](.research/). Historical pre-sandbox repor
 
 Full write-ups are in [`.research/`](.research/); each carries its own claim boundary.
 
+**Every discovery task now emits all three axes.** Five evaluators were measuring mechanism
+recovery, false discovery and refusal but publishing some of them as counts, or not at all:
+`ActiveLawDiscovery` published false-discovery and abstention counts without the world counts
+that make them rates, and `GravityInversion`, `ReactionMechanismFitting`, `SpinSystemInference`,
+`NMRSpectrumFitting` and `InterventionalSCM` published no coverage at all, so on those tasks
+"was a discovery attempted" could not be read off a run. A sixth, `ForceFieldCalibration`, needed
+no change: it publishes mechanism recovery as `supported_correct_model_rate` and
+`hypothesis_score`, and the audit had been measuring its own vocabulary rather than the task.
+
 **A task's difficulty is often its submission contract, not its science.** The rank correlation
 between hidden-evaluator length and the fraction of proposals that are even valid is **-0.675**
 across 39 tasks: the shortest evaluators accept 92-100%, the longest accept 0-5%. The mechanism
@@ -614,7 +623,7 @@ criterion which needs paired runs.
 | continuously scored rather than paying out on a threshold | 43 / 43 |
 | declares one of the two forms, optimization or discovery | 43 / 43 |
 | open-ended — the anchor is not itself a solution a correct implementation reaches | 41 / 43 |
-| discovery tasks emitting all three axes | 17 / 19 |
+| discovery tasks emitting all three axes | **19 / 19** |
 | frontier-anchored — uncapped against a reference the field would want to beat | 7 / 43 |
 
 Two tasks describe an anchor their own card calls a manufactured solution or the optimum:
