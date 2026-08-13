@@ -97,3 +97,19 @@ cannot read the frozen evaluator data. NumPy and SciPy are available.
 References: Borg et al., *Scientific Data* 7, 430 (2020), DOI
 `10.1038/s41597-020-00768-9`; Figshare dataset v9, DOI
 `10.6084/m9.figshare.12642953.v9`.
+
+## Inputs the candidate receives
+
+Every key the task passes to the candidate, taken from the baseline's reads and from the
+evaluator's own construction of the input mapping. Names are part of the contract: a candidate
+that reaches for one of these quantities under a different name raises at runtime and scores
+nothing, and that zero cannot be told apart from a zero earned on the science.
+
+| key | |
+|---|---|
+| `assay_budget` | passed in, unused by the baseline |
+| `batch_size` | read by the baseline |
+| `candidates` | read by the baseline |
+| `objective` | passed in, unused by the baseline |
+| `required_prediction_confidence` | passed in, unused by the baseline |
+| `scope_warning` | passed in, unused by the baseline |

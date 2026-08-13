@@ -125,18 +125,34 @@ Engineering* 105, 89–90 (1983), doi:10.1115/1.3240948; Sanaye & Hajabdollahi,
 *Applied Thermal Engineering* 30, 1937–1945 (2010),
 doi:10.1016/j.applthermaleng.2010.04.018.
 
-
 ## Inputs the candidate receives
 
-Every key the baseline reads off the input mapping. Names are part of the contract: a candidate
+Every key the task passes to the candidate, taken from the baseline's reads and from the
+evaluator's own construction of the input mapping. Names are part of the contract: a candidate
 that reaches for one of these quantities under a different name raises at runtime and scores
 nothing, and that zero cannot be told apart from a zero earned on the science.
 
 | key | |
 |---|---|
-| `baffle_spacing_bounds_m` | previously undocumented |
-| `tube_count_bounds` | previously undocumented |
-| `tube_inner_diameter_bounds_m` | previously undocumented |
-| `tube_length_bounds_m` | previously undocumented |
-
-A key not listed here may still exist; this table is what the shipped baseline uses.
+| `archive_size_bounds` | passed in, unused by the baseline |
+| `baffle_spacing_bounds_m` | read by the baseline |
+| `cold_fouling_resistance_m2k_w` | passed in, unused by the baseline |
+| `cold_inlet_temperature_k` | passed in, unused by the baseline |
+| `cold_mass_flow_kg_s` | passed in, unused by the baseline |
+| `cold_pressure_drop_limit_pa` | passed in, unused by the baseline |
+| `cold_reference_properties` | passed in, unused by the baseline |
+| `cost_model` | passed in, unused by the baseline |
+| `design_columns` | passed in, unused by the baseline |
+| `hot_fouling_resistance_m2k_w` | passed in, unused by the baseline |
+| `hot_inlet_temperature_k` | passed in, unused by the baseline |
+| `hot_mass_flow_kg_s` | passed in, unused by the baseline |
+| `hot_pressure_drop_limit_pa` | passed in, unused by the baseline |
+| `hot_reference_properties` | passed in, unused by the baseline |
+| `max_shell_diameter_m` | passed in, unused by the baseline |
+| `tube_count_bounds` | read by the baseline |
+| `tube_inner_diameter_bounds_m` | read by the baseline |
+| `tube_length_bounds_m` | read by the baseline |
+| `tube_pass_bounds` | passed in, unused by the baseline |
+| `tube_pitch_ratio` | passed in, unused by the baseline |
+| `tube_wall_conductivity_w_mk` | passed in, unused by the baseline |
+| `tube_wall_thickness_m` | passed in, unused by the baseline |

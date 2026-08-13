@@ -83,3 +83,19 @@ References: Rahmanian et al., *Scientific Data* 10, 43 (2023), DOI
 Rahmanian et al., *Batteries & Supercaps* 5, e202200228 (2022), DOI
 `10.1002/batt.202200228`; Flores et al., *Digital Discovery* 1, 440–447
 (2022), DOI `10.1039/D2DD00027J`.
+
+## Inputs the candidate receives
+
+Every key the task passes to the candidate, taken from the baseline's reads and from the
+evaluator's own construction of the input mapping. Names are part of the contract: a candidate
+that reaches for one of these quantities under a different name raises at runtime and scores
+nothing, and that zero cannot be told apart from a zero earned on the science.
+
+| key | |
+|---|---|
+| `application_weights` | read by the baseline |
+| `assay_budget` | passed in, unused by the baseline |
+| `batch_size` | read by the baseline |
+| `candidate_formulations` | read by the baseline |
+| `objective` | passed in, unused by the baseline |
+| `temperatures_c` | passed in, unused by the baseline |

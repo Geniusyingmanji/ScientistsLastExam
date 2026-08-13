@@ -124,16 +124,33 @@ Pande, DOI `10.1021/jz500737m`; Shell, DOI `10.1063/1.2992060`; Frederiksen et a
 `10.1103/PhysRevLett.93.165501`; Henderson, DOI `10.1016/0375-9601(74)90847-0`;
 Axilrod and Teller, DOI `10.1063/1.1723844`.
 
-
 ## Inputs the candidate receives
 
-Every key the baseline reads off the input mapping. Names are part of the contract: a candidate
+Every key the task passes to the candidate, taken from the baseline's reads and from the
+evaluator's own construction of the input mapping. Names are part of the contract: a candidate
 that reaches for one of these quantities under a different name raises at runtime and scores
 nothing, and that zero cannot be told apart from a zero earned on the science.
 
 | key | |
 |---|---|
-| `distance_bounds_a` | previously undocumented |
-| `first_query_temperature_k` | previously undocumented |
-
-A key not listed here may still exist; this table is what the shipped baseline uses.
+| `boyle_temperature_bounds_k` | passed in, unused by the baseline |
+| `boyle_temperature_threshold_k` | passed in, unused by the baseline |
+| `coordinate_abs_bound_a` | passed in, unused by the baseline |
+| `distance_bounds_a` | read by the baseline |
+| `first_query_distance_bounds_a` | passed in, unused by the baseline |
+| `first_query_max_configurations` | passed in, unused by the baseline |
+| `first_query_max_distance_ratio` | passed in, unused by the baseline |
+| `first_query_temperature_k` | read by the baseline |
+| `hypothesis_names` | passed in, unused by the baseline |
+| `max_batch_configurations` | passed in, unused by the baseline |
+| `max_query_calls` | passed in, unused by the baseline |
+| `minimum_retained_weight` | passed in, unused by the baseline |
+| `model_families` | passed in, unused by the baseline |
+| `nominal_energy_noise_sigma_ev` | passed in, unused by the baseline |
+| `nominal_force_noise_sigma_ev_per_a` | passed in, unused by the baseline |
+| `parameter_interval_confidence` | passed in, unused by the baseline |
+| `query_budget_units` | passed in, unused by the baseline |
+| `schema_version` | passed in, unused by the baseline |
+| `second_virial_bounds_cm3_mol` | passed in, unused by the baseline |
+| `temperatures_k` | passed in, unused by the baseline |
+| `virial_temperature_grid_k` | passed in, unused by the baseline |

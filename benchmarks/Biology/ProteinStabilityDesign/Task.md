@@ -81,3 +81,20 @@ protease-specific 95% interval widths no greater than 0.5 kcal/mol enter the fro
 
 References: Tsuboyama et al., *Nature* 620, 434–444 (2023), DOI
 `10.1038/s41586-023-06328-6`; ProteinGym v1.3, DOI `10.5281/zenodo.15293562`.
+
+## Inputs the candidate receives
+
+Every key the task passes to the candidate, taken from the baseline's reads and from the
+evaluator's own construction of the input mapping. Names are part of the contract: a candidate
+that reaches for one of these quantities under a different name raises at runtime and scores
+nothing, and that zero cannot be told apart from a zero earned on the science.
+
+| key | |
+|---|---|
+| `assay_budget` | passed in, unused by the baseline |
+| `batch_size` | read by the baseline |
+| `candidate_residue_pairs` | read by the baseline |
+| `mutable_positions` | read by the baseline |
+| `objective` | passed in, unused by the baseline |
+| `single_mutation_proxy` | read by the baseline |
+| `wild_type_sequence` | read by the baseline |

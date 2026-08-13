@@ -81,18 +81,27 @@ References: Allen & Berkley, *JASA* 65(4), 943–950 (1979), doi:10.1121/1.38259
 Johansson, *IEEE TASLP* 16(4), 742–752 (2008), doi:10.1109/TASL.2008.917341; ISO 3382-1:2009,
 *Acoustics—Measurement of room acoustic parameters—Part 1: Performance spaces*.
 
-
 ## Inputs the candidate receives
 
-Every key the baseline reads off the input mapping. Names are part of the contract: a candidate
+Every key the task passes to the candidate, taken from the baseline's reads and from the
+evaluator's own construction of the input mapping. Names are part of the contract: a candidate
 that reaches for one of these quantities under a different name raises at runtime and scores
 nothing, and that zero cannot be told apart from a zero earned on the science.
 
 | key | |
 |---|---|
-| `maximum_treatment_area_m2` | previously undocumented |
-| `maximum_treatment_fraction_by_surface` | previously undocumented |
-| `source_position_bounds_m` | previously undocumented |
-| `surface_areas_m2` | previously undocumented |
-
-A key not listed here may still exist; this table is what the shipped baseline uses.
+| `base_absorption_coefficients` | passed in, unused by the baseline |
+| `design_fields` | passed in, unused by the baseline |
+| `early_window_s` | passed in, unused by the baseline |
+| `maximum_treatment_area_m2` | read by the baseline |
+| `maximum_treatment_fraction_by_surface` | read by the baseline |
+| `nominal_image_order` | passed in, unused by the baseline |
+| `octave_band_center_hz` | passed in, unused by the baseline |
+| `receiver_positions_m` | passed in, unused by the baseline |
+| `room_dimensions_m` | passed in, unused by the baseline |
+| `source_position_bounds_m` | read by the baseline |
+| `speed_of_sound_m_s` | passed in, unused by the baseline |
+| `surface_areas_m2` | read by the baseline |
+| `surface_names` | passed in, unused by the baseline |
+| `target_reverberation_time_s` | passed in, unused by the baseline |
+| `treatment_absorption_coefficients` | passed in, unused by the baseline |

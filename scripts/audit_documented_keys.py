@@ -61,6 +61,36 @@ def subscript_keys(source: str) -> set[str]:
     return found
 
 
+def evaluator_problem_keys(source: str) -> set[str]:
+    """Keys of dict literals returned by the evaluator's problem constructors.
+
+    The baseline is a lower bound on what a task passes in - a key it happens not to read is
+    invisible - and the gap matters, because an undocumented key the baseline ignores is exactly
+    the one a candidate has no way to learn. `CalorimeterDesign` passes 27 keys and its baseline
+    reads 10 of them.
+
+    Only functions whose name mentions `public` or `problem` are read, and only dict literals they
+    return, so a private helper's internal mapping is not mistaken for the candidate's input.
+    """
+    try:
+        tree = ast.parse(source)
+    except SyntaxError:
+        return set()
+    found: set[str] = set()
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.FunctionDef):
+            continue
+        name = node.name.lower()
+        if "public" not in name and "problem" not in name:
+            continue
+        for inner in ast.walk(node):
+            if isinstance(inner, ast.Return) and isinstance(inner.value, ast.Dict):
+                for key in inner.value.keys:
+                    if isinstance(key, ast.Constant) and isinstance(key.value, str):
+                        found.add(key.value)
+    return found
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--output", required=True)
@@ -72,6 +102,10 @@ def main(argv: list[str] | None = None) -> int:
         if not program.is_file():
             continue
         keys = subscript_keys(program.read_text(encoding="utf-8"))
+        evaluator = spec.task_dir / "verification" / "evaluator.py"
+        declared = (evaluator_problem_keys(evaluator.read_text(encoding="utf-8"))
+                    if evaluator.is_file() else set())
+        keys |= declared
         if not keys:
             continue
         prose = ""
@@ -86,6 +120,8 @@ def main(argv: list[str] | None = None) -> int:
         rows.append({
             "task": spec.task_id,
             "keys_read_by_baseline": len(keys),
+            "keys_only_in_evaluator": sorted(declared - subscript_keys(
+                program.read_text(encoding="utf-8"))),
             "undocumented": undocumented,
         })
 

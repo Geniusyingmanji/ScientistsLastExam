@@ -107,17 +107,31 @@ References: Rodahl et al., DOI `10.1063/1.1145396`; Martin, Granstaff and Frye, 
 `10.1021/ac00020a015`; Kankare, DOI `10.1021/la025911w`; Nakamoto and Moriizumi, DOI
 `10.1143/jjap.29.963`; Na Songkhla and Nakamoto, DOI `10.3390/chemosensors9010009`.
 
-
 ## Inputs the candidate receives
 
-Every key the baseline reads off the input mapping. Names are part of the contract: a candidate
+Every key the task passes to the candidate, taken from the baseline's reads and from the
+evaluator's own construction of the input mapping. Names are part of the contract: a candidate
 that reaches for one of these quantities under a different name raises at runtime and scores
 nothing, and that zero cannot be told apart from a zero earned on the science.
 
 | key | |
 |---|---|
-| `calibration_blocks` | previously undocumented |
-| `nominal_frequency_hz_by_harmonic` | previously undocumented |
-| `sweeps` | |
-
-A key not listed here may still exist; this table is what the shipped baseline uses.
+| `adc_limit` | passed in, unused by the baseline |
+| `additional_time_bounds_s` | passed in, unused by the baseline |
+| `calibration_blocks` | read by the baseline |
+| `deposition_rate_bounds_ug_cm2_s` | passed in, unused by the baseline |
+| `deposition_times_s` | passed in, unused by the baseline |
+| `diagnosis_values` | passed in, unused by the baseline |
+| `harmonics` | passed in, unused by the baseline |
+| `mass_loading_bounds_ug_cm2` | passed in, unused by the baseline |
+| `mass_model` | passed in, unused by the baseline |
+| `measurement_model` | passed in, unused by the baseline |
+| `motional_capacitance_initial_f_by_harmonic` | passed in, unused by the baseline |
+| `nominal_frequency_hz_by_harmonic` | read by the baseline |
+| `prediction_time_s` | passed in, unused by the baseline |
+| `quality_factor_bounds` | passed in, unused by the baseline |
+| `sauerbrey_hz_per_ug_cm2` | passed in, unused by the baseline |
+| `schema_version` | passed in, unused by the baseline |
+| `shunt_capacitance_f` | passed in, unused by the baseline |
+| `sweeps` | read by the baseline |
+| `target_mass_ug_cm2` | passed in, unused by the baseline |

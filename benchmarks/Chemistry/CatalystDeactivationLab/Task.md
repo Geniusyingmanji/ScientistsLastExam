@@ -84,3 +84,27 @@ References: Franceschini and Macchietto, DOI `10.1016/j.ces.2007.11.034`; Bartho
 DOI `10.1016/S0926-860X(00)00843-7`; Häse, Roch and Aspuru-Guzik,
 DOI `10.1016/j.trechm.2019.02.007`; Burger et al., DOI `10.1038/s41586-020-2442-2`;
 MacLeod et al., DOI `10.1126/sciadv.aaz8867`.
+
+## Inputs the candidate receives
+
+Every key the task passes to the candidate, taken from the baseline's reads and from the
+evaluator's own construction of the input mapping. Names are part of the contract: a candidate
+that reaches for one of these quantities under a different name raises at runtime and scores
+nothing, and that zero cannot be told apart from a zero earned on the science.
+
+| key | |
+|---|---|
+| `condition_bounds` | passed in, unused by the baseline |
+| `coupon_ids` | passed in, unused by the baseline |
+| `coupon_remaining_uses` | passed in, unused by the baseline |
+| `coupon_state_versions` | read by the baseline |
+| `gas_constant_j_mol_k` | passed in, unused by the baseline |
+| `kinetic_model` | passed in, unused by the baseline |
+| `lab_state_version` | read by the baseline |
+| `maximum_batch_size` | passed in, unused by the baseline |
+| `maximum_reactions_per_coupon` | passed in, unused by the baseline |
+| `model_scope` | passed in, unused by the baseline |
+| `parameter_bounds` | passed in, unused by the baseline |
+| `physical_act_budget` | passed in, unused by the baseline |
+| `policy_objective` | passed in, unused by the baseline |
+| `standard_reference_response` | passed in, unused by the baseline |

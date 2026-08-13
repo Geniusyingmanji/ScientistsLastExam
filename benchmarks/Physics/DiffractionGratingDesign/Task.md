@@ -36,17 +36,28 @@ This is a deterministic, isotropic, lossless 1D computational benchmark. A high
 score is not evidence of fabrication, measured efficiency or a new photonic
 device.
 
-
 ## Inputs the candidate receives
 
-Every key the baseline reads off the input mapping. Names are part of the contract: a candidate
+Every key the task passes to the candidate, taken from the baseline's reads and from the
+evaluator's own construction of the input mapping. Names are part of the contract: a candidate
 that reaches for one of these quantities under a different name raises at runtime and scores
 nothing, and that zero cannot be told apart from a zero earned on the science.
 
 | key | |
 |---|---|
-| `depth_bounds_um` | previously undocumented |
-| `layer_count` | |
-| `period_um` | previously undocumented |
-
-A key not listed here may still exist; this table is what the shipped baseline uses.
+| `center_wavelength_um` | passed in, unused by the baseline |
+| `depth_bounds_um` | read by the baseline |
+| `design_columns` | passed in, unused by the baseline |
+| `development_angles_deg` | passed in, unused by the baseline |
+| `development_wavelength_scales` | passed in, unused by the baseline |
+| `fill_fraction_bounds` | passed in, unused by the baseline |
+| `incident_index` | passed in, unused by the baseline |
+| `layer_count` | read by the baseline |
+| `maximum_total_depth_um` | passed in, unused by the baseline |
+| `minimum_feature_fraction` | passed in, unused by the baseline |
+| `offset_fraction_bounds` | passed in, unused by the baseline |
+| `period_um` | read by the baseline |
+| `polarizations` | passed in, unused by the baseline |
+| `ridge_index` | passed in, unused by the baseline |
+| `substrate_index` | passed in, unused by the baseline |
+| `target_transmission_order` | passed in, unused by the baseline |

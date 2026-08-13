@@ -106,3 +106,25 @@ task is one where submissions have been rejected often enough that the distincti
 - Seidler et al., *A guide to prospective meta-analysis*, BMJ 367, l5342 (2019), DOI
   `10.1136/bmj.l5342`.
 - Page et al., *The PRISMA 2020 statement*, BMJ 372, n71 (2021), DOI `10.1136/bmj.n71`.
+
+## Inputs the candidate receives
+
+Every key the task passes to the candidate, taken from the baseline's reads and from the
+evaluator's own construction of the input mapping. Names are part of the contract: a candidate
+that reaches for one of these quantities under a different name raises at runtime and scores
+nothing, and that zero cannot be told apart from a zero earned on the science.
+
+| key | |
+|---|---|
+| `benefit_threshold` | passed in, unused by the baseline |
+| `candidate_sites` | passed in, unused by the baseline |
+| `decision_moderator` | passed in, unused by the baseline |
+| `effect_bounds` | passed in, unused by the baseline |
+| `effect_model` | passed in, unused by the baseline |
+| `eligibility_criteria` | passed in, unused by the baseline |
+| `minimum_sample_size` | passed in, unused by the baseline |
+| `prediction_interval_level` | passed in, unused by the baseline |
+| `records` | passed in, unused by the baseline |
+| `sample_size_step` | passed in, unused by the baseline |
+| `study_budget` | passed in, unused by the baseline |
+| `tau_bounds` | passed in, unused by the baseline |
