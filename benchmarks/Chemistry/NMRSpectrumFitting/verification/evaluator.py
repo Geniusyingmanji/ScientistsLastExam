@@ -350,6 +350,7 @@ def _score_instance(fit_spectrum, instance):
                 "reconstruction_score": None,
                 "confidence_calibration_score": confidence_score,
                 "correct_abstention": correct_abstention,
+                "abstained": bool(fitted["abstain"]),
                 "false_discovery": not correct_abstention,
                 "n_true_peaks": 0, "n_predicted_peaks": len(fitted["centers"]),
                 "noise_sigma": instance["noise_sigma"],
@@ -358,6 +359,7 @@ def _score_instance(fit_spectrum, instance):
             return {
                 "name": instance["name"], "split": instance["split"],
                 "kind": instance["kind"], "valid": True,
+                "abstained": True,
                 "mechanism_score": 0.0, "reconstruction_score": 0.0,
                 "confidence_calibration_score": confidence_score,
                 "correct_abstention": False, "false_discovery": False,
@@ -431,6 +433,12 @@ def _split_summary(records, split):
         "correct_refusal_rate": float(np.mean([
             row["correct_abstention"] for row in unsupported
         ])),
+        # Whether a fit was attempted on the worlds that have one. Without it a run where every
+        # proposal declined every spectrum is indistinguishable from one where the fitting was
+        # too hard, and those need opposite responses.
+        "discovery_coverage": float(np.mean([
+            not row.get("abstained", False) for row in supported
+        ])),
         "feasibility_rate": float(np.mean([row["valid"] for row in rows])),
         "all_valid": all(row["valid"] for row in rows),
     }
@@ -467,6 +475,8 @@ def evaluate(fit_spectrum):
             "correct_refusal_rate"
         ],
         "heldout_correct_refusal_rate": heldout["correct_refusal_rate"],
+        "development_discovery_coverage": development["discovery_coverage"],
+        "heldout_discovery_coverage": heldout["discovery_coverage"],
         "heldout_feasibility_rate": heldout["feasibility_rate"],
         "per_instance": records,
     }
