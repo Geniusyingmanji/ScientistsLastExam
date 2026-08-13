@@ -342,16 +342,22 @@ an input mapping — 24 undocumented keys, most of them the bounds a candidate m
 could only learn by copying the baseline. Documenting them changed no evaluator, no score and no
 science:
 
-| task | before | after |
-|---|---|---|
-| `CalorimeterDesign` | 0% valid, 0.0000 | **82% valid, 1.0000** |
-| `DistillationColumnDesign` | 38% valid, 0.5822 | **33% valid, 0.8920** |
-| `ForceFieldCalibration` | 5% valid, 0.0600 | 5% valid, **0.4340** |
+| task | valid before | valid after | best score before | after |
+|---|---:|---:|---:|---:|
+| `CalorimeterDesign` | 0% | **74%** | 0.0000 | **1.0000** |
+| `HeatExchangerDesign` | 66% | **100%** | 0.7665 | **1.0000** |
+| `RoomImpulseResponse` | 69% | **95%** | 0.4382 | 0.4002 |
+| `QuartzCrystalMicrobalanceLab` | 58% | **93%** | 0.0000 | 0.0000 |
+| `DistillationColumnDesign` | 38% | 33% | 0.5822 | **0.8920** |
+| `ForceFieldCalibration` | 5% | **21%** | 0.0600 | **0.4340** |
 
 `CalorimeterDesign` had been on the list of floor tasks needing recalibration. That diagnosis was
-wrong: it was never too hard, it just never said what its inputs were called. `ForceFieldCalibration`
-did not recover and is recorded as unexplained — it fails in the sandbox and returns cleanly
-outside it. Full write-up in
+wrong: it was never too hard, it just never said what its inputs were called.
+`QuartzCrystalMicrobalanceLab` separates the two failure modes cleanly — its contract problem is
+fixed, 58% valid to 93%, and its score is still 0.0000, because what remains is the blanket
+abstention below and not the contract. `ForceFieldCalibration` improved but is still mostly
+rejected, and one thing about it stays unexplained: the same rejected candidate raises inside the
+sandbox and returns cleanly outside it in 0.3s, with scipy importable in both. Full write-up in
 [.research/contract_burden_2026-08-14.md](.research/contract_burden_2026-08-14.md).
 
 Two things made this findable and are worth keeping. Rejected candidates are now retained (five
