@@ -262,6 +262,17 @@ def evaluate(discover_mechanism):
         "mechanism_score": raw_mechanism,
         "intervention_prediction_score": float(np.mean(prediction_scores)),
         "null_abstention_correct": null_correct,
+        # The same facts as rates, which is what the discovery triple needs. There is exactly one
+        # null world here, so the false-discovery rate is 0 or 1 - still a rate, and comparable
+        # with tasks that have more. Coverage is over the worlds that do have a graph to find:
+        # without it, a run where every proposal declined every world is indistinguishable from
+        # one where the recovery was too hard.
+        "false_discovery_rate": float(not null_correct),
+        "correct_refusal_rate": float(null_correct),
+        "discovery_coverage": float(np.mean([
+            not r.get("abstained", False)
+            for r in world_results if not r.get("null_world")
+        ])) if any(not r.get("null_world") for r in world_results) else 0.0,
         "mean_experiment_calls": float(np.mean([r["experiment_calls"] for r in world_results])),
         "mean_experiment_budget_units": float(np.mean([
             r["experiment_budget_units"] for r in world_results
