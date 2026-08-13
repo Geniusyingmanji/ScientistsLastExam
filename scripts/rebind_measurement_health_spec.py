@@ -73,6 +73,12 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--output", type=Path, required=True)
     ap.add_argument("--manifest-output", type=Path, required=True)
     ap.add_argument("--artifacts-output", type=Path, required=True)
+    ap.add_argument("--rebind-evidence", action="append", default=[], metavar="CHECK=PATH",
+                    help="point a check at re-measured evidence, e.g. "
+                         "exactly_once_recovery=experiments/..._2026-08-14_v1.json. Use this "
+                         "only when the evidence was re-run: a check bound to the runtime source "
+                         "hash cannot be re-signed after the runtime changes, it has to be "
+                         "remeasured, and this is how the result gets bound.")
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args(argv)
 
@@ -198,8 +204,11 @@ def main(argv: list[str] | None = None) -> int:
             # the preflight fails closed on "does not bind the current cohort manifest".
             "cohort_manifest_sha256": sha256_of(args.manifest_output),
         },
-        "shared_task_overrides": _deep(
+        "shared_task_overrides": _deep(_deep(
             raw_spec.get("shared_task_overrides") or {},
+            {check: {"evidence": {"path": path,
+                                  "sha256": sha256_of((ROOT / path).resolve())}}
+             for check, path in (item.split("=", 1) for item in args.rebind_evidence)}),
             {"portable_artifact": {"evidence": {
                 "path": args.artifacts_output.relative_to(ROOT).as_posix()
                 if args.artifacts_output.is_absolute()
