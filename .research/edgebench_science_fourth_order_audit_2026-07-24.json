@@ -18,7 +18,7 @@
     "The public Borden task supplies noisy censored monitoring data but its authoritative endpoint reads a fitted answer.json rather than replaying a complete raw-input method on fresh aquifers.",
     "EdgeBench tasks predeclare objectives and judges, and the reported main experiments evaluate one agent trajectory per run rather than a randomized independent-investigator and blinded-synthesis treatment."
   ],
-  "frontier_science_experiments": [
+  "sle_experiments": [
     {
       "id": "raw_measurement_error_propagation",
       "plan_id": "I6",

@@ -43,10 +43,10 @@
     "file_sha256": {
       "scripts/batch_evolve.py": "8bc4a2e0d1b70dfe518179f16b297ed0c47ac2eb1f2638ef3d338072617be026",
       "scripts/analyze_feedback_measurement_pilot.py": "6c74779039be568786d81f8688bf569527188f22a5cce27366d1ddbac1e2c1b2",
-      "frontier_science/algorithms/common.py": "2be92366a803e1688a5e76fb1dbfee958d8697bece685b445a0210c20b3bab71",
-      "frontier_science/algorithms/evolve.py": "ad14f64398e0fb65c54557c867df971c17426d7d5f4610b721aeeecefc3b0fe0",
-      "frontier_science/metric_visibility.py": "29c1a2794f27c9ca749b5e0e614059e9573147735900ff45b71e1e5ab38081dc",
-      "frontier_science/protocol.py": "8d9b4f2c15accaabec6c089af256bf578cb9f67ff9a7f5503bf85a1177d62157"
+      "sle/algorithms/common.py": "2be92366a803e1688a5e76fb1dbfee958d8697bece685b445a0210c20b3bab71",
+      "sle/algorithms/evolve.py": "ad14f64398e0fb65c54557c867df971c17426d7d5f4610b721aeeecefc3b0fe0",
+      "sle/metric_visibility.py": "29c1a2794f27c9ca749b5e0e614059e9573147735900ff45b71e1e5ab38081dc",
+      "sle/protocol.py": "8d9b4f2c15accaabec6c089af256bf578cb9f67ff9a7f5503bf85a1177d62157"
     },
     "trajectory_schema_version": 2,
     "portable_snapshot_schema_version": 2,

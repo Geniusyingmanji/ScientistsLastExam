@@ -9,7 +9,7 @@
     "source_tree_dirty": false,
     "source_changes": [],
     "source_scope": [
-      "frontier_science",
+      "sle",
       "scripts",
       "tests",
       "benchmarks",
@@ -913,10 +913,10 @@
           "metrics": {
             "combined_score": -1e+18,
             "valid": 0.0,
-            "error_message": "frontier_science.secure_eval.CandidateError: candidate worker exited:"
+            "error_message": "sle.secure_eval.CandidateError: candidate worker exited:"
           },
           "algorithm_metadata": {},
-          "error": "frontier_science.secure_eval.CandidateError: candidate worker exited:"
+          "error": "sle.secure_eval.CandidateError: candidate worker exited:"
         },
         {
           "step": 2,
@@ -2382,14 +2382,14 @@
           "metrics": {
             "combined_score": -1e+18,
             "valid": 0.0,
-            "error_message": "frontier_science.secure_eval.CandidateError: ValueError: invalid literal for int() with base 10: 'budget_cost'"
+            "error_message": "sle.secure_eval.CandidateError: ValueError: invalid literal for int() with base 10: 'budget_cost'"
           },
           "algorithm_metadata": {
             "selection_policy": "online_incumbent",
             "accepted_semantics": "online_incumbent_update",
             "proposal_slot": 1
           },
-          "error": "frontier_science.secure_eval.CandidateError: ValueError: invalid literal for int() with base 10: 'budget_cost'"
+          "error": "sle.secure_eval.CandidateError: ValueError: invalid literal for int() with base 10: 'budget_cost'"
         }
       ]
     },
@@ -2709,14 +2709,14 @@
           "metrics": {
             "combined_score": -1e+18,
             "valid": 0.0,
-            "error_message": "frontier_science.secure_eval.CandidateError: RuntimeError: ValueError: initial drifters must lie inside the public interior"
+            "error_message": "sle.secure_eval.CandidateError: RuntimeError: ValueError: initial drifters must lie inside the public interior"
           },
           "algorithm_metadata": {
             "selection_policy": "online_incumbent",
             "accepted_semantics": "online_incumbent_update",
             "proposal_slot": 1
           },
-          "error": "frontier_science.secure_eval.CandidateError: RuntimeError: ValueError: initial drifters must lie inside the public interior"
+          "error": "sle.secure_eval.CandidateError: RuntimeError: ValueError: initial drifters must lie inside the public interior"
         }
       ]
     },
@@ -2856,14 +2856,14 @@
           "metrics": {
             "combined_score": -1e+18,
             "valid": 0.0,
-            "error_message": "frontier_science.secure_eval.CandidateError: ValueError: could not convert string to float: 'initial_positions_m'"
+            "error_message": "sle.secure_eval.CandidateError: ValueError: could not convert string to float: 'initial_positions_m'"
           },
           "algorithm_metadata": {
             "selection_policy": "online_incumbent",
             "accepted_semantics": "online_incumbent_update",
             "proposal_slot": 2
           },
-          "error": "frontier_science.secure_eval.CandidateError: ValueError: could not convert string to float: 'initial_positions_m'"
+          "error": "sle.secure_eval.CandidateError: ValueError: could not convert string to float: 'initial_positions_m'"
         },
         {
           "step": 3,
@@ -2878,14 +2878,14 @@
           "metrics": {
             "combined_score": -1e+18,
             "valid": 0.0,
-            "error_message": "frontier_science.secure_eval.CandidateError: ValueError: could not convert string to float: 'time_s'"
+            "error_message": "sle.secure_eval.CandidateError: ValueError: could not convert string to float: 'time_s'"
           },
           "algorithm_metadata": {
             "selection_policy": "online_incumbent",
             "accepted_semantics": "online_incumbent_update",
             "proposal_slot": 3
           },
-          "error": "frontier_science.secure_eval.CandidateError: ValueError: could not convert string to float: 'time_s'"
+          "error": "sle.secure_eval.CandidateError: ValueError: could not convert string to float: 'time_s'"
         }
       ]
     },

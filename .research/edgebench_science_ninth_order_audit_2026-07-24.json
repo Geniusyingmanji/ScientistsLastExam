@@ -26,7 +26,7 @@
     "The public SForge visualizer exposes submission histories, archives, diffs and a downloadable full conversation log, but the public generic harness does not define a task-independent structured schema that guarantees a one-to-one census of every local simulator or instrument action and its positive, null, contradictory, failed or censored outcome.",
     "The approximately 38000-hour raw trajectory corpus and figure-analysis code are not public, so local-result reporting rates or adaptive-design inferential validity cannot be estimated for the EdgeBench headline runs from the public release."
   ],
-  "frontier_science_experiments": [
+  "sle_experiments": [
     {
       "id": "adaptive_design_inference",
       "plan_id": "AD1",

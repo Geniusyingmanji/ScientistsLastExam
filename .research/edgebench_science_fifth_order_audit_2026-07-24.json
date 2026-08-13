@@ -56,7 +56,7 @@
     "tie_policy": "For each checkpoint, retain the set of all models tied at the displayed maximum; count a task only when the 2h and 12h sets are disjoint.",
     "interpretation": "Horizon-conditioned ranking drift in displayed public scores; not a randomized causal effect of disclosed horizon."
   },
-  "frontier_science_experiments": [
+  "sle_experiments": [
     {
       "id": "disclosed_horizon_policy",
       "plan_id": "HZ1",

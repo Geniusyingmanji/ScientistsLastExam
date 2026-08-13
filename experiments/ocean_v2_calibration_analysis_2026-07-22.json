@@ -9,7 +9,7 @@
     "source_tree_dirty": false,
     "source_changes": [],
     "source_scope": [
-      "frontier_science",
+      "sle",
       "scripts",
       "tests",
       "benchmarks",
@@ -258,7 +258,7 @@
           "mean_experiment_calls": null,
           "mean_experiment_budget_units": null,
           "valid": 0.0,
-          "error_message": "frontier_science.secure_eval.CandidateError: RuntimeError: ValueError: initial drifters must lie inside the public interior",
+          "error_message": "sle.secure_eval.CandidateError: RuntimeError: ValueError: initial drifters must lie inside the public interior",
           "failure_kind": "invalid_experiment_geometry",
           "discovery_summary": null
         }
@@ -452,7 +452,7 @@
           "mean_experiment_calls": null,
           "mean_experiment_budget_units": null,
           "valid": 0.0,
-          "error_message": "frontier_science.secure_eval.CandidateError: ValueError: could not convert string to float: 'initial_positions_m'",
+          "error_message": "sle.secure_eval.CandidateError: ValueError: could not convert string to float: 'initial_positions_m'",
           "failure_kind": "callback_schema_misread",
           "discovery_summary": null
         },
@@ -490,7 +490,7 @@
           "mean_experiment_calls": null,
           "mean_experiment_budget_units": null,
           "valid": 0.0,
-          "error_message": "frontier_science.secure_eval.CandidateError: ValueError: could not convert string to float: 'time_s'",
+          "error_message": "sle.secure_eval.CandidateError: ValueError: could not convert string to float: 'time_s'",
           "failure_kind": "callback_schema_misread",
           "discovery_summary": null
         }
@@ -637,7 +637,7 @@
           "mean_experiment_calls": null,
           "mean_experiment_budget_units": null,
           "valid": 0.0,
-          "error_message": "frontier_science.secure_eval.CandidateError: ValueError: could not convert string to float: 'initial_positions_m'",
+          "error_message": "sle.secure_eval.CandidateError: ValueError: could not convert string to float: 'initial_positions_m'",
           "failure_kind": "callback_schema_misread",
           "discovery_summary": null
         },
@@ -675,7 +675,7 @@
           "mean_experiment_calls": null,
           "mean_experiment_budget_units": null,
           "valid": 0.0,
-          "error_message": "frontier_science.secure_eval.CandidateError: ValueError: could not convert string to float: 'initial_positions_m'",
+          "error_message": "sle.secure_eval.CandidateError: ValueError: could not convert string to float: 'initial_positions_m'",
           "failure_kind": "callback_schema_misread",
           "discovery_summary": null
         },
@@ -713,7 +713,7 @@
           "mean_experiment_calls": null,
           "mean_experiment_budget_units": null,
           "valid": 0.0,
-          "error_message": "frontier_science.secure_eval.CandidateError: ValueError: could not convert string to float: 'time_s'",
+          "error_message": "sle.secure_eval.CandidateError: ValueError: could not convert string to float: 'time_s'",
           "failure_kind": "callback_schema_misread",
           "discovery_summary": null
         }

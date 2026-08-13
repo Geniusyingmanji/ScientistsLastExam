@@ -54,7 +54,7 @@
     },
     "recomputation_note": "Cumulative-maximum repair is used only to make the delayed-takeoff sensitivity conservative under the declared best-so-far estimand. It is not a permitted repair for Frontier-Science source trajectories, which must instead pass event-level replay."
   },
-  "frontier_science_protocol_changes": [
+  "sle_protocol_changes": [
     {
       "id": "randomized_continuation_allocation",
       "plan_id": "CA1",

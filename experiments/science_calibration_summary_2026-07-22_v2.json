@@ -9,7 +9,7 @@
     "source_tree_dirty": false,
     "source_changes": [],
     "source_scope": [
-      "frontier_science",
+      "sle",
       "scripts",
       "tests",
       "benchmarks",
@@ -911,10 +911,10 @@
           "metrics": {
             "combined_score": -1e+18,
             "valid": 0.0,
-            "error_message": "frontier_science.secure_eval.CandidateError: candidate worker exited:"
+            "error_message": "sle.secure_eval.CandidateError: candidate worker exited:"
           },
           "algorithm_metadata": {},
-          "error": "frontier_science.secure_eval.CandidateError: candidate worker exited:"
+          "error": "sle.secure_eval.CandidateError: candidate worker exited:"
         },
         {
           "step": 2,

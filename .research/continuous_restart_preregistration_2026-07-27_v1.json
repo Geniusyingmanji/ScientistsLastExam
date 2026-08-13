@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "preregistration_id": "frontier_science_continuous_vs_restart_v1",
+  "preregistration_id": "sle_continuous_vs_restart_v1",
   "frozen_at_utc": "2026-07-27",
   "purpose": "exploratory_equal_active_time_continuous_vs_fresh_restart_ablation",
   "claim_limit": "result_selected_three_task_exploratory_artifact_plus_visible_metrics_continuation_not_full_context_memory_causal_population_scaling_law_or_discovery_evidence",

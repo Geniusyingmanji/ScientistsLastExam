@@ -9,7 +9,7 @@
     "source_tree_dirty": false,
     "source_changes": [],
     "source_scope": [
-      "frontier_science",
+      "sle",
       "scripts",
       "tests",
       "benchmarks",
@@ -187,7 +187,7 @@
       "trajectory_sha256": "1ea705899d2b4b09f3bda78449df9f7973e6b8ef1a3698d04f694894b19b1114",
       "source_revision": "e59e7bb7d46a8a5aeb3787ea7af18f01fceee295",
       "source_scope": [
-        "frontier_science",
+        "sle",
         "scripts",
         "tests",
         "benchmarks",
@@ -347,7 +347,7 @@
       "trajectory_sha256": "95c6a568165e61c961b3838a8475225c691f73a332fd2419739c29552c64602d",
       "source_revision": "e59e7bb7d46a8a5aeb3787ea7af18f01fceee295",
       "source_scope": [
-        "frontier_science",
+        "sle",
         "scripts",
         "tests",
         "benchmarks",
@@ -619,7 +619,7 @@
       "trajectory_sha256": "294bbfe82326de5cf7121c27749026a14f461aea067ae83787358dd4de13a6ae",
       "source_revision": "e59e7bb7d46a8a5aeb3787ea7af18f01fceee295",
       "source_scope": [
-        "frontier_science",
+        "sle",
         "scripts",
         "tests",
         "benchmarks",
@@ -919,7 +919,7 @@
         "trajectory_sha256": "81f5ec743477aea55af0e21e9dc25d1de921eaab2cd8a31c15aaba4e34909b4a",
         "source_revision": "2ae6725209a77d1d5ad032e9c76054c652786521",
         "source_scope": [
-          "frontier_science",
+          "sle",
           "scripts",
           "tests",
           "benchmarks",
@@ -1061,7 +1061,7 @@
         "trajectory_sha256": "f2bd84a1c1c4c0e64cc0c115205bd3974439447ddfd25652fc547b088108574f",
         "source_revision": "2ae6725209a77d1d5ad032e9c76054c652786521",
         "source_scope": [
-          "frontier_science",
+          "sle",
           "scripts",
           "tests",
           "benchmarks",
@@ -1315,7 +1315,7 @@
         "trajectory_sha256": "716b61f42c45638fa9a776170f81a09c6b1fec675386eaf777e749545df6bf27",
         "source_revision": "2ae6725209a77d1d5ad032e9c76054c652786521",
         "source_scope": [
-          "frontier_science",
+          "sle",
           "scripts",
           "tests",
           "benchmarks",

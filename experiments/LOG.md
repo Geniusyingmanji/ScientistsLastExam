@@ -13,11 +13,11 @@ version-compatible environments.
 
 ## 2026-06-11 — v0 harness + LennardJonesCluster
 
-**Harness built**: `frontier_science/` package — LLM client (chat + responses wires),
+**Harness built**: `sle/` package — LLM client (chat + responses wires),
 config resolver, task-spec loader (black-box contract), subprocess evaluator,
 OpenEvolve-lite `evolve` loop, registry, CLI (`list` / `eval` / `run` / `smoke`).
 
-**Endpoint smoke**: `python -m frontier_science smoke` → `FS_SMOKE_OK` (gpt-5.5, responses wire). OK.
+**Endpoint smoke**: `python -m sle smoke` → `FS_SMOKE_OK` (gpt-5.5, responses wire). OK.
 
 **Task: Chemistry/LennardJonesCluster**
 - Oracle: LJ energy (reduced units), normalized vs Cambridge Cluster Database global minima.
@@ -200,7 +200,7 @@ snapshot. Current CLI discovery reports **49 tasks**:
 Baseline smoke audit:
 
 ```bash
-python3 -m frontier_science list
+python3 -m sle list
 # 49 tasks
 
 # one-pass baseline audit over all discovered tasks, timeout 180s/eval
@@ -309,7 +309,7 @@ record, but it does not create nonzero-budget model-performance evidence.
 The stale local Azure proxy on port 9876 returned HTTP 403 because its legacy resources had
 public access disabled. Without disrupting that shared process, this project switched its
 git-ignored local configuration to the existing keyless managed-identity failover proxy on port
-9877 (SCUS/SWC). `python3.10 -m frontier_science smoke` returned `FS_SMOKE_OK`; endpoint details
+9877 (SCUS/SWC). `python3.10 -m sle smoke` returned `FS_SMOKE_OK`; endpoint details
 remain excluded from version control.
 
 `gpt55_core_pilot_b1_2026-07-21.json` is the first nonzero-budget schema-v2 report after the
@@ -2466,7 +2466,7 @@ The first post-documentation full-suite attempt, v6 (SHA-256
 `7e8b6be073255a4050464222c49b40e9c0270a04e9beb2ed0256ad35d93264ab`), is retained as
 explicit failed evidence. It ran 394 tests and failed only
 `test_full_analysis_when_raw_trajectories_exist`: the Calorimeter analyzer treated a change to
-the non-runtime `frontier_science/certification.yaml` narrative as a task-runtime mismatch.
+the non-runtime `sle/certification.yaml` narrative as a task-runtime mismatch.
 Commit `c813f16` narrows both Calorimeter and ProspectiveMetaAnalysis source-equivalence scopes to
 Python runtime files, the task-specific benchmark contract and requirements. Two new tests require
 that scope, while the existing explicit runtime-mismatch tests still fail closed.

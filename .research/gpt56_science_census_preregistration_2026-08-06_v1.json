@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "preregistration_id": "frontier_science_gpt56_science_census_2026_08_06_v1",
+  "preregistration_id": "sle_gpt56_science_census_2026_08_06_v1",
   "frozen_at_utc": "2026-08-06",
   "purpose": "measure_budget_one_gpt56_headroom_validity_and_cross_task_discrimination_over_the_complete_internally_admitted_inventory",
   "claim_limit": "single_unseeded_provider_draw_per_task_not_population_model_ranking_feedback_causal_external_validation_recursive_self_improvement_or_autonomous_discovery_evidence",
@@ -11,7 +11,7 @@
   "frozen_source": {
     "parent_revision": "c4803f491141abc594dcba506fd5df2047b9012a",
     "runtime_source_sha256": "21c1fe02540384c07786a40458e495418f00c82b3f3f4998fc724f41b263d40e",
-    "source_change_rule": "The execution revision must descend from parent_revision with no changes under frontier_science, scripts, tests, benchmarks, or requirements-upstream.txt. Research and experiment evidence commits are allowed."
+    "source_change_rule": "The execution revision must descend from parent_revision with no changes under sle, scripts, tests, benchmarks, or requirements-upstream.txt. Research and experiment evidence commits are allowed."
   },
   "model_condition": {
     "llm_condition_sha256": "60b240fdc2530ab24d202289a497dd4c2fb0ad1380a6ad9e8aca293bb8e4c34d",
@@ -359,7 +359,7 @@
       "--block-workers",
       "8",
       "--llm-config",
-      "frontier_science/conf/llm/local.gpt56.yaml",
+      "sle/conf/llm/local.gpt56.yaml",
       "--run-role",
       "calibration",
       "--preregistration",

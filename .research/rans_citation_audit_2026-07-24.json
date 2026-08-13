@@ -55,7 +55,7 @@
   "runtime_impact": {
     "changed_files": [
       "benchmarks/Turbulence/RANSCalibration/TASK_CARD.yaml",
-      "frontier_science/certification.yaml"
+      "sle/certification.yaml"
     ],
     "agent_prompt_changed": false,
     "initial_program_changed": false,

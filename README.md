@@ -29,11 +29,6 @@ This repository is inspired by
 the text-question benchmark named *FrontierScience* in
 [arXiv:2601.21165](https://arxiv.org/abs/2601.21165).
 
-The Python package is `sle`. It was called `frontier_science` while the project was being
-built; run manifests and frozen evidence recorded before the rename still carry the old name, and
-are deliberately left as they are — they record what the tree was called when the evidence was
-taken.
-
 > A higher simulator or verifier score demonstrates optimization only within the registered
 > oracle. It does not by itself establish autonomous scientific discovery, mechanism recovery,
 > physical validation, or real-world utility.

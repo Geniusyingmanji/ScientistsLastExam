@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "preregistration_id": "frontier_science_gpt56_science_pilot_2026_08_06_v1",
+  "preregistration_id": "sle_gpt56_science_pilot_2026_08_06_v1",
   "frozen_at_utc": "2026-08-06",
   "purpose": "diagnose_scientific_challenge_discrimination_and_short_horizon_self_evolution_with_gpt56_sol",
   "claim_limit": "exploratory_four_task_single_identifier_calibration_not_population_model_ranking_feedback_causal_external_validation_or_autonomous_discovery_evidence",
@@ -11,7 +11,7 @@
   "frozen_source": {
     "parent_revision": "46593df5fd82ff0bf960c25f5d1f15711cb4f8c9",
     "runtime_source_sha256": "21c1fe02540384c07786a40458e495418f00c82b3f3f4998fc724f41b263d40e",
-    "source_change_rule": "The execution revision must descend from parent_revision with no changes under frontier_science, scripts, tests, benchmarks, or requirements-upstream.txt. Research and experiment evidence commits are allowed."
+    "source_change_rule": "The execution revision must descend from parent_revision with no changes under sle, scripts, tests, benchmarks, or requirements-upstream.txt. Research and experiment evidence commits are allowed."
   },
   "model_condition": {
     "llm_condition_sha256": "60b240fdc2530ab24d202289a497dd4c2fb0ad1380a6ad9e8aca293bb8e4c34d",
@@ -85,7 +85,7 @@
       "--timeout",
       "300",
       "--llm-config",
-      "frontier_science/conf/llm/local.gpt56.yaml",
+      "sle/conf/llm/local.gpt56.yaml",
       "--run-role",
       "calibration",
       "--preregistration",

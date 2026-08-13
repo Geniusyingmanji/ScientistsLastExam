@@ -8,7 +8,7 @@
     "revision": "0fe0d02541bc72e51fb475d0a1d0561ed0c82bc6",
     "runtime_source_sha256": "f356c708e9a125bbe04304406f5308d0aa08649562aaeb39ba7cf2d17f81b465",
     "source_scope": [
-      "frontier_science",
+      "sle",
       "scripts",
       "tests",
       "benchmarks",

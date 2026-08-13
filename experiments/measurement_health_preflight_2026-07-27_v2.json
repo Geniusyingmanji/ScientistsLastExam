@@ -9,7 +9,7 @@
     "source_tree_dirty": false,
     "source_changes": [],
     "source_scope": [
-      "frontier_science",
+      "sle",
       "scripts",
       "tests",
       "benchmarks",
@@ -1579,10 +1579,10 @@
             "source_revision": "d06671f9b991d406cde00e1f38637b1c55c1c5ff",
             "runtime_files_unchanged": true,
             "paths": [
-              "frontier_science/algorithms/common.py",
-              "frontier_science/algorithms/evolve.py",
-              "frontier_science/evaluation_ledger.py",
-              "frontier_science/protocol.py",
+              "sle/algorithms/common.py",
+              "sle/algorithms/evolve.py",
+              "sle/evaluation_ledger.py",
+              "sle/protocol.py",
               "scripts/audit_evaluation_recovery.py",
               "scripts/run_recovery_fault_worker.py"
             ],
@@ -5604,10 +5604,10 @@
             "source_revision": "d06671f9b991d406cde00e1f38637b1c55c1c5ff",
             "runtime_files_unchanged": true,
             "paths": [
-              "frontier_science/algorithms/common.py",
-              "frontier_science/algorithms/evolve.py",
-              "frontier_science/evaluation_ledger.py",
-              "frontier_science/protocol.py",
+              "sle/algorithms/common.py",
+              "sle/algorithms/evolve.py",
+              "sle/evaluation_ledger.py",
+              "sle/protocol.py",
               "scripts/audit_evaluation_recovery.py",
               "scripts/run_recovery_fault_worker.py"
             ],
@@ -6778,10 +6778,10 @@
             "source_revision": "d06671f9b991d406cde00e1f38637b1c55c1c5ff",
             "runtime_files_unchanged": true,
             "paths": [
-              "frontier_science/algorithms/common.py",
-              "frontier_science/algorithms/evolve.py",
-              "frontier_science/evaluation_ledger.py",
-              "frontier_science/protocol.py",
+              "sle/algorithms/common.py",
+              "sle/algorithms/evolve.py",
+              "sle/evaluation_ledger.py",
+              "sle/protocol.py",
               "scripts/audit_evaluation_recovery.py",
               "scripts/run_recovery_fault_worker.py"
             ],
@@ -8996,10 +8996,10 @@
             "source_revision": "d06671f9b991d406cde00e1f38637b1c55c1c5ff",
             "runtime_files_unchanged": true,
             "paths": [
-              "frontier_science/algorithms/common.py",
-              "frontier_science/algorithms/evolve.py",
-              "frontier_science/evaluation_ledger.py",
-              "frontier_science/protocol.py",
+              "sle/algorithms/common.py",
+              "sle/algorithms/evolve.py",
+              "sle/evaluation_ledger.py",
+              "sle/protocol.py",
               "scripts/audit_evaluation_recovery.py",
               "scripts/run_recovery_fault_worker.py"
             ],
@@ -13355,10 +13355,10 @@
             "source_revision": "d06671f9b991d406cde00e1f38637b1c55c1c5ff",
             "runtime_files_unchanged": true,
             "paths": [
-              "frontier_science/algorithms/common.py",
-              "frontier_science/algorithms/evolve.py",
-              "frontier_science/evaluation_ledger.py",
-              "frontier_science/protocol.py",
+              "sle/algorithms/common.py",
+              "sle/algorithms/evolve.py",
+              "sle/evaluation_ledger.py",
+              "sle/protocol.py",
               "scripts/audit_evaluation_recovery.py",
               "scripts/run_recovery_fault_worker.py"
             ],
@@ -14914,10 +14914,10 @@
             "source_revision": "d06671f9b991d406cde00e1f38637b1c55c1c5ff",
             "runtime_files_unchanged": true,
             "paths": [
-              "frontier_science/algorithms/common.py",
-              "frontier_science/algorithms/evolve.py",
-              "frontier_science/evaluation_ledger.py",
-              "frontier_science/protocol.py",
+              "sle/algorithms/common.py",
+              "sle/algorithms/evolve.py",
+              "sle/evaluation_ledger.py",
+              "sle/protocol.py",
               "scripts/audit_evaluation_recovery.py",
               "scripts/run_recovery_fault_worker.py"
             ],
@@ -16081,10 +16081,10 @@
             "source_revision": "d06671f9b991d406cde00e1f38637b1c55c1c5ff",
             "runtime_files_unchanged": true,
             "paths": [
-              "frontier_science/algorithms/common.py",
-              "frontier_science/algorithms/evolve.py",
-              "frontier_science/evaluation_ledger.py",
-              "frontier_science/protocol.py",
+              "sle/algorithms/common.py",
+              "sle/algorithms/evolve.py",
+              "sle/evaluation_ledger.py",
+              "sle/protocol.py",
               "scripts/audit_evaluation_recovery.py",
               "scripts/run_recovery_fault_worker.py"
             ],

@@ -9,7 +9,7 @@
     "source_tree_dirty": false,
     "source_changes": [],
     "source_scope": [
-      "frontier_science",
+      "sle",
       "scripts",
       "tests",
       "benchmarks",
@@ -31,24 +31,24 @@
     "base_revision": "20c6b780828c1ec53ddafbbde8fbf4579ff7801a",
     "audited_revision": "e021aa07b6e693ccf48035dd7fe230e166760c8b",
     "runtime_paths": [
-      "frontier_science/evaluate.py",
-      "frontier_science/secure_eval.py",
-      "frontier_science/trusted_driver.py"
+      "sle/evaluate.py",
+      "sle/secure_eval.py",
+      "sle/trusted_driver.py"
     ],
     "runtime_source_changes": [
-      "frontier_science/evaluate.py",
-      "frontier_science/secure_eval.py",
-      "frontier_science/trusted_driver.py"
+      "sle/evaluate.py",
+      "sle/secure_eval.py",
+      "sle/trusted_driver.py"
     ],
     "base_runtime_sha256": {
-      "frontier_science/evaluate.py": "388a596a7e3b774116480657e0a2c9d423e03cecfd7704a65d78a47bddb8a39f",
-      "frontier_science/secure_eval.py": "af898b0102a826ab9fc8d36dd2455d2680d68db646f31996dbcf02e3dd43edaf",
-      "frontier_science/trusted_driver.py": "e6d630c0a0638138fb214a3a5b00d0f4cf718129edee6610f955ff0d3dda12b4"
+      "sle/evaluate.py": "388a596a7e3b774116480657e0a2c9d423e03cecfd7704a65d78a47bddb8a39f",
+      "sle/secure_eval.py": "af898b0102a826ab9fc8d36dd2455d2680d68db646f31996dbcf02e3dd43edaf",
+      "sle/trusted_driver.py": "e6d630c0a0638138fb214a3a5b00d0f4cf718129edee6610f955ff0d3dda12b4"
     },
     "audited_runtime_sha256": {
-      "frontier_science/evaluate.py": "ba30ec09573fd63ab9b3d02b940bc7718146f866363f4c7a44d39f0dc80dfe8d",
-      "frontier_science/secure_eval.py": "8f65b9459c22a508cdfdcbdedc940339d7b78c2adff10448d74c5cbfa41a98d7",
-      "frontier_science/trusted_driver.py": "79800395d619b11b751b512552a184bc19584e4a889c825bd5d6086fa77f1a83"
+      "sle/evaluate.py": "ba30ec09573fd63ab9b3d02b940bc7718146f866363f4c7a44d39f0dc80dfe8d",
+      "sle/secure_eval.py": "8f65b9459c22a508cdfdcbdedc940339d7b78c2adff10448d74c5cbfa41a98d7",
+      "sle/trusted_driver.py": "79800395d619b11b751b512552a184bc19584e4a889c825bd5d6086fa77f1a83"
     },
     "passed": true
   },

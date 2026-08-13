@@ -27,7 +27,7 @@
     "The public SForge implementation supports native same-run auto-resume after abnormal exits, preserving the last conversation state and workspace. Its public run interface and documentation do not define an experimental primitive that clones one immutable model-workspace-evidence checkpoint into multiple independently randomized continuations.",
     "The approximately 38000-hour raw trajectory corpus and figure-analysis code are not public, so conditional fork variance, history lock-in and score-state sufficiency cannot be estimated for the headline EdgeBench runs from the public release."
   ],
-  "frontier_science_experiment": {
+  "sle_experiment": {
     "id": "conditional_checkpoint_forking",
     "plan_id": "CF1",
     "addendum_id": "E51",

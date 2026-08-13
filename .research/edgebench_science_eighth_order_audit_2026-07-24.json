@@ -46,7 +46,7 @@
       "tryst_text_adventure": "a6e4815a7f300f53ac430c2962da256ed8bc5f6552d6e188cd6dfafa78c51b5f"
     }
   },
-  "frontier_science_experiment": {
+  "sle_experiment": {
     "id": "observation_kernel_sensitivity",
     "plan_id": "OBS1",
     "addendum_id": "E48",

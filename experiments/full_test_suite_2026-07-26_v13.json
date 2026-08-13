@@ -14,7 +14,7 @@
       "?? benchmarks/Optics/DiffractionGratingDesign/TASK_CARD.yaml"
     ],
     "source_scope": [
-      "frontier_science",
+      "sle",
       "scripts",
       "tests",
       "benchmarks",

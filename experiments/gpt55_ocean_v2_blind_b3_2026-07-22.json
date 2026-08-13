@@ -9,7 +9,7 @@
     "source_tree_dirty": false,
     "source_changes": [],
     "source_scope": [
-      "frontier_science",
+      "sle",
       "scripts",
       "tests",
       "benchmarks",
@@ -32,7 +32,7 @@
       "--timeout",
       "300",
       "--llm-config",
-      "frontier_science/conf/llm/local.yaml",
+      "sle/conf/llm/local.yaml",
       "--workdir",
       "runs/gpt55_ocean_v2_blind_b3_20260722",
       "--output",
@@ -174,14 +174,14 @@
             "metrics": {
               "combined_score": -1e+18,
               "valid": 0.0,
-              "error_message": "frontier_science.secure_eval.CandidateError: ValueError: could not convert string to float: 'initial_positions_m'"
+              "error_message": "sle.secure_eval.CandidateError: ValueError: could not convert string to float: 'initial_positions_m'"
             },
             "algorithm_metadata": {
               "selection_policy": "offline_best_of_open_loop_batch",
               "accepted_semantics": "offline_best_update",
               "proposal_slot": 1
             },
-            "error": "frontier_science.secure_eval.CandidateError: ValueError: could not convert string to float: 'initial_positions_m'"
+            "error": "sle.secure_eval.CandidateError: ValueError: could not convert string to float: 'initial_positions_m'"
           },
           {
             "step": 2,
@@ -196,14 +196,14 @@
             "metrics": {
               "combined_score": -1e+18,
               "valid": 0.0,
-              "error_message": "frontier_science.secure_eval.CandidateError: ValueError: could not convert string to float: 'initial_positions_m'"
+              "error_message": "sle.secure_eval.CandidateError: ValueError: could not convert string to float: 'initial_positions_m'"
             },
             "algorithm_metadata": {
               "selection_policy": "offline_best_of_open_loop_batch",
               "accepted_semantics": "offline_best_update",
               "proposal_slot": 2
             },
-            "error": "frontier_science.secure_eval.CandidateError: ValueError: could not convert string to float: 'initial_positions_m'"
+            "error": "sle.secure_eval.CandidateError: ValueError: could not convert string to float: 'initial_positions_m'"
           },
           {
             "step": 3,
@@ -218,14 +218,14 @@
             "metrics": {
               "combined_score": -1e+18,
               "valid": 0.0,
-              "error_message": "frontier_science.secure_eval.CandidateError: ValueError: could not convert string to float: 'time_s'"
+              "error_message": "sle.secure_eval.CandidateError: ValueError: could not convert string to float: 'time_s'"
             },
             "algorithm_metadata": {
               "selection_policy": "offline_best_of_open_loop_batch",
               "accepted_semantics": "offline_best_update",
               "proposal_slot": 3
             },
-            "error": "frontier_science.secure_eval.CandidateError: ValueError: could not convert string to float: 'time_s'"
+            "error": "sle.secure_eval.CandidateError: ValueError: could not convert string to float: 'time_s'"
           }
         ]
       }

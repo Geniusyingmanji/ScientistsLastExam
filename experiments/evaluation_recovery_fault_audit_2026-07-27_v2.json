@@ -9,7 +9,7 @@
     "source_tree_dirty": false,
     "source_changes": [],
     "source_scope": [
-      "frontier_science",
+      "sle",
       "scripts",
       "tests",
       "benchmarks",
@@ -41,7 +41,7 @@
           "--mode",
           "baseline_before_trajectory",
           "--workdir",
-          "/tmp/frontier_science_recovery_audit_vjqofa__/baseline_before_trajectory"
+          "/tmp/sle_recovery_audit_vjqofa__/baseline_before_trajectory"
         ],
         "returncode": 86,
         "stdout": "",
@@ -413,7 +413,7 @@
           "--mode",
           "baseline_after_trajectory",
           "--workdir",
-          "/tmp/frontier_science_recovery_audit_vjqofa__/baseline_after_trajectory"
+          "/tmp/sle_recovery_audit_vjqofa__/baseline_after_trajectory"
         ],
         "returncode": 86,
         "stdout": "",
@@ -785,7 +785,7 @@
           "--mode",
           "proposal_before_trajectory",
           "--workdir",
-          "/tmp/frontier_science_recovery_audit_vjqofa__/proposal_before_trajectory"
+          "/tmp/sle_recovery_audit_vjqofa__/proposal_before_trajectory"
         ],
         "returncode": 86,
         "stdout": "",
@@ -1392,7 +1392,7 @@
           "--mode",
           "proposal_after_trajectory",
           "--workdir",
-          "/tmp/frontier_science_recovery_audit_vjqofa__/proposal_after_trajectory"
+          "/tmp/sle_recovery_audit_vjqofa__/proposal_after_trajectory"
         ],
         "returncode": 86,
         "stdout": "",
@@ -1999,7 +1999,7 @@
           "--mode",
           "request_before_receipt",
           "--workdir",
-          "/tmp/frontier_science_recovery_audit_vjqofa__/request_before_receipt"
+          "/tmp/sle_recovery_audit_vjqofa__/request_before_receipt"
         ],
         "returncode": 86,
         "stdout": "",
@@ -2124,7 +2124,7 @@
           "--mode",
           "receipt_before_attempt_completion",
           "--workdir",
-          "/tmp/frontier_science_recovery_audit_vjqofa__/receipt_before_attempt_completion"
+          "/tmp/sle_recovery_audit_vjqofa__/receipt_before_attempt_completion"
         ],
         "returncode": 86,
         "stdout": "",
@@ -2232,7 +2232,7 @@
         "--mode",
         "hold_run_lease",
         "--workdir",
-        "/tmp/frontier_science_recovery_audit_vjqofa__/concurrent_run_lease"
+        "/tmp/sle_recovery_audit_vjqofa__/concurrent_run_lease"
       ],
       "child_ready": "READY",
       "child_returncode": -15,

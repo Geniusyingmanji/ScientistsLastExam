@@ -32,7 +32,7 @@
       "2160": 1
     }
   },
-  "frontier_science_experiments": [
+  "sle_experiments": [
     {
       "id": "feedback_clock_invariance",
       "plan_id": "S4",

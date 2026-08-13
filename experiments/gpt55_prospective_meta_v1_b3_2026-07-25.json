@@ -9,7 +9,7 @@
     "source_tree_dirty": false,
     "source_changes": [],
     "source_scope": [
-      "frontier_science",
+      "sle",
       "scripts",
       "tests",
       "benchmarks",
@@ -32,7 +32,7 @@
       "--timeout",
       "600",
       "--llm-config",
-      "frontier_science/conf/llm/local.yaml",
+      "sle/conf/llm/local.yaml",
       "--workdir",
       "runs/prospective_meta_v1_b3",
       "--output",

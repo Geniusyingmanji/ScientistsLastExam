@@ -73,31 +73,31 @@
       "id": "objective_selection_contract",
       "fact": "The generic agent prompt states that the best score across all submissions is final, while SForge supports pass_rate_first, score_first, and valid_then_score. The local display cache advances only when pass_rate improves. The judge server uses the configured policy.",
       "risk": "The agent, local cache, authoritative endpoint, and later analysis can optimize or display different incumbents. On constrained scientific tasks this can favor an invalid or scientifically dominated artifact, or make the agent believe a valid score improvement was not retained.",
-      "frontier_science_gate": "Render the exact objective, direction, hard constraints, materiality epsilon, tie/Pareto rule, and endpoint policy into the task prompt and event schema; replay every event through one versioned selector and fail closed on disagreement."
+      "sle_gate": "Render the exact objective, direction, hard constraints, materiality epsilon, tie/Pareto rule, and endpoint policy into the task prompt and event schema; replay every event through one versioned selector and fail closed on disagreement."
     },
     {
       "id": "visualizer_selection_drift",
       "fact": "The visualizer loads selection metadata but its scanner chooses the best scored submission using score direction only; run sorting is pass-rate first; the documented smoothing uses only new-best milestones. These paths do not uniformly execute the configured selection policy.",
       "risk": "A dashboard or smoothed plot can silently disagree with the authoritative result and hide invalid, dominated, or scientifically important regressions.",
-      "frontier_science_gate": "Treat dashboards and plots as tested analysis code: recompute incumbent identity from the signed event ledger with the same selector and verify it equals the authoritative endpoint before rendering. Keep raw current-state events visible."
+      "sle_gate": "Treat dashboards and plots as tested analysis code: recompute incumbent identity from the signed event ledger with the same selector and verify it equals the authoritative endpoint before rendering. Keep raw current-state events visible."
     },
     {
       "id": "lossy_runtime_history",
       "fact": "EvalReport contains score_0_100, runtime_seconds, timed_out, details, metrics, and submitted_at, but judge_server removes score_0_100 and stores only score/pass-rate/counts/valid/summary in run_history. Full reports remain in per-submission files, while summary scans may trust final_result.json.",
       "risk": "The convenient run ledger is insufficient to reconstruct component trajectories, feedback payloads, normalized-score provenance, timing, failures, or science-specific mechanism/uncertainty/refusal metrics. Joining mutable side files later can yield inconsistent analyses.",
-      "frontier_science_gate": "Use an append-only, schema-versioned event ledger keyed by artifact/report/evaluator hashes and retain raw metrics, visible-feedback projection, timestamps, costs, failure class, selector version, and source revisions. Derived tables must be regenerated only from this ledger plus hashed manifests."
+      "sle_gate": "Use an append-only, schema-versioned event ledger keyed by artifact/report/evaluator hashes and retain raw metrics, visible-feedback projection, timestamps, costs, failure class, selector version, and source revisions. Derived tables must be regenerated only from this ledger plus hashed manifests."
     },
     {
       "id": "missing_boundary_snapshots",
       "fact": "Periodic auto-evaluation starts only after one full interval, stops before final archive extraction, and the extracted terminal archive is not automatically judged by the same path. Therefore the fixed-grid series need not contain a t=0 baseline or the terminal artifact.",
       "risk": "Time-to-first-valid, early gain, terminal regression, declared-versus-terminal comparison, AUC, and held-out suffix forecasts can be biased or undefined, particularly when the agent never submits near a boundary.",
-      "frontier_science_gate": "Always capture and charge immutable sentinel artifacts at t=0, every scheduled checkpoint, every explicit commit, and the terminal cutoff. Record scheduled/published/captured/judge/feedback times and score boundary artifacts under the preregistered endpoint policy."
+      "sle_gate": "Always capture and charge immutable sentinel artifacts at t=0, every scheduled checkpoint, every explicit commit, and the terminal cutoff. Record scheduled/published/captured/judge/feedback times and score boundary artifacts under the preregistered endpoint policy."
     },
     {
       "id": "non_durable_judge_state",
       "fact": "The public judge server keeps sessions, counters, submission status, and run_history in process memory; no durable reload path is present. The agent may auto-resume while the authoritative judge state remains a separate failure domain.",
       "risk": "A judge/server restart during a day-long run can lose submission budget, feedback lineage, pending jobs, or endpoint identity. Retrying a costly or stochastic scientific evaluation can double-spend evidence and change the selected result.",
-      "frontier_science_gate": "Persist a write-ahead submission/evaluation ledger; make artifact-hash plus evaluator-manifest plus seed-panel an idempotency key; recover counters and pending jobs; distinguish retry from new evidence; and test crash/restart exactly-once semantics."
+      "sle_gate": "Persist a write-ahead submission/evaluation ledger; make artifact-hash plus evaluator-manifest plus seed-panel an idempotency key; recover counters and pending jobs; distinguish retry from new evidence; and test crash/restart exactly-once semantics."
     }
   ],
   "not_supported_by_public_release": [

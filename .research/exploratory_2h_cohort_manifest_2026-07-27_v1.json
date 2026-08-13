@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "manifest_id": "frontier_science_exploratory_2h_v1",
+  "manifest_id": "sle_exploratory_2h_v1",
   "frozen_at_utc": "2026-07-27",
   "analysis_role": "result_selected_exploratory_measurement_screen",
   "claim_limit": "not_confirmatory_not_long_horizon_ready_not_feedback_causal_not_scaling_law_not_external_validation_not_autonomous_discovery",
