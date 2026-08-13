@@ -63,16 +63,17 @@ QuartzCrystalMicrobalanceLab 58%、HeatExchangerDesign 66%。
 
 | 任务 | 修复前 有效率 / 最好分 | 修复后 |
 |---|---|---|
-| CalorimeterDesign | 0% / 0.0000 | **82% / 1.0000** |
-| DistillationColumnDesign | 38% / 0.5822 | **33% / 0.8920** |
-| ForceFieldCalibration | 5% / 0.0600 | 5% / **0.4340** |
+| CalorimeterDesign | 0% / 0.0000 | **77% / 1.0000** |
+| DistillationColumnDesign | 38% / 0.5822 | **29% / 0.9960** |
+| ForceFieldCalibration | 5% / 0.0600 | **17% / 0.8288** |
 
 CalorimeterDesign 从"没人交得出合法提交"变成打满锚点。它此前被列在"地板任务、需要重新标定"
 里 —— 那个诊断是错的,它从来不是太难,是没告诉它输入叫什么。
 
 ## 边界与代价
 
-**ForceFieldCalibration 没修好。** 它只有 2 个未文档化的键,补上之后有效率仍是 5%。
+**ForceFieldCalibration 部分修好。** 有效率只从 5% 升到 17%,但**落地的提案分数从 0.0600 升到 0.8288** ——
+此前被读成"地板任务",实际是契约几乎不放行,放行的那些其实做得很好。
 沙箱里报 `candidate_runtime_error`,但同一份被拒候选在沙箱外直接调用时干净返回 valid=0
 (0.3 秒,不是超时;scipy 三个子模块在沙箱里都能导入)。这条差异未查清,单独记为待办。
 
