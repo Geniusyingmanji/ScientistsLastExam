@@ -1,0 +1,108 @@
+# 地板任务不是难,是拒答
+
+六个任务在每个模型上都是 0 分。把它们当作"太难、需要重新标定"处理是错的 ——
+逐条查完之后,零分的成因有两种,而且要求相反的处置。
+
+## 两种零分
+
+先看有效性,而不是分数:
+
+| 任务 | 提案 | 有效 | 无效 | 有效且得分 >0 |
+|---|---:|---:|---:|---:|
+| CalorimeterDesign | 36 | **0** | 36 | 0 |
+| GeneNetworkIntervention | 36 | 8 | 28 | 0 |
+| ConvectionDiffusionOpt | 36 | 16 | 20 | 0 |
+| QuartzCrystalMicrobalanceLab | 36 | 21 | 15 | 0 |
+| ProspectiveMetaAnalysis | 36 | 23 | 13 | 0 |
+| RadiativeTransferFit | 36 | **36** | 0 | 0 |
+
+两端是完全不同的病:
+
+- **CalorimeterDesign 零有效提案。** 没有人交得出一份合法提交。这是契约猜不中,
+  和科学难度无关,零分里不含任何科学信息。
+- **RadiativeTransferFit 全部 36 个提案都有效、都跑通、都得 0。** 契约没问题。
+
+## 全零不是难度的形状
+
+关键线索:所有有效提案的分数**恰好都是 0.0**,不是一堆分散的小正值。
+科学难会给出梯度,恰好全零是闸门的特征。
+
+但读进 evaluator 的分项指标之后,闸门这个猜测也被推翻了。RadiativeTransferFit 的一次典型提案:
+
+```
+combined_score                       0.0
+development_correct_refusal_rate     1.0     ← 全对
+development_confidence_calibration   1.0     ← 全对
+development_false_discovery_rate     0.0     ← 完美
+development_discovery_coverage       0.0     ← 什么都没提交
+development_radiance_prediction      0.0139
+```
+
+归一化是
+
+```
+normalized = clip((raw − 全弃权基线) / (1 − 全弃权基线), 0, 1)
+```
+
+`全弃权基线 = 不支持世界数 / 总世界数`,也就是**对每个世界都拒答**所能拿到的分。
+候选的 coverage 是 0、correct_refusal 是 1 —— 它就是在全面弃权,拿到的正好是基线,
+归一化后是 0。
+
+**判据在正确工作。**§7.2 要求"全弃权策略强制得 0",否则拒答会变成刷分策略。
+这个零分是它该给的。
+
+## 全库测量
+
+把所有发现类任务按"最好的有效提案是否尝试过"排开,关系是单调的:
+
+| 任务 | 全弃权提案占比 | 平均覆盖率 | 开环最好分 |
+|---|---:|---:|---:|
+| RadiativeTransferFit | 100% | 0.000 | 0.000 |
+| ProspectiveMetaAnalysis | 100% | 0.000 | 0.000 |
+| GeneNetworkIntervention | 100% | 0.000 | 0.000 |
+| ConvectionDiffusionOpt | 100% | 0.000 | 0.000 |
+| QuartzCrystalMicrobalanceLab | 86% | 0.127 | 0.000 |
+| ForceFieldCalibration | 60% | 0.400 | 0.060 |
+| CatalystDeactivationLab | 28% | 0.725 | 0.098 |
+| DemographicSFS | 23% | 0.766 | 0.702 |
+| EnergyBalanceModel | 10% | 0.898 | 0.664 |
+
+**地板任务恰好就是模型全面弃权的任务。** 不是难度排序,是拒答率排序。
+
+## 这算不算模型的失败
+
+算。这些任务的卡片明确声明参考策略是"在支持的世界上给出精确参数,**只在 null 或
+误设世界上弃权**"。也就是说支持世界上尝试才是正确行为,全弃权是把一条正确的谨慎规则
+用到了不该用的地方。
+
+一个必须承认的边界:这五个任务**没有可运行的参考实现**(`verification/` 下只有
+`evaluator.py`),所以"参考解能拿多少分"是卡片里的散文声明,不是重算出来的数。
+在补上可跑参考之前,"模型本可以做得更好"这句话没有被独立验证过。
+这正是标准审计里"可跑参考 8/43"那条缺口的具体代价。
+
+## 处置
+
+**不要重新标定锚点。** 锚点没问题;把 0 分调高只会让全弃权开始得分,
+那恰好是判据存在的理由。
+
+已做的:`scripts/report_discovery_triple.py` 增加 coverage 一列(**不是第四条轴** ——
+三元组说发现得多好,coverage 说有没有去发现),并单独列出"最好的有效提案什么都没尝试"的任务。
+在此之前,难到做不出和根本没去做,在报告里都显示为同一个 `0.0000`。
+
+同一次修复里还改掉了这个报告的三个静默少报:它只扫单层 cohort 目录、
+只取匹配到的**第一个**目录、并且按目录名前缀认任务。结果是它对全部 19 个发现任务
+报"no valid proposal",而树里有几百次运行。现在按 manifest 跨 cohort 找,取全局最好的有效提案。
+
+还剩两件:
+
+1. **6 个发现任务的 evaluator 不发布 coverage** —— ActiveLawDiscovery、GravityInversion、
+   InterventionalSCM、NMRSpectrumFitting、ReactionMechanismFitting、SpinSystemInference。
+   在这些任务上"有没有尝试"根本无法从运行记录里读出来。
+2. **CalorimeterDesign 的契约要单独修** —— 它和拒答无关,是没人交得出合法提交。
+
+## 一个差点犯的错
+
+第一版的"未尝试"判定把 coverage 缺失当成 coverage=0,于是 `GravityInversion`
+(合并分 0.9941、机制分 0.8593)被列为"什么都没尝试"。缺失不等于零 ——
+这个仓库已经在别处踩过同一类错(未记录模型被当成第三个模型、空返回被当成无效提交)。
+现在缺指标的任务单独一栏,说的是"这件事在它上面没被测量",不是"它拒答了"。

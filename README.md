@@ -328,6 +328,26 @@ interpretations live in [`.research/`](.research/). Historical pre-sandbox repor
 
 Full write-ups are in [`.research/`](.research/); each carries its own claim boundary.
 
+**The six tasks scoring zero are refusals, not difficulty.** Every valid proposal on them
+scores exactly 0.0000 rather than a spread of small values, which is the shape of a gate rather
+than of a hard landscape. Reading the evaluator's own components explains it: on
+`RadiativeTransferFit` a typical proposal has a correct-refusal rate of 1.0, a false-discovery
+rate of 0.0 and a discovery coverage of **0.0** — it declined every world. The score normalises
+against the all-abstain baseline, so declining everything earns exactly nothing, which is what
+the criterion is for.
+
+Across all discovery tasks the relationship is monotone: 100% blanket abstention on the four
+worst, 86% on the fifth, down to 10% on `EnergyBalanceModel` which scores 0.664. The floor is an
+abstention ranking, not a difficulty ranking. **Recalibrating those anchors would be treating the
+wrong thing** — raising the floor would start paying for declining, which is exactly the strategy
+the normalisation exists to refuse.
+
+`scripts/report_discovery_triple.py` now carries a coverage column — not a fourth axis; the
+triple says how good a discovery was, coverage says whether one was attempted — and names the
+tasks whose best valid proposal attempted nothing. Six further tasks publish no coverage metric
+at all, so on those the question cannot be answered from the runs. Full write-up in
+[.research/floor_tasks_are_refusals_2026-08-14.md](.research/floor_tasks_are_refusals_2026-08-14.md).
+
 **Three models rank the tasks the same way and disagree on every admission verdict.** Spearman
 over the open-loop scores is 0.959 within one model family (50 shared tasks) and 0.811 and 0.559
 across families (12 each). On the 12 tasks two families both ran, the admission verdict differs
