@@ -123,3 +123,17 @@ References: Ercolessi and Adams, DOI `10.1209/0295-5075/26/8/005`; Wang, Martine
 Pande, DOI `10.1021/jz500737m`; Shell, DOI `10.1063/1.2992060`; Frederiksen et al., DOI
 `10.1103/PhysRevLett.93.165501`; Henderson, DOI `10.1016/0375-9601(74)90847-0`;
 Axilrod and Teller, DOI `10.1063/1.1723844`.
+
+
+## Inputs the candidate receives
+
+Every key the baseline reads off the input mapping. Names are part of the contract: a candidate
+that reaches for one of these quantities under a different name raises at runtime and scores
+nothing, and that zero cannot be told apart from a zero earned on the science.
+
+| key | |
+|---|---|
+| `distance_bounds_a` | previously undocumented |
+| `first_query_temperature_k` | previously undocumented |
+
+A key not listed here may still exist; this table is what the shipped baseline uses.

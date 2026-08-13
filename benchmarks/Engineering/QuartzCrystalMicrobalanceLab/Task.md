@@ -106,3 +106,18 @@ task is one where submissions have been rejected often enough that the distincti
 References: Rodahl et al., DOI `10.1063/1.1145396`; Martin, Granstaff and Frye, DOI
 `10.1021/ac00020a015`; Kankare, DOI `10.1021/la025911w`; Nakamoto and Moriizumi, DOI
 `10.1143/jjap.29.963`; Na Songkhla and Nakamoto, DOI `10.3390/chemosensors9010009`.
+
+
+## Inputs the candidate receives
+
+Every key the baseline reads off the input mapping. Names are part of the contract: a candidate
+that reaches for one of these quantities under a different name raises at runtime and scores
+nothing, and that zero cannot be told apart from a zero earned on the science.
+
+| key | |
+|---|---|
+| `calibration_blocks` | previously undocumented |
+| `nominal_frequency_hz_by_harmonic` | previously undocumented |
+| `sweeps` | |
+
+A key not listed here may still exist; this table is what the shipped baseline uses.

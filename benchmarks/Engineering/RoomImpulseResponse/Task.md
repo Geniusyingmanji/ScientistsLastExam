@@ -80,3 +80,19 @@ wave/ray simulation and measured RIR replication.
 References: Allen & Berkley, *JASA* 65(4), 943–950 (1979), doi:10.1121/1.382599; Lehmann &
 Johansson, *IEEE TASLP* 16(4), 742–752 (2008), doi:10.1109/TASL.2008.917341; ISO 3382-1:2009,
 *Acoustics—Measurement of room acoustic parameters—Part 1: Performance spaces*.
+
+
+## Inputs the candidate receives
+
+Every key the baseline reads off the input mapping. Names are part of the contract: a candidate
+that reaches for one of these quantities under a different name raises at runtime and scores
+nothing, and that zero cannot be told apart from a zero earned on the science.
+
+| key | |
+|---|---|
+| `maximum_treatment_area_m2` | previously undocumented |
+| `maximum_treatment_fraction_by_surface` | previously undocumented |
+| `source_position_bounds_m` | previously undocumented |
+| `surface_areas_m2` | previously undocumented |
+
+A key not listed here may still exist; this table is what the shipped baseline uses.

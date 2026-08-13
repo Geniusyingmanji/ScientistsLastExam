@@ -35,3 +35,18 @@ Method references:
 This is a deterministic, isotropic, lossless 1D computational benchmark. A high
 score is not evidence of fabrication, measured efficiency or a new photonic
 device.
+
+
+## Inputs the candidate receives
+
+Every key the baseline reads off the input mapping. Names are part of the contract: a candidate
+that reaches for one of these quantities under a different name raises at runtime and scores
+nothing, and that zero cannot be told apart from a zero earned on the science.
+
+| key | |
+|---|---|
+| `depth_bounds_um` | previously undocumented |
+| `layer_count` | |
+| `period_um` | previously undocumented |
+
+A key not listed here may still exist; this table is what the shipped baseline uses.

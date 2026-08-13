@@ -91,3 +91,16 @@ DOI `10.1002/0470068329`; Y. Taur and T. H. Ning, *Fundamentals of Modern VLSI D
 2nd ed., Cambridge University Press, DOI `10.1017/CBO9781139195065`; D. M. Caughey and
 R. E. Thomas, “Carrier mobilities in silicon empirically related to doping and field,”
 *Proceedings of the IEEE* 55(12), 1967, DOI `10.1109/PROC.1967.6123`.
+
+
+## Inputs the candidate receives
+
+Every key the baseline reads off the input mapping. Names are part of the contract: a candidate
+that reaches for one of these quantities under a different name raises at runtime and scores
+nothing, and that zero cannot be told apart from a zero earned on the science.
+
+| key | |
+|---|---|
+| `design_bounds` | previously undocumented |
+
+A key not listed here may still exist; this table is what the shipped baseline uses.

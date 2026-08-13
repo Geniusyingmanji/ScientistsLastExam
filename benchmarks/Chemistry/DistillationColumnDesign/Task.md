@@ -119,3 +119,24 @@ doi:10.1021/ie50186a023; Naphtali & Sandholm, *AIChE Journal* 17, 148--153 (1971
 doi:10.1002/aic.690170130; Boston & Sullivan, *Canadian Journal of Chemical Engineering* 52,
 52--63 (1974), doi:10.1002/cjce.5450520108; Yeomans & Grossmann, *Industrial & Engineering
 Chemistry Research* 39, 4326--4335 (2000), doi:10.1021/ie0001974.
+
+
+## Inputs the candidate receives
+
+Every key the baseline reads off the input mapping. Names are part of the contract: a candidate
+that reaches for one of these quantities under a different name raises at runtime and scores
+nothing, and that zero cannot be told apart from a zero earned on the science.
+
+| key | |
+|---|---|
+| `distillate_fraction_bounds` | previously undocumented |
+| `feed_light_mole_fraction` | previously undocumented |
+| `maximum_bottoms_light_mole_fraction` | previously undocumented |
+| `minimum_distillate_light_mole_fraction` | previously undocumented |
+| `minimum_heavy_recovery` | previously undocumented |
+| `minimum_light_recovery` | previously undocumented |
+| `reflux_ratio_bounds` | previously undocumented |
+| `relative_volatility` | previously undocumented |
+| `tray_count_bounds` | previously undocumented |
+
+A key not listed here may still exist; this table is what the shipped baseline uses.

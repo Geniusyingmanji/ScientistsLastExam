@@ -124,3 +124,19 @@ Atlas* (2010), doi:10.1007/978-3-540-77877-6_34; Haaland, *Journal of Fluids
 Engineering* 105, 89–90 (1983), doi:10.1115/1.3240948; Sanaye & Hajabdollahi,
 *Applied Thermal Engineering* 30, 1937–1945 (2010),
 doi:10.1016/j.applthermaleng.2010.04.018.
+
+
+## Inputs the candidate receives
+
+Every key the baseline reads off the input mapping. Names are part of the contract: a candidate
+that reaches for one of these quantities under a different name raises at runtime and scores
+nothing, and that zero cannot be told apart from a zero earned on the science.
+
+| key | |
+|---|---|
+| `baffle_spacing_bounds_m` | previously undocumented |
+| `tube_count_bounds` | previously undocumented |
+| `tube_inner_diameter_bounds_m` | previously undocumented |
+| `tube_length_bounds_m` | previously undocumented |
+
+A key not listed here may still exist; this table is what the shipped baseline uses.
