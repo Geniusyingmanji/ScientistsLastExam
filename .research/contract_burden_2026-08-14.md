@@ -45,7 +45,9 @@ KeyError: 'light_yield_per_gev'
 `scripts/audit_documented_keys.py`:从每个任务的 baseline 里 AST 抽出它读的
 `problem["..."]`,查是否出现在 Task.md 或 constraints 里。
 
-**7 / 15 个任务读了 prompt 从未提及的输入键,共 24 个。** 而且大多是**边界约束**:
+**7 / 15 个任务读了 prompt 从未提及的输入键,共 24 个。** 后来把审计从 baseline 侧扩到
+evaluator 侧(AST 抽取问题构造函数返回的字典键,在 CalorimeterDesign 上与实跑真值 27 个键完全一致),
+数字变成 **11 个任务、100 多个键**。 而且大多是**边界约束**:
 `design_bounds`、`tube_count_bounds`、`depth_bounds_um`、`distillate_fraction_bounds`、
 `source_position_bounds_m` —— 候选必须遵守却只能靠抄 baseline 才知道可行域。
 
@@ -57,15 +59,21 @@ QuartzCrystalMicrobalanceLab 58%、HeatExchangerDesign 66%。
 ## 修复与实测效果
 
 给 7 个任务的 Task.md 补上"候选收到的输入"键表。**不动 evaluator、不动评分、不动科学。**
-审计从 7/15 变成 0/15。
+审计从 7/16 变成 0/16。
 
 同一模型、同一预算重跑:
 
-| 任务 | 修复前 有效率 / 最好分 | 修复后 |
+| 任务 | 修复前 有效率 / 最好分 | 修复后(各 48 个提案) |
 |---|---|---|
 | CalorimeterDesign | 0% / 0.0000 | **77% / 1.0000** |
-| DistillationColumnDesign | 38% / 0.5822 | **29% / 0.9960** |
+| HeatExchangerDesign | 66% / 0.7665 | **96% / 1.0000** |
+| QuartzCrystalMicrobalanceLab | 58% / 0.0000 | **83% / 0.0000** |
+| RoomImpulseResponse | 69% / 0.4382 | 73% / **0.6824** |
+| DistillationColumnDesign | 38% / 0.5822 | 29% / **0.9960** |
 | ForceFieldCalibration | 5% / 0.0600 | **17% / 0.8288** |
+
+六个任务的最好分全部上升。QuartzCrystalMicrobalanceLab 把两种失败模式分得最干净:
+契约修好了(58%→83%),分数仍是 0.0000 —— 剩下的是拒答,不是契约。
 
 CalorimeterDesign 从"没人交得出合法提交"变成打满锚点。它此前被列在"地板任务、需要重新标定"
 里 —— 那个诊断是错的,它从来不是太难,是没告诉它输入叫什么。
@@ -88,6 +96,6 @@ CalorimeterDesign 从"没人交得出合法提交"变成打满锚点。它此前
 
 这个基准把大量精力花在"锚点是否够难"上,而实测下来,**在多个任务上占主导的难度来源
 根本不是锚点,是提交契约**。−0.675 的相关不能证明因果,但 CalorimeterDesign 的
-0% → 82% 是同一模型、同一预算、只改文档做出来的,机制也直接可见(KeyError 的键名)。
+0% → 77% 是同一模型、同一预算、只改文档做出来的,机制也直接可见(KeyError 的键名)。
 
 先量契约负担,再谈科学难度。
