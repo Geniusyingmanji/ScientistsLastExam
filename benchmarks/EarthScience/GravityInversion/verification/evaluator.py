@@ -536,6 +536,13 @@ def _split_summary(records, unsupported_count):
         "false_discovery_rate": float(np.mean([
             row["false_discovery"] for row in unsupported
         ])),
+        # Whether a discovery was attempted at all, on the worlds where one is available. The
+        # triple says how good a discovery was; without this a task where every proposal declined
+        # every world is indistinguishable from one where the science was too hard, and the two
+        # need opposite responses.
+        "discovery_coverage": float(np.mean([
+            not row["abstained"] for row in supported
+        ])),
         "correct_refusal_rate": float(np.mean([
             row["correct_refusal"] for row in unsupported
         ])),
@@ -578,6 +585,7 @@ def evaluate(discover_bodies):
         "development_confidence_calibration_score": dev["confidence_calibration"],
         "development_false_discovery_rate": dev["false_discovery_rate"],
         "development_correct_refusal_rate": dev["correct_refusal_rate"],
+        "development_discovery_coverage": dev["discovery_coverage"],
         "robustness_score": hold["normalized_mechanism"] if hold_valid else 0.0,
         "heldout_mechanism_score": hold["raw_mechanism"],
         "heldout_body_support_f1": hold["body_support_f1"],
@@ -591,6 +599,7 @@ def evaluate(discover_bodies):
         "heldout_confidence_calibration_score": hold["confidence_calibration"],
         "heldout_false_discovery_rate": hold["false_discovery_rate"],
         "heldout_correct_refusal_rate": hold["correct_refusal_rate"],
+        "heldout_discovery_coverage": hold["discovery_coverage"],
         "heldout_feasibility_rate": hold["valid_count"] / len(heldout),
         "mean_survey_calls": float(np.mean([
             row["survey_calls"] for row in all_records
