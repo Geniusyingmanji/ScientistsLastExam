@@ -25,7 +25,10 @@ def load_oracle(task_id: str):
 class CertificationPolicyTests(unittest.TestCase):
     def test_default_registry_is_certified_only(self):
         tasks = list_tasks()
-        self.assertEqual(len(tasks), 7)
+        # Two of the seven - SpinGlassGroundState and PoissonSolver2D - were retired along with
+        # the other saturated tasks. Certification says the task is sound; it says nothing about
+        # whether the task still has room left to measure anything.
+        self.assertEqual(len(tasks), 5)
         self.assertTrue(all(certification_status(s.task_id) == "certified" for s in tasks))
         # Fifteen tasks retired: every model had reached their cap, so the score could no
         # longer separate two searchers. Tasks scoring above 1.0 stayed - on an uncapped task
