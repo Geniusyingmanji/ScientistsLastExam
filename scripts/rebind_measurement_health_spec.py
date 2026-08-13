@@ -39,6 +39,16 @@ from sle.algorithms.common import task_contract_sha256, task_package_sha256  # n
 from sle.registry import find_task  # noqa: E402
 
 
+def _deep(base: dict, overlay: dict) -> dict:
+    out = dict(base)
+    for key, value in overlay.items():
+        if isinstance(value, dict) and isinstance(out.get(key), dict):
+            out[key] = _deep(out[key], value)
+        else:
+            out[key] = value
+    return out
+
+
 def sha256_of(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
@@ -62,6 +72,7 @@ def main(argv: list[str] | None = None) -> int:
                     help="the frozen cohort manifest being superseded")
     ap.add_argument("--output", type=Path, required=True)
     ap.add_argument("--manifest-output", type=Path, required=True)
+    ap.add_argument("--artifacts-output", type=Path, required=True)
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args(argv)
 
@@ -143,6 +154,31 @@ def main(argv: list[str] | None = None) -> int:
     args.manifest_output.write_text(json.dumps(new_manifest, indent=2) + "\n", encoding="utf-8")
     print("wrote", args.manifest_output)
 
+    # Third layer. Each frozen candidate records the contract it was produced against, so a moved
+    # contract hash invalidates the artifact pack too - and with it the three checks that depend
+    # on having a fixed artifact to run: noise remeasurement, baseline/reference separation and
+    # numerical resolution. The candidate sources themselves are untouched and verified unchanged
+    # by their own content hash; only the recorded origin moves.
+    artifact_binding = ((rows[0].get("portable_artifact") or {}).get("evidence") or {})
+    artifacts_path = (ROOT / artifact_binding["path"]).resolve()
+    artifacts = json.loads(artifacts_path.read_text(encoding="utf-8"))
+    new_artifacts = dict(artifacts)
+    new_artifacts["supersedes"] = {
+        "path": artifacts_path.relative_to(ROOT).as_posix(),
+        "sha256": sha256_of(artifacts_path),
+    }
+    new_artifacts["artifacts"] = [
+        dict(row, origin=dict(row.get("origin") or {},
+                              task_contract_sha256=contracts[row["task"]],
+                              superseded_task_contract_sha256=(
+                                  row.get("origin") or {}).get("task_contract_sha256")))
+        if row.get("task") in contracts else row
+        for row in artifacts.get("artifacts") or []
+    ]
+    args.artifacts_output.write_text(json.dumps(new_artifacts, indent=2) + "\n",
+                                     encoding="utf-8")
+    print("wrote", args.artifacts_output)
+
     document = {
         "schema_version": 2,
         "purpose": "Rebind the frozen cohort after a package rename and a declarative card "
@@ -162,7 +198,13 @@ def main(argv: list[str] | None = None) -> int:
             # the preflight fails closed on "does not bind the current cohort manifest".
             "cohort_manifest_sha256": sha256_of(args.manifest_output),
         },
-        "shared_task_overrides": raw_spec.get("shared_task_overrides") or {},
+        "shared_task_overrides": _deep(
+            raw_spec.get("shared_task_overrides") or {},
+            {"portable_artifact": {"evidence": {
+                "path": args.artifacts_output.relative_to(ROOT).as_posix()
+                if args.artifacts_output.is_absolute()
+                else args.artifacts_output.as_posix(),
+                "sha256": sha256_of(args.artifacts_output)}}}),
         # Carry the previous overlay's per-task overrides forward; this layer only adds hashes.
         "task_overrides": [
             dict(prev, **{k: v for k, v in next((u for u in updates
