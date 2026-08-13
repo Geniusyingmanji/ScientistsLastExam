@@ -136,5 +136,5 @@ diversity-constrained generation, **not** evidence of a drug candidate.
 ## Reproduce
 
 ```bash
-python -m frontier_science eval --allow-uncertified --task MedicinalChemistry/MolecularLeadOptimization
+python -m sle eval --allow-uncertified --task MedicinalChemistry/MolecularLeadOptimization
 ```

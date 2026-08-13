@@ -45,7 +45,7 @@ class TrackFContextGenerationTests(unittest.TestCase):
             "git_revision": "a" * 40,
             "source_tree_dirty": False,
             "source_changes": [],
-            "source_scope": ["frontier_science", "scripts", "tests", "benchmarks"],
+            "source_scope": ["sle", "scripts", "tests", "benchmarks"],
             "command": ["test"],
         }
         with tempfile.TemporaryDirectory() as temporary, patch.object(

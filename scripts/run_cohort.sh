@@ -102,7 +102,7 @@ run_one () {
   # Safe now: the lock is held, so no concurrent driver is writing into this directory.
   rm -rf "$dir"
   local log="$ROOT/logs/${COHORT}_${short}_${mode}_s${seed}.log"
-  if python3 -m frontier_science run --task "$task" --algorithm "$ALGORITHM" \
+  if python3 -m sle run --task "$task" --algorithm "$ALGORITHM" \
       --feedback-mode "$mode" --budget "$BUDGET" --seed "$seed" --allow-uncertified \
       --llm-config "$CONFIG" --workdir "$dir" > "$log" 2>&1 \
       && [[ -f "$dir/run_manifest.json" ]]; then

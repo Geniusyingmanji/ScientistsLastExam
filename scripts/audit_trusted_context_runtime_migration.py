@@ -26,13 +26,13 @@ from typing import Any
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from frontier_science.evaluate import evaluate_candidate  # noqa: E402
-from frontier_science.provenance import (  # noqa: E402
+from sle.evaluate import evaluate_candidate  # noqa: E402
+from sle.provenance import (  # noqa: E402
     finalize_report_trust,
     source_provenance,
 )
-from frontier_science.registry import find_task  # noqa: E402
-from frontier_science.runtime_migration import (  # noqa: E402
+from sle.registry import find_task  # noqa: E402
+from sle.runtime_migration import (  # noqa: E402
     AUDITED_RUNTIME_SHA256,
     BASE_RUNTIME_REVISION,
     BASE_RUNTIME_SHA256,
@@ -143,8 +143,8 @@ def _function(tree: ast.Module, name: str) -> ast.FunctionDef:
 
 
 def audit_legacy_path_semantics() -> dict[str, Any]:
-    secure_path = ROOT / "frontier_science/secure_eval.py"
-    evaluate_path = ROOT / "frontier_science/evaluate.py"
+    secure_path = ROOT / "sle/secure_eval.py"
+    evaluate_path = ROOT / "sle/evaluate.py"
     secure_text = secure_path.read_text(encoding="utf-8")
     evaluate_text = evaluate_path.read_text(encoding="utf-8")
     secure_tree = ast.parse(secure_text)
@@ -166,10 +166,10 @@ def audit_legacy_path_semantics() -> dict[str, Any]:
         and "--trusted-context" in outer_source
     )
     candidate_sandbox_hash_unchanged = bool(
-        _sha256_bytes(_git_show(BASE_RUNTIME_REVISION, "frontier_science/candidate_worker.py"))
-        == _sha256(ROOT / "frontier_science/candidate_worker.py")
-        and _sha256_bytes(_git_show(BASE_RUNTIME_REVISION, "frontier_science/rpc_codec.py"))
-        == _sha256(ROOT / "frontier_science/rpc_codec.py")
+        _sha256_bytes(_git_show(BASE_RUNTIME_REVISION, "sle/candidate_worker.py"))
+        == _sha256(ROOT / "sle/candidate_worker.py")
+        and _sha256_bytes(_git_show(BASE_RUNTIME_REVISION, "sle/rpc_codec.py"))
+        == _sha256(ROOT / "sle/rpc_codec.py")
     )
     passed = bool(
         legacy_oracle and context_optional and no_context_mount

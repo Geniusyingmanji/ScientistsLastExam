@@ -145,7 +145,7 @@ def _record(label, mode, failures, tokens, missing_imports=None):
         "report": label + ".json",
         "report_sha256": "a" * 64,
         "source_revision": ANALYSIS.INPUT_SOURCE_REVISION,
-        "source_scope": ["frontier_science", "scripts", "tests", "benchmarks"],
+        "source_scope": ["sle", "scripts", "tests", "benchmarks"],
         "llm_condition_sha256": "b" * 64,
         "model": "gpt-5.5",
         "server_side_seed_control": False,

@@ -15,8 +15,8 @@ from typing import Any
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402
-from frontier_science.sentinels import load_sentinel_events  # noqa: E402
+from sle.provenance import finalize_report_trust, source_provenance  # noqa: E402
+from sle.sentinels import load_sentinel_events  # noqa: E402
 
 
 DEFAULT_RAW = ROOT / "experiments/exploratory_2h_sentinel_smoke_2026-07-27_v1.json"

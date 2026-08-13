@@ -15,9 +15,9 @@ from typing import Any
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from frontier_science.algorithms.evolve import extract_signed_submission  # noqa: E402
-from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402
-from frontier_science.sentinels import load_sentinel_events  # noqa: E402
+from sle.algorithms.evolve import extract_signed_submission  # noqa: E402
+from sle.provenance import finalize_report_trust, source_provenance  # noqa: E402
+from sle.sentinels import load_sentinel_events  # noqa: E402
 
 
 DEFAULT_RAW = ROOT / "experiments/gpt55_signed_decision_smoke_2026-07-27_v3.json"

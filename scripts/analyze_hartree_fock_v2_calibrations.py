@@ -16,15 +16,15 @@ from typing import Any
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from frontier_science.protocol import (  # noqa: E402
+from sle.protocol import (  # noqa: E402
     compact_trajectory_snapshot,
     load_trajectory,
 )
-from frontier_science.provenance import (  # noqa: E402
+from sle.provenance import (  # noqa: E402
     finalize_report_trust,
     source_provenance,
 )
-from frontier_science.runtime_migration import runtime_source_changes  # noqa: E402
+from sle.runtime_migration import runtime_source_changes  # noqa: E402
 
 
 TASK = "QuantumChemistry/HartreeFockSCF"
@@ -42,7 +42,7 @@ EXPECTED_MODEL_SOURCE_REVISION = (
     "746dff077a58e4c9a4afea821b5a3015d70cc378"
 )
 TASK_RUNTIME_SCOPE = (
-    "frontier_science",
+    "sle",
     "benchmarks/Chemistry/HartreeFockSCF",
     "requirements-upstream.txt",
 )

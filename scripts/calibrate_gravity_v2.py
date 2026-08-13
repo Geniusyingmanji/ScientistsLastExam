@@ -21,7 +21,7 @@ TASK = ROOT / "benchmarks/EarthScience/GravityInversion"
 sys.path.insert(0, str(ROOT))
 G_CONST = 6.67430e-11
 
-from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402
+from sle.provenance import finalize_report_trust, source_provenance  # noqa: E402
 
 
 def _load_oracle():

@@ -42,7 +42,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from frontier_science.task_versions import version_class  # noqa: E402
+from sle.task_versions import version_class  # noqa: E402
 
 # Budgets the gap is reported at. The shape across these matters more than any single endpoint:
 # a gap that grows is evidence of iteration paying off, one that peaks and turns over means
@@ -132,7 +132,7 @@ def score_modes() -> dict[str, str]:
     one whose control sits at 1.061, above any cap - as solved at their ceiling. The failure was
     invisible because the fallback was a plausible-looking answer.
     """
-    from frontier_science.registry import list_tasks
+    from sle.registry import list_tasks
 
     return {spec.task_id: str(spec.metadata.get("score_mode", "clipped"))
             for spec in list_tasks(None)}
@@ -146,7 +146,7 @@ def known_conditions() -> dict[str, str]:
     """
     import yaml
 
-    path = ROOT / "frontier_science" / "llm_conditions.yaml"
+    path = ROOT / "sle" / "llm_conditions.yaml"
     if not path.is_file():
         return {}
     document = yaml.safe_load(path.read_text(encoding="utf-8")) or {}

@@ -15,7 +15,7 @@
 # The oracle runs in the trusted parent, not the sandbox, so installing here does not change the
 # isolation model. Candidates receive a toolkit only if their task lists it in
 # frontier_eval/candidate_packages.txt and the name appears in the audited allowlist in
-# frontier_science/secure_eval.py.
+# sle/secure_eval.py.
 #
 # Usage:
 #     bash scripts/setup_oracle_env.sh            # install everything

@@ -150,7 +150,7 @@ each backend discards, otherwise the measurement penalises long-artifact tasks b
 crashed in the adapter:
 
 ```text
-File "frontier_science/algorithms/openevolve_backend.py", line 191, in openevolve
+File "sle/algorithms/openevolve_backend.py", line 191, in openevolve
   metrics = load_full_metrics(...)
 FileNotFoundError: missing trusted metric sidecar for candidate 4ae99482...
 ```

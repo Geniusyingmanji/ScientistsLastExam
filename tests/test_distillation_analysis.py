@@ -67,7 +67,7 @@ def _record(label, budget, seed, mode, score, heldout, valid_count,
     return {
         "label": label,
         "source_revision": "b" * 40,
-        "source_scope": ["frontier_science", "scripts", "tests", "benchmarks"],
+        "source_scope": ["sle", "scripts", "tests", "benchmarks"],
         "llm_condition_sha256": "c" * 64,
         "model": "gpt-5.5",
         "server_side_seed_control": False,

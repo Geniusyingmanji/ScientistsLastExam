@@ -15,7 +15,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402
+from sle.provenance import finalize_report_trust, source_provenance  # noqa: E402
 
 
 DEFAULT_B1 = ROOT / "experiments/gpt55_maturity_gap_b1_current_v1_2026-07-26.json"

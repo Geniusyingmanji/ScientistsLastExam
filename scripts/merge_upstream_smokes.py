@@ -13,17 +13,17 @@ from typing import Any
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from frontier_science.protocol import SCHEMA_VERSION  # noqa: E402
-from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402
-from frontier_science.algorithms.abmcts_backend import (  # noqa: E402
+from sle.protocol import SCHEMA_VERSION  # noqa: E402
+from sle.provenance import finalize_report_trust, source_provenance  # noqa: E402
+from sle.algorithms.abmcts_backend import (  # noqa: E402
     TREEQUEST_COMMIT,
     TREEQUEST_VERSION,
 )
-from frontier_science.algorithms.openevolve_backend import (  # noqa: E402
+from sle.algorithms.openevolve_backend import (  # noqa: E402
     OPENEVOLVE_COMMIT,
     OPENEVOLVE_VERSION,
 )
-from frontier_science.algorithms.shinkaevolve_backend import (  # noqa: E402
+from sle.algorithms.shinkaevolve_backend import (  # noqa: E402
     SHINKA_COMMIT,
     SHINKA_VERSION,
 )

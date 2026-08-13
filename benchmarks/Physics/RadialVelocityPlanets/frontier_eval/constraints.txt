@@ -6,5 +6,5 @@
    all. Claiming those is scored as false discovery, not as a near miss.
 5) Some systems have a planet whose one-day cadence alias fits equally well. Abstaining is correct
    there and wrong everywhere else; abstaining on a determined system scores zero for it.
-6) `frontier_science.contract_lint` is importable and free to call for shape checks.
+6) `sle.contract_lint` is importable and free to call for shape checks.
 7) Do not read verification/ or frontier_eval/.

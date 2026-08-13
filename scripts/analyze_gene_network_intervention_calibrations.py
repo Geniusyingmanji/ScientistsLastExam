@@ -21,9 +21,9 @@ from typing import Any
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from frontier_science.protocol import compact_trajectory_snapshot, load_trajectory  # noqa: E402
-from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402
-from frontier_science.runtime_migration import runtime_source_changes  # noqa: E402
+from sle.protocol import compact_trajectory_snapshot, load_trajectory  # noqa: E402
+from sle.provenance import finalize_report_trust, source_provenance  # noqa: E402
+from sle.runtime_migration import runtime_source_changes  # noqa: E402
 
 
 TASK = "SystemsBiology/GeneNetworkIntervention"
@@ -38,8 +38,8 @@ REPORTS = {
 EXPECTED_TASK_SOURCE_REVISION = "b777889d0e394a66e2375bb5d2f4243dae994a62"
 EXPECTED_MODEL_SOURCE_REVISION = "a46d254f56978afdd92ee4400abbc7fc457c1720"
 TASK_RUNTIME_SCOPE = (
-    "frontier_science",
-    ":(exclude)frontier_science/certification.yaml",
+    "sle",
+    ":(exclude)sle/certification.yaml",
     "benchmarks/Biology/GeneNetworkIntervention",
     "requirements-upstream.txt",
 )

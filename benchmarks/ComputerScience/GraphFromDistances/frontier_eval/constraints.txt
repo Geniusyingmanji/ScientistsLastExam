@@ -7,5 +7,5 @@
    number of distance queries, and abstaining is the only correct answer there. Abstaining on an
    identifiable graph scores zero for that graph.
 5) Deterministic CPU code. The standard library, NumPy, SciPy and networkx are available.
-6) `frontier_science.contract_lint` is importable and free to call for shape checks.
+6) `sle.contract_lint` is importable and free to call for shape checks.
 7) Do not read verification/ or frontier_eval/.

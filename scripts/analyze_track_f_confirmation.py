@@ -31,17 +31,17 @@ from scipy.stats import t as student_t
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from frontier_science.algorithms.common import (  # noqa: E402
+from sle.algorithms.common import (  # noqa: E402
     atomic_write_text,
     runtime_source_sha256,
     task_contract_sha256,
 )
-from frontier_science.provenance import (  # noqa: E402
+from sle.provenance import (  # noqa: E402
     SOURCE_SCOPE,
     finalize_report_trust,
     source_provenance,
 )
-from frontier_science.registry import find_task  # noqa: E402
+from sle.registry import find_task  # noqa: E402
 
 
 EXPECTED_MODES = (

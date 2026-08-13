@@ -39,5 +39,5 @@ number, so a candidate cannot mine the potential's singularity.
 ## Reproduce
 
 ```bash
-python -m frontier_science eval --task Chemistry/LennardJonesCluster
+python -m sle eval --task Chemistry/LennardJonesCluster
 ```

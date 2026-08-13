@@ -14,9 +14,9 @@ import numpy as np
 from scipy.sparse import lil_matrix
 from scipy.sparse.linalg import spsolve
 
-from frontier_science.evaluate import evaluate_candidate
-from frontier_science.metric_visibility import search_visible_metrics
-from frontier_science.registry import find_task
+from sle.evaluate import evaluate_candidate
+from sle.metric_visibility import search_visible_metrics
+from sle.registry import find_task
 
 
 ROOT = Path(__file__).resolve().parent.parent

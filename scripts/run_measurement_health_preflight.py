@@ -30,14 +30,14 @@ import yaml
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from frontier_science.algorithms.common import (  # noqa: E402
+from sle.algorithms.common import (  # noqa: E402
     task_contract_sha256,
     task_package_sha256,
 )
-from frontier_science.evaluate import evaluate_candidate  # noqa: E402
-from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402
-from frontier_science.registry import find_task  # noqa: E402
-from frontier_science.spec import load_task_spec  # noqa: E402
+from sle.evaluate import evaluate_candidate  # noqa: E402
+from sle.provenance import finalize_report_trust, source_provenance  # noqa: E402
+from sle.registry import find_task  # noqa: E402
+from sle.spec import load_task_spec  # noqa: E402
 
 
 SCHEMA_VERSION = 1

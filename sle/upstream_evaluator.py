@@ -18,9 +18,9 @@ ROOT = Path(__file__).resolve().parent.parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from frontier_science.evaluate import INVALID_SCORE, evaluate_candidate
-from frontier_science.metric_visibility import search_visible_metrics, store_full_metrics
-from frontier_science.registry import find_task
+from sle.evaluate import INVALID_SCORE, evaluate_candidate
+from sle.metric_visibility import search_visible_metrics, store_full_metrics
+from sle.registry import find_task
 
 
 TASK_ID = ""
@@ -42,7 +42,7 @@ def write_configured_wrapper(path: Path, task_id: str, timeout_s: float,
     source = (
         "import sys\n"
         "sys.path.insert(0, %r)\n"
-        "from frontier_science.upstream_evaluator import configure, evaluate, main, shinka_main\n"
+        "from sle.upstream_evaluator import configure, evaluate, main, shinka_main\n"
         "configure(%r, %r, %r)\n"
         "if __name__ == '__main__':\n"
         "    raise SystemExit(main())\n"

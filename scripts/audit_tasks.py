@@ -17,9 +17,9 @@ import yaml
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from frontier_science.certification import certification_record, load_certification  # noqa: E402
-from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402
-from frontier_science.registry import list_tasks  # noqa: E402
+from sle.certification import certification_record, load_certification  # noqa: E402
+from sle.provenance import finalize_report_trust, source_provenance  # noqa: E402
+from sle.registry import list_tasks  # noqa: E402
 
 REQUIRED_FILES = (
     "Task.md", "solution.py", "verification/evaluator.py", "frontier_eval/metadata.yaml",

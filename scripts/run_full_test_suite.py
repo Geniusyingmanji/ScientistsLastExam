@@ -17,7 +17,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402
+from sle.provenance import finalize_report_trust, source_provenance  # noqa: E402
 
 
 SUMMARY_RE = re.compile(r"Ran (\d+) tests? in ([0-9.]+)s")

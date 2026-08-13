@@ -29,8 +29,8 @@ from scipy.stats import nct, t
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from frontier_science.algorithms.common import atomic_write_text  # noqa: E402
-from frontier_science.provenance import (  # noqa: E402
+from sle.algorithms.common import atomic_write_text  # noqa: E402
+from sle.provenance import (  # noqa: E402
     finalize_report_trust,
     source_provenance,
 )

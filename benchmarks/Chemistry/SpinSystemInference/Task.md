@@ -56,7 +56,7 @@ would hide exactly that.
 
 - Only edit `solution.py`; keep `infer_spin_system(observation)`.
 - Deterministic CPU code. The standard library, NumPy, SciPy and nmrsim are available.
-- `frontier_science.contract_lint` is importable and free to call for shape checks.
+- `sle.contract_lint` is importable and free to call for shape checks.
 - Do not read `verification/` or `frontier_eval/`.
 
 ## Difficulty

@@ -10,9 +10,9 @@ before the branch is merged. **It is not a request to relax any guard.**
 
 | File | Change | Why |
 |---|---|---|
-| `frontier_science/secure_eval.py` | resolve candidate site-packages for the candidate interpreter; per-task candidate package allowlist | under any search-backend venv the sandbox mounted no numpy at all, so every such candidate failed |
-| `frontier_science/benchmark_layout.py` | two domains added to the discipline table | unavoidable when adding tasks in new domains |
-| `frontier_science/llm.py` | chat max-tokens parameter name is now a config field | reasoning models reject `max_tokens` on the chat wire |
+| `sle/secure_eval.py` | resolve candidate site-packages for the candidate interpreter; per-task candidate package allowlist | under any search-backend venv the sandbox mounted no numpy at all, so every such candidate failed |
+| `sle/benchmark_layout.py` | two domains added to the discipline table | unavoidable when adding tasks in new domains |
+| `sle/llm.py` | chat max-tokens parameter name is now a config field | reasoning models reject `max_tokens` on the chat wire |
 
 ## Full-suite state
 

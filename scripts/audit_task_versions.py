@@ -35,8 +35,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from frontier_science.algorithms.common import task_package_sha256  # noqa: E402
-from frontier_science.registry import find_task, list_tasks  # noqa: E402
+from sle.algorithms.common import task_package_sha256  # noqa: E402
+from sle.registry import find_task, list_tasks  # noqa: E402
 
 
 def current_versions() -> dict[str, str]:

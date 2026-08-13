@@ -55,7 +55,7 @@ respectable on F1 while inventing edges, and one number would hide that.
 
 - Only edit `solution.py`; keep `reconstruct(problem, distance)`.
 - Deterministic CPU code. The standard library, NumPy, SciPy and networkx are available.
-- `frontier_science.contract_lint` is importable and free to call for shape checks.
+- `sle.contract_lint` is importable and free to call for shape checks.
 - Do not read `verification/` or `frontier_eval/`.
 
 ## Difficulty

@@ -7,7 +7,7 @@ from pathlib import Path
 
 import numpy as np
 
-from frontier_science.metric_visibility import search_visible_metrics
+from sle.metric_visibility import search_visible_metrics
 
 
 ROOT = Path(__file__).resolve().parent.parent

@@ -126,17 +126,17 @@ class ProspectiveMetaAnalysisCalibrationAnalysisTests(unittest.TestCase):
     def test_runtime_scope_tracks_trusted_evaluator_not_search_or_narrative(self):
         scope = self.module.TASK_RUNTIME_SCOPE
         for path in (
-            "frontier_science/evaluate.py",
-            "frontier_science/trusted_driver.py",
-            "frontier_science/secure_eval.py",
-            "frontier_science/candidate_worker.py",
-            "frontier_science/rpc_codec.py",
+            "sle/evaluate.py",
+            "sle/trusted_driver.py",
+            "sle/secure_eval.py",
+            "sle/candidate_worker.py",
+            "sle/rpc_codec.py",
         ):
             self.assertIn(path, scope)
         for path in (
-            "frontier_science/algorithms/evolve.py",
-            "frontier_science/protocol.py",
-            "frontier_science/certification.yaml",
+            "sle/algorithms/evolve.py",
+            "sle/protocol.py",
+            "sle/certification.yaml",
         ):
             self.assertNotIn(path, scope)
 

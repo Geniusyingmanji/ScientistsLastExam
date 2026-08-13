@@ -41,7 +41,7 @@ Every certified task must satisfy **all seven** of these:
 Each task lives at `benchmarks/<Discipline>/<Task>/` and is **auto-discovered** by the harness.
 The broad physical discipline is intentionally separate from the finer-grained `domain` in
 `metadata.yaml`: the latter preserves the stable public task id `<Domain>/<Task>`. New metadata
-domains must first be assigned in `frontier_science/benchmark_layout.py`.
+domains must first be assigned in `sle/benchmark_layout.py`.
 
 ```
 benchmarks/
@@ -132,11 +132,11 @@ best-known value, its source, and the date.
 
 ## Checklist before submitting a PR
 
-- [ ] Add the new task to `frontier_science/certification.yaml` as `candidate` first; do not
+- [ ] Add the new task to `sle/certification.yaml` as `candidate` first; do not
       self-certify an unreviewed task.
-- [ ] `python -m frontier_science eval --allow-uncertified --task <Domain>/<Task>` runs and returns a valid
+- [ ] `python -m sle eval --allow-uncertified --task <Domain>/<Task>` runs and returns a valid
       `metrics.json` with `combined_score` near 0 for the baseline.
-- [ ] `python -m frontier_science list --all` shows the new package with correct metadata.
+- [ ] `python -m sle list --all` shows the new package with correct metadata.
 - [ ] The oracle is deterministic (run twice, get the same score).
 - [ ] The agent files (`Task.md`, `solution.py`, `constraints.txt`) do not leak the oracle
       implementation or the answer.
@@ -156,8 +156,8 @@ best-known value, its source, and the date.
    template.
 4. **Test locally** (new packages are uncertified by default):
    ```bash
-   python -m frontier_science eval --allow-uncertified --task <Domain>/<Task>
-   python -m frontier_science run --allow-uncertified --task <Domain>/<Task> --budget 3
+   python -m sle eval --allow-uncertified --task <Domain>/<Task>
+   python -m sle run --allow-uncertified --task <Domain>/<Task> --budget 3
    ```
 5. **Submit a Pull Request** to `main`. In the PR description, include:
    - Scientific background (1–2 sentences).
@@ -173,7 +173,7 @@ best-known value, its source, and the date.
 The harness uses any OpenAI-compatible endpoint. Copy the example config and fill in your own:
 
 ```bash
-cp frontier_science/conf/llm/openai_compatible.example.yaml frontier_science/conf/llm/local.yaml
+cp sle/conf/llm/openai_compatible.example.yaml sle/conf/llm/local.yaml
 # edit base_url / api_key / model
 ```
 

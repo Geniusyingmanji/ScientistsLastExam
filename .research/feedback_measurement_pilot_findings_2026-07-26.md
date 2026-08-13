@@ -88,7 +88,7 @@ rule out treating the observed ordering as a stable feedback result.
 
 The pilot supports the following design requirements, not outcome claims:
 
-1. Freeze a new preregistration after any change under `frontier_science/`, `scripts/`, `tests/`,
+1. Freeze a new preregistration after any change under `sle/`, `scripts/`, `tests/`,
    `benchmarks/` or `requirements-upstream.txt`; v3 cannot be reused after such a change.
 2. Use at least ten independent runs per condition. If provider-side seeds remain unavailable,
    randomize the unpaired execution order and state that limitation rather than calling local

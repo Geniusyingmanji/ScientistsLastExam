@@ -7,7 +7,7 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from frontier_science.llm import LLMConfig
+from sle.llm import LLMConfig
 
 
 SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "batch_evolve.py"
@@ -586,7 +586,7 @@ class BatchAggregationTests(unittest.TestCase):
     def test_dirty_smoke_executes_but_is_not_trusted_evidence(self):
         client = type("Client", (), {"config": self.Config()})()
         dirty = {"git_available": True, "git_revision": "abc", "source_tree_dirty": True,
-                 "source_changes": [" M frontier_science/x.py"]}
+                 "source_changes": [" M sle/x.py"]}
         with tempfile.TemporaryDirectory() as tmp, patch.object(
             MODULE, "load_llm_client", return_value=client
         ), patch.object(MODULE, "source_provenance", return_value=dirty):

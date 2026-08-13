@@ -9,7 +9,7 @@ import os
 import sys
 import traceback
 
-from frontier_science.rpc_codec import decode, encode
+from sle.rpc_codec import decode, encode
 
 
 class RemoteCallback:

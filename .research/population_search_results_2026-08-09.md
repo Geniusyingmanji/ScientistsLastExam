@@ -75,7 +75,7 @@ pair were uninformative would have overstated the effect by a factor of two.
 Two of six OpenEvolve runs on Molecular (seeds 1 and 4) died identically:
 
 ```text
-File "frontier_science/algorithms/openevolve_backend.py", line 191, in openevolve
+File "sle/algorithms/openevolve_backend.py", line 191, in openevolve
   metrics = load_full_metrics(...)
 FileNotFoundError: missing trusted metric sidecar for candidate <digest>
 ```

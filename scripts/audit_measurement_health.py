@@ -23,7 +23,7 @@ from typing import Any, Optional
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402
+from sle.provenance import finalize_report_trust, source_provenance  # noqa: E402
 from scripts.audit_task_maturity import build_report as build_maturity_report  # noqa: E402
 
 

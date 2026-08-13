@@ -76,7 +76,7 @@ def _record(module, label, budget, seed, mode, reason_key, tokens):
         "report": label + ".json",
         "report_sha256": "b" * 64,
         "source_revision": module.EXPECTED_MODEL_SOURCE_REVISION,
-        "source_scope": ["frontier_science", "scripts", "tests", "benchmarks"],
+        "source_scope": ["sle", "scripts", "tests", "benchmarks"],
         "llm_condition_sha256": "c" * 64,
         "model": "gpt-5.5",
         "server_side_seed_control": False,
@@ -280,7 +280,7 @@ class CalorimeterAnalysisTests(unittest.TestCase):
     def test_runtime_source_change_gate_rejects_mismatch(self):
         report = self.report(
             runtime_source_equivalent=False,
-            runtime_source_changes=["frontier_science/example.py"],
+            runtime_source_changes=["sle/example.py"],
         )
         self.assertFalse(report["execution_passed"])
         self.assertEqual(report["trust_decision"], "execution_failed")
@@ -289,17 +289,17 @@ class CalorimeterAnalysisTests(unittest.TestCase):
     def test_runtime_scope_tracks_trusted_evaluator_not_search_or_narrative(self):
         scope = self.analysis.TASK_RUNTIME_SCOPE
         for path in (
-            "frontier_science/evaluate.py",
-            "frontier_science/trusted_driver.py",
-            "frontier_science/secure_eval.py",
-            "frontier_science/candidate_worker.py",
-            "frontier_science/rpc_codec.py",
+            "sle/evaluate.py",
+            "sle/trusted_driver.py",
+            "sle/secure_eval.py",
+            "sle/candidate_worker.py",
+            "sle/rpc_codec.py",
         ):
             self.assertIn(path, scope)
         for path in (
-            "frontier_science/algorithms/evolve.py",
-            "frontier_science/protocol.py",
-            "frontier_science/certification.yaml",
+            "sle/algorithms/evolve.py",
+            "sle/protocol.py",
+            "sle/certification.yaml",
         ):
             self.assertNotIn(path, scope)
 

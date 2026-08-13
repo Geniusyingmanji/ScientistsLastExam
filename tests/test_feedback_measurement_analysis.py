@@ -5,10 +5,10 @@ import json
 import unittest
 from pathlib import Path
 
-from frontier_science.algorithms.evolve import _build_prompt
-from frontier_science.metric_visibility import score_only_metrics, search_visible_metrics
-from frontier_science.protocol import sha256_text
-from frontier_science.registry import find_task
+from sle.algorithms.evolve import _build_prompt
+from sle.metric_visibility import score_only_metrics, search_visible_metrics
+from sle.protocol import sha256_text
+from sle.registry import find_task
 
 
 ROOT = Path(__file__).resolve().parents[1]

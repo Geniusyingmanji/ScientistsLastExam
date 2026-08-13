@@ -20,9 +20,9 @@ import numpy as np
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from frontier_science.evaluate import evaluate_candidate  # noqa: E402
-from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402
-from frontier_science.registry import find_task  # noqa: E402
+from sle.evaluate import evaluate_candidate  # noqa: E402
+from sle.provenance import finalize_report_trust, source_provenance  # noqa: E402
+from sle.registry import find_task  # noqa: E402
 
 
 TASK = ROOT / "benchmarks/Biology/RNAInverseDesign"

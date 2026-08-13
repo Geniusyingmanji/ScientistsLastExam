@@ -23,13 +23,13 @@ ROOT = Path(__file__).resolve().parent.parent
 TASK = ROOT / "benchmarks/Physics/CalorimeterDesign"
 sys.path.insert(0, str(ROOT))
 
-from frontier_science.evaluate import evaluate_candidate  # noqa: E402
-from frontier_science.metric_visibility import search_visible_metrics  # noqa: E402
-from frontier_science.provenance import (  # noqa: E402
+from sle.evaluate import evaluate_candidate  # noqa: E402
+from sle.metric_visibility import search_visible_metrics  # noqa: E402
+from sle.provenance import (  # noqa: E402
     finalize_report_trust,
     source_provenance,
 )
-from frontier_science.registry import find_task  # noqa: E402
+from sle.registry import find_task  # noqa: E402
 
 
 NOMINAL_SEED_BASE = 7100

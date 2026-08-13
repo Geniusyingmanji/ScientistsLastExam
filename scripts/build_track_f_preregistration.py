@@ -23,15 +23,15 @@ from typing import Any
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from frontier_science.algorithms.common import (  # noqa: E402
+from sle.algorithms.common import (  # noqa: E402
     atomic_write_text,
     llm_condition_sha256,
     runtime_source_sha256,
     task_contract_sha256,
 )
-from frontier_science.config import load_llm_client  # noqa: E402
-from frontier_science.provenance import source_provenance  # noqa: E402
-from frontier_science.registry import find_task  # noqa: E402
+from sle.config import load_llm_client  # noqa: E402
+from sle.provenance import source_provenance  # noqa: E402
+from sle.registry import find_task  # noqa: E402
 
 
 TASKS = (

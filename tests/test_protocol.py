@@ -7,27 +7,27 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from frontier_science.algorithms import ALGORITHMS, get_algorithm
-from frontier_science.algorithms.evolve import (extract_signed_decision,
+from sle.algorithms import ALGORITHMS, get_algorithm
+from sle.algorithms.evolve import (extract_signed_decision,
                                                 extract_signed_submission,
                                                 greedy_rewrite)
-from frontier_science.algorithms.abmcts_backend import abmcts
-from frontier_science.algorithms.shinkaevolve_backend import _evaluation_rows
-from frontier_science.algorithms.common import restore_committed_trajectory
-from frontier_science.algorithms.common import require_evaluation_budget
-from frontier_science.algorithms.common import llm_condition_sha256
-from frontier_science.llm import LLMClient, LLMConfig
-from frontier_science.metric_visibility import (load_full_metrics, search_visible_metrics,
+from sle.algorithms.abmcts_backend import abmcts
+from sle.algorithms.shinkaevolve_backend import _evaluation_rows
+from sle.algorithms.common import restore_committed_trajectory
+from sle.algorithms.common import require_evaluation_budget
+from sle.algorithms.common import llm_condition_sha256
+from sle.llm import LLMClient, LLMConfig
+from sle.metric_visibility import (load_full_metrics, search_visible_metrics,
                                                 score_only_metrics, source_sha256,
                                                 store_full_metrics)
-from frontier_science.protocol import (TrajectoryEvent, append_event, best_so_far_auc,
+from sle.protocol import (TrajectoryEvent, append_event, best_so_far_auc,
                                        compact_trajectory_snapshot, load_trajectory,
                                        mean_confidence_interval,
                                        realized_token_curve, sha256_text,
                                        summarize_at_token_horizon, summarize_trajectory)
-from frontier_science.registry import find_task
-from frontier_science import upstream_evaluator
-from frontier_science.upstream_evaluator import write_configured_wrapper
+from sle.registry import find_task
+from sle import upstream_evaluator
+from sle.upstream_evaluator import write_configured_wrapper
 
 
 class FakeLLM:
@@ -513,10 +513,10 @@ class GreedyRewriteTests(unittest.TestCase):
         ]
         clock = iter([0.0, 0.1, 0.1, 0.2, 0.2, 0.3, 2.0])
         with tempfile.TemporaryDirectory() as tmp, patch(
-            "frontier_science.algorithms.evolve.evaluate_candidate",
+            "sle.algorithms.evolve.evaluate_candidate",
             side_effect=metrics,
         ), patch(
-            "frontier_science.algorithms.evolve.time.monotonic",
+            "sle.algorithms.evolve.time.monotonic",
             side_effect=lambda: next(clock),
         ):
             result = greedy_rewrite(
@@ -552,10 +552,10 @@ class GreedyRewriteTests(unittest.TestCase):
         spec = find_task("LennardJonesCluster")
         clock = iter([0.0, 2.0])
         with tempfile.TemporaryDirectory() as tmp, patch(
-            "frontier_science.algorithms.evolve.evaluate_candidate",
+            "sle.algorithms.evolve.evaluate_candidate",
             return_value={"combined_score": 0.1, "valid": 1.0},
         ), patch(
-            "frontier_science.algorithms.evolve.time.monotonic",
+            "sle.algorithms.evolve.time.monotonic",
             side_effect=lambda: next(clock),
         ):
             result = greedy_rewrite(
@@ -665,7 +665,7 @@ class GreedyRewriteTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             work = Path(tmp)
             with patch(
-                "frontier_science.algorithms.evolve.evaluate_candidate",
+                "sle.algorithms.evolve.evaluate_candidate",
                 side_effect=[baseline_metrics, infrastructure],
             ):
                 with self.assertRaisesRegex(
@@ -687,7 +687,7 @@ class GreedyRewriteTests(unittest.TestCase):
                 pending["candidate_sha256"], sha256_text(pending["program"])
             )
             with patch(
-                "frontier_science.algorithms.evolve.evaluate_candidate",
+                "sle.algorithms.evolve.evaluate_candidate",
                 return_value={"combined_score": 0.2, "valid": 1.0},
             ):
                 resumed = greedy_rewrite(
@@ -712,10 +712,10 @@ class GreedyRewriteTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary:
             work = Path(temporary)
             with patch(
-                "frontier_science.algorithms.evolve.evaluate_candidate",
+                "sle.algorithms.evolve.evaluate_candidate",
                 side_effect=evaluate,
             ), patch(
-                "frontier_science.algorithms.evolve.append_event",
+                "sle.algorithms.evolve.append_event",
                 side_effect=RuntimeError("crash after baseline receipt"),
             ):
                 with self.assertRaisesRegex(RuntimeError, "baseline receipt"):
@@ -732,7 +732,7 @@ class GreedyRewriteTests(unittest.TestCase):
             )
 
             with patch(
-                "frontier_science.algorithms.evolve.evaluate_candidate",
+                "sle.algorithms.evolve.evaluate_candidate",
                 side_effect=AssertionError("baseline evaluator called twice"),
             ):
                 result = greedy_rewrite(
@@ -762,7 +762,7 @@ class GreedyRewriteTests(unittest.TestCase):
             return {"combined_score": 0.1, "valid": 1.0}
 
         real_append = __import__(
-            "frontier_science.algorithms.evolve", fromlist=["append_event"]
+            "sle.algorithms.evolve", fromlist=["append_event"]
         ).append_event
 
         def append_then_crash(path, event):
@@ -772,10 +772,10 @@ class GreedyRewriteTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary:
             work = Path(temporary)
             with patch(
-                "frontier_science.algorithms.evolve.evaluate_candidate",
+                "sle.algorithms.evolve.evaluate_candidate",
                 side_effect=evaluate,
             ), patch(
-                "frontier_science.algorithms.evolve.append_event",
+                "sle.algorithms.evolve.append_event",
                 side_effect=append_then_crash,
             ):
                 with self.assertRaisesRegex(RuntimeError, "baseline trajectory"):
@@ -788,7 +788,7 @@ class GreedyRewriteTests(unittest.TestCase):
             self.assertFalse((work / "checkpoint.json").exists())
 
             with patch(
-                "frontier_science.algorithms.evolve.evaluate_candidate",
+                "sle.algorithms.evolve.evaluate_candidate",
                 side_effect=AssertionError("baseline evaluator called twice"),
             ):
                 result = greedy_rewrite(
@@ -817,7 +817,7 @@ class GreedyRewriteTests(unittest.TestCase):
                 "valid": 1.0,
             }
 
-        from frontier_science.algorithms import evolve as evolve_module
+        from sle.algorithms import evolve as evolve_module
         real_append = evolve_module.append_event
         appends = {"count": 0}
 
@@ -830,10 +830,10 @@ class GreedyRewriteTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary:
             work = Path(temporary)
             with patch(
-                "frontier_science.algorithms.evolve.evaluate_candidate",
+                "sle.algorithms.evolve.evaluate_candidate",
                 side_effect=evaluate,
             ), patch(
-                "frontier_science.algorithms.evolve.append_event",
+                "sle.algorithms.evolve.append_event",
                 side_effect=crash_on_proposal,
             ):
                 with self.assertRaisesRegex(RuntimeError, "proposal receipt"):
@@ -854,7 +854,7 @@ class GreedyRewriteTests(unittest.TestCase):
             )
 
             with patch(
-                "frontier_science.algorithms.evolve.evaluate_candidate",
+                "sle.algorithms.evolve.evaluate_candidate",
                 side_effect=AssertionError("proposal evaluator called twice"),
             ):
                 result = greedy_rewrite(
@@ -890,7 +890,7 @@ class GreedyRewriteTests(unittest.TestCase):
             }
 
         evolve_module = __import__(
-            "frontier_science.algorithms.evolve", fromlist=["append_event"]
+            "sle.algorithms.evolve", fromlist=["append_event"]
         )
         real_append = evolve_module.append_event
         appends = {"count": 0}
@@ -904,10 +904,10 @@ class GreedyRewriteTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary:
             work = Path(temporary)
             with patch(
-                "frontier_science.algorithms.evolve.evaluate_candidate",
+                "sle.algorithms.evolve.evaluate_candidate",
                 side_effect=evaluate,
             ), patch(
-                "frontier_science.algorithms.evolve.append_event",
+                "sle.algorithms.evolve.append_event",
                 side_effect=append_then_crash,
             ):
                 with self.assertRaisesRegex(RuntimeError, "proposal trajectory"):
@@ -923,7 +923,7 @@ class GreedyRewriteTests(unittest.TestCase):
             self.assertEqual(checkpoint["next_iter"], 1)
 
             with patch(
-                "frontier_science.algorithms.evolve.evaluate_candidate",
+                "sle.algorithms.evolve.evaluate_candidate",
                 side_effect=AssertionError("proposal evaluator called twice"),
             ):
                 result = greedy_rewrite(
@@ -978,7 +978,7 @@ class GreedyRewriteTests(unittest.TestCase):
             {"combined_score": 0.7, "valid": 1.0, "feasibility_rate": 1.0},
         ]
         with tempfile.TemporaryDirectory() as tmp, patch(
-            "frontier_science.algorithms.evolve.evaluate_candidate",
+            "sle.algorithms.evolve.evaluate_candidate",
             side_effect=metrics,
         ):
             result = greedy_rewrite(
@@ -1032,7 +1032,7 @@ class GreedyRewriteTests(unittest.TestCase):
             {"combined_score": 0.7, "valid": 1.0},
         ]
         with tempfile.TemporaryDirectory() as tmp, patch(
-            "frontier_science.algorithms.evolve.evaluate_candidate",
+            "sle.algorithms.evolve.evaluate_candidate",
             side_effect=metrics,
         ):
             result = greedy_rewrite(
@@ -1073,7 +1073,7 @@ class GreedyRewriteTests(unittest.TestCase):
             {"combined_score": 0.8, "valid": 1.0},
         ]
         with tempfile.TemporaryDirectory() as tmp, patch(
-            "frontier_science.algorithms.evolve.evaluate_candidate",
+            "sle.algorithms.evolve.evaluate_candidate",
             side_effect=metrics,
         ):
             greedy_rewrite(
@@ -1101,7 +1101,7 @@ class GreedyRewriteTests(unittest.TestCase):
             {"combined_score": 0.6, "valid": 1.0, "raw_score": 6.0},
         ]
         with tempfile.TemporaryDirectory() as tmp, patch(
-            "frontier_science.algorithms.evolve.evaluate_candidate",
+            "sle.algorithms.evolve.evaluate_candidate",
             side_effect=metrics,
         ):
             result = greedy_rewrite(
@@ -1148,7 +1148,7 @@ class GreedyRewriteTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             work = Path(tmp)
             with patch(
-                "frontier_science.algorithms.evolve.evaluate_candidate",
+                "sle.algorithms.evolve.evaluate_candidate",
                 side_effect=[
                     {"combined_score": 0.0, "valid": 1.0},
                     {"combined_score": 0.8, "valid": 1.0},
@@ -1169,7 +1169,7 @@ class GreedyRewriteTests(unittest.TestCase):
                 )
             resumed_llm = FakeLLM(["```python\n%s\n```" % proposal_three])
             with patch(
-                "frontier_science.algorithms.evolve.evaluate_candidate",
+                "sle.algorithms.evolve.evaluate_candidate",
                 return_value={"combined_score": 0.6, "valid": 1.0},
             ):
                 resumed = greedy_rewrite(
@@ -1193,7 +1193,7 @@ class AlgorithmAdapterTests(unittest.TestCase):
     def test_optional_dependency_failure_is_explicit(self):
         spec = find_task("LennardJonesCluster")
         with tempfile.TemporaryDirectory() as tmp, patch(
-            "frontier_science.algorithms.abmcts_backend._load_treequest",
+            "sle.algorithms.abmcts_backend._load_treequest",
             side_effect=RuntimeError("official TreeQuest unavailable"),
         ):
             with self.assertRaisesRegex(RuntimeError, "official TreeQuest"):

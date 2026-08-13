@@ -7,10 +7,10 @@ from pathlib import Path
 
 import numpy as np
 
-from frontier_science.certification import certification_status, load_certification
-from frontier_science.evaluate import INVALID_SCORE, evaluate_candidate
-from frontier_science.metric_visibility import search_visible_metrics
-from frontier_science.registry import find_task, list_tasks
+from sle.certification import certification_status, load_certification
+from sle.evaluate import INVALID_SCORE, evaluate_candidate
+from sle.metric_visibility import search_visible_metrics
+from sle.registry import find_task, list_tasks
 
 
 def load_oracle(task_id: str):

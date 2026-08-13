@@ -72,7 +72,7 @@ def _record(label, mode, budget, tokens, proposal_spec):
     return {
         "label": label,
         "source_revision": _module().EXPECTED_MODEL_SOURCE_REVISION,
-        "source_scope": ["frontier_science", "scripts", "tests", "benchmarks"],
+        "source_scope": ["sle", "scripts", "tests", "benchmarks"],
         "llm_condition_sha256": "c" * 64,
         "feedback_mode": mode,
         "proposal_budget": budget,

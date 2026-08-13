@@ -47,7 +47,7 @@ right coefficients diverges from the continuation immediately.
 - Only edit `solution.py`; keep `recover_law(observation)`.
 - Integer coefficients, order at most 6.
 - Deterministic CPU code. The standard library, NumPy, SciPy and SymPy are available.
-- `frontier_science.contract_lint` is importable and free to call for shape checks.
+- `sle.contract_lint` is importable and free to call for shape checks.
 - Do not read `verification/` or `frontier_eval/`.
 
 ## Difficulty

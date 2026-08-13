@@ -1,9 +1,9 @@
 """Frontier-Science CLI.
 
-  python -m frontier_science list
-  python -m frontier_science eval  --task LennardJonesCluster [--candidate path.py]
-  python -m frontier_science run   --task LennardJonesCluster --budget 10 [--llm-config p.yaml]
-  python -m frontier_science smoke  # check the configured LLM endpoint responds
+  python -m sle list
+  python -m sle eval  --task LennardJonesCluster [--candidate path.py]
+  python -m sle run   --task LennardJonesCluster --budget 10 [--llm-config p.yaml]
+  python -m sle smoke  # check the configured LLM endpoint responds
 """
 
 from __future__ import annotations
@@ -70,7 +70,7 @@ def _cmd_smoke(args) -> int:
 
 
 def main(argv=None) -> int:
-    p = argparse.ArgumentParser(prog="frontier_science")
+    p = argparse.ArgumentParser(prog="sle")
     sub = p.add_subparsers(dest="cmd", required=True)
 
     pl = sub.add_parser("list"); pl.set_defaults(fn=_cmd_list)

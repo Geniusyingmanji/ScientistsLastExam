@@ -8,10 +8,10 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from frontier_science.algorithms.abmcts_backend import TREEQUEST_COMMIT, TREEQUEST_VERSION
-from frontier_science.algorithms.openevolve_backend import OPENEVOLVE_COMMIT, OPENEVOLVE_VERSION
-from frontier_science.algorithms.shinkaevolve_backend import SHINKA_COMMIT, SHINKA_VERSION
-from frontier_science.provenance import finalize_report_trust, source_provenance
+from sle.algorithms.abmcts_backend import TREEQUEST_COMMIT, TREEQUEST_VERSION
+from sle.algorithms.openevolve_backend import OPENEVOLVE_COMMIT, OPENEVOLVE_VERSION
+from sle.algorithms.shinkaevolve_backend import SHINKA_COMMIT, SHINKA_VERSION
+from sle.provenance import finalize_report_trust, source_provenance
 
 
 SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "merge_upstream_smokes.py"
@@ -24,13 +24,13 @@ class SourceProvenanceTests(unittest.TestCase):
     def test_clean_and_dirty_source_are_distinguished(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            (root / "frontier_science").mkdir()
-            source = root / "frontier_science" / "x.py"
+            (root / "sle").mkdir()
+            source = root / "sle" / "x.py"
             source.write_text("x = 1\n", encoding="utf-8")
             subprocess.run(["git", "init", "-q"], cwd=root, check=True)
             subprocess.run(["git", "config", "user.email", "test@example.invalid"], cwd=root, check=True)
             subprocess.run(["git", "config", "user.name", "Test"], cwd=root, check=True)
-            subprocess.run(["git", "add", "frontier_science/x.py"], cwd=root, check=True)
+            subprocess.run(["git", "add", "sle/x.py"], cwd=root, check=True)
             subprocess.run(["git", "commit", "-qm", "fixture"], cwd=root, check=True)
 
             clean = source_provenance(root, command=["fixture"])
@@ -41,7 +41,7 @@ class SourceProvenanceTests(unittest.TestCase):
             source.write_text("x = 2\n", encoding="utf-8")
             dirty = source_provenance(root)
             self.assertTrue(dirty["source_tree_dirty"])
-            self.assertTrue(any("frontier_science/x.py" in row for row in dirty["source_changes"]))
+            self.assertTrue(any("sle/x.py" in row for row in dirty["source_changes"]))
 
     def test_trust_decision_distinguishes_report_class_from_evidence_trust(self):
         report = {

@@ -41,5 +41,5 @@ contested, is required before this task can discriminate between searchers.
 ## Reproduce
 
 ```bash
-python -m frontier_science eval --task Optimization/CirclePacking
+python -m sle eval --task Optimization/CirclePacking
 ```

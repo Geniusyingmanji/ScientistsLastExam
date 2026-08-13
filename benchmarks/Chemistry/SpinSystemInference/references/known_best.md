@@ -63,5 +63,5 @@ will produce megabytes of output — one calibration run generated 2.8 MB before
 ## Reproduce
 
 ```bash
-python -m frontier_science eval --allow-uncertified --task Spectroscopy/SpinSystemInference
+python -m sle eval --allow-uncertified --task Spectroscopy/SpinSystemInference
 ```

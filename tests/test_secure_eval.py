@@ -11,14 +11,14 @@ from unittest.mock import patch
 
 import numpy as np
 
-from frontier_science.evaluate import (
+from sle.evaluate import (
     INVALID_SCORE, canonical_trusted_context, evaluate_candidate,
 )
-from frontier_science.rpc_codec import CodecError, decode, encode
-from frontier_science.secure_eval import (
+from sle.rpc_codec import CodecError, decode, encode
+from sle.secure_eval import (
     CandidateProxy, _seccomp_no_processes, validate_metrics,
 )
-from frontier_science.spec import load_task_spec
+from sle.spec import load_task_spec
 
 
 BENCHMARKS = Path(__file__).resolve().parents[1] / "benchmarks"
@@ -355,7 +355,7 @@ class SecureEvaluationTests(unittest.TestCase):
 
 class CodecTests(unittest.TestCase):
     def test_seccomp_file_fallback_is_available(self):
-        with patch("frontier_science.secure_eval.os.memfd_create", new=None, create=True):
+        with patch("sle.secure_eval.os.memfd_create", new=None, create=True):
             fd = None
             try:
                 fd = _seccomp_no_processes()

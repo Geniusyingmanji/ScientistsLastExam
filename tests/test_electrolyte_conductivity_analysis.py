@@ -40,9 +40,9 @@ class ElectrolyteConductivityAnalysisTests(unittest.TestCase):
         self.assertEqual(
             report["input_task_runtime_source_changes"],
             [
-                "frontier_science/evaluate.py",
-                "frontier_science/secure_eval.py",
-                "frontier_science/trusted_driver.py",
+                "sle/evaluate.py",
+                "sle/secure_eval.py",
+                "sle/trusted_driver.py",
             ],
         )
         self.assertTrue(report["input_task_runtime_source_migration"]["accepted"])

@@ -56,7 +56,7 @@ sys.path.insert(0, str(ROOT))
 
 import yaml  # noqa: E402
 
-from frontier_science.registry import list_tasks  # noqa: E402
+from sle.registry import list_tasks  # noqa: E402
 
 # Domain toolkits whose presence means the oracle is not a private reimplementation. NumPy and
 # SciPy are excluded on purpose: they are numerical infrastructure, not scientific authority.

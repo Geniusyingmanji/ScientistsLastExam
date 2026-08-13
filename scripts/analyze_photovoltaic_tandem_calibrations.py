@@ -23,15 +23,15 @@ from typing import Any
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from frontier_science.protocol import (  # noqa: E402
+from sle.protocol import (  # noqa: E402
     compact_trajectory_snapshot,
     load_trajectory,
 )
-from frontier_science.provenance import (  # noqa: E402
+from sle.provenance import (  # noqa: E402
     finalize_report_trust,
     source_provenance,
 )
-from frontier_science.runtime_migration import runtime_source_changes  # noqa: E402
+from sle.runtime_migration import runtime_source_changes  # noqa: E402
 
 
 TASK = "Photovoltaics/PhotovoltaicTandemDesign"
@@ -50,7 +50,7 @@ REPORTS = {
 INPUT_SOURCE_REVISION = "e57bb682930d65c39699b2153e8743063587b97e"
 CALIBRATION_SOURCE_REVISION = "0c0ca5ea21e6be5a58929e336b4c5dfbf0eddb55"
 TASK_RUNTIME_SCOPE = (
-    ":(glob)frontier_science/**/*.py",
+    ":(glob)sle/**/*.py",
     "benchmarks/Chemistry/PhotovoltaicTandemDesign",
     "requirements-upstream.txt",
 )

@@ -5,7 +5,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from frontier_science.evaluation_ledger import EvaluationLedger, RunLease
+from sle.evaluation_ledger import EvaluationLedger, RunLease
 
 
 class EvaluationLedgerTests(unittest.TestCase):

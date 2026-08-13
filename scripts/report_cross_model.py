@@ -36,7 +36,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from frontier_science.task_versions import version_class  # noqa: E402
+from sle.task_versions import version_class  # noqa: E402
 
 # Published list prices per million tokens, used only to report what a comparison cost. Absent
 # for a model means the cost column is blank rather than guessed.
@@ -73,7 +73,7 @@ def known_conditions() -> dict[str, str]:
     """Condition hash to model, for manifests predating the readable field. See the YAML."""
     import yaml
 
-    path = ROOT / "frontier_science" / "llm_conditions.yaml"
+    path = ROOT / "sle" / "llm_conditions.yaml"
     if not path.is_file():
         return {}
     document = yaml.safe_load(path.read_text(encoding="utf-8")) or {}

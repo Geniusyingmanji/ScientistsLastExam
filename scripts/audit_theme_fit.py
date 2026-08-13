@@ -51,7 +51,7 @@ sys.path.insert(0, str(ROOT))
 
 import yaml  # noqa: E402
 
-from frontier_science.registry import list_tasks  # noqa: E402
+from sle.registry import list_tasks  # noqa: E402
 
 # Phrases that say the anchor itself is a solution a correct implementation reaches. Written
 # narrowly on purpose: a first version matched the bare word "exact" and flagged four tasks

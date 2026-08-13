@@ -19,7 +19,7 @@ ROOT = Path(__file__).resolve().parent.parent
 TASK = ROOT / "benchmarks/EarthScience/RadiativeTransferFit"
 sys.path.insert(0, str(ROOT))
 
-from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402
+from sle.provenance import finalize_report_trust, source_provenance  # noqa: E402
 
 
 FIXED_NADIR_CHANNELS = np.asarray((12, 0, 23, 18, 21, 16, 11, 1, 20, 15, 10, 2))

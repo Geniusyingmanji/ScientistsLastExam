@@ -32,7 +32,7 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO))
 
-from frontier_science.benchmark_layout import discipline_for_domain  # noqa: E402
+from sle.benchmark_layout import discipline_for_domain  # noqa: E402
 
 RUN_EVAL_TEMPLATE = '''from __future__ import annotations
 import argparse, importlib.util, json, sys

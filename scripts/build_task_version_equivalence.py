@@ -27,7 +27,7 @@ recovered once, written down, and auditable, rather than re-derived by guesswork
 
 Usage:
     python scripts/build_task_version_equivalence.py --runs runs \\
-        --output frontier_science/task_versions.yaml
+        --output sle/task_versions.yaml
 """
 from __future__ import annotations
 
@@ -183,7 +183,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--output", required=True)
     args = ap.parse_args(argv)
 
-    from frontier_science.registry import list_tasks
+    from sle.registry import list_tasks
 
     directories = {spec.task_id: spec.task_dir.relative_to(ROOT).as_posix()
                    for spec in list_tasks(None)}

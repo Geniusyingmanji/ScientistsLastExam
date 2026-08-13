@@ -28,29 +28,29 @@ MIGRATION_REPORT_SHA256 = (
     "fe21a9be7d3a64dadf4e4f0bbc68b9157eb529e9a47e6b97faa751ffd9ee9673"
 )
 RUNTIME_PATHS = (
-    "frontier_science/evaluate.py",
-    "frontier_science/secure_eval.py",
-    "frontier_science/trusted_driver.py",
+    "sle/evaluate.py",
+    "sle/secure_eval.py",
+    "sle/trusted_driver.py",
 )
 BASE_RUNTIME_SHA256 = {
-    "frontier_science/evaluate.py": (
+    "sle/evaluate.py": (
         "388a596a7e3b774116480657e0a2c9d423e03cecfd7704a65d78a47bddb8a39f"
     ),
-    "frontier_science/secure_eval.py": (
+    "sle/secure_eval.py": (
         "af898b0102a826ab9fc8d36dd2455d2680d68db646f31996dbcf02e3dd43edaf"
     ),
-    "frontier_science/trusted_driver.py": (
+    "sle/trusted_driver.py": (
         "e6d630c0a0638138fb214a3a5b00d0f4cf718129edee6610f955ff0d3dda12b4"
     ),
 }
 AUDITED_RUNTIME_SHA256 = {
-    "frontier_science/evaluate.py": (
+    "sle/evaluate.py": (
         "ba30ec09573fd63ab9b3d02b940bc7718146f866363f4c7a44d39f0dc80dfe8d"
     ),
-    "frontier_science/secure_eval.py": (
+    "sle/secure_eval.py": (
         "8f65b9459c22a508cdfdcbdedc940339d7b78c2adff10448d74c5cbfa41a98d7"
     ),
-    "frontier_science/trusted_driver.py": (
+    "sle/trusted_driver.py": (
         "79800395d619b11b751b512552a184bc19584e4a889c825bd5d6086fa77f1a83"
     ),
 }
@@ -65,15 +65,15 @@ AUDITED_RUNTIME_SHA256 = {
 # incomplete combination of these blobs) continues to surface fail-closed.
 LAYOUT_MIGRATION_REVISION = "844ba97c4f425e4624a3c1b4b67c025c68438409"
 LAYOUT_RUNTIME_BLOBS = {
-    "frontier_science/benchmark_layout.py": (
+    "sle/benchmark_layout.py": (
         None,
         "5debce7f3f90c007a070d383297f80cdae0e2a19",
     ),
-    "frontier_science/registry.py": (
+    "sle/registry.py": (
         "8324a7be5e684ca6e9aa1997f803dace5c1a8d36",
         "215df53672776003acee22f85cd9564401d704ee",
     ),
-    "frontier_science/spec.py": (
+    "sle/spec.py": (
         "206523f66f286e974b1f2e9f807415f76b21648b",
         "b2ae45abb9cc5b3e20990245dcb0346e48c9b9c9",
     ),

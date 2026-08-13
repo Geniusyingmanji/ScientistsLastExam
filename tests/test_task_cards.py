@@ -4,8 +4,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from frontier_science.certification import certification_status
-from frontier_science.registry import list_tasks
+from sle.certification import certification_status
+from sle.registry import list_tasks
 from scripts.audit_tasks import _task_card_issues, audit
 
 

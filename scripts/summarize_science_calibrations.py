@@ -20,8 +20,8 @@ from typing import Any
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from frontier_science.protocol import compact_trajectory_snapshot, load_trajectory  # noqa: E402
-from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402
+from sle.protocol import compact_trajectory_snapshot, load_trajectory  # noqa: E402
+from sle.provenance import finalize_report_trust, source_provenance  # noqa: E402
 
 
 DEFAULT_REPORTS = (

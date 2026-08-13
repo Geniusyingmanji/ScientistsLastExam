@@ -16,9 +16,9 @@ from typing import Any
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from frontier_science.evaluate import INVALID_SCORE, evaluate_candidate  # noqa: E402
-from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402
-from frontier_science.registry import list_tasks  # noqa: E402
+from sle.evaluate import INVALID_SCORE, evaluate_candidate  # noqa: E402
+from sle.provenance import finalize_report_trust, source_provenance  # noqa: E402
+from sle.registry import list_tasks  # noqa: E402
 
 
 def _canonical(metrics: dict[str, Any]) -> str:

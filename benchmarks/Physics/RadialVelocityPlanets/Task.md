@@ -50,7 +50,7 @@ number would report the first and hide the second.
 
 - Only edit `solution.py`; keep `detect_planets(observation)`.
 - Deterministic CPU code. The standard library, NumPy, SciPy and astropy are available.
-- At most six claims. `frontier_science.contract_lint` is importable for shape checks.
+- At most six claims. `sle.contract_lint` is importable for shape checks.
 - Do not read `verification/` or `frontier_eval/`.
 
 ## Difficulty

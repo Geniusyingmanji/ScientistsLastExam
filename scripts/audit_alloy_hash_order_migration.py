@@ -30,13 +30,13 @@ from typing import Any
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from frontier_science.evaluate import evaluate_candidate  # noqa: E402
-from frontier_science.provenance import (  # noqa: E402
+from sle.evaluate import evaluate_candidate  # noqa: E402
+from sle.provenance import (  # noqa: E402
     finalize_report_trust,
     source_provenance,
 )
-from frontier_science.registry import find_task  # noqa: E402
-from frontier_science.runtime_migration import (  # noqa: E402
+from sle.registry import find_task  # noqa: E402
+from sle.runtime_migration import (  # noqa: E402
     RUNTIME_PATHS,
     runtime_migration_status,
     runtime_source_changes,
@@ -54,13 +54,13 @@ ALLOWED_RUNTIME_CHANGES = (
     "benchmarks/MaterialsScience/AlloyHardnessOptimization/verification/evaluator.py",
 )
 TASK_RUNTIME_SCOPE = (
-    "frontier_science/evaluate.py",
-    "frontier_science/trusted_driver.py",
-    "frontier_science/secure_eval.py",
-    "frontier_science/candidate_worker.py",
-    "frontier_science/rpc_codec.py",
-    "frontier_science/spec.py",
-    "frontier_science/registry.py",
+    "sle/evaluate.py",
+    "sle/trusted_driver.py",
+    "sle/secure_eval.py",
+    "sle/candidate_worker.py",
+    "sle/rpc_codec.py",
+    "sle/spec.py",
+    "sle/registry.py",
     "benchmarks/MaterialsScience/AlloyHardnessOptimization",
     "requirements-upstream.txt",
 )

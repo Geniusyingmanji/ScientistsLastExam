@@ -91,5 +91,5 @@ measurement.
 ## Reproduce
 
 ```bash
-python -m frontier_science eval --allow-uncertified --task RNAEngineering/RNAEnsembleDesign
+python -m sle eval --allow-uncertified --task RNAEngineering/RNAEnsembleDesign
 ```

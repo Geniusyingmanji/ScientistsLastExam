@@ -10,9 +10,9 @@ from pathlib import Path
 
 import numpy as np
 
-from frontier_science.evaluate import evaluate_candidate
-from frontier_science.metric_visibility import search_visible_metrics
-from frontier_science.registry import find_task
+from sle.evaluate import evaluate_candidate
+from sle.metric_visibility import search_visible_metrics
+from sle.registry import find_task
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -112,7 +112,7 @@ class ElectrolyteConductivityDesignTests(unittest.TestCase):
 
     def test_builder_reconstructs_exact_data_from_fixed_source_when_available(self):
         source = Path(
-            "/tmp/frontier_science_electrolyte/Conductivtiy_experiment.csv"
+            "/tmp/sle_electrolyte/Conductivtiy_experiment.csv"
         )
         if not source.is_file():
             self.skipTest("fixed upstream Zenodo CSV is not present")

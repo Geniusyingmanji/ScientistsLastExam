@@ -4,7 +4,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from frontier_science.sentinels import SentinelLedger, load_sentinel_events
+from sle.sentinels import SentinelLedger, load_sentinel_events
 
 
 class SentinelLedgerTests(unittest.TestCase):

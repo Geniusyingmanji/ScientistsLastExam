@@ -18,16 +18,16 @@ from typing import Any
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from frontier_science.protocol import (  # noqa: E402
+from sle.protocol import (  # noqa: E402
     compact_trajectory_snapshot,
     load_trajectory,
 )
-from frontier_science.provenance import (  # noqa: E402
+from sle.provenance import (  # noqa: E402
     finalize_report_trust,
     source_provenance,
 )
-from frontier_science.runtime_migration import runtime_source_changes  # noqa: E402
-from frontier_science.secure_eval import CandidateProxy  # noqa: E402
+from sle.runtime_migration import runtime_source_changes  # noqa: E402
+from sle.secure_eval import CandidateProxy  # noqa: E402
 
 
 TASK = "ChemicalProcess/DistillationColumnDesign"
@@ -43,7 +43,7 @@ REPORTS = {
     ),
 }
 SOURCE_SCOPE = (
-    "frontier_science", "scripts", "tests", "benchmarks",
+    "sle", "scripts", "tests", "benchmarks",
     "requirements-upstream.txt",
 )
 SCALAR_FIELDS = (

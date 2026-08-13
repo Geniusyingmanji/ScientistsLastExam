@@ -2,6 +2,6 @@
 2) Return finite shape-consistent parameters/source positions/source strengths, confidence in [0,1], and a boolean abstain decision.
 3) Respect the charged 12-unit experiment budget; caught invalid or over-budget calls still invalidate the world.
 4) Deterministic Python/NumPy/SciPy/stdlib CPU code only; no network/process creation and no reading verification/ or frontier_eval/.
-6) `frontier_science.contract_lint` is importable in the sandbox and free to call. Use it
+6) `sle.contract_lint` is importable in the sandbox and free to call. Use it
    to check your submission's shape before returning; a rejected submission scores the same
    as a wrong answer.

@@ -232,7 +232,7 @@ class AlloyHardnessAnalysisTests(unittest.TestCase):
 
         extra = self.module._source_migration_status(
             revision,
-            list(self.module.SOURCE_MIGRATION_CHANGES) + ["frontier_science/change.py"],
+            list(self.module.SOURCE_MIGRATION_CHANGES) + ["sle/change.py"],
         )
         self.assertFalse(extra["accepted"])
         self.assertFalse(extra["checks"]["runtime_change_scope_matches"])

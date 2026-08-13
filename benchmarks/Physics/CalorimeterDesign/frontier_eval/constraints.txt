@@ -2,6 +2,6 @@
 2) Return finite unique arrays with shape (3, problem["n_layers"]) and obey every public option envelope.
 3) NumPy/SciPy only. CPU, seconds. No network.
 4) Do not read verification/ or frontier_eval/.
-6) `frontier_science.contract_lint` is importable in the sandbox and free to call. Use it
+6) `sle.contract_lint` is importable in the sandbox and free to call. Use it
    to check your submission's shape before returning; a rejected submission scores the same
    as a wrong answer.

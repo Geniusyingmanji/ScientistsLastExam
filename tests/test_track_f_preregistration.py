@@ -91,7 +91,7 @@ class TrackFPreregistrationTests(unittest.TestCase):
             "git_revision": revision,
             "source_tree_dirty": False,
             "source_changes": [],
-            "source_scope": ["frontier_science", "scripts", "tests", "benchmarks"],
+            "source_scope": ["sle", "scripts", "tests", "benchmarks"],
         }
         task_bindings = []
         for task in MODULE.TASKS:

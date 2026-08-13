@@ -34,21 +34,21 @@ from typing import Any
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from frontier_science.algorithms.common import (  # noqa: E402
+from sle.algorithms.common import (  # noqa: E402
     atomic_write_text,
     feedback_scope,
     runtime_source_sha256,
     task_contract_sha256,
 )
-from frontier_science.algorithms.evolve import (  # noqa: E402
+from sle.algorithms.evolve import (  # noqa: E402
     SYSTEM_PROMPT,
     _build_prompt,
 )
-from frontier_science.evaluate import (  # noqa: E402
+from sle.evaluate import (  # noqa: E402
     canonical_trusted_context,
     evaluate_candidate,
 )
-from frontier_science.protocol import (  # noqa: E402
+from sle.protocol import (  # noqa: E402
     compact_trajectory_snapshot,
     load_trajectory,
     realized_token_curve,
@@ -56,16 +56,16 @@ from frontier_science.protocol import (  # noqa: E402
     summarize_at_token_horizon,
     summarize_trajectory,
 )
-from frontier_science.metric_visibility import (  # noqa: E402
+from sle.metric_visibility import (  # noqa: E402
     score_only_metrics,
     search_visible_metrics,
 )
-from frontier_science.provenance import (  # noqa: E402
+from sle.provenance import (  # noqa: E402
     SOURCE_SCOPE,
     finalize_report_trust,
     source_provenance,
 )
-from frontier_science.registry import find_task  # noqa: E402
+from sle.registry import find_task  # noqa: E402
 
 
 EXPECTED_ALGORITHM = "greedy_rewrite"

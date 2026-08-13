@@ -21,7 +21,7 @@ TASK = ROOT / "benchmarks/Engineering/RANSCalibration"
 VERIFICATION = TASK / "verification"
 sys.path.insert(0, str(ROOT))
 
-from frontier_science.provenance import (  # noqa: E402
+from sle.provenance import (  # noqa: E402
     finalize_report_trust,
     source_provenance,
 )

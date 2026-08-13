@@ -19,11 +19,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from frontier_science.algorithms import get_algorithm  # noqa: E402
-from frontier_science.config import load_llm_client  # noqa: E402
-from frontier_science.protocol import SCHEMA_VERSION, load_trajectory  # noqa: E402
-from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402
-from frontier_science.registry import find_task  # noqa: E402
+from sle.algorithms import get_algorithm  # noqa: E402
+from sle.config import load_llm_client  # noqa: E402
+from sle.protocol import SCHEMA_VERSION, load_trajectory  # noqa: E402
+from sle.provenance import finalize_report_trust, source_provenance  # noqa: E402
+from sle.registry import find_task  # noqa: E402
 
 MODULES = {"openevolve": "openevolve", "abmcts": "treequest", "shinkaevolve": "shinka"}
 

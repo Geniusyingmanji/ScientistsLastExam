@@ -9,8 +9,8 @@
 #
 # Each entry is a claim that a hash was produced by that condition. Regenerate a hash with:
 #   python3 -c "import sys; sys.path.insert(0,'.'); \
-#     from frontier_science.config import load_llm_client; \
-#     from frontier_science.algorithms.common import llm_condition_sha256; \
+#     from sle.config import load_llm_client; \
+#     from sle.algorithms.common import llm_condition_sha256; \
 #     print(llm_condition_sha256(load_llm_client('<config path>')))"
 schema_version: 1
 conditions:

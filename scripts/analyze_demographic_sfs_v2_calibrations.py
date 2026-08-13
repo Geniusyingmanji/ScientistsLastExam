@@ -26,9 +26,9 @@ from typing import Any
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from frontier_science.protocol import compact_trajectory_snapshot, load_trajectory  # noqa: E402
-from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402
-from frontier_science.runtime_migration import (  # noqa: E402
+from sle.protocol import compact_trajectory_snapshot, load_trajectory  # noqa: E402
+from sle.provenance import finalize_report_trust, source_provenance  # noqa: E402
+from sle.runtime_migration import (  # noqa: E402
     runtime_migration_status,
     runtime_source_changes,
 )
@@ -53,13 +53,13 @@ EXPECTED_CONDITIONS = {
     },
 }
 TASK_RUNTIME_SCOPE = (
-    "frontier_science/evaluate.py",
-    "frontier_science/trusted_driver.py",
-    "frontier_science/secure_eval.py",
-    "frontier_science/candidate_worker.py",
-    "frontier_science/rpc_codec.py",
-    "frontier_science/spec.py",
-    "frontier_science/registry.py",
+    "sle/evaluate.py",
+    "sle/trusted_driver.py",
+    "sle/secure_eval.py",
+    "sle/candidate_worker.py",
+    "sle/rpc_codec.py",
+    "sle/spec.py",
+    "sle/registry.py",
     "benchmarks/Biology/DemographicSFS",
     "requirements-upstream.txt",
 )

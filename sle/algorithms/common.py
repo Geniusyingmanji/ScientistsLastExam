@@ -139,7 +139,7 @@ def task_package_sha256(spec: TaskSpec) -> str:
 
 def runtime_source_sha256() -> str:
     root = Path(__file__).resolve().parents[2]
-    paths = sorted((root / "frontier_science").rglob("*.py"))
+    paths = sorted((root / "sle").rglob("*.py"))
     requirements = root / "requirements-upstream.txt"
     if requirements.is_file():
         paths.append(requirements)

@@ -27,14 +27,14 @@ import yaml
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from frontier_science.certification import certification_record  # noqa: E402
-from frontier_science.benchmark_layout import task_path  # noqa: E402
-from frontier_science.provenance import (  # noqa: E402
+from sle.certification import certification_record  # noqa: E402
+from sle.benchmark_layout import task_path  # noqa: E402
+from sle.provenance import (  # noqa: E402
     SOURCE_SCOPE,
     finalize_report_trust,
     source_provenance,
 )
-from frontier_science.registry import list_tasks  # noqa: E402
+from sle.registry import list_tasks  # noqa: E402
 from scripts.audit_tasks import _task_card_issues  # noqa: E402
 
 

@@ -25,21 +25,21 @@ import yaml
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from frontier_science.algorithms.evolve import SYSTEM_PROMPT, _build_prompt  # noqa: E402
-from frontier_science.metric_visibility import (  # noqa: E402
+from sle.algorithms.evolve import SYSTEM_PROMPT, _build_prompt  # noqa: E402
+from sle.metric_visibility import (  # noqa: E402
     SEARCH_VISIBLE_KEYS,
     search_visible_metrics,
 )
-from frontier_science.protocol import (  # noqa: E402
+from sle.protocol import (  # noqa: E402
     compact_trajectory_snapshot,
     load_trajectory,
     sha256_text,
 )
-from frontier_science.provenance import (  # noqa: E402
+from sle.provenance import (  # noqa: E402
     finalize_report_trust,
     source_provenance,
 )
-from frontier_science.registry import find_task  # noqa: E402
+from sle.registry import find_task  # noqa: E402
 
 
 DEFAULT_REPORT = ROOT / "experiments/gpt56_science_census_2026-08-06_v1.json"

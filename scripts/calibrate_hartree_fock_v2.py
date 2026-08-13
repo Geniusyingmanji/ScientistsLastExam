@@ -29,13 +29,13 @@ TASK = ROOT / "benchmarks/Chemistry/HartreeFockSCF"
 DATA_PATH = TASK / "verification/rhf_instances_v2.npz"
 sys.path.insert(0, str(ROOT))
 
-from frontier_science.metric_visibility import search_visible_metrics  # noqa: E402
-from frontier_science.evaluate import evaluate_candidate  # noqa: E402
-from frontier_science.provenance import (  # noqa: E402
+from sle.metric_visibility import search_visible_metrics  # noqa: E402
+from sle.evaluate import evaluate_candidate  # noqa: E402
+from sle.provenance import (  # noqa: E402
     finalize_report_trust,
     source_provenance,
 )
-from frontier_science.registry import find_task  # noqa: E402
+from sle.registry import find_task  # noqa: E402
 
 
 THREAD_ENVIRONMENT_KEYS = (

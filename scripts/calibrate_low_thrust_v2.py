@@ -26,7 +26,7 @@ ROOT = Path(__file__).resolve().parent.parent
 TASK = ROOT / "benchmarks/Engineering/LowThrustTransfer"
 sys.path.insert(0, str(ROOT))
 
-from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402
+from sle.provenance import finalize_report_trust, source_provenance  # noqa: E402
 
 
 # Order matches public_instances(), not private split labels.  Every result was produced by the

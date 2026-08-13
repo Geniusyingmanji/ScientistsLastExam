@@ -7,5 +7,5 @@
    identical coupling to everyone else. The measured single-site traces are the same under the
    swap, so those parameters are not identifiable and abstaining is correct. Abstaining on a
    determined chain scores zero for that chain.
-5) `frontier_science.contract_lint` is importable and free to call for shape checks.
+5) `sle.contract_lint` is importable and free to call for shape checks.
 6) Do not read verification/ or frontier_eval/.

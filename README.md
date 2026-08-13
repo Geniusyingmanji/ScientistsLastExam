@@ -29,7 +29,7 @@ This repository is inspired by
 the text-question benchmark named *FrontierScience* in
 [arXiv:2601.21165](https://arxiv.org/abs/2601.21165).
 
-The Python package is still importable as `frontier_science`, which was this project's working
+The Python package is still importable as `sle`, which was this project's working
 name; the CLI examples below reflect that. Renaming the module is a separate mechanical change.
 
 > A higher simulator or verifier score demonstrates optimization only within the registered
@@ -126,10 +126,10 @@ The certified core currently consists of:
 - `Photonics/MultilayerThinFilm`
 - `Physics/SpinGlassGroundState`
 
-Run `python -m frontier_science list --all` for the authoritative live inventory. The
+Run `python -m sle list --all` for the authoritative live inventory. The
 domain-to-discipline mapping is in
-[`frontier_science/benchmark_layout.py`](frontier_science/benchmark_layout.py); admission status
-is in [`frontier_science/certification.yaml`](frontier_science/certification.yaml).
+[`sle/benchmark_layout.py`](sle/benchmark_layout.py); admission status
+is in [`sle/certification.yaml`](sle/certification.yaml).
 
 ## Community-oracle tasks
 
@@ -172,14 +172,14 @@ backends have newer Python requirements. Per-task oracle dependencies are pinned
 
 ```bash
 # Show certified tasks, then the complete inventory.
-python -m frontier_science list
-python -m frontier_science list --all
+python -m sle list
+python -m sle list --all
 
 # Evaluate the bundled baseline for a certified task.
-python -m frontier_science eval --task Chemistry/LennardJonesCluster
+python -m sle eval --task Chemistry/LennardJonesCluster
 
 # Evaluate another candidate implementation.
-python -m frontier_science eval \
+python -m sle eval \
   --task Chemistry/LennardJonesCluster \
   --candidate /path/to/solution.py
 ```
@@ -203,15 +203,15 @@ bash scripts/setup_oracle_env.sh            # install the pinned set
 
 The oracle runs in the trusted parent, so installing a toolkit does not touch the isolation model.
 A candidate receives one only if its task lists it in `frontier_eval/candidate_packages.txt` **and**
-the name appears in the audited allowlist in `frontier_science/secure_eval.py`.
+the name appears in the audited allowlist in `sle/secure_eval.py`.
 
 ### Configure an LLM
 
 ```bash
-cp frontier_science/conf/llm/openai_compatible.example.yaml \
-   frontier_science/conf/llm/local.yaml
+cp sle/conf/llm/openai_compatible.example.yaml \
+   sle/conf/llm/local.yaml
 export OPENAI_API_KEY=your_key_here
-python -m frontier_science smoke
+python -m sle smoke
 ```
 
 `local.yaml` is git-ignored. Configuration resolution is `--llm-config`, then `FS_LLM_CONFIG`,
@@ -222,7 +222,7 @@ and Responses wires are supported. Reasoning models on the chat wire reject `max
 ### Run an optimization trajectory
 
 ```bash
-python -m frontier_science run \
+python -m sle run \
   --task Chemistry/LennardJonesCluster \
   --algorithm greedy_rewrite \
   --budget 10 \
@@ -619,7 +619,7 @@ form, alongside the hash that binds it, so this cannot be ambiguous again.
 
 Two things are deliberately left open rather than papered over.
 
-**The trusted runtime changed.** `frontier_science/secure_eval.py` and `benchmark_layout.py`
+**The trusted runtime changed.** `sle/secure_eval.py` and `benchmark_layout.py`
 were modified, and `tests/test_runtime_migration.py` passes at the previous revision and fails
 here. The project binds frozen analysis artifacts to a `runtime_source_sha256`, so changing the
 runtime unbinds them; the remedy is to register a runtime migration audit, which re-certifies the

@@ -14,10 +14,10 @@ from unittest.mock import patch
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from frontier_science.algorithms.evolve import greedy_rewrite  # noqa: E402
-from frontier_science.evaluation_ledger import EvaluationLedger, RunLease  # noqa: E402
-from frontier_science.llm import LLMConfig  # noqa: E402
-from frontier_science.registry import find_task  # noqa: E402
+from sle.algorithms.evolve import greedy_rewrite  # noqa: E402
+from sle.evaluation_ledger import EvaluationLedger, RunLease  # noqa: E402
+from sle.llm import LLMConfig  # noqa: E402
+from sle.registry import find_task  # noqa: E402
 
 
 FAULT_EXIT_CODE = 86
@@ -69,7 +69,7 @@ def _exit_now() -> None:
 
 
 def _run_greedy_fault(mode: str, workdir: Path) -> None:
-    evolve_module = importlib.import_module("frontier_science.algorithms.evolve")
+    evolve_module = importlib.import_module("sle.algorithms.evolve")
     real_append = evolve_module.append_event
     budget = 0 if mode.startswith("baseline_") else 1
     calls = {"count": 0}

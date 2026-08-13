@@ -48,7 +48,7 @@ def _record(label, mode, budget, seed, events, tokens=100):
         "source_revision": (
             "746dff077a58e4c9a4afea821b5a3015d70cc378"
         ),
-        "source_scope": ["frontier_science", "scripts", "tests", "benchmarks"],
+        "source_scope": ["sle", "scripts", "tests", "benchmarks"],
         "llm_condition_sha256": "a" * 64,
         "model": "gpt-5.5",
         "server_side_seed_control": False,

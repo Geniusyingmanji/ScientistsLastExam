@@ -14,7 +14,7 @@ from __future__ import annotations
 import unittest
 from unittest.mock import patch
 
-from frontier_science.llm import LLMClient, LLMConfig
+from sle.llm import LLMClient, LLMConfig
 
 
 def client(**overrides):
@@ -77,7 +77,7 @@ class AnthropicWireTests(unittest.TestCase):
             client(thinking_budget_tokens=8000, max_output_tokens=4096).complete("q")
 
     def test_the_wire_is_recorded_in_the_run_condition(self):
-        from frontier_science.algorithms.common import llm_condition_descriptor
+        from sle.algorithms.common import llm_condition_descriptor
 
         descriptor = llm_condition_descriptor(client())
         self.assertEqual(descriptor["wire"], "anthropic")

@@ -81,7 +81,7 @@ def _record(label, mode, budget, scores, tokens=1000):
     return {
         "label": label,
         "source_revision": "4" * 40,
-        "source_scope": ["frontier_science", "scripts", "tests", "benchmarks"],
+        "source_scope": ["sle", "scripts", "tests", "benchmarks"],
         "llm_condition_sha256": "5" * 64,
         "model": "gpt-5.5",
         "server_side_seed_control": False,
@@ -147,9 +147,9 @@ class RANSAnalysisTests(unittest.TestCase):
         self.assertEqual(
             changed,
             [
-                "frontier_science/evaluate.py",
-                "frontier_science/secure_eval.py",
-                "frontier_science/trusted_driver.py",
+                "sle/evaluate.py",
+                "sle/secure_eval.py",
+                "sle/trusted_driver.py",
             ],
         )
 
@@ -212,9 +212,9 @@ class RANSAnalysisTests(unittest.TestCase):
         self.assertEqual(
             report["input_task_runtime_source_changes"],
             [
-                "frontier_science/evaluate.py",
-                "frontier_science/secure_eval.py",
-                "frontier_science/trusted_driver.py",
+                "sle/evaluate.py",
+                "sle/secure_eval.py",
+                "sle/trusted_driver.py",
             ],
         )
         self.assertTrue(

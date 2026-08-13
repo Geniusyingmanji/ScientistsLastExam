@@ -49,9 +49,9 @@ class DiffractionGratingAnalysisTests(unittest.TestCase):
             report["model_to_analysis_task_runtime_source_changes"],
             [
                 "benchmarks/Physics/DiffractionGratingDesign/verification/evaluator.py",
-                "frontier_science/evaluate.py",
-                "frontier_science/secure_eval.py",
-                "frontier_science/trusted_driver.py",
+                "sle/evaluate.py",
+                "sle/secure_eval.py",
+                "sle/trusted_driver.py",
             ],
         )
         self.assertTrue(

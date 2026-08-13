@@ -13,7 +13,7 @@ the model understands the science.
 
 Usage inside a candidate::
 
-    from frontier_science.contract_lint import finite_array, binary_array, mapping
+    from sle.contract_lint import finite_array, binary_array, mapping
 
     ok, why = binary_array(prediction, shape=(shots, n_obs))
     if not ok:

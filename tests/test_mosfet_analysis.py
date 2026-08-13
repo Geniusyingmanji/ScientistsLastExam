@@ -86,7 +86,7 @@ def _record(label, budget, mode, seed, scores, robustness):
         "trajectory_sha256": "2" * 64,
         "run_manifest_sha256": "3" * 64,
         "source_revision": "4" * 40,
-        "source_scope": ["frontier_science", "scripts", "tests", "benchmarks"],
+        "source_scope": ["sle", "scripts", "tests", "benchmarks"],
         "llm_condition_sha256": "5" * 64,
         "model": "gpt-5.5",
         "server_side_seed_control": False,

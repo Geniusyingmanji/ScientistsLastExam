@@ -6,7 +6,7 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from frontier_science.runtime_migration import (
+from sle.runtime_migration import (
     LAYOUT_RUNTIME_BLOBS,
     compare_json_values,
     filter_runtime_source_changes,
@@ -36,8 +36,8 @@ class RuntimeMigrationTests(unittest.TestCase):
             "benchmarks/Engineering/ExampleTask/verification/evaluator.py",
             "benchmarks/Engineering/ExampleTask/verification/data.json",
             "benchmarks/Engineering/ExampleTask/frontier_eval/__init__.py",
-            "frontier_science/evaluate.py",
-            "frontier_science/TASK_CARD.yaml",
+            "sle/evaluate.py",
+            "sle/TASK_CARD.yaml",
             "benchmarks/Engineering/ExampleTask/verification/TASK_CARD.yaml",
         ]
 
@@ -95,8 +95,8 @@ class RuntimeMigrationTests(unittest.TestCase):
             ["git", "rev-parse", "HEAD"], cwd=ROOT, text=True
         ).strip()
         shared_scope = [
-            "frontier_science/registry.py",
-            "frontier_science/spec.py",
+            "sle/registry.py",
+            "sle/spec.py",
         ]
         for task_scope in (
             "benchmarks/Turbulence/RANSCalibration",
@@ -129,21 +129,21 @@ class RuntimeMigrationTests(unittest.TestCase):
             return tree_output(command[3])
 
         with patch(
-            "frontier_science.runtime_migration.subprocess.check_output",
+            "sle.runtime_migration.subprocess.check_output",
             side_effect=ls_tree,
         ):
             with patch(
-                "frontier_science.runtime_migration._is_ancestor",
+                "sle.runtime_migration._is_ancestor",
                 side_effect=lambda _left, right, _root: right != "legacy",
             ):
                 changes = runtime_source_changes(
                     "legacy",
                     "changed",
-                    ["frontier_science/registry.py"],
+                    ["sle/registry.py"],
                     root=ROOT,
                 )
 
-        self.assertIn("frontier_science/registry.py", changes)
+        self.assertIn("sle/registry.py", changes)
 
     def test_layout_runtime_unit_is_unchanged_at_current_revision(self):
         legacy_revision = "3e031373cd54f4d9542076fbe42ceaee855fe825"
@@ -155,9 +155,9 @@ class RuntimeMigrationTests(unittest.TestCase):
                 legacy_revision,
                 current_revision,
                 [
-                    "frontier_science/benchmark_layout.py",
-                    "frontier_science/registry.py",
-                    "frontier_science/spec.py",
+                    "sle/benchmark_layout.py",
+                    "sle/registry.py",
+                    "sle/spec.py",
                 ],
                 root=ROOT,
             ),

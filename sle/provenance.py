@@ -10,7 +10,7 @@ from typing import Any, Optional, Sequence
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 SOURCE_SCOPE = (
-    "frontier_science", "scripts", "tests", "benchmarks", "requirements-upstream.txt"
+    "sle", "scripts", "tests", "benchmarks", "requirements-upstream.txt"
 )
 
 

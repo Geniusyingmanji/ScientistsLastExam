@@ -19,11 +19,11 @@ from unittest.mock import patch
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from frontier_science.algorithms.evolve import greedy_rewrite  # noqa: E402
-from frontier_science.evaluation_ledger import EvaluationLedger, RunLease  # noqa: E402
-from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402
-from frontier_science.protocol import load_trajectory  # noqa: E402
-from frontier_science.registry import find_task  # noqa: E402
+from sle.algorithms.evolve import greedy_rewrite  # noqa: E402
+from sle.evaluation_ledger import EvaluationLedger, RunLease  # noqa: E402
+from sle.provenance import finalize_report_trust, source_provenance  # noqa: E402
+from sle.protocol import load_trajectory  # noqa: E402
+from sle.registry import find_task  # noqa: E402
 from scripts.run_recovery_fault_worker import (  # noqa: E402
     FAULT_EXIT_CODE,
     TASK,
@@ -107,7 +107,7 @@ def _audit_greedy_mode(root: Path, mode: str) -> dict[str, Any]:
     result = None
     try:
         with patch(
-            "frontier_science.algorithms.evolve.evaluate_candidate",
+            "sle.algorithms.evolve.evaluate_candidate",
             side_effect=forbidden_evaluator,
         ):
             result = greedy_rewrite(
@@ -301,7 +301,7 @@ def _audit_tamper_rejection(root: Path) -> dict[str, Any]:
 
 def build_report() -> dict[str, Any]:
     with tempfile.TemporaryDirectory(
-        prefix="frontier_science_recovery_audit_"
+        prefix="sle_recovery_audit_"
     ) as temporary:
         root = Path(temporary)
         scenarios = [

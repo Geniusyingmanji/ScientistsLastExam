@@ -3,6 +3,6 @@
 3) Perturbation inputs lie in [-2,2], target at most two genes, use 20-80 steps, and must not exceed budget_units.
 4) The protected phenotype readout cannot be directly perturbed; the submitted intervention targets at most two actionable genes.
 5) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read verification/ or frontier_eval/.
-6) `frontier_science.contract_lint` is importable in the sandbox and free to call. Use it
+6) `sle.contract_lint` is importable in the sandbox and free to call. Use it
    to check your submission's shape before returning; a rejected submission scores the same
    as a wrong answer.

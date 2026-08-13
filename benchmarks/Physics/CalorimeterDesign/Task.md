@@ -162,12 +162,12 @@ Engineering conclusions require GEANT4 and test-beam replication.
 
 ## Checking your submission's shape before spending a call
 
-`frontier_science.contract_lint` is importable inside the sandbox. Calling it costs no oracle
+`sle.contract_lint` is importable inside the sandbox. Calling it costs no oracle
 budget and reveals nothing about the science — every check is about form, and none touches a
 score, a hidden world or a reference value.
 
 ```python
-from frontier_science.contract_lint import mapping, finite_array, in_range, explain
+from sle.contract_lint import mapping, finite_array, in_range, explain
 
 ok, why = mapping(submission, required=["a", "b"])
 if not ok:

@@ -129,8 +129,8 @@ QuantumErrorDecoder。补跑之后合格任务从 5 个增加到 7 个
 
 ## pipeline 改动清单
 
-1. `task_package_sha256` 不再哈希运行产物(`frontier_science/algorithms/common.py`,4 测试)。
-2. `scripts/build_task_version_equivalence.py` + `frontier_science/task_versions.py`:
+1. `task_package_sha256` 不再哈希运行产物(`sle/algorithms/common.py`,4 测试)。
+2. `scripts/build_task_version_equivalence.py` + `sle/task_versions.py`:
    哈希等价表,重放优先、历史兜底,未知哈希映射到自身而非共用桶(5 测试)。
 3. 两个报告改为在等价类上比较,并列出被排除项。
 4. 准入证据按 (任务, 模型, 任务版本) 分组;此前饱和跨 cohort 池化 = 混两个版本的 seed。

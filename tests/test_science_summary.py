@@ -223,7 +223,7 @@ class ScienceCalibrationSummaryTests(unittest.TestCase):
         self.assertEqual(report["task_count"], 38)
 
     def test_scalar_metric_filter_rejects_nonfinite_and_omits_nested(self):
-        from frontier_science.protocol import compact_scalar_metrics
+        from sle.protocol import compact_scalar_metrics
 
         self.assertEqual(
             compact_scalar_metrics({
@@ -238,7 +238,7 @@ class ScienceCalibrationSummaryTests(unittest.TestCase):
             compact_scalar_metrics({"score": float("nan")})
 
     def test_compact_snapshot_binds_full_trajectory_without_nested_metrics(self):
-        from frontier_science.protocol import compact_trajectory_snapshot
+        from sle.protocol import compact_trajectory_snapshot
 
         event = {
             "schema_version": 2,

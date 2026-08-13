@@ -9,15 +9,15 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from frontier_science.algorithms.common import (
+from sle.algorithms.common import (
     llm_condition_sha256,
     runtime_source_sha256,
     task_contract_sha256,
 )
-from frontier_science.algorithms.evolve import greedy_rewrite
-from frontier_science.llm import LLMConfig
-from frontier_science.protocol import compact_trajectory_snapshot
-from frontier_science.registry import find_task
+from sle.algorithms.evolve import greedy_rewrite
+from sle.llm import LLMConfig
+from sle.protocol import compact_trajectory_snapshot
+from sle.registry import find_task
 
 
 ROOT = Path(__file__).resolve().parents[1]

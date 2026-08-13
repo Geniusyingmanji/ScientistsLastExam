@@ -40,7 +40,7 @@ def _record(label, mode, budget, events, tokens):
     return {
         "label": label,
         "source_revision": "input",
-        "source_scope": ["frontier_science", "benchmarks"],
+        "source_scope": ["sle", "benchmarks"],
         "llm_condition_sha256": "condition",
         "feedback_mode": mode,
         "proposal_budget": budget,

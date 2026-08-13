@@ -10,7 +10,7 @@ testing directly rather than trusting to review:
     a run that fails is reported, not silently skipped
 
 The real runner is invoked, with a fake `python3` earlier on PATH standing in for
-`frontier_science run`. That keeps the shell logic under test - argument parsing, locking, the
+`sle run`. That keeps the shell logic under test - argument parsing, locking, the
 completion check - rather than a reimplementation of it.
 """
 from __future__ import annotations

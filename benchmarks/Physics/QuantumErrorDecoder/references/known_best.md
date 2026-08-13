@@ -153,5 +153,5 @@ is described as a decoding improvement.
 ## Reproduce
 
 ```bash
-python -m frontier_science eval --allow-uncertified --task QuantumErrorCorrection/QuantumErrorDecoder
+python -m sle eval --allow-uncertified --task QuantumErrorCorrection/QuantumErrorDecoder
 ```

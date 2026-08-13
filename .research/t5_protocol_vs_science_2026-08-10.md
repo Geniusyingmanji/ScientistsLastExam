@@ -6,9 +6,9 @@
 
 一个提交被拒的任务和一个科学上很难的任务都产出 0 分，budget-1 普查区分不了。实测支撑：协议失败任务的隐藏 evaluator 中位数 808 行，而饱和任务只有 254 行；最极端的一个要求九个精确命名字段带交叉一致性约束，模型全部提交无效 —— 那个 0 分说明不了模型是否懂科学。
 
-## 交付一：`frontier_science/contract_lint.py`
+## 交付一：`sle/contract_lint.py`
 
-candidate 可在沙箱内 `from frontier_science.contract_lint import ...`。已挂进沙箱只读挂载，与 `rpc_codec` 并列。
+candidate 可在沙箱内 `from sle.contract_lint import ...`。已挂进沙箱只读挂载，与 `rpc_codec` 并列。
 
 调用它不消耗 oracle 预算，也不泄漏任何东西 —— 每个检查都只关于形式，不碰分数、不碰隐藏世界、不碰参考值。
 

@@ -20,8 +20,8 @@ import yaml
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from frontier_science.certification import certification_status  # noqa: E402
-from frontier_science.registry import list_tasks  # noqa: E402
+from sle.certification import certification_status  # noqa: E402
+from sle.registry import list_tasks  # noqa: E402
 
 
 DEFAULT_LEDGER = ROOT / "experiments/task_maturity_audit_2026-07-26_v1.json"

@@ -11,7 +11,7 @@ import unittest
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
-from frontier_science.task_versions import version_class
+from sle.task_versions import version_class
 
 
 def write_table(root: Path, body: str) -> Path:

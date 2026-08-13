@@ -26,24 +26,24 @@ from typing import Any
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from frontier_science.algorithms import ALGORITHMS, get_algorithm  # noqa: E402
-from frontier_science.algorithms.common import llm_condition_sha256  # noqa: E402
-from frontier_science.algorithms.common import atomic_write_text  # noqa: E402
-from frontier_science.algorithms.common import feedback_scope  # noqa: E402
-from frontier_science.algorithms.common import runtime_source_sha256  # noqa: E402
-from frontier_science.algorithms.common import task_contract_sha256  # noqa: E402
-from frontier_science.algorithms.common import task_package_sha256  # noqa: E402
-from frontier_science.config import load_llm_client  # noqa: E402
-from frontier_science.certification import certification_status  # noqa: E402
-from frontier_science.llm import LLMClient  # noqa: E402
-from frontier_science.protocol import mean_confidence_interval  # noqa: E402
-from frontier_science.protocol import compact_trajectory_snapshot  # noqa: E402
-from frontier_science.provenance import (  # noqa: E402
+from sle.algorithms import ALGORITHMS, get_algorithm  # noqa: E402
+from sle.algorithms.common import llm_condition_sha256  # noqa: E402
+from sle.algorithms.common import atomic_write_text  # noqa: E402
+from sle.algorithms.common import feedback_scope  # noqa: E402
+from sle.algorithms.common import runtime_source_sha256  # noqa: E402
+from sle.algorithms.common import task_contract_sha256  # noqa: E402
+from sle.algorithms.common import task_package_sha256  # noqa: E402
+from sle.config import load_llm_client  # noqa: E402
+from sle.certification import certification_status  # noqa: E402
+from sle.llm import LLMClient  # noqa: E402
+from sle.protocol import mean_confidence_interval  # noqa: E402
+from sle.protocol import compact_trajectory_snapshot  # noqa: E402
+from sle.provenance import (  # noqa: E402
     SOURCE_SCOPE,
     finalize_report_trust,
     source_provenance,
 )
-from frontier_science.registry import find_task, list_tasks  # noqa: E402
+from sle.registry import find_task, list_tasks  # noqa: E402
 
 
 def _csv(value: str) -> list[str]:

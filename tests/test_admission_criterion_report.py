@@ -357,7 +357,12 @@ class ScoreModeTests(unittest.TestCase):
         """A silent empty map here made every task look clipped and mislabelled three as solved,
         one of them a task whose control sits at 1.061 - above any cap there could be."""
         modes = MODULE.score_modes()
-        self.assertGreater(len(modes), 50)
+        # Every task in the inventory must resolve, whatever the inventory currently holds. A
+        # fixed floor here just breaks whenever tasks are retired, which says nothing about the
+        # bug this test exists to catch.
+        from sle.registry import list_tasks
+        self.assertEqual(set(modes), {spec.task_id for spec in list_tasks(None)})
+        self.assertTrue(modes)
         self.assertEqual(modes["Chemistry/LennardJonesCluster"], "uncapped")
         self.assertEqual(modes["QuantumErrorCorrection/QuantumErrorDecoder"], "uncapped")
 

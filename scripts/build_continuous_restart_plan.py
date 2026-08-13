@@ -15,9 +15,9 @@ from typing import Any
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from frontier_science.algorithms.common import task_contract_sha256  # noqa: E402
-from frontier_science.provenance import finalize_report_trust, source_provenance  # noqa: E402
-from frontier_science.registry import find_task  # noqa: E402
+from sle.algorithms.common import task_contract_sha256  # noqa: E402
+from sle.provenance import finalize_report_trust, source_provenance  # noqa: E402
+from sle.registry import find_task  # noqa: E402
 
 
 DEFAULT_PREREG = ROOT / ".research/continuous_restart_preregistration_2026-07-27_v1.json"

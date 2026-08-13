@@ -29,7 +29,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from frontier_science.registry import list_tasks  # noqa: E402
+from sle.registry import list_tasks  # noqa: E402
 
 # Several naming conventions coexist in the inventory. Preference order runs from the strictest
 # evidence (held-out worlds) to the weakest (development worlds the searcher could see).

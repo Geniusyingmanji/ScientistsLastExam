@@ -86,7 +86,7 @@ def evaluate_candidate(
     with tempfile.TemporaryDirectory(prefix="fs_trusted_") as tmp:
         result_path = Path(tmp) / "metrics.json"
         cmd = [
-            _trusted_python(), "-m", "frontier_science.trusted_driver",
+            _trusted_python(), "-m", "sle.trusted_driver",
             "--task-dir", str(spec.task_dir), "--candidate", str(candidate_path),
             "--entrypoint", spec.entrypoint, "--score-mode", score_mode,
             "--timeout", str(timeout_s), "--result", str(result_path),

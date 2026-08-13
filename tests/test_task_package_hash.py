@@ -11,7 +11,7 @@ import unittest
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
-from frontier_science.algorithms.common import task_package_sha256
+from sle.algorithms.common import task_package_sha256
 
 
 class Spec:

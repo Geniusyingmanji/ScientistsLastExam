@@ -31,25 +31,25 @@ from typing import Any, Optional
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from frontier_science.algorithms.common import (  # noqa: E402
+from sle.algorithms.common import (  # noqa: E402
     atomic_write_text,
     runtime_source_sha256,
     task_contract_sha256,
     task_package_sha256,
 )
-from frontier_science.evaluation_ledger import EvaluationLedger  # noqa: E402
-from frontier_science.protocol import (  # noqa: E402
+from sle.evaluation_ledger import EvaluationLedger  # noqa: E402
+from sle.protocol import (  # noqa: E402
     compact_trajectory_snapshot,
     load_trajectory,
 )
-from frontier_science.provenance import (  # noqa: E402
+from sle.provenance import (  # noqa: E402
     SOURCE_SCOPE,
     finalize_report_trust,
     source_provenance,
 )
-from frontier_science.registry import find_task  # noqa: E402
-from frontier_science.runtime_migration import runtime_source_changes  # noqa: E402
-from frontier_science.sentinels import load_sentinel_events  # noqa: E402
+from sle.registry import find_task  # noqa: E402
+from sle.runtime_migration import runtime_source_changes  # noqa: E402
+from sle.sentinels import load_sentinel_events  # noqa: E402
 
 
 DEFAULT_RAW = ROOT / "experiments/exploratory_2h_gpt55_2026-07-27_v2.json"
@@ -237,7 +237,7 @@ def _frozen_runtime_source_sha256(frozen: dict[str, Any]) -> Optional[str]:
         return None
     try:
         names = subprocess.check_output(
-            ["git", "ls-tree", "-r", "--name-only", parent, "--", "frontier_science",
+            ["git", "ls-tree", "-r", "--name-only", parent, "--", "sle",
              "requirements-upstream.txt"],
             cwd=str(ROOT), text=True, stderr=subprocess.DEVNULL,
         ).splitlines()
@@ -743,8 +743,8 @@ def _validate_inputs(
         and raw.get("trust_status") == "TRUSTED_SECURE_EVAL"
         and preregistration.get("schema_version") == 1
         and preregistration.get("preregistration_id")
-        == "frontier_science_exploratory_2h_execution_v2"
-        and cohort.get("manifest_id") == "frontier_science_exploratory_2h_v1"
+        == "sle_exploratory_2h_execution_v2"
+        and cohort.get("manifest_id") == "sle_exploratory_2h_v1"
         and (cohort.get("selection") or {}).get("confirmatory_reuse_permitted")
         is False
         and prereg_tasks == cohort_tasks == materiality_tasks

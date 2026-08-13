@@ -50,7 +50,7 @@ misses, because no method can determine them.
 
 - Only edit `solution.py`; keep `learn_hamiltonian(observation)`.
 - Deterministic CPU code. The standard library, NumPy, SciPy and QuTiP are available.
-- `frontier_science.contract_lint` is importable and free to call for shape checks.
+- `sle.contract_lint` is importable and free to call for shape checks.
 - Do not read `verification/` or `frontier_eval/`.
 
 ## Difficulty

@@ -5,13 +5,13 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from frontier_science.benchmark_layout import (
+from sle.benchmark_layout import (
     DISCIPLINE_DOMAINS,
     discipline_for_domain,
     task_path,
 )
-from frontier_science import registry
-from frontier_science.registry import discover_task_dirs, list_tasks
+from sle import registry
+from sle.registry import discover_task_dirs, list_tasks
 from scripts.gen_task import create_task
 
 

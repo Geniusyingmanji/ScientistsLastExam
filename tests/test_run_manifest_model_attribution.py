@@ -18,7 +18,7 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 from unittest.mock import patch
 
-from frontier_science.algorithms import common
+from sle.algorithms import common
 
 
 class _Config:

@@ -219,13 +219,13 @@ def _sandbox_command(candidate: Path, entrypoint: str, seccomp_fd: int,
         "--ro-bind", "/lib", "/lib",
         "--ro-bind", "/lib64", "/lib64",
         "--proc", "/proc", "--dev", "/dev", "--tmpfs", "/tmp",
-        "--dir", "/runner", "--dir", "/runner/frontier_science", "--dir", "/work",
-        "--ro-bind", str(PACKAGE_DIR / "candidate_worker.py"), "/runner/frontier_science/candidate_worker.py",
-        "--ro-bind", str(PACKAGE_DIR / "rpc_codec.py"), "/runner/frontier_science/rpc_codec.py",
+        "--dir", "/runner", "--dir", "/runner/sle", "--dir", "/work",
+        "--ro-bind", str(PACKAGE_DIR / "candidate_worker.py"), "/runner/sle/candidate_worker.py",
+        "--ro-bind", str(PACKAGE_DIR / "rpc_codec.py"), "/runner/sle/rpc_codec.py",
         # Free submission-shape validation the candidate may import. It reveals no score, no
         # hidden world and no reference value, so it costs nothing and leaks nothing.
-        "--ro-bind", str(PACKAGE_DIR / "contract_lint.py"), "/runner/frontier_science/contract_lint.py",
-        "--ro-bind", str(PACKAGE_DIR / "__init__.py"), "/runner/frontier_science/__init__.py",
+        "--ro-bind", str(PACKAGE_DIR / "contract_lint.py"), "/runner/sle/contract_lint.py",
+        "--ro-bind", str(PACKAGE_DIR / "__init__.py"), "/runner/sle/__init__.py",
         "--ro-bind", str(candidate), "/work/candidate.py",
     ]
     mounted: set[str] = set()
@@ -242,7 +242,7 @@ def _sandbox_command(candidate: Path, entrypoint: str, seccomp_fd: int,
         "--chdir", "/work", "--setenv", "HOME", "/tmp", "--setenv", "TMPDIR", "/tmp",
         "--setenv", "PYTHONPATH", "/runner:/packages", "--setenv", "PYTHONDONTWRITEBYTECODE", "1",
         "--setenv", "PYTHONHASHSEED", "0", "--setenv", "PATH", "/usr/bin:/bin",
-        "--", str(_candidate_python()), "/runner/frontier_science/candidate_worker.py",
+        "--", str(_candidate_python()), "/runner/sle/candidate_worker.py",
         "--candidate", "/work/candidate.py", "--entrypoint", entrypoint,
     ]
     return cmd
@@ -469,7 +469,7 @@ class RemoteCandidateCallable:
 
 def load_oracle(task_dir: Path, *, with_trusted_context: bool = False):
     path = task_dir / "verification/evaluator.py"
-    unique = "frontier_science_oracle_%x" % hash(str(path))
+    unique = "sle_oracle_%x" % hash(str(path))
     spec = importlib.util.spec_from_file_location(unique, str(path))
     if spec is None or spec.loader is None:
         raise ImportError("cannot load task oracle")

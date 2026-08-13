@@ -15,15 +15,15 @@ from typing import Any
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from frontier_science.algorithms.common import (  # noqa: E402
+from sle.algorithms.common import (  # noqa: E402
     llm_condition_sha256,
     runtime_source_sha256,
     task_contract_sha256,
     task_package_sha256,
 )
-from frontier_science.certification import certification_status  # noqa: E402
-from frontier_science.config import load_llm_client  # noqa: E402
-from frontier_science.registry import list_tasks  # noqa: E402
+from sle.certification import certification_status  # noqa: E402
+from sle.config import load_llm_client  # noqa: E402
+from sle.registry import list_tasks  # noqa: E402
 from scripts.batch_evolve import _maturity_contract_sha256  # noqa: E402
 
 
@@ -33,7 +33,7 @@ DEFAULT_COHORT_OUTPUT = (
 DEFAULT_PREREGISTRATION_OUTPUT = (
     ROOT / ".research/gpt56_science_census_preregistration_2026-08-06_v1.json"
 )
-LLM_CONFIG = "frontier_science/conf/llm/local.gpt56.yaml"
+LLM_CONFIG = "sle/conf/llm/local.gpt56.yaml"
 WORKDIR = "runs/gpt56_science_census_2026-08-06_v1"
 OUTPUT = "experiments/gpt56_science_census_2026-08-06_v1.json"
 BLOCK_WORKERS = 8
@@ -92,7 +92,7 @@ def build_documents() -> tuple[dict[str, Any], dict[str, Any]]:
         raise ValueError("census must exclude exactly nine quarantined tasks")
     cohort: dict[str, Any] = {
         "schema_version": 1,
-        "manifest_id": "frontier_science_gpt56_science_census_2026_08_06_v1",
+        "manifest_id": "sle_gpt56_science_census_2026_08_06_v1",
         "frozen_at_utc": "2026-08-06",
         "analysis_role": "complete_internal_admission_census_budget_one_headroom_screen",
         "claim_limit": (
@@ -189,7 +189,7 @@ def build_documents() -> tuple[dict[str, Any], dict[str, Any]]:
     preregistration: dict[str, Any] = {
         "schema_version": 1,
         "preregistration_id": (
-            "frontier_science_gpt56_science_census_2026_08_06_v1"
+            "sle_gpt56_science_census_2026_08_06_v1"
         ),
         "frozen_at_utc": "2026-08-06",
         "purpose": (
@@ -206,7 +206,7 @@ def build_documents() -> tuple[dict[str, Any], dict[str, Any]]:
             "runtime_source_sha256": runtime_source_sha256(),
             "source_change_rule": (
                 "The execution revision must descend from parent_revision with no "
-                "changes under frontier_science, scripts, tests, benchmarks, or "
+                "changes under sle, scripts, tests, benchmarks, or "
                 "requirements-upstream.txt. Research and experiment evidence commits "
                 "are allowed."
             ),
