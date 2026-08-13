@@ -122,8 +122,15 @@ def evaluate_candidate(
                 return {"combined_score": INVALID_SCORE, "valid": 0.0, "timeout": 1.0,
                         "error_message": "candidate invalid: candidate_timeout",
                         "candidate_failure_kind": "candidate_timeout"}
+            # Carry why. An infrastructure failure aborts the whole run rather than scoring a
+            # candidate, so nothing here reaches the searcher and there is no label-blindness to
+            # protect - but without it the abort says only "process failure", and two runs died
+            # that way under concurrent cohorts with nothing to diagnose from.
+            detail = (stderr or "").strip().splitlines()
             return {"combined_score": INVALID_SCORE, "valid": 0.0,
-                    "error_message": "trusted evaluator process failure",
+                    "error_message": "trusted evaluator process failure (rc=%s): %s"
+                                     % (proc.returncode, " | ".join(detail[-3:])[:400]
+                                        or "no stderr"),
                     "infrastructure_failure": 1.0}
         try:
             raw = json.loads(result_path.read_text(encoding="utf-8"))

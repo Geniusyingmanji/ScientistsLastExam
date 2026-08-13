@@ -542,7 +542,8 @@ def _greedy_rewrite_impl(
         metrics = dict(baseline_receipt["metrics"])
         if metrics.get("infrastructure_failure"):
             raise EvaluatorInfrastructureError(
-                "baseline trusted evaluator infrastructure failure"
+                "baseline trusted evaluator infrastructure failure: %s"
+                % (metrics.get("error_message") or "no detail")
             )
         if float(metrics.get("valid", 0.0)) < 1.0:
             raise EvaluatorInfrastructureError(
@@ -932,8 +933,8 @@ def _greedy_rewrite_impl(
             m = dict(evaluation_receipt["metrics"])
             if m.get("infrastructure_failure"):
                 raise EvaluatorInfrastructureError(
-                    "candidate trusted evaluator infrastructure failure"
-                )
+                    "candidate trusted evaluator infrastructure failure: %s"
+                    % (m.get("error_message") or "no detail"))
             result.evaluated += 1
             score = float(m.get("combined_score", INVALID_SCORE))
             valid = float(m.get("valid", 0.0)) >= 1.0
