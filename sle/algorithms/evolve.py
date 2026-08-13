@@ -125,6 +125,43 @@ def extract_signed_submission(
     return code, decision
 
 
+
+# How many rejected candidates a run keeps for diagnosis. Small on purpose: this exists so a
+# task that rejects everything can be looked at, not to archive a run.
+RETAINED_REJECTIONS = 5
+
+
+def _retain_rejected(workdir, step, code, metrics, valid):
+    """Keep the first few rejected candidates on disk so a rejection can be diagnosed later.
+
+    The evaluation ledger records a candidate by hash and never stores its source, and the
+    trajectory records a label-blind failure kind. Both are deliberate. The consequence is that a
+    task rejecting every proposal leaves nothing to look at: `CalorimeterDesign` rejected 36 of 36
+    with `candidate_runtime_error`, its shipped baseline evaluates fine, and there was no way to
+    see what the proposals had done differently - `best_program.py` is still the baseline, because
+    nothing was ever accepted.
+
+    This writes to disk only. Nothing here is read back into the search loop, so the label-blind
+    guarantee about what a searcher may see is untouched.
+    """
+    if valid:
+        return
+    try:
+        directory = Path(workdir) / "rejected"
+        directory.mkdir(exist_ok=True)
+        if len(list(directory.glob("*.py"))) >= RETAINED_REJECTIONS:
+            return
+        (directory / ("step_%03d.py" % int(step))).write_text(code, encoding="utf-8")
+        (directory / ("step_%03d.json" % int(step))).write_text(
+            json.dumps({k: v for k, v in metrics.items()
+                        if k in ("candidate_failure_kind", "error_message", "valid",
+                                 "combined_score")}, indent=2),
+            encoding="utf-8")
+    except OSError:
+        # Diagnostics must never be able to fail a run.
+        pass
+
+
 def _build_prompt(
     spec: TaskSpec,
     program: str,
@@ -903,6 +940,7 @@ def _greedy_rewrite_impl(
             accepted = bool(valid and score > best_score)
             candidate_sha = sha256_text(code)
             error = m.get("error_message")
+            _retain_rejected(workdir, it, code, m, valid)
         # The provider result is now a terminal candidate outcome. Keep the
         # on-disk pending record until the event and next checkpoint commit.
         pending_proposal = None
