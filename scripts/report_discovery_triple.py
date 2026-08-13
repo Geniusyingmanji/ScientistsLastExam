@@ -50,6 +50,20 @@ AXES = {
         "development_correct_refusal_rate",
         "null_abstention_correct",
     ),
+    # A fourth column, not a fourth axis. The triple says how good a discovery was; this says
+    # whether one was attempted at all. Without it a task can read as impossibly hard when what
+    # actually happened is that every proposal declined every world - and the two call for
+    # opposite responses. Six tasks in this inventory score exactly zero, and all six turn out to
+    # be blanket abstention rather than difficulty: refusal 1.00 with coverage 0.00 on every
+    # valid proposal. The scoring is right to give that nothing, because a task that pays for
+    # declining is a task that can be farmed by declining. What was wrong was that the report
+    # could not tell the two apart.
+    "coverage": (
+        "heldout_discovery_coverage",
+        "development_discovery_coverage",
+        "development_supported_claim_coverage",
+        "development_attempt_rate",
+    ),
 }
 
 
@@ -148,16 +162,38 @@ def main() -> int:
         return "%8.4f" % entry["value"]
 
     print("discovery triple, best valid proposal per task. never averaged.")
-    print("%-32s %9s %9s %9s %9s" % ("task", "combined", "mechanism", "fdr", "refusal"))
-    print("-" * 74)
+    print("coverage is not part of the triple: it says whether a discovery was attempted.")
+    print("%-32s %9s %9s %9s %9s %9s"
+          % ("task", "combined", "mechanism", "fdr", "refusal", "coverage"))
+    print("-" * 84)
     for r in rows:
         if r["status"] != "ok":
             print("%-32s %9s   %s" % (r["task"][:32], "-", r["status"]))
             continue
         a = r["axes"]
-        print("%-32s %9.4f %s %s %s" % (
+        print("%-32s %9.4f %s %s %s %s" % (
             r["task"][:32], r["combined_score"] or 0.0,
-            cell(a["mechanism"]), cell(a["fdr"]), cell(a["refusal"])))
+            cell(a["mechanism"]), cell(a["fdr"]), cell(a["refusal"]),
+            cell(a.get("coverage"))))
+
+    # Called out separately, because a task read as impossibly hard and a task nobody attempted
+    # need opposite responses and the combined score shows the same 0.0000 for both.
+    def value_of(row, axis):
+        entry = (row.get("axes") or {}).get(axis)
+        return None if entry is None else entry.get("value")
+
+    declined = [r for r in rows if r["status"] == "ok"
+                and (value_of(r, "coverage") or 0.0) <= 1e-9]
+    if declined:
+        print()
+        print("tasks where the best valid proposal attempted no discovery at all: %d of %d"
+              % (len(declined), sum(1 for r in rows if r["status"] == "ok")))
+        for r in declined:
+            print("  %-32s refusal %s, coverage 0" % (
+                r["task"][:32], cell((r.get("axes") or {}).get("refusal")).strip()))
+        print("  These score zero correctly - a task that pays for declining can be farmed by")
+        print("  declining - but the zero is a refusal, not a difficulty, and recalibrating the")
+        print("  anchor would be treating the wrong thing.")
 
     incomplete = [r for r in rows if r.get("missing_axes")]
     countonly = [r for r in rows if r.get("count_without_denominator")]
