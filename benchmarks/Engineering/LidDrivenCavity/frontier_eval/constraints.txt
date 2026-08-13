@@ -1,4 +1,0 @@
-1) Only edit solution.py. Keep solve_cavity(Re, N) and return (streamfunction, vorticity).
-2) Return two finite real (N,N) arrays; abs(streamfunction)<=2 and abs(vorticity)<=12*N.
-3) Python/NumPy/SciPy/stdlib only; deterministic, single-process CPU code under the shared evaluation deadline.
-4) Do not use network/process creation or read verification/ or frontier_eval/.

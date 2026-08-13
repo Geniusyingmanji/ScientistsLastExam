@@ -1,5 +1,0 @@
-1) Only edit solution.py. Keep discover_layered_velocity(midpoint_bounds_m, offset_bounds_m, frequency_bounds_hz, parameter_names, parameter_bounds, acquire, budget_units).
-2) Return nine finite parameters, confidence in [0,1] and a boolean abstain; abstention requires the canonical all-zero vector.
-3) Each acquisition contains 4-12 unique CMP-offset pairs with midpoint [0,10000] m, offset [0,3000] m and frequency 6-28 Hz. Do not exceed budget_units.
-4) acquire(...) returns a dictionary, not a tuple; use the exact string keys documented in Task.md.
-5) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read verification/ or frontier_eval/.

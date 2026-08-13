@@ -1,5 +1,0 @@
-1) Only edit solution.py. Keep the discover_currents() signature.
-2) Deterministic Python standard-library/NumPy/SciPy CPU code only. No network or process creation.
-3) Respect the charged 12-unit observation budget; any invalid or over-budget call fails closed.
-4) Return finite, shape-consistent coefficients/support/confidence/abstain fields.
-5) Do not read verification/ or frontier_eval/ or assume hidden world order.

@@ -27,7 +27,10 @@ class CertificationPolicyTests(unittest.TestCase):
         tasks = list_tasks()
         self.assertEqual(len(tasks), 7)
         self.assertTrue(all(certification_status(s.task_id) == "certified" for s in tasks))
-        self.assertEqual(len(list_tasks(None)), 58)
+        # Fifteen tasks retired: every model had reached their cap, so the score could no
+        # longer separate two searchers. Tasks scoring above 1.0 stayed - on an uncapped task
+        # that is the intended result rather than saturation.
+        self.assertEqual(len(list_tasks(None)), 43)
         self.assertEqual(
             certification_status("ProteinEngineering/ProteinStabilityDesign"),
             "candidate",
@@ -77,25 +80,7 @@ class ScientificInvariantTests(unittest.TestCase):
         y = x @ q + np.array([4.0, -2.0, 1.5])
         self.assertAlmostEqual(oracle.lj_energy(x), oracle.lj_energy(y), places=9)
 
-    def test_spin_glass_global_flip_invariance(self):
-        oracle = load_oracle("Physics/SpinGlassGroundState")
-        j = oracle.make_instance(32, 0)
-        s = np.where(np.arange(32) % 2, 1.0, -1.0)
-        self.assertAlmostEqual(oracle.energy(j, s), oracle.energy(j, -s), places=12)
-        for key, bits in oracle.REFERENCE_WITNESSES.items():
-            n, seed = key
-            witness = np.array([1.0 if bit == "1" else -1.0 for bit in bits])
-            self.assertEqual(witness.shape, (n,))
-            self.assertAlmostEqual(oracle.energy(oracle.make_instance(n, seed), witness),
-                                   oracle.REFERENCE[key]["e_best"], places=5)
 
-    def test_poisson_manufactured_solution_residual_converges(self):
-        oracle = load_oracle("ScientificComputing/PoissonSolver2D")
-        u, f, h = oracle.u_true_grid(), oracle.f_grid(), oracle._h()
-        padded = np.pad(u, 1)
-        discrete = (4 * u - padded[:-2, 1:-1] - padded[2:, 1:-1]
-                    - padded[1:-1, :-2] - padded[1:-1, 2:]) / h**2
-        self.assertLess(np.linalg.norm(discrete - f) / np.linalg.norm(f), 0.03)
 
     def test_matrix_tensor_accepts_schoolbook_and_rejects_perturbation(self):
         oracle = load_oracle("Algorithm/MatrixMultiplicationRank")
@@ -749,419 +734,17 @@ def discover_bodies(profile, depth, measure, budget_units):
             self.assertEqual(metrics["combined_score"], 0.0)
             self.assertTrue(all(not row["valid"] for row in metrics["per_world"]))
 
-    def test_ocean_v2_exact_currents_refusal_physics_and_metric_sealing(self):
-        oracle = load_oracle("Oceanography/OceanCurrentInversion")
-        self.assertEqual(oracle.N_MODES, 30)
-        self.assertEqual(len(oracle.DEVELOPMENT_SPECS), 6)
-        self.assertEqual(len(oracle.HELDOUT_SPECS), 5)
-        for specs in (oracle.DEVELOPMENT_SPECS, oracle.HELDOUT_SPECS):
-            supported_noise = {
-                spec[2] for spec in specs if spec[3] == "in_library"
-            }
-            unsupported_noise = {
-                spec[2] for spec in specs if spec[3] != "in_library"
-            }
-            self.assertTrue(unsupported_noise.issubset(supported_noise))
-            for spec in specs:
-                world = oracle._world(spec)
-                submission = oracle._reference_submission(world)
-                coefficients, support, _confidence, abstain = (
-                    oracle._validate_submission(submission)
-                )
-                mechanism = oracle._mechanism_metrics(
-                    world, coefficients, support, abstain
-                )
-                self.assertAlmostEqual(mechanism["mechanism_score"], 1.0)
-                if world["kind"] == "in_library":
-                    self.assertAlmostEqual(
-                        oracle._field_prediction_score(world, coefficients, False),
-                        1.0,
-                    )
-                    self.assertAlmostEqual(
-                        oracle._trajectory_prediction_score(
-                            world, coefficients, True
-                        ),
-                        1.0,
-                    )
-                else:
-                    self.assertTrue(mechanism["correct_refusal"])
 
-        # Independently finite-difference the public velocity equations.
-        rng = np.random.default_rng(20260722)
-        positions = rng.uniform(20000.0, 180000.0, size=(32, 2))
-        coefficients = rng.normal(scale=0.02, size=oracle.N_MODES)
-        step = 1.0
-        xp, xm = positions.copy(), positions.copy()
-        yp, ym = positions.copy(), positions.copy()
-        xp[:, 0] += step
-        xm[:, 0] -= step
-        yp[:, 1] += step
-        ym[:, 1] -= step
-        du_dx = (
-            oracle.mode_velocity(
-                coefficients, oracle.MODE_SPECIFICATIONS, xp, oracle.DAY_S
-            )[:, 0]
-            - oracle.mode_velocity(
-                coefficients, oracle.MODE_SPECIFICATIONS, xm, oracle.DAY_S
-            )[:, 0]
-        ) / (2.0 * step)
-        dv_dy = (
-            oracle.mode_velocity(
-                coefficients, oracle.MODE_SPECIFICATIONS, yp, oracle.DAY_S
-            )[:, 1]
-            - oracle.mode_velocity(
-                coefficients, oracle.MODE_SPECIFICATIONS, ym, oracle.DAY_S
-            )[:, 1]
-        ) / (2.0 * step)
-        self.assertLess(float(np.max(np.abs(du_dx + dv_dy))), 1e-12)
 
-        def always_abstain(_domain, modes, observe, _budget):
-            observe(
-                np.asarray(((30000.0, 30000.0),)), 0.0,
-                np.linspace(0.0, oracle.DAY_S, 7),
-            )
-            return {
-                "coefficients_m_s": np.zeros(len(modes)),
-                "support": np.zeros(len(modes)),
-                "confidence": 0.0,
-                "abstain": True,
-            }
 
-        baseline = oracle.evaluate(always_abstain)
-        self.assertEqual(baseline["valid"], 1.0)
-        self.assertAlmostEqual(baseline["combined_score"], 0.0)
-        self.assertAlmostEqual(baseline["robustness_score"], 0.0)
-        shown = search_visible_metrics(baseline)
-        self.assertNotIn("mechanism_score", shown)
-        self.assertNotIn("robustness_score", shown)
-        self.assertNotIn("development_field_prediction_score", shown)
-        self.assertNotIn("per_world", shown)
 
-    def test_ocean_v2_drifter_observations_are_deterministic_and_charged(self):
-        oracle = load_oracle("Oceanography/OceanCurrentInversion")
-        world = oracle._world(oracle.DEVELOPMENT_SPECS[0])
-        initial = np.asarray((
-            (30000.0, 35000.0),
-            (35000.0, 160000.0),
-            (105000.0, 60000.0),
-        ))
-        times = np.linspace(0.0, 1.5 * oracle.DAY_S, 13)
-        first = oracle._DrifterLaboratory(world)
-        second = oracle._DrifterLaboratory(world)
-        one = first.observe(initial, 0.0, times)
-        repeated = second.observe(initial, 0.0, times)
-        self.assertEqual(one["trajectories_m"].shape, (3, 13, 2))
-        self.assertEqual(one["budget_cost"], 6)
-        self.assertTrue(np.array_equal(
-            one["trajectories_m"], repeated["trajectories_m"]
-        ))
-        second_call = first.observe(initial, 0.0, times)
-        self.assertFalse(np.array_equal(
-            one["trajectories_m"], second_call["trajectories_m"]
-        ))
-        self.assertEqual(first.used, oracle.EXPERIMENT_BUDGET_UNITS)
-        clean = oracle._simulate(world, initial, 0.0, times)
-        stationary = np.repeat(initial[:, None, :], len(times), axis=1)
-        displacement = float(np.sqrt(np.mean((clean - stationary) ** 2)))
-        self.assertGreater(displacement, 8.0 * world["noise"])
 
-    def test_ocean_v2_budget_violation_fails_closed(self):
-        spec = find_task(
-            "Oceanography/OceanCurrentInversion", include_uncertified=True
-        )
-        source = """
-import numpy as np
-def discover_currents(domain, modes, observe, budget_units):
-    del domain, budget_units
-    initial = np.asarray(((30000.0, 35000.0), (35000.0, 160000.0),
-                          (105000.0, 60000.0)))
-    times = np.linspace(0.0, 1.5 * 86400.0, 13)
-    try:
-        for release in (0.0, 2.0 * 86400.0, 4.0 * 86400.0):
-            observe(initial, release, times)
-    except Exception:
-        pass
-    return {"coefficients_m_s": np.zeros(len(modes)),
-            "support": np.zeros(len(modes)), "confidence": 0.0,
-            "abstain": True}
-"""
-        with tempfile.TemporaryDirectory() as tmp:
-            candidate = Path(tmp) / "candidate.py"
-            candidate.write_text(source, encoding="utf-8")
-            metrics = evaluate_candidate(spec, candidate, timeout_s=90)
-        self.assertEqual(metrics["valid"], 0.0)
-        self.assertEqual(metrics["combined_score"], 0.0)
-        self.assertTrue(all(not row["valid"] for row in metrics["per_world"]))
-        self.assertTrue(all(
-            "budget exceeded" in row["reason"] for row in metrics["per_world"]
-        ))
 
-    def test_ocean_v2_caught_invalid_observation_fails_closed(self):
-        oracle = load_oracle("Oceanography/OceanCurrentInversion")
 
-        def catches_invalid(_domain, modes, observe, _budget):
-            try:
-                observe(
-                    "not-numeric", 0.0,
-                    np.linspace(0.0, oracle.DAY_S, 7),
-                )
-            except ValueError:
-                pass
-            return {
-                "coefficients_m_s": np.zeros(len(modes)),
-                "support": np.zeros(len(modes)),
-                "confidence": 0.0,
-                "abstain": True,
-            }
 
-        metrics = oracle.evaluate(catches_invalid)
-        self.assertEqual(metrics["valid"], 0.0)
-        self.assertEqual(metrics["combined_score"], 0.0)
-        self.assertTrue(all(not row["valid"] for row in metrics["per_world"]))
-        self.assertTrue(all(
-            "must be numeric" in row["reason"]
-            for row in metrics["per_world"]
-        ))
 
-    def test_ocean_v2_worlds_get_fresh_candidate_sessions(self):
-        spec = find_task(
-            "Oceanography/OceanCurrentInversion", include_uncertified=True
-        )
-        source = """
-import os
-import numpy as np
 
-module_counter = 0
 
-def discover_currents(domain, modes, observe, budget_units):
-    global module_counter
-    del domain, budget_units
-    module_counter += 1
-    tmp_seen = os.path.exists('/tmp/ocean-world-state')
-    with open('/tmp/ocean-world-state', 'w') as handle:
-        handle.write(str(module_counter))
-    imported_counter = getattr(np, '_ocean_world_counter', 0)
-    np._ocean_world_counter = imported_counter + 1
-    observe([[30000.0, 30000.0]], 0.0, np.linspace(0.0, 86400.0, 7))
-    confidence = 0.1 * module_counter + 0.2 * int(tmp_seen) + 0.3 * imported_counter
-    return {"coefficients_m_s": np.zeros(len(modes)),
-            "support": np.zeros(len(modes)), "confidence": confidence,
-            "abstain": True}
-"""
-        with tempfile.TemporaryDirectory() as tmp:
-            candidate = Path(tmp) / "candidate.py"
-            candidate.write_text(source, encoding="utf-8")
-            metrics = evaluate_candidate(spec, candidate, timeout_s=45)
-        self.assertEqual(metrics["valid"], 1.0)
-        self.assertTrue(all(
-            row["confidence"] == 0.1 for row in metrics["per_world"]
-        ))
-
-    def test_ocean_v2_nonfinite_shape_support_and_abstention_fail_closed(self):
-        oracle = load_oracle("Oceanography/OceanCurrentInversion")
-        common = {
-            "coefficients_m_s": np.zeros(oracle.N_MODES),
-            "support": np.zeros(oracle.N_MODES),
-            "confidence": 0.0,
-            "abstain": True,
-        }
-        candidates = []
-        for update in (
-            {"confidence": np.nan},
-            {"coefficients_m_s": np.zeros(oracle.N_MODES - 1)},
-            {"support": np.full(oracle.N_MODES, 0.5)},
-            {"support": np.r_[1.0, np.zeros(oracle.N_MODES - 1)]},
-            {"abstain": False},
-            {
-                "coefficients_m_s": np.r_[0.001, np.zeros(oracle.N_MODES - 1)],
-                "support": np.r_[1.0, np.zeros(oracle.N_MODES - 1)],
-                "abstain": False,
-            },
-        ):
-            result = dict(common)
-            result.update(update)
-            candidates.append(result)
-        for result in candidates:
-            metrics = oracle.evaluate(
-                lambda *_args, result=result: result
-            )
-            self.assertEqual(metrics["valid"], 0.0)
-            self.assertEqual(metrics["combined_score"], 0.0)
-            self.assertTrue(all(not row["valid"] for row in metrics["per_world"]))
-
-    def test_optimal_experiment_design_reference_and_sealed_shift(self):
-        oracle = load_oracle("BayesianInference/OptimalExperimentDesign")
-        self.assertEqual(len(oracle.DEVELOPMENT_INSTANCES), 6)
-        self.assertEqual(len(oracle.VALIDATION_INSTANCES), 4)
-        for instance in oracle.INSTANCES:
-            reference = instance["reference"]
-            n_parameters = instance["matrix"].shape[1]
-            self.assertTrue(reference["converged"])
-            self.assertLessEqual(
-                reference["maximum_sensitivity"],
-                n_parameters * (1.0 + oracle.REFERENCE_TOLERANCE),
-            )
-            self.assertEqual(
-                np.linalg.matrix_rank(instance["matrix"]), n_parameters
-            )
-
-        def uniform(candidate_points, _feature_matrix, n_measurements):
-            return np.rint(np.linspace(
-                0, len(candidate_points) - 1, n_measurements
-            )).astype(int)
-
-        metrics = oracle.evaluate(uniform)
-        self.assertEqual(metrics["valid"], 1.0)
-        self.assertGreater(metrics["combined_score"], 0.7)
-        self.assertIn("robustness_score", metrics)
-        self.assertNotIn("robustness_score", search_visible_metrics(metrics))
-        self.assertNotIn("per_instance", search_visible_metrics(metrics))
-
-        # D-optimal allocations are invariant to a nonsingular parameter transform.  Verify
-        # both the selected-design efficiency and the numerical whitening used by the oracle.
-        rng = np.random.default_rng(20260721)
-        original = oracle.DEVELOPMENT_INSTANCES[0]["matrix"]
-        transform = rng.normal(size=(original.shape[1], original.shape[1]))
-        transform += np.eye(original.shape[1])
-        transformed = original @ transform
-        whitened_original = oracle._scaled_columns(original)
-        whitened_transformed = oracle._scaled_columns(transformed)
-        gram_original = whitened_original @ whitened_original.T
-        gram_transformed = whitened_transformed @ whitened_transformed.T
-        self.assertTrue(np.allclose(
-            gram_original, gram_transformed, rtol=1e-8, atol=1e-8
-        ))
-
-    def test_optimal_experiment_design_nonfinite_indices_fail_closed(self):
-        spec = find_task(
-            "BayesianInference/OptimalExperimentDesign", include_uncertified=True
-        )
-        source = """
-import numpy as np
-def select_designs(candidate_points, feature_matrix, n_measurements):
-    return np.full(n_measurements, np.nan)
-"""
-        with tempfile.TemporaryDirectory() as tmp:
-            candidate = Path(tmp) / "candidate.py"
-            candidate.write_text(source, encoding="utf-8")
-            metrics = evaluate_candidate(spec, candidate, timeout_s=20)
-        self.assertEqual(metrics["valid"], 0.0)
-        self.assertEqual(metrics["combined_score"], 0.0)
-        self.assertEqual(metrics["validation_feasibility_rate"], 0.0)
-        self.assertTrue(all(not row["valid"] for row in metrics["per_instance"]))
-
-    def test_gate_synthesis_unitarity_phase_and_metric_sealing(self):
-        oracle = load_oracle("QuantumControl/GateSynthesis")
-        self.assertEqual(len(oracle.DEVELOPMENT_INSTANCES), 4)
-        self.assertEqual(len(oracle.HELDOUT_INSTANCES), 2)
-        for instance in oracle.INSTANCES:
-            pulse = np.zeros((instance["n_steps"], len(instance["controls"])))
-            unitary = oracle._propagate(
-                instance["drift"], instance["controls"], pulse, instance["dt"]
-            )
-            self.assertTrue(np.allclose(
-                unitary.conj().T @ unitary,
-                np.eye(len(unitary)), atol=1e-11, rtol=0.0,
-            ))
-            self.assertAlmostEqual(
-                oracle._process_fidelity(
-                    instance["target"], np.exp(0.37j) * instance["target"]
-                ),
-                1.0,
-                places=12,
-            )
-
-        baseline = oracle.evaluate(
-            lambda _drift, controls, _target, n_steps, _dt, _limit: np.zeros(
-                (n_steps, len(controls))
-            )
-        )
-        self.assertEqual(baseline["combined_score"], 0.0)
-        self.assertEqual(baseline["valid"], 1.0)
-        shown = search_visible_metrics(baseline)
-        self.assertNotIn("robustness_score", shown)
-        self.assertNotIn("heldout_policy_score", shown)
-        self.assertNotIn("per_instance", shown)
-
-    def test_gate_synthesis_nonfinite_and_out_of_bound_fail_closed(self):
-        oracle = load_oracle("QuantumControl/GateSynthesis")
-        nonfinite = oracle.evaluate(
-            lambda _drift, controls, _target, n_steps, _dt, _limit: np.full(
-                (n_steps, len(controls)), np.nan
-            )
-        )
-        outside = oracle.evaluate(
-            lambda _drift, controls, _target, n_steps, _dt, limit: np.full(
-                (n_steps, len(controls)), limit + 1.0
-            )
-        )
-        for metrics in (nonfinite, outside):
-            self.assertEqual(metrics["valid"], 0.0)
-            self.assertEqual(metrics["combined_score"], 0.0)
-            self.assertTrue(all(
-                not row["valid"] for row in metrics["per_instance"]
-            ))
-
-    def test_opf_v2_reference_order_security_and_metric_sealing(self):
-        oracle = load_oracle("PowerSystems/OptimalPowerFlow")
-        self.assertEqual(len(oracle.DEVELOPMENT_INSTANCES), 4)
-        self.assertEqual(len(oracle.HELDOUT_INSTANCES), 2)
-        for instance in oracle.INSTANCES:
-            baseline = oracle._dispatch_metrics(instance, instance["baseline_dispatch"])
-            nominal = oracle._dispatch_metrics(
-                instance, instance["nominal_reference_dispatch"]
-            )
-            secure = oracle._dispatch_metrics(
-                instance, instance["security_reference_dispatch"]
-            )
-            self.assertLessEqual(
-                instance["nominal_reference_cost"],
-                instance["security_reference_cost"] + 1e-7,
-            )
-            self.assertLessEqual(
-                instance["security_reference_cost"], instance["baseline_cost"] + 1e-7
-            )
-            self.assertLessEqual(
-                baseline["contingency_max_loading_ratio"], 1.0 + 1e-7
-            )
-            self.assertGreater(
-                nominal["contingency_max_loading_ratio"], 1.0 + 1e-3
-            )
-            self.assertLessEqual(
-                secure["contingency_max_loading_ratio"], 1.0 + 1e-7
-            )
-
-        def proportional(_n_bus, _generator_buses, demand, p_min, p_max, *_args):
-            remaining = np.sum(demand) - np.sum(p_min)
-            return p_min + remaining * (p_max - p_min) / np.sum(p_max - p_min)
-
-        metrics = oracle.evaluate(proportional)
-        self.assertEqual(metrics["combined_score"], 0.0)
-        self.assertEqual(metrics["valid"], 1.0)
-        self.assertEqual(metrics["mean_contingency_feasibility_rate"], 1.0)
-        shown = search_visible_metrics(metrics)
-        self.assertNotIn("robustness_score", shown)
-        self.assertNotIn("heldout_policy_score", shown)
-        self.assertNotIn("per_instance", shown)
-
-    def test_opf_v2_nonfinite_and_unbalanced_fail_closed(self):
-        oracle = load_oracle("PowerSystems/OptimalPowerFlow")
-        nonfinite = oracle.evaluate(
-            lambda _n_bus, generator_buses, *_args: np.full(
-                len(generator_buses), np.nan
-            )
-        )
-        unbalanced = oracle.evaluate(
-            lambda _n_bus, generator_buses, *_args: np.zeros(
-                len(generator_buses)
-            )
-        )
-        for metrics in (nonfinite, unbalanced):
-            self.assertEqual(metrics["valid"], 0.0)
-            self.assertEqual(metrics["combined_score"], 0.0)
-            self.assertTrue(all(
-                not row["valid"] for row in metrics["per_instance"]
-            ))
 
     def test_truss_v2_topology_references_and_metric_sealing(self):
         oracle = load_oracle("StructuralEngineering/TrussWeightMinimization")
@@ -1245,66 +828,7 @@ def select_designs(candidate_points, feature_matrix, n_measurements):
                 not row["valid"] for row in metrics["per_instance"]
             ))
 
-    def test_antenna_v2_reference_tradeoff_invariance_and_metric_sealing(self):
-        oracle = load_oracle("Electromagnetics/AntennaArraySynthesis")
-        self.assertEqual(len(oracle.DEVELOPMENT_INSTANCES), 4)
-        self.assertEqual(len(oracle.HELDOUT_INSTANCES), 2)
-        for instance in oracle.INSTANCES:
-            self.assertEqual(
-                sum(row["name"].startswith("element_failure_")
-                    for row in instance["shift_scenarios"]),
-                len(instance["positions_lambda"]),
-            )
-            self.assertGreater(
-                instance["nominal_reference_metrics"]["quality_db"],
-                instance["baseline_nominal_metrics"]["quality_db"],
-            )
-            self.assertGreater(
-                instance["robust_reference_quality_db"],
-                instance["baseline_robust_quality_db"],
-            )
-            translated = instance["positions_lambda"] + 3.17
-            angles = instance["sidelobe_angles_deg"]
-            original = abs(oracle._steering_matrix(
-                instance["positions_lambda"], angles
-            ) @ instance["nominal_reference_weights"])
-            shifted = abs(oracle._steering_matrix(
-                translated, angles
-            ) @ instance["nominal_reference_weights"])
-            self.assertTrue(np.allclose(original, shifted, atol=1e-12, rtol=0.0))
 
-        def uniform(positions, steering, *_args):
-            target = oracle._steering_matrix(positions, [steering])[0]
-            return np.conj(target) / len(positions)
-
-        baseline = oracle.evaluate(uniform)
-        self.assertEqual(baseline["valid"], 1.0)
-        self.assertEqual(baseline["combined_score"], 0.0)
-        shown = search_visible_metrics(baseline)
-        self.assertNotIn("robustness_score", shown)
-        self.assertNotIn("heldout_policy_score", shown)
-        self.assertNotIn("per_instance", shown)
-
-    def test_antenna_v2_zero_nonfinite_shape_and_excitation_fail_closed(self):
-        oracle = load_oracle("Electromagnetics/AntennaArraySynthesis")
-        zero = oracle.evaluate(
-            lambda positions, *_args: np.zeros(len(positions), dtype=complex)
-        )
-        nonfinite = oracle.evaluate(
-            lambda positions, *_args: np.full(len(positions), np.nan + 0j)
-        )
-        wrong = oracle.evaluate(lambda *_args: np.ones(1, dtype=complex))
-        excessive = oracle.evaluate(
-            lambda positions, *_args: np.eye(
-                1, len(positions), dtype=complex
-            )[0]
-        )
-        for metrics in (zero, nonfinite, wrong, excessive):
-            self.assertEqual(metrics["valid"], 0.0)
-            self.assertEqual(metrics["combined_score"], 0.0)
-            self.assertTrue(all(
-                not row["valid"] for row in metrics["per_instance"]
-            ))
 
     def test_heat_exchanger_v2_references_physics_and_metric_sealing(self):
         oracle = load_oracle("Thermodynamics/HeatExchangerDesign")
@@ -1486,32 +1010,7 @@ def select_designs(candidate_points, feature_matrix, n_measurements):
                 not row["valid"] for row in metrics["per_instance"]
             ))
 
-    def test_lyapunov_oracle_measures_closed_loop_feedback(self):
-        oracle = load_oracle("DynamicalSystems/LyapunovControl")
-        # Cancellation plus damping makes the sampled closed loop locally stable. Its exact
-        # exponent differs slightly from -gain because feedback is held for each RK4 step;
-        # an open-loop-only variational equation would instead report strong instability.
-        gain = 1.0
 
-        def controller(state):
-            x, y, z = np.asarray(state, dtype=float)
-            plant = np.array([
-                oracle.SIGMA * (y - x),
-                x * (oracle.RHO - z) - y,
-                x * y - oracle.BETA * z,
-            ])
-            return -plant - gain * np.array([x, y, z])
-
-        mle, _ = oracle._compute_mle(controller, n_steps=2000,
-                                     initial_state=np.zeros(3), burn_in_steps=0)
-        self.assertLess(mle, -0.8)
-        self.assertGreater(mle, -1.1)
-
-    def test_lyapunov_oracle_rejects_nonfinite_control(self):
-        oracle = load_oracle("DynamicalSystems/LyapunovControl")
-        with self.assertRaisesRegex(ValueError, "three finite values"):
-            oracle._compute_mle(lambda _state: np.array([np.nan, 0.0, 0.0]),
-                                n_steps=10, burn_in_steps=0)
 
     def test_neutron_diffusion_operator_is_symmetric_and_reference_is_reproducible(self):
         oracle = load_oracle("NuclearEngineering/NeutronDiffusionCriticality")
@@ -1539,51 +1038,7 @@ def select_designs(candidate_points, feature_matrix, n_measurements):
         matrix += np.diag(-interface / h**2, -1)
         self.assertTrue(np.allclose(matrix, matrix.T, atol=1e-14))
 
-    def test_seismic_refraction_is_translation_invariant_and_layer_identifiable(self):
-        oracle = load_oracle("Geophysics/SeismicInversion")
-        profile = np.array([1800.0, 2350.0, 3000.0, 3850.0, 5000.0])
-        offsets = np.linspace(200.0, 12000.0, 200)
-        times = oracle.first_arrival_times(profile, offsets)
-        perturbed = profile.copy()
-        perturbed[2] += 120.0
-        shifted_times = oracle.first_arrival_times(perturbed, offsets)
-        self.assertGreater(float(np.max(np.abs(times - shifted_times))), 1e-4)
 
-        sc = oracle.SCENARIOS[1]
-        reconstructed_offsets = np.abs(sc["receivers"] - sc["sources"])
-        self.assertTrue(np.allclose(reconstructed_offsets, sc["offsets"], atol=1e-12))
-        self.assertTrue(np.allclose(
-            oracle.first_arrival_times(sc["true_v"], reconstructed_offsets),
-            sc["clean_times"],
-            atol=1e-12,
-        ))
-        jacobian = []
-        for layer in range(sc["n_layers"]):
-            step = 1e-3 * sc["true_v"][layer]
-            upper = sc["true_v"].copy()
-            lower = sc["true_v"].copy()
-            upper[layer] += step
-            lower[layer] -= step
-            jacobian.append((
-                oracle.first_arrival_times(upper, reconstructed_offsets)
-                - oracle.first_arrival_times(lower, reconstructed_offsets)
-            ) / (2.0 * step))
-        self.assertEqual(
-            np.linalg.matrix_rank(np.column_stack(jacobian), tol=1e-12),
-            sc["n_layers"],
-        )
-
-    def test_seismic_truth_and_baseline_scores_are_calibrated(self):
-        oracle = load_oracle("Geophysics/SeismicInversion")
-        for sc in oracle.SCENARIOS:
-            truth = oracle._score_profile(sc, sc["true_v"])
-            baseline = oracle._score_profile(sc, oracle._constant_velocity(sc))
-            self.assertGreater(truth["development_score"], 0.99)
-            self.assertAlmostEqual(truth["mechanism_score"], 1.0, places=12)
-            self.assertAlmostEqual(truth["holdout_prediction_score"], 1.0, places=12)
-            self.assertAlmostEqual(baseline["development_score"], 0.0, places=12)
-            self.assertAlmostEqual(baseline["mechanism_score"], 0.0, places=12)
-            self.assertAlmostEqual(baseline["holdout_prediction_score"], 0.0, places=12)
 
     def test_pendulum_down_is_stable_and_upright_is_unstable(self):
         oracle = load_oracle("ControlTheory/InvertedPendulumSwingUp")

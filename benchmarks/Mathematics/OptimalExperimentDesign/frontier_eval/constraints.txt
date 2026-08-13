@@ -1,4 +1,0 @@
-1) Only edit solution.py. Keep select_designs(candidate_points, feature_matrix, n_measurements).
-2) Return exactly n_measurements finite in-range integer row indices; repetitions are allowed.
-3) NumPy/SciPy only. Deterministic CPU code. No network/process creation.
-4) Do not read verification/ or frontier_eval/.

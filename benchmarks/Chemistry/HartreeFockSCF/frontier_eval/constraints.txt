@@ -1,5 +1,0 @@
-1) Only edit solution.py. Keep solve_restricted_hf(problem).
-2) numpy/scipy only. Deterministic CPU code, no network or process creation.
-3) Return only the finite real occupied coefficient matrix with shape (n_ao, n_occupied) and C.T @ S @ C = I.
-4) Handle the supplied finite-basis Hamiltonian; do not hard-code one molecule or coefficient matrix.
-5) Do not read verification/ or frontier_eval/.

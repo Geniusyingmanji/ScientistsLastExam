@@ -1,4 +1,0 @@
-1) Only edit solution.py. Keep the complete design_array(positions_lambda, steering_angle_deg, interference_angles_deg, mainlobe_half_width_sine, angle_limit_deg, null_half_width_deg, null_weight, l2_norm_limit, element_amplitude_limit) signature.
-2) Return exactly one finite complex excitation per supplied position with finite nonzero nominal target response; normalized L2 and per-element amplitudes must satisfy the public limits. Values are rejected, not clipped.
-3) Handle varying uniform/nonuniform positions, counts, scan angles and interference directions. The nominal far-field contract is fully public; shifted hardware/frequency outcomes remain sealed.
-4) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read verification/ or frontier_eval/.

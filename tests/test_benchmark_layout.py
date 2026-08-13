@@ -19,7 +19,11 @@ class BenchmarkLayoutTests(unittest.TestCase):
     def test_inventory_uses_only_declared_discipline_roots(self):
         roots = {path.parent.name for path in discover_task_dirs()}
         self.assertEqual(roots, set(DISCIPLINE_DOMAINS))
-        self.assertEqual(len(list_tasks(None)), 58)
+        # Fifteen tasks were retired when every model reached their cap: a score pinned at 1.0
+        # cannot separate two searchers, so those tasks were costing evaluation budget without
+        # answering anything. Tasks scoring above 1.0 were kept - on an uncapped task that is the
+        # intended outcome, not saturation.
+        self.assertEqual(len(list_tasks(None)), 43)
 
     def test_logical_domain_is_independent_of_physical_discipline(self):
         specs = {spec.task_id: spec for spec in list_tasks(None)}

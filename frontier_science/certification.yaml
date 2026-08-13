@@ -22,14 +22,6 @@ tasks:
     status: certified
     reason: analytic energy oracle; published minima and invariance tests
     citation_ids: [doi:10.1021/jp970984n]
-  Physics/SpinGlassGroundState:
-    status: certified
-    reason: analytic SK energy with fixed instances and offline reference search
-    citation_ids: [doi:10.1103/PhysRevLett.35.1792]
-  ScientificComputing/PoissonSolver2D:
-    status: certified
-    reason: manufactured-solution PDE oracle with residual and convergence tests
-    citation_ids: [doi:10.1137/1.9780898717839]
   Algorithm/MatrixMultiplicationRank:
     status: certified
     reason: exact tensor reconstruction plus redundant functional checks
@@ -205,19 +197,6 @@ tasks:
       - doi:10.1136/bmj.l5342
       - doi:10.1136/bmj.n71
 
-  Photovoltaics/PhotovoltaicTandemDesign:
-    status: candidate
-    reason: v1 adds three fabrication-budget-conditioned one-to-four-junction series-tandem designs over eight interleaved ASTM-G173-derived spectral, temperature and cost regimes; the transparent detailed-balance oracle exposes finite optical absorption and radiative current matching while separately reporting held-out spectrum transfer, six sealed thermal/process/optical shifts, absolute efficiency, current matching, cost utilization and selected junction count; exact pvlib source hashes, independent one-through-four-junction ideal-limit integration, deterministic reference replay, secure baseline, fail-closed schemas and metric sealing are required before internal admission, and external photovoltaics review, higher-fidelity device simulation, real materials, manufacturing and experiments remain necessary for any engineering or discovery claim
-    citation_ids:
-      - doi:10.1063/1.1736034
-      - doi:10.1088/0022-3727/13/5/018
-      - doi:10.1063/1.328272
-      - doi:10.1016/j.solener.2016.02.015
-      - doi:10.1002/pip.1156
-      - doi:10.1002/pip.2943
-      - doi:10.1109/PVSC.2017.8366786
-      - doi:10.21105/joss.00884
-
   Catalysis/CatalystDeactivationLab:
     status: candidate
     reason: v1 adds a procedural stateful catalyst laboratory with raw drifting instrument signals, deterministic out-of-order batch completion, four finite coupons, irreversible reaction deactivation, exact-retry idempotency, stale/conflicting lineage rejection, single-site kinetic and linear-drift recovery, resolvable abrupt-drift/two-site refusal, and a sealed shifted fresh-batch operating policy; an independently checked truth-blind sequential reference reaches about 0.958/0.951 development/held-out nominal joint quality and 0.883/0.943 robustness with full supported coverage, full unsupported refusal, zero false discovery, one exact retry and no duplicate physical act, so retain as a synthetic state-machine and kinetic-inference candidate pending paired agent controls, server-held worlds, real reactor/instrument integration, independent catalysis review and experimental replication
@@ -238,47 +217,11 @@ tasks:
       - doi:10.1143/jjap.29.963
       - doi:10.3390/chemosensors9010009
 
-  BayesianInference/OptimalExperimentDesign:
-    status: candidate
-    reason: v2 is scientifically valid with procedural families and sealed shifts, but GPT-5.5 implements a generic D-optimal algorithm and reaches 0.991 development plus 0.994 validation at budget one; retain as an on-ramp pending harder sequential model-discrimination regimes and independent review
-    citation_ids:
-      - doi:10.1214/ss/1177009939
-      - doi:10.1137/1.9780898719109
-      - doi:10.4153/CJM-1960-030-4
-
-  QuantumControl/GateSynthesis:
-    status: candidate
-    reason: v2 is valid but nominally saturates with GPT-5.5 at budget one; sealed hardware robustness remains 0.957 at budget one and improves to 0.975 in an independent budget-three diagnostic while held-out robustness stays near 0.984; retain for nominal-versus-hardware studies pending paired controls, server-held plants and independent review
-    citation_ids:
-      - doi:10.1016/j.jmr.2004.11.004
-      - doi:10.1140/epjd/e2015-60464-1
-
-  PowerSystems/OptimalPowerFlow:
-    status: candidate
-    reason: v2 is scientifically valid but GPT-5.5 reproduces nominal DC-OPF at budget one with development/held-out score 1.0 while sealed N-1 robustness is 0.031/0.000001; budget-three nominal feedback leaves the security failure unchanged, so retain for economy-versus-security studies pending paired controls, server-held networks, AC replication and independent review
-    citation_ids:
-      - doi:10.1016/0142-0615(79)90026-7
-      - doi:10.1109/TPWRS.2013.2271980
-
-  DynamicalSystems/LyapunovControl:
-    status: candidate
-    reason: corrected closed-loop MLE oracle is scientifically valid, but a current-contract independent GPT-5.5 budget-one run reaches the clipped ceiling of 1.0 and both normal and selection-blind budget-three runs also reach 1.0 on their first proposal; retain as an on-ramp, not a long-horizon task, pending procedural hidden plants and a nontrivial energy-stability frontier
-    citation_ids:
-      - doi:10.1103/PhysRevLett.64.1196
-      - doi:10.1016/0375-9601(92)90745-8
-
   NuclearEngineering/NeutronDiffusionCriticality:
     status: candidate
     reason: corrected conservative two-group diffusion oracle and reproducible numerical anchor; current-contract GPT-5.5 reaches 0.939 at budget one, normal budget three improves 0.832 to 0.963 and a selection-blind batch reaches 0.982 with fewer tokens, so the single fixed public slab remains an on-ramp rather than long-horizon evidence pending procedural reactor regimes, transport replication and independent review
     citation_ids:
       - isbn:9780471223634
-
-  Geophysics/SeismicInversion:
-    status: candidate
-    reason: identifiable refraction inverse and useful on-ramp, but a current-contract independent GPT-5.5 budget-one run reaches 0.998 and both normal and selection-blind budget-three conditions reach the same 0.998 in their first proposal using standard global/local optimization; harder model-mismatch and survey-design regimes plus independent review are required before long-horizon use
-    citation_ids:
-      - isbn:9780521708425
-      - isbn:9780931830149
 
   SignalProcessing/SparseRecovery:
     status: candidate
@@ -314,13 +257,6 @@ tasks:
     reason: rebuilt and calibrated with correct dynamics; GPT-5.5 reaches 0.797 development but only 0.631 shifted robustness at budget one, leaving a measurable nominal-to-robust control gap
     citation_ids:
       - doi:10.1016/S0005-1098(99)00140-5
-  FluidDynamics/LidDrivenCavity:
-    status: candidate
-    reason: v2 replaces the single-Re sparse-centerline score with six steady laminar Reynolds/grid cases and two independent refinement calls; candidates return full streamfunction-vorticity fields, trusted code derives velocity and separately checks Poisson/transport/wall residuals, held-out Reynolds transfer, grid convergence and corrected Ghia Re=100 profiles; public utility is hard-gated by all PDE/wall tolerances, a valid weak baseline and a near-reference but transport-infeasible shortcut score zero, and converged continuation witnesses score approximately one; GPT-5.5 budget-one and strict open-loop proposals already reach approximately unit similarity while a normal budget-three trajectory reaches 0.898, making the fixed task an algorithm-synthesis on-ramp pending harder procedural cases, repeated controls, independent CFD review and higher-order replication
-    citation_ids:
-      - doi:10.1016/0021-9991(82)90058-4
-      - doi:10.1016/S0045-7930(98)00002-4
-      - doi:10.1002/fld.953
   MaterialsScience/AlloyHardnessOptimization:
     status: candidate
     reason: >-
@@ -368,12 +304,6 @@ tasks:
     citation_ids:
       - doi:10.1029/JZ064i001p00049
       - doi:10.1190/1.1444302
-  Oceanography/OceanCurrentInversion:
-    status: candidate
-    reason: v2 replaces the sub-metre fixed-field inversion with charged release-position/phase/time design, thirty public divergence-free streamfunction modes, procedural null and observationally resolvable out-of-library currents, separate mode/vorticity/field/drifter metrics and held-out noise shifts; a truth-blind two-phase sparse fit scores 0.707/0.406 development/held-out mechanism with zero false discovery, all seven in-library trajectory Jacobians have full rank, and the weakest bounded nonlinear public-library fit to a misspecified world has reduced chi-square 10.53 versus a 3.0 refusal threshold; GPT-5.5 budget one and normal budget three remain at zero, with one valid full-budget proposal refusing every in-library world and five other proposals failing the public experiment/callback protocol, while a same-seed-label selection-blind batch also remains at zero; retain as an active-inference and protocol-following challenge pending paired repeated runs, factorized label-blind feedback, server-held currents and independent physical-oceanography review
-    citation_ids:
-      - doi:10.1016/j.pocean.2008.02.002
-      - doi:10.1016/j.physd.2005.10.007
   PopulationGenetics/DemographicSFS:
     status: candidate
     reason: v2 replaces the rank-two time-index surrogate with exact finite-sample Kingman lineage-count CTMC occupancy, a fixed ancestral scale, charged sample-size/replicate sequencing, constant and three-epoch mechanism recovery, evaluator-only sample-size projection and resolvable ancestral-state-polarization-error refusal; the constant-size theta/i identity and an independent ODE occupancy implementation agree, all seven nonconstant supported histories have full-rank log-parameter sensitivities, and a truth-blind eight-unit multisample design reaches 0.770/0.510 development/held-out mechanism with 0.988/0.983 sample-size prediction and zero false discovery, versus 0.538/0.397 for an equal-budget repeated-small-sample design; finite four-epoch and population-mixture histories remain explicitly non-rejectable under the registered SFS threshold, so retain as a conditioned demographic-inference candidate pending server-held histories, linkage/recombination and structure, sequence-data QC and independent population-genetics review
@@ -390,21 +320,6 @@ tasks:
       - doi:10.5281/zenodo.5749302
       - doi:10.1007/s003480050256
       - doi:10.1063/1.3005862
-  WavePropagation/SeismicWaveInversion:
-    status: candidate
-    reason: v2 replaces the evidence-free fixed-grid velocity guess with charged CMP/offset/frequency acquisition over procedural three-layer, null and resolvable four-layer worlds; exact public Snell-ray/Ricker physics, nine interpretable velocity/interface parameters, separate observed-waveform, evaluator-only prediction, far-offset, mechanism, information and refusal metrics, analytic thickness validation and fresh per-world candidate sessions now fail closed; a truth-blind NMO/Dix plus waveform policy reaches 0.998/0.994 development/held-out joint quality with zero false discovery, all seven supported reference designs have rank nine and condition number below 247, while a centered narrow design has rank five and zero information score; formal single-run GPT-5.5 calibration produces six valid proposals and one timeout, but five valid proposals abstain on every supported world despite near-unit experiment information and no proposal improves the baseline, separating acquisition information from mechanism recovery; retain as an active-acquisition/model-checking on-ramp pending multi-seed model calibration, server-held geology, elastic/wave-equation replication and independent geophysics review
-    citation_ids:
-      - doi:10.1190/1.1441754
-      - doi:10.1190/1.3238367
-      - doi:10.1190/1.1438126
-
-  AcousticMetamaterials/BroadbandAbsorber:
-    status: candidate
-    reason: v2 replaces the dimensionally inconsistent fixed-band impedance toy and unrelated 0.92 anchor with six varying resonator-count/band/thickness instances, finite fail-closed geometry, equal-area surface admittance, Stinson circular-tube dynamic density, a public low-frequency proxy, separately replayed nominal/robust same-model witnesses, interleaved held-out bands and sealed angle, air-property and manufacturing shifts; weak-baseline exact utility is 0.06--0.08, reference utility is 0.42--0.61, and independent Bessel/impedance checks plus impedance-tube or thermoviscous-FEA replication remain required before engineering claims
-    citation_ids:
-      - doi:10.1121/1.400379
-      - doi:10.1063/1.4962328
-      - doi:10.1063/1.4941338
   ChemicalProcess/DistillationColumnDesign:
     status: candidate
     reason: v2 replaces the fixed-purity tray toy with six varying binary separations, exact mixed-integer artifacts, closed equilibrium-stage balances, purity/recovery gates, fixed-seed nominal/robust witnesses, held-out regimes and five sealed operating shifts; independent least-squares MESH solves agree below 2e-8, while one GPT-5.5 normal budget-three proposal reaches 0.613/0.541 development/held-out nominal score but only 0.20/0.20 shift feasibility and zero robustness, six of seven proposals time out, and a post-hoc public-cost counterfactual exposes no capital-versus-energy responsiveness; retain pending repeated paired calibration, server-held mixtures, rate-based process-simulator replication and independent chemical-engineering review
@@ -427,17 +342,6 @@ tasks:
       - doi:10.1016/0029-554X(75)90679-5
       - doi:10.1016/0168-9002(89)90571-8
       - doi:10.1016/0168-9002(92)90495-P
-  QuantumChemistry/HartreeFockSCF:
-    status: candidate
-    reason: v2 replaces the inconsistent two-coefficient H2 toy with seven closed-shell finite-basis Hamiltonians, a valid zero-score single-start DIIS policy, fixed-seed stable multistart witnesses, fail-closed RHF equations and separate held-out molecule, physical geometry, AO-representation and occupied-virtual stability axes; development H8 and held-out H4 rings retain lower stable solutions beyond the baseline, while GPT-5.5 reaches approximately unit score in one proposal and a 9e-15 online selection change reverses development/held-out robustness tradeoffs, making the fixed task a known-algorithm/materiality on-ramp pending procedural molecules, repeated controls, external-instability and correlated-method checks and independent quantum-chemistry review
-    citation_ids:
-      - doi:10.1103/RevModPhys.23.69
-      - doi:10.1016/0009-2614(80)80396-4
-      - doi:10.1063/1.434318
-      - doi:10.1063/1.1672392
-      - doi:10.1063/1.438955
-      - doi:10.1002/wcms.1340
-      - doi:10.1063/5.0006074
   Semiconductor/MOSFETDoping:
     status: candidate
     reason: v2 replaces the six-orders-wrong per-m3 concentration contract, clipped barrier proxy and unrelated Ion/Ioff anchor with log10 cm^-3 Gaussian background/source/drain pockets evaluated on four development and two held-out devices by a transparent screened-Poisson/MOS-electrostatics/Caughey-Thomas/charge-sheet/random-dopant compact model; hard threshold, current, DIBL, swing, variability, dose, active-doping and gradient gates feed drive-current-versus-leakage Pareto hypervolume, while six operation/process shifts remain sealed; fixed-seed 2048-point Sobol witnesses reconstruct exactly, the nominal witness reaches unit development/held-out score but zero development worst-shift robustness, and the robust witness trades nominal score to approximately 0.934/0.900 for unit development/held-out worst-shift robustness; retain pending GPT-5.5 headroom calibration, paired controls, server-held devices, independent semiconductor review, higher-fidelity TCAD/process replication and measured-device validation
@@ -445,11 +349,6 @@ tasks:
       - doi:10.1002/0470068329
       - doi:10.1017/CBO9781139195065
       - doi:10.1109/PROC.1967.6123
-  Thermodynamics/RankineCycleOpt:
-    status: candidate
-    reason: v2 replaces the zero-baseline polynomial steam surrogate and unrelated 46 percent anchor with a self-contained IAPWS-IF97 Region 1/2/4 single-reheat cycle over four development and two held-out operating regimes; hard moisture, material and energy-closure gates feed efficiency-versus-specific-work Pareto hypervolume, while five sealed weather, pressure-loss, degradation and material shifts remain evaluator-only; official IAPWS verification tables and an audit-only 32-state iapws-1.5.4 implementation agree to floating-point precision, a fixed-seed 2048-point Sobol witness reaches unit nominal development/held-out score but only approximately 0.71/0.73 shift feasibility, and a robust witness trades nominal score down to approximately 0.48/0.45 while reaching unit development/held-out robustness; retain pending GPT-5.5 headroom calibration, paired controls, server-held cycles, independent thermodynamics review, process-simulator/component-map replication and plant data
-    citation_ids:
-      - iapws:R7-97-2012
   Spectroscopy/NMRSpectrumFitting:
     status: candidate
     reason: v2 has ten procedural multi-regime spectra, finite bounded Voigt peak artifacts, order-invariant peak-mechanism matching, separate reconstruction/confidence/false-discovery/refusal metrics and held-out overlap/noise/baseline/axis/model-inadequacy shifts; a truth-blind classical fit scores 0.271/0.146 development/held-out mechanism-refusal despite high reconstruction, while GPT-5.5 reaches 0.428/0.176 at budget one and its budget-three feedback rewrites do not repair false discoveries, leaving meaningful science-specific headroom pending paired controls, server-held spectra and independent spectroscopist review
@@ -463,13 +362,6 @@ tasks:
     citation_ids:
       - doi:10.2514/3.49321
       - doi:10.1007/BF01376857
-  Electromagnetics/AntennaArraySynthesis:
-    status: candidate
-    reason: v2 has six scanned/uniform/nonuniform arrays, measured normalization, finite-grid nominal/robust domain references and sealed frequency/calibration/position/exhaustive single-element-failure metrics; GPT-5.5 nearly saturates nominal quality at budget one, while all three accepted nominal updates in an independent budget-three trajectory lower sealed development robustness, making this an informative nominal-versus-hardware on-ramp pending paired controls, server-held arrays, full-wave replication and independent review
-    citation_ids:
-      - doi:10.1109/JRPROC.1946.225956
-      - doi:10.1121/1.384777
-
   MolecularDynamics/ForceFieldCalibration:
     status: candidate
     reason: v2 replaces the falsely labeled Monte Carlo/RDF trigonometric clone with twelve procedural active three-particle energy/force worlds spanning public Mie and Morse hypotheses plus Buckingham, Axilrod-Teller and temperature-dependent misspecification; every query preregisters monotone hypothesis weights and a retained set, while separate axes score acquisition information, proper-score hypothesis calibration, true-family retention, model discrimination, parameter intervals, sealed short/long-range prediction, second virial and Boyle-temperature decisions, evidence lineage and unsupported refusal; a truth-blind nonlinear reference covers every supported world, refuses every unsupported world and reaches approximately 0.96/0.95 normalized development/held-out joint quality, pending server-held worlds, repeated controls, periodic many-particle or ab-initio replication and independent molecular-simulation review

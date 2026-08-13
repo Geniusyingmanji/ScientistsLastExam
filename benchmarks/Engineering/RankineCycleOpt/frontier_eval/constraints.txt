@@ -1,5 +1,0 @@
-1) Only edit solution.py. Keep design_rankine_archive(problem).
-2) Return 4-16 unique finite rows with [boiler pressure, main temperature, reheat pressure fraction, reheat temperature].
-3) Respect every public bound and use the supplied problem mapping rather than one hard-coded condition.
-4) numpy/scipy/stdlib only. Deterministic CPU. No network or process creation.
-5) Do not read verification/ or frontier_eval/.
