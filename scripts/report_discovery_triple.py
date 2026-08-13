@@ -205,8 +205,13 @@ def main() -> int:
         entry = (row.get("axes") or {}).get(axis)
         return None if entry is None else entry.get("value")
 
+    # A task that publishes no coverage metric has not been shown to decline; it has been shown
+    # to be unmeasured on this question. Folding the two together flagged GravityInversion, which
+    # scores 0.9941 with a mechanism score of 0.8593, as having attempted nothing.
     declined = [r for r in rows if r["status"] == "ok"
-                and (value_of(r, "coverage") or 0.0) <= 1e-9]
+                and value_of(r, "coverage") is not None
+                and value_of(r, "coverage") <= 1e-9]
+    unmeasured = [r for r in rows if r["status"] == "ok" and value_of(r, "coverage") is None]
     if declined:
         print()
         print("tasks where the best valid proposal attempted no discovery at all: %d of %d"
@@ -217,6 +222,11 @@ def main() -> int:
         print("  These score zero correctly - a task that pays for declining can be farmed by")
         print("  declining - but the zero is a refusal, not a difficulty, and recalibrating the")
         print("  anchor would be treating the wrong thing.")
+    if unmeasured:
+        print()
+        print("tasks whose evaluator publishes no coverage metric: %d" % len(unmeasured))
+        print("  " + ", ".join(r["task"][:28] for r in unmeasured))
+        print("  Whether a discovery was attempted cannot be read off these runs at all.")
 
     incomplete = [r for r in rows if r.get("missing_axes")]
     countonly = [r for r in rows if r.get("count_without_denominator")]
