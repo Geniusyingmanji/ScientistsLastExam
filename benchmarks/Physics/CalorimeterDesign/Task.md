@@ -186,3 +186,43 @@ task is one where submissions have been rejected often enough that the distincti
 - Only edit `solution.py`; keep the entrypoint signature.
 - NumPy/SciPy only, CPU, no network.
 - Do not read `verification/` or `frontier_eval/`.
+
+## Keys of `problem`
+
+Every key the evaluator passes in, so none has to be guessed. Twelve of these were previously
+undocumented, and a proposal that reached for one of them by an invented name — `light_yield_per_gev`
+for `light_yield_pe_per_active_gev` — raised at runtime and scored nothing. Values shown are from
+one development instance; only the key names and types are part of the contract.
+
+| key | type | example |
+|---|---|---|
+| `active_cost_per_liter` | float | 14.0 |
+| `active_thickness_bounds_mm` | list[2] | [1.0, 8.0] |
+| `archive_size` | int | 3 |
+| `baseline_absorber_depth_x0` | float | 21.0 |
+| `baseline_cost_fraction` | float | 0.9 |
+| `calibration_energy_gev` | float | 10.0 |
+| `constant_term` | float | 0.004 |
+| `critical_energy_gev` | float | 0.00743 |
+| `design_fields` | list[2] | ['passive_thicknesses_mm', 'active_thicknesses_mm'] |
+| `electronics_noise_active_gev` | float | 0.00045 |
+| `energies_gev` | list[5] | [2.0, 5.0, 10.0, ...] |
+| `lead_cost_per_kg` | float | 2.0 |
+| `lead_density_kg_m3` | float | 11340.0 |
+| `leakage_fluctuation_scale` | float | 0.18 |
+| `light_yield_pe_per_active_gev` | float | 12500.0 |
+| `maximum_lead_mass_kg_m2` | float | 1718.28 |
+| `maximum_total_length_mm` | float | 320.0 |
+| `minimum_absorber_depth_x0` | float | 19.5 |
+| `model` | str | transparent_longitudinal_gamma_sampling_calorimeter |
+| `n_layers` | int | 32 |
+| `option_cost_caps` | list[3] | [4427.6, 5174.3, 6169.9] |
+| `passive_thickness_bounds_mm` | list[2] | [0.8, 6.0] |
+| `radiation_length_pb_mm` | float | 5.612 |
+| `radiation_length_scintillator_mm` | float | 424.0 |
+| `readout_areal_cost_per_layer` | float | 20.0 |
+| `sampling_scale` | float | 0.018 |
+| `shower_profile_b` | float | 0.5 |
+
+There are no other keys. Reading one that is not listed here is a bug in the candidate, not a
+hidden part of the task.
