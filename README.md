@@ -45,9 +45,10 @@ the text-question benchmark named *FrontierScience* in
 - **8 tasks whose oracles are community-standard scientific tooling** — Stim + PyMatching, RDKit,
   ViennaRNA, nmrsim, networkx, SymPy, QuTiP, Astropy — rather than a bespoke reimplementation,
   each anchored on a value or a routine recomputed at evaluation time.
-- **7 tasks** are so far shown to measure iterative improvement, against a criterion the
-  repository can apply to any task with paired runs. Three of the seven rest on a saturation
-  result that a three-seed subset of their own runs would reverse, and are reported as such.
+- **6 tasks** are so far shown to measure iterative improvement, against a criterion the
+  repository can apply to any task with paired runs. Three rest on a saturation result that a
+  three-seed subset of their own runs would reverse, and are reported as such — one task has
+  already left the list when the extra seeds were run.
 - **Three models** have been run — one Claude family, two GPT family. They rank the tasks
   consistently (Spearman 0.959 within a family over 50 tasks, 0.811 and 0.559 across families
   over 12) and **disagree on every admission verdict**: see
@@ -553,6 +554,18 @@ distinction costs: a task can be fully certified and still not measure iterative
 | `Spectroscopy/NMRSpectrumFitting` | +0.085 → +0.173 | 3/4 | 4 | +0.097 |
 | `Astrodynamics/LowThrustTransfer` | −0.011 → +0.089 | 3/4 | 4 | +0.031 |
 | `ProteinEngineering/ProteinStabilityDesign` | +0.032 → +0.035 | 5/5 | 6 | +0.017 |
+
+**Adding seeds shrank the qualifying set, in the direction the fragility flag predicted.** The
+three tasks flagged as seed-fragile were re-run with three more seeds each:
+
+| task | seeds | second-half gain | verdict |
+|---|---|---|---|
+| `ProteinStabilityDesign` | 8 → **11** | 0.0000 → **0.0122** | qualified → **`control_not_exhausted`** |
+| `LowThrustTransfer` | 6 → **9** | 0.0053 → **0.0085** | still qualifies, closer to the 0.01 threshold |
+
+`ProteinStabilityDesign` crossed the threshold and left the list, taking the count from seven to
+six. Both tasks moved the same way. Two points is weak evidence, but it is the direction the flag
+predicted and it means the earlier evidence was optimistic rather than merely thin.
 
 **Three of the seven rest on a saturation their own seeds would reverse.** The necessary
 condition is a threshold test on the open-loop control's second-half gain, and the report already
