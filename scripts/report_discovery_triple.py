@@ -49,12 +49,16 @@ AXES = {
     "fdr": (
         "heldout_false_discovery_rate",
         "development_false_discovery_rate",
+        # Unprefixed, for evaluators that do not split their metrics by development and held-out.
+        # InterventionalSCM publishes exactly these and read as never measuring them.
+        "false_discovery_rate",
     ),
     "refusal": (
         "heldout_unsupported_refusal_rate",
         "development_unsupported_refusal_rate",
         "development_correct_refusal_rate",
         "null_abstention_correct",
+        "correct_refusal_rate",
     ),
     # A fourth column, not a fourth axis. The triple says how good a discovery was; this says
     # whether one was attempted at all. Without it a task can read as impossibly hard when what
@@ -69,6 +73,7 @@ AXES = {
         "development_discovery_coverage",
         "development_supported_claim_coverage",
         "development_attempt_rate",
+        "discovery_coverage",
     ),
 }
 
