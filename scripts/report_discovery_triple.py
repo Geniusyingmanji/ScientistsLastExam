@@ -166,6 +166,11 @@ def main() -> int:
         # The best valid proposal anywhere, which is what a leaderboard would show.
         metrics = max(candidates, key=lambda m: float(m.get("combined_score") or 0.0),
                       default=None)
+        # Which axes any run of this task publishes, not just the best-scoring one. An evaluator
+        # that started publishing an axis after its best run was recorded would otherwise be
+        # reported as never measuring it, which is a different and more damning claim.
+        published_anywhere = {axis for m in candidates
+                              for axis, entry in extract(m).items() if entry is not None}
         if metrics is None:
             rows.append({"task": name, "status": "no valid proposal"})
             continue
@@ -174,6 +179,7 @@ def main() -> int:
             "task": name,
             "status": "ok",
             "runs_seen": len(by_task.get(name, [])),
+            "axes_published_by_some_run": sorted(published_anywhere),
             "combined_score": metrics.get("combined_score"),
             "axes": axes,
             "missing_axes": [a for a, v in axes.items() if v is None],
@@ -217,7 +223,11 @@ def main() -> int:
     declined = [r for r in rows if r["status"] == "ok"
                 and value_of(r, "coverage") is not None
                 and value_of(r, "coverage") <= 1e-9]
-    unmeasured = [r for r in rows if r["status"] == "ok" and value_of(r, "coverage") is None]
+    unmeasured = [r for r in rows if r["status"] == "ok" and value_of(r, "coverage") is None
+                  and "coverage" not in (r.get("axes_published_by_some_run") or [])]
+    # Measured, but not on the run that scored best. Saying these are unmeasured would be wrong.
+    stale = [r for r in rows if r["status"] == "ok" and value_of(r, "coverage") is None
+             and "coverage" in (r.get("axes_published_by_some_run") or [])]
     if declined:
         print()
         print("tasks where the best valid proposal attempted no discovery at all: %d of %d"
@@ -232,7 +242,13 @@ def main() -> int:
         print()
         print("tasks whose evaluator publishes no coverage metric: %d" % len(unmeasured))
         print("  " + ", ".join(r["task"][:28] for r in unmeasured))
-        print("  Whether a discovery was attempted cannot be read off these runs at all.")
+        print("  Whether a discovery was attempted cannot be read off any run of these.")
+    if stale:
+        print()
+        print("tasks whose best proposal predates their coverage metric: %d" % len(stale))
+        print("  " + ", ".join(r["task"].split("/")[-1][:28] for r in stale))
+        print("  The evaluator publishes it now; the highest-scoring run on record was made")
+        print("  before it did, so the column is blank for that particular proposal.")
 
     incomplete = [r for r in rows if r.get("missing_axes")]
     countonly = [r for r in rows if r.get("count_without_denominator")]
