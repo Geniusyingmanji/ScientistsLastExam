@@ -328,6 +328,40 @@ interpretations live in [`.research/`](.research/). Historical pre-sandbox repor
 
 Full write-ups are in [`.research/`](.research/); each carries its own claim boundary.
 
+**A task's difficulty is often its submission contract, not its science.** The rank correlation
+between hidden-evaluator length and the fraction of proposals that are even valid is **-0.675**
+across 39 tasks: the shortest evaluators accept 92-100%, the longest accept 0-5%. The mechanism
+is visible rather than inferred. `CalorimeterDesign` rejected 36 of 36 proposals while its own
+shipped baseline evaluated fine, and the first rejection retained for diagnosis had read
+`problem["light_yield_per_gev"]` when the key is `light_yield_pe_per_active_gev` — the quantity
+was real, the name was undocumented, and the prompt named only 15 of the 27 keys the task passes
+in.
+
+`scripts/audit_documented_keys.py` found the same defect in **7 of 15** tasks whose baseline reads
+an input mapping — 24 undocumented keys, most of them the bounds a candidate must respect and
+could only learn by copying the baseline. Documenting them changed no evaluator, no score and no
+science:
+
+| task | before | after |
+|---|---|---|
+| `CalorimeterDesign` | 0% valid, 0.0000 | **82% valid, 1.0000** |
+| `DistillationColumnDesign` | 38% valid, 0.5822 | **33% valid, 0.8920** |
+| `ForceFieldCalibration` | 5% valid, 0.0600 | 5% valid, **0.4340** |
+
+`CalorimeterDesign` had been on the list of floor tasks needing recalibration. That diagnosis was
+wrong: it was never too hard, it just never said what its inputs were called. `ForceFieldCalibration`
+did not recover and is recorded as unexplained — it fails in the sandbox and returns cleanly
+outside it. Full write-up in
+[.research/contract_burden_2026-08-14.md](.research/contract_burden_2026-08-14.md).
+
+Two things made this findable and are worth keeping. Rejected candidates are now retained (five
+per run, written to disk only, never fed back to the searcher) — before that, a task rejecting
+everything left nothing to look at, since the ledger stores candidates by hash and
+`best_program.py` is still the baseline when nothing is accepted. And documenting a task edits its
+`Task.md`, which is its prompt, so the rebinding tool now **refuses** three of the seven frozen
+tasks: their evidence has to be re-measured rather than re-signed. That refusal is the tool
+working, and it is the real cost of the fix.
+
 **The six tasks scoring zero are refusals, not difficulty.** Every valid proposal on them
 scores exactly 0.0000 rather than a spread of small values, which is the shape of a gate rather
 than of a hard landscape. Reading the evaluator's own components explains it: on
