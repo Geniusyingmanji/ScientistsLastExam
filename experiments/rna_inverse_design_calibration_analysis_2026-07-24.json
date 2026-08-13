@@ -9,7 +9,7 @@
     "source_tree_dirty": false,
     "source_changes": [],
     "source_scope": [
-      "sle",
+      "frontier_science",
       "scripts",
       "tests",
       "benchmarks",
@@ -86,7 +86,7 @@
       "report_sha256": "5db7c55deeb2e5449683eabc14171f6b18fdece8328be07ee01a35685fb8b632",
       "source_revision": "41f5fb4700f09155a7d23afb67a0d16f4a41f905",
       "source_scope": [
-        "sle",
+        "frontier_science",
         "scripts",
         "tests",
         "benchmarks",
@@ -238,7 +238,7 @@
       "report_sha256": "ef7c710f9d0d6300801c262cb9ff01dcea7d19ee3dbdcbdbeac68b627aa2620b",
       "source_revision": "41f5fb4700f09155a7d23afb67a0d16f4a41f905",
       "source_scope": [
-        "sle",
+        "frontier_science",
         "scripts",
         "tests",
         "benchmarks",
@@ -478,7 +478,7 @@
       "report_sha256": "6608108394108328e3b8830f921e43233e13d66d864d01e3e0eee4f3bcc18de7",
       "source_revision": "41f5fb4700f09155a7d23afb67a0d16f4a41f905",
       "source_scope": [
-        "sle",
+        "frontier_science",
         "scripts",
         "tests",
         "benchmarks",

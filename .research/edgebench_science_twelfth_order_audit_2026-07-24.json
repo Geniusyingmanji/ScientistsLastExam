@@ -26,7 +26,7 @@
     "The evaluation-hacking appendix reports feedback leakage, stochastic-tail optimization, reused-seed overfitting, a trust-boundary exploit and blocked online lookup. These cases concern adaptation to the evaluator; they do not randomize feedback-source bias, regime drift, conflict or source-identity information.",
     "The approximately 38000-hour raw trajectory corpus and figure-analysis code are not public, so this audit cannot determine whether individual EdgeBench agents internally retained alternative hypotheses or calibrated the reliability of different information sources."
   ],
-  "sle_experiments": [
+  "frontier_science_experiments": [
     {
       "id": "competing_hypothesis_management",
       "plan_id": "HP1",

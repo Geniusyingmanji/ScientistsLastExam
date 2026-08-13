@@ -20,7 +20,7 @@
     "The official public Codex configuration gives each listed task an independent 12-hour default budget and staggers launches by 600 seconds; it is not a shared scientific portfolio allocation protocol.",
     "The public harness supports asynchronous judging, but the released benchmark does not report experiments on drifting instruments, consumptive samples or irreversible interventions."
   ],
-  "sle_experiments": [
+  "frontier_science_experiments": [
     {
       "id": "score_granularity_and_task_order_invariance",
       "design": "Replay identical raw physical outcomes under preregistered coarse, canonical and fine score partitions; refit under random and lineage-blocked task accumulation orders and subsamples.",

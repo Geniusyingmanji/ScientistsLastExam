@@ -9,7 +9,7 @@
     "source_tree_dirty": false,
     "source_changes": [],
     "source_scope": [
-      "sle",
+      "frontier_science",
       "scripts",
       "tests",
       "benchmarks",
@@ -32,7 +32,7 @@
       "--timeout",
       "240",
       "--llm-config",
-      "sle/conf/llm/local.yaml",
+      "frontier_science/conf/llm/local.yaml",
       "--workdir",
       "runs/gpt55_truss_v2_b3_20260721",
       "--output",

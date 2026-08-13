@@ -9,7 +9,7 @@
     "source_tree_dirty": false,
     "source_changes": [],
     "source_scope": [
-      "sle",
+      "frontier_science",
       "scripts",
       "tests",
       "benchmarks",
@@ -19,7 +19,7 @@
       "/usr/bin/python3",
       "scripts/calibrate_electrolyte_conductivity_design.py",
       "--csv",
-      "/tmp/sle_electrolyte/Conductivtiy_experiment.csv",
+      "/tmp/frontier_science_electrolyte/Conductivtiy_experiment.csv",
       "--output",
       "experiments/electrolyte_conductivity_design_calibration_2026-07-25.json"
     ]

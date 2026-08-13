@@ -9,7 +9,7 @@
     "source_tree_dirty": false,
     "source_changes": [],
     "source_scope": [
-      "sle",
+      "frontier_science",
       "scripts",
       "tests",
       "benchmarks",
@@ -82,7 +82,7 @@
       "path": ".research/exploratory_2h_cohort_manifest_2026-07-27_v1.json",
       "sha256": "2d4cb9dfb0ba566ac924ffc8b537516f358999e734bfd01af831ad22770b0d98",
       "bytes": 6147,
-      "manifest_id": "sle_exploratory_2h_v1",
+      "manifest_id": "frontier_science_exploratory_2h_v1",
       "analysis_role": "result_selected_exploratory_measurement_screen",
       "claim_limit": "not_confirmatory_not_long_horizon_ready_not_feedback_causal_not_scaling_law_not_external_validation_not_autonomous_discovery",
       "confirmatory_reuse_permitted": false,

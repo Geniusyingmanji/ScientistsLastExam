@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "preregistration_id": "sle_exploratory_2h_execution_v1",
+  "preregistration_id": "frontier_science_exploratory_2h_execution_v1",
   "frozen_at_utc": "2026-07-27",
   "purpose": "seven_task_gpt55_exploratory_fixed_duration_measurement_screen",
   "claim_limit": "result_selected_single_trajectory_per_task_exploratory_calibration_not_population_model_ranking_feedback_causality_scaling_law_confirmatory_science_external_validation_or_autonomous_discovery",
@@ -13,7 +13,7 @@
   "frozen_source": {
     "parent_revision": "e65aa903acf5d2076b2de57be2da052bb5838d68",
     "runtime_source_sha256": "513e52f13e5bd29cdfcbf0860e4ecb8783de729853ac1b1a2e22524567352491",
-    "source_change_rule": "The execution commit may descend from parent_revision only through files outside sle, scripts, tests, benchmarks and requirements-upstream.txt. Any scoped source change requires a new preregistration and a new full-suite/security gate."
+    "source_change_rule": "The execution commit may descend from parent_revision only through files outside frontier_science, scripts, tests, benchmarks and requirements-upstream.txt. Any scoped source change requires a new preregistration and a new full-suite/security gate."
   },
   "model_condition": {
     "llm_condition_sha256": "5b0df4671481f6b3505155bc6c5654a64c4da5591422fb806904e7d0f44fc4d2",
@@ -132,7 +132,7 @@
       "--block-workers",
       "3",
       "--llm-config",
-      "sle/conf/llm/local.yaml",
+      "frontier_science/conf/llm/local.yaml",
       "--run-role",
       "calibration",
       "--preregistration",

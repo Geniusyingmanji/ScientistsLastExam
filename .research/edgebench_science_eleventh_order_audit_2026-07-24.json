@@ -25,7 +25,7 @@
     "The model-comparison discussion separately notes that weaker agents often bundle unrelated edits, which can reduce sample efficiency. This is an aggregate behavioral observation, not a causal decomposition of the gravitational-wave milestones.",
     "The approximately 38000-hour raw trajectory corpus and figure-analysis code, including artifact lineages sufficient for retrospective component replay, are not public. Therefore this audit cannot infer that any official milestone attribution is wrong or estimate causal edit effects for EdgeBench."
   ],
-  "sle_experiment": {
+  "frontier_science_experiment": {
     "id": "milestone_component_attribution",
     "plan_id": "MA1",
     "supersedes_plan_id": "I3",

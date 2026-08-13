@@ -9,7 +9,7 @@
     "source_tree_dirty": false,
     "source_changes": [],
     "source_scope": [
-      "sle",
+      "frontier_science",
       "scripts",
       "tests",
       "benchmarks",
@@ -32,7 +32,7 @@
       "--timeout",
       "600",
       "--llm-config",
-      "sle/conf/llm/local.yaml",
+      "frontier_science/conf/llm/local.yaml",
       "--workdir",
       "runs/rna_inverse_v1_b3",
       "--output",

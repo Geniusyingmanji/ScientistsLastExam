@@ -9,7 +9,7 @@
     "source_tree_dirty": false,
     "source_changes": [],
     "source_scope": [
-      "sle",
+      "frontier_science",
       "scripts",
       "tests",
       "benchmarks",
@@ -374,7 +374,7 @@
           "mean_survey_calls": null,
           "mean_survey_budget_units": null,
           "valid": 0.0,
-          "error_message": "sle.secure_eval.CandidateError: ValueError: invalid literal for int() with base 10: 'budget_cost'"
+          "error_message": "frontier_science.secure_eval.CandidateError: ValueError: invalid literal for int() with base 10: 'budget_cost'"
         }
       ]
     },

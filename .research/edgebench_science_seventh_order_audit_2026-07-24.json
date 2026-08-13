@@ -32,7 +32,7 @@
     ],
     "interpretation": "Descriptive release-cohort gap only. Because the 83 unreleased task contracts, task-level results, release-selection rule and raw trajectories are unavailable, the gap does not identify task difficulty, release-selection bias or any causal explanation."
   },
-  "sle_experiments": [
+  "frontier_science_experiments": [
     {
       "id": "rotating_release_cohorts",
       "plan_id": "G1",

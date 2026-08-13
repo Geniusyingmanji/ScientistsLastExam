@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "manifest_id": "sle_gpt56_science_census_2026_08_06_v1",
+  "manifest_id": "frontier_science_gpt56_science_census_2026_08_06_v1",
   "frozen_at_utc": "2026-08-06",
   "analysis_role": "complete_internal_admission_census_budget_one_headroom_screen",
   "claim_limit": "single_unseeded_provider_draw_per_task_not_population_model_ranking_feedback_causal_external_validation_recursive_self_improvement_or_autonomous_discovery_evidence",

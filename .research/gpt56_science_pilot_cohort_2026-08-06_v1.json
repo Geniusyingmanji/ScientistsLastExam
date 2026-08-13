@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "manifest_id": "sle_gpt56_science_pilot_v1",
+  "manifest_id": "frontier_science_gpt56_science_pilot_v1",
   "frozen_at_utc": "2026-08-06",
   "analysis_role": "cross_discipline_diagnostic_model_and_self_evolution_pilot",
   "claim_limit": "exploratory_calibration_not_representative_population_model_ranking_feedback_causal_external_validation_or_autonomous_discovery_evidence",

@@ -9,7 +9,7 @@
     "source_tree_dirty": false,
     "source_changes": [],
     "source_scope": [
-      "sle",
+      "frontier_science",
       "scripts",
       "tests",
       "benchmarks",
@@ -29,7 +29,7 @@
   "preregistration": {
     "path": ".research/continuous_restart_preregistration_2026-07-27_v1.json",
     "sha256": "f534e3f5f46047eb1895bced58d3c9bb1fca192ae24d895154ba146463005944",
-    "preregistration_id": "sle_continuous_vs_restart_v1",
+    "preregistration_id": "frontier_science_continuous_vs_restart_v1",
     "claim_limit": "result_selected_three_task_exploratory_artifact_plus_visible_metrics_continuation_not_full_context_memory_causal_population_scaling_law_or_discovery_evidence"
   },
   "system_condition": {
