@@ -125,7 +125,10 @@ Task.md 长度更无关(ρ = −0.017)。
 1. **6 个发现任务的 evaluator 不发布 coverage** —— ActiveLawDiscovery、GravityInversion、
    InterventionalSCM、NMRSpectrumFitting、ReactionMechanismFitting、SpinSystemInference。
    在这些任务上"有没有尝试"根本无法从运行记录里读出来。
-2. **CalorimeterDesign 的契约要单独修** —— 它和拒答无关,是没人交得出合法提交。
+2. ~~CalorimeterDesign 的契约要单独修~~ **已修并验证**。它的公开 `problem` 有 27 个键而
+   Task.md 只写了 15 个;补齐后同模型同预算重跑,有效率 0% → 82%,最好分 0.0000 → 1.0000。
+   它从来不是"地板任务需要重新标定",是没告诉它输入叫什么。详见
+   [contract_burden_2026-08-14.md](contract_burden_2026-08-14.md)。
 
 ## 一个差点犯的错
 
