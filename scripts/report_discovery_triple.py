@@ -134,10 +134,32 @@ def main() -> int:
 
     wanted = discovery_task_names()
     root = Path(args.runs)
+
+    # Every run of the task, found by reading the manifest rather than by matching directory
+    # names, and across cohorts rather than inside one. The previous version looked only at
+    # `runs/<one cohort>/<name>_*` and then used `matches[0]` - the first directory it happened
+    # to find - so it reported "no valid proposal" for all nineteen discovery tasks against a
+    # tree holding hundreds of them, and would have reported one arbitrary run if it had found
+    # any. Directory names are not reliable here either: budget-sweep cohorts are named for their
+    # budget, not their task.
+    by_task: dict[str, list[Path]] = {}
+    for manifest in root.glob("*/*/run_manifest.json"):
+        try:
+            document = json.loads(manifest.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        task_id = str(document.get("task_id") or "")
+        name = task_id.split("/")[-1]
+        if name in wanted:
+            by_task.setdefault(name, []).append(manifest.parent)
+
     rows = []
     for name in sorted(wanted):
-        matches = [d for d in root.iterdir() if d.is_dir() and d.name.startswith(name + "_")]
-        metrics = best_metrics(matches[0]) if matches else None
+        candidates = [m for m in (best_metrics(d) for d in by_task.get(name, []))
+                      if m is not None]
+        # The best valid proposal anywhere, which is what a leaderboard would show.
+        metrics = max(candidates, key=lambda m: float(m.get("combined_score") or 0.0),
+                      default=None)
         if metrics is None:
             rows.append({"task": name, "status": "no valid proposal"})
             continue
@@ -145,6 +167,7 @@ def main() -> int:
         rows.append({
             "task": name,
             "status": "ok",
+            "runs_seen": len(by_task.get(name, [])),
             "combined_score": metrics.get("combined_score"),
             "axes": axes,
             "missing_axes": [a for a, v in axes.items() if v is None],
