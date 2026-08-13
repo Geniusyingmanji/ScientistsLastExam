@@ -39,6 +39,12 @@ AXES = {
         "mechanism_score",
         "development_mechanism_score",
         "development_body_support_f1",
+        # Same axis, different vocabulary. Without these, a task that measures mechanism recovery
+        # thoroughly reads as not measuring it at all.
+        "heldout_supported_correct_model_rate",
+        "development_supported_correct_model_rate",
+        "heldout_hypothesis_score",
+        "development_hypothesis_score",
     ),
     "fdr": (
         "heldout_false_discovery_rate",

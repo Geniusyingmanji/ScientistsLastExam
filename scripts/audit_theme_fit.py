@@ -83,7 +83,12 @@ THRESHOLD = re.compile(
     re.IGNORECASE,
 )
 
-MECHANISM_KEYS = ("mechanism_score", "mechanism", "body_support_f1", "edge_f1")
+# Mechanism recovery goes by several names across this inventory. ForceFieldCalibration reads as
+# "missing the mechanism axis" under a narrower list while publishing
+# `supported_correct_model_rate` and `hypothesis_score`, which are exactly that axis - the audit
+# was measuring its own vocabulary rather than the task.
+MECHANISM_KEYS = ("mechanism_score", "mechanism", "body_support_f1", "edge_f1",
+                  "supported_correct_model_rate", "hypothesis_score")
 FDR_KEYS = ("false_discovery_rate", "false_discoveries")
 REFUSAL_KEYS = ("refusal_rate", "correct_abstention", "abstention", "correct_refusal")
 
