@@ -21,7 +21,13 @@ class TaskCardAuditTests(unittest.TestCase):
                 [],
                 spec.task_id,
             )
-        self.assertEqual(checked, 58)
+        # Every non-quarantined task, whatever the inventory currently holds. A literal count
+        # here fails on any deliberate change to the inventory, which says nothing about whether
+        # the cards are valid - the thing this test exists to check.
+        expected = sum(1 for spec in list_tasks(None)
+                       if certification_status(spec.task_id) != "quarantined")
+        self.assertEqual(checked, expected)
+        self.assertGreater(checked, 0)
 
     def test_bad_yaml_is_a_task_issue_not_an_exception(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -65,8 +71,11 @@ class TaskCardAuditTests(unittest.TestCase):
 
     def test_inventory_audit_counts_all_required_cards(self):
         report = audit()
-        self.assertEqual(report["task_card_required_count"], 58)
-        self.assertEqual(report["task_card_passed_count"], 58)
+        expected = sum(1 for spec in list_tasks(None)
+                       if certification_status(spec.task_id) != "quarantined")
+        self.assertEqual(report["task_card_required_count"], expected)
+        self.assertEqual(report["task_card_passed_count"], expected)
+        self.assertGreater(expected, 0)
         self.assertTrue(report["passed"])
 
 
