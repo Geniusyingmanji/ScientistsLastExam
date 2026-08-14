@@ -4,7 +4,7 @@ scientific_role: optimization
 difficulty: hard
 tier: T2
 oracle_type: real_data_replay
-score_mode: clipped
+score_mode: uncapped
 gpu_required: false
 eval_time_seconds: 90
 science_metric: budgeted_study_held_hardness_diversity_proxy_failure_uncertainty_source_transfer_and_sparse_independent_confirmation

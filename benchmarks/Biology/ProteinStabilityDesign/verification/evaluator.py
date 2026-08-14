@@ -340,9 +340,18 @@ def _anchors():
 
 
 def _normalized(value, baseline, reference):
+    """Zero at the shipped baseline, one at the reference witness, unbounded above it.
+
+    The upper clip is gone. It made the witness the best achievable score, so a result better than
+    the witness read as exactly as good as the witness and the task could report nothing about a
+    searcher that had beaten it. Every run recorded before this change scored at or below one, so
+    their scores are unchanged; removing the cap only stops the next result being invisible.
+
+    The lower clip stays: below the baseline is a worse result, not a negative achievement.
+    """
     if reference <= baseline:
         raise RuntimeError("invalid normalization anchors")
-    return float(np.clip((value - baseline) / (reference - baseline), 0.0, 1.0))
+    return float(max((value - baseline) / (reference - baseline), 0.0))
 
 
 def _evaluate_world(design_stable_batch, world, index):

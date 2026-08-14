@@ -59,5 +59,58 @@ class TrussUncappedTests(unittest.TestCase):
         self.assertEqual(spec.metadata.get("score_mode"), "uncapped")
 
 
+class EveryUncappedTaskTests(unittest.TestCase):
+    """Whatever is declared uncapped must actually be able to exceed one.
+
+    A scorer that still clips while its card says uncapped is the worse of both: the benchmark
+    claims to measure results beyond the reference and silently cannot. This walks the inventory
+    rather than naming tasks, so a task converted later is covered without editing the test.
+    """
+
+    def uncapped_tasks(self):
+        return [s for s in list_tasks(None)
+                if str(s.metadata.get("score_mode", "clipped")) == "uncapped"]
+
+    def test_there_are_uncapped_tasks(self):
+        self.assertGreater(len(self.uncapped_tasks()), 0)
+
+    def test_no_uncapped_task_still_clips_its_normalisation_at_one(self):
+        offenders = []
+        for spec in self.uncapped_tasks():
+            evaluator = spec.task_dir / "verification" / "evaluator.py"
+            if not evaluator.is_file():
+                continue
+            source = evaluator.read_text(encoding="utf-8")
+            for line in source.splitlines():
+                stripped = line.strip()
+                if stripped.startswith("#") or "normal" not in stripped.lower():
+                    continue
+                if "clip(" in stripped and "1.0)" in stripped:
+                    offenders.append("%s: %s" % (spec.task_id, stripped[:70]))
+        self.assertEqual(offenders, [], "uncapped tasks whose normalisation still clips at one")
+
+    def test_a_normalised_helper_lets_a_better_result_exceed_one(self):
+        """Where the task exposes the two-anchor helper, beating the reference must show."""
+        checked = 0
+        for spec in self.uncapped_tasks():
+            evaluator = spec.task_dir / "verification" / "evaluator.py"
+            if not evaluator.is_file():
+                continue
+            module_spec = importlib.util.spec_from_file_location("probe", evaluator)
+            module = importlib.util.module_from_spec(module_spec)
+            try:
+                module_spec.loader.exec_module(module)
+            except Exception:  # noqa: BLE001 - a task needing an absent toolkit is skipped
+                continue
+            helper = getattr(module, "_normalized", None)
+            if helper is None:
+                continue
+            checked += 1
+            self.assertGreater(helper(1.5, 0.0, 1.0), 1.0, spec.task_id)
+            self.assertAlmostEqual(helper(1.0, 0.0, 1.0), 1.0, msg=spec.task_id)
+            self.assertAlmostEqual(helper(-1.0, 0.0, 1.0), 0.0, msg=spec.task_id)
+        self.assertGreater(checked, 0, "no uncapped task exposed the two-anchor helper")
+
+
 if __name__ == "__main__":
     unittest.main()
