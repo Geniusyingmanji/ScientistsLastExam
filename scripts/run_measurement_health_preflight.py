@@ -1031,7 +1031,28 @@ def _package_mismatch_explanation(task_spec: Any, source_revision: Any) -> dict[
     changed = sorted(name for name in set(before) | set(after)
                      if before.get(name) != after.get(name))
     card = [n for n in changed if n.endswith("frontier_eval/metadata.yaml")]
-    behavioural = [n for n in changed if n not in card]
+
+    def unreachable_addition(name):
+        """A reference added under verification/ that the evaluator never names.
+
+        Such a file is run by hand beside the oracle and cannot move a score, but it does move the
+        package hash. Counting it as behavioural would make documenting a task's anchor invalidate
+        the frozen evidence that anchor exists to explain.
+        """
+        if name in before or not name.startswith("verification/") or not name.endswith(".py"):
+            return False
+        evaluator = after.get("verification/evaluator.py")
+        if evaluator is None:
+            return False
+        try:
+            source = subprocess.check_output(
+                ["git", "cat-file", "blob", evaluator],
+                cwd=str(ROOT), text=True, stderr=subprocess.DEVNULL)
+        except (OSError, subprocess.CalledProcessError):
+            return False
+        return name.rsplit("/", 1)[-1][:-3] not in source
+
+    behavioural = [n for n in changed if n not in card and not unreachable_addition(n)]
     declarative = True
     for name in card:
         try:

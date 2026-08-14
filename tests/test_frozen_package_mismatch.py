@@ -98,6 +98,25 @@ class FrozenPackageMismatchTests(unittest.TestCase):
         self.commit("retime")
         self.assertFalse(self.classify(revision)["declarative_change_only"])
 
+    def test_a_reference_the_evaluator_never_names_is_not_behavioural(self):
+        """Documenting a task's anchor must not invalidate the evidence the anchor explains."""
+        revision = self.seed()
+        self.write("benchmarks/Old/T/verification/reference_thing.py", "def solve(): return 1")
+        self.commit("add a reference")
+        result = self.classify(revision)
+        self.assertTrue(result["classified"])
+        self.assertTrue(result["declarative_change_only"])
+        self.assertEqual(result["behavioural_files_changed"], [])
+
+    def test_a_reference_the_evaluator_does_import_is_behavioural(self):
+        revision = self.seed()
+        self.write("benchmarks/Old/T/verification/reference_thing.py", "def solve(): return 1")
+        self.write("benchmarks/Old/T/verification/evaluator.py",
+                   "import reference_thing\nscore = 1")
+        self.commit("add a reference the evaluator uses")
+        result = self.classify(revision)
+        self.assertFalse(result["declarative_change_only"])
+
     def test_a_missing_revision_is_reported_not_guessed(self):
         self.seed()
         self.assertFalse(self.classify(None)["classified"])

@@ -100,9 +100,35 @@ def package_hash(files: dict[str, str]) -> str:
     return digest.hexdigest()
 
 
+def _unreachable_addition(before: dict[str, str], after: dict[str, str], path: str) -> bool:
+    """Was this file added under verification/ without the evaluator ever naming it?
+
+    Reference implementations live beside the oracle and are run by hand, not by the evaluator, so
+    adding one cannot change any score - but it does change the package hash, and without this a
+    task that gains a reference stops being comparable with its own earlier runs. That would make
+    documenting an anchor cost the evidence it was meant to explain.
+
+    The test is what it says: the file is new, it is under verification/, and its module name does
+    not appear in the evaluator. A reference the evaluator does import is behavioural and is not
+    covered here.
+    """
+    if path in before or not path.startswith("verification/") or not path.endswith(".py"):
+        return False
+    evaluator = after.get("verification/evaluator.py")
+    if evaluator is None:
+        return False
+    module = Path(path).stem
+    try:
+        source = blob(evaluator).decode("utf-8", "replace")
+    except (OSError, subprocess.CalledProcessError):
+        return False
+    return module not in source
+
+
 def declarative_only(before: dict[str, str], after: dict[str, str]) -> bool:
     """Is the whole difference between two task trees a declarative annotation?"""
     changed = {p for p in set(before) | set(after) if before.get(p) != after.get(p)}
+    changed = {p for p in changed if not _unreachable_addition(before, after, p)}
     if not changed:
         return True
     if changed != {"frontier_eval/metadata.yaml"}:
