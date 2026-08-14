@@ -382,6 +382,34 @@ everything left nothing to look at, since the ledger stores candidates by hash a
 tasks: their evidence has to be re-measured rather than re-signed. That refusal is the tool
 working, and it is the real cost of the fix.
 
+**A runnable reference scores 0.79 where every model proposal scored zero.** The claim that
+blanket abstention was a failure rather than a correct reading of a hard task rested on prose in
+a task card that nothing executed. `RadiativeTransferFit` now ships a truth-blind reference —
+`verification/reference_retrieval.py`, using only the public forward model and the observation
+callback, never the hidden world — and it settles the question:
+
+| | every model proposal | reference |
+|---|---:|---:|
+| combined score | 0.0000 | **0.7910** |
+| discovery coverage | 0.0 | 1.0 |
+| false-discovery rate | 0.0 | 0.0 |
+| correct refusal rate | 1.0 | 1.0 |
+| mechanism recovery | 0.0 | **0.8606** |
+
+The models' false-discovery and refusal rates are perfect too, because declining everything
+cannot misfire. The reference matches them on both and adds 0.86 of mechanism recovery.
+
+Writing it showed what the task measures. A first version claimed on every world and scored
+0.0000 — the exact mirror of blanket abstention, and evidence that the normalisation is right to
+demand discrimination rather than either extreme. The second found that null worlds fit the
+family perfectly with all-zero parameters, so the honest answer there is abstention, not a claim
+of nothing. The third replaced fit-then-threshold with **BIC subset selection over all 32 support
+patterns**: thresholding a least-squares fit marks four or five of five entries active on every
+world, including nulls, because the noise lands in every knot. Which entries are active is a
+model-selection question and answering it as one took the score from 0.16 to 0.79. On held-out
+worlds the reference reaches only 0.475, which is deliberate — a reference that scores 1.0 leaves
+the task nothing to measure.
+
 **The six tasks scoring zero are refusals, not difficulty.** Every valid proposal on them
 scores exactly 0.0000 rather than a spread of small values, which is the shape of a gate rather
 than of a hard landscape. Reading the evaluator's own components explains it: on
