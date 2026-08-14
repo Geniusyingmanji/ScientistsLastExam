@@ -477,13 +477,22 @@ def _validate_areas(value, instance):
 
 
 def _normalized_weight_score(baseline_weight, reference_weight, candidate_weight):
+    """Zero at the shipped baseline, one at the reference witness, and unbounded above it.
+
+    The upper clip is gone. It made the reference the best achievable score, so a design lighter
+    than the witness read as exactly as good as the witness, and the task could report nothing
+    about a searcher that had beaten it. Every recorded run scored at or below one, so removing
+    the cap changes none of them - it only stops the next result being invisible.
+
+    The lower clip stays: below the baseline is a worse design, not a negative achievement, and
+    the normalisation has no meaning there.
+    """
     denominator = float(baseline_weight) - float(reference_weight)
     if denominator <= 1.0e-10:
         raise RuntimeError("invalid reference-weight normalization")
-    return float(np.clip(
+    return float(max(
         (float(baseline_weight) - float(candidate_weight)) / denominator,
         0.0,
-        1.0,
     ))
 
 

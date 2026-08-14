@@ -4,7 +4,7 @@ scientific_role: optimization
 difficulty: hard
 tier: T2
 oracle_type: analytical
-score_mode: clipped
+score_mode: uncapped
 gpu_required: false
 eval_time_seconds: 30
 science_metric: nominal weight reduction with sealed topology transfer and load/material/manufacturing robustness
