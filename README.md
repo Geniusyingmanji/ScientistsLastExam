@@ -382,6 +382,31 @@ everything left nothing to look at, since the ledger stores candidates by hash a
 tasks: their evidence has to be re-measured rather than re-signed. That refusal is the tool
 working, and it is the real cost of the fix.
 
+**Runnable references beat blanket abstention on both tasks that now have one.** The claim that
+declining every world was a failure rather than a correct reading of a hard task rested on prose
+in task cards that nothing executed. Two tasks now ship a truth-blind reference — using only what
+a candidate receives, never the hidden world:
+
+| | model proposals | reference |
+|---|---:|---:|
+| `RadiativeTransferFit` combined | 0.0000 | **0.7910** |
+| `RadiativeTransferFit` mechanism | 0.0 | 0.8606 |
+| `GeneNetworkIntervention` combined | 0.0000 | **0.3926** |
+| `GeneNetworkIntervention` mechanism | 0.0 | 0.8255 (held-out 0.9279) |
+
+Both references reach coverage 1.0, false-discovery 0.0 and correct-refusal 1.0 — the same
+refusal and false-discovery numbers the abstaining proposals get, since declining cannot misfire,
+plus the mechanism recovery those proposals forgo.
+
+Writing them showed what the tasks measure, and the same lesson appeared twice. A first
+`RadiativeTransferFit` reference claimed on every world and scored 0.0000 — the exact mirror of
+blanket abstention, and evidence that the normalisation demands discrimination rather than either
+extreme. In both tasks, thresholding a least-squares fit marks far too much active, because the
+noise lands in every parameter: on nulls it manufactures a mechanism where the truth is that
+there is none. Which entries are active is a model-selection question. Answering it as one — BIC
+over all 32 support patterns in one task, BIC backward elimination over the edges in the other —
+took the first from 0.16 to 0.79 and the second from 0.16 to 0.39.
+
 **A runnable reference scores 0.79 where every model proposal scored zero.** The claim that
 blanket abstention was a failure rather than a correct reading of a hard task rested on prose in
 a task card that nothing executed. `RadiativeTransferFit` now ships a truth-blind reference —
