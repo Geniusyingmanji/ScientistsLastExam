@@ -382,32 +382,39 @@ everything left nothing to look at, since the ledger stores candidates by hash a
 tasks: their evidence has to be re-measured rather than re-signed. That refusal is the tool
 working, and it is the real cost of the fix.
 
-**Runnable references beat blanket abstention on every task that now has one.** The claim that
+**Runnable references beat blanket abstention on all five tasks that scored zero.** The claim that
 declining every world was a failure rather than a correct reading of a hard task rested on prose
-in task cards that nothing executed. Four tasks now ship a truth-blind reference — using only what
-a candidate receives, never the hidden world:
+in task cards that nothing executed. All five now ship a truth-blind reference — using only what a candidate receives, never the
+hidden world:
 
 | task | model proposals | reference | mechanism recovery |
 |---|---:|---:|---:|
+| `ProspectiveMetaAnalysis` | 0.0000 | **0.9088** | 0.9266 |
 | `QuartzCrystalMicrobalanceLab` | 0.0000 | **0.8330** | 0.9585 |
 | `RadiativeTransferFit` | 0.0000 | **0.7910** | 0.8606 |
 | `ConvectionDiffusionOpt` | 0.0000 | **0.7636** | 0.9724 |
 | `GeneNetworkIntervention` | 0.0000 | **0.3926** | 0.8255 |
 
-All four reach coverage 1.0, false-discovery 0.0 and correct-refusal 1.0 — the same refusal and
+That is every task that had scored zero on refusal. All five reach coverage 1.0,
+false-discovery 0.0 and correct-refusal 1.0 — the same refusal and
 false-discovery numbers the abstaining proposals get, since declining cannot misfire, plus the
 mechanism recovery those proposals forgo. `QuartzCrystalMicrobalanceLab`'s diagnosis is right on
 10 of 10 worlds.
 
-Writing them showed what the tasks measure, and one lesson appeared in three of the four:
+Writing them showed what the tasks measure, and one lesson appeared in three of the five:
 **thresholding a fitted model marks far too much active, because the noise lands in every
 parameter.** On null worlds it manufactures a mechanism where the truth is that there is none.
 Which entries are active is a model-selection question, and answering it as one — BIC over all 32
 support patterns in one task, BIC backward elimination over the edges in another — moved the
-scores from 0.16 to 0.79 and from 0.16 to 0.39. In the fourth the same shape appeared differently:
+scores from 0.16 to 0.79 and from 0.16 to 0.39. The same shape appeared twice more in different clothes. On `QuartzCrystalMicrobalanceLab`:
 overtone dispersion is a *trend* and not a spread, and judging it by scatter marked a world with
 missing samples (0.281) as more dispersing than either genuinely viscoelastic world (0.157, 0.160).
-Requiring a monotone trend took that diagnosis from 6 of 10 to 10 of 10.
+Requiring a monotone trend took that diagnosis from 6 of 10 to 10 of 10. On
+`ProspectiveMetaAnalysis` the first out-of-family test asked whether the pooled effect fell
+outside the published bounds and never fired once: a curved moderator relationship produces
+perfectly ordinary effect sizes, so bounds cannot see it. Testing the quadratic term's
+significance instead — linear corpora at 0.17–1.32, nonlinear at 2.40 and 2.86 — took the score
+from 0.83 to 0.91 and the refusal rate from 0.0 to 1.0.
 
 A first `RadiativeTransferFit` reference claimed on every world and scored 0.0000 — the exact
 mirror of blanket abstention, and evidence that the normalisation demands discrimination rather
