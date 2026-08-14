@@ -117,6 +117,10 @@ def main(argv: list[str] | None = None) -> int:
             continue
         updates.append({
             "task": task_id,
+            # Recorded before the rebinding so the ledger says plainly that runs made against the
+            # old prompt are not comparable with runs made against the new one, even though the
+            # evaluator evidence carried forward is sound.
+            "prompt_changed_since_freeze": bool(verdict.get("prompt_change_invalidates_runs")),
             "task_package_sha256": current_package,
             "runtime_contract_sha256": current_contract,
             "superseded_task_package_sha256": frozen_package,
@@ -127,9 +131,11 @@ def main(argv: list[str] | None = None) -> int:
     for task_id, why in refused:
         print("REFUSED %-44s %s" % (task_id, why))
     for update in updates:
-        print("rebind  %-44s %s -> %s" % (
+        print("rebind  %-44s %s -> %s%s" % (
             update["task"], (update["superseded_task_package_sha256"] or "none")[:12],
-            update["task_package_sha256"][:12]))
+            update["task_package_sha256"][:12],
+            "  (prompt changed: recorded runs are not comparable)"
+            if update["prompt_changed_since_freeze"] else ""))
     print()
     print("%d task(s) rebound, %d refused" % (len(updates), len(refused)))
     if refused:

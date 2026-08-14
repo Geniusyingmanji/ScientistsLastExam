@@ -117,6 +117,25 @@ class FrozenPackageMismatchTests(unittest.TestCase):
         result = self.classify(revision)
         self.assertFalse(result["declarative_change_only"])
 
+    def test_a_prompt_edit_leaves_evaluator_evidence_sound(self):
+        """Every check here measures the evaluator; none of them reads Task.md."""
+        revision = self.seed()
+        self.write("benchmarks/Old/T/Task.md", "ask, with the input names spelled out")
+        self.commit("document the inputs")
+        result = self.classify(revision)
+        self.assertTrue(result["declarative_change_only"])
+        self.assertEqual(result["behavioural_files_changed"], [])
+        # It is still reported, because it does invalidate recorded runs.
+        self.assertTrue(result["prompt_change_invalidates_runs"])
+
+    def test_an_evaluator_edit_beside_a_prompt_edit_is_still_behavioural(self):
+        revision = self.seed()
+        self.write("benchmarks/Old/T/Task.md", "ask differently")
+        self.write("benchmarks/Old/T/verification/evaluator.py", "score = 2")
+        self.commit("both")
+        result = self.classify(revision)
+        self.assertFalse(result["declarative_change_only"])
+
     def test_a_missing_revision_is_reported_not_guessed(self):
         self.seed()
         self.assertFalse(self.classify(None)["classified"])

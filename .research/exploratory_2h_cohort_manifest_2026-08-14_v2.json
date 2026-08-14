@@ -22,7 +22,7 @@
     {
       "task": "Electrochemistry/ElectrolyteConductivityDesign",
       "maturity_contract_sha256": "4fe717ae4d393e6e443eb8583371d4f4ae1a75a51c1f3d0e145260033d5a0563",
-      "runtime_contract_sha256": "d089b923eaa99398d3dca7282dae658c2ea92e460f632f8a52b53665a471253a",
+      "runtime_contract_sha256": "e2f6b6241a0b2964a7ed2a334043e6cd512c60e33b1557ab72edd50fda216c6b",
       "task_card_sha256": "aaaa34f20954cce55180ea56b1c7ef9285a377194df3fbb89ff9822fafbdca61",
       "provenance_class": "public_data_replay",
       "role": "real-data optimization, Goodhart and repeatability screen",
@@ -31,7 +31,7 @@
     {
       "task": "Optics/DiffractionGratingDesign",
       "maturity_contract_sha256": "e57461d2ff8496157427b98238eb0292877111f7e4cf667b71d5b38b860bb6ac",
-      "runtime_contract_sha256": "c5fffef1ce762adb665cae561d5c58b39a50be86a62ea9fc13397a9d61d601b7",
+      "runtime_contract_sha256": "b5ee65142c26af4722c8d7f677473812612458a4067a97f0438fd575f7b07635",
       "task_card_sha256": "22c22a90b2940063a37488fc1cadc31445713c27fe8661e14cd868a384d9b8b4",
       "provenance_class": "procedural",
       "role": "high-variance Maxwell design, transfer and robustness screen",
@@ -49,7 +49,7 @@
     {
       "task": "Semiconductor/MOSFETDoping",
       "maturity_contract_sha256": "e31e47512cc25cdbfc98143cf1db28966d9d6fce9e1025e4b38c55c0ad22831a",
-      "runtime_contract_sha256": "951858516b946674922f51653591e28033a49315fa6962d58f07ccce8843622e",
+      "runtime_contract_sha256": "0939d2cc56f6887ea1a9ee5484d907d1d97eea6065d6dccd9e8a36074922c8bc",
       "task_card_sha256": "45a615a06c1b0c6db599d502373fed7007175d84f078d7009d05fd7764c3c36a",
       "provenance_class": "procedural",
       "role": "device Pareto, transfer and worst-shift robustness screen",
@@ -67,7 +67,7 @@
     {
       "task": "Thermodynamics/HeatExchangerDesign",
       "maturity_contract_sha256": "143482d56caafabaa60064018acc6c346927645c5b5171bdf46285b165df4a56",
-      "runtime_contract_sha256": "7aacb254dd78be18a5105b8d24f5af9d11b44a4de07048ba9c287b1ef1e738f2",
+      "runtime_contract_sha256": "fe3df8c2ae3b4d887a5ba40cd0a7d0a80dad423a3e161af5a663ccd01a59b075",
       "task_card_sha256": "a21c3338555c0b64c460e6d7bd241b7e0d5bfc6d974477dda4bb047e37cf8cdf",
       "provenance_class": "procedural",
       "role": "multifidelity Pareto and fouling/manufacturing robustness screen",

@@ -1052,7 +1052,16 @@ def _package_mismatch_explanation(task_spec: Any, source_revision: Any) -> dict[
             return False
         return name.rsplit("/", 1)[-1][:-3] not in source
 
-    behavioural = [n for n in changed if n not in card and not unreachable_addition(n)]
+    # Three kinds, not two. A change confined to Task.md changes what a candidate is shown and
+    # therefore whether recorded runs remain comparable - but every check in this preflight is
+    # about the evaluator: whether the baseline and the reference separate, whether the score has
+    # the resolution the materiality threshold assumes, whether re-evaluating a fixed artifact
+    # reproduces its noise. None of those reads the prompt. Lumping a prompt edit in with an
+    # evaluator edit refuses evidence that is still valid, which is what happened when four tasks
+    # gained a table of their own input names.
+    prompt_only = [n for n in changed if n.endswith("Task.md")]
+    behavioural = [n for n in changed if n not in card and n not in prompt_only
+                   and not unreachable_addition(n)]
     declarative = True
     for name in card:
         try:
@@ -1073,9 +1082,13 @@ def _package_mismatch_explanation(task_spec: Any, source_revision: Any) -> dict[
         "classified": True,
         "source_revision": source_revision,
         "behavioural_files_changed": behavioural,
+        "prompt_files_changed": prompt_only,
         # True means the frozen evidence still describes this task and only the binding is stale.
-        # False means something that can move a score has changed and the evidence must be remade.
+        # False means something that can move an evaluator's measurement has changed, and the
+        # evidence must be remade. A prompt-only change sets this true and is reported separately,
+        # because it does invalidate recorded runs even though it leaves the evidence sound.
         "declarative_change_only": not behavioural and declarative,
+        "prompt_change_invalidates_runs": bool(prompt_only),
     }
 
 
