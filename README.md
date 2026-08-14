@@ -382,58 +382,45 @@ everything left nothing to look at, since the ledger stores candidates by hash a
 tasks: their evidence has to be re-measured rather than re-signed. That refusal is the tool
 working, and it is the real cost of the fix.
 
-**Runnable references beat blanket abstention on both tasks that now have one.** The claim that
+**Runnable references beat blanket abstention on every task that now has one.** The claim that
 declining every world was a failure rather than a correct reading of a hard task rested on prose
-in task cards that nothing executed. Two tasks now ship a truth-blind reference — using only what
+in task cards that nothing executed. Four tasks now ship a truth-blind reference — using only what
 a candidate receives, never the hidden world:
 
-| | model proposals | reference |
-|---|---:|---:|
-| `RadiativeTransferFit` combined | 0.0000 | **0.7910** |
-| `RadiativeTransferFit` mechanism | 0.0 | 0.8606 |
-| `GeneNetworkIntervention` combined | 0.0000 | **0.3926** |
-| `GeneNetworkIntervention` mechanism | 0.0 | 0.8255 (held-out 0.9279) |
+| task | model proposals | reference | mechanism recovery |
+|---|---:|---:|---:|
+| `QuartzCrystalMicrobalanceLab` | 0.0000 | **0.8330** | 0.9585 |
+| `RadiativeTransferFit` | 0.0000 | **0.7910** | 0.8606 |
+| `ConvectionDiffusionOpt` | 0.0000 | **0.7636** | 0.9724 |
+| `GeneNetworkIntervention` | 0.0000 | **0.3926** | 0.8255 |
 
-Both references reach coverage 1.0, false-discovery 0.0 and correct-refusal 1.0 — the same
-refusal and false-discovery numbers the abstaining proposals get, since declining cannot misfire,
-plus the mechanism recovery those proposals forgo.
+All four reach coverage 1.0, false-discovery 0.0 and correct-refusal 1.0 — the same refusal and
+false-discovery numbers the abstaining proposals get, since declining cannot misfire, plus the
+mechanism recovery those proposals forgo. `QuartzCrystalMicrobalanceLab`'s diagnosis is right on
+10 of 10 worlds.
 
-Writing them showed what the tasks measure, and the same lesson appeared twice. A first
-`RadiativeTransferFit` reference claimed on every world and scored 0.0000 — the exact mirror of
-blanket abstention, and evidence that the normalisation demands discrimination rather than either
-extreme. In both tasks, thresholding a least-squares fit marks far too much active, because the
-noise lands in every parameter: on nulls it manufactures a mechanism where the truth is that
-there is none. Which entries are active is a model-selection question. Answering it as one — BIC
-over all 32 support patterns in one task, BIC backward elimination over the edges in the other —
-took the first from 0.16 to 0.79 and the second from 0.16 to 0.39.
+Writing them showed what the tasks measure, and one lesson appeared in three of the four:
+**thresholding a fitted model marks far too much active, because the noise lands in every
+parameter.** On null worlds it manufactures a mechanism where the truth is that there is none.
+Which entries are active is a model-selection question, and answering it as one — BIC over all 32
+support patterns in one task, BIC backward elimination over the edges in another — moved the
+scores from 0.16 to 0.79 and from 0.16 to 0.39. In the fourth the same shape appeared differently:
+overtone dispersion is a *trend* and not a spread, and judging it by scatter marked a world with
+missing samples (0.281) as more dispersing than either genuinely viscoelastic world (0.157, 0.160).
+Requiring a monotone trend took that diagnosis from 6 of 10 to 10 of 10.
 
-**A runnable reference scores 0.79 where every model proposal scored zero.** The claim that
-blanket abstention was a failure rather than a correct reading of a hard task rested on prose in
-a task card that nothing executed. `RadiativeTransferFit` now ships a truth-blind reference —
-`verification/reference_retrieval.py`, using only the public forward model and the observation
-callback, never the hidden world — and it settles the question:
+A first `RadiativeTransferFit` reference claimed on every world and scored 0.0000 — the exact
+mirror of blanket abstention, and evidence that the normalisation demands discrimination rather
+than either extreme.
 
-| | every model proposal | reference |
-|---|---:|---:|
-| combined score | 0.0000 | **0.7910** |
-| discovery coverage | 0.0 | 1.0 |
-| false-discovery rate | 0.0 | 0.0 |
-| correct refusal rate | 1.0 | 1.0 |
-| mechanism recovery | 0.0 | **0.8606** |
-
-The models' false-discovery and refusal rates are perfect too, because declining everything
-cannot misfire. The reference matches them on both and adds 0.86 of mechanism recovery.
-
-Writing it showed what the task measures. A first version claimed on every world and scored
-0.0000 — the exact mirror of blanket abstention, and evidence that the normalisation is right to
-demand discrimination rather than either extreme. The second found that null worlds fit the
-family perfectly with all-zero parameters, so the honest answer there is abstention, not a claim
-of nothing. The third replaced fit-then-threshold with **BIC subset selection over all 32 support
-patterns**: thresholding a least-squares fit marks four or five of five entries active on every
-world, including nulls, because the noise lands in every knot. Which entries are active is a
-model-selection question and answering it as one took the score from 0.16 to 0.79. On held-out
-worlds the reference reaches only 0.475, which is deliberate — a reference that scores 1.0 leaves
-the task nothing to measure.
+Two harness defects surfaced only because a reference was written. `ConvectionDiffusionOpt`'s
+reference abstained everywhere while its PDE solver was **bit-identical** to the evaluator's: the
+mismatch was reading the sensors, bilinear against nearest-node, and at a declared noise of 6.5e-4
+against field values near 0.27 a one per cent sampling error is a four-sigma residual. A refusal
+that comes from the instrument model rather than the science is indistinguishable from the real
+thing in the score. And `QuartzCrystalMicrobalanceLab` required four exact calibration key names
+that appeared nowhere in its prompt — the submission side of the same undocumented-contract defect
+the input-key audit had already found, and now audited too.
 
 **The six tasks scoring zero are refusals, not difficulty.** Every valid proposal on them
 scores exactly 0.0000 rather than a spread of small values, which is the shape of a gate rather
