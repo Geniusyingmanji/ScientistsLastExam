@@ -38,9 +38,30 @@ from sle.registry import list_tasks  # noqa: E402
 # Names a task's input mapping goes by across this inventory.
 INPUT_NAMES = {"problem", "instance", "spec", "task", "inputs", "context"}
 
+# Names the evaluator gives the candidate's return value. Keys read off these are the submission
+# contract - the other half of the interface, and undocumented just as often. The exact
+# calibration key names QuartzCrystalMicrobalanceLab requires appear nowhere in its prompt.
+# Deliberately narrow. `result`, `out` and `output` are what evaluators call their own metrics
+# dict at least as often as the candidate's return value, and reading those produced a list of
+# "undocumented submission fields" containing `error_message`, `valid_rate` and `robustness_score`
+# - names the evaluator writes, not names a candidate must supply. A false positive here sends
+# someone to document a field that is not part of the contract.
+# `fitted` is left out although some evaluators do use it for the validated candidate result:
+# others use it for the hidden truth, and CatalystDeactivationLab does exactly that, mapping
+# `fitted["log10_a"]` - a world parameter - onto the public name. A name that means opposite
+# things in different tasks is not a usable signal, and this audit already declares itself an
+# undercount.
+SUBMISSION_NAMES = {"submission", "answer", "claim", "returned"}
 
-def subscript_keys(source: str) -> set[str]:
-    """String keys read off an input mapping: `problem["x"]` and `problem.get("x")`."""
+# Constants that hold the exact submission contract. The suffix alone is too loose for the same
+# reason.
+SUBMISSION_CONSTANTS = ("SUBMISSION_KEYS", "CALIBRATION_KEYS", "CLAIM_KEYS", "REQUIRED_KEYS",
+                        "COMMIT_KEYS", "ANSWER_KEYS")
+
+
+def subscript_keys(source: str, names: set[str] | None = None) -> set[str]:
+    """String keys read off a named mapping: `problem["x"]` and `problem.get("x")`."""
+    names = INPUT_NAMES if names is None else names
     try:
         tree = ast.parse(source)
     except SyntaxError:
@@ -48,16 +69,41 @@ def subscript_keys(source: str) -> set[str]:
     found: set[str] = set()
     for node in ast.walk(tree):
         if (isinstance(node, ast.Subscript) and isinstance(node.value, ast.Name)
-                and node.value.id in INPUT_NAMES):
+                and node.value.id in names):
             index = node.slice
             if isinstance(index, ast.Constant) and isinstance(index.value, str):
                 found.add(index.value)
         if (isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute)
                 and node.func.attr == "get" and isinstance(node.func.value, ast.Name)
-                and node.func.value.id in INPUT_NAMES and node.args
+                and node.func.value.id in names and node.args
                 and isinstance(node.args[0], ast.Constant)
                 and isinstance(node.args[0].value, str)):
             found.add(node.args[0].value)
+    return found
+
+
+def submission_keys(source: str) -> set[str]:
+    """Keys the evaluator reads off the candidate's return value, plus any declared key set.
+
+    A task states its submission fields in prose and then validates them against an exact set. If
+    the set is a module-level constant - `SUBMISSION_KEYS`, `CALIBRATION_KEYS` - the names in it
+    are the contract, and a candidate that uses any other name is rejected outright.
+    """
+    found = subscript_keys(source, SUBMISSION_NAMES)
+    try:
+        tree = ast.parse(source)
+    except SyntaxError:
+        return found
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Assign):
+            continue
+        for target in node.targets:
+            if not isinstance(target, ast.Name) or target.id not in SUBMISSION_CONSTANTS:
+                continue
+            if isinstance(node.value, (ast.Set, ast.List, ast.Tuple)):
+                for element in node.value.elts:
+                    if isinstance(element, ast.Constant) and isinstance(element.value, str):
+                        found.add(element.value)
     return found
 
 
@@ -116,10 +162,15 @@ def main(argv: list[str] | None = None) -> int:
         constraints = spec.eval_dir / "constraints.txt"
         if constraints.is_file():
             prose += constraints.read_text(encoding="utf-8")
+        submitted = (submission_keys(evaluator.read_text(encoding="utf-8"))
+                     if evaluator.is_file() else set())
         undocumented = sorted(k for k in keys if k not in prose)
+        undocumented_submission = sorted(k for k in submitted if k not in prose)
         rows.append({
             "task": spec.task_id,
             "keys_read_by_baseline": len(keys),
+            "submission_keys": len(submitted),
+            "undocumented_submission": undocumented_submission,
             "keys_only_in_evaluator": sorted(declared - subscript_keys(
                 program.read_text(encoding="utf-8"))),
             "undocumented": undocumented,
@@ -127,6 +178,7 @@ def main(argv: list[str] | None = None) -> int:
 
     rows.sort(key=lambda r: (-len(r["undocumented"]), r["task"]))
     affected = [r for r in rows if r["undocumented"]]
+    submission_affected = [r for r in rows if r["undocumented_submission"]]
 
     print("%-34s %8s %s" % ("task", "keys", "undocumented"))
     print("-" * 78)
@@ -144,6 +196,16 @@ def main(argv: list[str] | None = None) -> int:
     print("Each of these is a name a candidate can only get right by copying the baseline. A")
     print("candidate that reaches for the quantity under any other name raises, and the zero it")
     print("earns cannot be told apart from a zero earned on the science.")
+    print()
+    print("tasks whose prompt does not name a field their submission is validated against: "
+          "%d of %d" % (len(submission_affected), len(rows)))
+    for row in submission_affected:
+        print("  %-32s %s" % (
+            row["task"].split("/")[-1][:32],
+            ", ".join(row["undocumented_submission"][:5])
+            + (" ..." if len(row["undocumented_submission"]) > 5 else "")))
+    print("  A submission using any other name is rejected outright, so this side of the")
+    print("  interface costs a candidate everything rather than one field.")
     print()
     print("This undercounts: a key the baseline does not happen to read is invisible here.")
 

@@ -10,7 +10,8 @@ from __future__ import annotations
 
 import unittest
 
-from scripts.audit_documented_keys import evaluator_problem_keys, subscript_keys
+from scripts.audit_documented_keys import (evaluator_problem_keys, submission_keys,
+                                           subscript_keys)
 
 
 class SubscriptKeyTests(unittest.TestCase):
@@ -66,3 +67,32 @@ class EvaluatorKeyTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class SubmissionKeyTests(unittest.TestCase):
+    """The other half of the interface: names the candidate must return under.
+
+    These are stricter than the input side, because a submission with the wrong key set is
+    rejected before it is scored - the candidate loses everything, not one field. That makes a
+    false positive here costly in the other direction: it sends someone to document a field that
+    is not part of the contract at all.
+    """
+
+    def test_a_key_read_off_the_submission_is_found(self):
+        self.assertIn("mass", submission_keys('x = submission["mass"]'))
+
+    def test_a_declared_contract_constant_is_found(self):
+        source = 'CALIBRATION_KEYS = {"start_offset_counts", "end_offset_counts"}'
+        self.assertEqual(submission_keys(source),
+                         {"start_offset_counts", "end_offset_counts"})
+
+    def test_the_evaluators_own_metrics_dict_is_not_the_submission(self):
+        """`result["error_message"]` is something the evaluator writes, not something asked for."""
+        self.assertEqual(submission_keys('result["error_message"] = "x"'), set())
+
+    def test_a_constant_that_merely_ends_in_keys_is_not_the_contract(self):
+        self.assertEqual(submission_keys('WORLD_KEYS = {"seed", "kind"}'), set())
+
+    def test_a_name_that_means_the_hidden_truth_elsewhere_is_excluded(self):
+        """One task uses `fitted` for the candidate result and another for the world's truth."""
+        self.assertEqual(submission_keys('x = fitted["log10_a"]'), set())

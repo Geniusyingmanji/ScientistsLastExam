@@ -43,7 +43,18 @@ def analyze_qcm(problem):
 
 Return exactly:
 
-- `calibration`, containing start/end complex offsets and complex gains as `[real, imag]` pairs;
+- `calibration`, containing exactly these four keys, each a `[real, imag]` pair:
+
+  | key | |
+  |---|---|
+  | `start_offset_counts` | complex offset at the first calibration capture |
+  | `end_offset_counts` | complex offset at the last calibration capture |
+  | `start_complex_gain_counts_per_siemens` | complex gain at the first capture |
+  | `end_complex_gain_counts_per_siemens` | complex gain at the last capture |
+
+  The names are part of the contract: a submission whose calibration dictionary has any other
+  key set is rejected before it is scored, and the resulting zero is indistinguishable from one
+  earned on the science.
 - `resonance_frequency_hz_by_sweep` and `quality_factor_by_sweep`, each keyed by every sweep ID;
 - `mass_loading_ug_cm2` at 40 seconds, `deposition_rate_ug_cm2_s`, and
   `predicted_mass_ug_cm2` at 60 seconds;
