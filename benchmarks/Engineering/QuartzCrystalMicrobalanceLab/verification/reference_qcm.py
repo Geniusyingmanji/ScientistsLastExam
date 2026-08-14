@@ -23,16 +23,23 @@ from __future__ import annotations
 
 import numpy as np
 
-# A harmonic whose Sauerbrey mass differs from the median by more than this fraction is dispersing
-# rather than loading rigidly.
-DISPERSION_TOLERANCE = 0.18
+# Overtone dispersion is a *trend*, not a spread. Measured on this task, the apparent Sauerbrey
+# mass rises monotonically with harmonic on the viscoelastic worlds - [1.10, 1.30, 1.48] and
+# [1.22, 1.45, 1.62] - while a world with missing raw samples scatters instead: [1.33, 1.20, 1.20]
+# and [0.77, 0.99, 0.77]. Judging by spread alone marks the second group as dispersing, and one of
+# them scatters wider (0.28) than either real dispersion (0.16). Requiring a monotone trend
+# separates them, and the span threshold then only has to clear the rigid worlds, which drift by
+# about 0.01.
+DISPERSION_SPAN = 0.10
 
-# How far the 20-second mass may sit from half the 40-second mass before the rate is changing.
-LINEARITY_TOLERANCE = 0.18
+# The 20-second mass against half the 40-second mass. Rate-change worlds sit at 0.12, everything
+# else at or below 0.07.
+LINEARITY_TOLERANCE = 0.09
 
-# Calibration residual, relative to the signal, above which the affine model has been fitted to
-# the wrong quadrature convention.
-CONJUGATION_RESIDUAL = 0.05
+# Conjugate-fit residual over direct-fit residual. Below this the instrument is reporting the
+# opposite quadrature convention: the conjugated worlds sit near 1.0 and every other world above
+# 1900, because fitting a correctly-oriented signal against a conjugated model is hopeless.
+CONJUGATION_RATIO = 10.0
 
 
 def _finite(values):
@@ -111,8 +118,8 @@ def analyze_qcm(problem):
     span = max(float(last["capture_index"]) - float(first["capture_index"]), 1e-9)
 
     clipped = any(_peak_count(sweep) >= adc_limit - 1.0 for sweep in sweeps)
-    conjugated = (min(conjugate_a, conjugate_b) < 0.5 * min(residual_a, residual_b)
-                  and min(residual_a, residual_b) > CONJUGATION_RESIDUAL)
+    conjugated = (min(conjugate_a, conjugate_b)
+                  / max(min(residual_a, residual_b), 1e-12)) < CONJUGATION_RATIO
 
     resonances, qualities, evidence = {}, {}, [first["calibration_id"], last["calibration_id"]]
     by_key = {}
@@ -147,8 +154,13 @@ def analyze_qcm(problem):
     masses_20 = mass_at(20.0)
     mass = float(np.median(masses_40)) if len(masses_40) else 0.0
 
-    dispersing = (len(masses_40) > 1 and abs(mass) > 1e-9
-                  and float(np.max(np.abs(masses_40 - mass))) / abs(mass) > DISPERSION_TOLERANCE)
+    # Strictly monotone in harmonic, and moving far enough to be a dispersion rather than drift.
+    ordered = masses_40
+    monotone = (len(ordered) >= 3
+                and (all(np.diff(ordered) > 0) or all(np.diff(ordered) < 0)))
+    span = (float(np.max(ordered) - np.min(ordered)) / abs(mass)
+            if len(ordered) and abs(mass) > 1e-9 else 0.0)
+    dispersing = monotone and span >= DISPERSION_SPAN
     rate_changing = False
     if len(masses_20) and abs(mass) > 1e-9:
         expected = mass / 2.0
