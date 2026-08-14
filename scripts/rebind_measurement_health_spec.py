@@ -39,6 +39,25 @@ from sle.algorithms.common import task_contract_sha256, task_package_sha256  # n
 from sle.registry import find_task  # noqa: E402
 
 
+def _renamed_runtime_paths(shared: dict) -> dict:
+    """Carry recorded runtime paths across the package rename.
+
+    They name `frontier_science/...`, which no longer exists, so the compatibility check reported
+    every runtime file as missing and could never pass again. Renaming a directory is not evidence
+    going stale.
+    """
+    out = dict(shared)
+    for check, config in out.items():
+        paths = (config or {}).get("runtime_paths")
+        if not paths:
+            continue
+        out[check] = dict(config, runtime_paths=[
+            "sle/" + path[len("frontier_science/"):]
+            if path.startswith("frontier_science/") else path
+            for path in paths])
+    return out
+
+
 def _deep(base: dict, overlay: dict) -> dict:
     out = dict(base)
     for key, value in overlay.items():
@@ -210,8 +229,11 @@ def main(argv: list[str] | None = None) -> int:
             # the preflight fails closed on "does not bind the current cohort manifest".
             "cohort_manifest_sha256": sha256_of(args.manifest_output),
         },
-        "shared_task_overrides": _deep(_deep(
-            raw_spec.get("shared_task_overrides") or {},
+        # The recorded runtime paths still name the package as it was before the rename, so they
+        # are carried forward under the current name. The files are the same files; only where
+        # they live has changed, and the comparison follows the rename in both directions.
+        "shared_task_overrides": _deep(_deep(_deep(
+            _renamed_runtime_paths(raw_spec.get("shared_task_overrides") or {}),
             {check: {"evidence": {"path": path,
                                   "sha256": sha256_of((ROOT / path).resolve())}}
              for check, path in (item.split("=", 1) for item in args.rebind_evidence)}),
@@ -219,7 +241,7 @@ def main(argv: list[str] | None = None) -> int:
                 "path": args.artifacts_output.relative_to(ROOT).as_posix()
                 if args.artifacts_output.is_absolute()
                 else args.artifacts_output.as_posix(),
-                "sha256": sha256_of(args.artifacts_output)}}}),
+                "sha256": sha256_of(args.artifacts_output)}}}), {}),
         # Carry the previous overlay's per-task overrides forward; this layer only adds hashes.
         "task_overrides": [
             dict(prev, **{k: v for k, v in next((u for u in updates

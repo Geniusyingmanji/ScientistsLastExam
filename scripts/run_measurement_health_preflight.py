@@ -271,12 +271,55 @@ def _comparison(value: Any, operator: str, expected: Any) -> bool:
     raise ValueError("unsupported comparison operator %r" % operator)
 
 
+# The package was renamed. A path recorded before the rename does not exist now, and the path
+# recorded after it does not exist at the frozen revision - so a byte comparison keyed on the path
+# alone reports every runtime file as missing and the check can never pass again. Following the
+# rename is the same fact stated in two names, and it is the third place in this repository where
+# a path-keyed lookup had to learn about a move.
+PACKAGE_RENAMES = (("sle/", "frontier_science/"),)
+
+
+def _declarative_yaml(historical: bytes, current: Path) -> bool:
+    """Do two versions of a card differ only in keys nothing computes from?
+
+    Takes the historical bytes rather than a path, because the task directory moved between
+    disciplines and looking the card up under today's path finds nothing at the frozen revision -
+    the same rename that this file already had to learn about twice elsewhere.
+    """
+    try:
+        before = yaml.safe_load(historical.decode("utf-8")) or {}
+        after = yaml.safe_load(current.read_text(encoding="utf-8")) or {}
+    except (OSError, ValueError, yaml.YAMLError, UnicodeDecodeError):
+        return False
+    differing = {key for key in set(before) | set(after) if before.get(key) != after.get(key)}
+    return bool(differing) and differing <= DECLARATIVE_CARD_KEYS
+
+
+def _historical_bytes(revision: str, relative: str):
+    """The file's bytes at a revision, following the package rename if it has to."""
+    candidates = [relative]
+    for new_prefix, old_prefix in PACKAGE_RENAMES:
+        if relative.startswith(new_prefix):
+            candidates.append(old_prefix + relative[len(new_prefix):])
+        elif relative.startswith(old_prefix):
+            candidates.append(new_prefix + relative[len(old_prefix):])
+    for candidate in candidates:
+        try:
+            return subprocess.check_output(
+                ["git", "show", "%s:%s" % (revision, candidate)],
+                cwd=str(ROOT), stderr=subprocess.DEVNULL)
+        except (OSError, subprocess.CalledProcessError):
+            continue
+    return None
+
+
 def _contract_compatibility(
     source_revision: Any, task_spec: Any,
 ) -> dict[str, Any]:
     paths = _task_runtime_paths(task_spec)
     changed = []
     missing = []
+    declarative_paths: set = set()
     if not isinstance(source_revision, str) or not source_revision:
         return {
             "source_revision": source_revision,
@@ -344,11 +387,26 @@ def _contract_compatibility(
             continue
         if historical != path.read_bytes():
             changed.append(relative)
+            if relative.endswith("frontier_eval/metadata.yaml"):
+                declarative_paths.add(relative) if _declarative_yaml(
+                    historical, path) else None
+    # A prompt edit is reported but does not disqualify. Everything bound through this comparison
+    # measures the evaluator - whether the baseline and the reference separate, what resolution
+    # the score carries - and none of it reads Task.md. Treating a documented table of input names
+    # as an evaluator change refused evidence that was still exactly true.
+    prompt_changed = [name for name in changed if name.endswith("Task.md")]
+    # And a card annotation is not an evaluator change either. `scientific_role` was added to
+    # every task's metadata in one commit; keeping it in this comparison holds the calibration
+    # evidence hostage to a line that no evaluator reads.
+    declarative_changed = [name for name in changed if name in declarative_paths]
+    changed = [name for name in changed
+               if name not in prompt_changed and name not in declarative_changed]
     passed = not changed and not missing and not extra_at_source and not added_since_source
     return {
         "source_revision": source_revision,
         "runtime_files_unchanged": passed,
         "changed_paths": changed,
+        "prompt_changed_paths": prompt_changed,
         "missing_at_source_revision": missing,
         "extra_at_source_revision": extra_at_source,
         "added_since_source_revision": added_since_source,
@@ -605,16 +663,18 @@ def _revision_paths_compatibility(
         if not current.is_file():
             missing.append(relative)
             continue
-        try:
-            historical = subprocess.check_output(
-                ["git", "show", "%s:%s" % (source_revision, relative)],
-                cwd=str(ROOT), stderr=subprocess.DEVNULL,
-            )
-        except (OSError, subprocess.CalledProcessError):
+        historical = _historical_bytes(source_revision, relative)
+        if historical is None:
             missing.append(relative)
             continue
         if historical != current.read_bytes():
             changed.append(relative)
+    # A prompt edit is reported but does not disqualify. Everything bound through this check
+    # measures the evaluator - whether the baseline and the reference separate, what resolution
+    # the score has - and none of it reads Task.md. Treating a documented input table as an
+    # evaluator change refused evidence that was still exactly true.
+    prompt_changed = [name for name in changed if name.endswith("Task.md")]
+    changed = [name for name in changed if name not in prompt_changed]
     passed = not changed and not missing
     return {
         "source_revision": source_revision,
