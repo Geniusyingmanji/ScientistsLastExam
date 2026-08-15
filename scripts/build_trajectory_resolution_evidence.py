@@ -34,6 +34,15 @@ sys.path.insert(0, str(ROOT))
 from sle.provenance import finalize_report_trust, source_provenance  # noqa: E402
 
 
+def _recorded(path: Path) -> str:
+    """Repository-relative when it can be, absolute otherwise. `Path.is_relative_to` is 3.9+ and
+    the evaluation host runs older, so this asks by trying rather than by feature."""
+    try:
+        return path.relative_to(ROOT).as_posix()
+    except ValueError:
+        return str(path)
+
+
 def _events(run: Path) -> list[dict]:
     trajectory = run / "trajectory.jsonl"
     if not trajectory.is_file():
@@ -74,7 +83,7 @@ def main(argv: list[str] | None = None) -> int:
             "algorithm": manifest.get("algorithm"),
             "feedback_mode": manifest.get("feedback_mode"),
             "budget": manifest.get("budget"),
-            "workdir": run.relative_to(ROOT).as_posix() if run.is_relative_to(ROOT) else str(run),
+            "workdir": _recorded(run),
             "trajectory_snapshot": {"events": events},
         }],
         "aggregate": {
