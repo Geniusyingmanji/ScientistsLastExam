@@ -7,7 +7,7 @@ oracle:
   deterministic: true
 normalization:
   baseline: valid zero-thrust coast policy, which reaches none of the nontrivial target orbits
-  reference: independently repropagated feasible finite-thrust reachability witnesses generated before target freezing; they are not claimed globally optimal
+  reference: independently repropagated feasible finite-thrust reachability witnesses generated before target freezing, repropagated through the same dynamics and scored the same way; the score is normalized so the witness is exactly 1.0 and is uncapped above it. They are not claimed globally optimal.
   score: nominal development terminal accuracy times rocket-equation propellant efficiency, normalized above coast; held-out mission transfer, terminal phase and thrust/ISP/J2/pointing/navigation/cutoff robustness remain separate
 citations:
 - id: doi:10.2514/2.4231
