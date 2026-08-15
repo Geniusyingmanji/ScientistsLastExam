@@ -535,10 +535,17 @@ def _utility(efficiencies: np.ndarray) -> float:
 
 
 def _normalized_score(baseline: float, reference: float, value: float) -> float:
+    """Zero at the baseline, one at the reference witness, unbounded above it.
+
+    The upper clip is gone: it made the witness the best achievable score, so a better result read
+    as exactly as good as the witness and the task could report nothing about a searcher that had
+    beaten it. Every recorded run scored at or below one, so their scores are unchanged. The floor
+    stays, because below the baseline is a worse result rather than a negative achievement.
+    """
     denominator = float(reference) - float(baseline)
     if denominator <= 1e-9:
         raise ValueError("invalid reference normalization")
-    return float(np.clip((float(value) - float(baseline)) / denominator, 0.0, 1.0))
+    return float(max((float(value) - float(baseline)) / denominator, 0.0))
 
 
 def _design_utilities(

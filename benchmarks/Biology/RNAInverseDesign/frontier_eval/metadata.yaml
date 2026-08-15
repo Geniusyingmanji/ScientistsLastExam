@@ -4,7 +4,7 @@ scientific_role: optimization
 difficulty: hard
 tier: T3
 oracle_type: exact_dynamic_programming
-score_mode: clipped
+score_mode: uncapped
 gpu_required: false
 eval_time_seconds: 120
 science_metric: constrained_rna_target_ensemble_probability_defect_mfe_transfer_and_proxy_false_promotion

@@ -4,7 +4,7 @@ scientific_role: optimization
 difficulty: flagship
 tier: T2
 oracle_type: fourier_modal_rcwa
-score_mode: clipped
+score_mode: uncapped
 gpu_required: false
 eval_time_seconds: 120
 science_metric: development_and_study_held_target_order_efficiency_with_polarization_angle_wavelength_and_fabrication_robustness
