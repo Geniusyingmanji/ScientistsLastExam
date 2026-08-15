@@ -82,7 +82,7 @@ LEGACY_SPEC = ROOT / ".research/measurement_health_preflight_spec_2026-07-27_v1.
 # cohort was rebound, and a legacy spec checked against the current manifest fails on the binding
 # rather than on the thing a caller wanted to test.
 LEGACY_MANIFEST = ROOT / ".research/exploratory_2h_cohort_manifest_2026-07-27_v1.json"
-DEFAULT_SPEC = ROOT / ".research/measurement_health_preflight_spec_2026-08-15_v5.json"
+DEFAULT_SPEC = ROOT / ".research/measurement_health_preflight_spec_2026-08-15_v6.json"
 STATUS_VALUES = {"pass", "fail", "missing"}
 
 Evaluator = Callable[[Any, Path, float], Dict[str, Any]]

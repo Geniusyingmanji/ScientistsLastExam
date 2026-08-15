@@ -58,13 +58,15 @@ def _renamed_runtime_paths(shared: dict) -> dict:
     return out
 
 
-def _deep(base: dict, overlay: dict) -> dict:
+def _deep(base: dict, *overlays: dict) -> dict:
+    """Merge overlays onto a base, later ones winning, recursing into nested dictionaries."""
     out = dict(base)
-    for key, value in overlay.items():
-        if isinstance(value, dict) and isinstance(out.get(key), dict):
-            out[key] = _deep(out[key], value)
-        else:
-            out[key] = value
+    for overlay in overlays:
+        for key, value in overlay.items():
+            if isinstance(value, dict) and isinstance(out.get(key), dict):
+                out[key] = _deep(out[key], value)
+            else:
+                out[key] = value
     return out
 
 
@@ -102,6 +104,15 @@ def main(argv: list[str] | None = None) -> int:
                          "only when the evidence was re-run: a check bound to the runtime source "
                          "hash cannot be re-signed after the runtime changes, it has to be "
                          "remeasured, and this is how the result gets bound.")
+    ap.add_argument("--rebind-field", action="append", default=[],
+                    metavar="[TASK:]CHECK.FIELD=VALUE",
+                    help="set a non-evidence field on a check, e.g. "
+                         "Optics/X:numerical_resolution.trajectory_pointer=/runs/0/... . "
+                         "Re-measured evidence rarely lands at the same offset as the evidence it "
+                         "replaces, and a correct file read at the wrong pointer fails in a way "
+                         "that looks like a science failure. This is bookkeeping for that, not a "
+                         "way to relax a threshold: every value written here is re-verified by "
+                         "the preflight against the file it points into.")
     ap.add_argument("--inertness", type=Path, default=None, metavar="REPORT",
                     help="a check_evaluator_inert.py report. A task whose evaluator changed is "
                          "normally refused; if that report measured the change inert - the frozen "
@@ -119,6 +130,14 @@ def main(argv: list[str] | None = None) -> int:
             task_rebinds.setdefault(task_id, {})[check] = path
         else:
             shared_rebinds[check] = path
+
+    shared_fields, task_fields = {}, {}
+    for item in args.rebind_field:
+        selector, value = item.split("=", 1)
+        head, _, field = selector.rpartition(".")
+        task_id, _, check = head.rpartition(":")
+        target = task_fields.setdefault(task_id, {}) if task_id else shared_fields
+        target.setdefault(check, {})[field] = value
 
     resolved, _inputs, issues = _module._resolve_preflight_spec(args.spec)
     if issues:
@@ -281,7 +300,8 @@ def main(argv: list[str] | None = None) -> int:
             _renamed_runtime_paths(raw_spec.get("shared_task_overrides") or {}),
             {check: {"evidence": {"path": path,
                                   "sha256": sha256_of((ROOT / path).resolve())}}
-             for check, path in shared_rebinds.items()}),
+             for check, path in shared_rebinds.items()},
+            shared_fields),
             {"portable_artifact": {"evidence": {
                 "path": args.artifacts_output.relative_to(ROOT).as_posix()
                 if args.artifacts_output.is_absolute()
@@ -294,7 +314,8 @@ def main(argv: list[str] | None = None) -> int:
                                 if k != "task"}),
                   {check: {"evidence": {"path": path,
                                         "sha256": sha256_of((ROOT / path).resolve())}}
-                   for check, path in (task_rebinds.get(prev["task"]) or {}).items()})
+                   for check, path in (task_rebinds.get(prev["task"]) or {}).items()},
+                  task_fields.get(prev["task"]) or {})
             for prev in raw_spec.get("task_overrides") or []
         ] or updates,
     }

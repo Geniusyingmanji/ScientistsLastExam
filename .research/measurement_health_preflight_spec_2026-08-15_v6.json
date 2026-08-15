@@ -1,0 +1,217 @@
+{
+  "schema_version": 2,
+  "purpose": "Rebind the frozen cohort after a package rename and a declarative card annotation moved every task hash. No task changed behaviourally; each rebinding below was checked against the revision its evidence was taken at.",
+  "supersedes": {
+    "path": ".research/measurement_health_preflight_spec_2026-08-15_v5.json",
+    "sha256": "1dc23d5bb9d210fb9105e6a9bb1a345fcce5889e1bc71c5a5094e9a5de57b1d3"
+  },
+  "base_spec": {
+    "path": ".research/measurement_health_preflight_spec_2026-07-27_v1.json",
+    "sha256": "674192b55f49460cad23f9e2b48c8f4ae054aa63c4a2fe2f1b2934eff5d5e4f7"
+  },
+  "source_provenance": {
+    "git_revision": "02ab019e1ade444ac72bf638882a254521df7994",
+    "source_tree_dirty": true
+  },
+  "top_level_overrides": {
+    "cohort_manifest_sha256": "ab1bec9f50ee4bf70c9326717dfaf1b928301cd586f6518e232fe98237dbc9b9"
+  },
+  "shared_task_overrides": {
+    "scientific_materiality": {
+      "evidence": {
+        "path": "experiments/scientific_materiality_audit_2026-08-15_v2.json",
+        "sha256": "8484bf4bed778714af31edeb2fcaa8751c96c2cd11e60627bdb087619902625e"
+      }
+    },
+    "exactly_once_recovery": {
+      "evidence": {
+        "path": "experiments/evaluation_recovery_fault_audit_2026-08-14_v2.json",
+        "sha256": "ae7ed6cabbe442041534e325a1044cbf3f4e9c6b83a005a51acdbe0549cad116"
+      },
+      "predicates": [
+        {
+          "pointer": "/execution_passed",
+          "operator": "eq",
+          "value": true
+        },
+        {
+          "pointer": "/checks/all_fault_scenarios_passed",
+          "operator": "eq",
+          "value": true
+        },
+        {
+          "pointer": "/checks/four_search_commit_windows_exercised",
+          "operator": "eq",
+          "value": true
+        },
+        {
+          "pointer": "/checks/request_before_receipt_retry_is_reason_coded",
+          "operator": "eq",
+          "value": true
+        },
+        {
+          "pointer": "/checks/receipt_before_attempt_completion_reuses_result",
+          "operator": "eq",
+          "value": true
+        },
+        {
+          "pointer": "/checks/concurrent_run_writer_is_rejected",
+          "operator": "eq",
+          "value": true
+        },
+        {
+          "pointer": "/checks/receipt_tampering_is_rejected",
+          "operator": "eq",
+          "value": true
+        }
+      ],
+      "runtime_paths": [
+        "sle/algorithms/common.py",
+        "sle/algorithms/evolve.py",
+        "sle/evaluation_ledger.py",
+        "sle/protocol.py",
+        "scripts/audit_evaluation_recovery.py",
+        "scripts/run_recovery_fault_worker.py"
+      ]
+    },
+    "portable_artifact": {
+      "evidence": {
+        "path": ".research/measurement_health_preflight_artifacts_2026-08-15_v4.json",
+        "sha256": "d348d3f6d289a30c3d230959aa7d02ca87c36265d5f84cb404b60e8323a7da21"
+      }
+    }
+  },
+  "task_overrides": [
+    {
+      "task": "Electrochemistry/ElectrolyteConductivityDesign",
+      "scientific_materiality": {
+        "task_pointer": "/tasks/0"
+      },
+      "prompt_changed_since_freeze": true,
+      "task_package_sha256": "fc5474ce306012c55ec4f817d9b04dbc597996f5300549eb0e077cbe860952e7",
+      "runtime_contract_sha256": "b194efc6ed63212c1ec7477e2d235739215fcaf9efdf729633fe940fca3ca570",
+      "superseded_task_package_sha256": "52fcfa8fd8f393d24f761400e79be502265fcc1cfad9506bd081b0cd1e10d296",
+      "justification": "declarative-only difference from ccbcd1252f6c, verified by _package_mismatch_explanation",
+      "evaluator_change_measured_inert": {
+        "metrics_compared": 45,
+        "files_changed": [
+          "verification/evaluator.py"
+        ]
+      }
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "scientific_materiality": {
+        "task_pointer": "/tasks/1"
+      },
+      "baseline_reference": {
+        "evidence": {
+          "path": "experiments/diffraction_grating_v2_calibration_2026-08-15_v3.json",
+          "sha256": "c6d70f098e74e58b41d80a5f34fdb457691c8ede1454d5df339944af0e180e49"
+        }
+      },
+      "prompt_changed_since_freeze": true,
+      "task_package_sha256": "b91717dcdaff67201178b8c66dabcd553eefbf8d352aa47b7c53558fc3e03fec",
+      "runtime_contract_sha256": "eff0d8ade431b1bd04479f3bbd984290ee568c0813945979e7975fff964d411c",
+      "superseded_task_package_sha256": "598e839aa54b76a686d9f3d188e65601dbb2f57ab032034a6b9defb2195d3b40",
+      "justification": "declarative-only difference from ccbcd1252f6c, verified by _package_mismatch_explanation",
+      "evaluator_change_measured_inert": null,
+      "evidence_remeasured_on_current_runtime": [
+        "baseline_reference",
+        "numerical_resolution"
+      ],
+      "numerical_resolution": {
+        "evidence": {
+          "path": "experiments/diffraction_trajectory_resolution_2026-08-15_v1.json",
+          "sha256": "bd94078edbbfd929d50b3a7517524456dbe6365b9b76e0b3688938e6d0ed2c10"
+        },
+        "trajectory_pointer": "/runs/0/trajectory_snapshot/events"
+      }
+    },
+    {
+      "task": "RNAEngineering/RNAInverseDesign",
+      "scientific_materiality": {
+        "task_pointer": "/tasks/2"
+      },
+      "prompt_changed_since_freeze": false,
+      "task_package_sha256": "b74867be99c072daf940fdb7658c7597d503645ddc089f96fd32f12e140da9a1",
+      "runtime_contract_sha256": "c0fefe1c1fa67e0e5adab9a2423561f53e627ebb41a1df400af8a6c802a3c14f",
+      "superseded_task_package_sha256": "e5ae14fd275757095e24b5af25ad63c7fa24db5b6b0bf9a1318f1d658f8e0d04",
+      "justification": "declarative-only difference from ccbcd1252f6c, verified by _package_mismatch_explanation",
+      "evaluator_change_measured_inert": {
+        "metrics_compared": 21,
+        "files_changed": [
+          "verification/evaluator.py"
+        ]
+      }
+    },
+    {
+      "task": "Semiconductor/MOSFETDoping",
+      "scientific_materiality": {
+        "task_pointer": "/tasks/3"
+      },
+      "prompt_changed_since_freeze": true,
+      "task_package_sha256": "e42221b11c80b0f4b214dc31af7e35d68427cc085cdc7cd5f04f28315da7ecc6",
+      "runtime_contract_sha256": "cdbb31a5dc9d1fada318da0ed92419fa1cbfec66b88303712b98f0b4642b02ff",
+      "superseded_task_package_sha256": "22a96b49f69a82b34b8d0d7db0bb5ac8ed1e40f30f5af9d08d96583f98784113",
+      "justification": "declarative-only difference from ccbcd1252f6c, verified by _package_mismatch_explanation",
+      "evaluator_change_measured_inert": {
+        "metrics_compared": 14,
+        "files_changed": [
+          "verification/evaluator.py"
+        ]
+      }
+    },
+    {
+      "task": "StructuralEngineering/TrussWeightMinimization",
+      "scientific_materiality": {
+        "task_pointer": "/tasks/4"
+      },
+      "prompt_changed_since_freeze": false,
+      "task_package_sha256": "b69243e20451f2843efb3a835967fa339c7ba9bac9f721e24e348eb42f9e6bd7",
+      "runtime_contract_sha256": "cf794ed8ff58324af6509926f4e2364e47a16b6ab8eb2b1a32350852f9d7dea4",
+      "superseded_task_package_sha256": "3ec2334d8c85318c82c260a968d762b03bd3726a6459547352261aa7a02ffcd4",
+      "justification": "declarative-only difference from ccbcd1252f6c, verified by _package_mismatch_explanation",
+      "evaluator_change_measured_inert": {
+        "metrics_compared": 11,
+        "files_changed": [
+          "verification/evaluator.py"
+        ]
+      }
+    },
+    {
+      "task": "Thermodynamics/HeatExchangerDesign",
+      "scientific_materiality": {
+        "task_pointer": "/tasks/5"
+      },
+      "prompt_changed_since_freeze": true,
+      "task_package_sha256": "0437974bd6019644585708f9477233e1f18b340c722da866868081201c551933",
+      "runtime_contract_sha256": "c953e11a6dd7019aa696371a32d452a6c893dca20974644c39b74b05a49ff99e",
+      "superseded_task_package_sha256": "ebcf1d99d31a4f08c04539669e6bb77dd06e2872172493f6c812b5e0969f580f",
+      "justification": "declarative-only difference from ccbcd1252f6c, verified by _package_mismatch_explanation",
+      "evaluator_change_measured_inert": {
+        "metrics_compared": 15,
+        "files_changed": [
+          "verification/evaluator.py"
+        ]
+      }
+    },
+    {
+      "task": "Turbulence/RANSCalibration",
+      "scientific_materiality": {
+        "task_pointer": "/tasks/6"
+      },
+      "prompt_changed_since_freeze": false,
+      "task_package_sha256": "343e4356123a7c4ff4156bffaf16e876095d3a96c63cbde847f5f3beb62044bf",
+      "runtime_contract_sha256": "91912e3c3d2dd44b9effaf0587bfab96c090c2da433426b917b56b306fc7bfef",
+      "superseded_task_package_sha256": "2199733d86821a9ebff7f7134777bb2fc897a23bd2c9e8319f8e19995f07dc91",
+      "justification": "declarative-only difference from ccbcd1252f6c, verified by _package_mismatch_explanation",
+      "evaluator_change_measured_inert": {
+        "metrics_compared": 20,
+        "files_changed": [
+          "verification/evaluator.py"
+        ]
+      }
+    }
+  ]
+}
