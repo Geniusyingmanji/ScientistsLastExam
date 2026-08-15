@@ -92,9 +92,13 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--output", type=Path, required=True)
     ap.add_argument("--manifest-output", type=Path, required=True)
     ap.add_argument("--artifacts-output", type=Path, required=True)
-    ap.add_argument("--rebind-evidence", action="append", default=[], metavar="CHECK=PATH",
+    ap.add_argument("--rebind-evidence", action="append", default=[],
+                    metavar="[TASK:]CHECK=PATH",
                     help="point a check at re-measured evidence, e.g. "
-                         "exactly_once_recovery=experiments/..._2026-08-14_v1.json. Use this "
+                         "exactly_once_recovery=experiments/..._2026-08-14_v1.json. Prefix a task "
+                         "id - Optics/DiffractionGratingDesign:baseline_reference=... - when the "
+                         "evidence is that task's alone, which per-task calibrations are; without "
+                         "the prefix the path is bound for every task in the cohort. Use this "
                          "only when the evidence was re-run: a check bound to the runtime source "
                          "hash cannot be re-signed after the runtime changes, it has to be "
                          "remeasured, and this is how the result gets bound.")
@@ -106,6 +110,15 @@ def main(argv: list[str] | None = None) -> int:
                          "asserted, and it is a claim about that artifact on that task.")
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args(argv)
+
+    shared_rebinds, task_rebinds = {}, {}
+    for item in args.rebind_evidence:
+        selector, path = item.split("=", 1)
+        task_id, _, check = selector.rpartition(":")
+        if task_id:
+            task_rebinds.setdefault(task_id, {})[check] = path
+        else:
+            shared_rebinds[check] = path
 
     resolved, _inputs, issues = _module._resolve_preflight_spec(args.spec)
     if issues:
@@ -144,7 +157,14 @@ def main(argv: list[str] | None = None) -> int:
             continue
         if not verdict.get("declarative_change_only"):
             measured = inert.get(task_id)
-            if measured is None:
+            remeasured = sorted(task_rebinds.get(task_id) or {})
+            # Three routes past a behavioural change, in descending order of strength. The change
+            # was declarative (handled above); the change was *measured* not to move this task's
+            # frozen artifact; or the evidence itself was re-run against the current runtime, which
+            # needs no argument about the change at all because nothing is being carried forward.
+            # Checks whose evidence was not re-run keep verifying their own binding and keep
+            # failing, so this rebinds exactly what was re-measured and nothing else.
+            if measured is None and not remeasured:
                 refused.append((task_id, "behavioural change in %s"
                                 % ", ".join(verdict["behavioural_files_changed"][:3])))
                 continue
@@ -155,9 +175,10 @@ def main(argv: list[str] | None = None) -> int:
             # evaluator evidence carried forward is sound.
             "prompt_changed_since_freeze": bool(verdict.get("prompt_change_invalidates_runs")),
             "evaluator_change_measured_inert": (
-                None if verdict.get("declarative_change_only")
+                None if verdict.get("declarative_change_only") or task_id not in inert
                 else {"metrics_compared": inert[task_id]["metrics_compared"],
                       "files_changed": verdict["behavioural_files_changed"]}),
+            "evidence_remeasured_on_current_runtime": sorted(task_rebinds.get(task_id) or {}) or None,
             "task_package_sha256": current_package,
             "runtime_contract_sha256": current_contract,
             "superseded_task_package_sha256": frozen_package,
@@ -174,8 +195,11 @@ def main(argv: list[str] | None = None) -> int:
             ("  (evaluator changed; %d metrics measured identical)"
              % update["evaluator_change_measured_inert"]["metrics_compared"])
             if update["evaluator_change_measured_inert"]
-            else ("  (prompt changed: recorded runs are not comparable)"
-                  if update["prompt_changed_since_freeze"] else "")))
+            else ("  (re-measured on the current runtime: %s)"
+                  % ", ".join(update["evidence_remeasured_on_current_runtime"])
+                  if update["evidence_remeasured_on_current_runtime"]
+                  else ("  (prompt changed: recorded runs are not comparable)"
+                        if update["prompt_changed_since_freeze"] else ""))))
     print()
     print("%d task(s) rebound, %d refused" % (len(updates), len(refused)))
     if refused:
@@ -257,7 +281,7 @@ def main(argv: list[str] | None = None) -> int:
             _renamed_runtime_paths(raw_spec.get("shared_task_overrides") or {}),
             {check: {"evidence": {"path": path,
                                   "sha256": sha256_of((ROOT / path).resolve())}}
-             for check, path in (item.split("=", 1) for item in args.rebind_evidence)}),
+             for check, path in shared_rebinds.items()}),
             {"portable_artifact": {"evidence": {
                 "path": args.artifacts_output.relative_to(ROOT).as_posix()
                 if args.artifacts_output.is_absolute()
@@ -265,9 +289,12 @@ def main(argv: list[str] | None = None) -> int:
                 "sha256": sha256_of(args.artifacts_output)}}}), {}),
         # Carry the previous overlay's per-task overrides forward; this layer only adds hashes.
         "task_overrides": [
-            dict(prev, **{k: v for k, v in next((u for u in updates
-                                                 if u["task"] == prev["task"]), {}).items()
-                          if k != "task"})
+            _deep(dict(prev, **{k: v for k, v in next((u for u in updates
+                                                       if u["task"] == prev["task"]), {}).items()
+                                if k != "task"}),
+                  {check: {"evidence": {"path": path,
+                                        "sha256": sha256_of((ROOT / path).resolve())}}
+                   for check, path in (task_rebinds.get(prev["task"]) or {}).items()})
             for prev in raw_spec.get("task_overrides") or []
         ] or updates,
     }

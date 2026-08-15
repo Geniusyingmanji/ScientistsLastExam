@@ -27,7 +27,10 @@ sys.path.insert(0, str(ROOT))
 
 from sle.provenance import finalize_report_trust, source_provenance  # noqa: E402
 from sle.registry import find_task  # noqa: E402
-from scripts.run_measurement_health_preflight import _contract_compatibility  # noqa: E402
+from scripts.run_measurement_health_preflight import (  # noqa: E402
+    _contract_compatibility,
+    load_inert_evaluators,
+)
 
 
 SCHEMA_VERSION = 1
@@ -520,8 +523,13 @@ def _audit_task(row: dict[str, Any]) -> dict[str, Any]:
     if document is None:
         issues.append("calibration evidence binding failed")
     else:
+        # Same exemption the preflight applies, read from the same spec: an evaluator edit that
+        # was *measured* not to move this task's frozen artifact does not unbind evidence taken
+        # before it. Without this the audit refuses what the preflight accepts, and the two
+        # disagree about the same task.
         compatibility = _contract_compatibility(
-            evidence_audit.get("source_revision"), task_spec
+            evidence_audit.get("source_revision"), task_spec,
+            load_inert_evaluators().get(task_id),
         )
         if not compatibility["runtime_files_unchanged"]:
             issues.append("calibration evidence is not bound to the current task runtime")

@@ -15,6 +15,7 @@ import argparse
 import ast
 import copy
 import hashlib
+import functools
 import json
 import math
 import platform
@@ -46,6 +47,34 @@ SCHEMA_VERSION = 1
 # task id because the four checks that need it receive their own sub-configuration rather than
 # the task's. Empty means no exemption, which is the safe default.
 _INERT_EVALUATORS: dict[str, Any] = {}
+
+def _record_inert_evaluators(evidence_spec: dict) -> dict[str, Any]:
+    """Publish the spec's measured-inert evaluator changes for the checks that consult them.
+
+    Every reader of the frozen evidence has to answer the same question - was this evaluator edit
+    one that could have moved this evidence - and they have to answer it identically, or the
+    preflight excuses a change that the materiality audit refuses and the two reports disagree
+    about the same task. The measurement lives in the spec; this is how it reaches both.
+    """
+    _INERT_EVALUATORS.clear()
+    for row in evidence_spec.get("tasks") or []:
+        measured = row.get("evaluator_change_measured_inert")
+        if measured:
+            _INERT_EVALUATORS[str(row.get("task"))] = measured
+    return dict(_INERT_EVALUATORS)
+
+
+@functools.lru_cache(maxsize=4)
+def load_inert_evaluators(spec_path: Any = None) -> dict[str, Any]:
+    """Read the measured-inert record straight from a spec, for readers outside the preflight.
+
+    Cached because callers ask once per task and resolving the spec overlay reads several files.
+    """
+    evidence_spec, _inputs, issues = _resolve_preflight_spec(spec_path or DEFAULT_SPEC)
+    if issues:
+        return {}
+    return _record_inert_evaluators(evidence_spec)
+
 
 DEFAULT_MANIFEST = ROOT / ".research/exploratory_2h_cohort_manifest_2026-08-15_v3.json"
 LEGACY_SPEC = ROOT / ".research/measurement_health_preflight_spec_2026-07-27_v1.json"
@@ -1308,11 +1337,7 @@ def build_report(
     spec_path = spec_path.resolve()
     manifest = _load_object(manifest_path)
     evidence_spec, spec_inputs, issues = _resolve_preflight_spec(spec_path)
-    _INERT_EVALUATORS.clear()
-    for row in evidence_spec.get("tasks") or []:
-        measured = row.get("evaluator_change_measured_inert")
-        if measured:
-            _INERT_EVALUATORS[str(row.get("task"))] = measured
+    _record_inert_evaluators(evidence_spec)
 
     expected_manifest_hash = evidence_spec.get("cohort_manifest_sha256")
     if _sha256(manifest_path) != expected_manifest_hash:

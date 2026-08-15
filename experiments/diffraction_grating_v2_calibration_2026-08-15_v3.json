@@ -1,0 +1,4079 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_TASK_CALIBRATION",
+  "evidence_scope": "DETERMINISTIC_LOSSLESS_ISOTROPIC_ONE_DIMENSIONAL_FOURIER_MODAL_GRATING_DESIGN_CALIBRATION_NOT_FABRICATED_DEVICE_MEASUREMENT_GLOBAL_OPTIMUM_OR_AUTONOMOUS_DISCOVERY_EVIDENCE",
+  "created_at": "2026-08-15T02:25:16.070831+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "49dfe33637f9bb8a7515e45d847fae667de1ca09",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "sle",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/calibrate_diffraction_grating_rcwa.py",
+      "--output",
+      "experiments/diffraction_grating_v2_calibration_2026-08-15_v3.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "numpy": "1.24.4",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "task": "Optics/DiffractionGratingDesign",
+  "task_source_sha256": {
+    "benchmarks/Physics/DiffractionGratingDesign/Task.md": "3d652f8d8308792d42e54f2f519fce6721cf52cc56c4ab89e024a81d67a78e5e",
+    "benchmarks/Physics/DiffractionGratingDesign/TASK_CARD.yaml": "22c22a90b2940063a37488fc1cadc31445713c27fe8661e14cd868a384d9b8b4",
+    "benchmarks/Physics/DiffractionGratingDesign/solution.py": "f2abe37d10285154574c5805325f5a0fdcc863e058e8503a5087359fdeba3046",
+    "benchmarks/Physics/DiffractionGratingDesign/verification/evaluator.py": "f039845aeca9c2f92a92ef339636aa0d547aab86aed8e86902b3108d90728484",
+    "benchmarks/Physics/DiffractionGratingDesign/frontier_eval/metadata.yaml": "63bba7ac9790a9c475d3994184994eac26efd2f4edc300cf8cd0416039560eb0",
+    "benchmarks/Physics/DiffractionGratingDesign/frontier_eval/run_eval.py": "77af0a68e573e8f05fa8cb96735574f75fe3370a36a9e1498f07732e67ad95c9",
+    "scripts/calibrate_diffraction_grating_rcwa.py": "854a214f3cbe4db8e415c69201fc08434be5d3ac25cf4ebb039efb68b7a3d22d"
+  },
+  "dimensions": {
+    "development_world_count": 4,
+    "heldout_world_count": 2,
+    "sealed_shift_count": 4,
+    "layer_count": 5,
+    "default_fourier_order": 9,
+    "polarizations": [
+      "TE",
+      "TM"
+    ],
+    "nominal_conditions_per_world": 18
+  },
+  "frozen_anchor_recalculation": {
+    "records": [
+      {
+        "world": "dev_visible_titania",
+        "split": "development",
+        "frozen_anchors": [
+          0.18014399889340393,
+          0.532133681719001,
+          0.13483237185212524,
+          0.44019507865384405
+        ],
+        "recalculated_anchors": [
+          0.18014399889340355,
+          0.5321336817190002,
+          0.1348323718521247,
+          0.44019507865384333
+        ],
+        "maximum_anchor_error": 7.771561172376096e-16,
+        "nominal_headroom": 0.3519896828255967,
+        "robust_headroom": 0.3053627068017186
+      },
+      {
+        "world": "heldout_red_silicon_nitride",
+        "split": "heldout",
+        "frozen_anchors": [
+          0.20278483445805393,
+          0.4685463609260546,
+          0.1552103101728418,
+          0.40130215926359536
+        ],
+        "recalculated_anchors": [
+          0.20278483445805406,
+          0.46854636092605484,
+          0.1552103101728418,
+          0.40130215926359525
+        ],
+        "maximum_anchor_error": 2.220446049250313e-16,
+        "nominal_headroom": 0.2657615264680008,
+        "robust_headroom": 0.24609184909075346
+      },
+      {
+        "world": "dev_near_ir_silicon_nitride",
+        "split": "development",
+        "frozen_anchors": [
+          0.19473081088858865,
+          0.4945997546172699,
+          0.14318642196916834,
+          0.4292864766132388
+        ],
+        "recalculated_anchors": [
+          0.19473081088858868,
+          0.4945997546172692,
+          0.1431864219691682,
+          0.4292864766132386
+        ],
+        "maximum_anchor_error": 7.216449660063518e-16,
+        "nominal_headroom": 0.2998689437286805,
+        "robust_headroom": 0.2861000546440704
+      },
+      {
+        "world": "dev_blue_titania",
+        "split": "development",
+        "frozen_anchors": [
+          0.1192360204505921,
+          0.5170498868268243,
+          0.09020651541347875,
+          0.4775205953501223
+        ],
+        "recalculated_anchors": [
+          0.11923602045059192,
+          0.5170498868268246,
+          0.09020651541347735,
+          0.47752059535012337
+        ],
+        "maximum_anchor_error": 1.4016565685892601e-15,
+        "nominal_headroom": 0.3978138663762327,
+        "robust_headroom": 0.387314079936646
+      },
+      {
+        "world": "heldout_telecom_silicon",
+        "split": "heldout",
+        "frozen_anchors": [
+          0.19275788460425558,
+          0.47150195943043827,
+          0.14553387064111,
+          0.3993352497091286
+        ],
+        "recalculated_anchors": [
+          0.1927578846042554,
+          0.4715019594304377,
+          0.14553387064111006,
+          0.3993352497091285
+        ],
+        "maximum_anchor_error": 5.551115123125783e-16,
+        "nominal_headroom": 0.27874407482618235,
+        "robust_headroom": 0.2538013790680184
+      },
+      {
+        "world": "dev_green_titania",
+        "split": "development",
+        "frozen_anchors": [
+          0.12554121767053006,
+          0.5299481907323139,
+          0.095913600202855,
+          0.4684159871939997
+        ],
+        "recalculated_anchors": [
+          0.12554121767053014,
+          0.529948190732314,
+          0.09591360020285447,
+          0.4684159871939988
+        ],
+        "maximum_anchor_error": 8.881784197001252e-16,
+        "nominal_headroom": 0.40440697306178386,
+        "robust_headroom": 0.37250238699114435
+      }
+    ],
+    "maximum_anchor_error": 1.4016565685892601e-15,
+    "minimum_nominal_headroom": 0.2657615264680008,
+    "minimum_robust_headroom": 0.24609184909075346,
+    "maximum_nominal_energy_residual": 1.176836406102666e-14
+  },
+  "fourier_order_convergence": {
+    "lower_order": 13,
+    "higher_order": 19,
+    "records": [
+      {
+        "world": "dev_visible_titania",
+        "artifact": "baseline",
+        "utility_order_13": 0.1788186239938961,
+        "utility_order_19": 0.17792621248511556,
+        "absolute_utility_delta": 0.0008924115087805273,
+        "maximum_condition_efficiency_delta": 0.005265138850237605,
+        "mean_condition_efficiency_delta": 0.0015909873151565808
+      },
+      {
+        "world": "dev_visible_titania",
+        "artifact": "reference",
+        "utility_order_13": 0.5329139042257065,
+        "utility_order_19": 0.5332663134013857,
+        "absolute_utility_delta": 0.0003524091756792469,
+        "maximum_condition_efficiency_delta": 0.009088108013189544,
+        "mean_condition_efficiency_delta": 0.0017907276992913728
+      },
+      {
+        "world": "heldout_red_silicon_nitride",
+        "artifact": "baseline",
+        "utility_order_13": 0.2024723635779556,
+        "utility_order_19": 0.20227376306366146,
+        "absolute_utility_delta": 0.00019860051429412828,
+        "maximum_condition_efficiency_delta": 0.002988141000117628,
+        "mean_condition_efficiency_delta": 0.0009400507554816895
+      },
+      {
+        "world": "heldout_red_silicon_nitride",
+        "artifact": "reference",
+        "utility_order_13": 0.46863122361127646,
+        "utility_order_19": 0.46868501142022717,
+        "absolute_utility_delta": 5.378780895071156e-05,
+        "maximum_condition_efficiency_delta": 0.00320604415623571,
+        "mean_condition_efficiency_delta": 0.0007580195976844608
+      },
+      {
+        "world": "dev_near_ir_silicon_nitride",
+        "artifact": "baseline",
+        "utility_order_13": 0.19431527797044362,
+        "utility_order_19": 0.1940476961161705,
+        "absolute_utility_delta": 0.00026758185427311343,
+        "maximum_condition_efficiency_delta": 0.0025515539518600194,
+        "mean_condition_efficiency_delta": 0.0005896559012529038
+      },
+      {
+        "world": "dev_near_ir_silicon_nitride",
+        "artifact": "reference",
+        "utility_order_13": 0.4952310020823427,
+        "utility_order_19": 0.4957550443720992,
+        "absolute_utility_delta": 0.0005240422897564989,
+        "maximum_condition_efficiency_delta": 0.00426485602950244,
+        "mean_condition_efficiency_delta": 0.0009072896816969267
+      },
+      {
+        "world": "dev_blue_titania",
+        "artifact": "baseline",
+        "utility_order_13": 0.11810654550905626,
+        "utility_order_19": 0.11731187923213708,
+        "absolute_utility_delta": 0.0007946662769191815,
+        "maximum_condition_efficiency_delta": 0.00553919748930215,
+        "mean_condition_efficiency_delta": 0.001482056373400532
+      },
+      {
+        "world": "dev_blue_titania",
+        "artifact": "reference",
+        "utility_order_13": 0.5173051931421975,
+        "utility_order_19": 0.517363978062199,
+        "absolute_utility_delta": 5.878492000155333e-05,
+        "maximum_condition_efficiency_delta": 0.015534991003118837,
+        "mean_condition_efficiency_delta": 0.0020079387029596865
+      },
+      {
+        "world": "heldout_telecom_silicon",
+        "artifact": "baseline",
+        "utility_order_13": 0.19246511303931071,
+        "utility_order_19": 0.1922821826759561,
+        "absolute_utility_delta": 0.00018293036335462198,
+        "maximum_condition_efficiency_delta": 0.0027618635487555165,
+        "mean_condition_efficiency_delta": 0.000881812762686855
+      },
+      {
+        "world": "heldout_telecom_silicon",
+        "artifact": "reference",
+        "utility_order_13": 0.4712105623932615,
+        "utility_order_19": 0.4712508681364874,
+        "absolute_utility_delta": 4.030574322594349e-05,
+        "maximum_condition_efficiency_delta": 0.0033753142487938925,
+        "mean_condition_efficiency_delta": 0.0011030210773271096
+      },
+      {
+        "world": "dev_green_titania",
+        "artifact": "baseline",
+        "utility_order_13": 0.12421256414466368,
+        "utility_order_19": 0.1232829127141229,
+        "absolute_utility_delta": 0.0009296514305407871,
+        "maximum_condition_efficiency_delta": 0.004925803107693472,
+        "mean_condition_efficiency_delta": 0.0015458575902528777
+      },
+      {
+        "world": "dev_green_titania",
+        "artifact": "reference",
+        "utility_order_13": 0.5325180165518479,
+        "utility_order_19": 0.5342149053603331,
+        "absolute_utility_delta": 0.0016968888084851752,
+        "maximum_condition_efficiency_delta": 0.009207790262224957,
+        "mean_condition_efficiency_delta": 0.0011607462514332996
+      }
+    ],
+    "maximum_utility_delta": 0.0016968888084851752,
+    "maximum_condition_efficiency_delta": 0.015534991003118837
+  },
+  "uniform_interface_fresnel_checks": {
+    "TE": {
+      "expected_reflection": 0.03465606558246724,
+      "observed_reflection": 0.034656065582467276,
+      "absolute_error": 3.469446951953614e-17,
+      "energy_residual": 4.440892098500626e-16
+    },
+    "TM": {
+      "expected_reflection": 0.0328273471672862,
+      "observed_reflection": 0.03282734716728617,
+      "absolute_error": 2.7755575615628914e-17,
+      "energy_residual": 1.1102230246251565e-16
+    }
+  },
+  "direct_weak_baseline": {
+    "combined_score": 0.0,
+    "valid": 1.0,
+    "feasibility_rate": 1.0,
+    "raw_score": 0.0,
+    "robustness_score": 0.0,
+    "heldout_policy_score": 0.0,
+    "heldout_robustness_score": 0.0,
+    "development_mean_target_efficiency": 0.22119642065217407,
+    "heldout_mean_target_efficiency": 0.2925978310069373,
+    "development_minimum_target_efficiency": 0.030937455874890493,
+    "heldout_minimum_target_efficiency": 0.008650390501823084,
+    "development_te_mean_target_efficiency": 0.16595279735126334,
+    "heldout_te_mean_target_efficiency": 0.21627649834722756,
+    "development_tm_mean_target_efficiency": 0.27644004395308475,
+    "heldout_tm_mean_target_efficiency": 0.36891916366664695,
+    "development_maximum_energy_residual": 5.10702591327572e-15,
+    "heldout_maximum_energy_residual": 6.217248937900877e-15,
+    "development_shift_geometry_feasibility": 1.0,
+    "heldout_shift_geometry_feasibility": 1.0,
+    "heldout_feasibility_rate": 1.0,
+    "candidate_instance_call_count": 6,
+    "candidate_instance_valid_rate": 1.0,
+    "per_instance": [
+      {
+        "name": "dev_visible_titania",
+        "split": "development",
+        "valid": true,
+        "failure_kind": null,
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "nominal_utility": 0.18014399889340393,
+        "robust_utility": 0.13483237185212524,
+        "mean_target_efficiency": 0.24629160222486826,
+        "twentieth_percentile_target_efficiency": 0.16134360404976328,
+        "minimum_target_efficiency": 0.021738583286427846,
+        "te_mean_target_efficiency": 0.18156355404909105,
+        "tm_mean_target_efficiency": 0.31101965040064544,
+        "maximum_energy_residual": 4.6629367034256575e-15,
+        "maximum_condition_number": 335.06999693468674,
+        "all_shift_geometries_feasible": true,
+        "nominal_conditions": [
+          {
+            "wavelength_um": 0.6208,
+            "incidence_angle_deg": -6.0,
+            "polarization": "TE",
+            "target_efficiency": 0.021738583286427846,
+            "energy_sum": 1.0000000000000004,
+            "condition_number": 64.02850540749989
+          },
+          {
+            "wavelength_um": 0.6208,
+            "incidence_angle_deg": -6.0,
+            "polarization": "TM",
+            "target_efficiency": 0.19137045137332107,
+            "energy_sum": 0.9999999999999976,
+            "condition_number": 117.67633528464056
+          },
+          {
+            "wavelength_um": 0.6208,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.08845756910964943,
+            "energy_sum": 0.9999999999999987,
+            "condition_number": 152.12164975861333
+          },
+          {
+            "wavelength_um": 0.6208,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.38388619137741226,
+            "energy_sum": 1.0000000000000009,
+            "condition_number": 251.97367526582724
+          },
+          {
+            "wavelength_um": 0.6208,
+            "incidence_angle_deg": 6.0,
+            "polarization": "TE",
+            "target_efficiency": 0.24056463650221213,
+            "energy_sum": 1.000000000000003,
+            "condition_number": 64.02850540749921
+          },
+          {
+            "wavelength_um": 0.6208,
+            "incidence_angle_deg": 6.0,
+            "polarization": "TM",
+            "target_efficiency": 0.35930896538354834,
+            "energy_sum": 1.0000000000000047,
+            "condition_number": 117.67633528463898
+          },
+          {
+            "wavelength_um": 0.64,
+            "incidence_angle_deg": -6.0,
+            "polarization": "TE",
+            "target_efficiency": 0.045100726630898286,
+            "energy_sum": 1.0000000000000013,
+            "condition_number": 83.68163146299855
+          },
+          {
+            "wavelength_um": 0.64,
+            "incidence_angle_deg": -6.0,
+            "polarization": "TM",
+            "target_efficiency": 0.2771195755340857,
+            "energy_sum": 1.0000000000000018,
+            "condition_number": 121.40114192950242
+          },
+          {
+            "wavelength_um": 0.64,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.24480220638538333,
+            "energy_sum": 1.0000000000000004,
+            "condition_number": 101.4272537701458
+          },
+          {
+            "wavelength_um": 0.64,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.3516888314289215,
+            "energy_sum": 1.0000000000000029,
+            "condition_number": 258.21448586916614
+          },
+          {
+            "wavelength_um": 0.64,
+            "incidence_angle_deg": 6.0,
+            "polarization": "TE",
+            "target_efficiency": 0.2674543879934341,
+            "energy_sum": 0.9999999999999992,
+            "condition_number": 83.68163146299854
+          },
+          {
+            "wavelength_um": 0.64,
+            "incidence_angle_deg": 6.0,
+            "polarization": "TM",
+            "target_efficiency": 0.3148063387147252,
+            "energy_sum": 1.0000000000000009,
+            "condition_number": 121.40114192950159
+          },
+          {
+            "wavelength_um": 0.6592,
+            "incidence_angle_deg": -6.0,
+            "polarization": "TE",
+            "target_efficiency": 0.15545463135441848,
+            "energy_sum": 1.0000000000000007,
+            "condition_number": 113.40367101562875
+          },
+          {
+            "wavelength_um": 0.6592,
+            "incidence_angle_deg": -6.0,
+            "polarization": "TM",
+            "target_efficiency": 0.1701770630927805,
+            "energy_sum": 0.9999999999999996,
+            "condition_number": 335.06999693468674
+          },
+          {
+            "wavelength_um": 0.6592,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.3619860738469067,
+            "energy_sum": 1.000000000000002,
+            "condition_number": 81.66799882214076
+          },
+          {
+            "wavelength_um": 0.6592,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.35304649111449243,
+            "energy_sum": 0.9999999999999998,
+            "condition_number": 116.4105187004424
+          },
+          {
+            "wavelength_um": 0.6592,
+            "incidence_angle_deg": 6.0,
+            "polarization": "TE",
+            "target_efficiency": 0.20851317133248914,
+            "energy_sum": 1.0000000000000004,
+            "condition_number": 113.40367101562931
+          },
+          {
+            "wavelength_um": 0.6592,
+            "incidence_angle_deg": 6.0,
+            "polarization": "TM",
+            "target_efficiency": 0.3977729455865217,
+            "energy_sum": 1.0000000000000013,
+            "condition_number": 335.06999693468276
+          }
+        ],
+        "shifts": [
+          {
+            "name": "etch_shallow_overlay",
+            "geometry_feasible": true,
+            "utility": 0.16404585312852069
+          },
+          {
+            "name": "etch_deep_underlay",
+            "geometry_feasible": true,
+            "utility": 0.17349192682523448
+          },
+          {
+            "name": "material_index_low",
+            "geometry_feasible": true,
+            "utility": 0.22459661968754233
+          },
+          {
+            "name": "material_index_high",
+            "geometry_feasible": true,
+            "utility": 0.13483237185212524
+          }
+        ]
+      },
+      {
+        "name": "heldout_red_silicon_nitride",
+        "split": "heldout",
+        "valid": true,
+        "failure_kind": null,
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "nominal_utility": 0.20278483445805393,
+        "robust_utility": 0.1552103101728418,
+        "mean_target_efficiency": 0.2967863784891578,
+        "twentieth_percentile_target_efficiency": 0.15009149865128518,
+        "minimum_target_efficiency": 0.010147258130979305,
+        "te_mean_target_efficiency": 0.22569702577575596,
+        "tm_mean_target_efficiency": 0.36787573120255956,
+        "maximum_energy_residual": 5.551115123125783e-15,
+        "maximum_condition_number": 417.50423185911103,
+        "all_shift_geometries_feasible": true,
+        "nominal_conditions": [
+          {
+            "wavelength_um": 0.6948,
+            "incidence_angle_deg": -8.0,
+            "polarization": "TE",
+            "target_efficiency": 0.010147258130979305,
+            "energy_sum": 1.0000000000000016,
+            "condition_number": 64.42691587751426
+          },
+          {
+            "wavelength_um": 0.6948,
+            "incidence_angle_deg": -8.0,
+            "polarization": "TM",
+            "target_efficiency": 0.2562696294481208,
+            "energy_sum": 0.9999999999999994,
+            "condition_number": 73.55618588570373
+          },
+          {
+            "wavelength_um": 0.6948,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.07930607812006134,
+            "energy_sum": 0.9999999999999979,
+            "condition_number": 113.10434780971757
+          },
+          {
+            "wavelength_um": 0.6948,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.4188593447649375,
+            "energy_sum": 1.0000000000000022,
+            "condition_number": 417.50423185911103
+          },
+          {
+            "wavelength_um": 0.6948,
+            "incidence_angle_deg": 8.0,
+            "polarization": "TE",
+            "target_efficiency": 0.3204111067947327,
+            "energy_sum": 0.999999999999998,
+            "condition_number": 64.42691587751357
+          },
+          {
+            "wavelength_um": 0.6948,
+            "incidence_angle_deg": 8.0,
+            "polarization": "TM",
+            "target_efficiency": 0.4479644400015596,
+            "energy_sum": 0.9999999999999948,
+            "condition_number": 73.5561858857036
+          },
+          {
+            "wavelength_um": 0.72,
+            "incidence_angle_deg": -8.0,
+            "polarization": "TE",
+            "target_efficiency": 0.023714128852561814,
+            "energy_sum": 0.999999999999999,
+            "condition_number": 93.29796637070073
+          },
+          {
+            "wavelength_um": 0.72,
+            "incidence_angle_deg": -8.0,
+            "polarization": "TM",
+            "target_efficiency": 0.3131112734197938,
+            "energy_sum": 1.0,
+            "condition_number": 102.5113370540038
+          },
+          {
+            "wavelength_um": 0.72,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.2940599623089761,
+            "energy_sum": 1.0000000000000018,
+            "condition_number": 93.63122649491046
+          },
+          {
+            "wavelength_um": 0.72,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.41394849282120083,
+            "energy_sum": 0.9999999999999971,
+            "condition_number": 136.47982580262018
+          },
+          {
+            "wavelength_um": 0.72,
+            "incidence_angle_deg": 8.0,
+            "polarization": "TE",
+            "target_efficiency": 0.40471900785603754,
+            "energy_sum": 1.0000000000000002,
+            "condition_number": 93.29796637070025
+          },
+          {
+            "wavelength_um": 0.72,
+            "incidence_angle_deg": 8.0,
+            "polarization": "TM",
+            "target_efficiency": 0.4124019396458627,
+            "energy_sum": 1.0000000000000009,
+            "condition_number": 102.51133705400427
+          },
+          {
+            "wavelength_um": 0.7451999999999999,
+            "incidence_angle_deg": -8.0,
+            "polarization": "TE",
+            "target_efficiency": 0.04007256146929149,
+            "energy_sum": 0.9999999999999994,
+            "condition_number": 101.72417571677254
+          },
+          {
+            "wavelength_um": 0.7451999999999999,
+            "incidence_angle_deg": -8.0,
+            "polarization": "TM",
+            "target_efficiency": 0.32089948338936397,
+            "energy_sum": 0.9999999999999944,
+            "condition_number": 278.57333324511274
+          },
+          {
+            "wavelength_um": 0.7451999999999999,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.40623101277523715,
+            "energy_sum": 1.0000000000000027,
+            "condition_number": 78.70013138600046
+          },
+          {
+            "wavelength_um": 0.7451999999999999,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.4106382647145381,
+            "energy_sum": 1.000000000000003,
+            "condition_number": 107.75005227472701
+          },
+          {
+            "wavelength_um": 0.7451999999999999,
+            "incidence_angle_deg": 8.0,
+            "polarization": "TE",
+            "target_efficiency": 0.4526121156739262,
+            "energy_sum": 0.9999999999999986,
+            "condition_number": 101.72417571677236
+          },
+          {
+            "wavelength_um": 0.7451999999999999,
+            "incidence_angle_deg": 8.0,
+            "polarization": "TM",
+            "target_efficiency": 0.316788712617659,
+            "energy_sum": 1.0000000000000033,
+            "condition_number": 278.5733332451129
+          }
+        ],
+        "shifts": [
+          {
+            "name": "etch_shallow_overlay",
+            "geometry_feasible": true,
+            "utility": 0.1964823618300005
+          },
+          {
+            "name": "etch_deep_underlay",
+            "geometry_feasible": true,
+            "utility": 0.20343713762139784
+          },
+          {
+            "name": "material_index_low",
+            "geometry_feasible": true,
+            "utility": 0.27483692926725084
+          },
+          {
+            "name": "material_index_high",
+            "geometry_feasible": true,
+            "utility": 0.1552103101728418
+          }
+        ]
+      },
+      {
+        "name": "dev_near_ir_silicon_nitride",
+        "split": "development",
+        "valid": true,
+        "failure_kind": null,
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "nominal_utility": 0.19473081088858865,
+        "robust_utility": 0.14318642196916834,
+        "mean_target_efficiency": 0.2916375938702287,
+        "twentieth_percentile_target_efficiency": 0.12350249277980321,
+        "minimum_target_efficiency": 0.017272555325060352,
+        "te_mean_target_efficiency": 0.20542248627771847,
+        "tm_mean_target_efficiency": 0.3778527014627389,
+        "maximum_energy_residual": 3.774758283725532e-15,
+        "maximum_condition_number": 239.89407286263162,
+        "all_shift_geometries_feasible": true,
+        "nominal_conditions": [
+          {
+            "wavelength_um": 0.9117999999999999,
+            "incidence_angle_deg": -7.0,
+            "polarization": "TE",
+            "target_efficiency": 0.017272555325060352,
+            "energy_sum": 1.0000000000000013,
+            "condition_number": 71.04943242350522
+          },
+          {
+            "wavelength_um": 0.9117999999999999,
+            "incidence_angle_deg": -7.0,
+            "polarization": "TM",
+            "target_efficiency": 0.26843380975376024,
+            "energy_sum": 0.9999999999999969,
+            "condition_number": 77.84350102940806
+          },
+          {
+            "wavelength_um": 0.9117999999999999,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.08210010298197007,
+            "energy_sum": 0.9999999999999989,
+            "condition_number": 106.10901408766273
+          },
+          {
+            "wavelength_um": 0.9117999999999999,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.373691194341838,
+            "energy_sum": 1.0000000000000038,
+            "condition_number": 143.2760490354643
+          },
+          {
+            "wavelength_um": 0.9117999999999999,
+            "incidence_angle_deg": 7.0,
+            "polarization": "TE",
+            "target_efficiency": 0.31255155375643506,
+            "energy_sum": 1.0000000000000027,
+            "condition_number": 71.0494324235054
+          },
+          {
+            "wavelength_um": 0.9117999999999999,
+            "incidence_angle_deg": 7.0,
+            "polarization": "TM",
+            "target_efficiency": 0.45750973939005224,
+            "energy_sum": 0.9999999999999981,
+            "condition_number": 77.84350102940755
+          },
+          {
+            "wavelength_um": 0.94,
+            "incidence_angle_deg": -7.0,
+            "polarization": "TE",
+            "target_efficiency": 0.03167830486638996,
+            "energy_sum": 0.9999999999999997,
+            "condition_number": 99.7059743738713
+          },
+          {
+            "wavelength_um": 0.94,
+            "incidence_angle_deg": -7.0,
+            "polarization": "TM",
+            "target_efficiency": 0.30722993733810683,
+            "energy_sum": 1.0000000000000022,
+            "condition_number": 105.24199748041283
+          },
+          {
+            "wavelength_um": 0.94,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.18560607747655283,
+            "energy_sum": 1.0000000000000004,
+            "condition_number": 102.66909437740941
+          },
+          {
+            "wavelength_um": 0.94,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.4192234789270709,
+            "energy_sum": 0.9999999999999979,
+            "condition_number": 239.89407286263162
+          },
+          {
+            "wavelength_um": 0.94,
+            "incidence_angle_deg": 7.0,
+            "polarization": "TE",
+            "target_efficiency": 0.37835258766617424,
+            "energy_sum": 1.0000000000000022,
+            "condition_number": 99.70597437387116
+          },
+          {
+            "wavelength_um": 0.94,
+            "incidence_angle_deg": 7.0,
+            "polarization": "TM",
+            "target_efficiency": 0.4346320345654871,
+            "energy_sum": 0.9999999999999968,
+            "condition_number": 105.24199748041163
+          },
+          {
+            "wavelength_um": 0.9682,
+            "incidence_angle_deg": -7.0,
+            "polarization": "TE",
+            "target_efficiency": 0.060265058653017345,
+            "energy_sum": 1.0000000000000009,
+            "condition_number": 99.03028963528953
+          },
+          {
+            "wavelength_um": 0.9682,
+            "incidence_angle_deg": -7.0,
+            "polarization": "TM",
+            "target_efficiency": 0.3097864005749215,
+            "energy_sum": 1.0000000000000004,
+            "condition_number": 163.36280334289802
+          },
+          {
+            "wavelength_um": 0.9682,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.3661902223061437,
+            "energy_sum": 0.9999999999999974,
+            "condition_number": 80.5628249252273
+          },
+          {
+            "wavelength_um": 0.9682,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.41751013797507636,
+            "energy_sum": 0.9999999999999997,
+            "condition_number": 109.96870907176921
+          },
+          {
+            "wavelength_um": 0.9682,
+            "incidence_angle_deg": 7.0,
+            "polarization": "TE",
+            "target_efficiency": 0.4147859134677228,
+            "energy_sum": 0.9999999999999984,
+            "condition_number": 99.03028963528985
+          },
+          {
+            "wavelength_um": 0.9682,
+            "incidence_angle_deg": 7.0,
+            "polarization": "TM",
+            "target_efficiency": 0.4126575802983367,
+            "energy_sum": 1.0000000000000036,
+            "condition_number": 163.36280334289773
+          }
+        ],
+        "shifts": [
+          {
+            "name": "etch_shallow_overlay",
+            "geometry_feasible": true,
+            "utility": 0.19213626556512883
+          },
+          {
+            "name": "etch_deep_underlay",
+            "geometry_feasible": true,
+            "utility": 0.19912699089032077
+          },
+          {
+            "name": "material_index_low",
+            "geometry_feasible": true,
+            "utility": 0.26840656979151784
+          },
+          {
+            "name": "material_index_high",
+            "geometry_feasible": true,
+            "utility": 0.14318642196916834
+          }
+        ]
+      },
+      {
+        "name": "dev_blue_titania",
+        "split": "development",
+        "valid": true,
+        "failure_kind": null,
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "nominal_utility": 0.1192360204505921,
+        "robust_utility": 0.09020651541347875,
+        "mean_target_efficiency": 0.16331499597712093,
+        "twentieth_percentile_target_efficiency": 0.07216427361335809,
+        "minimum_target_efficiency": 0.056858521299180315,
+        "te_mean_target_efficiency": 0.1454370146835261,
+        "tm_mean_target_efficiency": 0.18119297727071576,
+        "maximum_energy_residual": 4.440892098500626e-15,
+        "maximum_condition_number": 279.8321428194124,
+        "all_shift_geometries_feasible": true,
+        "nominal_conditions": [
+          {
+            "wavelength_um": 0.4875,
+            "incidence_angle_deg": -5.0,
+            "polarization": "TE",
+            "target_efficiency": 0.06496547320207532,
+            "energy_sum": 0.9999999999999979,
+            "condition_number": 169.2388863418352
+          },
+          {
+            "wavelength_um": 0.4875,
+            "incidence_angle_deg": -5.0,
+            "polarization": "TM",
+            "target_efficiency": 0.062344184825462154,
+            "energy_sum": 1.0000000000000009,
+            "condition_number": 184.38709744554814
+          },
+          {
+            "wavelength_um": 0.4875,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.15062315056324885,
+            "energy_sum": 1.0000000000000013,
+            "condition_number": 72.83875560157355
+          },
+          {
+            "wavelength_um": 0.4875,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.07907298351611029,
+            "energy_sum": 1.0,
+            "condition_number": 78.06836185527862
+          },
+          {
+            "wavelength_um": 0.4875,
+            "incidence_angle_deg": 5.0,
+            "polarization": "TE",
+            "target_efficiency": 0.20582564525822547,
+            "energy_sum": 0.9999999999999987,
+            "condition_number": 169.23888634183618
+          },
+          {
+            "wavelength_um": 0.4875,
+            "incidence_angle_deg": 5.0,
+            "polarization": "TM",
+            "target_efficiency": 0.1510747398120824,
+            "energy_sum": 0.9999999999999976,
+            "condition_number": 184.38709744554558
+          },
+          {
+            "wavelength_um": 0.5,
+            "incidence_angle_deg": -5.0,
+            "polarization": "TE",
+            "target_efficiency": 0.06755846701152328,
+            "energy_sum": 1.0000000000000004,
+            "condition_number": 211.3231005410758
+          },
+          {
+            "wavelength_um": 0.5,
+            "incidence_angle_deg": -5.0,
+            "polarization": "TM",
+            "target_efficiency": 0.20210236734073397,
+            "energy_sum": 1.0000000000000044,
+            "condition_number": 278.4538440592238
+          },
+          {
+            "wavelength_um": 0.5,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.10742266130978058,
+            "energy_sum": 0.9999999999999996,
+            "condition_number": 131.12503130496322
+          },
+          {
+            "wavelength_um": 0.5,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.09153157897429913,
+            "energy_sum": 0.9999999999999989,
+            "condition_number": 122.9469714097969
+          },
+          {
+            "wavelength_um": 0.5,
+            "incidence_angle_deg": 5.0,
+            "polarization": "TE",
+            "target_efficiency": 0.27921265403729845,
+            "energy_sum": 0.999999999999999,
+            "condition_number": 211.32310054108032
+          },
+          {
+            "wavelength_um": 0.5,
+            "incidence_angle_deg": 5.0,
+            "polarization": "TM",
+            "target_efficiency": 0.3350534880881511,
+            "energy_sum": 1.0000000000000002,
+            "condition_number": 278.4538440592247
+          },
+          {
+            "wavelength_um": 0.5125,
+            "incidence_angle_deg": -5.0,
+            "polarization": "TE",
+            "target_efficiency": 0.056858521299180315,
+            "energy_sum": 1.0000000000000027,
+            "condition_number": 82.33413756067257
+          },
+          {
+            "wavelength_um": 0.5125,
+            "incidence_angle_deg": -5.0,
+            "polarization": "TM",
+            "target_efficiency": 0.1550226076953837,
+            "energy_sum": 1.0000000000000013,
+            "condition_number": 161.0819170715259
+          },
+          {
+            "wavelength_um": 0.5125,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.11668800219658111,
+            "energy_sum": 1.0000000000000016,
+            "condition_number": 192.605502846056
+          },
+          {
+            "wavelength_um": 0.5125,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.2429008358713222,
+            "energy_sum": 1.0000000000000009,
+            "condition_number": 279.8321428194124
+          },
+          {
+            "wavelength_um": 0.5125,
+            "incidence_angle_deg": 5.0,
+            "polarization": "TE",
+            "target_efficiency": 0.25977855727382143,
+            "energy_sum": 1.0000000000000042,
+            "condition_number": 82.33413756067218
+          },
+          {
+            "wavelength_um": 0.5125,
+            "incidence_angle_deg": 5.0,
+            "polarization": "TM",
+            "target_efficiency": 0.31163400931289686,
+            "energy_sum": 1.0000000000000013,
+            "condition_number": 161.08191707152574
+          }
+        ],
+        "shifts": [
+          {
+            "name": "etch_shallow_overlay",
+            "geometry_feasible": true,
+            "utility": 0.11728529175364306
+          },
+          {
+            "name": "etch_deep_underlay",
+            "geometry_feasible": true,
+            "utility": 0.11969501793023458
+          },
+          {
+            "name": "material_index_low",
+            "geometry_feasible": true,
+            "utility": 0.1495368926790208
+          },
+          {
+            "name": "material_index_high",
+            "geometry_feasible": true,
+            "utility": 0.09020651541347875
+          }
+        ]
+      },
+      {
+        "name": "heldout_telecom_silicon",
+        "split": "heldout",
+        "valid": true,
+        "failure_kind": null,
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "nominal_utility": 0.19275788460425558,
+        "robust_utility": 0.14553387064111,
+        "mean_target_efficiency": 0.28840928352471684,
+        "twentieth_percentile_target_efficiency": 0.13080829636451172,
+        "minimum_target_efficiency": 0.007153522872666863,
+        "te_mean_target_efficiency": 0.2068559709186992,
+        "tm_mean_target_efficiency": 0.36996259613073434,
+        "maximum_energy_residual": 6.217248937900877e-15,
+        "maximum_condition_number": 364.69262681321237,
+        "all_shift_geometries_feasible": true,
+        "nominal_conditions": [
+          {
+            "wavelength_um": 1.2707,
+            "incidence_angle_deg": -10.0,
+            "polarization": "TE",
+            "target_efficiency": 0.007153522872666863,
+            "energy_sum": 1.0000000000000013,
+            "condition_number": 55.16534855538752
+          },
+          {
+            "wavelength_um": 1.2707,
+            "incidence_angle_deg": -10.0,
+            "polarization": "TM",
+            "target_efficiency": 0.22055208302210885,
+            "energy_sum": 1.000000000000002,
+            "condition_number": 71.85408195146154
+          },
+          {
+            "wavelength_um": 1.2707,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.07097910525944687,
+            "energy_sum": 0.9999999999999979,
+            "condition_number": 111.40704018725205
+          },
+          {
+            "wavelength_um": 1.2707,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.4164792343796161,
+            "energy_sum": 0.9999999999999989,
+            "condition_number": 364.69262681321237
+          },
+          {
+            "wavelength_um": 1.2707,
+            "incidence_angle_deg": 10.0,
+            "polarization": "TE",
+            "target_efficiency": 0.3110299746844679,
+            "energy_sum": 0.999999999999997,
+            "condition_number": 55.16534855538768
+          },
+          {
+            "wavelength_um": 1.2707,
+            "incidence_angle_deg": 10.0,
+            "polarization": "TM",
+            "target_efficiency": 0.4478441849679055,
+            "energy_sum": 1.0000000000000009,
+            "condition_number": 71.85408195146142
+          },
+          {
+            "wavelength_um": 1.31,
+            "incidence_angle_deg": -10.0,
+            "polarization": "TE",
+            "target_efficiency": 0.009550125865855637,
+            "energy_sum": 1.0000000000000027,
+            "condition_number": 76.05558080105247
+          },
+          {
+            "wavelength_um": 1.31,
+            "incidence_angle_deg": -10.0,
+            "polarization": "TM",
+            "target_efficiency": 0.27219550269077764,
+            "energy_sum": 0.9999999999999973,
+            "condition_number": 77.93734905002063
+          },
+          {
+            "wavelength_um": 1.31,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.24923094784495525,
+            "energy_sum": 1.000000000000002,
+            "condition_number": 100.80512214105568
+          },
+          {
+            "wavelength_um": 1.31,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.4117756960826732,
+            "energy_sum": 0.9999999999999987,
+            "condition_number": 168.72645226073064
+          },
+          {
+            "wavelength_um": 1.31,
+            "incidence_angle_deg": 10.0,
+            "polarization": "TE",
+            "target_efficiency": 0.3711321435622109,
+            "energy_sum": 0.9999999999999998,
+            "condition_number": 76.05558080105318
+          },
+          {
+            "wavelength_um": 1.31,
+            "incidence_angle_deg": 10.0,
+            "polarization": "TM",
+            "target_efficiency": 0.4345675442198919,
+            "energy_sum": 0.999999999999994,
+            "condition_number": 77.9373490500207
+          },
+          {
+            "wavelength_um": 1.3493000000000002,
+            "incidence_angle_deg": -10.0,
+            "polarization": "TE",
+            "target_efficiency": 0.023103311886479426,
+            "energy_sum": 1.0000000000000004,
+            "condition_number": 95.79504477033917
+          },
+          {
+            "wavelength_um": 1.3493000000000002,
+            "incidence_angle_deg": -10.0,
+            "polarization": "TM",
+            "target_efficiency": 0.32354811566841923,
+            "energy_sum": 1.0000000000000022,
+            "condition_number": 107.05682199389658
+          },
+          {
+            "wavelength_um": 1.3493000000000002,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.38099994524898967,
+            "energy_sum": 0.9999999999999938,
+            "condition_number": 77.54163437197958
+          },
+          {
+            "wavelength_um": 1.3493000000000002,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.4090022147000523,
+            "energy_sum": 0.9999999999999987,
+            "condition_number": 101.28424387528706
+          },
+          {
+            "wavelength_um": 1.3493000000000002,
+            "incidence_angle_deg": 10.0,
+            "polarization": "TE",
+            "target_efficiency": 0.43852466104322035,
+            "energy_sum": 1.0,
+            "condition_number": 95.79504477033905
+          },
+          {
+            "wavelength_um": 1.3493000000000002,
+            "incidence_angle_deg": 10.0,
+            "polarization": "TM",
+            "target_efficiency": 0.3936987894451645,
+            "energy_sum": 1.0000000000000004,
+            "condition_number": 107.05682199389602
+          }
+        ],
+        "shifts": [
+          {
+            "name": "etch_shallow_overlay",
+            "geometry_feasible": true,
+            "utility": 0.19060564003547206
+          },
+          {
+            "name": "etch_deep_underlay",
+            "geometry_feasible": true,
+            "utility": 0.18658689883453256
+          },
+          {
+            "name": "material_index_low",
+            "geometry_feasible": true,
+            "utility": 0.23785319558080437
+          },
+          {
+            "name": "material_index_high",
+            "geometry_feasible": true,
+            "utility": 0.14553387064111
+          }
+        ]
+      },
+      {
+        "name": "dev_green_titania",
+        "split": "development",
+        "valid": true,
+        "failure_kind": null,
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "nominal_utility": 0.12554121767053006,
+        "robust_utility": 0.095913600202855,
+        "mean_target_efficiency": 0.1835414905364784,
+        "twentieth_percentile_target_efficiency": 0.07606946063075301,
+        "minimum_target_efficiency": 0.02788016358889346,
+        "te_mean_target_efficiency": 0.13138813439471772,
+        "tm_mean_target_efficiency": 0.23569484667823903,
+        "maximum_energy_residual": 5.10702591327572e-15,
+        "maximum_condition_number": 542.8509567157189,
+        "all_shift_geometries_feasible": true,
+        "nominal_conditions": [
+          {
+            "wavelength_um": 0.5432,
+            "incidence_angle_deg": -7.0,
+            "polarization": "TE",
+            "target_efficiency": 0.033479410728404844,
+            "energy_sum": 1.000000000000002,
+            "condition_number": 127.17622151684586
+          },
+          {
+            "wavelength_um": 0.5432,
+            "incidence_angle_deg": -7.0,
+            "polarization": "TM",
+            "target_efficiency": 0.11194871483906312,
+            "energy_sum": 1.000000000000001,
+            "condition_number": 191.8921456357594
+          },
+          {
+            "wavelength_um": 0.5432,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.11491747597663712,
+            "energy_sum": 1.0000000000000004,
+            "condition_number": 109.29408237107023
+          },
+          {
+            "wavelength_um": 0.5432,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.10002640326306216,
+            "energy_sum": 1.0000000000000027,
+            "condition_number": 103.54444175986687
+          },
+          {
+            "wavelength_um": 0.5432,
+            "incidence_angle_deg": 7.0,
+            "polarization": "TE",
+            "target_efficiency": 0.23611365614412932,
+            "energy_sum": 1.0000000000000018,
+            "condition_number": 127.17622151684607
+          },
+          {
+            "wavelength_um": 0.5432,
+            "incidence_angle_deg": 7.0,
+            "polarization": "TM",
+            "target_efficiency": 0.37507591183464917,
+            "energy_sum": 0.9999999999999949,
+            "condition_number": 191.89214563575888
+          },
+          {
+            "wavelength_um": 0.56,
+            "incidence_angle_deg": -7.0,
+            "polarization": "TE",
+            "target_efficiency": 0.02788016358889346,
+            "energy_sum": 0.999999999999998,
+            "condition_number": 103.85286257148364
+          },
+          {
+            "wavelength_um": 0.56,
+            "incidence_angle_deg": -7.0,
+            "polarization": "TM",
+            "target_efficiency": 0.11942743398648843,
+            "energy_sum": 1.0000000000000013,
+            "condition_number": 209.66736952053733
+          },
+          {
+            "wavelength_um": 0.56,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.0600981655425469,
+            "energy_sum": 0.9999999999999988,
+            "condition_number": 182.58201737540773
+          },
+          {
+            "wavelength_um": 0.56,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.22860035475666643,
+            "energy_sum": 1.0000000000000004,
+            "condition_number": 272.9854822962142
+          },
+          {
+            "wavelength_um": 0.56,
+            "incidence_angle_deg": 7.0,
+            "polarization": "TE",
+            "target_efficiency": 0.23374841163715437,
+            "energy_sum": 0.9999999999999998,
+            "condition_number": 103.8528625714885
+          },
+          {
+            "wavelength_um": 0.56,
+            "incidence_angle_deg": 7.0,
+            "polarization": "TM",
+            "target_efficiency": 0.3419680970404327,
+            "energy_sum": 1.000000000000001,
+            "condition_number": 209.6673695205324
+          },
+          {
+            "wavelength_um": 0.5768000000000001,
+            "incidence_angle_deg": -7.0,
+            "polarization": "TE",
+            "target_efficiency": 0.03694518545716734,
+            "energy_sum": 1.0000000000000004,
+            "condition_number": 66.28937269424397
+          },
+          {
+            "wavelength_um": 0.5768000000000001,
+            "incidence_angle_deg": -7.0,
+            "polarization": "TM",
+            "target_efficiency": 0.17474088607136948,
+            "energy_sum": 0.9999999999999992,
+            "condition_number": 91.23119132572721
+          },
+          {
+            "wavelength_um": 0.5768000000000001,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.20117298076816184,
+            "energy_sum": 0.9999999999999987,
+            "condition_number": 107.37033625718817
+          },
+          {
+            "wavelength_um": 0.5768000000000001,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.34287286508924913,
+            "energy_sum": 0.9999999999999992,
+            "condition_number": 542.8509567157189
+          },
+          {
+            "wavelength_um": 0.5768000000000001,
+            "incidence_angle_deg": 7.0,
+            "polarization": "TE",
+            "target_efficiency": 0.23813775970936432,
+            "energy_sum": 1.0000000000000018,
+            "condition_number": 66.28937269424407
+          },
+          {
+            "wavelength_um": 0.5768000000000001,
+            "incidence_angle_deg": 7.0,
+            "polarization": "TM",
+            "target_efficiency": 0.3265929532231709,
+            "energy_sum": 1.000000000000001,
+            "condition_number": 91.23119132572644
+          }
+        ],
+        "shifts": [
+          {
+            "name": "etch_shallow_overlay",
+            "geometry_feasible": true,
+            "utility": 0.13668288421129243
+          },
+          {
+            "name": "etch_deep_underlay",
+            "geometry_feasible": true,
+            "utility": 0.12703007888736556
+          },
+          {
+            "name": "material_index_low",
+            "geometry_feasible": true,
+            "utility": 0.1517520627312838
+          },
+          {
+            "name": "material_index_high",
+            "geometry_feasible": true,
+            "utility": 0.095913600202855
+          }
+        ]
+      }
+    ]
+  },
+  "direct_reference": {
+    "combined_score": 0.9999999999999991,
+    "valid": 1.0,
+    "feasibility_rate": 1.0,
+    "raw_score": 0.9999999999999991,
+    "robustness_score": 0.9999999999999992,
+    "heldout_policy_score": 0.9999999999999994,
+    "heldout_robustness_score": 0.9999999999999996,
+    "development_mean_target_efficiency": 0.6000416659940113,
+    "heldout_mean_target_efficiency": 0.5757145621942861,
+    "development_minimum_target_efficiency": 0.3240771605939754,
+    "heldout_minimum_target_efficiency": 0.21784591330040431,
+    "development_te_mean_target_efficiency": 0.5800057849986653,
+    "heldout_te_mean_target_efficiency": 0.5446336144905105,
+    "development_tm_mean_target_efficiency": 0.6200775469893572,
+    "heldout_tm_mean_target_efficiency": 0.6067955098980619,
+    "development_maximum_energy_residual": 1.176836406102666e-14,
+    "heldout_maximum_energy_residual": 9.769962616701378e-15,
+    "development_shift_geometry_feasibility": 1.0,
+    "heldout_shift_geometry_feasibility": 1.0,
+    "heldout_feasibility_rate": 1.0,
+    "candidate_instance_call_count": 6,
+    "candidate_instance_valid_rate": 1.0,
+    "per_instance": [
+      {
+        "name": "dev_visible_titania",
+        "split": "development",
+        "valid": true,
+        "failure_kind": null,
+        "score": 0.9999999999999978,
+        "robustness_score": 0.9999999999999974,
+        "nominal_utility": 0.5321336817190002,
+        "robust_utility": 0.44019507865384333,
+        "mean_target_efficiency": 0.6082620506372787,
+        "twentieth_percentile_target_efficiency": 0.46536396886986114,
+        "minimum_target_efficiency": 0.406242808255158,
+        "te_mean_target_efficiency": 0.5976419985681081,
+        "tm_mean_target_efficiency": 0.6188821027064494,
+        "maximum_energy_residual": 7.105427357601002e-15,
+        "maximum_condition_number": 424.5880338157447,
+        "all_shift_geometries_feasible": true,
+        "nominal_conditions": [
+          {
+            "wavelength_um": 0.6208,
+            "incidence_angle_deg": -6.0,
+            "polarization": "TE",
+            "target_efficiency": 0.7446728737375352,
+            "energy_sum": 1.0,
+            "condition_number": 140.4819435533038
+          },
+          {
+            "wavelength_um": 0.6208,
+            "incidence_angle_deg": -6.0,
+            "polarization": "TM",
+            "target_efficiency": 0.5980893014570812,
+            "energy_sum": 1.000000000000003,
+            "condition_number": 326.01766004660726
+          },
+          {
+            "wavelength_um": 0.6208,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.7989844872995343,
+            "energy_sum": 0.9999999999999981,
+            "condition_number": 126.00987687067983
+          },
+          {
+            "wavelength_um": 0.6208,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.7301837852834598,
+            "energy_sum": 0.9999999999999951,
+            "condition_number": 102.29413620531744
+          },
+          {
+            "wavelength_um": 0.6208,
+            "incidence_angle_deg": 6.0,
+            "polarization": "TE",
+            "target_efficiency": 0.445802554715689,
+            "energy_sum": 0.9999999999999978,
+            "condition_number": 155.6445766581944
+          },
+          {
+            "wavelength_um": 0.6208,
+            "incidence_angle_deg": 6.0,
+            "polarization": "TM",
+            "target_efficiency": 0.6069461577204345,
+            "energy_sum": 0.9999999999999951,
+            "condition_number": 328.3064635003618
+          },
+          {
+            "wavelength_um": 0.64,
+            "incidence_angle_deg": -6.0,
+            "polarization": "TE",
+            "target_efficiency": 0.6411303937005043,
+            "energy_sum": 0.9999999999999997,
+            "condition_number": 124.92246098387447
+          },
+          {
+            "wavelength_um": 0.64,
+            "incidence_angle_deg": -6.0,
+            "polarization": "TM",
+            "target_efficiency": 0.6414604335107897,
+            "energy_sum": 1.0000000000000029,
+            "condition_number": 109.60203421078967
+          },
+          {
+            "wavelength_um": 0.64,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.6950316577065119,
+            "energy_sum": 1.0000000000000024,
+            "condition_number": 183.77214725499474
+          },
+          {
+            "wavelength_um": 0.64,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.5984816813126147,
+            "energy_sum": 0.9999999999999929,
+            "condition_number": 424.5880338157447
+          },
+          {
+            "wavelength_um": 0.64,
+            "incidence_angle_deg": 6.0,
+            "polarization": "TE",
+            "target_efficiency": 0.4673873013123288,
+            "energy_sum": 1.000000000000001,
+            "condition_number": 126.79557738185258
+          },
+          {
+            "wavelength_um": 0.64,
+            "incidence_angle_deg": 6.0,
+            "polarization": "TM",
+            "target_efficiency": 0.7043769904913574,
+            "energy_sum": 1.0000000000000049,
+            "condition_number": 108.38411819105973
+          },
+          {
+            "wavelength_um": 0.6592,
+            "incidence_angle_deg": -6.0,
+            "polarization": "TE",
+            "target_efficiency": 0.406242808255158,
+            "energy_sum": 1.0000000000000022,
+            "condition_number": 167.5018423240909
+          },
+          {
+            "wavelength_um": 0.6592,
+            "incidence_angle_deg": -6.0,
+            "polarization": "TM",
+            "target_efficiency": 0.5773729050029384,
+            "energy_sum": 1.0000000000000002,
+            "condition_number": 100.9061360617672
+          },
+          {
+            "wavelength_um": 0.6592,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.715510829810828,
+            "energy_sum": 1.0000000000000007,
+            "condition_number": 129.89713836319385
+          },
+          {
+            "wavelength_um": 0.6592,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.4361717264947552,
+            "energy_sum": 1.000000000000007,
+            "condition_number": 412.7327801863353
+          },
+          {
+            "wavelength_um": 0.6592,
+            "incidence_angle_deg": 6.0,
+            "polarization": "TE",
+            "target_efficiency": 0.46401508057488267,
+            "energy_sum": 0.9999999999999998,
+            "condition_number": 172.23125201951268
+          },
+          {
+            "wavelength_um": 0.6592,
+            "incidence_angle_deg": 6.0,
+            "polarization": "TM",
+            "target_efficiency": 0.6768559430846134,
+            "energy_sum": 0.9999999999999971,
+            "condition_number": 102.0566326065028
+          }
+        ],
+        "shifts": [
+          {
+            "name": "etch_shallow_overlay",
+            "geometry_feasible": true,
+            "utility": 0.44019507865384333
+          },
+          {
+            "name": "etch_deep_underlay",
+            "geometry_feasible": true,
+            "utility": 0.5681955178891112
+          },
+          {
+            "name": "material_index_low",
+            "geometry_feasible": true,
+            "utility": 0.4502252359730894
+          },
+          {
+            "name": "material_index_high",
+            "geometry_feasible": true,
+            "utility": 0.5312629592666188
+          }
+        ]
+      },
+      {
+        "name": "heldout_red_silicon_nitride",
+        "split": "heldout",
+        "valid": true,
+        "failure_kind": null,
+        "score": 1.0000000000000009,
+        "robustness_score": 0.9999999999999996,
+        "nominal_utility": 0.46854636092605484,
+        "robust_utility": 0.40130215926359525,
+        "mean_target_efficiency": 0.5727908506427324,
+        "twentieth_percentile_target_efficiency": 0.439582378498747,
+        "minimum_target_efficiency": 0.21807899223932645,
+        "te_mean_target_efficiency": 0.5478165683651375,
+        "tm_mean_target_efficiency": 0.5977651329203274,
+        "maximum_energy_residual": 9.769962616701378e-15,
+        "maximum_condition_number": 429.7655169031885,
+        "all_shift_geometries_feasible": true,
+        "nominal_conditions": [
+          {
+            "wavelength_um": 0.6948,
+            "incidence_angle_deg": -8.0,
+            "polarization": "TE",
+            "target_efficiency": 0.6887313684172397,
+            "energy_sum": 0.999999999999999,
+            "condition_number": 425.85516750893714
+          },
+          {
+            "wavelength_um": 0.6948,
+            "incidence_angle_deg": -8.0,
+            "polarization": "TM",
+            "target_efficiency": 0.6192276025914774,
+            "energy_sum": 0.9999999999999937,
+            "condition_number": 320.1975255598899
+          },
+          {
+            "wavelength_um": 0.6948,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.6956572088237777,
+            "energy_sum": 0.9999999999999999,
+            "condition_number": 180.7355711355515
+          },
+          {
+            "wavelength_um": 0.6948,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.6564123932902401,
+            "energy_sum": 0.999999999999996,
+            "condition_number": 114.7325894263486
+          },
+          {
+            "wavelength_um": 0.6948,
+            "incidence_angle_deg": 8.0,
+            "polarization": "TE",
+            "target_efficiency": 0.37476415458924806,
+            "energy_sum": 1.000000000000002,
+            "condition_number": 429.7655169031885
+          },
+          {
+            "wavelength_um": 0.6948,
+            "incidence_angle_deg": 8.0,
+            "polarization": "TM",
+            "target_efficiency": 0.6653441127663872,
+            "energy_sum": 0.9999999999999996,
+            "condition_number": 365.2942883271967
+          },
+          {
+            "wavelength_um": 0.72,
+            "incidence_angle_deg": -8.0,
+            "polarization": "TE",
+            "target_efficiency": 0.37660131425952825,
+            "energy_sum": 0.9999999999999991,
+            "condition_number": 205.35171266321925
+          },
+          {
+            "wavelength_um": 0.72,
+            "incidence_angle_deg": -8.0,
+            "polarization": "TM",
+            "target_efficiency": 0.5584210845315863,
+            "energy_sum": 0.9999999999999993,
+            "condition_number": 73.64521050179002
+          },
+          {
+            "wavelength_um": 0.72,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.8265448607107694,
+            "energy_sum": 0.9999999999999992,
+            "condition_number": 121.58630547201966
+          },
+          {
+            "wavelength_um": 0.72,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.5371717747783139,
+            "energy_sum": 0.9999999999999902,
+            "condition_number": 307.75632946655895
+          },
+          {
+            "wavelength_um": 0.72,
+            "incidence_angle_deg": 8.0,
+            "polarization": "TE",
+            "target_efficiency": 0.21807899223932645,
+            "energy_sum": 0.9999999999999998,
+            "condition_number": 195.99508852679875
+          },
+          {
+            "wavelength_um": 0.72,
+            "incidence_angle_deg": 8.0,
+            "polarization": "TM",
+            "target_efficiency": 0.6506406084769589,
+            "energy_sum": 0.999999999999998,
+            "condition_number": 74.55154368178688
+          },
+          {
+            "wavelength_um": 0.7451999999999999,
+            "incidence_angle_deg": -8.0,
+            "polarization": "TE",
+            "target_efficiency": 0.8128209899528044,
+            "energy_sum": 0.999999999999999,
+            "condition_number": 100.5326317724011
+          },
+          {
+            "wavelength_um": 0.7451999999999999,
+            "incidence_angle_deg": -8.0,
+            "polarization": "TM",
+            "target_efficiency": 0.49834197499745014,
+            "energy_sum": 0.9999999999999998,
+            "condition_number": 68.62419141794051
+          },
+          {
+            "wavelength_um": 0.7451999999999999,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.5367409121272653,
+            "energy_sum": 1.0000000000000049,
+            "condition_number": 107.37076961302625
+          },
+          {
+            "wavelength_um": 0.7451999999999999,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.5850672753212989,
+            "energy_sum": 1.0000000000000004,
+            "condition_number": 162.71046735734404
+          },
+          {
+            "wavelength_um": 0.7451999999999999,
+            "incidence_angle_deg": 8.0,
+            "polarization": "TE",
+            "target_efficiency": 0.4004093141662781,
+            "energy_sum": 1.0000000000000013,
+            "condition_number": 103.46873870431271
+          },
+          {
+            "wavelength_um": 0.7451999999999999,
+            "incidence_angle_deg": 8.0,
+            "polarization": "TM",
+            "target_efficiency": 0.6092593695292334,
+            "energy_sum": 1.0000000000000007,
+            "condition_number": 71.96622293218924
+          }
+        ],
+        "shifts": [
+          {
+            "name": "etch_shallow_overlay",
+            "geometry_feasible": true,
+            "utility": 0.40130215926359525
+          },
+          {
+            "name": "etch_deep_underlay",
+            "geometry_feasible": true,
+            "utility": 0.526776351357649
+          },
+          {
+            "name": "material_index_low",
+            "geometry_feasible": true,
+            "utility": 0.43528370016881424
+          },
+          {
+            "name": "material_index_high",
+            "geometry_feasible": true,
+            "utility": 0.48534467480997656
+          }
+        ]
+      },
+      {
+        "name": "dev_near_ir_silicon_nitride",
+        "split": "development",
+        "valid": true,
+        "failure_kind": null,
+        "score": 0.9999999999999978,
+        "robustness_score": 0.9999999999999992,
+        "nominal_utility": 0.4945997546172692,
+        "robust_utility": 0.4292864766132386,
+        "mean_target_efficiency": 0.5746993809290841,
+        "twentieth_percentile_target_efficiency": 0.49858012496887033,
+        "minimum_target_efficiency": 0.26935031932027637,
+        "te_mean_target_efficiency": 0.5837860170500931,
+        "tm_mean_target_efficiency": 0.565612744808075,
+        "maximum_energy_residual": 6.106226635438361e-15,
+        "maximum_condition_number": 511.3551279349092,
+        "all_shift_geometries_feasible": true,
+        "nominal_conditions": [
+          {
+            "wavelength_um": 0.9117999999999999,
+            "incidence_angle_deg": -7.0,
+            "polarization": "TE",
+            "target_efficiency": 0.69443587934657,
+            "energy_sum": 0.9999999999999967,
+            "condition_number": 88.79037502016641
+          },
+          {
+            "wavelength_um": 0.9117999999999999,
+            "incidence_angle_deg": -7.0,
+            "polarization": "TM",
+            "target_efficiency": 0.5835196311210699,
+            "energy_sum": 0.9999999999999973,
+            "condition_number": 164.93245647650554
+          },
+          {
+            "wavelength_um": 0.9117999999999999,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.6778478591975592,
+            "energy_sum": 1.0,
+            "condition_number": 159.50849695236676
+          },
+          {
+            "wavelength_um": 0.9117999999999999,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.6310248350581145,
+            "energy_sum": 0.9999999999999953,
+            "condition_number": 65.59965216289196
+          },
+          {
+            "wavelength_um": 0.9117999999999999,
+            "incidence_angle_deg": 7.0,
+            "polarization": "TE",
+            "target_efficiency": 0.40487433265873524,
+            "energy_sum": 0.999999999999999,
+            "condition_number": 90.29474637896519
+          },
+          {
+            "wavelength_um": 0.9117999999999999,
+            "incidence_angle_deg": 7.0,
+            "polarization": "TM",
+            "target_efficiency": 0.6448346254196468,
+            "energy_sum": 0.9999999999999994,
+            "condition_number": 162.7763419743023
+          },
+          {
+            "wavelength_um": 0.94,
+            "incidence_angle_deg": -7.0,
+            "polarization": "TE",
+            "target_efficiency": 0.4872052202213199,
+            "energy_sum": 1.0000000000000016,
+            "condition_number": 197.63047876945936
+          },
+          {
+            "wavelength_um": 0.94,
+            "incidence_angle_deg": -7.0,
+            "polarization": "TM",
+            "target_efficiency": 0.5617618223061406,
+            "energy_sum": 1.000000000000005,
+            "condition_number": 81.5818679717916
+          },
+          {
+            "wavelength_um": 0.94,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.7979786298000379,
+            "energy_sum": 1.000000000000004,
+            "condition_number": 126.80516388074915
+          },
+          {
+            "wavelength_um": 0.94,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.5856919252794174,
+            "energy_sum": 1.0000000000000029,
+            "condition_number": 255.64633463739483
+          },
+          {
+            "wavelength_um": 0.94,
+            "incidence_angle_deg": 7.0,
+            "polarization": "TE",
+            "target_efficiency": 0.5156424820901959,
+            "energy_sum": 0.9999999999999982,
+            "condition_number": 193.53130945903882
+          },
+          {
+            "wavelength_um": 0.94,
+            "incidence_angle_deg": 7.0,
+            "polarization": "TM",
+            "target_efficiency": 0.6468876436592843,
+            "energy_sum": 0.9999999999999939,
+            "condition_number": 80.41165716365401
+          },
+          {
+            "wavelength_um": 0.9682,
+            "incidence_angle_deg": -7.0,
+            "polarization": "TE",
+            "target_efficiency": 0.704799812881114,
+            "energy_sum": 1.0000000000000004,
+            "condition_number": 218.6464128651429
+          },
+          {
+            "wavelength_um": 0.9682,
+            "incidence_angle_deg": -7.0,
+            "polarization": "TM",
+            "target_efficiency": 0.5199710978000188,
+            "energy_sum": 0.9999999999999981,
+            "condition_number": 134.8803814649597
+          },
+          {
+            "wavelength_um": 0.9682,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.7019396179350292,
+            "energy_sum": 1.0000000000000033,
+            "condition_number": 90.45370723785129
+          },
+          {
+            "wavelength_um": 0.9682,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.2952112151377227,
+            "energy_sum": 0.9999999999999987,
+            "condition_number": 511.3551279349092
+          },
+          {
+            "wavelength_um": 0.9682,
+            "incidence_angle_deg": 7.0,
+            "polarization": "TE",
+            "target_efficiency": 0.26935031932027637,
+            "energy_sum": 0.9999999999999958,
+            "condition_number": 164.01047899483515
+          },
+          {
+            "wavelength_um": 0.9682,
+            "incidence_angle_deg": 7.0,
+            "polarization": "TM",
+            "target_efficiency": 0.6216119074912599,
+            "energy_sum": 1.000000000000001,
+            "condition_number": 146.15271606477788
+          }
+        ],
+        "shifts": [
+          {
+            "name": "etch_shallow_overlay",
+            "geometry_feasible": true,
+            "utility": 0.4292864766132386
+          },
+          {
+            "name": "etch_deep_underlay",
+            "geometry_feasible": true,
+            "utility": 0.5229728521995034
+          },
+          {
+            "name": "material_index_low",
+            "geometry_feasible": true,
+            "utility": 0.4833348082248197
+          },
+          {
+            "name": "material_index_high",
+            "geometry_feasible": true,
+            "utility": 0.5347978374161759
+          }
+        ]
+      },
+      {
+        "name": "dev_blue_titania",
+        "split": "development",
+        "valid": true,
+        "failure_kind": null,
+        "score": 1.0000000000000009,
+        "robustness_score": 1.0000000000000027,
+        "nominal_utility": 0.5170498868268246,
+        "robust_utility": 0.47752059535012337,
+        "mean_target_efficiency": 0.6062271101551242,
+        "twentieth_percentile_target_efficiency": 0.47193733490349293,
+        "minimum_target_efficiency": 0.3282032125781653,
+        "te_mean_target_efficiency": 0.5600633604804632,
+        "tm_mean_target_efficiency": 0.652390859829785,
+        "maximum_energy_residual": 8.43769498715119e-15,
+        "maximum_condition_number": 382.0661898813156,
+        "all_shift_geometries_feasible": true,
+        "nominal_conditions": [
+          {
+            "wavelength_um": 0.4875,
+            "incidence_angle_deg": -5.0,
+            "polarization": "TE",
+            "target_efficiency": 0.706952167494374,
+            "energy_sum": 0.9999999999999993,
+            "condition_number": 106.68651868361671
+          },
+          {
+            "wavelength_um": 0.4875,
+            "incidence_angle_deg": -5.0,
+            "polarization": "TM",
+            "target_efficiency": 0.6925931201387318,
+            "energy_sum": 1.0000000000000084,
+            "condition_number": 138.0515296028519
+          },
+          {
+            "wavelength_um": 0.4875,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.4697140158024095,
+            "energy_sum": 1.0000000000000024,
+            "condition_number": 100.82673446507967
+          },
+          {
+            "wavelength_um": 0.4875,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.6379299051459865,
+            "energy_sum": 0.9999999999999998,
+            "condition_number": 139.8637326979386
+          },
+          {
+            "wavelength_um": 0.4875,
+            "incidence_angle_deg": 5.0,
+            "polarization": "TE",
+            "target_efficiency": 0.3282032125781653,
+            "energy_sum": 0.9999999999999989,
+            "condition_number": 106.83023438244874
+          },
+          {
+            "wavelength_um": 0.4875,
+            "incidence_angle_deg": 5.0,
+            "polarization": "TM",
+            "target_efficiency": 0.7308178562736134,
+            "energy_sum": 1.000000000000007,
+            "condition_number": 141.1127606005079
+          },
+          {
+            "wavelength_um": 0.5,
+            "incidence_angle_deg": -5.0,
+            "polarization": "TE",
+            "target_efficiency": 0.7279620634896811,
+            "energy_sum": 1.0000000000000004,
+            "condition_number": 83.33938007799546
+          },
+          {
+            "wavelength_um": 0.5,
+            "incidence_angle_deg": -5.0,
+            "polarization": "TM",
+            "target_efficiency": 0.6362356143934413,
+            "energy_sum": 1.0,
+            "condition_number": 133.7910823317351
+          },
+          {
+            "wavelength_um": 0.5,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.5480207981375217,
+            "energy_sum": 1.0000000000000007,
+            "condition_number": 72.33026881646923
+          },
+          {
+            "wavelength_um": 0.5,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.7076356566194644,
+            "energy_sum": 1.0,
+            "condition_number": 79.68298981814131
+          },
+          {
+            "wavelength_um": 0.5,
+            "incidence_angle_deg": 5.0,
+            "polarization": "TE",
+            "target_efficiency": 0.33361731119718957,
+            "energy_sum": 1.0000000000000013,
+            "condition_number": 84.80939333436726
+          },
+          {
+            "wavelength_um": 0.5,
+            "incidence_angle_deg": 5.0,
+            "polarization": "TM",
+            "target_efficiency": 0.6775394752521934,
+            "energy_sum": 0.9999999999999996,
+            "condition_number": 134.0039385515978
+          },
+          {
+            "wavelength_um": 0.5125,
+            "incidence_angle_deg": -5.0,
+            "polarization": "TE",
+            "target_efficiency": 0.7349790796334401,
+            "energy_sum": 0.9999999999999991,
+            "condition_number": 114.36334283848176
+          },
+          {
+            "wavelength_um": 0.5125,
+            "incidence_angle_deg": -5.0,
+            "polarization": "TM",
+            "target_efficiency": 0.6652271852674893,
+            "energy_sum": 0.9999999999999967,
+            "condition_number": 382.0661898813156
+          },
+          {
+            "wavelength_um": 0.5125,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.71584928243627,
+            "energy_sum": 0.9999999999999996,
+            "condition_number": 111.35817547778659
+          },
+          {
+            "wavelength_um": 0.5125,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.706320341049961,
+            "energy_sum": 0.999999999999999,
+            "condition_number": 98.64258440696166
+          },
+          {
+            "wavelength_um": 0.5125,
+            "incidence_angle_deg": 5.0,
+            "polarization": "TE",
+            "target_efficiency": 0.4752723135551181,
+            "energy_sum": 1.0000000000000013,
+            "condition_number": 111.27417421085856
+          },
+          {
+            "wavelength_um": 0.5125,
+            "incidence_angle_deg": 5.0,
+            "polarization": "TM",
+            "target_efficiency": 0.417218584327184,
+            "energy_sum": 0.9999999999999951,
+            "condition_number": 376.86753741963213
+          }
+        ],
+        "shifts": [
+          {
+            "name": "etch_shallow_overlay",
+            "geometry_feasible": true,
+            "utility": 0.47752059535012337
+          },
+          {
+            "name": "etch_deep_underlay",
+            "geometry_feasible": true,
+            "utility": 0.5269151898884064
+          },
+          {
+            "name": "material_index_low",
+            "geometry_feasible": true,
+            "utility": 0.47812734276299357
+          },
+          {
+            "name": "material_index_high",
+            "geometry_feasible": true,
+            "utility": 0.5653502126248005
+          }
+        ]
+      },
+      {
+        "name": "heldout_telecom_silicon",
+        "split": "heldout",
+        "valid": true,
+        "failure_kind": null,
+        "score": 0.999999999999998,
+        "robustness_score": 0.9999999999999996,
+        "nominal_utility": 0.4715019594304377,
+        "robust_utility": 0.3993352497091285,
+        "mean_target_efficiency": 0.5786382737458398,
+        "twentieth_percentile_target_efficiency": 0.43891336799171743,
+        "minimum_target_efficiency": 0.2176128343614822,
+        "te_mean_target_efficiency": 0.5414506606158835,
+        "tm_mean_target_efficiency": 0.6158258868757963,
+        "maximum_energy_residual": 9.325873406851315e-15,
+        "maximum_condition_number": 559.2410044331449,
+        "all_shift_geometries_feasible": true,
+        "nominal_conditions": [
+          {
+            "wavelength_um": 1.2707,
+            "incidence_angle_deg": -10.0,
+            "polarization": "TE",
+            "target_efficiency": 0.6087041188749518,
+            "energy_sum": 0.9999999999999907,
+            "condition_number": 414.3796759360655
+          },
+          {
+            "wavelength_um": 1.2707,
+            "incidence_angle_deg": -10.0,
+            "polarization": "TM",
+            "target_efficiency": 0.7295309634375435,
+            "energy_sum": 1.000000000000001,
+            "condition_number": 395.48114615507404
+          },
+          {
+            "wavelength_um": 1.2707,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.7218660545356752,
+            "energy_sum": 0.9999999999999979,
+            "condition_number": 173.1000890520574
+          },
+          {
+            "wavelength_um": 1.2707,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.6608038993115243,
+            "energy_sum": 1.000000000000004,
+            "condition_number": 106.92133298216663
+          },
+          {
+            "wavelength_um": 1.2707,
+            "incidence_angle_deg": 10.0,
+            "polarization": "TE",
+            "target_efficiency": 0.29907108790267906,
+            "energy_sum": 0.999999999999998,
+            "condition_number": 377.55664173759914
+          },
+          {
+            "wavelength_um": 1.2707,
+            "incidence_angle_deg": 10.0,
+            "polarization": "TM",
+            "target_efficiency": 0.6716646493269626,
+            "energy_sum": 0.9999999999999991,
+            "condition_number": 385.5386249072406
+          },
+          {
+            "wavelength_um": 1.31,
+            "incidence_angle_deg": -10.0,
+            "polarization": "TE",
+            "target_efficiency": 0.39625755480764746,
+            "energy_sum": 1.000000000000003,
+            "condition_number": 219.66967049094407
+          },
+          {
+            "wavelength_um": 1.31,
+            "incidence_angle_deg": -10.0,
+            "polarization": "TM",
+            "target_efficiency": 0.5814329391930956,
+            "energy_sum": 0.9999999999999986,
+            "condition_number": 96.65713395178477
+          },
+          {
+            "wavelength_um": 1.31,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.8250806324964425,
+            "energy_sum": 0.9999999999999952,
+            "condition_number": 142.04964077509212
+          },
+          {
+            "wavelength_um": 1.31,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.5634360117296904,
+            "energy_sum": 0.9999999999999964,
+            "condition_number": 559.2410044331449
+          },
+          {
+            "wavelength_um": 1.31,
+            "incidence_angle_deg": 10.0,
+            "polarization": "TE",
+            "target_efficiency": 0.2176128343614822,
+            "energy_sum": 1.000000000000002,
+            "condition_number": 199.337125025094
+          },
+          {
+            "wavelength_um": 1.31,
+            "incidence_angle_deg": 10.0,
+            "polarization": "TM",
+            "target_efficiency": 0.6473355101460381,
+            "energy_sum": 0.9999999999999982,
+            "condition_number": 100.58582415666271
+          },
+          {
+            "wavelength_um": 1.3493000000000002,
+            "incidence_angle_deg": -10.0,
+            "polarization": "TE",
+            "target_efficiency": 0.7522325934518654,
+            "energy_sum": 1.0000000000000018,
+            "condition_number": 82.12632503784478
+          },
+          {
+            "wavelength_um": 1.3493000000000002,
+            "incidence_angle_deg": -10.0,
+            "polarization": "TM",
+            "target_efficiency": 0.5028970877678223,
+            "energy_sum": 0.9999999999999979,
+            "condition_number": 73.83903546465072
+          },
+          {
+            "wavelength_um": 1.3493000000000002,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.6835202915593632,
+            "energy_sum": 0.999999999999997,
+            "condition_number": 100.58139179017829
+          },
+          {
+            "wavelength_um": 1.3493000000000002,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.5583479524965176,
+            "energy_sum": 0.9999999999999984,
+            "condition_number": 287.06480749497257
+          },
+          {
+            "wavelength_um": 1.3493000000000002,
+            "incidence_angle_deg": 10.0,
+            "polarization": "TE",
+            "target_efficiency": 0.36871077755284437,
+            "energy_sum": 0.9999999999999991,
+            "condition_number": 84.73330953309608
+          },
+          {
+            "wavelength_um": 1.3493000000000002,
+            "incidence_angle_deg": 10.0,
+            "polarization": "TM",
+            "target_efficiency": 0.6269839684729724,
+            "energy_sum": 0.9999999999999978,
+            "condition_number": 75.88512997995278
+          }
+        ],
+        "shifts": [
+          {
+            "name": "etch_shallow_overlay",
+            "geometry_feasible": true,
+            "utility": 0.3993352497091285
+          },
+          {
+            "name": "etch_deep_underlay",
+            "geometry_feasible": true,
+            "utility": 0.4806261292447426
+          },
+          {
+            "name": "material_index_low",
+            "geometry_feasible": true,
+            "utility": 0.4405197161021311
+          },
+          {
+            "name": "material_index_high",
+            "geometry_feasible": true,
+            "utility": 0.48630564539683563
+          }
+        ]
+      },
+      {
+        "name": "dev_green_titania",
+        "split": "development",
+        "valid": true,
+        "failure_kind": null,
+        "score": 1.0000000000000002,
+        "robustness_score": 0.9999999999999977,
+        "nominal_utility": 0.529948190732314,
+        "robust_utility": 0.4684159871939988,
+        "mean_target_efficiency": 0.610978122254558,
+        "twentieth_percentile_target_efficiency": 0.5416310521913865,
+        "minimum_target_efficiency": 0.292512302222302,
+        "te_mean_target_efficiency": 0.5785317638959966,
+        "tm_mean_target_efficiency": 0.6434244806131197,
+        "maximum_energy_residual": 1.176836406102666e-14,
+        "maximum_condition_number": 360.5187377479107,
+        "all_shift_geometries_feasible": true,
+        "nominal_conditions": [
+          {
+            "wavelength_um": 0.5432,
+            "incidence_angle_deg": -7.0,
+            "polarization": "TE",
+            "target_efficiency": 0.7674699242465891,
+            "energy_sum": 0.999999999999996,
+            "condition_number": 92.1546591895026
+          },
+          {
+            "wavelength_um": 0.5432,
+            "incidence_angle_deg": -7.0,
+            "polarization": "TM",
+            "target_efficiency": 0.7676412984856043,
+            "energy_sum": 1.0000000000000018,
+            "condition_number": 182.25393415176225
+          },
+          {
+            "wavelength_um": 0.5432,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.5571687688933195,
+            "energy_sum": 1.000000000000005,
+            "condition_number": 75.77682287717484
+          },
+          {
+            "wavelength_um": 0.5432,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.6946424069192778,
+            "energy_sum": 0.999999999999996,
+            "condition_number": 87.88873865587705
+          },
+          {
+            "wavelength_um": 0.5432,
+            "incidence_angle_deg": 7.0,
+            "polarization": "TE",
+            "target_efficiency": 0.292512302222302,
+            "energy_sum": 0.9999999999999967,
+            "condition_number": 96.4187478603834
+          },
+          {
+            "wavelength_um": 0.5432,
+            "incidence_angle_deg": 7.0,
+            "polarization": "TM",
+            "target_efficiency": 0.6425989889055612,
+            "energy_sum": 0.9999999999999984,
+            "condition_number": 184.59270999922782
+          },
+          {
+            "wavelength_um": 0.56,
+            "incidence_angle_deg": -7.0,
+            "polarization": "TE",
+            "target_efficiency": 0.7486907321805384,
+            "energy_sum": 1.000000000000003,
+            "condition_number": 130.5376339940609
+          },
+          {
+            "wavelength_um": 0.56,
+            "incidence_angle_deg": -7.0,
+            "polarization": "TM",
+            "target_efficiency": 0.5611516938953011,
+            "energy_sum": 1.0000000000000029,
+            "condition_number": 360.5187377479107
+          },
+          {
+            "wavelength_um": 0.56,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.745279529368678,
+            "energy_sum": 1.0000000000000002,
+            "condition_number": 110.37705979185634
+          },
+          {
+            "wavelength_um": 0.56,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.7180111736027808,
+            "energy_sum": 1.0000000000000009,
+            "condition_number": 86.52205715682994
+          },
+          {
+            "wavelength_um": 0.56,
+            "incidence_angle_deg": 7.0,
+            "polarization": "TE",
+            "target_efficiency": 0.39286532035666866,
+            "energy_sum": 1.0000000000000016,
+            "condition_number": 126.47872368488265
+          },
+          {
+            "wavelength_um": 0.56,
+            "incidence_angle_deg": 7.0,
+            "polarization": "TM",
+            "target_efficiency": 0.5312725743900979,
+            "energy_sum": 0.9999999999999882,
+            "condition_number": 360.1030786448557
+          },
+          {
+            "wavelength_um": 0.5768000000000001,
+            "incidence_angle_deg": -7.0,
+            "polarization": "TE",
+            "target_efficiency": 0.6131785535083009,
+            "energy_sum": 0.9999999999999986,
+            "condition_number": 165.39743551890155
+          },
+          {
+            "wavelength_um": 0.5768000000000001,
+            "incidence_angle_deg": -7.0,
+            "polarization": "TM",
+            "target_efficiency": 0.577652744743619,
+            "energy_sum": 1.0000000000000044,
+            "condition_number": 126.15922283804962
+          },
+          {
+            "wavelength_um": 0.5768000000000001,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.6875786462075704,
+            "energy_sum": 1.0000000000000022,
+            "condition_number": 156.6666432582792
+          },
+          {
+            "wavelength_um": 0.5768000000000001,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.6406088046601934,
+            "energy_sum": 0.9999999999999969,
+            "condition_number": 216.02999512686083
+          },
+          {
+            "wavelength_um": 0.5768000000000001,
+            "incidence_angle_deg": 7.0,
+            "polarization": "TE",
+            "target_efficiency": 0.4020420980800027,
+            "energy_sum": 0.9999999999999989,
+            "condition_number": 170.00977669618612
+          },
+          {
+            "wavelength_um": 0.5768000000000001,
+            "incidence_angle_deg": 7.0,
+            "polarization": "TM",
+            "target_efficiency": 0.6572406399156412,
+            "energy_sum": 0.9999999999999989,
+            "condition_number": 141.19760103853497
+          }
+        ],
+        "shifts": [
+          {
+            "name": "etch_shallow_overlay",
+            "geometry_feasible": true,
+            "utility": 0.4684159871939988
+          },
+          {
+            "name": "etch_deep_underlay",
+            "geometry_feasible": true,
+            "utility": 0.5549488587338087
+          },
+          {
+            "name": "material_index_low",
+            "geometry_feasible": true,
+            "utility": 0.5094152221675219
+          },
+          {
+            "name": "material_index_high",
+            "geometry_feasible": true,
+            "utility": 0.5684546091469362
+          }
+        ]
+      }
+    ]
+  },
+  "secure_weak_baseline": {
+    "combined_score": 0.0,
+    "valid": 1.0,
+    "feasibility_rate": 1.0,
+    "raw_score": 0.0,
+    "robustness_score": 0.0,
+    "heldout_policy_score": 0.0,
+    "heldout_robustness_score": 0.0,
+    "development_mean_target_efficiency": 0.22119642065217407,
+    "heldout_mean_target_efficiency": 0.2925978310069373,
+    "development_minimum_target_efficiency": 0.030937455874890493,
+    "heldout_minimum_target_efficiency": 0.008650390501823084,
+    "development_te_mean_target_efficiency": 0.16595279735126334,
+    "heldout_te_mean_target_efficiency": 0.21627649834722756,
+    "development_tm_mean_target_efficiency": 0.27644004395308475,
+    "heldout_tm_mean_target_efficiency": 0.36891916366664695,
+    "development_maximum_energy_residual": 5.10702591327572e-15,
+    "heldout_maximum_energy_residual": 6.217248937900877e-15,
+    "development_shift_geometry_feasibility": 1.0,
+    "heldout_shift_geometry_feasibility": 1.0,
+    "heldout_feasibility_rate": 1.0,
+    "candidate_instance_call_count": 6,
+    "candidate_instance_valid_rate": 1.0,
+    "per_instance": [
+      {
+        "name": "dev_visible_titania",
+        "split": "development",
+        "valid": true,
+        "failure_kind": null,
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "nominal_utility": 0.18014399889340393,
+        "robust_utility": 0.13483237185212524,
+        "mean_target_efficiency": 0.24629160222486826,
+        "twentieth_percentile_target_efficiency": 0.16134360404976328,
+        "minimum_target_efficiency": 0.021738583286427846,
+        "te_mean_target_efficiency": 0.18156355404909105,
+        "tm_mean_target_efficiency": 0.31101965040064544,
+        "maximum_energy_residual": 4.6629367034256575e-15,
+        "maximum_condition_number": 335.06999693468674,
+        "all_shift_geometries_feasible": true,
+        "nominal_conditions": [
+          {
+            "wavelength_um": 0.6208,
+            "incidence_angle_deg": -6.0,
+            "polarization": "TE",
+            "target_efficiency": 0.021738583286427846,
+            "energy_sum": 1.0000000000000004,
+            "condition_number": 64.02850540749989
+          },
+          {
+            "wavelength_um": 0.6208,
+            "incidence_angle_deg": -6.0,
+            "polarization": "TM",
+            "target_efficiency": 0.19137045137332107,
+            "energy_sum": 0.9999999999999976,
+            "condition_number": 117.67633528464056
+          },
+          {
+            "wavelength_um": 0.6208,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.08845756910964943,
+            "energy_sum": 0.9999999999999987,
+            "condition_number": 152.12164975861333
+          },
+          {
+            "wavelength_um": 0.6208,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.38388619137741226,
+            "energy_sum": 1.0000000000000009,
+            "condition_number": 251.97367526582724
+          },
+          {
+            "wavelength_um": 0.6208,
+            "incidence_angle_deg": 6.0,
+            "polarization": "TE",
+            "target_efficiency": 0.24056463650221213,
+            "energy_sum": 1.000000000000003,
+            "condition_number": 64.02850540749921
+          },
+          {
+            "wavelength_um": 0.6208,
+            "incidence_angle_deg": 6.0,
+            "polarization": "TM",
+            "target_efficiency": 0.35930896538354834,
+            "energy_sum": 1.0000000000000047,
+            "condition_number": 117.67633528463898
+          },
+          {
+            "wavelength_um": 0.64,
+            "incidence_angle_deg": -6.0,
+            "polarization": "TE",
+            "target_efficiency": 0.045100726630898286,
+            "energy_sum": 1.0000000000000013,
+            "condition_number": 83.68163146299855
+          },
+          {
+            "wavelength_um": 0.64,
+            "incidence_angle_deg": -6.0,
+            "polarization": "TM",
+            "target_efficiency": 0.2771195755340857,
+            "energy_sum": 1.0000000000000018,
+            "condition_number": 121.40114192950242
+          },
+          {
+            "wavelength_um": 0.64,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.24480220638538333,
+            "energy_sum": 1.0000000000000004,
+            "condition_number": 101.4272537701458
+          },
+          {
+            "wavelength_um": 0.64,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.3516888314289215,
+            "energy_sum": 1.0000000000000029,
+            "condition_number": 258.21448586916614
+          },
+          {
+            "wavelength_um": 0.64,
+            "incidence_angle_deg": 6.0,
+            "polarization": "TE",
+            "target_efficiency": 0.2674543879934341,
+            "energy_sum": 0.9999999999999992,
+            "condition_number": 83.68163146299854
+          },
+          {
+            "wavelength_um": 0.64,
+            "incidence_angle_deg": 6.0,
+            "polarization": "TM",
+            "target_efficiency": 0.3148063387147252,
+            "energy_sum": 1.0000000000000009,
+            "condition_number": 121.40114192950159
+          },
+          {
+            "wavelength_um": 0.6592,
+            "incidence_angle_deg": -6.0,
+            "polarization": "TE",
+            "target_efficiency": 0.15545463135441848,
+            "energy_sum": 1.0000000000000007,
+            "condition_number": 113.40367101562875
+          },
+          {
+            "wavelength_um": 0.6592,
+            "incidence_angle_deg": -6.0,
+            "polarization": "TM",
+            "target_efficiency": 0.1701770630927805,
+            "energy_sum": 0.9999999999999996,
+            "condition_number": 335.06999693468674
+          },
+          {
+            "wavelength_um": 0.6592,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.3619860738469067,
+            "energy_sum": 1.000000000000002,
+            "condition_number": 81.66799882214076
+          },
+          {
+            "wavelength_um": 0.6592,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.35304649111449243,
+            "energy_sum": 0.9999999999999998,
+            "condition_number": 116.4105187004424
+          },
+          {
+            "wavelength_um": 0.6592,
+            "incidence_angle_deg": 6.0,
+            "polarization": "TE",
+            "target_efficiency": 0.20851317133248914,
+            "energy_sum": 1.0000000000000004,
+            "condition_number": 113.40367101562931
+          },
+          {
+            "wavelength_um": 0.6592,
+            "incidence_angle_deg": 6.0,
+            "polarization": "TM",
+            "target_efficiency": 0.3977729455865217,
+            "energy_sum": 1.0000000000000013,
+            "condition_number": 335.06999693468276
+          }
+        ],
+        "shifts": [
+          {
+            "name": "etch_shallow_overlay",
+            "geometry_feasible": true,
+            "utility": 0.16404585312852069
+          },
+          {
+            "name": "etch_deep_underlay",
+            "geometry_feasible": true,
+            "utility": 0.17349192682523448
+          },
+          {
+            "name": "material_index_low",
+            "geometry_feasible": true,
+            "utility": 0.22459661968754233
+          },
+          {
+            "name": "material_index_high",
+            "geometry_feasible": true,
+            "utility": 0.13483237185212524
+          }
+        ]
+      },
+      {
+        "name": "heldout_red_silicon_nitride",
+        "split": "heldout",
+        "valid": true,
+        "failure_kind": null,
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "nominal_utility": 0.20278483445805393,
+        "robust_utility": 0.1552103101728418,
+        "mean_target_efficiency": 0.2967863784891578,
+        "twentieth_percentile_target_efficiency": 0.15009149865128518,
+        "minimum_target_efficiency": 0.010147258130979305,
+        "te_mean_target_efficiency": 0.22569702577575596,
+        "tm_mean_target_efficiency": 0.36787573120255956,
+        "maximum_energy_residual": 5.551115123125783e-15,
+        "maximum_condition_number": 417.50423185911103,
+        "all_shift_geometries_feasible": true,
+        "nominal_conditions": [
+          {
+            "wavelength_um": 0.6948,
+            "incidence_angle_deg": -8.0,
+            "polarization": "TE",
+            "target_efficiency": 0.010147258130979305,
+            "energy_sum": 1.0000000000000016,
+            "condition_number": 64.42691587751426
+          },
+          {
+            "wavelength_um": 0.6948,
+            "incidence_angle_deg": -8.0,
+            "polarization": "TM",
+            "target_efficiency": 0.2562696294481208,
+            "energy_sum": 0.9999999999999994,
+            "condition_number": 73.55618588570373
+          },
+          {
+            "wavelength_um": 0.6948,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.07930607812006134,
+            "energy_sum": 0.9999999999999979,
+            "condition_number": 113.10434780971757
+          },
+          {
+            "wavelength_um": 0.6948,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.4188593447649375,
+            "energy_sum": 1.0000000000000022,
+            "condition_number": 417.50423185911103
+          },
+          {
+            "wavelength_um": 0.6948,
+            "incidence_angle_deg": 8.0,
+            "polarization": "TE",
+            "target_efficiency": 0.3204111067947327,
+            "energy_sum": 0.999999999999998,
+            "condition_number": 64.42691587751357
+          },
+          {
+            "wavelength_um": 0.6948,
+            "incidence_angle_deg": 8.0,
+            "polarization": "TM",
+            "target_efficiency": 0.4479644400015596,
+            "energy_sum": 0.9999999999999948,
+            "condition_number": 73.5561858857036
+          },
+          {
+            "wavelength_um": 0.72,
+            "incidence_angle_deg": -8.0,
+            "polarization": "TE",
+            "target_efficiency": 0.023714128852561814,
+            "energy_sum": 0.999999999999999,
+            "condition_number": 93.29796637070073
+          },
+          {
+            "wavelength_um": 0.72,
+            "incidence_angle_deg": -8.0,
+            "polarization": "TM",
+            "target_efficiency": 0.3131112734197938,
+            "energy_sum": 1.0,
+            "condition_number": 102.5113370540038
+          },
+          {
+            "wavelength_um": 0.72,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.2940599623089761,
+            "energy_sum": 1.0000000000000018,
+            "condition_number": 93.63122649491046
+          },
+          {
+            "wavelength_um": 0.72,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.41394849282120083,
+            "energy_sum": 0.9999999999999971,
+            "condition_number": 136.47982580262018
+          },
+          {
+            "wavelength_um": 0.72,
+            "incidence_angle_deg": 8.0,
+            "polarization": "TE",
+            "target_efficiency": 0.40471900785603754,
+            "energy_sum": 1.0000000000000002,
+            "condition_number": 93.29796637070025
+          },
+          {
+            "wavelength_um": 0.72,
+            "incidence_angle_deg": 8.0,
+            "polarization": "TM",
+            "target_efficiency": 0.4124019396458627,
+            "energy_sum": 1.0000000000000009,
+            "condition_number": 102.51133705400427
+          },
+          {
+            "wavelength_um": 0.7451999999999999,
+            "incidence_angle_deg": -8.0,
+            "polarization": "TE",
+            "target_efficiency": 0.04007256146929149,
+            "energy_sum": 0.9999999999999994,
+            "condition_number": 101.72417571677254
+          },
+          {
+            "wavelength_um": 0.7451999999999999,
+            "incidence_angle_deg": -8.0,
+            "polarization": "TM",
+            "target_efficiency": 0.32089948338936397,
+            "energy_sum": 0.9999999999999944,
+            "condition_number": 278.57333324511274
+          },
+          {
+            "wavelength_um": 0.7451999999999999,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.40623101277523715,
+            "energy_sum": 1.0000000000000027,
+            "condition_number": 78.70013138600046
+          },
+          {
+            "wavelength_um": 0.7451999999999999,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.4106382647145381,
+            "energy_sum": 1.000000000000003,
+            "condition_number": 107.75005227472701
+          },
+          {
+            "wavelength_um": 0.7451999999999999,
+            "incidence_angle_deg": 8.0,
+            "polarization": "TE",
+            "target_efficiency": 0.4526121156739262,
+            "energy_sum": 0.9999999999999986,
+            "condition_number": 101.72417571677236
+          },
+          {
+            "wavelength_um": 0.7451999999999999,
+            "incidence_angle_deg": 8.0,
+            "polarization": "TM",
+            "target_efficiency": 0.316788712617659,
+            "energy_sum": 1.0000000000000033,
+            "condition_number": 278.5733332451129
+          }
+        ],
+        "shifts": [
+          {
+            "name": "etch_shallow_overlay",
+            "geometry_feasible": true,
+            "utility": 0.1964823618300005
+          },
+          {
+            "name": "etch_deep_underlay",
+            "geometry_feasible": true,
+            "utility": 0.20343713762139784
+          },
+          {
+            "name": "material_index_low",
+            "geometry_feasible": true,
+            "utility": 0.27483692926725084
+          },
+          {
+            "name": "material_index_high",
+            "geometry_feasible": true,
+            "utility": 0.1552103101728418
+          }
+        ]
+      },
+      {
+        "name": "dev_near_ir_silicon_nitride",
+        "split": "development",
+        "valid": true,
+        "failure_kind": null,
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "nominal_utility": 0.19473081088858865,
+        "robust_utility": 0.14318642196916834,
+        "mean_target_efficiency": 0.2916375938702287,
+        "twentieth_percentile_target_efficiency": 0.12350249277980321,
+        "minimum_target_efficiency": 0.017272555325060352,
+        "te_mean_target_efficiency": 0.20542248627771847,
+        "tm_mean_target_efficiency": 0.3778527014627389,
+        "maximum_energy_residual": 3.774758283725532e-15,
+        "maximum_condition_number": 239.89407286263162,
+        "all_shift_geometries_feasible": true,
+        "nominal_conditions": [
+          {
+            "wavelength_um": 0.9117999999999999,
+            "incidence_angle_deg": -7.0,
+            "polarization": "TE",
+            "target_efficiency": 0.017272555325060352,
+            "energy_sum": 1.0000000000000013,
+            "condition_number": 71.04943242350522
+          },
+          {
+            "wavelength_um": 0.9117999999999999,
+            "incidence_angle_deg": -7.0,
+            "polarization": "TM",
+            "target_efficiency": 0.26843380975376024,
+            "energy_sum": 0.9999999999999969,
+            "condition_number": 77.84350102940806
+          },
+          {
+            "wavelength_um": 0.9117999999999999,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.08210010298197007,
+            "energy_sum": 0.9999999999999989,
+            "condition_number": 106.10901408766273
+          },
+          {
+            "wavelength_um": 0.9117999999999999,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.373691194341838,
+            "energy_sum": 1.0000000000000038,
+            "condition_number": 143.2760490354643
+          },
+          {
+            "wavelength_um": 0.9117999999999999,
+            "incidence_angle_deg": 7.0,
+            "polarization": "TE",
+            "target_efficiency": 0.31255155375643506,
+            "energy_sum": 1.0000000000000027,
+            "condition_number": 71.0494324235054
+          },
+          {
+            "wavelength_um": 0.9117999999999999,
+            "incidence_angle_deg": 7.0,
+            "polarization": "TM",
+            "target_efficiency": 0.45750973939005224,
+            "energy_sum": 0.9999999999999981,
+            "condition_number": 77.84350102940755
+          },
+          {
+            "wavelength_um": 0.94,
+            "incidence_angle_deg": -7.0,
+            "polarization": "TE",
+            "target_efficiency": 0.03167830486638996,
+            "energy_sum": 0.9999999999999997,
+            "condition_number": 99.7059743738713
+          },
+          {
+            "wavelength_um": 0.94,
+            "incidence_angle_deg": -7.0,
+            "polarization": "TM",
+            "target_efficiency": 0.30722993733810683,
+            "energy_sum": 1.0000000000000022,
+            "condition_number": 105.24199748041283
+          },
+          {
+            "wavelength_um": 0.94,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.18560607747655283,
+            "energy_sum": 1.0000000000000004,
+            "condition_number": 102.66909437740941
+          },
+          {
+            "wavelength_um": 0.94,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.4192234789270709,
+            "energy_sum": 0.9999999999999979,
+            "condition_number": 239.89407286263162
+          },
+          {
+            "wavelength_um": 0.94,
+            "incidence_angle_deg": 7.0,
+            "polarization": "TE",
+            "target_efficiency": 0.37835258766617424,
+            "energy_sum": 1.0000000000000022,
+            "condition_number": 99.70597437387116
+          },
+          {
+            "wavelength_um": 0.94,
+            "incidence_angle_deg": 7.0,
+            "polarization": "TM",
+            "target_efficiency": 0.4346320345654871,
+            "energy_sum": 0.9999999999999968,
+            "condition_number": 105.24199748041163
+          },
+          {
+            "wavelength_um": 0.9682,
+            "incidence_angle_deg": -7.0,
+            "polarization": "TE",
+            "target_efficiency": 0.060265058653017345,
+            "energy_sum": 1.0000000000000009,
+            "condition_number": 99.03028963528953
+          },
+          {
+            "wavelength_um": 0.9682,
+            "incidence_angle_deg": -7.0,
+            "polarization": "TM",
+            "target_efficiency": 0.3097864005749215,
+            "energy_sum": 1.0000000000000004,
+            "condition_number": 163.36280334289802
+          },
+          {
+            "wavelength_um": 0.9682,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.3661902223061437,
+            "energy_sum": 0.9999999999999974,
+            "condition_number": 80.5628249252273
+          },
+          {
+            "wavelength_um": 0.9682,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.41751013797507636,
+            "energy_sum": 0.9999999999999997,
+            "condition_number": 109.96870907176921
+          },
+          {
+            "wavelength_um": 0.9682,
+            "incidence_angle_deg": 7.0,
+            "polarization": "TE",
+            "target_efficiency": 0.4147859134677228,
+            "energy_sum": 0.9999999999999984,
+            "condition_number": 99.03028963528985
+          },
+          {
+            "wavelength_um": 0.9682,
+            "incidence_angle_deg": 7.0,
+            "polarization": "TM",
+            "target_efficiency": 0.4126575802983367,
+            "energy_sum": 1.0000000000000036,
+            "condition_number": 163.36280334289773
+          }
+        ],
+        "shifts": [
+          {
+            "name": "etch_shallow_overlay",
+            "geometry_feasible": true,
+            "utility": 0.19213626556512883
+          },
+          {
+            "name": "etch_deep_underlay",
+            "geometry_feasible": true,
+            "utility": 0.19912699089032077
+          },
+          {
+            "name": "material_index_low",
+            "geometry_feasible": true,
+            "utility": 0.26840656979151784
+          },
+          {
+            "name": "material_index_high",
+            "geometry_feasible": true,
+            "utility": 0.14318642196916834
+          }
+        ]
+      },
+      {
+        "name": "dev_blue_titania",
+        "split": "development",
+        "valid": true,
+        "failure_kind": null,
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "nominal_utility": 0.1192360204505921,
+        "robust_utility": 0.09020651541347875,
+        "mean_target_efficiency": 0.16331499597712093,
+        "twentieth_percentile_target_efficiency": 0.07216427361335809,
+        "minimum_target_efficiency": 0.056858521299180315,
+        "te_mean_target_efficiency": 0.1454370146835261,
+        "tm_mean_target_efficiency": 0.18119297727071576,
+        "maximum_energy_residual": 4.440892098500626e-15,
+        "maximum_condition_number": 279.8321428194124,
+        "all_shift_geometries_feasible": true,
+        "nominal_conditions": [
+          {
+            "wavelength_um": 0.4875,
+            "incidence_angle_deg": -5.0,
+            "polarization": "TE",
+            "target_efficiency": 0.06496547320207532,
+            "energy_sum": 0.9999999999999979,
+            "condition_number": 169.2388863418352
+          },
+          {
+            "wavelength_um": 0.4875,
+            "incidence_angle_deg": -5.0,
+            "polarization": "TM",
+            "target_efficiency": 0.062344184825462154,
+            "energy_sum": 1.0000000000000009,
+            "condition_number": 184.38709744554814
+          },
+          {
+            "wavelength_um": 0.4875,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.15062315056324885,
+            "energy_sum": 1.0000000000000013,
+            "condition_number": 72.83875560157355
+          },
+          {
+            "wavelength_um": 0.4875,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.07907298351611029,
+            "energy_sum": 1.0,
+            "condition_number": 78.06836185527862
+          },
+          {
+            "wavelength_um": 0.4875,
+            "incidence_angle_deg": 5.0,
+            "polarization": "TE",
+            "target_efficiency": 0.20582564525822547,
+            "energy_sum": 0.9999999999999987,
+            "condition_number": 169.23888634183618
+          },
+          {
+            "wavelength_um": 0.4875,
+            "incidence_angle_deg": 5.0,
+            "polarization": "TM",
+            "target_efficiency": 0.1510747398120824,
+            "energy_sum": 0.9999999999999976,
+            "condition_number": 184.38709744554558
+          },
+          {
+            "wavelength_um": 0.5,
+            "incidence_angle_deg": -5.0,
+            "polarization": "TE",
+            "target_efficiency": 0.06755846701152328,
+            "energy_sum": 1.0000000000000004,
+            "condition_number": 211.3231005410758
+          },
+          {
+            "wavelength_um": 0.5,
+            "incidence_angle_deg": -5.0,
+            "polarization": "TM",
+            "target_efficiency": 0.20210236734073397,
+            "energy_sum": 1.0000000000000044,
+            "condition_number": 278.4538440592238
+          },
+          {
+            "wavelength_um": 0.5,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.10742266130978058,
+            "energy_sum": 0.9999999999999996,
+            "condition_number": 131.12503130496322
+          },
+          {
+            "wavelength_um": 0.5,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.09153157897429913,
+            "energy_sum": 0.9999999999999989,
+            "condition_number": 122.9469714097969
+          },
+          {
+            "wavelength_um": 0.5,
+            "incidence_angle_deg": 5.0,
+            "polarization": "TE",
+            "target_efficiency": 0.27921265403729845,
+            "energy_sum": 0.999999999999999,
+            "condition_number": 211.32310054108032
+          },
+          {
+            "wavelength_um": 0.5,
+            "incidence_angle_deg": 5.0,
+            "polarization": "TM",
+            "target_efficiency": 0.3350534880881511,
+            "energy_sum": 1.0000000000000002,
+            "condition_number": 278.4538440592247
+          },
+          {
+            "wavelength_um": 0.5125,
+            "incidence_angle_deg": -5.0,
+            "polarization": "TE",
+            "target_efficiency": 0.056858521299180315,
+            "energy_sum": 1.0000000000000027,
+            "condition_number": 82.33413756067257
+          },
+          {
+            "wavelength_um": 0.5125,
+            "incidence_angle_deg": -5.0,
+            "polarization": "TM",
+            "target_efficiency": 0.1550226076953837,
+            "energy_sum": 1.0000000000000013,
+            "condition_number": 161.0819170715259
+          },
+          {
+            "wavelength_um": 0.5125,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.11668800219658111,
+            "energy_sum": 1.0000000000000016,
+            "condition_number": 192.605502846056
+          },
+          {
+            "wavelength_um": 0.5125,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.2429008358713222,
+            "energy_sum": 1.0000000000000009,
+            "condition_number": 279.8321428194124
+          },
+          {
+            "wavelength_um": 0.5125,
+            "incidence_angle_deg": 5.0,
+            "polarization": "TE",
+            "target_efficiency": 0.25977855727382143,
+            "energy_sum": 1.0000000000000042,
+            "condition_number": 82.33413756067218
+          },
+          {
+            "wavelength_um": 0.5125,
+            "incidence_angle_deg": 5.0,
+            "polarization": "TM",
+            "target_efficiency": 0.31163400931289686,
+            "energy_sum": 1.0000000000000013,
+            "condition_number": 161.08191707152574
+          }
+        ],
+        "shifts": [
+          {
+            "name": "etch_shallow_overlay",
+            "geometry_feasible": true,
+            "utility": 0.11728529175364306
+          },
+          {
+            "name": "etch_deep_underlay",
+            "geometry_feasible": true,
+            "utility": 0.11969501793023458
+          },
+          {
+            "name": "material_index_low",
+            "geometry_feasible": true,
+            "utility": 0.1495368926790208
+          },
+          {
+            "name": "material_index_high",
+            "geometry_feasible": true,
+            "utility": 0.09020651541347875
+          }
+        ]
+      },
+      {
+        "name": "heldout_telecom_silicon",
+        "split": "heldout",
+        "valid": true,
+        "failure_kind": null,
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "nominal_utility": 0.19275788460425558,
+        "robust_utility": 0.14553387064111,
+        "mean_target_efficiency": 0.28840928352471684,
+        "twentieth_percentile_target_efficiency": 0.13080829636451172,
+        "minimum_target_efficiency": 0.007153522872666863,
+        "te_mean_target_efficiency": 0.2068559709186992,
+        "tm_mean_target_efficiency": 0.36996259613073434,
+        "maximum_energy_residual": 6.217248937900877e-15,
+        "maximum_condition_number": 364.69262681321237,
+        "all_shift_geometries_feasible": true,
+        "nominal_conditions": [
+          {
+            "wavelength_um": 1.2707,
+            "incidence_angle_deg": -10.0,
+            "polarization": "TE",
+            "target_efficiency": 0.007153522872666863,
+            "energy_sum": 1.0000000000000013,
+            "condition_number": 55.16534855538752
+          },
+          {
+            "wavelength_um": 1.2707,
+            "incidence_angle_deg": -10.0,
+            "polarization": "TM",
+            "target_efficiency": 0.22055208302210885,
+            "energy_sum": 1.000000000000002,
+            "condition_number": 71.85408195146154
+          },
+          {
+            "wavelength_um": 1.2707,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.07097910525944687,
+            "energy_sum": 0.9999999999999979,
+            "condition_number": 111.40704018725205
+          },
+          {
+            "wavelength_um": 1.2707,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.4164792343796161,
+            "energy_sum": 0.9999999999999989,
+            "condition_number": 364.69262681321237
+          },
+          {
+            "wavelength_um": 1.2707,
+            "incidence_angle_deg": 10.0,
+            "polarization": "TE",
+            "target_efficiency": 0.3110299746844679,
+            "energy_sum": 0.999999999999997,
+            "condition_number": 55.16534855538768
+          },
+          {
+            "wavelength_um": 1.2707,
+            "incidence_angle_deg": 10.0,
+            "polarization": "TM",
+            "target_efficiency": 0.4478441849679055,
+            "energy_sum": 1.0000000000000009,
+            "condition_number": 71.85408195146142
+          },
+          {
+            "wavelength_um": 1.31,
+            "incidence_angle_deg": -10.0,
+            "polarization": "TE",
+            "target_efficiency": 0.009550125865855637,
+            "energy_sum": 1.0000000000000027,
+            "condition_number": 76.05558080105247
+          },
+          {
+            "wavelength_um": 1.31,
+            "incidence_angle_deg": -10.0,
+            "polarization": "TM",
+            "target_efficiency": 0.27219550269077764,
+            "energy_sum": 0.9999999999999973,
+            "condition_number": 77.93734905002063
+          },
+          {
+            "wavelength_um": 1.31,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.24923094784495525,
+            "energy_sum": 1.000000000000002,
+            "condition_number": 100.80512214105568
+          },
+          {
+            "wavelength_um": 1.31,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.4117756960826732,
+            "energy_sum": 0.9999999999999987,
+            "condition_number": 168.72645226073064
+          },
+          {
+            "wavelength_um": 1.31,
+            "incidence_angle_deg": 10.0,
+            "polarization": "TE",
+            "target_efficiency": 0.3711321435622109,
+            "energy_sum": 0.9999999999999998,
+            "condition_number": 76.05558080105318
+          },
+          {
+            "wavelength_um": 1.31,
+            "incidence_angle_deg": 10.0,
+            "polarization": "TM",
+            "target_efficiency": 0.4345675442198919,
+            "energy_sum": 0.999999999999994,
+            "condition_number": 77.9373490500207
+          },
+          {
+            "wavelength_um": 1.3493000000000002,
+            "incidence_angle_deg": -10.0,
+            "polarization": "TE",
+            "target_efficiency": 0.023103311886479426,
+            "energy_sum": 1.0000000000000004,
+            "condition_number": 95.79504477033917
+          },
+          {
+            "wavelength_um": 1.3493000000000002,
+            "incidence_angle_deg": -10.0,
+            "polarization": "TM",
+            "target_efficiency": 0.32354811566841923,
+            "energy_sum": 1.0000000000000022,
+            "condition_number": 107.05682199389658
+          },
+          {
+            "wavelength_um": 1.3493000000000002,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.38099994524898967,
+            "energy_sum": 0.9999999999999938,
+            "condition_number": 77.54163437197958
+          },
+          {
+            "wavelength_um": 1.3493000000000002,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.4090022147000523,
+            "energy_sum": 0.9999999999999987,
+            "condition_number": 101.28424387528706
+          },
+          {
+            "wavelength_um": 1.3493000000000002,
+            "incidence_angle_deg": 10.0,
+            "polarization": "TE",
+            "target_efficiency": 0.43852466104322035,
+            "energy_sum": 1.0,
+            "condition_number": 95.79504477033905
+          },
+          {
+            "wavelength_um": 1.3493000000000002,
+            "incidence_angle_deg": 10.0,
+            "polarization": "TM",
+            "target_efficiency": 0.3936987894451645,
+            "energy_sum": 1.0000000000000004,
+            "condition_number": 107.05682199389602
+          }
+        ],
+        "shifts": [
+          {
+            "name": "etch_shallow_overlay",
+            "geometry_feasible": true,
+            "utility": 0.19060564003547206
+          },
+          {
+            "name": "etch_deep_underlay",
+            "geometry_feasible": true,
+            "utility": 0.18658689883453256
+          },
+          {
+            "name": "material_index_low",
+            "geometry_feasible": true,
+            "utility": 0.23785319558080437
+          },
+          {
+            "name": "material_index_high",
+            "geometry_feasible": true,
+            "utility": 0.14553387064111
+          }
+        ]
+      },
+      {
+        "name": "dev_green_titania",
+        "split": "development",
+        "valid": true,
+        "failure_kind": null,
+        "score": 0.0,
+        "robustness_score": 0.0,
+        "nominal_utility": 0.12554121767053006,
+        "robust_utility": 0.095913600202855,
+        "mean_target_efficiency": 0.1835414905364784,
+        "twentieth_percentile_target_efficiency": 0.07606946063075301,
+        "minimum_target_efficiency": 0.02788016358889346,
+        "te_mean_target_efficiency": 0.13138813439471772,
+        "tm_mean_target_efficiency": 0.23569484667823903,
+        "maximum_energy_residual": 5.10702591327572e-15,
+        "maximum_condition_number": 542.8509567157189,
+        "all_shift_geometries_feasible": true,
+        "nominal_conditions": [
+          {
+            "wavelength_um": 0.5432,
+            "incidence_angle_deg": -7.0,
+            "polarization": "TE",
+            "target_efficiency": 0.033479410728404844,
+            "energy_sum": 1.000000000000002,
+            "condition_number": 127.17622151684586
+          },
+          {
+            "wavelength_um": 0.5432,
+            "incidence_angle_deg": -7.0,
+            "polarization": "TM",
+            "target_efficiency": 0.11194871483906312,
+            "energy_sum": 1.000000000000001,
+            "condition_number": 191.8921456357594
+          },
+          {
+            "wavelength_um": 0.5432,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.11491747597663712,
+            "energy_sum": 1.0000000000000004,
+            "condition_number": 109.29408237107023
+          },
+          {
+            "wavelength_um": 0.5432,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.10002640326306216,
+            "energy_sum": 1.0000000000000027,
+            "condition_number": 103.54444175986687
+          },
+          {
+            "wavelength_um": 0.5432,
+            "incidence_angle_deg": 7.0,
+            "polarization": "TE",
+            "target_efficiency": 0.23611365614412932,
+            "energy_sum": 1.0000000000000018,
+            "condition_number": 127.17622151684607
+          },
+          {
+            "wavelength_um": 0.5432,
+            "incidence_angle_deg": 7.0,
+            "polarization": "TM",
+            "target_efficiency": 0.37507591183464917,
+            "energy_sum": 0.9999999999999949,
+            "condition_number": 191.89214563575888
+          },
+          {
+            "wavelength_um": 0.56,
+            "incidence_angle_deg": -7.0,
+            "polarization": "TE",
+            "target_efficiency": 0.02788016358889346,
+            "energy_sum": 0.999999999999998,
+            "condition_number": 103.85286257148364
+          },
+          {
+            "wavelength_um": 0.56,
+            "incidence_angle_deg": -7.0,
+            "polarization": "TM",
+            "target_efficiency": 0.11942743398648843,
+            "energy_sum": 1.0000000000000013,
+            "condition_number": 209.66736952053733
+          },
+          {
+            "wavelength_um": 0.56,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.0600981655425469,
+            "energy_sum": 0.9999999999999988,
+            "condition_number": 182.58201737540773
+          },
+          {
+            "wavelength_um": 0.56,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.22860035475666643,
+            "energy_sum": 1.0000000000000004,
+            "condition_number": 272.9854822962142
+          },
+          {
+            "wavelength_um": 0.56,
+            "incidence_angle_deg": 7.0,
+            "polarization": "TE",
+            "target_efficiency": 0.23374841163715437,
+            "energy_sum": 0.9999999999999998,
+            "condition_number": 103.8528625714885
+          },
+          {
+            "wavelength_um": 0.56,
+            "incidence_angle_deg": 7.0,
+            "polarization": "TM",
+            "target_efficiency": 0.3419680970404327,
+            "energy_sum": 1.000000000000001,
+            "condition_number": 209.6673695205324
+          },
+          {
+            "wavelength_um": 0.5768000000000001,
+            "incidence_angle_deg": -7.0,
+            "polarization": "TE",
+            "target_efficiency": 0.03694518545716734,
+            "energy_sum": 1.0000000000000004,
+            "condition_number": 66.28937269424397
+          },
+          {
+            "wavelength_um": 0.5768000000000001,
+            "incidence_angle_deg": -7.0,
+            "polarization": "TM",
+            "target_efficiency": 0.17474088607136948,
+            "energy_sum": 0.9999999999999992,
+            "condition_number": 91.23119132572721
+          },
+          {
+            "wavelength_um": 0.5768000000000001,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TE",
+            "target_efficiency": 0.20117298076816184,
+            "energy_sum": 0.9999999999999987,
+            "condition_number": 107.37033625718817
+          },
+          {
+            "wavelength_um": 0.5768000000000001,
+            "incidence_angle_deg": 0.0,
+            "polarization": "TM",
+            "target_efficiency": 0.34287286508924913,
+            "energy_sum": 0.9999999999999992,
+            "condition_number": 542.8509567157189
+          },
+          {
+            "wavelength_um": 0.5768000000000001,
+            "incidence_angle_deg": 7.0,
+            "polarization": "TE",
+            "target_efficiency": 0.23813775970936432,
+            "energy_sum": 1.0000000000000018,
+            "condition_number": 66.28937269424407
+          },
+          {
+            "wavelength_um": 0.5768000000000001,
+            "incidence_angle_deg": 7.0,
+            "polarization": "TM",
+            "target_efficiency": 0.3265929532231709,
+            "energy_sum": 1.000000000000001,
+            "condition_number": 91.23119132572644
+          }
+        ],
+        "shifts": [
+          {
+            "name": "etch_shallow_overlay",
+            "geometry_feasible": true,
+            "utility": 0.13668288421129243
+          },
+          {
+            "name": "etch_deep_underlay",
+            "geometry_feasible": true,
+            "utility": 0.12703007888736556
+          },
+          {
+            "name": "material_index_low",
+            "geometry_feasible": true,
+            "utility": 0.1517520627312838
+          },
+          {
+            "name": "material_index_high",
+            "geometry_feasible": true,
+            "utility": 0.095913600202855
+          }
+        ]
+      }
+    ]
+  },
+  "secure_baseline_exactly_matches_direct": true,
+  "invalid_submission_checks": {
+    "bad_shape": {
+      "combined_score": 0.0,
+      "valid": 0.0,
+      "feasibility_rate": 0.0,
+      "raw_score": 0.0,
+      "robustness_score": 0.0,
+      "heldout_policy_score": 0.0,
+      "heldout_robustness_score": 0.0,
+      "development_mean_target_efficiency": 0.0,
+      "heldout_mean_target_efficiency": 0.0,
+      "development_minimum_target_efficiency": 0.0,
+      "heldout_minimum_target_efficiency": 0.0,
+      "development_te_mean_target_efficiency": 0.0,
+      "heldout_te_mean_target_efficiency": 0.0,
+      "development_tm_mean_target_efficiency": 0.0,
+      "heldout_tm_mean_target_efficiency": 0.0,
+      "development_maximum_energy_residual": 0.0,
+      "heldout_maximum_energy_residual": 0.0,
+      "development_shift_geometry_feasibility": 0.0,
+      "heldout_shift_geometry_feasibility": 0.0,
+      "heldout_feasibility_rate": 0.0,
+      "candidate_instance_call_count": 6,
+      "candidate_instance_valid_rate": 0.0,
+      "per_instance": [
+        {
+          "name": "dev_visible_titania",
+          "split": "development",
+          "valid": false,
+          "failure_kind": "invalid_grating_submission",
+          "score": 0.0,
+          "robustness_score": 0.0,
+          "nominal_utility": 0.0,
+          "robust_utility": 0.0,
+          "mean_target_efficiency": 0.0,
+          "twentieth_percentile_target_efficiency": 0.0,
+          "minimum_target_efficiency": 0.0,
+          "te_mean_target_efficiency": 0.0,
+          "tm_mean_target_efficiency": 0.0,
+          "maximum_energy_residual": 0.0,
+          "maximum_condition_number": 0.0,
+          "all_shift_geometries_feasible": false,
+          "nominal_conditions": [],
+          "shifts": []
+        },
+        {
+          "name": "heldout_red_silicon_nitride",
+          "split": "heldout",
+          "valid": false,
+          "failure_kind": "invalid_grating_submission",
+          "score": 0.0,
+          "robustness_score": 0.0,
+          "nominal_utility": 0.0,
+          "robust_utility": 0.0,
+          "mean_target_efficiency": 0.0,
+          "twentieth_percentile_target_efficiency": 0.0,
+          "minimum_target_efficiency": 0.0,
+          "te_mean_target_efficiency": 0.0,
+          "tm_mean_target_efficiency": 0.0,
+          "maximum_energy_residual": 0.0,
+          "maximum_condition_number": 0.0,
+          "all_shift_geometries_feasible": false,
+          "nominal_conditions": [],
+          "shifts": []
+        },
+        {
+          "name": "dev_near_ir_silicon_nitride",
+          "split": "development",
+          "valid": false,
+          "failure_kind": "invalid_grating_submission",
+          "score": 0.0,
+          "robustness_score": 0.0,
+          "nominal_utility": 0.0,
+          "robust_utility": 0.0,
+          "mean_target_efficiency": 0.0,
+          "twentieth_percentile_target_efficiency": 0.0,
+          "minimum_target_efficiency": 0.0,
+          "te_mean_target_efficiency": 0.0,
+          "tm_mean_target_efficiency": 0.0,
+          "maximum_energy_residual": 0.0,
+          "maximum_condition_number": 0.0,
+          "all_shift_geometries_feasible": false,
+          "nominal_conditions": [],
+          "shifts": []
+        },
+        {
+          "name": "dev_blue_titania",
+          "split": "development",
+          "valid": false,
+          "failure_kind": "invalid_grating_submission",
+          "score": 0.0,
+          "robustness_score": 0.0,
+          "nominal_utility": 0.0,
+          "robust_utility": 0.0,
+          "mean_target_efficiency": 0.0,
+          "twentieth_percentile_target_efficiency": 0.0,
+          "minimum_target_efficiency": 0.0,
+          "te_mean_target_efficiency": 0.0,
+          "tm_mean_target_efficiency": 0.0,
+          "maximum_energy_residual": 0.0,
+          "maximum_condition_number": 0.0,
+          "all_shift_geometries_feasible": false,
+          "nominal_conditions": [],
+          "shifts": []
+        },
+        {
+          "name": "heldout_telecom_silicon",
+          "split": "heldout",
+          "valid": false,
+          "failure_kind": "invalid_grating_submission",
+          "score": 0.0,
+          "robustness_score": 0.0,
+          "nominal_utility": 0.0,
+          "robust_utility": 0.0,
+          "mean_target_efficiency": 0.0,
+          "twentieth_percentile_target_efficiency": 0.0,
+          "minimum_target_efficiency": 0.0,
+          "te_mean_target_efficiency": 0.0,
+          "tm_mean_target_efficiency": 0.0,
+          "maximum_energy_residual": 0.0,
+          "maximum_condition_number": 0.0,
+          "all_shift_geometries_feasible": false,
+          "nominal_conditions": [],
+          "shifts": []
+        },
+        {
+          "name": "dev_green_titania",
+          "split": "development",
+          "valid": false,
+          "failure_kind": "invalid_grating_submission",
+          "score": 0.0,
+          "robustness_score": 0.0,
+          "nominal_utility": 0.0,
+          "robust_utility": 0.0,
+          "mean_target_efficiency": 0.0,
+          "twentieth_percentile_target_efficiency": 0.0,
+          "minimum_target_efficiency": 0.0,
+          "te_mean_target_efficiency": 0.0,
+          "tm_mean_target_efficiency": 0.0,
+          "maximum_energy_residual": 0.0,
+          "maximum_condition_number": 0.0,
+          "all_shift_geometries_feasible": false,
+          "nominal_conditions": [],
+          "shifts": []
+        }
+      ]
+    },
+    "nonfinite": {
+      "combined_score": -1e+18,
+      "valid": 0.0,
+      "error_message": "candidate invalid: non_finite_candidate_value",
+      "candidate_failure_kind": "non_finite_candidate_value",
+      "raw_score": -1e+18
+    },
+    "minimum_feature": {
+      "combined_score": 0.0,
+      "valid": 0.0,
+      "feasibility_rate": 0.0,
+      "raw_score": 0.0,
+      "robustness_score": 0.0,
+      "heldout_policy_score": 0.0,
+      "heldout_robustness_score": 0.0,
+      "development_mean_target_efficiency": 0.0,
+      "heldout_mean_target_efficiency": 0.0,
+      "development_minimum_target_efficiency": 0.0,
+      "heldout_minimum_target_efficiency": 0.0,
+      "development_te_mean_target_efficiency": 0.0,
+      "heldout_te_mean_target_efficiency": 0.0,
+      "development_tm_mean_target_efficiency": 0.0,
+      "heldout_tm_mean_target_efficiency": 0.0,
+      "development_maximum_energy_residual": 0.0,
+      "heldout_maximum_energy_residual": 0.0,
+      "development_shift_geometry_feasibility": 0.0,
+      "heldout_shift_geometry_feasibility": 0.0,
+      "heldout_feasibility_rate": 0.0,
+      "candidate_instance_call_count": 6,
+      "candidate_instance_valid_rate": 0.0,
+      "per_instance": [
+        {
+          "name": "dev_visible_titania",
+          "split": "development",
+          "valid": false,
+          "failure_kind": "invalid_grating_submission",
+          "score": 0.0,
+          "robustness_score": 0.0,
+          "nominal_utility": 0.0,
+          "robust_utility": 0.0,
+          "mean_target_efficiency": 0.0,
+          "twentieth_percentile_target_efficiency": 0.0,
+          "minimum_target_efficiency": 0.0,
+          "te_mean_target_efficiency": 0.0,
+          "tm_mean_target_efficiency": 0.0,
+          "maximum_energy_residual": 0.0,
+          "maximum_condition_number": 0.0,
+          "all_shift_geometries_feasible": false,
+          "nominal_conditions": [],
+          "shifts": []
+        },
+        {
+          "name": "heldout_red_silicon_nitride",
+          "split": "heldout",
+          "valid": false,
+          "failure_kind": "invalid_grating_submission",
+          "score": 0.0,
+          "robustness_score": 0.0,
+          "nominal_utility": 0.0,
+          "robust_utility": 0.0,
+          "mean_target_efficiency": 0.0,
+          "twentieth_percentile_target_efficiency": 0.0,
+          "minimum_target_efficiency": 0.0,
+          "te_mean_target_efficiency": 0.0,
+          "tm_mean_target_efficiency": 0.0,
+          "maximum_energy_residual": 0.0,
+          "maximum_condition_number": 0.0,
+          "all_shift_geometries_feasible": false,
+          "nominal_conditions": [],
+          "shifts": []
+        },
+        {
+          "name": "dev_near_ir_silicon_nitride",
+          "split": "development",
+          "valid": false,
+          "failure_kind": "invalid_grating_submission",
+          "score": 0.0,
+          "robustness_score": 0.0,
+          "nominal_utility": 0.0,
+          "robust_utility": 0.0,
+          "mean_target_efficiency": 0.0,
+          "twentieth_percentile_target_efficiency": 0.0,
+          "minimum_target_efficiency": 0.0,
+          "te_mean_target_efficiency": 0.0,
+          "tm_mean_target_efficiency": 0.0,
+          "maximum_energy_residual": 0.0,
+          "maximum_condition_number": 0.0,
+          "all_shift_geometries_feasible": false,
+          "nominal_conditions": [],
+          "shifts": []
+        },
+        {
+          "name": "dev_blue_titania",
+          "split": "development",
+          "valid": false,
+          "failure_kind": "invalid_grating_submission",
+          "score": 0.0,
+          "robustness_score": 0.0,
+          "nominal_utility": 0.0,
+          "robust_utility": 0.0,
+          "mean_target_efficiency": 0.0,
+          "twentieth_percentile_target_efficiency": 0.0,
+          "minimum_target_efficiency": 0.0,
+          "te_mean_target_efficiency": 0.0,
+          "tm_mean_target_efficiency": 0.0,
+          "maximum_energy_residual": 0.0,
+          "maximum_condition_number": 0.0,
+          "all_shift_geometries_feasible": false,
+          "nominal_conditions": [],
+          "shifts": []
+        },
+        {
+          "name": "heldout_telecom_silicon",
+          "split": "heldout",
+          "valid": false,
+          "failure_kind": "invalid_grating_submission",
+          "score": 0.0,
+          "robustness_score": 0.0,
+          "nominal_utility": 0.0,
+          "robust_utility": 0.0,
+          "mean_target_efficiency": 0.0,
+          "twentieth_percentile_target_efficiency": 0.0,
+          "minimum_target_efficiency": 0.0,
+          "te_mean_target_efficiency": 0.0,
+          "tm_mean_target_efficiency": 0.0,
+          "maximum_energy_residual": 0.0,
+          "maximum_condition_number": 0.0,
+          "all_shift_geometries_feasible": false,
+          "nominal_conditions": [],
+          "shifts": []
+        },
+        {
+          "name": "dev_green_titania",
+          "split": "development",
+          "valid": false,
+          "failure_kind": "invalid_grating_submission",
+          "score": 0.0,
+          "robustness_score": 0.0,
+          "nominal_utility": 0.0,
+          "robust_utility": 0.0,
+          "mean_target_efficiency": 0.0,
+          "twentieth_percentile_target_efficiency": 0.0,
+          "minimum_target_efficiency": 0.0,
+          "te_mean_target_efficiency": 0.0,
+          "tm_mean_target_efficiency": 0.0,
+          "maximum_energy_residual": 0.0,
+          "maximum_condition_number": 0.0,
+          "all_shift_geometries_feasible": false,
+          "nominal_conditions": [],
+          "shifts": []
+        }
+      ]
+    }
+  },
+  "metric_sealing": {
+    "visible_metric_keys": [
+      "combined_score",
+      "feasibility_rate",
+      "raw_score",
+      "valid"
+    ]
+  },
+  "references": [
+    {
+      "doi": "10.1364/JOSA.71.000811",
+      "role": "RCWA formulation"
+    },
+    {
+      "doi": "10.1364/JOSAA.12.001077",
+      "role": "stable implementation"
+    },
+    {
+      "doi": "10.1364/JOSAA.13.000779",
+      "role": "TM convergence"
+    },
+    {
+      "doi": "10.1364/JOSAA.13.001870",
+      "role": "Fourier factorization"
+    }
+  ],
+  "independent_implementation_plan": {
+    "package": "grcwa 0.1.2",
+    "wheel_sha256": "65dbc0151d46a22985c1fe7f1070347e67562363fcb04371e9d158e3ba6140ee",
+    "license": "GPL-3.0-or-later",
+    "repository": "https://github.com/weiliangjinca/grcwa",
+    "not_a_runtime_dependency": true,
+    "status": "cross-check script and frozen report required before admission"
+  },
+  "limitations": [
+    "The evaluator is a deterministic lossless isotropic one-dimensional Fourier-modal model, not a fabricated or measured grating.",
+    "It omits absorption, anisotropy, roughness, finite aperture, two-dimensional patterning, fabrication yield and detector response.",
+    "The dense boundary solve is stable on the registered worlds but is not a scattering-matrix implementation for arbitrary thick or evanescent stacks.",
+    "The calibrated five-layer references are reproducible witnesses, not global optima or device records.",
+    "Finite Fourier truncation is retained as a numerical-uncertainty axis; admission requires an independently implemented grcwa cross-check.",
+    "Repository-visible worlds require server-held procedural regimes and contamination auditing before leaderboard or generalization claims.",
+    "Task calibration does not measure feedback causality, population performance, fabrication or autonomous scientific discovery."
+  ],
+  "execution_passed": true,
+  "trust_decision": "trusted_clean_revision",
+  "trusted_evidence": true,
+  "passed": true
+}
