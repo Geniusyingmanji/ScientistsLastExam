@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_QUARANTINED_TASK_REAUDIT",
+  "created_at": "2026-08-15T04:26:31.780412+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "d8686dab6abf7b51abec03fc6f0e4fc90e98355d",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "sle",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/audit_quarantined_tasks.py",
+      "--output",
+      "experiments/quarantined_task_admission_audit_2026-08-15_v2.json"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "policy": {
+    "meaning": "A reproduced defect proves that quarantine remains warranted; it does not validate the task as benchmark-admissible.",
+    "required_coverage": "all manifest tasks whose status is quarantined"
+  },
+  "manifest_quarantined_tasks": [],
+  "missing_checks": [],
+  "stale_checks": [],
+  "retired_checks": [
+    "Biomechanics/ProstheticJointDesign",
+    "Combustion/FlameSpeedOptimization",
+    "CrystalGrowth/CzochralskiProcess",
+    "Electromagnetics/WaveguideModeSolver",
+    "FluidMechanics/StokesShapeDrag",
+    "Geomechanics/TunnelSupportDesign",
+    "InventoryManagement/MultiEchelonStock",
+    "Optoelectronics/LaserCavityDesign",
+    "Transportation/TrafficSignalTiming"
+  ],
+  "generic_clone_group": {
+    "tasks": [],
+    "unique_normalized_oracle_count": 0,
+    "normalized_oracle_sha256": null
+  },
+  "records": [],
+  "summary": {
+    "manifest_quarantined_count": 0,
+    "audited_count": 0,
+    "reproduced_defect_count": 0,
+    "meets_internal_benchmark_standard_count": 0,
+    "recommended_retain_quarantine_count": 0
+  },
+  "execution_passed": true,
+  "trust_decision": "trusted_clean_revision",
+  "trusted_evidence": true,
+  "passed": true
+}

@@ -67,8 +67,8 @@ PROVENANCE_CLASSES = {
     "prospective",
 }
 GLOBAL_REPORTS = {
-    "certification": "experiments/task_certification_audit_2026-07-26_v65.json",
-    "secure_baseline": "experiments/secure_baseline_determinism_2026-07-26_v46.json",
+    "certification": "experiments/task_certification_audit_2026-08-15_v66.json",
+    "secure_baseline": "experiments/secure_baseline_determinism_2026-08-15_v48.json",
     "security": "experiments/security_audit_2026-07-26_v47.json",
     "full_test_suite": "experiments/full_test_suite_2026-07-26_v23.json",
     "cross_task_calibration": "experiments/science_calibration_summary_2026-07-26_v31.json",
@@ -78,7 +78,7 @@ GLOBAL_REPORTS = {
     "track_f_confirmation": "experiments/track_f_confirmation_2026-07-26_v1.json",
     "track_f_analysis": "experiments/track_f_analysis_2026-07-26_v1.json",
     "quarantined_reaudit": (
-        "experiments/quarantined_task_admission_audit_2026-08-03_v1.json"
+        "experiments/quarantined_task_admission_audit_2026-08-15_v2.json"
     ),
 }
 EVIDENCE_PATTERNS = (
