@@ -378,9 +378,8 @@ Two things made this findable and are worth keeping. Rejected candidates are now
 per run, written to disk only, never fed back to the searcher) — before that, a task rejecting
 everything left nothing to look at, since the ledger stores candidates by hash and
 `best_program.py` is still the baseline when nothing is accepted. And documenting a task edits its
-`Task.md`, which is its prompt, so the rebinding tool now **refuses** three of the seven frozen
-tasks: their evidence has to be re-measured rather than re-signed. That refusal is the tool
-working, and it is the real cost of the fix.
+`Task.md`, which is its prompt, so the rebinding tool **refuses** to re-sign a frozen task whose
+evidence could have moved. That refusal is the tool working, and it is the real cost of the fix.
 
 **Runnable references beat blanket abstention on all five tasks that scored zero.** The claim that
 declining every world was a failure rather than a correct reading of a hard task rested on prose
@@ -841,13 +840,26 @@ form, alongside the hash that binds it, so this cannot be ambiguous again.
 
 Several things are deliberately left open rather than papered over.
 
-**The frozen measurement-health cohort is failing, and the reason is now known.** All seven
-frozen tasks fail every preflight check, because each check requires the task package to hash to
-its frozen value and the tasks were annotated and relocated after freezing. The preflight now
-classifies the mismatch instead of only reporting two hashes, and for all seven the difference is
-**declarative only** — the scientific evidence still describes these tasks; the binding is what
-went stale. Refreshing a binding re-signs frozen evidence, so it is a governance decision and has
-been left as one. Most of the remaining test failures on this branch are downstream of it.
+**The frozen measurement-health cohort passes 7 of 7, and getting there is the interesting part.**
+A frozen cohort is a snapshot mechanism for a release point, not a guard for continuous
+development: every evaluator improvement moves a task hash and unbinds the evidence attached to
+it. The order that works is *finalize the evaluators, measure once, rebind once*.
+
+`scripts/check_evaluator_inert.py` does the measuring. It runs each frozen artifact through the
+evaluator as it stood at the freeze revision and as it stands now, and compares the two metric
+dictionaries key by key. On this cohort that came out **6 inert, 1 changed** — removing the upper
+clip could not move a score that was already under the cap, except on
+`DiffractionGratingDesign`, where the artifact's `robustness_score` genuinely crossed 1.0. The six
+carried their evidence forward with a number behind the claim; the seventh had all three of its
+bindings re-measured on the current runtime instead. Re-measuring the calibration moved 8 of 3004
+keys, all at 1e-15.
+
+Two things were worth more than the 7/7. The materiality audit and the preflight were asking the
+same question — *could this evaluator edit have moved this evidence* — and answering it
+differently, so the same task passed one report and failed the other; they now read the exemption
+from the same record. And a test pinned the calibration's filename date, which made it fail the
+moment the evidence was legitimately re-measured — exactly backwards. It asserts the recorded
+evaluator hash now.
 
 **The trusted runtime changed.** `sle/secure_eval.py` and `benchmark_layout.py`
 were modified, and `tests/test_runtime_migration.py` passes at the previous revision and fails
