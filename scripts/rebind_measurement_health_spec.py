@@ -129,6 +129,12 @@ def main(argv: list[str] | None = None) -> int:
                          "asserted, and it is a claim about that artifact on that task.")
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args(argv)
+    # Relative paths are relative to the repository, not to wherever this was invoked from -
+    # otherwise `--spec .research/...` resolves against the caller's directory and dies inside
+    # `relative_to` with a message about subpaths rather than about the file.
+    args.spec = args.spec if args.spec.is_absolute() else (ROOT / args.spec).resolve()
+    args.manifest = (args.manifest if args.manifest.is_absolute()
+                     else (ROOT / args.manifest).resolve())
 
     shared_rebinds, task_rebinds = {}, {}
     for item in args.rebind_evidence:
@@ -337,9 +343,14 @@ def main(argv: list[str] | None = None) -> int:
                 "sha256": sha256_of(args.artifacts_output)}}}), {}),
         # Carry the previous overlay's per-task overrides forward; this layer only adds hashes.
         "task_overrides": [
+            # `if v is not None` is load-bearing. An overlay records what *it* measured; a later
+            # rebinding that measured nothing must not erase what an earlier one did. Without this
+            # the maturity-hash rebinding silently dropped six tasks' recorded inertness and the
+            # preflight fell from 7 of 7 to 1 of 7 - the evidence had not changed, only the record
+            # that it had been checked.
             _deep(dict(prev, **{k: v for k, v in next((u for u in updates
                                                        if u["task"] == prev["task"]), {}).items()
-                                if k != "task"}),
+                                if k != "task" and v is not None}),
                   {check: {"evidence": {"path": path,
                                         "sha256": sha256_of((ROOT / path).resolve())}}
                    for check, path in (task_rebinds.get(prev["task"]) or {}).items()},
