@@ -31,7 +31,7 @@ from sle.provenance import (  # noqa: E402
     finalize_report_trust,
     source_provenance,
 )
-from sle.registry import find_task  # noqa: E402
+from sle.registry import find_task, list_tasks  # noqa: E402
 from scripts import audit_candidate_wave4 as wave4  # noqa: E402
 from scripts.audit_tasks import _normalized_oracle  # noqa: E402
 
@@ -256,7 +256,20 @@ def audit() -> dict[str, Any]:
         task_id for task_id, record in manifest["tasks"].items()
         if record.get("status") == "quarantined"
     }
-    covered = set(REPRODUCED_WAVE4_CHECKS) | set(GENERIC_CLONE_TASKS)
+    # A quarantined task can leave the inventory two ways: it is rebuilt and readmitted, or it is
+    # retired outright. The wave-4 checks below name tasks from an earlier quarantine wave, and
+    # once those tasks are retired their files are gone - so reproducing their defect is not
+    # merely unnecessary, it is impossible. Reading them as still-owed checks made this audit
+    # raise KeyError on a task the registry has never heard of, which reads like a broken tool
+    # rather than what it is: a finished quarantine. Retired tasks are reported by name and
+    # otherwise carry no weight, because a task that is gone is neither quarantined nor admitted.
+    present = {spec.task_id for spec in list_tasks(None)}
+    retired_checks = sorted((set(REPRODUCED_WAVE4_CHECKS) | set(GENERIC_CLONE_TASKS)) - present)
+    wave4_checks = {task_id: check for task_id, check in REPRODUCED_WAVE4_CHECKS.items()
+                    if task_id in present}
+    clone_tasks = {task_id: config for task_id, config in GENERIC_CLONE_TASKS.items()
+                   if task_id in present}
+    covered = set(wave4_checks) | set(clone_tasks)
 
     generic_fingerprints = {
         task_id: hashlib.sha256(
@@ -265,17 +278,17 @@ def audit() -> dict[str, Any]:
                 / "verification/evaluator.py"
             ).encode("utf-8")
         ).hexdigest()
-        for task_id in GENERIC_CLONE_TASKS
+        for task_id in clone_tasks
     }
     unique_generic_fingerprints = set(generic_fingerprints.values())
-    expected_fingerprint = next(iter(unique_generic_fingerprints))
+    expected_fingerprint = next(iter(unique_generic_fingerprints), None)
 
     records = [
         _wave4_record(task_id, check)
-        for task_id, check in REPRODUCED_WAVE4_CHECKS.items()
+        for task_id, check in wave4_checks.items()
     ] + [
         _generic_clone_record(task_id, config, expected_fingerprint)
-        for task_id, config in GENERIC_CLONE_TASKS.items()
+        for task_id, config in clone_tasks.items()
     ]
     records.sort(key=lambda row: row["task"])
 
@@ -284,7 +297,7 @@ def audit() -> dict[str, Any]:
     execution_passed = bool(
         not missing_checks
         and not stale_checks
-        and len(unique_generic_fingerprints) == 1
+        and len(unique_generic_fingerprints) == (1 if clone_tasks else 0)
         and len(records) == len(manifest_quarantined)
         and all(row["defect_reproduced"] for row in records)
         and all(
@@ -308,8 +321,9 @@ def audit() -> dict[str, Any]:
         "manifest_quarantined_tasks": sorted(manifest_quarantined),
         "missing_checks": missing_checks,
         "stale_checks": stale_checks,
+        "retired_checks": retired_checks,
         "generic_clone_group": {
-            "tasks": sorted(GENERIC_CLONE_TASKS),
+            "tasks": sorted(clone_tasks),
             "unique_normalized_oracle_count": len(unique_generic_fingerprints),
             "normalized_oracle_sha256": expected_fingerprint,
         },
