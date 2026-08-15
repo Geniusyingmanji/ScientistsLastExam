@@ -41,6 +41,12 @@ from sle.spec import load_task_spec  # noqa: E402
 
 
 SCHEMA_VERSION = 1
+# Tasks whose evaluator changed since their evidence was taken and whose change was *measured*
+# inert by scripts/check_evaluator_inert.py. Filled once per report from the spec, and keyed by
+# task id because the four checks that need it receive their own sub-configuration rather than
+# the task's. Empty means no exemption, which is the safe default.
+_INERT_EVALUATORS: dict[str, Any] = {}
+
 DEFAULT_MANIFEST = ROOT / ".research/exploratory_2h_cohort_manifest_2026-08-15_v3.json"
 LEGACY_SPEC = ROOT / ".research/measurement_health_preflight_spec_2026-07-27_v1.json"
 # The manifest that legacy spec binds. Kept beside it because the default manifest moved when the
@@ -318,8 +324,17 @@ def _historical_bytes(revision: str, relative: str):
 
 
 def _contract_compatibility(
-    source_revision: Any, task_spec: Any,
+    source_revision: Any, task_spec: Any, evaluator_measured_inert: Any = None,
 ) -> dict[str, Any]:
+    """Compare a task's files against the revision its evidence was taken at.
+
+    `evaluator_measured_inert` carries the result of `scripts/check_evaluator_inert.py`: the
+    frozen artifact was run through both evaluators and every metric matched. Without it an
+    evaluator improvement refuses evidence it cannot have moved, which is what happened when
+    fourteen tasks had their score caps removed - a change that alters what a future candidate can
+    score and nothing a past one did. With it, the exemption rests on a measurement rather than on
+    the argument.
+    """
     paths = _task_runtime_paths(task_spec)
     changed = []
     missing = []
@@ -399,18 +414,23 @@ def _contract_compatibility(
     # the score carries - and none of it reads Task.md. Treating a documented table of input names
     # as an evaluator change refused evidence that was still exactly true.
     prompt_changed = [name for name in changed if name.endswith("Task.md")]
+    evaluator_changed = [
+        name for name in changed
+        if evaluator_measured_inert and name.endswith("verification/evaluator.py")]
     # And a card annotation is not an evaluator change either. `scientific_role` was added to
     # every task's metadata in one commit; keeping it in this comparison holds the calibration
     # evidence hostage to a line that no evaluator reads.
     declarative_changed = [name for name in changed if name in declarative_paths]
     changed = [name for name in changed
-               if name not in prompt_changed and name not in declarative_changed]
+               if name not in prompt_changed and name not in declarative_changed
+               and name not in evaluator_changed]
     passed = not changed and not missing and not extra_at_source and not added_since_source
     return {
         "source_revision": source_revision,
         "runtime_files_unchanged": passed,
         "changed_paths": changed,
         "prompt_changed_paths": prompt_changed,
+        "evaluator_changed_but_measured_inert": evaluator_changed,
         "missing_at_source_revision": missing,
         "extra_at_source_revision": extra_at_source,
         "added_since_source_revision": added_since_source,
@@ -436,7 +456,8 @@ def _baseline_reference_check(
     values, audit = _extract_bound_values(binding, pointers)
     if not values:
         return _check("missing", evidence=audit, reason="bound baseline/reference evidence unavailable")
-    compatibility = _contract_compatibility(audit.get("source_revision"), task_spec)
+    compatibility = _contract_compatibility(audit.get("source_revision"), task_spec,
+                                            _INERT_EVALUATORS.get(task_spec.task_id))
     if not compatibility["runtime_files_unchanged"]:
         return _check(
             "missing", evidence=audit, contract_compatibility=compatibility,
@@ -476,7 +497,8 @@ def _shortcut_check(config: dict[str, Any], task_spec: Any) -> dict[str, Any]:
     values, audit = _extract_bound_values(binding, pointers)
     if not values:
         return _check("missing", evidence=audit, reason="bound shortcut-resistance evidence unavailable")
-    compatibility = _contract_compatibility(audit.get("source_revision"), task_spec)
+    compatibility = _contract_compatibility(audit.get("source_revision"), task_spec,
+                                            _INERT_EVALUATORS.get(task_spec.task_id))
     if not compatibility["runtime_files_unchanged"]:
         return _check(
             "missing", evidence=audit, contract_compatibility=compatibility,
@@ -783,7 +805,8 @@ def _trajectory_resolution_check(
     values, audit = _extract_bound_values(binding, [pointer])
     if not values or not isinstance(values[0], list):
         return _check("missing", evidence=audit, reason="bound trajectory evidence unavailable")
-    compatibility = _contract_compatibility(audit.get("source_revision"), task_spec)
+    compatibility = _contract_compatibility(audit.get("source_revision"), task_spec,
+                                            _INERT_EVALUATORS.get(task_spec.task_id))
     if not compatibility["runtime_files_unchanged"]:
         return _check(
             "missing", evidence=audit, contract_compatibility=compatibility,
@@ -884,7 +907,8 @@ def _scientific_materiality_check(
         and row.get("baseline_pointer") != row.get("material_witness_pointer")
     )
     scope_matches = document.get("evidence_scope") == expected_scope
-    compatibility = _contract_compatibility(audit.get("source_revision"), task_spec)
+    compatibility = _contract_compatibility(audit.get("source_revision"), task_spec,
+                                            _INERT_EVALUATORS.get(task_spec.task_id))
     passed = bool(
         identity_matches
         and row.get("materiality_contract_passed") is True
@@ -1284,6 +1308,11 @@ def build_report(
     spec_path = spec_path.resolve()
     manifest = _load_object(manifest_path)
     evidence_spec, spec_inputs, issues = _resolve_preflight_spec(spec_path)
+    _INERT_EVALUATORS.clear()
+    for row in evidence_spec.get("tasks") or []:
+        measured = row.get("evaluator_change_measured_inert")
+        if measured:
+            _INERT_EVALUATORS[str(row.get("task"))] = measured
 
     expected_manifest_hash = evidence_spec.get("cohort_manifest_sha256")
     if _sha256(manifest_path) != expected_manifest_hash:
