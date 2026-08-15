@@ -1103,6 +1103,9 @@ def _package_mismatch_explanation(task_spec: Any, source_revision: Any) -> dict[
         package hash. Counting it as behavioural would make documenting a task's anchor invalidate
         the frozen evidence that anchor exists to explain.
         """
+        # `references/` holds the anchor write-ups, which no evaluator reads.
+        if name.startswith("references/"):
+            return True
         if name in before or not name.startswith("verification/") or not name.endswith(".py"):
             return False
         evaluator = after.get("verification/evaluator.py")
