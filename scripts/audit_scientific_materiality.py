@@ -35,7 +35,7 @@ from scripts.run_measurement_health_preflight import (  # noqa: E402
 
 SCHEMA_VERSION = 1
 DEFAULT_CONTRACT = (
-    ROOT / ".research/scientific_materiality_contracts_2026-07-27_v1.json"
+    ROOT / ".research/scientific_materiality_contracts_2026-08-15_v2.json"
 )
 ALLOWED_AXES = {"development", "heldout", "robustness", "independent_confirmation"}
 ALLOWED_KINDS = {"paired_scalar", "paired_records", "values_bound"}

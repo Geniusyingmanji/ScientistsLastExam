@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import importlib.util
 import json
 import tempfile
@@ -75,7 +76,20 @@ class MeasurementHealthPreflightTests(unittest.TestCase):
         check = diffraction["checks"]["baseline_reference_separation"]
         self.assertEqual(check["status"], "pass")
         self.assertTrue(check["contract_compatibility"]["runtime_files_unchanged"])
-        self.assertIn("2026-07-27_v2", check["evidence"]["path"])
+        # The property is that the calibration was measured against the evaluator that ships
+        # now - not that it carries a particular date. Pinning the filename made this test fail
+        # the moment the evidence was legitimately re-measured, which is backwards: a re-measured
+        # calibration is the thing this test wants, so it asserts the hash instead.
+        calibration = json.loads(
+            (ROOT / check["evidence"]["path"]).read_text(encoding="utf-8"))
+        recorded = calibration["task_source_sha256"]
+        evaluator = next(path for path in recorded if path.endswith("verification/evaluator.py"))
+        self.assertEqual(
+            recorded[evaluator],
+            hashlib.sha256((ROOT / evaluator).read_bytes()).hexdigest(),
+            "the bound calibration was measured against a different evaluator than the one "
+            "on disk, so it is not evidence about the current runtime",
+        )
         for task in (
             "Electrochemistry/ElectrolyteConductivityDesign",
             "RNAEngineering/RNAInverseDesign",
