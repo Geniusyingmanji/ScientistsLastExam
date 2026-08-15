@@ -385,12 +385,17 @@ def _reference_archive(instance, kind):
 
 
 def _normalized_hypervolume(candidate, baseline, reference):
+    """Zero at the baseline, one at the reference witness, unbounded above it.
+
+    The upper clip made the witness the best achievable score, so a Pareto archive dominating more
+    volume than the witness read as exactly as good as the witness. Every recorded run scored at or
+    below one, so their scores are unchanged. The floor stays: less volume than the baseline is a
+    worse archive, not a negative achievement.
+    """
     denominator = float(reference) - float(baseline)
     if denominator <= 1e-12:
         raise RuntimeError("invalid MOSFET hypervolume normalization")
-    return float(np.clip(
-        (float(candidate) - float(baseline)) / denominator, 0.0, 1.0
-    ))
+    return float(max((float(candidate) - float(baseline)) / denominator, 0.0))
 
 
 def _summarize_records(records):

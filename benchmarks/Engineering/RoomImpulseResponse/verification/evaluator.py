@@ -620,10 +620,17 @@ def _acoustic_metrics(design, problem, shift=None, image_order=None):
 
 
 def _normalized_score(baseline, reference, value):
+    """Zero at the baseline, one at the reference witness, unbounded above it.
+
+    The upper clip made the witness the best achievable score, so a better result read as exactly
+    as good as the witness and the task could report nothing about a searcher that had beaten it.
+    Every recorded run scored at or below one, so their scores are unchanged. The floor stays,
+    because below the baseline is a worse result rather than a negative achievement.
+    """
     denominator = float(reference) - float(baseline)
     if denominator <= 1.0e-8:
         raise ValueError("reference witness does not improve the weak baseline")
-    return float(np.clip((float(value) - float(baseline)) / denominator, 0.0, 1.0))
+    return float(max((float(value) - float(baseline)) / denominator, 0.0))
 
 
 def _make_instance(spec):

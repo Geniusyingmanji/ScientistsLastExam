@@ -4,7 +4,7 @@ scientific_role: optimization
 difficulty: flagship
 tier: T2
 oracle_type: physical_sim
-score_mode: clipped
+score_mode: uncapped
 gpu_required: false
 eval_time_seconds: 30
 science_metric: development exact cost-versus-duty Pareto hypervolume with sealed proxy agreement, held-out transfer and fouling/manufacturing/blockage robustness

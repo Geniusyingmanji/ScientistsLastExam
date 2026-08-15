@@ -4,7 +4,7 @@ scientific_role: optimization
 difficulty: hard
 tier: T2
 oracle_type: equilibrium_stage_process_sim
-score_mode: clipped
+score_mode: uncapped
 gpu_required: false
 eval_time_seconds: 30
 science_metric: nominal annualized reduced-order column cost subject to equilibrium-stage purity and recovery constraints, with separate held-out transfer and sealed off-design feasibility

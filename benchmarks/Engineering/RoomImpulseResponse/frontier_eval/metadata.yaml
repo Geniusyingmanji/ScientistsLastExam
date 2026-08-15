@@ -3,7 +3,7 @@ task: RoomImpulseResponse
 scientific_role: optimization
 difficulty: hard
 oracle_type: physical_sim
-score_mode: clipped
+score_mode: uncapped
 gpu_required: false
 eval_time_seconds: 30
 science_metric: room_clarity_reverberation_and_uniformity_utility

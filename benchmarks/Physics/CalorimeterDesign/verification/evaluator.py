@@ -924,14 +924,17 @@ def _validate_archive(returned, problem):
 
 
 def _normalized_score(baseline, reference, observed):
+    """Zero at the baseline, one at the reference witness, unbounded above it.
+
+    The upper clip made the witness the best achievable score, so a better result read as exactly
+    as good as the witness and the task could report nothing about a searcher that had beaten it.
+    Every recorded run scored at or below one, so their scores are unchanged. The floor stays,
+    because below the baseline is a worse result rather than a negative achievement.
+    """
     denominator = float(reference) - float(baseline)
     if not math.isfinite(denominator) or denominator <= 1.0e-10:
         raise RuntimeError("invalid calibration anchors")
-    return float(np.clip(
-        (float(observed) - float(baseline)) / denominator,
-        0.0,
-        1.0,
-    ))
+    return float(max((float(observed) - float(baseline)) / denominator, 0.0))
 
 
 def _shifted_option_metrics(passive, active, problem, option, shift):

@@ -4,7 +4,7 @@ scientific_role: optimization
 difficulty: hard
 tier: T2
 oracle_type: analytical_reduced_order_physics
-score_mode: clipped
+score_mode: uncapped
 gpu_required: false
 eval_time_seconds: 60
 science_metric: development nominal multi-energy resolution-linearity-containment utility across three public cost caps, with separate held-out detector transfer and worst fabrication/calibration-shift robustness

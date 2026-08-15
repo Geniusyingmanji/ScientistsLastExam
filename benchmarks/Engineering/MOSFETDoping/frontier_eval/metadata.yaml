@@ -4,7 +4,7 @@ scientific_role: optimization
 difficulty: hard
 tier: T2
 oracle_type: physical_sim
-score_mode: clipped
+score_mode: uncapped
 gpu_required: false
 eval_time_seconds: 25
 science_metric: development nominal compact-model drive-current-versus-leakage Pareto hypervolume with sealed held-out transfer and worst-shift robustness
