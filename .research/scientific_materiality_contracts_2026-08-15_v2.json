@@ -1,6 +1,5 @@
 {
   "schema_version": 1,
-  "purpose": "Point DiffractionGratingDesign at its re-measured calibration. Its evaluator change was measured *not* inert - the frozen artifact's robustness_score moved once the upper clip came off - so its evidence could not be carried forward and was re-run against the current runtime instead. The other six carry forward under measured inertness.",
   "cohort_manifest": {
     "path": ".research/exploratory_2h_cohort_manifest_2026-07-27_v1.json",
     "sha256": "2d4cb9dfb0ba566ac924ffc8b537516f358999e734bfd01af831ad22770b0d98"
@@ -741,5 +740,7 @@
   "supersedes": {
     "path": ".research/scientific_materiality_contracts_2026-07-27_v1.json",
     "sha256": "b2025f1c42fa115d440ac6819fcced466d81066e4145dd29d8345685664e934d"
-  }
+  },
+  "rebinding_note": "Point DiffractionGratingDesign at its re-measured calibration. Its evaluator change was measured *not* inert - the frozen artifact's robustness_score moved once the upper clip came off - so its evidence could not be carried forward and was re-run against the current runtime instead. The other six carry forward under measured inertness.",
+  "purpose": "domain_grounded_scientific_materiality_contracts_for_the_frozen_seven_task_exploratory_cohort"
 }
