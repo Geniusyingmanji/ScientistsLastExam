@@ -98,6 +98,12 @@ def main(argv: list[str] | None = None) -> int:
                          "only when the evidence was re-run: a check bound to the runtime source "
                          "hash cannot be re-signed after the runtime changes, it has to be "
                          "remeasured, and this is how the result gets bound.")
+    ap.add_argument("--inertness", type=Path, default=None, metavar="REPORT",
+                    help="a check_evaluator_inert.py report. A task whose evaluator changed is "
+                         "normally refused; if that report measured the change inert - the frozen "
+                         "artifact scores identically under both evaluators - the task is rebound "
+                         "and the measurement is recorded beside it. Inertness is measured, not "
+                         "asserted, and it is a claim about that artifact on that task.")
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args(argv)
 
@@ -105,6 +111,12 @@ def main(argv: list[str] | None = None) -> int:
     if issues:
         print("cannot read the current spec:", "; ".join(issues), file=sys.stderr)
         return 1
+
+    inert = {}
+    if args.inertness and args.inertness.is_file():
+        report = json.loads(args.inertness.read_text(encoding="utf-8"))
+        inert = {row["task"]: row for row in report.get("rows", [])
+                 if row.get("status") == "inert"}
 
     raw_spec = json.loads(args.spec.read_text(encoding="utf-8"))
     base_binding = raw_spec.get("base_spec") or {}
@@ -131,15 +143,21 @@ def main(argv: list[str] | None = None) -> int:
             refused.append((task_id, "unclassifiable: %s" % verdict.get("reason")))
             continue
         if not verdict.get("declarative_change_only"):
-            refused.append((task_id, "behavioural change in %s"
-                            % ", ".join(verdict["behavioural_files_changed"][:3])))
-            continue
+            measured = inert.get(task_id)
+            if measured is None:
+                refused.append((task_id, "behavioural change in %s"
+                                % ", ".join(verdict["behavioural_files_changed"][:3])))
+                continue
         updates.append({
             "task": task_id,
             # Recorded before the rebinding so the ledger says plainly that runs made against the
             # old prompt are not comparable with runs made against the new one, even though the
             # evaluator evidence carried forward is sound.
             "prompt_changed_since_freeze": bool(verdict.get("prompt_change_invalidates_runs")),
+            "evaluator_change_measured_inert": (
+                None if verdict.get("declarative_change_only")
+                else {"metrics_compared": inert[task_id]["metrics_compared"],
+                      "files_changed": verdict["behavioural_files_changed"]}),
             "task_package_sha256": current_package,
             "runtime_contract_sha256": current_contract,
             "superseded_task_package_sha256": frozen_package,
@@ -153,8 +171,11 @@ def main(argv: list[str] | None = None) -> int:
         print("rebind  %-44s %s -> %s%s" % (
             update["task"], (update["superseded_task_package_sha256"] or "none")[:12],
             update["task_package_sha256"][:12],
-            "  (prompt changed: recorded runs are not comparable)"
-            if update["prompt_changed_since_freeze"] else ""))
+            ("  (evaluator changed; %d metrics measured identical)"
+             % update["evaluator_change_measured_inert"]["metrics_compared"])
+            if update["evaluator_change_measured_inert"]
+            else ("  (prompt changed: recorded runs are not comparable)"
+                  if update["prompt_changed_since_freeze"] else "")))
     print()
     print("%d task(s) rebound, %d refused" % (len(updates), len(refused)))
     if refused:

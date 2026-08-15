@@ -24,6 +24,7 @@ from __future__ import annotations
 import argparse
 import importlib.util
 import json
+import os
 import subprocess
 import sys
 import tempfile
@@ -108,13 +109,28 @@ def main(argv: list[str] | None = None) -> int:
             root = Path(temporary)
             candidate = root / "candidate.py"
             candidate.write_text(source, encoding="utf-8")
-            # Frozen artifacts import the helper modules that ship beside the task, so the task
-            # directory has to be importable or the comparison fails on the import rather than on
+            # Evaluators import helper modules that ship beside them - `verification/device.py`,
+            # `verification/closure_model.py` - so both the task directory and its verification
+            # directory have to be importable, or the comparison fails on an import rather than on
             # the science. Removed again below so one task cannot shadow the next.
-            sys.path.insert(0, str(spec.task_dir))
-            old_path = root / "old_evaluator.py"
+            added = [str(spec.task_dir / "verification"), str(spec.task_dir)]
+            for entry in added:
+                sys.path.insert(0, entry)
+            # Some evaluators open their frozen data relative to the working directory, so the
+            # comparison has to run from the task directory or it fails on a missing file rather
+            # than on the science.
+            previous_directory = os.getcwd()
+            os.chdir(spec.task_dir / "verification")
+            # Written beside the current evaluator, not in the temp directory: several evaluators
+            # open their frozen data relative to `__file__`, and a copy living elsewhere looks for
+            # that data elsewhere too. Removed in the finally block.
+            old_path = spec.task_dir / "verification" / ("_frozen_evaluator_%d.py" % os.getpid())
             found = historical_evaluator(args.revision, task_id.split("/")[-1], old_path)
             if found is None:
+                os.chdir(previous_directory)
+                for entry in added:
+                    if entry in sys.path:
+                        sys.path.remove(entry)
                 rows.append({"task": task_id, "status": "no evaluator at that revision"})
                 continue
             try:
@@ -132,8 +148,11 @@ def main(argv: list[str] | None = None) -> int:
                 rows.append({"task": task_id, "status": "could not run: %s" % str(error)[:120]})
                 continue
             finally:
-                if sys.path and sys.path[0] == str(spec.task_dir):
-                    sys.path.pop(0)
+                old_path.unlink(missing_ok=True)
+                os.chdir(previous_directory)
+                for entry in added:
+                    if entry in sys.path:
+                        sys.path.remove(entry)
 
         moved = sorted(k for k in set(before) | set(after) if before.get(k) != after.get(k))
         rows.append({
