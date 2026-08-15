@@ -3,7 +3,7 @@ task: LowThrustTransfer
 scientific_role: optimization
 difficulty: flagship
 oracle_type: physical_sim
-score_mode: clipped
+score_mode: uncapped
 gpu_required: false
 eval_time_seconds: 30
 science_metric: nominal_transfer_utility_with_separate_heldout_phase_and_execution_robustness

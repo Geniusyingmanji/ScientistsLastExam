@@ -156,6 +156,24 @@ FROZEN_BASELINE_UTILITIES = {
     "dev_combined": 4.555897853981541e-55,
 }
 
+# Utility of the reference witness on each scenario: the finite-thrust profile that made the
+# target reachable, repropagated through the same dynamics and scored the same way. Frozen here
+# rather than recomputed per run for the same reason the baselines are - the value is a property
+# of the scenario, and recomputing it would spend six propagations on every evaluation.
+#
+# Reproduce with:
+#     python scripts/measure_reference.py --task Engineering/LowThrustTransfer \
+#         --reference solution.py --entry design_guidance
+# and the witness numbers with the snippet in references/known_best.md.
+FROZEN_REFERENCE_UTILITIES = {
+    "dev_raise": 0.7355590266,
+    "heldout_lower": 0.7345660848,
+    "dev_eccentric": 0.8103903732,
+    "dev_plane": 0.7473029816,
+    "heldout_combined": 0.6969522546,
+    "dev_combined": 0.6457521012,
+}
+
 
 SHIFT_SPECS = (
     {
@@ -468,7 +486,17 @@ def _terminal_record(propagation, scenario):
     fuel_factor = math.exp(-delta_v / EFFICIENCY_SCALE_M_S)
     utility = terminal_accuracy * fuel_factor
     baseline = float(scenario["baseline_utility"])
-    score = float(np.clip((utility - baseline) / max(1.0e-12, 1.0 - baseline), 0.0, 1.0))
+    # Normalised against the reference witness, not against a utility of one. A utility of one
+    # means perfect terminal accuracy reached with zero propellant, which no finite-thrust
+    # transfer can approach - so the old denominator made the score a fraction of an impossible
+    # ideal while the task card described it as a fraction of the way to a witness. The witness
+    # itself scored 0.65 to 0.81 under that scale and the best recorded searcher 0.04, which read
+    # as far weaker than it was: 0.04 of the impossible ideal is 0.055 of the witness.
+    #
+    # Uncapped above, because the witnesses are feasible transfers generated before the targets
+    # were frozen and are not claimed optimal.
+    reference = float(scenario["reference_utility"])
+    score = float(max((utility - baseline) / max(1.0e-12, reference - baseline), 0.0))
     return {
         "score": score,
         "terminal_accuracy": float(terminal_accuracy),
@@ -522,6 +550,7 @@ def _instances():
             max(50000.0, 0.006 * target[0]), 0.008, 0.008, 0.004, 0.004,
         ))
         scenario["baseline_utility"] = float(FROZEN_BASELINE_UTILITIES[name])
+        scenario["reference_utility"] = float(FROZEN_REFERENCE_UTILITIES[name])
         instances.append(scenario)
     return tuple(instances)
 
