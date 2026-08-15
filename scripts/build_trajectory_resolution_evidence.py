@@ -31,7 +31,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
+from sle.algorithms.common import task_contract_sha256, task_package_sha256  # noqa: E402
 from sle.provenance import finalize_report_trust, source_provenance  # noqa: E402
+from sle.registry import find_task  # noqa: E402
 
 
 def _recorded(path: Path) -> str:
@@ -66,6 +68,24 @@ def main(argv: list[str] | None = None) -> int:
     if not manifest_path.is_file():
         raise SystemExit("%s has no run_manifest.json, so the run did not finish" % run)
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    task_id = manifest.get("task_id")
+
+    # The whole point of re-measuring is that the evidence describes the *current* runtime, so a
+    # run made against a different task package is not the repair it looks like. The manifest
+    # records what it ran against; this refuses rather than packaging a stale run as fresh.
+    spec_obj = find_task(task_id, include_uncertified=True) if task_id else None
+    if spec_obj is None:
+        raise SystemExit("run manifest names no task in the registry: %r" % (task_id,))
+    current = {"task_package_sha256": task_package_sha256(spec_obj),
+               "task_contract_sha256": task_contract_sha256(spec_obj)}
+    stale = {key: (manifest.get(key), value) for key, value in current.items()
+             if manifest.get(key) != value}
+    if stale:
+        raise SystemExit(
+            "the run was made against a different task than the one on disk, so it is not "
+            "evidence about the current runtime:\n"
+            + "\n".join("  %s: run %s, current %s" % (key, (was or "none")[:12], now[:12])
+                         for key, (was, now) in sorted(stale.items())))
     events = _events(run)
 
     scores = sorted({event["score"] for event in events
@@ -78,11 +98,12 @@ def main(argv: list[str] | None = None) -> int:
         "created_at": _datetime.datetime.now(_datetime.timezone.utc).isoformat(),
         "evidence_scope": "MODEL_PERFORMANCE",
         "runs": [{
-            "task": manifest.get("task"),
+            "task": task_id,
             "seed": manifest.get("seed"),
             "algorithm": manifest.get("algorithm"),
             "feedback_mode": manifest.get("feedback_mode"),
-            "budget": manifest.get("budget"),
+            "task_package_sha256": current["task_package_sha256"],
+            "task_contract_sha256": current["task_contract_sha256"],
             "workdir": _recorded(run),
             "trajectory_snapshot": {"events": events},
         }],
@@ -100,7 +121,7 @@ def main(argv: list[str] | None = None) -> int:
     args.output.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
 
     print(json.dumps({
-        "task": manifest.get("task"),
+        "task": task_id,
         "events": len(events),
         "distinct_valid_scores": len(scores),
         "minimum_nonzero_score_gap": min(gaps) if gaps else None,
