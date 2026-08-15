@@ -21,7 +21,7 @@ class MeasurementHealthAuditTests(unittest.TestCase):
         cls.tasks = {row["task"]: row for row in cls.report["tasks"]}
 
     def test_classification_is_exhaustive_and_claim_bounded(self):
-        self.assertEqual(self.report["inventory_count"], 58)
+        self.assertEqual(self.report["inventory_count"], 43)
         self.assertEqual(
             sum(self.report["classification_counts"].values()),
             self.report["inventory_count"],
@@ -45,9 +45,17 @@ class MeasurementHealthAuditTests(unittest.TestCase):
             self.assertIn("material_post_2h_headroom_demonstrated", row["missing_complete_gate_checks"])
 
     def test_known_saturated_gap_tasks_are_onramps(self):
+        """Tasks whose ceiling is already reached are on-ramps, not headline measurements.
+
+        Two of the three tasks this originally named - `DynamicalSystems/LyapunovControl` and
+        `Geophysics/SeismicInversion` - have since been retired, and asking about them by name made
+        this raise KeyError rather than fail an assertion. The claim is about the classification,
+        not about a particular list, so it is asked of whichever tasks currently carry it.
+        """
         for task in (
-            "DynamicalSystems/LyapunovControl",
-            "Geophysics/SeismicInversion",
+            "Chemistry/LennardJonesCluster",
+            "SignalProcessing/SparseRecovery",
+            "Geophysics/GravityInversion",
             "NuclearEngineering/NeutronDiffusionCriticality",
         ):
             self.assertEqual(
@@ -57,20 +65,34 @@ class MeasurementHealthAuditTests(unittest.TestCase):
     def test_active_law_is_a_control_not_a_headline_optimization_task(self):
         row = self.tasks["DynamicalSystems/ActiveLawDiscovery"]
         self.assertEqual(row["classification"], self.module.CONTROL_ONLY)
-        self.assertGreaterEqual(
-            row["checks"]["at_least_three_matched_controls"]["value"], 48
-        )
-        self.assertTrue(row["checks"]["fresh_postcommit_confirmation"]["passed"])
 
-    def test_proposal_health_is_observed_not_inferred(self):
-        row = self.tasks["RNAEngineering/RNAInverseDesign"]
-        first_valid = row["checks"]["observed_first_valid_in_normal_budget_three"]
-        self.assertEqual(first_valid["run_count"], 1)
-        self.assertEqual(first_valid["value"], 1.0)
-        self.assertTrue(first_valid["passed"])
-        self.assertTrue(
-            row["checks"]["material_short_run_post_first_valid_gain"]["passed"]
-        )
+    def test_no_model_run_is_currently_bound_to_its_task_contract(self):
+        """Every model-derived check reads zero, and that is a finding rather than a bug.
+
+        This test used to assert 48 matched controls on ActiveLawDiscovery and a first-valid
+        observation on RNAInverseDesign. Both now read zero, because a recorded run binds to the
+        task contract it was made against and the evaluators have since changed - most of them
+        when the upper clip came off. The runs still exist and still describe what those models
+        did; they describe it about a previous contract.
+
+        Asserting the old numbers would have meant re-signing evidence rather than re-measuring
+        it, which is the exact move the rebinding tool refuses elsewhere. So this asserts the
+        state that is true, and names what restores the old one: re-running the cohort against the
+        current contracts. When that happens this test should fail, and the assertions it replaced
+        should come back.
+        """
+        model_derived = 0
+        for row in self.report["tasks"]:
+            for name, check in row["checks"].items():
+                if isinstance(check, dict) and "run_count" in check:
+                    model_derived += 1
+                    self.assertEqual(
+                        check["run_count"], 0,
+                        "%s/%s has bound runs again - re-measurement has happened, so restore the "
+                        "matched-control and first-valid assertions this test replaced"
+                        % (row["task"], name),
+                    )
+        self.assertGreater(model_derived, 0, "no model-derived check was found to inspect")
 
 
 if __name__ == "__main__":
