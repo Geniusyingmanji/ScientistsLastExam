@@ -38,6 +38,14 @@ _spec.loader.exec_module(_module)
 from sle.algorithms.common import task_contract_sha256, task_package_sha256  # noqa: E402
 from sle.registry import find_task  # noqa: E402
 
+# The same hash `batch_evolve` checks the manifest against, imported rather than reimplemented so
+# the rebinding cannot drift from the check it is meant to satisfy.
+_launcher = importlib.util.spec_from_file_location(
+    "batch_evolve_for_rebinding", ROOT / "scripts" / "batch_evolve.py")
+_launcher_module = importlib.util.module_from_spec(_launcher)
+_launcher.loader.exec_module(_launcher_module)
+_maturity_contract_sha256 = _launcher_module._maturity_contract_sha256
+
 
 def _renamed_runtime_paths(shared: dict) -> dict:
     """Carry recorded runtime paths across the package rename.
@@ -163,7 +171,17 @@ def main(argv: list[str] | None = None) -> int:
         current_package = task_package_sha256(spec_obj)
         current_contract = task_contract_sha256(spec_obj)
         frozen_package = row.get("task_package_sha256")
-        if current_package == frozen_package:
+        # Not `package matches, therefore done`: the manifest carries a second, wider hash that a
+        # package-only comparison cannot see, and a task can be correctly rebound on one while the
+        # other stays stale. That is exactly what happened - the preflight passed while the cohort
+        # launcher refused to start. A task is up to date when every hash bound to it is.
+        manifest_row = next((r for r in manifest.get("tasks") or []
+                             if r.get("task") == task_id), {})
+        stale_maturity = (manifest_row.get("maturity_contract_sha256")
+                          not in (None, _maturity_contract_sha256(spec_obj)))
+        stale_runtime = (manifest_row.get("runtime_contract_sha256")
+                         not in (None, current_contract))
+        if current_package == frozen_package and not stale_maturity and not stale_runtime:
             continue
 
         # The same classifier the preflight reports with. Rebinding is only defensible when the
@@ -200,6 +218,7 @@ def main(argv: list[str] | None = None) -> int:
             "evidence_remeasured_on_current_runtime": sorted(task_rebinds.get(task_id) or {}) or None,
             "task_package_sha256": current_package,
             "runtime_contract_sha256": current_contract,
+            "maturity_contract_sha256": _maturity_contract_sha256(spec_obj),
             "superseded_task_package_sha256": frozen_package,
             "justification": "declarative-only difference from %s, verified by "
                              "_package_mismatch_explanation" % (revision or "")[:12],
@@ -234,7 +253,14 @@ def main(argv: list[str] | None = None) -> int:
     # The runtime contract lives in the cohort manifest, not the spec, so rebinding one without
     # the other leaves the preflight failing on the half that was not touched. A first attempt
     # updated only the spec and left every task still failing `frozen_runtime_contract`.
+    #
+    # The manifest carries a second, wider hash beside it: the maturity contract, which covers the
+    # prompt, the seed program, the evaluator, the eval harness and the card. Leaving that one
+    # behind moved the failure rather than fixing it - the preflight passed while `batch_evolve`
+    # refused to launch the cohort at all, on "cohort manifest maturity contract differs". Both
+    # hashes describe the same task and are rebound on the same justification.
     contracts = {u["task"]: u["runtime_contract_sha256"] for u in updates}
+    maturity = {u["task"]: u["maturity_contract_sha256"] for u in updates}
     new_manifest = dict(manifest)
     new_manifest["supersedes"] = {
         "path": manifest_path.relative_to(ROOT).as_posix(),
@@ -242,7 +268,9 @@ def main(argv: list[str] | None = None) -> int:
     }
     new_manifest["tasks"] = [
         dict(row, runtime_contract_sha256=contracts[row["task"]],
-             superseded_runtime_contract_sha256=row.get("runtime_contract_sha256"))
+             superseded_runtime_contract_sha256=row.get("runtime_contract_sha256"),
+             maturity_contract_sha256=maturity[row["task"]],
+             superseded_maturity_contract_sha256=row.get("maturity_contract_sha256"))
         if row.get("task") in contracts else row
         for row in manifest.get("tasks") or []
     ]

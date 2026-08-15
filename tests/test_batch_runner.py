@@ -16,6 +16,16 @@ MODULE = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(MODULE)
 
 
+def _current_cohort_manifest() -> Path:
+    """The cohort manifest the preflight is bound to, whichever rebinding wrote it last."""
+    spec = importlib.util.spec_from_file_location(
+        "preflight_for_cohort_manifest",
+        Path(__file__).resolve().parents[1] / "scripts" / "run_measurement_health_preflight.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module.DEFAULT_MANIFEST
+
+
 class BatchAggregationTests(unittest.TestCase):
     class Config:
         wire = "chat"; base_url = "https://example.invalid/v1"; model = "fixture"
@@ -387,10 +397,7 @@ class BatchAggregationTests(unittest.TestCase):
             MODULE, "_execution_preregistration_is_committed", return_value=True
         ):
             path = Path(tmp) / "execution_prereg.json"
-            cohort = (
-                MODULE.ROOT
-                / ".research/exploratory_2h_cohort_manifest_2026-07-27_v1.json"
-            )
+            cohort = _current_cohort_manifest()
             document = {
                 "schema_version": 1,
                 "preregistration_id": "test_execution_contract",
@@ -542,10 +549,15 @@ class BatchAggregationTests(unittest.TestCase):
                 )
 
     def test_frozen_exploratory_manifest_matches_current_contracts(self):
-        path = (
-            Path(__file__).resolve().parents[1]
-            / ".research/exploratory_2h_cohort_manifest_2026-07-27_v1.json"
-        )
+        """The *current* manifest, not the one frozen first.
+
+        Naming the original by filename meant this test kept checking a manifest that rebinding
+        had superseded, so it went on failing after the rebinding that was supposed to fix it -
+        and it failed on `maturity contract differs`, which was true of the old file and not of
+        the live one. Reading the preflight's manifest makes the test follow a rebinding, which is
+        the behaviour it is asking about.
+        """
+        path = _current_cohort_manifest()
         document = json.loads(path.read_text(encoding="utf-8"))
         specs = [
             MODULE.find_task(row["task"], include_uncertified=True)
