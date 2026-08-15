@@ -109,7 +109,12 @@ def evaluate(optimize_enrichment):
     k = _compute_keff(enrichments)
     k_baseline = _K_UNIFORM
     k_sota = _K_REFERENCE
-    score = max(0.0, min(1.0, (k - k_baseline) / (k_sota - k_baseline)))
+    # Uncapped above. The reference is a reproducible symmetric multistart witness, not a bound
+    # on achievable k-effective, so a loading that beats it has done something the task should be
+    # able to report. Every recorded run scored at or below one, so removing the cap leaves them
+    # unchanged. The floor stays: less reactive than a uniform loading is a worse design, not a
+    # negative achievement.
+    score = max(0.0, (k - k_baseline) / (k_sota - k_baseline))
     return {"combined_score": float(score), "valid": 1.0, "feasibility_rate": 1.0,
             "raw_score": float(k), "k_eff": round(k, 6),
             "k_baseline": round(k_baseline, 6), "k_reference": round(k_sota, 6),
