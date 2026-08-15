@@ -253,10 +253,11 @@ def _normalized_score(loss, split, objective):
     denominator = baseline - reference
     if denominator <= 0.0:
         raise ValueError("invalid normalization anchors")
-    return float(np.clip(
-        (baseline - float(loss)) / denominator,
-        0.0, 1.0,
-    ))
+    # Uncapped above. The reference is a calibrated witness, not a bound, so a closure that fits
+    # better than the witness has done something the task should be able to report. Every recorded
+    # run scored at or below one, so removing the cap leaves them unchanged. The floor stays: a
+    # loss worse than the baseline is a worse calibration, not a negative achievement.
+    return float(max((baseline - float(loss)) / denominator, 0.0))
 
 
 def _result_failure(kind):

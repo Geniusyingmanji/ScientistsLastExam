@@ -4,7 +4,7 @@ scientific_role: optimization
 difficulty: hard
 tier: T2
 oracle_type: physical_sim
-score_mode: clipped
+score_mode: uncapped
 gpu_required: false
 eval_time_seconds: 20
 science_metric: development real-DNS mean-velocity-plus-Reynolds-shear closure fit with sealed higher-Re transfer and wall-coordinate robustness
