@@ -870,6 +870,30 @@ task in a new domain. Nine per-task analysis tests also fail and are explicitly 
 unattributed — they read `runs/` paths stored as absolute paths, so they error in a clone or
 worktree. See [runtime governance](.research/runtime_change_governance_2026-08-09.md).
 
+**No recorded model run is bound to a current task contract, so every model-derived measurement
+health check reads zero.** A run binds to the contract it was made against, and the evaluators have
+since changed — most of them when the upper clip came off. The runs still exist and still describe
+what those models did; they describe it about a previous contract. Concretely: the matched-control
+count on the `ActiveLawDiscovery` control and the observed first-valid step on `RNAInverseDesign`
+both read 0 where they previously read 48 and 1. Nothing about those measurements was withdrawn —
+they were unbound, which is a different and recoverable thing, and the repair is to re-run the
+cohort against the current contracts rather than to re-sign the old numbers. Read the model tables
+below as measured against pre-uncapping evaluators. For the 17 uncapped optimization tasks a score
+can only have moved *up*, and only for candidates that were sitting against the ceiling.
+
+**One oracle was not a function, and the headline score hid it.** The 43-task determinism sweep
+returned 42 of 43. `RNAEnsembleDesign` failed because ViennaRNA's designers, handed `None` as a
+start sequence, draw one from a generator inside the C library that the task's own
+`random.Random(seed)` does not reach. The visible symptom was anchor defects wandering by 1e-4.
+The damaging one was that a target sitting near the edge of the acceptance band flipped in and out
+of the instance set between runs — so *which instances existed* changed, and two scores were not
+comparable at all. `combined_score` was 0.0 both times, so the headline number showed nothing.
+Seeding is now per call and derived from the call's own inputs, because the candidate is arbitrary
+code that may draw from the same generator first; seeding once at import would shift every draw
+after it. Three processes now agree to ten decimal places, and
+`tests/test_oracle_rng_is_pinned.py` asks the question of the whole inventory rather than of this
+one task.
+
 **The new tasks are not registered as maturity evidence.** They pass `scripts/audit_tasks.py`
 with zero task-card issues and appear in the live inventory, but their measurements are not yet
 trusted artifacts under `experiments/`, so the maturity ledger does not count them as internally
