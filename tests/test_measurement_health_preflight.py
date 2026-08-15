@@ -160,7 +160,9 @@ class MeasurementHealthPreflightTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary:
             path = Path(temporary) / "spec.json"
             path.write_text(json.dumps(document), encoding="utf-8")
-            report = MODULE.build_report(spec_path=path, evaluator=stable_evaluator)
+            report = MODULE.build_report(spec_path=path,
+                                         manifest_path=MODULE.LEGACY_MANIFEST,
+                                         evaluator=stable_evaluator)
         first = report["tasks"][0]
         self.assertEqual(first["checks"]["fixed_artifact_binding"]["status"], "fail")
         self.assertEqual(first["checks"]["fixed_artifact_noise"]["status"], "missing")
