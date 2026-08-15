@@ -429,6 +429,19 @@ thing in the score. And `QuartzCrystalMicrobalanceLab` required four exact calib
 that appeared nowhere in its prompt — the submission side of the same undocumented-contract defect
 the input-key audit had already found, and now audited too.
 
+**Three explanations for that abstention have been ruled out, and the remaining one is the
+models.** Prompt wording does not predict it: the density of abstain/refuse language correlates
+with the abstention rate at -0.267, with the sign the wrong way round. Undocumented submission
+fields do not explain it: the fields are documented. And the size of the claim contract does not
+explain it either — Spearman +0.133 over nine tasks, with `ProspectiveMetaAnalysis` (17 claim
+fields, 100% abstention) and `CatalystDeactivationLab` (17 fields, 28%) showing opposite behaviour
+at identical contract size.
+
+Meanwhile the five references score 0.39 to 0.91 on the same tasks, so the science is doable. What
+is left is a property of the searchers: given a hard inference with a refusal available, these
+models refuse rather than attempt, and the scoring correctly pays nothing for it. That is not a
+defect in the tasks — it is the kind of thing a discovery benchmark exists to measure.
+
 **The six tasks scoring zero are refusals, not difficulty.** Every valid proposal on them
 scores exactly 0.0000 rather than a spread of small values, which is the shape of a gate rather
 than of a hard landscape. Reading the evaluator's own components explains it: on
