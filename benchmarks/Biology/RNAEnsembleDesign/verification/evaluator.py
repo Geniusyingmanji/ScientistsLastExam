@@ -38,6 +38,7 @@ is worth about 0.03; in logs it is worth about 0.2.
 
 from __future__ import annotations
 
+import hashlib
 import random
 
 # Difficulty selects the target set. Level 1 is the shipped configuration. Targets are generated
@@ -124,6 +125,26 @@ def _target(rng, branches, stem, loop, bulge_rate):
     return left + "".join(inner) + right
 
 
+def _seed_rna(RNA, *parts) -> None:
+    """Pin ViennaRNA's own RNG before a call that draws from it.
+
+    `inverse_fold` and `inverse_pf_fold` start from a *random* sequence when handed `None`, drawn
+    from a process-global generator inside ViennaRNA that Python's `random.Random` does not reach.
+    Two consequences, and the second is the one that matters. Anchor defects wander by about 1e-4
+    between runs, which is merely noise; but a target whose anchor sits near the edge of the
+    acceptance band flips in and out of the set, so *which instances exist* changes between runs
+    and two scores stop being comparable at all. That is how this task came back non-deterministic
+    on the 43-task baseline sweep while reproducing perfectly when re-run by hand: the fifth
+    development target was a different target.
+
+    Seeding per call, from the call's own inputs, rather than once at import: the candidate is
+    arbitrary code and may draw from this same generator before the evaluator does, which would
+    otherwise shift every draw after it.
+    """
+    digest = hashlib.sha256("|".join(str(part) for part in parts).encode("utf-8")).digest()
+    RNA.init_rand(int.from_bytes(digest[:4], "big"))
+
+
 def _designable(RNA, structure, restarts):
     """Does any sequence fold into this structure as its MFE?
 
@@ -133,7 +154,8 @@ def _designable(RNA, structure, restarts):
     where ViennaRNA's own designer reached the target on none of them; filtering for designability
     replaces that guesswork with a property.
     """
-    for _ in range(restarts):
+    for restart in range(restarts):
+        _seed_rna(RNA, "designable", structure, restart)
         sequence, distance = RNA.inverse_fold(None, structure)
         if distance == 0 and RNA.fold(sequence)[0] == structure:
             return True
@@ -162,8 +184,8 @@ def _generate(profile):
         if not _designable(RNA, structure, profile["designability_restarts"]):
             continue
         best = min(
-            ensemble_defect(RNA, _pf_design(RNA, structure), structure)
-            for _ in range(ANCHOR_RESTARTS)
+            ensemble_defect(RNA, _pf_design(RNA, structure, restart), structure)
+            for restart in range(ANCHOR_RESTARTS)
         )
         if not (low <= best <= high):
             continue
@@ -229,7 +251,7 @@ def ensemble_defect(RNA, sequence: str, structure: str) -> float:
     return float(fold_compound.ensemble_defect(structure))
 
 
-def _pf_design(RNA, structure: str) -> str:
+def _pf_design(RNA, structure: str, restart: int = 0) -> str:
     """ViennaRNA's partition-function designer, returning the sequence it settles on.
 
     The structure must be balanced before this is called. ViennaRNA segfaults on an unbalanced
@@ -238,6 +260,7 @@ def _pf_design(RNA, structure: str) -> str:
     """
     if not balanced(structure):
         raise ValueError("refusing to hand an unbalanced structure to ViennaRNA")
+    _seed_rna(RNA, "pf_design", structure, restart)
     result = RNA.inverse_pf_fold(None, structure)
     return result[0] if isinstance(result, (tuple, list)) else result
 
@@ -255,7 +278,7 @@ def _anchors(RNA, targets, tag):
         baseline_sequence = BASELINE_BASE * len(structure)
         best_sequence, best_defect = None, float("inf")
         for _restart in range(ANCHOR_RESTARTS):
-            designed = _pf_design(RNA, structure)
+            designed = _pf_design(RNA, structure, _restart)
             defect = ensemble_defect(RNA, designed, structure)
             if defect < best_defect:
                 best_sequence, best_defect = designed, defect
