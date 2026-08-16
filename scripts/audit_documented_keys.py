@@ -59,6 +59,19 @@ SUBMISSION_CONSTANTS = ("SUBMISSION_KEYS", "CALIBRATION_KEYS", "CLAIM_KEYS", "RE
                         "COMMIT_KEYS", "ANSWER_KEYS")
 
 
+def _subscript_index(node: ast.Subscript) -> ast.AST:
+    """The expression inside `x[...]`, on either side of the 3.9 AST change.
+
+    Before 3.9 the slice is wrapped in an `ast.Index`; from 3.9 it is the expression itself.
+    Reading `node.slice` directly finds nothing on the older grammar, and finding nothing is
+    indistinguishable here from an evaluator that reads no input keys - so this audit quietly
+    reported a clean bill of health on the evaluation host, which runs 3.8, while working
+    correctly on a 3.11 laptop.
+    """
+    index = node.slice
+    return getattr(index, "value", index) if index.__class__.__name__ == "Index" else index
+
+
 def subscript_keys(source: str, names: set[str] | None = None) -> set[str]:
     """String keys read off a named mapping: `problem["x"]` and `problem.get("x")`."""
     names = INPUT_NAMES if names is None else names
@@ -70,7 +83,7 @@ def subscript_keys(source: str, names: set[str] | None = None) -> set[str]:
     for node in ast.walk(tree):
         if (isinstance(node, ast.Subscript) and isinstance(node.value, ast.Name)
                 and node.value.id in names):
-            index = node.slice
+            index = _subscript_index(node)
             if isinstance(index, ast.Constant) and isinstance(index.value, str):
                 found.add(index.value)
         if (isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute)
