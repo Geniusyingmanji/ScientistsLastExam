@@ -32,6 +32,7 @@ import statistics as st
 import sys
 from collections import defaultdict
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
@@ -83,7 +84,13 @@ def main(argv: list[str] | None = None) -> int:
             baselines[spec.task_id] = len(program.read_text(encoding="utf-8").splitlines())
 
     counts: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
-    for manifest in Path(args.runs).glob("*/*/run_manifest.json"):
+    # What went in, recorded beside what came out. This report's numbers are quoted in the README,
+    # and a run root is not a fixed thing: point it at `runs/` today and it averages the runs made
+    # before a fix together with the ones made after, producing a number between the two that
+    # matches neither and names nothing. A reader who cannot see which runs produced a figure
+    # cannot tell that from a real result.
+    inputs: list[dict[str, Any]] = []
+    for manifest in sorted(Path(args.runs).glob("*/*/run_manifest.json")):
         try:
             document = json.loads(manifest.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError):
@@ -94,6 +101,16 @@ def main(argv: list[str] | None = None) -> int:
         trajectory = manifest.parent / "trajectory.jsonl"
         if not trajectory.is_file():
             continue
+        inputs.append({
+            "run": manifest.parent.as_posix(),
+            "task": task,
+            "feedback_mode": document.get("feedback_mode"),
+            "seed": document.get("seed"),
+            # The package the run was scored against. Runs from either side of a task edit can sit
+            # under one root, and these hashes are what tells them apart after the fact.
+            "task_package_sha256": document.get("task_package_sha256"),
+            "task_contract_sha256": document.get("task_contract_sha256"),
+        })
         for line in trajectory.read_text(encoding="utf-8").splitlines():
             if not line.strip():
                 continue
@@ -170,9 +187,28 @@ def main(argv: list[str] | None = None) -> int:
         "note": "validity rate and evaluator size are reported separately; a long evaluator is "
                 "not automatically a defect, but a long evaluator that rejects most proposals is",
         "min_proposals": MIN_PROPOSALS,
+        "runs_root": str(args.runs),
+        "input_run_count": len(inputs),
+        "distinct_task_packages_measured": sorted(
+            {row["task_package_sha256"] for row in inputs if row["task_package_sha256"]}),
+        "inputs": inputs,
         "rank_correlation_lines_vs_validity": rho,
         "rows": rows,
     }, indent=2), encoding="utf-8")
+    packages = {row["task_package_sha256"] for row in inputs if row["task_package_sha256"]}
+    by_task = defaultdict(set)
+    for row in inputs:
+        if row["task_package_sha256"]:
+            by_task[row["task"]].add(row["task_package_sha256"])
+    mixed = sorted(task for task, seen in by_task.items() if len(seen) > 1)
+    print()
+    print("read %d runs under %s, spanning %d distinct task packages"
+          % (len(inputs), args.runs, len(packages)))
+    if mixed:
+        print("these tasks were measured against more than one package, so their rate here is an")
+        print("average across task versions rather than a measurement of any one of them:")
+        for task in mixed[:8]:
+            print("    %-46s %d packages" % (task[:46], len(by_task[task])))
     print()
     print("report:", args.output)
     return 0
