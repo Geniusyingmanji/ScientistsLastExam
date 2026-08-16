@@ -65,6 +65,29 @@ class EvaluatorKeyTests(unittest.TestCase):
                          {"unused"})
 
 
+class InventoryScanTests(unittest.TestCase):
+    """Finding nothing has to be distinguishable from finding nothing wrong.
+
+    Before `_subscript_index` handled the pre-3.9 grammar, this audit found zero input keys on the
+    evaluation host and therefore reported zero undocumented ones - a vacuous pass indistinguishable
+    from a real one, on the machine where it actually runs. A count is asserted so that a scanner
+    which stops seeing anything fails loudly instead of congratulating the repository.
+    """
+
+    def test_the_scan_finds_input_keys_across_the_inventory(self):
+        from sle.registry import list_tasks
+
+        total = 0
+        for spec in list_tasks(None):
+            evaluator = spec.task_dir / "verification" / "evaluator.py"
+            if evaluator.is_file():
+                total += len(subscript_keys(evaluator.read_text(encoding="utf-8")))
+        self.assertGreater(
+            total, 20,
+            "the input-key scan found almost nothing across the whole inventory, which is what a "
+            "broken scanner looks like - not what a well-documented benchmark looks like")
+
+
 if __name__ == "__main__":
     unittest.main()
 
