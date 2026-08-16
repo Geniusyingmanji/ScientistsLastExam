@@ -194,6 +194,26 @@ def run_identity(workdir: Path) -> tuple[str, str, int, str, str] | None:
     return str(task), str(mode), int(seed), model, contract
 
 
+def _cohort_of(workdir: Path, runs_root: Path) -> str:
+    """The first directory under the run root, whatever depth the run itself sits at.
+
+    Two layouts write into this tree. `run_cohort.sh` puts each run one level down -
+    `runs/claude/qec_normal_s0` - while `batch_evolve.py` nests by task, algorithm, mode and seed:
+    `runs/recontract_b3/Optics__X/greedy_rewrite/normal/seed_0`. A fixed-depth glob finds the
+    first and silently finds nothing in the second, which reads as a cohort that was never run
+    rather than as a layout this did not expect.
+
+    Taking the first component keeps a paired sweep together: `normal` and `selection_blind` sit
+    under the same cohort, which is what makes them comparable at all. Using the run's parent
+    directory instead would put each mode in its own cohort and leave nothing paired.
+    """
+    try:
+        relative = workdir.relative_to(runs_root)
+    except ValueError:
+        return workdir.parent.name
+    return relative.parts[0] if relative.parts else runs_root.name
+
+
 def collect(runs_root: Path) -> dict[tuple[str, str, str, str],
                                      dict[str, dict[int, list[float]]]]:
     """Group curves by (task, cohort, model, task version).
@@ -216,7 +236,7 @@ def collect(runs_root: Path) -> dict[tuple[str, str, str, str],
     found: dict[tuple[str, str, str, str], dict[str, dict[int, list[float]]]] = defaultdict(
         lambda: defaultdict(dict)
     )
-    for trajectory in runs_root.glob("*/*/trajectory.jsonl"):
+    for trajectory in sorted(runs_root.rglob("trajectory.jsonl")):
         workdir = trajectory.parent
         identity = run_identity(workdir)
         if identity is None:
@@ -225,7 +245,7 @@ def collect(runs_root: Path) -> dict[tuple[str, str, str, str],
         curve = best_so_far(trajectory)
         if curve is None:
             continue
-        key = (task, workdir.parent.name, model, contract)
+        key = (task, _cohort_of(workdir, runs_root), model, contract)
         existing = found[key][mode].get(seed)
         if existing is None or len(curve) > len(existing):
             found[key][mode][seed] = curve
