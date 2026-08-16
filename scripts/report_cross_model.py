@@ -84,7 +84,12 @@ def known_conditions() -> dict[str, str]:
 def read_runs(runs_root: Path) -> list[dict]:
     conditions = known_conditions()
     out = []
-    for trajectory in runs_root.glob("*/*/trajectory.jsonl"):
+    # Recursive, because two drivers write into this tree at different depths: `run_cohort.sh`
+    # puts a run one level down and `batch_evolve.py` nests it by task, algorithm, mode and seed.
+    # A fixed-depth glob finds the first and silently finds nothing in the second, which reads as
+    # a model that was never run rather than as a layout this did not expect. Run identity comes
+    # from the manifest, so depth carries no meaning here anyway.
+    for trajectory in sorted(runs_root.rglob("trajectory.jsonl")):
         workdir = trajectory.parent
         manifest = workdir / "run_manifest.json"
         if not manifest.is_file():
