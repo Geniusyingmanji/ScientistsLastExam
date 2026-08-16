@@ -870,8 +870,22 @@ task in a new domain. Nine per-task analysis tests also fail and are explicitly 
 unattributed — they read `runs/` paths stored as absolute paths, so they error in a clone or
 worktree. See [runtime governance](.research/runtime_change_governance_2026-08-09.md).
 
-**No recorded model run is bound to a current task contract, so every model-derived measurement
-health check reads zero.** A run binds to the contract it was made against, and the evaluators have
+**The first measurement against the current contracts is in, and it is thin on purpose.** Every
+one of the 43 tasks now has a model run bound to the contract it is scored under — one seed, one
+proposal, `greedy_rewrite`, Claude. That is enough to restore the binding and nothing like enough
+to rank anything, so read the table below as a single draw rather than as a result.
+
+Two numbers are worth pulling out. `CirclePacking` scores **1.1468** and `CalorimeterDesign`
+**1.0121** — above one, which is the whole point of removing the upper clip and the first time the
+benchmark has been able to say that a candidate beat its reference witness rather than merely
+matched it. At the other end, 17 of 43 score exactly 0.0 from a single proposal, and 6 reach 0.95
+or better from that same single proposal, which is a saturation signal rather than a score.
+
+The paired budget-3 sweep that follows — `normal` against `selection_blind`, seed-matched, which is
+what the evolvability gap is measured from — is the one that will support a claim.
+
+**Until that campaign landed, no recorded model run was bound to a current task contract, and every
+model-derived measurement-health check read zero.** A run binds to the contract it was made against, and the evaluators have
 since changed — most of them when the upper clip came off. The runs still exist and still describe
 what those models did; they describe it about a previous contract. Concretely: the matched-control
 count on the `ActiveLawDiscovery` control and the observed first-valid step on `RNAInverseDesign`
