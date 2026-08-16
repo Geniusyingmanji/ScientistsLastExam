@@ -114,7 +114,23 @@ class InventoryTests(unittest.TestCase):
             "MedicinalChemistry/MolecularLeadOptimization",
             "RNAEngineering/RNAEnsembleDesign",
             "Spectroscopy/SpinSystemInference",
+            "Algorithm/GraphFromDistances",
+            "Mathematics/SequenceLawRecovery",
+            "QuantumDynamics/HamiltonianLearning",
         })
+
+    def test_a_toolkit_used_only_by_a_reference_does_not_make_the_oracle_community(self):
+        """The standard is about the oracle, and a reference is not the oracle.
+
+        `RadialVelocityPlanets` ships a reference detector built on astropy's Lomb-Scargle while
+        its evaluator implements the periodogram itself. Counting the directory's imports
+        wholesale read that as a community oracle, which inverts what the standard measures: a
+        reference is *encouraged* to use the community tool, precisely so the author's oracle can
+        be checked against it.
+        """
+        rows = {row["task"]: row for row in self.report["rows"]}
+        self.assertFalse(
+            rows["Exoplanets/RadialVelocityPlanets"]["standards"]["oracle_is_community"])
 
     def test_every_uncapped_task_ships_a_reference_record(self):
         """An uncapped score above 1.0 is a claim about the state of the art."""

@@ -122,6 +122,42 @@ def evaluator_sources(task_dir: Path) -> str:
     return "\n".join(parts)
 
 
+def oracle_modules(task_dir: Path) -> set[str]:
+    """What the *oracle* imports: `evaluator.py` plus the helpers it actually reaches.
+
+    Not every file under `verification/`. A reference implementation lives there too, and a
+    reference is allowed - encouraged - to use a community toolkit while the oracle it is measured
+    by remains an author reimplementation. Scanning the directory wholesale read
+    `RadialVelocityPlanets` as having a community oracle because its *reference* imports astropy's
+    Lomb-Scargle; the evaluator only mentions it in a docstring. That inverts the standard, which
+    exists to distinguish an oracle a domain would recognise from one this project wrote.
+
+    Local helpers are followed because evaluators legitimately split themselves across
+    `verification/device.py` and the like, and the toolkit is often imported there.
+    """
+    verification = task_dir / "verification"
+    entry = verification / "evaluator.py"
+    if not entry.is_file():
+        return set()
+    local = {path.stem: path for path in verification.glob("*.py")}
+    seen, pending, modules = set(), [entry.stem], set()
+    while pending:
+        name = pending.pop()
+        if name in seen or name not in local:
+            continue
+        seen.add(name)
+        try:
+            source = local[name].read_text(encoding="utf-8")
+        except OSError:
+            continue
+        for imported in imported_modules(source):
+            if imported in local:
+                pending.append(imported)
+            else:
+                modules.add(imported)
+    return modules
+
+
 def check(task_dir: Path, card: dict) -> dict[str, bool | None]:
     evaluator = task_dir / "verification" / "evaluator.py"
     source = evaluator.read_text(encoding="utf-8") if evaluator.is_file() else ""
@@ -139,7 +175,7 @@ def check(task_dir: Path, card: dict) -> dict[str, bool | None]:
                               ("reference", "baseline", "score", "measured_anchors"))
 
     return {
-        "oracle_is_community": bool(modules & COMMUNITY_PACKAGES),
+        "oracle_is_community": bool(oracle_modules(task_dir) & COMMUNITY_PACKAGES),
         # Two grades of evidence, kept apart because they are not equally good. A reference
         # implementation shipped under verification/ is something the evaluator can run; prose in
         # the card saying the reference is "recomputed" is a claim. Spot-checking found the prose
