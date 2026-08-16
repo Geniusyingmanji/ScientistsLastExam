@@ -91,7 +91,20 @@ EVIDENCE_PATTERNS = (
     "experiments/*crosscheck*.json",
     "experiments/*migration_audit*.json",
     "experiments/neutron_diffusion_anchor*.json",
+    # The campaign re-measuring model runs against the contracts as they stand after the
+    # evaluators were finalized. Recorded runs bind to the contract they were made against, and
+    # every earlier campaign predates those edits.
+    "experiments/recontract_*.json",
+    # GPT-5.6. Fifty runs over fifty tasks that no pattern selected, so the ledger counted them as
+    # zero rather than as historical - a whole model campaign invisible for want of a filename.
+    "experiments/gpt56*.json",
+    "experiments/exploratory_2h_gpt*.json",
 )
+
+# A document may hold runs and still not be evidence of model performance. The smoke reports say so
+# themselves, and counting them would inflate exactly the number that widening the patterns above
+# was meant to correct.
+NON_PERFORMANCE_EVIDENCE_SCOPES = {"PROTOCOL_SMOKE_ONLY"}
 TASK_CONTRACT_PATHS = (
     "Task.md",
     "solution.py",
@@ -128,7 +141,45 @@ def _tracked_json_paths(
     selected = set(required_reports)
     for pattern in EVIDENCE_PATTERNS:
         selected.update(str(path.relative_to(ROOT)) for path in ROOT.glob(pattern))
+    # Declared scope, not filename. The patterns above are a whitelist, and a whitelist makes a
+    # new campaign invisible rather than absent - a report the ledger never opens contributes
+    # zero runs and looks exactly like a campaign that never ran. Fifty GPT-5.6 runs sat outside
+    # it for that reason alone. A document that says what it is gets read on that basis; the
+    # patterns stay for the files written before the scope field existed.
+    for name in tracked - selected:
+        document = _load_json(ROOT / name)
+        if isinstance(document, dict) and document.get("evidence_scope") == "MODEL_PERFORMANCE":
+            selected.add(name)
     return [ROOT / name for name in sorted(selected & tracked) if (ROOT / name).is_file()]
+
+
+def unmatched_run_evidence() -> list[str]:
+    """Tracked experiment files that hold runs and that no evidence pattern selects.
+
+    `EVIDENCE_PATTERNS` is a whitelist of filename prefixes, so a campaign whose report is named
+    something new is not merely unmatched - it is *invisible*, and every count derived from it
+    reads zero exactly as though the runs had never happened. That is the failure mode this
+    project keeps meeting from a new direction, and the fix each time is the same: make the
+    absence a number somebody sees rather than a silence.
+    """
+    tracked = set(_git(["ls-files", "experiments/*.json"], check=True).splitlines())
+    selected = _tracked_json_paths_names()
+    unmatched = []
+    for name in sorted(tracked - selected):
+        document = _load_json(ROOT / name)
+        if not isinstance(document, dict) or not isinstance(document.get("runs"), list):
+            continue
+        if not _trusted_document(document):
+            continue  # untrusted evidence is excluded on its merits, not by oversight
+        if document.get("evidence_scope") in NON_PERFORMANCE_EVIDENCE_SCOPES:
+            continue  # the document says it is not performance evidence; believe it
+        if any(isinstance(run, dict) and run.get("task") for run in document["runs"]):
+            unmatched.append(name)
+    return unmatched
+
+
+def _tracked_json_paths_names() -> set[str]:
+    return {path.relative_to(ROOT).as_posix() for path in _tracked_json_paths()}
 
 
 def _load_json(path: Path) -> Optional[dict[str, Any]]:
@@ -445,6 +496,8 @@ def _model_run_records(
     for relative, document in documents.items():
         runs = document.get("runs")
         if not _trusted_document(document) or not isinstance(runs, list):
+            continue
+        if document.get("evidence_scope") in NON_PERFORMANCE_EVIDENCE_SCOPES:
             continue
         config = document.get("config") if isinstance(document.get("config"), dict) else {}
         budget = config.get("budget")
@@ -1056,6 +1109,11 @@ def build_report(full_test_suite: Optional[str] = None) -> dict[str, Any]:
             documents.get(global_reports["full_test_suite"], {}),
             head_revision,
         ))
+    invisible = unmatched_run_evidence()
+    if invisible:
+        issues.append(
+            "run evidence no pattern selects, so its runs count as zero: %s"
+            % ", ".join(invisible[:5]))
     if len(task_records) != len(inventory_ids):
         issues.append("task record count does not match inventory")
     if sum(status_counts.values()) != len(task_records):

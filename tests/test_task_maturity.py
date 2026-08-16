@@ -71,13 +71,14 @@ class TaskMaturityAuditTests(unittest.TestCase):
         )
 
     def test_every_admissible_task_has_current_or_migration_safe_model_measurement(self):
-        # Zero, and that is a finding rather than a bug: a recorded run binds to the contract it
-        # was made against, and the evaluators changed - most of them when the upper clip came
-        # off. The runs still describe what those models did, about a previous contract. Restoring
-        # this to the inventory size means re-running the cohort, not re-signing the old numbers.
-        self.assertEqual(
-            self.report["evidence_coverage"]["current_model_measurement_count"], 0
-        )
+        # Most admissible tasks have no bound measurement, and that is a finding rather than a
+        # bug: a recorded run binds to the contract it was made against, and the evaluators
+        # changed - most of them when the upper clip came off. The runs still describe what those
+        # models did, about a previous contract. Restoring full coverage means re-running the
+        # cohort, not re-signing the old numbers, so the count moves as that campaign lands and is
+        # checked for consistency below rather than pinned to a passing value.
+        coverage = self.report["evidence_coverage"]["current_model_measurement_count"]
+        self.assertLessEqual(coverage, self.report["inventory_count"])
         # Every admissible task is currently in this list, for the same reason the count above is
         # zero. What this pins is that the audit and the coverage count agree about *which* tasks
         # lack a bound measurement - a task counted as measured while appearing here, or the
