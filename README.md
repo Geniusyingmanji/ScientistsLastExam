@@ -895,6 +895,32 @@ cohort against the current contracts rather than to re-sign the old numbers. Rea
 below as measured against pre-uncapping evaluators. For the 17 uncapped optimization tasks a score
 can only have moved *up*, and only for candidates that were sitting against the ceiling.
 
+**Two tasks now score above 1.0, and both are findings about the benchmark rather than the model.**
+Removing the upper clip was justified by an argument — a candidate that beats the reference witness
+should be distinguishable from one that matches it. The first fresh sweep produced two such scores,
+and reading them properly meant not celebrating either.
+
+`CirclePacking` scored **1.4406** at N=13, which would be a new Packomania record from a single
+proposal. The packing is genuinely valid — 13 circles, closest centres 1.99999999999999645 apart,
+which is 3.6e-15 from touching, and every circle inside the square. What is wrong is the anchor: the
+task records 7.6274 as the best known side, and `4 + 2√3 = 7.4641` is a construction anyone can
+write down. A "best known" that loses to a textbook packing is not a best known. The other two
+anchors check out (N=7 is `4 + √3`, proven optimal; N=10 matches the literature), so this is one bad
+number, and the score built on it is meaningless until it is sourced properly. See
+[the write-up](.research/circle_packing_anchor_defect_2026-08-18.md).
+
+`CalorimeterDesign` scored **1.0121**, past its reference witness — with `robustness_score` of
+exactly **0.0**, meaning its worst-shift utility sits at the shipped baseline. The searcher beat the
+witness on the axis it could see and gained nothing at all on the one it could not. That is the task
+working as designed: robustness is evaluator-only precisely so it cannot be optimised directly. But
+it exposed a blind spot in the saturation classifier, which decides retirement from `combined_score`
+alone and would have retired a task half of which is untouched. The verdict now says which metric it
+is about, and `scripts/report_saturation_hidden_axes.py` scores the best recorded candidate again to
+report the hidden axes — of seven saturated tasks, one is in this state.
+
+Neither of these was visible under the cap: both would have read as exactly 1.0, indistinguishable
+from a candidate that merely matched the reference.
+
 **A candidate could crash three of the evaluators, and a crash costs a cohort rather than a
 candidate.** A 129-block paired sweep returned four terminal failures, each reporting only
 `trusted evaluator internal failure` — no task, no line, no cause — and those four invalidated the
