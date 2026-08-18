@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import dataclasses
 import json
 import hashlib
 import math
@@ -294,8 +295,8 @@ class SecureEvaluationTests(unittest.TestCase):
                                     pass
                     return marker in visible
             """), encoding="utf-8")
-            spec = load_task_spec(BENCHMARKS / "Physics" / "LaserCavityDesign")
-            spec.task_dir = task
+            # A copy, so overriding the directory here cannot disturb the shared fixture.
+            spec = dataclasses.replace(self.spec, task_dir=task)
             spec.entrypoint = "inspect_context"
             result = evaluate_candidate(
                 spec, candidate, timeout_s=10, trusted_context=context
@@ -324,8 +325,8 @@ class SecureEvaluationTests(unittest.TestCase):
             """), encoding="utf-8")
             candidate = root / "candidate.py"
             candidate.write_text("def noop(): return None\n", encoding="utf-8")
-            spec = load_task_spec(BENCHMARKS / "Physics" / "LaserCavityDesign")
-            spec.task_dir = task
+            # A copy, so overriding the directory here cannot disturb the shared fixture.
+            spec = dataclasses.replace(self.spec, task_dir=task)
             spec.entrypoint = "noop"
             with patch.dict(
                 "os.environ",
@@ -368,8 +369,8 @@ class SecureEvaluationTests(unittest.TestCase):
                 def fail(_value):
                     raise RuntimeError("candidate-owned failure")
             """), encoding="utf-8")
-            spec = load_task_spec(BENCHMARKS / "Physics" / "LaserCavityDesign")
-            spec.task_dir = task
+            # A copy, so overriding the directory here cannot disturb the shared fixture.
+            spec = dataclasses.replace(self.spec, task_dir=task)
             spec.entrypoint = "fail"
             result = evaluate_candidate(
                 spec, candidate, timeout_s=10, trusted_context=context
