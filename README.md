@@ -895,6 +895,31 @@ cohort against the current contracts rather than to re-sign the old numbers. Rea
 below as measured against pre-uncapping evaluators. For the 17 uncapped optimization tasks a score
 can only have moved *up*, and only for candidates that were sitting against the ceiling.
 
+**A candidate could crash three of the evaluators, and a crash costs a cohort rather than a
+candidate.** A 129-block paired sweep returned four terminal failures, each reporting only
+`trusted evaluator internal failure` — no task, no line, no cause — and those four invalidated the
+whole campaign's report. The fixed wording is deliberate: an exception string must not carry
+evaluator internals or hidden values back to a candidate. But an infrastructure failure *aborts
+the run* rather than scoring anything, so there is no searcher downstream to protect on that path.
+The cause now goes to the trusted driver's stderr and is attached only where the run is already
+being abandoned, which keeps the separation structural rather than remembered.
+
+With the cause visible it took one run to find: `KeyError: 'abstained'`. The row an evaluator
+builds when scoring a world *raises* carried fewer keys than the row it builds when scoring
+succeeds, and `discovery_coverage` — added later, as the fourth column of the discovery triple —
+read one of the missing ones. A third task had no failure path at all: a controller returning a
+dictionary raised out of `float()`.
+
+`scripts/check_evaluator_survives_bad_candidates.py` now asks the question of the whole inventory
+by feeding every evaluator three candidates that fail — one that raises, one that returns `{}`,
+one that returns a string — and asking whether the evaluator scores them zero or dies. It was 3
+tasks crashing; it is now **0 of 43**, across 129 cases.
+
+A structural version of this check was written first and thrown away. It compared the key sets of
+the two branches and flagged five tasks the executable check had just cleared, because whether a
+missing key matters depends on which list the aggregation walks. An invariant stricter than the
+property it stands in for buys nothing and costs a permanently red suite.
+
 **One oracle was not a function, and the headline score hid it.** The 43-task determinism sweep
 returned 42 of 43. `RNAEnsembleDesign` failed because ViennaRNA's designers, handed `None` as a
 start sequence, draw one from a generator inside the C library that the task's own
