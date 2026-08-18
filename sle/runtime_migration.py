@@ -238,6 +238,14 @@ def runtime_source_changes(
         legacy = "benchmarks/%s/%s" % (domain, task_dir.name)
         aliases.append((canonical, legacy))
 
+    # The package itself moved: `frontier_science` became `sle`. The aliases above cover benchmark
+    # directories being reorganised by discipline and stop there, so a scope naming `sle` found
+    # nothing at any revision from before the rename - and the readers built on this reported that
+    # as a runtime whose files had vanished rather than as a runtime under its former name. This
+    # is the fifth place in the repository where reading history through today's names produced a
+    # wrong answer that looked like a finding.
+    aliases.append(("sle", "frontier_science"))
+
     preferred: dict[tuple[str, str], str] = {}
     expanded: list[str] = []
     for raw in scope:

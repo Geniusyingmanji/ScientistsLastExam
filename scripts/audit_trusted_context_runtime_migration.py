@@ -85,9 +85,24 @@ def _sha256(path: Path) -> str:
 
 
 def _git_show(revision: str, relative: str) -> bytes:
-    return subprocess.check_output(
-        ["git", "show", revision + ":" + relative], cwd=str(ROOT),
-    )
+    """Read a file at a revision, under whichever name the package had then.
+
+    The runtime package was `frontier_science` before it was renamed to `sle`, so asking a
+    revision from that era for `sle/evaluate.py` fails outright - and the failure surfaces as a
+    subprocess error, which reads as a broken tool rather than as a file that has moved.
+    """
+    try:
+        return subprocess.check_output(
+            ["git", "show", revision + ":" + relative], cwd=str(ROOT),
+            stderr=subprocess.DEVNULL,
+        )
+    except subprocess.CalledProcessError:
+        if not relative.startswith("sle/"):
+            raise
+        return subprocess.check_output(
+            ["git", "show", revision + ":" + relative.replace("sle/", "frontier_science/", 1)],
+            cwd=str(ROOT),
+        )
 
 
 def _load_script(relative: str):
