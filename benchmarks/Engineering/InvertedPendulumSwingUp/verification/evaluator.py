@@ -123,6 +123,16 @@ def _disturbance_force(scenario, time):
     ))
 
 
+class CandidateFailure(Exception):
+    """The submitted controller misbehaved. This is a zero, not a broken evaluator.
+
+    Every other evaluator in this inventory distinguishes the two; this one did not, and a
+    controller returning a non-number raised out of `float()` and was reported as
+    "trusted evaluator internal failure" - which aborts the whole run rather than scoring the
+    candidate, so one bad submission costs a cohort its evidence.
+    """
+
+
 def _scenario_utility(controller, scenario, validation=False):
     plant = tuple(scenario.get("plant", _plant_tuple()))
     state = np.asarray(scenario["initial"], dtype=float)
@@ -135,9 +145,20 @@ def _scenario_utility(controller, scenario, validation=False):
 
     for index in range(N_STEPS):
         time = index * DT
-        command = float(controller(state.copy(), time, DT))
+        # A controller that returns a dictionary, a string, or nothing is a candidate that
+        # scores zero - not an infrastructure failure. Only the call and the conversion are
+        # wrapped, so a defect anywhere else in this evaluator still surfaces as the
+        # infrastructure error it is instead of being scored as a bad submission.
+        try:
+            command = float(controller(state.copy(), time, DT))
+        except CandidateFailure:
+            raise
+        except Exception as exc:
+            raise CandidateFailure(
+                "controller did not return a finite force: %s: %s" % (type(exc).__name__, exc)
+            ) from exc
         if not math.isfinite(command):
-            raise ValueError("controller returned a non-finite force")
+            raise CandidateFailure("controller returned a non-finite force")
         command = float(np.clip(command, -F_MAX, F_MAX))
         plant_force = command + _disturbance_force(scenario, time)
         state = _rk4_step(state, plant_force, plant)
@@ -197,15 +218,37 @@ def _scenario_utility(controller, scenario, validation=False):
     }
 
 
+def _invalid(reason):
+    """The same keys a scored run returns, so nothing downstream has to special-case a failure."""
+    return {
+        "combined_score": 0.0,
+        "valid": 0.0,
+        "feasibility_rate": 0.0,
+        "raw_score": 0.0,
+        "development_score": 0.0,
+        "robustness_score": 0.0,
+        "development_robustness_gap": 0.0,
+        "mean_balanced_fraction": 0.0,
+        "mean_rms_force": 0.0,
+        "mean_rms_cart_position": 0.0,
+        "failure_kind": "candidate_controller_failure",
+        "reason": str(reason)[:300],
+        "per_scenario": [],
+    }
+
+
 def evaluate(swing_up_controller):
-    development = [
-        _scenario_utility(swing_up_controller, scenario, validation=False)
-        for scenario in DEVELOPMENT_SCENARIOS
-    ]
-    validation = [
-        _scenario_utility(swing_up_controller, scenario, validation=True)
-        for scenario in VALIDATION_SCENARIOS
-    ]
+    try:
+        development = [
+            _scenario_utility(swing_up_controller, scenario, validation=False)
+            for scenario in DEVELOPMENT_SCENARIOS
+        ]
+        validation = [
+            _scenario_utility(swing_up_controller, scenario, validation=True)
+            for scenario in VALIDATION_SCENARIOS
+        ]
+    except CandidateFailure as failure:
+        return _invalid(failure)
     development_score = float(np.mean([row["utility"] for row in development]))
     robustness_score = float(np.mean([row["utility"] for row in validation]))
     return {
