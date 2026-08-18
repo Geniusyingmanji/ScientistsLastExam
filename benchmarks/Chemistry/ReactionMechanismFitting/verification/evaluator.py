@@ -476,6 +476,15 @@ def _evaluate_world(discover_mechanism, spec, split, index):
             "kind": world["kind"],
             "valid": False,
             "reason": "%s: %s" % (type(exc).__name__, exc),
+            # Present because the aggregation reads them off every row, including this one.
+            # A world whose scoring raised did not decline a discovery, it failed to make one -
+            # which is what `abstained` means for coverage: no discovery was attempted here. The
+            # branches were allowed to differ once, a later aggregation read a key only the
+            # success branch carried, and the KeyError surfaced as "trusted evaluator internal
+            # failure": four runs lost and a 129-block campaign's report invalidated, for a
+            # candidate that should simply have scored zero.
+            "abstained": True,
+            "confidence": 0.0,
             "support_f1": 0.0,
             "rate_curve_score": 0.0,
             "mechanism_score": 0.0,
