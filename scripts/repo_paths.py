@@ -17,6 +17,7 @@ be is how a containment check turns into a formality.
 """
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 
@@ -32,7 +33,14 @@ def resolve_run_workdir(recorded: str, root: Path) -> Path:
             "recorded workdir names no runs/ directory, so it cannot be placed in this "
             "repository: %r" % (recorded,))
     index = len(parts) - 1 - parts[::-1].index("runs")
-    return (Path(root) / Path(*parts[index:])).resolve()
+    # Normalised lexically rather than with `resolve()`. Resolving follows symlinks, and a `runs`
+    # symlink pointing at the machine's real run tree - which is how a worktree borrows them -
+    # then lands outside the repository and fails the containment check this exists to satisfy.
+    # `normpath` still collapses `..`, so a recorded path cannot climb out.
+    candidate = os.path.normpath(os.path.join(str(root), *parts[index:]))
+    if os.path.commonpath([candidate, str(root)]) != os.path.normpath(str(root)):
+        raise ValueError("recorded workdir escapes the repository: %r" % (recorded,))
+    return Path(candidate)
 
 
 def run_workdir_is_present(recorded: str, root: Path) -> bool:
