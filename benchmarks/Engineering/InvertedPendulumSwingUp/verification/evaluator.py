@@ -165,7 +165,9 @@ def _scenario_utility(controller, scenario, validation=False):
         commanded_force_squared.append(command**2)
         cart_position_squared.append(float(state[0] ** 2))
         if not np.all(np.isfinite(state)):
-            raise ValueError("cart-pole trajectory became non-finite")
+            # Also the candidate's doing: the only force this plant sees is the one the
+            # controller commanded plus a fixed disturbance.
+            raise CandidateFailure("cart-pole trajectory became non-finite")
         if abs(state[0]) > CART_LIMIT:
             runaway = True
             break
