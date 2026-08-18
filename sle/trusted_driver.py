@@ -9,6 +9,8 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import sys
+import traceback
 from pathlib import Path
 
 from .secure_eval import (
@@ -49,6 +51,14 @@ def main() -> int:
         # Trusted evaluator failures are infrastructure errors, not candidate feedback.
         # Keep the outward record fixed so evaluator internals and hidden values cannot be
         # exposed through an exception string.
+        #
+        # The traceback goes to stderr instead, which the trusted parent captures and only ever
+        # reports on the path that aborts the run. Keeping it out of this dictionary is what makes
+        # the separation structural rather than a rule someone has to remember: nothing a
+        # candidate could reach ever holds it. Without it, four runs in a 129-block sweep died
+        # saying only "trusted evaluator internal failure", which names no task, no line and no
+        # cause, and invalidated the whole campaign's report.
+        traceback.print_exc(file=sys.stderr)
         metrics = {
             "combined_score": INVALID_SCORE,
             "valid": 0.0,

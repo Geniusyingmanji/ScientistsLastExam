@@ -134,6 +134,15 @@ def evaluate_candidate(
                     "infrastructure_failure": 1.0}
         try:
             raw = json.loads(result_path.read_text(encoding="utf-8"))
+            # The driver keeps its outward message fixed so nothing a candidate could read holds
+            # evaluator internals. It writes the cause to stderr instead, and this is the one
+            # place that is allowed to carry it: an infrastructure failure raises and aborts the
+            # run rather than scoring anything, so there is no searcher downstream to protect.
+            if raw.get("infrastructure_failure") and (stderr or "").strip():
+                detail = (stderr or "").strip().splitlines()
+                raw = dict(raw, error_message="%s: %s" % (
+                    raw.get("error_message") or "trusted evaluator internal failure",
+                    " | ".join(detail[-3:])[:400]))
             metrics = validate_metrics(raw, score_mode)
             if context_payload is not None:
                 expected = hashlib.sha256(context_payload).hexdigest()
