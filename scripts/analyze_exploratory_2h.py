@@ -260,10 +260,11 @@ def _frozen_runtime_source_sha256(frozen: dict[str, Any]) -> Optional[str]:
                 ["git", "show", "%s:%s" % (parent, relative)],
                 cwd=str(ROOT), stderr=subprocess.DEVNULL,
             )
-            # Recorded under the name the runtime has now, so the digest is stable across the
-            # rename rather than stable only within one era of it.
-            recorded = relative.replace("frontier_science/", "sle/", 1)
-            digest.update(recorded.encode("utf-8") + b"\0")
+            # Under the name the file had at that revision, not the name it has now: the hash
+            # this reproduces was computed then, over those paths. Normalising them here looked
+            # tidier and produced a different digest, which is the same mistake as not following
+            # the rename at all - reading history through today's names.
+            digest.update(relative.encode("utf-8") + b"\0")
             digest.update(payload + b"\0")
         return digest.hexdigest()
     except (OSError, subprocess.CalledProcessError):
