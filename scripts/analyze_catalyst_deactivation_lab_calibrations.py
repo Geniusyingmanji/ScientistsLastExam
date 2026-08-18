@@ -21,6 +21,8 @@ from pathlib import Path
 from typing import Any
 
 
+from scripts.repo_paths import resolve_run_workdir  # noqa: E402
+
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
@@ -445,12 +447,8 @@ def _load_model(label: str, relative: str) -> dict[str, Any]:
         and config.get("llm", {}).get("server_side_seed_control") is False
     ):
         raise ValueError("unexpected catalyst calibration condition")
-
-    workdir = Path(run["workdir"]).resolve()
-    try:
-        relative_workdir = workdir.relative_to(ROOT)
-    except ValueError as exc:
-        raise ValueError("catalyst workdir is outside repository") from exc
+    workdir = resolve_run_workdir(run["workdir"], ROOT)
+    relative_workdir = workdir.relative_to(ROOT)
     trajectory_path = workdir / "trajectory.jsonl"
     raw_events = load_trajectory(trajectory_path)
     snapshot = compact_trajectory_snapshot(trajectory_path)

@@ -26,11 +26,20 @@ class ProspectiveMetaAnalysisCalibrationAnalysisTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.module = _analysis()
-        cls.calibration = cls.module._load_calibration()
-        cls.records = {
-            label: cls.module._load_model(label, path)
-            for label, path in cls.module.REPORTS.items()
-        }
+        try:
+            cls.calibration = cls.module._load_calibration()
+            cls.records = {
+                label: cls.module._load_model(label, path)
+                for label, path in cls.module.REPORTS.items()
+            }
+        except FileNotFoundError as missing:
+            # Run directories are not committed; a checkout without them is missing data, not
+            # looking at broken evidence. See the note in test_alloy_hardness_analysis.
+            #
+            # Both loads are inside the guard: the calibration document is committed and the run
+            # trajectories it points at are not, so wrapping only the first one skipped nothing.
+            raise unittest.SkipTest(
+                "the runs this analysis reads are not in this checkout: %s" % missing)
 
     def report(self, records=None, **kwargs):
         return self.module._analyze_records(

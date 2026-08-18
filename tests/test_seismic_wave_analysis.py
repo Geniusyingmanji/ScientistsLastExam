@@ -25,7 +25,15 @@ class SeismicWaveAnalysisTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.module = _module()
-        cls.report = cls.module.analyze()
+        try:
+            cls.report = cls.module.analyze()
+        except FileNotFoundError as missing:
+            # Run directories are not committed, so a checkout that does not hold them is a
+            # reader missing data - not a reader looking at broken evidence. Erroring here made
+            # fifteen analysis suites fail identically on every machine but the one the runs were
+            # produced on, which buries a real regression in noise that never changes.
+            raise unittest.SkipTest(
+                "the runs this analysis reads are not in this checkout: %s" % missing)
 
     def test_analysis_binds_formal_inputs_axes_and_lineage(self):
         report = self.report

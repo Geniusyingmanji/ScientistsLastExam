@@ -37,6 +37,7 @@ from sle.provenance import (  # noqa: E402
     finalize_report_trust,
     source_provenance,
 )
+from scripts.repo_paths import resolve_run_workdir  # noqa: E402
 from sle.registry import find_task  # noqa: E402
 from sle.runtime_migration import (  # noqa: E402
     RUNTIME_PATHS,
@@ -687,12 +688,8 @@ def _load_model(
         and llm_config.get("server_side_seed_control") is False
     ):
         raise ValueError("unexpected alloy calibration condition")
-
-    workdir = Path(run["workdir"]).resolve()
-    try:
-        relative_workdir = workdir.relative_to(ROOT)
-    except ValueError as exc:
-        raise ValueError("alloy workdir is outside repository") from exc
+    workdir = resolve_run_workdir(run["workdir"], ROOT)
+    relative_workdir = workdir.relative_to(ROOT)
     trajectory_path = workdir / "trajectory.jsonl"
     raw_events = load_trajectory(trajectory_path)
     snapshot = compact_trajectory_snapshot(trajectory_path)
