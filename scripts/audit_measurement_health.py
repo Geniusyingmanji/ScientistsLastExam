@@ -233,6 +233,16 @@ def _classification(row: dict[str, Any], checks: dict[str, dict[str, Any]]) -> t
         return SATURATED_ON_RAMP, [
             "observed one-step or near-ceiling behavior, or retained as a known-answer/on-ramp control",
             "requires a harder procedural or multifidelity contract before long-horizon allocation",
+            # Said out loud because this verdict retires tasks. The only score a searcher receives
+            # is `combined_score`; robustness, mechanism recovery and every per-instance metric are
+            # evaluator-only by the visibility contract, and none of them reach this classifier.
+            # `CalorimeterDesign` reads 1.0121 here - past its reference witness - while its
+            # `robustness_score` sits at exactly 0.0, the shipped baseline. Half that task is
+            # untouched. `scripts/report_saturation_hidden_axes.py` scores the best recorded
+            # candidate again to say which half.
+            "saturation is observed on combined_score only, which is the one metric a searcher "
+            "receives; evaluator-only axes are not visible to this classifier and may be "
+            "untouched - see scripts/report_saturation_hidden_axes.py",
         ]
     return REPAIR_FIRST, [
         "current contract lacks sufficient non-saturated, valid, repeated trajectory evidence",
