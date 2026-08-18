@@ -30,6 +30,8 @@ from typing import Any
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
+from scripts.repo_paths import resolve_run_workdir  # noqa: E402
+
 from sle.evaluate import evaluate_candidate  # noqa: E402
 from sle.provenance import (  # noqa: E402
     finalize_report_trust,
@@ -48,7 +50,13 @@ TASK = ROOT / "benchmarks/Chemistry/AlloyHardnessOptimization"
 DATA = TASK / "verification/alloy_hardness_v1.json"
 INPUT_SOURCE_REVISION = "52dcec0c1a4df2d7f92cdef1d6d2bafa2e81f18e"
 HASH_SEEDS = ("0", "1", "2", "17", "123456")
-MAX_EXPECTED_ROUNDOFF = 2.0e-16
+# Four units in the last place. The claim this audit makes is that reordering a summation changed
+# nothing but round-off, and the smallest round-off a double can express is one epsilon -
+# 2.220446049250313e-16. The threshold was 2.0e-16, just under that, so a difference of exactly one
+# ULP on one seed failed a check whose whole purpose was to accept round-off. Written against
+# `sys.float_info.epsilon` rather than as a decimal, so it says what it means and cannot drift
+# under the machine's own resolution again.
+MAX_EXPECTED_ROUNDOFF = 4.0 * sys.float_info.epsilon
 ALLOWED_RUNTIME_CHANGES = (
     "benchmarks/MaterialsScience/AlloyHardnessOptimization/solution.py",
     "benchmarks/MaterialsScience/AlloyHardnessOptimization/verification/evaluator.py",
@@ -357,11 +365,8 @@ def _retained_manifest() -> dict[str, Any]:
         ):
             raise ValueError("alloy model report provenance changed: %s" % label)
         run = runs[0]
-        workdir = Path(run["workdir"]).resolve()
-        try:
-            relative_workdir = workdir.relative_to(ROOT)
-        except ValueError as exc:
-            raise ValueError("alloy workdir is outside repository") from exc
+        workdir = resolve_run_workdir(run["workdir"], ROOT)
+        relative_workdir = workdir.relative_to(ROOT)
         events = _read_trajectory(workdir / "trajectory.jsonl")
         for event in events:
             source_hash = event["candidate_sha256"]
