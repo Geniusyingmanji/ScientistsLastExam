@@ -23,11 +23,52 @@ from sle.spec import load_task_spec
 
 BENCHMARKS = Path(__file__).resolve().parents[1] / "benchmarks"
 
+# The oracle these tests run against. It is deliberately trivial: what is under test is the
+# sandbox - that a candidate cannot open a socket, read the hidden world, spawn a process or
+# outlive its timeout - and none of that depends on the science of any particular task.
+FIXTURE_EVALUATOR = "\n".join([
+    "def evaluate(design_cavity):",
+    "    value = design_cavity(4)",
+    "    total = float(sum(float(x) for x in value))",
+    '    return {"combined_score": total, "valid": 1.0, "raw_score": total}',
+    "",
+])
+
+FIXTURE_METADATA = "domain: Optics\nscientific_role: sandbox_fixture\nscore_mode: clipped\n"
+
+
+def _fixture_task(root: Path) -> Path:
+    """A task built for these tests rather than borrowed from the inventory.
+
+    These tests used to load `Physics/LaserCavityDesign`. That task was one of nine quarantined
+    tasks deleted for meeting no benchmark standard, and deleting it turned this entire file - the
+    suite that checks the candidate sandbox blocks the network, the filesystem, subprocesses and
+    the clock - into a `setUpClass` error. A security suite that has stopped running looks exactly
+    like a security suite that passes, and it stayed that way.
+
+    Owning the fixture removes the coupling: retiring a task can no longer silence the sandbox.
+    """
+    task_dir = root / "Physics" / "SandboxFixture"
+    (task_dir / "frontier_eval").mkdir(parents=True)
+    (task_dir / "verification").mkdir()
+    (task_dir / "frontier_eval" / "metadata.yaml").write_text(FIXTURE_METADATA, encoding="utf-8")
+    (task_dir / "frontier_eval" / "entrypoint.txt").write_text("design_cavity\n", encoding="utf-8")
+    (task_dir / "verification" / "evaluator.py").write_text(FIXTURE_EVALUATOR, encoding="utf-8")
+    (task_dir / "Task.md").write_text("# Sandbox fixture\n", encoding="utf-8")
+    (task_dir / "solution.py").write_text(
+        "def design_cavity(n):\n    return [0.0] * n\n", encoding="utf-8")
+    return task_dir
+
 
 class SecureEvaluationTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.spec = load_task_spec(BENCHMARKS / "Physics" / "LaserCavityDesign")
+        cls._fixture_root = tempfile.TemporaryDirectory(prefix="sandbox_fixture_")
+        cls.spec = load_task_spec(_fixture_task(Path(cls._fixture_root.name)))
+
+    @classmethod
+    def tearDownClass(cls):
+        cls._fixture_root.cleanup()
 
     def evaluate_source(self, source: str, timeout: float = 5.0):
         with tempfile.TemporaryDirectory() as tmp:
