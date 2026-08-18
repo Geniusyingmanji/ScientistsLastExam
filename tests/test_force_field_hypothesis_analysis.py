@@ -2,11 +2,15 @@ from __future__ import annotations
 
 import importlib.util
 import tempfile
+import sys
 import unittest
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+from scripts.repo_paths import run_workdir_is_present  # noqa: E402
 SCRIPT = ROOT / "scripts/analyze_force_field_hypothesis_calibrations.py"
 SPEC = importlib.util.spec_from_file_location("force_field_analysis", SCRIPT)
 ANALYSIS = importlib.util.module_from_spec(SPEC)
@@ -362,11 +366,13 @@ class ForceFieldHypothesisAnalysisTests(unittest.TestCase):
             document = __import__("json").loads(
                 (ROOT / relative).read_text(encoding="utf-8")
             )
-            raw_paths.append(
-                Path(document["runs"][0]["workdir"]) / "trajectory.jsonl"
-            )
-        if not all(path.is_file() for path in raw_paths):
-            self.skipTest("ignored raw trajectories are unavailable")
+            raw_paths.append(document["runs"][0]["workdir"])
+        # Resolved the same way the analysis resolves it. Checking the recorded absolute path
+        # instead made this guard and the analysis disagree: on the machine that produced the
+        # runs the absolute path exists, so the guard passed, and the analysis - which places the
+        # path in the repository being read - then raised in a worktree.
+        if not all(run_workdir_is_present(path, ROOT) for path in raw_paths):
+            self.skipTest("the runs this analysis reads are not in this checkout")
         report = ANALYSIS.analyze()
         self.assertTrue(report["execution_passed"], report)
         self.assertEqual(
