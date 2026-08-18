@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import importlib.util
 import tempfile
+import json
 import unittest
 from pathlib import Path
 
@@ -113,13 +114,31 @@ class ExploratoryTwoHourAnalysisTests(unittest.TestCase):
         self.assertEqual(online["step"], 1)
         self.assertEqual(observer["step"], 2)
 
-    def test_repository_report_replays_complete_fixed_risk_set(self):
-        try:
-            report = MODULE.analyze()
-        except FileNotFoundError as missing:
-            # The reports are committed; the run directories they point at are not.
-            self.skipTest("the runs this analysis reads are not in this checkout: %s"
-                          % missing)
+    def test_replaying_the_preregistered_cohort_refuses_once_its_tasks_change(self):
+        """A preregistration cannot be rebound, so this has to fail closed rather than replay.
+
+        The seven tasks in this frozen cohort have been edited since - most of them when the upper
+        clip came off - so the analysis no longer describes the tasks on disk. Every other frozen
+        binding in this repository is repaired by measuring the change inert or re-measuring the
+        evidence. Neither is available here: the point of a preregistration is that it was fixed
+        *before* the runs, and re-signing it after seeing the results is the one thing it exists to
+        prevent. So the correct behaviour is refusal, and refusal is what is pinned.
+        """
+        with self.assertRaises(ValueError) as raised:
+            MODULE.analyze()
+        self.assertIn("frozen input contract differs", str(raised.exception))
+
+    def test_the_recorded_replay_is_the_authority_for_its_numbers(self):
+        """The analysis ran when the contracts still matched, and its report is committed.
+
+        Those numbers are a historical fact about seven task versions that no longer exist. They
+        are checked here rather than dropped, because deleting the assertions along with the
+        ability to re-derive them would lose the record entirely.
+        """
+        recorded = ROOT / "experiments/exploratory_2h_analysis_2026-07-30_v1.json"
+        if not recorded.is_file():
+            self.skipTest("the recorded two-hour analysis is not in this checkout")
+        report = json.loads(recorded.read_text(encoding="utf-8"))
         self.assertTrue(report["execution_passed"])
         self.assertEqual(report["risk_set"]["scheduled_cells"], 7)
         self.assertEqual(report["risk_set"]["successful_cells"], 7)
