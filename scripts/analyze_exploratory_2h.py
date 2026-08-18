@@ -236,11 +236,21 @@ def _frozen_runtime_source_sha256(frozen: dict[str, Any]) -> Optional[str]:
     if not isinstance(parent, str) or not parent:
         return None
     try:
-        names = subprocess.check_output(
-            ["git", "ls-tree", "-r", "--name-only", parent, "--", "sle",
-             "requirements-upstream.txt"],
-            cwd=str(ROOT), text=True, stderr=subprocess.DEVNULL,
-        ).splitlines()
+        # The package was called `frontier_science` before it was renamed to `sle`, so asking a
+        # revision from that era for `sle` returns almost nothing and the recomputed hash cannot
+        # match the recorded one. The failure reads as "frozen input contract differs" - as though
+        # the evidence had moved - when nothing moved but the directory name. This is the fourth
+        # place in this repository where reading history without following the rename produced a
+        # wrong answer that looked like a real finding.
+        names: list[str] = []
+        for package in ("sle", "frontier_science"):
+            names = subprocess.check_output(
+                ["git", "ls-tree", "-r", "--name-only", parent, "--", package,
+                 "requirements-upstream.txt"],
+                cwd=str(ROOT), text=True, stderr=subprocess.DEVNULL,
+            ).splitlines()
+            if any(name.endswith(".py") for name in names):
+                break
         digest = hashlib.sha256()
         for relative in sorted(
             name for name in names
@@ -250,7 +260,10 @@ def _frozen_runtime_source_sha256(frozen: dict[str, Any]) -> Optional[str]:
                 ["git", "show", "%s:%s" % (parent, relative)],
                 cwd=str(ROOT), stderr=subprocess.DEVNULL,
             )
-            digest.update(relative.encode("utf-8") + b"\0")
+            # Recorded under the name the runtime has now, so the digest is stable across the
+            # rename rather than stable only within one era of it.
+            recorded = relative.replace("frontier_science/", "sle/", 1)
+            digest.update(recorded.encode("utf-8") + b"\0")
             digest.update(payload + b"\0")
         return digest.hexdigest()
     except (OSError, subprocess.CalledProcessError):
