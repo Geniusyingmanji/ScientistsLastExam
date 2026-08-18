@@ -1,0 +1,910 @@
+{
+  "schema_version": 1,
+  "checked_task_count": 43,
+  "crashing_tasks": [],
+  "rows": [
+    {
+      "task": "PopulationGenetics/DemographicSFS",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "PopulationGenetics/DemographicSFS",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "PopulationGenetics/DemographicSFS",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "SystemsBiology/GeneNetworkIntervention",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "SystemsBiology/GeneNetworkIntervention",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "SystemsBiology/GeneNetworkIntervention",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "EvidenceSynthesis/ProspectiveMetaAnalysis",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "EvidenceSynthesis/ProspectiveMetaAnalysis",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "EvidenceSynthesis/ProspectiveMetaAnalysis",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "ProteinEngineering/ProteinStabilityDesign",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "ProteinEngineering/ProteinStabilityDesign",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "ProteinEngineering/ProteinStabilityDesign",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "RNAEngineering/RNAEnsembleDesign",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "RNAEngineering/RNAEnsembleDesign",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "RNAEngineering/RNAEnsembleDesign",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "RNAEngineering/RNAInverseDesign",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "RNAEngineering/RNAInverseDesign",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "RNAEngineering/RNAInverseDesign",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "MaterialsScience/AlloyHardnessOptimization",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "MaterialsScience/AlloyHardnessOptimization",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "MaterialsScience/AlloyHardnessOptimization",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Catalysis/CatalystDeactivationLab",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Catalysis/CatalystDeactivationLab",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Catalysis/CatalystDeactivationLab",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "ChemicalProcess/DistillationColumnDesign",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "ChemicalProcess/DistillationColumnDesign",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "ChemicalProcess/DistillationColumnDesign",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Electrochemistry/ElectrolyteConductivityDesign",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Electrochemistry/ElectrolyteConductivityDesign",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Electrochemistry/ElectrolyteConductivityDesign",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "MolecularDynamics/ForceFieldCalibration",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "MolecularDynamics/ForceFieldCalibration",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "MolecularDynamics/ForceFieldCalibration",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Chemistry/LennardJonesCluster",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Chemistry/LennardJonesCluster",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Chemistry/LennardJonesCluster",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "MedicinalChemistry/MolecularLeadOptimization",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "MedicinalChemistry/MolecularLeadOptimization",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 1.0,
+      "detail": ""
+    },
+    {
+      "task": "MedicinalChemistry/MolecularLeadOptimization",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Spectroscopy/NMRSpectrumFitting",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Spectroscopy/NMRSpectrumFitting",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Spectroscopy/NMRSpectrumFitting",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "ChemicalKinetics/ReactionMechanismFitting",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "ChemicalKinetics/ReactionMechanismFitting",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "ChemicalKinetics/ReactionMechanismFitting",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Spectroscopy/SpinSystemInference",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Spectroscopy/SpinSystemInference",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Spectroscopy/SpinSystemInference",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Algorithm/GraphFromDistances",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Algorithm/GraphFromDistances",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Algorithm/GraphFromDistances",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "CausalDiscovery/InterventionalSCM",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "CausalDiscovery/InterventionalSCM",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "CausalDiscovery/InterventionalSCM",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Algorithm/MatrixMultiplicationRank",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Algorithm/MatrixMultiplicationRank",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Algorithm/MatrixMultiplicationRank",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "SignalProcessing/SparseRecovery",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "SignalProcessing/SparseRecovery",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "SignalProcessing/SparseRecovery",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "ClimateScience/EnergyBalanceModel",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "ClimateScience/EnergyBalanceModel",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "ClimateScience/EnergyBalanceModel",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Geophysics/GravityInversion",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Geophysics/GravityInversion",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Geophysics/GravityInversion",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "AtmosphericScience/RadiativeTransferFit",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "AtmosphericScience/RadiativeTransferFit",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "AtmosphericScience/RadiativeTransferFit",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "HeatTransfer/ConvectionDiffusionOpt",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "HeatTransfer/ConvectionDiffusionOpt",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "HeatTransfer/ConvectionDiffusionOpt",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Thermodynamics/HeatExchangerDesign",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Thermodynamics/HeatExchangerDesign",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Thermodynamics/HeatExchangerDesign",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "ControlTheory/InvertedPendulumSwingUp",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "ControlTheory/InvertedPendulumSwingUp",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "ControlTheory/InvertedPendulumSwingUp",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Astrodynamics/LowThrustTransfer",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Astrodynamics/LowThrustTransfer",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Astrodynamics/LowThrustTransfer",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Semiconductor/MOSFETDoping",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Semiconductor/MOSFETDoping",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Semiconductor/MOSFETDoping",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "NuclearEngineering/NeutronDiffusionCriticality",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "NuclearEngineering/NeutronDiffusionCriticality",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "NuclearEngineering/NeutronDiffusionCriticality",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Sensors/QuartzCrystalMicrobalanceLab",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Sensors/QuartzCrystalMicrobalanceLab",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Sensors/QuartzCrystalMicrobalanceLab",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Turbulence/RANSCalibration",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Turbulence/RANSCalibration",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Turbulence/RANSCalibration",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Acoustics/RoomImpulseResponse",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Acoustics/RoomImpulseResponse",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Acoustics/RoomImpulseResponse",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "StructuralEngineering/TrussWeightMinimization",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "StructuralEngineering/TrussWeightMinimization",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "StructuralEngineering/TrussWeightMinimization",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Mathematics/CapSet",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Mathematics/CapSet",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 1.0,
+      "detail": ""
+    },
+    {
+      "task": "Mathematics/CapSet",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Optimization/CirclePacking",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Optimization/CirclePacking",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Optimization/CirclePacking",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Mathematics/SequenceLawRecovery",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Mathematics/SequenceLawRecovery",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Mathematics/SequenceLawRecovery",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "ParticlePhysics/CalorimeterDesign",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "ParticlePhysics/CalorimeterDesign",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "ParticlePhysics/CalorimeterDesign",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "QuantumDynamics/HamiltonianLearning",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "QuantumDynamics/HamiltonianLearning",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "QuantumDynamics/HamiltonianLearning",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Photonics/MultilayerThinFilm",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Photonics/MultilayerThinFilm",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Photonics/MultilayerThinFilm",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "QuantumErrorCorrection/QuantumErrorDecoder",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "QuantumErrorCorrection/QuantumErrorDecoder",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "QuantumErrorCorrection/QuantumErrorDecoder",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Exoplanets/RadialVelocityPlanets",
+      "candidate": "raises",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Exoplanets/RadialVelocityPlanets",
+      "candidate": "empty",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    },
+    {
+      "task": "Exoplanets/RadialVelocityPlanets",
+      "candidate": "wrong_type",
+      "crashed": false,
+      "valid": 0.0,
+      "detail": ""
+    }
+  ]
+}
