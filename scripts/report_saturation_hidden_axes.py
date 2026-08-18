@@ -94,9 +94,22 @@ def main(argv: list[str] | None = None) -> int:
             and any(hint in key for hint in HIDDEN_AXIS_HINTS)
         }
         headline = metrics.get("combined_score")
-        # A hidden axis sitting at zero means the candidate is exactly as good as the shipped
-        # baseline there: the searcher gained nothing on it, whatever the headline says.
-        untouched = sorted(key for key, value in hidden.items() if value == 0.0)
+        # Zero does not mean the same thing on every axis, and an earlier version of this script
+        # asserted that it did. A baseline-normalised `*_score` at zero means the candidate is
+        # exactly as good as the shipped baseline - no gain at all. A `false_discovery_rate` at
+        # zero means the opposite: no false discoveries, the best value available. Reporting the
+        # second as "untouched" marked `GravityInversion` as half-done on the strength of its
+        # best result.
+        #
+        # So only baseline-normalised scores are called out, and only when the headline has
+        # *passed* the reference: a candidate that beat the reference on the visible axis while
+        # gaining nothing on a hidden one is the case a saturation verdict gets wrong. Everything
+        # else is reported as a number for a reader to judge, because judging it needs to know
+        # which direction each metric runs, and that is a property of the task.
+        beat_reference = isinstance(headline, (int, float)) and headline >= 1.0
+        no_gain = sorted(
+            key for key, value in hidden.items()
+            if value == 0.0 and key.endswith("_score")) if beat_reference else []
         rows.append({
             "task": spec.task_id,
             "status": "scored",
@@ -104,19 +117,20 @@ def main(argv: list[str] | None = None) -> int:
             if str(program).startswith(str(ROOT)) else str(program),
             "combined_score": headline,
             "hidden_axes": hidden,
-            "hidden_axes_at_baseline": untouched,
+            "headline_passed_the_reference": beat_reference,
+            "normalised_hidden_scores_with_no_gain": no_gain,
         })
-        if untouched:
+        if no_gain:
             print("%-46s headline %-8s  untouched: %s" % (
                 spec.task_id[:46],
                 "%.4f" % headline if isinstance(headline, (int, float)) else headline,
-                ", ".join(untouched[:3])))
+                ", ".join(no_gain[:3])))
 
     scored = [row for row in rows if row.get("status") == "scored"]
-    half_done = [row for row in scored if row["hidden_axes_at_baseline"]]
+    half_done = [row for row in scored if row.get("normalised_hidden_scores_with_no_gain")]
     print()
-    print("scored %d tasks; %d have a hidden axis still at the shipped baseline"
-          % (len(scored), len(half_done)))
+    print("scored %d tasks; %d beat the reference on the visible axis while gaining nothing on a "
+          "hidden one" % (len(scored), len(half_done)))
     if half_done:
         print("A saturation verdict on any of these describes the visible axis only.")
 
@@ -126,7 +140,11 @@ def main(argv: list[str] | None = None) -> int:
             "note": "hidden axes are evaluator-only by the visibility contract, so they cannot be "
                     "read off a recorded trajectory and the candidate is scored again here",
             "scored_task_count": len(scored),
-            "tasks_with_a_hidden_axis_at_baseline": [row["task"] for row in half_done],
+            "zero_is_not_one_meaning": "a baseline-normalised score at zero is no gain over the "
+                                       "shipped baseline; a false-discovery rate at zero is the "
+                                       "best value there is. Only the former is called out.",
+            "tasks_that_beat_the_reference_while_gaining_nothing_hidden": [
+                row["task"] for row in half_done],
             "rows": rows,
         }, indent=2) + "\n", encoding="utf-8")
         print("report:", args.output)
