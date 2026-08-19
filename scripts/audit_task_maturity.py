@@ -492,7 +492,11 @@ def _model_run_records(
     migrations: list[dict[str, Any]],
 ) -> dict[str, list[dict[str, Any]]]:
     records: dict[str, list[dict[str, Any]]] = defaultdict(list)
-    seen: set[tuple[str, str]] = set()
+    # Records keyed by cell, so a retry can replace the attempt it recovered. A retried cell
+    # writes twice into the same working directory - the failure, then the run that fixed it - and
+    # keeping whichever came first kept the failure and dropped the success. A cohort the campaign
+    # itself reported as recovered then arrived here one matched replicate short.
+    by_cell: dict[str, dict[tuple[str, str], dict[str, Any]]] = defaultdict(dict)
     for relative, document in documents.items():
         runs = document.get("runs")
         if not _trusted_document(document) or not isinstance(runs, list):
@@ -507,9 +511,6 @@ def _model_run_records(
             task_id = str(run["task"])
             workdir = str(run.get("workdir") or "")
             identity = (task_id, workdir or "%s#%d" % (relative, index))
-            if identity in seen:
-                continue
-            seen.add(identity)
             source_revision = str((document.get("source_provenance") or {}).get("git_revision") or "")
             binding, migration_audit = _binding_state(
                 source_revision, task_id, head_revision, migrations
@@ -522,7 +523,7 @@ def _model_run_records(
                      if score is not None),
                     default=None,
                 )
-            records[task_id].append({
+            by_cell[task_id][identity] = ({
                 "report": relative,
                 "report_sha256": _sha256(ROOT / relative),
                 "source_revision": source_revision or None,
@@ -539,6 +540,9 @@ def _model_run_records(
                 "error": run.get("error"),
                 "events": events,
             })
+
+    for task_id, cells in by_cell.items():
+        records[task_id].extend(cells.values())
     return records
 
 
