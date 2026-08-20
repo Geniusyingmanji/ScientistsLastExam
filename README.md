@@ -1,181 +1,140 @@
 # Scientist's Last Exam
 
-Scientist's Last Exam (SLE) is a research prototype for **cross-domain, executable,
-budget-constrained scientific generative optimization**. An agent edits a runnable program,
-a frozen deterministic oracle evaluates each candidate, and the benchmark records both the
-best feasible artifact and the cost-aware trajectory used to find it.
+Scientist's Last Exam (SLE) 是一个研究原型,面向**跨领域、可执行、预算受限的科学生成式优化**。
+智能体编辑一个可运行的程序,一个冻结的确定性 oracle 为每个候选打分,基准同时记录最好的可行产物
+和找到它所用的、计入成本的轨迹。
 
-The question it is built to answer is not "can a model score well once" but "does giving a model
-feedback and more budget make it better **at science**" — the agentic, self-improving regime that
-AlphaFold-style and AlphaEvolve-style results live in.
+它要回答的不是"模型能不能考一次高分",而是**"给模型反馈和更多预算,它在科学上会不会变得更好"** ——
+也就是 AlphaFold 式、AlphaEvolve 式结果所处的那个自我改进的智能体区间。
 
-Both halves of that matter, and the concurrent literature splits along exactly this line. SEE
-([arXiv:2608.06931](https://arxiv.org/abs/2608.06931)) is science — expert-curated chemistry,
-biology and materials questions, 19 multimodal models, best accuracy 48.7% — but it is a static
-question set, so it cannot say whether iterating helps. OPT-BENCH
-([arXiv:2605.08904](https://arxiv.org/abs/2605.08904)) measures iterative self-optimization with a
-memory-less control arm, which is the right instrument, but its thirty environments are twenty
-machine-learning tasks and ten NP-hard problems. Neither occupies the intersection: a scientific
-problem with a frozen domain oracle, where the thing being measured is whether feedback compounds.
+这两半都要紧,而同期文献恰好沿这条线分开。SEE([arXiv:2608.06931](https://arxiv.org/abs/2608.06931))
+是科学 —— 专家编纂的化学、生物、材料题目,19 个多模态模型,最好准确率 48.7% —— 但它是静态题集,
+说不了迭代有没有用。OPT-BENCH([arXiv:2605.08904](https://arxiv.org/abs/2605.08904))用无记忆对照臂
+测量迭代式自我优化,工具是对的,但它的三十个环境是二十个机器学习任务加十个 NP-hard 问题。
+**两者都不在交集上**:一个有冻结领域 oracle 的科学问题,而被测量的是反馈会不会累积。
 
-That intersection is what this repository is for. Section
-[Does a task measure iteration](#does-a-task-measure-iteration) gives the criterion, and
-[Does a task meet the benchmark's own standards](#does-a-task-meet-the-benchmarks-own-standards)
-gives the audit of whether the science underneath is real. The honest answer today is a small
-number on both.
+这个交集就是本仓库的目的。[任务是否测量迭代](#任务是否测量迭代)给出判据,
+[是否满足基准自身的标准](#是否满足基准自身的标准)给出底下科学是否真实的审计。
+今天诚实的答案是:两边的数字都不大。
 
-This repository is inspired by
-[Frontier-Engineering](https://github.com/EinsiaLab/Frontier-Engineering). It is unrelated to
-the text-question benchmark named *FrontierScience* in
-[arXiv:2601.21165](https://arxiv.org/abs/2601.21165).
+本仓库受 [Frontier-Engineering](https://github.com/EinsiaLab/Frontier-Engineering) 启发。它与
+[arXiv:2601.21165](https://arxiv.org/abs/2601.21165) 中那个名为 *FrontierScience* 的文本题基准无关。
 
-> A higher simulator or verifier score demonstrates optimization only within the registered
-> oracle. It does not by itself establish autonomous scientific discovery, mechanism recovery,
-> physical validation, or real-world utility.
+> 更高的模拟器或验证器分数,只能证明在**已登记的 oracle 内部**做了优化。它本身不能确立自主科学发现、
+> 机制恢复、物理验证或真实世界效用。
 
-## At a glance
+## 速览
 
-- **43 task packages** across 7 disciplines — **24 scientific optimization** and **19 scientific
-  discovery**. Discovery tasks report mechanism recovery, false-discovery rate and calibrated
-  refusal separately, because one maximised scalar cannot say whether a discovery was *right*.
-- **5 certified**, 38 candidate; the quarantine set is empty.
-- Deterministic black-box evaluation through a networkless Bubblewrap sandbox, with the oracle in
-  the trusted parent and a strict search-visible metric allowlist.
-- A built-in iterative rewrite baseline plus OpenEvolve, AB-MCTS and ShinkaEvolve backends.
-- Hash-bound experiment reports carrying Git revision, command, source-tree state and an explicit
-  trust decision — evidence that cannot be bound to the runtime that produced it is refused rather
-  than quietly reused.
-- **7 oracles are community-standard scientific tooling** — Stim + PyMatching, RDKit, ViennaRNA,
-  nmrsim, networkx, SymPy, QuTiP. The other 36 are this project's own NumPy, which is the largest
-  standing gap.
-- **6 tasks** are so far shown to measure iterative improvement, three of them resting on a
-  saturation result their own extra seeds would reverse.
+- **43 个任务包**,横跨 7 个学科 —— **24 个科学优化**任务与 **19 个科学发现**任务。发现类任务分开报告
+  机制恢复、假发现率、校准拒答,因为一个被最大化的标量说不出一个发现**对不对**。
+- **5 个 certified**、38 个 candidate;隔离区为空。
+- 通过无网络的 Bubblewrap 沙箱做确定性黑盒评测,oracle 运行在受信父进程,搜索可见指标走严格白名单。
+- 内置迭代重写基线,外加 OpenEvolve、AB-MCTS、ShinkaEvolve 三个后端。
+- 实验报告按哈希绑定,携带 Git 修订、命令、源码树状态与显式的信任判定 ——
+  **无法绑定到产出它的运行时的证据会被拒绝,而不是被悄悄复用**。
+- **7 个 oracle 使用社区标准科学工具** —— Stim + PyMatching、RDKit、ViennaRNA、nmrsim、networkx、
+  SymPy、QuTiP。其余 36 个是本项目自己写的 NumPy,这是最大的现存缺口。
+- **6 个任务**目前被证明能测量迭代改进,其中 3 个依赖的饱和结论会被它们自己的补充种子推翻。
 
-[What the tasks look like](#what-the-tasks-look-like-and-how-hard-they-are) has the difficulty
-picture, [Current state](#current-state) the coverage, and
-[What this does and does not show](#what-this-does-and-does-not-show) the limits.
+[任务形态与难度](#任务形态与难度)给出难度画像,[当前状态](#当前状态)给出覆盖度,
+[说明了什么,没说明什么](#说明了什么没说明什么)给出边界。
 
-### Scope
+### 范围
 
-Every remaining task is natural science or its mathematics. Two operations-research entries
-(`MultiEchelonStock`, `TrafficSignalTiming`) that had been quarantined for reproduced defects
-have since left the inventory, and the quarantine set is now empty.
+剩下的每个任务都是自然科学或其数学。两个运筹学条目(`MultiEchelonStock`、`TrafficSignalTiming`)
+曾因可复现的缺陷被隔离,现已离开清单,隔离区为空。
 
-The default CLI exposes only certified tasks. Candidates remain visible for research and
-calibration; neither group beyond the certified core is benchmark-admissible by default.
+默认 CLI 只暴露 certified 任务。candidate 仍可见,用于研究与校准;认证核心之外的任何一组,
+默认都不具备基准准入资格。
 
-## What the tasks look like, and how hard they are
+## 任务形态与难度
 
-A task is a runnable program plus a hidden deterministic oracle. The searcher edits the program,
-the oracle scores each candidate, and the score comes back for the next proposal. Scores are
-normalised so **0 is the shipped baseline and 1 is the reference witness**, with no upper clip — a
-candidate that beats the reference has to be distinguishable from one that matches it.
+一个任务是一个可运行程序加一个隐藏的确定性 oracle。搜索者编辑程序,oracle 为每个候选打分,
+分数回到下一轮提案。分数经过归一化:**0 是出厂基线,1 是参考见证解,且不设上限** ——
+赢过参考解必须能与追平参考解区分开。
 
-Forty-three tasks across seven disciplines: biology 6, chemistry 10, computer science 4, earth
-science 3, engineering 10, mathematics 4, physics 6. They split into **24 optimization** and **19
-discovery** tasks, and that split turns out to be the sharpest thing in the data.
+43 个任务分布在七个学科:biology 6、chemistry 10、computer science 4、earth science 3、
+engineering 10、mathematics 4、physics 6。它们分成 **24 个优化**与 **19 个发现**,
+而这条分界线是数据里最尖锐的东西。
 
-Best score at budget 3, three seeds, `greedy_rewrite` with `claude-opus-4-8`:
+budget 3、三个种子、`greedy_rewrite` + `claude-opus-4-8` 下的最好分数:
 
-| band | tasks |
+| 区间 | 任务数 |
 |---|---:|
-| ≥ 1.0 — beat the reference witness | 6 |
+| ≥ 1.0 —— 赢过参考见证解 | 6 |
 | 0.9 – 1.0 | 5 |
 | 0.5 – 0.9 | 13 |
 | 0 – 0.5 | 13 |
-| exactly 0 | 6 |
+| 恰好 0 | 6 |
 
-| | median | scored exactly 0 |
+| | 中位数 | 得分恰好为 0 |
 |---|---:|---:|
 | optimization (24) | **0.7747** | 0 |
 | discovery (19) | **0.3515** | **6** |
 
-**Every task that scored zero is a discovery task.** No optimization task did — a searcher can
-always improve a design a little. Discovery tasks instead decline the whole problem:
-`RadiativeTransferFit`, `ProspectiveMetaAnalysis`, `ConvectionDiffusionOpt`, `ForceFieldCalibration`,
-`QuartzCrystalMicrobalanceLab` and `GeneNetworkIntervention` all return 0.0.
+**得零分的全部是发现类任务。** 优化类一个都没有 —— 搜索者总能把一个设计改好一点。发现类则整题弃权:
+`RadiativeTransferFit`、`ProspectiveMetaAnalysis`、`ConvectionDiffusionOpt`、`ForceFieldCalibration`、
+`QuartzCrystalMicrobalanceLab`、`GeneNetworkIntervention` 都返回 0.0。
 
-That is not simply the tasks being too hard. Five of them ship a truth-blind reference under
-`verification/` that scores 0.83 – 0.91 using only what a candidate receives, never the hidden
-world. Blanket abstention is a model failure mode, not a correct reading of an impossible task —
-and until those references existed, the two were indistinguishable.
+这不只是题目太难。其中五个在 `verification/` 下附带 truth-blind 参考实现,只用候选能拿到的信息、
+从不读取隐藏世界,得分 0.83 – 0.91。**全面弃权是模型的失败模式,不是对一道不可能的题的正确读法** ——
+而在这些参考实现存在之前,两者是无法区分的。
 
-## Current state
+## 当前状态
 
-Every task is now measured against the contract it is scored under. Two sweeps, `greedy_rewrite`
-against `claude-opus-4-8`: 43 runs at budget 1, and 258 seed-paired runs at budget 3 across both
-feedback conditions. Both trusted, no terminal failures.
+每个任务现在都是**对着它被打分所依据的那份契约**测出来的。两次扫描,均为 `greedy_rewrite` +
+`claude-opus-4-8`:budget 1 下 43 次运行,budget 3 下 258 次种子配对运行(覆盖两种反馈条件)。
+两份报告都可信,无终局失败。
 
 | | |
 |---|---:|
-| tasks with model measurement bound to the current contract | 43 / 43 |
-| tasks with both budget arms in both feedback conditions | 43 / 43 |
-| tasks with three matched control replicates | 43 / 43 |
-| internal science admission | 43 / 43 |
-| evaluators no candidate can crash | 43 / 43 |
-| deterministic oracles | 43 / 43 |
-| frozen measurement-health cohort | 7 / 7 |
-| **tasks reviewed by an external domain expert** | **0 / 43** |
+| 模型测量绑定到当前契约的任务 | 43 / 43 |
+| 两个预算档 × 两种反馈条件齐备的任务 | 43 / 43 |
+| 有三个配对对照重复的任务 | 43 / 43 |
+| 内部科学准入 | 43 / 43 |
+| 候选无法打挂其 evaluator 的任务 | 43 / 43 |
+| 确定性 oracle | 43 / 43 |
+| 冻结的测量健康 cohort | 7 / 7 |
+| **经外部领域专家评审的任务** | **0 / 43** |
 
-Three models have been run: `gpt-5.5` (615 recorded runs), `claude-opus-4-8` (607) and
-`gpt-5.6-sol` (58). They rank tasks consistently — Spearman 0.959 within a family — and **disagree
-on every admission verdict they share**, because the crossover budget is a property of the task and
-the searcher together rather than of the task alone.
+已跑过三个模型:`gpt-5.5`(615 次记录运行)、`claude-opus-4-8`(607 次)、`gpt-5.6-sol`(58 次)。
+它们对任务的排名一致 —— 同族 Spearman 0.959 —— 却**在共享的每一个准入判决上都不一致**,
+因为交叉预算是"任务与搜索者"的联合性质,而不是任务单独的性质。
 
-## What this does and does not show
+## 说明了什么,没说明什么
 
-**It does not yet show an evolvability gap.** The admission criterion is two-part: the open-loop
-control has to saturate first, and only then does a widening gap mean anything. Both parts need a
-budget *ladder*, and the paired sweep is a single budget point — so 42 of its 43 rows come back
-`unknown`, all with the same reason: *no open-loop run long enough to judge saturation*. The
-campaign bought binding and coverage. Δ still needs a budget sweep.
+**它还给不出可演化性差距。** 准入判据是两段式的:开环对照必须先饱和,然后差距扩大才有意义。
+两段都需要一个预算**阶梯**,而配对扫描只有一个预算点 —— 所以 43 行里有 42 行回 `unknown`,
+原因统一是 *no open-loop run long enough to judge saturation*。这次战役买到的是**绑定与覆盖度**,
+Δ 仍然需要一次预算扫描。
 
-At that one budget the paired difference runs **negative on 21 tasks, positive on 11, flat on 11**.
-That is what being below the crossover budget looks like — three proposals is not enough for
-iteration to pay for itself on most of these tasks — and it is not evidence that feedback does not
-help, which is exactly why the criterion refuses to judge from one point.
+在那个单一预算点上,配对差**负向 21 个任务、正向 11 个、持平 11 个**。这正是"低于交叉预算"的样子 ——
+三个提案不足以让迭代收回成本 —— 而**不是**反馈无用的证据。判据拒绝从单点下判断,原因正在于此。
 
-**Two scores above 1.0 turned out to be findings about the benchmark, not the model.**
-`CirclePacking` scored 1.4406 on a packing that is genuinely valid — closest centres 3.6e-15 from
-touching — against an N=13 anchor that loses to a textbook `4 + 2*sqrt(3)` construction.
-`CalorimeterDesign` scored 1.0121 past its reference witness with `robustness_score` of exactly
-**0.0**: its worst-shift utility sits at the shipped baseline. The searcher beat the witness on the
-axis it could see and gained nothing on the one it could not.
+**两个超过 1.0 的分数,结果都是关于基准的发现,不是关于模型的。** `CirclePacking` 拿到 1.4406,
+装填确实合法 —— 最近的圆心距离相切只差 3.6e-15 —— 但它对的那个 N=13 锚点输给了教科书构造
+`4 + 2√3`。`CalorimeterDesign` 拿到 1.0121、越过参考见证解,而 `robustness_score` **恰好是 0.0**:
+它的最坏情况效用停在出厂基线。搜索者在**看得见的轴**上赢过了见证解,在**看不见的轴**上一无所获。
 
-Neither was visible while the score was clipped at 1.0. Both would have read as "matched the
-reference".
+在分数被压在 1.0 时,这两个都不可见 —— 它们都会读成"追平了参考解"。
 
-**The oracles are still mostly this project's own code.** Seven of 43 put a community-standard
-toolkit in the oracle; 36 are author-written NumPy reductions of the science they describe. No task
-has completed external domain review. A score on those 36 measures agreement with an author's code,
-not with the field, and that is the largest standing gap in the benchmark.
+**oracle 大多仍是本项目自己的代码。** 43 个里只有 7 个把社区标准工具放进 oracle;36 个是作者写的
+NumPy 降阶实现。没有任何任务完成过外部领域评审。在那 36 个上,分数测量的是**与某位作者代码的一致性**,
+不是与该领域的一致性 —— 这是本基准最大的现存缺口。
 
-## Benchmark organization
+## 基准组织
 
-Tasks are grouped on disk by broad discipline, while their stable public IDs retain the more
-specific metadata domain:
+任务在磁盘上按大学科分组,而其稳定的公开 ID 保留更具体的元数据 domain:
 
 ```text
 benchmarks/<Discipline>/<Task>/
 task id: <Domain>/<Task>
 ```
 
-For example, `benchmarks/Physics/DiffractionGratingDesign/` has the stable task ID
-`Optics/DiffractionGratingDesign`. Code and reports should use the task ID; filesystem tooling
-should use the discipline path.
+例如 `benchmarks/Physics/DiffractionGratingDesign/` 的稳定任务 ID 是
+`Optics/DiffractionGratingDesign`。代码与报告应使用任务 ID,文件系统工具应使用学科路径。
 
-| Discipline | Tasks | Certified | Candidate |
-|---|---:|---:|---:|
-| Biology | 6 | 0 | 6 |
-| Chemistry | 10 | 1 | 9 |
-| Computer Science | 4 | 1 | 3 |
-| Earth Science | 3 | 0 | 3 |
-| Engineering | 10 | 0 | 10 |
-| Mathematics | 4 | 2 | 2 |
-| Physics | 6 | 1 | 5 |
-| **Total** | **43** | **5** | **38** |
-
-The certified core currently consists of:
+当前的 certified 核心:
 
 - `Chemistry/LennardJonesCluster`
 - `Algorithm/MatrixMultiplicationRank`
@@ -183,99 +142,58 @@ The certified core currently consists of:
 - `Optimization/CirclePacking`
 - `Photonics/MultilayerThinFilm`
 
-Run `python -m sle list --all` for the authoritative live inventory. The
-domain-to-discipline mapping is in
-[`sle/benchmark_layout.py`](sle/benchmark_layout.py); admission status
-is in [`sle/certification.yaml`](sle/certification.yaml).
+运行 `python -m sle list --all` 获取权威的实时清单。domain 到 discipline 的映射在
+[`sle/benchmark_layout.py`](sle/benchmark_layout.py),准入状态在
+[`sle/certification.yaml`](sle/certification.yaml)。
 
-## Community-oracle tasks
+## 社区 oracle 任务
 
-Most evaluators depend only on NumPy, SciPy and the standard library. Task narratives cite real
-science, but those oracles are author-written reduced-order reimplementations, and none has
-completed external domain review. A score on them measures agreement with the author's NumPy
-code, not with the science.
+多数 evaluator 只依赖 NumPy、SciPy 和标准库。任务叙述引用真实科学,但那些 oracle 是作者写的降阶
+重实现,且没有一个完成过外部领域评审。**在它们上面的分数测量的是与作者 NumPy 代码的一致性,
+不是与科学的一致性。**
 
-Seven tasks close that gap. Each puts a community-standard toolkit **in the oracle** and recomputes
-its anchor at evaluation time rather than quoting a number from a paper. `RNAEnsembleDesign` goes
-one step further and makes the anchor a routine the community actually uses rather than a value:
-it runs ViennaRNA's own designer inside the evaluator, restart-matched so a candidate cannot beat
-it by calling it more often.
+七个任务弥补了这个缺口。每一个都把社区标准工具包**放进 oracle**,并在评测时重算锚点,而不是从论文里
+抄一个数。
 
-| Task | Oracle | Form | Anchor |
+| 任务 | Oracle | 类型 | 锚点 |
 |---|---|---|---|
-| `QuantumErrorCorrection/QuantumErrorDecoder` | **Stim** rotated surface-code circuits, seeded sampling | Opt | **PyMatching 2** minimum-weight perfect matching, recomputed per run; uncapped |
-| `RNAEngineering/RNAEnsembleDesign` | **ViennaRNA** partition function over the Turner nearest-neighbour model; ensemble defect | Opt | ViennaRNA's `inverse_pf_fold`, best of three restarts, recomputed per run; uncapped |
-| `MedicinalChemistry/MolecularLeadOptimization` | **RDKit** QED, Ertl–Schuffenhauer SA, Lipinski/Veber, PAINS, Morgan/Tanimoto | Opt | mean drug-likeness of structurally distinct approved drugs from a 20-drug panel, each SMILES verified against published molecular weights; uncapped |
-| `Spectroscopy/SpinSystemInference` | **nmrsim** full Zeeman-plus-coupling Hamiltonian, diagonalised | Disc | least-squares fit of the nmrsim forward model, run at scoring time |
-| `Algorithm/GraphFromDistances` | **networkx** | Disc | truth-blind domain reference strategy, run at scoring time |
-| `Mathematics/SequenceLawRecovery` | **SymPy** | Disc | truth-blind reference recoverer; correct-refusal rate 0.50 by construction |
-| `QuantumDynamics/HamiltonianLearning` | **QuTiP** | Disc | truth-blind reference identifier |
-`Exoplanets/RadialVelocityPlanets` is deliberately not in that table, and used to be. Its reference
-detector uses astropy's Lomb-Scargle while its evaluator implements the periodogram itself, so the
-oracle is still an author reimplementation — which is the thing this standard exists to
-distinguish. The audit had been reading every file under `verification/`, so the reference vouched
-for the oracle; it now follows the evaluator's own imports. That is the right way round: a
-reference is *encouraged* to use the community tool, precisely so the author's oracle can be
-checked against it.
+| `QuantumErrorCorrection/QuantumErrorDecoder` | **Stim** rotated surface-code 电路,定种采样 | Opt | **PyMatching 2** 最小权完美匹配,每次运行重算;不设上限 |
+| `RNAEngineering/RNAEnsembleDesign` | **ViennaRNA** Turner 最近邻模型配分函数;ensemble defect | Opt | ViennaRNA 自己的 `inverse_pf_fold`,三次重启取最好,每次运行重算;不设上限 |
+| `MedicinalChemistry/MolecularLeadOptimization` | **RDKit** QED、Ertl–Schuffenhauer SA、Lipinski/Veber、PAINS、Morgan/Tanimoto | Opt | 20 种已上市药物面板中结构互异者的平均成药性,每个 SMILES 对照已发表分子量核验;不设上限 |
+| `Spectroscopy/SpinSystemInference` | **nmrsim** 完整 Zeeman 加耦合 Hamiltonian,对角化 | Disc | nmrsim 正演模型的最小二乘拟合,打分时运行 |
+| `Algorithm/GraphFromDistances` | **networkx** | Disc | truth-blind 领域参考策略,打分时运行 |
+| `Mathematics/SequenceLawRecovery` | **SymPy** | Disc | truth-blind 参考恢复器;按构造正确拒答率 0.50 |
+| `QuantumDynamics/HamiltonianLearning` | **QuTiP** | Disc | truth-blind 参考辨识器 |
 
-The discovery entries all ship their reference under `verification/` and run it at scoring time,
-and each reference is deliberately imperfect — a reference that scores 1.0 leaves the task no
-headroom. `SpinSystemInference`'s reference recovers 0.5833 of the mechanism at a false-discovery
-rate of 0.250.
+`Exoplanets/RadialVelocityPlanets` **有意**不在这张表里,而它曾经在。它的参考检测器用 astropy 的
+Lomb-Scargle,而它的 evaluator 自己实现周期图 —— 所以 oracle 仍是作者重实现,而这正是这条标准要区分的
+东西。此前审计读取 `verification/` 下的所有文件,于是**参考实现替 oracle 背了书**;现在它只跟随
+evaluator 自己的 import。这个方向才对:参考实现**应该**用社区工具,正是为了能拿它去核对作者的 oracle。
 
-Calibration ladders are in each task's `references/known_best.md`. On the decoder task:
-baseline 0.0, two NumPy/SciPy reference decoders at 0.2395 and 0.3832, GPT-5.6 budget-one best
-of five draws 0.7391, OpenEvolve at budget 40 **0.9932**, PyMatching anchor 1.0.
+发现类条目都把参考实现放在 `verification/` 下、在打分时运行,且每个参考都**刻意不完美** ——
+一个得 1.0 的参考不给任务留余量。`SpinSystemInference` 的参考恢复了 0.5833 的机制,假发现率 0.250。
 
-The oracle runs in the trusted parent, not the sandbox, so adding a scientific library to an
-evaluator does not touch the isolation model. A task may additionally expose a toolkit to its
-*candidate* through `frontier_eval/candidate_packages.txt`, expanded via a fixed allowlist in
-trusted code; verification-side anchors such as PyMatching are deliberately excluded from that
-allowlist.
+校准阶梯在各任务的 `references/known_best.md` 里。
 
-## Quickstart
-
-Run commands from the repository root. Core evaluation requires Python, PyYAML, NumPy, SciPy,
-and Linux Bubblewrap (`bwrap`). The checked-in environment is Python 3.8; optional search
-backends have newer Python requirements. Per-task oracle dependencies are pinned in each
-`verification/requirements.txt`.
+## 快速开始
 
 ```bash
-# Show certified tasks, then the complete inventory.
-python -m sle list
-python -m sle list --all
+python -m sle list          # 只列 certified
+python -m sle list --all    # 含 candidate
 
-# Evaluate the bundled baseline for a certified task.
 python -m sle eval --task Chemistry/LennardJonesCluster
-
-# Evaluate another candidate implementation.
-python -m sle eval \
-  --task Chemistry/LennardJonesCluster \
-  --candidate /path/to/solution.py
 ```
 
-Task names are accepted when unambiguous. Candidate and quarantined packages require the
-explicit `--allow-uncertified` flag.
+### 安装 oracle 工具包
 
-### Install the oracle toolkits
-
-Seven tasks put a community toolkit in the oracle, and each pins its version in
-`verification/requirements.txt`. On the benchmark host those files cannot be installed the usual
-way: the system interpreter's pip fails at import with a pyOpenSSL binding mismatch, so
-`pip install -r` never runs. `scripts/setup_oracle_env.sh` documents the way around it — a
-virtualenv created *without* `--system-site-packages` has working pip, and `--target` points it at
-the oracle interpreter's site-packages.
+七个社区 oracle 任务需要各自的领域工具包。`scripts/setup_oracle_env.sh` 记录了安装方式:
 
 ```bash
-bash scripts/setup_oracle_env.sh --check    # report what is present
-bash scripts/setup_oracle_env.sh            # install the pinned set
+bash scripts/setup_oracle_env.sh --check    # 报告已装了什么
+bash scripts/setup_oracle_env.sh            # 安装钉住的版本集
 ```
 
-The oracle runs in the trusted parent, so installing a toolkit does not touch the isolation model.
-A candidate receives one only if its task lists it in `frontier_eval/candidate_packages.txt` **and**
-the name appears in the audited allowlist in `sle/secure_eval.py`.
-
-### Configure an LLM
+### 配置 LLM
 
 ```bash
 cp sle/conf/llm/openai_compatible.example.yaml \
@@ -284,12 +202,12 @@ export OPENAI_API_KEY=your_key_here
 python -m sle smoke
 ```
 
-`local.yaml` is git-ignored. Configuration resolution is `--llm-config`, then `FS_LLM_CONFIG`,
-then `conf/llm/local.yaml`, then the committed example. Both OpenAI-compatible Chat Completions
-and Responses wires are supported. Reasoning models on the chat wire reject `max_tokens`; set
-`chat_max_tokens_field: max_completion_tokens` for those. Never commit credentials.
+`local.yaml` 已被 git 忽略。配置解析顺序为 `--llm-config` → `FS_LLM_CONFIG` →
+`conf/llm/local.yaml` → 已提交的示例。OpenAI 兼容的 Chat Completions 与 Responses 两种协议都支持。
+推理模型在 chat 协议上会拒绝 `max_tokens`,这类模型需设
+`chat_max_tokens_field: max_completion_tokens`。**永远不要提交凭证。**
 
-### Run an optimization trajectory
+### 跑一条优化轨迹
 
 ```bash
 python -m sle run \
@@ -300,107 +218,82 @@ python -m sle run \
   --workdir runs/lj/seed-0
 ```
 
-Available algorithms are `greedy_rewrite` (built-in single-incumbent full-file rewriting),
-`openevolve` (0.2.26, Python ≥3.10), `abmcts` (TreeQuest AB-MCTS-A, Python ≥3.11) and
-`shinkaevolve`. A named backend fails explicitly if unavailable; it never silently falls back.
+可用算法:`greedy_rewrite`(内置,单一在位者、整文件重写)、`openevolve`(0.2.26,Python ≥3.10)、
+`abmcts`(TreeQuest AB-MCTS-A,Python ≥3.11)、`shinkaevolve`。指名的后端若不可用会**显式失败**,
+绝不静默回退。
 
-`selection_blind` is the strict open-loop control: proposals always see the frozen baseline and
-its public metrics, while evaluation results are retained only for offline selection.
+`selection_blind` 是严格的开环对照:提案永远只看到冻结的基线及其公开指标,评测结果仅保留用于
+离线选择。
 
-## Evaluation and security model
+## 评测与安全模型
 
-The trusted parent process imports each hidden oracle. Candidate code runs separately through a
-typed JSON-RPC boundary inside Bubblewrap with no network namespace, read-only mounts, a private
-temporary filesystem, CPU/memory/file/descriptor/process limits, seccomp blocking process and
-thread creation, fixed numerical thread counts, and a label-blind failure taxonomy that removes
-candidate-controlled exception text from search feedback.
+受信父进程 import 每个隐藏 oracle。候选代码通过带类型的 JSON-RPC 边界、在 Bubblewrap 内单独运行,
+无网络命名空间、只读挂载、私有临时文件系统、CPU/内存/文件/描述符/进程限制、seccomp 阻断进程与线程创建、
+固定数值线程数,以及一套**标签盲的失败分类** —— 它把候选可控的异常文本从搜索反馈中剔除。
 
-Site-packages are resolved for the interpreter that will actually import them, not for the
-parent process — these differ whenever a search backend runs the harness inside its own
-virtualenv.
+site-packages 是按**实际会 import 它们的解释器**解析的,而不是按父进程 —— 当搜索后端在自己的
+虚拟环境里运行 harness 时,两者不同。
 
-This design reduces common leakage and host-access risks; it does not prove absence of
-training-data contamination, semantic shortcuts, simulator error, or hidden scientific
-confounding.
+这个设计降低了常见的泄漏与主机访问风险;它**不**证明不存在训练数据污染、语义捷径、模拟器误差
+或隐藏的科学混淆。
 
-## Task package contract
+## 任务包契约
 
 ```text
 <Task>/
-├── Task.md                       # agent-visible task description
-├── TASK_CARD.yaml                # scientific evidence and review record
-├── solution.py                   # weak but valid baseline
+├── Task.md                       # 智能体可见的任务描述
+├── TASK_CARD.yaml                # 科学证据与评审记录
+├── solution.py                   # 弱但合法的基线
 ├── frontier_eval/
-│   ├── metadata.yaml             # logical domain and task metadata
+│   ├── metadata.yaml             # 逻辑 domain 与任务元数据
 │   ├── initial_program.txt
 │   ├── candidate_destination.txt
 │   ├── entrypoint.txt
 │   ├── constraints.txt
 │   ├── agent_files.txt
 │   ├── readonly_files.txt
-│   └── candidate_packages.txt    # optional; domain toolkits exposed to the candidate
+│   └── candidate_packages.txt    # 可选;暴露给候选的领域工具包
 ├── verification/
-│   ├── evaluator.py              # hidden frozen oracle
-│   └── requirements.txt          # optional; pinned oracle dependencies
+│   ├── evaluator.py              # 隐藏的冻结 oracle
+│   └── requirements.txt          # 可选;钉住的 oracle 依赖
 └── references/
-    └── known_best.md             # required for uncapped tasks
+    └── known_best.md             # 不设上限的任务必需
 ```
 
-The evaluator returns at least finite numeric `combined_score` and `valid` fields. Adding a
-package makes it discoverable, not certified. See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the
-complete contract and certification requirements.
+evaluator 至少返回有限数值的 `combined_score` 与 `valid` 字段。**加一个包只是让它可被发现,
+不等于认证。** 完整契约与认证要求见 [`CONTRIBUTING.md`](CONTRIBUTING.md)。
 
-## Certification and evidence
+## 认证与证据
 
-Certification status describes evidence quality, not task difficulty: `certified` is admitted to
-the default benchmark, `candidate` is retained for calibration but missing one or more gates, and
-`quarantined` marks a reproduced material defect.
+认证状态描述的是**证据质量,不是任务难度**:`certified` 已进入默认基准,`candidate` 保留用于校准但
+缺少一项或多项门槛,`quarantined` 标记可复现的实质缺陷。
 
-| Evidence | Result | Scope |
+| 证据 | 结果 | 范围 |
 |---|---|---|
-| [Certification audit v66](experiments/task_certification_audit_2026-08-15_v66.json) | 5 certified / 38 candidate / 0 quarantined | Inventory and admission gates at the current 43-package revision |
-| [Secure baseline v49](experiments/secure_baseline_determinism_2026-08-18_v49.json) | 43/43 deterministic, valid, fail-closed | Two baseline evaluations per task, taken after the evaluator repairs |
-| [Evaluator crash resistance](experiments/evaluator_crash_resistance_2026-08-18_v1.json) | 0 of 43 evaluators a candidate can crash | Three deliberately bad submissions per task |
-| [Re-measurement, budget 1](experiments/recontract_2026-08_b1_s0_v2.json) | 43/43 runs, trusted | One seed, `normal`, against the current contracts |
-| [Re-measurement, budget 3 paired](experiments/recontract_2026-08_b3_paired_v2.json) | 258/258 runs, trusted | Three seeds, `normal` against `selection_blind` |
-| [Security audit v49](experiments/security_audit_2026-07-27_v49.json) | 23/23 tests passed | Sandbox and protocol regressions |
-| [GPT-5.6 50-task census](experiments/gpt56_science_census_analysis_2026-08-06_v1.json) | 50/50 cells; 36/50 valid proposals | Budget-one screen; challenge gate fails |
-| [Track F confirmatory analysis](experiments/track_f_analysis_2026-07-26_v1.json) | no identified feedback advantage | Preregistered, n=48/arm, on ActiveLawDiscovery |
-| [Admission criterion sweep](.research/task_admission_verification_2026-08-11.md) | 7 tasks shown to measure iteration; 3 of the 7 seed-fragile | Every recorded run, both conditions |
-| [Cross-model comparison](.research/cross_model_2026-08-13.md) | ranking consistent, admission verdicts not | Three models, 12 shared tasks |
+| [认证审计 v66](experiments/task_certification_audit_2026-08-15_v66.json) | 5 certified / 38 candidate / 0 quarantined | 当前 43 包修订下的清单与准入门槛 |
+| [安全基线 v49](experiments/secure_baseline_determinism_2026-08-18_v49.json) | 43/43 确定、有效、fail-closed | 每任务两次基线评测,取自 evaluator 修复之后 |
+| [evaluator 抗崩溃](experiments/evaluator_crash_resistance_2026-08-18_v1.json) | 43 个中 0 个能被候选打挂 | 每任务三种刻意写坏的提交 |
+| [重测 budget 1](experiments/recontract_2026-08_b1_s0_v2.json) | 43/43 运行,可信 | 单种子 `normal`,对当前契约 |
+| [重测 budget 3 配对](experiments/recontract_2026-08_b3_paired_v2.json) | 258/258 运行,可信 | 三种子,`normal` 对 `selection_blind` |
+| [安全审计 v49](experiments/security_audit_2026-07-27_v49.json) | 23/23 测试通过 | 沙箱与协议回归 |
+| [GPT-5.6 50 题普查](experiments/gpt56_science_census_analysis_2026-08-06_v1.json) | 50/50 格;36/50 有效提案 | budget-1 筛查;挑战门槛未过 |
+| [Track F 确证分析](experiments/track_f_analysis_2026-07-26_v1.json) | 未识别出反馈优势 | 预注册,n=48/臂,在 ActiveLawDiscovery 上 |
 
-[`experiments/TRUST.md`](experiments/TRUST.md) is the append-only trust manifest. Study plans and
-interpretations live in [`.research/`](.research/). Historical pre-sandbox reports are classified
-`UNTRUSTED_PRE_SANDBOX` and must not be used as benchmark evidence.
+## 近期发现
 
-## Recent findings
+完整记录在 [`.research/`](.research/),每份自带其主张边界。
 
-Full write-ups are in [`.research/`](.research/); each carries its own claim boundary.
+**一个任务的难度往往在它的提交契约上,不在它的科学上。** 隐藏 evaluator 长度与"提案连**有效**都算不上"
+的比例,秩相关是 **-0.675**(39 个任务)—— 最短的 evaluator 接受 92-100%,最长的接受 0-5%。
+机制是看得见的而不是推断的:`CalorimeterDesign` 拒绝了 36 个提案中的 36 个,而它自己的基线评测正常,
+原因是某个候选写了 `problem["light_yield_per_gev"]`,而键名是 `light_yield_pe_per_active_gev`。
+量是真的,名字没写在文档里 —— 提示词只列出了任务传入的 27 个键中的 15 个。
 
-**Every discovery task now emits all three axes.** Five evaluators were measuring mechanism
-recovery, false discovery and refusal but publishing some of them as counts, or not at all:
-`ActiveLawDiscovery` published false-discovery and abstention counts without the world counts
-that make them rates, and `GravityInversion`, `ReactionMechanismFitting`, `SpinSystemInference`,
-`NMRSpectrumFitting` and `InterventionalSCM` published no coverage at all, so on those tasks
-"was a discovery attempted" could not be read off a run. A sixth, `ForceFieldCalibration`, needed
-no change: it publishes mechanism recovery as `supported_correct_model_rate` and
-`hypothesis_score`, and the audit had been measuring its own vocabulary rather than the task.
+`scripts/audit_documented_keys.py` 在 15 个基线会读输入映射的任务里找到 **7 个**有同样缺陷 ——
+24 个未文档化的键,多数是候选必须遵守、却只能靠抄基线才能知道的边界。补上文档没有改动任何 evaluator、
+任何分数、任何科学:
 
-**A task's difficulty is often its submission contract, not its science.** The rank correlation
-between hidden-evaluator length and the fraction of proposals that are even valid is **-0.675**
-across 39 tasks: the shortest evaluators accept 92-100%, the longest accept 0-5%. The mechanism
-is visible rather than inferred. `CalorimeterDesign` rejected 36 of 36 proposals while its own
-shipped baseline evaluated fine, and the first rejection retained for diagnosis had read
-`problem["light_yield_per_gev"]` when the key is `light_yield_pe_per_active_gev` — the quantity
-was real, the name was undocumented, and the prompt named only 15 of the 27 keys the task passes
-in.
-
-`scripts/audit_documented_keys.py` found the same defect in **7 of 15** tasks whose baseline reads
-an input mapping — 24 undocumented keys, most of them the bounds a candidate must respect and
-could only learn by copying the baseline. Documenting them changed no evaluator, no score and no
-science:
-
-| task | valid before | valid after | best score before | after |
+| 任务 | 修复前有效率 | 修复后 | 修复前最好分 | 修复后 |
 |---|---:|---:|---:|---:|
 | `CalorimeterDesign` | 0% | **77%** | 0.0000 | **1.0000** |
 | `HeatExchangerDesign` | 66% | **96%** | 0.7665 | **1.0000** |
@@ -409,32 +302,16 @@ science:
 | `DistillationColumnDesign` | 38% | 29% | 0.5822 | **0.9960** |
 | `ForceFieldCalibration` | 5% | **17%** | 0.0600 | **0.8288** |
 
-Each row is 48 proposals after the fix against 36-204 before, same model and budget.
+`CalorimeterDesign` 此前被列为"需要重新校准的地板任务",那个诊断是错的。
+`QuartzCrystalMicrobalanceLab` 把两种失败模式分得很干净:契约问题修好了(58% → 83%),分数仍是 0.0000,
+因为剩下的是弃权。两件事让这个缺陷可被发现:被拒候选现在会保留(每次运行五个,只写盘、绝不回喂搜索者),
+以及补文档会改动 `Task.md` —— 而它就是提示词 —— 所以重绑工具会**拒绝**为可能已变动的冻结证据重新签名。
+详见 [contract_burden](.research/contract_burden_2026-08-14.md)。
 
-`CalorimeterDesign` had been on the list of floor tasks needing recalibration. That diagnosis was
-wrong: it was never too hard, it just never said what its inputs were called.
-`QuartzCrystalMicrobalanceLab` separates the two failure modes cleanly — its contract problem is
-fixed, 58% valid to 83%, and its score is still 0.0000, because what remains is the blanket
-abstention below and not the contract. `ForceFieldCalibration` still rejects most proposals, but
-the ones that land now score 0.8288 against 0.0600 before, so what was read as a floor task was a
-contract that let almost nothing through. One thing about it stays unexplained: the same rejected
-candidate raises inside the sandbox and returns cleanly outside it in 0.3s, with scipy importable
-in both. Full write-up in
-[.research/contract_burden_2026-08-14.md](.research/contract_burden_2026-08-14.md).
+**在全部五个得零分的任务上,可运行的参考实现都击败了全面弃权。** "拒绝每个世界是对一道难题的正确读法"
+这个说法,此前只靠任务卡里没人执行的散文支撑。五个现在都附带 truth-blind 参考,只用候选能收到的信息:
 
-Two things made this findable and are worth keeping. Rejected candidates are now retained (five
-per run, written to disk only, never fed back to the searcher) — before that, a task rejecting
-everything left nothing to look at, since the ledger stores candidates by hash and
-`best_program.py` is still the baseline when nothing is accepted. And documenting a task edits its
-`Task.md`, which is its prompt, so the rebinding tool **refuses** to re-sign a frozen task whose
-evidence could have moved. That refusal is the tool working, and it is the real cost of the fix.
-
-**Runnable references beat blanket abstention on all five tasks that scored zero.** The claim that
-declining every world was a failure rather than a correct reading of a hard task rested on prose
-in task cards that nothing executed. All five now ship a truth-blind reference — using only what a candidate receives, never the
-hidden world:
-
-| task | model proposals | reference | mechanism recovery |
+| 任务 | 模型提案 | 参考实现 | 机制恢复 |
 |---|---:|---:|---:|
 | `ProspectiveMetaAnalysis` | 0.0000 | **0.9088** | 0.9266 |
 | `QuartzCrystalMicrobalanceLab` | 0.0000 | **0.8330** | 0.9585 |
@@ -442,628 +319,329 @@ hidden world:
 | `ConvectionDiffusionOpt` | 0.0000 | **0.7636** | 0.9724 |
 | `GeneNetworkIntervention` | 0.0000 | **0.3926** | 0.8255 |
 
-That is every task that had scored zero on refusal. All five reach coverage 1.0,
-false-discovery 0.0 and correct-refusal 1.0 — the same refusal and
-false-discovery numbers the abstaining proposals get, since declining cannot misfire, plus the
-mechanism recovery those proposals forgo. `QuartzCrystalMicrobalanceLab`'s diagnosis is right on
-10 of 10 worlds.
+五个里有三个反复出现同一条教训:**对拟合模型做阈值化会把太多项标记为活跃,因为噪声落在每个参数上**,
+于是在 null 世界上制造出一个并不存在的机制。改成当作模型选择问题来答 —— 对支持模式做 BIC、
+对边做 BIC 反向消除 —— 把两个分数从 0.16 提到 0.79、从 0.16 提到 0.39。同样的形状还出现过两次:
+overtone dispersion 是**趋势**不是离散度(诊断正确率从 10 中 6 提到 10 中 10);另一处的"超出族"检验
+问的是合并效应是否落在已发表边界外,**一次都没触发过** —— 因为弯曲的调节关系照样产生完全普通的效应量。
+改测二次项显著性后,分数从 0.83 到 0.91,拒答率从 0.0 到 1.0。
 
-Writing them showed what the tasks measure, and one lesson appeared in three of the five:
-**thresholding a fitted model marks far too much active, because the noise lands in every
-parameter.** On null worlds it manufactures a mechanism where the truth is that there is none.
-Which entries are active is a model-selection question, and answering it as one — BIC over all 32
-support patterns in one task, BIC backward elimination over the edges in another — moved the
-scores from 0.16 to 0.79 and from 0.16 to 0.39. The same shape appeared twice more in different clothes. On `QuartzCrystalMicrobalanceLab`:
-overtone dispersion is a *trend* and not a spread, and judging it by scatter marked a world with
-missing samples (0.281) as more dispersing than either genuinely viscoelastic world (0.157, 0.160).
-Requiring a monotone trend took that diagnosis from 6 of 10 to 10 of 10. On
-`ProspectiveMetaAnalysis` the first out-of-family test asked whether the pooled effect fell
-outside the published bounds and never fired once: a curved moderator relationship produces
-perfectly ordinary effect sizes, so bounds cannot see it. Testing the quadratic term's
-significance instead — linear corpora at 0.17–1.32, nonlinear at 2.40 and 2.86 — took the score
-from 0.83 to 0.91 and the refusal rate from 0.0 to 1.0.
+写参考实现还暴露了两个别的手段发现不了的 harness 缺陷。`ConvectionDiffusionOpt` 的参考在所有世界上弃权,
+而它的 PDE 求解器与 evaluator 的**逐位相同** —— 差别在读传感器时用了双线性而非最近节点,
+在声明噪声 6.5e-4 之下,百分之一的采样误差就是四个标准差。**由仪器模型导致的拒答,在分数上与由科学
+导致的拒答无法区分。**
 
-A first `RadiativeTransferFit` reference claimed on every world and scored 0.0000 — the exact
-mirror of blanket abstention, and evidence that the normalisation demands discrimination rather
-than either extreme.
+**关于这种弃权的三个解释已被排除,剩下的那个是模型本身。** 提示词措辞预测不了它(-0.267,符号还反了),
+提交字段是有文档的,声明契约的规模也解释不了(九个任务上 +0.133,两个同为 17 字段的任务弃权率分别是
+100% 与 28%)。而参考实现在同样的任务上拿到 0.39 – 0.91,**科学是做得出来的**。
+在一个有拒答选项的困难推断面前,这些模型选择拒答而不是尝试,而归一化正确地不为此付钱。
+详见 [floor tasks are refusals](.research/floor_tasks_are_refusals_2026-08-14.md)。
 
-Two harness defects surfaced only because a reference was written. `ConvectionDiffusionOpt`'s
-reference abstained everywhere while its PDE solver was **bit-identical** to the evaluator's: the
-mismatch was reading the sensors, bilinear against nearest-node, and at a declared noise of 6.5e-4
-against field values near 0.27 a one per cent sampling error is a four-sigma residual. A refusal
-that comes from the instrument model rather than the science is indistinguishable from the real
-thing in the score. And `QuartzCrystalMicrobalanceLab` required four exact calibration key names
-that appeared nowhere in its prompt — the submission side of the same undocumented-contract defect
-the input-key audit had already found, and now audited too.
+**更强的模型可以让一个任务失去资格。** 在两个模型族都跑过的 12 个任务上,准入判决**每一次**都不同,
+而且是单向的:一个模型判定合格的,另一个读成 `control_not_exhausted`,因为在同样预算下它的 best-of-N
+还在爬 —— 后半段增益 0.028、0.024、0.017 对 0.000。曲线长度、任务版本、搜索者都是匹配的。
+交叉预算是任务**与**搜索者的联合性质,所以准入必须表述为一个联合主张。这是判据的代价,不是它的缺陷。
 
-**Three explanations for that abstention have been ruled out, and the remaining one is the
-models.** Prompt wording does not predict it: the density of abstain/refuse language correlates
-with the abstention rate at -0.267, with the sign the wrong way round. Undocumented submission
-fields do not explain it: the fields are documented. And the size of the claim contract does not
-explain it either — Spearman +0.133 over nine tasks, with `ProspectiveMetaAnalysis` (17 claim
-fields, 100% abstention) and `CatalystDeactivationLab` (17 fields, 28%) showing opposite behaviour
-at identical contract size.
+**决定什么可比的哈希,只能覆盖会改变分数的东西。** 两个缺陷让这个守卫拒绝了有效证据:
+一行卡片注释改动了每个任务的哈希;而哈希覆盖了任务自己的 `runs/` 输出,于是**任何人跑一次,
+任务的身份就变一次**。身份哈希现在排除生成产物,
+[`build_task_version_equivalence.py`](scripts/build_task_version_equivalence.py) 通过从 git 对象重放
+每个修订的哈希来恢复历史。20 个记录在多个哈希下的任务里,**16 个是同一个任务**。
+没有这张表,跨模型比较会从 50 个共享任务掉到 6 个。
 
-Meanwhile the five references score 0.39 to 0.91 on the same tasks, so the science is doable. What
-is left is a property of the searchers: given a hard inference with a refusal available, these
-models refuse rather than attempt, and the scoring correctly pays nothing for it. That is not a
-defect in the tasks — it is the kind of thing a discovery benchmark exists to measure.
-
-**The six tasks scoring zero are refusals, not difficulty.** Every valid proposal on them
-scores exactly 0.0000 rather than a spread of small values, which is the shape of a gate rather
-than of a hard landscape. Reading the evaluator's own components explains it: on
-`RadiativeTransferFit` a typical proposal has a correct-refusal rate of 1.0, a false-discovery
-rate of 0.0 and a discovery coverage of **0.0** — it declined every world. The score normalises
-against the all-abstain baseline, so declining everything earns exactly nothing, which is what
-the criterion is for.
-
-Across all discovery tasks the relationship is monotone: 100% blanket abstention on the four
-worst, 86% on the fifth, down to 10% on `EnergyBalanceModel` which scores 0.664. The floor is an
-abstention ranking, not a difficulty ranking. **Recalibrating those anchors would be treating the
-wrong thing** — raising the floor would start paying for declining, which is exactly the strategy
-the normalisation exists to refuse.
-
-`scripts/report_discovery_triple.py` now carries a coverage column — not a fourth axis; the
-triple says how good a discovery was, coverage says whether one was attempted — and names the
-tasks whose best valid proposal attempted nothing. Six further tasks publish no coverage metric
-at all, so on those the question cannot be answered from the runs. Full write-up in
-[.research/floor_tasks_are_refusals_2026-08-14.md](.research/floor_tasks_are_refusals_2026-08-14.md).
-
-**Three models rank the tasks the same way and disagree on every admission verdict.** Spearman
-over the open-loop scores is 0.959 within one model family (50 shared tasks) and 0.811 and 0.559
-across families (12 each). On the 12 tasks two families both ran, the admission verdict differs
-every time, and one-sidedly: tasks one model qualifies, the other reads as
-`control_not_exhausted`, because its best-of-N is still climbing at the same budget — second-half
-gains of 0.028, 0.024 and 0.017 against 0.000. Curve length, task version and searcher are all
-matched, so this is a model effect rather than an artefact.
-
-The consequence is structural. The crossover budget is a property of the task *and* the searcher,
-and the model is part of the searcher, so **a stronger model can disqualify a task**. Admission
-has to be stated as a joint claim about a task and a searcher; it cannot be a property of the
-task alone. That is a direct cost of the criterion, not a defect in it.
-
-**A hash that decides what is comparable must cover only what can change a score.** Runs record
-`task_package_sha256`, and the reports refuse to compare across a difference. Two defects made
-that guard reject valid evidence: a one-line `scientific_role` annotation added to every task's
-card moved every hash, and the hash covered the task's own `runs/` output, so a task's recorded
-identity changed whenever anyone ran it — 35 of the directories accumulate one.
-
-The identity hash now excludes generated output, and
-[`scripts/build_task_version_equivalence.py`](scripts/build_task_version_equivalence.py) recovers
-the history: it replays each revision's package hash from git objects, and where a recorded hash
-cannot be reproduced it asks instead whether anything behavioural has been committed since the
-task's first run. Of 20 tasks recorded under more than one hash, **16 are the same task**; three
-were genuinely edited and one is unresolved. Without that table, cross-model comparison drops
-from 50 shared tasks to 6.
-
-**The evolvability gap depends on the task, not just on the budget.** Paired `normal` versus
-`selection_blind` runs measure whether an oracle budget is better spent on a feedback loop or on
-independent draws. Sweeping the budget on both community-oracle tasks, seed-paired:
+**可演化性差距取决于任务,而不只取决于预算。** 两个社区 oracle 任务上的种子配对预算扫描:
 
 | budget | 3 | 5 | 7 | 10 | 15 | 20 |
 |---|---:|---:|---:|---:|---:|---:|
 | Molecular | +0.311 | **+0.371** | +0.036 | −0.093 | — | — |
 | decoder | +0.135 | +0.061 | — | +0.080 | **+0.172** | +0.111 |
 
-On the molecular task the gap is **not monotone**: it peaks at budget 5 — the strongest result in
-this project, eight paired wins out of eight, sign test p=0.0078 — then collapses, reaches parity
-at 7, and crosses zero near **budget 7.8**. On the decoder task the gap is **positive at every
-budget through 20**, three of five intervals excluding zero, and largest at 15.
+Molecular 的差距**不是单调的**:它在 budget 5 达到峰值 —— 八个配对种子八胜,符号检验 p=0.0078 ——
+然后坍塌,在 budget 7.8 附近穿过零。decoder 的差距到 budget 20 为止在每个预算上都为正。
+同一个搜索者、同一个模型、同一套协议,所以**交叉是任务的性质**。对照臂说明了原因:decoder 的开环从
+budget 5 起就平了,而 molecular 的从 0.404 爬到 0.970。一次 molecular 抽样可能落进长右尾,
+所以多抽有用;decoder 的单次抽样质量被"一代能写出什么"限制住,所以精炼胜过重抽。
 
-Same searcher, same model, same protocol. **The crossover is a task property, not a searcher
-property**, and the control arms say why: the decoder's open loop is flat from budget 5
-(0.824, 0.869, 0.824, 0.845) while the molecular one climbs 0.404 → 0.970. A molecular draw can
-land in a long right tail, so more draws keep helping; a decoder's per-draw quality is bounded by
-what one generation can write, so refining beats redrawing and the feedback arm climbs to 0.995
-against the matching anchor.
+这推出一条比 `Δ > 0` 更锐利的规则 —— 一个任务测量迭代的程度,取决于它的开环对照饱和的程度 ——
+而这条规则被证明是**必要但不充分**的,反例就在本仓库里。详见
+[evolvability_gap](.research/evolvability_gap_2026-08-09.md) 与
+[budget dependence](.research/evolvability_gap_budget_dependence_2026-08-09.md)。
 
-That implied a sharper admission rule than `Δ > 0`, measurable from the control arm alone: a task
-measures iterative improvement to the extent that its open-loop control saturates with budget.
-**That rule turned out to be necessary but not sufficient**, and the counterexample is in this
-repository — see [Does a task measure iteration](#does-a-task-measure-iteration).
-See [evolvability_gap](.research/evolvability_gap_2026-08-09.md) and
-[budget dependence](.research/evolvability_gap_budget_dependence_2026-08-09.md).
+**搜索后端从来没有产出过一个数据点。** 在 2822 次记录的算法调用中,唯一真正跑过的算法是
+`greedy_rewrite`。找到六个阻塞、修了四个:沙箱在任何后端虚拟环境下都没挂载任何包;chat 协议硬编码了
+`max_tokens`;OpenEvolve 静默丢弃超过 10,000 字符的候选(decoder 任务 40 次迭代中的 29 次,
+折合报告分数 0.054);上游 evaluator 超时会中止整个运行。修好之后,`CirclePacking` 三次 oracle 调用
+就被解决 —— **从来没有任何 certified 任务被暴露给种群搜索过**,所以记录在案的每一个难度主张,
+都是对着 budget 一到三的 greedy 校准出来的。详见
+[E0 unblocking](.research/e0_backend_unblocking_2026-08-08.md)。
 
-**The search backends had never produced a data point, for mechanical reasons.** Across 2822
-recorded algorithm invocations the only search algorithm ever run was `greedy_rewrite`. Six
-independent blockers were found and four fixed: the sandbox mounted no packages under any
-backend virtualenv; the chat wire hardcoded `max_tokens`; OpenEvolve silently discarded
-candidates over 10,000 characters (29 of 40 iterations on the decoder task, which moved its
-reported score by 0.054); and upstream evaluator timeouts aborted whole runs. ShinkaEvolve's own
-request body and an AB-MCTS bandit key error remain open.
-See [E0 unblocking](.research/e0_backend_unblocking_2026-08-08.md).
+**种群搜索没有复现 greedy 的反转 —— 方向上如此。** 在 molecular 任务 budget 10 上,greedy 得 −0.093、
+六个配对种子输五个,而 OpenEvolve 得 **+0.074**、十二个中赢八个。两个区间都跨零(p = 0.22 与 0.39),
+所以这与锁定解释一致但没有确立它。n=10 时的中途读数是 +0.153,是最终值的两倍 ——
+那两个缺失的格子是因为崩溃而缺失,但**不是随机缺失**:OpenEvolve 在它们上面得 0.990 和 1.034,
+而对照恰好抽到 1.325 和 1.336。**消失的格子必须被找回来,而不是绕开它们做分析。** 详见
+[population search](.research/population_search_results_2026-08-09.md)。
 
-**A certified task turned out to have no measurable difficulty.** With the backends working,
-`Optimization/CirclePacking` is solved in three oracle calls by OpenEvolve and reaches 0.999989
-under plain greedy — the two searchers are indistinguishable because the task is easy at
-`N = 7, 10, 13`, where the Packomania values are long settled. No certified task has ever been
-exposed to a population search, so every difficulty claim on record was calibrated against
-`greedy_rewrite` at budget one to three.
+## 任务是否测量迭代
 
-**Population search does not reproduce greedy's reversal — directionally.** On the molecular task
-at budget 10 against the same open-loop control, greedy scores −0.093 and loses five of six
-paired seeds, while OpenEvolve scores **+0.074** and wins eight of twelve. Both confidence
-intervals span zero and the sign tests give p = 0.22 and p = 0.39, so this is consistent with the
-lock-in explanation but does not establish it — the arms differ by 0.167 against a per-seed
-spread near 1.1.
+**判据是两段式的,两段都必要。**
 
-An interim read of the same comparison at n=10 gave +0.153, twice the final value. The two
-missing cells were missing because of a crash, not a result, but they were still not missing at
-random: OpenEvolve scored 0.990 and 1.034 on them while the control happened to draw 1.325 and
-1.336. Disappearing cells have to be recovered, not analysed around.
-See [population search](.research/population_search_results_2026-08-09.md).
+1. **必要条件** —— 开环对照必须饱和。如果 best-of-N 还在爬,更高的分数只说明抽样够多。
+2. **充分条件** —— 在对照已耗尽之后,种子配对的差距必须随预算扩大。
 
-## Does a task measure iteration
+`scripts/report_admission_criterion.py` 对任意有配对运行的任务应用这条判据。当前判决:
 
-A task earns its place here by measuring iterative improvement. That takes two conditions, and
-the order matters:
-
-1. **necessary** — the open-loop control must *saturate* with budget. A control that keeps
-   climbing means best-of-N is not exhausted, so independent sampling will eventually overtake
-   any searcher and whatever gap you measured was an artefact of the budget you picked.
-2. **sufficient** — with best-of-N exhausted, the feedback arm must still beat it, and the gap
-   must widen with budget rather than close.
-
-The sign of condition 1 reads backwards at first glance, and an earlier version of this section
-had it inverted — it asked for a control that keeps climbing, which disqualified every task that
-actually passes. The evidence sits in this repository: the decoder's control is flat from budget 5
-onward and its feedback arm pulls further ahead the longer it runs, while the molecular task's
-control climbs 0.404 → 0.970 and its gap crosses zero near budget 7.8. Refining beats redrawing
-precisely where redrawing has stopped paying. A saturated control is not a solved task — `floor`,
-where the control never leaves zero, is reported separately because nothing is measurable there
-either.
-
-`scripts/report_admission_criterion.py` applies both conditions to every run in `runs/`, reading
-each run's task and arm from its manifest rather than its directory name, pooling open-loop seeds
-across cohorts (saturation is one-armed) while keeping gaps within a cohort (arms from different
-cohorts were never paired). Over the 53 tasks with recorded runs:
-
-| verdict | tasks |
+| 判决 | 任务数 |
 |---|---:|
-| measures iteration | 5 |
-| measures iteration, but one paired seed carries it | 1 |
-| feedback actively harmful | 3 |
-| feedback harmful, but one paired seed carries it | 3 |
-| arms indistinguishable — gap too small to matter | 1 |
-| control exhausted, feedback arm never run | 25 |
-| control still climbing — best-of-N not exhausted | 7 |
-| judged on fewer than three seeds | 2 |
-| floor — control never leaves zero | 6 |
+| 测量迭代 | 7 |
+| 测量迭代,但只有一个配对种子撑着 | 1 |
+| 反馈**有害** | 5 |
+| 反馈有害,但只有一个种子撑着 | 3 |
+| 两臂无法区分 —— 差距小到无所谓 | 2 |
+| 交叉点在测量范围内 | 3 |
+| 对照仍在爬 —— best-of-N 未耗尽 | 12 |
+| 筛查过薄(少于三个种子) | 84 行 |
+| 地板 —— 对照从未离开零 | 17 |
 
-A gap counts as a difference only when it is large next to the scores being compared — at least 2%
-of the open-loop mean. Sign alone was not enough: `RNAEngineering/RNAEnsembleDesign` trailed by
-0.0021 against scores near 1.0, two parts in a thousand, and the criterion was calling that
-"harmful" with the same word it gave a task trailing by 0.37 against scores near 0.5.
+**5 个 certified 任务没有一个在"测量迭代"名单里。** 认证核心是默认 CLI 暴露的那一组,而在当前证据下
+它们全部是 `thin_screen`(各两个种子),不足以判定。认证在本仓库一贯描述的是**证据质量而非难度**,
+这就是那个区分的代价:一个任务可以完全通过认证,却仍然测不出迭代改进。
 
-**None of the seven certified tasks is among them.** The certified core is what the default CLI
-exposes, and measured against the criterion this benchmark exists to apply:
+**加种子会缩小合格集合,方向与脆弱性标志所预测的一致。** 必要条件是对开环对照后半段增益的阈值检验,
+而报告已声明三个种子足以判定它。枚举已有运行的三种子子集,可以看到
+`LowThrustTransfer`、`ProteinStabilityDesign`、`QuantumErrorDecoder` 都会翻转:
+`LowThrustTransfer` 在六个种子上读 0.0053(已耗尽),在前三个种子上读 0.0193(未耗尽)。
 
-| certified task | verdict | control settles at |
-|---|---|---:|
-| `ScientificComputing/PoissonSolver2D` | control exhausted, never paired | 1.000 |
-| `Physics/SpinGlassGroundState` | control exhausted, never paired | 1.000 |
-| `Optimization/CirclePacking` | control exhausted, never paired | 1.061 |
-| `Chemistry/LennardJonesCluster` | control exhausted, never paired | 0.998 |
-| `Algorithm/MatrixMultiplicationRank` | control exhausted, never paired | 0.979 |
-| `Photonics/MultilayerThinFilm` | control still climbing | 0.936 |
-| `Mathematics/CapSet` | control still climbing | 0.705 |
+留一法找不到这个 —— 从六个种子里去掉一个,中位数从不越过阈值,而它在一个刚被种子配对比较标出一个脆弱
+判决的清单上报告了零个脆弱判决。**子集必须小到判据自己声称信任的那个规模。**
 
-`PoissonSolver2D` and `SpinGlassGroundState` are clipped and sit at exactly 1.000 — best-of-N
-reaches the anchor, so there is nothing above it to measure. The three uncapped ones are being
-paired now, and are the only certified tasks that could still qualify. Certification in this
-repository has always described evidence quality rather than difficulty, and this is what that
-distinction costs: a task can be fully certified and still not measure iterative improvement.
+`ChemicalKinetics/ReactionMechanismFitting` 两个种子前还在这份名单上:它当时是清单里最大的差距,
++0.423、无一败绩;到四个种子时符号反转,现在读作有害,而且同样由一个种子带着。
+**任务没有变,变的是证据。**
 
-**Paired evidence exists for 19 tasks, and seven pass:** `QuantumErrorCorrection/QuantumErrorDecoder`,
-`Spectroscopy/NMRSpectrumFitting`, `Astrodynamics/LowThrustTransfer`,
-`ProteinEngineering/ProteinStabilityDesign`, `MaterialsScience/AlloyHardnessOptimization`,
-`Catalysis/CatalystDeactivationLab` and `ClimateScience/EnergyBalanceModel`.
+**反馈起负作用的任务,数量几乎与它明确起正作用的一样多。** `TrussWeightMinimization`、
+`RANSCalibration`、`HeatExchangerDesign` 的得分明显**差于**它们自己的开环对照,另有两个在单个种子上
+如此读数。这不是 harness 故障:两臂的通过率相当。最清楚的一例是 `TrussWeightMinimization` ——
+它落后自己的开环对照 0.37,从 budget 8 起输掉每一个配对种子(去掉最有利的那个种子后仍为 −0.30)。
+两臂各有约一半提交通过(开环 0.50 对反馈 0.40),所以不是契约在拒绝反馈臂的工作。开环臂在某个种子上
+达到 0.9979,而反馈臂在全部四个种子上的最好成绩是 0.4143:**独立抽样找到了尾巴,锚定在位者则找不到。**
 
-| task | gap at budget 3 → 12 | last budget | seeds | drop-one-seed |
-|---|---|---|---:|---:|
-| `QuantumErrorCorrection/QuantumErrorDecoder` | +0.104 → +0.129 | 5/6 | 6 | +0.133 |
-| `Spectroscopy/NMRSpectrumFitting` | +0.085 → +0.173 | 3/4 | 4 | +0.097 |
-| `Astrodynamics/LowThrustTransfer` | −0.011 → +0.089 | 3/4 | 4 | +0.031 |
-| `ProteinEngineering/ProteinStabilityDesign` | +0.032 → +0.035 | 5/5 | 6 | +0.017 |
+一个测量迭代改进的基准,必须有能力报告"迭代有时会让你付出代价"—— 这一个可以。
 
-**Adding seeds shrank the qualifying set, in the direction the fragility flag predicted.** The
-three tasks flagged as seed-fragile were re-run with three more seeds each:
+**留一种子守卫改变两个判决。** `ForceFieldCalibration` 在 budget 12 读到 +0.0367 的差距,
+去掉一个种子后变成 +0.0000 —— 它四个配对种子里只有一个有差距;`CatalystDeactivationLab` 读到的
+−0.022 在同样检验下翻正。两者都被报告为"一个种子深",而不是发现。**这个守卫刻意在两个方向上都生效:
+一个有害的判决和一个有利的判决,同样容易只靠一个种子撑着。**
 
-| task | seeds | second-half gain | verdict |
-|---|---|---|---|
-| `ProteinStabilityDesign` | 8 → **11** | 0.0000 → **0.0122** | qualified → **`control_not_exhausted`** |
-| `LowThrustTransfer` | 6 → **9** | 0.0053 → **0.0085** | still qualifies, closer to the 0.01 threshold |
+### 这甚至算不算对的那类问题
 
-`ProteinStabilityDesign` crossed the threshold and left the list, taking the count from seven to
-six. Both tasks moved the same way. Two points is weak evidence, but it is the direction the flag
-predicted and it means the earlier evidence was optimistic rather than merely thin.
+两个审计检查科学与证据。第三个 `scripts/audit_theme_fit.py` 检查它们共同假设的东西:
+这个任务是否首先就提出了一个开放式问题。它只读任务包,所以从任务写下的那天起就适用 ——
+不像准入判据需要配对运行。
 
-**Three of the seven rest on a saturation their own seeds would reverse.** The necessary
-condition is a threshold test on the open-loop control's second-half gain, and the report already
-declares three seeds enough to decide it. Enumerating three-seed subsets of the runs that exist
-shows `LowThrustTransfer`, `ProteinStabilityDesign` and `QuantumErrorDecoder` flipping:
-`LowThrustTransfer` reads 0.0053 over six seeds, which is exhausted, and 0.0193 over the first
-three, which is not.
-
-Leave-one-out does not find this — dropping a single seed from six never moves the median across
-the threshold, and it reported zero fragile verdicts on an inventory where the seed-matched
-comparison had just shown one. The subset has to be as small as the criterion claims to trust.
-
-A sixth was on this list two seeds ago and is not now.
-`ChemicalKinetics/ReactionMechanismFitting` showed the largest gap in the inventory, +0.423 with
-two paired seeds and no losses; at four seeds it reversed sign and now reads as harmful, carried by
-one seed in that direction too. Nothing about the task changed — the evidence did.
-
-**Feedback is actively harmful on nearly as many tasks as it clearly helps.** Three tasks —
-`StructuralEngineering/TrussWeightMinimization`, `Turbulence/RANSCalibration` and
-`Thermodynamics/HeatExchangerDesign` — score materially worse with feedback than their own
-open-loop controls, and two more read that way on a single seed. This is not a
-harness fault: pass rates are comparable between the arms, and on the decoder task the mechanism is
-visible — independent draws find a long right tail that an incumbent-anchored search never
-explores. A benchmark for iterative improvement has to be able to report that iteration sometimes
-costs you, and this one does.
-
-The last column is the mean after dropping whichever single seed helps the conclusion most. With
-four to six seeds a verdict can be one seed deep, so the report computes it and labels any gap it
-flips; all four survive at their final budget. `LowThrustTransfer` does flip at budget 5, which is
-visible in its curve and is why the trend across budgets is what the verdict rests on.
-
-The decoder is the strongest, passing in two independent cohorts. `ProteinStabilityDesign` has the
-smallest effect but the tightest: four of four paired seeds at budgets 8, 10 and 12 with a
-standard error near 0.013, so its gap sits about three standard errors from zero. The other two
-carry wider intervals on four seeds and are provisional. Effect size and evidence strength are
-different things here — `NMRSpectrumFitting` has a gap four times larger than
-`ProteinStabilityDesign` and a weaker case for it.
-
-**The drop-one-seed guard changes two verdicts.** `MolecularDynamics/ForceFieldCalibration` reads
-a gap of +0.0367 at budget 12 that becomes +0.0000 when one seed is removed — one of its four
-paired seeds had any gap at all — and `Catalysis/CatalystDeactivationLab` reads −0.022 that flips
-positive under the same test. Both are reported as one-seed-deep rather than as findings. The
-guard cuts in both directions on purpose: a harmful verdict can rest on one seed exactly as easily
-as a favourable one.
-
-The clearest case: `StructuralEngineering/TrussWeightMinimization`
-trails its own open-loop control by 0.37 and loses every paired seed from budget 8 onward
-(−0.30 after dropping the most favourable seed). Both arms pass roughly half their submissions —
-0.50 open-loop against 0.40 with feedback — so this is not the contract rejecting the feedback
-arm's work. The open-loop arm reached 0.9979 on one seed while the feedback arm's best across all
-four was 0.4143: independent draws find the tail, and anchoring on an incumbent does not.
-
-**31 tasks have an exhausted control and have never been paired.** That is the pool that can add
-qualifying tasks, and it is where paired runs are going next, ordered by how much room the
-control leaves: a control that has run out at 0.998 gives a searcher almost nothing to
-demonstrate, while `Catalysis/CatalystDeactivationLab` and `MolecularDynamics/ForceFieldCalibration`
-run out near 0.12.
-
-### Is it even the right kind of problem
-
-Two audits check the science and the evidence. A third, `scripts/audit_theme_fit.py`, checks
-something they both assume: that the task poses an open-ended problem in the first place. It reads
-only the task package, so it applies to every task from the day it is written, unlike the admission
-criterion which needs paired runs.
-
-| check | met |
+| 检查 | 满足 |
 |---|---|
-| continuously scored rather than paying out on a threshold | 43 / 43 |
-| declares one of the two forms, optimization or discovery | 43 / 43 |
-| open-ended — the anchor is not itself a solution a correct implementation reaches | 41 / 43 |
-| discovery tasks emitting all three axes | **19 / 19** |
-| frontier-anchored — uncapped against a reference the field would want to beat | 7 / 43 |
+| 连续打分而非达到阈值即付 | 43 / 43 |
+| 声明了优化或发现两种形态之一 | 43 / 43 |
+| 开放式 —— 锚点本身不是一个正确实现就能达到的解 | 41 / 43 |
+| 发现类任务报出全部三个轴 | **19 / 19** |
 
-Two tasks describe an anchor their own card calls a manufactured solution or the optimum:
-`ControlTheory/InvertedPendulumSwingUp` and `Optics/DiffractionGratingDesign`. They are not
-defective — they ask for a known method and have a unique answer, so iteration stops paying once
-it is found. Labelling them is more useful than measuring an evolvability gap on them. Two others
-that failed this check, `PoissonSolver2D` and `GateSynthesis`, have since been retired for having
-no headroom left, which is the same problem arriving through a different door.
+## 是否满足基准自身的标准
 
-The gap that matters is the last row, but it needs narrowing. Thirty-six of 43 tasks are clipped,
-and it is tempting to read that as the structural cause of saturation. Split by role:
-
-| | clipped | uncapped |
-|---|---:|---:|
-| discovery | 19 | 0 |
-| optimization | 17 | 7 |
-
-The 19 clipped discovery tasks are clipped **correctly**. Their `combined_score` is the fraction
-of the hidden mechanism recovered, so 1.0 means the truth was recovered, not that a reference was
-matched — nobody can recover more than all of it, and uncapping would mean nothing. Uncapping is
-a prescription for optimization tasks whose anchor is a human record.
-
-So the real surface is **17 optimization tasks**, not 36. That is still the structural reason the
-optimization half saturates, and retiring a maxed task treats the symptom rather than the cause.
-
-### A rejected proposal is not always a contract failure
-
-`scripts/report_protocol_vs_science.py` used to report one pass rate, valid proposals over total,
-and that number answered no clean question. It counted a candidate that crashed together with a
-candidate that ran to completion and was then ruled infeasible — the first never reached the
-science, the second reached it and failed there, and several of the second group carry a real
-score the oracle computed before rejecting them. Across the paired and screening cohorts the
-split is 162 that never executed against 101 that executed and were infeasible, so roughly two
-fifths of rejections are scientific rather than contractual. The report now gives
-`execution_rate` and `feasible_given_executed` separately.
-
-### How much of this is measurement, and how much is a screen
-
-The inventory was originally swept one open-loop seed per task; 48 of 52 tasks then in it had exactly one
-seed anywhere in the repository. A seeding pass has since raised 50 of 52 to three or more, and it
-changed verdicts: 17 of 52 tasks moved category. That pass also exposed a defect in the criterion
-itself. Saturation was judged on the *mean* second-half gain across seeds, and because a
-best-so-far curve is monotone, that gain is never negative — so the mean can only rise as seeds
-are added, and one climbing seed drags a set of flat controls over the threshold. The tell was
-that every one of the first 17 flips went the same way. Judging the *median* seed removes it, and
-the flips then go both directions. Rows below three seeds are labelled `thin_screen` rather than
-given a verdict.
-
-## Does a task meet the benchmark's own standards
-
-Measuring iteration is one question; whether a task's science is solid is another, and the two
-are independent. `scripts/audit_benchmark_standards.py` checks nine mechanically verifiable
-properties across all 43 packages and reports them separately, because they are different kinds
-of defect and an average would hide whichever one matters.
-
-| standard | met |
+| | |
 |---|---:|
-| declares specific known shortcuts | 53 / 62 |
-| states oracle invariants | 53 / 62 |
-| cites resolvable literature | 50 / 62 |
-| holds a sealed split back from the development score | 41 / 62 |
-| ships a runnable reference implementation the evaluator can re-derive its anchor from | 6 / 62 |
-| card claims the anchor is recomputed, without shipping one | 6 / 62 |
-| ships a reference record | 7 / 62 |
-| oracle is community-standard tooling, not a reimplementation | 3 / 62 |
-| exposes a difficulty level | 3 / 62 |
-| externally domain reviewed | 0 / 62 |
+| 陈述了抗捷径论证的任务 | 43 / 43 |
+| 陈述了科学不变量的任务 | 43 / 43 |
+| 引用可解析文献(DOI 或 arXiv)的任务 | 42 / 43 |
+| 对开发分数保留了密封划分的任务 | 35 / 43 |
+| 锚点为重算而非引用的任务 | **15 / 43** |
+| oracle 使用社区标准领域工具的任务 | **7 / 43** |
+| 附带可运行参考记录的任务 | **27 / 43** |
+| 带难度阶梯的任务 | **8 / 43**,其中一个实测有可用的台阶 |
+| 经外部领域专家评审的任务 | **0 / 43** |
 
-The distribution is lopsided in a specific way: the documentation standards are largely met while
-the standards that decide scientific credibility are largely not. The anchor row is split on
-purpose. A reference implementation under `verification/` is something the evaluator can run; a
-sentence in the card saying the anchor is "recomputed" is a claim, and spot-checking found that
-claim on a task whose same sentence also cites a literature value. Counting them together gave 9
-of 62 where the runnable evidence is 6. Only three tasks reach eight of
-nine, and those are the three built to these standards; nothing else exceeds five.
+前几行是框架,加粗的几行是实质 —— 而实质正是这份清单薄的地方。43 个 oracle 里有 36 个是作者写的
+NumPy 降阶实现,所以在它们上面的分数测量的是与那位作者代码的一致性,而不是与该领域的一致性。
+任务叙述引用了真实工作;多数 oracle 并不运行它。
 
-An independent check that the standards are measuring something: the nine tasks scoring zero are
-exactly the nine the repository has quarantined, and this audit never reads `certification.yaml`.
+锚点那一行是**有意拆开的**。`verification/` 下的参考实现是 evaluator 能跑的东西;卡片里写着锚点
+"经过重算"的一句话是一个**主张** —— 抽查发现这句话出现在某个任务上,而同一句话还引用了一个文献值。
+把两者合并计数会给出 9,而可运行的证据是 6。
 
-Crossing the two audits gives the honest position. `QuantumErrorCorrection/QuantumErrorDecoder` is
-the only task that both measures iteration and rests on community tooling with a recomputed
-anchor. `ProteinStabilityDesign`, `NMRSpectrumFitting` and `LowThrustTransfer` measure iteration
-but score against author-written NumPy reimplementations, so what they measure is agreement with
-that code rather than with the science. `MolecularLeadOptimization` is the reverse: solid
-grounding, but its control has not been exhausted.
+把两个审计交叉起来看,才是诚实的位置。`QuantumErrorDecoder` 是唯一一个**既**测量迭代**又**建立在
+社区工具与重算锚点之上的任务。`ProteinStabilityDesign`、`NMRSpectrumFitting`、`LowThrustTransfer`
+测量迭代,但打分对的是作者写的 NumPy 重实现,所以它们测的是与那段代码的一致性而非与科学的一致性。
+`MolecularLeadOptimization` 则相反:根基扎实,但它的对照还没有耗尽。
 
-See [standards audit](.research/benchmark_standards_audit_2026-08-11.md).
+详见 [standards audit](.research/benchmark_standards_audit_2026-08-11.md)。
 
-### What the newest task shows about the criterion
+### 最新的任务对判据说明了什么
 
-`RNAEngineering/RNAEnsembleDesign` was built to close the community-oracle gap and then run
-through the admission criterion like anything else. Over four paired seeds its gap is +0.0135 at
-budget 3 and −0.0005 by budget 12, against an open-loop mean of 1.0062 — the searcher sits right
-at ViennaRNA's own partition-function designer and feedback neither helps nor hurts. The verdict
-is `no measurable difference`, which is the honest reading and not one the criterion could produce
-until the materiality rule was added.
+`RNAEngineering/RNAEnsembleDesign` 是为了补社区 oracle 缺口而建的,然后像其他任务一样过了一遍准入判据。
+在四个配对种子上,它的差距在 budget 3 是 +0.0135,到 budget 12 是 −0.0005,而开环均值是 1.0062 ——
+搜索者正好坐在 ViennaRNA 自己的配分函数设计器上,反馈既不帮忙也不添乱。判决是 `no measurable
+difference`,这是诚实的读法。
 
-That is a useful negative for the benchmark: a task can have a community oracle, a recomputed
-anchor, a sealed split and a difficulty ladder — eight of nine standards — and still not measure
-iterative improvement. Scientific grounding and RSI fit are separate properties, and this task now
-demonstrates the separation from the other direction.
+这对基准是一个有用的否定结果:一个任务可以有社区 oracle、重算锚点、密封划分和难度阶梯 ——
+九项标准里满足八项 —— **却仍然测不出迭代改进**。科学根基与 RSI 适配性是两个独立的性质。
 
-## Difficulty ladders
+## 难度阶梯
 
-Eight tasks carry a `DIFFICULTY` level so that saturating one does not retire the task. Every one
-of them sits at level 1, which means `difficulty_parameterized` currently asserts that a ladder is
-*present*, not that it does anything. `scripts/report_difficulty_ladder.py` measures the difference:
-it copies the task, rewrites `DIFFICULTY` in the copy, and scores the same program through the
-copy's own evaluator, so the shipped task is never touched.
+八个任务带 `DIFFICULTY` 层级,好让一个任务饱和之后不必退役。**它们全部停在层级 1**,这意味着
+`difficulty_parameterized` 目前断言的是阶梯**存在**,不是阶梯**有用**。
+`scripts/report_difficulty_ladder.py` 测量这个差别:它复制任务、在副本里改写 `DIFFICULTY`、
+用副本自己的 evaluator 给同一个程序打分,所以已发布的任务一行不动。
 
-The first task measured that way was `RNAEnsembleDesign`, chosen because it is classified saturated
-*and* has a ladder — exactly the retire-or-promote question:
+第一个这样测的是 `RNAEnsembleDesign`,选它是因为它**既**被归为饱和**又**有阶梯 ——
+正是"退役还是升级"这个问题:
 
-| level | best recorded candidate | shipped baseline |
+| 层级 | 最好候选 | 出厂基线 |
 |---|---:|---:|
 | 1 | **0.9971** | 0.0 |
 | 2 | **0.9422** | 0.0 |
-| 3 | invalid | **invalid** |
+| 3 | 无效 | **无效** |
 
-Level 2 is a real rung: the task is saturated at level 1 and is not at level 2, and the baseline
-stays valid at both, so the normalisation still has an anchor. The answer for this task is promote,
-not retire.
+层级 2 是真台阶:任务在层级 1 上饱和、在层级 2 上不饱和,而基线在两级上都有效,所以归一化仍有锚点。
+**这个任务的答案是升级,不是退役。**
 
-Level 3 is not a rung. The *baseline* cannot produce a valid submission there, and a level where
-the baseline is invalid measures nothing — the score is normalised to "baseline = 0" and there is
-no baseline. So this three-level ladder has two usable levels.
+层级 3 不是台阶。**基线**在那里给不出合法提交,而一个基线无效的层级什么都测不了 ——
+分数以"基线 = 0"归一化,那里没有基线。所以这个三级阶梯只有两级可用。
 
-Finding that needed the baseline. Scored with the candidate alone, level 3 reads as "too hard to
-solve", which is indistinguishable from "broken" until something known-valid is run through it.
+发现这一点需要基线。只用候选去测,层级 3 读起来是"难到解不出",而在有已知合法的东西跑过去之前,
+它与"坏了"无法区分。
 
-The two community-oracle ladders below were built earlier and in more depth. Level 1 reproduces
-the shipped instances and their recorded anchors exactly; a level with no measured entry raises
-rather than being extrapolated.
+下面两个社区 oracle 的阶梯建得更早也更深。层级 1 精确复现已发布的实例与其记录锚点;
+没有实测条目的层级会直接抛错,而不是外推。
 
-Each ladder is a measured table rather than a formula, because both tasks punish the obvious
-formula:
+每个阶梯是一张**实测表而非公式**,因为两个任务都惩罚那个显而易见的公式:
 
-- On the decoder, difficulty cannot be raised by code distance. Below threshold a larger code
-  drives the logical error rate down exponentially, so the anchor stops failing often enough to
-  measure — a first attempt left a level-3 regime with 9 anchor failures. Each level instead
-  pushes the physical error rate toward the circuit-level threshold near 1%. Shot counts then hold
-  the *decoding workload* fixed, not the shot count: detectors grow as `d²`, so keeping the shots
-  high silently made level 2 a 1.68× throughput test, and 24 of 29 feedback-arm failures there
-  were timeouts.
-- On the molecular task the two knobs interact through the reference panel. Tightening the
-  diversity ceiling shrinks the retained portfolio *and* raises the anchor, because the panel is
-  selected highest-QED-first and the survivors of a stricter ceiling are the better drugs. Past a
-  point it breaks the panel outright.
+- 在 decoder 上,难度不能靠码距提高。阈值以下,更大的码会让逻辑错误率指数下降,于是锚点不再频繁失败到
+  可测量的程度 —— 第一次尝试留下了一个只有 9 次锚点失败的层级 3。每一级改为把物理错误率推向接近 1%
+  的电路级阈值。此时 shot 数固定的是**解码工作量**而不是 shot 本身:探测器随 `d²` 增长,
+  所以保持高 shot 数会悄悄把层级 2 变成 1.68 倍吞吐测试,而那里反馈臂 29 次失败中有 24 次是超时。
+- 在 molecular 任务上,两个旋钮通过参考面板相互作用。收紧多样性上限会缩小保留的组合**并**抬高锚点,
+  因为面板是按 QED 从高到低选的,更严格上限的幸存者是更好的药。过了某个点会直接破坏面板。
 
-Rungs are placed by the shape of the evolvability gap against budget, not by score. Level 1 of the
-molecular task is effectively solved — the strongest submission this benchmark has produced scores
-1.3363 against a QED ceiling near 1.35 — and its gap turns negative by budget 10. The level-2 rung
-was chosen because its gap instead grows monotonically, −0.011 at budget 3 to +0.062 at budget 12
-over eight paired seeds. That endpoint's interval includes zero; the evidence is the monotone
-trend across five budget points, not the endpoint.
+台阶是按**可演化性差距对预算的形状**放置的,不是按分数。molecular 任务的层级 1 实际上已被解决 ——
+本基准产出过的最强提交得 1.3363,而 QED 上限接近 1.35 —— 它的差距在 budget 10 转负。
+选择层级 2 是因为它的差距转为单调增长:八个配对种子上从 budget 3 的 −0.011 到 budget 12 的 +0.062。
+那个端点的区间包含零;**证据是横跨五个预算点的单调趋势,不是端点本身。**
 
-All ladder measurements use `greedy_rewrite` with searcher `gpt-5.5` at `reasoning_effort: low`.
-The calibration ladders in each task's `references/known_best.md` were measured with GPT-5.6, so
-the two are not comparable, and because the crossover is a task-and-searcher property the rung
-placement is specific to this condition. Run manifests now record the model condition in readable
-form, alongside the hash that binds it, so this cannot be ambiguous again.
+所有阶梯测量都使用 `greedy_rewrite` 配搜索者 `gpt-5.5`、`reasoning_effort: low`。各任务
+`references/known_best.md` 里的校准阶梯是用 GPT-5.6 测的,两者不可比;而且因为交叉是任务与搜索者的
+联合性质,台阶位置只对这一组条件成立。
 
-## Known state before relying on this branch
+## 依赖本分支前需知
 
-Several things are deliberately left open rather than papered over.
+以下几件事是**有意留着敞口**的,而不是被糊过去。
 
-**The frozen measurement-health cohort passes 7 of 7, and getting there is the interesting part.**
-A frozen cohort is a snapshot mechanism for a release point, not a guard for continuous
-development: every evaluator improvement moves a task hash and unbinds the evidence attached to
-it. The order that works is *finalize the evaluators, measure once, rebind once*.
+**冻结的测量健康 cohort 通过 7/7,而到达那里的过程才是有意思的部分。** 冻结 cohort 是发布点的快照机制,
+不是持续开发期的守卫:每一次 evaluator 改进都会移动任务哈希、解绑挂在它上面的证据。行得通的顺序是
+**先定稿 evaluator,测一次,重绑一次**。
 
-`scripts/check_evaluator_inert.py` does the measuring. It runs each frozen artifact through the
-evaluator as it stood at the freeze revision and as it stands now, and compares the two metric
-dictionaries key by key. On this cohort that came out **6 inert, 1 changed** — removing the upper
-clip could not move a score that was already under the cap, except on
-`DiffractionGratingDesign`, where the artifact's `robustness_score` genuinely crossed 1.0. The six
-carried their evidence forward with a number behind the claim; the seventh had all three of its
-bindings re-measured on the current runtime instead. Re-measuring the calibration moved 8 of 3004
-keys, all at 1e-15.
+`scripts/check_evaluator_inert.py` 负责"测一次":它把冻结产物分别送过冻结修订那版和当前版的 evaluator,
+逐键比较两个指标字典。在这个 cohort 上结果是 **6 惰性、1 变动** —— 去掉上限不可能移动一个本来就在
+上限之下的分数,除了 `DiffractionGratingDesign`,它的产物 `robustness_score` 确实越过了 1.0。
+六个带着一个数字把证据带过来,第七个则把三份绑定全部在当前运行时上重测。重测校准移动了 3004 个键中的
+8 个,全在 1e-15 量级。
 
-Two things were worth more than the 7/7. The materiality audit and the preflight were asking the
-same question — *could this evaluator edit have moved this evidence* — and answering it
-differently, so the same task passed one report and failed the other; they now read the exemption
-from the same record. And a test pinned the calibration's filename date, which made it fail the
-moment the evidence was legitimately re-measured — exactly backwards. It asserts the recorded
-evaluator hash now.
+比 7/7 更值钱的是另外两件事。实质性审计与预检在问同一个问题 —— *这次 evaluator 编辑会不会移动这份证据* ——
+却给出不同答案,于是同一个任务在一份报告里通过、在另一份里失败;现在两者从同一条记录读取豁免。
+以及,有个测试把校准文件名里的日期钉死了,于是证据一被正当重测它就必然失败 —— 方向完全反了。
+它现在断言的是记录在案的 evaluator 哈希。
 
-**`CirclePacking`'s N=13 anchor is wrong, and the replacement is not sourced yet.** The task
-normalises against 7.6274 as the smallest known square side; `4 + 2*sqrt(3) = 7.4641` is a
-construction anyone can write down, and a recorded run reached a verified valid 7.4632466. A "best
-known" that loses to a textbook packing is not a best known, so the 1.4406 built on it — and the
-`saturated_on_ramp` classification that followed — should not be quoted until the number is fixed.
+**`CirclePacking` 的 N=13 锚点是错的,而替代值还没有出处。** 该任务对着 7.6274 归一化(号称最小已知
+方形边长),而 `4 + 2√3 = 7.4641` 是任何人都能写下的构造,并且有一次记录运行达到了经验证合法的
+7.4632466。**一个输给教科书装填的"已知最优"不是已知最优**,所以建立在它上面的 1.4406 ——
+以及随之而来的 `saturated_on_ramp` 分类 —— 在这个数字修正之前不应被引用。
 
-Two attempts to derive a replacement here both came back *worse* than the current anchor (7.8059
-and 7.7042), so nothing was changed: shipping a weaker reference would lower the bar rather than
-correct it. That failure is informative in its own right — a naive search does not get close to
-7.4632, so the task discriminates. It is the ruler that is wrong, not the question.
-`tests/test_external_anchors_are_checkable.py` keeps this the only task in the inventory
-normalising against a literal nobody here can re-derive. See
-[the write-up](.research/circle_packing_anchor_defect_2026-08-18.md).
+两次尝试在本地推导替代值,得到的结果都**比现有锚点更差**(7.8059 与 7.7042),所以什么都没改:
+交付一个更弱的参考是在降低标准,不是在纠正它。这个失败本身是有信息量的 —— 朴素搜索离 7.4632 差得远,
+**说明任务是有区分度的,错的是尺子而不是题目**。
+`tests/test_external_anchors_are_checkable.py` 保证这仍是清单里唯一一个对着"本地无法重新推导的字面量"
+归一化的任务。详见 [write-up](.research/circle_packing_anchor_defect_2026-08-18.md)。
 
-**The trusted runtime changed, and re-certifying it is a decision nobody has taken.** Frozen
-analysis artifacts bind to a `runtime_source_sha256`, so editing `sle/evaluate.py` or
-`sle/trusted_driver.py` unbinds them — and both were edited, to carry the cause of an evaluator
-failure to the operator's log. `tests/test_runtime_migration.py` fails on that, correctly.
+**受信运行时变了,而重新认证是一个没人做过的决定。** 冻结的分析产物绑定在 `runtime_source_sha256` 上,
+所以编辑 `sle/evaluate.py` 或 `sle/trusted_driver.py` 会解绑它们 —— 而两者都被编辑过,
+为的是把 evaluator 失败的原因带到运维日志。`tests/test_runtime_migration.py` 因此失败,这是正确的。
 
-Re-running the migration audit gives the shape of the change rather than a verdict: **654 numeric
-differences across 14 retained artifacts, maximum 0.1536, and zero failure-taxonomy changes.** Which
-candidates count as valid or invalid did not move at all; only the scores did, which is consistent
-with the evaluator repairs and the uncapping and not with the two logging edits. Registering a fresh
-audit would amount to declaring the new numbers the right ones. That is defensible — the uncapping
-was intended — but it is a governance call, so it has been left as one rather than pushed through by
-updating a constant. See
-[runtime governance](.research/runtime_change_governance_2026-08-09.md).
+重跑迁移审计给出的是变化的**形状**而非判决:**14 个保留产物上 654 处数值差异,最大 0.1536,
+以及零处失败分类变化**。哪些候选算有效或无效完全没动,只有分数动了 —— 这与 evaluator 修复和去掉上限
+一致,而与那两处日志编辑无关。登记一份新审计等于宣布新数字才是对的。这是站得住的 ——
+去掉上限本就是有意为之 —— 但它是一个**治理判断**,所以被留作判断,而不是通过改一个常量推过去。
+详见 [runtime governance](.research/runtime_change_governance_2026-08-09.md)。
 
-The nine per-task analysis tests that used to fail alongside it are fixed. They read `runs/` paths
-recorded as absolute paths on the machine that produced them, so every other checkout hit a
-containment check and reported "workdir is outside repository" — which reads as a security refusal
-and was a portability defect. Paths are now placed in the repository doing the reading, and a
-checkout without the run directories skips with a reason instead of erroring, because a reader
-missing data is not a reader looking at broken evidence.
+那九个曾与它一起失败的逐任务分析测试已经修好。它们读取的 `runs/` 路径是**产出机器上的绝对路径**,
+于是其他任何检出都会撞上容纳性检查并报 "workdir is outside repository" —— 听起来像安全拒绝,
+实际是可移植性缺陷。现在路径按**正在读取的那个仓库**放置,而没有运行目录的检出会**带原因跳过**
+而不是报错,因为**缺数据的读者不是在看坏证据的读者**。
 
-**What the re-measurement campaign cost, and why every step of it refused loudly.** The headline
-is in [Current state](#current-state); this is the part worth reading if you maintain the
-repository. Before the campaign, no recorded model run was bound to a current task contract and
-every model-derived health check read zero — the matched-control count on `ActiveLawDiscovery` and
-the observed first-valid step on `RNAInverseDesign` read 0 where they had read 48 and 1. Nothing
-had been withdrawn. The evidence was *unbound*, which is a different and recoverable thing, and
-the repair was to re-run rather than to re-sign. Model tables further down that predate the
-campaign are measured against pre-uncapping evaluators.
+**重测战役的代价,以及为什么它的每一步都大声拒绝。** 结论在[当前状态](#当前状态);这一段是给维护者的。
+战役之前,没有任何记录运行绑定在当前任务契约上,每一项由模型推导的健康检查都读零 ——
+`ActiveLawDiscovery` 的匹配对照计数和 `RNAInverseDesign` 的首个有效步分别读 0,而它们曾读 48 和 1。
+**什么都没有被撤回。** 证据是**被解绑**了,这是另一回事,而且可恢复,修法是重跑而不是重签。
 
-One repair then cascaded, and it is the clearest illustration of how the bindings are supposed to
-behave. Fixing three evaluators that a candidate could crash moved their task contracts, which
-unbound their model evidence, which unbound their secure baseline, which dropped internal science
-admission from 43 to 40. Re-running those three tasks at budget 1 restored the model evidence and
-admission *stayed* at 40 — the secure baseline is a single global document and the one on file
-predated the repairs. Re-running that restored 43 of 43. Four links in the chain, four refusals,
-none of them silent.
+随后一次修复引发了连锁,它是这些绑定应有行为最清楚的例证。修好三个"候选能打挂"的 evaluator 移动了
+它们的任务契约,解绑了它们的模型证据,解绑了它们的安全基线,把内部科学准入从 43 压到 40。
+在 budget 1 重跑那三个任务恢复了模型证据,而准入**仍是** 40 —— 安全基线是一份全局文档,
+在档的那份早于修复。重跑它才恢复 43/43。**四个环节,四次拒绝,没有一次是静默的。**
 
+**在看得见的轴上赢过参考解,不等于解决了任务。** `CalorimeterDesign` 拿到 **1.0121**、越过参考见证解,
+而 `robustness_score` **恰好是 0.0** —— 它的最坏情况效用停在出厂基线。
 
+这是任务在按设计工作:稳健性是 evaluator-only,正是为了不让它被直接优化。它暴露的是**饱和分类器的
+盲点** —— 该分类器只凭 `combined_score`(搜索者唯一收到的指标)决定退役,会退掉一个有一半没被碰过的
+任务。判决现在会说明它是关于哪个指标的,而 `scripts/report_saturation_hidden_axes.py` 会给最好的记录
+候选重新打分以读出隐藏轴,因为可见性过滤在写入前就把它们剥掉了。七个饱和任务里有一个处于这种状态。
 
-**Beating the reference on the visible axis is not the same as solving the task.**
-`CalorimeterDesign` scored **1.0121**, past its reference witness — with `robustness_score` of
-exactly **0.0**, meaning its worst-shift utility sits at the shipped baseline. The searcher beat the
-witness on the axis it could see and gained nothing at all on the one it could not.
+这一条和 `CirclePacking` 的锚点,在分数被压在 1.0 时都不可见 —— 两者都会读成恰好 1.0,
+与"仅仅追平参考解"无法区分。这正是移除上限的目的,而它最先浮出来的两样东西,都是**基准的缺陷**
+而不是模型的成绩。
 
-That is the task working as designed: robustness is evaluator-only precisely so it cannot be
-optimised directly. What it exposed is a blind spot in the saturation classifier, which decides
-retirement from `combined_score` alone — the one metric a searcher receives — and would have retired
-a task half of which is untouched. The verdict now states which metric it is a verdict about, and
-`scripts/report_saturation_hidden_axes.py` scores the best recorded candidate again to read the
-hidden axes, since the visibility filter strips them before anything is written. Of seven saturated
-tasks, one is in this state.
+**候选曾能打挂三个 evaluator,而崩溃的代价是一整个 cohort,不是一个候选。** 一次 129 块的配对扫描
+返回四个终局失败,每一个只报 `trusted evaluator internal failure` —— 没有任务、没有行号、没有原因 ——
+而这四个让整份战役报告作废。
 
-Neither this nor the `CirclePacking` anchor was visible while scores were clipped at 1.0. Both
-would have read as exactly 1.0, indistinguishable from a candidate that merely matched the
-reference. That is what removing the cap was for, and the first two things it surfaced were defects
-in the benchmark rather than results from the model.
+那句固定措辞是**有意**的:异常字符串不得把 evaluator 内部或隐藏值带回给候选。但基础设施失败会
+**中止运行**而不是给任何东西打分,所以在那条路径上没有下游搜索者需要保护。原因现在写进受信驱动的
+stderr,并且只在运行已被放弃的地方附加,让这种分离由结构保证而非靠人记住。
 
-**A candidate could crash three of the evaluators, and a crash costs a cohort rather than a
-candidate.** A 129-block paired sweep returned four terminal failures, each reporting only
-`trusted evaluator internal failure` — no task, no line, no cause — and those four invalidated the
-whole campaign's report. The fixed wording is deliberate: an exception string must not carry
-evaluator internals or hidden values back to a candidate. But an infrastructure failure *aborts
-the run* rather than scoring anything, so there is no searcher downstream to protect on that path.
-The cause now goes to the trusted driver's stderr and is attached only where the run is already
-being abandoned, which keeps the separation structural rather than remembered.
+原因一可见,一次运行就找到了:`KeyError: 'abstained'`。evaluator 在"世界评分抛异常"时构造的行,
+比"评分成功"时构造的行少几个键,而后来加的 `discovery_coverage`(发现三元组的第四列)正好读其中一个。
+第三个任务则**根本没有失败路径**:控制器返回字典时直接从 `float()` 抛出。
 
-With the cause visible it took one run to find: `KeyError: 'abstained'`. The row an evaluator
-builds when scoring a world *raises* carried fewer keys than the row it builds when scoring
-succeeds, and `discovery_coverage` — added later, as the fourth column of the discovery triple —
-read one of the missing ones. A third task had no failure path at all: a controller returning a
-dictionary raised out of `float()`.
+`scripts/check_evaluator_survives_bad_candidates.py` 现在对全清单问这个问题:给每个 evaluator
+喂三种会失败的候选 —— 一个抛异常、一个返回 `{}`、一个返回字符串 —— 看它是把候选判零还是自己死掉。
+曾经是三个任务崩溃,现在是 **43 个里 0 个**,共 129 个用例。
 
-`scripts/check_evaluator_survives_bad_candidates.py` now asks the question of the whole inventory
-by feeding every evaluator three candidates that fail — one that raises, one that returns `{}`,
-one that returns a string — and asking whether the evaluator scores them zero or dies. It was 3
-tasks crashing; it is now **0 of 43**, across 129 cases.
+这个检查的结构化版本先写过一次然后扔掉了。它比较两个分支的键集合,标出了五个可执行检查刚刚放行的任务,
+因为**一个键缺不缺要看聚合走的是哪个列表**。一个比它所代表的性质更严格的不变量,什么也买不到,
+只会换来一个常红的测试套件。
 
-A structural version of this check was written first and thrown away. It compared the key sets of
-the two branches and flagged five tasks the executable check had just cleared, because whether a
-missing key matters depends on which list the aggregation walks. An invariant stricter than the
-property it stands in for buys nothing and costs a permanently red suite.
+**有一个 oracle 不是函数,而头条分数把它藏住了。** 43 任务的确定性扫描返回 42/43。
+`RNAEnsembleDesign` 失败,因为 ViennaRNA 的设计器在 start 参数为 `None` 时,会从 C 库内部一个
+任务自己的 `random.Random(seed)` 够不到的生成器里抽随机起始序列。看得见的症状是锚点缺陷在 1e-4 抖动;
+**有破坏性的那个是:锚点落在接受带边缘的目标会在实例集合里进进出出** —— 于是**哪些实例存在**都在变,
+两次打分根本不可比。而 `combined_score` 两次都是 0.0,所以头条数字什么也没显示。
 
-**One oracle was not a function, and the headline score hid it.** The 43-task determinism sweep
-returned 42 of 43. `RNAEnsembleDesign` failed because ViennaRNA's designers, handed `None` as a
-start sequence, draw one from a generator inside the C library that the task's own
-`random.Random(seed)` does not reach. The visible symptom was anchor defects wandering by 1e-4.
-The damaging one was that a target sitting near the edge of the acceptance band flipped in and out
-of the instance set between runs — so *which instances existed* changed, and two scores were not
-comparable at all. `combined_score` was 0.0 both times, so the headline number showed nothing.
-Seeding is now per call and derived from the call's own inputs, because the candidate is arbitrary
-code that may draw from the same generator first; seeding once at import would shift every draw
-after it. Three processes now agree to ten decimal places, and
-`tests/test_oracle_rng_is_pinned.py` asks the question of the whole inventory rather than of this
-one task.
+定种现在**按调用输入进行**,因为候选是任意代码、可能先从同一个生成器抽走若干个;在 import 时定一次
+会让其后每一次抽取都错位。三个进程现在一致到小数点后十位,
+`tests/test_oracle_rng_is_pinned.py` 把这个问题问向整个清单,而不是这一个任务。
 
-**The new tasks are not registered as maturity evidence.** They pass `scripts/audit_tasks.py`
-with zero task-card issues and appear in the live inventory, but their measurements are not yet
-trusted artifacts under `experiments/`, so the maturity ledger does not count them as internally
-admitted. Each run records its own `task_contract_sha256`, so the groundwork is done. The
-inventory guard itself was internally inconsistent — it asserted 61 packages while its status
-counts summed to 59 — and now agrees with the live inventory.
+**新任务尚未登记为成熟度证据。** 它们通过 `scripts/audit_tasks.py` 且任务卡零问题、出现在实时清单里,
+但它们的测量还不是 `experiments/` 下的可信产物,所以成熟度账本不把它们算作内部已准入。
+每次运行都记录自己的 `task_contract_sha256`,所以基础工作已经做好。
 
-**Four discovery tasks cannot report a false-discovery rate.** Their evaluators do measure it,
-but publish the numerator as a count without the world count that would make it a rate, so the
-discovery triple cannot be completed for them. `scripts/report_discovery_triple.py` now separates
-this case from an axis that was never measured, because the two need different fixes. Publishing
-the denominator edits the task package and therefore rebinds that task's analysis artifacts —
-including the Track F negative result — so it is a governance step rather than a cleanup, and has
-been left for a deliberate decision.
+**四个发现类任务报不出假发现率。** 它们的 evaluator 确实在测量它,但把分子作为**计数**发布、
+缺少能让它成为比率的世界计数,所以发现三元组对它们无法补全。
+`scripts/report_discovery_triple.py` 现在把这种情况与"某个轴从未被测量"分开,因为两者需要不同的修法。
+补上分母会编辑任务包,从而重绑该任务的分析产物 —— 包括 Track F 的否定结果 ——
+所以这是一个治理步骤而非清理,已留作一个刻意的决定。
 
-The sandbox itself is verified intact: `tests.test_secure_eval` passes and
-`scripts/run_security_audit.py` passes 23/23 with `trusted_evidence: true`.
+沙箱本身经过验证完好:`tests.test_secure_eval` 通过,`scripts/run_security_audit.py` 以
+`trusted_evidence: true` 通过 23/23。
 
-## Reproduce checks
+## 复现检查
 
 ```bash
 python -m unittest -v tests.test_benchmark_layout tests.test_secure_eval
@@ -1077,11 +655,9 @@ python scripts/report_cross_model.py --runs runs --output /tmp/cross_model.json 
 python -m unittest discover -s tests -q
 ```
 
-New machine-readable reports include their command, Git revision, scoped source-tree state,
-changed paths, execution status, and trust decision. A dated artifact is trusted evidence only
-when its declared checks pass on a clean, known revision.
+机器可读的报告都包含自己的命令、Git 修订、限定范围的源码树状态、变更路径、执行状态与信任判定。
+**一份带日期的产物,只有在它声明的检查于一个干净的已知修订上通过时,才算可信证据。**
 
-## Contributing
+## 贡献
 
-The current priority is hardening and independently reviewing the existing inventory. Start with
-[`CONTRIBUTING.md`](CONTRIBUTING.md); new tasks enter as candidates and cannot self-certify.
+见 [`CONTRIBUTING.md`](CONTRIBUTING.md)。
