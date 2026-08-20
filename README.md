@@ -35,85 +35,25 @@ the text-question benchmark named *FrontierScience* in
 
 ## At a glance
 
-- **43 task packages** across **7 broad disciplines** — biology, chemistry, computer science,
-  earth science, engineering, mathematics and physics.
-- **24 scientific optimization** tasks and **19 scientific discovery** tasks, the two forms this
-  benchmark claims to cover. Discovery tasks report mechanism recovery, false-discovery rate and
-  calibrated refusal separately, because one maximised scalar cannot say whether a discovery was
-  right.
-- **5 certified** and **38 candidate** tasks; the quarantine set is empty.
-- **7 tasks whose oracles are community-standard scientific tooling** — Stim + PyMatching, RDKit,
-  ViennaRNA, nmrsim, networkx, SymPy, QuTiP — rather than a bespoke reimplementation, each
-  anchored on a value or a routine recomputed at evaluation time. It read 8 until the standard was
-  scoped to what the *oracle* imports: `RadialVelocityPlanets` uses astropy's Lomb-Scargle in its
-  reference implementation while its evaluator computes the periodogram itself, and counting the
-  directory wholesale inverted what the standard measures — a reference is encouraged to use the
-  community tool precisely so the author's oracle can be checked against it.
-- **6 tasks** are so far shown to measure iterative improvement, against a criterion the
-  repository can apply to any task with paired runs. Three rest on a saturation result that a
-  three-seed subset of their own runs would reverse, and are reported as such — one task has
-  already left the list when the extra seeds were run.
-- **Three models** have been run — one Claude family, two GPT family. They rank the tasks
-  consistently (Spearman 0.959 within a family over 50 tasks, 0.811 and 0.559 across families
-  over 12) and **disagree on every admission verdict**: see
-  [Does a task measure iteration](#does-a-task-measure-iteration).
-- **Every task is measured against the contract it is scored under.** Two sweeps — 43 runs at
-  budget 1 and 258 seed-paired runs at budget 3 across both feedback conditions — brought current
-  model measurement, both budget arms and three matched control replicates to 43 of 43. What that
-  does *not* give is an evolvability gap: the admission criterion needs a budget ladder to judge
-  saturation, and a single budget point leaves 42 of 43 rows undecidable.
-- **No candidate can crash an evaluator**, checked by running every task against three deliberately
-  bad submissions — one that raises, one that returns `{}`, one that returns a string. It was three
-  tasks crashing; it is 0 of 43 across 129 cases. A crash aborts the run rather than scoring the
-  candidate, so one bad submission used to cost a cohort its evidence.
-- Deterministic black-box evaluation through a networkless Bubblewrap sandbox.
-- A built-in iterative rewrite baseline plus OpenEvolve, AB-MCTS, and ShinkaEvolve backends.
-- Hash-bound experiment reports with Git revision, command, source-tree state, and explicit
-  trust decisions.
+- **43 task packages** across 7 disciplines — **24 scientific optimization** and **19 scientific
+  discovery**. Discovery tasks report mechanism recovery, false-discovery rate and calibrated
+  refusal separately, because one maximised scalar cannot say whether a discovery was *right*.
+- **5 certified**, 38 candidate; the quarantine set is empty.
+- Deterministic black-box evaluation through a networkless Bubblewrap sandbox, with the oracle in
+  the trusted parent and a strict search-visible metric allowlist.
+- A built-in iterative rewrite baseline plus OpenEvolve, AB-MCTS and ShinkaEvolve backends.
+- Hash-bound experiment reports carrying Git revision, command, source-tree state and an explicit
+  trust decision — evidence that cannot be bound to the runtime that produced it is refused rather
+  than quietly reused.
+- **7 oracles are community-standard scientific tooling** — Stim + PyMatching, RDKit, ViennaRNA,
+  nmrsim, networkx, SymPy, QuTiP. The other 36 are this project's own NumPy, which is the largest
+  standing gap.
+- **6 tasks** are so far shown to measure iterative improvement, three of them resting on a
+  saturation result their own extra seeds would reverse.
 
-### Fifteen tasks were retired for having no room left
-
-A task every searcher drives to its cap no longer separates anything, while still consuming a
-share of every evaluation budget. Fifteen were retired on that basis: `BroadbandAbsorber`,
-`AntennaArraySynthesis`, `LidDrivenCavity`, `GateSynthesis`, `HartreeFockSCF`, `PoissonSolver2D`,
-`OptimalPowerFlow`, `RankineCycleOpt`, `SpinGlassGroundState`, `LyapunovControl`,
-`OptimalExperimentDesign`, `PhotovoltaicTandemDesign`, `SeismicInversion`, `OceanCurrentInversion`
-and `SeismicWaveInversion`.
-
-The rule is *every* model at or above 0.99, not *any*. A task only one model has maxed is still
-separating models and stays: `RNAInverseDesign` scores 0.8948 for one and 0.9996 for another.
-
-Scores **above** 1.0 stay too. On an uncapped task, exceeding the anchor is the intended result
-rather than saturation — `CirclePacking` is at 1.09 and `RNAEnsembleDesign` at 1.01. Retiring
-those would be treating success as a fault.
-
-Two of the fifteen were certified. Certification says the task is sound; it says nothing about
-whether the task has any headroom left, and the two need separate accounting.
-
-### How deep the science goes, measured rather than asserted
-
-Claiming a scientific setting is easy; the audit exists because the claim is checkable. Across the
-43 packages:
-
-| | |
-|---|---:|
-| tasks stating their shortcut-resistance argument | 43 / 43 |
-| tasks stating scientific invariants | 43 / 43 |
-| tasks citing resolvable literature (DOI or arXiv) | 42 / 43 |
-| tasks holding a sealed split back from the development score | 35 / 43 |
-| tasks whose anchor is recomputed rather than quoted | **15 / 43** |
-| tasks whose oracle is community-standard domain tooling | **7 / 43** |
-| tasks shipping a runnable reference record | **27 / 43** |
-| tasks carrying a difficulty ladder | **8 / 43**, of which one is measured to have a working rung |
-| tasks reviewed by an external domain expert | **0 / 43** |
-
-The first rows are the framing; the bolded ones are the substance, and they are where this
-inventory is thin. Thirty-six of 43 oracles are author-written NumPy reductions of the science
-they describe, so a score on them measures agreement with that author's code rather than with the
-field. The task narratives cite real work; most of the oracles do not run it.
-
-The eight community-oracle tasks close that gap and are the template for the rest rather than a
-finished state.
+[What the tasks look like](#what-the-tasks-look-like-and-how-hard-they-are) has the difficulty
+picture, [Current state](#current-state) the coverage, and
+[What this does and does not show](#what-this-does-and-does-not-show) the limits.
 
 ### Scope
 
@@ -123,6 +63,92 @@ have since left the inventory, and the quarantine set is now empty.
 
 The default CLI exposes only certified tasks. Candidates remain visible for research and
 calibration; neither group beyond the certified core is benchmark-admissible by default.
+
+## What the tasks look like, and how hard they are
+
+A task is a runnable program plus a hidden deterministic oracle. The searcher edits the program,
+the oracle scores each candidate, and the score comes back for the next proposal. Scores are
+normalised so **0 is the shipped baseline and 1 is the reference witness**, with no upper clip — a
+candidate that beats the reference has to be distinguishable from one that matches it.
+
+Forty-three tasks across seven disciplines: biology 6, chemistry 10, computer science 4, earth
+science 3, engineering 10, mathematics 4, physics 6. They split into **24 optimization** and **19
+discovery** tasks, and that split turns out to be the sharpest thing in the data.
+
+Best score at budget 3, three seeds, `greedy_rewrite` with `claude-opus-4-8`:
+
+| band | tasks |
+|---|---:|
+| ≥ 1.0 — beat the reference witness | 6 |
+| 0.9 – 1.0 | 5 |
+| 0.5 – 0.9 | 13 |
+| 0 – 0.5 | 13 |
+| exactly 0 | 6 |
+
+| | median | scored exactly 0 |
+|---|---:|---:|
+| optimization (24) | **0.7747** | 0 |
+| discovery (19) | **0.3515** | **6** |
+
+**Every task that scored zero is a discovery task.** No optimization task did — a searcher can
+always improve a design a little. Discovery tasks instead decline the whole problem:
+`RadiativeTransferFit`, `ProspectiveMetaAnalysis`, `ConvectionDiffusionOpt`, `ForceFieldCalibration`,
+`QuartzCrystalMicrobalanceLab` and `GeneNetworkIntervention` all return 0.0.
+
+That is not simply the tasks being too hard. Five of them ship a truth-blind reference under
+`verification/` that scores 0.83 – 0.91 using only what a candidate receives, never the hidden
+world. Blanket abstention is a model failure mode, not a correct reading of an impossible task —
+and until those references existed, the two were indistinguishable.
+
+## Current state
+
+Every task is now measured against the contract it is scored under. Two sweeps, `greedy_rewrite`
+against `claude-opus-4-8`: 43 runs at budget 1, and 258 seed-paired runs at budget 3 across both
+feedback conditions. Both trusted, no terminal failures.
+
+| | |
+|---|---:|
+| tasks with model measurement bound to the current contract | 43 / 43 |
+| tasks with both budget arms in both feedback conditions | 43 / 43 |
+| tasks with three matched control replicates | 43 / 43 |
+| internal science admission | 43 / 43 |
+| evaluators no candidate can crash | 43 / 43 |
+| deterministic oracles | 43 / 43 |
+| frozen measurement-health cohort | 7 / 7 |
+| **tasks reviewed by an external domain expert** | **0 / 43** |
+
+Three models have been run: `gpt-5.5` (615 recorded runs), `claude-opus-4-8` (607) and
+`gpt-5.6-sol` (58). They rank tasks consistently — Spearman 0.959 within a family — and **disagree
+on every admission verdict they share**, because the crossover budget is a property of the task and
+the searcher together rather than of the task alone.
+
+## What this does and does not show
+
+**It does not yet show an evolvability gap.** The admission criterion is two-part: the open-loop
+control has to saturate first, and only then does a widening gap mean anything. Both parts need a
+budget *ladder*, and the paired sweep is a single budget point — so 42 of its 43 rows come back
+`unknown`, all with the same reason: *no open-loop run long enough to judge saturation*. The
+campaign bought binding and coverage. Δ still needs a budget sweep.
+
+At that one budget the paired difference runs **negative on 21 tasks, positive on 11, flat on 11**.
+That is what being below the crossover budget looks like — three proposals is not enough for
+iteration to pay for itself on most of these tasks — and it is not evidence that feedback does not
+help, which is exactly why the criterion refuses to judge from one point.
+
+**Two scores above 1.0 turned out to be findings about the benchmark, not the model.**
+`CirclePacking` scored 1.4406 on a packing that is genuinely valid — closest centres 3.6e-15 from
+touching — against an N=13 anchor that loses to a textbook `4 + 2*sqrt(3)` construction.
+`CalorimeterDesign` scored 1.0121 past its reference witness with `robustness_score` of exactly
+**0.0**: its worst-shift utility sits at the shipped baseline. The searcher beat the witness on the
+axis it could see and gained nothing on the one it could not.
+
+Neither was visible while the score was clipped at 1.0. Both would have read as "matched the
+reference".
+
+**The oracles are still mostly this project's own code.** Seven of 43 put a community-standard
+toolkit in the oracle; 36 are author-written NumPy reductions of the science they describe. No task
+has completed external domain review. A score on those 36 measures agreement with an author's code,
+not with the field, and that is the largest standing gap in the benchmark.
 
 ## Benchmark organization
 
@@ -944,68 +970,42 @@ and was a portability defect. Paths are now placed in the repository doing the r
 checkout without the run directories skips with a reason instead of erroring, because a reader
 missing data is not a reader looking at broken evidence.
 
-**The re-measurement campaign is complete, and every task is now bound to the contract it is
-scored under.** Two sweeps, both `greedy_rewrite` against Claude:
+**What the re-measurement campaign cost, and why every step of it refused loudly.** The headline
+is in [Current state](#current-state); this is the part worth reading if you maintain the
+repository. Before the campaign, no recorded model run was bound to a current task contract and
+every model-derived health check read zero — the matched-control count on `ActiveLawDiscovery` and
+the observed first-valid step on `RNAInverseDesign` read 0 where they had read 48 and 1. Nothing
+had been withdrawn. The evidence was *unbound*, which is a different and recoverable thing, and
+the repair was to re-run rather than to re-sign. Model tables further down that predate the
+campaign are measured against pre-uncapping evaluators.
 
-| sweep | shape | runs |
-|---|---|---:|
-| budget 1 | `normal`, one seed, all 43 tasks | 43 |
-| budget 3 paired | `normal` and `selection_blind`, seed-matched, three seeds, all 43 tasks | 258 |
-
-Both report `trusted_clean_revision` with no terminal failures. Coverage that had read zero for
-every task now reads 43 of 43 — current model measurement, budget-1 and budget-3 arms in both
-conditions, and three matched control replicates per task. Internal science admission is 43 of 43
-and the maturity ledger reports no issues.
-
-**What this does not buy is an evolvability gap.** The admission criterion is two-part — the
-open-loop control has to saturate first, and only then does a widening gap mean anything — and both
-parts need a budget *ladder*. The paired sweep is a single budget point, so 42 of its 43 rows come
-back `unknown` with the same reason: *no open-loop run long enough to judge saturation*. The
-campaign restored binding and coverage. Δ still needs a budget sweep, and saying otherwise before
-running one would be the same mistake as reading a saturated task as a solved one.
-
-**Before this landed, no recorded model run was bound to a current task contract, and every
-model-derived measurement-health check read zero.** A run binds to the contract it was made
-against, and the evaluators had since changed — most of them when the upper clip came off. Those
-runs still exist and still describe what those models did; they describe it about a previous
-contract. The matched-control count on the `ActiveLawDiscovery` control and the observed first-valid
-step on `RNAInverseDesign` read 0 where they had read 48 and 1. Nothing was withdrawn — the evidence
-was unbound, which is a different and recoverable thing, and the repair was to re-run rather than
-to re-sign. Model tables below this line that predate the campaign are measured against
-pre-uncapping evaluators.
-
-One repair cascaded, and every step of it refused loudly rather than quietly. Fixing three
-evaluators that a candidate could crash moved their task contracts, which unbound their model
-evidence, which unbound their secure baseline, which dropped admission from 43 to 40. Re-running
-the three tasks at budget 1 restored the model evidence and admission stayed at 40 — the baseline is
-a single global document, and the one on file predated the repairs. Re-running it restored 43 of 43.
+One repair then cascaded, and it is the clearest illustration of how the bindings are supposed to
+behave. Fixing three evaluators that a candidate could crash moved their task contracts, which
+unbound their model evidence, which unbound their secure baseline, which dropped internal science
+admission from 43 to 40. Re-running those three tasks at budget 1 restored the model evidence and
+admission *stayed* at 40 — the secure baseline is a single global document and the one on file
+predated the repairs. Re-running that restored 43 of 43. Four links in the chain, four refusals,
+none of them silent.
 
 
-**Two tasks now score above 1.0, and both are findings about the benchmark rather than the model.**
-Removing the upper clip was justified by an argument — a candidate that beats the reference witness
-should be distinguishable from one that matches it. The first fresh sweep produced two such scores,
-and reading them properly meant not celebrating either.
 
-`CirclePacking` scored **1.4406** at N=13, which would be a new Packomania record from a single
-proposal. The packing is genuinely valid — 13 circles, closest centres 1.99999999999999645 apart,
-which is 3.6e-15 from touching, and every circle inside the square. What is wrong is the anchor: the
-task records 7.6274 as the best known side, and `4 + 2√3 = 7.4641` is a construction anyone can
-write down. A "best known" that loses to a textbook packing is not a best known. The other two
-anchors check out (N=7 is `4 + √3`, proven optimal; N=10 matches the literature), so this is one bad
-number, and the score built on it is meaningless until it is sourced properly. See
-[the write-up](.research/circle_packing_anchor_defect_2026-08-18.md).
-
+**Beating the reference on the visible axis is not the same as solving the task.**
 `CalorimeterDesign` scored **1.0121**, past its reference witness — with `robustness_score` of
 exactly **0.0**, meaning its worst-shift utility sits at the shipped baseline. The searcher beat the
-witness on the axis it could see and gained nothing at all on the one it could not. That is the task
-working as designed: robustness is evaluator-only precisely so it cannot be optimised directly. But
-it exposed a blind spot in the saturation classifier, which decides retirement from `combined_score`
-alone and would have retired a task half of which is untouched. The verdict now says which metric it
-is about, and `scripts/report_saturation_hidden_axes.py` scores the best recorded candidate again to
-report the hidden axes — of seven saturated tasks, one is in this state.
+witness on the axis it could see and gained nothing at all on the one it could not.
 
-Neither of these was visible under the cap: both would have read as exactly 1.0, indistinguishable
-from a candidate that merely matched the reference.
+That is the task working as designed: robustness is evaluator-only precisely so it cannot be
+optimised directly. What it exposed is a blind spot in the saturation classifier, which decides
+retirement from `combined_score` alone — the one metric a searcher receives — and would have retired
+a task half of which is untouched. The verdict now states which metric it is a verdict about, and
+`scripts/report_saturation_hidden_axes.py` scores the best recorded candidate again to read the
+hidden axes, since the visibility filter strips them before anything is written. Of seven saturated
+tasks, one is in this state.
+
+Neither this nor the `CirclePacking` anchor was visible while scores were clipped at 1.0. Both
+would have read as exactly 1.0, indistinguishable from a candidate that merely matched the
+reference. That is what removing the cap was for, and the first two things it surfaced were defects
+in the benchmark rather than results from the model.
 
 **A candidate could crash three of the evaluators, and a crash costs a cohort rather than a
 candidate.** A 129-block paired sweep returned four terminal failures, each reporting only
