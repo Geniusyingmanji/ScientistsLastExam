@@ -42,9 +42,13 @@ the text-question benchmark named *FrontierScience* in
   calibrated refusal separately, because one maximised scalar cannot say whether a discovery was
   right.
 - **5 certified** and **38 candidate** tasks; the quarantine set is empty.
-- **8 tasks whose oracles are community-standard scientific tooling** — Stim + PyMatching, RDKit,
-  ViennaRNA, nmrsim, networkx, SymPy, QuTiP, Astropy — rather than a bespoke reimplementation,
-  each anchored on a value or a routine recomputed at evaluation time.
+- **7 tasks whose oracles are community-standard scientific tooling** — Stim + PyMatching, RDKit,
+  ViennaRNA, nmrsim, networkx, SymPy, QuTiP — rather than a bespoke reimplementation, each
+  anchored on a value or a routine recomputed at evaluation time. It read 8 until the standard was
+  scoped to what the *oracle* imports: `RadialVelocityPlanets` uses astropy's Lomb-Scargle in its
+  reference implementation while its evaluator computes the periodogram itself, and counting the
+  directory wholesale inverted what the standard measures — a reference is encouraged to use the
+  community tool precisely so the author's oracle can be checked against it.
 - **6 tasks** are so far shown to measure iterative improvement, against a criterion the
   repository can apply to any task with paired runs. Three rest on a saturation result that a
   three-seed subset of their own runs would reverse, and are reported as such — one task has
@@ -53,6 +57,15 @@ the text-question benchmark named *FrontierScience* in
   consistently (Spearman 0.959 within a family over 50 tasks, 0.811 and 0.559 across families
   over 12) and **disagree on every admission verdict**: see
   [Does a task measure iteration](#does-a-task-measure-iteration).
+- **Every task is measured against the contract it is scored under.** Two sweeps — 43 runs at
+  budget 1 and 258 seed-paired runs at budget 3 across both feedback conditions — brought current
+  model measurement, both budget arms and three matched control replicates to 43 of 43. What that
+  does *not* give is an evolvability gap: the admission criterion needs a budget ladder to judge
+  saturation, and a single budget point leaves 42 of 43 rows undecidable.
+- **No candidate can crash an evaluator**, checked by running every task against three deliberately
+  bad submissions — one that raises, one that returns `{}`, one that returns a string. It was three
+  tasks crashing; it is 0 of 43 across 129 cases. A crash aborts the run rather than scoring the
+  candidate, so one bad submission used to cost a cohort its evidence.
 - Deterministic black-box evaluation through a networkless Bubblewrap sandbox.
 - A built-in iterative rewrite baseline plus OpenEvolve, AB-MCTS, and ShinkaEvolve backends.
 - Hash-bound experiment reports with Git revision, command, source-tree state, and explicit
@@ -88,14 +101,14 @@ Claiming a scientific setting is easy; the audit exists because the claim is che
 | tasks stating scientific invariants | 43 / 43 |
 | tasks citing resolvable literature (DOI or arXiv) | 42 / 43 |
 | tasks holding a sealed split back from the development score | 35 / 43 |
-| tasks whose anchor is recomputed rather than quoted | **10 / 43** |
-| tasks whose oracle is community-standard domain tooling | **8 / 43** |
-| tasks shipping a runnable reference the anchor is re-derived from | **8 / 43** |
-| tasks carrying a difficulty ladder | **8 / 43** |
+| tasks whose anchor is recomputed rather than quoted | **15 / 43** |
+| tasks whose oracle is community-standard domain tooling | **7 / 43** |
+| tasks shipping a runnable reference record | **27 / 43** |
+| tasks carrying a difficulty ladder | **8 / 43**, of which one is measured to have a working rung |
 | tasks reviewed by an external domain expert | **0 / 43** |
 
 The first rows are the framing; the bolded ones are the substance, and they are where this
-inventory is thin. Thirty-five of 43 oracles are author-written NumPy reductions of the science
+inventory is thin. Thirty-six of 43 oracles are author-written NumPy reductions of the science
 they describe, so a score on them measures agreement with that author's code rather than with the
 field. The task narratives cite real work; most of the oracles do not run it.
 
@@ -156,7 +169,7 @@ science, but those oracles are author-written reduced-order reimplementations, a
 completed external domain review. A score on them measures agreement with the author's NumPy
 code, not with the science.
 
-Eight tasks close that gap. Each puts a community-standard toolkit in the oracle and recomputes
+Seven tasks close that gap. Each puts a community-standard toolkit **in the oracle** and recomputes
 its anchor at evaluation time rather than quoting a number from a paper. `RNAEnsembleDesign` goes
 one step further and makes the anchor a routine the community actually uses rather than a value:
 it runs ViennaRNA's own designer inside the evaluator, restart-matched so a candidate cannot beat
@@ -171,7 +184,13 @@ it by calling it more often.
 | `Algorithm/GraphFromDistances` | **networkx** | Disc | truth-blind domain reference strategy, run at scoring time |
 | `Mathematics/SequenceLawRecovery` | **SymPy** | Disc | truth-blind reference recoverer; correct-refusal rate 0.50 by construction |
 | `QuantumDynamics/HamiltonianLearning` | **QuTiP** | Disc | truth-blind reference identifier |
-| `Exoplanets/RadialVelocityPlanets` | **Astropy** | Disc | truth-blind periodogram reference; baseline recovers 0.50 of the mechanism at a false-discovery rate of 0.889 |
+`Exoplanets/RadialVelocityPlanets` is deliberately not in that table, and used to be. Its reference
+detector uses astropy's Lomb-Scargle while its evaluator implements the periodogram itself, so the
+oracle is still an author reimplementation — which is the thing this standard exists to
+distinguish. The audit had been reading every file under `verification/`, so the reference vouched
+for the oracle; it now follows the evaluator's own imports. That is the right way round: a
+reference is *encouraged* to use the community tool, precisely so the author's oracle can be
+checked against it.
 
 The discovery entries all ship their reference under `verification/` and run it at scoring time,
 and each reference is deliberately imperfect — a reference that scores 1.0 leaves the task no
@@ -214,7 +233,7 @@ explicit `--allow-uncertified` flag.
 
 ### Install the oracle toolkits
 
-Eight tasks put a community toolkit in the oracle, and each pins its version in
+Seven tasks put a community toolkit in the oracle, and each pins its version in
 `verification/requirements.txt`. On the benchmark host those files cannot be installed the usual
 way: the system interpreter's pip fails at import with a pyOpenSSL binding mismatch, so
 `pip install -r` never runs. `scripts/setup_oracle_env.sh` documents the way around it — a
@@ -313,8 +332,11 @@ the default benchmark, `candidate` is retained for calibration but missing one o
 
 | Evidence | Result | Scope |
 |---|---|---|
-| [Certification audit v65](experiments/task_certification_audit_2026-07-26_v65.json) | 7 certified / 43 candidate / 9 quarantined | Inventory and admission gates at the 59-package revision |
-| [Secure baseline v46](experiments/secure_baseline_determinism_2026-07-26_v46.json) | 59/59 deterministic, valid, fail-closed | Two baseline evaluations per task |
+| [Certification audit v66](experiments/task_certification_audit_2026-08-15_v66.json) | 5 certified / 38 candidate / 0 quarantined | Inventory and admission gates at the current 43-package revision |
+| [Secure baseline v49](experiments/secure_baseline_determinism_2026-08-18_v49.json) | 43/43 deterministic, valid, fail-closed | Two baseline evaluations per task, taken after the evaluator repairs |
+| [Evaluator crash resistance](experiments/evaluator_crash_resistance_2026-08-18_v1.json) | 0 of 43 evaluators a candidate can crash | Three deliberately bad submissions per task |
+| [Re-measurement, budget 1](experiments/recontract_2026-08_b1_s0_v2.json) | 43/43 runs, trusted | One seed, `normal`, against the current contracts |
+| [Re-measurement, budget 3 paired](experiments/recontract_2026-08_b3_paired_v2.json) | 258/258 runs, trusted | Three seeds, `normal` against `selection_blind` |
 | [Security audit v49](experiments/security_audit_2026-07-27_v49.json) | 23/23 tests passed | Sandbox and protocol regressions |
 | [GPT-5.6 50-task census](experiments/gpt56_science_census_analysis_2026-08-06_v1.json) | 50/50 cells; 36/50 valid proposals | Budget-one screen; challenge gate fails |
 | [Track F confirmatory analysis](experiments/track_f_analysis_2026-07-26_v1.json) | no identified feedback advantage | Preregistered, n=48/arm, on ActiveLawDiscovery |
@@ -804,9 +826,35 @@ demonstrates the separation from the other direction.
 
 ## Difficulty ladders
 
-Both community-oracle tasks carry a `DIFFICULTY` level so that saturating one does not retire the
-task. Level 1 reproduces the shipped instances and their recorded anchors exactly; a level with no
-measured entry raises rather than being extrapolated.
+Eight tasks carry a `DIFFICULTY` level so that saturating one does not retire the task. Every one
+of them sits at level 1, which means `difficulty_parameterized` currently asserts that a ladder is
+*present*, not that it does anything. `scripts/report_difficulty_ladder.py` measures the difference:
+it copies the task, rewrites `DIFFICULTY` in the copy, and scores the same program through the
+copy's own evaluator, so the shipped task is never touched.
+
+The first task measured that way was `RNAEnsembleDesign`, chosen because it is classified saturated
+*and* has a ladder — exactly the retire-or-promote question:
+
+| level | best recorded candidate | shipped baseline |
+|---|---:|---:|
+| 1 | **0.9971** | 0.0 |
+| 2 | **0.9422** | 0.0 |
+| 3 | invalid | **invalid** |
+
+Level 2 is a real rung: the task is saturated at level 1 and is not at level 2, and the baseline
+stays valid at both, so the normalisation still has an anchor. The answer for this task is promote,
+not retire.
+
+Level 3 is not a rung. The *baseline* cannot produce a valid submission there, and a level where
+the baseline is invalid measures nothing — the score is normalised to "baseline = 0" and there is
+no baseline. So this three-level ladder has two usable levels.
+
+Finding that needed the baseline. Scored with the candidate alone, level 3 reads as "too hard to
+solve", which is indistinguishable from "broken" until something known-valid is run through it.
+
+The two community-oracle ladders below were built earlier and in more depth. Level 1 reproduces
+the shipped instances and their recorded anchors exactly; a level with no measured entry raises
+rather than being extrapolated.
 
 Each ladder is a measured table rather than a formula, because both tasks punish the obvious
 formula:
@@ -861,39 +909,77 @@ from the same record. And a test pinned the calibration's filename date, which m
 moment the evidence was legitimately re-measured — exactly backwards. It asserts the recorded
 evaluator hash now.
 
-**The trusted runtime changed.** `sle/secure_eval.py` and `benchmark_layout.py`
-were modified, and `tests/test_runtime_migration.py` passes at the previous revision and fails
-here. The project binds frozen analysis artifacts to a `runtime_source_sha256`, so changing the
-runtime unbinds them; the remedy is to register a runtime migration audit, which re-certifies the
-trusted runtime and should be a deliberate decision. Note that this guard fires for **any** new
-task in a new domain. Nine per-task analysis tests also fail and are explicitly recorded as
-unattributed — they read `runs/` paths stored as absolute paths, so they error in a clone or
-worktree. See [runtime governance](.research/runtime_change_governance_2026-08-09.md).
+**`CirclePacking`'s N=13 anchor is wrong, and the replacement is not sourced yet.** The task
+normalises against 7.6274 as the smallest known square side; `4 + 2*sqrt(3) = 7.4641` is a
+construction anyone can write down, and a recorded run reached a verified valid 7.4632466. A "best
+known" that loses to a textbook packing is not a best known, so the 1.4406 built on it — and the
+`saturated_on_ramp` classification that followed — should not be quoted until the number is fixed.
 
-**The first measurement against the current contracts is in, and it is thin on purpose.** Every
-one of the 43 tasks now has a model run bound to the contract it is scored under — one seed, one
-proposal, `greedy_rewrite`, Claude. That is enough to restore the binding and nothing like enough
-to rank anything, so read the table below as a single draw rather than as a result.
+Two attempts to derive a replacement here both came back *worse* than the current anchor (7.8059
+and 7.7042), so nothing was changed: shipping a weaker reference would lower the bar rather than
+correct it. That failure is informative in its own right — a naive search does not get close to
+7.4632, so the task discriminates. It is the ruler that is wrong, not the question.
+`tests/test_external_anchors_are_checkable.py` keeps this the only task in the inventory
+normalising against a literal nobody here can re-derive. See
+[the write-up](.research/circle_packing_anchor_defect_2026-08-18.md).
 
-Two numbers are worth pulling out. `CirclePacking` scores **1.1468** and `CalorimeterDesign`
-**1.0121** — above one, which is the whole point of removing the upper clip and the first time the
-benchmark has been able to say that a candidate beat its reference witness rather than merely
-matched it. At the other end, 17 of 43 score exactly 0.0 from a single proposal, and 6 reach 0.95
-or better from that same single proposal, which is a saturation signal rather than a score.
+**The trusted runtime changed, and re-certifying it is a decision nobody has taken.** Frozen
+analysis artifacts bind to a `runtime_source_sha256`, so editing `sle/evaluate.py` or
+`sle/trusted_driver.py` unbinds them — and both were edited, to carry the cause of an evaluator
+failure to the operator's log. `tests/test_runtime_migration.py` fails on that, correctly.
 
-The paired budget-3 sweep that follows — `normal` against `selection_blind`, seed-matched, which is
-what the evolvability gap is measured from — is the one that will support a claim.
+Re-running the migration audit gives the shape of the change rather than a verdict: **654 numeric
+differences across 14 retained artifacts, maximum 0.1536, and zero failure-taxonomy changes.** Which
+candidates count as valid or invalid did not move at all; only the scores did, which is consistent
+with the evaluator repairs and the uncapping and not with the two logging edits. Registering a fresh
+audit would amount to declaring the new numbers the right ones. That is defensible — the uncapping
+was intended — but it is a governance call, so it has been left as one rather than pushed through by
+updating a constant. See
+[runtime governance](.research/runtime_change_governance_2026-08-09.md).
 
-**Until that campaign landed, no recorded model run was bound to a current task contract, and every
-model-derived measurement-health check read zero.** A run binds to the contract it was made against, and the evaluators have
-since changed — most of them when the upper clip came off. The runs still exist and still describe
-what those models did; they describe it about a previous contract. Concretely: the matched-control
-count on the `ActiveLawDiscovery` control and the observed first-valid step on `RNAInverseDesign`
-both read 0 where they previously read 48 and 1. Nothing about those measurements was withdrawn —
-they were unbound, which is a different and recoverable thing, and the repair is to re-run the
-cohort against the current contracts rather than to re-sign the old numbers. Read the model tables
-below as measured against pre-uncapping evaluators. For the 17 uncapped optimization tasks a score
-can only have moved *up*, and only for candidates that were sitting against the ceiling.
+The nine per-task analysis tests that used to fail alongside it are fixed. They read `runs/` paths
+recorded as absolute paths on the machine that produced them, so every other checkout hit a
+containment check and reported "workdir is outside repository" — which reads as a security refusal
+and was a portability defect. Paths are now placed in the repository doing the reading, and a
+checkout without the run directories skips with a reason instead of erroring, because a reader
+missing data is not a reader looking at broken evidence.
+
+**The re-measurement campaign is complete, and every task is now bound to the contract it is
+scored under.** Two sweeps, both `greedy_rewrite` against Claude:
+
+| sweep | shape | runs |
+|---|---|---:|
+| budget 1 | `normal`, one seed, all 43 tasks | 43 |
+| budget 3 paired | `normal` and `selection_blind`, seed-matched, three seeds, all 43 tasks | 258 |
+
+Both report `trusted_clean_revision` with no terminal failures. Coverage that had read zero for
+every task now reads 43 of 43 — current model measurement, budget-1 and budget-3 arms in both
+conditions, and three matched control replicates per task. Internal science admission is 43 of 43
+and the maturity ledger reports no issues.
+
+**What this does not buy is an evolvability gap.** The admission criterion is two-part — the
+open-loop control has to saturate first, and only then does a widening gap mean anything — and both
+parts need a budget *ladder*. The paired sweep is a single budget point, so 42 of its 43 rows come
+back `unknown` with the same reason: *no open-loop run long enough to judge saturation*. The
+campaign restored binding and coverage. Δ still needs a budget sweep, and saying otherwise before
+running one would be the same mistake as reading a saturated task as a solved one.
+
+**Before this landed, no recorded model run was bound to a current task contract, and every
+model-derived measurement-health check read zero.** A run binds to the contract it was made
+against, and the evaluators had since changed — most of them when the upper clip came off. Those
+runs still exist and still describe what those models did; they describe it about a previous
+contract. The matched-control count on the `ActiveLawDiscovery` control and the observed first-valid
+step on `RNAInverseDesign` read 0 where they had read 48 and 1. Nothing was withdrawn — the evidence
+was unbound, which is a different and recoverable thing, and the repair was to re-run rather than
+to re-sign. Model tables below this line that predate the campaign are measured against
+pre-uncapping evaluators.
+
+One repair cascaded, and every step of it refused loudly rather than quietly. Fixing three
+evaluators that a candidate could crash moved their task contracts, which unbound their model
+evidence, which unbound their secure baseline, which dropped admission from 43 to 40. Re-running
+the three tasks at budget 1 restored the model evidence and admission stayed at 40 — the baseline is
+a single global document, and the one on file predated the repairs. Re-running it restored 43 of 43.
+
 
 **Two tasks now score above 1.0, and both are findings about the benchmark rather than the model.**
 Removing the upper clip was justified by an argument — a candidate that beats the reference witness
