@@ -380,7 +380,15 @@ PUBLIC_PROBLEM = {
     "candidate_laws": list(LAWS),
     "required_parameters": {k: list(v) for k, v in REQUIRED_PARAMETERS.items()},
     "velocity_units": "umol_per_min_per_mg",
-    "noise_sigma_hint": "additive Gaussian, sigma between 0.008 and 0.012 in velocity units",
+    # Machine-readable, because the name has to match the type. This was one key,
+    # `noise_sigma_hint`, holding the sentence "additive Gaussian, sigma between 0.008 and 0.012
+    # in velocity units". A name ending in `_sigma_hint` reads numeric, and a live Opus 5 draw
+    # wrote `float(problem["noise_sigma_hint"])` in its setup block: every world raised
+    # ValueError before the first assay call, and the three-titration design further down its own
+    # program never ran. Nine of nine proposals across three seeds scored zero on a naming
+    # choice. Difficulty a task did not intend is not difficulty it measures.
+    "noise_sigma_bounds": [0.008, 0.012],
+    "noise_model": "additive Gaussian on each measured velocity",
     "abstain_when": "the enzyme obeys no law in candidate_laws",
 }
 

@@ -61,7 +61,8 @@ def discover_kinetics(problem, assay):
 | `candidate_laws` | the six law names you may report |
 | `required_parameters` | per law, the parameter names your `parameters` must carry |
 | `velocity_units` | `umol_per_min_per_mg` |
-| `noise_sigma_hint` | additive Gaussian, sigma between 0.008 and 0.012 in velocity units |
+| `noise_sigma_bounds` | `[0.008, 0.012]`; the assay noise sigma lies in this range |
+| `noise_model` | `additive Gaussian on each measured velocity` |
 | `abstain_when` | the enzyme obeys no law in `candidate_laws` |
 
 ### `assay(substrate_um, inhibitor_um=0.0)`

@@ -60,9 +60,33 @@ class AnthropicWireTests(unittest.TestCase):
         self.assertEqual(c.total_usage["total_tokens"], 18)
 
     def test_thinking_is_off_unless_asked_for(self):
+        """And is *said* to be off, because omitting the field does not turn it off.
+
+        This asserted that no `thinking` key was sent, on the reading that a field left out is a
+        feature left off. For a model that reasons by default it is not. Measured against Opus 5
+        with the field omitted: 8000 of 8000 output tokens were thinking tokens, the reply carried
+        a single `thinking` block and no `text` block, and the searcher recorded `no_code` on
+        every proposal - a result that reads as a model unable to write a program. With
+        `{"type": "disabled"}` sent, the same prompt returned a complete program in 4996 tokens.
+        """
         with patch.object(LLMClient, "_post", return_value=REPLY) as post:
             client().complete("q")
-        self.assertNotIn("thinking", post.call_args[0][1])
+        self.assertEqual(post.call_args[0][1]["thinking"], {"type": "disabled"})
+
+    def test_a_thinking_only_reply_is_an_error_not_an_empty_answer(self):
+        """The two are indistinguishable downstream, and only one is the model's fault."""
+        thinking_only = {
+            "content": [{"type": "thinking", "thinking": "...", "signature": "x"}],
+            "usage": {"input_tokens": 11, "output_tokens": 8000,
+                      "output_tokens_details": {"thinking_tokens": 8000}},
+            "stop_reason": "max_tokens",
+        }
+        with patch.object(LLMClient, "_post", return_value=thinking_only):
+            with self.assertRaises(RuntimeError) as caught:
+                client().complete("q")
+        message = str(caught.exception)
+        self.assertIn("thinking", message)
+        self.assertIn("8000", message)
 
     def test_thinking_replaces_temperature_when_enabled(self):
         with patch.object(LLMClient, "_post", return_value=REPLY) as post:
