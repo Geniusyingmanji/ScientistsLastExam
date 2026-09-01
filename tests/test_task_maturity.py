@@ -26,7 +26,7 @@ class TaskMaturityAuditTests(unittest.TestCase):
         self.assertEqual(self.report["inventory_count"], 45)
         self.assertEqual(
             self.report["status_counts"],
-            {"certified": 5, "candidate": 38, "quarantined": 0},
+            {"certified": 5, "candidate": 40, "quarantined": 0},
         )
         self.assertEqual(self.report["gate_counts"]["internal_science_admission"], 45)
         self.assertEqual(self.report["issues"], [])
@@ -65,8 +65,12 @@ class TaskMaturityAuditTests(unittest.TestCase):
             self.report["evidence_coverage"]["domain_review_complete_task_count"], 0
         )
         self.assertEqual(
-            self.report["evidence_coverage"]["builder_lineage_declared_task_count"], 43
+            self.report["evidence_coverage"]["builder_lineage_declared_task_count"], 45
         )
+        # Still zero with two tasks now naming their builder, because `complete` here also
+        # requires `frozen_before_eval`, and neither is frozen: EnzymeKineticsLaw had a public key
+        # changed after its first calibration draw, and both may yet be hardened. Declaring the
+        # lineage and freezing the task are different claims and the audit keeps them apart.
         self.assertEqual(
             self.report["evidence_coverage"]["builder_lineage_complete_task_count"], 0
         )
