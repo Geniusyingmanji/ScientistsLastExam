@@ -37,22 +37,35 @@ provenance:
   fresh_confirmation_status: not_completed
 novelty_risk:
   level: medium
-  rationale: The rate laws and the inhibition-mode table are textbook, so a model may recognise the family. What is not published is which world is which, and the ablation shows the score turns on experiment design rather than on recalling the laws.
+  rationale: >-
+    The rate laws and the inhibition-mode table are textbook. A calibration draw settled what the
+    ablation could not: Opus 5 reaches the reference on its first proposal, by titrating at three
+    inhibitor levels and running both refusal tests, with no exploit. The task separates a naive
+    analysis from a competent one and is an on-ramp; it is not evidence about the frontier.
 lineage:
   status: complete
   builder_model_ids:
   - claude-opus-5
   builder_scaffolds:
   - claude-code
-  calibrator_model_ids: []
-  calibration_runs: []
-  calibration_evidence_status: missing
-  edits_triggered_by_model: None yet. The difficulty ladder in Task.md was measured by ablating the reference, which is not a substitute for a model draw; this task is a candidate until one is run.
+  calibrator_model_ids:
+  - anthropic:claude-opus-5
+  calibration_runs:
+  - experiments/opus5_enzyme_kinetics_calibration_2026-09-02.json
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: >-
+    The draw moved a public key. Opus 5 wrote float(problem["noise_sigma_hint"]) into its setup
+    block; the key held a sentence, so every world raised before the first assay call and nine of
+    nine proposals scored zero on a naming choice. It is now noise_sigma_bounds beside a separately
+    named noise_model, and scripts/check_numeric_keys_hold_numbers.py sweeps the inventory for the
+    same shape. The draw also exposed sle/llm.py omitting the Anthropic thinking field, which for a
+    reasoning-by-default model spends the whole output budget on thinking and returns no text.
+    After both fixes the draw saturates the task - see references/known_best.md.
   shortcut_discoverer: builder_self_audit
   frozen_before_eval: false
   freeze_timestamp: null
 long_horizon:
-  status: not_tested
+  status: saturated_for_current_frontier
   measurement_health_passed: false
   material_headroom_after_2h: false
   evidence: []

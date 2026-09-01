@@ -33,6 +33,8 @@ Truth-blind: it reads only the public problem and the budgeted assay.
 | confidence calibration | 0.9151 | - |
 | mean assay calls | 24.0 of 28 | 24.0 of 28 |
 
+A live Opus 5 draw reached the same score. See the model draw below.
+
 Its design is three substrate titrations of eight geometrically spaced points, at inhibitor 0,
 0.35 and 0.85 of the declared maximum; BIC over the six laws rather than lowest residual; and two
 separate refusal tests, one for no substrate dependence and one for model inadequacy.
@@ -67,10 +69,38 @@ experiment design changes.
 
 Varying the inhibitor is worth about +0.67 and knowing when to decline about +0.50.
 
-The reference scoring 0.99 is not a saturation warning here: it is what a correct experiment plus
-a correct model-selection rule earns, and the ladder shows the score collapses to 0.315 when the
-design is wrong. The open question is where a model draw lands on that ladder, and until one is
-run this task stays a candidate.
+The ladder above is not a difficulty measurement, and reading it as one was wrong. It measures
+ablations of a reference this repository wrote - it says what happens when *that* procedure is
+crippled, not what a searcher does.
+
+## Model draw - Claude Opus 5, 2026-09-02
+
+`experiments/opus5_enzyme_kinetics_calibration_2026-09-02.json`, three seeds, three proposals
+each, greedy_rewrite, normal feedback.
+
+| seed | baseline | proposal 1 | proposal 2 | proposal 3 |
+|---|---|---|---|---|
+| 0 | 0.0000 | **0.9905** | 0.9896 | 0.9903 |
+| 1 | 0.0000 | **0.9882** | 0.9886 | 0.9895 |
+| 2 | 0.0000 | **0.9890** | 0.1662 | 0.9897 |
+
+Every first proposal reached the reference. Law identification 1.00, false discovery 0.00,
+coverage 1.00, 28 of 28 assay calls spent. Reading the winning program: it titrates substrate at
+three inhibitor levels, tests for a dead enzyme on the spread of the zero-inhibitor ladder, and
+tests for model inadequacy on the largest standardised residual. There is no exploit in it. It
+did the experiment the task is about, first try.
+
+**So this task is saturated for Opus 5 and does not separate it from a competent reference.** It
+still separates a naive analysis from a competent one, which is worth something as an on-ramp,
+but it cannot be evidence about the frontier. Hardening it requires a defect a *correct*
+procedure still trips on rather than a defect a naive one trips on.
+
+One measured non-starter, recorded so it is not retried: making the assay noise proportional to
+velocity. At 3% relative noise the reference falls to 0.322 and the model's program to 0.000. The
+collapse is not a missing weighted-least-squares skill - it is that the refusal thresholds are
+calibrated against a fixed sigma and stop meaning anything. A heteroscedastic version has to
+declare the noise model in the public problem and retune both thresholds against it, which is a
+different task rather than a harder setting of this one.
 
 ## Separation the refusal tests rely on
 

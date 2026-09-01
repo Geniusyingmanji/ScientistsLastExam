@@ -139,3 +139,10 @@ Ablating the reference - same fitting code, same refusal tests, only the design 
 
 Varying the inhibitor is worth about +0.67, knowing when to decline about +0.50, and the two are
 close to independent.
+
+That table says what happens when a competent procedure is crippled. It does not say how hard the
+task is. A Claude Opus 5 draw on 2026-09-02 reached 0.9905, 0.9882 and 0.9890 on its *first*
+proposal across three seeds - the reference scores 0.9904 - by titrating at three inhibitor levels
+and running both refusal tests. This task is therefore saturated for the current frontier and is
+kept as an on-ramp: it still separates a naive analysis from a competent one, and it is not
+evidence about the ceiling. See `references/known_best.md`.

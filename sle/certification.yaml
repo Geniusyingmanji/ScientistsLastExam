@@ -303,9 +303,13 @@ tasks:
       false discovery rather than merely scoring low. Ablating the reference measures what each competence
       is worth - 0.990 with three inhibitor levels and both refusal tests, 0.315 with one level, 0.490
       when never declining, 0.000 with neither - and blanket abstention scores 0.000 by construction.
-      Candidate rather than certified because no model draw has been run: the ladder was measured by
-      ablating the reference, which the project has recorded as not a substitute for calibrating against
-      a live searcher.
+      A Claude Opus 5 draw on 2026-09-02 settles it: three seeds, first proposal 0.9905 / 0.9882 / 0.9890
+      against the reference's 0.9904, law identification 1.00, false discovery 0.00, 28 of 28 assay calls.
+      The winning program titrates at three inhibitor levels and runs both refusal tests; there is no
+      exploit in it. Saturated for the current frontier and retained as an on-ramp that still separates a
+      naive analysis from a competent one, not as frontier evidence. The draw also moved a public key:
+      the model wrote float() on noise_sigma_hint, which held a sentence, and nine of nine proposals
+      scored zero on the naming before the fix.
     citation_ids:
       - doi:10.1016/0926-6569(63)90226-8
       - doi:10.1021/bi201284u
