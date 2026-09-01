@@ -8,43 +8,44 @@ Scientist's Last Exam (SLE) 是一个研究原型,面向**跨领域、可执行�
 同期基准沿任务形式分化,各自占住了一块:
 
 ```mermaid
-mindmap
-  root((SLE))
-    场景
-      多学科广度
-        AstaBench
-        DiscoveryBench
-        ResearchClawBench
-      单学科纵深
-        NewtonBench 物理
-        BioDesignBench 蛋白
-    optimization
-      Frontier-Eng 工程
-      PMO 分子
-      Design-Bench 离线
-    discover
-      公式
-        NewtonBench
-        LLM-SRBench
-      结构
-        CausalGame
-        Corr2Cause
-      证据
-        DiscoveryBench
-      物质
-        MADE 材料
-        SMDD-Bench 药物
-      参数与机制反演
-        无旗舰占位
-    评估
-      受限 oracle 预算
-        已成标配
-      成本质量 Pareto
-        AstaBench
-      弃权能力
-        AgentAbstain 通用场景
-      可演化性差距
-        本仓库
+flowchart LR
+  SLE(["Scientist's Last Exam"])
+
+  SLE --> SC[场景]
+  SLE --> TF[任务形式]
+  SLE --> EV[评估]
+
+  SC --> SC1[多学科广度]
+  SC1 --> SC1a[AstaBench · DiscoveryBench<br/>ResearchClawBench]
+  SC --> SC2[单学科纵深]
+  SC2 --> SC2a[NewtonBench 物理<br/>BioDesignBench 蛋白]
+
+  TF --> OP[optimization]
+  OP --> OPa[Frontier-Eng 工程<br/>PMO 分子 · Design-Bench 离线]
+  TF --> DI[discover]
+  DI --> D1[公式]
+  D1 --> D1a[NewtonBench · LLM-SRBench]
+  DI --> D2[结构]
+  D2 --> D2a[CausalGame · Corr2Cause]
+  DI --> D3[证据]
+  D3 --> D3a[DiscoveryBench]
+  DI --> D4[物质]
+  D4 --> D4a[MADE 材料 · SMDD-Bench 药物]
+  DI --> D5[参数与机制反演]
+  D5 --> D5a[无旗舰占位]
+
+  EV --> E1[受限 oracle 预算]
+  E1 --> E1a[已成标配]
+  EV --> E2[成本质量 Pareto]
+  E2 --> E2a[AstaBench]
+  EV --> E3[弃权能力]
+  E3 --> E3a[AgentAbstain 通用场景]
+  EV --> E4[可演化性差距]
+  E4 --> E4a[本仓库]
+
+  style SLE fill:#4a72b8,color:#fff,stroke:#39598f
+  style D5 stroke-dasharray: 4 3
+  style E4 stroke-dasharray: 4 3
 ```
 
 **空位在两处。** 一是"参数与机制反演"—— 从受预算的观测里反演一个机制,或判断根本没有机制可反演;
