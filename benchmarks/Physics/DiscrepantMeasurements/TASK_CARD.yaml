@@ -46,10 +46,16 @@ lineage:
   - claude-opus-5
   builder_scaffolds:
   - claude-code
-  calibrator_model_ids: []
-  calibration_runs: []
-  calibration_evidence_status: missing
-  edits_triggered_by_model: None yet. The ladder was measured by ablating the reference, which is not a substitute for a model draw; this task is a candidate until one is run.
+  calibrator_model_ids:
+  - anthropic:claude-opus-5
+  calibration_runs:
+  - experiments/opus5_discrepant_measurements_calibration_2026-09-02.json
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: >-
+    None to the task. The draw reached the reference on two of three seeds and exceeded it on
+    none, so the reference is at the ceiling this scoring admits rather than below it. The third
+    seed stalls at 0.6817 while spending 3.8 of its 5 split tests, which is the failure the axes
+    were separated to make visible.
   shortcut_discoverer: builder_self_audit
   frozen_before_eval: false
   freeze_timestamp: null

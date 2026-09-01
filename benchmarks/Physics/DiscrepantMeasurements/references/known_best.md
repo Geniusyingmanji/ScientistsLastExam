@@ -63,6 +63,35 @@ Buying splits at all is worth +0.42. Buying at both ends rather than only the de
 worth a further +0.14 and takes culprit identification from 0.50 to 1.00. Declining where it is
 right is worth +0.33.
 
+## Model draw - Claude Opus 5, 2026-09-02
+
+`experiments/opus5_discrepant_measurements_calibration_2026-09-02.json`, three seeds, three
+proposals each, greedy_rewrite, normal feedback.
+
+| seed | baseline | proposal 1 | proposal 2 | proposal 3 | split tests used |
+|---|---|---|---|---|---|
+| 0 | 0.0000 | 0.6817 | 0.5267 | 0.6817 | 3.8 of 5 |
+| 1 | 0.0000 | 0.6817 | **0.8421** | 0.8421 | 5.0 of 5 |
+| 2 | 0.0000 | **0.8421** | 0.8421 | 0.8421 | 5.0 of 5 |
+
+Read carefully, because the two halves of this say different things.
+
+Two of three seeds reach the reference, one of them on the first proposal, and **no proposal
+exceeded it**. The reference's 0.8421 is close to the ceiling this scoring admits - the shortfall
+from 1.0 is the distance between a best value and the truth, not a missed defect - so reaching
+0.8421 is reaching the top. On that reading the task is at its ceiling for the current frontier,
+as `EnzymeKineticsLaw` is.
+
+Seed 0 is the part worth keeping. It never gets there across three proposals, and the reason is
+legible in the axes: it spends 3.8 of its 5 split tests and its diagnosis rate stops at 0.88. It
+is not buying the interrogation the diagnosis needs. Seed 1 shows the opposite - 0.6817 on the
+first proposal, 0.8421 on the second, with the split count going 5.0 - which is an iteration
+actually paying for itself rather than a first draft that happened to be right.
+
+So this task is a harder on-ramp than `EnzymeKineticsLaw` and it does carry a real
+proposal-to-proposal signal, but it is not frontier evidence either. Raising its ceiling means
+raising what a *correct* procedure can reach, which the accuracy axis currently caps.
+
 ## Why the published table is not enough
 
 Chi-square per degree of freedom, 5th to 95th percentile over 200 seeds per kind:

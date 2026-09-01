@@ -328,7 +328,12 @@ tasks:
       both a single systematic and a global understatement, so the tail alone halves culprit
       identification. Ablation - 0.842 buying at both ends, 0.701 on the deviant tail only, 0.586 on
       typical groups only, 0.425 buying nothing, 0.509 never declining, 0.000 declining everything.
-      Candidate rather than certified because no model draw has been run.
+      A Claude Opus 5 draw on 2026-09-02 reached the reference's 0.8421 on two of three seeds - one on
+      the first proposal, one on the second after 0.6817 - and exceeded it on none. The third seed
+      stalls at 0.6817 across all three proposals while buying 3.8 of its 5 split tests, which is the
+      failure the axes exist to make legible. A harder on-ramp than EnzymeKineticsLaw and one that
+      shows a real proposal-to-proposal gain, but the reference sits at the ceiling this scoring
+      admits, so it is not frontier evidence.
     citation_ids:
       - doi:10.1103/PhysRev.40.207
       - doi:10.1103/PhysRevD.110.030001
