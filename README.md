@@ -7,57 +7,30 @@ Scientist's Last Exam (SLE) 是一个研究原型,面向**跨领域、可执行�
 
 同期基准沿任务形式分化,各自占住了一块:
 
-```mermaid
-flowchart LR
-  SLE(["Scientist's Last Exam"])
-
-  SLE --> SC[场景]
-  SLE --> TF[任务形式]
-  SLE --> EV[评估]
-
-  SC --> SC1[多学科广度]
-  SC1 --> SC1a[AstaBench · DiscoveryBench<br/>ResearchClawBench]
-  SC --> SC2[单学科纵深]
-  SC2 --> SC2a[NewtonBench 物理<br/>BioDesignBench 蛋白]
-
-  TF --> OP[optimization]
-  OP --> OPa[Frontier-Eng 工程<br/>PMO 分子 · Design-Bench 离线]
-  TF --> DI[discover]
-  DI --> D1[公式]
-  D1 --> D1a[NewtonBench · LLM-SRBench]
-  DI --> D2[结构]
-  D2 --> D2a[CausalGame · Corr2Cause]
-  DI --> D3[证据]
-  D3 --> D3a[DiscoveryBench]
-  DI --> D4[物质]
-  D4 --> D4a[MADE 材料 · SMDD-Bench 药物]
-  DI --> D5[参数与机制反演]
-  D5 --> D5a[无旗舰占位]
-
-  EV --> E1[受限 oracle 预算]
-  E1 --> E1a[已成标配]
-  EV --> E2[成本质量 Pareto]
-  E2 --> E2a[AstaBench]
-  EV --> E3[弃权能力]
-  E3 --> E3a[AgentAbstain 通用场景]
-  EV --> E4[可演化性差距]
-  E4 --> E4a[本仓库]
-
-  style SLE fill:#4a72b8,color:#fff,stroke:#39598f
-  style D5 stroke-dasharray: 4 3
-  style E4 stroke-dasharray: 4 3
+```text
+Scientist's Last Exam
+├── 场景
+│   ├── 多学科广度 ── AstaBench · DiscoveryBench · ResearchClawBench
+│   └── 单学科纵深 ── NewtonBench 物理 · BioDesignBench 蛋白
+├── 任务形式
+│   ├── optimization ── Frontier-Eng 工程 · PMO 分子 · Design-Bench 离线
+│   └── discover
+│       ├── 公式 ── NewtonBench · LLM-SRBench
+│       ├── 结构 ── CausalGame · Corr2Cause
+│       ├── 证据 ── DiscoveryBench
+│       ├── 物质 ── MADE 材料 · SMDD-Bench 药物
+│       └── 参数与机制反演 ── 无旗舰占位    ← 空位
+└── 评估
+    ├── 受限 oracle 预算 ── 已成标配
+    ├── 成本质量 Pareto ── AstaBench
+    ├── 弃权能力 ── AgentAbstain 通用场景
+    └── 可演化性差距 ── 本仓库              ← 空位
 ```
 
 **空位在两处。** 一是"参数与机制反演"—— 从受预算的观测里反演一个机制,或判断根本没有机制可反演;
 SLE 19 个发现类任务中有 12 个落在这里。二是**评估形式**:受限 oracle 预算已经是标配
 (MADE 50 次查询、CausalGame 10 次部署、PMO-1K 1000 次调用),但**没有一个基准用同一个搜索者的
 开环臂做对照** —— 因此"分数变高"与"迭代真的有用"仍然分不开。这两件事就是本仓库要做的。
-
-本仓库受 [Frontier-Engineering](https://github.com/EinsiaLab/Frontier-Engineering) 启发,
-与 [arXiv:2601.21165](https://arxiv.org/abs/2601.21165) 中同名的文本题基准无关。
-
-> 更高的模拟器或验证器分数,只能证明在**已登记的 oracle 内部**做了优化。它本身不能确立自主科学发现、
-> 机制恢复、物理验证或真实世界效用。
 
 ## 两类任务
 
