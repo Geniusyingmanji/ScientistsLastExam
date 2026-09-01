@@ -1,0 +1,66 @@
+schema_version: 2
+scientific_question: Identify which enzyme rate law a hidden enzyme obeys by designing a budgeted substrate-and-inhibitor assay, and decline when the enzyme obeys no law in the published family.
+artifact: A named rate law, its parameters, a confidence, and an optional abstention.
+oracle:
+  model: procedurally parameterized single-enzyme assays over six published rate laws, plus dead-catalysis and two out-of-family worlds
+  feasibility: finite bounded parameters, sealed-grid prediction checking, calibrated abstention, and a charged assay budget
+  deterministic: true
+normalization:
+  baseline: a single substrate titration at zero inhibitor, always reporting Michaelis-Menten
+  reference: substrate titrated at three inhibitor levels, BIC model selection over the six laws, and two separate refusal tests
+  score: development mechanism recovery normalized above always-abstain; law identification, prediction, false discovery, correct refusal, coverage, extrapolation, calibration and the held-out split stay separate
+citations:
+- id: doi:10.1016/0926-6569(63)90226-8
+  title: The kinetics of enzyme-catalyzed reactions with two or more substrates or products. II. Inhibition - nomenclature and theory
+- id: doi:10.1021/bi201284u
+  title: The Original Michaelis Constant - Translation of the 1913 Michaelis-Menten Paper
+- id: doi:10.1042/bj0190338
+  title: A Note on the Kinetics of Enzyme Action
+- id: doi:10.1214/aos/1176344136
+  title: Estimating the Dimension of a Model
+invariants:
+- competitive, uncompetitive and noncompetitive worlds are not separable from a single substrate titration, and are separable from two inhibitor levels
+- in-library worlds fit the family to 0.79-1.11 sigma and out-of-family worlds to 7.8-12.7 sigma, so refusal is decidable rather than a coin flip
+- one out-of-family shape fits the family to 0.9 sigma from a single titration, so a candidate that does not vary the inhibitor books a false discovery rather than merely scoring low
+- the null world is separated by the velocity range against the expected range of pure noise, which scales with the number of points; the weakest real law spans 22 sigma against a dead enzyme's 4
+- declining every world scores exactly zero, and the discovery axes distinguish it from claiming a law on every world
+- assay calls are charged and overspend fails closed; malformed submissions score zero and never raise out of the evaluator
+- held-out split, per-world rows, extrapolation and the discovery axes remain evaluator-only
+known_shortcuts: The six-law family and the Gaussian assay model are controlled research abstractions rather than wet-lab measurements. World seeds are repository-visible and require a future server-held split. A candidate that always titrates a dense substrate-by-inhibitor grid reaches the same score as one that reasons about which experiment separates the modes; the task measures the design, not the reasoning that produced it.
+review:
+  domain: pending_external
+  evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_abstention_normalization_checks
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic generator with development and sealed held-out worlds, including two distinct out-of-family shapes.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: The rate laws and the inhibition-mode table are textbook, so a model may recognise the family. What is not published is which world is which, and the ablation shows the score turns on experiment design rather than on recalling the laws.
+lineage:
+  status: complete
+  builder_model_ids:
+  - claude-opus-5
+  builder_scaffolds:
+  - claude-code
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: None yet. The difficulty ladder in Task.md was measured by ablating the reference, which is not a substitute for a model draw; this task is a candidate until one is run.
+  shortcut_discoverer: builder_self_audit
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: claude-opus-5
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: the reference, the baseline, the five-rung ablation ladder and the nine bad-candidate shapes are all runnable from this directory

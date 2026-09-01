@@ -1,0 +1,4 @@
+1) Only edit solution.py. Keep discover_kinetics(problem, assay).
+2) Return {"law", "parameters", "confidence", "abstain"}. `law` must be one of problem["candidate_laws"]; `parameters` must carry every name in problem["required_parameters"][law], all finite; `confidence` in [0,1]; `abstain` a boolean. Omit `law` and `parameters` when abstaining.
+3) assay(substrate_um, inhibitor_um=0.0) returns one noisy velocity. Concentrations must be finite, non-negative and within problem["substrate_bounds_um"] and problem["inhibitor_bounds_um"]. Do not exceed problem["assay_budget_calls"] calls per enzyme.
+4) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read verification/ or frontier_eval/.

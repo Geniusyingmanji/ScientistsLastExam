@@ -6,7 +6,11 @@ from pathlib import Path
 
 from sle.certification import certification_status
 from sle.registry import list_tasks
-from scripts.audit_tasks import _task_card_issues, audit
+from scripts.audit_tasks import LINEAGE_STATUSES, _task_card_issues, audit
+
+# Tasks built inside this repository, whose builder model, scaffold and red-team history are
+# recorded on the card rather than reconstructed after the fact. Everything else is inherited.
+RECORDED_LINEAGE = {"SystemsBiology/EnzymeKineticsLaw"}
 
 
 class TaskCardAuditTests(unittest.TestCase):
@@ -62,10 +66,20 @@ class TaskCardAuditTests(unittest.TestCase):
             self.assertIn(card["provenance"]["class"], {
                 "known_answer", "procedural", "public_data_replay", "prospective",
             })
-            self.assertEqual(card["lineage"]["status"], "incomplete_legacy")
+            # Enumerated, not pinned to one literal. This asserted `incomplete_legacy`
+            # everywhere, which was true of an inventory that was entirely inherited - but the
+            # field exists to separate a task whose lineage is recorded from one whose is not,
+            # and a literal forces a newly built task to misreport itself to stay green.
+            #
+            # The allowlist keeps it a guard rather than a formality: an inherited task cannot
+            # quietly start claiming a lineage nobody reconstructed.
+            self.assertIn(card["lineage"]["status"], LINEAGE_STATUSES, spec.task_id)
+            if spec.task_id not in RECORDED_LINEAGE:
+                self.assertEqual(card["lineage"]["status"], "incomplete_legacy", spec.task_id)
+                self.assertEqual(
+                    card["construction_audit"]["status"], "incomplete_legacy", spec.task_id)
             self.assertFalse(card["lineage"]["frozen_before_eval"])
             self.assertIsNone(card["lineage"]["freeze_timestamp"])
-            self.assertEqual(card["construction_audit"]["status"], "incomplete_legacy")
             self.assertFalse(card["long_horizon"]["measurement_health_passed"])
             self.assertFalse(card["long_horizon"]["material_headroom_after_2h"])
 

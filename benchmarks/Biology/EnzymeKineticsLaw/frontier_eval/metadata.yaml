@@ -1,0 +1,13 @@
+domain: SystemsBiology
+task: EnzymeKineticsLaw
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: physical_sim
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 40
+science_metric: active_rate_law_identification_with_refusal_and_sealed_prediction
+reference_baseline: one substrate titration at zero inhibitor, always reporting Michaelis-Menten
+reference_sota: substrate titrated at three inhibitor levels with BIC selection and two refusal tests
+citation: "Cleland, 1963, DOI 10.1016/0926-6569(63)90226-8"
