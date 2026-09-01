@@ -185,6 +185,23 @@ class CohortRunnerTests(unittest.TestCase):
         modes = sorted(self.calls.read_text(encoding="utf-8").split())
         self.assertEqual(modes, ["normal", "normal", "selection_blind", "selection_blind"])
 
+    def test_modes_flag_runs_only_the_requested_arm(self):
+        """Wave-1 open-loop scans must not also launch unpaired normal runs."""
+        self.fake_python('''
+            for arg in "$@"; do
+              case "$prev" in --workdir) out="$arg" ;; --feedback-mode) mode="$arg" ;; esac
+              prev="$arg"
+            done
+            echo "$mode" >> "%s"
+            mkdir -p "$out"; echo '{}' > "$out/run_manifest.json"
+        ''' % self.calls)
+        result = self.run_script(
+            "--cohort", "c", "--config", "x.yaml", "--seeds", "0,1",
+            "--modes", "selection_blind", "T/t:t")
+        modes = sorted(self.calls.read_text(encoding="utf-8").split())
+        self.assertEqual(modes, ["selection_blind", "selection_blind"])
+        self.assertIn("all runs have a manifest", result.stdout)
+
 
 if __name__ == "__main__":
     unittest.main()

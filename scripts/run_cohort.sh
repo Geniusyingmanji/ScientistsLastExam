@@ -27,6 +27,9 @@
 #       --seeds 0,1,2 --budget 12 Spectroscopy/NMRSpectrumFitting:nmr Astro/X:x
 #
 #   --only-missing   restrict to runs that have no manifest (repairs a partial cohort)
+#   --modes          comma-separated feedback modes; default is both arms. Open-loop
+#                    saturation scans pass selection_blind only so a climbing control
+#                    does not also buy an unpaired feedback arm.
 set -uo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -40,6 +43,7 @@ while [[ $# -gt 0 ]]; do
     --seeds) SEEDS="$2"; shift 2 ;;
     --budget) BUDGET="$2"; shift 2 ;;
     --algorithm) ALGORITHM="$2"; shift 2 ;;
+    --modes) IFS=',' read -r -a MODES <<< "$2"; shift 2 ;;
     --only-missing) ONLY_MISSING=1; shift ;;
     --) shift; break ;;
     -*) echo "unknown flag: $1" >&2; exit 2 ;;
@@ -47,8 +51,8 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-[[ -n "$COHORT" && -n "$CONFIG" && $# -gt 0 ]] || {
-  echo "usage: $0 --cohort NAME --config PATH [--seeds 0,1,2] [--budget N] [--only-missing] TASK:SHORT..." >&2
+[[ -n "$COHORT" && -n "$CONFIG" && $# -gt 0 && ${#MODES[@]} -gt 0 ]] || {
+  echo "usage: $0 --cohort NAME --config PATH [--seeds 0,1,2] [--budget N] [--modes selection_blind,normal] [--only-missing] TASK:SHORT..." >&2
   exit 2
 }
 

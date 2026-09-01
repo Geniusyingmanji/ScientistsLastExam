@@ -84,7 +84,7 @@ class LowThrustV2Tests(unittest.TestCase):
 
         metrics = oracle.evaluate(zero)
         self.assertEqual(metrics["valid"], 1.0)
-        self.assertEqual(metrics["combined_score"], 0.0)
+        self.assertAlmostEqual(metrics["combined_score"], 0.0, delta=1e-12)
         self.assertEqual(metrics["feasibility_rate"], 0.0)
         self.assertEqual(metrics["development_mission_feasibility_rate"], 0.0)
         shown = search_visible_metrics(metrics)

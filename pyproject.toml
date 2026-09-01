@@ -1,0 +1,14 @@
+[project]
+name = "scientists-last-exam"
+version = "0.1.0"
+description = "Scientist's Last Exam: budgeted generative scientific optimization"
+requires-python = ">=3.12"
+dependencies = [
+  "numpy>=1.26,<2",
+  "scipy>=1.14",
+  "pyyaml>=6",
+  "sympy==1.13.3",
+]
+
+[tool.uv]
+package = false

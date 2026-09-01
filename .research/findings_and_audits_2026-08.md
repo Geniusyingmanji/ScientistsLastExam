@@ -55,6 +55,13 @@ budget 3 下 258 次种子配对运行,两份报告都可信、无终局失败�
 
 完整记录在 [`.research/`](),每份自带其主张边界。
 
+**2026-09-01,hy3-ioa Wave-1。** 四题开环(3 seed × budget 12)加 LowThrust 条件配对。
+`report_admission_criterion.py` 在当前包哈希上判 LowThrustTransfer 为 `measures_iteration`;
+CalorimeterDesign 开环未耗尽,SequenceLawRecovery 公开分封顶,LennardJonesCluster 近见证。
+不与 8 月三模型混表。详见
+[wave1_hy3_ioa_2026-09-01.md](wave1_hy3_ioa_2026-09-01.md)。
+
+
 **一个任务的难度往往在它的提交契约上,不在它的科学上。** 隐藏 evaluator 长度与"提案连**有效**都算不上"
 的比例,秩相关是 **-0.675**(39 个任务)—— 最短的 evaluator 接受 92-100%,最长的接受 0-5%。
 机制是看得见的而不是推断的:`CalorimeterDesign` 拒绝了 36 个提案中的 36 个,而它自己的基线评测正常,

@@ -1,0 +1,258 @@
+{
+  "schema_version": 2,
+  "note": "condition 1 (open-loop non-saturation) is necessary; condition 2 (a feedback gap that does not close with budget) is what makes a task measure iteration",
+  "budgets": [
+    3,
+    5,
+    8,
+    10,
+    12
+  ],
+  "row_count": 4,
+  "note_rows": "one row per task; paired gaps listed per cohort inside each row",
+  "distinct_task_count": 4,
+  "models": [
+    "hy3-ioa"
+  ],
+  "tasks_with_more_than_one_version": [],
+  "qualifying_but_seed_fragile": [],
+  "cross_model_agreement": {},
+  "cross_model_disagreement": {},
+  "short_run_count": 0,
+  "total_run_count": 15,
+  "distinct_tasks_with_paired_evidence": 1,
+  "distinct_tasks_measuring_iteration": [
+    "Astrodynamics/LowThrustTransfer"
+  ],
+  "paired_evidence_row_count": 1,
+  "verdict_counts": {
+    "measures_iteration": 1,
+    "exhausted_unpaired": 1,
+    "control_not_exhausted": 1,
+    "solved_at_ceiling": 1
+  },
+  "single_seed_screen_count": 0,
+  "judged_count": 4,
+  "rows": [
+    {
+      "task": "Astrodynamics/LowThrustTransfer",
+      "model": "hy3-ioa",
+      "task_version": "1d7c9f7202ddba",
+      "verdict": "measures_iteration",
+      "reason": "control exhausted and the gap still grows, -0.0019 at 3 to +0.0953 at 12 (3/3 at the last budget, n=3)",
+      "judged_on_cohort": "wave1-hy3-ioa",
+      "pooled_open_loop_seeds": 3,
+      "paired_cohorts": [
+        {
+          "cohort": "wave1-hy3-ioa",
+          "gaps": [
+            {
+              "budget": 3,
+              "n": 3,
+              "mean": -0.001897215045972022,
+              "stderr": 0.0013059969806132284,
+              "open_loop_mean": 0.0018972151748382733,
+              "material": true,
+              "leave_one_out_worst": -0.0006455253375202934,
+              "robust_to_one_seed": true,
+              "wins": 0,
+              "losses": 3
+            },
+            {
+              "budget": 5,
+              "n": 3,
+              "mean": -0.0008594101641613853,
+              "stderr": 0.0004297065349679781,
+              "open_loop_mean": 0.0018972151748382733,
+              "material": true,
+              "leave_one_out_worst": -0.0006435899087217846,
+              "robust_to_one_seed": true,
+              "wins": 0,
+              "losses": 3
+            },
+            {
+              "budget": 8,
+              "n": 3,
+              "mean": 0.08210339169504892,
+              "stderr": 0.08274734710533568,
+              "open_loop_mean": 0.0018972151748382733,
+              "material": true,
+              "leave_one_out_worst": -0.0006431199046179483,
+              "robust_to_one_seed": false,
+              "wins": 2,
+              "losses": 1
+            },
+            {
+              "budget": 10,
+              "n": 3,
+              "mean": 0.09564127142952644,
+              "stderr": 0.07613702943270236,
+              "open_loop_mean": 0.0018972151748382733,
+              "material": true,
+              "leave_one_out_worst": 0.01966369969709835,
+              "robust_to_one_seed": true,
+              "wins": 3,
+              "losses": 0
+            },
+            {
+              "budget": 12,
+              "n": 3,
+              "mean": 0.09529311603905405,
+              "stderr": 0.07578960654802742,
+              "open_loop_mean": 0.0022453705653106767,
+              "material": true,
+              "leave_one_out_worst": 0.01966369969709835,
+              "robust_to_one_seed": true,
+              "wins": 3,
+              "losses": 0
+            }
+          ],
+          "seeds": 3
+        }
+      ],
+      "saturation": {
+        "seeds": 3,
+        "seed_fragile": null,
+        "median_second_half_gain": 0.0,
+        "mean_second_half_gain": 0.0003481553904724035,
+        "max_second_half_gain": 0.0010444661714172105,
+        "mean_final": 0.0022453705653106767,
+        "is_floor": false,
+        "saturated": true,
+        "marginal": false
+      },
+      "gap_by_budget": [
+        {
+          "budget": 3,
+          "n": 3,
+          "mean": -0.001897215045972022,
+          "stderr": 0.0013059969806132284,
+          "open_loop_mean": 0.0018972151748382733,
+          "material": true,
+          "leave_one_out_worst": -0.0006455253375202934,
+          "robust_to_one_seed": true,
+          "wins": 0,
+          "losses": 3
+        },
+        {
+          "budget": 5,
+          "n": 3,
+          "mean": -0.0008594101641613853,
+          "stderr": 0.0004297065349679781,
+          "open_loop_mean": 0.0018972151748382733,
+          "material": true,
+          "leave_one_out_worst": -0.0006435899087217846,
+          "robust_to_one_seed": true,
+          "wins": 0,
+          "losses": 3
+        },
+        {
+          "budget": 8,
+          "n": 3,
+          "mean": 0.08210339169504892,
+          "stderr": 0.08274734710533568,
+          "open_loop_mean": 0.0018972151748382733,
+          "material": true,
+          "leave_one_out_worst": -0.0006431199046179483,
+          "robust_to_one_seed": false,
+          "wins": 2,
+          "losses": 1
+        },
+        {
+          "budget": 10,
+          "n": 3,
+          "mean": 0.09564127142952644,
+          "stderr": 0.07613702943270236,
+          "open_loop_mean": 0.0018972151748382733,
+          "material": true,
+          "leave_one_out_worst": 0.01966369969709835,
+          "robust_to_one_seed": true,
+          "wins": 3,
+          "losses": 0
+        },
+        {
+          "budget": 12,
+          "n": 3,
+          "mean": 0.09529311603905405,
+          "stderr": 0.07578960654802742,
+          "open_loop_mean": 0.0022453705653106767,
+          "material": true,
+          "leave_one_out_worst": 0.01966369969709835,
+          "robust_to_one_seed": true,
+          "wins": 3,
+          "losses": 0
+        }
+      ],
+      "confidence": "measured"
+    },
+    {
+      "task": "Chemistry/LennardJonesCluster",
+      "model": "hy3-ioa",
+      "task_version": "669ede9218cd14",
+      "verdict": "exhausted_unpaired",
+      "reason": "open-loop control is exhausted (median gain +0.0015, ending at 0.9811) but no paired feedback arm exists, so it is unknown whether a searcher can go further",
+      "judged_on_cohort": null,
+      "pooled_open_loop_seeds": 3,
+      "paired_cohorts": [],
+      "saturation": {
+        "seeds": 3,
+        "seed_fragile": null,
+        "median_second_half_gain": 0.0014519509913597517,
+        "mean_second_half_gain": 0.0014899572262332035,
+        "max_second_half_gain": 0.003017920687339859,
+        "mean_final": 0.9811324393067703,
+        "is_floor": false,
+        "saturated": false,
+        "marginal": true
+      },
+      "gap_by_budget": [],
+      "confidence": "measured"
+    },
+    {
+      "task": "ParticlePhysics/CalorimeterDesign",
+      "model": "hy3-ioa",
+      "task_version": "342538dc38d0fc",
+      "verdict": "control_not_exhausted",
+      "reason": "open-loop control still gains +0.0186 over its second half at the median seed, so best-of-N has not run out and any gap measured here depends on the budget chosen",
+      "judged_on_cohort": null,
+      "pooled_open_loop_seeds": 3,
+      "paired_cohorts": [],
+      "saturation": {
+        "seeds": 3,
+        "seed_fragile": null,
+        "median_second_half_gain": 0.018579551939252648,
+        "mean_second_half_gain": 0.1330192747378228,
+        "max_second_half_gain": 0.38047827227421577,
+        "mean_final": 0.31213178697119714,
+        "is_floor": false,
+        "saturated": false,
+        "marginal": false
+      },
+      "gap_by_budget": [],
+      "confidence": "measured"
+    },
+    {
+      "task": "Mathematics/SequenceLawRecovery",
+      "model": "hy3-ioa",
+      "task_version": "1b542ff6e9ec23",
+      "verdict": "solved_at_ceiling",
+      "reason": "clipped scoring with the open-loop control at 1.0000, which is the cap; there is nothing above the anchor for a searcher to reach and pairing can only measure zero",
+      "judged_on_cohort": null,
+      "pooled_open_loop_seeds": 3,
+      "paired_cohorts": [],
+      "saturation": {
+        "seeds": 3,
+        "seed_fragile": null,
+        "median_second_half_gain": 0.0,
+        "mean_second_half_gain": 0.16666666666666666,
+        "max_second_half_gain": 0.5,
+        "mean_final": 1.0,
+        "is_floor": false,
+        "saturated": true,
+        "marginal": false
+      },
+      "gap_by_budget": [],
+      "confidence": "measured"
+    }
+  ]
+}

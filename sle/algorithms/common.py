@@ -180,6 +180,7 @@ def llm_condition_descriptor(llm: LLMClient) -> dict[str, Any]:
         "temperature": getattr(config, "temperature", None),
         "max_output_tokens": getattr(config, "max_output_tokens", None),
         "timeout_seconds": getattr(config, "timeout_seconds", None),
+        "stream": getattr(config, "stream", False),
         "base_url_host": host,
     }
 
@@ -197,6 +198,7 @@ def llm_condition_sha256(llm: LLMClient) -> str:
         "temperature": getattr(config, "temperature", None),
         "reasoning_effort": getattr(config, "reasoning_effort", None),
         "timeout_seconds": getattr(config, "timeout_seconds", None),
+        "stream": getattr(config, "stream", False),
         # Header values may contain credentials. Their hashes still bind the run
         # condition without writing the secrets to disk.
         "extra_header_value_sha256": {

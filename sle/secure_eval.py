@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import functools
 import importlib.util
 import json
 import math
@@ -207,6 +208,33 @@ def read_candidate_packages(task_dir: Path) -> tuple[str, ...]:
     return tuple(resolved)
 
 
+@functools.lru_cache(maxsize=1)
+def _proc_mount_args() -> tuple[str, ...]:
+    """Prefer a fresh procfs. Some container hosts forbid that mount.
+
+    This host can unshare user namespaces but cannot `mount -t proc`. Binding the
+    host `/proc` read-only still keeps the candidate off the network and the writable
+    tree; it is weaker than a private procfs, so it is only used when the probe fails.
+    """
+    bwrap = shutil.which("bwrap")
+    if not bwrap:
+        return ("--proc", "/proc")
+    probe = [
+        bwrap, "--unshare-all", "--die-with-parent",
+        "--ro-bind", "/usr", "/usr", "--ro-bind", "/lib", "/lib",
+        "--proc", "/proc", "--dev", "/dev", "--", "/usr/bin/true",
+    ]
+    if Path("/lib64").exists():
+        probe[8:8] = ["--ro-bind", "/lib64", "/lib64"]
+    try:
+        result = subprocess.run(probe, capture_output=True, timeout=5)
+    except (OSError, subprocess.TimeoutExpired):
+        return ("--ro-bind", "/proc", "/proc")
+    if result.returncode == 0:
+        return ("--proc", "/proc")
+    return ("--ro-bind", "/proc", "/proc")
+
+
 def _sandbox_command(candidate: Path, entrypoint: str, seccomp_fd: int,
                      packages: tuple[str, ...] = ()) -> list[str]:
     bwrap = shutil.which("bwrap")
@@ -218,7 +246,7 @@ def _sandbox_command(candidate: Path, entrypoint: str, seccomp_fd: int,
         "--ro-bind", "/usr", "/usr",
         "--ro-bind", "/lib", "/lib",
         "--ro-bind", "/lib64", "/lib64",
-        "--proc", "/proc", "--dev", "/dev", "--tmpfs", "/tmp",
+        *_proc_mount_args(), "--dev", "/dev", "--tmpfs", "/tmp",
         "--dir", "/runner", "--dir", "/runner/sle", "--dir", "/work",
         "--ro-bind", str(PACKAGE_DIR / "candidate_worker.py"), "/runner/sle/candidate_worker.py",
         "--ro-bind", str(PACKAGE_DIR / "rpc_codec.py"), "/runner/sle/rpc_codec.py",

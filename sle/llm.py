@@ -56,6 +56,9 @@ class LLMConfig:
     # max_tokens to exceed the thinking budget.
     thinking_budget_tokens: Optional[int] = None
     timeout_seconds: float = 600.0
+    # Tencent Copilot (and some other proxies) reject non-stream chat. Off by default so
+    # OpenAI-compatible JSON endpoints keep returning one object.
+    stream: bool = False
     extra_headers: dict = field(default_factory=dict)
     input_cost_per_million: Optional[float] = None
     output_cost_per_million: Optional[float] = None
@@ -106,6 +109,12 @@ class LLMClient:
         if self.config.api_key:
             headers["Authorization"] = f"Bearer {self.config.api_key}"
         headers.update(self.config.extra_headers)
+        if self.config.stream:
+            payload["stream"] = True
+            raw = self._post_sse(url, payload, headers)
+            text, usage = self._assemble_chat_sse(raw)
+            self._record_usage(usage)
+            return text
         data = self._post(url, payload, headers)
         self._record_usage(data.get("usage") or {})
         return data["choices"][0]["message"]["content"] or ""
@@ -228,6 +237,35 @@ class LLMClient:
             raise RuntimeError(f"LLM error: {data['error']}")
         return "".join(chunks)
 
+    @staticmethod
+    def _assemble_chat_sse(raw: str) -> tuple[str, dict]:
+        """Join OpenAI-style `data:` chunks. Usage, if present, is on the last chunk."""
+        parts: list[str] = []
+        usage: dict[str, Any] = {}
+        for line in raw.splitlines():
+            if not line.startswith("data:"):
+                continue
+            payload = line[5:].strip()
+            if not payload or payload == "[DONE]":
+                continue
+            try:
+                chunk = json.loads(payload)
+            except json.JSONDecodeError:
+                continue
+            if not isinstance(chunk, dict):
+                continue
+            if isinstance(chunk.get("usage"), dict):
+                usage = chunk["usage"]
+            choices = chunk.get("choices") or []
+            if not choices or not isinstance(choices[0], dict):
+                continue
+            delta = choices[0].get("delta") or {}
+            if isinstance(delta, dict):
+                piece = delta.get("content")
+                if isinstance(piece, str) and piece:
+                    parts.append(piece)
+        return "".join(parts), usage
+
     # ---- transport ------------------------------------------------------
     def _post(self, url: str, payload: dict, headers: dict, retries: int = 3) -> dict:
         body = json.dumps(payload).encode("utf-8")
@@ -241,3 +279,16 @@ class LLMClient:
                 last_err = exc
                 time.sleep(2.0 * (attempt + 1))
         raise RuntimeError(f"LLM request failed after {retries} attempts: {last_err}")
+
+    def _post_sse(self, url: str, payload: dict, headers: dict, retries: int = 3) -> str:
+        body = json.dumps(payload).encode("utf-8")
+        last_err: Optional[Exception] = None
+        for attempt in range(retries):
+            try:
+                req = urllib.request.Request(url, data=body, headers=headers, method="POST")
+                with urllib.request.urlopen(req, timeout=self.config.timeout_seconds) as resp:
+                    return resp.read().decode("utf-8")
+            except Exception as exc:  # noqa: BLE001 - surface after retries
+                last_err = exc
+                time.sleep(2.0 * (attempt + 1))
+        raise RuntimeError(f"LLM stream request failed after {retries} attempts: {last_err}")
