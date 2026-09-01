@@ -1,0 +1,4 @@
+1) Only edit solution.py. Keep synthesize_evidence(problem, split_test).
+2) Return {"best_value", "uncertainty", "diagnosis", "culprit_index", "confidence", "abstain"}. `diagnosis` must be one of problem["candidate_diagnoses"] or null; `uncertainty` strictly positive and finite; `culprit_index` in [0, problem["group_count"]) and required when diagnosis is "outlier"; `confidence` in [0,1]; `abstain` a boolean. Omit `best_value` and `uncertainty` when abstaining.
+3) split_test(group_index) charges one call. Do not exceed problem["split_test_budget"] calls per body of evidence, and keep group_index in [0, problem["group_count"]).
+4) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read verification/ or frontier_eval/.

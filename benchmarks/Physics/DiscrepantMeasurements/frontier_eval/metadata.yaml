@@ -1,0 +1,13 @@
+domain: ParticlePhysics
+task: DiscrepantMeasurements
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: statistical_sim
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 25
+science_metric: evidence_defect_diagnosis_with_charged_internal_consistency_tests_and_refusal
+reference_baseline: the inverse-variance weighted mean of the published table, declared consistent
+reference_sota: split tests at both ends of the deviation ordering, then diagnosis from where the inconsistency falls
+citation: "Birge, 1932, DOI 10.1103/PhysRev.40.207"

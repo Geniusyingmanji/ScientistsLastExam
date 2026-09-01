@@ -33,10 +33,10 @@ class CertificationPolicyTests(unittest.TestCase):
         # Fifteen tasks retired: every model had reached their cap, so the score could no
         # longer separate two searchers. Tasks scoring above 1.0 stayed - on an uncapped task
         # that is the intended result rather than saturation.
-        # 44 since EnzymeKineticsLaw was added: active rate-law identification, filling
-        # Biology x formula-discovery and Biology x designed-experiment, both of which
-        # the discipline-by-form survey found empty.
-        self.assertEqual(len(list_tasks(None)), 44)
+        # 45: EnzymeKineticsLaw (Biology x formula discovery, Biology x designed experiment)
+        # and DiscrepantMeasurements (Physics x evidence synthesis), all three cells that the
+        # discipline-by-form survey found empty.
+        self.assertEqual(len(list_tasks(None)), 45)
         self.assertEqual(
             certification_status("ProteinEngineering/ProteinStabilityDesign"),
             "candidate",

@@ -23,10 +23,10 @@ class BenchmarkLayoutTests(unittest.TestCase):
         # cannot separate two searchers, so those tasks were costing evaluation budget without
         # answering anything. Tasks scoring above 1.0 were kept - on an uncapped task that is the
         # intended outcome, not saturation.
-        # 44 since EnzymeKineticsLaw was added: active rate-law identification, filling
-        # Biology x formula-discovery and Biology x designed-experiment, both of which
-        # the discipline-by-form survey found empty.
-        self.assertEqual(len(list_tasks(None)), 44)
+        # 45: EnzymeKineticsLaw (Biology x formula discovery, Biology x designed experiment)
+        # and DiscrepantMeasurements (Physics x evidence synthesis), all three cells that the
+        # discipline-by-form survey found empty.
+        self.assertEqual(len(list_tasks(None)), 45)
 
     def test_logical_domain_is_independent_of_physical_discipline(self):
         specs = {spec.task_id: spec for spec in list_tasks(None)}

@@ -311,6 +311,25 @@ tasks:
       - doi:10.1021/bi201284u
       - doi:10.1042/bj0190338
       - doi:10.1214/aos/1176344136
+  ParticlePhysics/DiscrepantMeasurements:
+    status: candidate
+    reason: >-
+      Evidence synthesis migrated out of clinical trials: eight groups publish a value and a one-sigma
+      uncertainty for the same constant and scatter further than those uncertainties allow. Four defects
+      are possible - sound, globally understated errors, one group with an unquoted systematic, or two
+      methods that disagree - and the three defective ones overlap in chi-square per degree of freedom
+      (2.2-11.8, 1.8-5.7, 3.9-10.2 against a sound table's 0.4-1.9), so the diagnosis is not reachable
+      from the published table. It is reachable from five charged split tests against eight groups, and
+      only by spending them at both ends of the deviation ordering: the deviant tail splits badly under
+      both a single systematic and a global understatement, so the tail alone halves culprit
+      identification. Ablation - 0.842 buying at both ends, 0.701 on the deviant tail only, 0.586 on
+      typical groups only, 0.425 buying nothing, 0.509 never declining, 0.000 declining everything.
+      Candidate rather than certified because no model draw has been run.
+    citation_ids:
+      - doi:10.1103/PhysRev.40.207
+      - doi:10.1103/PhysRevD.110.030001
+      - doi:10.1103/RevModPhys.93.025010
+      - doi:10.1016/0197-2456(86)90046-2
   ChemicalKinetics/ReactionMechanismFitting:
     status: candidate
     reason: v2 is an active partial-species assay task with twelve candidate reactions, charged temperature/initial-condition/sensor design, sparse Arrhenius rate-curve recovery, held-out topologies and separate null/model-inadequacy refusal; a truth-blind classical fit scores 0.482/0.404 development/held-out mechanism while reaching 0.860 development interpolation and falsely claiming a mechanism in half of unsupported worlds; GPT-5.5 budget-one and normal budget-three runs remain at zero while a strict open-loop batch finds 0.343/0.363 development/held-out mechanism but retains the same false-discovery failure, leaving science-specific headroom pending paired controls, server-held reactors and independent kinetics review
