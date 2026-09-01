@@ -3,13 +3,54 @@
 ## 背景
 
 Scientist's Last Exam (SLE) 是一个研究原型,面向**跨领域、可执行、预算受限的科学生成式优化**。
-
 它要回答的不是"模型能不能考一次高分",而是**"给模型反馈和更多预算,它在科学上会不会变得更好"**。
 
-同期文献沿这条线分开:SEE([arXiv:2608.06931](https://arxiv.org/abs/2608.06931))是科学,
-但作为静态题集说不了迭代有没有用;OPT-BENCH([arXiv:2605.08904](https://arxiv.org/abs/2605.08904))
-用无记忆对照臂测量迭代,工具是对的,但它的环境是机器学习与 NP-hard 问题。
-**两者都不在交集上** —— 一个有冻结领域 oracle 的科学问题,而被测量的是反馈会不会累积。
+同期基准沿任务形式分化,各自占住了一块:
+
+```mermaid
+mindmap
+  root((SLE))
+    场景
+      多学科广度
+        AstaBench
+        DiscoveryBench
+        ResearchClawBench
+      单学科纵深
+        NewtonBench 物理
+        BioDesignBench 蛋白
+    optimization
+      Frontier-Eng 工程
+      PMO 分子
+      Design-Bench 离线
+    discover
+      公式
+        NewtonBench
+        LLM-SRBench
+      结构
+        CausalGame
+        Corr2Cause
+      证据
+        DiscoveryBench
+      物质
+        MADE 材料
+        SMDD-Bench 药物
+      参数与机制反演
+        无旗舰占位
+    评估
+      受限 oracle 预算
+        已成标配
+      成本质量 Pareto
+        AstaBench
+      弃权能力
+        AgentAbstain 通用场景
+      可演化性差距
+        本仓库
+```
+
+**空位在两处。** 一是"参数与机制反演"—— 从受预算的观测里反演一个机制,或判断根本没有机制可反演;
+SLE 19 个发现类任务中有 12 个落在这里。二是**评估形式**:受限 oracle 预算已经是标配
+(MADE 50 次查询、CausalGame 10 次部署、PMO-1K 1000 次调用),但**没有一个基准用同一个搜索者的
+开环臂做对照** —— 因此"分数变高"与"迭代真的有用"仍然分不开。这两件事就是本仓库要做的。
 
 本仓库受 [Frontier-Engineering](https://github.com/EinsiaLab/Frontier-Engineering) 启发,
 与 [arXiv:2601.21165](https://arxiv.org/abs/2601.21165) 中同名的文本题基准无关。
