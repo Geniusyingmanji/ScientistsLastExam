@@ -37,9 +37,16 @@ tasks:
       - doi:10.1038/s41586-023-06924-6
   Optimization/CirclePacking:
     status: certified
-    reason: geometric feasibility oracle and dated Packomania anchors
+    reason: >-
+      Geometric feasibility oracle with Packomania anchors, each re-derived from the source
+      coordinate files rather than transcribed. The N=13 anchor was corrected on 2026-09-02 from
+      7.6274 - a number the source never contained - to 7.4630478289, proven optimal by Peikert
+      (1991); against the wrong anchor one model proposal had scored 1.4406 and been read as a
+      world record. Score comparisons across that date are invalid for N=13; runs from the
+      2026-09-02 delta ladder onward use the corrected anchor.
     citation_ids:
-      - url:http://hydra.nat.uni-magdeburg.de/packing/csq/csq.html
+      - url:http://www.packomania.com/csq/txt/csq13.txt
+      - url:https://erich-friedman.github.io/packing/cirinsqu/
       - doi:10.1007/978-0-387-45676-8
   Photonics/MultilayerThinFilm:
     status: certified

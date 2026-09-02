@@ -9,5 +9,5 @@ eval_time_seconds: 10
 science_metric: mean_gap_closed_to_best_known_packing
 sizes: [7, 10, 13]
 reference_baseline: regular_grid
-reference_sota: "Packomania (E. Specht): N=7 side=5.7321, N=10 side=6.7474, N=13 side=7.6274"
+reference_sota: "Packomania (E. Specht), re-derived from coordinate files: N=7 side=5.7320508076 (proven optimal), N=10 side=6.7474415232, N=13 side=7.4630478289 (proven optimal, Peikert 1991)"
 citation: "Specht (Packomania); Szabó et al. 2007"

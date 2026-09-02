@@ -10,12 +10,18 @@ from __future__ import annotations
 
 import numpy as np
 
-# (N, best_known_side_length) from Packomania / Specht database.
-# These are the smallest known square side for N unit circles (radius 1).
+# (N, best_known_side_length): the smallest known square side for N unit circles (radius 1),
+# each re-derived from the Packomania coordinate files (side = 1 / radius-in-unit-square) rather
+# than copied from a rendered table. The N=13 entry used to read 7.6274, which is not in the
+# source at all: the coordinate file gives r = 0.133993513499, so the side is 7.4630478289, and
+# Friedman's survey attributes a proof of optimality to Peikert (1991). Against the wrong anchor
+# a single model proposal scored 1.4406 and the task was reclassified as beating a world record;
+# the same packing scores 0.9995 against the real one. Sources and the re-derivation are in
+# references/known_best.md.
 INSTANCES = [
-    {"n": 7, "best_side": 5.7321, "note": "known optimal"},
-    {"n": 10, "best_side": 6.7474, "note": "Packomania"},
-    {"n": 13, "best_side": 7.6274, "note": "Packomania"},
+    {"n": 7, "best_side": 5.7320508076, "note": "proven optimal, 4 + sqrt(3)"},
+    {"n": 10, "best_side": 6.7474415232, "note": "Packomania csq10, r = 0.148204322565"},
+    {"n": 13, "best_side": 7.4630478289, "note": "proven optimal (Peikert 1991), Packomania csq13, r = 0.133993513499"},
 ]
 
 
