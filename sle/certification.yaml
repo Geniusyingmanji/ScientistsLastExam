@@ -359,7 +359,11 @@ tasks:
       with grid-midpoint boundaries; 0.444 never declining; 0.000 for the naive grid, with a 0.86
       false-phase rate. The reference deliberately sits at 0.730 on half the budget, so the boundary
       axis retains headroom; the admission bar recorded on the card is that a first Opus 5 proposal
-      must not reach it. Candidate: no model draw has been run yet.
+      must not reach it - and a Claude Opus 5 draw on 2026-09-02 (clean-revision run) passed: first
+      proposals 0.10 / 0.67 / 0.34 against the reference's 0.730, best of nine 0.6706, none reaching
+      the reference. The near-miss got the phase set exactly right and fell short only on boundary
+      placement, the lever-rule skill the task isolates. Unsaturated at the frontier; the run is
+      single-arm at budget 3, so it shows headroom, not yet feedback-driven improvement.
     citation_ids:
       - doi:10.1038/s41467-020-19597-w
       - doi:10.1107/S0021889869006558

@@ -43,13 +43,19 @@ lineage:
   - claude-opus-5
   builder_scaffolds:
   - claude-code
-  calibrator_model_ids: []
-  calibration_runs: []
-  calibration_evidence_status: missing
+  calibrator_model_ids:
+  - anthropic:claude-opus-5
+  calibration_runs:
+  - experiments/opus5_phase_diagram_calibration_2026-09-02_v2.json
+  calibration_evidence_status: current_or_migration_replayed
   edits_triggered_by_model: >-
-    None yet. The ladder was measured by ablating the reference, which this project has recorded
-    as not a substitute for a model draw; this task is a candidate until one is run, and the
-    admission bar set for it is that a first Opus 5 proposal must not reach the reference.
+    None. The draw (clean-revision run v2; a first dirty-tree run was discarded) passed the
+    admission bar the task was built under. First proposals scored 0.10 / 0.67 / 0.34 against the
+    reference's 0.730 and no proposal of nine reached it, so the task is unsaturated. The failure
+    is the designed one: even seed 1's near-miss got the phase set exactly right and fell short
+    only on boundary placement, the lever-rule skill the task isolates. The run is single-arm at
+    budget 3, so it evidences headroom rather than feedback-driven improvement; a paired
+    selection_blind arm is not yet run.
   shortcut_discoverer: builder_self_audit
   frozen_before_eval: false
   freeze_timestamp: null

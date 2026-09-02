@@ -37,6 +37,35 @@ the headroom a better searcher is supposed to claim. This is the admission bar r
 card: a first model proposal that reaches the reference means the task needs hardening before it
 is anything more than an on-ramp.
 
+## Model draw - Claude Opus 5, 2026-09-02
+
+`experiments/opus5_phase_diagram_calibration_2026-09-02_v2.json`, a clean-revision run (the first
+run was on a dirty tree and was discarded). Three seeds, three proposals each, greedy_rewrite,
+normal feedback. The admission bar this task was built under: a first proposal must not reach the
+reference.
+
+| seed | baseline | proposal 1 | proposal 2 | proposal 3 | best |
+|---|---|---|---|---|---|
+| 0 | 0.0000 | 0.1010 | 0.0000 | 0.0000 | 0.1010 |
+| 1 | 0.0000 | **0.6706** | 0.3783 | 0.3657 | 0.6706 |
+| 2 | 0.0000 | 0.3402 | 0.0000 | 0.0000 | 0.3402 |
+
+**No proposal reached the reference's 0.730, so the admission bar holds and the task is
+unsaturated at the frontier.** The best of nine proposals is 0.6706, and the layered headroom is
+real: model best 0.671, reference 0.730, ceiling 1.0.
+
+What the axes say is more specific than the scalar. On seed 1's first proposal the phase set is
+**exactly right** (phase_set_rate 1.0) and the shortfall is entirely in the boundaries
+(boundary_score 0.67 against the reference's 0.73) - the model identifies which phases exist but
+does not place their limits as well as the lever-rule regression does, which is precisely the
+skill this task isolates. Its false-phase rate starts at 0.86 on the baseline and drops to
+0.00-0.14 on the better proposals.
+
+One caveat, stated because a 3-proposal single arm cannot support more: the best proposal is
+usually the *first* one here, not a later one, so this run is evidence of headroom, not of
+feedback-driven improvement. Whether iteration pays on this task needs the paired
+`selection_blind` arm and a longer budget, which have not been run.
+
 ## Baseline - `solution.py`
 
 A 13-point uniform grid; every distinct-looking pattern becomes a phase; boundaries at grid
