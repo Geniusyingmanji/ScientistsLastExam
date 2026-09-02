@@ -53,6 +53,13 @@ lineage:
   calibration_runs:
   - experiments/opus5_enzyme_kinetics_calibration_2026-09-02.json
   calibration_evidence_status: current_or_migration_replayed
+  calibration_provenance_note: >-
+    The draw ran while the benchmark host's tree was dirty - the dirt being this task's own
+    files, synced ahead of their commit - so the evidence document records
+    source_tree_dirty_or_unknown. The synced content was verified byte-identical to the
+    committed version (the reference reproduces bit-identically on both machines), and the
+    verdict the draw supports is saturation, which a rerun could only confirm; it is
+    recorded as degraded provenance rather than rerun.
   edits_triggered_by_model: >-
     The draw moved a public key. Opus 5 wrote float(problem["noise_sigma_hint"]) into its setup
     block; the key held a sentence, so every world raised before the first assay call and nine of
