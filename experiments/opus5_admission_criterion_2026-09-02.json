@@ -1,0 +1,662 @@
+{
+  "schema_version": 2,
+  "note": "condition 1 (open-loop non-saturation) is necessary; condition 2 (a feedback gap that does not close with budget) is what makes a task measure iteration",
+  "budgets": [
+    3,
+    5,
+    8,
+    10,
+    12
+  ],
+  "row_count": 5,
+  "note_rows": "one row per task; paired gaps listed per cohort inside each row",
+  "distinct_task_count": 5,
+  "models": [
+    "claude-opus-5"
+  ],
+  "tasks_with_more_than_one_version": [],
+  "qualifying_but_seed_fragile": [],
+  "cross_model_agreement": {},
+  "cross_model_disagreement": {},
+  "short_run_count": 4,
+  "total_run_count": 27,
+  "distinct_tasks_with_paired_evidence": 4,
+  "distinct_tasks_measuring_iteration": [],
+  "paired_evidence_row_count": 4,
+  "verdict_counts": {
+    "no_measurable_difference": 2,
+    "control_not_exhausted": 1,
+    "thin_screen": 2
+  },
+  "single_seed_screen_count": 2,
+  "judged_count": 5,
+  "rows": [
+    {
+      "task": "Algorithm/MatrixMultiplicationRank",
+      "model": "claude-opus-5",
+      "task_version": "ba7cc57d6bfc49",
+      "verdict": "no_measurable_difference",
+      "reason": "gap is +0.0000 at budget 12 against an open-loop mean of 0.6458 - under 2% of it, so the arms are indistinguishable rather than one being better",
+      "judged_on_cohort": "Algorithm__MatrixMultiplicationRank",
+      "pooled_open_loop_seeds": 3,
+      "paired_cohorts": [
+        {
+          "cohort": "Algorithm__MatrixMultiplicationRank",
+          "gaps": [
+            {
+              "budget": 3,
+              "n": 3,
+              "mean": 0.0,
+              "stderr": 0.0,
+              "open_loop_mean": 0.6458333333333334,
+              "material": false,
+              "leave_one_out_worst": 0.0,
+              "robust_to_one_seed": true,
+              "wins": 0,
+              "losses": 0
+            },
+            {
+              "budget": 5,
+              "n": 3,
+              "mean": 0.0,
+              "stderr": 0.0,
+              "open_loop_mean": 0.6458333333333334,
+              "material": false,
+              "leave_one_out_worst": 0.0,
+              "robust_to_one_seed": true,
+              "wins": 0,
+              "losses": 0
+            },
+            {
+              "budget": 8,
+              "n": 3,
+              "mean": 0.0,
+              "stderr": 0.0,
+              "open_loop_mean": 0.6458333333333334,
+              "material": false,
+              "leave_one_out_worst": 0.0,
+              "robust_to_one_seed": true,
+              "wins": 0,
+              "losses": 0
+            },
+            {
+              "budget": 10,
+              "n": 3,
+              "mean": 0.0,
+              "stderr": 0.0,
+              "open_loop_mean": 0.6458333333333334,
+              "material": false,
+              "leave_one_out_worst": 0.0,
+              "robust_to_one_seed": true,
+              "wins": 0,
+              "losses": 0
+            },
+            {
+              "budget": 12,
+              "n": 3,
+              "mean": 0.0,
+              "stderr": 0.0,
+              "open_loop_mean": 0.6458333333333334,
+              "material": false,
+              "leave_one_out_worst": 0.0,
+              "robust_to_one_seed": true,
+              "wins": 0,
+              "losses": 0
+            }
+          ],
+          "seeds": 3
+        }
+      ],
+      "saturation": {
+        "seeds": 3,
+        "seed_fragile": null,
+        "median_second_half_gain": 0.0,
+        "mean_second_half_gain": 0.0,
+        "max_second_half_gain": 0.0,
+        "mean_final": 0.6458333333333334,
+        "is_floor": false,
+        "saturated": true,
+        "marginal": false
+      },
+      "gap_by_budget": [
+        {
+          "budget": 3,
+          "n": 3,
+          "mean": 0.0,
+          "stderr": 0.0,
+          "open_loop_mean": 0.6458333333333334,
+          "material": false,
+          "leave_one_out_worst": 0.0,
+          "robust_to_one_seed": true,
+          "wins": 0,
+          "losses": 0
+        },
+        {
+          "budget": 5,
+          "n": 3,
+          "mean": 0.0,
+          "stderr": 0.0,
+          "open_loop_mean": 0.6458333333333334,
+          "material": false,
+          "leave_one_out_worst": 0.0,
+          "robust_to_one_seed": true,
+          "wins": 0,
+          "losses": 0
+        },
+        {
+          "budget": 8,
+          "n": 3,
+          "mean": 0.0,
+          "stderr": 0.0,
+          "open_loop_mean": 0.6458333333333334,
+          "material": false,
+          "leave_one_out_worst": 0.0,
+          "robust_to_one_seed": true,
+          "wins": 0,
+          "losses": 0
+        },
+        {
+          "budget": 10,
+          "n": 3,
+          "mean": 0.0,
+          "stderr": 0.0,
+          "open_loop_mean": 0.6458333333333334,
+          "material": false,
+          "leave_one_out_worst": 0.0,
+          "robust_to_one_seed": true,
+          "wins": 0,
+          "losses": 0
+        },
+        {
+          "budget": 12,
+          "n": 3,
+          "mean": 0.0,
+          "stderr": 0.0,
+          "open_loop_mean": 0.6458333333333334,
+          "material": false,
+          "leave_one_out_worst": 0.0,
+          "robust_to_one_seed": true,
+          "wins": 0,
+          "losses": 0
+        }
+      ],
+      "confidence": "measured"
+    },
+    {
+      "task": "Chemistry/LennardJonesCluster",
+      "model": "claude-opus-5",
+      "task_version": "2f8d325c1cd11b",
+      "verdict": "no_measurable_difference",
+      "reason": "gap is -0.0004 at budget 12 against an open-loop mean of 1.0000 - under 2% of it, so the arms are indistinguishable rather than one being better",
+      "judged_on_cohort": "Chemistry__LennardJonesCluster",
+      "pooled_open_loop_seeds": 3,
+      "paired_cohorts": [
+        {
+          "cohort": "Chemistry__LennardJonesCluster",
+          "gaps": [
+            {
+              "budget": 3,
+              "n": 3,
+              "mean": -0.000507302914629156,
+              "stderr": 0.0010146058296054787,
+              "open_loop_mean": 0.9994927015399706,
+              "material": false,
+              "leave_one_out_worst": 1.9395596240201485e-13,
+              "robust_to_one_seed": false,
+              "wins": 1,
+              "losses": 2
+            },
+            {
+              "budget": 5,
+              "n": 3,
+              "mean": -0.00043188146503603253,
+              "stderr": 0.0009790762698026125,
+              "open_loop_mean": 0.9994927015399706,
+              "material": false,
+              "leave_one_out_worst": 0.00011313217454289592,
+              "robust_to_one_seed": false,
+              "wins": 1,
+              "losses": 2
+            },
+            {
+              "budget": 8,
+              "n": 3,
+              "mean": -0.00043188146514653675,
+              "stderr": 0.0004318814651747364,
+              "open_loop_mean": 1.0000000044548416,
+              "material": false,
+              "leave_one_out_worst": 2.8199664825478976e-14,
+              "robust_to_one_seed": false,
+              "wins": 1,
+              "losses": 2
+            },
+            {
+              "budget": 10,
+              "n": 3,
+              "mean": -0.00043188146514653675,
+              "stderr": 0.0004318814651747364,
+              "open_loop_mean": 1.0000000044548416,
+              "material": false,
+              "leave_one_out_worst": 2.8199664825478976e-14,
+              "robust_to_one_seed": false,
+              "wins": 1,
+              "losses": 2
+            },
+            {
+              "budget": 12,
+              "n": 3,
+              "mean": -0.0004318814651459446,
+              "stderr": 0.0004318814651750325,
+              "open_loop_mean": 1.0000000044548416,
+              "material": false,
+              "leave_one_out_worst": 2.90878432451791e-14,
+              "robust_to_one_seed": false,
+              "wins": 1,
+              "losses": 1
+            }
+          ],
+          "seeds": 3
+        }
+      ],
+      "saturation": {
+        "seeds": 3,
+        "seed_fragile": null,
+        "median_second_half_gain": 2.7977620220553945e-14,
+        "mean_second_half_gain": 0.0005073029147927288,
+        "max_second_half_gain": 0.0015219087443502088,
+        "mean_final": 1.0000000044548416,
+        "is_floor": false,
+        "saturated": true,
+        "marginal": false
+      },
+      "gap_by_budget": [
+        {
+          "budget": 3,
+          "n": 3,
+          "mean": -0.000507302914629156,
+          "stderr": 0.0010146058296054787,
+          "open_loop_mean": 0.9994927015399706,
+          "material": false,
+          "leave_one_out_worst": 1.9395596240201485e-13,
+          "robust_to_one_seed": false,
+          "wins": 1,
+          "losses": 2
+        },
+        {
+          "budget": 5,
+          "n": 3,
+          "mean": -0.00043188146503603253,
+          "stderr": 0.0009790762698026125,
+          "open_loop_mean": 0.9994927015399706,
+          "material": false,
+          "leave_one_out_worst": 0.00011313217454289592,
+          "robust_to_one_seed": false,
+          "wins": 1,
+          "losses": 2
+        },
+        {
+          "budget": 8,
+          "n": 3,
+          "mean": -0.00043188146514653675,
+          "stderr": 0.0004318814651747364,
+          "open_loop_mean": 1.0000000044548416,
+          "material": false,
+          "leave_one_out_worst": 2.8199664825478976e-14,
+          "robust_to_one_seed": false,
+          "wins": 1,
+          "losses": 2
+        },
+        {
+          "budget": 10,
+          "n": 3,
+          "mean": -0.00043188146514653675,
+          "stderr": 0.0004318814651747364,
+          "open_loop_mean": 1.0000000044548416,
+          "material": false,
+          "leave_one_out_worst": 2.8199664825478976e-14,
+          "robust_to_one_seed": false,
+          "wins": 1,
+          "losses": 2
+        },
+        {
+          "budget": 12,
+          "n": 3,
+          "mean": -0.0004318814651459446,
+          "stderr": 0.0004318814651750325,
+          "open_loop_mean": 1.0000000044548416,
+          "material": false,
+          "leave_one_out_worst": 2.90878432451791e-14,
+          "robust_to_one_seed": false,
+          "wins": 1,
+          "losses": 1
+        }
+      ],
+      "confidence": "measured"
+    },
+    {
+      "task": "Mathematics/CapSet",
+      "model": "claude-opus-5",
+      "task_version": "a9858bb1b885bb",
+      "verdict": "control_not_exhausted",
+      "reason": "open-loop control still gains +0.0166 over its second half at the median seed, so best-of-N has not run out and any gap measured here depends on the budget chosen",
+      "judged_on_cohort": "Mathematics__CapSet",
+      "pooled_open_loop_seeds": 3,
+      "paired_cohorts": [
+        {
+          "cohort": "Mathematics__CapSet",
+          "gaps": [
+            {
+              "budget": 3,
+              "n": 3,
+              "mean": 0.2266737891737892,
+              "stderr": 0.05663932803277437,
+              "open_loop_mean": 0.693554131054131,
+              "material": true,
+              "leave_one_out_worst": 0.1810897435897436,
+              "robust_to_one_seed": true,
+              "wins": 3,
+              "losses": 0
+            },
+            {
+              "budget": 5,
+              "n": 3,
+              "mean": 0.18696581196581194,
+              "stderr": 0.07206788559187778,
+              "open_loop_mean": 0.7332621082621082,
+              "material": true,
+              "leave_one_out_worst": 0.12847222222222215,
+              "robust_to_one_seed": true,
+              "wins": 3,
+              "losses": 0
+            },
+            {
+              "budget": 8,
+              "n": 3,
+              "mean": 0.1654202279202279,
+              "stderr": 0.021135522342854898,
+              "open_loop_mean": 0.7918447293447294,
+              "material": true,
+              "leave_one_out_worst": 0.1474358974358974,
+              "robust_to_one_seed": true,
+              "wins": 3,
+              "losses": 0
+            },
+            {
+              "budget": 10,
+              "n": 3,
+              "mean": 0.12695868945868946,
+              "stderr": 0.013738548212934725,
+              "open_loop_mean": 0.8303062678062678,
+              "material": true,
+              "leave_one_out_worst": 0.11538461538461536,
+              "robust_to_one_seed": true,
+              "wins": 3,
+              "losses": 0
+            },
+            {
+              "budget": 12,
+              "n": 3,
+              "mean": 0.16969373219373218,
+              "stderr": 0.05481120948230638,
+              "open_loop_mean": 0.8303062678062678,
+              "material": true,
+              "leave_one_out_worst": 0.11538461538461536,
+              "robust_to_one_seed": true,
+              "wins": 3,
+              "losses": 0
+            }
+          ],
+          "seeds": 3
+        }
+      ],
+      "saturation": {
+        "seeds": 3,
+        "seed_fragile": null,
+        "median_second_half_gain": 0.016559829059829,
+        "mean_second_half_gain": 0.038461538461538436,
+        "max_second_half_gain": 0.0988247863247863,
+        "mean_final": 0.8303062678062678,
+        "is_floor": false,
+        "saturated": false,
+        "marginal": false
+      },
+      "gap_by_budget": [
+        {
+          "budget": 3,
+          "n": 3,
+          "mean": 0.2266737891737892,
+          "stderr": 0.05663932803277437,
+          "open_loop_mean": 0.693554131054131,
+          "material": true,
+          "leave_one_out_worst": 0.1810897435897436,
+          "robust_to_one_seed": true,
+          "wins": 3,
+          "losses": 0
+        },
+        {
+          "budget": 5,
+          "n": 3,
+          "mean": 0.18696581196581194,
+          "stderr": 0.07206788559187778,
+          "open_loop_mean": 0.7332621082621082,
+          "material": true,
+          "leave_one_out_worst": 0.12847222222222215,
+          "robust_to_one_seed": true,
+          "wins": 3,
+          "losses": 0
+        },
+        {
+          "budget": 8,
+          "n": 3,
+          "mean": 0.1654202279202279,
+          "stderr": 0.021135522342854898,
+          "open_loop_mean": 0.7918447293447294,
+          "material": true,
+          "leave_one_out_worst": 0.1474358974358974,
+          "robust_to_one_seed": true,
+          "wins": 3,
+          "losses": 0
+        },
+        {
+          "budget": 10,
+          "n": 3,
+          "mean": 0.12695868945868946,
+          "stderr": 0.013738548212934725,
+          "open_loop_mean": 0.8303062678062678,
+          "material": true,
+          "leave_one_out_worst": 0.11538461538461536,
+          "robust_to_one_seed": true,
+          "wins": 3,
+          "losses": 0
+        },
+        {
+          "budget": 12,
+          "n": 3,
+          "mean": 0.16969373219373218,
+          "stderr": 0.05481120948230638,
+          "open_loop_mean": 0.8303062678062678,
+          "material": true,
+          "leave_one_out_worst": 0.11538461538461536,
+          "robust_to_one_seed": true,
+          "wins": 3,
+          "losses": 0
+        }
+      ],
+      "confidence": "measured"
+    },
+    {
+      "task": "Optimization/CirclePacking",
+      "model": "claude-opus-5",
+      "task_version": "c9b6e36bc421cb",
+      "verdict": "thin_screen",
+      "reason": "judged on 2 open-loop seed(s); below 3 this is a screen, not a measurement (median second-half gain +0.0000, ending at 0.9994)",
+      "judged_on_cohort": "Optimization__CirclePacking",
+      "pooled_open_loop_seeds": 2,
+      "paired_cohorts": [
+        {
+          "cohort": "Optimization__CirclePacking",
+          "gaps": [
+            {
+              "budget": 3,
+              "n": 2,
+              "mean": 2.1854611018778947e-05,
+              "stderr": 0.0004419093664914664,
+              "open_loop_mean": 0.9994336945769344,
+              "material": false,
+              "leave_one_out_worst": null,
+              "robust_to_one_seed": null,
+              "wins": 1,
+              "losses": 1
+            },
+            {
+              "budget": 5,
+              "n": 2,
+              "mean": 2.813054304956486e-05,
+              "stderr": 0.0004481852985222523,
+              "open_loop_mean": 0.9994336945769344,
+              "material": false,
+              "leave_one_out_worst": null,
+              "robust_to_one_seed": null,
+              "wins": 1,
+              "losses": 1
+            },
+            {
+              "budget": 8,
+              "n": 2,
+              "mean": 0.0005247275181832212,
+              "stderr": 0.000416629681401881,
+              "open_loop_mean": 0.9994336945769344,
+              "material": false,
+              "leave_one_out_worst": null,
+              "robust_to_one_seed": null,
+              "wins": 2,
+              "losses": 0
+            },
+            {
+              "budget": 10,
+              "n": 2,
+              "mean": 0.0005247275199263823,
+              "stderr": 0.00041662968314504223,
+              "open_loop_mean": 0.9994336945769344,
+              "material": false,
+              "leave_one_out_worst": null,
+              "robust_to_one_seed": null,
+              "wins": 2,
+              "losses": 0
+            },
+            {
+              "budget": 12,
+              "n": 2,
+              "mean": 0.0005261768230898078,
+              "stderr": 0.00041518037998161667,
+              "open_loop_mean": 0.9994336945769344,
+              "material": false,
+              "leave_one_out_worst": null,
+              "robust_to_one_seed": null,
+              "wins": 2,
+              "losses": 0
+            }
+          ],
+          "seeds": 2
+        }
+      ],
+      "saturation": {
+        "seeds": 2,
+        "seed_fragile": null,
+        "median_second_half_gain": 0.0,
+        "mean_second_half_gain": 0.0,
+        "max_second_half_gain": 0.0,
+        "mean_final": 0.9994336945769344,
+        "is_floor": false,
+        "saturated": true,
+        "marginal": false
+      },
+      "gap_by_budget": [
+        {
+          "budget": 3,
+          "n": 2,
+          "mean": 2.1854611018778947e-05,
+          "stderr": 0.0004419093664914664,
+          "open_loop_mean": 0.9994336945769344,
+          "material": false,
+          "leave_one_out_worst": null,
+          "robust_to_one_seed": null,
+          "wins": 1,
+          "losses": 1
+        },
+        {
+          "budget": 5,
+          "n": 2,
+          "mean": 2.813054304956486e-05,
+          "stderr": 0.0004481852985222523,
+          "open_loop_mean": 0.9994336945769344,
+          "material": false,
+          "leave_one_out_worst": null,
+          "robust_to_one_seed": null,
+          "wins": 1,
+          "losses": 1
+        },
+        {
+          "budget": 8,
+          "n": 2,
+          "mean": 0.0005247275181832212,
+          "stderr": 0.000416629681401881,
+          "open_loop_mean": 0.9994336945769344,
+          "material": false,
+          "leave_one_out_worst": null,
+          "robust_to_one_seed": null,
+          "wins": 2,
+          "losses": 0
+        },
+        {
+          "budget": 10,
+          "n": 2,
+          "mean": 0.0005247275199263823,
+          "stderr": 0.00041662968314504223,
+          "open_loop_mean": 0.9994336945769344,
+          "material": false,
+          "leave_one_out_worst": null,
+          "robust_to_one_seed": null,
+          "wins": 2,
+          "losses": 0
+        },
+        {
+          "budget": 12,
+          "n": 2,
+          "mean": 0.0005261768230898078,
+          "stderr": 0.00041518037998161667,
+          "open_loop_mean": 0.9994336945769344,
+          "material": false,
+          "leave_one_out_worst": null,
+          "robust_to_one_seed": null,
+          "wins": 2,
+          "losses": 0
+        }
+      ],
+      "confidence": "single_seed_screen"
+    },
+    {
+      "task": "Photonics/MultilayerThinFilm",
+      "model": "claude-opus-5",
+      "task_version": "bdfea025b790b6",
+      "verdict": "thin_screen",
+      "reason": "judged on 2 open-loop seed(s); below 3 this is a screen, not a measurement (median second-half gain +0.0000, ending at 0.9278)",
+      "judged_on_cohort": null,
+      "pooled_open_loop_seeds": 2,
+      "paired_cohorts": [],
+      "saturation": {
+        "seeds": 2,
+        "seed_fragile": null,
+        "median_second_half_gain": 0.0,
+        "mean_second_half_gain": 0.0,
+        "max_second_half_gain": 0.0,
+        "mean_final": 0.9278442771149253,
+        "is_floor": false,
+        "saturated": true,
+        "marginal": false
+      },
+      "gap_by_budget": [],
+      "confidence": "single_seed_screen"
+    }
+  ]
+}
