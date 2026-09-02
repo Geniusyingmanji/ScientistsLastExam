@@ -339,6 +339,24 @@ tasks:
       - doi:10.1103/PhysRevD.110.030001
       - doi:10.1103/RevModPhys.93.025010
       - doi:10.1016/0197-2456(86)90046-2
+  MaterialsScience/PhaseDiagramDiscovery:
+    status: candidate
+    reason: >-
+      The first task whose artifact is a substance rather than a parameter set: from 26 budgeted
+      synthesis-and-diffraction calls the candidate must say which equilibrium phases a hidden binary
+      system contains and over which composition ranges, or decline when replicates show the system
+      never equilibrates. Two-phase fields return lever-rule superpositions that read as new compounds
+      unless decomposed; an impurity adds peaks that only replication can reject; boundaries are only
+      reachable through lever-rule regression, because the gaps are 0.2-0.3 wide and grid midpoints
+      lose 0.72 of the score. Ablation: 0.730 with decomposition, replication and regression; 0.006
+      with grid-midpoint boundaries; 0.444 never declining; 0.000 for the naive grid, with a 0.86
+      false-phase rate. The reference deliberately sits at 0.730 on half the budget, so the boundary
+      axis retains headroom; the admission bar recorded on the card is that a first Opus 5 proposal
+      must not reach it. Candidate: no model draw has been run yet.
+    citation_ids:
+      - doi:10.1038/s41467-020-19597-w
+      - doi:10.1107/S0021889869006558
+      - doi:10.1063/1.4977487
   ChemicalKinetics/ReactionMechanismFitting:
     status: candidate
     reason: v2 is an active partial-species assay task with twelve candidate reactions, charged temperature/initial-condition/sensor design, sparse Arrhenius rate-curve recovery, held-out topologies and separate null/model-inadequacy refusal; a truth-blind classical fit scores 0.482/0.404 development/held-out mechanism while reaching 0.860 development interpolation and falsely claiming a mechanism in half of unsupported worlds; GPT-5.5 budget-one and normal budget-three runs remain at zero while a strict open-loop batch finds 0.343/0.363 development/held-out mechanism but retains the same false-discovery failure, leaving science-specific headroom pending paired controls, server-held reactors and independent kinetics review

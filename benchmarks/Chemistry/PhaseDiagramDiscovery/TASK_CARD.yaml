@@ -1,0 +1,68 @@
+schema_version: 2
+scientific_question: Map the equilibrium phase set of a hidden binary system from budgeted synthesis-and-diffraction calls - which phases exist and over which composition ranges - and decline when repeated synthesis shows the system never reaches equilibrium.
+artifact: A claimed phase set with signature peaks and composition ranges, a confidence, and an optional refusal.
+oracle:
+  model: procedurally parameterized isothermal binary systems with terminal solid solutions, zero to two line compounds, lever-rule two-phase superpositions, a non-reproducing impurity, and kinetically trapped variants
+  feasibility: charged synthesis calls, exact-set gating on the claimed phases, boundary scoring against a declared tolerance, and calibrated refusal
+  deterministic: true
+normalization:
+  baseline: a uniform grid that calls every distinct-looking pattern a phase, never replicates, and never declines
+  reference: terminal anchors, a replicate-based equilibrium check, iterative signature peeling, and lever-rule boundary regression normalised by pure-pattern intensities
+  score: development mechanism recovery normalized above always-abstain; phase-set rate, boundary accuracy, false-phase rate, false discovery, refusal, coverage and the held-out split stay separate
+citations:
+- id: doi:10.1107/S0021889869006558
+  title: A profile refinement method for nuclear and magnetic structures
+- id: doi:10.1038/s41467-020-19597-w
+  title: On-the-fly closed-loop materials discovery via Bayesian active learning
+- id: doi:10.1063/1.4977487
+  title: Fulfilling the promise of the materials genome initiative with high-throughput experimental methodologies
+invariants:
+- a two-phase field returns a lever-rule superposition of its neighbours, so a candidate that never decomposes patterns as mixtures claims it as a compound and books a false phase
+- the impurity appears in a minority of syntheses at fixed positions with intensity below the strong-peak range, so replication separates it from every real signature
+- a trapped system freezes in a different mixture per synthesis with transient peaks that never reproduce, so replication is also what earns the refusal
+- a minority phase at fraction 0.2 puts every peak below a strong-peak floor, so signature discovery and fraction estimation require different intensity floors
+- interior gaps are 0.2-0.3 wide, so grid-midpoint boundaries lose 0.72 of the score and the lever regression is the only budget-feasible route to boundary accuracy
+- the claimed phase set is gated exactly; declining every world scores exactly zero; the axes separate blanket abstention from confident publication
+- synthesis calls are charged and overspend fails closed; malformed submissions score zero and never raise out of the evaluator
+- held-out split, per-world rows and the discovery axes remain evaluator-only
+known_shortcuts: The peak model (no overlapping reflections between phases, no peak broadening, no texture) and the two-shape world family are controlled research abstractions. World seeds are repository-visible and require a future server-held split. The reference leaves 13 of 26 calls unspent and scores 0.730, so the boundary axis deliberately retains headroom for a searcher that allocates the remaining budget better.
+review:
+  domain: pending_external
+  evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_abstention_normalization_checks
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic generator with development and sealed held-out systems across four world kinds.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Lever-rule analysis and search-match are textbook, and a model may recognise them. What is not published is which system has which defect, and the ablation shows the score turns on budget allocation across decomposition, replication and regression rather than on recalling the concepts.
+lineage:
+  status: complete
+  builder_model_ids:
+  - claude-opus-5
+  builder_scaffolds:
+  - claude-code
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    None yet. The ladder was measured by ablating the reference, which this project has recorded
+    as not a substitute for a model draw; this task is a candidate until one is run, and the
+    admission bar set for it is that a first Opus 5 proposal must not reach the reference.
+  shortcut_discoverer: builder_self_audit
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: claude-opus-5
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: the reference, the baseline, the five-rung ablation ladder and the twelve bad-candidate shapes are all runnable from this directory

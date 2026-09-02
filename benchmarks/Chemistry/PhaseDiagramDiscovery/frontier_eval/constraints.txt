@@ -1,0 +1,4 @@
+1) Only edit solution.py. Keep discover_phases(problem, synthesize).
+2) Return {"phases", "confidence", "abstain"}. Each phase is {"composition_range": [lo, hi], "peak_two_thetas": [...]} with 0 <= lo < hi <= 1, ranges non-overlapping across phases, 1-12 finite peak positions inside problem["two_theta_bounds"], and at most problem["max_claimed_phases"] phases. `confidence` in [0,1]; `abstain` a boolean. Omit `phases` when abstaining.
+3) synthesize(composition) charges one call and returns one powder pattern. Keep composition finite and inside problem["composition_bounds"]; do not exceed problem["synthesis_budget_calls"] calls per system.
+4) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read verification/ or frontier_eval/.

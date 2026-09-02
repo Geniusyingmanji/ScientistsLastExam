@@ -1,0 +1,13 @@
+domain: MaterialsScience
+task: PhaseDiagramDiscovery
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: physical_sim
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 30
+science_metric: equilibrium_phase_set_recovery_with_lever_rule_boundaries_and_trapped_system_refusal
+reference_baseline: a uniform grid calling every distinct pattern a phase, never replicating, never declining
+reference_sota: terminal anchors, replicate equilibrium check, iterative signature peeling and lever-rule boundary regression
+citation: "Kusne et al., 2020, DOI 10.1038/s41467-020-19597-w"

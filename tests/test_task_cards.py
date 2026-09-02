@@ -13,6 +13,7 @@ from scripts.audit_tasks import LINEAGE_STATUSES, _task_card_issues, audit
 RECORDED_LINEAGE = {
     "SystemsBiology/EnzymeKineticsLaw",
     "ParticlePhysics/DiscrepantMeasurements",
+    "MaterialsScience/PhaseDiagramDiscovery",
 }
 
 

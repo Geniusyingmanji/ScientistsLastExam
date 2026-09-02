@@ -23,12 +23,12 @@ class TaskMaturityAuditTests(unittest.TestCase):
 
     def test_inventory_and_internal_risk_set_are_complete(self):
         # 45 since EnzymeKineticsLaw and DiscrepantMeasurements were added.
-        self.assertEqual(self.report["inventory_count"], 45)
+        self.assertEqual(self.report["inventory_count"], 46)
         self.assertEqual(
             self.report["status_counts"],
-            {"certified": 5, "candidate": 40, "quarantined": 0},
+            {"certified": 5, "candidate": 41, "quarantined": 0},
         )
-        self.assertEqual(self.report["gate_counts"]["internal_science_admission"], 45)
+        self.assertEqual(self.report["gate_counts"]["internal_science_admission"], 46)
         self.assertEqual(self.report["issues"], [])
         self.assertTrue(self.report["execution_passed"])
 
@@ -65,7 +65,7 @@ class TaskMaturityAuditTests(unittest.TestCase):
             self.report["evidence_coverage"]["domain_review_complete_task_count"], 0
         )
         self.assertEqual(
-            self.report["evidence_coverage"]["builder_lineage_declared_task_count"], 45
+            self.report["evidence_coverage"]["builder_lineage_declared_task_count"], 46
         )
         # Still zero with two tasks now naming their builder, because `complete` here also
         # requires `frozen_before_eval`, and neither is frozen: EnzymeKineticsLaw had a public key
