@@ -1,0 +1,649 @@
+{
+  "schema_version": 1,
+  "trust_status": "TRUSTED_CERTIFICATION_AUDIT",
+  "inventory_count": 46,
+  "status_counts": {
+    "certified": 5,
+    "candidate": 41,
+    "quarantined": 0
+  },
+  "missing_manifest_records": [],
+  "orphaned_manifest_records": [],
+  "duplicate_oracle_groups": [],
+  "task_card_required_count": 46,
+  "task_card_passed_count": 46,
+  "tasks": [
+    {
+      "task": "PopulationGenetics/DemographicSFS",
+      "status": "candidate",
+      "reason": "v2 replaces the rank-two time-index surrogate with exact finite-sample Kingman lineage-count CTMC occupancy, a fixed ancestral scale, charged sample-size/replicate sequencing, constant and three-epoch mechanism recovery, evaluator-only sample-size projection and resolvable ancestral-state-polarization-error refusal; the constant-size theta/i identity and an independent ODE occupancy implementation agree, all seven nonconstant supported histories have full-rank log-parameter sensitivities, and a truth-blind eight-unit multisample design reaches 0.770/0.510 development/held-out mechanism with 0.988/0.983 sample-size prediction and zero false discovery, versus 0.538/0.397 for an equal-budget repeated-small-sample design; finite four-epoch and population-mixture histories remain explicitly non-rejectable under the registered SFS threshold, so retain as a conditioned demographic-inference candidate pending server-held histories, linkage/recombination and structure, sequence-data QC and independent population-genetics review",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1371/journal.pgen.1000695",
+        "doi:10.1534/genetics.117.200493",
+        "doi:10.1016/j.tpb.2008.01.001",
+        "doi:10.1214/14-AOS1264",
+        "doi:10.1073/pnas.1503717112"
+      ],
+      "issues": []
+    },
+    {
+      "task": "SystemsBiology/EnzymeKineticsLaw",
+      "status": "candidate",
+      "reason": "Active rate-law identification: the candidate spends a 28-call budget on a substrate-and-inhibitor assay, names one of six published laws with its constants, and declines on the three worlds that obey none. Competitive, uncompetitive and noncompetitive inhibition are provably inseparable from a single substrate titration, so the score turns on designing the experiment rather than on recalling the laws. One out-of-family world is a cooperative enzyme that is also competitively inhibited: at zero inhibitor it fits Hill to 0.9 sigma, so a candidate that does not vary the inhibitor books a false discovery rather than merely scoring low. Ablating the reference measures what each competence is worth - 0.990 with three inhibitor levels and both refusal tests, 0.315 with one level, 0.490 when never declining, 0.000 with neither - and blanket abstention scores 0.000 by construction. A Claude Opus 5 draw on 2026-09-02 settles it: three seeds, first proposal 0.9905 / 0.9882 / 0.9890 against the reference's 0.9904, law identification 1.00, false discovery 0.00, 28 of 28 assay calls. The winning program titrates at three inhibitor levels and runs both refusal tests; there is no exploit in it. Saturated for the current frontier and retained as an on-ramp that still separates a naive analysis from a competent one, not as frontier evidence. The draw also moved a public key: the model wrote float() on noise_sigma_hint, which held a sentence, and nine of nine proposals scored zero on the naming before the fix.",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1016/0926-6569(63)90226-8",
+        "doi:10.1021/bi201284u",
+        "doi:10.1042/bj0190338",
+        "doi:10.1214/aos/1176344136"
+      ],
+      "issues": []
+    },
+    {
+      "task": "SystemsBiology/GeneNetworkIntervention",
+      "status": "candidate",
+      "reason": "active four-gene nonlinear ODE task separates signed mechanism recovery, sealed trajectory prediction, sparse protected-readout intervention utility, intervention transfer and correct null or latent-regulator refusal; a truth-blind nonlinear reference reaches about 0.90 development and 0.88 held-out joint quality with full supported coverage, full unsupported refusal and zero false discovery, leaving graded mechanism and transfer headroom pending server-held worlds, real Perturb-seq or wet-lab replication and independent systems-biology review",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1126/science.1081900",
+        "doi:10.1016/j.cell.2014.09.029",
+        "doi:10.1016/j.cell.2016.11.038",
+        "doi:10.1016/j.cell.2022.05.013"
+      ],
+      "issues": []
+    },
+    {
+      "task": "EvidenceSynthesis/ProspectiveMetaAnalysis",
+      "status": "candidate",
+      "reason": "v1 adds a procedural registered-study laboratory with randomized eligibility screening, participant-lineage de-duplication, preregistered-primary extraction, outcome-selective publication flags, heterogeneous linear meta-regression, resolvable nonlinear-family refusal, an immutable pre-result claim/forecast/study-design commit and one fresh simulated confirmation; the truth-blind registry-first reference reaches 0.934/0.886 development/held-out score with zero false discovery and full nonlinear refusal, while four of seven GPT-5.5 proposals are schema-invalid and the three executable proposals are empty abstentions with no screening or confirmation workflow; retain as a synthetic evidence-synthesis candidate pending paired repeated controls, server-held corpora, independent research-synthesis/biostatistics review, source-document extraction and genuinely independent prospective replication",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1016/0197-2456(86)90046-2",
+        "doi:10.1002/sim.1186",
+        "doi:10.1002/sim.1482",
+        "doi:10.1001/jama.291.8.974",
+        "doi:10.1001/jama.291.20.2457",
+        "doi:10.1136/bmj.l5342",
+        "doi:10.1136/bmj.n71"
+      ],
+      "issues": []
+    },
+    {
+      "task": "ProteinEngineering/ProteinStabilityDesign",
+      "status": "candidate",
+      "reason": "hash-bound ProteinGym v1.3 and Tsuboyama 2023 replay reconstructs 2,756 reliable double mutants across five development and three held-out protein domains, limits each policy to twelve charged assays and separates stability, diversity, proxy false promotion, held-out transfer and independent trypsin/chymotrypsin readouts; exact source reconstruction, scientific invariants, secure-baseline replay and fixed-instance shortcut screening pass, while seven GPT-5.5 proposals are valid and expose graded development/held-out/protease tradeoffs; retain as an offline public-data optimization candidate pending server-held proteins, contamination review, synthesis, independent biophysical and functional assays, and external protein-engineering review",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1038/s41586-023-06328-6",
+        "doi:10.5281/zenodo.15293562"
+      ],
+      "issues": []
+    },
+    {
+      "task": "RNAEngineering/RNAEnsembleDesign",
+      "status": "candidate",
+      "reason": "inverse folding scored by ensemble defect against ViennaRNA 2.7.2 over the Turner nearest-neighbour model, with the anchor being ViennaRNA's own inverse_fold recomputed at evaluation time as the best of ten restarts by ensemble defect. The oracle is community tooling rather than a reimplementation, which is what the RNAInverseDesign entry lists as its main outstanding gap. Calibrated on the benchmark host: poly-A baseline 0.0000, a single inverse_fold call through the sandbox 0.5763, a truth-blind 60-restart reference 1.3506 against an anchor of 1.0000 by construction; the difficulty ladder moves that reference to 1.1937 and 1.1028 at levels two and three. Retained as a candidate pending external RNA thermodynamics review, an independent recomputation of the ensemble-defect anchor, and any model measurement at all - no search has been run against it yet.",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1186/1748-7188-6-26",
+        "doi:10.1002/jcc.21633",
+        "doi:10.1093/nar/gkp892",
+        "doi:10.1002/bip.360290621"
+      ],
+      "issues": []
+    },
+    {
+      "task": "RNAEngineering/RNAInverseDesign",
+      "status": "candidate",
+      "reason": "constrained inverse design over five development and three held-out hairpin, bulge, internal-loop, tandem and multibranch targets uses an exact public pair-stack-loop partition-function dynamic program, exact pair marginals, MFE agreement, target probability, ensemble defect, fixed bases, GC and motif constraints plus four sealed energy/temperature shifts; independent exhaustive enumeration and deterministic reference regeneration pass, the weak hairpin baseline has perfect pair compatibility but target probability 3e-9, normal GPT-5.5 budget three improves 0.239 to 0.507 to 0.720 while retaining proxy false promotions, and a frozen-parent batch reaches 0.894 development and 0.986 held-out; retain as a simplified ensemble-design candidate pending server-held families, complete Turner/ViennaRNA or NUPACK replication, synthesis, functional assays and independent RNA-design review",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1093/nar/9.1.133",
+        "doi:10.1002/bip.360290621",
+        "doi:10.1093/nar/gkp892",
+        "doi:10.1002/jcc.21596",
+        "doi:10.1186/1748-7188-6-26",
+        "doi:10.1073/pnas.1313039111"
+      ],
+      "issues": []
+    },
+    {
+      "task": "MaterialsScience/AlloyHardnessOptimization",
+      "status": "candidate",
+      "reason": "v1 replaces the source-free five-element polynomial with a hash-bound replay of the Borg MPEA literature compilation: 197 historical recipes from 44 full DOI groups train an equal-study-weight composition/process proxy after exact target recipe matches are removed, all thirteen eligible 2018-2019 composition-series studies form eight development and five citation-hash-held worlds, two charged hardness assays support a three-alloy batch with forced unmeasured 90 percent prediction intervals, and separate axes retain proxy false promotion, DOI-held transfer and nine sparse cross-DOI exact-recipe records; a frozen residual-smoothing witness reaches approximately 0.66 development and 0.88 heldout utility, pending repeated paired controls, server-held prospective alloys, harmonized processing/microstructure/indentation, independent synthesis and materials-science review",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1038/s41597-020-00768-9",
+        "doi:10.6084/m9.figshare.12642953.v9"
+      ],
+      "issues": []
+    },
+    {
+      "task": "Catalysis/CatalystDeactivationLab",
+      "status": "candidate",
+      "reason": "v1 adds a procedural stateful catalyst laboratory with raw drifting instrument signals, deterministic out-of-order batch completion, four finite coupons, irreversible reaction deactivation, exact-retry idempotency, stale/conflicting lineage rejection, single-site kinetic and linear-drift recovery, resolvable abrupt-drift/two-site refusal, and a sealed shifted fresh-batch operating policy; an independently checked truth-blind sequential reference reaches about 0.958/0.951 development/held-out nominal joint quality and 0.883/0.943 robustness with full supported coverage, full unsupported refusal, zero false discovery, one exact retry and no duplicate physical act, so retain as a synthetic state-machine and kinetic-inference candidate pending paired agent controls, server-held worlds, real reactor/instrument integration, independent catalysis review and experimental replication",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1016/j.ces.2007.11.034",
+        "doi:10.1016/S0926-860X(00)00843-7",
+        "doi:10.1016/j.trechm.2019.02.007",
+        "doi:10.1038/s41586-020-2442-2",
+        "doi:10.1126/sciadv.aaz8867"
+      ],
+      "issues": []
+    },
+    {
+      "task": "ChemicalProcess/DistillationColumnDesign",
+      "status": "candidate",
+      "reason": "v2 replaces the fixed-purity tray toy with six varying binary separations, exact mixed-integer artifacts, closed equilibrium-stage balances, purity/recovery gates, fixed-seed nominal/robust witnesses, held-out regimes and five sealed operating shifts; independent least-squares MESH solves agree below 2e-8, while one GPT-5.5 normal budget-three proposal reaches 0.613/0.541 development/held-out nominal score but only 0.20/0.20 shift feasibility and zero robustness, six of seven proposals time out, and a post-hoc public-cost counterfactual exposes no capital-versus-energy responsiveness; retain pending repeated paired calibration, server-held mixtures, rate-based process-simulator replication and independent chemical-engineering review",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1021/ie50186a023",
+        "doi:10.1002/aic.690170130",
+        "doi:10.1002/cjce.5450520108",
+        "doi:10.1021/ie0001974"
+      ],
+      "issues": []
+    },
+    {
+      "task": "Electrochemistry/ElectrolyteConductivityDesign",
+      "status": "candidate",
+      "reason": "hash-bound CC-BY-4.0 replay reconstructs all 5,035 temperature records as 504 experiment IDs, retains 358 complete historical experiments across 85 formulations for a public proxy and 141 complete later experiments across 23 non-overlapping candidate formulations, exposes eight charged two-repeat EIS temperature assays and separately scores visible optimization, worse-repeat robustness, untouched-repeat confirmation and held-out temperature duties; exact source rebuilding, cell-constant/resistance conductivity identities, independent Arrhenius recalculation, secure-baseline replay and metric sealing pass, while a truth-blind eight-assay strategy reaches 0.408 development and 0.270 held-out visible optimization but only 0.026/0.000 untouched confirmation, so retain as a real-data optimization and Goodhart/repeatability candidate pending server-held formulations, new batches, independent EIS analysis, complete-cell validation and external electrochemistry review",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1038/s41597-023-01936-3",
+        "doi:10.5281/zenodo.7244939",
+        "doi:10.1002/batt.202200228",
+        "doi:10.1039/D2DD00027J"
+      ],
+      "issues": []
+    },
+    {
+      "task": "MolecularDynamics/ForceFieldCalibration",
+      "status": "candidate",
+      "reason": "v2 replaces the falsely labeled Monte Carlo/RDF trigonometric clone with twelve procedural active three-particle energy/force worlds spanning public Mie and Morse hypotheses plus Buckingham, Axilrod-Teller and temperature-dependent misspecification; every query preregisters monotone hypothesis weights and a retained set, while separate axes score acquisition information, proper-score hypothesis calibration, true-family retention, model discrimination, parameter intervals, sealed short/long-range prediction, second virial and Boyle-temperature decisions, evidence lineage and unsupported refusal; a truth-blind nonlinear reference covers every supported world, refuses every unsupported world and reaches approximately 0.96/0.95 normalized development/held-out joint quality, pending server-held worlds, repeated controls, periodic many-particle or ab-initio replication and independent molecular-simulation review",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1209/0295-5075/26/8/005",
+        "doi:10.1021/jz500737m",
+        "doi:10.1063/1.2992060",
+        "doi:10.1103/PhysRevLett.93.165501",
+        "doi:10.1016/0375-9601(74)90847-0",
+        "doi:10.1063/1.1723844"
+      ],
+      "issues": []
+    },
+    {
+      "task": "Chemistry/LennardJonesCluster",
+      "status": "certified",
+      "reason": "analytic energy oracle; published minima and invariance tests",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1021/jp970984n"
+      ],
+      "issues": []
+    },
+    {
+      "task": "MedicinalChemistry/MolecularLeadOptimization",
+      "status": "candidate",
+      "reason": "RDKit community-standard oracle with a verified approved-drug reference panel; pending external medicinal-chemistry review",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1038/nchem.1243",
+        "doi:10.1186/1758-2946-1-8",
+        "doi:10.1021/jm901137j"
+      ],
+      "issues": []
+    },
+    {
+      "task": "Spectroscopy/NMRSpectrumFitting",
+      "status": "candidate",
+      "reason": "v2 has ten procedural multi-regime spectra, finite bounded Voigt peak artifacts, order-invariant peak-mechanism matching, separate reconstruction/confidence/false-discovery/refusal metrics and held-out overlap/noise/baseline/axis/model-inadequacy shifts; a truth-blind classical fit scores 0.271/0.146 development/held-out mechanism-refusal despite high reconstruction, while GPT-5.5 reaches 0.428/0.176 at budget one and its budget-three feedback rewrites do not repair false discoveries, leaving meaningful science-specific headroom pending paired controls, server-held spectra and independent spectroscopist review",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1093/bioinformatics/bts308",
+        "doi:10.1007/s11306-017-1244-5",
+        "doi:10.1016/0022-4073(77)90161-3"
+      ],
+      "issues": []
+    },
+    {
+      "task": "MaterialsScience/PhaseDiagramDiscovery",
+      "status": "candidate",
+      "reason": "The first task whose artifact is a substance rather than a parameter set: from 26 budgeted synthesis-and-diffraction calls the candidate must say which equilibrium phases a hidden binary system contains and over which composition ranges, or decline when replicates show the system never equilibrates. Two-phase fields return lever-rule superpositions that read as new compounds unless decomposed; an impurity adds peaks that only replication can reject; boundaries are only reachable through lever-rule regression, because the gaps are 0.2-0.3 wide and grid midpoints lose 0.72 of the score. Ablation: 0.730 with decomposition, replication and regression; 0.006 with grid-midpoint boundaries; 0.444 never declining; 0.000 for the naive grid, with a 0.86 false-phase rate. The reference deliberately sits at 0.730 on half the budget, so the boundary axis retains headroom; the admission bar recorded on the card is that a first Opus 5 proposal must not reach it - and a Claude Opus 5 draw on 2026-09-02 (clean-revision run) passed: first proposals 0.10 / 0.67 / 0.34 against the reference's 0.730, best of nine 0.6706, none reaching the reference. The near-miss got the phase set exactly right and fell short only on boundary placement, the lever-rule skill the task isolates. Unsaturated at the frontier; the run is single-arm at budget 3, so it shows headroom, not yet feedback-driven improvement.",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1038/s41467-020-19597-w",
+        "doi:10.1107/S0021889869006558",
+        "doi:10.1063/1.4977487"
+      ],
+      "issues": []
+    },
+    {
+      "task": "ChemicalKinetics/ReactionMechanismFitting",
+      "status": "candidate",
+      "reason": "v2 is an active partial-species assay task with twelve candidate reactions, charged temperature/initial-condition/sensor design, sparse Arrhenius rate-curve recovery, held-out topologies and separate null/model-inadequacy refusal; a truth-blind classical fit scores 0.482/0.404 development/held-out mechanism while reaching 0.860 development interpolation and falsely claiming a mechanism in half of unsupported worlds; GPT-5.5 budget-one and normal budget-three runs remain at zero while a strict open-loop batch finds 0.343/0.363 development/held-out mechanism but retains the same false-discovery failure, leaving science-specific headroom pending paired controls, server-held reactors and independent kinetics review",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1007/978-3-662-44562-4",
+        "doi:10.1093/bioinformatics/btq074",
+        "doi:10.3390/bioengineering10091056"
+      ],
+      "issues": []
+    },
+    {
+      "task": "Spectroscopy/SpinSystemInference",
+      "status": "candidate",
+      "reason": "second-order spin system recovery from an nmrsim-simulated NMR spectrum, with the full Zeeman-plus-coupling Hamiltonian as the oracle rather than a first-order reimplementation. Reports the discovery triple separately: combined_score carries mechanism recovery alone while false-discovery rate and calibrated refusal sit beside it. Calibrated on the benchmark host: baseline 0.0417 mechanism, and a truth-blind least-squares fit of the nmrsim forward model reaching 0.5833 mechanism while claiming a coupling on a quarter of the genuinely uncoupled pairs and never recognising the magnetically equivalent world it cannot solve. Retained as a candidate pending external NMR review, an independent recomputation, and any model measurement at all - no search has been run against it yet.",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1016/j.pnmrs.2010.11.001",
+        "doi:10.5281/zenodo.3237610",
+        "doi:10.1021/ed5001895"
+      ],
+      "issues": []
+    },
+    {
+      "task": "Algorithm/GraphFromDistances",
+      "status": "candidate",
+      "reason": "hidden weighted graph recovered from a budget of shortest-path queries, with networkx as the distance oracle rather than a reimplementation of Dijkstra. Reports the discovery triple separately: edge-recovery F1 as combined_score, with false edges and identifiability refusal beside it. About half of each world set contains an edge lying on no shortest path, which no query can reveal and where abstaining is the only correct answer. Calibrated on the benchmark host at the shipped level: baseline 0.4308 (every queried distance read as an edge), shipped triangle-inequality reconstructor 0.7900 with a 0.0444 false-discovery rate. Retained as a candidate pending external review, independent recomputation, and any model measurement.",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1137/S0097539702418498",
+        "doi:10.1007/BF01386390"
+      ],
+      "issues": []
+    },
+    {
+      "task": "CausalDiscovery/InterventionalSCM",
+      "status": "candidate",
+      "reason": "mechanism-recovery task awaiting independent domain review and nonzero-budget calibration",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.7551/mitpress/11283.001.0001"
+      ],
+      "issues": []
+    },
+    {
+      "task": "Algorithm/MatrixMultiplicationRank",
+      "status": "certified",
+      "reason": "exact tensor reconstruction plus redundant functional checks",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1007/BF02165411",
+        "doi:10.1090/S0002-9904-1976-13988-2",
+        "arxiv:2506.13131"
+      ],
+      "issues": []
+    },
+    {
+      "task": "SignalProcessing/SparseRecovery",
+      "status": "candidate",
+      "reason": "valid compressed-sensing on-ramp, but GPT-5.5 reaches 0.958 at budget one with standard sparse solvers; procedural sensing, sparsity and noise shifts plus independent review are required",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1109/TIT.2006.871582"
+      ],
+      "issues": []
+    },
+    {
+      "task": "ClimateScience/EnergyBalanceModel",
+      "status": "candidate",
+      "reason": "v2 removes the unstable untraceable fixed climatology and replaces it with an active five-parameter two-layer climate-response identification task; an eight-unit budget forces a choice between one 160-year or multiple shorter forcing experiments, and candidates must distinguish supported responses from null, benchmark-strength state-dependent-feedback and three-layer-ocean worlds; mechanism, forcing transfer, held-out recovery, confidence, coverage, false discovery and refusal remain separate, pending independent climate-domain review, server-held worlds, clean-tree truth-blind calibration and GPT-5.5 headroom testing",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1029/RG019i001p00091",
+        "doi:10.1175/JCLI-D-12-00195.1",
+        "doi:10.1029/2003GL018747"
+      ],
+      "issues": []
+    },
+    {
+      "task": "Geophysics/GravityInversion",
+      "status": "candidate",
+      "reason": "v2 replaces two noise-dominated duplicate grids with charged multi-height survey design, seven procedural signed rectangular-body topologies, null and observationally resolvable out-of-library worlds, external-field-equivalent mechanism matching and held-out noise shifts; a truth-blind BIC fit reaches 0.786/0.775 development/held-out mechanism, while GPT-5.5 budget three reaches 0.994 development but only 0.767 held-out mechanism and one topology has 0.975 field prediction versus 0.346 body mechanism; retain as an algorithm-synthesis and field-versus-geology on-ramp pending server-held geology and independent review",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1029/JZ064i001p00049",
+        "doi:10.1190/1.1444302"
+      ],
+      "issues": []
+    },
+    {
+      "task": "AtmosphericScience/RadiativeTransferFit",
+      "status": "candidate",
+      "reason": "v2 replaces a fixed underdetermined 10-radiance/20-temperature hidden-profile score with charged selection over 24 channels and viewing angles, a public five-parameter temperature/optical-depth family, seven full-rank supported worlds, separate radiance/view-shift prediction and null/absorber/cloud refusal; a truth-blind two-view fit scores 0.614/0.491 development/held-out mechanism and 0.855/0.812 radiance prediction with zero false discovery, while all seven protocol-valid GPT-5.5 proposals at budgets one or three refuse every supported atmosphere despite correct unsupported-world refusal; retain as an active-sounding and calibrated-refusal challenge pending paired factorized-feedback controls, server-held atmospheres, line-by-line or real-data replication and independent atmospheric-science review",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1029/RG014i004p00609",
+        "doi:10.1142/3171",
+        "doi:10.1016/j.jqsrt.2004.05.058"
+      ],
+      "issues": []
+    },
+    {
+      "task": "HeatTransfer/ConvectionDiffusionOpt",
+      "status": "candidate",
+      "reason": "v2 replaces the fixed hidden-field guessing task and fail-open non-finite path with a charged active laboratory over six development and five held-out homogeneous, null and heterogeneous worlds; candidates infer five anisotropic transport/loss parameters and design four heaters against a visible target, with separate mechanism, diagnostic prediction, nominal design, four physical-shift robustness, transfer, refusal and false-discovery axes; a truth-blind complementary two-experiment policy spends all 12 units and reaches approximately 0.896/0.892 development/held-out joint quality with zero false discovery, while a symmetric one-experiment policy is near-unidentifiable and scores approximately zero; across budget-one, normal budget-three and strict open-loop GPT-5.5 calibration, four proposals fail the executable contract and all three valid proposals abstain on every supported world, including one full-budget two-experiment policy, leaving meaningful experiment-design and supported-discovery headroom; retain pending repeated paired controls, server-held procedural apparatuses, continuum/high-fidelity replication and independent heat-transfer review",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1007/978-1-4020-8839-1"
+      ],
+      "issues": []
+    },
+    {
+      "task": "Thermodynamics/HeatExchangerDesign",
+      "status": "candidate",
+      "reason": "v2 replaces the monotone single-point objective with six fluid/operating regimes and bounded cost-versus-duty Pareto archives, separates a public constant-property proxy from a sealed temperature-dependent segmented oracle, and evaluates proxy false promotion, held-out transfer plus fouling/manufacturing/blockage robustness; GPT-5.5 budget three reaches only 0.126 development exact quality and 0.130 robustness with improvement concentrated in a subset of regimes, leaving graded multifidelity headroom pending repeated controls, server-held regimes, independent thermal-engineering review and CFD or experimental replication",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1002/9780470172605",
+        "doi:10.1007/978-3-540-77877-6_34",
+        "doi:10.1115/1.3240948",
+        "doi:10.1016/j.applthermaleng.2010.04.018",
+        "doi:10.1109/4235.797969"
+      ],
+      "issues": []
+    },
+    {
+      "task": "ControlTheory/InvertedPendulumSwingUp",
+      "status": "candidate",
+      "reason": "rebuilt and calibrated with correct dynamics; GPT-5.5 reaches 0.797 development but only 0.631 shifted robustness at budget one, leaving a measurable nominal-to-robust control gap",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1016/S0005-1098(99)00140-5"
+      ],
+      "issues": []
+    },
+    {
+      "task": "Astrodynamics/LowThrustTransfer",
+      "status": "candidate",
+      "reason": "v2 replaces the unstable single 30-day Euler trajectory and unsupported fuel anchors with six raising/lowering/eccentricity/plane-change MEE+J2 transfers, continuous bounded harmonic guidance, rocket-equation mass depletion, public terminal feasibility and separate phase/held-out/execution robustness; an input-only finite-difference Gauss-Newton policy attains approximately 0.71 development and 0.72 held-out utility with full nominal feasibility, whereas GPT-5.5 budget-one and budget-three proposals retain zero terminal feasibility and near-zero held-out utility, leaving substantive long-horizon boundary-value headroom pending repeated paired controls, server-held missions, independent domain review and higher-fidelity mission-tool replication",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.2514/2.4231",
+        "doi:10.1007/BF01227493",
+        "doi:10.1017/CBO9780511778025",
+        "doi:10.2514/8.5723"
+      ],
+      "issues": []
+    },
+    {
+      "task": "Semiconductor/MOSFETDoping",
+      "status": "candidate",
+      "reason": "v2 replaces the six-orders-wrong per-m3 concentration contract, clipped barrier proxy and unrelated Ion/Ioff anchor with log10 cm^-3 Gaussian background/source/drain pockets evaluated on four development and two held-out devices by a transparent screened-Poisson/MOS-electrostatics/Caughey-Thomas/charge-sheet/random-dopant compact model; hard threshold, current, DIBL, swing, variability, dose, active-doping and gradient gates feed drive-current-versus-leakage Pareto hypervolume, while six operation/process shifts remain sealed; fixed-seed 2048-point Sobol witnesses reconstruct exactly, the nominal witness reaches unit development/held-out score but zero development worst-shift robustness, and the robust witness trades nominal score to approximately 0.934/0.900 for unit development/held-out worst-shift robustness; retain pending GPT-5.5 headroom calibration, paired controls, server-held devices, independent semiconductor review, higher-fidelity TCAD/process replication and measured-device validation",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1002/0470068329",
+        "doi:10.1017/CBO9781139195065",
+        "doi:10.1109/PROC.1967.6123"
+      ],
+      "issues": []
+    },
+    {
+      "task": "NuclearEngineering/NeutronDiffusionCriticality",
+      "status": "candidate",
+      "reason": "corrected conservative two-group diffusion oracle and reproducible numerical anchor; current-contract GPT-5.5 reaches 0.939 at budget one, normal budget three improves 0.832 to 0.963 and a selection-blind batch reaches 0.982 with fewer tokens, so the single fixed public slab remains an on-ramp rather than long-horizon evidence pending procedural reactor regimes, transport replication and independent review",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "isbn:9780471223634"
+      ],
+      "issues": []
+    },
+    {
+      "task": "Sensors/QuartzCrystalMicrobalanceLab",
+      "status": "candidate",
+      "reason": "v1 adds a procedural raw-instrument pipeline over ten development/held-out rigid-film, missing-data, viscoelastic, rate-change, I/Q-conjugation and ADC-clipping worlds; candidates must calibrate drifting complex I/Q counts, fit multi-harmonic BVD resonance and Q, infer Sauerbrey mass and deposition rate, distinguish physical model mismatch from instrument faults, predict a sealed horizon and commit a target-mass stop decision with immutable evidence IDs; a truth-blind reference pipeline and independent peak/bandwidth checks retain graded calibration/extraction/decision headroom, but this deterministic reduced-order task remains a synthetic I6 on-ramp pending GPT-5.5 headroom calibration, server-held traces, real QCM electronics/deposition data and independent sensing/thin-film review",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1063/1.1145396",
+        "doi:10.1021/ac00020a015",
+        "doi:10.1021/la025911w",
+        "doi:10.1143/jjap.29.963",
+        "doi:10.3390/chemosensors9010009"
+      ],
+      "issues": []
+    },
+    {
+      "task": "Turbulence/RANSCalibration",
+      "status": "candidate",
+      "reason": "v2 replaces the analytic log-law/TKE pseudo-DNS and rank-three five-constant surrogate with hash-bound CC-BY-4.0 channel DNS at Re-tau 180/395/590/950, a four-parameter full-rank positive algebraic closure, joint mean-velocity/Reynolds-shear scoring, exact channel momentum balance, evaluator-only higher-Re transfer and wall-coordinate calibration shifts; deterministic nominal and minimax references expose substantial development-to-heldout tradeoffs; single-run GPT-5.5 budget three improves development nominal to 0.356 and heldout nominal to 0.428 but only reaches 0.127/0.299 development/heldout robustness, while budget one and the selection-blind batch remain at zero; retain as a closure-calibration and transfer candidate pending repeated generation-controlled runs, server-held flow families, transport-equation or higher-fidelity CFD replication and independent turbulence review",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.5281/zenodo.5749302",
+        "doi:10.1007/s003480050256",
+        "doi:10.1063/1.3005862"
+      ],
+      "issues": []
+    },
+    {
+      "task": "Acoustics/RoomImpulseResponse",
+      "status": "candidate",
+      "reason": "v2 replaces fixed-RIR reconstruction and its length crash with source-placement plus six-surface treatment optimization over four development and two held-out rooms; the order-10 energy image-source and Eyring oracle separates C50 clarity, target reverberation and spatial uniformity, while first-order proxy error and five sealed installation/material/geometry/order-14 shifts remain evaluator-only; independent path, absorption, decay, utility and deterministic reference-search calibration passes internally; GPT-5.5 budget one exposes a development/held-out selection conflict, normal budget three has three contract failures and a strict open-loop batch reaches 0.754/0.742 development/held-out nominal quality, leaving graded headroom pending repeated paired controls, server-held rooms, hybrid wave/ray replication, measured-RIR validation and independent acoustics review",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1121/1.382599",
+        "doi:10.1109/TASL.2008.917341",
+        "standard:ISO-3382-1:2009"
+      ],
+      "issues": []
+    },
+    {
+      "task": "StructuralEngineering/TrussWeightMinimization",
+      "status": "candidate",
+      "reason": "v2 has six unique procedural structures, complete stress/displacement/Euler-buckling FEM, multistart feasible references and sealed physical shifts; GPT-5.5 improves development 0.0 to 0.611 across three accepted proposals while final held-out robustness falls from 0.206 to 0.078, leaving useful non-saturated optimization/validation headroom pending paired controls, server-held structures and independent domain review",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.2514/3.49321",
+        "doi:10.1007/BF01376857"
+      ],
+      "issues": []
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "status": "candidate",
+      "reason": "active sparse-law laboratory exposes a reproducible prediction-versus-refusal gap; GPT-5.5 reaches near-perfect in-library rollout but falsely claims mechanisms in misspecified worlds at budgets one and three; awaiting paired controls, server-held worlds and independent review",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1073/pnas.1517384113",
+        "doi:10.1073/pnas.0609476104",
+        "doi:10.1214/ss/1177009939"
+      ],
+      "issues": []
+    },
+    {
+      "task": "Mathematics/CapSet",
+      "status": "certified",
+      "reason": "exhaustive finite-field collinearity verifier and documented anchors",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.4007/annals.2017.185.1.8",
+        "doi:10.1038/s41586-023-06924-6"
+      ],
+      "issues": []
+    },
+    {
+      "task": "Optimization/CirclePacking",
+      "status": "certified",
+      "reason": "Geometric feasibility oracle with Packomania anchors, each re-derived from the source coordinate files rather than transcribed. The N=13 anchor was corrected on 2026-09-02 from 7.6274 - a number the source never contained - to 7.4630478289, proven optimal by Peikert (1991); against the wrong anchor one model proposal had scored 1.4406 and been read as a world record. Score comparisons across that date are invalid for N=13; runs from the 2026-09-02 delta ladder onward use the corrected anchor.",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "url:http://www.packomania.com/csq/txt/csq13.txt",
+        "url:https://erich-friedman.github.io/packing/cirinsqu/",
+        "doi:10.1007/978-0-387-45676-8"
+      ],
+      "issues": []
+    },
+    {
+      "task": "Mathematics/SequenceLawRecovery",
+      "status": "candidate",
+      "reason": "linear recurrence recovered from an integer prefix containing transcription errors, verified exactly with SymPy against a held-out continuation rather than against the visible terms. About a third of each set is shown with too few terms to pin a unique minimal rule, where abstaining is correct. Calibrated at the shipped level: baseline 0.0000 (a fixed Fibonacci guess), shipped error-tolerant solver 0.7500 with a 0.50 correct-refusal rate. Corruption was added because exact solving on clean prefixes is complete and left nothing above the reference. Retained as a candidate pending external review, independent recomputation, and any model measurement.",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1145/3208976.3209017",
+        "doi:10.1090/S0025-5718-1980-0583502-2"
+      ],
+      "issues": []
+    },
+    {
+      "task": "ParticlePhysics/CalorimeterDesign",
+      "status": "candidate",
+      "reason": "v2 replaces the false fixed-10-GeV baseline and fail-open clipping path with three cost-conditioned Pb/scintillator design curves over four development and two interleaved held-out layer/energy/noise/material regimes; a transparent normalized-gamma longitudinal model separates multi-energy resolution, response linearity, containment, sampling, photoelectron, electronics, leakage, lead mass, length and readout cost, while five fabrication, calibration, dead-material, light-yield and electronics shifts remain sealed; the valid uniform baseline has development RMS resolution 0.0856 and zero normalized score, fixed-seed nominal witnesses improve it to unit development/held-out nominal score but retain only 0.483 development shifted-envelope feasibility and zero robustness, whereas minimax witnesses leave approximately two percent cost headroom, preserve every shifted envelope and trade nominal score to 0.798 development and 0.754 held-out; independent gamma-CDF quadrature, material-budget identities, reference regeneration, secure baseline replay and fail-closed archive tests pass internally, so retain as a reduced-order scientific-instrument optimization candidate pending GPT-5.5 headroom calibration, paired controls, server-held detector regimes, independent detector-physics review, GEANT4/electronics replication and test-beam validation",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1103/RevModPhys.75.1243",
+        "doi:10.1016/0168-9002(90)90566-O",
+        "doi:10.1016/0029-554X(75)90679-5",
+        "doi:10.1016/0168-9002(89)90571-8",
+        "doi:10.1016/0168-9002(92)90495-P"
+      ],
+      "issues": []
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "status": "candidate",
+      "reason": "v2 replaces the scalar phase FFT and analytic phase-ramp shortcut with a one-dimensional Fourier-modal Maxwell solver over four development and two held-out material/wavelength regimes, both TE and TM polarization, angle and wavelength grids, and four sealed etch/overlay/index/angle shifts; frozen baseline/reference anchors reproduce with at least 0.266 nominal and 0.246 robust utility headroom, lossless energy conservation and Fresnel limits pass, order-13 versus order-19 utility differs by at most 0.00170, and a pinned external grcwa cross-check agrees within 0.00785 efficiency over 72 conditions; three single-run GPT-5.5 calibrations produce one nominally valid proposal out of seven, whose development/held-out scores are 0.187/0.173 but whose held-out robustness is zero because both held-out shift geometries fail, pending repeated paired controls, server-held regimes, independent photonics review, scattering-matrix or full-wave replication, fabrication and optical measurement",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1364/JOSA.71.000811",
+        "doi:10.1364/JOSAA.12.001077",
+        "doi:10.1364/JOSAA.13.000779",
+        "doi:10.1364/JOSAA.13.001870",
+        "doi:10.1021/acsphotonics.0c00768"
+      ],
+      "issues": []
+    },
+    {
+      "task": "ParticlePhysics/DiscrepantMeasurements",
+      "status": "candidate",
+      "reason": "Evidence synthesis migrated out of clinical trials: eight groups publish a value and a one-sigma uncertainty for the same constant and scatter further than those uncertainties allow. Four defects are possible - sound, globally understated errors, one group with an unquoted systematic, or two methods that disagree - and the three defective ones overlap in chi-square per degree of freedom (2.2-11.8, 1.8-5.7, 3.9-10.2 against a sound table's 0.4-1.9), so the diagnosis is not reachable from the published table. It is reachable from five charged split tests against eight groups, and only by spending them at both ends of the deviation ordering: the deviant tail splits badly under both a single systematic and a global understatement, so the tail alone halves culprit identification. Ablation - 0.842 buying at both ends, 0.701 on the deviant tail only, 0.586 on typical groups only, 0.425 buying nothing, 0.509 never declining, 0.000 declining everything. A Claude Opus 5 draw on 2026-09-02 reached the reference's 0.8421 on two of three seeds - one on the first proposal, one on the second after 0.6817 - and exceeded it on none. The third seed stalls at 0.6817 across all three proposals while buying 3.8 of its 5 split tests, which is the failure the axes exist to make legible. A harder on-ramp than EnzymeKineticsLaw and one that shows a real proposal-to-proposal gain, but the reference sits at the ceiling this scoring admits, so it is not frontier evidence.",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1103/PhysRev.40.207",
+        "doi:10.1103/PhysRevD.110.030001",
+        "doi:10.1103/RevModPhys.93.025010",
+        "doi:10.1016/0197-2456(86)90046-2"
+      ],
+      "issues": []
+    },
+    {
+      "task": "QuantumDynamics/HamiltonianLearning",
+      "status": "candidate",
+      "reason": "spin-chain fields and couplings recovered from QuTiP-generated magnetisation dynamics, with the full Schrodinger evolution as the oracle. Some chains carry an exchange symmetry that makes two spins' parameters unidentifiable from single-site traces, and abstaining is the only correct answer there. Calibrated on the benchmark host: baseline 0.0833 mechanism, shipped least-squares learner 0.5833 while claiming a coupling between uncoupled spins a quarter of the time and never recognising the symmetric chains. Retained as a candidate pending external review, independent recomputation, and any model measurement.",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1103/PhysRevLett.112.190501",
+        "doi:10.1016/j.cpc.2012.11.019"
+      ],
+      "issues": []
+    },
+    {
+      "task": "Photonics/MultilayerThinFilm",
+      "status": "certified",
+      "reason": "transfer-matrix physics oracle with analytic boundary tests",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.1201/9781420073034",
+        "doi:10.1364/AO.35.000644"
+      ],
+      "issues": []
+    },
+    {
+      "task": "QuantumErrorCorrection/QuantumErrorDecoder",
+      "status": "candidate",
+      "reason": "community-standard Stim oracle with a computed PyMatching anchor; pending external domain review and fresh unseeded confirmation",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.22331/q-2021-07-06-497",
+        "doi:10.22331/q-2025-01-20-1600"
+      ],
+      "issues": []
+    },
+    {
+      "task": "Exoplanets/RadialVelocityPlanets",
+      "status": "candidate",
+      "reason": "planets identified in a radial-velocity series against a stellar rotation signal and nightly cadence aliases, with astropy LombScargle as the periodogram oracle. False discovery is a first-class axis because that is this field's characteristic failure - the literature carries retracted detections traced to activity and aliasing. Calibrated at the shipped level: baseline 0.5000 mechanism with a 0.889 false-discovery rate, shipped pre-whitening detector 0.8750 with 0.611. The signal-to-noise regime was lowered from the first sizing, where both scored 1.0 and the mechanism axis measured nothing. Retained as a candidate pending external review, independent recomputation, and any model measurement.",
+      "missing_files": [],
+      "missing_metadata": [],
+      "citation_ids": [
+        "doi:10.3847/1538-4365/aab766",
+        "doi:10.1088/0004-637X/764/1/3"
+      ],
+      "issues": []
+    }
+  ],
+  "created_at": "2026-09-02T05:20:55.825025+00:00",
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "120b9c6ff3b838cce423302fa2f73f9cfa52d7b8",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "sle",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/audit_tasks.py",
+      "--output",
+      "experiments/task_certification_audit_2026-09-02_v68.json"
+    ]
+  },
+  "execution_passed": true,
+  "trust_decision": "trusted_clean_revision",
+  "trusted_evidence": true,
+  "passed": true
+}
