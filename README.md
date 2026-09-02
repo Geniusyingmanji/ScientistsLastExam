@@ -1,14 +1,14 @@
-# Scientist's Last Exam
+# Scientists' Last Exam: Optimizing the Known, Discovering the Unknown
 
 ## 背景
 
-Scientist's Last Exam (SLE) 是一个研究原型,面向**跨领域、可执行、预算受限的科学生成式优化**。
+Scientists' Last Exam (SLE) 是一个研究原型,面向**跨领域、可执行、预算受限的科学生成式优化**。
 它要回答的不是"模型能不能考一次高分",而是**"给模型反馈和更多预算,它在科学上会不会变得更好"**。
 
 同期基准沿任务形式分化,各自占住了一块:
 
 ```text
-Scientist's Last Exam
+Scientists' Last Exam
 ├── 场景
 │   ├── 多学科广度 ── AstaBench · DiscoveryBench · ResearchClawBench
 │   └── 单学科纵深 ── NewtonBench 物理 · BioDesignBench 蛋白
