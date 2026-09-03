@@ -153,7 +153,12 @@ def main(argv: list[str] | None = None) -> int:
         target = task_fields.setdefault(task_id, {}) if task_id else shared_fields
         target.setdefault(check, {})[field] = value
 
-    resolved, _inputs, issues = _module._resolve_preflight_spec(args.spec)
+    # A clean successor is also the migration path for older overlays produced before dirty-tree
+    # refusal existed. Keep all predecessor/base hash checks, but let this writer inspect that
+    # overlay; the runtime consumer uses the strict default and will reject it directly.
+    resolved, _inputs, issues = _module._resolve_preflight_spec(
+        args.spec, require_trusted_overlay=False
+    )
     if issues:
         print("cannot read the current spec:", "; ".join(issues), file=sys.stderr)
         return 1
@@ -270,6 +275,9 @@ def main(argv: list[str] | None = None) -> int:
     # untracked outputs and records every legitimately clean rebinding as dirty.
     source_revision = git_revision()
     source_tree_clean = tree_is_clean()
+    if not source_tree_clean:
+        print("refusing to write a successor from a dirty source tree", file=sys.stderr)
+        return 1
 
     # The runtime contract lives in the cohort manifest, not the spec, so rebinding one without
     # the other leaves the preflight failing on the half that was not touched. A first attempt

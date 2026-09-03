@@ -126,6 +126,23 @@ def _load_object(path: Path) -> dict[str, Any]:
     return value
 
 
+def _git_commit_exists(revision: Any) -> bool:
+    if (
+        not isinstance(revision, str)
+        or len(revision) != 40
+        or any(character not in "0123456789abcdef" for character in revision.lower())
+    ):
+        return False
+    return subprocess.run(
+        ["git", "cat-file", "-e", revision + "^{commit}"],
+        cwd=str(ROOT),
+        stdin=subprocess.DEVNULL,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+        check=False,
+    ).returncode == 0
+
+
 def _deep_merge(base: dict[str, Any], patch: dict[str, Any]) -> dict[str, Any]:
     """Return a recursive object merge without mutating either input."""
 
@@ -140,6 +157,8 @@ def _deep_merge(base: dict[str, Any], patch: dict[str, Any]) -> dict[str, Any]:
 
 def _resolve_preflight_spec(
     path: Path,
+    *,
+    require_trusted_overlay: bool = True,
 ) -> tuple[dict[str, Any], list[dict[str, Any]], list[str]]:
     """Resolve an immutable v1 spec or a hash-bound v2 overlay.
 
@@ -155,6 +174,31 @@ def _resolve_preflight_spec(
         return document, inputs, []
     if document.get("schema_version") != 2:
         return {}, inputs, ["unsupported measurement-health spec schema"]
+
+    if require_trusted_overlay:
+        provenance = document.get("source_provenance") or {}
+        if provenance.get("source_tree_dirty") is not False:
+            return {}, inputs, ["v2 preflight source provenance is dirty"]
+        if not _git_commit_exists(provenance.get("git_revision")):
+            return {}, inputs, ["v2 preflight source revision is missing or unreachable"]
+
+    predecessor = document.get("supersedes") or {}
+    raw_predecessor_path = predecessor.get("path")
+    expected_predecessor_hash = predecessor.get("sha256")
+    if not isinstance(raw_predecessor_path, str) or not isinstance(
+        expected_predecessor_hash, str
+    ):
+        return {}, inputs, ["v2 preflight predecessor binding is incomplete"]
+    predecessor_path = (ROOT / raw_predecessor_path).resolve()
+    if not predecessor_path.is_file():
+        return {}, inputs, ["v2 preflight predecessor is missing"]
+    actual_predecessor_hash = _sha256(predecessor_path)
+    inputs.append({
+        "path": _recorded_path(predecessor_path),
+        "sha256": actual_predecessor_hash,
+    })
+    if actual_predecessor_hash != expected_predecessor_hash:
+        return {}, inputs, ["v2 preflight predecessor hash differs"]
 
     binding = document.get("base_spec") or {}
     raw_base_path = binding.get("path")

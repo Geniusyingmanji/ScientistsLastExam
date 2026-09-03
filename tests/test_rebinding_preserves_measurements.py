@@ -18,8 +18,10 @@ import importlib.util
 import json
 import subprocess
 import sys
+import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -33,6 +35,15 @@ def _preflight():
     spec = importlib.util.spec_from_file_location(
         "preflight_for_rebinding_tests",
         ROOT / "scripts" / "run_measurement_health_preflight.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def _rebinder():
+    spec = importlib.util.spec_from_file_location(
+        "rebinder_for_rebinding_tests",
+        ROOT / "scripts" / "rebind_measurement_health_spec.py")
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
@@ -123,6 +134,22 @@ class RebindingPreservesMeasurementsTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn("%d task(s) rebound" % len(self.spec["task_overrides"]), result.stdout)
         self.assertNotIn("nothing to write", result.stdout)
+
+    def test_dirty_tree_cannot_write_a_successor(self):
+        module = _rebinder()
+        evidence = self.spec["shared_task_overrides"]["exactly_once_recovery"]["evidence"]
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            outputs = [root / name for name in ("spec.json", "manifest.json", "artifacts.json")]
+            with patch.object(module, "tree_is_clean", return_value=False):
+                result = module.main([
+                    "--output", str(outputs[0]),
+                    "--manifest-output", str(outputs[1]),
+                    "--artifacts-output", str(outputs[2]),
+                    "--rebind-evidence", "exactly_once_recovery=%s" % evidence["path"],
+                ])
+            self.assertEqual(result, 1)
+            self.assertFalse(any(path.exists() for path in outputs))
 
 
 if __name__ == "__main__":
