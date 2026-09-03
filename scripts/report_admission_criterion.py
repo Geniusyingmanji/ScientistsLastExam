@@ -196,6 +196,17 @@ def run_identity(workdir: Path) -> tuple[str, str, int, str, str, str, str] | No
     return str(task), str(mode), int(seed), model, condition, contract, runtime
 
 
+def _identity_is_recorded(
+    model: str, condition: str, contract: str, runtime: str,
+) -> bool:
+    return bool(
+        model != "unrecorded"
+        and condition != "unrecorded"
+        and contract not in {"unknown", "unrecorded"}
+        and runtime != "unrecorded"
+    )
+
+
 def _cohort_of(workdir: Path, runs_root: Path) -> str:
     """The first directory under the run root, whatever depth the run itself sits at.
 
@@ -491,6 +502,13 @@ def main(argv: list[str] | None = None) -> int:
         )
         state, why = verdict(sat, best["gaps"] if best else [],
                              clipped=modes.get(task, "clipped") != "uncapped")
+        if not _identity_is_recorded(model, condition, contract, runtime):
+            why = (
+                "evidence identity is incomplete; diagnostic verdict was %s, but an "
+                "admission claim requires recorded model, condition, task, and runtime"
+                % state
+            )
+            state = "unattributable_evidence"
         rows.append({
             "task": task,
             "model": model,
@@ -521,6 +539,7 @@ def main(argv: list[str] | None = None) -> int:
     order = {
         "measures_iteration": 0, "measures_iteration_one_seed_deep": 1,
         "solved_at_ceiling": 90,
+        "unattributable_evidence": 91,
         "crossover_in_range": 2, "feedback_harmful": 3,
         "feedback_harmful_one_seed_deep": 4, "no_measurable_difference": 5,
         "gap_at_one_budget": 6, "exhausted_unpaired": 7, "control_not_exhausted": 8,
@@ -577,7 +596,10 @@ def main(argv: list[str] | None = None) -> int:
     # three-way disagreement while only two of the three had run the same task.
     by_version: dict[tuple[str, str, str], dict[str, str]] = defaultdict(dict)
     for row in rows:
-        if row["model"] == "unrecorded":
+        if not _identity_is_recorded(
+            row["model"], row["llm_condition_sha256"], row["task_version"],
+            row["runtime_source_sha256"],
+        ):
             continue
         model_condition = "%s@%s" % (
             row["model"], row["llm_condition_sha256"][:12]

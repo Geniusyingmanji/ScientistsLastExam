@@ -154,6 +154,22 @@ class TaskVersionSeparationTests(unittest.TestCase):
             )
             self.assertTrue(all(row["pooled_open_loop_seeds"] == 1 for row in report["rows"]))
 
+    def test_unrecorded_runtime_cannot_support_an_admission_verdict(self):
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            open_loop = [0.5] * 8
+            feedback = [0.5, 0.52, 0.54, 0.57, 0.60, 0.65, 0.70, 0.75]
+            for seed in range(3):
+                write_run(root, "paired", "open%d" % seed, "T/X",
+                          "selection_blind", seed, open_loop, runtime="")
+                write_run(root, "paired", "feedback%d" % seed, "T/X",
+                          "normal", seed, feedback, runtime="")
+            report = PoolingTests.run_report(root)
+            row = report["rows"][0]
+            self.assertEqual(row["runtime_source_sha256"], "unrecorded")
+            self.assertEqual(row["verdict"], "unattributable_evidence")
+            self.assertEqual(report["distinct_tasks_measuring_iteration"], [])
+
 
 class SeedFragilityTests(unittest.TestCase):
     """A necessary condition that one seed can overturn has not been established."""

@@ -218,6 +218,12 @@ def _classification(row: dict[str, Any], checks: dict[str, dict[str, Any]]) -> t
         return QUARANTINED, ["internal science admission failed"]
     if task in CONTROL_ONLY_TASKS:
         return CONTROL_ONLY, [CONTROL_ONLY_TASKS[task]]
+    if (task in EXPLORATORY_TASKS
+            and not row["gates"]["internal_science_admission"]["passed"]):
+        return REPAIR_FIRST, [
+            "current science admission failed",
+            "refresh the baseline and certification evidence before measurement allocation",
+        ]
     if task in EXPLORATORY_TASKS:
         reasons = [
             "result-selected current-contract task for an exploratory 2 h measurement screen",
@@ -245,11 +251,10 @@ def _classification(row: dict[str, Any], checks: dict[str, dict[str, Any]]) -> t
             "receives; evaluator-only axes are not visible to this classifier and may be "
             "untouched - see scripts/report_saturation_hidden_axes.py",
         ]
-    if (certification_status == "candidate"
-            and not row["gates"]["internal_science_admission"]["passed"]):
+    if not row["gates"]["internal_science_admission"]["passed"]:
         return REPAIR_FIRST, [
-            "candidate has not cleared internal science admission",
-            "complete current baseline and certification evidence before measurement allocation",
+            "current science admission failed",
+            "refresh the baseline and certification evidence before measurement allocation",
         ]
     return REPAIR_FIRST, [
         "current contract lacks sufficient non-saturated, valid, repeated trajectory evidence",

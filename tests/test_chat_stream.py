@@ -45,6 +45,18 @@ class ChatStreamTests(unittest.TestCase):
         self.assertEqual(payload["stream_options"], {"include_usage": True})
         self.assertEqual(client.total_usage["total_tokens"], 30)
 
+    def test_provider_error_event_is_not_returned_as_an_empty_answer(self):
+        error_stream = """\
+data: {"error":{"message":"provider rejected request"}}
+
+data: [DONE]
+"""
+        client = LLMClient(LLMConfig(stream=True))
+        with patch.object(LLMClient, "_post_sse", return_value=error_stream):
+            with self.assertRaises(RuntimeError) as raised:
+                client.complete("rewrite the program")
+        self.assertIn("provider rejected request", str(raised.exception))
+
     def test_reasoning_tokens_are_read_from_chat_usage(self):
         usage = {
             "completion_tokens": 8000,

@@ -66,6 +66,16 @@ class MeasurementHealthAuditTests(unittest.TestCase):
         row = self.tasks["DynamicalSystems/ActiveLawDiscovery"]
         self.assertEqual(row["classification"], self.module.CONTROL_ONLY)
 
+    def test_expired_certified_task_is_repaired_before_measurement_allocation(self):
+        row = {
+            "task": "Semiconductor/MOSFETDoping",
+            "certification_status": "certified",
+            "gates": {"internal_science_admission": {"passed": False}},
+        }
+        classification, reasons = self.module._classification(row, {})
+        self.assertEqual(classification, self.module.REPAIR_FIRST)
+        self.assertIn("current science admission", reasons[0])
+
     def test_model_derived_checks_report_observed_run_counts_consistently(self):
         """Re-measurement may legitimately turn zero into a positive current-bound count."""
         model_derived = 0

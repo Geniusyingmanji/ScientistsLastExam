@@ -328,6 +328,16 @@ class LLMClient:
                 continue
             if not isinstance(chunk, dict):
                 continue
+            if "error" in chunk and chunk["error"] is not None:
+                error = chunk["error"]
+                if isinstance(error, dict):
+                    detail = error.get("message") or error.get("code")
+                else:
+                    detail = str(error)
+                raise RuntimeError(
+                    "LLM stream error: %s"
+                    % str(detail or "provider returned an error event")[:500]
+                )
             if isinstance(chunk.get("usage"), dict):
                 usage = chunk["usage"]
             choices = chunk.get("choices") or []
