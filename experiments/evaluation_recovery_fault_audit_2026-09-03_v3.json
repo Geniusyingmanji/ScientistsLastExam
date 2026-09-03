@@ -1,0 +1,2334 @@
+{
+  "schema_version": 1,
+  "trust_status": "EVALUATION_RECOVERY_FAULT_INJECTION_AUDIT",
+  "evidence_scope": "PROCESS_CRASH_DURABLE_RECEIPT_LOGICAL_EXACTLY_ONCE_OUTCOME_AND_ORACLE_BUDGET_FOR_DETERMINISTIC_LOCAL_EVALUATORS_NOT_PHYSICAL_EXACTLY_ONCE_LIVE_LAB_EXECUTION",
+  "created_at": "2026-09-03T05:58:00.548485+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "3627306c867598f1eac25ecfe1a899433a95b67d",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "sle",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/workspace/wynckeliao/ScientistsLastExam/.venv/bin/python",
+      "scripts/audit_evaluation_recovery.py",
+      "--output",
+      "experiments/evaluation_recovery_fault_audit_2026-09-03_v3.json"
+    ]
+  },
+  "environment": {
+    "python": "3.12.3 (main, Nov  6 2024, 18:32:19) [GCC 13.2.0]",
+    "platform": "Linux-6.1.170-210.320.amzn2023.x86_64-x86_64-with-glibc2.39"
+  },
+  "worker": {
+    "path": "scripts/run_recovery_fault_worker.py",
+    "sha256": "5ae51cd8d8b509242edad21ee34856b60c7929520e3e0f8b0a81f78c7c594c6c"
+  },
+  "scenario_count": 8,
+  "scenarios": [
+    {
+      "mode": "baseline_before_trajectory",
+      "fault_process": {
+        "command": [
+          "/workspace/wynckeliao/ScientistsLastExam/.venv/bin/python",
+          "/tmp/sle-pr-split.tAr081/framework/scripts/run_recovery_fault_worker.py",
+          "--mode",
+          "baseline_before_trajectory",
+          "--workdir",
+          "/tmp/sle_recovery_audit_jelamh7m/baseline_before_trajectory"
+        ],
+        "returncode": 86,
+        "stdout": "",
+        "stderr": "",
+        "expected_fault_exit": true
+      },
+      "resume_error": null,
+      "resume_evaluator_call_count": 0,
+      "trajectory": [
+        {
+          "schema_version": 2,
+          "step": 0,
+          "oracle_calls": 1,
+          "score": 0.041930443440283925,
+          "best_score": 0.041930443440283925,
+          "valid": true,
+          "accepted": true,
+          "wall_seconds": 0.3704447540221736,
+          "cumulative_wall_seconds": 0.3704447540221736,
+          "candidate_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+          "parent_sha256": null,
+          "budget_units": 1,
+          "metrics": {
+            "combined_score": 0.041930443440283925,
+            "feasibility_rate": 1.0,
+            "per_size": [
+              {
+                "e_min": -44.326801,
+                "energy": -1.6608566740915731,
+                "n": 13,
+                "score": 0.03746845331995812,
+                "valid": true
+              },
+              {
+                "e_min": -72.659782,
+                "energy": -3.2668830121309282,
+                "n": 19,
+                "score": 0.04496136545153587,
+                "valid": true
+              },
+              {
+                "e_min": -173.928427,
+                "energy": -7.5417994961221275,
+                "n": 38,
+                "score": 0.04336151154935776,
+                "valid": true
+              }
+            ],
+            "raw_score": 0.041930443440283925,
+            "valid": 1.0
+          },
+          "llm": {},
+          "error": null,
+          "algorithm_metadata": {
+            "evaluation_request_id": "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02",
+            "evaluation_receipt_reused": true,
+            "evaluation_receipt_committed": true
+          }
+        }
+      ],
+      "evaluation_ledger_snapshot": {
+        "schema_version": 1,
+        "semantics": "exactly_once_logical_scientific_outcome_and_oracle_budget_for_deterministic_local_evaluators_not_physical_exactly_once_execution",
+        "request_count": 1,
+        "receipt_count": 1,
+        "attempt_count": 1,
+        "incomplete_attempt_count": 0,
+        "infrastructure_failure_attempt_count": 0,
+        "open_request_ids": [],
+        "request_ids": [
+          "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02"
+        ],
+        "receipt_ids": [
+          "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02"
+        ]
+      },
+      "checks": {
+        "worker_exited_at_injected_fault": true,
+        "resume_completed": true,
+        "resume_made_zero_evaluator_calls": true,
+        "trajectory_is_complete": true,
+        "logical_oracle_budget_is_exact": true,
+        "one_request_and_receipt_per_evaluated_event": true,
+        "trajectory_receipt_ids_are_unique": true
+      },
+      "files": [
+        {
+          "path": "best_program.py",
+          "sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+          "bytes": 760
+        },
+        {
+          "path": "checkpoint.json",
+          "sha256": "17b5156fdc0730c3807002028f1c09a94df444826c4ac4e549370e0ac28d52e7",
+          "bytes": 2745,
+          "json": {
+            "schema_version": 1,
+            "algorithm": "greedy_rewrite",
+            "task_id": "Chemistry/LennardJonesCluster",
+            "seed": 260727,
+            "next_iter": 1,
+            "baseline_score": 0.041930443440283925,
+            "baseline_metrics": {
+              "combined_score": 0.041930443440283925,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.041930443440283925
+            },
+            "best_score": 0.041930443440283925,
+            "best_metrics": {
+              "combined_score": 0.041930443440283925,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.041930443440283925
+            },
+            "best_program": "\"\"\"Initial baseline for LennardJonesCluster (weak but valid).\n\nPlaces atoms at random inside a loose sphere with a minimum-separation rejection. The\natoms barely interact, so the energy is close to zero (far from the global minimum) \u2014 there\nis a large gap for an optimizer to close. Edit this file to do better.\n\"\"\"\n\nimport numpy as np\n\n\ndef build_cluster(n_atoms: int, seed: int = 0) -> np.ndarray:\n    rng = np.random.default_rng(seed)\n    radius = 1.5 * (n_atoms ** (1.0 / 3.0))\n    pts = []\n    while len(pts) < n_atoms:\n        p = rng.uniform(-radius, radius, size=3)\n        if np.linalg.norm(p) > radius:\n            continue\n        if all(np.linalg.norm(p - q) > 1.2 for q in pts):\n            pts.append(p)\n    return np.asarray(pts, dtype=float)\n",
+            "best_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+            "best_source_step": 0,
+            "best_published_wall_seconds": 0.0,
+            "evaluated_candidates": [
+              {
+                "step": 0,
+                "program": "\"\"\"Initial baseline for LennardJonesCluster (weak but valid).\n\nPlaces atoms at random inside a loose sphere with a minimum-separation rejection. The\natoms barely interact, so the energy is close to zero (far from the global minimum) \u2014 there\nis a large gap for an optimizer to close. Edit this file to do better.\n\"\"\"\n\nimport numpy as np\n\n\ndef build_cluster(n_atoms: int, seed: int = 0) -> np.ndarray:\n    rng = np.random.default_rng(seed)\n    radius = 1.5 * (n_atoms ** (1.0 / 3.0))\n    pts = []\n    while len(pts) < n_atoms:\n        p = rng.uniform(-radius, radius, size=3)\n        if np.linalg.norm(p) > radius:\n            continue\n        if all(np.linalg.norm(p - q) > 1.2 for q in pts):\n            pts.append(p)\n    return np.asarray(pts, dtype=float)\n",
+                "sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+                "score": 0.041930443440283925,
+                "valid": true,
+                "metrics": {
+                  "combined_score": 0.041930443440283925,
+                  "valid": 1.0,
+                  "feasibility_rate": 1.0,
+                  "raw_score": 0.041930443440283925
+                },
+                "published_wall_seconds": 0.0
+              }
+            ],
+            "pending_proposal": null
+          }
+        },
+        {
+          "path": "evaluation_ledger/attempts/240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02/000001.json",
+          "sha256": "05e4a220bd7f329d2f2e6ac4b1c95fa09aded4f447bc1492add9b07bc3e7aabf",
+          "bytes": 321,
+          "json": {
+            "attempt_index": 1,
+            "completed_at_utc": "2026-09-03T05:57:56.743008+00:00",
+            "evaluation_wall_seconds": 0.3704447540221736,
+            "outcome": "receipt_committed",
+            "request_id": "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02",
+            "schema_version": 1,
+            "started_at_utc": "2026-09-03T05:57:56.365986+00:00",
+            "status": "completed"
+          }
+        },
+        {
+          "path": "evaluation_ledger/receipts/240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02.json",
+          "sha256": "8e4d4e61d3b8db3d9870d3fcfafeae217289c6a542dfcbde8073c91738101212",
+          "bytes": 794,
+          "json": {
+            "completed_at_utc": "2026-09-03T05:57:56.739561+00:00",
+            "evaluation_wall_seconds": 0.3704447540221736,
+            "metrics": {
+              "combined_score": 0.041930443440283925,
+              "feasibility_rate": 1.0,
+              "per_size": [
+                {
+                  "e_min": -44.326801,
+                  "energy": -1.6608566740915731,
+                  "n": 13,
+                  "score": 0.03746845331995812,
+                  "valid": true
+                },
+                {
+                  "e_min": -72.659782,
+                  "energy": -3.2668830121309282,
+                  "n": 19,
+                  "score": 0.04496136545153587,
+                  "valid": true
+                },
+                {
+                  "e_min": -173.928427,
+                  "energy": -7.5417994961221275,
+                  "n": 38,
+                  "score": 0.04336151154935776,
+                  "valid": true
+                }
+              ],
+              "raw_score": 0.041930443440283925,
+              "valid": 1.0
+            },
+            "metrics_sha256": "e2a6718fa949d93b9ae01ce0edc22c9c76ce8e639c05c1fe29f016652c284d9e",
+            "request_id": "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02",
+            "request_sha256": "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02",
+            "schema_version": 1
+          }
+        },
+        {
+          "path": "evaluation_ledger/requests/240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02.json",
+          "sha256": "64aa0bcdb472a1545303c0ac876b990e3842ffd1d97c6bf677dd9e5b63dbf088",
+          "bytes": 655,
+          "json": {
+            "request": {
+              "candidate_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+              "evaluator_timeout_seconds": 20.0,
+              "kind": "baseline",
+              "runtime_source_sha256": "4de01efd7ec716518b13d69184fb9d3d5f2fd8a501a3e6045d249895a3085a4b",
+              "step": 0,
+              "task_contract_sha256": "73cdf81bb29553be2895d8d51388065787ece1af7fed4f048849cde34ee9f47b",
+              "task_id": "Chemistry/LennardJonesCluster",
+              "task_package_sha256": "669ede9218cd141fefa13b5dda9c66b93fb1315442b3bf07ff650890bd4d910d"
+            },
+            "request_id": "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02",
+            "request_sha256": "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02",
+            "schema_version": 1
+          }
+        },
+        {
+          "path": "run_manifest.json",
+          "sha256": "db94f7ad76eecb426419ac20a1d3c2362b45addf186aa6c079e9680d17213b8f",
+          "bytes": 1551,
+          "json": {
+            "schema_version": 1,
+            "algorithm": "greedy_rewrite",
+            "task_id": "Chemistry/LennardJonesCluster",
+            "task_contract_sha256": "73cdf81bb29553be2895d8d51388065787ece1af7fed4f048849cde34ee9f47b",
+            "task_package_sha256": "669ede9218cd141fefa13b5dda9c66b93fb1315442b3bf07ff650890bd4d910d",
+            "runtime_source_sha256": "4de01efd7ec716518b13d69184fb9d3d5f2fd8a501a3e6045d249895a3085a4b",
+            "runtime_environment": {
+              "python": "3.12.3 (main, Nov  6 2024, 18:32:19) [GCC 13.2.0]",
+              "executable": "/usr/bin/python3.12",
+              "platform": "Linux-6.1.170-210.320.amzn2023.x86_64-x86_64-with-glibc2.39"
+            },
+            "seed": 260727,
+            "feedback_mode": "normal",
+            "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+            "llm_condition_sha256": "2316c79efbc12142a460cff46bab7f871369c79a53bf937b48b1f0c082fcbade",
+            "llm_condition": {
+              "model": "recovery-fixture",
+              "wire": "chat",
+              "reasoning_effort": null,
+              "temperature": 0.0,
+              "max_output_tokens": 20,
+              "timeout_seconds": 1,
+              "stream": false,
+              "chat_max_tokens_field": "max_tokens",
+              "anthropic_version": "2023-06-01",
+              "thinking_budget_tokens": null,
+              "base_url_host": "recovery-audit.invalid",
+              "chat_reasoning_fallback": false
+            },
+            "upstream": null,
+            "protocol": {
+              "evaluator_timeout_seconds": 20.0,
+              "evaluation_ledger": true
+            }
+          }
+        },
+        {
+          "path": "solution.py",
+          "sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+          "bytes": 760
+        },
+        {
+          "path": "summary.json",
+          "sha256": "0aa087e616a4c253b21798bdacf467cc5f936da2c6049fa65dd53eae0c1cd9aa",
+          "bytes": 1804,
+          "json": {
+            "schema_version": 2,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "best_score": 0.041930443440283925,
+            "best_so_far_auc": 0.041930443440283925,
+            "valid_rate": 1.0,
+            "accepted": 0,
+            "wall_seconds": 0.3704447540221736,
+            "llm": {
+              "calls": 0,
+              "provider_usage_records": 0,
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "total_tokens": 0,
+              "estimated_cost_usd": 0.0
+            },
+            "algorithm": "greedy_rewrite",
+            "task_id": "Chemistry/LennardJonesCluster",
+            "seed": 260727,
+            "baseline_score": 0.041930443440283925,
+            "budget": 0,
+            "feedback_mode": "normal",
+            "active_wall_horizon_s": null,
+            "sentinel_interval_s": null,
+            "horizon_reached": false,
+            "baseline_crossed_horizon": false,
+            "signed_decisions": false,
+            "signed_decision_policy": "record_only",
+            "latest_signed_endpoint_action": null,
+            "honored_signed_stop_action": null,
+            "sentinel_snapshot": null,
+            "evaluation_ledger_snapshot": {
+              "schema_version": 1,
+              "semantics": "exactly_once_logical_scientific_outcome_and_oracle_budget_for_deterministic_local_evaluators_not_physical_exactly_once_execution",
+              "request_count": 1,
+              "receipt_count": 1,
+              "attempt_count": 1,
+              "incomplete_attempt_count": 0,
+              "infrastructure_failure_attempt_count": 0,
+              "open_request_ids": [],
+              "request_ids": [
+                "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02"
+              ],
+              "receipt_ids": [
+                "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02"
+              ]
+            },
+            "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+            "selection_policy": "online_incumbent"
+          }
+        },
+        {
+          "path": "trajectory.jsonl",
+          "sha256": "f9eb26938fcffede02f098b2ce1f801852b9c168012389ff7664a68d51d2558b",
+          "bytes": 973,
+          "json_rows": [
+            {
+              "schema_version": 2,
+              "step": 0,
+              "oracle_calls": 1,
+              "score": 0.041930443440283925,
+              "best_score": 0.041930443440283925,
+              "valid": true,
+              "accepted": true,
+              "wall_seconds": 0.3704447540221736,
+              "cumulative_wall_seconds": 0.3704447540221736,
+              "candidate_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+              "parent_sha256": null,
+              "budget_units": 1,
+              "metrics": {
+                "combined_score": 0.041930443440283925,
+                "feasibility_rate": 1.0,
+                "per_size": [
+                  {
+                    "e_min": -44.326801,
+                    "energy": -1.6608566740915731,
+                    "n": 13,
+                    "score": 0.03746845331995812,
+                    "valid": true
+                  },
+                  {
+                    "e_min": -72.659782,
+                    "energy": -3.2668830121309282,
+                    "n": 19,
+                    "score": 0.04496136545153587,
+                    "valid": true
+                  },
+                  {
+                    "e_min": -173.928427,
+                    "energy": -7.5417994961221275,
+                    "n": 38,
+                    "score": 0.04336151154935776,
+                    "valid": true
+                  }
+                ],
+                "raw_score": 0.041930443440283925,
+                "valid": 1.0
+              },
+              "llm": {},
+              "error": null,
+              "algorithm_metadata": {
+                "evaluation_request_id": "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02",
+                "evaluation_receipt_reused": true,
+                "evaluation_receipt_committed": true
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "baseline_after_trajectory",
+      "fault_process": {
+        "command": [
+          "/workspace/wynckeliao/ScientistsLastExam/.venv/bin/python",
+          "/tmp/sle-pr-split.tAr081/framework/scripts/run_recovery_fault_worker.py",
+          "--mode",
+          "baseline_after_trajectory",
+          "--workdir",
+          "/tmp/sle_recovery_audit_jelamh7m/baseline_after_trajectory"
+        ],
+        "returncode": 86,
+        "stdout": "",
+        "stderr": "",
+        "expected_fault_exit": true
+      },
+      "resume_error": null,
+      "resume_evaluator_call_count": 0,
+      "trajectory": [
+        {
+          "schema_version": 2,
+          "step": 0,
+          "oracle_calls": 1,
+          "score": 0.041930443440283925,
+          "best_score": 0.041930443440283925,
+          "valid": true,
+          "accepted": true,
+          "wall_seconds": 0.3582602629903704,
+          "cumulative_wall_seconds": 0.3582602629903704,
+          "candidate_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+          "parent_sha256": null,
+          "budget_units": 1,
+          "metrics": {
+            "combined_score": 0.041930443440283925,
+            "feasibility_rate": 1.0,
+            "per_size": [
+              {
+                "e_min": -44.326801,
+                "energy": -1.6608566740915731,
+                "n": 13,
+                "score": 0.03746845331995812,
+                "valid": true
+              },
+              {
+                "e_min": -72.659782,
+                "energy": -3.2668830121309282,
+                "n": 19,
+                "score": 0.04496136545153587,
+                "valid": true
+              },
+              {
+                "e_min": -173.928427,
+                "energy": -7.5417994961221275,
+                "n": 38,
+                "score": 0.04336151154935776,
+                "valid": true
+              }
+            ],
+            "raw_score": 0.041930443440283925,
+            "valid": 1.0
+          },
+          "llm": {},
+          "error": null,
+          "algorithm_metadata": {
+            "evaluation_request_id": "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02",
+            "evaluation_receipt_reused": false,
+            "evaluation_receipt_committed": true
+          }
+        }
+      ],
+      "evaluation_ledger_snapshot": {
+        "schema_version": 1,
+        "semantics": "exactly_once_logical_scientific_outcome_and_oracle_budget_for_deterministic_local_evaluators_not_physical_exactly_once_execution",
+        "request_count": 1,
+        "receipt_count": 1,
+        "attempt_count": 1,
+        "incomplete_attempt_count": 0,
+        "infrastructure_failure_attempt_count": 0,
+        "open_request_ids": [],
+        "request_ids": [
+          "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02"
+        ],
+        "receipt_ids": [
+          "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02"
+        ]
+      },
+      "checks": {
+        "worker_exited_at_injected_fault": true,
+        "resume_completed": true,
+        "resume_made_zero_evaluator_calls": true,
+        "trajectory_is_complete": true,
+        "logical_oracle_budget_is_exact": true,
+        "one_request_and_receipt_per_evaluated_event": true,
+        "trajectory_receipt_ids_are_unique": true
+      },
+      "files": [
+        {
+          "path": "best_program.py",
+          "sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+          "bytes": 760
+        },
+        {
+          "path": "checkpoint.json",
+          "sha256": "17b5156fdc0730c3807002028f1c09a94df444826c4ac4e549370e0ac28d52e7",
+          "bytes": 2745,
+          "json": {
+            "schema_version": 1,
+            "algorithm": "greedy_rewrite",
+            "task_id": "Chemistry/LennardJonesCluster",
+            "seed": 260727,
+            "next_iter": 1,
+            "baseline_score": 0.041930443440283925,
+            "baseline_metrics": {
+              "combined_score": 0.041930443440283925,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.041930443440283925
+            },
+            "best_score": 0.041930443440283925,
+            "best_metrics": {
+              "combined_score": 0.041930443440283925,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.041930443440283925
+            },
+            "best_program": "\"\"\"Initial baseline for LennardJonesCluster (weak but valid).\n\nPlaces atoms at random inside a loose sphere with a minimum-separation rejection. The\natoms barely interact, so the energy is close to zero (far from the global minimum) \u2014 there\nis a large gap for an optimizer to close. Edit this file to do better.\n\"\"\"\n\nimport numpy as np\n\n\ndef build_cluster(n_atoms: int, seed: int = 0) -> np.ndarray:\n    rng = np.random.default_rng(seed)\n    radius = 1.5 * (n_atoms ** (1.0 / 3.0))\n    pts = []\n    while len(pts) < n_atoms:\n        p = rng.uniform(-radius, radius, size=3)\n        if np.linalg.norm(p) > radius:\n            continue\n        if all(np.linalg.norm(p - q) > 1.2 for q in pts):\n            pts.append(p)\n    return np.asarray(pts, dtype=float)\n",
+            "best_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+            "best_source_step": 0,
+            "best_published_wall_seconds": 0.0,
+            "evaluated_candidates": [
+              {
+                "step": 0,
+                "program": "\"\"\"Initial baseline for LennardJonesCluster (weak but valid).\n\nPlaces atoms at random inside a loose sphere with a minimum-separation rejection. The\natoms barely interact, so the energy is close to zero (far from the global minimum) \u2014 there\nis a large gap for an optimizer to close. Edit this file to do better.\n\"\"\"\n\nimport numpy as np\n\n\ndef build_cluster(n_atoms: int, seed: int = 0) -> np.ndarray:\n    rng = np.random.default_rng(seed)\n    radius = 1.5 * (n_atoms ** (1.0 / 3.0))\n    pts = []\n    while len(pts) < n_atoms:\n        p = rng.uniform(-radius, radius, size=3)\n        if np.linalg.norm(p) > radius:\n            continue\n        if all(np.linalg.norm(p - q) > 1.2 for q in pts):\n            pts.append(p)\n    return np.asarray(pts, dtype=float)\n",
+                "sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+                "score": 0.041930443440283925,
+                "valid": true,
+                "metrics": {
+                  "combined_score": 0.041930443440283925,
+                  "valid": 1.0,
+                  "feasibility_rate": 1.0,
+                  "raw_score": 0.041930443440283925
+                },
+                "published_wall_seconds": 0.0
+              }
+            ],
+            "pending_proposal": null
+          }
+        },
+        {
+          "path": "evaluation_ledger/attempts/240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02/000001.json",
+          "sha256": "b2d1a8a4b7e886d069796f4d7fc41b7e3bad97b790084db161e97cf7a6c75551",
+          "bytes": 321,
+          "json": {
+            "attempt_index": 1,
+            "completed_at_utc": "2026-09-03T05:57:57.530561+00:00",
+            "evaluation_wall_seconds": 0.3582602629903704,
+            "outcome": "receipt_committed",
+            "request_id": "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02",
+            "schema_version": 1,
+            "started_at_utc": "2026-09-03T05:57:57.165987+00:00",
+            "status": "completed"
+          }
+        },
+        {
+          "path": "evaluation_ledger/receipts/240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02.json",
+          "sha256": "4eecd409c205a01cd957ccd276e668421f8162a5ce86e0f312e08ac3afdb7b66",
+          "bytes": 794,
+          "json": {
+            "completed_at_utc": "2026-09-03T05:57:57.527176+00:00",
+            "evaluation_wall_seconds": 0.3582602629903704,
+            "metrics": {
+              "combined_score": 0.041930443440283925,
+              "feasibility_rate": 1.0,
+              "per_size": [
+                {
+                  "e_min": -44.326801,
+                  "energy": -1.6608566740915731,
+                  "n": 13,
+                  "score": 0.03746845331995812,
+                  "valid": true
+                },
+                {
+                  "e_min": -72.659782,
+                  "energy": -3.2668830121309282,
+                  "n": 19,
+                  "score": 0.04496136545153587,
+                  "valid": true
+                },
+                {
+                  "e_min": -173.928427,
+                  "energy": -7.5417994961221275,
+                  "n": 38,
+                  "score": 0.04336151154935776,
+                  "valid": true
+                }
+              ],
+              "raw_score": 0.041930443440283925,
+              "valid": 1.0
+            },
+            "metrics_sha256": "e2a6718fa949d93b9ae01ce0edc22c9c76ce8e639c05c1fe29f016652c284d9e",
+            "request_id": "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02",
+            "request_sha256": "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02",
+            "schema_version": 1
+          }
+        },
+        {
+          "path": "evaluation_ledger/requests/240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02.json",
+          "sha256": "64aa0bcdb472a1545303c0ac876b990e3842ffd1d97c6bf677dd9e5b63dbf088",
+          "bytes": 655,
+          "json": {
+            "request": {
+              "candidate_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+              "evaluator_timeout_seconds": 20.0,
+              "kind": "baseline",
+              "runtime_source_sha256": "4de01efd7ec716518b13d69184fb9d3d5f2fd8a501a3e6045d249895a3085a4b",
+              "step": 0,
+              "task_contract_sha256": "73cdf81bb29553be2895d8d51388065787ece1af7fed4f048849cde34ee9f47b",
+              "task_id": "Chemistry/LennardJonesCluster",
+              "task_package_sha256": "669ede9218cd141fefa13b5dda9c66b93fb1315442b3bf07ff650890bd4d910d"
+            },
+            "request_id": "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02",
+            "request_sha256": "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02",
+            "schema_version": 1
+          }
+        },
+        {
+          "path": "run_manifest.json",
+          "sha256": "db94f7ad76eecb426419ac20a1d3c2362b45addf186aa6c079e9680d17213b8f",
+          "bytes": 1551,
+          "json": {
+            "schema_version": 1,
+            "algorithm": "greedy_rewrite",
+            "task_id": "Chemistry/LennardJonesCluster",
+            "task_contract_sha256": "73cdf81bb29553be2895d8d51388065787ece1af7fed4f048849cde34ee9f47b",
+            "task_package_sha256": "669ede9218cd141fefa13b5dda9c66b93fb1315442b3bf07ff650890bd4d910d",
+            "runtime_source_sha256": "4de01efd7ec716518b13d69184fb9d3d5f2fd8a501a3e6045d249895a3085a4b",
+            "runtime_environment": {
+              "python": "3.12.3 (main, Nov  6 2024, 18:32:19) [GCC 13.2.0]",
+              "executable": "/usr/bin/python3.12",
+              "platform": "Linux-6.1.170-210.320.amzn2023.x86_64-x86_64-with-glibc2.39"
+            },
+            "seed": 260727,
+            "feedback_mode": "normal",
+            "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+            "llm_condition_sha256": "2316c79efbc12142a460cff46bab7f871369c79a53bf937b48b1f0c082fcbade",
+            "llm_condition": {
+              "model": "recovery-fixture",
+              "wire": "chat",
+              "reasoning_effort": null,
+              "temperature": 0.0,
+              "max_output_tokens": 20,
+              "timeout_seconds": 1,
+              "stream": false,
+              "chat_max_tokens_field": "max_tokens",
+              "anthropic_version": "2023-06-01",
+              "thinking_budget_tokens": null,
+              "base_url_host": "recovery-audit.invalid",
+              "chat_reasoning_fallback": false
+            },
+            "upstream": null,
+            "protocol": {
+              "evaluator_timeout_seconds": 20.0,
+              "evaluation_ledger": true
+            }
+          }
+        },
+        {
+          "path": "solution.py",
+          "sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+          "bytes": 760
+        },
+        {
+          "path": "summary.json",
+          "sha256": "6636c46f43b8f7e55cf344e2f687864ffeb1f35d6a06d86abd4d32fb3b32f77f",
+          "bytes": 1804,
+          "json": {
+            "schema_version": 2,
+            "oracle_calls": 1,
+            "budget_units": 1,
+            "best_score": 0.041930443440283925,
+            "best_so_far_auc": 0.041930443440283925,
+            "valid_rate": 1.0,
+            "accepted": 0,
+            "wall_seconds": 0.3582602629903704,
+            "llm": {
+              "calls": 0,
+              "provider_usage_records": 0,
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "total_tokens": 0,
+              "estimated_cost_usd": 0.0
+            },
+            "algorithm": "greedy_rewrite",
+            "task_id": "Chemistry/LennardJonesCluster",
+            "seed": 260727,
+            "baseline_score": 0.041930443440283925,
+            "budget": 0,
+            "feedback_mode": "normal",
+            "active_wall_horizon_s": null,
+            "sentinel_interval_s": null,
+            "horizon_reached": false,
+            "baseline_crossed_horizon": false,
+            "signed_decisions": false,
+            "signed_decision_policy": "record_only",
+            "latest_signed_endpoint_action": null,
+            "honored_signed_stop_action": null,
+            "sentinel_snapshot": null,
+            "evaluation_ledger_snapshot": {
+              "schema_version": 1,
+              "semantics": "exactly_once_logical_scientific_outcome_and_oracle_budget_for_deterministic_local_evaluators_not_physical_exactly_once_execution",
+              "request_count": 1,
+              "receipt_count": 1,
+              "attempt_count": 1,
+              "incomplete_attempt_count": 0,
+              "infrastructure_failure_attempt_count": 0,
+              "open_request_ids": [],
+              "request_ids": [
+                "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02"
+              ],
+              "receipt_ids": [
+                "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02"
+              ]
+            },
+            "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+            "selection_policy": "online_incumbent"
+          }
+        },
+        {
+          "path": "trajectory.jsonl",
+          "sha256": "dad9e67106ec52bd032b440f5171168f8769ed56eaa2216bc7e5605bf8b61eac",
+          "bytes": 974,
+          "json_rows": [
+            {
+              "schema_version": 2,
+              "step": 0,
+              "oracle_calls": 1,
+              "score": 0.041930443440283925,
+              "best_score": 0.041930443440283925,
+              "valid": true,
+              "accepted": true,
+              "wall_seconds": 0.3582602629903704,
+              "cumulative_wall_seconds": 0.3582602629903704,
+              "candidate_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+              "parent_sha256": null,
+              "budget_units": 1,
+              "metrics": {
+                "combined_score": 0.041930443440283925,
+                "feasibility_rate": 1.0,
+                "per_size": [
+                  {
+                    "e_min": -44.326801,
+                    "energy": -1.6608566740915731,
+                    "n": 13,
+                    "score": 0.03746845331995812,
+                    "valid": true
+                  },
+                  {
+                    "e_min": -72.659782,
+                    "energy": -3.2668830121309282,
+                    "n": 19,
+                    "score": 0.04496136545153587,
+                    "valid": true
+                  },
+                  {
+                    "e_min": -173.928427,
+                    "energy": -7.5417994961221275,
+                    "n": 38,
+                    "score": 0.04336151154935776,
+                    "valid": true
+                  }
+                ],
+                "raw_score": 0.041930443440283925,
+                "valid": 1.0
+              },
+              "llm": {},
+              "error": null,
+              "algorithm_metadata": {
+                "evaluation_request_id": "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02",
+                "evaluation_receipt_reused": false,
+                "evaluation_receipt_committed": true
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "proposal_before_trajectory",
+      "fault_process": {
+        "command": [
+          "/workspace/wynckeliao/ScientistsLastExam/.venv/bin/python",
+          "/tmp/sle-pr-split.tAr081/framework/scripts/run_recovery_fault_worker.py",
+          "--mode",
+          "proposal_before_trajectory",
+          "--workdir",
+          "/tmp/sle_recovery_audit_jelamh7m/proposal_before_trajectory"
+        ],
+        "returncode": 86,
+        "stdout": "",
+        "stderr": "",
+        "expected_fault_exit": true
+      },
+      "resume_error": null,
+      "resume_evaluator_call_count": 0,
+      "trajectory": [
+        {
+          "schema_version": 2,
+          "step": 0,
+          "oracle_calls": 1,
+          "score": 0.041930443440283925,
+          "best_score": 0.041930443440283925,
+          "valid": true,
+          "accepted": true,
+          "wall_seconds": 0.37187769694719464,
+          "cumulative_wall_seconds": 0.37187769694719464,
+          "candidate_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+          "parent_sha256": null,
+          "budget_units": 1,
+          "metrics": {
+            "combined_score": 0.041930443440283925,
+            "feasibility_rate": 1.0,
+            "per_size": [
+              {
+                "e_min": -44.326801,
+                "energy": -1.6608566740915731,
+                "n": 13,
+                "score": 0.03746845331995812,
+                "valid": true
+              },
+              {
+                "e_min": -72.659782,
+                "energy": -3.2668830121309282,
+                "n": 19,
+                "score": 0.04496136545153587,
+                "valid": true
+              },
+              {
+                "e_min": -173.928427,
+                "energy": -7.5417994961221275,
+                "n": 38,
+                "score": 0.04336151154935776,
+                "valid": true
+              }
+            ],
+            "raw_score": 0.041930443440283925,
+            "valid": 1.0
+          },
+          "llm": {},
+          "error": null,
+          "algorithm_metadata": {
+            "evaluation_request_id": "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02",
+            "evaluation_receipt_reused": false,
+            "evaluation_receipt_committed": true
+          }
+        },
+        {
+          "schema_version": 2,
+          "step": 1,
+          "oracle_calls": 2,
+          "score": 0.041930443440283925,
+          "best_score": 0.041930443440283925,
+          "valid": true,
+          "accepted": false,
+          "wall_seconds": 0.37648914696183056,
+          "cumulative_wall_seconds": 0.7483668439090252,
+          "candidate_sha256": "0020e867f3dd39246016e66bccf65d25e276aef61172ed7fbcc65d4ac82993b8",
+          "parent_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+          "budget_units": 2,
+          "metrics": {
+            "combined_score": 0.041930443440283925,
+            "feasibility_rate": 1.0,
+            "per_size": [
+              {
+                "e_min": -44.326801,
+                "energy": -1.6608566740915731,
+                "n": 13,
+                "score": 0.03746845331995812,
+                "valid": true
+              },
+              {
+                "e_min": -72.659782,
+                "energy": -3.2668830121309282,
+                "n": 19,
+                "score": 0.04496136545153587,
+                "valid": true
+              },
+              {
+                "e_min": -173.928427,
+                "energy": -7.5417994961221275,
+                "n": 38,
+                "score": 0.04336151154935776,
+                "valid": true
+              }
+            ],
+            "raw_score": 0.041930443440283925,
+            "valid": 1.0
+          },
+          "llm": {
+            "input_tokens": 10,
+            "output_tokens": 5,
+            "total_tokens": 15,
+            "estimated_cost_usd": null
+          },
+          "error": null,
+          "algorithm_metadata": {
+            "selection_policy": "online_incumbent",
+            "accepted_semantics": "online_incumbent_update",
+            "proposal_slot": 1,
+            "prompt_source_step": 0,
+            "feedback_released_through_step": 0,
+            "prompt_sha256": "e32f1b512aeb8336ac995214105e80843544071319d6767c07fb2e7ac4b6326a",
+            "prompt_utf8_bytes": 3713,
+            "prompt_program_utf8_bytes": 760,
+            "prompt_metrics_sha256": "8c21d80e455be2b77cf42c48fde07d304e4f26a6b7ed74f708291582bc380323",
+            "prompt_metrics_utf8_bytes": 124,
+            "prompt_metric_keys": "combined_score,feasibility_rate,raw_score,valid",
+            "proposal_published_wall_seconds": 0.37197237997315824,
+            "completed_after_active_wall_horizon": false,
+            "signed_decision_action": null,
+            "evaluation_request_id": "1c6d491f7c3dc16bb49696e0766f3ce3715388026b84521b83f23c751e55bc4b",
+            "evaluation_receipt_reused": true,
+            "evaluation_receipt_committed": true
+          }
+        }
+      ],
+      "evaluation_ledger_snapshot": {
+        "schema_version": 1,
+        "semantics": "exactly_once_logical_scientific_outcome_and_oracle_budget_for_deterministic_local_evaluators_not_physical_exactly_once_execution",
+        "request_count": 2,
+        "receipt_count": 2,
+        "attempt_count": 2,
+        "incomplete_attempt_count": 0,
+        "infrastructure_failure_attempt_count": 0,
+        "open_request_ids": [],
+        "request_ids": [
+          "1c6d491f7c3dc16bb49696e0766f3ce3715388026b84521b83f23c751e55bc4b",
+          "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02"
+        ],
+        "receipt_ids": [
+          "1c6d491f7c3dc16bb49696e0766f3ce3715388026b84521b83f23c751e55bc4b",
+          "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02"
+        ]
+      },
+      "checks": {
+        "worker_exited_at_injected_fault": true,
+        "resume_completed": true,
+        "resume_made_zero_evaluator_calls": true,
+        "trajectory_is_complete": true,
+        "logical_oracle_budget_is_exact": true,
+        "one_request_and_receipt_per_evaluated_event": true,
+        "trajectory_receipt_ids_are_unique": true
+      },
+      "files": [
+        {
+          "path": "best_program.py",
+          "sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+          "bytes": 760
+        },
+        {
+          "path": "checkpoint.json",
+          "sha256": "0b7f36abdbeffb9e54e4fc56a495e82b211d95a1bb3f499b512c38dc20dc8940",
+          "bytes": 3951,
+          "json": {
+            "schema_version": 1,
+            "algorithm": "greedy_rewrite",
+            "task_id": "Chemistry/LennardJonesCluster",
+            "seed": 260727,
+            "next_iter": 2,
+            "baseline_score": 0.041930443440283925,
+            "baseline_metrics": {
+              "combined_score": 0.041930443440283925,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.041930443440283925
+            },
+            "best_score": 0.041930443440283925,
+            "best_metrics": {
+              "combined_score": 0.041930443440283925,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.041930443440283925
+            },
+            "best_program": "\"\"\"Initial baseline for LennardJonesCluster (weak but valid).\n\nPlaces atoms at random inside a loose sphere with a minimum-separation rejection. The\natoms barely interact, so the energy is close to zero (far from the global minimum) \u2014 there\nis a large gap for an optimizer to close. Edit this file to do better.\n\"\"\"\n\nimport numpy as np\n\n\ndef build_cluster(n_atoms: int, seed: int = 0) -> np.ndarray:\n    rng = np.random.default_rng(seed)\n    radius = 1.5 * (n_atoms ** (1.0 / 3.0))\n    pts = []\n    while len(pts) < n_atoms:\n        p = rng.uniform(-radius, radius, size=3)\n        if np.linalg.norm(p) > radius:\n            continue\n        if all(np.linalg.norm(p - q) > 1.2 for q in pts):\n            pts.append(p)\n    return np.asarray(pts, dtype=float)\n",
+            "best_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+            "best_source_step": 0,
+            "best_published_wall_seconds": 0.0,
+            "evaluated_candidates": [
+              {
+                "step": 0,
+                "program": "\"\"\"Initial baseline for LennardJonesCluster (weak but valid).\n\nPlaces atoms at random inside a loose sphere with a minimum-separation rejection. The\natoms barely interact, so the energy is close to zero (far from the global minimum) \u2014 there\nis a large gap for an optimizer to close. Edit this file to do better.\n\"\"\"\n\nimport numpy as np\n\n\ndef build_cluster(n_atoms: int, seed: int = 0) -> np.ndarray:\n    rng = np.random.default_rng(seed)\n    radius = 1.5 * (n_atoms ** (1.0 / 3.0))\n    pts = []\n    while len(pts) < n_atoms:\n        p = rng.uniform(-radius, radius, size=3)\n        if np.linalg.norm(p) > radius:\n            continue\n        if all(np.linalg.norm(p - q) > 1.2 for q in pts):\n            pts.append(p)\n    return np.asarray(pts, dtype=float)\n",
+                "sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+                "score": 0.041930443440283925,
+                "valid": true,
+                "metrics": {
+                  "combined_score": 0.041930443440283925,
+                  "valid": 1.0,
+                  "feasibility_rate": 1.0,
+                  "raw_score": 0.041930443440283925
+                },
+                "published_wall_seconds": 0.0
+              },
+              {
+                "step": 1,
+                "program": "\"\"\"Initial baseline for LennardJonesCluster (weak but valid).\n\nPlaces atoms at random inside a loose sphere with a minimum-separation rejection. The\natoms barely interact, so the energy is close to zero (far from the global minimum) \u2014 there\nis a large gap for an optimizer to close. Edit this file to do better.\n\"\"\"\n\nimport numpy as np\n\n\ndef build_cluster(n_atoms: int, seed: int = 0) -> np.ndarray:\n    rng = np.random.default_rng(seed)\n    radius = 1.5 * (n_atoms ** (1.0 / 3.0))\n    pts = []\n    while len(pts) < n_atoms:\n        p = rng.uniform(-radius, radius, size=3)\n        if np.linalg.norm(p) > radius:\n            continue\n        if all(np.linalg.norm(p - q) > 1.2 for q in pts):\n            pts.append(p)\n    return np.asarray(pts, dtype=float)",
+                "sha256": "0020e867f3dd39246016e66bccf65d25e276aef61172ed7fbcc65d4ac82993b8",
+                "score": 0.041930443440283925,
+                "valid": true,
+                "metrics": {
+                  "combined_score": 0.041930443440283925,
+                  "valid": 1.0,
+                  "feasibility_rate": 1.0,
+                  "raw_score": 0.041930443440283925
+                },
+                "published_wall_seconds": 0.37197237997315824
+              }
+            ],
+            "pending_proposal": null
+          }
+        },
+        {
+          "path": "evaluation_ledger/attempts/1c6d491f7c3dc16bb49696e0766f3ce3715388026b84521b83f23c751e55bc4b/000001.json",
+          "sha256": "a2070aaf826a52fa9e89a2bf6cb04731eda588e06ddd32c34833de5ee17d0e69",
+          "bytes": 320,
+          "json": {
+            "attempt_index": 1,
+            "completed_at_utc": "2026-09-03T05:57:58.711454+00:00",
+            "evaluation_wall_seconds": 0.376376248896122,
+            "outcome": "receipt_committed",
+            "request_id": "1c6d491f7c3dc16bb49696e0766f3ce3715388026b84521b83f23c751e55bc4b",
+            "schema_version": 1,
+            "started_at_utc": "2026-09-03T05:57:58.328605+00:00",
+            "status": "completed"
+          }
+        },
+        {
+          "path": "evaluation_ledger/attempts/240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02/000001.json",
+          "sha256": "e502b3389f4a1dc4a9e66cb66b369e23a4870378edcd7617b03c20fe7a087a31",
+          "bytes": 322,
+          "json": {
+            "attempt_index": 1,
+            "completed_at_utc": "2026-09-03T05:57:58.307656+00:00",
+            "evaluation_wall_seconds": 0.37187769694719464,
+            "outcome": "receipt_committed",
+            "request_id": "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02",
+            "schema_version": 1,
+            "started_at_utc": "2026-09-03T05:57:57.929594+00:00",
+            "status": "completed"
+          }
+        },
+        {
+          "path": "evaluation_ledger/receipts/1c6d491f7c3dc16bb49696e0766f3ce3715388026b84521b83f23c751e55bc4b.json",
+          "sha256": "7df9d6740491edc4570c04b2c7bc9acd47516ea97cec91184b12aaab6316ede5",
+          "bytes": 793,
+          "json": {
+            "completed_at_utc": "2026-09-03T05:57:58.708033+00:00",
+            "evaluation_wall_seconds": 0.376376248896122,
+            "metrics": {
+              "combined_score": 0.041930443440283925,
+              "feasibility_rate": 1.0,
+              "per_size": [
+                {
+                  "e_min": -44.326801,
+                  "energy": -1.6608566740915731,
+                  "n": 13,
+                  "score": 0.03746845331995812,
+                  "valid": true
+                },
+                {
+                  "e_min": -72.659782,
+                  "energy": -3.2668830121309282,
+                  "n": 19,
+                  "score": 0.04496136545153587,
+                  "valid": true
+                },
+                {
+                  "e_min": -173.928427,
+                  "energy": -7.5417994961221275,
+                  "n": 38,
+                  "score": 0.04336151154935776,
+                  "valid": true
+                }
+              ],
+              "raw_score": 0.041930443440283925,
+              "valid": 1.0
+            },
+            "metrics_sha256": "e2a6718fa949d93b9ae01ce0edc22c9c76ce8e639c05c1fe29f016652c284d9e",
+            "request_id": "1c6d491f7c3dc16bb49696e0766f3ce3715388026b84521b83f23c751e55bc4b",
+            "request_sha256": "1c6d491f7c3dc16bb49696e0766f3ce3715388026b84521b83f23c751e55bc4b",
+            "schema_version": 1
+          }
+        },
+        {
+          "path": "evaluation_ledger/receipts/240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02.json",
+          "sha256": "bb0dbd4c202ce4cac58112d29f70062a37c6dbef47f8d57356688a6e53b00014",
+          "bytes": 795,
+          "json": {
+            "completed_at_utc": "2026-09-03T05:57:58.304388+00:00",
+            "evaluation_wall_seconds": 0.37187769694719464,
+            "metrics": {
+              "combined_score": 0.041930443440283925,
+              "feasibility_rate": 1.0,
+              "per_size": [
+                {
+                  "e_min": -44.326801,
+                  "energy": -1.6608566740915731,
+                  "n": 13,
+                  "score": 0.03746845331995812,
+                  "valid": true
+                },
+                {
+                  "e_min": -72.659782,
+                  "energy": -3.2668830121309282,
+                  "n": 19,
+                  "score": 0.04496136545153587,
+                  "valid": true
+                },
+                {
+                  "e_min": -173.928427,
+                  "energy": -7.5417994961221275,
+                  "n": 38,
+                  "score": 0.04336151154935776,
+                  "valid": true
+                }
+              ],
+              "raw_score": 0.041930443440283925,
+              "valid": 1.0
+            },
+            "metrics_sha256": "e2a6718fa949d93b9ae01ce0edc22c9c76ce8e639c05c1fe29f016652c284d9e",
+            "request_id": "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02",
+            "request_sha256": "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02",
+            "schema_version": 1
+          }
+        },
+        {
+          "path": "evaluation_ledger/requests/1c6d491f7c3dc16bb49696e0766f3ce3715388026b84521b83f23c751e55bc4b.json",
+          "sha256": "3bf689c000edad4d9758219a824e38e592a5812c0f699a67136a7285b53f2bff",
+          "bytes": 821,
+          "json": {
+            "request": {
+              "candidate_sha256": "0020e867f3dd39246016e66bccf65d25e276aef61172ed7fbcc65d4ac82993b8",
+              "evaluator_timeout_seconds": 20.0,
+              "kind": "proposal",
+              "parent_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+              "prompt_sha256": "e32f1b512aeb8336ac995214105e80843544071319d6767c07fb2e7ac4b6326a",
+              "runtime_source_sha256": "4de01efd7ec716518b13d69184fb9d3d5f2fd8a501a3e6045d249895a3085a4b",
+              "step": 1,
+              "task_contract_sha256": "73cdf81bb29553be2895d8d51388065787ece1af7fed4f048849cde34ee9f47b",
+              "task_id": "Chemistry/LennardJonesCluster",
+              "task_package_sha256": "669ede9218cd141fefa13b5dda9c66b93fb1315442b3bf07ff650890bd4d910d"
+            },
+            "request_id": "1c6d491f7c3dc16bb49696e0766f3ce3715388026b84521b83f23c751e55bc4b",
+            "request_sha256": "1c6d491f7c3dc16bb49696e0766f3ce3715388026b84521b83f23c751e55bc4b",
+            "schema_version": 1
+          }
+        },
+        {
+          "path": "evaluation_ledger/requests/240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02.json",
+          "sha256": "64aa0bcdb472a1545303c0ac876b990e3842ffd1d97c6bf677dd9e5b63dbf088",
+          "bytes": 655,
+          "json": {
+            "request": {
+              "candidate_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+              "evaluator_timeout_seconds": 20.0,
+              "kind": "baseline",
+              "runtime_source_sha256": "4de01efd7ec716518b13d69184fb9d3d5f2fd8a501a3e6045d249895a3085a4b",
+              "step": 0,
+              "task_contract_sha256": "73cdf81bb29553be2895d8d51388065787ece1af7fed4f048849cde34ee9f47b",
+              "task_id": "Chemistry/LennardJonesCluster",
+              "task_package_sha256": "669ede9218cd141fefa13b5dda9c66b93fb1315442b3bf07ff650890bd4d910d"
+            },
+            "request_id": "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02",
+            "request_sha256": "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02",
+            "schema_version": 1
+          }
+        },
+        {
+          "path": "run_manifest.json",
+          "sha256": "db94f7ad76eecb426419ac20a1d3c2362b45addf186aa6c079e9680d17213b8f",
+          "bytes": 1551,
+          "json": {
+            "schema_version": 1,
+            "algorithm": "greedy_rewrite",
+            "task_id": "Chemistry/LennardJonesCluster",
+            "task_contract_sha256": "73cdf81bb29553be2895d8d51388065787ece1af7fed4f048849cde34ee9f47b",
+            "task_package_sha256": "669ede9218cd141fefa13b5dda9c66b93fb1315442b3bf07ff650890bd4d910d",
+            "runtime_source_sha256": "4de01efd7ec716518b13d69184fb9d3d5f2fd8a501a3e6045d249895a3085a4b",
+            "runtime_environment": {
+              "python": "3.12.3 (main, Nov  6 2024, 18:32:19) [GCC 13.2.0]",
+              "executable": "/usr/bin/python3.12",
+              "platform": "Linux-6.1.170-210.320.amzn2023.x86_64-x86_64-with-glibc2.39"
+            },
+            "seed": 260727,
+            "feedback_mode": "normal",
+            "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+            "llm_condition_sha256": "2316c79efbc12142a460cff46bab7f871369c79a53bf937b48b1f0c082fcbade",
+            "llm_condition": {
+              "model": "recovery-fixture",
+              "wire": "chat",
+              "reasoning_effort": null,
+              "temperature": 0.0,
+              "max_output_tokens": 20,
+              "timeout_seconds": 1,
+              "stream": false,
+              "chat_max_tokens_field": "max_tokens",
+              "anthropic_version": "2023-06-01",
+              "thinking_budget_tokens": null,
+              "base_url_host": "recovery-audit.invalid",
+              "chat_reasoning_fallback": false
+            },
+            "upstream": null,
+            "protocol": {
+              "evaluator_timeout_seconds": 20.0,
+              "evaluation_ledger": true
+            }
+          }
+        },
+        {
+          "path": "solution.py",
+          "sha256": "0020e867f3dd39246016e66bccf65d25e276aef61172ed7fbcc65d4ac82993b8",
+          "bytes": 759
+        },
+        {
+          "path": "summary.json",
+          "sha256": "022090a798d88cd768605db894c196ff492b35a2e7ea0dd3ab22b417f47d7b88",
+          "bytes": 1955,
+          "json": {
+            "schema_version": 2,
+            "oracle_calls": 2,
+            "budget_units": 2,
+            "best_score": 0.041930443440283925,
+            "best_so_far_auc": 0.041930443440283925,
+            "valid_rate": 1.0,
+            "accepted": 0,
+            "wall_seconds": 0.7483668439090252,
+            "llm": {
+              "calls": 1,
+              "provider_usage_records": 1,
+              "input_tokens": 10,
+              "output_tokens": 5,
+              "total_tokens": 15,
+              "estimated_cost_usd": null
+            },
+            "algorithm": "greedy_rewrite",
+            "task_id": "Chemistry/LennardJonesCluster",
+            "seed": 260727,
+            "baseline_score": 0.041930443440283925,
+            "budget": 1,
+            "feedback_mode": "normal",
+            "active_wall_horizon_s": null,
+            "sentinel_interval_s": null,
+            "horizon_reached": false,
+            "baseline_crossed_horizon": false,
+            "signed_decisions": false,
+            "signed_decision_policy": "record_only",
+            "latest_signed_endpoint_action": null,
+            "honored_signed_stop_action": null,
+            "sentinel_snapshot": null,
+            "evaluation_ledger_snapshot": {
+              "schema_version": 1,
+              "semantics": "exactly_once_logical_scientific_outcome_and_oracle_budget_for_deterministic_local_evaluators_not_physical_exactly_once_execution",
+              "request_count": 2,
+              "receipt_count": 2,
+              "attempt_count": 2,
+              "incomplete_attempt_count": 0,
+              "infrastructure_failure_attempt_count": 0,
+              "open_request_ids": [],
+              "request_ids": [
+                "1c6d491f7c3dc16bb49696e0766f3ce3715388026b84521b83f23c751e55bc4b",
+                "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02"
+              ],
+              "receipt_ids": [
+                "1c6d491f7c3dc16bb49696e0766f3ce3715388026b84521b83f23c751e55bc4b",
+                "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02"
+              ]
+            },
+            "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+            "selection_policy": "online_incumbent"
+          }
+        },
+        {
+          "path": "trajectory.jsonl",
+          "sha256": "2c6e6c132ac2e3ba624d74916d18b7cb7d530a86f95eeb3fe87a568d4c01d0aa",
+          "bytes": 2715,
+          "json_rows": [
+            {
+              "schema_version": 2,
+              "step": 0,
+              "oracle_calls": 1,
+              "score": 0.041930443440283925,
+              "best_score": 0.041930443440283925,
+              "valid": true,
+              "accepted": true,
+              "wall_seconds": 0.37187769694719464,
+              "cumulative_wall_seconds": 0.37187769694719464,
+              "candidate_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+              "parent_sha256": null,
+              "budget_units": 1,
+              "metrics": {
+                "combined_score": 0.041930443440283925,
+                "feasibility_rate": 1.0,
+                "per_size": [
+                  {
+                    "e_min": -44.326801,
+                    "energy": -1.6608566740915731,
+                    "n": 13,
+                    "score": 0.03746845331995812,
+                    "valid": true
+                  },
+                  {
+                    "e_min": -72.659782,
+                    "energy": -3.2668830121309282,
+                    "n": 19,
+                    "score": 0.04496136545153587,
+                    "valid": true
+                  },
+                  {
+                    "e_min": -173.928427,
+                    "energy": -7.5417994961221275,
+                    "n": 38,
+                    "score": 0.04336151154935776,
+                    "valid": true
+                  }
+                ],
+                "raw_score": 0.041930443440283925,
+                "valid": 1.0
+              },
+              "llm": {},
+              "error": null,
+              "algorithm_metadata": {
+                "evaluation_request_id": "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02",
+                "evaluation_receipt_reused": false,
+                "evaluation_receipt_committed": true
+              }
+            },
+            {
+              "schema_version": 2,
+              "step": 1,
+              "oracle_calls": 2,
+              "score": 0.041930443440283925,
+              "best_score": 0.041930443440283925,
+              "valid": true,
+              "accepted": false,
+              "wall_seconds": 0.37648914696183056,
+              "cumulative_wall_seconds": 0.7483668439090252,
+              "candidate_sha256": "0020e867f3dd39246016e66bccf65d25e276aef61172ed7fbcc65d4ac82993b8",
+              "parent_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+              "budget_units": 2,
+              "metrics": {
+                "combined_score": 0.041930443440283925,
+                "feasibility_rate": 1.0,
+                "per_size": [
+                  {
+                    "e_min": -44.326801,
+                    "energy": -1.6608566740915731,
+                    "n": 13,
+                    "score": 0.03746845331995812,
+                    "valid": true
+                  },
+                  {
+                    "e_min": -72.659782,
+                    "energy": -3.2668830121309282,
+                    "n": 19,
+                    "score": 0.04496136545153587,
+                    "valid": true
+                  },
+                  {
+                    "e_min": -173.928427,
+                    "energy": -7.5417994961221275,
+                    "n": 38,
+                    "score": 0.04336151154935776,
+                    "valid": true
+                  }
+                ],
+                "raw_score": 0.041930443440283925,
+                "valid": 1.0
+              },
+              "llm": {
+                "input_tokens": 10,
+                "output_tokens": 5,
+                "total_tokens": 15,
+                "estimated_cost_usd": null
+              },
+              "error": null,
+              "algorithm_metadata": {
+                "selection_policy": "online_incumbent",
+                "accepted_semantics": "online_incumbent_update",
+                "proposal_slot": 1,
+                "prompt_source_step": 0,
+                "feedback_released_through_step": 0,
+                "prompt_sha256": "e32f1b512aeb8336ac995214105e80843544071319d6767c07fb2e7ac4b6326a",
+                "prompt_utf8_bytes": 3713,
+                "prompt_program_utf8_bytes": 760,
+                "prompt_metrics_sha256": "8c21d80e455be2b77cf42c48fde07d304e4f26a6b7ed74f708291582bc380323",
+                "prompt_metrics_utf8_bytes": 124,
+                "prompt_metric_keys": "combined_score,feasibility_rate,raw_score,valid",
+                "proposal_published_wall_seconds": 0.37197237997315824,
+                "completed_after_active_wall_horizon": false,
+                "signed_decision_action": null,
+                "evaluation_request_id": "1c6d491f7c3dc16bb49696e0766f3ce3715388026b84521b83f23c751e55bc4b",
+                "evaluation_receipt_reused": true,
+                "evaluation_receipt_committed": true
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "proposal_after_trajectory",
+      "fault_process": {
+        "command": [
+          "/workspace/wynckeliao/ScientistsLastExam/.venv/bin/python",
+          "/tmp/sle-pr-split.tAr081/framework/scripts/run_recovery_fault_worker.py",
+          "--mode",
+          "proposal_after_trajectory",
+          "--workdir",
+          "/tmp/sle_recovery_audit_jelamh7m/proposal_after_trajectory"
+        ],
+        "returncode": 86,
+        "stdout": "",
+        "stderr": "",
+        "expected_fault_exit": true
+      },
+      "resume_error": null,
+      "resume_evaluator_call_count": 0,
+      "trajectory": [
+        {
+          "schema_version": 2,
+          "step": 0,
+          "oracle_calls": 1,
+          "score": 0.041930443440283925,
+          "best_score": 0.041930443440283925,
+          "valid": true,
+          "accepted": true,
+          "wall_seconds": 0.36642700294032693,
+          "cumulative_wall_seconds": 0.36642700294032693,
+          "candidate_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+          "parent_sha256": null,
+          "budget_units": 1,
+          "metrics": {
+            "combined_score": 0.041930443440283925,
+            "feasibility_rate": 1.0,
+            "per_size": [
+              {
+                "e_min": -44.326801,
+                "energy": -1.6608566740915731,
+                "n": 13,
+                "score": 0.03746845331995812,
+                "valid": true
+              },
+              {
+                "e_min": -72.659782,
+                "energy": -3.2668830121309282,
+                "n": 19,
+                "score": 0.04496136545153587,
+                "valid": true
+              },
+              {
+                "e_min": -173.928427,
+                "energy": -7.5417994961221275,
+                "n": 38,
+                "score": 0.04336151154935776,
+                "valid": true
+              }
+            ],
+            "raw_score": 0.041930443440283925,
+            "valid": 1.0
+          },
+          "llm": {},
+          "error": null,
+          "algorithm_metadata": {
+            "evaluation_request_id": "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02",
+            "evaluation_receipt_reused": false,
+            "evaluation_receipt_committed": true
+          }
+        },
+        {
+          "schema_version": 2,
+          "step": 1,
+          "oracle_calls": 2,
+          "score": 0.041930443440283925,
+          "best_score": 0.041930443440283925,
+          "valid": true,
+          "accepted": false,
+          "wall_seconds": 0.3590403610141948,
+          "cumulative_wall_seconds": 0.7254673639545217,
+          "candidate_sha256": "0020e867f3dd39246016e66bccf65d25e276aef61172ed7fbcc65d4ac82993b8",
+          "parent_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+          "budget_units": 2,
+          "metrics": {
+            "combined_score": 0.041930443440283925,
+            "feasibility_rate": 1.0,
+            "per_size": [
+              {
+                "e_min": -44.326801,
+                "energy": -1.6608566740915731,
+                "n": 13,
+                "score": 0.03746845331995812,
+                "valid": true
+              },
+              {
+                "e_min": -72.659782,
+                "energy": -3.2668830121309282,
+                "n": 19,
+                "score": 0.04496136545153587,
+                "valid": true
+              },
+              {
+                "e_min": -173.928427,
+                "energy": -7.5417994961221275,
+                "n": 38,
+                "score": 0.04336151154935776,
+                "valid": true
+              }
+            ],
+            "raw_score": 0.041930443440283925,
+            "valid": 1.0
+          },
+          "llm": {
+            "input_tokens": 10,
+            "output_tokens": 5,
+            "total_tokens": 15,
+            "estimated_cost_usd": null
+          },
+          "error": null,
+          "algorithm_metadata": {
+            "selection_policy": "online_incumbent",
+            "accepted_semantics": "online_incumbent_update",
+            "proposal_slot": 1,
+            "prompt_source_step": 0,
+            "feedback_released_through_step": 0,
+            "prompt_sha256": "e32f1b512aeb8336ac995214105e80843544071319d6767c07fb2e7ac4b6326a",
+            "prompt_utf8_bytes": 3713,
+            "prompt_program_utf8_bytes": 760,
+            "prompt_metrics_sha256": "8c21d80e455be2b77cf42c48fde07d304e4f26a6b7ed74f708291582bc380323",
+            "prompt_metrics_utf8_bytes": 124,
+            "prompt_metric_keys": "combined_score,feasibility_rate,raw_score,valid",
+            "proposal_published_wall_seconds": 0.36650525499135256,
+            "completed_after_active_wall_horizon": false,
+            "signed_decision_action": null,
+            "evaluation_request_id": "1c6d491f7c3dc16bb49696e0766f3ce3715388026b84521b83f23c751e55bc4b",
+            "evaluation_receipt_reused": true,
+            "evaluation_receipt_committed": true
+          }
+        }
+      ],
+      "evaluation_ledger_snapshot": {
+        "schema_version": 1,
+        "semantics": "exactly_once_logical_scientific_outcome_and_oracle_budget_for_deterministic_local_evaluators_not_physical_exactly_once_execution",
+        "request_count": 2,
+        "receipt_count": 2,
+        "attempt_count": 2,
+        "incomplete_attempt_count": 0,
+        "infrastructure_failure_attempt_count": 0,
+        "open_request_ids": [],
+        "request_ids": [
+          "1c6d491f7c3dc16bb49696e0766f3ce3715388026b84521b83f23c751e55bc4b",
+          "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02"
+        ],
+        "receipt_ids": [
+          "1c6d491f7c3dc16bb49696e0766f3ce3715388026b84521b83f23c751e55bc4b",
+          "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02"
+        ]
+      },
+      "checks": {
+        "worker_exited_at_injected_fault": true,
+        "resume_completed": true,
+        "resume_made_zero_evaluator_calls": true,
+        "trajectory_is_complete": true,
+        "logical_oracle_budget_is_exact": true,
+        "one_request_and_receipt_per_evaluated_event": true,
+        "trajectory_receipt_ids_are_unique": true
+      },
+      "files": [
+        {
+          "path": "best_program.py",
+          "sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+          "bytes": 760
+        },
+        {
+          "path": "checkpoint.json",
+          "sha256": "46f5e9c65fad176351f92877d2e9dfa3891db6afe148c3477bb778e961a05c5e",
+          "bytes": 3951,
+          "json": {
+            "schema_version": 1,
+            "algorithm": "greedy_rewrite",
+            "task_id": "Chemistry/LennardJonesCluster",
+            "seed": 260727,
+            "next_iter": 2,
+            "baseline_score": 0.041930443440283925,
+            "baseline_metrics": {
+              "combined_score": 0.041930443440283925,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.041930443440283925
+            },
+            "best_score": 0.041930443440283925,
+            "best_metrics": {
+              "combined_score": 0.041930443440283925,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.041930443440283925
+            },
+            "best_program": "\"\"\"Initial baseline for LennardJonesCluster (weak but valid).\n\nPlaces atoms at random inside a loose sphere with a minimum-separation rejection. The\natoms barely interact, so the energy is close to zero (far from the global minimum) \u2014 there\nis a large gap for an optimizer to close. Edit this file to do better.\n\"\"\"\n\nimport numpy as np\n\n\ndef build_cluster(n_atoms: int, seed: int = 0) -> np.ndarray:\n    rng = np.random.default_rng(seed)\n    radius = 1.5 * (n_atoms ** (1.0 / 3.0))\n    pts = []\n    while len(pts) < n_atoms:\n        p = rng.uniform(-radius, radius, size=3)\n        if np.linalg.norm(p) > radius:\n            continue\n        if all(np.linalg.norm(p - q) > 1.2 for q in pts):\n            pts.append(p)\n    return np.asarray(pts, dtype=float)\n",
+            "best_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+            "best_source_step": 0,
+            "best_published_wall_seconds": 0.0,
+            "evaluated_candidates": [
+              {
+                "step": 0,
+                "program": "\"\"\"Initial baseline for LennardJonesCluster (weak but valid).\n\nPlaces atoms at random inside a loose sphere with a minimum-separation rejection. The\natoms barely interact, so the energy is close to zero (far from the global minimum) \u2014 there\nis a large gap for an optimizer to close. Edit this file to do better.\n\"\"\"\n\nimport numpy as np\n\n\ndef build_cluster(n_atoms: int, seed: int = 0) -> np.ndarray:\n    rng = np.random.default_rng(seed)\n    radius = 1.5 * (n_atoms ** (1.0 / 3.0))\n    pts = []\n    while len(pts) < n_atoms:\n        p = rng.uniform(-radius, radius, size=3)\n        if np.linalg.norm(p) > radius:\n            continue\n        if all(np.linalg.norm(p - q) > 1.2 for q in pts):\n            pts.append(p)\n    return np.asarray(pts, dtype=float)\n",
+                "sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+                "score": 0.041930443440283925,
+                "valid": true,
+                "metrics": {
+                  "combined_score": 0.041930443440283925,
+                  "valid": 1.0,
+                  "feasibility_rate": 1.0,
+                  "raw_score": 0.041930443440283925
+                },
+                "published_wall_seconds": 0.0
+              },
+              {
+                "step": 1,
+                "program": "\"\"\"Initial baseline for LennardJonesCluster (weak but valid).\n\nPlaces atoms at random inside a loose sphere with a minimum-separation rejection. The\natoms barely interact, so the energy is close to zero (far from the global minimum) \u2014 there\nis a large gap for an optimizer to close. Edit this file to do better.\n\"\"\"\n\nimport numpy as np\n\n\ndef build_cluster(n_atoms: int, seed: int = 0) -> np.ndarray:\n    rng = np.random.default_rng(seed)\n    radius = 1.5 * (n_atoms ** (1.0 / 3.0))\n    pts = []\n    while len(pts) < n_atoms:\n        p = rng.uniform(-radius, radius, size=3)\n        if np.linalg.norm(p) > radius:\n            continue\n        if all(np.linalg.norm(p - q) > 1.2 for q in pts):\n            pts.append(p)\n    return np.asarray(pts, dtype=float)",
+                "sha256": "0020e867f3dd39246016e66bccf65d25e276aef61172ed7fbcc65d4ac82993b8",
+                "score": 0.041930443440283925,
+                "valid": true,
+                "metrics": {
+                  "combined_score": 0.041930443440283925,
+                  "valid": 1.0,
+                  "feasibility_rate": 1.0,
+                  "raw_score": 0.041930443440283925
+                },
+                "published_wall_seconds": 0.36650525499135256
+              }
+            ],
+            "pending_proposal": null
+          }
+        },
+        {
+          "path": "evaluation_ledger/attempts/1c6d491f7c3dc16bb49696e0766f3ce3715388026b84521b83f23c751e55bc4b/000001.json",
+          "sha256": "0d721ad6942ca4baafe06d53a9a66670136454b2a9b185c8611c9406ea35eb7b",
+          "bytes": 321,
+          "json": {
+            "attempt_index": 1,
+            "completed_at_utc": "2026-09-03T05:57:59.871534+00:00",
+            "evaluation_wall_seconds": 0.3589449729770422,
+            "outcome": "receipt_committed",
+            "request_id": "1c6d491f7c3dc16bb49696e0766f3ce3715388026b84521b83f23c751e55bc4b",
+            "schema_version": 1,
+            "started_at_utc": "2026-09-03T05:57:59.506192+00:00",
+            "status": "completed"
+          }
+        },
+        {
+          "path": "evaluation_ledger/attempts/240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02/000001.json",
+          "sha256": "e66aab7ee1586aa6d8b839511d2743266b926597432ee0c12f6c75c8b2c65907",
+          "bytes": 322,
+          "json": {
+            "attempt_index": 1,
+            "completed_at_utc": "2026-09-03T05:57:59.485951+00:00",
+            "evaluation_wall_seconds": 0.36642700294032693,
+            "outcome": "receipt_committed",
+            "request_id": "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02",
+            "schema_version": 1,
+            "started_at_utc": "2026-09-03T05:57:59.112358+00:00",
+            "status": "completed"
+          }
+        },
+        {
+          "path": "evaluation_ledger/receipts/1c6d491f7c3dc16bb49696e0766f3ce3715388026b84521b83f23c751e55bc4b.json",
+          "sha256": "14f739f5b4a857b7f786dd8b103125a340cd30e9067c990473c216bbc65a286f",
+          "bytes": 794,
+          "json": {
+            "completed_at_utc": "2026-09-03T05:57:59.868088+00:00",
+            "evaluation_wall_seconds": 0.3589449729770422,
+            "metrics": {
+              "combined_score": 0.041930443440283925,
+              "feasibility_rate": 1.0,
+              "per_size": [
+                {
+                  "e_min": -44.326801,
+                  "energy": -1.6608566740915731,
+                  "n": 13,
+                  "score": 0.03746845331995812,
+                  "valid": true
+                },
+                {
+                  "e_min": -72.659782,
+                  "energy": -3.2668830121309282,
+                  "n": 19,
+                  "score": 0.04496136545153587,
+                  "valid": true
+                },
+                {
+                  "e_min": -173.928427,
+                  "energy": -7.5417994961221275,
+                  "n": 38,
+                  "score": 0.04336151154935776,
+                  "valid": true
+                }
+              ],
+              "raw_score": 0.041930443440283925,
+              "valid": 1.0
+            },
+            "metrics_sha256": "e2a6718fa949d93b9ae01ce0edc22c9c76ce8e639c05c1fe29f016652c284d9e",
+            "request_id": "1c6d491f7c3dc16bb49696e0766f3ce3715388026b84521b83f23c751e55bc4b",
+            "request_sha256": "1c6d491f7c3dc16bb49696e0766f3ce3715388026b84521b83f23c751e55bc4b",
+            "schema_version": 1
+          }
+        },
+        {
+          "path": "evaluation_ledger/receipts/240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02.json",
+          "sha256": "2644ab13bd36468e8aa0e910f00d2d9319b33352dd6864dabb8ea5b2e7f81b3f",
+          "bytes": 795,
+          "json": {
+            "completed_at_utc": "2026-09-03T05:57:59.482634+00:00",
+            "evaluation_wall_seconds": 0.36642700294032693,
+            "metrics": {
+              "combined_score": 0.041930443440283925,
+              "feasibility_rate": 1.0,
+              "per_size": [
+                {
+                  "e_min": -44.326801,
+                  "energy": -1.6608566740915731,
+                  "n": 13,
+                  "score": 0.03746845331995812,
+                  "valid": true
+                },
+                {
+                  "e_min": -72.659782,
+                  "energy": -3.2668830121309282,
+                  "n": 19,
+                  "score": 0.04496136545153587,
+                  "valid": true
+                },
+                {
+                  "e_min": -173.928427,
+                  "energy": -7.5417994961221275,
+                  "n": 38,
+                  "score": 0.04336151154935776,
+                  "valid": true
+                }
+              ],
+              "raw_score": 0.041930443440283925,
+              "valid": 1.0
+            },
+            "metrics_sha256": "e2a6718fa949d93b9ae01ce0edc22c9c76ce8e639c05c1fe29f016652c284d9e",
+            "request_id": "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02",
+            "request_sha256": "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02",
+            "schema_version": 1
+          }
+        },
+        {
+          "path": "evaluation_ledger/requests/1c6d491f7c3dc16bb49696e0766f3ce3715388026b84521b83f23c751e55bc4b.json",
+          "sha256": "3bf689c000edad4d9758219a824e38e592a5812c0f699a67136a7285b53f2bff",
+          "bytes": 821,
+          "json": {
+            "request": {
+              "candidate_sha256": "0020e867f3dd39246016e66bccf65d25e276aef61172ed7fbcc65d4ac82993b8",
+              "evaluator_timeout_seconds": 20.0,
+              "kind": "proposal",
+              "parent_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+              "prompt_sha256": "e32f1b512aeb8336ac995214105e80843544071319d6767c07fb2e7ac4b6326a",
+              "runtime_source_sha256": "4de01efd7ec716518b13d69184fb9d3d5f2fd8a501a3e6045d249895a3085a4b",
+              "step": 1,
+              "task_contract_sha256": "73cdf81bb29553be2895d8d51388065787ece1af7fed4f048849cde34ee9f47b",
+              "task_id": "Chemistry/LennardJonesCluster",
+              "task_package_sha256": "669ede9218cd141fefa13b5dda9c66b93fb1315442b3bf07ff650890bd4d910d"
+            },
+            "request_id": "1c6d491f7c3dc16bb49696e0766f3ce3715388026b84521b83f23c751e55bc4b",
+            "request_sha256": "1c6d491f7c3dc16bb49696e0766f3ce3715388026b84521b83f23c751e55bc4b",
+            "schema_version": 1
+          }
+        },
+        {
+          "path": "evaluation_ledger/requests/240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02.json",
+          "sha256": "64aa0bcdb472a1545303c0ac876b990e3842ffd1d97c6bf677dd9e5b63dbf088",
+          "bytes": 655,
+          "json": {
+            "request": {
+              "candidate_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+              "evaluator_timeout_seconds": 20.0,
+              "kind": "baseline",
+              "runtime_source_sha256": "4de01efd7ec716518b13d69184fb9d3d5f2fd8a501a3e6045d249895a3085a4b",
+              "step": 0,
+              "task_contract_sha256": "73cdf81bb29553be2895d8d51388065787ece1af7fed4f048849cde34ee9f47b",
+              "task_id": "Chemistry/LennardJonesCluster",
+              "task_package_sha256": "669ede9218cd141fefa13b5dda9c66b93fb1315442b3bf07ff650890bd4d910d"
+            },
+            "request_id": "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02",
+            "request_sha256": "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02",
+            "schema_version": 1
+          }
+        },
+        {
+          "path": "run_manifest.json",
+          "sha256": "db94f7ad76eecb426419ac20a1d3c2362b45addf186aa6c079e9680d17213b8f",
+          "bytes": 1551,
+          "json": {
+            "schema_version": 1,
+            "algorithm": "greedy_rewrite",
+            "task_id": "Chemistry/LennardJonesCluster",
+            "task_contract_sha256": "73cdf81bb29553be2895d8d51388065787ece1af7fed4f048849cde34ee9f47b",
+            "task_package_sha256": "669ede9218cd141fefa13b5dda9c66b93fb1315442b3bf07ff650890bd4d910d",
+            "runtime_source_sha256": "4de01efd7ec716518b13d69184fb9d3d5f2fd8a501a3e6045d249895a3085a4b",
+            "runtime_environment": {
+              "python": "3.12.3 (main, Nov  6 2024, 18:32:19) [GCC 13.2.0]",
+              "executable": "/usr/bin/python3.12",
+              "platform": "Linux-6.1.170-210.320.amzn2023.x86_64-x86_64-with-glibc2.39"
+            },
+            "seed": 260727,
+            "feedback_mode": "normal",
+            "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+            "llm_condition_sha256": "2316c79efbc12142a460cff46bab7f871369c79a53bf937b48b1f0c082fcbade",
+            "llm_condition": {
+              "model": "recovery-fixture",
+              "wire": "chat",
+              "reasoning_effort": null,
+              "temperature": 0.0,
+              "max_output_tokens": 20,
+              "timeout_seconds": 1,
+              "stream": false,
+              "chat_max_tokens_field": "max_tokens",
+              "anthropic_version": "2023-06-01",
+              "thinking_budget_tokens": null,
+              "base_url_host": "recovery-audit.invalid",
+              "chat_reasoning_fallback": false
+            },
+            "upstream": null,
+            "protocol": {
+              "evaluator_timeout_seconds": 20.0,
+              "evaluation_ledger": true
+            }
+          }
+        },
+        {
+          "path": "solution.py",
+          "sha256": "0020e867f3dd39246016e66bccf65d25e276aef61172ed7fbcc65d4ac82993b8",
+          "bytes": 759
+        },
+        {
+          "path": "summary.json",
+          "sha256": "04e9d962001b5c0a5a71c136c625a0d3074d3cb9b97f10930655a468b358aa34",
+          "bytes": 1955,
+          "json": {
+            "schema_version": 2,
+            "oracle_calls": 2,
+            "budget_units": 2,
+            "best_score": 0.041930443440283925,
+            "best_so_far_auc": 0.041930443440283925,
+            "valid_rate": 1.0,
+            "accepted": 0,
+            "wall_seconds": 0.7254673639545217,
+            "llm": {
+              "calls": 1,
+              "provider_usage_records": 1,
+              "input_tokens": 10,
+              "output_tokens": 5,
+              "total_tokens": 15,
+              "estimated_cost_usd": null
+            },
+            "algorithm": "greedy_rewrite",
+            "task_id": "Chemistry/LennardJonesCluster",
+            "seed": 260727,
+            "baseline_score": 0.041930443440283925,
+            "budget": 1,
+            "feedback_mode": "normal",
+            "active_wall_horizon_s": null,
+            "sentinel_interval_s": null,
+            "horizon_reached": false,
+            "baseline_crossed_horizon": false,
+            "signed_decisions": false,
+            "signed_decision_policy": "record_only",
+            "latest_signed_endpoint_action": null,
+            "honored_signed_stop_action": null,
+            "sentinel_snapshot": null,
+            "evaluation_ledger_snapshot": {
+              "schema_version": 1,
+              "semantics": "exactly_once_logical_scientific_outcome_and_oracle_budget_for_deterministic_local_evaluators_not_physical_exactly_once_execution",
+              "request_count": 2,
+              "receipt_count": 2,
+              "attempt_count": 2,
+              "incomplete_attempt_count": 0,
+              "infrastructure_failure_attempt_count": 0,
+              "open_request_ids": [],
+              "request_ids": [
+                "1c6d491f7c3dc16bb49696e0766f3ce3715388026b84521b83f23c751e55bc4b",
+                "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02"
+              ],
+              "receipt_ids": [
+                "1c6d491f7c3dc16bb49696e0766f3ce3715388026b84521b83f23c751e55bc4b",
+                "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02"
+              ]
+            },
+            "feedback_scope": "proposal prompt sees only allowlisted selection metrics; search selection uses combined_score; search receives only allowlisted feasibility/selection metrics; evaluator-only validation, mechanism, robustness and per-instance metrics remain in the trusted trace",
+            "selection_policy": "online_incumbent"
+          }
+        },
+        {
+          "path": "trajectory.jsonl",
+          "sha256": "1c561f2b126e37181f9eeb91677696e36bc2adb123e58da476fb4b54caa23feb",
+          "bytes": 2714,
+          "json_rows": [
+            {
+              "schema_version": 2,
+              "step": 0,
+              "oracle_calls": 1,
+              "score": 0.041930443440283925,
+              "best_score": 0.041930443440283925,
+              "valid": true,
+              "accepted": true,
+              "wall_seconds": 0.36642700294032693,
+              "cumulative_wall_seconds": 0.36642700294032693,
+              "candidate_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+              "parent_sha256": null,
+              "budget_units": 1,
+              "metrics": {
+                "combined_score": 0.041930443440283925,
+                "feasibility_rate": 1.0,
+                "per_size": [
+                  {
+                    "e_min": -44.326801,
+                    "energy": -1.6608566740915731,
+                    "n": 13,
+                    "score": 0.03746845331995812,
+                    "valid": true
+                  },
+                  {
+                    "e_min": -72.659782,
+                    "energy": -3.2668830121309282,
+                    "n": 19,
+                    "score": 0.04496136545153587,
+                    "valid": true
+                  },
+                  {
+                    "e_min": -173.928427,
+                    "energy": -7.5417994961221275,
+                    "n": 38,
+                    "score": 0.04336151154935776,
+                    "valid": true
+                  }
+                ],
+                "raw_score": 0.041930443440283925,
+                "valid": 1.0
+              },
+              "llm": {},
+              "error": null,
+              "algorithm_metadata": {
+                "evaluation_request_id": "240793ecbd0bf278947a54bd5e3f6fb28c6f24282fab3a89af2d73294e747f02",
+                "evaluation_receipt_reused": false,
+                "evaluation_receipt_committed": true
+              }
+            },
+            {
+              "schema_version": 2,
+              "step": 1,
+              "oracle_calls": 2,
+              "score": 0.041930443440283925,
+              "best_score": 0.041930443440283925,
+              "valid": true,
+              "accepted": false,
+              "wall_seconds": 0.3590403610141948,
+              "cumulative_wall_seconds": 0.7254673639545217,
+              "candidate_sha256": "0020e867f3dd39246016e66bccf65d25e276aef61172ed7fbcc65d4ac82993b8",
+              "parent_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+              "budget_units": 2,
+              "metrics": {
+                "combined_score": 0.041930443440283925,
+                "feasibility_rate": 1.0,
+                "per_size": [
+                  {
+                    "e_min": -44.326801,
+                    "energy": -1.6608566740915731,
+                    "n": 13,
+                    "score": 0.03746845331995812,
+                    "valid": true
+                  },
+                  {
+                    "e_min": -72.659782,
+                    "energy": -3.2668830121309282,
+                    "n": 19,
+                    "score": 0.04496136545153587,
+                    "valid": true
+                  },
+                  {
+                    "e_min": -173.928427,
+                    "energy": -7.5417994961221275,
+                    "n": 38,
+                    "score": 0.04336151154935776,
+                    "valid": true
+                  }
+                ],
+                "raw_score": 0.041930443440283925,
+                "valid": 1.0
+              },
+              "llm": {
+                "input_tokens": 10,
+                "output_tokens": 5,
+                "total_tokens": 15,
+                "estimated_cost_usd": null
+              },
+              "error": null,
+              "algorithm_metadata": {
+                "selection_policy": "online_incumbent",
+                "accepted_semantics": "online_incumbent_update",
+                "proposal_slot": 1,
+                "prompt_source_step": 0,
+                "feedback_released_through_step": 0,
+                "prompt_sha256": "e32f1b512aeb8336ac995214105e80843544071319d6767c07fb2e7ac4b6326a",
+                "prompt_utf8_bytes": 3713,
+                "prompt_program_utf8_bytes": 760,
+                "prompt_metrics_sha256": "8c21d80e455be2b77cf42c48fde07d304e4f26a6b7ed74f708291582bc380323",
+                "prompt_metrics_utf8_bytes": 124,
+                "prompt_metric_keys": "combined_score,feasibility_rate,raw_score,valid",
+                "proposal_published_wall_seconds": 0.36650525499135256,
+                "completed_after_active_wall_horizon": false,
+                "signed_decision_action": null,
+                "evaluation_request_id": "1c6d491f7c3dc16bb49696e0766f3ce3715388026b84521b83f23c751e55bc4b",
+                "evaluation_receipt_reused": true,
+                "evaluation_receipt_committed": true
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "request_before_receipt",
+      "fault_process": {
+        "command": [
+          "/workspace/wynckeliao/ScientistsLastExam/.venv/bin/python",
+          "/tmp/sle-pr-split.tAr081/framework/scripts/run_recovery_fault_worker.py",
+          "--mode",
+          "request_before_receipt",
+          "--workdir",
+          "/tmp/sle_recovery_audit_jelamh7m/request_before_receipt"
+        ],
+        "returncode": 86,
+        "stdout": "",
+        "stderr": "",
+        "expected_fault_exit": true
+      },
+      "recovery_error": null,
+      "recovery_evaluator_call_count": 1,
+      "result": {
+        "completed_at_utc": "2026-09-03T05:58:00.182693+00:00",
+        "evaluation_wall_seconds": 2.6779016479849815e-06,
+        "metrics": {
+          "combined_score": 0.55,
+          "valid": 1.0
+        },
+        "metrics_sha256": "446c07a0d78fdbba0e9a249fb1db8fa830c166dc05777c151aef9f1f377810ac",
+        "request_id": "f102b58e27f6a55614ea9649de5697f5674182a40cbd78cf3ada0cdd9b821d42",
+        "request_sha256": "f102b58e27f6a55614ea9649de5697f5674182a40cbd78cf3ada0cdd9b821d42",
+        "schema_version": 1,
+        "receipt_reused": false,
+        "attempt_index": 2,
+        "receipt_committed": true
+      },
+      "evaluation_ledger_snapshot": {
+        "schema_version": 1,
+        "semantics": "exactly_once_logical_scientific_outcome_and_oracle_budget_for_deterministic_local_evaluators_not_physical_exactly_once_execution",
+        "request_count": 1,
+        "receipt_count": 1,
+        "attempt_count": 2,
+        "incomplete_attempt_count": 1,
+        "infrastructure_failure_attempt_count": 0,
+        "open_request_ids": [],
+        "request_ids": [
+          "f102b58e27f6a55614ea9649de5697f5674182a40cbd78cf3ada0cdd9b821d42"
+        ],
+        "receipt_ids": [
+          "f102b58e27f6a55614ea9649de5697f5674182a40cbd78cf3ada0cdd9b821d42"
+        ]
+      },
+      "checks": {
+        "worker_exited_at_injected_fault": true,
+        "recovery_completed": true,
+        "expected_recovery_evaluator_calls": true,
+        "one_logical_request": true,
+        "one_durable_receipt": true,
+        "attempt_lineage_retained": true,
+        "no_open_logical_request": true
+      },
+      "files": [
+        {
+          "path": "evaluation_ledger/attempts/f102b58e27f6a55614ea9649de5697f5674182a40cbd78cf3ada0cdd9b821d42/000001.json",
+          "sha256": "1f5562511f0cc459dd473cbdc06c383815e7a728867b93b060e7b77a09418666",
+          "bytes": 260,
+          "json": {
+            "attempt_index": 1,
+            "completed_at_utc": null,
+            "evaluation_wall_seconds": null,
+            "outcome": null,
+            "request_id": "f102b58e27f6a55614ea9649de5697f5674182a40cbd78cf3ada0cdd9b821d42",
+            "schema_version": 1,
+            "started_at_utc": "2026-09-03T05:58:00.172298+00:00",
+            "status": "started"
+          }
+        },
+        {
+          "path": "evaluation_ledger/attempts/f102b58e27f6a55614ea9649de5697f5674182a40cbd78cf3ada0cdd9b821d42/000002.json",
+          "sha256": "a58c26e22d6f41032dfd6e8c0ed6b4c4707ca10b0ebf6af8d090e6786d6c4f50",
+          "bytes": 325,
+          "json": {
+            "attempt_index": 2,
+            "completed_at_utc": "2026-09-03T05:58:00.185728+00:00",
+            "evaluation_wall_seconds": 2.6779016479849815e-06,
+            "outcome": "receipt_committed",
+            "request_id": "f102b58e27f6a55614ea9649de5697f5674182a40cbd78cf3ada0cdd9b821d42",
+            "schema_version": 1,
+            "started_at_utc": "2026-09-03T05:58:00.179734+00:00",
+            "status": "completed"
+          }
+        },
+        {
+          "path": "evaluation_ledger/receipts/f102b58e27f6a55614ea9649de5697f5674182a40cbd78cf3ada0cdd9b821d42.json",
+          "sha256": "250711e3cbae517092d2ec347b21c36ad4b4cbd9c22c6f573a64998bd446e3ca",
+          "bytes": 418,
+          "json": {
+            "completed_at_utc": "2026-09-03T05:58:00.182693+00:00",
+            "evaluation_wall_seconds": 2.6779016479849815e-06,
+            "metrics": {
+              "combined_score": 0.55,
+              "valid": 1.0
+            },
+            "metrics_sha256": "446c07a0d78fdbba0e9a249fb1db8fa830c166dc05777c151aef9f1f377810ac",
+            "request_id": "f102b58e27f6a55614ea9649de5697f5674182a40cbd78cf3ada0cdd9b821d42",
+            "request_sha256": "f102b58e27f6a55614ea9649de5697f5674182a40cbd78cf3ada0cdd9b821d42",
+            "schema_version": 1
+          }
+        },
+        {
+          "path": "evaluation_ledger/requests/f102b58e27f6a55614ea9649de5697f5674182a40cbd78cf3ada0cdd9b821d42.json",
+          "sha256": "0eda1a91d3dc93f0505a03fa82ff29a20c3b798320f518c4691ab5dd40ed3047",
+          "bytes": 386,
+          "json": {
+            "request": {
+              "candidate_sha256": "726571756573745f6265666f72655f7265636569707400000000000000000000",
+              "kind": "recovery_fault_fixture",
+              "label": "request_before_receipt",
+              "step": 1,
+              "task_id": "Fixture/Recovery"
+            },
+            "request_id": "f102b58e27f6a55614ea9649de5697f5674182a40cbd78cf3ada0cdd9b821d42",
+            "request_sha256": "f102b58e27f6a55614ea9649de5697f5674182a40cbd78cf3ada0cdd9b821d42",
+            "schema_version": 1
+          }
+        }
+      ]
+    },
+    {
+      "mode": "receipt_before_attempt_completion",
+      "fault_process": {
+        "command": [
+          "/workspace/wynckeliao/ScientistsLastExam/.venv/bin/python",
+          "/tmp/sle-pr-split.tAr081/framework/scripts/run_recovery_fault_worker.py",
+          "--mode",
+          "receipt_before_attempt_completion",
+          "--workdir",
+          "/tmp/sle_recovery_audit_jelamh7m/receipt_before_attempt_completion"
+        ],
+        "returncode": 86,
+        "stdout": "",
+        "stderr": "",
+        "expected_fault_exit": true
+      },
+      "recovery_error": null,
+      "recovery_evaluator_call_count": 0,
+      "result": {
+        "completed_at_utc": "2026-09-03T05:58:00.358472+00:00",
+        "evaluation_wall_seconds": 1.7889542505145073e-06,
+        "metrics": {
+          "combined_score": 0.6,
+          "valid": 1.0
+        },
+        "metrics_sha256": "105a74c62f652f197fa4425f8f235bf592d1dbc86d4ce2b94632c708438b84f6",
+        "request_id": "8c4bbed7997754e4d046436564ad406da44f075bdfb519fbdc2149798a583103",
+        "request_sha256": "8c4bbed7997754e4d046436564ad406da44f075bdfb519fbdc2149798a583103",
+        "schema_version": 1,
+        "receipt_reused": true,
+        "attempt_index": null
+      },
+      "evaluation_ledger_snapshot": {
+        "schema_version": 1,
+        "semantics": "exactly_once_logical_scientific_outcome_and_oracle_budget_for_deterministic_local_evaluators_not_physical_exactly_once_execution",
+        "request_count": 1,
+        "receipt_count": 1,
+        "attempt_count": 1,
+        "incomplete_attempt_count": 1,
+        "infrastructure_failure_attempt_count": 0,
+        "open_request_ids": [],
+        "request_ids": [
+          "8c4bbed7997754e4d046436564ad406da44f075bdfb519fbdc2149798a583103"
+        ],
+        "receipt_ids": [
+          "8c4bbed7997754e4d046436564ad406da44f075bdfb519fbdc2149798a583103"
+        ]
+      },
+      "checks": {
+        "worker_exited_at_injected_fault": true,
+        "recovery_completed": true,
+        "expected_recovery_evaluator_calls": true,
+        "one_logical_request": true,
+        "one_durable_receipt": true,
+        "attempt_lineage_retained": true,
+        "no_open_logical_request": true
+      },
+      "files": [
+        {
+          "path": "evaluation_ledger/attempts/8c4bbed7997754e4d046436564ad406da44f075bdfb519fbdc2149798a583103/000001.json",
+          "sha256": "99c096013bcab5a90c6eeb74363e43d1b528e3d22cd30a4225af81098ced5212",
+          "bytes": 260,
+          "json": {
+            "attempt_index": 1,
+            "completed_at_utc": null,
+            "evaluation_wall_seconds": null,
+            "outcome": null,
+            "request_id": "8c4bbed7997754e4d046436564ad406da44f075bdfb519fbdc2149798a583103",
+            "schema_version": 1,
+            "started_at_utc": "2026-09-03T05:58:00.353160+00:00",
+            "status": "started"
+          }
+        },
+        {
+          "path": "evaluation_ledger/receipts/8c4bbed7997754e4d046436564ad406da44f075bdfb519fbdc2149798a583103.json",
+          "sha256": "814df30f839c2ba9cac78d03ddf4c902fdb019c05d2bfdfd85a4c50d630b8501",
+          "bytes": 417,
+          "json": {
+            "completed_at_utc": "2026-09-03T05:58:00.358472+00:00",
+            "evaluation_wall_seconds": 1.7889542505145073e-06,
+            "metrics": {
+              "combined_score": 0.6,
+              "valid": 1.0
+            },
+            "metrics_sha256": "105a74c62f652f197fa4425f8f235bf592d1dbc86d4ce2b94632c708438b84f6",
+            "request_id": "8c4bbed7997754e4d046436564ad406da44f075bdfb519fbdc2149798a583103",
+            "request_sha256": "8c4bbed7997754e4d046436564ad406da44f075bdfb519fbdc2149798a583103",
+            "schema_version": 1
+          }
+        },
+        {
+          "path": "evaluation_ledger/requests/8c4bbed7997754e4d046436564ad406da44f075bdfb519fbdc2149798a583103.json",
+          "sha256": "f8604dc96f6c999a24c194bfee6eb57d04cb3a80152cf7661b63f65edb2d391d",
+          "bytes": 397,
+          "json": {
+            "request": {
+              "candidate_sha256": "726563656970745f6265666f72655f617474656d70745f636f6d706c6574696f",
+              "kind": "recovery_fault_fixture",
+              "label": "receipt_before_attempt_completion",
+              "step": 1,
+              "task_id": "Fixture/Recovery"
+            },
+            "request_id": "8c4bbed7997754e4d046436564ad406da44f075bdfb519fbdc2149798a583103",
+            "request_sha256": "8c4bbed7997754e4d046436564ad406da44f075bdfb519fbdc2149798a583103",
+            "schema_version": 1
+          }
+        }
+      ]
+    },
+    {
+      "mode": "concurrent_run_lease",
+      "command": [
+        "/workspace/wynckeliao/ScientistsLastExam/.venv/bin/python",
+        "/tmp/sle-pr-split.tAr081/framework/scripts/run_recovery_fault_worker.py",
+        "--mode",
+        "hold_run_lease",
+        "--workdir",
+        "/tmp/sle_recovery_audit_jelamh7m/concurrent_run_lease"
+      ],
+      "child_ready": "READY",
+      "child_returncode": -15,
+      "child_stderr": "",
+      "concurrent_error": "RuntimeError: run workdir is already leased by another process",
+      "checks": {
+        "child_acquired_lease": true,
+        "concurrent_writer_rejected": true,
+        "lease_released_when_process_terminated": true
+      }
+    },
+    {
+      "mode": "tamper_rejection",
+      "request_id": "e3560791aeef1fce41ef19308c7660397dca8414e40f613b1bf9ff8ed0ed06ab",
+      "original_receipt_sha256": "303939deb00e1abf1568e597efc4715637a9955e45221607539788c2b36e9ffc",
+      "tampered_receipt_sha256": "cbc206b26f67c1cfb0a9304e1ad28fc7888d8a2f4e5cb5295c5de8c205f3cf36",
+      "observed_error": "ValueError: evaluation receipt content binding differs",
+      "checks": {
+        "tamper_changes_receipt_hash": true,
+        "tampered_receipt_rejected": true
+      }
+    }
+  ],
+  "checks": {
+    "all_fault_scenarios_passed": true,
+    "four_search_commit_windows_exercised": true,
+    "request_before_receipt_retry_is_reason_coded": true,
+    "receipt_before_attempt_completion_reuses_result": true,
+    "concurrent_run_writer_is_rejected": true,
+    "receipt_tampering_is_rejected": true
+  },
+  "issues": [],
+  "limitations": [
+    "The fault workers use SIG-like abrupt os._exit process death, not whole-host power loss or filesystem corruption.",
+    "A crash before receipt commit may repeat deterministic computation; it remains one logical request, receipt, scientific outcome and oracle-budget unit.",
+    "Physical exactly-once execution requires an idempotency-aware remote instrument or laboratory service and is not established here.",
+    "The end-to-end runner fault injection uses LennardJonesCluster as a protocol fixture and is not model-performance or scientific-discovery evidence."
+  ],
+  "execution_passed": true,
+  "trust_decision": "trusted_clean_revision",
+  "trusted_evidence": true,
+  "passed": true
+}
