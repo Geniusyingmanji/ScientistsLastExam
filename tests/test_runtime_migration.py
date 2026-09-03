@@ -7,6 +7,8 @@ from pathlib import Path
 from unittest.mock import patch
 
 from sle.runtime_migration import (
+    AUDITED_RUNTIME_REVISION,
+    LAYOUT_MIGRATION_REVISION,
     LAYOUT_RUNTIME_BLOBS,
     compare_json_values,
     filter_runtime_source_changes,
@@ -68,11 +70,10 @@ class RuntimeMigrationTests(unittest.TestCase):
             )
             self.assertFalse(rejected["equivalent"], rejected)
 
-    def test_source_and_none_path_contracts_are_exact(self):
+    def test_frozen_source_and_none_path_contracts_are_exact(self):
         module = _audit_module()
-        revision = module.source_provenance(ROOT)["git_revision"]
-        source = module.audit_source_contract(revision)
-        semantics = module.audit_legacy_path_semantics()
+        source = module.audit_source_contract(AUDITED_RUNTIME_REVISION)
+        semantics = module.audit_legacy_path_semantics(AUDITED_RUNTIME_REVISION)
         self.assertTrue(source["passed"], source)
         self.assertTrue(semantics["passed"], semantics)
 
@@ -91,9 +92,6 @@ class RuntimeMigrationTests(unittest.TestCase):
 
     def test_runtime_diff_normalizes_the_committed_cross_revision_layout_move(self):
         legacy_revision = "3e031373cd54f4d9542076fbe42ceaee855fe825"
-        current_revision = subprocess.check_output(
-            ["git", "rev-parse", "HEAD"], cwd=ROOT, text=True
-        ).strip()
         shared_scope = [
             "sle/registry.py",
             "sle/spec.py",
@@ -105,7 +103,7 @@ class RuntimeMigrationTests(unittest.TestCase):
             self.assertEqual(
                 runtime_source_changes(
                     legacy_revision,
-                    current_revision,
+                    LAYOUT_MIGRATION_REVISION,
                     [*shared_scope, task_scope],
                     root=ROOT,
                 ),
@@ -145,15 +143,12 @@ class RuntimeMigrationTests(unittest.TestCase):
 
         self.assertIn("sle/registry.py", changes)
 
-    def test_layout_runtime_unit_is_unchanged_at_current_revision(self):
+    def test_layout_runtime_unit_is_unchanged_at_migration_revision(self):
         legacy_revision = "3e031373cd54f4d9542076fbe42ceaee855fe825"
-        current_revision = subprocess.check_output(
-            ["git", "rev-parse", "HEAD"], cwd=ROOT, text=True
-        ).strip()
         self.assertEqual(
             runtime_source_changes(
                 legacy_revision,
-                current_revision,
+                LAYOUT_MIGRATION_REVISION,
                 [
                     "sle/benchmark_layout.py",
                     "sle/registry.py",

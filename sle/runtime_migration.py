@@ -21,6 +21,7 @@ import yaml
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 BASE_RUNTIME_REVISION = "20c6b780828c1ec53ddafbbde8fbf4579ff7801a"
+AUDITED_RUNTIME_REVISION = "e021aa07b6e693ccf48035dd7fe230e166760c8b"
 MIGRATION_REPORT = (
     "experiments/trusted_context_runtime_migration_audit_2026-07-26_v1.json"
 )
@@ -271,9 +272,12 @@ def runtime_source_changes(
     # three exact blobs as one runtime unit so a later mapping edit cannot be
     # omitted merely because historical scopes predate the new module.
     if set(expanded) & set(LAYOUT_RUNTIME_BLOBS):
-        expanded.extend(
-            path for path in LAYOUT_RUNTIME_BLOBS if path not in expanded
-        )
+        for path in LAYOUT_RUNTIME_BLOBS:
+            if path not in expanded:
+                expanded.append(path)
+            legacy_path = path.replace("sle/", "frontier_science/", 1)
+            if legacy_path not in expanded:
+                expanded.append(legacy_path)
 
     def tree(revision: str) -> dict[str, str]:
         output = subprocess.check_output(
