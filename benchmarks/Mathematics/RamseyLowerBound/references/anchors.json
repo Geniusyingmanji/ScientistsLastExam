@@ -1,0 +1,19 @@
+{
+  "task": "Mathematics/RamseyLowerBound",
+  "anchors": [
+    {
+      "name": "sota_ref_R55",
+      "value": 42,
+      "source_url": "https://en.wikipedia.org/wiki/Ramsey%27s_theorem",
+      "derivation": "R(5,5) >= 43 (Exoo 1989): a 2-colouring of K_42 with no red or blue K5",
+      "retrieved_on": "2026-09-03"
+    },
+    {
+      "name": "sota_ref_R46",
+      "value": 35,
+      "source_url": "https://en.wikipedia.org/wiki/Ramsey%27s_theorem",
+      "derivation": "R(4,6) >= 36 (Exoo): a 2-colouring of K_35",
+      "retrieved_on": "2026-09-03"
+    }
+  ]
+}

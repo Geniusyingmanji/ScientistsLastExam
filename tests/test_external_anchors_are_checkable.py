@@ -18,6 +18,7 @@ a line that slips in.
 from __future__ import annotations
 
 import ast
+import json
 import re
 import sys
 import unittest
@@ -99,6 +100,34 @@ class ExternalAnchorTests(unittest.TestCase):
             "either recompute the anchor, ship a runnable reference, or add the task to "
             "DECLARED_EXTERNAL_ANCHORS with a source in its references/known_best.md:\n"
             + "\n".join(offenders))
+
+    def test_every_literal_anchor_is_recorded_with_a_source(self):
+        """`references/anchors.json` is the ledger: one entry per literal, each with a source URL
+        and the derivation from that source, and the evaluator's literal must match it.
+
+        Two anchors were wrong in one review cycle - 7.6274 that Packomania never listed and 46204
+        that OEIS records as 46205 - and both were plain numbers nobody could check by running
+        anything. A ledger does not make a number true, but it makes it a claim with an address,
+        and the match makes an evaluator edit that drifts from the ledger a test failure."""
+        for task in sorted(DECLARED_EXTERNAL_ANCHORS):
+            spec = next(s for s in list_tasks(None) if s.task_id == task)
+            ledger_path = spec.task_dir / "references" / "anchors.json"
+            self.assertTrue(ledger_path.is_file(),
+                            "%s declares literal anchors but ships no references/anchors.json" % task)
+            entries = (json.loads(ledger_path.read_text(encoding="utf-8")).get("anchors") or [])
+            self.assertTrue(entries, "%s: anchors.json lists nothing" % task)
+            for entry in entries:
+                self.assertTrue(str(entry.get("source_url", "")).startswith("http"),
+                                "%s: anchor %r has no source_url" % (task, entry.get("name")))
+                self.assertTrue(entry.get("derivation"),
+                                "%s: anchor %r has no derivation" % (task, entry.get("name")))
+            values = [float(e["value"]) for e in entries]
+            source = (spec.task_dir / "verification" / "evaluator.py").read_text(encoding="utf-8")
+            for name, value, line in [r for r in _hardcoded_anchors(source) if r[1] != 0]:
+                self.assertTrue(
+                    any(abs(float(value) - v) <= 1e-9 * max(1.0, abs(v)) for v in values),
+                    "%s: evaluator literal %s=%s (line %d) is not in references/anchors.json - "
+                    "the ledger or the evaluator moved without the other" % (task, name, value, line))
 
     def test_a_declared_external_anchor_ships_its_source(self):
         for task in DECLARED_EXTERNAL_ANCHORS:

@@ -2,6 +2,9 @@ from __future__ import annotations
 
 import importlib.util
 import unittest
+from collections import Counter
+from sle.certification import certification_status
+from sle.registry import list_tasks
 from pathlib import Path
 from unittest.mock import patch
 
@@ -22,31 +25,47 @@ class TaskMaturityAuditTests(unittest.TestCase):
         cls.tasks = {row["task"]: row for row in cls.report["tasks"]}
 
     def test_inventory_and_internal_risk_set_are_complete(self):
-        self.assertEqual(self.report["inventory_count"], 58)
-        self.assertEqual(
-            self.report["status_counts"],
-            {"certified": 5, "candidate": 53, "quarantined": 0},
-        )
+        # Computed, not pinned: the inventory is whatever the registry discovers. A literal here
+        # was hand-edited 43 -> 44 -> 45 -> 46 -> 58 in two days and guarded nothing.
+        self.assertEqual(self.report["inventory_count"], len(list_tasks(None)))
+        expected_status = Counter(certification_status(s.task_id) for s in list_tasks(None))
+        self.assertEqual(self.report["status_counts"],
+                         {k: expected_status.get(k, 0) for k in ("certified", "candidate", "quarantined")})
+        # Policy literal, kept on purpose: certification is a deliberate act, not a count.
+        self.assertEqual(expected_status.get("certified", 0), 5)
         # Admission is fail-closed against the current evidence bindings. Candidate registration
         # does not imply admission, and older reports whose task/runtime contract drifted do not
         # count toward this total.
-        # 58 once the certification audit and secure baseline were regenerated for the merged
-        # inventory under the merged runtime; the 32 pinned at merge time counted the frozen
-        # documents' stale bindings, not a semantic demotion.
-        self.assertEqual(self.report["gate_counts"]["internal_science_admission"], 58)
+        # Every non-quarantined task is admitted when the frozen evidence is fresh. Asserting the
+        # blocked list is empty - rather than a count - names the tasks and the reason when it is
+        # not, which is the cue to run scripts/refresh_global_evidence.py.
+        blocked = ["%s: %s" % (row["task"], row["gates"]["internal_science_admission"]["blockers"])
+                   for row in self.report["tasks"]
+                   if not row["gates"]["internal_science_admission"]["passed"]]
+        self.assertEqual(blocked, [], "frozen evidence is stale; regenerate with "
+                                      "scripts/refresh_global_evidence.py")
+        self.assertEqual(self.report["gate_counts"]["internal_science_admission"],
+                         self.report["inventory_count"] - self.report["status_counts"].get("quarantined", 0))
         self.assertEqual(self.report["issues"], [])
         self.assertTrue(self.report["execution_passed"])
 
+    # The five tests below cover the twelve tasks merged from #4. As written at merge time they
+    # asserted that internal science admission FAILED for each, on the reading that "listing a
+    # task does not grant it admission". That reading confused two ledgers. The admission gate
+    # measures runnable integrity - a valid card, a current certification record, and a
+    # deterministic baseline in the sandbox - and the blocker they pinned,
+    # `current_certification_record_failed`, meant only that the frozen certification audit had
+    # not yet been regenerated with these tasks in it. Once v69/v52 were regenerated for the
+    # merged inventory the gate passes for all twelve, exactly as it did for every earlier task
+    # once its baseline ran. What "not self-admitted" actually protects - no task certifies
+    # itself by being listed - is the certification status, which stays `candidate`, and the
+    # default registry, which excludes them. That is what is asserted now.
     def test_crowded_spectrum_is_listed_and_not_self_admitted(self):
         row = self.tasks["Spectroscopy/CrowdedSpectrumAssignment"]
         self.assertEqual(row["certification_status"], "candidate")
         gate = row["gates"]["internal_science_admission"]
-        self.assertFalse(gate["passed"])
-        self.assertIn("current_certification_record_failed", gate["blockers"])
-        self.assertIn(
-            "no_current_or_migration_replayed_deterministic_baseline",
-            gate["blockers"],
-        )
+        self.assertTrue(gate["passed"])
+        self.assertEqual(gate["blockers"], [])
 
     def test_wave0_constructions_are_listed_and_not_self_admitted(self):
         for task_id in (
@@ -59,15 +78,15 @@ class TaskMaturityAuditTests(unittest.TestCase):
             row = self.tasks[task_id]
             self.assertEqual(row["certification_status"], "candidate", task_id)
             gate = row["gates"]["internal_science_admission"]
-            self.assertFalse(gate["passed"], task_id)
-            self.assertIn("current_certification_record_failed", gate["blockers"], task_id)
+            self.assertTrue(gate["passed"], task_id)
+            self.assertEqual(gate["blockers"], [], task_id)
 
     def test_look_elsewhere_is_listed_and_not_self_admitted(self):
         row = self.tasks["ParticlePhysics/LookElsewhereAnomaly"]
         self.assertEqual(row["certification_status"], "candidate")
         gate = row["gates"]["internal_science_admission"]
-        self.assertFalse(gate["passed"])
-        self.assertIn("current_certification_record_failed", gate["blockers"])
+        self.assertTrue(gate["passed"])
+        self.assertEqual(gate["blockers"], [])
 
     def test_wave1_discovery_constructions_are_listed_and_not_self_admitted(self):
         for task_id in (
@@ -77,8 +96,8 @@ class TaskMaturityAuditTests(unittest.TestCase):
             row = self.tasks[task_id]
             self.assertEqual(row["certification_status"], "candidate", task_id)
             gate = row["gates"]["internal_science_admission"]
-            self.assertFalse(gate["passed"], task_id)
-            self.assertIn("current_certification_record_failed", gate["blockers"], task_id)
+            self.assertTrue(gate["passed"], task_id)
+            self.assertEqual(gate["blockers"], [], task_id)
 
     def test_wave2_discovery_constructions_are_listed_and_not_self_admitted(self):
         for task_id in (
@@ -89,8 +108,8 @@ class TaskMaturityAuditTests(unittest.TestCase):
             row = self.tasks[task_id]
             self.assertEqual(row["certification_status"], "candidate", task_id)
             gate = row["gates"]["internal_science_admission"]
-            self.assertFalse(gate["passed"], task_id)
-            self.assertIn("current_certification_record_failed", gate["blockers"], task_id)
+            self.assertTrue(gate["passed"], task_id)
+            self.assertEqual(gate["blockers"], [], task_id)
 
     def test_explicit_current_full_suite_gate_is_fail_closed(self):
         revision = "a" * 40
@@ -144,7 +163,8 @@ class TaskMaturityAuditTests(unittest.TestCase):
         )
         self.assertEqual(self.module._status_admission_issues(records), [])
         self.assertEqual(
-            self.report["evidence_coverage"]["builder_lineage_declared_task_count"], 58,
+            self.report["evidence_coverage"]["builder_lineage_declared_task_count"],
+            self.report["inventory_count"],
         )
         # Still zero with two tasks now naming their builder, because `complete` here also
         # requires `frozen_before_eval`, and neither is frozen: EnzymeKineticsLaw had a public key

@@ -1,0 +1,26 @@
+{
+  "task": "Algorithm/MatrixMultiplicationRank",
+  "anchors": [
+    {
+      "name": "sota_ref_2x2",
+      "value": 7,
+      "source_url": "https://doi.org/10.1007/BF02165411",
+      "derivation": "Strassen 1969, 7 multiplications for 2x2",
+      "retrieved_on": "2026-09-03"
+    },
+    {
+      "name": "sota_ref_3x3",
+      "value": 23,
+      "source_url": "https://doi.org/10.1090/S0002-9904-1976-13988-2",
+      "derivation": "Laderman 1976, 23 multiplications for 3x3",
+      "retrieved_on": "2026-09-03"
+    },
+    {
+      "name": "sota_ref_4x4",
+      "value": 48,
+      "source_url": "https://arxiv.org/abs/2506.13131",
+      "derivation": "AlphaEvolve 2025, 48 multiplications for 4x4 over C (recursive Strassen is 49)",
+      "retrieved_on": "2026-09-03"
+    }
+  ]
+}

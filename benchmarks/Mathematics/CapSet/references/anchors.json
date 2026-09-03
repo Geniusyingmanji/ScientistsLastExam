@@ -1,0 +1,26 @@
+{
+  "task": "Mathematics/CapSet",
+  "anchors": [
+    {
+      "name": "sota_ref_n4",
+      "value": 20,
+      "source_url": "https://oeis.org/A090245",
+      "derivation": "proven maximum, Pellegrino 1971",
+      "retrieved_on": "2026-09-03"
+    },
+    {
+      "name": "sota_ref_n5",
+      "value": 45,
+      "source_url": "https://doi.org/10.1006/jcta.2002.3261",
+      "derivation": "proven maximum, Edel-Ferret-Landjev-Storme 2002",
+      "retrieved_on": "2026-09-03"
+    },
+    {
+      "name": "sota_ref_n6",
+      "value": 112,
+      "source_url": "https://doi.org/10.1007/s10623-007-9132-z",
+      "derivation": "proven maximum, Potechin 2008",
+      "retrieved_on": "2026-09-03"
+    }
+  ]
+}

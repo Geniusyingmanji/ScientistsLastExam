@@ -1,0 +1,19 @@
+{
+  "task": "Mathematics/Superpermutation",
+  "anchors": [
+    {
+      "name": "sota_ref_n7",
+      "value": 5906,
+      "source_url": "https://www.gregegan.net/SCIENCE/Superpermutations/Superpermutations.html",
+      "derivation": "Egan and Houston, 27 Feb 2019",
+      "retrieved_on": "2026-09-03"
+    },
+    {
+      "name": "sota_ref_n8",
+      "value": 46205,
+      "source_url": "https://oeis.org/A180632",
+      "derivation": "Egan, Oct 2018, Williams construction n!+(n-1)!+(n-2)!+(n-3)!+n-3; OEIS comment corrected by Alekseyev Jan 2019. An earlier draft carried a value one lower with a misattributed source.",
+      "retrieved_on": "2026-09-03"
+    }
+  ]
+}

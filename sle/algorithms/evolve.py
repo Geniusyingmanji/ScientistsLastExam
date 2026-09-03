@@ -1166,6 +1166,27 @@ def _greedy_rewrite_impl(
                                if feedback_mode == "delayed_replay"
                                else "online_incumbent"
                            )})
+    # A run in which no proposal ever became a valid candidate measured nothing about the
+    # searcher. The transport can do that on its own - an omitted `thinking` field once spent
+    # every output token on a thinking block and returned no text, and nine of nine proposals
+    # read as `no_code` - and so can a prose value under a numeric-looking key, which raised
+    # inside every candidate before its first oracle call. Both looked, in the report, like a
+    # model that scored zero. Mark the run so the aggregation can tell the two apart; the
+    # admission report and the maturity audit exclude it from performance evidence.
+    trajectory_rows = load_trajectory(trajectory_path)
+    valid_proposal_count = sum(
+        1 for row in trajectory_rows
+        if int(row.get("step", 0) or 0) > 0 and row.get("valid"))
+    result.summary["valid_proposal_count"] = valid_proposal_count
+    if budget > 0 and valid_proposal_count == 0 and "protocol_incomplete" not in result.summary:
+        result.summary["protocol_incomplete"] = "no_valid_proposal"
+        result.summary["protocol_incomplete_detail"] = (
+            "%d proposal(s) evaluated, none valid; first failure: %s" % (
+                sum(1 for row in trajectory_rows if int(row.get("step", 0) or 0) > 0),
+                next((row.get("error") or (row.get("metrics") or {}).get("candidate_failure_kind")
+                      for row in trajectory_rows if int(row.get("step", 0) or 0) > 0), None)))
+        log_fn("[%s] PROTOCOL INCOMPLETE: no valid proposal in %d - this run is not evidence "
+               "about the model" % (spec.task_id, budget))
     atomic_write_text(
         workdir / "summary.json",
         json.dumps(result.summary, indent=2, allow_nan=False) + "\n",

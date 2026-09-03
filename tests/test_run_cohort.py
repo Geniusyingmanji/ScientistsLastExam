@@ -29,6 +29,10 @@ ROOT = Path(__file__).resolve().parent.parent
 SCRIPT = ROOT / "scripts" / "run_cohort.sh"
 
 
+from _sandbox_tools import skip_unless_sandbox  # noqa: E402
+
+
+@skip_unless_sandbox("flock")
 class CohortRunnerTests(unittest.TestCase):
     def setUp(self):
         self._tmp = TemporaryDirectory()

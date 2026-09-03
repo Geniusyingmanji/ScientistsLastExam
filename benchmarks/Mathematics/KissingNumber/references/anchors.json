@@ -1,0 +1,26 @@
+{
+  "task": "Mathematics/KissingNumber",
+  "anchors": [
+    {
+      "name": "sota_ref_d9",
+      "value": 306,
+      "source_url": "https://cohn.mit.edu/kissing-numbers/",
+      "derivation": "Cohn table lower bound",
+      "retrieved_on": "2026-09-03"
+    },
+    {
+      "name": "sota_ref_d10",
+      "value": 510,
+      "source_url": "https://cohn.mit.edu/kissing-numbers/",
+      "derivation": "Cohn table lower bound",
+      "retrieved_on": "2026-09-03"
+    },
+    {
+      "name": "sota_ref_d12",
+      "value": 841,
+      "source_url": "https://arxiv.org/abs/2606.18984",
+      "derivation": "Takhanov-Assylbekov-Yun 2026; verified against Cohn table 2026-09-03",
+      "retrieved_on": "2026-09-03"
+    }
+  ]
+}

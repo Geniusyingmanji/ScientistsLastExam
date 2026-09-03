@@ -25,7 +25,10 @@ class BenchmarkLayoutTests(unittest.TestCase):
         # intended outcome, not saturation.
         # 58: PTA + ComplexBose + QuinaryHull on top of CrowdedSpectrum,
         # Survivorship, AMOC, LookElsewhere and the five Wave-0 constructions (55).
-        self.assertEqual(len(list_tasks(None)), 58)
+        # Every discovered task directory is a listed task and nothing else is. The count is not
+        # a policy: it moved 43 -> 58 in two days and the pin only ever cost edits.
+        self.assertEqual(len(list_tasks(None)), len(discover_task_dirs()))
+        self.assertGreater(len(list_tasks(None)), 0)
 
     def test_logical_domain_is_independent_of_physical_discipline(self):
         specs = {spec.task_id: spec for spec in list_tasks(None)}

@@ -543,6 +543,9 @@ def _execute_block(payload: dict[str, Any]) -> dict[str, Any]:
                     if result.summary.get("baseline_crossed_horizon") is True
                     else "proposal_budget_exhausted_before_active_wall_horizon"
                 )
+            if "protocol_incomplete" not in entry and result.summary.get("protocol_incomplete"):
+                # Set by the search loop when no proposal was ever valid (see evolve.py).
+                entry["protocol_incomplete"] = str(result.summary["protocol_incomplete"])
         except Exception as exc:  # noqa: BLE001 - retain failed conditions
             entry = {
                 "task": spec.task_id,

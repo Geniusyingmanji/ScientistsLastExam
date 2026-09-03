@@ -18,22 +18,22 @@ P2 下月(类型扩展与重判)。
 | 本轮有前沿模型 draw 的任务 | 3 / 58 |
 | certified 任务对 Opus 5 能测迭代 | 0 / 5 |
 
-## P0:修正与固化(本周)
+## P0:修正与固化(本周)—— 2026-09-03 状态:P0.1–P0.6 已落地(P0.5 的 runtime 哈希收窄部分除外),旧 run_eval 进程内执行路径已关闭
 
-### P0.1 恢复 main 绿灯
+### P0.1 恢复 main 绿灯 ✅
 `tests/test_task_maturity.py` 有 5 个测试把 12 个新任务钉为"不得进 `internal_science_admission`",
 钉的是冻结证据文档过期时的快照;重出 v69/v52 后它们按门的定义(卡片 + 证书记录 + 沙箱基线)通过。
 改为断言真正要保的性质:`certification_status == candidate`、`gate["blockers"] == []`、不在默认注册表。
 验收:`pytest tests/test_task_maturity.py tests/test_measurement_health.py` 0 failed。
 
-### P0.2 CI:Linux 全量 + 沙箱测试的 skip 语义
+### P0.2 CI:Linux 全量 + 沙箱测试的 skip 语义 ✅(`.github/workflows/tests.yml`、`tests/_sandbox_tools.py`;仅在平台无法提供 bwrap/flock 时 skip,Linux 缺工具仍 fail)
 - 新增 `.github/workflows/tests.yml`:ubuntu 容器,`apt install bubblewrap util-linux`,Python 3.8 与 3.11
   两档(基准主机是 3.8),跑 `python -m unittest discover -s tests`。
 - `tests/` 里所有需要 bwrap / flock 的测试,在缺工具时 `self.skipTest("requires bwrap")`,不再 fail。
   涉及 `test_secure_eval.py`、`test_run_cohort.py`、以及 12 个新任务的 `*_secure_path*` 测试。
 验收:Mac 上全量测试只剩 skip,无环境性 fail;CI 在 PR 上有 checks(本轮三个 PR 是 0 checks)。
 
-### P0.3 "没测到"与"测到零"必须区分(run 级不变量)
+### P0.3 "没测到"与"测到零"必须区分(run 级不变量)✅(`summary.protocol_incomplete = no_valid_proposal`;batch_evolve 传递;准入报告 `collect` 跳过;`tests/test_protocol_incomplete_runs_are_not_evidence.py`)
 - `sle/algorithms/evolve.py`:一个 run 内若全部提案都是 `no_code` / `candidate_invalid`,
   在 `summary.json` 写 `protocol_incomplete: true` 与首要失败原因,并在 stderr 打印显眼警告。
 - `scripts/batch_evolve.py` 汇总里单列 `protocol_incomplete_runs`;
@@ -42,7 +42,7 @@ P2 下月(类型扩展与重判)。
 - `sle/llm.py` 已做的"有输出 token 却无 text 块 → RuntimeError"补单元测试覆盖 chat 与 anthropic 两条 wire。
 验收:人为把 `thinking` 字段去掉复现一次,报告应显示 protocol_incomplete 而非"模型得 0 分"。
 
-### P0.4 锚点溯源硬约束
+### P0.4 锚点溯源硬约束 ✅(8 个任务 `references/anchors.json`,守卫要求每个 evaluator 字面量都在账本内且带 source_url;evaluator 未改,哈希不动)
 - 新增 `references/anchors.json`(每个字面锚点任务):`{name, value, source_url, retrieved_on, derivation}`;
   evaluator 的 `SIZES/INSTANCES/BEST` 从它读取,不再内联数字。
 - `tests/test_external_anchors_are_checkable.py`:守卫改为"模块级 dict 里任何非零数值字面量都视为锚点",
@@ -52,7 +52,7 @@ P2 下月(类型扩展与重判)。
   OEIS 文本格式、arXiv 摘要),输出 `experiments/anchor_provenance_<date>.json`。
 验收:8 个字面锚点任务全部有 anchors.json;守卫在删掉任一 source_url 时失败(阳性对照)。
 
-### P0.5 全局证据一键刷新
+### P0.5 全局证据一键刷新 ✅ 脚本 `scripts/refresh_global_evidence.py`(runtime 哈希收窄 **未做**,见下)
 - 新增 `scripts/refresh_global_evidence.py`:在干净树上依次跑 `audit_tasks.py` → `run_secure_baseline.py`
   → `audit_task_maturity.py`,自动编号 vN+1,改写 `GLOBAL_REPORTS` 与 `DEFAULT_MATURITY` 指针,
   打印准入门与库存计数供更新 pin。
@@ -60,11 +60,15 @@ P2 下月(类型扩展与重判)。
   (procfs 探测)与评测语义分文件,前者不进哈希。本轮改 31 行 procfs 探测就让 26/58 任务的基线失效。
 验收:改动 `secure_eval.py` 中的挂载探测后,重出证据不需要;改动 `evaluate.py` 后需要,且脚本一步完成。
 
-### P0.6 计数类 pin 改为计算不变量
+### P0.6 计数类 pin 改为计算不变量 ✅
 `tests/test_certification.py`、`test_benchmark_layout.py`、`test_task_maturity.py`、
 `test_measurement_health.py` 里的库存 / candidate / 准入门字面量,改为
 "从注册表算出 + 与报告一致"的断言;只保留策略性字面量(certified == 5)。本轮这些 pin 手改了 43→44→45→46→58 共五次。
 验收:加一个任务只需注册,不需改任何测试计数。
+
+### P0.7 关闭旧 run_eval.py 的进程内执行路径 ✅
+46 个旧模板在同一进程 import 候选再调 oracle;现改为薄封装,shell 出去调 `python -m sle eval`(trusted_driver + bwrap)。
+`eval_command.txt` 黑盒契约不变。代价:46 个任务包哈希变动,需一次证据刷新。
 
 ## P1:标定与准入自动化(两周)
 

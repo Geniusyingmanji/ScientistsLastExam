@@ -10,7 +10,7 @@ import numpy as np
 from sle.certification import certification_status, load_certification
 from sle.evaluate import INVALID_SCORE, evaluate_candidate
 from sle.metric_visibility import search_visible_metrics
-from sle.registry import find_task, list_tasks
+from sle.registry import discover_task_dirs, find_task, list_tasks
 
 
 def load_oracle(task_id: str):
@@ -35,7 +35,8 @@ class CertificationPolicyTests(unittest.TestCase):
         # that is the intended result rather than saturation.
         # 58: PTA + Bose + quinary hull on top of CrowdedSpectrum, Survivorship,
         # AMOC, LookElsewhere and the five Wave-0 constructions (55).
-        self.assertEqual(len(list_tasks(None)), 58)
+        # Computed: the inventory is whatever the registry discovers.
+        self.assertEqual(len(list_tasks(None)), len(discover_task_dirs()))
         self.assertEqual(
             certification_status("ProteinEngineering/ProteinStabilityDesign"),
             "candidate",

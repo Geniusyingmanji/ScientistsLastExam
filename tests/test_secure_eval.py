@@ -61,6 +61,12 @@ def _fixture_task(root: Path) -> Path:
     return task_dir
 
 
+from _sandbox_tools import skip_unless_sandbox  # noqa: E402
+
+
+# Skipped only where the platform cannot have bwrap (macOS). Linux without it still fails: that
+# is a misconfigured benchmark host, and this file's note about silent security suites stands.
+@skip_unless_sandbox("bwrap")
 class SecureEvaluationTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):

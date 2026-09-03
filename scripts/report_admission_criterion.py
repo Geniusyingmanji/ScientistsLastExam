@@ -227,6 +227,20 @@ def _cohort_of(workdir: Path, runs_root: Path) -> str:
     return relative.parts[0] if relative.parts else runs_root.name
 
 
+
+def _protocol_incomplete(workdir: Path) -> str | None:
+    """The reason a run's own summary gives for not being evidence, if it gives one."""
+    summary = workdir / "summary.json"
+    if not summary.is_file():
+        return None
+    try:
+        document = json.loads(summary.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    value = document.get("protocol_incomplete")
+    return str(value) if value else None
+
+
 def collect(runs_root: Path) -> dict[tuple[str, str, str, str, str, str],
                                      dict[str, dict[int, list[float]]]]:
     """Group curves by task, cohort, model condition, task version, and runtime.
@@ -255,6 +269,11 @@ def collect(runs_root: Path) -> dict[tuple[str, str, str, str, str, str],
         if identity is None:
             continue
         task, mode, seed, model, condition, contract, runtime = identity
+        if _protocol_incomplete(workdir):
+            # A run with no valid proposal is not a measurement of the searcher; its flat zero
+            # curve would read as saturation of the control or as a feedback arm that never
+            # moved, and either reading is about the transport, not the task.
+            continue
         curve = best_so_far(trajectory)
         if curve is None:
             continue

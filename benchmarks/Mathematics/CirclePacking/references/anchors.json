@@ -1,0 +1,26 @@
+{
+  "task": "Optimization/CirclePacking",
+  "anchors": [
+    {
+      "name": "best_side_n7",
+      "value": 5.7320508076,
+      "source_url": "http://www.packomania.com/csq/txt/csq7.txt",
+      "derivation": "side = 1/r with r = 0.174457630187 from the coordinate file; equals 4 + sqrt(3), proven optimal",
+      "retrieved_on": "2026-09-03"
+    },
+    {
+      "name": "best_side_n10",
+      "value": 6.7474415232,
+      "source_url": "http://www.packomania.com/csq/txt/csq10.txt",
+      "derivation": "side = 1/r with r = 0.148204322565 from the coordinate file",
+      "retrieved_on": "2026-09-03"
+    },
+    {
+      "name": "best_side_n13",
+      "value": 7.4630478289,
+      "source_url": "http://www.packomania.com/csq/txt/csq13.txt",
+      "derivation": "side = 1/r with r = 0.133993513499; proven optimal (Peikert 1991) per https://erich-friedman.github.io/packing/cirinsqu/",
+      "retrieved_on": "2026-09-03"
+    }
+  ]
+}

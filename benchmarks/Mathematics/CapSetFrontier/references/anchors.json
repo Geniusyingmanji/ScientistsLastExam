@@ -1,0 +1,26 @@
+{
+  "task": "Mathematics/CapSetFrontier",
+  "anchors": [
+    {
+      "name": "sota_ref_n7",
+      "value": 236,
+      "source_url": "https://doi.org/10.1007/BF01388452",
+      "derivation": "Calderbank-Fishburn, best known",
+      "retrieved_on": "2026-09-03"
+    },
+    {
+      "name": "sota_ref_n8",
+      "value": 512,
+      "source_url": "https://doi.org/10.1038/s41586-023-06924-6",
+      "derivation": "FunSearch 2023, best known",
+      "retrieved_on": "2026-09-03"
+    },
+    {
+      "name": "sota_ref_n9",
+      "value": 1082,
+      "source_url": "https://doi.org/10.1038/s41586-023-06924-6",
+      "derivation": "FunSearch companion, Figure C.5, best known",
+      "retrieved_on": "2026-09-03"
+    }
+  ]
+}

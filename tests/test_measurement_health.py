@@ -3,6 +3,10 @@ from __future__ import annotations
 import importlib.util
 import unittest
 from pathlib import Path
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from sle.registry import list_tasks  # noqa: E402
 
 
 def load_module():
@@ -21,7 +25,7 @@ class MeasurementHealthAuditTests(unittest.TestCase):
         cls.tasks = {row["task"]: row for row in cls.report["tasks"]}
 
     def test_classification_is_exhaustive_and_claim_bounded(self):
-        self.assertEqual(self.report["inventory_count"], 58)
+        self.assertEqual(self.report["inventory_count"], len(list_tasks(None)))
         self.assertEqual(
             sum(self.report["classification_counts"].values()),
             self.report["inventory_count"],

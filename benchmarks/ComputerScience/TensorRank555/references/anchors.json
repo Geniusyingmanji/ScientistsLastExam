@@ -1,0 +1,19 @@
+{
+  "task": "Algorithm/TensorRank555",
+  "anchors": [
+    {
+      "name": "sota_ref_555",
+      "value": 93,
+      "source_url": "https://arxiv.org/abs/2502.04514",
+      "derivation": "Moosbauer-Poole ISSAC 2025, 93 multiplications for 5x5, arbitrary field",
+      "retrieved_on": "2026-09-03"
+    },
+    {
+      "name": "sota_ref_666",
+      "value": 153,
+      "source_url": "https://arxiv.org/abs/2502.04514",
+      "derivation": "Moosbauer-Poole ISSAC 2025, 153 multiplications for 6x6",
+      "retrieved_on": "2026-09-03"
+    }
+  ]
+}
