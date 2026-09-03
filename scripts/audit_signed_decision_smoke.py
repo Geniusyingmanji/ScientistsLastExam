@@ -15,6 +15,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
+from scripts.repo_paths import resolve_run_workdir  # noqa: E402
 from sle.algorithms.evolve import extract_signed_submission  # noqa: E402
 from sle.provenance import finalize_report_trust, source_provenance  # noqa: E402
 from sle.sentinels import load_sentinel_events  # noqa: E402
@@ -26,6 +27,13 @@ EXPECTED_INCOMPLETE = "proposal_budget_exhausted_before_active_wall_horizon"
 
 def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _recorded_path(path: Path) -> str:
+    try:
+        return str(path.relative_to(ROOT))
+    except ValueError:
+        return str(path)
 
 
 def build_report(raw_path: Path = DEFAULT_RAW) -> dict[str, Any]:
@@ -41,13 +49,21 @@ def build_report(raw_path: Path = DEFAULT_RAW) -> dict[str, Any]:
     config = raw.get("config") or {}
     summary = run.get("summary") or {}
     snapshot = summary.get("sentinel_snapshot") or {}
-    workdir = Path(run.get("workdir") or ".")
-    ledger_path = workdir / str(snapshot.get("ledger_path"))
-    events = []
     try:
-        events = load_sentinel_events(ledger_path, workdir=workdir)
-    except Exception as exc:  # noqa: BLE001
-        issues.append("sentinel replay failed: %s" % exc)
+        workdir = resolve_run_workdir(run.get("workdir"), ROOT)
+    except (OSError, TypeError, ValueError) as exc:
+        issues.append("workdir resolution failed: %s" % exc)
+        workdir = None
+    ledger_path = (
+        workdir / str(snapshot.get("ledger_path"))
+        if workdir is not None else None
+    )
+    events = []
+    if ledger_path is not None:
+        try:
+            events = load_sentinel_events(ledger_path, workdir=workdir)
+        except Exception as exc:  # noqa: BLE001
+            issues.append("sentinel replay failed: %s" % exc)
     by_type = {row["sentinel_type"]: row for row in events}
     submission = by_type.get("submission") or {}
     commit = by_type.get("commit") or {}
@@ -57,8 +73,14 @@ def build_report(raw_path: Path = DEFAULT_RAW) -> dict[str, Any]:
     proposal = trajectory[1] if len(trajectory) == 2 else {}
 
     response_ref = submission.get("provider_response") or {}
-    response_path = workdir / str(response_ref.get("path"))
-    response = response_path.read_text(encoding="utf-8") if response_path.is_file() else ""
+    response_path = (
+        workdir / str(response_ref.get("path"))
+        if workdir is not None else None
+    )
+    response = (
+        response_path.read_text(encoding="utf-8")
+        if response_path is not None and response_path.is_file() else ""
+    )
     parsed = extract_signed_submission(response)
     parsed_code, parsed_decision = parsed if parsed is not None else (None, None)
     response_sha = hashlib.sha256(response.encode("utf-8")).hexdigest() if response else None
@@ -120,7 +142,8 @@ def build_report(raw_path: Path = DEFAULT_RAW) -> dict[str, Any]:
             and terminal.get("evaluation", {}).get("status") == "reused_deterministic"
         ),
         "sentinel_ledger_hash_matches": bool(
-            ledger_path.is_file()
+            ledger_path is not None
+            and ledger_path.is_file()
             and _sha256(ledger_path) == snapshot.get("ledger_sha256")
             and events == snapshot.get("events")
         ),
@@ -137,7 +160,7 @@ def build_report(raw_path: Path = DEFAULT_RAW) -> dict[str, Any]:
         "created_at": datetime.now(timezone.utc).isoformat(),
         "source_provenance": source_provenance(ROOT),
         "environment": {"python": sys.version, "platform": platform.platform()},
-        "input": {"path": str(raw_path.relative_to(ROOT)), "sha256": _sha256(raw_path)},
+        "input": {"path": _recorded_path(raw_path), "sha256": _sha256(raw_path)},
         "checks": checks,
         "observed": {
             "task": run.get("task"),

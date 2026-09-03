@@ -15,6 +15,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
+from scripts.repo_paths import resolve_run_workdir  # noqa: E402
 from sle.provenance import finalize_report_trust, source_provenance  # noqa: E402
 from sle.sentinels import load_sentinel_events  # noqa: E402
 
@@ -70,15 +71,30 @@ def build_report(raw_path: Path, cohort_path: Path) -> dict[str, Any]:
         issues.append("raw smoke sentinel interval is not 1800 seconds")
 
     for run in raw.get("runs") or []:
-        workdir = Path(run["workdir"])
-        snapshot = (run.get("summary") or {}).get("sentinel_snapshot") or {}
-        ledger_path = workdir / str(snapshot.get("ledger_path"))
         try:
-            events = load_sentinel_events(ledger_path, workdir=workdir)
-        except Exception as exc:  # noqa: BLE001
-            issues.append("%s sentinel replay failed: %s" % (run.get("task"), exc))
-            events = []
-        replay_hash = _sha256(ledger_path) if ledger_path.is_file() else None
+            workdir = resolve_run_workdir(run.get("workdir"), ROOT)
+        except (OSError, TypeError, ValueError) as exc:
+            issues.append(
+                "%s workdir resolution failed: %s" % (run.get("task"), exc)
+            )
+            workdir = None
+        snapshot = (run.get("summary") or {}).get("sentinel_snapshot") or {}
+        ledger_path = (
+            workdir / str(snapshot.get("ledger_path"))
+            if workdir is not None else None
+        )
+        events = []
+        if ledger_path is not None:
+            try:
+                events = load_sentinel_events(ledger_path, workdir=workdir)
+            except Exception as exc:  # noqa: BLE001
+                issues.append(
+                    "%s sentinel replay failed: %s" % (run.get("task"), exc)
+                )
+        replay_hash = (
+            _sha256(ledger_path)
+            if ledger_path is not None and ledger_path.is_file() else None
+        )
         checks = {
             "protocol_incomplete_is_expected": run.get("protocol_incomplete") == EXPECTED_INCOMPLETE,
             "horizon_not_reached": (run.get("summary") or {}).get("horizon_reached") is False,
@@ -108,7 +124,7 @@ def build_report(raw_path: Path, cohort_path: Path) -> dict[str, Any]:
             )
         rows.append({
             "task": run.get("task"),
-            "workdir": str(workdir),
+            "workdir": str(workdir) if workdir is not None else None,
             "checks": checks,
             "sentinel_ledger_sha256": replay_hash,
             "t0_artifact_sha256": events[0].get("artifact_sha256") if events else None,
