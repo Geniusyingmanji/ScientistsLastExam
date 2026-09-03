@@ -74,6 +74,13 @@ P2 下月(类型扩展与重判)。
 ### P0.7 关闭旧 run_eval.py 的进程内执行路径 ✅
 46 个旧模板在同一进程 import 候选再调 oracle;现改为薄封装,shell 出去调 `python -m sle eval`(trusted_driver + bwrap)。
 `eval_command.txt` 黑盒契约不变。代价:46 个任务包哈希变动,需一次证据刷新。
+**连带伤(2026-09-03 CI 首跑暴露)**:全局证据刷了,但 7 任务冻结队列没刷 —— 物质性契约与预审 spec v8 都把
+`frontier_eval/run_eval.py` 当运行时文件,重写后 7/7 解绑,`test_scientific_materiality` 4 红、`test_measurement_health_preflight` 8 红、
+`test_batch_runner` 1 红。处置:(a) 该文件没有任何 `sle/` 代码执行,绑定的标定证据全由 `evaluate_candidate` 产出,故从
+`_task_runtime_paths` 与 `_package_mismatch_explanation` 的行为性文件里排除(`RUNTIME_SCOPE_EXCLUDED_EVAL_FILES`,单测钉住);
+(b) `evolve.py` 的 protocol_incomplete 改动确实在恢复检查的运行时范围内,在 g450 干净树重测 `evaluation_recovery_fault_audit_v4`;
+(c) `rebind_measurement_health_spec.py` 重签 spec v9 / manifest v7 / artifacts v7,7 任务全部 rebound、0 refused。
+教训:改任何任务包内文件后,`refresh_global_evidence.py` 之外还要跑 `pytest tests/test_measurement_health_preflight.py tests/test_scientific_materiality.py tests/test_batch_runner.py`。
 
 ## P1:标定与准入自动化(两周)
 
