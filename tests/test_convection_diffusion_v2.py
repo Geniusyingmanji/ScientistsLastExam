@@ -17,6 +17,7 @@ from scipy.sparse.linalg import spsolve
 from sle.evaluate import evaluate_candidate
 from sle.metric_visibility import search_visible_metrics
 from sle.registry import find_task
+from _sandbox_tools import skip_unless_sandbox  # noqa: E402
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -223,6 +224,7 @@ class ConvectionDiffusionV2Tests(unittest.TestCase):
         ):
             self.assertTrue(all(row["passed"] for row in report[key]))
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_caught_overbudget_secure_evaluation_fails_closed(self):
         spec = find_task(
             "HeatTransfer/ConvectionDiffusionOpt", include_uncertified=True
@@ -262,6 +264,7 @@ class ConvectionDiffusionV2Tests(unittest.TestCase):
         )
         self.assertEqual(metrics["candidate_world_call_count"], 11)
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_all_worlds_get_fresh_candidate_process_and_tmpfs(self):
         spec = find_task(
             "HeatTransfer/ConvectionDiffusionOpt", include_uncertified=True
@@ -311,6 +314,7 @@ class ConvectionDiffusionV2Tests(unittest.TestCase):
             math.isclose(row["confidence"], 0.1) for row in metrics["per_world"]
         ))
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_legacy_driver_uses_v2_entrypoint(self):
         with tempfile.TemporaryDirectory() as tmp:
             metrics_path = Path(tmp) / "metrics.json"

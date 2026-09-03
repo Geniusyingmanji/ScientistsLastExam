@@ -15,6 +15,7 @@ import numpy as np
 from sle.evaluate import evaluate_candidate
 from sle.metric_visibility import search_visible_metrics
 from sle.registry import find_task
+from _sandbox_tools import skip_unless_sandbox  # noqa: E402
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -296,6 +297,7 @@ class DistillationV2Tests(unittest.TestCase):
             self.assertTrue(forbidden.isdisjoint(problem))
             self.assertEqual(set(problem["design_fields"]), set(oracle.DESIGN_FIELDS))
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_secure_evaluation_resets_process_imports_and_tmpfs_per_instance(self):
         spec = find_task(
             "ChemicalProcess/DistillationColumnDesign",
@@ -342,6 +344,7 @@ class DistillationV2Tests(unittest.TestCase):
         self.assertEqual(metrics["candidate_instance_valid_rate"], 1.0)
         self.assertTrue(all(row["valid"] for row in metrics["per_instance"]))
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_legacy_driver_uses_v2_entrypoint(self):
         with tempfile.TemporaryDirectory() as tmp:
             metrics_path = Path(tmp) / "metrics.json"

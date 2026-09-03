@@ -13,6 +13,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from _sandbox_tools import skip_unless_sandbox  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -75,6 +76,7 @@ class QuinaryConvexHullTests(unittest.TestCase):
         self.assertEqual(reference["development_false_discovery_rate"], 0.0)
         self.assertEqual(reference["development_signal_recovery_rate"], 1.0)
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_the_reference_runs_through_the_same_secure_path_as_submissions(self):
         with tempfile.TemporaryDirectory() as tmp:
             metrics_path = Path(tmp) / "metrics.json"

@@ -8,6 +8,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 from sle.llm import LLMConfig
+from _sandbox_tools import skip_unless_sandbox  # noqa: E402
 
 
 SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "batch_evolve.py"
@@ -161,6 +162,7 @@ class BatchAggregationTests(unittest.TestCase):
             )
             self.assertEqual(set(block["feedback_modes"]), set(modes))
 
+    @skip_unless_sandbox("bwrap")  # runs the baseline through the real harness
     def test_block_resume_retries_started_cell_then_runs_unstarted_cells(self):
         task = "Chemistry/LennardJonesCluster"
         modes = ["normal", "score_only"]
@@ -305,6 +307,7 @@ class BatchAggregationTests(unittest.TestCase):
             1,
         )
 
+    @skip_unless_sandbox("bwrap")  # runs the baseline through the real harness
     def test_complete_smoke_writes_passed_status(self):
         client = type("Client", (), {"config": self.Config()})()
         clean = {"git_available": True, "git_revision": "abc",
@@ -359,6 +362,7 @@ class BatchAggregationTests(unittest.TestCase):
         self.assertEqual(report["config"]["run_role"], "protocol_smoke")
         self.assertIn("do not treat", report["warning"])
 
+    @skip_unless_sandbox("bwrap")  # runs the baseline through the real harness
     def test_preregistration_is_hash_bound_into_config(self):
         client = type("Client", (), {"config": self.Config()})()
         clean = {"git_available": True, "git_revision": "abc",
@@ -573,6 +577,7 @@ class BatchAggregationTests(unittest.TestCase):
         )
         self.assertFalse(record["confirmatory_reuse_permitted"])
 
+    @skip_unless_sandbox("bwrap")  # runs the baseline through the real harness
     def test_resume_rejects_changed_experiment_config(self):
         client = type("Client", (), {"config": self.Config()})()
 
@@ -595,6 +600,7 @@ class BatchAggregationTests(unittest.TestCase):
                     "--resume",
                 ])
 
+    @skip_unless_sandbox("bwrap")  # runs the baseline through the real harness
     def test_dirty_smoke_executes_but_is_not_trusted_evidence(self):
         client = type("Client", (), {"config": self.Config()})()
         dirty = {"git_available": True, "git_revision": "abc", "source_tree_dirty": True,

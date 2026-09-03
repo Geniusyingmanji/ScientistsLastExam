@@ -14,6 +14,7 @@ import tempfile
 import textwrap
 import unittest
 from pathlib import Path
+from _sandbox_tools import skip_unless_sandbox  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -81,6 +82,7 @@ class AMOCTippingRefusalTests(unittest.TestCase):
         self.assertTrue(all(row["mechanism_score"] == 0.0 for row in unsupported))
         self.assertTrue(all(not row["correct_refusal"] for row in unsupported))
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_candidate_state_cannot_encode_the_fixed_world_order(self):
         from sle.evaluate import evaluate_candidate
         from sle.registry import find_task

@@ -13,6 +13,7 @@ import numpy as np
 from sle.evaluate import evaluate_candidate
 from sle.metric_visibility import search_visible_metrics
 from sle.registry import find_task
+from _sandbox_tools import skip_unless_sandbox  # noqa: E402
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -178,6 +179,7 @@ class RNAInverseDesignTests(unittest.TestCase):
                 right - left > problem["min_hairpin"] for left, right in pairs
             ))
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_secure_baseline_is_valid_zero_and_metrics_are_sealed(self):
         spec = find_task(
             "RNAEngineering/RNAInverseDesign", include_uncertified=True
@@ -199,6 +201,7 @@ class RNAInverseDesignTests(unittest.TestCase):
         ):
             self.assertNotIn(key, visible)
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_all_instances_get_fresh_process_imports_and_tmpfs(self):
         result = self.evaluate_source(
             """
@@ -221,6 +224,7 @@ class RNAInverseDesignTests(unittest.TestCase):
         self.assertEqual(result["candidate_problem_valid_rate"], 1.0, result)
         self.assertEqual(result["candidate_problem_call_count"], 8, result)
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_malformed_length_alphabet_fixed_gc_and_motif_fail_closed(self):
         bodies = (
             "return {}",

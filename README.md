@@ -136,11 +136,18 @@ python scripts/report_admission_criterion.py --runs runs/<name> --output /tmp/ad
 - 发现类任务要报满三个轴,并能区分"弃权"与"尝试了但没做对"。
 - 难度用真实模型 draw 标定,不用参考实现或消融阶梯:参考解故意不打满,首个前沿模型提案够到参考的
   任务只算 on-ramp。
+- 在哪里跑:笔记本(macOS / Windows)只用来改代码和跑单元测试,需要沙箱的测试会自动 skip。
+  任何要进仓库的证据(基线、标定、Δ 阶梯、全局证据刷新、恢复审计)都必须在装有 bubblewrap 与
+  util-linux flock 的 Linux 主机上、从干净的 git 树生成;脏树或笔记本产出的文档会被标为不可信并被
+  测试拒收。CI 在 Linux 上跑全量测试,是合并前唯一算数的绿灯。
+- 密钥只走环境变量:LLM 配置放 `sle/conf/llm/local.*.yaml`(已忽略),里面写
+  `api_key: ${ANTHROPIC_API_KEY}` 这样的引用,永远不要把密钥写进任何文件。
 
 加一个包只是让它可被发现,不等于认证。认证描述的是证据质量,不是任务难度。
 
 ```bash
-python -m unittest discover -s tests -q
+python -m pytest tests/ -q                                   # 笔记本:沙箱测试自动 skip
 python scripts/audit_tasks.py --output /tmp/certification.json
 python scripts/audit_benchmark_standards.py --output /tmp/standards.json
+python scripts/refresh_global_evidence.py --commit           # 仅限 Linux 主机、干净树
 ```

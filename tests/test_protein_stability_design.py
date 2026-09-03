@@ -11,6 +11,7 @@ from pathlib import Path
 from sle.evaluate import evaluate_candidate
 from sle.metric_visibility import search_visible_metrics
 from sle.registry import find_task
+from _sandbox_tools import skip_unless_sandbox  # noqa: E402
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -171,6 +172,7 @@ class ProteinStabilityDesignTests(unittest.TestCase):
             self.assertEqual(problem["batch_size"], 8)
             self.assertEqual(problem["assay_budget"], 12)
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_secure_baseline_is_zero_and_science_metrics_are_sealed(self):
         spec = find_task(
             "ProteinEngineering/ProteinStabilityDesign", include_uncertified=True
@@ -227,6 +229,7 @@ class ProteinStabilityDesignTests(unittest.TestCase):
         finally:
             ORACLE._batch_metrics = original
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_all_worlds_get_fresh_process_imports_and_tmpfs(self):
         result = self.evaluate_source(
             """
@@ -253,6 +256,7 @@ class ProteinStabilityDesignTests(unittest.TestCase):
         self.assertEqual(result["candidate_world_call_count"], 8)
         self.assertEqual(result["candidate_world_valid_rate"], 1.0)
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_budget_repeat_and_invalid_assay_fail_closed_even_when_caught(self):
         bodies = (
             "for _ in range(13): assay(make(problem['candidate_residue_pairs'][0]))",
@@ -281,6 +285,7 @@ class ProteinStabilityDesignTests(unittest.TestCase):
                     row["failure_kind"] == expected for row in result["per_world"]
                 ))
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_malformed_duplicate_wrong_length_and_unmeasured_pair_fail_closed(self):
         bodies = (
             "return {}",

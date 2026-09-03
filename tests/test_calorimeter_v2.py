@@ -17,6 +17,7 @@ from scipy.stats import gamma as gamma_distribution
 from sle.evaluate import evaluate_candidate
 from sle.metric_visibility import search_visible_metrics
 from sle.registry import find_task
+from _sandbox_tools import skip_unless_sandbox  # noqa: E402
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -272,6 +273,7 @@ class CalorimeterV2Tests(unittest.TestCase):
                 tuple(problem["design_fields"]), oracle.DESIGN_FIELDS
             )
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_all_six_instances_get_fresh_process_and_tmpfs(self):
         spec = find_task(
             "ParticlePhysics/CalorimeterDesign", include_uncertified=True
@@ -329,6 +331,7 @@ class CalorimeterV2Tests(unittest.TestCase):
         self.assertEqual(metrics["candidate_instance_valid_rate"], 1.0)
         self.assertTrue(all(row["valid"] for row in metrics["per_instance"]))
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_secure_baseline_and_legacy_driver_use_v2_interface(self):
         spec = find_task(
             "ParticlePhysics/CalorimeterDesign", include_uncertified=True

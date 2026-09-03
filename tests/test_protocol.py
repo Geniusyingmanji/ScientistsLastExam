@@ -28,6 +28,7 @@ from sle.protocol import (TrajectoryEvent, append_event, best_so_far_auc,
 from sle.registry import find_task
 from sle import upstream_evaluator
 from sle.upstream_evaluator import write_configured_wrapper
+from _sandbox_tools import skip_unless_sandbox  # noqa: E402
 
 
 class FakeLLM:
@@ -357,6 +358,7 @@ class GreedyRewriteTests(unittest.TestCase):
             "```python\n", "```python\nx = 0\n```\n```python\n", 1
         )))
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_invalid_signed_contract_is_candidate_failure(self):
         spec = find_task("LennardJonesCluster")
         baseline = spec.initial_program_path.read_text(encoding="utf-8")
@@ -382,6 +384,7 @@ class GreedyRewriteTests(unittest.TestCase):
         )
         self.assertEqual(submission["evaluation"]["status"], "not_applicable")
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_signed_commit_is_bound_and_honor_stop_ends_proposals(self):
         spec = find_task("LennardJonesCluster")
         baseline = spec.initial_program_path.read_text(encoding="utf-8")
@@ -431,6 +434,7 @@ class GreedyRewriteTests(unittest.TestCase):
         )
         self.assertIn("```decision``` JSON object", llm.prompts[0])
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_signed_abstain_can_be_recorded_without_stopping(self):
         spec = find_task("LennardJonesCluster")
         baseline = spec.initial_program_path.read_text(encoding="utf-8")
@@ -466,6 +470,7 @@ class GreedyRewriteTests(unittest.TestCase):
         self.assertIsNone(abstain["artifact_sha256"])
         self.assertEqual(abstain["evaluation"]["status"], "not_applicable")
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_fixed_duration_sentinels_capture_boundary_artifacts(self):
         spec = find_task("LennardJonesCluster")
         baseline = spec.initial_program_path.read_text(encoding="utf-8")
@@ -579,6 +584,7 @@ class GreedyRewriteTests(unittest.TestCase):
             "baseline_evaluation_completed_after_active_wall_horizon",
         )
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_trace_cost_and_resume(self):
         spec = find_task("LennardJonesCluster")
         baseline = spec.initial_program_path.read_text(encoding="utf-8")
@@ -621,6 +627,7 @@ class GreedyRewriteTests(unittest.TestCase):
                                workdir=work, seed=17, resume=True,
                                log_fn=lambda _: None)
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_llm_transport_failure_does_not_consume_proposal_slot(self):
         spec = find_task("LennardJonesCluster")
         with tempfile.TemporaryDirectory() as tmp:
@@ -946,6 +953,7 @@ class GreedyRewriteTests(unittest.TestCase):
                 result.summary["evaluation_ledger_snapshot"]["request_count"], 2
             )
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_checkpoint_search_state_does_not_store_sealed_metrics(self):
         spec = find_task("ControlTheory/InvertedPendulumSwingUp", include_uncertified=True)
         baseline = spec.initial_program_path.read_text(encoding="utf-8")

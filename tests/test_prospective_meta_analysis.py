@@ -14,6 +14,7 @@ import numpy as np
 from sle.evaluate import evaluate_candidate
 from sle.metric_visibility import search_visible_metrics
 from sle.registry import find_task
+from _sandbox_tools import skip_unless_sandbox  # noqa: E402
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -272,6 +273,7 @@ class ProspectiveMetaAnalysisTests(unittest.TestCase):
         self.assertEqual(result["heldout_feasibility_rate"], 0.0)
         self.assertEqual(result["heldout_policy_score"], 0.0)
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_secure_baseline_equivalence_fresh_sessions_and_metric_sealing(self):
         oracle = self.oracle
         direct = oracle.evaluate(oracle.weak_baseline)
@@ -314,6 +316,7 @@ def synthesize_evidence(problem, confirm):
         self.assertEqual(isolated["valid"], 1.0)
         self.assertEqual(isolated["combined_score"], 0.0)
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_duplicate_confirmation_call_fails_closed_even_when_caught(self):
         spec = find_task(
             "EvidenceSynthesis/ProspectiveMetaAnalysis", include_uncertified=True
@@ -351,6 +354,7 @@ def synthesize_evidence(problem, confirm):
         self.assertEqual(metrics["valid"], 0.0)
         self.assertEqual(metrics["combined_score"], 0.0)
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_calibration_gate_executes(self):
         report = load_calibration().calibrate()
         self.assertTrue(report["execution_passed"], report)
@@ -359,12 +363,14 @@ def synthesize_evidence(problem, confirm):
         self.assertTrue(report["difficulty_gate"]["passed"])
         self.assertTrue(report["secure_baseline_exactly_matches_direct"])
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_wave5_admission_gate_executes(self):
         report = load_admission().audit()
         self.assertTrue(report["execution_passed"], report)
         self.assertEqual(report["summary"]["recommended_candidate_count"], 1)
         self.assertTrue(report["records"][0]["passed"])
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_frontier_eval_entrypoint_accepts_baseline(self):
         with tempfile.TemporaryDirectory() as tmp:
             metrics_path = Path(tmp) / "metrics.json"

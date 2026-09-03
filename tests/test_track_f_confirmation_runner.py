@@ -18,6 +18,7 @@ from sle.algorithms.evolve import greedy_rewrite
 from sle.llm import LLMConfig
 from sle.protocol import compact_trajectory_snapshot
 from sle.registry import find_task
+from _sandbox_tools import skip_unless_sandbox  # noqa: E402
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -221,6 +222,7 @@ class TrackFConfirmationRunnerTests(unittest.TestCase):
         events[3]["valid"] = False
         self.assertEqual(MODULE._observer_best_step(events, 3), 1)
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_real_retained_run_reconstructs_prompt_lineage_and_selection(self):
         spec = find_task(
             "DynamicalSystems/ActiveLawDiscovery", include_uncertified=True

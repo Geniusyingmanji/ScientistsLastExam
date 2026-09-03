@@ -14,6 +14,7 @@ from pathlib import Path
 from sle.evaluate import evaluate_candidate
 from sle.metric_visibility import search_visible_metrics
 from sle.registry import find_task
+from _sandbox_tools import skip_unless_sandbox  # noqa: E402
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -203,6 +204,7 @@ class AlloyHardnessOptimizationTests(unittest.TestCase):
             record["doi"] not in target_dois for record in confirmation_records
         ))
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_split_anchors_baseline_reference_and_truth_blind_headroom(self):
         anchors = ORACLE._anchors()
         for split in ("development", "heldout"):
@@ -232,6 +234,7 @@ class AlloyHardnessOptimizationTests(unittest.TestCase):
         self.assertEqual(result["development_assay_unique_rate"], 1.0)
         self.assertEqual(result["heldout_assay_unique_rate"], 1.0)
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_baseline_is_bit_exact_across_hash_seeds_and_secure_path(self):
         script = (
             "import importlib.util,json,pathlib;"
@@ -305,6 +308,7 @@ class AlloyHardnessOptimizationTests(unittest.TestCase):
             self.assertEqual(problem["assay_budget"], 2)
             self.assertEqual(problem["required_prediction_confidence"], 0.90)
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_secure_baseline_is_zero_and_science_metrics_are_sealed(self):
         spec = find_task(
             "MaterialsScience/AlloyHardnessOptimization", include_uncertified=True
@@ -325,6 +329,7 @@ class AlloyHardnessOptimizationTests(unittest.TestCase):
         ):
             self.assertNotIn(key, visible)
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_trusted_scoring_failure_is_not_candidate_invalidity(self):
         original = ORACLE._batch_utility
         try:
@@ -339,6 +344,7 @@ class AlloyHardnessOptimizationTests(unittest.TestCase):
         finally:
             ORACLE._batch_utility = original
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_all_worlds_get_fresh_process_imports_and_tmpfs(self):
         result = self.evaluate_source(
             """
@@ -367,6 +373,7 @@ class AlloyHardnessOptimizationTests(unittest.TestCase):
         self.assertEqual(result["candidate_world_call_count"], 13)
         self.assertEqual(result["candidate_world_valid_rate"], 1.0)
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_budget_repeat_and_invalid_assay_fail_closed_when_caught(self):
         bodies = (
             "for _ in range(3): assay(problem['candidates'][0]['id'])",
@@ -398,6 +405,7 @@ class AlloyHardnessOptimizationTests(unittest.TestCase):
                     row["failure_kind"] == expected for row in result["per_world"]
                 ))
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_malformed_ids_prediction_keys_intervals_and_nonfinite_fail_closed(self):
         bodies = (
             "return {}",

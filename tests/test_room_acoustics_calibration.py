@@ -3,6 +3,7 @@ from __future__ import annotations
 import importlib.util
 import unittest
 from pathlib import Path
+from _sandbox_tools import skip_unless_sandbox  # noqa: E402
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -21,6 +22,7 @@ def _module():
 
 
 class RoomAcousticsCalibrationTests(unittest.TestCase):
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_fast_preflight_executes_but_is_not_complete_calibration(self):
         report = _module().calibrate(recalibrate_references=False)
         self.assertTrue(report["preflight_passed"])

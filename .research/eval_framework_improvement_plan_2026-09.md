@@ -37,6 +37,10 @@ P2 下月(类型扩展与重判)。
 - `tests/` 里所有需要 bwrap / flock 的测试,在缺工具时 `self.skipTest("requires bwrap")`,不再 fail。
   涉及 `test_secure_eval.py`、`test_run_cohort.py`、以及 12 个新任务的 `*_secure_path*` 测试。
 验收:Mac 上全量测试只剩 skip,无环境性 fail;CI 在 PR 上有 checks(本轮三个 PR 是 0 checks)。
+  状态(2026-09-03 晚):CI 在 ea1e1e6 首次全绿(906 passed / 50 skipped)。Mac 全量此前 130 failed(82 个测试 + 子测试),
+  全部是走沙箱路径的环境性失败;已按测试方法逐个加 `@skip_unless_sandbox("bwrap")`(27 个文件)。唯一保留的 Mac 红是
+  `test_low_thrust_v2::test_zero_baseline_is_valid_but_not_terminal_feasible`:进程内 `oracle.evaluate(zero)` 在 Mac 给 2.5e-29,
+  Linux 给 0.0,是平台浮点差异不是沙箱问题;基准主机与 CI 均为 0,测试的精确 pin 不改。
 
 ### P0.3 "没测到"与"测到零"必须区分(run 级不变量)✅(`summary.protocol_incomplete = no_valid_proposal`;batch_evolve 传递;准入报告 `collect` 跳过;`tests/test_protocol_incomplete_runs_are_not_evidence.py`)
 - `sle/algorithms/evolve.py`:一个 run 内若全部提案都是 `no_code` / `candidate_invalid`,

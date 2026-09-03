@@ -185,7 +185,7 @@ normalized = (raw_mechanism - always_abstain) / (1.0 - always_abstain)
 2. **建分支**:`feat/<Domain>/<Task>`(例如 `feat/Biology/RNAInverseFolding`)。
 3. **按上面的目录结构添加任务**。可拿已有任务当模板 —— `Chemistry/LennardJonesCluster`
    是 clipped,`Mathematics/CapSet` 是 uncapped。
-4. **本地测试**(新任务包默认未认证):
+4. **测试**(新任务包默认未认证;下面两条要在 Linux 主机上跑,见"运行环境"):
    ```bash
    python -m sle eval --allow-uncertified --task <Domain>/<Task>
    python -m sle run --allow-uncertified --task <Domain>/<Task> --budget 3
@@ -198,16 +198,44 @@ normalized = (raw_mechanism - always_abstain) / (1.0 - always_abstain)
 
 ---
 
+## 运行环境:哪里能跑什么
+
+| 环境 | 能做什么 | 不能做什么 |
+|---|---|---|
+| 笔记本(macOS / Windows) | 改代码;`python -m pytest tests/ -q`(需要沙箱的测试自动 skip);写任务文档 | 跑 `sle eval / run`、标定、Δ 阶梯、任何要进仓库的证据 |
+| Linux 主机(bubblewrap + util-linux flock) | 以上全部;`refresh_global_evidence.py`;恢复审计;`rebind_measurement_health_spec.py` | 在脏树上生成证据 |
+| CI(GitHub Actions,ubuntu-22.04) | 全量测试 + 审计,合并前唯一算数的绿灯 | 生成证据(runner 不是可信来源) |
+
+原因写在沙箱里:候选代码在 bubblewrap 中由 `/usr/bin` 的解释器执行,只挂载 `/usr /lib /lib64`,
+所以依赖必须装进系统解释器(`sudo /usr/bin/python3 -m pip install numpy scipy pyyaml`),
+`actions/setup-python` 或 conda 里的包沙箱看不见。macOS 没有 bubblewrap,沙箱路径一律不可用。
+
+证据文档(`experiments/*.json`、`.research/*_spec_*.json`)都带 `source_provenance`:git 修订、
+树是否干净、运行时源码哈希。脏树、笔记本产出、或运行时文件已变的文档会被标为不可信,测试直接拒收。
+所以流程固定是:**先 commit,再在 Linux 主机上 `git pull --ff-only`,确认 `git status` 干净,再生成证据,
+再 commit 证据**。改动任何任务包内文件之后,除了 `refresh_global_evidence.py`,还要跑
+`pytest tests/test_measurement_health_preflight.py tests/test_scientific_materiality.py tests/test_batch_runner.py`。
+
+团队内部的主机名、可用模型端点与密钥获取方式不在仓库里,向维护者索取内部 runbook。
+
+---
+
 ## LLM 配置(用于测试)
 
-harness 支持任何 OpenAI 兼容的端点。复制示例配置并填入你自己的:
+harness 支持 Anthropic wire 与任何 OpenAI 兼容端点(chat 或 responses)。复制示例配置,
+密钥一律通过环境变量引用,配置文件里只写 `${VAR}`:
 
 ```bash
-cp sle/conf/llm/openai_compatible.example.yaml sle/conf/llm/local.yaml
-# 编辑 base_url / api_key / model
+cp sle/conf/llm/anthropic.example.yaml sle/conf/llm/local.claude.yaml
+# base_url / model 按需改;api_key 保持 ${ANTHROPIC_API_KEY}
+export ANTHROPIC_API_KEY=...        # 只在当前 shell,来自你们的密钥管理,不写进文件
+python -m sle run --task Chemistry/LennardJonesCluster --algorithm greedy_rewrite \
+  --budget 3 --seed 0 --workdir runs/smoke --llm-config sle/conf/llm/local.claude.yaml
 ```
 
-`local.yaml` 已被 git 忽略。**永远不要提交 API key。**
+`sle/conf/llm/local.yaml` 与 `local.*.yaml` 已被 git 忽略。**永远不要把 API key 写进任何会被提交的文件,
+也不要写进 `.research/` 或实验文档。** Anthropic wire 会显式发送 `thinking: disabled`;
+模型只返回 thinking 块、没有文本时 harness 会报错而不是记零分。
 
 ---
 

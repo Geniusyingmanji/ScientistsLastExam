@@ -12,6 +12,7 @@ from scipy.integrate import solve_ivp
 from sle.evaluate import evaluate_candidate
 from sle.metric_visibility import search_visible_metrics
 from sle.registry import find_task
+from _sandbox_tools import skip_unless_sandbox  # noqa: E402
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -143,6 +144,7 @@ class GeneNetworkInterventionTests(unittest.TestCase):
                     np.all(schedule[:, ORACLE.READOUT_INDEX] == 0.0)
                 )
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_baseline_is_valid_zero_and_science_metrics_are_sealed(self):
         spec = find_task(
             "SystemsBiology/GeneNetworkIntervention", include_uncertified=True
@@ -163,6 +165,7 @@ class GeneNetworkInterventionTests(unittest.TestCase):
         ):
             self.assertNotIn(key, visible)
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_budget_violation_fails_closed_when_candidate_catches_error(self):
         result = self.evaluate_source(
             """
@@ -188,6 +191,7 @@ class GeneNetworkInterventionTests(unittest.TestCase):
             for row in result["per_world"][:6]
         ))
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_experiment_cannot_directly_perturb_protected_readout(self):
         result = self.evaluate_source(
             """
@@ -212,6 +216,7 @@ class GeneNetworkInterventionTests(unittest.TestCase):
             for row in result["per_world"][:6]
         ))
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_malformed_nonfinite_bounds_and_protected_target_fail_closed(self):
         sources = (
             "return {}",
@@ -234,6 +239,7 @@ class GeneNetworkInterventionTests(unittest.TestCase):
                 self.assertEqual(result["valid"], 0.0, result)
                 self.assertEqual(result["combined_score"], 0.0, result)
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_nonfinite_and_boolean_experiment_inputs_fail_closed_when_caught(self):
         for expression in (
             "np.full((20, n), np.nan)",
@@ -264,6 +270,7 @@ class GeneNetworkInterventionTests(unittest.TestCase):
                     for row in result["per_world"][:6]
                 ))
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_all_worlds_get_fresh_candidate_process_imports_and_tmpfs(self):
         result = self.evaluate_source(
             """

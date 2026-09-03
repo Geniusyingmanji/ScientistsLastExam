@@ -14,6 +14,7 @@ import numpy as np
 from sle.evaluate import evaluate_candidate
 from sle.metric_visibility import search_visible_metrics
 from sle.registry import find_task
+from _sandbox_tools import skip_unless_sandbox  # noqa: E402
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -217,6 +218,7 @@ class EnergyBalanceModelV2Tests(unittest.TestCase):
         ):
             self.assertTrue(all(row["passed"] for row in report[key]))
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_caught_budget_violation_fails_closed_in_secure_evaluation(self):
         spec = find_task(
             "ClimateScience/EnergyBalanceModel", include_uncertified=True
@@ -256,6 +258,7 @@ class EnergyBalanceModelV2Tests(unittest.TestCase):
             for row in metrics["per_world"]
         ))
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_legacy_frontier_eval_driver_uses_v2_entrypoint(self):
         task = ROOT / "benchmarks/EarthScience/EnergyBalanceModel"
         with tempfile.TemporaryDirectory() as tmp:
@@ -277,6 +280,7 @@ class EnergyBalanceModelV2Tests(unittest.TestCase):
         self.assertEqual(metrics["raw_score"], 0.0)
         self.assertNotIn("error_message", metrics)
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_all_worlds_get_fresh_candidate_process_and_tmpfs(self):
         spec = find_task(
             "ClimateScience/EnergyBalanceModel", include_uncertified=True

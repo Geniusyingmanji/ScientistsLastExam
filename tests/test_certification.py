@@ -11,6 +11,7 @@ from sle.certification import certification_status, load_certification
 from sle.evaluate import INVALID_SCORE, evaluate_candidate
 from sle.metric_visibility import search_visible_metrics
 from sle.registry import discover_task_dirs, find_task, list_tasks
+from _sandbox_tools import skip_unless_sandbox  # noqa: E402
 
 
 def load_oracle(task_id: str):
@@ -144,6 +145,7 @@ class ScientificInvariantTests(unittest.TestCase):
             )
             self.assertTrue(np.all(samples[:, 3] == 1.25))
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_interventional_scm_budget_violation_fails_closed(self):
         spec = find_task("CausalDiscovery/InterventionalSCM", include_uncertified=True)
         source = """
@@ -208,6 +210,7 @@ def discover_mechanism(n, observe, intervene, budget):
         self.assertNotIn("robustness_score", search_visible_metrics(baseline))
         self.assertNotIn("per_world", search_visible_metrics(baseline))
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_active_law_budget_violation_fails_closed(self):
         spec = find_task(
             "DynamicalSystems/ActiveLawDiscovery", include_uncertified=True
@@ -322,6 +325,7 @@ def discover_law(n_states, term_names, experiment, budget_units):
             atol=1e-12,
         ))
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_reaction_v2_budget_violation_fails_closed(self):
         spec = find_task(
             "ChemicalKinetics/ReactionMechanismFitting", include_uncertified=True
@@ -470,6 +474,7 @@ def discover_mechanism(species, pairs, experiment, budget_units):
         self.assertFalse(np.array_equal(one["radiances"], two["radiances"]))
         self.assertEqual(first.used, 12)
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_radiative_v2_budget_and_invalid_query_fail_closed(self):
         spec = find_task(
             "AtmosphericScience/RadiativeTransferFit", include_uncertified=True
@@ -556,6 +561,7 @@ def discover_atmosphere(public_model, observe, budget_units):
                 not row["valid"] for row in metrics["per_world"]
             ))
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_radiative_v2_runtime_feedback_is_label_blind_and_sanitized(self):
         spec = find_task(
             "AtmosphericScience/RadiativeTransferFit", include_uncertified=True
@@ -586,6 +592,7 @@ def discover_atmosphere(public_model, observe, budget_units):
         self.assertNotIn("heldout", str(visible))
         self.assertNotIn("EXFILTRATE", str(metrics))
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_radiative_v2_worlds_get_fresh_candidate_sessions(self):
         spec = find_task(
             "AtmosphericScience/RadiativeTransferFit", include_uncertified=True
@@ -671,6 +678,7 @@ def discover_atmosphere(public_model, observe, budget_units):
         self.assertNotIn("development_prediction_score", shown)
         self.assertNotIn("per_world", shown)
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_gravity_v2_surveys_are_deterministic_and_charged(self):
         oracle = load_oracle("Geophysics/GravityInversion")
         world = oracle._world(oracle.DEVELOPMENT_SPECS[0])
@@ -692,6 +700,7 @@ def discover_atmosphere(public_model, observe, budget_units):
             10.0 * float(np.mean(one["noise_std_mgal"])),
         )
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_gravity_v2_budget_violation_fails_closed(self):
         spec = find_task("Geophysics/GravityInversion", include_uncertified=True)
         source = """

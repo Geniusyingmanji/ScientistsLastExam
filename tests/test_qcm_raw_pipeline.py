@@ -11,6 +11,7 @@ import numpy as np
 from sle.evaluate import evaluate_candidate
 from sle.metric_visibility import search_visible_metrics
 from sle.registry import find_task
+from _sandbox_tools import skip_unless_sandbox  # noqa: E402
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -180,6 +181,7 @@ class QCMRawPipelineTests(unittest.TestCase):
         self.assertNotIn("development_calibration_score", visible)
         self.assertNotIn("development_fault_diagnosis_accuracy", visible)
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_secure_baseline_matches_direct_evaluation(self):
         spec = find_task(
             "Sensors/QuartzCrystalMicrobalanceLab", include_uncertified=True
@@ -189,6 +191,7 @@ class QCMRawPipelineTests(unittest.TestCase):
         direct["raw_score"] = direct["combined_score"]
         self.assertEqual(secure, direct)
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_fabricated_evidence_and_incomplete_sweep_map_fail_closed(self):
         for mode in ("evidence", "missing_map"):
             with self.subTest(mode=mode):
@@ -266,6 +269,7 @@ class QCMRawPipelineTests(unittest.TestCase):
         self.assertEqual(result["valid"], 0.0, result)
         self.assertLessEqual(result["combined_score"], 0.0, result)
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_candidate_worlds_use_fresh_processes(self):
         result = self.evaluate_source(
             """

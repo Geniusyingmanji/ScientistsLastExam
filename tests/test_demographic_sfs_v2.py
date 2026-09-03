@@ -14,6 +14,7 @@ import numpy as np
 from sle.evaluate import evaluate_candidate
 from sle.metric_visibility import search_visible_metrics
 from sle.registry import find_task
+from _sandbox_tools import skip_unless_sandbox  # noqa: E402
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -106,6 +107,7 @@ class DemographicSFSV2Tests(unittest.TestCase):
         ):
             self.assertNotIn(key, visible)
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_calibration_invariants_and_prediction_mechanism_gap(self):
         report = self.calibration.calibrate()
         self.assertTrue(report["execution_passed"])
@@ -199,6 +201,7 @@ class DemographicSFSV2Tests(unittest.TestCase):
                 "candidate invalid: invalid_return_artifact",
             )
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_caught_budget_violation_fails_closed_in_secure_evaluation(self):
         spec = find_task(
             "PopulationGenetics/DemographicSFS", include_uncertified=True
@@ -230,6 +233,7 @@ class DemographicSFSV2Tests(unittest.TestCase):
             for row in metrics["per_world"]
         ))
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_all_worlds_get_fresh_candidate_process_and_tmpfs(self):
         spec = find_task(
             "PopulationGenetics/DemographicSFS", include_uncertified=True
@@ -266,6 +270,7 @@ class DemographicSFSV2Tests(unittest.TestCase):
             row["experiment_calls"] == 1 for row in metrics["per_world"]
         ))
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_legacy_frontier_eval_driver_uses_v2_entrypoint(self):
         task = ROOT / "benchmarks/Biology/DemographicSFS"
         with tempfile.TemporaryDirectory() as tmp:

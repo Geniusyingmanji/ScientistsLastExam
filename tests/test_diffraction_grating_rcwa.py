@@ -12,6 +12,7 @@ import numpy as np
 from sle.evaluate import evaluate_candidate
 from sle.metric_visibility import search_visible_metrics
 from sle.registry import find_task
+from _sandbox_tools import skip_unless_sandbox  # noqa: E402
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -116,6 +117,7 @@ class DiffractionGratingRCWATests(unittest.TestCase):
             self.assertEqual(problem["layer_count"], 5)
             self.assertEqual(problem["polarizations"], ("TE", "TM"))
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_secure_baseline_is_valid_and_science_metrics_are_sealed(self):
         spec = find_task(
             "Optics/DiffractionGratingDesign", include_uncertified=True
@@ -148,6 +150,7 @@ class DiffractionGratingRCWATests(unittest.TestCase):
                 )
                 self.assertEqual(result["valid"], 0.0, result)
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_fresh_process_per_world(self):
         source = """
             import os
@@ -171,6 +174,7 @@ class DiffractionGratingRCWATests(unittest.TestCase):
         self.assertEqual(result["valid"], 1.0, result)
         self.assertEqual(result["candidate_instance_call_count"], 6)
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_task_calibration_gate_executes(self):
         report = CALIBRATION.audit()
         self.assertTrue(report["execution_passed"], report)

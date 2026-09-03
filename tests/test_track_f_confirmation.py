@@ -13,6 +13,7 @@ import numpy as np
 from sle.evaluate import canonical_trusted_context, evaluate_candidate
 from sle.metric_visibility import search_visible_metrics
 from sle.registry import find_task
+from _sandbox_tools import skip_unless_sandbox  # noqa: E402
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -122,6 +123,7 @@ class ActiveLawConfirmationTests(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     ACTIVE._validate_confirmation_context(context)
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_secure_baseline_binds_context_and_seals_science_axes(self):
         spec = find_task(
             "DynamicalSystems/ActiveLawDiscovery", include_uncertified=True
@@ -234,6 +236,7 @@ class DiffractionConfirmationTests(unittest.TestCase):
         self.assertGreater(audit["minimum_nominal_headroom"], 0.05)
         self.assertGreater(audit["minimum_robust_headroom"], 0.05)
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_secure_baseline_binds_private_resolved_context(self):
         spec = find_task(
             "Optics/DiffractionGratingDesign", include_uncertified=True

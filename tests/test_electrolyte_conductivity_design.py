@@ -13,6 +13,7 @@ import numpy as np
 from sle.evaluate import evaluate_candidate
 from sle.metric_visibility import search_visible_metrics
 from sle.registry import find_task
+from _sandbox_tools import skip_unless_sandbox  # noqa: E402
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -211,6 +212,7 @@ class ElectrolyteConductivityDesignTests(unittest.TestCase):
             self.assertEqual(problem["batch_size"], 3)
             self.assertEqual(problem["assay_budget"], 8)
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_secure_baseline_is_zero_and_science_metrics_are_sealed(self):
         spec = find_task(
             "Electrochemistry/ElectrolyteConductivityDesign",
@@ -254,6 +256,7 @@ class ElectrolyteConductivityDesignTests(unittest.TestCase):
         self.assertEqual(result["candidate_world_valid_rate"], 5.0 / 8.0)
         self.assertNotIn("error_message", result)
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_all_worlds_get_fresh_process_imports_and_tmpfs(self):
         result = self.evaluate_source(
             """
@@ -275,6 +278,7 @@ class ElectrolyteConductivityDesignTests(unittest.TestCase):
         self.assertEqual(result["candidate_world_call_count"], 8)
         self.assertEqual(result["candidate_world_valid_rate"], 1.0)
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_budget_repeat_and_invalid_assay_fail_closed_even_when_caught(self):
         bodies = (
             "for _ in range(9): assay(problem['candidate_formulations'][0]['id'])",
@@ -297,6 +301,7 @@ class ElectrolyteConductivityDesignTests(unittest.TestCase):
                 self.assertEqual(result["valid"], 0.0, result)
                 self.assertEqual(result["combined_score"], 0.0)
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_malformed_submissions_fail_closed(self):
         sources = (
             "return {'formulation_ids': []}",

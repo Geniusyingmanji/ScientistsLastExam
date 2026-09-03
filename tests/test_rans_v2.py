@@ -15,6 +15,7 @@ import numpy as np
 from sle.evaluate import evaluate_candidate
 from sle.metric_visibility import search_visible_metrics
 from sle.registry import find_task
+from _sandbox_tools import skip_unless_sandbox  # noqa: E402
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -149,6 +150,7 @@ class RANSV2Tests(unittest.TestCase):
             self.assertEqual(metrics["combined_score"], 0.0)
             self.assertEqual(metrics["raw_score"], 0.0)
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_secure_sandbox_blocks_oracle_read_and_network(self):
         spec = find_task("RANSCalibration", include_uncertified=True)
         source = textwrap.dedent("""
@@ -173,6 +175,7 @@ class RANSV2Tests(unittest.TestCase):
             "blocked_or_missing_file", "blocked_operation", "candidate_runtime_error"
         })
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_legacy_driver_uses_v2_entrypoint(self):
         with tempfile.TemporaryDirectory() as tmp:
             metrics_path = Path(tmp) / "metrics.json"

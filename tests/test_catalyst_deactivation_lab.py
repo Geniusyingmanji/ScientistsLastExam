@@ -12,6 +12,7 @@ import numpy as np
 from sle.evaluate import evaluate_candidate
 from sle.metric_visibility import search_visible_metrics
 from sle.registry import find_task
+from _sandbox_tools import skip_unless_sandbox  # noqa: E402
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -123,6 +124,7 @@ class CatalystDeactivationLabTests(unittest.TestCase):
         self.assertEqual(response["coupon_remaining_uses"][coupon], 0)
         self.assertGreater(signals[0], signals[-1])
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_stale_parent_conflicting_retry_and_exhaustion_fail_closed(self):
         for mode in ("stale", "conflict", "exhaust"):
             with self.subTest(mode=mode):
@@ -190,6 +192,7 @@ class CatalystDeactivationLabTests(unittest.TestCase):
                     for row in result["per_world"][:5]
                 ))
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_concurrent_same_coupon_and_overbudget_fail_closed_when_caught(self):
         for mode in ("concurrent", "overbudget"):
             with self.subTest(mode=mode):
@@ -275,6 +278,7 @@ class CatalystDeactivationLabTests(unittest.TestCase):
         ):
             self.assertNotIn(forbidden, rendered)
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_nonfinite_submission_fails_closed(self):
         result = self.evaluate_source(
             """
@@ -301,6 +305,7 @@ class CatalystDeactivationLabTests(unittest.TestCase):
         )
         self.assertNotIn("per_world", result)
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_baseline_is_valid_zero_and_metrics_are_sealed(self):
         spec = find_task(
             "Catalysis/CatalystDeactivationLab", include_uncertified=True
@@ -351,6 +356,7 @@ class CatalystDeactivationLabTests(unittest.TestCase):
                 )
         self.assertGreater(max(differences), 0.02)
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_all_worlds_get_fresh_candidate_processes(self):
         result = self.evaluate_source(
             """
@@ -395,6 +401,7 @@ class CatalystDeactivationLabTests(unittest.TestCase):
         ):
             self.assertNotIn(forbidden, public)
 
+    @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_calibration_and_admission_gates_execute(self):
         calibration = _load(CALIBRATION, "catalyst_lab_calibration_test").calibrate()
         self.assertTrue(calibration["execution_passed"], calibration)
