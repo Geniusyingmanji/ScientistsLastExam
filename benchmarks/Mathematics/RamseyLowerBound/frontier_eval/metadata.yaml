@@ -1,0 +1,14 @@
+domain: Mathematics
+task: RamseyLowerBound
+scientific_role: optimization
+difficulty: flagship
+tier: T3
+oracle_type: analytical
+score_mode: uncapped
+gpu_required: false
+eval_time_seconds: 45
+science_metric: mean_progress_to_best_known_ramsey_colouring_order
+pairs: [[5, 5], [4, 6]]
+reference_baseline: complete_bipartite_parts_of_t_minus_1
+reference_sota: "R(5,5)>=43 so n=42 (Exoo 1989); R(4,6)>=36 so n=35 (Exoo)"
+citation: "Exoo 1989 J. Graph Theory; Radziszowski Dynamic Survey DS1; Angeltveit-McKay upper bound 46 for R(5,5)"

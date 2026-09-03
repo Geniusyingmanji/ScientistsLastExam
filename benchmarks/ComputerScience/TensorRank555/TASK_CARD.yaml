@@ -1,0 +1,59 @@
+schema_version: 2
+scientific_question: Construct fixed-tolerance numerical complex decompositions for the 5x5x5 and 6x6x6 matrix-multiplication tensors using as few rank-one terms as possible.
+artifact: Complex coefficient matrices U, V, W with a shared rank dimension.
+oracle:
+  model: complex tensor reconstruction at fixed numerical tolerances plus random-integer functional multiplication checks
+  feasibility: finite two-dimensional arrays with dimensionally consistent shapes
+  deterministic: true
+normalization:
+  baseline: schoolbook scalar-multiplication count m*n*p
+  reference: Moosbauer-Poole ISSAC 2025 exact ranks 93 and 153, used only as contextual numerical score anchors
+  score: uncapped fraction of numerical term-count improvement; going below an anchor exceeds 1 but is not an exact-rank certificate
+citations:
+- id: arxiv:2502.04514
+  title: Flip Graphs with Symmetry and New Matrix Multiplication Schemes
+- id: doi:10.1007/BF02165411
+  title: Gaussian elimination is not optimal
+invariants:
+- tensor equality within the frozen numerical tolerance
+- functional equality on integer matrices
+- rank-axis permutation invariance
+known_shortcuts: Public decompositions of these sizes may occur in training; the 2/3/4 cell is a different task and does not score here. Fixed-tolerance complex reconstruction can admit approximate or border-rank phenomena, so going below 93 or 153 is a benchmark improvement only; an exact record claim requires a separate exact certificate.
+review:
+  domain: pending_external
+  evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_uncapped_normalisation_checks
+provenance:
+  class: known_answer
+  target_source: Published exact records are used only as contextual score=1.0 anchors; a numerically accepted decomposition with fewer terms scores above 1.0. No required solution and no exact-rank claim.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: high
+  rationale: Matching a public construction may be reconstruction, while a smaller numerical decomposition can exploit approximate or border-rank behavior and is not automatically an exact algebraic-complexity result.
+lineage:
+  status: complete
+  builder_model_ids:
+  - cursor-grok-4.6
+  builder_scaffolds:
+  - cursor
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    None. No frontier searcher draw has been run. In-process pins are tests/test_wave0_uncapped_constructions.py.
+  shortcut_discoverer: builder_self_audit
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: cursor-grok-4.6
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: baseline, invalid-candidate and two-anchor numerical helper pins are runnable from this directory; exact symbolic certification is absent

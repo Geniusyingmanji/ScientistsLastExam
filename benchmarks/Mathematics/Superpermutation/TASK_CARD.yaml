@@ -1,0 +1,62 @@
+schema_version: 2
+scientific_question: Construct shorter superpermutations on 7 and 8 symbols than the published records.
+artifact: A finite string over the digits 1 through n containing every n-permutation as a contiguous substring.
+oracle:
+  model: exhaustive sliding-window check against the set of n! permutations
+  feasibility: a string on the alphabet 1..n, within the length cap, covering every permutation
+  deterministic: true
+normalization:
+  baseline: concatenation of all n! permutations, length n*n!
+  reference: length 5906 on 7 symbols and 46204 on 8 symbols
+  score: uncapped fraction of length improvement; beating the witness exceeds 1
+citations:
+- id: arxiv:1408.5108
+  title: Tackling the Minimal Superpermutation Problem
+- id: doi:10.1080/00029890.2021.1835384
+  title: Containing All Permutations
+- id: url:https://www.gregegan.net/SCIENCE/Superpermutations/Superpermutations.html
+  title: Superpermutations (Greg Egan)
+- id: url:https://github.com/urdvr/superpermutations-hunter
+  title: A New Lower Bound for Superpermutations — Lean formalization
+invariants:
+- alphabet permutation (relabelling 1..n) preserves validity and length
+- reversal preserves validity and length
+known_shortcuts: Published 5906- and 46204-symbol strings may occur in training; beating them is the novelty claim. Exact minima are proved only through n=5; n=6 also remains open and is not scored here.
+review:
+  domain: pending_external
+  evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_uncapped_normalisation_checks
+provenance:
+  class: known_answer
+  target_source: Published records used only as the score=1.0 witness; a shorter verified object scores above 1.0. No required solution.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: high
+  rationale: Matching a published construction is reconstruction. Beating the witness is the scientific event the score is built to show.
+lineage:
+  status: complete
+  builder_model_ids:
+  - cursor-grok-4.6
+  builder_scaffolds:
+  - cursor
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    None. No frontier searcher draw has been run. In-process pins are tests/test_wave0_uncapped_constructions.py.
+  shortcut_discoverer: builder_self_audit
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: cursor-grok-4.6
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: baseline, invalid-candidate and two-anchor helper pins are runnable from this directory
