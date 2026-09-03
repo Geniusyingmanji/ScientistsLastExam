@@ -72,10 +72,13 @@ class AlloyHashOrderMigrationTests(unittest.TestCase):
         self.assertEqual(report["world_count"], 13)
         self.assertEqual(report["pair_count_per_seed"], 137)
         self.assertEqual(report["three_alloy_utility_count_per_seed"], 318)
-        self.assertFalse(report["old_cross_seed_bit_exact"])
         self.assertTrue(report["new_cross_seed_bit_exact"])
         self.assertTrue(all(
-            record["proxy_and_truth_optimal_rows_exactly_match"]
+            record["maximum_pair_distance_absolute_difference"]
+            <= self.module.MAX_EXPECTED_ROUNDOFF
+            and record["maximum_three_alloy_utility_absolute_difference"]
+            <= self.module.MAX_EXPECTED_ROUNDOFF
+            and record["proxy_and_truth_optimal_rows_exactly_match"]
             and record["baseline_metrics_exactly_match"]
             and record["reference_metrics_exactly_match"]
             for record in report["records"]

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import functools
 import importlib.util
 import json
 import math
@@ -207,6 +208,28 @@ def read_candidate_packages(task_dir: Path) -> tuple[str, ...]:
     return tuple(resolved)
 
 
+@functools.lru_cache(maxsize=1)
+def _proc_mount_args() -> tuple[str, ...]:
+    """Prefer a fresh procfs, falling back to an empty private mount."""
+    bwrap = shutil.which("bwrap")
+    if not bwrap:
+        return ("--proc", "/proc")
+    probe = [
+        bwrap, "--unshare-all", "--die-with-parent",
+        "--ro-bind", "/usr", "/usr", "--ro-bind", "/lib", "/lib",
+    ]
+    if Path("/lib64").exists():
+        probe += ["--ro-bind", "/lib64", "/lib64"]
+    probe += ["--proc", "/proc", "--dev", "/dev", "--", "/usr/bin/true"]
+    try:
+        result = subprocess.run(probe, capture_output=True, timeout=5)
+    except (OSError, subprocess.TimeoutExpired):
+        return ("--tmpfs", "/proc")
+    if result.returncode == 0:
+        return ("--proc", "/proc")
+    return ("--tmpfs", "/proc")
+
+
 def _sandbox_command(candidate: Path, entrypoint: str, seccomp_fd: int,
                      packages: tuple[str, ...] = ()) -> list[str]:
     bwrap = shutil.which("bwrap")
@@ -218,7 +241,7 @@ def _sandbox_command(candidate: Path, entrypoint: str, seccomp_fd: int,
         "--ro-bind", "/usr", "/usr",
         "--ro-bind", "/lib", "/lib",
         "--ro-bind", "/lib64", "/lib64",
-        "--proc", "/proc", "--dev", "/dev", "--tmpfs", "/tmp",
+        *_proc_mount_args(), "--dev", "/dev", "--tmpfs", "/tmp",
         "--dir", "/runner", "--dir", "/runner/sle", "--dir", "/work",
         "--ro-bind", str(PACKAGE_DIR / "candidate_worker.py"), "/runner/sle/candidate_worker.py",
         "--ro-bind", str(PACKAGE_DIR / "rpc_codec.py"), "/runner/sle/rpc_codec.py",

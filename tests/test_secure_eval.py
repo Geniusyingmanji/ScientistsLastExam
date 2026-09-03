@@ -17,7 +17,7 @@ from sle.evaluate import (
 )
 from sle.rpc_codec import CodecError, decode, encode
 from sle.secure_eval import (
-    CandidateProxy, _seccomp_no_processes, validate_metrics,
+    CandidateProxy, _proc_mount_args, _seccomp_no_processes, validate_metrics,
 )
 from sle.spec import load_task_spec
 
@@ -81,6 +81,27 @@ class SecureEvaluationTests(unittest.TestCase):
         self.assertEqual(metrics["combined_score"], INVALID_SCORE, metrics)
         self.assertEqual(metrics["valid"], 0.0, metrics)
 
+    def test_private_proc_probe_has_well_formed_bind_arguments(self):
+        completed = type("Completed", (), {"returncode": 0})()
+        _proc_mount_args.cache_clear()
+        try:
+            with patch("sle.secure_eval.shutil.which", return_value="/usr/bin/bwrap"), \
+                    patch("sle.secure_eval.Path.exists", return_value=True), \
+                    patch("sle.secure_eval.subprocess.run", return_value=completed) as run:
+                self.assertEqual(_proc_mount_args(), ("--proc", "/proc"))
+            self.assertEqual(
+                run.call_args.args[0],
+                [
+                    "/usr/bin/bwrap", "--unshare-all", "--die-with-parent",
+                    "--ro-bind", "/usr", "/usr",
+                    "--ro-bind", "/lib", "/lib",
+                    "--ro-bind", "/lib64", "/lib64",
+                    "--proc", "/proc", "--dev", "/dev", "--", "/usr/bin/true",
+                ],
+            )
+        finally:
+            _proc_mount_args.cache_clear()
+
     def test_oracle_import_is_not_visible(self):
         result = self.evaluate_source("""
             def design_cavity(n):
@@ -110,6 +131,17 @@ class SecureEvaluationTests(unittest.TestCase):
         """)
         self.assert_rejected(result)
         self.assertEqual(result["candidate_failure_kind"], "blocked_or_missing_file")
+
+    def test_host_process_table_is_not_visible(self):
+        result = self.evaluate_source("""
+            def design_cavity(n):
+                import os
+                process_count = sum(name.isdigit() for name in os.listdir('/proc'))
+                host_table_visible = float(process_count > 2)
+                return [host_table_visible] + [0.0] * (n - 1)
+        """)
+        self.assertNotIn("infrastructure_failure", result, result)
+        self.assertEqual(result["combined_score"], 0.0, result)
 
     def test_network_namespace_is_disconnected(self):
         result = self.evaluate_source("""
@@ -280,12 +312,18 @@ class SecureEvaluationTests(unittest.TestCase):
 
                 def inspect_context(_public_value):
                     marker = "SERVER_HELD_" + "WORLD_MARKER_" + "9f42d117"
-                    visible = "\\n".join([
+                    visible_parts = [
                         " ".join(sys.argv),
                         repr(sorted(os.environ.items())),
-                        open("/proc/self/cmdline", "rb").read().decode("utf-8", "ignore"),
-                        open("/proc/self/environ", "rb").read().decode("utf-8", "ignore"),
-                    ])
+                    ]
+                    for proc_path in ("/proc/self/cmdline", "/proc/self/environ"):
+                        try:
+                            visible_parts.append(
+                                open(proc_path, "rb").read().decode("utf-8", "ignore")
+                            )
+                        except OSError:
+                            pass
+                    visible = "\\n".join(visible_parts)
                     for path in ("/work", "/tmp", "/runner"):
                         for base, _, files in os.walk(path):
                             for name in files:

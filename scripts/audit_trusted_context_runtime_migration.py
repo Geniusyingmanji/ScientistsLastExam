@@ -38,6 +38,7 @@ from sle.runtime_migration import (  # noqa: E402
     BASE_RUNTIME_SHA256,
     RUNTIME_PATHS,
     compare_json_values,
+    runtime_source_changes,
 )
 
 
@@ -117,19 +118,19 @@ def _load_script(relative: str):
 
 
 def audit_source_contract(audited_revision: str) -> dict[str, Any]:
-    changes = subprocess.check_output(
-        [
-            "git", "diff", "--name-only", BASE_RUNTIME_REVISION,
-            audited_revision, "--", *RUNTIME_PATHS,
-        ],
-        cwd=str(ROOT), text=True,
-    ).splitlines()
+    changes = runtime_source_changes(
+        BASE_RUNTIME_REVISION,
+        audited_revision,
+        RUNTIME_PATHS,
+        root=ROOT,
+    )
     base_hashes = {
         relative: _sha256_bytes(_git_show(BASE_RUNTIME_REVISION, relative))
         for relative in RUNTIME_PATHS
     }
     current_hashes = {
-        relative: _sha256(ROOT / relative) for relative in RUNTIME_PATHS
+        relative: _sha256_bytes(_git_show(audited_revision, relative))
+        for relative in RUNTIME_PATHS
     }
     return {
         "base_revision": BASE_RUNTIME_REVISION,
@@ -157,11 +158,16 @@ def _function(tree: ast.Module, name: str) -> ast.FunctionDef:
     return matches[0]
 
 
-def audit_legacy_path_semantics() -> dict[str, Any]:
-    secure_path = ROOT / "sle/secure_eval.py"
-    evaluate_path = ROOT / "sle/evaluate.py"
-    secure_text = secure_path.read_text(encoding="utf-8")
-    evaluate_text = evaluate_path.read_text(encoding="utf-8")
+def audit_legacy_path_semantics(
+    audited_revision: str | None = None,
+) -> dict[str, Any]:
+    def source(relative: str) -> bytes:
+        if audited_revision is None:
+            return (ROOT / relative).read_bytes()
+        return _git_show(audited_revision, relative)
+
+    secure_text = source("sle/secure_eval.py").decode("utf-8")
+    evaluate_text = source("sle/evaluate.py").decode("utf-8")
     secure_tree = ast.parse(secure_text)
     evaluate_tree = ast.parse(evaluate_text)
     secure_function = _function(secure_tree, "trusted_evaluate")
@@ -182,9 +188,9 @@ def audit_legacy_path_semantics() -> dict[str, Any]:
     )
     candidate_sandbox_hash_unchanged = bool(
         _sha256_bytes(_git_show(BASE_RUNTIME_REVISION, "sle/candidate_worker.py"))
-        == _sha256(ROOT / "sle/candidate_worker.py")
+        == _sha256_bytes(source("sle/candidate_worker.py"))
         and _sha256_bytes(_git_show(BASE_RUNTIME_REVISION, "sle/rpc_codec.py"))
-        == _sha256(ROOT / "sle/rpc_codec.py")
+        == _sha256_bytes(source("sle/rpc_codec.py"))
     )
     passed = bool(
         legacy_oracle and context_optional and no_context_mount

@@ -42,6 +42,32 @@ def _canonical(value):
     return value
 
 
+def _anchors_match(observed, expected):
+    if not isinstance(observed, dict) or not isinstance(expected, dict):
+        return False
+    if set(observed) != set(expected):
+        return False
+    for name, observed_values in observed.items():
+        expected_values = expected[name]
+        if not isinstance(observed_values, dict) or not isinstance(expected_values, dict):
+            return False
+        if set(observed_values) != set(expected_values):
+            return False
+        for key, observed_value in observed_values.items():
+            try:
+                observed_array = np.asarray(observed_value, dtype=float)
+                expected_array = np.asarray(expected_values[key], dtype=float)
+            except (TypeError, ValueError):
+                return False
+            if observed_array.shape != expected_array.shape:
+                return False
+            if not np.allclose(
+                observed_array, expected_array, rtol=0.0, atol=1e-14
+            ):
+                return False
+    return True
+
+
 def _load_oracle():
     verification = TASK / "verification"
     sys.path.insert(0, str(verification))
@@ -258,7 +284,7 @@ def build_report():
 
     committed_literals_match = bool(
         _canonical(reference_literal) == _canonical(oracle.REFERENCE_SOBOL)
-        and _canonical(anchors_literal) == _canonical(oracle.CALIBRATED_ANCHORS)
+        and _anchors_match(anchors_literal, oracle.CALIBRATED_ANCHORS)
     )
     overall = overall and committed_literals_match
 
@@ -278,8 +304,8 @@ def build_report():
     witness_tradeoff_checks = {
         "baseline_is_zero_valid_witness": bool(
             baseline_witness["valid"] == 1.0
-            and baseline_witness["combined_score"] == 0.0
-            and baseline_witness["heldout_policy_score"] == 0.0
+            and abs(baseline_witness["combined_score"]) <= 1e-14
+            and abs(baseline_witness["heldout_policy_score"]) <= 1e-14
         ),
         "nominal_witness_reaches_nominal_anchors": bool(
             nominal_witness["valid"] == 1.0

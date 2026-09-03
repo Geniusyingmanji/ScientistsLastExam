@@ -316,11 +316,14 @@ def audit_landscape() -> dict[str, Any]:
         "new_cross_seed_bit_exact": len(new_hashes) == 1,
         "records": records,
     }
+    # The frozen Python 3.8 audit records the old cross-seed variation. A newer
+    # interpreter may reduce these same positive terms identically even before
+    # sorting, so current replay must prove the stabilized result and bounded
+    # old/new deltas without requiring that historical symptom to reappear.
     result["passed"] = bool(
         result["world_count"] == 13
         and result["pair_count_per_seed"] == 137
         and result["three_alloy_utility_count_per_seed"] == 318
-        and not result["old_cross_seed_bit_exact"]
         and result["new_cross_seed_bit_exact"]
         and all(
             record["maximum_pair_distance_absolute_difference"]
