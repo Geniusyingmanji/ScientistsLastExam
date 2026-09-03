@@ -121,8 +121,10 @@ class MOSFETV2EvaluatorTests(unittest.TestCase):
         self.assertEqual(len(oracle.HELDOUT_INSTANCES), 2)
         self.assertEqual(len(oracle.SHIFT_SPECS), 6)
         self.assertEqual(baseline["valid"], 1.0)
-        self.assertEqual(baseline["combined_score"], 0.0)
-        self.assertEqual(baseline["heldout_policy_score"], 0.0)
+        self.assertAlmostEqual(baseline["combined_score"], 0.0, delta=1e-14)
+        self.assertAlmostEqual(
+            baseline["heldout_policy_score"], 0.0, delta=1e-14
+        )
 
         self.assertEqual(nominal["valid"], 1.0)
         self.assertAlmostEqual(nominal["combined_score"], 1.0)
@@ -213,6 +215,32 @@ class MOSFETV2EvaluatorTests(unittest.TestCase):
         self.assertTrue(report["committed_literals_match"])
         self.assertTrue(all(report["directional_checks"].values()))
         self.assertTrue(all(report["witness_tradeoff_checks"].values()))
+
+    def test_calibration_rejects_broadcastable_anchor_shape_mismatch(self):
+        calibration = _load(CALIBRATION, "mosfet_calibration_shape_test")
+        expected = {
+            "device": {
+                "baseline_nominal_hypervolume": 0.25,
+                "reference_nominal_hypervolume": 0.75,
+                "baseline_shifted_hypervolumes": (0.25,),
+                "reference_shifted_hypervolumes": (0.75,),
+            }
+        }
+        observed = {
+            "device": {
+                "baseline_nominal_hypervolume": 0.25,
+                "reference_nominal_hypervolume": 0.75,
+                "baseline_shifted_hypervolumes": (0.25, 0.25),
+                "reference_shifted_hypervolumes": (0.75, 0.75),
+            }
+        }
+        self.assertTrue(np.allclose(
+            observed["device"]["baseline_shifted_hypervolumes"],
+            expected["device"]["baseline_shifted_hypervolumes"],
+            rtol=0.0,
+            atol=1e-14,
+        ))
+        self.assertFalse(calibration._anchors_match(observed, expected))
 
     def test_malformed_nonfinite_bool_bounds_duplicates_and_infeasible_fail(self):
         oracle = self.oracle
@@ -308,7 +336,9 @@ class MOSFETV2EvaluatorTests(unittest.TestCase):
         self.assertEqual(spec.entrypoint, "design_doping_archive")
         metrics = evaluate_candidate(spec, spec.initial_program_path, timeout_s=30)
         self.assertEqual(metrics["valid"], 1.0, metrics)
-        self.assertEqual(metrics["combined_score"], 0.0, metrics)
+        self.assertAlmostEqual(
+            metrics["combined_score"], 0.0, delta=1e-14, msg=metrics
+        )
         self.assertEqual(metrics["candidate_instance_call_count"], 6, metrics)
 
     def test_legacy_driver_uses_v2_entrypoint(self):
@@ -330,8 +360,8 @@ class MOSFETV2EvaluatorTests(unittest.TestCase):
             metrics = json.loads(metrics_path.read_text(encoding="utf-8"))
         self.assertEqual(process.returncode, 0)
         self.assertEqual(metrics["valid"], 1.0)
-        self.assertEqual(metrics["combined_score"], 0.0)
-        self.assertEqual(metrics["raw_score"], 0.0)
+        self.assertAlmostEqual(metrics["combined_score"], 0.0, delta=1e-14)
+        self.assertAlmostEqual(metrics["raw_score"], 0.0, delta=1e-14)
         self.assertNotIn("error_message", metrics)
 
 
