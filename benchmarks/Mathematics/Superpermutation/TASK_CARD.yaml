@@ -7,7 +7,7 @@ oracle:
   deterministic: true
 normalization:
   baseline: concatenation of all n! permutations, length n*n!
-  reference: length 5906 on 7 symbols and 46204 on 8 symbols
+  reference: length 5906 on 7 symbols and 46205 on 8 symbols
   score: uncapped fraction of length improvement; beating the witness exceeds 1
 citations:
 - id: arxiv:1408.5108
@@ -21,7 +21,7 @@ citations:
 invariants:
 - alphabet permutation (relabelling 1..n) preserves validity and length
 - reversal preserves validity and length
-known_shortcuts: Published 5906- and 46204-symbol strings may occur in training; beating them is the novelty claim. Exact minima are proved only through n=5; n=6 also remains open and is not scored here.
+known_shortcuts: Published 5906- and 46205-symbol strings may occur in training; beating them is the novelty claim. Exact minima are proved only through n=5; n=6 also remains open and is not scored here.
 review:
   domain: pending_external
   evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_uncapped_normalisation_checks

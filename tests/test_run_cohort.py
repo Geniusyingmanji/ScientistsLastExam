@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import json
 import os
+import sys
 import subprocess
 import textwrap
 import time
@@ -38,9 +39,18 @@ class CohortRunnerTests(unittest.TestCase):
         self.calls = self.tmp / "calls.txt"
 
     def fake_python(self, body: str) -> None:
-        """Install a `python3` that stands in for the run command."""
+        """Install a `python3` that stands in for the run command.
+
+        Only the run command. The runner also calls `python3 - ... <<PY` to decide whether a cell
+        is already complete, and that check must reach a real interpreter: an earlier version of
+        the runner spelled it `python` so this shim would not catch it, which held on machines
+        with a `python` alias and broke on the benchmark host, which has none. The shim now hands
+        any heredoc invocation (first argument `-`) to the interpreter running this test suite.
+        """
         (self.bin / "python3").write_text(
-            "#!/usr/bin/env bash\n" + textwrap.dedent('''
+            "#!/usr/bin/env bash\n"
+            + 'if [[ "${1:-}" == "-" ]]; then exec "%s" "$@"; fi\n' % sys.executable
+            + textwrap.dedent('''
                 for fake_arg in "$@"; do
                   case "$fake_prev" in
                     --task) fake_task="$fake_arg" ;;

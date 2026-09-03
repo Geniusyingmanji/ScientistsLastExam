@@ -10,5 +10,5 @@ eval_time_seconds: 20
 science_metric: mean_progress_to_shortest_known_superpermutation
 orders: [7, 8]
 reference_baseline: concatenation_of_all_n_factorial_permutations
-reference_sota: "n=7 length 5906 (anonymous/Houston/Egan); n=8 length 46204 (Raudvere/Hunter artifact, 2026)"
+reference_sota: "n=7 length 5906 (anonymous/Houston/Egan); n=8 length 46205 (Egan 2018, Williams construction; OEIS A180632)"
 citation: "Houston arXiv:1408.5108; Egan superpermutation page; https://github.com/urdvr/superpermutations-hunter"

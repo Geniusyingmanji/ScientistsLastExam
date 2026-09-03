@@ -30,12 +30,27 @@ from sle.registry import list_tasks  # noqa: E402
 
 ANCHOR_KEYS = re.compile(
     r"(best_known|best_side|record|reference_value|known_best|literature|published_|"
-    r"target_record|optimum)", re.IGNORECASE)
+    r"target_record|optimum|sota)", re.IGNORECASE)
 
 # Tasks that legitimately normalise against a published record, each one a deliberate choice.
 # Adding to this list means accepting that the number cannot be checked by running anything here,
 # so it needs a source in the task's `references/known_best.md` and a human who has read it.
-DECLARED_EXTERNAL_ANCHORS = {"Optimization/CirclePacking"}
+# `sota` joined the pattern on 2026-09-03. Until then seven tasks normalised against `sota_ref`
+# literals the guard never saw - five arriving in one PR, two (MatrixMultiplicationRank, CapSet)
+# certified and present all along. The same review caught one of the five off by one:
+# Superpermutation's n=8 anchor read 46204 where OEIS A180632 and Egan record 46205. A key name
+# the pattern does not match is a literal nothing checks, which is the CirclePacking failure with
+# a different spelling.
+DECLARED_EXTERNAL_ANCHORS = {
+    "Optimization/CirclePacking",
+    "Algorithm/MatrixMultiplicationRank",
+    "Mathematics/CapSet",
+    "Mathematics/CapSetFrontier",
+    "Mathematics/KissingNumber",
+    "Mathematics/RamseyLowerBound",
+    "Mathematics/Superpermutation",
+    "Algorithm/TensorRank555",
+}
 
 
 def _hardcoded_anchors(source: str) -> list[tuple[str, float, int]]:

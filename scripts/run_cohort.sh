@@ -87,7 +87,7 @@ run_is_complete () {
      && -f "$dir/.cohort_request_sha256" ]] || return 1
   [[ "$(<"$dir/.cohort_request_sha256")" == "$(request_digest "$task" "$mode" "$seed")" ]] \
     || return 1
-  python - "$dir" "$task" "$mode" "$seed" "$ALGORITHM" "$BUDGET" "$ROOT" "$CONFIG" <<'PY'
+  python3 - "$dir" "$task" "$mode" "$seed" "$ALGORITHM" "$BUDGET" "$ROOT" "$CONFIG" <<'PY'
 import json
 import sys
 from pathlib import Path

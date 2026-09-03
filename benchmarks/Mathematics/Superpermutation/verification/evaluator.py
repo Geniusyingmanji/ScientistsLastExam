@@ -13,7 +13,7 @@ import numpy as np
 
 SIZES = {
     7: {"naive": 7 * 5040, "sota_ref": 5906},     # 35280 vs Egan/Houston 5906
-    8: {"naive": 8 * 40320, "sota_ref": 46204},    # 322560 vs current best known
+    8: {"naive": 8 * 40320, "sota_ref": 46205},    # 322560 vs Egan 2018 (Williams construction), OEIS A180632
 }
 MAX_LEN = {7: 40000, 8: 400000}
 

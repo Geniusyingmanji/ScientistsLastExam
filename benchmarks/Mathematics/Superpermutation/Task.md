@@ -7,7 +7,7 @@ of those symbols as a contiguous substring. Minimal lengths are known through `n
 `n = 6`, 872 is the shortest published construction but has not been proved minimal. For
 `n = 7` the shortest known string has length 5906 (Egan–Houston, February 2019) against the
 anonymous-4chan lower bound of 5884 — a gap of 22 symbols. For `n = 8` the current best-known
-upper bound is 46204, as recorded in Raudvere and Hunter's July 2026 companion artifact,
+upper bound is 46205, found by Greg Egan in October 2018 via the Williams construction (OEIS A180632),
 against the same-style lower bound 46085 — a gap of 119. There is **no required string**. One symbol
 shorter than the record is a paper; the score is built to keep climbing.
 

@@ -341,7 +341,7 @@ class SuperpermutationTests(unittest.TestCase):
         self.assertGreater(helper(-5905.0, -35280.0, -5906.0), 1.0)
 
     def test_the_n8_reference_is_current_and_synchronized(self):
-        self.assertEqual(self.evaluator.SIZES[8]["sota_ref"], 46204)
+        self.assertEqual(self.evaluator.SIZES[8]["sota_ref"], 46205)
         for relative_path in (
             "Task.md",
             "TASK_CARD.yaml",
@@ -349,8 +349,8 @@ class SuperpermutationTests(unittest.TestCase):
             "references/known_best.md",
         ):
             text = (self.spec.task_dir / relative_path).read_text(encoding="utf-8")
-            self.assertIn("46204", text, relative_path)
-            self.assertNotIn("46205", text, relative_path)
+            self.assertIn("46205", text, relative_path)
+            self.assertNotIn("46204", text, relative_path)
 
         known_best = (self.spec.task_dir / "references/known_best.md").read_text(
             encoding="utf-8"
