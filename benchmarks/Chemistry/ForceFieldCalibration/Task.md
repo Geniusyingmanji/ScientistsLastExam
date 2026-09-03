@@ -154,3 +154,5 @@ nothing, and that zero cannot be told apart from a zero earned on the science.
 | `second_virial_bounds_cm3_mol` | passed in, unused by the baseline |
 | `temperatures_k` | passed in, unused by the baseline |
 | `virial_temperature_grid_k` | passed in, unused by the baseline |
+
+`sle.contract_lint` is importable inside the sandbox and costs no oracle call.

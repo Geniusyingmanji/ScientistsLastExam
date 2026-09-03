@@ -80,6 +80,7 @@ field fit is not automatically treated as proof of a unique internal geology.
 - Deterministic CPU code using the Python standard library, NumPy and SciPy only.
 - Do not assume hidden-world order, body count, signs, locations or noise level.
 - No network or process creation. Do not read `verification/` or `frontier_eval/`.
+- `sle.contract_lint` is importable and free to call for shape checks.
 
 References: Talwani, Worzel & Landisman (1959), DOI `10.1029/JZ064i001p00049`; Li &
 Oldenburg (1998), DOI `10.1190/1.1444302`.

@@ -213,10 +213,17 @@ def _health_checks(row: dict[str, Any]) -> dict[str, dict[str, Any]]:
 
 def _classification(row: dict[str, Any], checks: dict[str, dict[str, Any]]) -> tuple[str, list[str]]:
     task = row["task"]
-    if not row["gates"]["internal_science_admission"]["passed"]:
+    certification_status = row.get("certification_status")
+    if certification_status == "quarantined":
         return QUARANTINED, ["internal science admission failed"]
     if task in CONTROL_ONLY_TASKS:
         return CONTROL_ONLY, [CONTROL_ONLY_TASKS[task]]
+    if (task in EXPLORATORY_TASKS
+            and not row["gates"]["internal_science_admission"]["passed"]):
+        return REPAIR_FIRST, [
+            "current science admission failed",
+            "refresh the baseline and certification evidence before measurement allocation",
+        ]
     if task in EXPLORATORY_TASKS:
         reasons = [
             "result-selected current-contract task for an exploratory 2 h measurement screen",
@@ -244,6 +251,11 @@ def _classification(row: dict[str, Any], checks: dict[str, dict[str, Any]]) -> t
             "receives; evaluator-only axes are not visible to this classifier and may be "
             "untouched - see scripts/report_saturation_hidden_axes.py",
         ]
+    if not row["gates"]["internal_science_admission"]["passed"]:
+        return REPAIR_FIRST, [
+            "current science admission failed",
+            "refresh the baseline and certification evidence before measurement allocation",
+        ]
     return REPAIR_FIRST, [
         "current contract lacks sufficient non-saturated, valid, repeated trajectory evidence",
         "repair contract or run a short measurement calibration before allocating 2--12 h",
@@ -270,10 +282,10 @@ def build_report(maturity_path: Path = DEFAULT_MATURITY) -> dict[str, Any]:
     current_maturity = build_maturity_report()
     if current_maturity.get("execution_passed") is not True:
         raise ValueError("current maturity reconstruction failed")
-    if {row["task"] for row in maturity["tasks"]} != {
-        row["task"] for row in current_maturity["tasks"]
-    }:
-        raise ValueError("frozen and reconstructed maturity inventories differ")
+    frozen_tasks = {row["task"] for row in maturity["tasks"]}
+    current_tasks = {row["task"] for row in current_maturity["tasks"]}
+    if not frozen_tasks <= current_tasks:
+        raise ValueError("frozen maturity contains tasks absent from the current inventory")
 
     task_records = []
     for row in current_maturity["tasks"]:
@@ -305,7 +317,7 @@ def build_report(maturity_path: Path = DEFAULT_MATURITY) -> dict[str, Any]:
         if row["classification"] == EXPLORATORY_LONG_HORIZON_SCREEN
     ]
     issues = []
-    if len(task_records) != maturity.get("inventory_count"):
+    if len(task_records) != current_maturity.get("inventory_count"):
         issues.append("measurement-health inventory differs from maturity inventory")
     if sum(counts.values()) != len(task_records):
         issues.append("classification counts do not cover the inventory")

@@ -76,6 +76,7 @@ mechanism recovery or a false discovery is evidence of curve fitting, not a vali
 - Use deterministic CPU code from the Python standard library, NumPy and SciPy only.
 - Do not assume hidden-world order, topology, parameter values or noise level.
 - No network or process creation.  Do not read `verification/` or `frontier_eval/`.
+- `sle.contract_lint` is importable and free to call for shape checks.
 
 References: Turányi & Tomlin (2014), DOI `10.1007/978-3-662-44562-4`; Chis et al. (2011),
 DOI `10.1093/bioinformatics/btq074`; Loskot et al. (2023), DOI

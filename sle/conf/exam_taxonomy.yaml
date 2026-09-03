@@ -1,0 +1,85 @@
+# Scientists' Last Exam surface map.
+#
+# This is not Humanity's Last Exam (closed one-shot Q&A), not Scientist's First
+# Exam (multidisciplinary understanding), and not sgi-bench (full-paper auto-research).
+# Those occupy neighbouring cells. SLE occupies the remaining one: with a budgeted
+# oracle and an open-loop control, does a searcher get scientifically better?
+#
+# Every listed task fills exactly one form cell. Counts are a test, not a comment.
+
+schema_version: 1
+scenario: multidisciplinary_search
+out_of_scope:
+  - id: SFE
+    reason: one-shot multidisciplinary understanding; SLE does not score a single answer
+  - id: sgi-bench
+    reason: full-pipeline auto-research (paper, figures, claims); SLE scores a hidden oracle
+  - id: HLE
+    reason: closed exam items; SLE items are programs plus a frozen executable oracle
+
+optimization_analogue:
+  frontier_eng: engineering design under a frozen simulator
+  combinatorial: open-record construction with an executable mathematical verifier
+  molecular_design: molecular or macromolecular design under a frozen scientific oracle
+discovery_kind:
+  formula: recover a law, or refuse when no law in the family holds
+  structure: recover a graph, network or geometry
+  evidence: decide what a body of measurements supports
+  substance: say which materials, phases or species are present
+  parameter_inversion: recover numbers of a form that is already named
+
+tasks:
+  # --- optimization / frontier-eng ------------------------------------------
+  Thermodynamics/HeatExchangerDesign: {form: optimization, analogue: frontier_eng}
+  StructuralEngineering/TrussWeightMinimization: {form: optimization, analogue: frontier_eng}
+  Semiconductor/MOSFETDoping: {form: optimization, analogue: frontier_eng}
+  ChemicalProcess/DistillationColumnDesign: {form: optimization, analogue: frontier_eng}
+  Turbulence/RANSCalibration: {form: optimization, analogue: frontier_eng}
+  NuclearEngineering/NeutronDiffusionCriticality: {form: optimization, analogue: frontier_eng}
+  Acoustics/RoomImpulseResponse: {form: optimization, analogue: frontier_eng}
+  ControlTheory/InvertedPendulumSwingUp: {form: optimization, analogue: frontier_eng}
+  Astrodynamics/LowThrustTransfer: {form: optimization, analogue: frontier_eng}
+  ParticlePhysics/CalorimeterDesign: {form: optimization, analogue: frontier_eng}
+  Photonics/MultilayerThinFilm: {form: optimization, analogue: frontier_eng}
+  Optics/DiffractionGratingDesign: {form: optimization, analogue: frontier_eng}
+  SignalProcessing/SparseRecovery: {form: optimization, analogue: frontier_eng}
+  Electrochemistry/ElectrolyteConductivityDesign: {form: optimization, analogue: frontier_eng}
+  MaterialsScience/AlloyHardnessOptimization: {form: optimization, analogue: frontier_eng}
+  # --- optimization / combinatorial (open records: Ramsey, kissing, tensors, caps) ---
+  Optimization/CirclePacking: {form: optimization, analogue: combinatorial}
+  Mathematics/CapSet: {form: optimization, analogue: combinatorial}
+  Algorithm/MatrixMultiplicationRank: {form: optimization, analogue: combinatorial}
+  QuantumErrorCorrection/QuantumErrorDecoder: {form: optimization, analogue: combinatorial}
+  # --- optimization / molecular & macromolecular design (PMO / BioDesign) -----
+  MedicinalChemistry/MolecularLeadOptimization: {form: optimization, analogue: molecular_design}
+  ProteinEngineering/ProteinStabilityDesign: {form: optimization, analogue: molecular_design}
+  RNAEngineering/RNAInverseDesign: {form: optimization, analogue: molecular_design}
+  RNAEngineering/RNAEnsembleDesign: {form: optimization, analogue: molecular_design}
+  Chemistry/LennardJonesCluster: {form: optimization, analogue: molecular_design}
+  # --- discovery / formula ----------------------------------------------------
+  Mathematics/SequenceLawRecovery: {form: discovery, kind: formula}
+  DynamicalSystems/ActiveLawDiscovery: {form: discovery, kind: formula}
+  SystemsBiology/EnzymeKineticsLaw: {form: discovery, kind: formula, note: on_ramp_do_not_pair}
+  # --- discovery / structure --------------------------------------------------
+  CausalDiscovery/InterventionalSCM: {form: discovery, kind: structure}
+  Algorithm/GraphFromDistances: {form: discovery, kind: structure}
+  SystemsBiology/GeneNetworkIntervention: {form: discovery, kind: structure}
+  # --- discovery / evidence ---------------------------------------------------
+  ParticlePhysics/DiscrepantMeasurements: {form: discovery, kind: evidence, note: on_ramp_do_not_pair}
+  EvidenceSynthesis/ProspectiveMetaAnalysis: {form: discovery, kind: evidence}
+  # --- discovery / substance --------------------------------------------------
+  MaterialsScience/PhaseDiagramDiscovery: {form: discovery, kind: substance}
+  # --- discovery / parameter inversion (SLE's remaining empty-looking cell) ---
+  QuantumDynamics/HamiltonianLearning: {form: discovery, kind: parameter_inversion}
+  ClimateScience/EnergyBalanceModel: {form: discovery, kind: parameter_inversion}
+  AtmosphericScience/RadiativeTransferFit: {form: discovery, kind: parameter_inversion}
+  MolecularDynamics/ForceFieldCalibration: {form: discovery, kind: parameter_inversion}
+  HeatTransfer/ConvectionDiffusionOpt: {form: discovery, kind: parameter_inversion}
+  Geophysics/GravityInversion: {form: discovery, kind: parameter_inversion}
+  PopulationGenetics/DemographicSFS: {form: discovery, kind: parameter_inversion}
+  ChemicalKinetics/ReactionMechanismFitting: {form: discovery, kind: parameter_inversion}
+  Spectroscopy/SpinSystemInference: {form: discovery, kind: parameter_inversion}
+  Exoplanets/RadialVelocityPlanets: {form: discovery, kind: parameter_inversion}
+  Catalysis/CatalystDeactivationLab: {form: discovery, kind: parameter_inversion}
+  Sensors/QuartzCrystalMicrobalanceLab: {form: discovery, kind: parameter_inversion}
+  Spectroscopy/NMRSpectrumFitting: {form: discovery, kind: parameter_inversion}

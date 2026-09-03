@@ -108,3 +108,5 @@ nothing, and that zero cannot be told apart from a zero earned on the science.
 | `physical_act_budget` | passed in, unused by the baseline |
 | `policy_objective` | passed in, unused by the baseline |
 | `standard_reference_response` | passed in, unused by the baseline |
+
+`sle.contract_lint` is importable inside the sandbox and costs no oracle call.

@@ -180,7 +180,14 @@ def llm_condition_descriptor(llm: LLMClient) -> dict[str, Any]:
         "temperature": getattr(config, "temperature", None),
         "max_output_tokens": getattr(config, "max_output_tokens", None),
         "timeout_seconds": getattr(config, "timeout_seconds", None),
+        "stream": bool(getattr(config, "stream", False)),
+        "chat_max_tokens_field": getattr(config, "chat_max_tokens_field", "max_tokens"),
+        "anthropic_version": getattr(config, "anthropic_version", "2023-06-01"),
+        "thinking_budget_tokens": getattr(config, "thinking_budget_tokens", None),
         "base_url_host": host,
+        "chat_reasoning_fallback": bool(
+            getattr(config, "chat_reasoning_fallback", False)
+        ),
     }
 
 
@@ -189,7 +196,7 @@ def llm_condition_sha256(llm: LLMClient) -> str:
     if config is None:
         return _canonical_hash({"client_type": type(llm).__name__})
     extra_headers = getattr(config, "extra_headers", None) or {}
-    return _canonical_hash({
+    payload = {
         "wire": getattr(config, "wire", None),
         "base_url": getattr(config, "base_url", None),
         "model": getattr(config, "model", None),
@@ -205,7 +212,26 @@ def llm_condition_sha256(llm: LLMClient) -> str:
         },
         "input_cost_per_million": getattr(config, "input_cost_per_million", None),
         "output_cost_per_million": getattr(config, "output_cost_per_million", None),
-    })
+        # This field predates the readable descriptor and was present even when false. Keeping
+        # it unconditional preserves the identity of every existing non-stream run.
+        "stream": bool(getattr(config, "stream", False)),
+    }
+    # Only bind when on. The default (visible content only) must keep the Wave-1
+    # hashes; turning the fallback on is a different searcher.
+    if getattr(config, "chat_reasoning_fallback", False):
+        payload["chat_reasoning_fallback"] = True
+    # Preserve legacy hashes for the original defaults, while binding every option that changes
+    # the wire contract or reasoning budget when it is actually selected.
+    chat_max_tokens_field = getattr(config, "chat_max_tokens_field", "max_tokens")
+    if chat_max_tokens_field != "max_tokens":
+        payload["chat_max_tokens_field"] = chat_max_tokens_field
+    anthropic_version = getattr(config, "anthropic_version", "2023-06-01")
+    if anthropic_version != "2023-06-01":
+        payload["anthropic_version"] = anthropic_version
+    thinking_budget = getattr(config, "thinking_budget_tokens", None)
+    if thinking_budget is not None:
+        payload["thinking_budget_tokens"] = thinking_budget
+    return _canonical_hash(payload)
 
 
 def require_distribution(

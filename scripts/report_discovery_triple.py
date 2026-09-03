@@ -30,6 +30,20 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from sle.registry import list_tasks  # noqa: E402
+from sle.task_versions import version_class  # noqa: E402
+
+
+def known_conditions() -> dict[str, str]:
+    import yaml
+
+    path = ROOT / "sle" / "llm_conditions.yaml"
+    if not path.is_file():
+        return {}
+    document = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    return {
+        str(digest): str(entry.get("model") or "unrecorded")
+        for digest, entry in (document.get("conditions") or {}).items()
+    }
 
 # Several naming conventions coexist in the inventory. Preference order runs from the strictest
 # evidence (held-out worlds) to the weakest (development worlds the searcher could see).
@@ -107,6 +121,22 @@ def best_metrics(directory: Path) -> dict | None:
     return best
 
 
+def run_identity(document: dict) -> tuple[str, str, str, str, str] | None:
+    """Return the full evidence identity shared with the admission report."""
+    task = str(document.get("task_id") or "")
+    if not task:
+        return None
+    condition = str(document.get("llm_condition_sha256") or "unrecorded")
+    model = str((document.get("llm_condition") or {}).get("model") or "")
+    if not model:
+        model = known_conditions().get(condition, "unrecorded")
+    task_version = version_class(
+        task, str(document.get("task_package_sha256") or "unknown")
+    )[:14]
+    runtime = str(document.get("runtime_source_sha256") or "unrecorded")
+    return task, model, condition, task_version, runtime
+
+
 # Some evaluators publish a count where the report needs a rate, and do not publish the
 # denominator that would turn one into the other. That is a different defect from not measuring
 # the axis at all, and conflating them sends the fix to the wrong place: a count with no
@@ -137,11 +167,11 @@ def extract(metrics: dict) -> dict:
     return out
 
 
-def main() -> int:
+def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--runs", required=True)
     ap.add_argument("--output", required=True)
-    args = ap.parse_args()
+    args = ap.parse_args(argv)
 
     wanted = discovery_task_names()
     root = Path(args.runs)
@@ -153,20 +183,25 @@ def main() -> int:
     # tree holding hundreds of them, and would have reported one arbitrary run if it had found
     # any. Directory names are not reliable here either: budget-sweep cohorts are named for their
     # budget, not their task.
-    by_task: dict[str, list[Path]] = {}
-    for manifest in root.glob("*/*/run_manifest.json"):
+    by_identity: dict[tuple[str, str, str, str, str], list[Path]] = {}
+    for manifest in root.rglob("run_manifest.json"):
         try:
             document = json.loads(manifest.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError):
             continue
-        task_id = str(document.get("task_id") or "")
-        name = task_id.split("/")[-1]
+        identity = run_identity(document)
+        if identity is None:
+            continue
+        name = identity[0].split("/")[-1]
         if name in wanted:
-            by_task.setdefault(name, []).append(manifest.parent)
+            by_identity.setdefault(identity, []).append(manifest.parent)
 
     rows = []
-    for name in sorted(wanted):
-        candidates = [m for m in (best_metrics(d) for d in by_task.get(name, []))
+    represented = set()
+    for identity, directories in sorted(by_identity.items()):
+        task, model, condition, task_version, runtime = identity
+        represented.add(task.split("/")[-1])
+        candidates = [m for m in (best_metrics(d) for d in directories)
                       if m is not None]
         # The best valid proposal anywhere, which is what a leaderboard would show.
         metrics = max(candidates, key=lambda m: float(m.get("combined_score") or 0.0),
@@ -177,13 +212,24 @@ def main() -> int:
         published_anywhere = {axis for m in candidates
                               for axis, entry in extract(m).items() if entry is not None}
         if metrics is None:
-            rows.append({"task": name, "status": "no valid proposal"})
+            rows.append({
+                "task": task,
+                "model": model,
+                "llm_condition_sha256": condition,
+                "task_version": task_version,
+                "runtime_source_sha256": runtime,
+                "status": "no valid proposal",
+            })
             continue
         axes = extract(metrics)
         rows.append({
-            "task": name,
+            "task": task,
+            "model": model,
+            "llm_condition_sha256": condition,
+            "task_version": task_version,
+            "runtime_source_sha256": runtime,
             "status": "ok",
-            "runs_seen": len(by_task.get(name, [])),
+            "runs_seen": len(directories),
             "axes_published_by_some_run": sorted(published_anywhere),
             "combined_score": metrics.get("combined_score"),
             "axes": axes,
@@ -193,6 +239,8 @@ def main() -> int:
                 if v is not None and v.get("status") == "count_without_denominator"
             ],
         })
+    for name in sorted(wanted - represented):
+        rows.append({"task": name, "status": "no valid proposal"})
 
     def cell(entry):
         if entry is None:

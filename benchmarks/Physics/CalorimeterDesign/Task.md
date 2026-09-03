@@ -120,7 +120,7 @@ score. Two held-out regimes are evaluator-only transfer diagnostics.
 Within every regime and cost cap, the weak valid uniform design defines zero.
 A separately fixed-seed, same-model graded witness defines one. These witnesses
 are replayable normalization anchors, not global-optimality or state-of-the-art
-claims; better feasible designs are clipped to one. The visible score is the
+claims; better feasible designs score above one. The visible score is the
 mean of the three option scores and then the four development-regime scores.
 
 Five sealed shifts separately test:

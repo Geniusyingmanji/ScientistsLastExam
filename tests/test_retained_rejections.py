@@ -51,6 +51,35 @@ class RetainedRejectionTests(unittest.TestCase):
             kept = list((Path(tmp) / "rejected").glob("*.py"))
             self.assertEqual(len(kept), RETAINED_REJECTIONS)
 
+    def test_an_unparsed_reply_is_kept(self):
+        with TemporaryDirectory() as tmp:
+            _retain_rejected(
+                Path(tmp), 1, "",
+                {"valid": 0.0, "error_message": "no_code", "combined_score": -1e18},
+                valid=False, response="```python\ndef f():\n", parse_status="no_code",
+            )
+            reply = Path(tmp) / "rejected" / "step_001.reply.txt"
+            record = json.loads((Path(tmp) / "rejected" / "step_001.json")
+                                .read_text(encoding="utf-8"))
+            self.assertEqual(reply.read_text(encoding="utf-8"), "```python\ndef f():\n")
+            self.assertEqual(record["parse_status"], "no_code")
+            self.assertFalse((Path(tmp) / "rejected" / "step_001.py").exists())
+
+    def test_an_empty_unparsed_reply_is_still_kept(self):
+        """A thinking-only stream has zero visible characters. Keeping the empty
+        file is how you tell that apart from 'we never captured the reply'."""
+        with TemporaryDirectory() as tmp:
+            _retain_rejected(
+                Path(tmp), 1, "",
+                {"valid": 0.0, "error_message": "no_code", "combined_score": -1e18},
+                valid=False, response="", parse_status="no_code",
+            )
+            reply = Path(tmp) / "rejected" / "step_001.reply.txt"
+            record = json.loads((Path(tmp) / "rejected" / "step_001.json")
+                                .read_text(encoding="utf-8"))
+            self.assertEqual(reply.read_text(encoding="utf-8"), "")
+            self.assertEqual(record["response_utf8_bytes"], 0)
+
     def test_a_write_failure_does_not_propagate(self):
         """Diagnostics must never be able to fail a run."""
         with TemporaryDirectory() as tmp:

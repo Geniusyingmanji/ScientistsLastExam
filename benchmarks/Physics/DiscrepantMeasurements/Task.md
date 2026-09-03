@@ -124,3 +124,9 @@ and whether to decline:
 Buying splits at all is worth +0.42. Buying at *both ends* rather than only the deviant tail is
 worth a further +0.14, and takes the culprit rate from 0.50 to 1.00. Declining where it is right
 is worth +0.33.
+
+## Rules
+
+- Only edit `solution.py`; keep `synthesize_evidence(problem, split_test)`.
+- `sle.contract_lint` is importable and free to call for shape checks. It costs no oracle call.
+- Do not read `verification/` or `frontier_eval/`.

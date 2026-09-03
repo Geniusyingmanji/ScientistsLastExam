@@ -114,3 +114,9 @@ time:
 The gaps between single-phase regions are 0.2-0.3 wide, so grid midpoints miss boundaries by ~0.1
 and the lever regression is worth +0.72 on its own. Knowing when to decline is worth +0.29. The
 reference spends 13 of its 26 calls; what the other 13 could buy is left on the table.
+
+## Rules
+
+- Only edit `solution.py`; keep `discover_phases(problem, synthesize)`.
+- `sle.contract_lint` is importable and free to call for shape checks. It costs no oracle call.
+- Do not read `verification/` or `frontier_eval/`.

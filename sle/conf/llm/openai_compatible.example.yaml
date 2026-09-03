@@ -9,5 +9,10 @@ base_url: https://api.openai.com/v1
 api_key: ${OPENAI_API_KEY}         # read from the environment; never hard-code a key
 model: gpt-4o
 max_output_tokens: 8000
+# Chat streams that emit a separate reasoning channel (hy3-ioa) spend this
+# budget on thinking first. If visible content comes back empty, raise it,
+# or set chat_reasoning_fallback: true in the git-ignored local.yaml for debug
+# (that is not the Wave-1 searcher condition).
+# chat_reasoning_fallback: false
 temperature: 0.7
 timeout_seconds: 600

@@ -60,5 +60,6 @@ validity diagnostic.
 - Only edit `solution.py`; keep the `discover_mechanism` signature.
 - Deterministic CPU code using the Python standard library, NumPy, and SciPy only.
 - No network or process creation. Do not read `verification/` or `frontier_eval/`.
+- `sle.contract_lint` is importable and free to call for shape checks.
 - Do not assume that variable index is a causal/topological order.
 

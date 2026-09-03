@@ -198,6 +198,40 @@ class MeasurementHealthPreflightTests(unittest.TestCase):
         self.assertFalse(report["execution_passed"])
         self.assertIn("v2 preflight base-spec hash differs", report["issues"])
 
+    def test_v2_overlay_predecessor_hash_is_fail_closed(self):
+        document = json.loads(MODULE.DEFAULT_SPEC.read_text(encoding="utf-8"))
+        document["source_provenance"] = {
+            "source_tree_dirty": False,
+            "git_revision": MODULE.subprocess.check_output(
+                ["git", "rev-parse", "HEAD"], cwd=ROOT, text=True
+            ).strip(),
+        }
+        document["supersedes"]["sha256"] = "0" * 64
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / "spec.json"
+            path.write_text(json.dumps(document), encoding="utf-8")
+            _resolved, _inputs, issues = MODULE._resolve_preflight_spec(path)
+        self.assertIn("v2 preflight predecessor hash differs", issues)
+
+    def test_v2_overlay_dirty_provenance_is_fail_closed(self):
+        document = json.loads(MODULE.DEFAULT_SPEC.read_text(encoding="utf-8"))
+        document["source_provenance"]["source_tree_dirty"] = True
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / "spec.json"
+            path.write_text(json.dumps(document), encoding="utf-8")
+            _resolved, _inputs, issues = MODULE._resolve_preflight_spec(path)
+        self.assertIn("v2 preflight source provenance is dirty", issues)
+
+    def test_v2_overlay_unreachable_revision_is_fail_closed(self):
+        document = json.loads(MODULE.DEFAULT_SPEC.read_text(encoding="utf-8"))
+        document["source_provenance"]["source_tree_dirty"] = False
+        document["source_provenance"]["git_revision"] = "0" * 40
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / "spec.json"
+            path.write_text(json.dumps(document), encoding="utf-8")
+            _resolved, _inputs, issues = MODULE._resolve_preflight_spec(path)
+        self.assertIn("v2 preflight source revision is missing or unreachable", issues)
+
     def test_recovery_requires_a_deterministic_task_card(self):
         config = self.report["tasks"][0]["checks"]["exactly_once_recovery"]
         self.assertEqual(config["status"], "pass")

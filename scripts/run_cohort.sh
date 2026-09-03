@@ -14,9 +14,8 @@
 #   the lock is per run directory, so two drivers that happen to share a task serialise on the
 #   run they collide over instead of on their own names, and
 #
-#   a run counts as finished when its manifest exists - the same file the readers require. The old
-#   guard accepted "trajectory.jsonl has at least 13 lines", which is true of a run whose manifest
-#   was destroyed, so a resume skipped exactly the runs that needed redoing.
+#   a run counts as finished only when both its manifest and terminal summary exist. The manifest
+#   is written before baseline evaluation, so it proves attribution but not completion.
 #
 # The paired structure matters for the same reason it does in the evolvability gap: `normal` and
 # `selection_blind` must run at the same seed and the same budget, so they are launched together
@@ -27,6 +26,9 @@
 #       --seeds 0,1,2 --budget 12 Spectroscopy/NMRSpectrumFitting:nmr Astro/X:x
 #
 #   --only-missing   restrict to runs that have no manifest (repairs a partial cohort)
+#   --modes          comma-separated feedback modes; default is both arms. Open-loop
+#                    saturation scans pass selection_blind only so a climbing control
+#                    does not also buy an unpaired feedback arm.
 set -uo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -40,6 +42,7 @@ while [[ $# -gt 0 ]]; do
     --seeds) SEEDS="$2"; shift 2 ;;
     --budget) BUDGET="$2"; shift 2 ;;
     --algorithm) ALGORITHM="$2"; shift 2 ;;
+    --modes) IFS=',' read -r -a MODES <<< "$2"; shift 2 ;;
     --only-missing) ONLY_MISSING=1; shift ;;
     --) shift; break ;;
     -*) echo "unknown flag: $1" >&2; exit 2 ;;
@@ -47,8 +50,8 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-[[ -n "$COHORT" && -n "$CONFIG" && $# -gt 0 ]] || {
-  echo "usage: $0 --cohort NAME --config PATH [--seeds 0,1,2] [--budget N] [--only-missing] TASK:SHORT..." >&2
+[[ -n "$COHORT" && -n "$CONFIG" && $# -gt 0 && ${#MODES[@]} -gt 0 ]] || {
+  echo "usage: $0 --cohort NAME --config PATH [--seeds 0,1,2] [--budget N] [--modes selection_blind,normal] [--only-missing] TASK:SHORT..." >&2
   exit 2
 }
 
@@ -66,53 +69,123 @@ mkdir -p "$ROOT/runs/$COHORT" "$ROOT/logs" "$LOCK_ROOT"
 IFS=',' read -r -a SEED_LIST <<< "$SEEDS"
 failures=0
 
+request_digest () {
+  local task="$1" mode="$2" seed="$3"
+  local config_digest
+  if [[ -f "$CONFIG" ]]; then
+    config_digest="$(sha256sum "$CONFIG" | awk '{print $1}')"
+  else
+    config_digest="missing:$CONFIG"
+  fi
+  printf '%s\n' "$task" "$mode" "$seed" "$ALGORITHM" "$BUDGET" "$config_digest" \
+    | sha256sum | awk '{print $1}'
+}
+
+run_is_complete () {
+  local dir="$1" task="$2" mode="$3" seed="$4"
+  [[ -f "$dir/run_manifest.json" && -f "$dir/summary.json" \
+     && -f "$dir/.cohort_request_sha256" ]] || return 1
+  [[ "$(<"$dir/.cohort_request_sha256")" == "$(request_digest "$task" "$mode" "$seed")" ]] \
+    || return 1
+  python - "$dir" "$task" "$mode" "$seed" "$ALGORITHM" "$BUDGET" "$ROOT" "$CONFIG" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+directory, task, mode, seed, algorithm, budget, root, config = sys.argv[1:]
+try:
+    manifest = json.loads((Path(directory) / "run_manifest.json").read_text())
+    summary = json.loads((Path(directory) / "summary.json").read_text())
+except (OSError, json.JSONDecodeError):
+    raise SystemExit(1)
+expected_manifest = {
+    "task_id": task,
+    "feedback_mode": mode,
+    "seed": int(seed),
+    "algorithm": algorithm,
+}
+expected_summary = {**expected_manifest, "budget": int(budget)}
+if any(manifest.get(key) != value for key, value in expected_manifest.items()):
+    raise SystemExit(1)
+if any(summary.get(key) != value for key, value in expected_summary.items()):
+    raise SystemExit(1)
+
+# A completed cell is evidence about one frozen task, runtime, and model condition. The
+# lightweight script tests copy this file without the package, so the identity check is enabled
+# whenever this is a real checkout and otherwise the artifact/request checks above still run.
+root_path = Path(root)
+if (root_path / "sle").is_dir():
+    sys.path.insert(0, str(root_path))
+    from sle.algorithms.common import (
+        llm_condition_sha256,
+        runtime_source_sha256,
+        task_contract_sha256,
+        task_package_sha256,
+    )
+    from sle.config import load_llm_client
+    from sle.registry import find_task
+
+    spec = find_task(task, include_uncertified=True)
+    expected_bindings = {
+        "llm_condition_sha256": llm_condition_sha256(load_llm_client(config)),
+        "task_contract_sha256": task_contract_sha256(spec),
+        "task_package_sha256": task_package_sha256(spec),
+        "runtime_source_sha256": runtime_source_sha256(),
+    }
+    if any(manifest.get(key) != value for key, value in expected_bindings.items()):
+        raise SystemExit(1)
+PY
+}
+
 run_one () {
   local task="$1" short="$2" mode="$3" seed="$4"
   local name="${short}_${mode}_s${seed}"
   local dir="$ROOT/runs/$COHORT/$name"
-  local lock="$LOCK_ROOT/$name"
+  local lock="$LOCK_ROOT/$name.lock"
 
-  # Finished means the manifest is there, because that is what the reports require.
-  if [[ -f "$dir/run_manifest.json" ]]; then
+  if run_is_complete "$dir" "$task" "$mode" "$seed"; then
     echo "skip  $short $mode s$seed (already complete)"
     return 0
   fi
-  # mkdir is the atomic primitive here; -p would succeed on an existing directory and defeat it.
-  if ! mkdir "$lock" 2>/dev/null; then
-    # A driver that is killed leaves its lock behind, and a lock nobody holds would block this
-    # run forever. The holder's pid is recorded so a dead one can be taken over; a live one is
-    # still respected.
-    local holder
-    holder="$(cat "$lock/pid" 2>/dev/null || true)"
-    if [[ -n "$holder" ]] && kill -0 "$holder" 2>/dev/null; then
-      echo "busy  $short $mode s$seed (held by pid $holder)"
-      return 0
-    fi
-    echo "stale $short $mode s$seed (lock left by pid ${holder:-unknown}); taking it over"
-  fi
-  echo "$$" > "$lock/pid"
-  # Two drivers can find the same stale lock at the same moment and both claim it. Whoever wrote
-  # last owns it; the other backs off rather than running a duplicate into the same directory.
-  if [[ "$(cat "$lock/pid" 2>/dev/null)" != "$$" ]]; then
-    echo "busy  $short $mode s$seed (lost the race for a stale lock)"
-    return 0
-  fi
-  trap 'rm -rf "$lock" 2>/dev/null' RETURN
-
-  # Safe now: the lock is held, so no concurrent driver is writing into this directory.
-  rm -rf "$dir"
-  local log="$ROOT/logs/${COHORT}_${short}_${mode}_s${seed}.log"
-  if python3 -m sle run --task "$task" --algorithm "$ALGORITHM" \
-      --feedback-mode "$mode" --budget "$BUDGET" --seed "$seed" --allow-uncertified \
-      --llm-config "$CONFIG" --workdir "$dir" > "$log" 2>&1 \
-      && [[ -f "$dir/run_manifest.json" ]]; then
-    echo "done  $short $mode s$seed"
-  else
-    # Report it rather than letting a missing manifest look like a run that was never requested.
-    echo "FAIL  $short $mode s$seed -- see $log"
-    tail -3 "$log" | sed 's/^/        /'
+  if [[ -f "$dir/run_manifest.json" && -f "$dir/summary.json" ]]; then
+    echo "CONFLICT $short $mode s$seed (terminal artifacts do not match requested cell)"
     return 1
   fi
+  # `flock` locks the open inode atomically and the kernel releases it if the driver dies. This
+  # has no empty-pid acquisition window and no stale-lock takeover race. Keep the lock file: an
+  # unlink/recreate cycle would let two processes lock different inodes for the same run.
+  (
+    if ! flock -n 9; then
+      echo "busy  $short $mode s$seed"
+      exit 0
+    fi
+    # Another driver may have completed the cell between the optimistic check above and this
+    # lock acquisition. Re-check under the lock before touching the run directory.
+    if run_is_complete "$dir" "$task" "$mode" "$seed"; then
+      echo "skip  $short $mode s$seed (already complete)"
+      exit 0
+    fi
+    if [[ -f "$dir/run_manifest.json" && -f "$dir/summary.json" ]]; then
+      echo "CONFLICT $short $mode s$seed (terminal artifacts do not match requested cell)"
+      exit 1
+    fi
+
+    # Safe now: the kernel lock is held, so no concurrent driver is writing into this directory.
+    rm -rf "$dir"
+    local log="$ROOT/logs/${COHORT}_${short}_${mode}_s${seed}.log"
+    if python3 -m sle run --task "$task" --algorithm "$ALGORITHM" \
+        --feedback-mode "$mode" --budget "$BUDGET" --seed "$seed" --allow-uncertified \
+        --llm-config "$CONFIG" --workdir "$dir" > "$log" 2>&1 \
+        && [[ -f "$dir/run_manifest.json" && -f "$dir/summary.json" ]]; then
+      request_digest "$task" "$mode" "$seed" > "$dir/.cohort_request_sha256"
+      echo "done  $short $mode s$seed"
+    else
+      # Report it rather than letting a missing manifest look like a run that was never requested.
+      echo "FAIL  $short $mode s$seed -- see $log"
+      tail -3 "$log" | sed 's/^/        /'
+      exit 1
+    fi
+  ) 9>"$lock"
 }
 
 for spec in "$@"; do
@@ -122,8 +195,9 @@ for spec in "$@"; do
     for seed in "${SEED_LIST[@]}"; do
       pids=()
       for mode in "${MODES[@]}"; do
-        if [[ "$ONLY_MISSING" == 1 \
-              && -f "$ROOT/runs/$COHORT/${short}_${mode}_s${seed}/run_manifest.json" ]]; then
+        if [[ "$ONLY_MISSING" == 1 ]] && run_is_complete \
+              "$ROOT/runs/$COHORT/${short}_${mode}_s${seed}" \
+              "$task" "$mode" "$seed"; then
           continue
         fi
         run_one "$task" "$short" "$mode" "$seed" &
@@ -144,10 +218,19 @@ for spec in "$@"; do
   [[ "$task" == "$short" ]] && short="${task##*/}"
   for seed in "${SEED_LIST[@]}"; do
     for mode in "${MODES[@]}"; do
-      [[ -f "$ROOT/runs/$COHORT/${short}_${mode}_s${seed}/run_manifest.json" ]] \
-        || { echo "MISSING $short $mode s$seed"; failures=$((failures + 1)); }
+      name="${short}_${mode}_s${seed}"
+      dir="$ROOT/runs/$COHORT/$name"
+      lock="$LOCK_ROOT/$name.lock"
+      # A concurrent driver may have reported this cell as busy and returned from run_one.
+      # Check terminal evidence only after that driver releases the same per-cell lock.
+      ( flock 9 && run_is_complete "$dir" "$task" "$mode" "$seed" ) 9>"$lock" \
+        || { echo "INCOMPLETE $short $mode s$seed"; failures=$((failures + 1)); }
     done
   done
 done
-[[ "$failures" == 0 ]] && echo "all runs have a manifest" || echo "$failures run(s) missing a manifest"
-exit 0
+if [[ "$failures" == 0 ]]; then
+  echo "all runs have terminal artifacts"
+  exit 0
+fi
+echo "$failures run(s) incomplete"
+exit 1

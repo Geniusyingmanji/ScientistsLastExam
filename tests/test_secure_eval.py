@@ -172,6 +172,12 @@ class SecureEvaluationTests(unittest.TestCase):
         self.assert_rejected(result)
         self.assertEqual(result.get("timeout"), 1.0)
 
+    def test_timeout_during_worker_initialization_is_a_candidate_timeout(self):
+        result = self.evaluate_source("while True: pass", timeout=0.5)
+        self.assert_rejected(result)
+        self.assertEqual(result.get("timeout"), 1.0)
+        self.assertNotIn("infrastructure_failure", result)
+
     def test_caught_multi_instance_timeout_is_not_masked_by_closed_worker(self):
         spec = load_task_spec(BENCHMARKS / "Mathematics" / "CirclePacking")
         with tempfile.TemporaryDirectory() as tmp:

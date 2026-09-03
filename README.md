@@ -10,16 +10,17 @@ Scientists' Last Exam (SLE) 是一个研究原型,面向**跨领域、可执行�
 ```text
 Scientists' Last Exam
 ├── 场景
-│   ├── 多学科广度 ── AstaBench · DiscoveryBench · ResearchClawBench
+│   ├── 多学科广度 ── 本仓库(可执行搜索,不是一次作答)
+│   │     SFE / HLE 占理解与闭卷; sgi-bench 占全流程写论文 —— 都不是这里
 │   └── 单学科纵深 ── NewtonBench 物理 · BioDesignBench 蛋白
 ├── 任务形式
-│   ├── optimization ── Frontier-Eng 工程 · PMO 分子 · Design-Bench 离线
+│   ├── optimization ── Frontier-Eng 工程 · EdgeBench 可执行搜索 · PMO 分子
 │   └── discover
-│       ├── 公式 ── NewtonBench · LLM-SRBench
-│       ├── 结构 ── CausalGame · Corr2Cause
-│       ├── 证据 ── DiscoveryBench
-│       ├── 物质 ── MADE 材料 · SMDD-Bench 药物
-│       └── 参数与机制反演 ── 无旗舰占位    ← 空位
+│       ├── 公式 ── NewtonBench · SequenceLaw · EnzymeKinetics(on-ramp,勿配对)
+│       ├── 结构 ── InterventionalSCM · GraphFromDistances · GeneNetwork
+│       ├── 证据 ── DiscoveryBench · DiscrepantMeasurements(on-ramp,勿配对)
+│       ├── 物质 ── MADE · PhaseDiagramDiscovery
+│       └── 参数与机制反演 ── SLE 13 题(无外部旗舰)    ← 仍是空位的主体
 └── 评估
     ├── 受限 oracle 预算 ── 已成标配
     ├── 成本质量 Pareto ── AstaBench
@@ -28,18 +29,21 @@ Scientists' Last Exam
 ```
 
 **空位在两处。** 一是"参数与机制反演"—— 从受预算的观测里反演一个机制,或判断根本没有机制可反演;
-SLE 19 个发现类任务中有 12 个落在这里。二是**评估形式**:受限 oracle 预算已经是标配
+SLE 22 个发现类任务中有 13 个落在这里。二是**评估形式**:受限 oracle 预算已经是标配
 (MADE 50 次查询、CausalGame 10 次部署、PMO-1K 1000 次调用),但**没有一个基准用同一个搜索者的
 开环臂做对照** —— 因此"分数变高"与"迭代真的有用"仍然分不开。这两件事就是本仓库要做的。
 
+机器可读的格点账本是 `sle/conf/exam_taxonomy.yaml`(`python scripts/report_exam_taxonomy.py`)。
+SFE / HLE / sgi-bench 写在 `out_of_scope` 里,避免把一次作答或写论文算进 SLE。
+
 ## 两类任务
 
-当前 43 个任务包,横跨 7 个学科,分成两类:
+当前 46 个任务包,横跨 7 个学科,分成两类:
 
 **optimization(24 个)** —— 在一个受约束的设计空间里把目标做得更好:换热器几何、超材料层叠、
 桁架截面、解码器策略。分数由**它做出来的东西有多好**决定。
 
-**discovery(19 个)** —— 从受预算约束的观测里恢复一个机制,或者判断根本没有机制可恢复。
+**discovery(22 个)** —— 从受预算约束的观测里恢复一个机制,或者判断根本没有机制可恢复。
 每题包含三种世界:机制在候选可表达的模型族内(**该找出来**)、机制在族外、以及**根本没有机制**
 (后两种**该拒答**)。候选看不到自己面对的是哪一类。
 

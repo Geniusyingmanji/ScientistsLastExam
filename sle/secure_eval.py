@@ -210,7 +210,11 @@ def read_candidate_packages(task_dir: Path) -> tuple[str, ...]:
 
 @functools.lru_cache(maxsize=1)
 def _proc_mount_args() -> tuple[str, ...]:
-    """Prefer a fresh procfs, falling back to an empty private mount."""
+    """Prefer a fresh procfs. Some container hosts forbid that mount.
+
+    An empty tmpfs is sufficient for candidates when a private procfs is unavailable.
+    Never bind the host process table into the candidate namespace.
+    """
     bwrap = shutil.which("bwrap")
     if not bwrap:
         return ("--proc", "/proc")
@@ -349,6 +353,8 @@ class CandidateProxy:
             raise CandidateError("candidate response is not UTF-8") from exc
 
     def _stderr(self) -> str:
+        if self.proc is None:
+            return ""
         if self.proc.poll() is None:
             return ""
         assert self.proc.stderr is not None

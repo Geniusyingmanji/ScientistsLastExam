@@ -88,6 +88,7 @@ biological discovery.
 - Deterministic CPU code using Python, NumPy, SciPy and the standard library only.
 - Do not assume world order, hidden parameters, Poisson realization or response kind.
 - No network or process creation. Do not read `verification/` or `frontier_eval/`.
+- `sle.contract_lint` is importable and free to call for shape checks.
 
 ## References
 

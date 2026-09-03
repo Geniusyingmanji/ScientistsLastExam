@@ -27,15 +27,16 @@ of your configuration, and compares it to the known global minimum for that `n`.
 
 ## Scoring
 
-For each cluster size the per-task score is the fraction of the baseline→optimum gap closed:
+For each cluster size the score is the ratio of achieved energy to the Cambridge Cluster
+Database putative minimum (both negative):
 
 ```
-gap_closed(n) = (E_baseline(n) − E_found(n)) / (E_baseline(n) − E_global_min(n))
+score(n) = max(0, E_found(n) / E_CCD(n))     # no upper clamp
 ```
 
-clipped to `[0, 1]`, where `E_baseline` is this folder's initial program. The reported
-`combined_score` is the mean of `gap_closed` over all test sizes (so the initial program
-scores ~0 and matching the known global minima scores 1.0). A configuration with any atoms
+Matching a listed minimum scores 1.0. An energy below the listed value (more negative) scores
+above 1.0: those minima are conjectured, not proven. The reported `combined_score` is the mean
+over the test sizes, so the initial program scores near 0. A configuration with any atoms
 closer than a hard-core cutoff or producing non-finite energy is invalid.
 
 ## Rules
