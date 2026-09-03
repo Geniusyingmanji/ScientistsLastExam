@@ -1,0 +1,13 @@
+domain: MaterialsScience
+task: QuinaryConvexHull
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: analytical
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 8
+science_metric: exact_nonunary_hull_vertices_with_glass_refusal
+reference_baseline: publish every catalog composition with E_f < 0
+reference_sota: replicate energies, then keep only non-unary vertices of the lower convex envelope
+citation: "Malik et al., MADE, arXiv:2601.20996"

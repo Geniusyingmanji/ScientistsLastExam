@@ -1,0 +1,13 @@
+domain: Physics
+task: ComplexBoseLaw
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: physical_sim
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 8
+science_metric: bose_exponent_recovery_under_mode_mixing_with_fermi_refusal
+reference_baseline: always publish textbook Bose occupation with (C, alpha, beta) = (1, 1, 1)
+reference_sota: invert mixed occupancy with x=log(1+1/n); refuse Fermi saturation and T-independent blanks
+citation: "Zheng et al., NewtonBench, arXiv:2510.07172"

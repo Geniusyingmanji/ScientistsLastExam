@@ -1,0 +1,4 @@
+1) Only edit solution.py. Keep interpret_correlations(problem, bootstrap).
+2) Return {"kernel", "confidence", "abstain"}. `kernel` must be one of problem["kernel_names"] unless abstaining. `confidence` in [0,1]; `abstain` a boolean. Omit `kernel` when abstaining.
+3) bootstrap(n) charges ceil(n / problem["bootstrap_batch_size"]) units and must receive a positive integer n. Do not exceed problem["bootstrap_budget_units"] on this array.
+4) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read verification/ or frontier_eval/.

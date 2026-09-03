@@ -1,0 +1,4 @@
+1) Only edit solution.py. Keep recover_hull(problem, relax).
+2) Return {"stable", "confidence", "abstain"}. `stable` is a list of catalog names unless abstaining. `confidence` in [0,1]; `abstain` a boolean. Omit `stable` when abstaining.
+3) relax(name) charges one call and `name` must be in problem["catalog"]. Do not exceed problem["relax_budget_calls"].
+4) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read verification/ or frontier_eval/.

@@ -1,0 +1,5 @@
+1) Only edit solution.py. Keep recover_effect(problem, observe_survivors, intervene).
+2) Return {"has_treatment_effect", "effect_sign", "confidence", "abstain"}. `has_treatment_effect` is a boolean and is required unless abstaining. `effect_sign` must be a finite nonzero number when claiming an effect. `confidence` in [0,1]; `abstain` a boolean.
+3) observe_survivors(n) and intervene(t, n) charge ceil(n / problem["sample_unit"]) units. n in [8, observe_batch_max] or [8, intervene_batch_max]; t in [treatment_probe_low, treatment_probe_high]. Do not exceed problem["budget_units"].
+4) In this task's model class, selection probability increases with outcome Y and treatment T has no direct path to selection; these restrictions are required to interpret the sign of a survival contrast as the sign of T→Y.
+5) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read verification/ or frontier_eval/.

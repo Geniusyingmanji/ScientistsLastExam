@@ -1,0 +1,4 @@
+1) Only edit solution.py. Keep interpret_spectrum(problem, toys).
+2) Return {"discovery", "mass_gev", "confidence", "abstain"}. `discovery` is a boolean and is required unless abstaining. `mass_gev` must be finite and inside the scanned range when `discovery` is true. `confidence` in [0,1]; `abstain` a boolean. Omit `discovery` when abstaining.
+3) toys(n) charges ceil(n / problem["toys_batch_size"]) units and must receive a positive integer n. Do not exceed problem["toys_budget_units"] on this spectrum.
+4) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read verification/ or frontier_eval/.

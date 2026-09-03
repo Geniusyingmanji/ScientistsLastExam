@@ -1,0 +1,13 @@
+domain: ParticlePhysics
+task: LookElsewhereAnomaly
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: physical_sim
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 8
+science_metric: global_significance_after_look_elsewhere_with_sideband_refusal
+reference_baseline: claim the highest local z against the public prior, never buy toys, never decline
+reference_sota: Bonferroni trials factor plus sideband chi-square; refuse local flukes, blanks and sculpted backgrounds
+citation: "Kasieczka et al., 2021, DOI 10.1088/1361-6633/ac36b9"

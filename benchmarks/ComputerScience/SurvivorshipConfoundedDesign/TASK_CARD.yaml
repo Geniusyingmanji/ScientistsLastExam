@@ -1,0 +1,65 @@
+schema_version: 2
+scientific_question: From budgeted survivor-only samples of a hidden SCM, say whether treatment still affects the outcome after selection and confounding, and decline when the survivor association is a collider or the returned table is blank of a T→Y edge.
+artifact: A treatment-effect bit, a sign, a confidence, and an optional refusal.
+oracle:
+  model: linear Gaussian SCM with hidden confounder C, optional T→Y, and a logit selection that increases with Y, also depends on C, and has no direct T input, so only survivors are returned
+  feasibility: charged observe/intervene calls, sign gating on claimed effects, and calibrated refusal
+  deterministic: true
+normalization:
+  baseline: OLS of outcome on treatment among observational survivors, never intervening, never declining
+  reference: two interventions at the public probe values; claim an effect only when survival probabilities differ by more than 0.12
+  score: development mechanism recovery normalized above always-abstain; signal recovery, false discovery, refusal, coverage and the held-out split stay separate
+citations:
+- id: arxiv:2607.04293
+  title: "CausalGame: Benchmarking Causal Thinking of LLM Agents in Games"
+- id: doi:10.1093/aje/kwh188
+  title: "A structural approach to selection bias"
+- id: doi:10.1017/CBO9780511804090
+  title: Causality (Pearl), selection and confounding
+invariants:
+- observational survivors remain correlated when T→Y is absent, because C opens T ← C → Y and feeds the selection logit
+- within the stated no-direct-T→S and monotone-Y→S model class, randomising T and reading P(survive | do(T)) identifies the sign of T→Y; this conclusion does not follow from randomisation alone
+- blank worlds nearly disable selection and still have no T→Y; publishing an effect is a false discovery
+- declining every world scores exactly zero; the axes separate blanket abstention from confident publication
+- calls are charged and overspend fails closed; malformed submissions score zero and never raise out of the evaluator
+- held-out split, per-world rows and the discovery axes remain evaluator-only
+known_shortcuts: A two-node SCM plus one hidden confounder is a research abstraction of CausalGame's drone-survival worlds, not a 14-game suite. World seeds are repository-visible and require a future server-held split. A full IPW / Heckman correction on the returned rows is leftover headroom once the survival contrast is known, not an exploit.
+review:
+  domain: pending_external
+  evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_abstention_normalization_checks
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic generator with development and sealed held-out worlds across causal, collider and blank kinds.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Collider bias is textbook. What is not published is which world has a T→Y edge, and the score turns on randomising T rather than regressing the survivor table.
+lineage:
+  status: complete
+  builder_model_ids:
+  - cursor-grok-4.6
+  builder_scaffolds:
+  - cursor
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    None. No frontier searcher draw has been run. In-process pins are tests/test_survivorship_confounded_design.py
+    (blanket abstention scores zero; the delivered baseline sits below the sealed reference).
+  shortcut_discoverer: builder_self_audit
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: cursor-grok-4.6
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: the reference, the baseline, the abstention normalisation and the three bad-candidate shapes are all runnable from this directory

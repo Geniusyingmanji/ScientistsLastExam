@@ -1,0 +1,13 @@
+domain: Spectroscopy
+task: CrowdedSpectrumAssignment
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: physical_sim
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 10
+science_metric: library_species_assignment_under_blended_resolution_with_alias_refusal
+reference_baseline: claim every library species with a line near a default-scan peak, never zoom, never decline
+reference_sota: unique default matches plus zooms only on peaks consistent with more than one library species
+citation: "Stein, 2012, DOI 10.1021/ac302337u"

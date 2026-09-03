@@ -1,0 +1,65 @@
+schema_version: 2
+scientific_question: From a budgeted AMOC-like fingerprint, say whether a cubic fold is supported and when the hidden state crosses, and decline when the series is red noise or an ice-restored unique attractor that still declines with freshwater.
+artifact: A tipping bit, an optional collapse year, a confidence, and an optional refusal.
+oracle:
+  model: procedurally parameterized cubic fold, red-noise monostable flow, and ice-restored unique attractor, with charged plus/minus/continue freshwater probes
+  feasibility: charged probes, year-window gating on claimed tips, and calibrated refusal
+  deterministic: true
+normalization:
+  baseline: first historical year at which the fingerprint is negative, never probing, never declining
+  reference: plus/minus hysteresis at present freshwater, then a continued run for the crossing year
+  score: development mechanism recovery normalized above always-abstain; signal recovery, false discovery, refusal, coverage and the held-out split stay separate
+citations:
+- id: doi:10.1038/s41467-023-39810-w
+  title: "Warning of a forthcoming collapse of the Atlantic meridional overturning circulation"
+- id: doi:10.1126/sciadv.adl4841
+  title: "Uncertainties too large to predict tipping times of major Earth system components from historical data"
+- id: doi:10.3402/tellusa.v13i2.9494
+  title: "Thermohaline convection with two stable regimes of flow"
+invariants:
+- a fold world remains on the upper well through year_now; the hidden crossing is in the future
+- red-noise worlds have no second attractor; a historical dip below zero is not a fold
+- ice-restore worlds have a unique attractor that can still decline with freshwater
+- declining every world scores exactly zero; the axes separate blanket abstention from confident publication
+- probe calls are charged and overspend fails closed; malformed submissions score zero and never raise out of the evaluator
+- held-out split, per-world rows and the discovery axes remain evaluator-only
+known_shortcuts: A one-dimensional cubic is a research abstraction of Stommel/Ditlevsen, not a CMIP AMOC. World seeds are repository-visible and require a future server-held split. A longer continued probe than the reference uses is leftover headroom, not an exploit.
+review:
+  domain: pending_external
+  evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_abstention_normalization_checks
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic generator with development and sealed held-out worlds across fold, red-noise and ice-restore kinds.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Early-warning extrapolation is published. What is not published is which fingerprint belongs to a fold, and the score turns on refusing red-noise and ice-restore worlds rather than fitting a collapse year to every decline.
+lineage:
+  status: complete
+  builder_model_ids:
+  - cursor-grok-4.6
+  builder_scaffolds:
+  - cursor
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    None. No frontier searcher draw has been run. In-process pins are tests/test_amoc_tipping_refusal.py
+    (blanket abstention scores zero; the delivered baseline sits below the sealed reference).
+  shortcut_discoverer: builder_self_audit
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: cursor-grok-4.6
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: the reference, the baseline, the abstention normalisation and the three bad-candidate shapes are all runnable from this directory

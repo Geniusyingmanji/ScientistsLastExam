@@ -1,0 +1,13 @@
+domain: Gravitation
+task: PTAHellingsDowns
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: physical_sim
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 6
+science_metric: hellings_downs_quadrupole_versus_clock_monopole_refusal
+reference_baseline: treat a positive mean pair correlation as a GWB and always publish Hellings-Downs
+reference_sota: least-squares spatial-kernel comparison; publish HD only when it uniquely beats monopole, dipole and uncorrelated
+citation: "Agazie et al., ApJL 2023, DOI 10.3847/2041-8213/acdac6"

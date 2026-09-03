@@ -1,0 +1,4 @@
+1) Only edit solution.py. Keep interpret_amoc(problem, probe).
+2) Return {"has_tipping", "collapse_year", "confidence", "abstain"}. `has_tipping` is a boolean and is required unless abstaining. `collapse_year` must be finite when claiming a tip. `confidence` in [0,1]; `abstain` a boolean.
+3) probe(freshwater_offset, duration_years, mode) charges one call. offset in [freshwater_offset_low, freshwater_offset_high]; duration in [min_duration_years, max_duration_years]; mode one of problem["modes"]. Do not exceed problem["probe_budget"].
+4) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read verification/ or frontier_eval/.
