@@ -2,8 +2,14 @@
 # Linux tools (bubblewrap, util-linux flock) that a developer laptop does not have. Without CI the
 # only Linux run of the suite was whoever happened to ssh into the benchmark host: three external
 # PRs landed with zero checks, and a merge went out with five red tests because a pipe swallowed
-# pytest's exit code. This runs the whole suite where it can actually pass, on the two Python
-# versions that matter - 3.8 is the benchmark host, 3.11 is the development default.
+# pytest's exit code.
+#
+# Why the system interpreter and not actions/setup-python: the sandbox execs a /usr/bin
+# interpreter and mounts only /usr, /lib and /lib64 read-only, so packages must live where that
+# interpreter finds them. The first run of this workflow installed numpy into the toolcache Python
+# and every candidate in the sandbox died on `import numpy` - 159 failures that said nothing about
+# the code. `sudo /usr/bin/python3 -m pip install` lands in /usr/local/lib/python3.x/dist-packages,
+# inside the mount, which is also how the benchmark host is set up.
 name: tests
 
 on:
@@ -12,41 +18,33 @@ on:
   pull_request:
 
 jobs:
-  unit:
+  sandbox:
     runs-on: ubuntu-22.04
-    strategy:
-      fail-fast: false
-      matrix:
-        python: ["3.8", "3.11"]
     steps:
       - uses: actions/checkout@v4
         with:
           # Evidence-binding tests read git history and refuse dirty or unknown revisions.
           fetch-depth: 0
-      - uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python }}
       - name: Sandbox tools
         run: |
           sudo apt-get update -q
-          sudo apt-get install -y -q bubblewrap util-linux
+          sudo apt-get install -y -q bubblewrap util-linux python3-pip
           bwrap --version && flock --version
-          # Bubblewrap needs unprivileged user namespaces; GitHub's Ubuntu runners allow them,
-          # and this makes the failure explicit if that ever changes.
-          sysctl kernel.unprivileged_userns_clone 2>/dev/null || true
-      - name: Python dependencies
+          # Bubblewrap needs unprivileged user namespaces; make it explicit if the runner ever
+          # stops allowing them.
+          bwrap --unshare-all --die-with-parent --ro-bind /usr /usr --ro-bind /lib /lib \
+                --ro-bind /lib64 /lib64 --proc /proc --dev /dev -- /usr/bin/true && echo "bwrap ok"
+      - name: Python dependencies into the system interpreter
         run: |
-          python -m pip install --upgrade pip
-          if [ "${{ matrix.python }}" = "3.8" ]; then
-            python -m pip install "numpy==1.24.4" "scipy==1.10.1" pyyaml
-          else
-            python -m pip install numpy scipy pyyaml
-          fi
-          python -m pip install pytest
+          /usr/bin/python3 --version
+          sudo /usr/bin/python3 -m pip install --upgrade pip
+          sudo /usr/bin/python3 -m pip install "numpy==1.24.4" "scipy==1.10.1" pyyaml pytest
+          # The sandbox resolves site-packages for the interpreter it execs; prove they are there.
+          /usr/bin/python3 -c "import numpy, scipy, yaml; print(numpy.__file__)"
       - name: Inventory and card audits
         run: |
-          python scripts/audit_tasks.py --output /tmp/certification.json
-          python scripts/check_numeric_keys_hold_numbers.py
+          /usr/bin/python3 scripts/audit_tasks.py --output /tmp/certification.json
+          /usr/bin/python3 scripts/check_numeric_keys_hold_numbers.py
       - name: Test suite
-        # Exit code is the gate. Never pipe this into anything.
-        run: python -m pytest tests/ -q -p no:cacheprovider
+        # The exit code is the gate. Never pipe this into anything.
+        run: /usr/bin/python3 -m pytest tests/ -q -p no:cacheprovider

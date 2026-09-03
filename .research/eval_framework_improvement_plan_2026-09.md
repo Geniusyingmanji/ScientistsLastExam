@@ -27,8 +27,13 @@ P2 下月(类型扩展与重判)。
 验收:`pytest tests/test_task_maturity.py tests/test_measurement_health.py` 0 failed。
 
 ### P0.2 CI:Linux 全量 + 沙箱测试的 skip 语义 ✅(`.github/workflows/tests.yml`、`tests/_sandbox_tools.py`;仅在平台无法提供 bwrap/flock 时 skip,Linux 缺工具仍 fail)
-- 新增 `.github/workflows/tests.yml`:ubuntu 容器,`apt install bubblewrap util-linux`,Python 3.8 与 3.11
-  两档(基准主机是 3.8),跑 `python -m unittest discover -s tests`。
+- 新增 `.github/workflows/tests.yml`:ubuntu-22.04 虚拟机,`apt install bubblewrap util-linux`,跑 `pytest tests/`。
+  **首跑教训(run 33737183216,159 failed)**:沙箱 exec 的是 `/usr/bin` 解释器且只挂 `/usr /lib /lib64`,
+  而 `actions/setup-python` 把 numpy 装进 `/opt/hostedtoolcache`,沙箱内 `import numpy` 直接 ModuleNotFoundError。
+  改为不用 setup-python,`sudo /usr/bin/python3 -m pip install numpy==1.24.4 scipy==1.10.1`(落在 `/usr/local/lib`,
+  挂载范围内,与基准主机同构),测试也用 `/usr/bin/python3` 跑。3.8/3.11 矩阵因此取消:CI 的 Python 版本由
+  runner 系统解释器决定(22.04 是 3.10);3.8 兼容以基准主机 g450 的实跑为准。要恢复 3.8 CI 得用 20.04 容器,
+  但容器内 bwrap 需要非特权 user namespace,GitHub 的 Docker 默认 seccomp 不放行,暂不做。
 - `tests/` 里所有需要 bwrap / flock 的测试,在缺工具时 `self.skipTest("requires bwrap")`,不再 fail。
   涉及 `test_secure_eval.py`、`test_run_cohort.py`、以及 12 个新任务的 `*_secure_path*` 测试。
 验收:Mac 上全量测试只剩 skip,无环境性 fail;CI 在 PR 上有 checks(本轮三个 PR 是 0 checks)。
