@@ -1,0 +1,63 @@
+schema_version: 2
+scientific_question: From a budgeted pulsar-pair correlation table, say whether the spatial kernel is the Hellings-Downs quadrupole of an isotropic GWB, and decline when a clock monopole, an ephemeris dipole, or an uncorrelated common process fits as well or better.
+artifact: A kernel name, a confidence, and an optional refusal.
+oracle:
+  model: procedurally placed pulsars with pair angles and noisy correlations drawn from Hellings-Downs, monopole, dipole, or uncorrelated kernels
+  feasibility: charged parametric pair-table replicates, unique-kernel gating on claimed Hellings-Downs, and calibrated refusal
+  deterministic: true
+normalization:
+  baseline: treat a positive mean pair correlation as a GWB and always publish Hellings-Downs
+  reference: least-squares comparison of the four public kernels; publish HD only when it uniquely beats the others
+  score: development mechanism recovery normalized above always-abstain; signal recovery, false discovery, refusal, coverage and the held-out split stay separate
+citations:
+- id: doi:10.3847/2041-8213/acdac6
+  title: "The NANOGrav 15 yr Data Set: Evidence for a Gravitational-Wave Background"
+- id: doi:10.1086/183954
+  title: "Upper limits on the isotropic gravitational radiation background from pulsar timing observations"
+invariants:
+- Hellings-Downs ORF is 1/2 - x/4 + (3/2) x ln x with x=(1-cos θ)/2; HD(π)=1/4 and HD(π/2)≈-0.15
+- a clock error is a monopole Γ=1 and an ephemeris error is a dipole cos θ; neither is a GWB
+- CURN / white pair noise has no angular kernel
+- declining every world scores exactly zero; the axes separate blanket abstention from confident publication
+- the legacy-named bootstrap callback draws parametric replicates from the hidden kernel; calls are charged and overspend fails closed
+- held-out split, per-world rows and the discovery axes remain evaluator-only
+known_shortcuts: Eighteen isotropically placed pulsars and a four-kernel least-squares test are a research abstraction of a PTA, not a full Bayesian GWB analysis with red-noise hyperparameters. World seeds are repository-visible and require a future server-held split. The legacy-named bootstrap is a parametric redraw from the hidden generating kernel, not an empirical resample, so it can make kernel selection easier and must be replaced before frontier certification.
+review:
+  domain: pending_external
+  evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_abstention_normalization_checks
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic generator with development and sealed held-out arrays across four spatial kernels.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Hellings-Downs overlap reduction is textbook. What is not published is which array is a clock monopole, and the score turns on refusing that monopole without also refusing a genuine quadrupole.
+lineage:
+  status: complete
+  builder_model_ids:
+  - cursor-grok-4.6
+  builder_scaffolds:
+  - cursor
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    None. No frontier searcher draw has been run. In-process pins are tests/test_pta_hellings_downs.py
+    (blanket abstention scores zero; the delivered baseline sits below the sealed reference).
+  shortcut_discoverer: builder_self_audit
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: cursor-grok-4.6
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: the reference, the baseline, the abstention normalisation and the three bad-candidate shapes are all runnable from this directory

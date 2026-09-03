@@ -1,0 +1,64 @@
+schema_version: 2
+scientific_question: From budgeted formation energies on a five-element composition catalog, name the non-unary lower-convex-hull vertices, and decline when energies do not reproduce.
+artifact: A set of catalog names, a confidence, and an optional refusal.
+oracle:
+  model: analytic mixing-plus-well formation energies on the 35 integer compositions of 3 atoms into 5 elements, with near-hull E_f<0 extras, empty hulls, and non-reproducing glass
+  feasibility: charged relax calls, exact-set gating on non-unary hull vertices, and calibrated glass refusal
+  deterministic: true
+normalization:
+  baseline: publish every catalog composition with E_f < 0
+  reference: replicate energies, then keep only non-unary vertices of the lower convex envelope
+  score: development mechanism recovery normalized above always-abstain; signal recovery, false discovery, refusal, coverage and the held-out split stay separate
+citations:
+- id: arxiv:2601.20996
+  title: "MADE: Benchmark Environments for Closed-Loop Materials Discovery"
+- id: doi:10.1103/PhysRevB.78.104102
+  title: "Li-Fe-P-O2 phase diagram from first principles calculations"
+invariants:
+- a thermodynamically stable compound is a lower-hull vertex besides the unaries; E_f < 0 is not that test
+- near-hull catalog points sit ~12 meV/atom above the envelope and can still have E_f < 0
+- glass energies do not reproduce under replication; publishing any hull on a glass is a false discovery
+- declining every world scores exactly zero; the axes separate blanket abstention from confident publication
+- relax calls are charged and overspend fails closed; malformed submissions score zero and never raise out of the evaluator
+- held-out split, per-world rows and the discovery axes remain evaluator-only
+- the oracle is a frozen analytic energy, not a live MLIP or DFT call
+known_shortcuts: Thirty-five 3-atom compositions are a research abstraction of MADE's quinary search, not a 10^4-entry convex hull. World seeds are repository-visible and require a future server-held split. A tighter noise model or an adaptive query policy can still save relax calls and is leftover headroom, not an exploit.
+review:
+  domain: pending_external
+  evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_abstention_normalization_checks
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic generator with development and sealed held-out catalogs across hull, near-hull, empty and glass worlds.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Convex-hull stability is textbook. What is not published is which catalog is glass and which E_f<0 points sit above the hull, and the score turns on that exact set.
+lineage:
+  status: complete
+  builder_model_ids:
+  - cursor-grok-4.6
+  builder_scaffolds:
+  - cursor
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    None. No frontier searcher draw has been run. In-process pins are tests/test_quinary_convex_hull.py
+    (blanket abstention scores zero; the delivered baseline sits below the sealed reference).
+  shortcut_discoverer: builder_self_audit
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: cursor-grok-4.6
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: the reference, the baseline, the abstention normalisation and the three bad-candidate shapes are all runnable from this directory

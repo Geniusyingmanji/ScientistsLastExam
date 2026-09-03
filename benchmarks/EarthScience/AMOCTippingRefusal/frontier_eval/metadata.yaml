@@ -1,0 +1,13 @@
+domain: Oceanography
+task: AMOCTippingRefusal
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: physical_sim
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 8
+science_metric: fold_recovery_with_red_noise_and_ice_restore_refusal
+reference_baseline: first historical year at which the fingerprint is negative, never probing, never declining
+reference_sota: plus/minus hysteresis test then a continued run for the crossing year
+citation: "Ditlevsen & Ditlevsen, 2023, DOI 10.1038/s41467-023-39810-w"

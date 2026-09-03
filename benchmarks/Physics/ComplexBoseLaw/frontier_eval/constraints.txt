@@ -1,0 +1,4 @@
+1) Only edit solution.py. Keep interpret_cavity(problem, measure).
+2) Return {"family", "C", "alpha", "beta", "confidence", "abstain"}. `family` must be one of problem["family_names"] unless abstaining. C, alpha, beta positive finite. `confidence` in [0,1]; `abstain` a boolean. Omit the law fields when abstaining.
+3) measure(omega, temperature) charges one call. omega in problem["omega_bounds"], temperature in problem["temperature_bounds"]. Do not exceed problem["measure_budget_calls"].
+4) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read verification/ or frontier_eval/.

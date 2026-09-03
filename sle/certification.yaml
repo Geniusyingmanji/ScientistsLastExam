@@ -346,6 +346,152 @@ tasks:
       - doi:10.1103/PhysRevD.110.030001
       - doi:10.1103/RevModPhys.93.025010
       - doi:10.1016/0197-2456(86)90046-2
+  Spectroscopy/CrowdedSpectrumAssignment:
+    status: candidate
+    reason: >-
+      Species assignment under blending, not Voigt-parameter recovery and not a composition-axis
+      phase set: a public stick library is mixed linearly, an 8 cm-1 pair merges at the default
+      instrument width into the same four peaks as a third library species, and a charged zoom is
+      the only way to split the alias. Contaminant lines off the library and blank noise must be
+      refused. The naive nearest-library baseline never zooms and never declines. No frontier
+      searcher draw yet; in-process pins require blanket abstention to score zero and the baseline
+      to sit below the sealed reference. Candidate, not certified.
+    citation_ids:
+      - doi:10.1021/ac302337u
+      - doi:10.1021/ac00096a002
+  ParticlePhysics/LookElsewhereAnomaly:
+    status: candidate
+    reason: >-
+      Evidence cell that is not a clone of DiscrepantMeasurements: one Poisson mass
+      histogram is scanned in 40 windows, and a local 5σ that dies after a Bonferroni
+      trials factor, a linearly sculpted background, or a blank must be refused. A
+      genuine narrow resonance remains global-5σ with clean sidebands. The naive
+      local-z baseline never buys toys and never declines. Candidate, not certified.
+      No frontier searcher draw; in-process pins require blanket abstention to score
+      zero and the baseline to sit below the sealed reference.
+    citation_ids:
+      - doi:10.1088/1361-6633/ac36b9
+      - doi:10.1140/epjc/s10052-010-1470-8
+      - arxiv:2512.13787
+  CausalDiscovery/SurvivorshipConfoundedDesign:
+    status: candidate
+    reason: >-
+      Structure cell that is not a clone of InterventionalSCM: only survivors are
+      returned from a hidden SCM, a confounder opens T←C→Y and feeds selection, and
+      OLS on the returned table therefore publishes a collider. Two charged
+      interventions identify T→Y by moving the survival probability. Candidate, not
+      certified. No frontier searcher draw; in-process pins require blanket
+      abstention to score zero and the survivor-OLS baseline to sit below the sealed
+      reference.
+    citation_ids:
+      - arxiv:2607.04293
+      - doi:10.1093/aje/kwh188
+      - doi:10.1017/CBO9780511804090
+  Oceanography/AMOCTippingRefusal:
+    status: candidate
+    reason: >-
+      Formula cell that is not EnergyBalanceModel parameter inversion: a cubic fold
+      still lies in the future of the public fingerprint, while red-noise and
+      ice-restored unique attractors can still go negative historically. Plus/minus
+      hysteresis plus a continued probe recovers the fold; a first negative year is
+      a false discovery. Candidate, not certified. No frontier searcher draw.
+    citation_ids:
+      - doi:10.1038/s41467-023-39810-w
+      - doi:10.1126/sciadv.adl4841
+      - doi:10.3402/tellusa.v13i2.9494
+  Gravitation/PTAHellingsDowns:
+    status: candidate
+    reason: >-
+      Evidence cell that is not a LookElsewhere bump hunt: pulsar-pair correlations
+      are drawn from a Hellings-Downs quadrupole, a clock monopole, an ephemeris
+      dipole, or an uncorrelated common process. Publishing HD on the last three is
+      a false discovery. The mean-correlation baseline never declines. Candidate,
+      not certified. No frontier searcher draw; in-process pins require blanket
+      abstention to score zero and the baseline to sit below the sealed reference.
+    citation_ids:
+      - doi:10.3847/2041-8213/acdac6
+      - doi:10.1086/183954
+  Physics/ComplexBoseLaw:
+    status: candidate
+    reason: >-
+      Formula cell that is not an ActiveLaw polynomial ODE and not AMOC fold-year
+      extrapolation: NewtonBench hard Bose occupation keeps the minus sign with
+      world-dependent exponents behind a mixed cavity, and Fermi (+1) or
+      T-independent blanks must be refused. The textbook (1,1,1) baseline never
+      declines. Candidate, not certified. No frontier searcher draw.
+    citation_ids:
+      - arxiv:2510.07172
+      - doi:10.1007/BF01327738
+  MaterialsScience/QuinaryConvexHull:
+    status: candidate
+    reason: >-
+      Substance cell that is not a binary XRD phase diagram and not a stick-library
+      assignment: a five-element 3-atom catalog has an analytic formation-energy
+      hull, E_f<0 includes near-hull junk, and glass energies must be refused. No
+      live MLIP. Candidate, not certified. No frontier searcher draw.
+    citation_ids:
+      - arxiv:2601.20996
+      - doi:10.1103/PhysRevB.78.104102
+  Mathematics/RamseyLowerBound:
+    status: candidate
+    reason: >-
+      Uncapped Ramsey lower-bound constructions, not a closed exam item: a 2-colouring of K_n
+      with no red K_s and no blue K_t is a witness that R(s,t) >= n+1, and the published
+      Exoo orders (n=42 for (5,5), n=35 for (4,6)) are the score=1 anchors, not a cap.
+      The complete-bipartite baseline is valid and scores 0. No required colouring; a larger
+      verified colouring scores above 1. Candidate, not certified. No frontier searcher draw.
+    citation_ids:
+      - doi:10.1002/jgt.3190130114
+      - url:https://www.combinatorics.org/ojs/index.php/eljc/article/view/DS1
+  Mathematics/KissingNumber:
+    status: candidate
+    reason: >-
+      Uncapped kissing configurations in dimensions 9, 10 and 12, where the exact number is
+      still open. Dimension 11 is withheld because recent AI-search claims there are contested.
+      The Cohn-table lower bounds 306/510/841 are the score=1 anchors; the 2d axes baseline
+      scores 0. Pairwise 60-degree checks are exact on primitive integer vectors; accepted
+      floating witnesses use a fixed tolerance and require separate exact or interval
+      certification before a scientific record claim. No required configuration. Candidate,
+      not certified. No frontier searcher draw.
+    citation_ids:
+      - url:https://cohn.mit.edu/kissing-numbers/
+      - arxiv:2506.13131
+      - arxiv:2606.18984
+  Algorithm/TensorRank555:
+    status: candidate
+    reason: >-
+      Same fixed-tolerance numerical tensor-decomposition objective as MatrixMultiplicationRank
+      on new sizes only: <5,5,5> and
+      <6,6,6>, naive 125/216, Moosbauer-Poole ISSAC 2025 ranks 93/153 as the score=1 anchors.
+      The 2/3/4 cell is a different task. No required algorithm; a lower numerically verified
+      rank scores above 1, pending separate exact symbolic certification. Candidate, not certified.
+      No frontier searcher draw.
+    citation_ids:
+      - arxiv:2502.04514
+      - doi:10.1007/BF02165411
+  Mathematics/Superpermutation:
+    status: candidate
+    reason: >-
+      Uncapped shortest-superpermutation search on 7 and 8 symbols. Concatenating all n!
+      permutations is valid and scores 0; the published lengths 5906 and 46204 are the
+      score=1 anchors, against a remaining 22-symbol gap on n=7 and 119 on n=8. No required
+      string; one symbol shorter scores above 1. Candidate, not certified. No frontier searcher draw.
+    citation_ids:
+      - arxiv:1408.5108
+      - doi:10.1080/00029890.2021.1835384
+      - url:https://www.gregegan.net/SCIENCE/Superpermutations/Superpermutations.html
+      - url:https://github.com/urdvr/superpermutations-hunter
+  Mathematics/CapSetFrontier:
+    status: candidate
+    reason: >-
+      Open-dimension cap sets, not a silent extension of the proven n<=6 cell: n=7,8,9 with
+      records 236/512/1082 as score=1 anchors and the {0,1}^n hypercube as the floor.
+      Beating FunSearch's 512 in dimension 8 scores above 1. Candidate, not certified.
+      No frontier searcher draw.
+    citation_ids:
+      - doi:10.1038/s41586-023-06924-6
+      - doi:10.1007/BF01388452
+      - doi:10.4007/annals.2017.185.1.8
   MaterialsScience/PhaseDiagramDiscovery:
     status: candidate
     reason: >-

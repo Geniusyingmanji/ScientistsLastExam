@@ -1,0 +1,13 @@
+domain: CausalDiscovery
+task: SurvivorshipConfoundedDesign
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: physical_sim
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 8
+science_metric: treatment_effect_recovery_under_survivor_selection
+reference_baseline: OLS of outcome on treatment among observational survivors, never intervening, never declining
+reference_sota: two interventions at the public probe values; claim only when survival probabilities move
+citation: "Chen et al., CausalGame, arXiv 2607.04293"

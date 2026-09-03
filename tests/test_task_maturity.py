@@ -22,10 +22,10 @@ class TaskMaturityAuditTests(unittest.TestCase):
         cls.tasks = {row["task"]: row for row in cls.report["tasks"]}
 
     def test_inventory_and_internal_risk_set_are_complete(self):
-        self.assertEqual(self.report["inventory_count"], 46)
+        self.assertEqual(self.report["inventory_count"], 58)
         self.assertEqual(
             self.report["status_counts"],
-            {"certified": 5, "candidate": 41, "quarantined": 0},
+            {"certified": 5, "candidate": 53, "quarantined": 0},
         )
         # Admission is fail-closed against the current evidence bindings. Candidate registration
         # does not imply admission, and older reports whose task/runtime contract drifted do not
@@ -33,6 +33,61 @@ class TaskMaturityAuditTests(unittest.TestCase):
         self.assertEqual(self.report["gate_counts"]["internal_science_admission"], 32)
         self.assertEqual(self.report["issues"], [])
         self.assertTrue(self.report["execution_passed"])
+
+    def test_crowded_spectrum_is_listed_and_not_self_admitted(self):
+        row = self.tasks["Spectroscopy/CrowdedSpectrumAssignment"]
+        self.assertEqual(row["certification_status"], "candidate")
+        gate = row["gates"]["internal_science_admission"]
+        self.assertFalse(gate["passed"])
+        self.assertIn("current_certification_record_failed", gate["blockers"])
+        self.assertIn(
+            "no_current_or_migration_replayed_deterministic_baseline",
+            gate["blockers"],
+        )
+
+    def test_wave0_constructions_are_listed_and_not_self_admitted(self):
+        for task_id in (
+            "Mathematics/RamseyLowerBound",
+            "Mathematics/KissingNumber",
+            "Algorithm/TensorRank555",
+            "Mathematics/Superpermutation",
+            "Mathematics/CapSetFrontier",
+        ):
+            row = self.tasks[task_id]
+            self.assertEqual(row["certification_status"], "candidate", task_id)
+            gate = row["gates"]["internal_science_admission"]
+            self.assertFalse(gate["passed"], task_id)
+            self.assertIn("current_certification_record_failed", gate["blockers"], task_id)
+
+    def test_look_elsewhere_is_listed_and_not_self_admitted(self):
+        row = self.tasks["ParticlePhysics/LookElsewhereAnomaly"]
+        self.assertEqual(row["certification_status"], "candidate")
+        gate = row["gates"]["internal_science_admission"]
+        self.assertFalse(gate["passed"])
+        self.assertIn("current_certification_record_failed", gate["blockers"])
+
+    def test_wave1_discovery_constructions_are_listed_and_not_self_admitted(self):
+        for task_id in (
+            "CausalDiscovery/SurvivorshipConfoundedDesign",
+            "Oceanography/AMOCTippingRefusal",
+        ):
+            row = self.tasks[task_id]
+            self.assertEqual(row["certification_status"], "candidate", task_id)
+            gate = row["gates"]["internal_science_admission"]
+            self.assertFalse(gate["passed"], task_id)
+            self.assertIn("current_certification_record_failed", gate["blockers"], task_id)
+
+    def test_wave2_discovery_constructions_are_listed_and_not_self_admitted(self):
+        for task_id in (
+            "Gravitation/PTAHellingsDowns",
+            "Physics/ComplexBoseLaw",
+            "MaterialsScience/QuinaryConvexHull",
+        ):
+            row = self.tasks[task_id]
+            self.assertEqual(row["certification_status"], "candidate", task_id)
+            gate = row["gates"]["internal_science_admission"]
+            self.assertFalse(gate["passed"], task_id)
+            self.assertIn("current_certification_record_failed", gate["blockers"], task_id)
 
     def test_explicit_current_full_suite_gate_is_fail_closed(self):
         revision = "a" * 40
@@ -86,7 +141,7 @@ class TaskMaturityAuditTests(unittest.TestCase):
         )
         self.assertEqual(self.module._status_admission_issues(records), [])
         self.assertEqual(
-            self.report["evidence_coverage"]["builder_lineage_declared_task_count"], 46,
+            self.report["evidence_coverage"]["builder_lineage_declared_task_count"], 58,
         )
         # Still zero with two tasks now naming their builder, because `complete` here also
         # requires `frozen_before_eval`, and neither is frozen: EnzymeKineticsLaw had a public key

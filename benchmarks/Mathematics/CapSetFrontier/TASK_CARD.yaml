@@ -1,0 +1,61 @@
+schema_version: 2
+scientific_question: Construct larger cap sets in Z_3^n for the still-open dimensions 7, 8 and 9.
+artifact: A collection of length-n vectors over the field with three elements.
+oracle:
+  model: exhaustive pair closure check for x+y+z=0 modulo 3
+  feasibility: correct vector length, entries in {0,1,2}, at most 2500 points, and no distinct collinear triples
+  deterministic: true
+normalization:
+  baseline: the {0,1}^n hypercube construction
+  reference: best-known sizes 236, 512 and 1082 in dimensions 7, 8 and 9
+  score: uncapped fraction of cardinality improvement; beating the witness exceeds 1
+citations:
+- id: doi:10.1007/BF01388452
+  title: Maximal three-independent subsets of {0, 1, 2}^n
+- id: doi:10.1038/s41586-023-06924-6
+  title: Mathematical discoveries from program search with large language models
+- id: doi:10.4007/annals.2017.185.1.8
+  title: On large subsets of finite vector spaces with no three-term arithmetic progression
+invariants:
+- affine-translation invariance
+- invertible-linear-map invariance
+- duplicate-point idempotence
+known_shortcuts: FunSearch's n=8 cap of size 512 and the n=7/n=9 tables may occur in training; n<=6 is a different proven-max task. Beating 236, 512 or 1082 is the novelty claim.
+review:
+  domain: pending_external
+  evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_uncapped_normalisation_checks
+provenance:
+  class: known_answer
+  target_source: Published records used only as the score=1.0 witness; a larger verified object scores above 1.0. No required solution.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: high
+  rationale: Matching a published construction is reconstruction. Beating the witness is the scientific event the score is built to show.
+lineage:
+  status: complete
+  builder_model_ids:
+  - cursor-grok-4.6
+  builder_scaffolds:
+  - cursor
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    None. No frontier searcher draw has been run. In-process pins are tests/test_wave0_uncapped_constructions.py.
+  shortcut_discoverer: builder_self_audit
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: cursor-grok-4.6
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: baseline, invalid-candidate and two-anchor helper pins are runnable from this directory

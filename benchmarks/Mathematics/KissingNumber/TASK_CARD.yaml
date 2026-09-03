@@ -1,0 +1,61 @@
+schema_version: 2
+scientific_question: Construct larger kissing configurations in Euclidean dimensions whose exact kissing number is still open.
+artifact: A finite list of nonzero vectors in R^d that remain at least 60 degrees apart after normalisation.
+oracle:
+  model: exact integer inner-product checks, with a floating-point 60-degree test for non-integral vectors
+  feasibility: nonzero finite length-d vectors, at most 2500 of them, pairwise inner product at most one half on the sphere
+  deterministic: true
+normalization:
+  baseline: the 2d coordinate axes plus or minus e_i
+  reference: Cohn-table lower bounds 306, 510 and 841 in dimensions 9, 10 and 12
+  score: uncapped fraction of cardinality improvement; beating the witness exceeds 1, but floating-witness acceptance is only a numerical benchmark result
+citations:
+- id: url:https://cohn.mit.edu/kissing-numbers/
+  title: Kissing numbers (Cohn table)
+- id: arxiv:2506.13131
+  title: AlphaEvolve
+- id: arxiv:2606.18984
+  title: Structure of kissing arrangements in R^12 and a place for the 841st sphere
+invariants:
+- orthogonal transformation invariance
+- positive scaling of each vector is idempotent provided the scaled vector remains above the numerical floor
+- duplicate vectors after exact equality are dropped
+known_shortcuts: Root lattices and published spherical codes may occur in training; dimension 11 is withheld because its recent AI claims are contested. Beating the Cohn lower bound with a primitive integer witness is checked exactly; a non-integral floating witness requires an exact or interval certificate for a scientific record claim.
+review:
+  domain: pending_external
+  evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_uncapped_normalisation_checks
+provenance:
+  class: known_answer
+  target_source: Published records are used only as score=1.0 witnesses. A larger accepted object scores above 1.0, but a non-integral floating result remains a benchmark candidate until backed by an exact or interval certificate. No required solution.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: high
+  rationale: Matching a published construction is reconstruction. Beating the witness with an exactly checked integer witness is the scientific event; floating-witness improvements require separate exact or interval certification.
+lineage:
+  status: complete
+  builder_model_ids:
+  - cursor-grok-4.6
+  builder_scaffolds:
+  - cursor
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    None. No frontier searcher draw has been run. In-process pins are tests/test_wave0_uncapped_constructions.py.
+  shortcut_discoverer: builder_self_audit
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: cursor-grok-4.6
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: baseline, invalid-candidate and two-anchor helper pins are runnable from this directory

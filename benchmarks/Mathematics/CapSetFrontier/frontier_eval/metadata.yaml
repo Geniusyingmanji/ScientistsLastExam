@@ -1,0 +1,14 @@
+domain: Mathematics
+task: CapSetFrontier
+scientific_role: optimization
+difficulty: flagship
+tier: T3
+oracle_type: analytical
+score_mode: uncapped
+gpu_required: false
+eval_time_seconds: 30
+science_metric: mean_progress_to_best_known_cap_size
+dims: [7, 8, 9]
+reference_baseline: hypercube_2_to_n
+reference_sota: "n=7:236 Calderbank-Fishburn; n=8:512 FunSearch; n=9:1082 FunSearch companion Figure C.5"
+citation: "Calderbank-Fishburn doi:10.1007/BF01388452; Romera-Paredes et al. doi:10.1038/s41586-023-06924-6"

@@ -1,0 +1,3 @@
+1) Only edit solution.py. Keep build_capset(n) -> list of {0,1,2}^n vectors.
+2) The set must be a valid cap (no 3 distinct collinear); invalid -> score 0.
+3) numpy/stdlib only, CPU, seconds per dimension. Do not read verification/ or frontier_eval/.

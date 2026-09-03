@@ -1,0 +1,4 @@
+1) Only edit solution.py. Keep assign_species(problem, scan, zoom).
+2) Return {"species", "confidence", "abstain"}. Each species is {"name": <library key>, "fraction": f} with f in (0, 1], fractions summing to one, unique names, at most problem["max_claimed_species"] entries. `confidence` in [0,1]; `abstain` a boolean. Omit `species` when abstaining.
+3) scan() is free. zoom(lo, hi) charges one call; keep the window finite, inside problem["wavenumber_bounds"], and between problem["min_zoom_width"] and problem["max_zoom_width"] wide. Do not exceed problem["zoom_budget_calls"] zooms per mixture.
+4) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read verification/ or frontier_eval/.

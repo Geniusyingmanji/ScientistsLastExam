@@ -1,0 +1,66 @@
+schema_version: 2
+scientific_question: From a budgeted default-plus-zoom vibrational scan, say which closed-library species are present in a hidden mixture and in what fractions, and decline when the default scan is an unresolved alias, the spectrum is blank, or unexplained lines remain.
+artifact: A named subset of the public library with mixing fractions, a confidence, and an optional refusal.
+oracle:
+  model: procedurally parameterized linear mixtures over a seven-species stick library, Gaussian instrument widths, an 8 cm-1 alias pair whose merge centres coincide with a third species, contaminant lines off the library, and blank noise
+  feasibility: charged zooms, exact-set gating on claimed names, fraction scoring against a declared tolerance, and calibrated refusal
+  deterministic: true
+normalization:
+  baseline: every library species with a line near a default-scan peak, equal fractions, never zooming, never declining
+  reference: unique default matches, zooms only on peaks consistent with more than one library species, two-hit assignment, refusal on unexplained peaks
+  score: development mechanism recovery normalized above always-abstain; species-set rate, fraction accuracy, false-species rate, false discovery, refusal, coverage and the held-out split stay separate
+citations:
+- id: doi:10.1021/ac302337u
+  title: "Mass Spectral Reference Libraries: An Ever-Expanding Resource for Chemical Identification"
+- id: doi:10.1021/ac00096a002
+  title: Optimization and testing of mass spectral library search algorithms for compound identification
+- id: doi:10.1002/jms.1198
+  title: Identification of unknowns from electron-ionization mass spectra by matching against large spectral libraries
+invariants:
+- at default resolution an 8 cm-1 pair merges, so {gamma, delta} and {epsilon} share the same four strong peaks
+- a zoom of 2.5 cm-1 splits the pair and leaves a true singlet unsplit, which is the only budget-feasible way to break the alias
+- a contaminant adds strong lines more than 40 cm-1 from every library position, so nearest-library assignment is a false discovery
+- a blank world has no peaks above the detection floor; publishing any species is a false discovery
+- the claimed species set is gated exactly; declining every world scores exactly zero; the axes separate blanket abstention from confident publication
+- zoom calls are charged and overspend fails closed; malformed submissions score zero and never raise out of the evaluator
+- held-out split, per-world rows and the discovery axes remain evaluator-only
+known_shortcuts: The stick library, the two Gaussian widths and the one planted alias are controlled research abstractions rather than a real NIST search. World seeds are repository-visible and require a future server-held split. A weighted stick fit of fractions costs no extra oracle call and is leftover headroom, not an exploit.
+review:
+  domain: pending_external
+  evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_abstention_normalization_checks
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic generator with development and sealed held-out mixtures across five world kinds.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Library search and peak picking are textbook. What is not published is which mixture is an alias, and the score turns on buying zooms only where the default scan is consistent with more than one subset.
+lineage:
+  status: complete
+  builder_model_ids:
+  - cursor-grok-4.6
+  builder_scaffolds:
+  - cursor
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    None. No frontier searcher draw has been run. In-process pins are tests/test_crowded_spectrum_assignment.py
+    (blanket abstention scores zero; the delivered baseline sits below the sealed reference).
+  shortcut_discoverer: builder_self_audit
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: cursor-grok-4.6
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: the reference, the baseline, the abstention normalisation and the three bad-candidate shapes are all runnable from this directory

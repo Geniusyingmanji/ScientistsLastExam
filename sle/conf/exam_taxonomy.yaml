@@ -48,7 +48,12 @@ tasks:
   # --- optimization / combinatorial (open records: Ramsey, kissing, tensors, caps) ---
   Optimization/CirclePacking: {form: optimization, analogue: combinatorial}
   Mathematics/CapSet: {form: optimization, analogue: combinatorial}
+  Mathematics/CapSetFrontier: {form: optimization, analogue: combinatorial, note: open_dims_not_extension_of_certified_capset}
+  Mathematics/RamseyLowerBound: {form: optimization, analogue: combinatorial}
+  Mathematics/KissingNumber: {form: optimization, analogue: combinatorial}
+  Mathematics/Superpermutation: {form: optimization, analogue: combinatorial}
   Algorithm/MatrixMultiplicationRank: {form: optimization, analogue: combinatorial}
+  Algorithm/TensorRank555: {form: optimization, analogue: combinatorial, note: new_sizes_not_extension_of_certified_matmul}
   QuantumErrorCorrection/QuantumErrorDecoder: {form: optimization, analogue: combinatorial}
   # --- optimization / molecular & macromolecular design (PMO / BioDesign) -----
   MedicinalChemistry/MolecularLeadOptimization: {form: optimization, analogue: molecular_design}
@@ -60,15 +65,22 @@ tasks:
   Mathematics/SequenceLawRecovery: {form: discovery, kind: formula}
   DynamicalSystems/ActiveLawDiscovery: {form: discovery, kind: formula}
   SystemsBiology/EnzymeKineticsLaw: {form: discovery, kind: formula, note: on_ramp_do_not_pair}
+  Oceanography/AMOCTippingRefusal: {form: discovery, kind: formula, note: fold_refusal_not_ebm_parameter_fit}
+  Physics/ComplexBoseLaw: {form: discovery, kind: formula, note: bose_exponents_not_activelaw_ode}
   # --- discovery / structure --------------------------------------------------
   CausalDiscovery/InterventionalSCM: {form: discovery, kind: structure}
+  CausalDiscovery/SurvivorshipConfoundedDesign: {form: discovery, kind: structure, note: selection_not_clone_of_interventional_scm}
   Algorithm/GraphFromDistances: {form: discovery, kind: structure}
   SystemsBiology/GeneNetworkIntervention: {form: discovery, kind: structure}
   # --- discovery / evidence ---------------------------------------------------
   ParticlePhysics/DiscrepantMeasurements: {form: discovery, kind: evidence, note: on_ramp_do_not_pair}
+  ParticlePhysics/LookElsewhereAnomaly: {form: discovery, kind: evidence, note: trials_factor_not_clone_of_discrepant_measurements}
+  Gravitation/PTAHellingsDowns: {form: discovery, kind: evidence, note: hd_orf_not_lookelsewhere_bump}
   EvidenceSynthesis/ProspectiveMetaAnalysis: {form: discovery, kind: evidence}
   # --- discovery / substance --------------------------------------------------
   MaterialsScience/PhaseDiagramDiscovery: {form: discovery, kind: substance}
+  Spectroscopy/CrowdedSpectrumAssignment: {form: discovery, kind: substance}
+  MaterialsScience/QuinaryConvexHull: {form: discovery, kind: substance, note: quinary_hull_not_binary_xrd}
   # --- discovery / parameter inversion (SLE's remaining empty-looking cell) ---
   QuantumDynamics/HamiltonianLearning: {form: discovery, kind: parameter_inversion}
   ClimateScience/EnergyBalanceModel: {form: discovery, kind: parameter_inversion}

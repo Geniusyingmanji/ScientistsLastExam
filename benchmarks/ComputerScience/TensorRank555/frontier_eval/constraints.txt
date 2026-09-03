@@ -1,0 +1,3 @@
+1) Only edit solution.py. Keep build_algorithm(m, n, p) -> (U, V, W) with the documented shapes.
+2) The decomposition must pass the fixed numerical tolerance of 1e-7; this is not an exact-rank certificate.
+3) numpy only, CPU. Do not read verification/ or frontier_eval/.

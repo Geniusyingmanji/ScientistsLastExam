@@ -1,0 +1,66 @@
+schema_version: 2
+scientific_question: From a budgeted mass histogram with a public flat background, say whether a local excess is a new particle after a look-elsewhere trials factor, and decline when the excess dies after trials, the spectrum is blank, or the sidebands reject the prior.
+artifact: A discovery bit, an optional mass, a confidence, and an optional refusal.
+oracle:
+  model: procedurally parameterized Poisson histograms over 40 mass windows, a narrow Gaussian resonance that stays global-5σ after Bonferroni, local ~5σ background flukes, a linear sculpted background, and blanks
+  feasibility: charged background-only toys, mass-window gating on claimed discoveries, and calibrated refusal
+  deterministic: true
+normalization:
+  baseline: claim the highest local z against the public prior, never buy toys, never decline
+  reference: sideband reduced chi-square against the public prior, then a Bonferroni trials factor; refuse unless the leading excess is global-5σ with clean sidebands
+  score: development mechanism recovery normalized above always-abstain; signal recovery, false discovery, refusal, coverage and the held-out split stay separate
+citations:
+- id: doi:10.1088/1361-6633/ac36b9
+  title: "The LHC Olympics 2020: a community challenge for anomaly detection in high energy physics"
+- id: doi:10.1140/epjc/s10052-010-1470-8
+  title: "Trial factors for the look elsewhere effect in high energy physics"
+- id: arxiv:2512.13787
+  title: "Robust Anomaly Detection in Particle Physics Through Sampling-Based Test Statistic"
+invariants:
+- a local 5σ in one of 40 independent windows is not a global 5σ after a trials factor
+- a true resonance in these worlds remains above global 5σ and leaves sidebands consistent with the public flat prior
+- a linearly sculpted background produces a large sideband chi-square against the flat prior even after the leading bin is excised
+- a blank has no bin above local z ≈ 2.7; publishing any mass is a false discovery
+- declining every world scores exactly zero; the axes separate blanket abstention from confident publication
+- toy calls are charged and overspend fails closed; malformed submissions score zero and never raise out of the evaluator
+- held-out split, per-world rows and the discovery axes remain evaluator-only
+known_shortcuts: Forty independent Poisson windows and a Bonferroni factor are a research abstraction of a real LHC bump hunt, not a full look-elsewhere analysis with correlated bins and a floating nuisance. World seeds are repository-visible and require a future server-held split. The 200-call toy budget is useful only as a diagnostic at ordinary tail probabilities; it cannot independently resolve a global 5-sigma tail near 2.87e-7, so the analytic trials correction remains part of this frozen task.
+review:
+  domain: pending_external
+  evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_abstention_normalization_checks
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic generator with development and sealed held-out spectra across four world kinds.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Local-significance bump hunts are textbook. What is not published is which spectrum is a trials-factor fluke, and the score turns on refusing that fluke without also refusing a genuine global-5σ resonance.
+lineage:
+  status: complete
+  builder_model_ids:
+  - cursor-grok-4.6
+  builder_scaffolds:
+  - cursor
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    None. No frontier searcher draw has been run. In-process pins are tests/test_look_elsewhere_anomaly.py
+    (blanket abstention scores zero; the delivered baseline sits below the sealed reference).
+  shortcut_discoverer: builder_self_audit
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: cursor-grok-4.6
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: the reference, the baseline, the abstention normalisation and the three bad-candidate shapes are all runnable from this directory

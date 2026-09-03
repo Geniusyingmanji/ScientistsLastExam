@@ -46,12 +46,23 @@ class TaskContributionGateTests(unittest.TestCase):
     def test_phase_diagram_passes_the_structural_gate(self):
         self._assert_structural_gate("MaterialsScience/PhaseDiagramDiscovery")
 
+    def test_crowded_spectrum_passes_the_structural_gate(self):
+        self._assert_structural_gate("Spectroscopy/CrowdedSpectrumAssignment")
+
+    def test_wave2_discovery_packages_pass_the_structural_gate(self):
+        for task_id in (
+            "Gravitation/PTAHellingsDowns",
+            "Physics/ComplexBoseLaw",
+            "MaterialsScience/QuinaryConvexHull",
+        ):
+            self._assert_structural_gate(task_id)
+
     @mock.patch("scripts.check_task_contribution.evaluate_candidate")
     def test_runtime_gate_rejects_a_high_scoring_baseline_and_valid_bad_candidates(
         self, evaluate_candidate
     ):
         evaluate_candidate.return_value = {"combined_score": 1.0, "valid": 1.0}
-        report = check_task("MaterialsScience/PhaseDiagramDiscovery")
+        report = check_task("Mathematics/RamseyLowerBound")
         checks = {row["check"]: row for row in report["checks"]}
         self.assertFalse(checks["baseline_eval"]["ok"])
         self.assertFalse(checks["bad_candidates_score_zero"]["ok"])
@@ -70,14 +81,14 @@ class TaskContributionGateTests(unittest.TestCase):
         }
         malformed = {"combined_score": 0.25, "valid": 0.0}
         evaluate_candidate.side_effect = [baseline, dict(baseline), malformed, malformed, malformed]
-        report = check_task("MaterialsScience/PhaseDiagramDiscovery")
+        report = check_task("ParticlePhysics/LookElsewhereAnomaly")
         checks = {row["check"]: row for row in report["checks"]}
         self.assertFalse(checks["bad_candidates_score_zero"]["ok"])
 
     @mock.patch("scripts.check_task_contribution.load_certification")
     def test_structural_gate_requires_an_explicit_certification_record(self, load_certification):
         load_certification.return_value = {"schema_version": 1, "tasks": {}}
-        report = check_task("MaterialsScience/PhaseDiagramDiscovery", skip_eval=True)
+        report = check_task("Mathematics/RamseyLowerBound", skip_eval=True)
         checks = {row["check"]: row for row in report["checks"]}
         self.assertFalse(checks["registered_in_certification"]["ok"])
 
