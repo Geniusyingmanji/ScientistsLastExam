@@ -43,11 +43,14 @@ lineage:
   - claude-fable-5-1
   builder_scaffolds:
   - claude-code
-  calibrator_model_ids: []
-  calibration_runs: []
-  calibration_evidence_status: historical_only
+  calibrator_model_ids:
+  - anthropic:claude-opus-5
+  calibration_runs:
+  - experiments/opus5_black_box_group_identification_calibration_2026-09-03.json
+  - experiments/opus5_black_box_group_identification_calibration_2026-09-03_v2.json
+  calibration_evidence_status: current_or_migration_replayed
   edits_triggered_by_model: >-
-    Yes. The first draw (Claude Opus 5, budget 3, three seeds, experiments/opus5_black_box_group_identification_calibration_2026-09-03.json) scored 1.000 on its first proposal against a reference of 0.857 - the query budget of 6 * order paid for the whole Cayley table, and with the table an isomorphism test wins every world. The budget was cut to 2.5 * order, below the 2 * order + identity cost of reconstructing anything of rank three or more, and the reference rewritten to the strategy that budget allows. Re-calibration pending.
+    Yes. The first draw (Claude Opus 5, budget 3, three seeds, experiments/opus5_black_box_group_identification_calibration_2026-09-03.json) scored 1.000 on its first proposal against a reference of 0.857 - the query budget of 6 * order paid for the whole Cayley table, and with the table an isomorphism test wins every world. The budget was cut to 2.5 * order, below the 2 * order + identity cost of reconstructing anything of rank three or more, and the reference rewritten to the strategy that budget allows. The second draw on the hardened task (experiments/opus5_black_box_group_identification_calibration_2026-09-03_v2.json) had first proposals of 0.143 / 0.429 / 0.000 against a reference of 0.286 - above it on one seed of three - and best-of-three scores of 0.286 / 0.429 / 0.429 against a ceiling of 1.0. From 1.000 to a best of 0.429, so the budget cut did the work it was meant to do; the one-seed bar failure is recorded rather than hardened away.
   shortcut_discoverer: builder_self_audit
   frozen_before_eval: false
   freeze_timestamp: null

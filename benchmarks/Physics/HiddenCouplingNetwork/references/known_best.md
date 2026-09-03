@@ -41,6 +41,41 @@ eight experiments, in-degree four, and one weakly coupled hidden unit instead of
 in this file are the hardened world; the draw that failed the bar is recorded in the card and in
 `experiments/opus5_hidden_coupling_network_calibration_2026-09-03.json`.
 
+## Model draws - Claude Opus 5
+
+Three seeds, three proposals each, greedy_rewrite, normal feedback, budget 3.
+
+**First draw, original world** (14 experiments for 12 units, in-degree 3, two hidden units;
+`experiments/opus5_hidden_coupling_network_calibration_2026-09-03.json`, reference 0.631):
+
+| seed | proposal 1 | proposal 2 | proposal 3 | best |
+|---|---|---|---|---|
+| 0 | **0.665** | 0.565 | 0.714 | 0.714 |
+| 1 | 0.571 | 0.571 | invalid | 0.571 |
+| 2 | 0.528 | 0.571 | 0.551 | 0.571 |
+
+Seed 0's first proposal cleared the reference, so the admission bar failed and the world was
+hardened: eight experiments, in-degree four, one weakly coupled hidden unit.
+
+**Second draw, hardened world**
+(`experiments/opus5_hidden_coupling_network_calibration_2026-09-03_v2.json`, reference 0.445):
+
+| seed | proposal 1 | proposal 2 | proposal 3 | best |
+|---|---|---|---|---|
+| 0 | 0.351 | 0.550 | 0.540 | 0.550 |
+| 1 | 0.374 | 0.681 | **0.938** | 0.938 |
+| 2 | 0.659 | 0.418 | 0.500 | 0.659 |
+
+Two of three first proposals now sit below the reference; seed 2's does not. The best of nine is
+0.938 against a ceiling of 1.0 and a median best of 0.659, so the task is not saturated. Seed 1 is
+the interesting trajectory: 0.374 to 0.681 to 0.938 with every proposal accepted, which is the
+shape of iteration paying off rather than of a lucky first draw.
+
+The bar is a construction-time heuristic, not the scale. `combined_score` is anchored at blanket
+abstention (0.0) and perfect signed-edge recovery with correct refusals (1.0); the reference is a
+runnable witness of a competent method, not the normaliser. A first proposal above it on one seed
+is recorded here rather than hardened away.
+
 ## Baseline - `solution.py`
 
 Random drives, dense minimum-norm least squares on the raw states, threshold at 0.1, never declines.

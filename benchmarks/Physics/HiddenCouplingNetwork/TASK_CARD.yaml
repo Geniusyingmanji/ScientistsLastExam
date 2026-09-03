@@ -42,16 +42,25 @@ lineage:
   - claude-fable-5-1
   builder_scaffolds:
   - claude-code
-  calibrator_model_ids: []
-  calibration_runs: []
-  calibration_evidence_status: historical_only
+  calibrator_model_ids:
+  - anthropic:claude-opus-5
+  calibration_runs:
+  - experiments/opus5_hidden_coupling_network_calibration_2026-09-03.json
+  - experiments/opus5_hidden_coupling_network_calibration_2026-09-03_v2.json
+  calibration_evidence_status: current_or_migration_replayed
   edits_triggered_by_model: >-
     Yes. The first draw (Claude Opus 5, budget 3, three seeds,
     experiments/opus5_hidden_coupling_network_calibration_2026-09-03.json) had first proposals of
     0.665 / 0.571 / 0.528 against a reference of 0.631, so the admission bar failed on one seed of
-    three. The world was hardened in response: fourteen experiments to eight for twelve units,
-    in-degree three to four, and two hidden units to one weakly coupled unit. Re-calibration
-    pending.
+    three. The world was hardened in response, not the reference: fourteen experiments to eight for
+    twelve units, in-degree three to four, and two hidden units to one weakly coupled unit. The
+    second draw on the hardened world
+    (experiments/opus5_hidden_coupling_network_calibration_2026-09-03_v2.json) had first proposals
+    of 0.351 / 0.374 / 0.659 against a reference of 0.445 - still above it on one seed of three -
+    and best-of-three scores of 0.550 / 0.938 / 0.659 against a ceiling of 1.0. The task is
+    therefore not saturated at the frontier, and its median best is 0.659; the one-seed bar failure
+    is recorded rather than hardened away, because the score scale is anchored at blanket
+    abstention and perfect recovery, not at the reference.
   shortcut_discoverer: builder_self_audit
   frozen_before_eval: false
   freeze_timestamp: null

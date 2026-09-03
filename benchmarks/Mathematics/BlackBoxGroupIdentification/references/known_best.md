@@ -16,25 +16,51 @@ charged oracle.
 
 | metric | development | held out |
 |---|---|---|
-| mechanism score (normalized) | **0.857** | 1.000 |
-| identification rate | 1.00 | 1.00 |
-| false discovery rate | 0.10 | 0.00 |
-| correct refusal rate | 0.75 | 1.00 |
-| refusal reason right | 0.75 | 1.00 |
-| queries | 90 of 96-192 | 107 of 144-288 |
+| mechanism score (normalized) | **0.286** | 0.400 |
+| identification rate | 0.50 | 0.50 |
+| false discovery rate | 0.50 | 0.25 |
+| correct refusal rate | 0.50 | 0.75 |
+| refusal reason right | 0.50 | 0.75 |
+| queries | 52 of 40-80 | 84 of 60-120 |
 
-Its design: the powers of one random element until they cycle, which yields the identity;
-left-multiplication closure over generators drawn at random from the unreached labels; the whole
-table reconstructed from generator words; up to 24 prediction checks with what remains of the
-budget, any disagreement declaring the operation not a group; and identification by element-order
-profile plus centre size against tables built from the catalogue constructions, declining as
-outside the catalogue when nothing matches.
+Its design: the powers of one random element until they cycle, which yields the identity and one
+element order; an attempted left-multiplication closure over generators drawn from the unreached
+labels, abandoned when the remaining budget cannot cover the elements still missing; exact
+invariant matching when the closure completes; and otherwise a rank lower bound (the generators
+already consumed), the order of the proper subgroup reached, the element orders measured, and a
+commutation-based centre estimate, pruning catalogue tables built offline from their constructions.
 
-**The reference is deliberately not at the ceiling.** It names the unlisted group `C4:C4` as the
-catalogue entry `C2xQ8`: the two share their order profile and centre size and differ in the
-number of distinct squares. Adding that invariant (or the derived subgroup order) takes the same
-pipeline to 1.000. This is the admission bar recorded in the card: a first model proposal that
-reaches the reference means the task needs hardening before it is anything more than an on-ramp.
+**The reference is deliberately not at the ceiling.** It identifies the two-generated worlds, where
+`2 * order` queries buy the table, and loses the three-generated ones and both unlisted groups,
+because by then only a handful of queries remain for the centre - the one invariant that separates
+what rank and the order profile leave standing. Pricing the closure before committing to it, and
+spending the savings on the pairs that separate the surviving entries, is the headroom.
+
+## Model draws - Claude Opus 5
+
+Three seeds, three proposals each, greedy_rewrite, normal feedback, budget 3.
+
+**First draw, original budget of 6 * order**
+(`experiments/opus5_black_box_group_identification_calibration_2026-09-03.json`, reference 0.857):
+every seed scored **1.000 on its first proposal**. At that budget the whole Cayley table is
+affordable and a real isomorphism test wins every world, so the task measured nothing about
+budgeted identification. This is the clearest saturation this repository has recorded.
+
+**Second draw, budget cut to 2.5 * order**
+(`experiments/opus5_black_box_group_identification_calibration_2026-09-03_v2.json`, reference
+0.286):
+
+| seed | proposal 1 | proposal 2 | proposal 3 | best |
+|---|---|---|---|---|
+| 0 | 0.143 | 0.000 | 0.286 | 0.286 |
+| 1 | **0.429** | 0.214 | 0.286 | 0.429 |
+| 2 | 0.000 | 0.000 | 0.429 | 0.429 |
+
+From 1.000 to a best of 0.429 against a ceiling of 1.0. Seed 1's first proposal clears the
+reference, so the construction-time bar still fails on one seed of three, and that is recorded
+rather than hardened away: the scale is anchored at blanket refusal (0.0) and exact identification
+with correct refusal reasons (1.0), and the reference is a runnable witness rather than the
+normaliser.
 
 ## Baseline - `solution.py`
 
@@ -44,8 +70,8 @@ declines.
 | metric | value |
 |---|---|
 | combined score | **0.0000** |
-| identification rate | 0.50 |
-| false discovery rate | 0.70 |
+| identification rate | 0.00 |
+| false discovery rate | 1.00 |
 
 Confidently wrong rather than empty: every non-group and every unlisted group is given a name.
 
@@ -53,16 +79,14 @@ Confidently wrong rather than empty: every non-group and every unlisted group is
 
 | strategy | score | identification | false discovery | refusal | reason right | held out |
 |---|---|---|---|---|---|---|
-| identity + Cayley closure + reconstruction + prediction checks + order profile & centre | 0.857 | 1.00 | 0.10 | 0.75 | 0.75 | 1.000 |
-| same, invariants extended by the derived subgroup order and the number of squares | 1.000 | 1.00 | 0.00 | 1.00 | 1.00 | 1.000 |
-| same, naming the nearest catalogue entry instead of declining | 0.714 | 1.00 | 0.20 | 0.50 | 0.50 | 0.600 |
-| sampled order profile, nearest entry, never declining | 0.000 | 0.50 | 0.70 | 0.00 | 0.00 | 0.200 |
+| attempted closure, exact match when it finishes, rank + subgroup + centre when it does not | 0.286 | 0.50 | 0.50 | 0.50 | 0.50 | 0.400 |
+| sampled order profile, nearest entry, never declining (baseline) | 0.000 | 0.00 | 1.00 | 0.00 | 0.00 | 0.000 |
 | declining everything, either reason | 0.000 | 0.00 | 0.00 | 1.00 | 0.50 | 0.000 |
 
-The ladder is not a difficulty measurement; difficulty is measured by a frontier-model draw, which
-has not been run yet. Prediction checks did not change the reference's score on these worlds: the
-reconstructed table of a non-group already fails the Latin-square check on its columns, so the
-refusal is earned by reconstruction itself and the checks are insurance.
+The ladder is not a difficulty measurement; difficulty is measured by the frontier-model draws
+above. What the budget cut changed is which route is available: at `6 * order` the table is
+affordable and the answer follows from it, and at `2.5 * order` the table is a bet that pays on a
+two-generated world and loses on any other.
 
 ## Robustness
 
