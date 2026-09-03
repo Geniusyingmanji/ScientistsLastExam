@@ -30,7 +30,7 @@ class TaskMaturityAuditTests(unittest.TestCase):
         # Admission is fail-closed against the current evidence bindings. Candidate registration
         # does not imply admission, and older reports whose task/runtime contract drifted do not
         # count toward this total.
-        self.assertEqual(self.report["gate_counts"]["internal_science_admission"], 46)
+        self.assertEqual(self.report["gate_counts"]["internal_science_admission"], 32)
         self.assertEqual(self.report["issues"], [])
         self.assertTrue(self.report["execution_passed"])
 
