@@ -31,6 +31,17 @@ class TaskInventoryDocumentTests(unittest.TestCase):
         expected = sorted(spec.task_id.split("/")[-1] for spec in list_tasks(None))
         self.assertEqual(sorted(names), expected)
 
+    def test_every_task_has_a_chinese_brief_and_scoring_note(self):
+        """The two Chinese columns are hand-written; a new task must not ship with them empty."""
+        briefs = MODULE.CHINESE_BRIEFS
+        registered = {spec.task_id for spec in list_tasks(None)}
+        self.assertEqual(sorted(registered - set(briefs)), [], "tasks without a Chinese brief")
+        self.assertEqual(sorted(set(briefs) - registered), [], "briefs for tasks that do not exist")
+        for task_id, (meaning, scoring) in briefs.items():
+            self.assertTrue(meaning.strip(), task_id)
+            self.assertTrue(scoring.strip(), task_id)
+            self.assertNotIn("|", meaning + scoring, task_id)
+
     def test_no_task_is_left_unmapped(self):
         rows = MODULE.build_rows()
         self.assertEqual([r["task_id"] for r in rows if r["form"] == "unmapped"], [])
