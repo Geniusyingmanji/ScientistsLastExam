@@ -265,6 +265,35 @@ class MeasurementHealthPreflightTests(unittest.TestCase):
         self.assertEqual(check["status"], "fail")
         self.assertFalse(check["task_identity_matches"])
 
+    def test_black_box_entry_wrapper_is_outside_the_runtime_scope(self):
+        """`frontier_eval/run_eval.py` is never executed by the harness; binding evidence to it
+        unbound seven materiality contracts when the legacy copies became thin wrappers."""
+        import sys
+        sys.path.insert(0, str(ROOT))
+        from sle.registry import list_tasks
+        spec = next(
+            spec for spec in list_tasks(None)
+            if spec.task_id == "Optics/DiffractionGratingDesign"
+        )
+        relative = {
+            path.relative_to(spec.task_dir.resolve()).as_posix()
+            for path in MODULE._task_runtime_paths(spec)
+        }
+        self.assertNotIn("frontier_eval/run_eval.py", relative)
+        for kept in (
+            "Task.md",
+            "verification/evaluator.py",
+            "frontier_eval/entrypoint.txt",
+            "frontier_eval/metadata.yaml",
+        ):
+            self.assertIn(kept, relative)
+        # Positive control: the exclusion is by name inside frontier_eval/ only, so a file of the
+        # same name elsewhere in the package would still bind.
+        self.assertTrue(
+            (spec.eval_dir / "run_eval.py").is_file(),
+            "the excluded wrapper must exist for this control to mean anything",
+        )
+
     def test_materiality_runtime_drift_fails_closed(self):
         resolved, _inputs, issues = MODULE._resolve_preflight_spec(MODULE.DEFAULT_SPEC)
         self.assertEqual(issues, [])

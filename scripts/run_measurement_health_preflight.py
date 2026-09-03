@@ -92,6 +92,16 @@ def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+# `frontier_eval/run_eval.py` is the external black-box entry point. Nothing under `sle/` executes
+# it: the harness resolves `entrypoint.txt` and runs the evaluator through the trusted driver, and
+# every calibration document bound through this comparison was produced by `evaluate_candidate`.
+# Rewriting the 46 legacy copies into a thin `python -m sle eval` wrapper (2026-09-03) therefore
+# could not move a number in any of them - yet it unbound the seven scientific-materiality contracts
+# and turned the suite red. The files the harness does read (`entrypoint.txt`, `eval_command.txt`,
+# `metadata.yaml`, `constraints.txt`) stay in the comparison.
+RUNTIME_SCOPE_EXCLUDED_EVAL_FILES = frozenset({"run_eval.py"})
+
+
 def _task_runtime_paths(task_spec: Any) -> list[Path]:
     roots = [
         task_spec.task_dir / "Task.md",
@@ -107,6 +117,10 @@ def _task_runtime_paths(task_spec: Any) -> list[Path]:
                 path.is_file()
                 and "__pycache__" not in path.parts
                 and path.suffix not in {".pyc", ".pyo"}
+                and not (
+                    path.parent == task_spec.eval_dir
+                    and path.name in RUNTIME_SCOPE_EXCLUDED_EVAL_FILES
+                )
             ):
                 paths.add(path.resolve())
     return sorted(paths)
@@ -453,6 +467,10 @@ def _contract_compatibility(
         )
         and "__pycache__" not in Path(name).parts
         and Path(name).suffix not in {".pyc", ".pyo"}
+        and not (
+            Path(name).parent.as_posix() == "%s/frontier_eval" % source_task_relative
+            and Path(name).name in RUNTIME_SCOPE_EXCLUDED_EVAL_FILES
+        )
     }
     historical_by_suffix = {
         str(Path(name).relative_to(source_task_relative)): name
@@ -1224,8 +1242,17 @@ def _package_mismatch_explanation(task_spec: Any, source_revision: Any) -> dict[
     # evaluator edit refuses evidence that is still valid, which is what happened when four tasks
     # gained a table of their own input names.
     prompt_only = [n for n in changed if n.endswith("Task.md")]
+    # The external black-box entry point is outside the harness: no check in this preflight and
+    # no calibration document it binds ever executes it (see RUNTIME_SCOPE_EXCLUDED_EVAL_FILES).
+    # Reported on its own line so a rebinding says what moved the hash, but it cannot have moved
+    # a measurement.
+    harness_bypassed = [
+        n for n in changed
+        if n.rsplit("/", 1)[0] == "frontier_eval"
+        and n.rsplit("/", 1)[-1] in RUNTIME_SCOPE_EXCLUDED_EVAL_FILES
+    ]
     behavioural = [n for n in changed if n not in card and n not in prompt_only
-                   and not unreachable_addition(n)]
+                   and n not in harness_bypassed and not unreachable_addition(n)]
     declarative = True
     for name in card:
         try:
@@ -1247,6 +1274,7 @@ def _package_mismatch_explanation(task_spec: Any, source_revision: Any) -> dict[
         "source_revision": source_revision,
         "behavioural_files_changed": behavioural,
         "prompt_files_changed": prompt_only,
+        "harness_bypassed_files_changed": harness_bypassed,
         # True means the frozen evidence still describes this task and only the binding is stale.
         # False means something that can move an evaluator's measurement has changed, and the
         # evidence must be remade. A prompt-only change sets this true and is reported separately,
