@@ -15,7 +15,7 @@
 
 ## Optimization(29)
 
-### 工程设计(frontier_eng) — 15
+### 工程设计(engineering_design) — 15
 
 | 任务 | 学科 | 领域 | 打分 | oracle | 认证 | 说明 |
 |---|---|---|---|---|---|---|

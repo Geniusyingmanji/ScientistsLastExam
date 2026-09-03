@@ -33,7 +33,7 @@ CERTIFICATION = ROOT / "sle" / "certification.yaml"
 
 FORM_TITLES = OrderedDict([("optimization", "Optimization"), ("discovery", "Discovery")])
 ANALOGUE_TITLES = OrderedDict([
-    ("frontier_eng", "工程设计(frontier_eng)"),
+    ("engineering_design", "工程设计(engineering_design)"),
     ("combinatorial", "开放组合纪录(combinatorial,无上限)"),
     ("molecular_design", "分子与大分子设计(molecular_design)"),
 ])

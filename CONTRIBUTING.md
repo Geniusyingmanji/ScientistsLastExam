@@ -172,6 +172,9 @@ normalized = (raw_mechanism - always_abstain) / (1.0 - always_abstain)
 - [ ] `python scripts/audit_tasks.py` 无准入问题,不变量测试全部通过。
 - [ ] 在 `sle/conf/exam_taxonomy.yaml` 里占**恰好一格**(optimization analogue 或
       discovery kind)。`python scripts/report_exam_taxonomy.py` 必须干净。
+- [ ] 不与 Frontier-Eng 重合:建题前对照其论文附录 A 的 47 题与仓库 `TASK_DETAILS.md` 的全部条目,
+      同一问题类(如桁架减重、光栅衍射级配、月面着陆轨迹)不再立题;同形式不同问题可以,但要在卡片
+      `novelty_risk` 里写清区别。核查记录见 `.research/frontier_eng_overlap_audit_2026-09-03.md`。
 - [ ] `python scripts/check_task_contribution.py --task <Domain>/<Task>` 通过
       （上面大部分检查的一条命令;不调用 LLM,也不宣称认证）。
       EnzymeKineticsLaw / DiscrepantMeasurements 已标 `on_ramp_do_not_pair`,不要拿它们

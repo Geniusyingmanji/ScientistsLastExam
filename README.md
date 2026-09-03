@@ -17,7 +17,7 @@ Scientists' Last Exam
 │   │     SFE / HLE 占理解与闭卷;sgi-bench 占全流程写论文,都不在这里
 │   └── 单学科纵深 ── NewtonBench 物理 · BioDesignBench 蛋白
 ├── 任务形式
-│   ├── optimization ── Frontier-Eng 工程 · PMO 分子 · 开放数学纪录
+│   ├── optimization ── 工程设计(与 Frontier-Eng 同形式,任务不重合) · 分子设计(与 PMO 同形式) · 开放数学纪录
 │   └── discovery
 │       ├── 公式   ── 在一族候选律里认出哪条成立,或判断都不成立
 │       ├── 结构   ── 恢复图、网络、几何

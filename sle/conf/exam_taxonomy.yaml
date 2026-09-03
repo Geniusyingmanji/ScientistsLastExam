@@ -18,7 +18,7 @@ out_of_scope:
     reason: closed exam items; SLE items are programs plus a frozen executable oracle
 
 optimization_analogue:
-  frontier_eng: engineering design under a frozen simulator
+  engineering_design: engineering design under a frozen simulator (same form as Frontier-Eng; no task is shared with it)
   combinatorial: open-record construction with an executable mathematical verifier
   molecular_design: molecular or macromolecular design under a frozen scientific oracle
 discovery_kind:
@@ -30,21 +30,21 @@ discovery_kind:
 
 tasks:
   # --- optimization / frontier-eng ------------------------------------------
-  Thermodynamics/HeatExchangerDesign: {form: optimization, analogue: frontier_eng}
-  StructuralEngineering/TrussWeightMinimization: {form: optimization, analogue: frontier_eng}
-  Semiconductor/MOSFETDoping: {form: optimization, analogue: frontier_eng}
-  ChemicalProcess/DistillationColumnDesign: {form: optimization, analogue: frontier_eng}
-  Turbulence/RANSCalibration: {form: optimization, analogue: frontier_eng}
-  NuclearEngineering/NeutronDiffusionCriticality: {form: optimization, analogue: frontier_eng}
-  Acoustics/RoomImpulseResponse: {form: optimization, analogue: frontier_eng}
-  ControlTheory/InvertedPendulumSwingUp: {form: optimization, analogue: frontier_eng}
-  Astrodynamics/LowThrustTransfer: {form: optimization, analogue: frontier_eng}
-  ParticlePhysics/CalorimeterDesign: {form: optimization, analogue: frontier_eng}
-  Photonics/MultilayerThinFilm: {form: optimization, analogue: frontier_eng}
-  Optics/DiffractionGratingDesign: {form: optimization, analogue: frontier_eng}
-  SignalProcessing/SparseRecovery: {form: optimization, analogue: frontier_eng}
-  Electrochemistry/ElectrolyteConductivityDesign: {form: optimization, analogue: frontier_eng}
-  MaterialsScience/AlloyHardnessOptimization: {form: optimization, analogue: frontier_eng}
+  Thermodynamics/HeatExchangerDesign: {form: optimization, analogue: engineering_design}
+  StructuralEngineering/TrussWeightMinimization: {form: optimization, analogue: engineering_design}
+  Semiconductor/MOSFETDoping: {form: optimization, analogue: engineering_design}
+  ChemicalProcess/DistillationColumnDesign: {form: optimization, analogue: engineering_design}
+  Turbulence/RANSCalibration: {form: optimization, analogue: engineering_design}
+  NuclearEngineering/NeutronDiffusionCriticality: {form: optimization, analogue: engineering_design}
+  Acoustics/RoomImpulseResponse: {form: optimization, analogue: engineering_design}
+  ControlTheory/InvertedPendulumSwingUp: {form: optimization, analogue: engineering_design}
+  Astrodynamics/LowThrustTransfer: {form: optimization, analogue: engineering_design}
+  ParticlePhysics/CalorimeterDesign: {form: optimization, analogue: engineering_design}
+  Photonics/MultilayerThinFilm: {form: optimization, analogue: engineering_design}
+  Optics/DiffractionGratingDesign: {form: optimization, analogue: engineering_design}
+  SignalProcessing/SparseRecovery: {form: optimization, analogue: engineering_design}
+  Electrochemistry/ElectrolyteConductivityDesign: {form: optimization, analogue: engineering_design}
+  MaterialsScience/AlloyHardnessOptimization: {form: optimization, analogue: engineering_design}
   # --- optimization / combinatorial (open records: Ramsey, kissing, tensors, caps) ---
   Optimization/CirclePacking: {form: optimization, analogue: combinatorial}
   Mathematics/CapSet: {form: optimization, analogue: combinatorial}
