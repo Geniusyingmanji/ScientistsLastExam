@@ -3,7 +3,7 @@
 Computes the Lennard-Jones energy of a candidate configuration and normalizes against
 catalogued putative global minima (Cambridge Cluster Database / Wales & Doye 1997,
 reduced units ε = σ = 1). The non-interacting limit (E = 0) is the natural baseline,
-so gap_closed(n) = clip(E_found / E_min, 0, 1).
+so score(n) = max(0, E_found / E_min) with no upper clamp.
 """
 
 from __future__ import annotations
@@ -54,7 +54,7 @@ def min_pair_distance(coords: np.ndarray) -> float:
 
 
 def score_configuration(n: int, coords) -> dict:
-    """Return per-size validity, energy, and gap-closed score in [0, 1]."""
+    """Return per-size validity, energy, and uncapped score (1.0 at the listed minimum)."""
     try:
         arr = np.asarray(coords, dtype=float)
     except Exception as exc:  # noqa: BLE001

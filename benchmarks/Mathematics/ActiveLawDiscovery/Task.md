@@ -66,3 +66,4 @@ zero-score baseline.
 - Deterministic CPU code using the Python standard library, NumPy and SciPy only.
 - Do not assume hidden-world order, coefficients, noise level or a fixed trajectory count.
 - No network or process creation. Do not read `verification/` or `frontier_eval/`.
+- `sle.contract_lint` is importable and free to call for shape checks.

@@ -1,8 +1,8 @@
-# 为 Scientist's Last Exam 贡献
+# 为 Scientists' Last Exam 贡献
 
-当前的优先级是**认证并加固已有清单,而不是把它做大**。欢迎通过 Pull Request 提交修复、任务卡、
-科学检验,以及经过仔细审阅的新优化任务。被发现(discovery)只让一个任务包在 `--all` 下可见;
-进入默认基准需要通过下面单独的认证门槛。
+当前同时做两件事:**加固已有清单**,以及按 `sle/conf/exam_taxonomy.yaml` 的空格扩 task。
+新包一律 `candidate`,被发现只让它在 `--all` 下可见;进入默认基准仍要过下面的认证门槛,
+不要自我认证。SFE / HLE / sgi-bench 写在 taxonomy 的 `out_of_scope` 里,不是本仓库的题型。
 
 > **欢迎 AI 辅助的贡献。** 但请自己核验所有 oracle 代码与参考值 —— 不要把科学正确性完全交给 AI。
 
@@ -170,6 +170,12 @@ normalized = (raw_mechanism - always_abstain) / (1.0 - always_abstain)
 - [ ] `metadata.yaml` 字段填全。
 - [ ] flagship(`uncapped`)任务:`references/known_best.md` 存在且值有出处。
 - [ ] `python scripts/audit_tasks.py` 无准入问题,不变量测试全部通过。
+- [ ] 在 `sle/conf/exam_taxonomy.yaml` 里占**恰好一格**(optimization analogue 或
+      discovery kind)。`python scripts/report_exam_taxonomy.py` 必须干净。
+- [ ] `python scripts/check_task_contribution.py --task <Domain>/<Task>` 通过
+      （上面大部分检查的一条命令;不调用 LLM,也不宣称认证）。
+      EnzymeKineticsLaw / DiscrepantMeasurements 已标 `on_ramp_do_not_pair`,不要拿它们
+      做配对对照,也不要再加一题同构的 on-ramp。
 
 ---
 

@@ -146,3 +146,9 @@ proposal across three seeds - the reference scores 0.9904 - by titrating at thre
 and running both refusal tests. This task is therefore saturated for the current frontier and is
 kept as an on-ramp: it still separates a naive analysis from a competent one, and it is not
 evidence about the ceiling. See `references/known_best.md`.
+
+## Rules
+
+- Only edit `solution.py`; keep `discover_kinetics(problem, assay)`.
+- `sle.contract_lint` is importable and free to call for shape checks. It costs no oracle call.
+- Do not read `verification/` or `frontier_eval/`.

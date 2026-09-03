@@ -38,7 +38,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from sle.evaluate import evaluate_candidate  # noqa: E402
+from sle.evaluate import INVALID_SCORE, evaluate_candidate  # noqa: E402
 from sle.registry import list_tasks  # noqa: E402
 
 BAD_CANDIDATES = {
@@ -74,22 +74,41 @@ def main(argv: list[str] | None = None) -> int:
                                  "crashed": True, "detail": str(error)[:300]})
                     continue
             crashed = bool(metrics.get("infrastructure_failure"))
+            valid = float(metrics.get("valid", 0.0))
+            score = float(metrics.get("combined_score", INVALID_SCORE))
             rows.append({
                 "task": spec.task_id,
                 "candidate": kind,
                 "crashed": crashed,
-                "valid": float(metrics.get("valid", 0.0)),
+                "valid": valid,
+                "combined_score": score,
                 "detail": str(metrics.get("error_message") or "")[:300] if crashed else "",
             })
             print("%-46s %-11s %s" % (
                 spec.task_id[:46], kind,
-                "CRASHED  %s" % rows[-1]["detail"][:90] if crashed else "scored invalid"))
+                "CRASHED  %s" % rows[-1]["detail"][:90]
+                if crashed else ("scored invalid" if valid == 0.0 else "INVALID GATE: valid=%s" % valid)))
 
     crashing = sorted({row["task"] for row in rows if row["crashed"]})
+    accepting = sorted({row["task"] for row in rows if not row["crashed"] and row["valid"] != 0.0})
+    bad_scores = sorted({
+        row["task"] for row in rows
+        if not row["crashed"]
+        and row["valid"] == 0.0
+        and row["combined_score"] not in {0.0, float(INVALID_SCORE)}
+    })
     print()
     print("tasks whose evaluator a candidate can crash: %d of %d" % (len(crashing), len(specs)))
     for task in crashing:
         print("   ", task)
+    if accepting:
+        print("tasks accepting a malformed candidate as valid: %d" % len(accepting))
+        for task in accepting:
+            print("   ", task)
+    if bad_scores:
+        print("tasks assigning a non-failure score to malformed candidates: %d" % len(bad_scores))
+        for task in bad_scores:
+            print("   ", task)
     if crashing:
         print()
         print("A crash here aborts the run rather than scoring the candidate, so one bad "
@@ -103,7 +122,7 @@ def main(argv: list[str] | None = None) -> int:
             "rows": rows,
         }, indent=2) + "\n", encoding="utf-8")
         print("report:", args.output)
-    return 1 if crashing else 0
+    return 1 if crashing or accepting or bad_scores else 0
 
 
 if __name__ == "__main__":

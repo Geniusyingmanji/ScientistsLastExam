@@ -12,14 +12,25 @@ optimization side, where the anchor is a search witness and beating it is the po
 from __future__ import annotations
 
 import importlib.util
+import re
 import sys
 import unittest
 from pathlib import Path
+
+import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from sle.registry import list_tasks  # noqa: E402
+
+# Prompt-side claims that a better-than-reference result is invisible. "clip at one" and
+# `clip(..., 0, 1)` in a formula are the same lie in other phrasing; this wave pins the
+# two wordings that were still on LJ and Calorimeter after the evaluators were uncapped.
+_TASK_MD_CLIP_CLAIM = re.compile(
+    r"clip(?:ped)?\s+to\s+(?:`?\[?\s*0\s*,\s*1\s*\]?`?|one)\b",
+    re.IGNORECASE,
+)
 
 
 def load_evaluator(task_id: str):
@@ -89,6 +100,19 @@ class EveryUncappedTaskTests(unittest.TestCase):
                     offenders.append("%s: %s" % (spec.task_id, stripped[:70]))
         self.assertEqual(offenders, [], "uncapped tasks whose normalisation still clips at one")
 
+    def test_no_uncapped_task_md_claims_the_score_is_clipped_to_one(self):
+        """The searcher only sees Task.md. A card that still says clip-to-one hides wins."""
+        offenders = []
+        for spec in self.uncapped_tasks():
+            task_md = spec.task_dir / "Task.md"
+            if not task_md.is_file():
+                continue
+            text = task_md.read_text(encoding="utf-8")
+            hit = _TASK_MD_CLIP_CLAIM.search(text)
+            if hit:
+                offenders.append("%s: %s" % (spec.task_id, hit.group(0)))
+        self.assertEqual(offenders, [], "uncapped Task.md still claiming the score clips to one")
+
     def test_a_normalised_helper_lets_a_better_result_exceed_one(self):
         """Where the task exposes the two-anchor helper, beating the reference must show."""
         checked = 0
@@ -110,6 +134,38 @@ class EveryUncappedTaskTests(unittest.TestCase):
             self.assertAlmostEqual(helper(1.0, 0.0, 1.0), 1.0, msg=spec.task_id)
             self.assertAlmostEqual(helper(-1.0, 0.0, 1.0), 0.0, msg=spec.task_id)
         self.assertGreater(checked, 0, "no uncapped task exposed the two-anchor helper")
+
+
+class LennardJonesUncappedTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.evaluator = load_evaluator("Chemistry/LennardJonesCluster")
+        spec = next(s for s in list_tasks(None)
+                    if s.task_id == "Chemistry/LennardJonesCluster")
+        path = spec.initial_program_path
+        module_spec = importlib.util.spec_from_file_location("lj_baseline", path)
+        module = importlib.util.module_from_spec(module_spec)
+        module_spec.loader.exec_module(module)
+        cls.baseline = module
+
+    def test_the_factory_baseline_is_valid_and_near_zero(self):
+        metrics = self.evaluator.evaluate(self.baseline.build_cluster)
+        self.assertEqual(metrics["valid"], 1.0)
+        self.assertGreaterEqual(metrics["combined_score"], 0.0)
+        self.assertLess(metrics["combined_score"], 0.15)
+
+    def test_an_energy_below_the_listed_minimum_scores_above_one(self):
+        n = 13
+        e_min = self.evaluator.GLOBAL_MINIMA[n]
+        coords = np.arange(n * 3, dtype=float).reshape(n, 3) * 2.0
+        original = self.evaluator.lj_energy
+        self.evaluator.lj_energy = lambda _coords: e_min * 1.01
+        try:
+            result = self.evaluator.score_configuration(n, coords)
+        finally:
+            self.evaluator.lj_energy = original
+        self.assertTrue(result["valid"])
+        self.assertGreater(result["score"], 1.0)
 
 
 if __name__ == "__main__":

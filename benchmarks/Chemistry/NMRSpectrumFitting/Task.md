@@ -62,3 +62,4 @@ Simulator-truth recovery is task evidence, not a claim of experimental NMR disco
 - Deterministic CPU code using the Python standard library, NumPy and SciPy only.
 - Do not assume a fixed axis, sample count, peak count, noise level or hidden-instance order.
 - No network or process creation. Do not read `verification/` or `frontier_eval/`.
+- `sle.contract_lint` is importable and free to call for shape checks.
