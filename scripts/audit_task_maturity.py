@@ -803,6 +803,31 @@ def _current_full_suite_issues(
     return []
 
 
+def _status_admission_issues(task_records: list[dict[str, Any]]) -> list[str]:
+    """Quarantine is exclusionary; certification and current maturity are separate ledgers."""
+    quarantined_admitted = sorted(
+        row["task"] for row in task_records
+        if row["certification_status"] == "quarantined"
+        and row["gates"]["internal_science_admission"]["passed"]
+    )
+    issues = []
+    if quarantined_admitted:
+        issues.append(
+            "quarantined tasks passed internal science admission: %s"
+            % ", ".join(quarantined_admitted)
+        )
+    return issues
+
+
+def _certified_without_current_admission(task_records: list[dict[str, Any]]) -> list[str]:
+    """Surface expired current evidence without silently changing the registry API."""
+    return sorted(
+        row["task"] for row in task_records
+        if row["certification_status"] == "certified"
+        and not row["gates"]["internal_science_admission"]["passed"]
+    )
+
+
 def build_report(full_test_suite: Optional[str] = None) -> dict[str, Any]:
     global_reports = dict(GLOBAL_REPORTS)
     if full_test_suite is not None:
@@ -1103,6 +1128,9 @@ def build_report(full_test_suite: Optional[str] = None) -> dict[str, Any]:
         "current_quarantine_defect_reproduction_count": sum(
             row["quarantine_reaudit"]["passed"] for row in task_records
         ),
+        "certified_without_current_admission_count": len(
+            _certified_without_current_admission(task_records)
+        ),
     }
 
     issues = []
@@ -1127,10 +1155,10 @@ def build_report(full_test_suite: Optional[str] = None) -> dict[str, Any]:
         for row in task_records for binding in row["evidence_binding_counts"]
     ):
         issues.append("unknown evidence binding state")
-    if gate_counts["internal_science_admission"] != (
-        status_counts.get("certified", 0) + status_counts.get("candidate", 0)
-    ):
-        issues.append("internal admission count diverges from audited nonquarantined risk set")
+    # Quarantined tasks may never enter the current risk set. Certified tasks whose current
+    # evidence expired remain visible below rather than being hidden by aggregate counts or
+    # silently removed from the default registry.
+    issues.extend(_status_admission_issues(task_records))
     current_quarantined = {
         row["task"] for row in task_records
         if row["certification_status"] == "quarantined"
@@ -1217,6 +1245,9 @@ def build_report(full_test_suite: Optional[str] = None) -> dict[str, Any]:
         },
         "gate_counts": gate_counts,
         "evidence_coverage": coverage,
+        "certified_without_current_admission": _certified_without_current_admission(
+            task_records
+        ),
         "issues": issues,
         "tasks": task_records,
     }

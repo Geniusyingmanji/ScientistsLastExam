@@ -36,13 +36,16 @@ MODULE = load_module()
 
 def write_run(root: Path, cohort: str, dirname: str, task: str, mode: str, seed: int,
               scores: list[float], write_manifest: bool = True,
-              model: str = "gpt-5.5", contract: str | None = None) -> None:
+              model: str = "gpt-5.5", contract: str | None = None,
+              condition: str | None = None, runtime: str = "runtime:default") -> None:
     workdir = root / cohort / dirname
     workdir.mkdir(parents=True)
     if write_manifest:
         (workdir / "run_manifest.json").write_text(json.dumps({
             "task_id": task, "feedback_mode": mode, "seed": seed,
             "llm_condition": {"model": model},
+            "llm_condition_sha256": condition or ("condition:" + model),
+            "runtime_source_sha256": runtime,
             **({"task_package_sha256": contract} if contract else {}),
         }), encoding="utf-8")
     lines = [json.dumps({"step": 0, "valid": True, "score": 0.0})]
@@ -58,7 +61,8 @@ class RunIdentityTests(unittest.TestCase):
             write_run(root, "crossover", "b20_normal_s0", "Astro/LowThrust", "normal", 0, [0.1])
             found = MODULE.collect(root)
             self.assertEqual(list(found),
-                             [("Astro/LowThrust", "crossover", "gpt-5.5", "unknown")])
+                             [("Astro/LowThrust", "crossover", "gpt-5.5",
+                               "condition:gpt-5.5", "unknown", "runtime:default")])
 
     def test_a_run_without_a_manifest_is_skipped_rather_than_guessed(self):
         with TemporaryDirectory() as tmp:
@@ -131,8 +135,24 @@ class TaskVersionSeparationTests(unittest.TestCase):
                           contract=contract)
             found = MODULE.collect(root)
             self.assertEqual(len(found), 2)
-            versions = {key[3] for key in found}
+            versions = {key[4] for key in found}
             self.assertEqual(versions, {"v1" + "0" * 12, "v2" + "0" * 12})
+
+    def test_saturation_does_not_pool_across_runtime_versions(self):
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            curve = [0.1] * 8
+            write_run(root, "a", "old", "T/X", "selection_blind", 0, curve,
+                      runtime="runtime-old")
+            write_run(root, "b", "new", "T/X", "selection_blind", 1, curve,
+                      runtime="runtime-new")
+            report = PoolingTests.run_report(root)
+            self.assertEqual(len(report["rows"]), 2)
+            self.assertEqual(
+                {row["runtime_source_sha256"] for row in report["rows"]},
+                {"runtime-old", "runtime-new"},
+            )
+            self.assertTrue(all(row["pooled_open_loop_seeds"] == 1 for row in report["rows"]))
 
 
 class SeedFragilityTests(unittest.TestCase):
@@ -190,6 +210,35 @@ class ModelSeparationTests(unittest.TestCase):
             self.assertEqual(by_model["gpt-5.5"], 2)
             self.assertEqual(by_model["claude-opus-4-8"], 1)
 
+    def test_models_on_different_runtimes_are_not_reported_as_agreeing(self):
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            flat = [0.5] * 8
+            write_run(root, "a", "g", "T/X", "selection_blind", 0, flat,
+                      model="gpt-5.5", runtime="runtime-g")
+            write_run(root, "b", "c", "T/X", "selection_blind", 0, flat,
+                      model="claude-opus-4-8", runtime="runtime-c")
+            report = PoolingTests.run_report(root)
+            self.assertEqual(len(report["rows"]), 2)
+            self.assertEqual(report["cross_model_agreement"], {})
+            self.assertEqual(report["cross_model_disagreement"], {})
+
+    def test_same_model_with_different_conditions_is_not_pooled(self):
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            climb = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8]
+            write_run(root, "a", "stream", "T/X", "selection_blind", 0, climb,
+                      condition="stream-on")
+            write_run(root, "b", "nonstream", "T/X", "selection_blind", 1, climb,
+                      condition="stream-off")
+            report = PoolingTests.run_report(root)
+            self.assertEqual(len(report["rows"]), 2)
+            self.assertEqual(
+                {row["llm_condition_sha256"] for row in report["rows"]},
+                {"stream-on", "stream-off"},
+            )
+            self.assertTrue(all(row["pooled_open_loop_seeds"] == 1 for row in report["rows"]))
+
     def test_a_manifest_without_a_model_is_labelled_rather_than_assumed(self):
         with TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -201,7 +250,8 @@ class ModelSeparationTests(unittest.TestCase):
             (workdir / "trajectory.jsonl").write_text(
                 json.dumps({"step": 1, "valid": True, "score": 0.4}) + "\n", encoding="utf-8")
             self.assertEqual(list(MODULE.collect(root)),
-                             [("T/X", "old", "unrecorded", "unknown")])
+                             [("T/X", "old", "unrecorded", "unrecorded", "unknown",
+                               "unrecorded")])
 
 
 class VerdictTests(unittest.TestCase):
