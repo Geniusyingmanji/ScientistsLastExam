@@ -1,0 +1,4 @@
+1) Only edit solution.py. Keep identify(problem, mul).
+2) Return {"catalogue_id", "confidence", "abstain", "abstain_reason"}. `catalogue_id` must be the `id` of an entry of problem["catalogue"]; `confidence` in [0,1]; `abstain` a boolean; when abstaining, `abstain_reason` must be one of problem["abstain_reasons"] and `catalogue_id` is omitted.
+3) mul(a, b) returns the label of a*b for integer labels in 0..order-1 and charges one query; do not exceed problem["query_budget"] calls per world.
+4) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read verification/ or frontier_eval/.

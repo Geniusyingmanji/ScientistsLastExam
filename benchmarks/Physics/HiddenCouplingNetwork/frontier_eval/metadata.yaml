@@ -1,0 +1,13 @@
+domain: Physics
+task: HiddenCouplingNetwork
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: physical_sim
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 30
+science_metric: signed_direct_coupling_graph_recovery_from_budgeted_multi_unit_drives_with_hidden_unit_refusal
+reference_baseline: dense least squares on the raw states over random drives, never declining
+reference_sota: Rademacher multi-unit design, per-unit orthogonal matching pursuit on tanh(x) with a BIC stop, noise-floor refusal
+citation: "Timme 2007, DOI 10.1103/PhysRevLett.98.224101; Casadiego, Nitzan, Hallerberg and Timme 2017, DOI 10.1038/s41467-017-02288-4"

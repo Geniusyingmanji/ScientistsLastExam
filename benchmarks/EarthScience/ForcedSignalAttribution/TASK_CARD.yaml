@@ -1,0 +1,66 @@
+schema_version: 2
+scientific_question: Decide whether a regional record carries a forced response of known pattern and time profile, estimate its scaling factor with an interval, and decline when the residual shows the model's fingerprint or control variability cannot be trusted - all under a budget of model control years.
+artifact: A detection decision, a scaling-factor estimate with a 90% interval, a confidence, and an optional refusal.
+oracle:
+  model: procedurally generated regional fields with four red spatially coherent modes of internal variability plus white noise, a forced pattern projecting partly onto the reddest mode and growing along a fixed profile, a three-member ensemble-mean fingerprint, and charged unforced control segments; misspecified worlds either scale the model's variability down or rotate its fingerprint pattern
+  feasibility: charged control years with a minimum segment length, detection gated on the claim, amplitude scored against a declared tolerance, interval coverage, exact gating on unforced worlds, and calibrated refusal on untrustworthy models
+  deterministic: true
+normalization:
+  baseline: regional-mean ordinary least squares trend test with a white-noise interval, never declining, spending no control years
+  reference: EOF-truncated total least squares fingerprinting with the fingerprint's noise ratio, a null distribution from overlapping control windows, and a residual consistency test normalised for the fingerprint's noise
+  score: development mechanism recovery normalized above always-abstain; detection rate, amplitude score, interval coverage, false discovery, unforced false detection, refusal, coverage and the held-out split stay separate
+citations:
+- id: doi:10.1007/BF00210008
+  title: Optimal fingerprints for the detection of time-dependent climate change
+- id: doi:10.1007/s003820050291
+  title: Checking for model consistency in optimal fingerprinting
+- id: doi:10.1007/s00382-003-0313-9
+  title: Estimating signal amplitudes in optimal fingerprinting, part I - theory
+invariants:
+- the leading mode of internal variability has memory 0.9 and the forced pattern projects onto it, so a white-noise interval detects unforced records in roughly a third of draws while the control-window null does not
+- the fingerprint averages three forced runs, so ordinary least squares attenuates the amplitude and loses all interval coverage; total least squares with the known noise ratio recovers it
+- a quiet model or a rotated fingerprint leaves a residual inconsistent with the model's own control variability, which is the only evidence that the interval is untrustworthy
+- an unforced world with a trustworthy model is determinable and "not detected" is its answer; declining there scores zero
+- declining every world scores exactly zero by construction; the axes separate blanket abstention from confident publication
+- control years are charged and overspend fails closed; malformed submissions score zero and never raise out of the evaluator
+- held-out split, per-world rows and the discovery axes remain evaluator-only
+known_shortcuts: The variability model (four AR(1) modes plus white noise), the single-pattern forced response and the two misspecification modes are controlled research abstractions of detection and attribution; multi-signal regression, observational error and non-stationary variability are out of scope. World seeds are repository-visible and require a future server-held split. The reference's amplitude score is 0.52 and its truncation is fixed, so the amplitude axis deliberately retains headroom.
+review:
+  domain: pending_external
+  evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_abstention_normalization_checks
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic generator with development (24 regions, 60 years, 600 control years) and sealed held-out (30 regions, 80 years, 800 control years) worlds across four world kinds.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Optimal fingerprinting, total least squares and the residual consistency check are textbook (Hasselmann 1993; Allen and Tett 1999; Allen and Stott 2003) and a model may recognise them. What is not published is which world is misspecified, and the ablation shows the score turns on combining a control-based null, the noise-aware fit and the consistency test under one budget rather than on recalling any of them.
+lineage:
+  status: complete
+  builder_model_ids:
+  - claude-fable-5-1
+  builder_scaffolds:
+  - claude-code
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    None yet. The admission bar this task is built under: a first frontier-model proposal must
+    not reach the reference's 0.722; the draw has not been run.
+  shortcut_discoverer: builder_self_audit
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: claude-fable-5-1
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: the reference, the baseline, the five-rung ablation ladder and the eleven bad-candidate shapes are all runnable from this directory

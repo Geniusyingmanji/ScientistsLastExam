@@ -1,0 +1,66 @@
+schema_version: 2
+scientific_question: Recover the signed direct coupling graph of a hidden saturating network from fewer budgeted steady-state experiments than there are units, and decline when unmeasured units make the direct graph unidentifiable.
+artifact: A claimed signed edge list over the observed units, a confidence, and an optional refusal.
+oracle:
+  model: procedurally generated stable networks of tanh-coupled leaky units with sparse random couplings of bounded in-degree, uncoupled variants, and variants with two unmeasured undriven units coupled into and out of the observed ones; steady states solved by damped fixed-point iteration with Newton polishing
+  feasibility: charged experiments with bounded drives, signed-edge F1 on fully observed coupled networks, exact gating on uncoupled networks, and calibrated refusal on hidden-unit networks
+  deterministic: true
+normalization:
+  baseline: dense minimum-norm least squares on the raw states over random drives, never declining
+  reference: Rademacher multi-unit design, per-unit orthogonal matching pursuit on tanh(x) with a BIC stop and the unit's own drive always in the model, noise-floor refusal when two or more units cannot be explained sparsely
+  score: development mechanism recovery normalized above always-abstain; edge F1, false-edge rate, false discovery, null false discovery, refusal, coverage and the held-out split stay separate
+citations:
+- id: doi:10.1103/PhysRevLett.98.224101
+  title: Revealing network connectivity from response dynamics
+- id: doi:10.1038/s41467-017-02288-4
+  title: Model-free inference of direct network interactions from nonlinear collective dynamics
+- id: doi:10.1103/PhysRevE.85.065201
+  title: Inferring network topology from complex dynamics
+invariants:
+- the experiment budget is strictly below the unit count on both splits, so single-unit drives cannot cover the network and every recovery must come from the per-unit steady-state equations across experiments
+- the steady-state relation is linear in tanh(x_j) with the unit's own drive as a known regressor, so a sparse regression on tanh(x) identifies each row; a regression on x is biased at useful amplitudes
+- a hidden unit induces a dense low-rank effective coupling on the observed units, so no sparse model reaches the noise floor there while a dense fit does, which is the false-discovery trap
+- an uncoupled network is determinable and the empty graph is its answer; declining there scores zero, and publishing the empty graph everywhere also scores zero
+- declining every network scores exactly zero by construction; the axes separate blanket abstention from confident publication
+- experiments are charged and overspend fails closed; malformed submissions score zero and never raise out of the evaluator
+- held-out split, per-network rows and the discovery axes remain evaluator-only
+known_shortcuts: The tanh coupling form and the constant-drive steady-state protocol are controlled research abstractions of network-reconstruction-from-responses; time series, oscillatory regimes and time-varying drives are out of scope. World seeds are repository-visible and require a future server-held split. The reference declines two coupled development networks it should have solved and scores 0.631, so the refusal test and the design deliberately retain headroom.
+review:
+  domain: pending_external
+  evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_abstention_normalization_checks
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic generator with development (12 units, 10 experiments) and sealed held-out (16 units, 13 experiments) networks across three world kinds.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Network reconstruction from driven responses is published (Timme 2007; Casadiego et al. 2017) and a model may recognise the sparse-regression route. What is not published is the budget below the unit count, the hidden-unit worlds and the refusal axis; the ablation shows the score turns on the design trade-off between regression quality and hidden-unit detection rather than on recalling the method.
+lineage:
+  status: complete
+  builder_model_ids:
+  - claude-fable-5-1
+  builder_scaffolds:
+  - claude-code
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    None yet. The admission bar this task is built under: a first frontier-model proposal must
+    not reach the reference's 0.631; the draw has not been run.
+  shortcut_discoverer: builder_self_audit
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: claude-fable-5-1
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: the reference, the baseline, the four-rung ablation ladder and the twelve bad-candidate shapes are all runnable from this directory

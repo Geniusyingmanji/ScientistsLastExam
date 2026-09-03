@@ -1,0 +1,13 @@
+domain: ClimateScience
+task: ForcedSignalAttribution
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: statistical_sim
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 30
+science_metric: forced_response_detection_and_scaling_factor_recovery_under_a_control_year_budget_with_model_inconsistency_refusal
+reference_baseline: regional-mean ordinary least squares trend test with a white-noise interval, never declining, no control years
+reference_sota: EOF-truncated total-least-squares fingerprinting, control-window null distribution, noise-aware residual consistency test
+citation: "Hasselmann 1993, DOI 10.1007/BF00210008; Allen and Tett 1999, DOI 10.1007/s003820050291; Allen and Stott 2003, DOI 10.1007/s00382-003-0313-9"

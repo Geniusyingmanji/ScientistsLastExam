@@ -1,0 +1,13 @@
+domain: Mathematics
+task: BlackBoxGroupIdentification
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: analytical
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 60
+science_metric: isomorphism_type_identification_from_a_black_box_product_under_a_query_budget_with_non_group_and_outside_catalogue_refusal
+reference_baseline: sampled element-order profile matched to the nearest catalogue entry, never declining
+reference_sota: identity from one element's powers, left-multiplication Cayley closure over a random generating set, table reconstruction from generator words, prediction checks with the remaining budget, order-profile-plus-centre matching against tables built from the public catalogue
+citation: "Babai and Szemeredi 1984, DOI 10.1109/SFCS.1984.715919; Miller 1978, DOI 10.1145/800133.804331; Holt, Eick and O'Brien 2005, ISBN 9781584883722"

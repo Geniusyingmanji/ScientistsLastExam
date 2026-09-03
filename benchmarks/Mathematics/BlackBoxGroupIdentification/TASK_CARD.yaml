@@ -1,0 +1,66 @@
+schema_version: 2
+scientific_question: Identify the isomorphism type of a finite group presented only as a black-box product on relabelled elements, under a query budget of six times the order, choosing from a public catalogue of explicit constructions - or decline because the operation is not associative or the group is not listed, stating which.
+artifact: A catalogue identifier, a confidence, and an optional refusal with its reason.
+oracle:
+  model: exact Cayley tables of groups of orders 16, 24, 32 and 48 built from explicit constructions (cyclic products, semidirect products, dicyclic groups, direct products, permutation and matrix groups, the Pauli group), randomly relabelled per world; non-group worlds are random isotopes of catalogue groups that visibly fail associativity; outside-catalogue worlds are groups whose scoring invariants differ from every catalogue entry of their order
+  feasibility: charged product queries with label validation, exact gating on the catalogue identifier, half credit for a refusal with the wrong reason, and false discovery on any name given to an unsupported world
+  deterministic: true
+normalization:
+  baseline: sampled element-order profile matched to the nearest catalogue entry, never declining
+  reference: identity from one element's powers, left-multiplication Cayley closure over a random generating set, table reconstruction from generator words, prediction checks with the remaining budget, and order-profile-plus-centre matching against tables built from the public catalogue
+  score: development mechanism recovery normalized above the better blanket refusal; identification rate, false discovery, refusal, refusal-reason accuracy, coverage and the held-out split stay separate
+citations:
+- id: doi:10.1109/SFCS.1984.715919
+  title: On the complexity of matrix group problems I
+- id: doi:10.1145/800133.804331
+  title: On the n^log n isomorphism technique
+- id: isbn:9781584883722
+  title: Handbook of Computational Group Theory
+invariants:
+- every catalogue and outside construction is a group of the stated order, and no two catalogue entries of one order share (order profile, centre size, derived subgroup order, number of squares); no outside group shares them with a catalogue entry, so "outside" is determinable
+- the element-order profile alone does not separate the catalogue, so a profile-matching candidate books false identifications
+- a random isotope of a group is a Latin square that fails associativity on a fifth or more of sampled triples; its reconstruction from generator words has permutation rows and non-permutation columns and disagrees with the oracle on unqueried products
+- left-multiplication closure costs one query per element per generator, so a group needing many generators consumes most of a six-times-order budget; the identity costs one element's order
+- declining every world with either blanket reason scores exactly zero by construction; the axes separate blanket abstention from confident naming
+- queries are charged and overspend fails closed; malformed submissions score zero and never raise out of the evaluator
+- held-out split, per-world rows and the discovery axes remain evaluator-only
+known_shortcuts: The catalogue is a curated subset of the groups of each order, given with constructions, so the task measures identification against a stated library rather than open-ended classification; orders are small enough that full associativity checks are cheap for the oracle. World seeds and constructions are repository-visible and require a future server-held split. The reference mistakes one unlisted group for a catalogue entry that shares its order profile and centre, and scores 0.857, so the invariant axis deliberately retains headroom.
+review:
+  domain: pending_external
+  evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_abstention_normalization_checks
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic constructions with development worlds at orders 16 and 32 and sealed held-out worlds at orders 24 and 48 across three world kinds.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Black-box group algorithms (Babai and Szemeredi 1984) and small-group identification are classical, and a model may recognise the closure-and-invariants route. What is not published is the catalogue, the relabelling and the two refusal reasons under a budget; the ablation shows the score turns on trusting associativity only after checking it and on knowing which invariants separate the catalogue.
+lineage:
+  status: complete
+  builder_model_ids:
+  - claude-fable-5-1
+  builder_scaffolds:
+  - claude-code
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    None yet. The admission bar this task is built under: a first frontier-model proposal must
+    not reach the reference's 0.857; the draw has not been run.
+  shortcut_discoverer: builder_self_audit
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: claude-fable-5-1
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: the reference, the baseline, the four-rung ablation ladder, the catalogue invariant check and the eleven bad-candidate shapes are all runnable from this directory

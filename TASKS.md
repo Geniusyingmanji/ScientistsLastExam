@@ -4,12 +4,12 @@
 
 | | |
 |---|---:|
-| 任务包 | 58 |
+| 任务包 | 61 |
 | optimization | 29 |
-| discovery | 29 |
+| discovery | 32 |
 | certified | 5 |
-| candidate | 53 |
-| 学科 | 7(Biology 7,Chemistry 13,ComputerScience 6,EarthScience 4,Engineering 10,Mathematics 8,Physics 10) |
+| candidate | 56 |
+| 学科 | 7(Biology 7,Chemistry 13,ComputerScience 6,EarthScience 5,Engineering 10,Mathematics 9,Physics 11) |
 
 认证描述的是证据质量,不是难度。标 on-ramp 的任务首个前沿模型提案已够到参考解,不用于配对 Δ 测量。
 
@@ -59,7 +59,7 @@
 | [`LennardJonesCluster`](benchmarks/Chemistry/LennardJonesCluster/) | Chemistry | Chemistry | uncapped | analytical | certified | minimize the energy of atomic clusters |
 | [`MolecularLeadOptimization`](benchmarks/Chemistry/MolecularLeadOptimization/) | Chemistry | MedicinalChemistry | uncapped | rdkit_cheminformatics_property_filter | candidate | build a diverse portfolio of novel, developable leads |
 
-## Discovery(29)
+## Discovery(32)
 
 ### 公式(formula) — 5
 
@@ -71,7 +71,7 @@
 | [`SequenceLawRecovery`](benchmarks/Mathematics/SequenceLawRecovery/) | Mathematics | Mathematics | clipped | community_symbolic_sympy | candidate | Given the first terms of an integer sequence, state the linear recurrence that produced it. |
 | [`ComplexBoseLaw`](benchmarks/Physics/ComplexBoseLaw/) | Physics | Physics | clipped | physical_sim | candidate | a mixed cavity occupancy is not textbook Planck |
 
-### 结构(structure) — 4
+### 结构(structure) — 6
 
 | 任务 | 学科 | 领域 | 打分 | oracle | 认证 | 说明 |
 |---|---|---|---|---|---|---|
@@ -79,12 +79,15 @@
 | [`GraphFromDistances`](benchmarks/ComputerScience/GraphFromDistances/) | ComputerScience | Algorithm | clipped | community_graph_algorithms_networkx | candidate | A weighted network exists but you cannot see it. |
 | [`InterventionalSCM`](benchmarks/ComputerScience/InterventionalSCM/) | ComputerScience | CausalDiscovery | clipped | physical_sim | candidate | recover hidden causal mechanisms by experimentation |
 | [`SurvivorshipConfoundedDesign`](benchmarks/ComputerScience/SurvivorshipConfoundedDesign/) | ComputerScience | CausalDiscovery | clipped | physical_sim | candidate | association among survivors is not a treatment effect |
+| [`BlackBoxGroupIdentification`](benchmarks/Mathematics/BlackBoxGroupIdentification/) | Mathematics | Mathematics | clipped | analytical | candidate | A finite set of `order` labelled elements and a black-box product: `mul(a, b)` returns the label |
+| [`HiddenCouplingNetwork`](benchmarks/Physics/HiddenCouplingNetwork/) | Physics | Physics | clipped | physical_sim | candidate | A network of `units` observed units relaxes to a steady state under constant drive. |
 
-### 证据(evidence) — 4
+### 证据(evidence) — 5
 
 | 任务 | 学科 | 领域 | 打分 | oracle | 认证 | 说明 |
 |---|---|---|---|---|---|---|
 | [`ProspectiveMetaAnalysis`](benchmarks/Biology/ProspectiveMetaAnalysis/) | Biology | EvidenceSynthesis | clipped | prospective_evidence_synthesis | candidate | synthesize registered evidence and design confirmation |
+| [`ForcedSignalAttribution`](benchmarks/EarthScience/ForcedSignalAttribution/) | EarthScience | ClimateScience | clipped | statistical_sim | candidate | A regional field is observed for `years` years over `regions` regions. |
 | [`DiscrepantMeasurements`](benchmarks/Physics/DiscrepantMeasurements/) | Physics | ParticlePhysics | clipped | statistical_sim | candidate | Eight groups have measured the same physical constant. · on-ramp,不配对 |
 | [`LookElsewhereAnomaly`](benchmarks/Physics/LookElsewhereAnomaly/) | Physics | ParticlePhysics | clipped | physical_sim | candidate | local 5σ is not a discovery |
 | [`PTAHellingsDowns`](benchmarks/Physics/PTAHellingsDowns/) | Physics | Gravitation | clipped | physical_sim | candidate | a common process is not a gravitational-wave background |

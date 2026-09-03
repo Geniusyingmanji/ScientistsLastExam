@@ -1,0 +1,4 @@
+1) Only edit solution.py. Keep attribute(problem, run_control).
+2) Return {"detected", "scaling_factor", "interval", "confidence", "abstain"}. `detected` is a boolean; `scaling_factor` a finite float (the fitted amplitude beta of the forced response); `interval` is [low, high], finite with low <= high (your 90% interval for beta); `confidence` in [0,1]; `abstain` a boolean. When abstaining, omit the others.
+3) run_control(years) returns one unforced model segment as a years x regions nested list and charges `years` against problem["control_budget_years"]; `years` must be an integer of at least problem["min_segment_years"]. Exceeding the budget fails the world.
+4) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read verification/ or frontier_eval/.

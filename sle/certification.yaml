@@ -492,6 +492,33 @@ tasks:
       - doi:10.1038/s41586-023-06924-6
       - doi:10.1007/BF01388452
       - doi:10.4007/annals.2017.185.1.8
+  Mathematics/BlackBoxGroupIdentification:
+    status: candidate
+    reason: >-
+      A structure task with an exact oracle: from a black-box product on relabelled elements and a
+      query budget of six times the order, name the isomorphism type from a public catalogue given
+      with explicit constructions, or decline because the operation is not associative or the group
+      is not listed. Catalogue and outside groups are pinned pairwise non-isomorphic by invariants;
+      sealed split at orders 24 and 48; pending a frontier-model draw and external review.
+    citation_ids: [doi:10.1109/SFCS.1984.715919, doi:10.1145/800133.804331]
+  ClimateScience/ForcedSignalAttribution:
+    status: candidate
+    reason: >-
+      An evidence task in the detection-and-attribution mould: decide whether a regional record
+      carries a forced response, estimate its scaling factor with an interval, and decline when the
+      residual shows the model's fingerprint or control variability cannot be trusted. Control
+      years are the budget. Procedural oracle with forced, unforced, quiet-model and wrong-pattern
+      worlds and a sealed larger split; pending a frontier-model draw and external domain review.
+    citation_ids: [doi:10.1007/BF00210008, doi:10.1007/s003820050291, doi:10.1007/s00382-003-0313-9]
+  Physics/HiddenCouplingNetwork:
+    status: candidate
+    reason: >-
+      A structure task whose budget is below the unit count: the direct signed coupling graph of a
+      saturating network must be recovered from ten multi-unit drives over twelve units, and
+      declined when unmeasured units make the direct graph unidentifiable. Procedural oracle with
+      sparse, null and hidden-unit worlds and a sealed sixteen-unit split; pending a frontier-model
+      draw and external domain review.
+    citation_ids: [doi:10.1103/PhysRevLett.98.224101, doi:10.1038/s41467-017-02288-4]
   MaterialsScience/PhaseDiagramDiscovery:
     status: candidate
     reason: >-

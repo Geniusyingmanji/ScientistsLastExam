@@ -1,0 +1,4 @@
+1) Only edit solution.py. Keep discover_couplings(problem, run_experiment).
+2) Return {"edges", "confidence", "abstain"}. `edges` is a list of [source, target, sign] over observed unit indices 0..units-1 with source != target, sign in {-1, +1}, no duplicate (source, target) pair, and at most problem["max_claimed_edges_per_unit"] * units entries; an empty list is a claim that there are no couplings. `confidence` in [0,1]; `abstain` a boolean. Omit `edges` when abstaining.
+3) run_experiment(drive) charges one experiment and returns the noisy steady state of every observed unit. `drive` must have one finite entry per observed unit within [-drive_bound, drive_bound]; do not exceed problem["experiment_budget"] calls per network.
+4) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read verification/ or frontier_eval/.
