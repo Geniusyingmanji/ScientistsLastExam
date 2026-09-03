@@ -22,18 +22,19 @@ sign - or is the direct graph among the observed units not identifiable from the
 - **The equation is linear in `tanh(x_j)`, not in `x_j`.** Regressing on `x_j` is fine at small
   amplitude and biased at the amplitude a good signal-to-noise ratio wants; the bias shows up as
   weak extra edges.
-- **Hidden units look like a dense graph.** Some networks contain units that are never measured
-  and never driven. Their effect on the observed units is a dense, low-rank coupling that no
-  sparse direct graph explains. A dense regression fits it perfectly and produces a confident,
-  wrong graph. The tell: no sparse model of any observed unit reaches the noise floor. The honest
-  answer is to decline.
+- **A hidden unit looks like a dense graph.** Some networks contain one unit that is never
+  measured and never driven, weakly coupled into and out of the observed ones. Its effect is a
+  dense, low-rank coupling that no sparse direct graph explains. A dense regression fits it
+  perfectly and produces a confident, wrong graph. The tell: several observed units leave a
+  sparse-fit residual above the noise floor at once. One unit that does is a hard fit, not
+  evidence. The honest answer, when enough of them do, is to decline.
 
 A network with **no couplings at all is not the hidden case**: its steady state is diagonal and
 "no edges" is a claim the evidence supports. Declining there is a missed discovery.
 
 ## Where the budget actually goes
 
-With `experiment_budget < units`, driving one unit per experiment cannot even touch every unit.
+With `experiment_budget` at two thirds of `units`, driving one unit per experiment cannot even touch most of them.
 But every experiment yields one equation per unit - the row `x_i = sum_j (A_ij/gamma_i) tanh(x_j)
 + u_i/gamma_i` holds for all `i` simultaneously - so the real question is which drive patterns make
 those equations identify a sparse row of at most `max_in_degree` couplings plus the unit's own
@@ -53,10 +54,10 @@ def discover_couplings(problem, run_experiment):
 | key | meaning |
 |---|---|
 | `units` | number of observed units, indexed `0..units-1` (12 in development) |
-| `experiment_budget` | how many experiments you may run on this network (10 in development) |
+| `experiment_budget` | how many experiments you may run on this network (8 in development) |
 | `drive_bound` | every drive entry must lie in `[-drive_bound, drive_bound]` (1.0) |
 | `noise_sigma` | Gaussian noise on each reported steady-state value (0.02) |
-| `max_in_degree` | no observed unit has more than this many direct inputs from other units (3) |
+| `max_in_degree` | no observed unit has more than this many direct inputs from other units (4) |
 | `coupling_weight_range` | `[0.35, 0.8]`: magnitude range of every nonzero `A_ij` |
 | `decay_rate_range` | `[0.9, 1.4]`: range of every `gamma_i` |
 | `max_claimed_edges_per_unit` | at most this many edges per unit may be claimed in total (4) |
@@ -105,26 +106,30 @@ Reported separately, never averaged into one number:
 `false_discovery_rate` · `null_false_discovery_rate` · `correct_refusal_rate` ·
 `discovery_coverage` · `confidence_calibration`
 
-A sealed held-out set of eight larger networks (16 units, 13 experiments) is scored too and is
+A sealed held-out set of eight larger networks (16 units, 10 experiments) is scored too and is
 not visible to a searcher.
 
 ## What each competence is worth
 
 Ablating the reference - one choice changed at a time:
 
-| strategy | score | edge F1 | false edges | false discovery | refusal | held out |
-|---|---|---|---|---|---|---|
-| Rademacher multi-unit design + sparse regression on tanh(x) + noise-floor refusal | **0.631** | 0.48 | 0.20 | 0.00 | 1.00 | 0.589 |
-| same, never declining | 0.445 | 0.82 | 0.18 | 1.00 | 0.00 | 0.309 |
-| same, regressing on x instead of tanh(x) | 0.393 | 0.35 | 0.10 | 0.33 | 0.67 | 0.389 |
-| same regression, single-unit drives | 0.476 | 0.87 | 0.15 | 1.00 | 0.00 | 0.335 |
-| declining everything | 0.000 | - | 0.00 | 0.00 | 1.00 | 0.000 |
-| empty graph everywhere | 0.000 | - | 0.00 | 1.00 | 0.00 | 0.000 |
+| strategy | score | edge F1 | false edges | false discovery | refusal | coverage | held out |
+|---|---|---|---|---|---|---|---|
+| Rademacher multi-unit design + sparse regression on tanh(x) + noise-floor refusal | **0.445** | 0.22 | 0.47 | 0.00 | 1.00 | 0.57 | 0.358 |
+| same, never declining | 0.258 | 0.56 | 0.45 | 1.00 | 0.00 | 1.00 | 0.224 |
+| same, regressing on x instead of tanh(x) | 0.303 | 0.22 | 0.47 | 0.33 | 0.67 | 0.57 | 0.200 |
+| same regression, single-unit drives | 0.227 | 0.72 | 0.25 | 1.00 | 0.00 | 1.00 | 0.000 |
+| dense least squares on the raw states, never declining | 0.000 | 0.39 | 0.77 | 1.00 | 0.00 | 1.00 | 0.000 |
+| declining everything | 0.000 | - | 0.00 | 0.00 | 1.00 | 0.00 | 0.000 |
+| empty graph everywhere | 0.000 | - | 0.00 | 1.00 | 0.00 | 1.00 | 0.000 |
 
-Read the second and fourth rows together: single-unit drives give the cleanest regressions
-(F1 0.87) and never detect a hidden unit; the multi-unit design detects every hidden unit and
-regresses worse. The reference declines two coupled development networks it should have solved -
-its noise-floor test is crude - so the score-carrying skill is a design that keeps both.
+Read the rows together. Single-unit drives give the cleanest regressions (F1 0.72) and never see a
+hidden unit, so every hidden world is published and the score is worse than declining. The
+multi-unit design refuses every hidden world and books no false discovery, and pays for it with an
+F1 of 0.22 - it declines three of the five solvable networks as well. Coverage 0.57 is the number
+to beat: a design that keeps the refusals and answers the solvable networks has the score.
+
+## Rules
 
 ## Rules
 

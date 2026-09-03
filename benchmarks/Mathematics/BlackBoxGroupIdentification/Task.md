@@ -4,21 +4,26 @@
 
 A finite set of `order` labelled elements and a black-box product: `mul(a, b)` returns the label
 of `a*b`. Nothing else - no identity label, no table, no names; the labels are a random
-relabelling. You have a query budget of a few multiples of the order. Which group is this, among
+relabelling. You have a query budget of 2.5 times the order. Which group is this, among
 the isomorphism types in a public catalogue given with explicit constructions - or is it not a
 group at all, or a group the catalogue does not list?
 
 ## Three traps
 
-- **Order statistics are not an identification.** The multiset of element orders is the first
-  thing anyone computes and it does not determine the group: catalogue entries share it and differ
-  in their centre, their derived subgroup, or the number of distinct squares. Naming a group from
-  its order profile is a guess dressed as an identification.
-- **A reconstructed table can lie.** A generating set and the left-multiplication maps of its
-  generators determine the whole Cayley table - if the operation is associative. Some worlds are
-  Latin squares that are not groups. Their reconstruction has permutation rows and disagrees with
-  the oracle on products nobody queried; only checking columns or spending queries on predictions
-  reveals it.
+- **Order statistics are not an identification, and neither is rank.** The multiset of element
+  orders is the first thing anyone computes and it does not determine the group. Nor does it
+  together with the minimal number of generators: at order 16 `C8xC2` and `M16` agree on both, as
+  do `C16xC2` and `M32` at order 32, and two of the unlisted groups agree with a catalogue entry.
+  What separates them is the **centre**, and the centre is only measurable by commutation checks at
+  two queries each - so the last few queries decide the answer.
+- **The table is only sometimes affordable.** Left-multiplication closure over `k` generators
+  costs exactly `k * order` queries, and the budget is `2.5 * order`. A two-generated world can be
+  reconstructed and then identified exactly; a world needing three or more generators cannot be, at
+  any price available here. Which world is which is not announced, and a closure that stalls has
+  still bought something: the rank it ruled out, and the order of a proper subgroup.
+- **A reconstructed table can lie.** The reconstruction of a Latin square that is not a group has
+  permutation rows and disagrees with the oracle on products nobody queried; checking its columns,
+  or spending queries on predictions, is what reveals it.
 - **A group can be none of the listed types.** Recognising a group as a group does not place it in
   the catalogue. Matching it to the nearest entry books a false identification; the honest answer
   is that it lies outside the catalogue.
@@ -28,11 +33,15 @@ scored: the associativity evidence and the isomorphism evidence are different th
 
 ## Where the budget actually goes
 
-Every query is one product. The powers of one element cost its order and give you the identity.
-Left-multiplication closure over `k` generators costs `k * order` queries and gives you the whole
-table by words - if you trust associativity. The catalogue tables cost nothing: build them from
-their constructions offline. What the budget really buys is the choice of generators (a group that
-needs five of them eats most of it) and how many predictions you can afford to check.
+Every query is one product, and the prices are fixed: the powers of one element cost its order and
+give you the identity; an element's order costs that order; a commutation check costs two; a square
+costs one; an associativity check costs three; left-multiplication closure over `k` generators
+costs `k * order`. The catalogue tables cost nothing - build them from their constructions offline.
+
+So the decision is what to buy. Betting `2 * order` on a closure that finishes leaves you with the
+table and an exact answer. Betting it on one that cannot finish leaves half a budget and one
+invariant. Probing the rank first is cheaper than either, and the queries it saves are the ones
+that estimate the centre - which is the invariant this catalogue actually turns on.
 
 ## What you implement
 
@@ -48,7 +57,7 @@ def identify(problem, mul):
 | key | meaning |
 |---|---|
 | `order` | number of elements, labelled `0..order-1` (16 and 32 in development) |
-| `query_budget` | how many `mul` calls you may make on this world (6 times the order) |
+| `query_budget` | how many `mul` calls you may make on this world (2.5 times the order) |
 | `catalogue` | list of `{"id", "order", "presentation", "construction"}`: the isomorphism types you may name, each with a human-readable presentation and a machine-readable construction |
 | `constructions_help` | prose: how to build a table from each construction type |
 | `abstain_reasons` | `["not_a_group", "outside_catalogue"]` |
@@ -103,19 +112,24 @@ too and is not visible to a searcher.
 
 ## What each competence is worth
 
-Ablating the reference - one choice changed at a time:
+The reference attempts the closure, keeps what a stalled attempt bought (a rank lower bound and a
+proper subgroup's order), and spends the rest on commutation checks:
 
-| strategy | score | identification | false discovery | refusal | reason right | held out |
-|---|---|---|---|---|---|---|
-| identity from powers + Cayley closure + reconstruction + prediction checks + order profile & centre | **0.857** | 1.00 | 0.10 | 0.75 | 0.75 | 1.000 |
-| same, invariants extended by the derived subgroup order and the number of squares | 1.000 | 1.00 | 0.00 | 1.00 | 1.00 | 1.000 |
-| same, naming the nearest catalogue entry instead of declining | 0.714 | 1.00 | 0.20 | 0.50 | 0.50 | 0.600 |
-| sampled order profile, nearest entry, never declining | 0.000 | 0.50 | 0.70 | 0.00 | 0.00 | 0.200 |
-| declining everything, either reason | 0.000 | 0.00 | 0.00 | 1.00 | 0.50 | 0.000 |
+| | development | held out |
+|---|---|---|
+| mechanism score | **0.286** | 0.400 |
+| identification rate | 0.50 | 0.50 |
+| false discovery rate | 0.50 | 0.25 |
+| correct refusal rate | 0.50 | 0.75 |
+| queries | 52 of 40-80 | 84 of 60-120 |
 
-The reference's one error is instructive: an unlisted group of order 16 shares its order profile
-and centre size with a catalogue entry and is named after it. The invariants that separate them
-are the headroom on the table.
+It identifies the two-generated worlds exactly, because there the closure finishes. It loses the
+three-generated ones and both unlisted groups, because by then only a handful of queries remain for
+the centre - the one invariant that separates what rank and the order profile leave standing.
+Pricing the closure before committing to it, and spending the savings on the pairs that separate
+the surviving entries, is the headroom.
+
+Declining every world, with either reason, scores exactly 0.000.
 
 ## Rules
 

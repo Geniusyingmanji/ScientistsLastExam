@@ -49,9 +49,11 @@ class HiddenCouplingNetworkTests(unittest.TestCase):
         self.assertEqual(metrics["development_false_discovery_rate"], 1.0)
         self.assertEqual(metrics["development_null_false_discovery_rate"], 0.0)
 
-    def test_the_budget_is_below_the_unit_count(self):
-        self.assertLess(self.evaluator.DEVELOPMENT_BUDGET, self.evaluator.DEVELOPMENT_UNITS)
-        self.assertLess(self.evaluator.HELDOUT_BUDGET, self.evaluator.HELDOUT_UNITS)
+    def test_the_budget_stays_well_below_the_unit_count(self):
+        """Cut to two thirds after a first frontier proposal beat the original reference."""
+        ev = self.evaluator
+        self.assertLessEqual(ev.DEVELOPMENT_BUDGET, 0.75 * ev.DEVELOPMENT_UNITS)
+        self.assertLessEqual(ev.HELDOUT_BUDGET, 0.75 * ev.HELDOUT_UNITS)
 
     def test_the_dense_baseline_is_valid_and_below_the_reference(self):
         baseline = self.evaluator.evaluate(self.baseline.discover_couplings)
@@ -59,10 +61,14 @@ class HiddenCouplingNetworkTests(unittest.TestCase):
         self.assertEqual(baseline["valid"], 1.0)
         self.assertEqual(reference["valid"], 1.0)
         self.assertLess(baseline["combined_score"], reference["combined_score"])
-        self.assertGreater(reference["combined_score"], 0.5)
+        self.assertGreater(reference["combined_score"], 0.3)
         self.assertLess(reference["combined_score"], 1.0)
         self.assertEqual(reference["development_false_discovery_rate"], 0.0)
         self.assertEqual(baseline["development_false_discovery_rate"], 1.0)
+        # The reference keeps the refusals and pays for them in coverage: the headroom the card
+        # claims is that a better design answers the solvable networks without publishing a
+        # hidden-unit one.
+        self.assertLess(reference["development_discovery_coverage"], 0.8)
 
 
 if __name__ == "__main__":

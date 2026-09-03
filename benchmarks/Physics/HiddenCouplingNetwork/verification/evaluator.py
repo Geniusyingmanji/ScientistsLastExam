@@ -38,20 +38,24 @@ import math
 
 import numpy as np
 
-# Experiments per network. Fewer than the number of units: single-unit drives cannot cover the
-# network, and the direct graph has to be recovered from multi-unit drives by sparse regression.
+# Experiments per network, well under the number of units. The first frontier draw (Claude Opus 5,
+# 2026-09-03) reached 0.665 on its first proposal against a reference of 0.631 at fourteen
+# experiments for twelve units, so the budget was cut to eight: below the twelve equations a
+# per-unit regression would like, which forces the design to earn identifiability rather than buy
+# it. In-degree rose to four and the hidden units dropped to one weakly coupled unit, which is
+# what a residual test has the hardest time seeing.
 DEVELOPMENT_UNITS = 12
-DEVELOPMENT_BUDGET = 10
+DEVELOPMENT_BUDGET = 8
 HELDOUT_UNITS = 16
-HELDOUT_BUDGET = 13
+HELDOUT_BUDGET = 10
 
 DRIVE_BOUND = 1.0
 NOISE_SIGMA = 0.02
-MAX_IN_DEGREE = 3
+MAX_IN_DEGREE = 4
 WEIGHT_RANGE = (0.35, 0.8)
 DECAY_RANGE = (0.9, 1.4)
-HIDDEN_UNITS = 2
-HIDDEN_WEIGHT_RANGE = (0.4, 0.8)
+HIDDEN_UNITS = 1
+HIDDEN_WEIGHT_RANGE = (0.3, 0.55)
 # Spectral abscissa of the linearisation the generator insists on, so every drive relaxes.
 STABILITY_MARGIN = -0.15
 MAX_CLAIMED_EDGES_PER_UNIT = 4

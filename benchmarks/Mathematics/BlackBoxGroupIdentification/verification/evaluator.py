@@ -13,12 +13,17 @@ Three ways to be wrong:
                         does not determine the group: catalogue entries share it and differ in
                         their centre or derived subgroup. Naming a group from its order profile
                         alone is a guess dressed as an identification.
-    the table you infer a generating set and the left-multiplication maps of its generators
-                        determine the whole Cayley table - if the operation is associative. A
-                        quasigroup that is not a group reconstructs into a table whose rows are
-                        all permutations and which disagrees with the oracle on products nobody
-                        queried. Checking the table's columns, or spending queries on predictions,
-                        is what reveals it; reading off invariants does not.
+    the table only sometimes. Left-multiplication closure over k generators costs exactly
+                        k * order queries and the budget is 2.5 times the order, so a two-generated
+                        world can be reconstructed and then identified exactly, while a world
+                        needing three or more generators cannot be at any price available here.
+                        Which world is which is not announced, and a closure that stalls has still
+                        bought something: the rank it ruled out, and a proper subgroup's order.
+    the last invariant  rank and the element-order profile do not separate this catalogue. At order
+                        16 C8xC2 and M16 agree on both, as do C16xC2 and M32 at order 32; two of
+                        the unlisted groups agree with a catalogue entry as well. What separates
+                        them is the centre, and the centre is only measurable by commutation
+                        checks at two queries each - so the last few queries decide the answer.
     the catalogue       a group can be recognised as a group and still be none of the listed
                         types. Matching it to the nearest entry books a false identification;
                         the honest answer is that it lies outside the catalogue.
@@ -36,7 +41,14 @@ import math
 
 import numpy as np
 
-BUDGET_MULTIPLIER = 6
+# Queries per world, as a multiple of the order. 1.5 is chosen against the cost of the route that
+# makes the task trivial: left-multiplication closure over k generators costs exactly k * order
+# queries, so two generators cost 2 * order and no world here can be fully reconstructed. With the
+# table in hand a real isomorphism test wins every world, which is what a first frontier draw did
+# at 6 * order (score 1.000 on the first proposal). Below 2 * order the candidate must instead
+# decide which invariants to buy: an element's order costs that order in queries, a commutation
+# check costs two, a square costs one, and an associativity check costs three.
+BUDGET_MULTIPLIER = 2.5
 ABSTAIN_REASONS = ("not_a_group", "outside_catalogue")
 WORLD_KINDS = ("catalogue", "not_a_group", "outside_catalogue")
 
@@ -383,7 +395,7 @@ def _world(spec):
     if kind != "not_a_group":
         table, _inverse = _relabel(table, rng)
     return {"kind": kind, "seed": spec["seed"], "order": order, "table": table,
-            "truth": truth, "budget": BUDGET_MULTIPLIER * order}
+            "truth": truth, "budget": int(BUDGET_MULTIPLIER * order)}
 
 
 class _Oracle:
@@ -409,7 +421,7 @@ class _Oracle:
 
 PUBLIC_PROBLEM = {
     "order": 16,
-    "query_budget": BUDGET_MULTIPLIER * 16,
+    "query_budget": int(BUDGET_MULTIPLIER * 16),
     "catalogue": None,
     "constructions_help": CONSTRUCTIONS_HELP,
     "abstain_reasons": list(ABSTAIN_REASONS),

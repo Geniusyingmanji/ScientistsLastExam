@@ -14,8 +14,8 @@ import numpy as np
 AMPLITUDE_FRACTION = 0.7
 PARTICIPATION = 0.5
 EDGE_FLOOR = 0.15          # |A_ij / gamma_i| below this is not an edge (true edges sit >= 0.25)
-RESIDUAL_RATIO = 4.0       # sparse-fit residual variance over the noise floor that flags a unit
-UNEXPLAINED_UNITS = 2      # this many flagged units means unmeasured units are coupled in
+RESIDUAL_RATIO = 3.0       # sparse-fit residual variance over the noise floor that flags a unit
+UNEXPLAINED_UNITS = 3      # this many flagged units means unmeasured units are coupled in
 
 
 def _design(n, k, amplitude, rng):

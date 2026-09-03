@@ -1,5 +1,5 @@
 schema_version: 2
-scientific_question: Identify the isomorphism type of a finite group presented only as a black-box product on relabelled elements, under a query budget of six times the order, choosing from a public catalogue of explicit constructions - or decline because the operation is not associative or the group is not listed, stating which.
+scientific_question: Identify the isomorphism type of a finite group presented only as a black-box product on relabelled elements, under a query budget of two and a half times the order, choosing from a public catalogue of explicit constructions - or decline because the operation is not associative or the group is not listed, stating which.
 artifact: A catalogue identifier, a confidence, and an optional refusal with its reason.
 oracle:
   model: exact Cayley tables of groups of orders 16, 24, 32 and 48 built from explicit constructions (cyclic products, semidirect products, dicyclic groups, direct products, permutation and matrix groups, the Pauli group), randomly relabelled per world; non-group worlds are random isotopes of catalogue groups that visibly fail associativity; outside-catalogue worlds are groups whose scoring invariants differ from every catalogue entry of their order
@@ -7,7 +7,7 @@ oracle:
   deterministic: true
 normalization:
   baseline: sampled element-order profile matched to the nearest catalogue entry, never declining
-  reference: identity from one element's powers, left-multiplication Cayley closure over a random generating set, table reconstruction from generator words, prediction checks with the remaining budget, and order-profile-plus-centre matching against tables built from the public catalogue
+  reference: identity from one element's powers, an attempted left-multiplication closure over generators drawn from the unreached labels, exact invariant matching when it completes, and otherwise a rank lower bound plus subgroup order plus commutation-based centre estimate pruning the catalogue
   score: development mechanism recovery normalized above the better blanket refusal; identification rate, false discovery, refusal, refusal-reason accuracy, coverage and the held-out split stay separate
 citations:
 - id: doi:10.1109/SFCS.1984.715919
@@ -18,13 +18,14 @@ citations:
   title: Handbook of Computational Group Theory
 invariants:
 - every catalogue and outside construction is a group of the stated order, and no two catalogue entries of one order share (order profile, centre size, derived subgroup order, number of squares); no outside group shares them with a catalogue entry, so "outside" is determinable
+- rank and the order profile alone do not separate the catalogue - C8xC2 and M16 agree at order 16, C16xC2 and M32 at order 32, and the unlisted C4:C4, Pauli, C8:C4, C2xM16 and C3xC4:C4 each agree with a catalogue entry - so the centre is the invariant that decides, and it costs two queries per sample
 - the element-order profile alone does not separate the catalogue, so a profile-matching candidate books false identifications
 - a random isotope of a group is a Latin square that fails associativity on a fifth or more of sampled triples; its reconstruction from generator words has permutation rows and non-permutation columns and disagrees with the oracle on unqueried products
-- left-multiplication closure costs one query per element per generator, so a group needing many generators consumes most of a six-times-order budget; the identity costs one element's order
+- left-multiplication closure costs exactly k * order queries, so at a budget of 2.5 * order a two-generated world is reconstructible and exactly identifiable while a world of rank three or more is not, at any price available; a stalled closure still yields a rank lower bound and a proper subgroup's order
 - declining every world with either blanket reason scores exactly zero by construction; the axes separate blanket abstention from confident naming
 - queries are charged and overspend fails closed; malformed submissions score zero and never raise out of the evaluator
 - held-out split, per-world rows and the discovery axes remain evaluator-only
-known_shortcuts: The catalogue is a curated subset of the groups of each order, given with constructions, so the task measures identification against a stated library rather than open-ended classification; orders are small enough that full associativity checks are cheap for the oracle. World seeds and constructions are repository-visible and require a future server-held split. The reference mistakes one unlisted group for a catalogue entry that shares its order profile and centre, and scores 0.857, so the invariant axis deliberately retains headroom.
+known_shortcuts: The catalogue is a curated subset of the groups of each order, given with constructions, so the task measures identification against a stated library rather than open-ended classification; orders are small enough that full associativity checks are cheap for the oracle. World seeds and constructions are repository-visible and require a future server-held split. The first frontier draw (Claude Opus 5, 2026-09-03) scored 1.000 on its first proposal at the original budget of 6 * order, where the whole Cayley table is affordable and a real isomorphism test wins every world; the budget was cut to 2.5 * order in response, which puts reconstruction out of reach for any world of rank three or more. The reference scores 0.286 there, and pricing the closure before committing to it is the headroom.
 review:
   domain: pending_external
   evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_abstention_normalization_checks
@@ -44,10 +45,9 @@ lineage:
   - claude-code
   calibrator_model_ids: []
   calibration_runs: []
-  calibration_evidence_status: missing
+  calibration_evidence_status: historical_only
   edits_triggered_by_model: >-
-    None yet. The admission bar this task is built under: a first frontier-model proposal must
-    not reach the reference's 0.857; the draw has not been run.
+    Yes. The first draw (Claude Opus 5, budget 3, three seeds, experiments/opus5_black_box_group_identification_calibration_2026-09-03.json) scored 1.000 on its first proposal against a reference of 0.857 - the query budget of 6 * order paid for the whole Cayley table, and with the table an isomorphism test wins every world. The budget was cut to 2.5 * order, below the 2 * order + identity cost of reconstructing anything of rank three or more, and the reference rewritten to the strategy that budget allows. Re-calibration pending.
   shortcut_discoverer: builder_self_audit
   frozen_before_eval: false
   freeze_timestamp: null
@@ -63,4 +63,4 @@ construction_audit:
   expert_hours: null
   red_team_rounds: 1
   oracle_disagreement_status: not_quantified
-  independent_recomputation_status: the reference, the baseline, the four-rung ablation ladder, the catalogue invariant check and the eleven bad-candidate shapes are all runnable from this directory
+  independent_recomputation_status: the reference, the baseline, the catalogue invariant check (including the rank-plus-profile collisions) and the eleven bad-candidate shapes are all runnable from this directory
