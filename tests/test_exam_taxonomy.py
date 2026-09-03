@@ -51,5 +51,44 @@ class ExamTaxonomyTests(unittest.TestCase):
             "on_ramp_do_not_pair",
         )
 
+    def test_wave0_siblings_are_named_as_disjoint_instance_sets(self):
+        """CapSetFrontier and TensorRank555 share an oracle family with a certified
+        package. The taxonomy note is the ledger that they are new instance sets,
+        not silent extensions of those certified cells."""
+        tax = load_taxonomy()
+        self.assertEqual(
+            tax["tasks"]["Mathematics/CapSetFrontier"].get("note"),
+            "open_dims_not_extension_of_certified_capset",
+        )
+        self.assertEqual(
+            tax["tasks"]["Algorithm/TensorRank555"].get("note"),
+            "new_sizes_not_extension_of_certified_matmul",
+        )
+        self.assertEqual(
+            tax["tasks"]["ParticlePhysics/LookElsewhereAnomaly"].get("note"),
+            "trials_factor_not_clone_of_discrepant_measurements",
+        )
+        self.assertEqual(
+            tax["tasks"]["CausalDiscovery/SurvivorshipConfoundedDesign"].get("note"),
+            "selection_not_clone_of_interventional_scm",
+        )
+        self.assertEqual(
+            tax["tasks"]["Oceanography/AMOCTippingRefusal"].get("note"),
+            "fold_refusal_not_ebm_parameter_fit",
+        )
+        self.assertEqual(
+            tax["tasks"]["Gravitation/PTAHellingsDowns"].get("note"),
+            "hd_orf_not_lookelsewhere_bump",
+        )
+        self.assertEqual(
+            tax["tasks"]["Physics/ComplexBoseLaw"].get("note"),
+            "bose_exponents_not_activelaw_ode",
+        )
+        self.assertEqual(
+            tax["tasks"]["MaterialsScience/QuinaryConvexHull"].get("note"),
+            "quinary_hull_not_binary_xrd",
+        )
+
+
 if __name__ == "__main__":
     unittest.main()

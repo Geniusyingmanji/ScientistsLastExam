@@ -33,10 +33,9 @@ class CertificationPolicyTests(unittest.TestCase):
         # Fifteen tasks retired: every model had reached their cap, so the score could no
         # longer separate two searchers. Tasks scoring above 1.0 stayed - on an uncapped task
         # that is the intended result rather than saturation.
-        # 46: EnzymeKineticsLaw (Biology x formula discovery + designed experiment),
-        # DiscrepantMeasurements (Physics x evidence synthesis) and PhaseDiagramDiscovery
-        # (materials x substance discovery) - the cells the discipline-by-form survey found empty.
-        self.assertEqual(len(list_tasks(None)), 46)
+        # 58: PTA + Bose + quinary hull on top of CrowdedSpectrum, Survivorship,
+        # AMOC, LookElsewhere and the five Wave-0 constructions (55).
+        self.assertEqual(len(list_tasks(None)), 58)
         self.assertEqual(
             certification_status("ProteinEngineering/ProteinStabilityDesign"),
             "candidate",

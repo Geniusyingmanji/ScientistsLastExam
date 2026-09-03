@@ -23,10 +23,9 @@ class BenchmarkLayoutTests(unittest.TestCase):
         # cannot separate two searchers, so those tasks were costing evaluation budget without
         # answering anything. Tasks scoring above 1.0 were kept - on an uncapped task that is the
         # intended outcome, not saturation.
-        # 46: EnzymeKineticsLaw (Biology x formula discovery + designed experiment),
-        # DiscrepantMeasurements (Physics x evidence synthesis) and PhaseDiagramDiscovery
-        # (materials x substance discovery) - the cells the discipline-by-form survey found empty.
-        self.assertEqual(len(list_tasks(None)), 46)
+        # 58: PTA + ComplexBose + QuinaryHull on top of CrowdedSpectrum,
+        # Survivorship, AMOC, LookElsewhere and the five Wave-0 constructions (55).
+        self.assertEqual(len(list_tasks(None)), 58)
 
     def test_logical_domain_is_independent_of_physical_discipline(self):
         specs = {spec.task_id: spec for spec in list_tasks(None)}

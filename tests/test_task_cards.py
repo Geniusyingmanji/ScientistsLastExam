@@ -14,6 +14,18 @@ RECORDED_LINEAGE = {
     "SystemsBiology/EnzymeKineticsLaw",
     "ParticlePhysics/DiscrepantMeasurements",
     "MaterialsScience/PhaseDiagramDiscovery",
+    "Spectroscopy/CrowdedSpectrumAssignment",
+    "Mathematics/RamseyLowerBound",
+    "Mathematics/KissingNumber",
+    "Algorithm/TensorRank555",
+    "Mathematics/Superpermutation",
+    "Mathematics/CapSetFrontier",
+    "ParticlePhysics/LookElsewhereAnomaly",
+    "CausalDiscovery/SurvivorshipConfoundedDesign",
+    "Oceanography/AMOCTippingRefusal",
+    "Gravitation/PTAHellingsDowns",
+    "Physics/ComplexBoseLaw",
+    "MaterialsScience/QuinaryConvexHull",
 }
 
 

@@ -16,10 +16,10 @@ Scientists' Last Exam
 ├── 任务形式
 │   ├── optimization ── Frontier-Eng 工程 · EdgeBench 可执行搜索 · PMO 分子
 │   └── discover
-│       ├── 公式 ── NewtonBench · SequenceLaw · EnzymeKinetics(on-ramp,勿配对)
+│       ├── 公式 ── NewtonBench · SequenceLaw · EnzymeKinetics(on-ramp,勿配对) · ComplexBoseLaw · AMOCTippingRefusal
 │       ├── 结构 ── InterventionalSCM · GraphFromDistances · GeneNetwork
-│       ├── 证据 ── DiscoveryBench · DiscrepantMeasurements(on-ramp,勿配对)
-│       ├── 物质 ── MADE · PhaseDiagramDiscovery
+│       ├── 证据 ── DiscoveryBench · DiscrepantMeasurements(on-ramp,勿配对) · LookElsewhere · PTAHellingsDowns
+│       ├── 物质 ── MADE · PhaseDiagramDiscovery · CrowdedSpectrumAssignment · QuinaryConvexHull
 │       └── 参数与机制反演 ── SLE 13 题(无外部旗舰)    ← 仍是空位的主体
 └── 评估
     ├── 受限 oracle 预算 ── 已成标配
@@ -29,7 +29,7 @@ Scientists' Last Exam
 ```
 
 **空位在两处。** 一是"参数与机制反演"—— 从受预算的观测里反演一个机制,或判断根本没有机制可反演;
-SLE 22 个发现类任务中有 13 个落在这里。二是**评估形式**:受限 oracle 预算已经是标配
+SLE 29 个发现类任务中有 13 个落在这里。物质格现在有相图、拥挤光谱指认与五元 convex hull 三题。二是**评估形式**:受限 oracle 预算已经是标配
 (MADE 50 次查询、CausalGame 10 次部署、PMO-1K 1000 次调用),但**没有一个基准用同一个搜索者的
 开环臂做对照** —— 因此"分数变高"与"迭代真的有用"仍然分不开。这两件事就是本仓库要做的。
 
@@ -38,12 +38,13 @@ SFE / HLE / sgi-bench 写在 `out_of_scope` 里,避免把一次作答或写论�
 
 ## 两类任务
 
-当前 46 个任务包,横跨 7 个学科,分成两类:
+当前 58 个任务包,横跨 7 个学科,分成两类:
 
-**optimization(24 个)** —— 在一个受约束的设计空间里把目标做得更好:换热器几何、超材料层叠、
-桁架截面、解码器策略。分数由**它做出来的东西有多好**决定。
+**optimization(29 个)** —— 在一个受约束的设计空间里把目标做得更好:换热器几何、超材料层叠、
+桁架截面、解码器策略,以及无上限的 Ramsey / kissing / 张量秩 / 超排列 / 开维 cap set。
+分数由**它做出来的东西有多好**决定;公开纪录只是 score=1 的见证,不是封顶。
 
-**discovery(22 个)** —— 从受预算约束的观测里恢复一个机制,或者判断根本没有机制可恢复。
+**discovery(29 个)** —— 从受预算约束的观测里恢复一个机制,或者判断根本没有机制可恢复。
 每题包含三种世界:机制在候选可表达的模型族内(**该找出来**)、机制在族外、以及**根本没有机制**
 (后两种**该拒答**)。候选看不到自己面对的是哪一类。
 
@@ -122,6 +123,20 @@ python -m sle run \
 
 当前的测量结果、准入判据的完整判决与开放项,见
 [详细发现与审计](.research/findings_and_audits_2026-08.md)。
+
+这次扩展在 46 题基础清单上新增 `Spectroscopy/CrowdedSpectrumAssignment`(物质/光谱指认)、五道无上限
+组合构造(`RamseyLowerBound`, `KissingNumber`, `TensorRank555`, `Superpermutation`,
+`CapSetFrontier`;其中 `CapSetFrontier` / `TensorRank555` 的实例集与已认证 CapSet /
+矩阵乘不相交),`ParticlePhysics/LookElsewhereAnomaly`(证据格: trials factor),
+`CausalDiscovery/SurvivorshipConfoundedDesign`(structure: survivor collider,不是
+InterventionalSCM),`Oceanography/AMOCTippingRefusal`(formula: fold vs red-noise /
+ice-restore,不是 EBM 参数反演),`Gravitation/PTAHellingsDowns`(evidence: HD quadrupole vs
+clock monopole,不是 LookElsewhere bump hunt),`Physics/ComplexBoseLaw`(formula:
+NewtonBench-inspired complex Bose counterfactual,拒 Fermi),以及
+`MaterialsScience/QuinaryConvexHull`(substance: 五元 analytic hull,不是 binary XRD),
+并把清单接到 `exam_taxonomy.yaml`。这 12 题均为 `candidate`;
+metadata 中的 hard/flagship 是目标评审层级,不是已测得的难度结论,也没有 frontier calibration、
+外部领域验证或长程证据。
 
 ## 如何贡献
 

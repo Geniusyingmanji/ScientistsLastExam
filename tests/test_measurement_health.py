@@ -21,7 +21,7 @@ class MeasurementHealthAuditTests(unittest.TestCase):
         cls.tasks = {row["task"]: row for row in cls.report["tasks"]}
 
     def test_classification_is_exhaustive_and_claim_bounded(self):
-        self.assertEqual(self.report["inventory_count"], 46)
+        self.assertEqual(self.report["inventory_count"], 58)
         self.assertEqual(
             sum(self.report["classification_counts"].values()),
             self.report["inventory_count"],
@@ -75,6 +75,17 @@ class MeasurementHealthAuditTests(unittest.TestCase):
         classification, reasons = self.module._classification(row, {})
         self.assertEqual(classification, self.module.REPAIR_FIRST)
         self.assertIn("current science admission", reasons[0])
+
+    def test_unadmitted_candidates_are_repair_first_not_quarantined(self):
+        for task in (
+            "Spectroscopy/CrowdedSpectrumAssignment",
+            "Mathematics/RamseyLowerBound",
+            "ParticlePhysics/LookElsewhereAnomaly",
+            "Gravitation/PTAHellingsDowns",
+        ):
+            row = self.tasks[task]
+            self.assertEqual(row["certification_status"], "candidate")
+            self.assertEqual(row["classification"], self.module.REPAIR_FIRST)
 
     def test_model_derived_checks_report_observed_run_counts_consistently(self):
         """Re-measurement may legitimately turn zero into a positive current-bound count."""
