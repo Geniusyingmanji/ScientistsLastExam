@@ -46,6 +46,7 @@ class RunManifestModelAttributionTests(unittest.TestCase):
         self.assertEqual(descriptor["reasoning_effort"], "low")
         self.assertEqual(descriptor["max_output_tokens"], 8000)
         self.assertEqual(descriptor["timeout_seconds"], 900)
+        self.assertFalse(descriptor["chat_reasoning_fallback"])
 
     def test_descriptor_never_writes_a_credential_to_disk(self):
         descriptor = common.llm_condition_descriptor(_Client())
@@ -61,6 +62,48 @@ class RunManifestModelAttributionTests(unittest.TestCase):
         self.assertEqual(
             common.llm_condition_descriptor(Bare()), {"client_type": "Bare"}
         )
+
+    def test_default_false_stream_flag_preserves_the_legacy_condition_hash(self):
+        class ExplicitFalse(_Config):
+            stream = False
+
+        class Streaming(_Config):
+            stream = True
+
+        class FalseClient:
+            config = ExplicitFalse()
+
+        class StreamClient:
+            config = Streaming()
+
+        self.assertEqual(
+            common.llm_condition_sha256(_Client()),
+            common.llm_condition_sha256(FalseClient()),
+        )
+        self.assertEqual(
+            common.llm_condition_sha256(_Client()),
+            "bfa30402d45305dd5504080f44c793c444fa4268dfe7bfce840c32c24d6da842",
+        )
+        self.assertNotEqual(
+            common.llm_condition_sha256(_Client()),
+            common.llm_condition_sha256(StreamClient()),
+        )
+
+    def test_wire_and_reasoning_budget_changes_have_distinct_condition_hashes(self):
+        class ChangedChatField(_Config):
+            chat_max_tokens_field = "max_completion_tokens"
+
+        class ChangedAnthropicVersion(_Config):
+            anthropic_version = "2099-01-01"
+
+        class ThinkingBudget(_Config):
+            thinking_budget_tokens = 4000
+
+        hashes = {common.llm_condition_sha256(_Client())}
+        for config in (ChangedChatField, ChangedAnthropicVersion, ThinkingBudget):
+            client = type("Client", (), {"config": config()})()
+            hashes.add(common.llm_condition_sha256(client))
+        self.assertEqual(len(hashes), 4)
 
     def test_malformed_base_url_does_not_break_a_run(self):
         class Odd(_Config):

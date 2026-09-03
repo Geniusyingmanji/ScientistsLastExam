@@ -51,7 +51,10 @@ SIGNED_SYSTEM_PROMPT = (
     "outside the two required fenced blocks."
 )
 
-_CODE_RE = re.compile(r"```(?:python)?\s*\n(.*?)```", re.DOTALL)
+_CODE_RE = re.compile(r"```(?:python|py)?\s*\n(.*?)```", re.DOTALL | re.IGNORECASE)
+# A stream that hits max_output_tokens often opens the fence and never closes it.
+_UNCLOSED_CODE_RE = re.compile(r"```(?:python|py)?\s*\n(.*)\Z", re.DOTALL | re.IGNORECASE)
+_REPLY_RETAIN_BYTES = 512_000
 _DECISION_RE = re.compile(r"```decision\s*\n(.*?)```", re.DOTALL)
 _SIGNED_RESPONSE_RE = re.compile(
     r"\A\s*```(?:python)?\s*\n(.*?)```\s*"
@@ -82,6 +85,11 @@ def extract_code(text: str) -> Optional[str]:
     matches = _CODE_RE.findall(text or "")
     if matches:
         return max(matches, key=len).strip()
+    unclosed = _UNCLOSED_CODE_RE.search(text or "")
+    if unclosed:
+        body = unclosed.group(1).strip()
+        if body and ("import " in body[:400] or "def " in body[:4000]):
+            return body
     stripped = (text or "").strip()
     # Fallback: looks like raw code (no prose) if it imports / defs early.
     if stripped and ("import " in stripped[:200] or "def " in stripped[:200]):
@@ -131,7 +139,7 @@ def extract_signed_submission(
 RETAINED_REJECTIONS = 5
 
 
-def _retain_rejected(workdir, step, code, metrics, valid):
+def _retain_rejected(workdir, step, code, metrics, valid, *, response=None, parse_status=None):
     """Keep the first few rejected candidates on disk so a rejection can be diagnosed later.
 
     The evaluation ledger records a candidate by hash and never stores its source, and the
@@ -141,6 +149,10 @@ def _retain_rejected(workdir, step, code, metrics, valid):
     see what the proposals had done differently - `best_program.py` is still the baseline, because
     nothing was ever accepted.
 
+    A `no_code` draw is the same gap with a worse symptom: there is no candidate source at all.
+    hy3-ioa on this host has hit max_output_tokens with an unclosed fence; without the raw reply
+    on disk, the debug loop cannot tell a parser miss from a truncated stream.
+
     This writes to disk only. Nothing here is read back into the search loop, so the label-blind
     guarantee about what a searcher may see is untouched.
     """
@@ -149,14 +161,24 @@ def _retain_rejected(workdir, step, code, metrics, valid):
     try:
         directory = Path(workdir) / "rejected"
         directory.mkdir(exist_ok=True)
-        if len(list(directory.glob("*.py"))) >= RETAINED_REJECTIONS:
+        kept = list(directory.glob("step_*.json"))
+        if len(kept) >= RETAINED_REJECTIONS:
             return
-        (directory / ("step_%03d.py" % int(step))).write_text(code, encoding="utf-8")
+        payload = {k: v for k, v in metrics.items()
+                   if k in ("candidate_failure_kind", "error_message", "valid",
+                            "combined_score")}
+        if parse_status:
+            payload["parse_status"] = parse_status
+        if code:
+            (directory / ("step_%03d.py" % int(step))).write_text(code, encoding="utf-8")
+        if response is not None and not code:
+            encoded = response.encode("utf-8")
+            (directory / ("step_%03d.reply.txt" % int(step))).write_bytes(
+                encoded[:_REPLY_RETAIN_BYTES])
+            payload["response_utf8_bytes"] = len(encoded)
+            payload["response_truncated"] = len(encoded) > _REPLY_RETAIN_BYTES
         (directory / ("step_%03d.json" % int(step))).write_text(
-            json.dumps({k: v for k, v in metrics.items()
-                        if k in ("candidate_failure_kind", "error_message", "valid",
-                                 "combined_score")}, indent=2),
-            encoding="utf-8")
+            json.dumps(payload, indent=2), encoding="utf-8")
     except OSError:
         # Diagnostics must never be able to fail a run.
         pass
@@ -912,6 +934,11 @@ def _greedy_rewrite_impl(
             m = {"combined_score": INVALID_SCORE, "valid": 0.0, "error_message": error}
             score, valid, accepted = INVALID_SCORE, False, False
             candidate_sha = ""
+            _retain_rejected(
+                workdir, it, "", m, valid=False,
+                response=pending_record.get("response"),
+                parse_status=pending_record.get("parse_status"),
+            )
         else:
             cand_path.write_text(code, encoding="utf-8")
             evaluation_receipt = evaluation_ledger.evaluate_once(
