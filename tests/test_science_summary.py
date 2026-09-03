@@ -5,6 +5,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 
 def load_summary_module():
@@ -269,6 +270,30 @@ class ScienceCalibrationSummaryTests(unittest.TestCase):
             snapshot["events"][0]["algorithm_metadata"],
             {"selection_policy": "offline_best_of_open_loop_batch"},
         )
+
+    def test_portable_summary_content_is_pinned(self):
+        module = load_summary_module()
+        original = json.loads(module.PORTABLE_SUMMARY.read_text(encoding="utf-8"))
+        mutations = (
+            lambda document: document["records"][0].__setitem__(
+                "source_revision", "tampered-revision"
+            ),
+            lambda document: document["records"][0]["trajectory"][0].__setitem__(
+                "score", 12345.0
+            ),
+        )
+        for mutate in mutations:
+            with self.subTest(mutate=mutate):
+                document = json.loads(json.dumps(original))
+                mutate(document)
+                with tempfile.TemporaryDirectory() as temporary:
+                    path = Path(temporary) / "summary.json"
+                    path.write_text(json.dumps(document), encoding="utf-8")
+                    module._portable_records.cache_clear()
+                    with patch.object(module, "PORTABLE_SUMMARY", path):
+                        with self.assertRaisesRegex(ValueError, "hash"):
+                            module._portable_records()
+        module._portable_records.cache_clear()
 
 
 if __name__ == "__main__":

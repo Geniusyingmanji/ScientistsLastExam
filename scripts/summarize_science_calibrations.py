@@ -14,6 +14,7 @@ import json
 import platform
 import sys
 from datetime import datetime, timezone
+from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
@@ -102,9 +103,65 @@ DEFAULT_REPORTS = (
     "experiments/gpt55_diffraction_grating_v2_b3_2026-07-26.json",
 )
 
+PORTABLE_SUMMARY = ROOT / "experiments/science_calibration_summary_2026-07-26_v31.json"
+PORTABLE_SUMMARY_SHA256 = "b3b3983423f1978b3ddf63fe73f3a34f41eb9a450190fdd7a4c78a0b88028c32"
+
 
 def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+@lru_cache(maxsize=1)
+def _portable_records() -> dict[str, dict[str, Any]]:
+    if _sha256(PORTABLE_SUMMARY) != PORTABLE_SUMMARY_SHA256:
+        raise ValueError("portable calibration summary hash differs")
+    document = json.loads(PORTABLE_SUMMARY.read_text(encoding="utf-8"))
+    provenance = document.get("source_provenance") or {}
+    if (
+        document.get("schema_version") != 1
+        or document.get("trusted_evidence") is not True
+        or document.get("passed") is not True
+        or provenance.get("source_tree_dirty") is not False
+    ):
+        raise ValueError("portable calibration summary is not trusted and clean")
+    records = document.get("records") or []
+    by_report = {record.get("report"): record for record in records}
+    if len(by_report) != len(records):
+        raise ValueError("portable calibration summary contains duplicate reports")
+    if set(by_report) != set(DEFAULT_REPORTS):
+        raise ValueError("portable calibration summary report set differs")
+    return by_report
+
+
+def _portable_record(path: Path, document: dict[str, Any], run: dict[str, Any]) -> dict[str, Any]:
+    report = str(path.relative_to(ROOT))
+    record = _portable_records().get(report)
+    if record is None or record.get("report_sha256") != _sha256(path):
+        raise ValueError("no hash-matched portable trajectory for: %s" % path)
+    expected = {
+        "source_revision": (document.get("source_provenance") or {})["git_revision"],
+        "task": run["task"],
+        "algorithm": run["algorithm"],
+        "feedback_mode": run["feedback_mode"],
+        "seed": int(run["seed"]),
+        "proposal_budget": int(document["config"]["budget"]),
+        "baseline_score": run["baseline"],
+        "best_score": run["best"],
+        "accepted_proposals": int(run["accepted"]),
+        "oracle_calls": int(run["evaluated"]),
+        "llm": (run.get("summary") or {}).get("llm", {}),
+        "feedback_scope": (run.get("summary") or {}).get("feedback_scope"),
+    }
+    if any(record.get(key) != value for key, value in expected.items()):
+        raise ValueError("portable trajectory metadata disagrees with report: %s" % path)
+    trajectory = record.get("trajectory") or []
+    if (
+        len(trajectory) != record.get("trajectory_event_count")
+        or not trajectory
+        or int(trajectory[-1]["oracle_calls"]) != int(run["evaluated"])
+    ):
+        raise ValueError("portable trajectory counts disagree with report: %s" % path)
+    return dict(record)
 
 
 def summarize_report(path: Path) -> dict[str, Any]:
@@ -120,6 +177,8 @@ def summarize_report(path: Path) -> dict[str, Any]:
         raise ValueError("expected exactly one successful calibration run: %s" % path)
     run = runs[0]
     trajectory_path = Path(run["workdir"]) / "trajectory.jsonl"
+    if not trajectory_path.is_file():
+        return _portable_record(path, document, run)
     events = load_trajectory(trajectory_path)
     summary = run.get("summary") or {}
     if int(events[-1]["oracle_calls"]) != int(run.get("evaluated", -1)):
