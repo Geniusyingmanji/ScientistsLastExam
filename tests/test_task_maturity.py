@@ -30,7 +30,10 @@ class TaskMaturityAuditTests(unittest.TestCase):
         # Admission is fail-closed against the current evidence bindings. Candidate registration
         # does not imply admission, and older reports whose task/runtime contract drifted do not
         # count toward this total.
-        self.assertEqual(self.report["gate_counts"]["internal_science_admission"], 32)
+        # 58 once the certification audit and secure baseline were regenerated for the merged
+        # inventory under the merged runtime; the 32 pinned at merge time counted the frozen
+        # documents' stale bindings, not a semantic demotion.
+        self.assertEqual(self.report["gate_counts"]["internal_science_admission"], 58)
         self.assertEqual(self.report["issues"], [])
         self.assertTrue(self.report["execution_passed"])
 
