@@ -16,6 +16,8 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import subprocess
+import sys
 import unittest
 from pathlib import Path
 
@@ -98,6 +100,29 @@ class RebindingPreservesMeasurementsTests(unittest.TestCase):
                 "%s claims a measured-inert evaluator change with no metrics behind it"
                 % row["task"])
             self.assertTrue(measured.get("files_changed"), row["task"])
+
+    def test_explicit_shared_remeasurement_is_not_ignored_when_hashes_match(self):
+        evidence = self.spec["shared_task_overrides"]["exactly_once_recovery"]["evidence"]
+        result = subprocess.run(
+            [
+                sys.executable,
+                str(ROOT / "scripts" / "rebind_measurement_health_spec.py"),
+                "--output", str(ROOT / ".research" / "unused_spec.json"),
+                "--manifest-output", str(ROOT / ".research" / "unused_manifest.json"),
+                "--artifacts-output", str(ROOT / ".research" / "unused_artifacts.json"),
+                "--rebind-evidence",
+                "exactly_once_recovery=%s" % evidence["path"],
+                "--dry-run",
+            ],
+            cwd=ROOT,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            check=False,
+        )
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("%d task(s) rebound" % len(self.spec["task_overrides"]), result.stdout)
+        self.assertNotIn("nothing to write", result.stdout)
 
 
 if __name__ == "__main__":

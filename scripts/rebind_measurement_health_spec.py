@@ -173,6 +173,7 @@ def main(argv: list[str] | None = None) -> int:
     updates, refused = [], []
     for row in rows:
         task_id = row["task"]
+        remeasured = sorted(set(shared_rebinds) | set(task_rebinds.get(task_id) or {}))
         spec_obj = find_task(task_id, include_uncertified=True)
         current_package = task_package_sha256(spec_obj)
         current_contract = task_contract_sha256(spec_obj)
@@ -187,20 +188,25 @@ def main(argv: list[str] | None = None) -> int:
                           not in (None, _maturity_contract_sha256(spec_obj)))
         stale_runtime = (manifest_row.get("runtime_contract_sha256")
                          not in (None, current_contract))
-        if current_package == frozen_package and not stale_maturity and not stale_runtime:
+        binding_changed = current_package != frozen_package or stale_maturity or stale_runtime
+        if not binding_changed and not remeasured:
             continue
 
         # The same classifier the preflight reports with. Rebinding is only defensible when the
         # difference cannot have moved a score.
         revision = _module._freeze_revision(
             (row.get("scientific_materiality") or {}).get("evidence"))
-        verdict = _module._package_mismatch_explanation(spec_obj, revision)
-        if not verdict.get("classified"):
+        verdict = (_module._package_mismatch_explanation(spec_obj, revision)
+                   if binding_changed else {
+                       "classified": True,
+                       "declarative_change_only": True,
+                       "prompt_change_invalidates_runs": False,
+                   })
+        if binding_changed and not verdict.get("classified"):
             refused.append((task_id, "unclassifiable: %s" % verdict.get("reason")))
             continue
-        if not verdict.get("declarative_change_only"):
+        if binding_changed and not verdict.get("declarative_change_only"):
             measured = inert.get(task_id)
-            remeasured = sorted(task_rebinds.get(task_id) or {})
             # Three routes past a behavioural change, in descending order of strength. The change
             # was declarative (handled above); the change was *measured* not to move this task's
             # frozen artifact; or the evidence itself was re-run against the current runtime, which
@@ -221,13 +227,17 @@ def main(argv: list[str] | None = None) -> int:
                 None if verdict.get("declarative_change_only") or task_id not in inert
                 else {"metrics_compared": inert[task_id]["metrics_compared"],
                       "files_changed": verdict["behavioural_files_changed"]}),
-            "evidence_remeasured_on_current_runtime": sorted(task_rebinds.get(task_id) or {}) or None,
+            "evidence_remeasured_on_current_runtime": remeasured or None,
             "task_package_sha256": current_package,
             "runtime_contract_sha256": current_contract,
             "maturity_contract_sha256": _maturity_contract_sha256(spec_obj),
             "superseded_task_package_sha256": frozen_package,
-            "justification": "declarative-only difference from %s, verified by "
-                             "_package_mismatch_explanation" % (revision or "")[:12],
+            "justification": (
+                "evidence re-measured against the current runtime"
+                if not binding_changed else
+                "declarative-only difference from %s, verified by "
+                "_package_mismatch_explanation" % (revision or "")[:12]
+            ),
         })
 
     for task_id, why in refused:
@@ -255,6 +265,11 @@ def main(argv: list[str] | None = None) -> int:
     if args.dry_run:
         print("dry run: nothing written")
         return 0
+
+    # Capture provenance before creating the successor files. Otherwise the tool observes its own
+    # untracked outputs and records every legitimately clean rebinding as dirty.
+    source_revision = git_revision()
+    source_tree_clean = tree_is_clean()
 
     # The runtime contract lives in the cohort manifest, not the spec, so rebinding one without
     # the other leaves the preflight failing on the half that was not touched. A first attempt
@@ -310,17 +325,17 @@ def main(argv: list[str] | None = None) -> int:
 
     document = {
         "schema_version": 2,
-        "purpose": "Rebind the frozen cohort after a package rename and a declarative card "
-                   "annotation moved every task hash. No task changed behaviourally; each "
-                   "rebinding below was checked against the revision its evidence was taken at.",
+        "purpose": "Rebind the frozen cohort after current-runtime evidence remeasurement or "
+                   "a verified non-behavioural hash change. Each binding records the measurement "
+                   "or comparison that justifies it.",
         "supersedes": {
             "path": args.spec.relative_to(ROOT).as_posix(),
             "sha256": sha256_of(args.spec),
         },
         "base_spec": base_binding,
         "source_provenance": {
-            "git_revision": git_revision(),
-            "source_tree_dirty": not tree_is_clean(),
+            "git_revision": source_revision,
+            "source_tree_dirty": not source_tree_clean,
         },
         "top_level_overrides": {
             # The spec binds the manifest by hash, so a new manifest needs a new binding here or
