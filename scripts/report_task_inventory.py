@@ -31,6 +31,72 @@ OUTPUT = ROOT / "TASKS.md"
 TAXONOMY = ROOT / "sle" / "conf" / "exam_taxonomy.yaml"
 CERTIFICATION = ROOT / "sle" / "certification.yaml"
 
+# Chinese name per task, shown in the first column beside the English directory name. The
+# directory name is the identifier and never changes; this is what a Chinese reader scans for.
+CHINESE_NAMES = {
+    "Acoustics/RoomImpulseResponse": "房间声学处理设计",
+    "Algorithm/GraphFromDistances": "距离查询重建图",
+    "Algorithm/MatrixMultiplicationRank": "矩阵乘法秩",
+    "Algorithm/TensorRank555": "5x5 与 6x6 张量秩",
+    "Astrodynamics/LowThrustTransfer": "小推力轨道转移",
+    "AtmosphericScience/RadiativeTransferFit": "辐射传输反演",
+    "Catalysis/CatalystDeactivationLab": "催化剂失活实验室",
+    "CausalDiscovery/InterventionalSCM": "干预式结构因果模型",
+    "CausalDiscovery/SurvivorshipConfoundedDesign": "幸存者偏差下的效应估计",
+    "ChemicalKinetics/ReactionMechanismFitting": "反应机理辨识",
+    "ChemicalProcess/DistillationColumnDesign": "精馏塔设计",
+    "Chemistry/LennardJonesCluster": "Lennard-Jones 团簇",
+    "ClimateScience/EnergyBalanceModel": "能量平衡模型辨识",
+    "ClimateScience/ForcedSignalAttribution": "强迫信号检测归因",
+    "ControlTheory/InvertedPendulumSwingUp": "倒立摆摆起控制",
+    "DynamicalSystems/ActiveLawDiscovery": "主动定律发现",
+    "Electrochemistry/ElectrolyteConductivityDesign": "电解液电导率设计",
+    "EvidenceSynthesis/ProspectiveMetaAnalysis": "前瞻荟萃分析",
+    "Exoplanets/RadialVelocityPlanets": "视向速度找行星",
+    "Geophysics/GravityInversion": "重力反演",
+    "Gravitation/PTAHellingsDowns": "脉冲星阵四极相关",
+    "HeatTransfer/ConvectionDiffusionOpt": "对流扩散辨识与加热器设计",
+    "MaterialsScience/AlloyHardnessOptimization": "合金硬度实验设计",
+    "MaterialsScience/PhaseDiagramDiscovery": "相图发现",
+    "MaterialsScience/QuinaryConvexHull": "五元凸包稳定相",
+    "Mathematics/BlackBoxGroupIdentification": "黑盒群同构辨识",
+    "Mathematics/CapSet": "Cap Set 构造",
+    "Mathematics/CapSetFrontier": "Cap Set 未证明维度",
+    "Mathematics/KissingNumber": "接触数构造",
+    "Mathematics/RamseyLowerBound": "Ramsey 下界染色",
+    "Mathematics/SequenceLawRecovery": "整数序列递推恢复",
+    "Mathematics/Superpermutation": "超排列最短串",
+    "MedicinalChemistry/MolecularLeadOptimization": "分子先导组合优化",
+    "MolecularDynamics/ForceFieldCalibration": "力场假设判别",
+    "NuclearEngineering/NeutronDiffusionCriticality": "中子扩散临界优化",
+    "Oceanography/AMOCTippingRefusal": "AMOC 折叠拒答",
+    "Optics/DiffractionGratingDesign": "衍射光栅设计",
+    "Optimization/CirclePacking": "圆堆积",
+    "ParticlePhysics/CalorimeterDesign": "量能器设计",
+    "ParticlePhysics/DiscrepantMeasurements": "不相容测量调和",
+    "ParticlePhysics/LookElsewhereAnomaly": "多窗口扫描的全局显著性",
+    "Photonics/MultilayerThinFilm": "多层减反射膜",
+    "Physics/ComplexBoseLaw": "复玻色占据律",
+    "Physics/HiddenCouplingNetwork": "隐藏耦合网络重建",
+    "PopulationGenetics/DemographicSFS": "位点频率谱人口史反演",
+    "ProteinEngineering/ProteinStabilityDesign": "蛋白稳定性批次设计",
+    "QuantumDynamics/HamiltonianLearning": "哈密顿量学习",
+    "QuantumErrorCorrection/QuantumErrorDecoder": "表面码解码器",
+    "RNAEngineering/RNAEnsembleDesign": "RNA 系综设计",
+    "RNAEngineering/RNAInverseDesign": "RNA 约束反折叠",
+    "Semiconductor/MOSFETDoping": "MOSFET 掺杂剖面",
+    "Sensors/QuartzCrystalMicrobalanceLab": "石英微天平原始信号反演",
+    "SignalProcessing/SparseRecovery": "压缩感知稀疏恢复",
+    "Spectroscopy/CrowdedSpectrumAssignment": "混叠谱物种指认",
+    "Spectroscopy/NMRSpectrumFitting": "核磁谱峰机制恢复",
+    "Spectroscopy/SpinSystemInference": "自旋体系反演",
+    "StructuralEngineering/TrussWeightMinimization": "桁架减重",
+    "SystemsBiology/EnzymeKineticsLaw": "酶动力学律辨识",
+    "SystemsBiology/GeneNetworkIntervention": "基因网络干预设计",
+    "Thermodynamics/HeatExchangerDesign": "换热器帕累托设计",
+    "Turbulence/RANSCalibration": "RANS 封闭标定",
+}
+
 # One-line Chinese brief and scoring note per task. Written by hand: the English Task.md
 # cannot be machine-translated into something a reader can trust, and the table is read by
 # people deciding which task to look at. A task without an entry fails the inventory test,
@@ -288,8 +354,9 @@ def _table(rows: list[dict]) -> list[str]:
         note = " · on-ramp,不配对" if "on_ramp" in r["note"] else ""
         summary = (r["summary"] or "").replace("|", "\\|")
         meaning, scoring = CHINESE_BRIEFS.get(r["task_id"], ("", ""))
-        out.append("| [`%s`](%s/) | %s | %s | %s | %s | %s | %s%s | %s | %s |" % (
-            r["name"], r["path"], r["discipline"], r["domain"], r["score_mode"],
+        chinese_name = CHINESE_NAMES.get(r["task_id"], "")
+        out.append("| [`%s`](%s/)<br>%s | %s | %s | %s | %s | %s | %s%s | %s | %s |" % (
+            r["name"], r["path"], chinese_name, r["discipline"], r["domain"], r["score_mode"],
             r["oracle_type"], r["status"], summary, note, meaning, scoring))
     return out
 

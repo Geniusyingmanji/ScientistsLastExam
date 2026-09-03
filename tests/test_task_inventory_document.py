@@ -34,9 +34,15 @@ class TaskInventoryDocumentTests(unittest.TestCase):
     def test_every_task_has_a_chinese_brief_and_scoring_note(self):
         """The two Chinese columns are hand-written; a new task must not ship with them empty."""
         briefs = MODULE.CHINESE_BRIEFS
+        names = MODULE.CHINESE_NAMES
         registered = {spec.task_id for spec in list_tasks(None)}
         self.assertEqual(sorted(registered - set(briefs)), [], "tasks without a Chinese brief")
         self.assertEqual(sorted(set(briefs) - registered), [], "briefs for tasks that do not exist")
+        self.assertEqual(sorted(registered - set(names)), [], "tasks without a Chinese name")
+        self.assertEqual(sorted(set(names) - registered), [], "names for tasks that do not exist")
+        for task_id, name in names.items():
+            self.assertTrue(name.strip(), task_id)
+            self.assertNotIn("|", name, task_id)
         for task_id, (meaning, scoring) in briefs.items():
             self.assertTrue(meaning.strip(), task_id)
             self.assertTrue(scoring.strip(), task_id)
