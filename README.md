@@ -151,3 +151,8 @@ python scripts/audit_tasks.py --output /tmp/certification.json
 python scripts/audit_benchmark_standards.py --output /tmp/standards.json
 python scripts/refresh_global_evidence.py --commit           # 仅限 Linux 主机、干净树
 ```
+
+## 任务汇总
+
+全部任务包按形式与子类分组的清单,含学科、打分模式、oracle 类型与认证状态:[`TASKS.md`](TASKS.md)
+(由 `scripts/report_task_inventory.py` 生成,测试保证与注册表一致)。
