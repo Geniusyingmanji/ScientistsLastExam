@@ -28,7 +28,7 @@ from scripts.audit_task_maturity import build_report as build_maturity_report  #
 
 
 SCHEMA_VERSION = 1
-DEFAULT_MATURITY = ROOT / "experiments/task_maturity_audit_2026-09-03_v10.json"
+DEFAULT_MATURITY = ROOT / "experiments/task_maturity_audit_2026-09-03_v11.json"
 
 EXPLORATORY_LONG_HORIZON_SCREEN = "exploratory_long_horizon_screen"
 REPAIR_FIRST = "repair_first"
