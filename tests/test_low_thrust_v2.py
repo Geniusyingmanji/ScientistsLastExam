@@ -83,12 +83,18 @@ class LowThrustV2Tests(unittest.TestCase):
             return np.zeros((oracle.N_SEGMENTS, 7))
 
         metrics = oracle.evaluate(zero)
+        # A coast policy scores zero, and "zero" here is a number a trajectory integration
+        # produced, not a literal. It comes back as 2.5e-29 on macOS and on some continuous-
+        # integration runners and as 0.0 on the benchmark host, because the three machines
+        # dispatch different vector kernels. The property is that a coast earns nothing, and
+        # 2.5e-29 out of a score in [0, 1] is nothing; asserting the last bit of a double is
+        # asserting the vendor of the CPU.
         self.assertEqual(metrics["valid"], 1.0)
-        self.assertEqual(metrics["combined_score"], 0.0)
-        self.assertEqual(metrics["feasibility_rate"], 0.0)
-        self.assertEqual(metrics["development_mission_feasibility_rate"], 0.0)
+        self.assertAlmostEqual(metrics["combined_score"], 0.0, places=12)
+        self.assertAlmostEqual(metrics["feasibility_rate"], 0.0, places=12)
+        self.assertAlmostEqual(metrics["development_mission_feasibility_rate"], 0.0, places=12)
         shown = search_visible_metrics(metrics)
-        self.assertEqual(shown["feasibility_rate"], 0.0)
+        self.assertAlmostEqual(shown["feasibility_rate"], 0.0, places=12)
         for key in (
             "robustness_score", "heldout_policy_score",
             "mean_development_phase_score", "per_instance",
