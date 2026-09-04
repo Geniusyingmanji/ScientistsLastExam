@@ -163,6 +163,7 @@ def check_task(task_id: str, timeout_s: float = 180.0, *, skip_eval: bool = Fals
         _ok(rows, "deterministic_baseline", "skipped")
         if role == "discovery":
             _ok(rows, "discovery_axes", "skipped")
+            _ok(rows, "degenerate_candidates_score_zero", "skipped")
         _ok(rows, "bad_candidates_score_zero", "skipped")
     else:
         baseline = evaluate_candidate(spec, spec.initial_program_path, timeout_s=timeout_s)
@@ -197,6 +198,48 @@ def check_task(task_id: str, timeout_s: float = 180.0, *, skip_eval: bool = Fals
                 _fail(rows, "discovery_axes",
                       "mechanism=%s fdr=%s refusal=%s coverage=%s"
                       % (has_mechanism, has_fdr, has_refusal, has_coverage))
+
+        # A degenerate candidate is not a broken one. The bad-candidate sweep below asks whether
+        # a malformed submission is rejected; this asks whether a *well-formed* submission that
+        # does no science scores nothing. For a discovery task the universal case is blanket
+        # abstention: the whole three-axis normalisation rests on it being exactly zero, because a
+        # candidate that refuses everything is perfect on false-discovery and on refusal and has
+        # discovered nothing. FrontierMath makes the same demand of guessing, at under one per
+        # cent. Until now this was pinned per task by hand-written tests, which meant a new task
+        # could ship without it.
+        if role == "discovery":
+            degenerate = {
+                "blanket_abstention":
+                    "def {entry}(*args, **kwargs):\n    return {{'abstain': True}}\n",
+                "blanket_abstention_with_confidence":
+                    "def {entry}(*args, **kwargs):\n"
+                    "    return {{'abstain': True, 'confidence': 1.0}}\n",
+            }
+            offenders = []
+            for kind, template in degenerate.items():
+                with tempfile.TemporaryDirectory(prefix="degenerate_") as tmp:
+                    candidate = Path(tmp) / "candidate.py"
+                    candidate.write_text(template.format(entry=spec.entrypoint), encoding="utf-8")
+                    try:
+                        metrics = evaluate_candidate(spec, candidate, timeout_s=timeout_s)
+                    except Exception as exc:  # noqa: BLE001
+                        offenders.append("%s:%s" % (kind, exc))
+                        continue
+                    if metrics.get("infrastructure_failure"):
+                        offenders.append("%s:infrastructure_failure" % kind)
+                        continue
+                    degenerate_score = float(metrics.get("combined_score", INVALID_SCORE))
+                    # Scoring zero is the requirement. Being rejected outright is acceptable too:
+                    # a task whose contract has no abstain key simply cannot be gamed this way.
+                    if float(metrics.get("valid", 0.0)) == 0.0:
+                        continue
+                    if abs(degenerate_score) > BASELINE_ZERO_TOLERANCE:
+                        offenders.append("%s scores %s, not zero" % (kind, degenerate_score))
+            if offenders:
+                _fail(rows, "degenerate_candidates_score_zero", "; ".join(offenders))
+            else:
+                _ok(rows, "degenerate_candidates_score_zero",
+                    "blanket abstention earns nothing")
 
         crashes = []
         for kind, template in BAD_CANDIDATES.items():
