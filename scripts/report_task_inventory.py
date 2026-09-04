@@ -88,6 +88,7 @@ CHINESE_NAMES = {
     "Sensors/QuartzCrystalMicrobalanceLab": "石英微天平原始信号反演",
     "SignalProcessing/SparseRecovery": "压缩感知稀疏恢复",
     "Spectroscopy/CrowdedSpectrumAssignment": "混叠谱物种指认",
+    "StructuralEngineering/ModalDamageAttribution": "模态损伤归因",
     "Spectroscopy/NMRSpectrumFitting": "核磁谱峰机制恢复",
     "Spectroscopy/SpinSystemInference": "自旋体系反演",
     "StructuralEngineering/TrussWeightMinimization": "桁架减重",
@@ -261,6 +262,9 @@ CHINESE_BRIEFS = {
     "SignalProcessing/SparseRecovery": (
         "从远少于奈奎斯特的测量里恢复 k 稀疏信号",
         "平均恢复信噪比"),
+    "StructuralEngineering/ModalDamageAttribution": (
+        "在受预算约束的测量日里判断模态频率的偏移是不是某个内部元件的刚度损伤、是哪一个、损失多少;支座变化导致的偏移须拒答",
+        "定位精确门控 + 严重度容差评分;温度对频率比精确抵消,健康结构误报与支座变化误判分别记误发现,分数标尺锚在全弃权为零"),
     "Spectroscopy/CrowdedSpectrumAssignment": (
         "在混叠谱里指认封闭库中的物种;两个近线的混合与第三个物种不可区分,变焦要花预算",
         "库物种指认 + 别名拒答"),

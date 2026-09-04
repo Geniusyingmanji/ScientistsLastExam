@@ -81,6 +81,7 @@ tasks:
   MaterialsScience/PhaseDiagramDiscovery: {form: discovery, kind: substance}
   Physics/HiddenCouplingNetwork: {form: discovery, kind: structure}
   ClimateScience/ForcedSignalAttribution: {form: discovery, kind: evidence}
+  StructuralEngineering/ModalDamageAttribution: {form: discovery, kind: evidence}
   Mathematics/BlackBoxGroupIdentification: {form: discovery, kind: structure}
   Spectroscopy/CrowdedSpectrumAssignment: {form: discovery, kind: substance}
   MaterialsScience/QuinaryConvexHull: {form: discovery, kind: substance, note: quinary_hull_not_binary_xrd}

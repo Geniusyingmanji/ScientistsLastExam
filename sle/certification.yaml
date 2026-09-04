@@ -501,6 +501,18 @@ tasks:
       is not listed. Catalogue and outside groups are pinned pairwise non-isomorphic by invariants;
       sealed split at orders 24 and 48; pending a frontier-model draw and external review.
     citation_ids: [doi:10.1109/SFCS.1984.715919, doi:10.1145/800133.804331]
+  StructuralEngineering/ModalDamageAttribution:
+    status: candidate
+    reason: >-
+      The reference exemplar for a task contribution, and the first discovery task in Engineering
+      outside parameter inversion. From nine budgeted measurement days on a public calendar, decide
+      whether a structure's modal shift is damage at one internal element, name it and its severity,
+      or decline because a support changed instead - against a temperature confound that the
+      commissioning band does not cover and a validated model that carries three per cent of error.
+      Every construction checkpoint is recorded in references/known_best.md, including three errors
+      the checkpoints caught before any model saw the task. Pending a frontier-model draw and
+      external structural-dynamics review.
+    citation_ids: [doi:10.1098/rsta.2006.1928, doi:10.1098/rsta.2006.1935, doi:10.1177/058310249803000201]
   ClimateScience/ForcedSignalAttribution:
     status: candidate
     reason: >-

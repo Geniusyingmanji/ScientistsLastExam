@@ -1,0 +1,4 @@
+1) Only edit solution.py. Keep attribute_damage(problem, measure).
+2) Return {"damaged", "element", "severity", "confidence", "abstain"}. `damaged` is a boolean; when it is true, `element` must be an integer in 1..mass_count-1 and `severity` a finite fraction in (0, 1). `confidence` in [0,1]; `abstain` a boolean, and when abstaining the other keys may be omitted.
+3) measure(day) charges one measurement day and returns that day's frequencies; `day` must be an integer index into problem["calendar"]. Do not exceed problem["measurement_budget_days"] calls per structure.
+4) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read verification/ or frontier_eval/.

@@ -16,6 +16,7 @@ RECORDED_LINEAGE = {
     "MaterialsScience/PhaseDiagramDiscovery",
     "Physics/HiddenCouplingNetwork",
     "ClimateScience/ForcedSignalAttribution",
+    "StructuralEngineering/ModalDamageAttribution",
     "Mathematics/BlackBoxGroupIdentification",
     "Spectroscopy/CrowdedSpectrumAssignment",
     "Mathematics/RamseyLowerBound",
