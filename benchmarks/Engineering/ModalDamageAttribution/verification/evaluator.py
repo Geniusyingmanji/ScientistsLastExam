@@ -64,7 +64,11 @@ SUPPORT_MULTIPLIER_RANGE = (0.45, 0.78)
 # anything: it sits inside the measurement noise, and refusing it could not be earned.
 # The generator redraws until the change is visible, so every refusal world is decidable.
 SUPPORT_MIN_RATIO_SIGNAL = 0.012
-SEVERITY_TOLERANCE = 0.12           # absolute error at which the severity score reaches zero
+# Absolute severity error at which the severity score reaches zero. A repair decision turns on
+# a few per cent of section loss, so a tolerance of a tenth would score a useless answer as
+# nearly right. At 0.04 the severity axis costs the reference 0.16 and the best known method
+# 0.10, which makes it a scoring axis rather than a formality.
+SEVERITY_TOLERANCE = 0.04
 
 # Commissioning campaign: the healthy structure, measured only in this temperature band.
 BASELINE_TEMPERATURES = (5.0, 9.0, 13.0, 17.0, 21.0, 25.0)

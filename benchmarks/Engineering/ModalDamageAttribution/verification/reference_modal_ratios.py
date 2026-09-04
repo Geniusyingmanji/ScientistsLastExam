@@ -7,6 +7,8 @@ scales every eigenvalue equally and cancels exactly from the ratios f_k / f_1. W
 removes the confound outright, including the part that lives outside the commissioning band where
 the temperature law is not what the baseline suggests.
 
+    baseline    the healthy ratios come from the commissioning campaign, which measured the real
+                structure, and not from the published model, which is a few per cent away from it.
     days        buy the highest-excitation days. Noise scales as 1 / sqrt(excitation), and the
                 ratios need no temperature spread, so signal is the only thing worth paying for.
     family      re-solve the eigenproblem for every internal element and every severity on a grid,
@@ -16,10 +18,12 @@ the temperature law is not what the baseline suggests.
                 the answer when its residual is small relative to the shift; a residual that stays
                 large no matter which member is tried is a support change, and is declined.
 
-Deliberately not at the ceiling. The severity grid is coarse against the scoring tolerance; the
-days are averaged with equal weight although their noise differs threefold; the refusal threshold
-is a fixed fraction rather than what the measured noise says a fit should leave behind; and
-nothing is done with the modes' individual noise. Each of those is a scoring axis.
+Deliberately not at the ceiling. Three things are left: the days are averaged with equal weight
+although their noise differs threefold, so an inverse-variance average would be strictly better;
+the decision is a pair of thresholds rather than a comparison of how well each hypothesis explains
+the data under a stated noise model; and the search is over a grid in the severity while the
+residual is smooth in it. A frontier draw took all three (see references/known_best.md) and still
+left a quarter of the scale unclaimed.
 """
 from __future__ import annotations
 
@@ -29,7 +33,7 @@ import numpy as np
 
 DETECTION_THRESHOLD = 0.008       # max ratio shift below this is a healthy structure
 REFUSAL_RELATIVE_RESIDUAL = 0.30  # residual, relative to the shift, that no family member explains
-SEVERITY_GRID = np.arange(0.05, 0.91, 0.05)
+SEVERITY_GRID = np.arange(0.02, 0.91, 0.01)
 
 
 def _frequencies(masses, springs, mode_count):
@@ -52,8 +56,15 @@ def attribute_damage(problem, measure):
     budget = int(problem["measurement_budget_days"])
     calendar = problem["calendar"]
 
-    healthy = _frequencies(masses, springs, modes)
-    healthy_ratios = healthy / healthy[0]
+    # The published model carries a few per cent of error, and the commissioning campaign measured
+    # the real structure. So the healthy ratios come from the campaign, not from the model; the
+    # model is kept only for the shape of each damage pattern, where a common error largely
+    # cancels between the damaged and healthy solutions of the same model.
+    commissioning = np.array(
+        [np.asarray(row["frequencies_hz"], dtype=float) for row in problem["commissioning_baseline"]])
+    healthy_ratios = np.mean(commissioning / commissioning[:, :1], axis=0)
+    model_healthy = _frequencies(masses, springs, modes)
+    model_ratios = model_healthy / model_healthy[0]
 
     order = sorted(range(len(calendar)), key=lambda d: -calendar[d]["excitation_quality"])
     observed = []
@@ -80,7 +91,7 @@ def attribute_damage(problem, measure):
             trial = springs.copy()
             trial[element] *= 1.0 - float(severity)
             frequencies = _frequencies(masses, trial, modes)
-            pattern = (frequencies / frequencies[0]) / healthy_ratios - 1.0
+            pattern = (frequencies / frequencies[0]) / model_ratios - 1.0
             residual = float(np.linalg.norm(shift - pattern))
             if residual < best[0]:
                 best = (residual, element, float(severity))
