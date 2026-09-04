@@ -1,0 +1,62 @@
+schema_version: 2
+scientific_question: Can a charging-current schedule maximize delivered charge while controlling voltage, heat and accelerated ageing across nominal lithium-ion cells and a bounded family of unobserved cell-to-cell variations?
+artifact: A deterministic sixteen-stage, open-loop C-rate charging policy conditioned only on the public nominal cell state and operating parameters.
+oracle:
+  model: deterministic reduced electro-thermal and ageing simulator with nonlinear open-circuit voltage, a relaxing polarization state, current-dependent heat generation, charge-rate-dependent efficiency and state-dependent ageing
+  feasibility: exactly sixteen finite currents in [0, 3.0]; every current schedule must respect voltage <= 4.25 V and temperature <= 47 C for every fixed latent cell variant
+  deterministic: true
+normalization:
+  baseline: a conservative 0.5 C constant-current policy, recomputed in every cell and latent variant
+  reference: a deterministic nominal-parameter-aware, tapered CC-CV-like schedule; it is a reproducible feasible witness, not a claim of global optimality or a clinical charging protocol
+  score: each nominal cell receives a weighted lower-tail and mean utility across three fixed latent variants; utility combines delivered charge, completion beyond 72 percent SOC, degradation cost and temperature excursion; the development score is the mean normalized utility across five development cells, with four held-out cells reported separately
+citations:
+- id: doi:10.1149/1.2221597
+  title: Modeling of Galvanostatic Charge and Discharge of the Lithium/Polymer/Insertion Cell
+invariants:
+- the weak 0.5 C baseline is feasible in every development, held-out and latent cell variant and normalizes to zero
+- the tapered reference schedule is feasible in every development, held-out and latent cell variant and normalizes to one on both development and held-out sets
+- malformed, non-finite, wrong-length and out-of-range candidate outputs fail closed instead of crashing the evaluator
+- the oracle has no random-number calls, external files, network calls or wall-clock-dependent branches
+- every candidate is evaluated only through the sandboxed callable; the evaluator, test split and latent parameters are not agent-visible
+- voltage, temperature, delivered charge, fade and score aggregation are all recomputed by the trusted evaluator
+- development and held-out nominal cells are disjoint fixed tuples; latent-variant and held-out metrics remain evaluator-only
+known_shortcuts: This is a reduced-order synthetic simulator, not a Doyle-Fuller-Newman or single-particle electrochemical model fitted to a specified commercial cell. The fixed task family may be reverse engineered from repeated black-box evaluation, and the public nominal parameters make a conservative taper discoverable. It omits diffusion limits, hysteresis, calendar ageing, state-estimation error, cell balancing, charger hardware, safety standards, experimental noise and cycle-life validation. A high score does not establish a deployable charging protocol.
+review:
+  domain: pending_external_electrochemistry_review
+  evaluator_security: automated_sandbox_contract_baseline_reference_determinism_and_malformed_candidate_tests
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic reduced-order simulator with fixed development and held-out nominal cell regimes plus evaluator-only latent manufacturing variants.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: The scientific task family and simplified simulator are public once the repository is available. Hidden nominal cells and latent variants prevent direct test lookup, but do not exclude benchmark-specific tuning or model pretraining exposure.
+lineage:
+  status: unknown
+  builder_model_ids:
+  - unknown_interactive_builder
+  builder_scaffolds:
+  - interactive_codex_assisted_task_construction
+  calibrator_model_ids:
+  - deepseek-v4-flash
+  - deepseek-v4-pro
+  calibration_runs: []
+  calibration_evidence_status: historical_only
+  edits_triggered_by_model: The task was revised after an initial three-proposal DeepSeek run reached 0.9188; robust latent variants and nonlinear electro-thermal coupling were added before the retained calibration runs.
+  shortcut_discoverer: interactive_model_calibration
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: candidate_self_audit_complete_external_review_pending
+  author_domain: unknown_interactive_builder
+  reviewer_domain: pending_external_electrochemistry
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: reduced-order equations and fixed reference rechecked internally; independent electrochemical-model replication pending

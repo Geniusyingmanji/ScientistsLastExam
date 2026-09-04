@@ -1,0 +1,13 @@
+domain: Electrochemistry
+task: BatteryFastCharging
+scientific_role: optimization
+difficulty: hard
+tier: T2
+oracle_type: physical_sim
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 10
+science_metric: constrained_charge_delivery_with_thermal_and_ageing_penalties
+reference_baseline: constant 0.5C charge
+reference_sota: deterministic CC-CV-like taper policy
+citation: "Doyle, Fuller, Newman, Journal of the Electrochemical Society 140(6), 1993"

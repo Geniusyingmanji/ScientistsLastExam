@@ -10,6 +10,16 @@ policy:
   statuses: [certified, candidate, quarantined]
 
 tasks:
+  Electrochemistry/BatteryFastCharging:
+    status: candidate
+    reason: >-
+      Deterministic reduced electro-thermal fast-charging protocol optimization over five development
+      and four held-out nominal cells, with nonlinear voltage, polarization memory, heat-ageing coupling
+      and evaluator-only bounded manufacturing variants. Baseline, reference, malformed-candidate and
+      deterministic checks pass; retained as a candidate pending external electrochemistry review,
+      independent higher-fidelity model replication, server-held regimes and experimental validation.
+    citation_ids:
+      - doi:10.1149/1.2221597
   MedicinalChemistry/MolecularLeadOptimization:
     status: candidate
     reason: RDKit community-standard oracle with a verified approved-drug reference panel; pending external medicinal-chemistry review
