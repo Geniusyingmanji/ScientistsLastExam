@@ -4,10 +4,10 @@ scientific_role: optimization
 difficulty: hard
 tier: T2
 oracle_type: analytical
-score_mode: clipped
+score_mode: uncapped
 gpu_required: false
 eval_time_seconds: 25
 science_metric: exact-OSSE forecast-skill versus observation-cost Pareto hypervolume with sealed sensitivity, noise and dynamics robustness
 reference_baseline: four clustered low-cost surface-velocity networks
 reference_sota: shipped truth-blind greedy A-optimal multibudget archive; no globally optimal or operational mission claim
-citation: "Cheng et al. 2025, DOI 10.5194/tc-19-5423-2025; Edwards et al. 2023, DOI 10.5194/tc-17-4661-2023"
+citation: "Choi et al. 2025, DOI 10.5194/tc-19-5423-2025; Edwards et al. 2023, DOI 10.5194/tc-17-4661-2023"

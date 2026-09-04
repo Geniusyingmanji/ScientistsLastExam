@@ -5,6 +5,15 @@ from __future__ import annotations
 import math
 
 import numpy as np
+import xarray as xr
+
+DIFFICULTY = 1
+
+_DIFFICULTY_LADDER = {
+    1: {"noise_multiplier": 1.00, "extra_anomalies": 0},
+    2: {"noise_multiplier": 1.30, "extra_anomalies": 1},
+    3: {"noise_multiplier": 1.65, "extra_anomalies": 2},
+}
 
 GRID_SHAPE = (20, 32)
 SPACING_M = 50.0
@@ -35,6 +44,13 @@ HELDOUT_SPECS = (
 )
 
 
+def _difficulty_profile(level=None):
+    level = DIFFICULTY if level is None else int(level)
+    if level not in _DIFFICULTY_LADDER:
+        raise ValueError("difficulty %d has no measured profile" % level)
+    return _DIFFICULTY_LADDER[level]
+
+
 def _background():
     z = np.linspace(0.0, 1.0, GRID_SHAPE[0])[:, None]
     return np.broadcast_to(BACKGROUND_MIN + (BACKGROUND_MAX - BACKGROUND_MIN) * z,
@@ -47,7 +63,7 @@ def _velocity(seed, variant, kind):
         return base
     rng = np.random.default_rng(int(seed))
     zz, xx = np.mgrid[0:GRID_SHAPE[0], 0:GRID_SHAPE[1]]
-    count = 1 + int(variant % 3)
+    count = min(5, 1 + int(variant % 3) + _difficulty_profile()["extra_anomalies"])
     for index in range(count):
         cx = rng.uniform(6.0, GRID_SHAPE[1] - 6.0)
         cz = rng.uniform(4.5, GRID_SHAPE[0] - 6.0)
@@ -99,8 +115,29 @@ def simulate_waveforms(velocity_m_s, source_index, frequency_hz=12.0, attenuatio
 def _world(spec):
     seed, kind, variant = spec
     velocity = _velocity(seed, variant, kind)
+    noise = (0.0025 + 0.0005 * (variant % 3)) * _difficulty_profile()["noise_multiplier"]
     return {"seed": int(seed), "kind": kind, "variant": int(variant), "velocity": velocity,
-            "noise": 0.0025 + 0.0005 * (variant % 3)}
+            "noise": noise}
+
+
+def _waveform_relative_l2(proposed, observed):
+    """Coordinate-aware waveform misfit using the community xarray data model."""
+    coordinates = {
+        "time_s": np.arange(N_TIME, dtype=float) * DT_S,
+        "receiver_x_m": RECEIVER_X_M,
+    }
+    proposed_array = xr.DataArray(
+        np.asarray(proposed, dtype=float), dims=("time_s", "receiver_x_m"),
+        coords=coordinates,
+    )
+    observed_array = xr.DataArray(
+        np.asarray(observed, dtype=float), dims=("time_s", "receiver_x_m"),
+        coords=coordinates,
+    )
+    proposed_array, observed_array = xr.align(proposed_array, observed_array, join="exact")
+    numerator = float(np.sqrt(((proposed_array - observed_array) ** 2).sum().item()))
+    denominator = float(np.sqrt((observed_array ** 2).sum().item()))
+    return numerator / max(denominator, 1e-12)
 
 
 class _Acquisition:
@@ -171,8 +208,7 @@ def _supported_scores(world, predicted):
     for frequency, source in ((8.0, 6), (15.0, 25)):
         observed = simulate_waveforms(truth, source, frequency)
         proposed = simulate_waveforms(predicted, source, frequency)
-        errors.append(float(np.linalg.norm(proposed - observed) /
-                            max(np.linalg.norm(observed), 1e-12)))
+        errors.append(_waveform_relative_l2(proposed, observed))
     waveform_error = float(np.mean(errors))
     waveform_score = float(math.exp(-3.0 * waveform_error))
     return model_score, waveform_score, float(math.sqrt(model_score * waveform_score))

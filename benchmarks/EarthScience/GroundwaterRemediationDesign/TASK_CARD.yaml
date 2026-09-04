@@ -2,13 +2,20 @@ schema_version: 2
 scientific_question: Can an agent construct a receptor-compliant pump-and-treat Pareto archive that balances contaminant removal and lifecycle cost across uncertain transport regimes?
 artifact: Four to sixteen unique remediation plans, each containing bounded extraction-well locations, start years and pumping rates.
 oracle:
-  model: deterministic Gaussian advection-dispersion-decay plume with location-dependent capture, discounted pumping cost and sealed velocity, dispersion, decay and continued-release shifts
+  model: deterministic Gaussian advection-dispersion-decay plume with location-dependent capture, discounted pumping cost and sealed velocity, dispersion, decay and continued-release shifts; mass and receptor histories are represented and reduced with xarray
   feasibility: finite unique archives, bounded wells and pumping, and receptor concentrations below the public cleanup threshold
   deterministic: true
+  external_tooling: xarray 2023.6.0 for labeled time/receptor transport histories and compliance reduction
+difficulty_ladder:
+  default_level: 1
+  levels:
+    1: working proxy-exact discrepancy and transport stresses
+    2: 15 percent tighter compliance, 25 percent stronger discrepancy and 18 percent stronger stresses
+    3: 30 percent tighter compliance, 55 percent stronger discrepancy and 38 percent stronger stresses
 normalization:
   baseline: four low-intensity single-well plans recomputed for every aquifer
   reference: a shipped truth-blind plume-aligned multirate archive recomputed for every aquifer
-  score: exact-model cleanup-versus-lifecycle-cost Pareto hypervolume above baseline; feasibility, proxy promotion, held-out transfer and worst-shift robustness remain separate
+  score: exact-model cleanup-versus-lifecycle-cost Pareto hypervolume above baseline, floored at zero and uncapped above the reference; feasibility, proxy promotion, held-out transfer and worst-shift robustness remain separate
 citations:
 - id: doi:10.1016/S0309-1708(01)00020-3
   title: Multi-objective optimal design of groundwater remediation systems
@@ -19,8 +26,16 @@ invariants:
 - lifecycle cost increases with well count or pumping volume under fixed geometry
 - only receptor-compliant plans contribute Pareto hypervolume
 - exact and proxy transport agree when all hidden shift multipliers are one
+- exact evaluation applies an evaluator-only model-discrepancy shift, composed with each robustness stress
 - the shipped reference archive exceeds the weak baseline on development aquifers
-known_shortcuts: The deterministic Gaussian plume and empirical capture kernel are reduced-order abstractions. They omit transient heads, layered three-dimensional flow, sorption and treatment-plant hydraulics. Public aquifers need server-held replacements, MODFLOW transport replication and independent hydrogeology review before any field claim.
+known_shortcuts: xarray supplies authoritative labeled transport-array representation and aggregation, not groundwater physics. The deterministic Gaussian plume and empirical capture kernel are local reduced-order abstractions. They omit transient heads, layered three-dimensional flow, sorption and treatment-plant hydraulics. Public aquifers need server-held replacements, MODFLOW transport replication and independent hydrogeology review before any field claim.
+licensing:
+  task_package: repository_license_not_declared
+  external_assets: none
+  note: All evaluated aquifers are generated from original repository code; cited publications are not redistributed.
+contamination:
+  status: cannot_be_ruled_out
+  rationale: The procedural aquifers and reference policy are public and AI-assisted; server-held aquifers and independent transport replication are still required.
 review:
   domain: pending_external_hydrogeology
   evaluator_security: automated_archive_bounds_cost_monotonicity_compliance_determinism_reference_and_metric_sealing_tests

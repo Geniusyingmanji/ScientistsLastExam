@@ -5,6 +5,15 @@ from __future__ import annotations
 import math
 
 import numpy as np
+import xarray as xr
+
+DIFFICULTY = 1
+
+_DIFFICULTY_LADDER = {
+    1: {"observation_noise": 1.00, "model_discrepancy": 1.00, "stress_strength": 1.00},
+    2: {"observation_noise": 1.15, "model_discrepancy": 1.25, "stress_strength": 1.18},
+    3: {"observation_noise": 1.32, "model_discrepancy": 1.55, "stress_strength": 1.38},
+}
 
 STATE_DIM = 6
 N_OBSERVATIONS = 28
@@ -12,15 +21,32 @@ ENSEMBLE_SIZE = 24
 OBS_TYPES = ("velocity", "elevation", "thickness", "grounding_line", "basal_radar")
 DEVELOPMENT_SEEDS = (17011, 17021, 17033, 17047)
 HELDOUT_SEEDS = (27011, 27023)
-SHIFTS = (
+_BASE_SHIFTS = (
     {"sensitivity": 0.84, "noise": 1.25, "dynamics": 1.08},
     {"sensitivity": 1.12, "noise": 1.15, "dynamics": 0.90},
     {"sensitivity": 0.92, "noise": 1.45, "dynamics": 1.18},
 )
 
 
+def _difficulty_profile(level=None):
+    level = DIFFICULTY if level is None else int(level)
+    if level not in _DIFFICULTY_LADDER:
+        raise ValueError("difficulty %d has no measured profile" % level)
+    return _DIFFICULTY_LADDER[level]
+
+
+def _scale_shift(shift, strength):
+    return {key: 1.0 + float(strength) * (float(value) - 1.0)
+            for key, value in shift.items()}
+
+
+SHIFTS = tuple(_scale_shift(shift, _difficulty_profile()["stress_strength"])
+               for shift in _BASE_SHIFTS)
+
+
 def _world(seed):
     rng = np.random.default_rng(int(seed))
+    profile = _difficulty_profile()
     raw = rng.normal(size=(STATE_DIM, STATE_DIM))
     prior = raw @ raw.T
     scale = np.sqrt(np.diag(prior))
@@ -34,7 +60,8 @@ def _world(seed):
         y = ((11 * index + seed % 7) % N_OBSERVATIONS) / (N_OBSERVATIONS - 1)
         year = float((index % 4) * 5)
         cost = 1 + (index % len(OBS_TYPES)) // 2
-        noise = (0.11 + 0.025 * (index % 5)) * (1.0 + 0.25 * y)
+        noise = ((0.11 + 0.025 * (index % 5)) * (1.0 + 0.25 * y)
+                 * profile["observation_noise"])
         row = rng.normal(0.0, 0.18, STATE_DIM)
         row[index % STATE_DIM] += 0.85 + 0.35 * x
         row[(index + 2) % STATE_DIM] += 0.30 * (1.0 - y)
@@ -45,12 +72,17 @@ def _world(seed):
     forecast = np.asarray(((780.0, -260.0, 190.0, 120.0, 70.0, -45.0),
                            (28.0, 42.0, -18.0, 35.0, 24.0, 12.0),
                            (0.078, 0.112, -0.045, 0.092, 0.061, 0.025)))
-    exact_h = proxy_h.copy()
-    exact_h *= (0.88 + 0.24 * np.asarray([row["y_normalized"] for row in catalog]))[:, None]
-    exact_h += 0.045 * np.roll(proxy_h, 1, axis=1)
-    exact_forecast = forecast + np.asarray(((35.0, -20.0, 12.0, 0.0, 8.0, -5.0),
-                                            (1.5, -2.0, 0.5, 2.2, -0.8, 0.6),
-                                            (0.006, -0.004, 0.002, 0.003, 0.0, 0.001)))
+    raw_exact_h = proxy_h.copy()
+    raw_exact_h *= (0.88 + 0.24 * np.asarray(
+        [row["y_normalized"] for row in catalog]
+    ))[:, None]
+    raw_exact_h += 0.045 * np.roll(proxy_h, 1, axis=1)
+    discrepancy = profile["model_discrepancy"]
+    exact_h = proxy_h + discrepancy * (raw_exact_h - proxy_h)
+    forecast_offset = np.asarray(((35.0, -20.0, 12.0, 0.0, 8.0, -5.0),
+                                  (1.5, -2.0, 0.5, 2.2, -0.8, 0.6),
+                                  (0.006, -0.004, 0.002, 0.003, 0.0, 0.001)))
+    exact_forecast = forecast + discrepancy * forecast_offset
     return {"seed": seed, "prior": prior, "catalog": catalog, "proxy_h": proxy_h,
             "exact_h": exact_h, "forecast": forecast, "exact_forecast": exact_forecast}
 
@@ -107,6 +139,38 @@ def _crps_normal(mean, std, truth):
     return std * (z * (2.0 * cdf - 1.0) + 2.0 * phi - 1.0 / math.sqrt(math.pi))
 
 
+def _osse_draws(world, shift):
+    """Common random numbers for every design evaluated in one shifted world."""
+    shift_seed = (int(round(1000.0 * shift["sensitivity"])) * 1000003
+                  + int(round(1000.0 * shift["noise"])) * 1009
+                  + int(round(1000.0 * shift["dynamics"])))
+    rng = np.random.default_rng(int(world["seed"]) * 10000019 + shift_seed)
+    truth_states = rng.multivariate_normal(
+        np.zeros(STATE_DIM), world["prior"], size=ENSEMBLE_SIZE
+    )
+    standard_errors = rng.normal(size=(ENSEMBLE_SIZE, N_OBSERVATIONS))
+    return truth_states, standard_errors
+
+
+def _ensemble_forecast_metrics(errors, crps_values):
+    """Labeled ensemble/forecast aggregation through the community xarray data model."""
+    names = ["grounding_line_position", "twenty_year_mass_loss", "sea_level_equivalent"]
+    error_array = xr.DataArray(
+        np.asarray(errors, dtype=float), dims=("ensemble", "forecast"),
+        coords={"ensemble": np.arange(len(errors)), "forecast": names},
+    )
+    crps_array = xr.DataArray(
+        np.asarray(crps_values, dtype=float), dims=("ensemble", "forecast"),
+        coords={"ensemble": np.arange(len(crps_values)), "forecast": names},
+    )
+    rmse = np.sqrt((error_array ** 2).mean("ensemble"))
+    scales = xr.DataArray(
+        np.asarray((1000.0, 100.0, 0.3)), dims=("forecast",),
+        coords={"forecast": names},
+    )
+    return np.asarray(rmse.values, dtype=float), float((crps_array / scales).mean().item())
+
+
 def _plan_metrics(world, indices, shift=None):
     shift = shift or {"sensitivity": 1.0, "noise": 1.0, "dynamics": 1.0}
     prior = world["prior"]
@@ -120,20 +184,19 @@ def _plan_metrics(world, indices, shift=None):
     g_proxy = world["forecast"]
     g_exact = world["exact_forecast"] * shift["dynamics"]
     predictive_std = np.sqrt(np.maximum(np.diag(g_proxy @ posterior @ g_proxy.T), 1e-12))
-    rng = np.random.default_rng(world["seed"] + 7919 * sum(int(i) + 1 for i in indices)
-                                + int(100 * shift["noise"]))
-    truth_states = rng.multivariate_normal(np.zeros(STATE_DIM), prior, size=ENSEMBLE_SIZE)
+    # Every design in one OSSE world must face the same hidden state ensemble.  Observation
+    # errors are generated once per catalog item and then subset by a plan, so adding or
+    # replacing an observation cannot silently swap in an easier Monte Carlo world.
+    truth_states, standard_errors = _osse_draws(world, shift)
     errors, crps_values = [], []
-    for state in truth_states:
-        observation = he @ state + rng.normal(0.0, noise)
+    for ensemble_index, state in enumerate(truth_states):
+        observation = he @ state + standard_errors[ensemble_index, indices] * noise
         estimate = gain @ observation
         truth_forecast = g_exact @ state
         predicted_forecast = g_proxy @ estimate
         errors.append(predicted_forecast - truth_forecast)
         crps_values.append(_crps_normal(predicted_forecast, predictive_std, truth_forecast))
-    errors = np.asarray(errors)
-    rmse = np.sqrt(np.mean(errors ** 2, axis=0))
-    crps = float(np.mean(np.asarray(crps_values) / np.asarray((1000.0, 100.0, 0.3))))
+    rmse, crps = _ensemble_forecast_metrics(errors, crps_values)
     sign, logdet = np.linalg.slogdet(posterior)
     cost = float(sum(world["catalog"][int(i)]["cost_units"] for i in indices))
     prior_std = np.sqrt(np.diag(g_exact @ prior @ g_exact.T))
@@ -199,7 +262,7 @@ def _reference_archive(world):
 def _normalize(value, baseline, reference):
     if reference <= baseline + 1e-12:
         return 0.0
-    return float(np.clip((value - baseline) / (reference - baseline), 0.0, 1.0))
+    return float(max(0.0, (value - baseline) / (reference - baseline)))
 
 
 def _evaluate_problem(candidate, seed, split, index):

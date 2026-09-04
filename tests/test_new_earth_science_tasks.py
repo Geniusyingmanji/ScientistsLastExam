@@ -91,6 +91,92 @@ class NewEarthSciencePackageTests(unittest.TestCase):
 
 
 class NewEarthScienceInvariantTests(unittest.TestCase):
+    def test_earth_oracles_use_pinned_xarray_in_scored_paths(self):
+        for directory, _, _ in TASKS.values():
+            evaluator = _load(
+                EARTH / directory / "verification" / "evaluator.py",
+                "new_earth_xarray_" + directory,
+            )
+            self.assertEqual(evaluator.xr.__name__, "xarray")
+            requirements = (EARTH / directory / "verification" / "requirements.txt").read_text()
+            self.assertIn("xarray==2023.6.0", requirements)
+
+        fwi = _load(EARTH / "ActiveFullWaveformInversion" / "verification" / "evaluator.py",
+                    "new_earth_xarray_fwi_metric")
+        zeros = np.zeros((fwi.N_TIME, len(fwi.RECEIVER_INDICES)))
+        self.assertEqual(fwi._waveform_relative_l2(zeros, zeros), 0.0)
+
+        chronology = _load(EARTH / "ChronologyAssimilation" / "verification" / "evaluator.py",
+                           "new_earth_xarray_chronology_metric")
+        ce, rmse = chronology._climate_field_metrics(chronology.TIME_GRID,
+                                                     chronology.TIME_GRID)
+        self.assertAlmostEqual(ce, 1.0)
+        self.assertAlmostEqual(rmse, 0.0)
+
+        deformation = _load(
+            EARTH / "DeformationMechanismInference" / "verification" / "evaluator.py",
+            "new_earth_xarray_deformation_metric",
+        )
+        stations = np.asarray(((0.0, 0.0), (100.0, -200.0)))
+        field = np.asarray(((1.0, 2.0, 3.0), (-1.0, 0.5, 4.0)))
+        np.testing.assert_allclose(
+            deformation._insar_projection(field, stations),
+            field @ deformation.LOOK_VECTOR,
+        )
+
+    def test_difficulty_ladders_change_scientific_regimes(self):
+        fwi = _load(EARTH / "ActiveFullWaveformInversion" / "verification" / "evaluator.py",
+                    "new_earth_fwi_ladder")
+        self.assertLess(fwi._difficulty_profile(1)["noise_multiplier"],
+                        fwi._difficulty_profile(3)["noise_multiplier"])
+        fwi.DIFFICULTY = 1
+        easy_fwi = fwi._world(fwi.DEVELOPMENT_SPECS[0])
+        fwi.DIFFICULTY = 3
+        hard_fwi = fwi._world(fwi.DEVELOPMENT_SPECS[0])
+        self.assertGreater(hard_fwi["noise"], easy_fwi["noise"])
+        self.assertFalse(np.array_equal(hard_fwi["velocity"], easy_fwi["velocity"]))
+
+        chronology = _load(EARTH / "ChronologyAssimilation" / "verification" / "evaluator.py",
+                           "new_earth_chronology_ladder")
+        chronology.DIFFICULTY = 1
+        easy_chronology = chronology._world(chronology.DEVELOPMENT_SPECS[0])
+        chronology.DIFFICULTY = 3
+        hard_chronology = chronology._world(chronology.DEVELOPMENT_SPECS[0])
+        self.assertGreater(hard_chronology["date_noise"], easy_chronology["date_noise"])
+        self.assertGreater(np.max(np.abs(hard_chronology["offsets"])),
+                           np.max(np.abs(easy_chronology["offsets"])))
+
+        deformation = _load(
+            EARTH / "DeformationMechanismInference" / "verification" / "evaluator.py",
+            "new_earth_deformation_ladder",
+        )
+        self.assertLess(deformation._difficulty_profile(1)["noise_multiplier"],
+                        deformation._difficulty_profile(3)["noise_multiplier"])
+        self.assertLess(deformation._difficulty_profile(1)["extra_supported_worlds"],
+                        deformation._difficulty_profile(3)["extra_supported_worlds"])
+
+        groundwater = _load(
+            EARTH / "GroundwaterRemediationDesign" / "verification" / "evaluator.py",
+            "new_earth_groundwater_ladder",
+        )
+        groundwater.DIFFICULTY = 1
+        easy_groundwater = groundwater._public_problem(groundwater.DEVELOPMENT_SPECS[0])
+        groundwater.DIFFICULTY = 3
+        hard_groundwater = groundwater._public_problem(groundwater.DEVELOPMENT_SPECS[0])
+        self.assertLess(hard_groundwater["concentration_limit_kg_m3"],
+                        easy_groundwater["concentration_limit_kg_m3"])
+
+        ice = _load(EARTH / "IceObservationNetworkDesign" / "verification" / "evaluator.py",
+                    "new_earth_ice_ladder")
+        ice.DIFFICULTY = 1
+        easy_ice = ice._world(ice.DEVELOPMENT_SEEDS[0])
+        ice.DIFFICULTY = 3
+        hard_ice = ice._world(ice.DEVELOPMENT_SEEDS[0])
+        self.assertGreater(hard_ice["catalog"][0]["noise_std"],
+                           easy_ice["catalog"][0]["noise_std"])
+        self.assertGreater(np.linalg.norm(hard_ice["exact_h"] - hard_ice["proxy_h"]),
+                           np.linalg.norm(easy_ice["exact_h"] - easy_ice["proxy_h"]))
+
     def test_fwi_exact_model_has_unit_structure_and_waveform_scores(self):
         evaluator = _load(EARTH / "ActiveFullWaveformInversion" / "verification" / "evaluator.py",
                           "new_earth_fwi_invariant")
@@ -112,6 +198,24 @@ class NewEarthScienceInvariantTests(unittest.TestCase):
                 shifted, _ = evaluator._hypervolume(problem, evaluator._reference_archive(problem), shift)
                 self.assertGreater(shifted, 0.0)
 
+    def test_groundwater_exact_world_differs_from_public_proxy(self):
+        evaluator = _load(EARTH / "GroundwaterRemediationDesign" / "verification" / "evaluator.py",
+                          "new_earth_groundwater_proxy_exact")
+        spec = evaluator.DEVELOPMENT_SPECS[0]
+        problem = evaluator._public_problem(spec)
+        plans = evaluator._reference_archive(problem)
+        proxy, _ = evaluator._hypervolume(problem, plans)
+        exact, _ = evaluator._hypervolume(problem, plans, evaluator._exact_shift(spec))
+        self.assertNotAlmostEqual(proxy, exact, places=10)
+
+    def test_optimization_reference_normalization_is_uncapped(self):
+        for directory in ("GroundwaterRemediationDesign", "IceObservationNetworkDesign"):
+            evaluator = _load(EARTH / directory / "verification" / "evaluator.py",
+                              "new_earth_uncapped_" + directory)
+            self.assertAlmostEqual(evaluator._normalize(1.0, 0.0, 1.0), 1.0)
+            self.assertGreater(evaluator._normalize(1.5, 0.0, 1.0), 1.0)
+            self.assertEqual(evaluator._normalize(-1.0, 0.0, 1.0), 0.0)
+
     def test_ice_additional_observation_reduces_public_posterior_trace(self):
         evaluator = _load(EARTH / "IceObservationNetworkDesign" / "verification" / "evaluator.py",
                           "new_earth_ice_invariant")
@@ -119,6 +223,17 @@ class NewEarthScienceInvariantTests(unittest.TestCase):
         first = evaluator._plan_metrics(world, np.asarray((0, 1, 2)))
         second = evaluator._plan_metrics(world, np.asarray((0, 1, 2, 3)))
         self.assertLessEqual(second["posterior_trace"], first["posterior_trace"] + 1e-9)
+
+    def test_ice_designs_share_one_osse_ensemble_per_world(self):
+        evaluator = _load(EARTH / "IceObservationNetworkDesign" / "verification" / "evaluator.py",
+                          "new_earth_ice_common_random_numbers")
+        world = evaluator._world(evaluator.DEVELOPMENT_SEEDS[0])
+        shift = {"sensitivity": 1.0, "noise": 1.0, "dynamics": 1.0}
+        states_a, errors_a = evaluator._osse_draws(world, shift)
+        states_b, errors_b = evaluator._osse_draws(world, shift)
+        np.testing.assert_array_equal(states_a, states_b)
+        np.testing.assert_array_equal(errors_a, errors_b)
+        self.assertEqual(errors_a.shape[1], evaluator.N_OBSERVATIONS)
 
     def test_paleoclimate_crps_is_finite_and_sharp_at_truth(self):
         evaluator = _load(EARTH / "ChronologyAssimilation" / "verification" / "evaluator.py",
@@ -140,6 +255,33 @@ class NewEarthScienceInvariantTests(unittest.TestCase):
         moved[:2] += shift
         translated = evaluator.forward_displacement("mogi", moved, stations + shift)
         np.testing.assert_allclose(original, translated, rtol=1e-12, atol=1e-12)
+
+    def test_volcano_scores_only_forward_identifiable_parameters(self):
+        evaluator = _load(EARTH / "DeformationMechanismInference" / "verification" / "evaluator.py",
+                          "new_earth_volcano_identifiability")
+        np.testing.assert_array_equal(
+            evaluator._identifiable_parameter_mask("mogi"),
+            np.asarray((True, True, True, True, False)),
+        )
+        np.testing.assert_array_equal(
+            evaluator._identifiable_parameter_mask("dike"),
+            np.asarray((True, True, False, True, True)),
+        )
+
+    def test_volcano_brier_excludes_unsupported_worlds(self):
+        evaluator = _load(EARTH / "DeformationMechanismInference" / "verification" / "evaluator.py",
+                          "new_earth_volcano_brier")
+        rows = []
+        for index, spec in enumerate(evaluator.DEVELOPMENT_SPECS):
+            rows.append(evaluator._evaluate_world(
+                lambda *args: {
+                    "mechanism_probabilities": {name: 1.0 / 3.0 for name in evaluator.MECHANISMS},
+                    "parameters": [], "confidence": 0.0, "abstain": True,
+                },
+                spec, "development", index,
+            ))
+        summary = evaluator._summary(rows, evaluator.DEVELOPMENT_SPECS)
+        self.assertAlmostEqual(summary["brier"], 2.0 / 3.0)
 
 
 if __name__ == "__main__":

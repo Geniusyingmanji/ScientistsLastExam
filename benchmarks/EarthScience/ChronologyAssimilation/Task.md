@@ -43,7 +43,8 @@ def reconstruct_climate(time_grid_years, proxy_catalog, date_sample, budget_unit
 A dating call may request 1–10 unique valid samples from one record and costs
 `1 + ceil(n_samples/5)`. Total cost may not exceed 16. The returned time grid is ascending. A
 non-abstaining reconstruction must contain finite means, strictly positive finite standard
-deviations, and one finite age offset per record.
+deviations, and one finite age offset per record. Every returned age offset must lie in
+`[-300, 300]` years.
 
 ## Evaluation
 
@@ -54,6 +55,13 @@ deviations, and one finite age offset per record.
 - `robustness_score` uses held-out spectra, proxy mixes, dating noise and chronology offsets.
 
 This is a pseudoproxy benchmark. It does not reconstruct Earth's actual climate.
+
+## Oracle and difficulty
+
+The evaluator uses `xarray` to align climate fields on the public time coordinate and calculate CE
+and RMSE. The pseudoproxy physics remains the stated local reduced-order model. Evaluator
+difficulty levels 1–3 increase chronology offsets, proxy noise and dating noise; level 1 is the
+shipped default and every level remains inside the public `[-300, 300]` offset contract.
 
 ## Rules
 

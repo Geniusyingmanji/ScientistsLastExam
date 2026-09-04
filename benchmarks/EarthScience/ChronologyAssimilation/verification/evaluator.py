@@ -6,6 +6,18 @@ import hashlib
 import math
 
 import numpy as np
+import xarray as xr
+
+DIFFICULTY = 1
+
+_DIFFICULTY_LADDER = {
+    1: {"offset_bound_years": 150.0, "proxy_noise_multiplier": 1.00,
+        "date_noise_multiplier": 1.00},
+    2: {"offset_bound_years": 190.0, "proxy_noise_multiplier": 1.18,
+        "date_noise_multiplier": 1.25},
+    3: {"offset_bound_years": 230.0, "proxy_noise_multiplier": 1.38,
+        "date_noise_multiplier": 1.55},
+}
 
 TIME_GRID = np.linspace(0.0, 2000.0, 81)
 N_PROXY = 8
@@ -25,6 +37,13 @@ HELDOUT_SPECS = (
 )
 
 
+def _difficulty_profile(level=None):
+    level = DIFFICULTY if level is None else int(level)
+    if level not in _DIFFICULTY_LADDER:
+        raise ValueError("difficulty %d has no measured profile" % level)
+    return _DIFFICULTY_LADDER[level]
+
+
 def _climate(seed, variant):
     rng = np.random.default_rng(int(seed))
     phase = rng.uniform(0.0, 2.0 * np.pi)
@@ -41,8 +60,10 @@ def _climate(seed, variant):
 def _world(spec):
     seed, kind, variant = spec
     rng = np.random.default_rng(int(seed) + 19)
+    profile = _difficulty_profile()
     climate = _climate(seed, variant)
-    offsets = rng.uniform(-150.0, 150.0, N_PROXY)
+    offset_bound = profile["offset_bound_years"]
+    offsets = rng.uniform(-offset_bound, offset_bound, N_PROXY)
     catalog = []
     true_ages = []
     for proxy_index in range(N_PROXY):
@@ -51,7 +72,8 @@ def _world(spec):
         nominal.sort()
         actual = np.clip(nominal + offsets[proxy_index], 0.0, 2000.0)
         sensitivity = 0.65 + 0.12 * (proxy_index % 4)
-        noise = 0.16 + 0.025 * (proxy_index % 3)
+        noise = ((0.16 + 0.025 * (proxy_index % 3))
+                 * profile["proxy_noise_multiplier"])
         if kind == "null":
             values = rng.normal(0.0, 0.75, N_SAMPLE)
         else:
@@ -70,7 +92,8 @@ def _world(spec):
         true_ages.append(actual)
     return {"seed": seed, "kind": kind, "variant": variant, "climate": climate,
             "offsets": offsets, "catalog": catalog, "true_ages": true_ages,
-            "date_noise": 12.0 + 2.0 * (variant % 3)}
+            "date_noise": ((12.0 + 2.0 * (variant % 3))
+                           * profile["date_noise_multiplier"])}
 
 
 class _DatingLab:
@@ -155,6 +178,24 @@ def _crps_normal(mean, std, truth):
     return std * (z * (2.0 * cdf - 1.0) + 2.0 * phi - 1.0 / math.sqrt(math.pi))
 
 
+def _climate_field_metrics(mean, truth):
+    """Coordinate-aligned CE and RMSE through xarray's labeled time-series model."""
+    coordinates = {"time_years": TIME_GRID}
+    predicted = xr.DataArray(
+        np.asarray(mean, dtype=float), dims=("time_years",), coords=coordinates
+    )
+    observed = xr.DataArray(
+        np.asarray(truth, dtype=float), dims=("time_years",), coords=coordinates
+    )
+    predicted, observed = xr.align(predicted, observed, join="exact")
+    residual = predicted - observed
+    sse = float((residual ** 2).sum().item())
+    anomalies = observed - observed.mean("time_years")
+    sst = float((anomalies ** 2).sum().item())
+    rmse = float(np.sqrt((residual ** 2).mean("time_years").item()))
+    return 1.0 - sse / max(sst, 1e-12), rmse
+
+
 def _empty(split, index):
     return {"split": split, "world_index": index, "valid": False, "abstained": False,
             "mechanism_score": 0.0, "coefficient_efficiency": -1e6, "rmse_c": 1e6,
@@ -174,10 +215,7 @@ def _evaluate_world(candidate, spec, split, index):
         supported = world["kind"] == "supported"
         if supported and not abstain:
             truth = world["climate"]
-            sse = float(np.sum((mean - truth) ** 2))
-            sst = float(np.sum((truth - np.mean(truth)) ** 2))
-            ce = 1.0 - sse / max(sst, 1e-12)
-            rmse = float(np.sqrt(np.mean((mean - truth) ** 2)))
+            ce, rmse = _climate_field_metrics(mean, truth)
             age_mae = float(np.mean(np.abs(offsets - world["offsets"])))
             crps = float(np.mean(_crps_normal(mean, std, truth)))
             ce_score = float(np.clip(ce, 0.0, 1.0))

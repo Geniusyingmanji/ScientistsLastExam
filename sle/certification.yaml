@@ -38,7 +38,8 @@ tasks:
     status: candidate
     reason: active GNSS/InSAR source-mechanism inference with a public source family, charged station design, null and multi-source misspecification worlds, sealed spatial prediction and separately reported mechanism, false-discovery, refusal, coverage and probability calibration; pending independent volcanology review, elastic-model replication, server-held worlds and model calibration
     citation_ids:
-      - doi:10.1029/2009JB006958
+      - doi:10.1029/2001RG000107
+      - isbn:9780691133027
 
   MedicinalChemistry/MolecularLeadOptimization:
     status: candidate

@@ -5,6 +5,18 @@ from __future__ import annotations
 import math
 
 import numpy as np
+import xarray as xr
+
+DIFFICULTY = 1
+
+_DIFFICULTY_LADDER = {
+    1: {"exact_discrepancy_strength": 1.00, "stress_strength": 1.00,
+        "compliance_limit_multiplier": 1.00},
+    2: {"exact_discrepancy_strength": 1.25, "stress_strength": 1.18,
+        "compliance_limit_multiplier": 0.85},
+    3: {"exact_discrepancy_strength": 1.55, "stress_strength": 1.38,
+        "compliance_limit_multiplier": 0.70},
+}
 
 DEVELOPMENT_SPECS = (
     (0, 0.72, 620.0, 260.0, 0.000055),
@@ -16,11 +28,43 @@ HELDOUT_SPECS = (
     (4, 1.05, 930.0, 285.0, 0.000028),
     (5, 0.66, 650.0, 455.0, 0.000062),
 )
-SHIFTS = (
+_BASE_SHIFTS = (
     {"velocity": 0.82, "dispersion": 1.22, "decay": 0.78, "release": 1.10},
     {"velocity": 1.18, "dispersion": 0.82, "decay": 1.18, "release": 1.00},
     {"velocity": 1.04, "dispersion": 1.35, "decay": 0.65, "release": 1.22},
 )
+
+
+def _difficulty_profile(level=None):
+    level = DIFFICULTY if level is None else int(level)
+    if level not in _DIFFICULTY_LADDER:
+        raise ValueError("difficulty %d has no measured profile" % level)
+    return _DIFFICULTY_LADDER[level]
+
+
+def _scale_shift(shift, strength):
+    return {key: 1.0 + float(strength) * (float(value) - 1.0)
+            for key, value in shift.items()}
+
+
+SHIFTS = tuple(_scale_shift(shift, _difficulty_profile()["stress_strength"])
+               for shift in _BASE_SHIFTS)
+
+
+def _exact_shift(spec):
+    """Evaluator-only departure from the public homogeneous transport proxy."""
+    index = int(spec[0])
+    shift = {
+        "velocity": 0.96 + 0.025 * (index % 4),
+        "dispersion": 1.08 + 0.04 * (index % 3),
+        "decay": 0.90 + 0.035 * (index % 3),
+        "release": 1.02 + 0.025 * (index % 2),
+    }
+    return _scale_shift(shift, _difficulty_profile()["exact_discrepancy_strength"])
+
+
+def _compose_shift(base, perturbation):
+    return {key: float(base[key]) * float(perturbation[key]) for key in base}
 
 
 def _public_problem(spec):
@@ -39,7 +83,8 @@ def _public_problem(spec):
         "aquifer_thickness_m": 18.0,
         "effective_porosity": 0.24,
         "receptor_locations_m": np.asarray(((7200.0, source_y - 180.0), (9000.0, source_y + 220.0))),
-        "concentration_limit_kg_m3": 1.2e-4,
+        "concentration_limit_kg_m3": (1.2e-4
+                                       * _difficulty_profile()["compliance_limit_multiplier"]),
         "well_count_bounds": np.asarray((1, 5), dtype=int),
         "pumping_rate_bounds_m3_day": np.asarray((80.0, 950.0)),
         "max_total_pumping_m3_day": 2600.0,
@@ -99,8 +144,8 @@ def _plan_metrics(problem, wells, shift=None):
     source_x, source_y = problem["source_location_m"]
     thickness = problem["aquifer_thickness_m"]
     porosity = problem["effective_porosity"]
-    max_receptor = 0.0
-    final_mass = initial_mass
+    mass_history = []
+    concentration_history = []
     for year in problem["evaluation_times_years"]:
         days = 365.25 * float(year)
         center_x = source_x + velocity * days
@@ -116,20 +161,37 @@ def _plan_metrics(problem, wells, shift=None):
             proximity = math.exp(-0.5 * (0.32 * along * along + across * across))
             removal += 2.4e-7 * rate * active_days * proximity
         mass = initial_mass * natural * math.exp(-removal)
-        final_mass = mass
+        mass_history.append(mass)
         denominator = 2.0 * math.pi * sigma_x * sigma_y * thickness * porosity
+        receptor_row = []
         for receptor_x, receptor_y in problem["receptor_locations_m"]:
             exponent = -0.5 * (((receptor_x - center_x) / sigma_x) ** 2
                                + ((receptor_y - source_y) / sigma_y) ** 2)
             concentration = mass / max(denominator, 1e-12) * math.exp(exponent)
-            max_receptor = max(max_receptor, concentration)
+            receptor_row.append(concentration)
+        concentration_history.append(receptor_row)
+    transport = xr.Dataset(
+        data_vars={
+            "remaining_mass_kg": ("time_years", np.asarray(mass_history, dtype=float)),
+            "receptor_concentration_kg_m3": (
+                ("time_years", "receptor"),
+                np.asarray(concentration_history, dtype=float),
+            ),
+        },
+        coords={
+            "time_years": np.asarray(problem["evaluation_times_years"], dtype=float),
+            "receptor": np.arange(len(problem["receptor_locations_m"])),
+        },
+    )
+    final_mass = float(transport["remaining_mass_kg"].isel(time_years=-1).item())
+    max_receptor = float(transport["receptor_concentration_kg_m3"].max().item())
     horizon_days = 365.25 * problem["horizon_years"]
     pumped = float(np.sum([rate * max(0.0, horizon_days - 365.25 * start)
                            for _, _, start, rate in wells]))
     mean_discount = (1.0 + problem["discount_rate"]) ** (-0.5 * problem["horizon_years"])
     cost = len(wells) * problem["fixed_well_cost_usd"] + pumped * problem["pumping_cost_usd_per_m3"] * mean_discount
     compliance = max_receptor <= problem["concentration_limit_kg_m3"]
-    return {"remaining_mass_kg": float(final_mass), "max_receptor_concentration_kg_m3": float(max_receptor),
+    return {"remaining_mass_kg": final_mass, "max_receptor_concentration_kg_m3": max_receptor,
             "lifecycle_cost_usd": float(cost), "total_pumped_m3": pumped, "compliant": bool(compliance)}
 
 
@@ -201,20 +263,24 @@ def _reference_archive(problem):
 def _normalize(value, baseline, reference):
     if reference <= baseline + 1e-12:
         return 0.0
-    return float(np.clip((value - baseline) / (reference - baseline), 0.0, 1.0))
+    return float(max(0.0, (value - baseline) / (reference - baseline)))
 
 
 def _evaluate_problem(candidate, spec, split, index):
     problem = _public_problem(spec)
     try:
         plans = _validate_archive(candidate(problem), problem)
-        exact_hv, exact_rows = _hypervolume(problem, plans)
-        proxy_hv, _ = _hypervolume(problem, plans, {"velocity": 0.94, "dispersion": 0.88, "decay": 1.08, "release": 1.0})
-        baseline_hv, _ = _hypervolume(problem, _baseline_archive(problem))
-        reference_hv, _ = _hypervolume(problem, _reference_archive(problem))
-        shifted = [_hypervolume(problem, plans, shift)[0] for shift in SHIFTS]
-        baseline_shifted = [_hypervolume(problem, _baseline_archive(problem), shift)[0] for shift in SHIFTS]
-        reference_shifted = [_hypervolume(problem, _reference_archive(problem), shift)[0] for shift in SHIFTS]
+        exact = _exact_shift(spec)
+        exact_hv, exact_rows = _hypervolume(problem, plans, exact)
+        proxy_hv, _ = _hypervolume(problem, plans)
+        baseline_hv, _ = _hypervolume(problem, _baseline_archive(problem), exact)
+        reference_hv, _ = _hypervolume(problem, _reference_archive(problem), exact)
+        shifted_worlds = [_compose_shift(exact, shift) for shift in SHIFTS]
+        shifted = [_hypervolume(problem, plans, shift)[0] for shift in shifted_worlds]
+        baseline_shifted = [_hypervolume(problem, _baseline_archive(problem), shift)[0]
+                            for shift in shifted_worlds]
+        reference_shifted = [_hypervolume(problem, _reference_archive(problem), shift)[0]
+                             for shift in shifted_worlds]
         shifted_scores = [_normalize(v, b, r) for v, b, r in zip(shifted, baseline_shifted, reference_shifted)]
         compliant = [row for row in exact_rows if row["compliant"]]
         return {"split": split, "problem_index": index, "valid": True,

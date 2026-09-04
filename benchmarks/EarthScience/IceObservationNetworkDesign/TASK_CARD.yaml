@@ -2,13 +2,20 @@ schema_version: 2
 scientific_question: Can an agent construct a cost-aware observation-network archive that improves ice-sheet forecasts under uncertain sensitivities and dynamics?
 artifact: Four to sixteen unique, bounded-cost selections from a public catalog of velocity, elevation, thickness, grounding-line and basal-radar observations.
 oracle:
-  model: deterministic linear-Gaussian ice-sheet OSSE with a public proxy sensitivity matrix, fixed Kalman update, seeded state/noise ensembles and sealed sensitivity, noise and forecast-dynamics shifts
+  model: deterministic linear-Gaussian ice-sheet OSSE with a public proxy sensitivity matrix, fixed Kalman update, seeded state/noise ensembles and sealed sensitivity, noise and forecast-dynamics shifts; ensemble forecast errors and CRPS are labeled and reduced with xarray
   feasibility: unique valid catalog selections with three to ten observations and total cost within the public budget
   deterministic: true
+  external_tooling: xarray 2023.6.0 for labeled ensemble/forecast alignment, RMSE and CRPS reduction
+difficulty_ladder:
+  default_level: 1
+  levels:
+    1: working observation noise, proxy-exact mismatch and stresses
+    2: 15 percent more noise, 25 percent more mismatch and 18 percent stronger stresses
+    3: 32 percent more noise, 55 percent more mismatch and 38 percent stronger stresses
 normalization:
   baseline: four clustered low-cost velocity networks recomputed for each world
   reference: a shipped truth-blind greedy A-optimal multibudget archive recomputed from the public proxy
-  score: exact-OSSE forecast-skill-versus-cost Pareto hypervolume above baseline; CRPS, physical RMSE, posterior diagnostics, held-out transfer and worst-shift robustness remain separate
+  score: exact-OSSE forecast-skill-versus-cost Pareto hypervolume above baseline, floored at zero and uncapped above the reference; CRPS, physical RMSE, posterior diagnostics, held-out transfer and worst-shift robustness remain separate
 citations:
 - id: doi:10.5194/tc-19-5423-2025
   title: Estimation of the state and parameters in ice sheet model using an ensemble Kalman filter and Observing System Simulation Experiments
@@ -18,9 +25,17 @@ invariants:
 - adding an independent finite-noise observation cannot increase public linear-Gaussian posterior covariance
 - posterior covariance remains symmetric positive definite for every valid design
 - zero proxy-exact shift makes proxy and exact OSSE metrics agree
+- every design within a world is compared on the same deterministic truth and noise ensemble
 - identical fixed designs reproduce physical RMSE, CRPS and hypervolume exactly
 - the shipped greedy archive exceeds the clustered weak baseline on development worlds
-known_shortcuts: The state and observation operators are low-dimensional linear-Gaussian abstractions. They omit nonlinear grounding-line migration, non-Gaussian structural error, orbital constraints and correlated instrument bias. Public worlds need server-held replacements, full ice-flow replication and mission-domain review before operational interpretation.
+known_shortcuts: xarray supplies authoritative labeled forecast-array alignment and aggregation, not ice-flow physics. The state and observation operators are local low-dimensional linear-Gaussian abstractions. They omit nonlinear grounding-line migration, non-Gaussian structural error, orbital constraints and correlated instrument bias. Public worlds need server-held replacements, full ice-flow replication and mission-domain review before operational interpretation.
+licensing:
+  task_package: repository_license_not_declared
+  external_assets: none
+  note: All catalogs and OSSE arrays are generated from original repository code; cited publications are not redistributed.
+contamination:
+  status: cannot_be_ruled_out
+  rationale: The procedural catalogs, linear model and greedy scaffold are public and AI-assisted; server-held worlds and independent ice-flow replication are still required.
 review:
   domain: pending_external_cryosphere
   evaluator_security: automated_archive_budget_covariance_crps_determinism_reference_and_metric_sealing_tests

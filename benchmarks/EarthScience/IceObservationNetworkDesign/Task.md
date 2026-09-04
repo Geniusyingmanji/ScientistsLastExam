@@ -45,8 +45,9 @@ sensitivity and dynamics shifts. It reports:
 - observation cost; and
 - forecast-skill-versus-cost Pareto hypervolume.
 
-`combined_score` is normalized development exact-OSSE hypervolume. Posterior trace/log determinant
-are diagnostics, not the primary objective: an overconfident proxy cannot beat poor hidden
+`combined_score` is normalized development exact-OSSE hypervolume, floored at zero but not capped
+above the reference. Posterior trace/log determinant are diagnostics, not the primary objective:
+an overconfident proxy cannot beat poor hidden
 forecast skill. `robustness_score` is the worst sensitivity/noise/dynamics shift.
 
 Evaluator-only per-problem diagnostics use the keys `split`, `problem_index`, `valid`, `score`,
@@ -56,6 +57,13 @@ Evaluator-only per-problem diagnostics use the keys `split`, `problem_index`, `v
 
 This is a reduced-order OSSE and not a mission design recommendation.
 
+## Oracle and difficulty
+
+The evaluator uses `xarray` to align ensemble/forecast dimensions and calculate forecast RMSE and
+normalized CRPS. The ice dynamics and observation operators remain the stated local
+linear-Gaussian OSSE. Evaluator difficulty levels 1–3 increase observation noise, proxy-to-exact
+model discrepancy and sealed physical stresses; level 1 is the shipped default.
+
 ## Rules
 
 - Only edit `solution.py`; keep `design_ice_observation_network(problem)`.
@@ -63,5 +71,5 @@ This is a reduced-order OSSE and not a mission design recommendation.
 - Do not read `verification/` or `frontier_eval/`.
 - Malformed, duplicated, out-of-range or over-budget plans fail closed.
 
-References: Cheng et al. (2025), DOI `10.5194/tc-19-5423-2025`; Edwards et al. (2023),
+References: Choi et al. (2025), DOI `10.5194/tc-19-5423-2025`; Edwards et al. (2023),
 DOI `10.5194/tc-17-4661-2023`.

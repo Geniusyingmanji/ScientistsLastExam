@@ -50,8 +50,9 @@ The public proxy and hidden exact simulator report:
 - total pumped water in m3; and
 - the Pareto hypervolume for maximizing cleanup and minimizing lifecycle cost.
 
-`combined_score` is normalized development exact-model hypervolume. Regulatory compliance is a
-hard gate: a cheap plan cannot compensate for receptor exceedance. The evaluator separately
+`combined_score` is normalized development exact-model hypervolume, floored at zero and uncapped
+above the shipped reference. Regulatory compliance is a hard gate: a cheap plan cannot compensate
+for receptor exceedance. The evaluator separately
 retains proxy hypervolume, false promotion, held-out aquifers and the worst hidden velocity,
 dispersion, decay and continued-release shift. `robustness_score` is the worst shifted normalized
 hypervolume.
@@ -64,6 +65,13 @@ Evaluator-only per-problem diagnostics use the keys `split`, `problem_index`, `v
 The transport model is a deterministic Gaussian-plume/capture approximation. It is not a site
 remediation decision and requires MODFLOW or field replication before scientific use.
 
+## Oracle and difficulty
+
+The evaluator uses `xarray` for labeled contaminant-mass and time-by-receptor concentration
+histories and compliance reduction. The plume/capture physics remains the stated local
+reduced-order model. Evaluator difficulty levels 1–3 tighten the receptor limit and strengthen
+proxy-to-exact discrepancy and robustness stresses; level 1 is the shipped default.
+
 ## Rules
 
 - Only edit `solution.py`; keep `design_remediation(problem)`.
@@ -71,5 +79,5 @@ remediation decision and requires MODFLOW or field replication before scientific
 - Do not read `verification/` or `frontier_eval/`.
 - Malformed, duplicated-only, non-finite or out-of-bound archives fail closed.
 
-References: Bayer & Finkel (2007), DOI `10.1016/S0309-1708(01)00020-3`; Matott et al.
-(2013), DOI `10.1186/2193-2697-2-6`.
+References: Erickson, Mayer & Horn (2002), DOI `10.1016/S0309-1708(01)00020-3`;
+Deschaine, Lillys & Pintér (2013), DOI `10.1186/2193-2697-2-6`.

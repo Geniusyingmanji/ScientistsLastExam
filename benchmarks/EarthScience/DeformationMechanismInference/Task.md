@@ -15,8 +15,10 @@ The public source library contains `mogi`, `sill` and `dike`. Every source uses 
 ```
 
 with public bounds supplied in `model_library`. The exact public forward expressions and units
-are included in that mapping. Hidden information consists of source type and parameters, noise,
-null or out-of-family status, and sealed station locations.
+are included in that mapping. The common row contains two mechanism-inactive placeholders:
+`horizontal_scale_m` is not scored for `mogi`, and `depth_m` is not scored for the reduced-order
+`dike`; all five coordinates are active for `sill`. Hidden information consists of source type
+and identifiable parameters, noise, null or out-of-family status, and sealed station locations.
 
 ## Your task
 
@@ -54,6 +56,13 @@ nonnegative and sum to one. Non-abstaining parameters must satisfy the public bo
 
 This is an elastic reduced-order benchmark, not evidence for a real volcano.
 
+## Oracle and difficulty
+
+The evaluator uses `xarray` to align station/component displacement fields, apply the labeled
+InSAR look-vector projection and reduce residuals. The source equations remain the stated local
+reduced-order models. Evaluator difficulty levels 1–3 increase geodetic noise, strengthen
+out-of-family responses and add supported source worlds; level 1 is the shipped default.
+
 ## Rules
 
 - Only edit `solution.py`; keep the complete function signature.
@@ -61,4 +70,7 @@ This is an elastic reduced-order benchmark, not evidence for a real volcano.
 - Do not read `verification/` or `frontier_eval/`.
 - Survey errors and overspending invalidate the world even when caught.
 
-Reference: O'Brien et al. (2010), DOI `10.1029/2009JB006958`.
+References: Dzurisin (2003), *Reviews of Geophysics*, doi:`10.1029/2001RG000107`;
+Segall (2010), *Earthquake and Volcano Deformation*, ISBN `9780691133027`. These
+references motivate the source families and deformation-observation setting; the benchmark
+uses the reduced-order equations stated in its public model library.

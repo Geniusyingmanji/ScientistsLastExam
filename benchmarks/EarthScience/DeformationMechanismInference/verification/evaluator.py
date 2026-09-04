@@ -6,6 +6,18 @@ import hashlib
 import math
 
 import numpy as np
+import xarray as xr
+
+DIFFICULTY = 1
+
+_DIFFICULTY_LADDER = {
+    1: {"noise_multiplier": 1.00, "misspecification_strength": 1.00,
+        "extra_supported_worlds": 0},
+    2: {"noise_multiplier": 1.30, "misspecification_strength": 1.18,
+        "extra_supported_worlds": 1},
+    3: {"noise_multiplier": 1.65, "misspecification_strength": 1.38,
+        "extra_supported_worlds": 2},
+}
 
 BOUNDS_M = (-5000.0, 5000.0)
 BUDGET_UNITS = 18
@@ -17,7 +29,7 @@ PARAMETER_BOUNDS = np.asarray([
 LOOK_VECTOR = np.asarray((0.42, -0.18, 0.889), dtype=float)
 LOOK_VECTOR /= np.linalg.norm(LOOK_VECTOR)
 
-DEVELOPMENT_SPECS = (
+_BASE_DEVELOPMENT_SPECS = (
     (62011, "supported", "mogi"), (62017, "supported", "sill"),
     (62029, "supported", "dike"), (62039, "supported", "mogi"),
     (62047, "null", "null"), (62053, "misspecified", "multi_source"),
@@ -26,6 +38,23 @@ HELDOUT_SPECS = (
     (72007, "supported", "sill"), (72019, "supported", "dike"),
     (72031, "supported", "mogi"), (72043, "null", "null"),
     (72053, "misspecified", "rheology"),
+)
+
+
+def _difficulty_profile(level=None):
+    level = DIFFICULTY if level is None else int(level)
+    if level not in _DIFFICULTY_LADDER:
+        raise ValueError("difficulty %d has no measured profile" % level)
+    return _DIFFICULTY_LADDER[level]
+
+
+_EXTRA_DEVELOPMENT_SPECS = (
+    (73001, "supported", "dike"),
+    (73004, "supported", "sill"),
+)
+DEVELOPMENT_SPECS = (
+    _BASE_DEVELOPMENT_SPECS
+    + _EXTRA_DEVELOPMENT_SPECS[:_difficulty_profile()["extra_supported_worlds"]]
 )
 
 
@@ -64,6 +93,22 @@ def forward_displacement(mechanism, parameters, stations_xy_m):
     raise ValueError("unknown mechanism")
 
 
+def _identifiable_parameter_mask(mechanism):
+    """Parameters that actually occur in the public forward expression.
+
+    Mogi has no horizontal-scale parameter and the reduced-order dike expression has no
+    depth dependence.  Keeping the common five-column artifact is convenient, but scoring an
+    unused coordinate would reward guessing hidden state rather than geodetic inference.
+    """
+    if mechanism == "mogi":
+        return np.asarray((True, True, True, True, False))
+    if mechanism == "dike":
+        return np.asarray((True, True, False, True, True))
+    if mechanism == "sill":
+        return np.ones(5, dtype=bool)
+    raise ValueError("unknown mechanism")
+
+
 def _parameters(seed):
     rng = np.random.default_rng(int(seed))
     lo, hi = PARAMETER_BOUNDS[:, 0], PARAMETER_BOUNDS[:, 1]
@@ -75,8 +120,10 @@ def _parameters(seed):
 def _world(spec):
     seed, kind, mechanism = spec
     parameters = _parameters(seed)
+    noise_multiplier = _difficulty_profile()["noise_multiplier"]
     return {"seed": seed, "kind": kind, "mechanism": mechanism, "parameters": parameters,
-            "noise_gnss": 0.0035, "noise_insar": 0.006}
+            "noise_gnss": 0.0035 * noise_multiplier,
+            "noise_insar": 0.006 * noise_multiplier}
 
 
 def _field(world, stations):
@@ -88,12 +135,43 @@ def _field(world, stations):
     second_params = world["parameters"].copy()
     second_params[:2] *= -0.7
     second_params[2] *= 1.35
-    second_params[3] *= -0.55
+    second_params[3] *= (-0.55 * _difficulty_profile()["misspecification_strength"])
     second = forward_displacement("sill", second_params, stations)
     field = first + second
     if world["mechanism"] == "rheology":
         field = np.sign(field) * np.sqrt(np.abs(field) * 0.08)
     return field
+
+
+def _displacement_array(values, stations):
+    """Station/component-labeled displacement field using the community xarray model."""
+    stations = np.asarray(stations, dtype=float)
+    return xr.DataArray(
+        np.asarray(values, dtype=float),
+        dims=("station", "component"),
+        coords={
+            "station": np.arange(len(stations)),
+            "component": ["east", "north", "up"],
+            "x_m": ("station", stations[:, 0]),
+            "y_m": ("station", stations[:, 1]),
+        },
+    )
+
+
+def _insar_projection(field, stations):
+    displacement = _displacement_array(field, stations)
+    look = xr.DataArray(
+        LOOK_VECTOR, dims=("component",),
+        coords={"component": ["east", "north", "up"]},
+    )
+    return np.asarray(xr.dot(displacement, look, dims="component").values, dtype=float)
+
+
+def _reduced_chi_square(predicted, truth, stations, sigma):
+    predicted_array = _displacement_array(predicted, stations)
+    truth_array = _displacement_array(truth, stations)
+    predicted_array, truth_array = xr.align(predicted_array, truth_array, join="exact")
+    return float((((predicted_array - truth_array) / float(sigma)) ** 2).mean().item())
 
 
 class _Survey:
@@ -132,7 +210,7 @@ class _Survey:
             observed = clean + rng.normal(0.0, sigma, clean.shape)
             look = []
         else:
-            observed = clean @ LOOK_VECTOR + rng.normal(0.0, sigma, len(stations))
+            observed = _insar_projection(clean, stations) + rng.normal(0.0, sigma, len(stations))
             look = LOOK_VECTOR.copy()
         return {"stations_xy_m": stations.copy(), "modality": modality,
                 "displacement_m": observed, "noise_std_m": sigma,
@@ -187,15 +265,18 @@ def _evaluate_world(candidate, spec, split, index):
         if supported and not abstain:
             truth_index = MECHANISMS.index(world["mechanism"])
             class_probability = float(probs[truth_index])
-            scale = PARAMETER_BOUNDS[:, 1] - PARAMETER_BOUNDS[:, 0]
-            parameter_error = float(np.sqrt(np.mean(((parameters - world["parameters"]) / scale) ** 2)))
+            active = _identifiable_parameter_mask(world["mechanism"])
+            scale = PARAMETER_BOUNDS[active, 1] - PARAMETER_BOUNDS[active, 0]
+            parameter_error = float(np.sqrt(np.mean(
+                ((parameters[active] - world["parameters"][active]) / scale) ** 2
+            )))
             parameter_score = float(math.exp(-8.0 * parameter_error))
             axis = np.linspace(-4700.0, 4700.0, 9)
             sealed = np.asarray([(x, y) for x in axis for y in axis if (int(x + y) // 100) % 3 == 0])
             truth = _field(world, sealed)
             predicted = forward_displacement(MECHANISMS[int(np.argmax(probs))], parameters, sealed)
             sigma = world["noise_gnss"]
-            chi2 = float(np.mean(((predicted - truth) / sigma) ** 2))
+            chi2 = _reduced_chi_square(predicted, truth, sealed, sigma)
             prediction_score = float(1.0 / (1.0 + math.sqrt(chi2) / 150.0))
             mechanism = float((class_probability * parameter_score * prediction_score) ** (1.0 / 3.0))
         elif supported:
@@ -205,10 +286,14 @@ def _evaluate_world(candidate, spec, split, index):
             correct = bool(abstain)
             class_probability = parameter_score = prediction_score = mechanism = 1.0 if correct else 0.0
             chi2 = 0.0 if correct else 1e12
-        target = np.zeros(3)
         if supported:
+            target = np.zeros(3)
             target[MECHANISMS.index(world["mechanism"])] = 1.0
-        brier = float(np.sum((probs - target) ** 2))
+            brier = float(np.sum((probs - target) ** 2))
+        else:
+            # There is no member of the three-class simplex that represents an unsupported
+            # world.  Refusal is scored on its own axis, so exclude these worlds from Brier.
+            brier = 0.0
         target_confidence = 1.0 if supported and not abstain else 0.0
         row.update({"valid": True, "abstained": abstain, "mechanism_score": mechanism,
                     "class_probability": class_probability, "parameter_score": parameter_score,
@@ -234,7 +319,7 @@ def _summary(rows, specs):
         "class_probability": float(np.mean([r["class_probability"] for r in supported])),
         "parameter_score": float(np.mean([r["parameter_score"] for r in supported])),
         "prediction_score": float(np.mean([r["prediction_score"] for r in supported])),
-        "brier": float(np.mean([r["brier_score"] for r in rows])),
+        "brier": float(np.mean([r["brier_score"] for r in supported])),
         "false_count": sum(r["false_discovery"] for r in unsupported),
         "refusal_count": sum(r["correct_refusal"] for r in unsupported),
         "attempt_count": sum(not r["abstained"] for r in supported),

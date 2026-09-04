@@ -2,23 +2,39 @@ schema_version: 2
 scientific_question: Can a charged GNSS/InSAR survey identify a supported volcanic source family and parameters while refusing null or resolvably out-of-family deformation?
 artifact: Probabilities over a public source family, one bounded parameter row, confidence and optional model-inadequacy abstention.
 oracle:
-  model: deterministic elastic Mogi, sill and dike responses with procedural sources, zero-deformation nulls and two-source or rheological misspecification
+  model: deterministic elastic Mogi, sill and dike responses with procedural sources, zero-deformation nulls and two-source or rheological misspecification; station/component fields and InSAR projection are coordinate-aligned with xarray
   feasibility: finite bounded source artifacts and unique charged station surveys under an eighteen-unit budget
   deterministic: true
+  external_tooling: xarray 2023.6.0 for labeled station/component displacement alignment, projection and residual reduction
+difficulty_ladder:
+  default_level: 1
+  levels:
+    1: working geodetic noise and source set
+    2: 30 percent more noise, stronger misspecification and one extra supported source
+    3: 65 percent more noise, stronger misspecification and two extra supported sources
 normalization:
   baseline: one coarse GNSS survey followed by abstention on every world
-  reference: a shipped truth-blind family-and-parameter grid-search witness and exact supported-world ceiling
+  reference: the evaluator recomputes a shipped truth-blind family-and-parameter grid-search witness and exact supported-world ceiling on every world
   score: source probability, parameter recovery and sealed displacement prediction normalized above always abstaining; Brier calibration and refusal remain separate
 citations:
-- id: doi:10.1029/2009JB006958
-  title: Statistical selection of the best seismic source mechanisms from inversions of synthetic volcanic long-period events
+- id: doi:10.1029/2001RG000107
+  title: A comprehensive approach to monitoring volcano deformation as a window on the eruption cycle
+- id: isbn:9780691133027
+  title: Earthquake and Volcano Deformation
 invariants:
 - translated sources produce correspondingly translated displacement fields
-- exact source families and parameters attain unit mechanism and sealed-prediction scores
+- exact source families and identifiable parameters attain unit mechanism and sealed-prediction scores; inactive placeholder coordinates are not scored
 - null and resolvable two-source or rheological responses reward refusal
 - GNSS and InSAR observations agree under the public look-vector projection
 - survey cost is charged and malformed or overspent surveys fail closed
-known_shortcuts: The public half-space source expressions are reduced-order elastic abstractions with synthetic independent noise. They omit topography, heterogeneous elastic structure, temporal source evolution and atmospheric InSAR errors. Public procedural worlds require server-held confirmation and real claims require independent geodetic and geological evidence.
+known_shortcuts: xarray supplies authoritative labeled-array projection and aggregation, not elastic source physics. The public half-space source expressions are local reduced-order abstractions with synthetic independent noise. They omit topography, heterogeneous elastic structure, temporal source evolution and atmospheric InSAR errors. Public procedural worlds require server-held confirmation and real claims require independent geodetic and geological evidence.
+licensing:
+  task_package: repository_license_not_declared
+  external_assets: none
+  note: All runtime worlds are generated from original repository code; cited publications are not redistributed.
+contamination:
+  status: cannot_be_ruled_out
+  rationale: The equations, scaffold and fixed procedural family are public and were built with AI assistance; server-held worlds and an independent model family are still required.
 review:
   domain: pending_external_volcanology
   evaluator_security: automated_budget_geometry_projection_parameter_refusal_determinism_and_metric_sealing_tests

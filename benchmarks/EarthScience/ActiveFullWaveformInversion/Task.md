@@ -59,6 +59,13 @@ shot is allowed but costs again. Velocity must be finite and remain inside
 The grid is deliberately small enough for deterministic CPU evaluation. It is a controlled
 acoustic benchmark, not a claim of field-scale seismic imaging.
 
+## Oracle and difficulty
+
+The evaluator uses `xarray` for coordinate-labeled time/receiver waveform alignment and misfit
+reduction. The propagation model itself remains the stated local reduced-order finite-difference
+model. Evaluator difficulty levels 1–3 progressively increase observation noise and the number of
+simultaneous anomalies; level 1 is the shipped default.
+
 ## Rules
 
 - Only edit `solution.py`; keep the complete function signature above.

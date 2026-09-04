@@ -2,12 +2,19 @@ schema_version: 2
 scientific_question: Can a bounded shot program recover a supported acoustic velocity structure and refuse null or resolvably non-acoustic responses?
 artifact: A bounded two-dimensional velocity grid, confidence and an optional model-inadequacy abstention.
 oracle:
-  model: deterministic constant-density 2-D acoustic finite differences with procedural smooth anomalies, no-anomaly nulls and attenuating out-of-family responses
+  model: deterministic constant-density 2-D acoustic finite differences with procedural smooth anomalies, no-anomaly nulls and attenuating out-of-family responses; waveform misfit is aligned and aggregated with xarray
   feasibility: finite bounded velocity grids and strictly charged source acquisitions under a three-unit budget
   deterministic: true
+  external_tooling: xarray 2023.6.0 for coordinate-labeled time/receiver waveform alignment and reduction
+difficulty_ladder:
+  default_level: 1
+  levels:
+    1: working noise and anomaly count
+    2: 30 percent more observation noise and one additional anomaly
+    3: 65 percent more observation noise and two additional anomalies
 normalization:
   baseline: one central shot followed by abstention on every world
-  reference: a shipped truth-blind multishot smooth-lens witness plus an exact supported-world ceiling
+  reference: the evaluator recomputes a shipped truth-blind multishot smooth-lens witness plus an exact supported-world ceiling on every world
   score: depth-weighted structure and sealed-frequency waveform recovery normalized above always abstaining; refusal, calibration and held-out transfer remain separate
 citations:
 - id: doi:10.1190/1.3238367
@@ -20,7 +27,14 @@ invariants:
 - no-anomaly and attenuating responses reward refusal instead of fabricated structure
 - every acquisition consumes budget and overspending fails closed
 - held-out shots, frequencies, worlds and mechanism metrics remain evaluator-only
-known_shortcuts: This is a small constant-density acoustic benchmark with public grid geometry. It omits elasticity, three-dimensional acquisition, realistic source signatures and field preprocessing. Public procedural worlds require future server-held replacements, and scientific claims require independent wave solvers and field validation.
+known_shortcuts: xarray supplies authoritative labeled-array alignment and aggregation, not the wave physics. The local simulator is a small constant-density acoustic benchmark with public grid geometry and omits elasticity, three-dimensional acquisition, realistic source signatures and field preprocessing. Public procedural worlds require future server-held replacements, and scientific claims require independent wave solvers and field validation.
+licensing:
+  task_package: repository_license_not_declared
+  external_assets: none
+  note: All waveforms and velocity worlds are generated from original repository code; cited publications are not redistributed.
+contamination:
+  status: cannot_be_ruled_out
+  rationale: The acoustic family, grid and scaffold are public and AI-assisted; server-held worlds and an independent solver are still required.
 review:
   domain: pending_external_seismology
   evaluator_security: automated_budget_shape_bounds_determinism_refusal_and_metric_sealing_tests
