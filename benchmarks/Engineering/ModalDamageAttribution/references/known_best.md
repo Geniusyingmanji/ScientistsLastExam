@@ -15,29 +15,68 @@ Truth-blind: it reads only the public problem and the budgeted campaign.
 
 | metric | development | held out |
 |---|---|---|
-| mechanism score (normalized) | **0.665** | 0.535 |
+| mechanism score (normalized) | **0.733** | 0.587 |
 | localisation rate | 0.83 | 0.80 |
-| severity score | 0.61 | — |
+| severity score | 0.46 | — |
 | healthy false alarm rate | 0.00 | 0.00 |
-| false discovery rate | 0.00 | 0.00 |
+| false discovery rate | 0.10 | — |
 | correct refusal rate | 1.00 | 1.00 |
-| discovery coverage | 0.75 | — |
+| discovery coverage | 1.00 | — |
 | days measured | 9 of 9 | 9 of 9 |
 
-Its design: buy the nine highest-excitation days; average the frequency ratios `f_k / f_1`, which
-cancel the temperature factor exactly; enumerate the declared damage family by re-solving the
-eigenproblem for every internal element on a severity grid; call a shift below the detection
-threshold healthy, the best family member the answer when its residual is small relative to the
-shift, and anything else a support change.
+Its design: take the healthy ratios from the commissioning campaign, which measured the real
+structure, rather than from the published model, which is a few per cent away from it; buy the nine
+highest-excitation days; average the frequency ratios `f_k / f_1`, which cancel the temperature
+factor exactly; enumerate the declared damage family by re-solving the eigenproblem for every
+internal element on a severity grid; call a shift below the detection threshold healthy, the best
+family member the answer when its residual is small relative to the shift, and anything else a
+support change.
 
-**The reference is deliberately not at the ceiling.** Its coverage is 0.75: it declines two damaged
-structures it should have solved, because it measures the shift against the model's own healthy
-ratios and the published model carries three per cent of error against the real structure. The
-commissioning campaign measured the real structure, so using its ratios as the baseline instead
-recovers both — worth **+0.125** and runnable as a one-line change. Its severity grid is coarse
-against the scoring tolerance, its days are averaged with equal weight although their noise differs
-threefold, and its refusal threshold is a fixed fraction rather than what the measured noise says a
-fit should leave behind. Each of those is a scoring axis.
+**The reference is deliberately not at the ceiling.** Its severity score is 0.46 against a
+tolerance of four per cent. Three things are left on the table: the days are averaged with equal
+weight although their noise differs threefold, so an inverse-variance average would be strictly
+better; the decision is a pair of thresholds rather than a comparison of how well each hypothesis
+explains the data under a stated noise model; and the search is over a grid in a quantity the
+residual is smooth in. The frontier draw below took all three.
+
+## Model draws — Claude Opus 5
+
+Three seeds, three proposals each, `greedy_rewrite`, normal feedback, budget 3.
+
+**First draw, against the under-built reference**
+(`experiments/opus5_modal_damage_attribution_calibration_2026-09-04.json`, reference 0.665):
+
+| seed | proposal 1 | proposal 2 | proposal 3 | best |
+|---|---|---|---|---|
+| 0 | **0.821** | 0.696 | 0.821 | 0.821 |
+| 1 | 0.447 | 0.698 | 0.823 | 0.823 |
+| 2 | **0.821** | 0.812 | 0.821 | 0.821 |
+
+Two of three first proposals cleared the reference, so the admission bar failed. Its solution said
+why, in its own docstring: it updated the published model against the commissioning campaign,
+worked in log-ratio space with inverse-variance weights, and decided between healthy, damaged and
+out-of-family by likelihood ratio with a complexity penalty rather than by thresholds.
+
+**The response was to fix the reference, not the world.** Model updating against measurements is
+standard practice in structural health monitoring, so a reference that skips it is under-built —
+and this repository's own lesson is that a weak reference makes the admission bar meaningless. The
+reference now takes its healthy ratios from the campaign; the severity tolerance was tightened from
+0.12 to 0.04 at the same time, because a repair decision turns on a few per cent of section loss.
+
+**Second draw, against the corrected reference**
+(`experiments/opus5_modal_damage_attribution_calibration_2026-09-04_v2.json`, reference 0.733):
+
+| seed | proposal 1 | proposal 2 | proposal 3 | best |
+|---|---|---|---|---|
+| 0 | 0.622 | 0.613 | 0.748 | **0.748** |
+| 1 | 0.725 | 0.724 | 0.724 | 0.725 |
+| 2 | 0.725 | 0.726 | 0.731 | 0.731 |
+
+**The admission bar holds: no first proposal reaches the reference's 0.733.** The best of nine is
+0.748 against a ceiling of 1.0, so the task is not saturated at the frontier, and the remaining
+quarter of the scale is the severity axis and the inverse-variance weighting the reference does not
+do. Seed 0 is the trajectory worth reading: 0.622 to 0.613 to 0.748, a rejected middle proposal and
+then a real gain.
 
 ## Baseline — `solution.py`
 
@@ -59,37 +98,35 @@ its budget lands outside the commissioning band where the linear law is not the 
 
 | strategy | score | localisation | severity | healthy false alarm | false discovery | refusal | coverage | held out |
 |---|---|---|---|---|---|---|---|---|
-| ratios + family search + relative-residual refusal (reference) | 0.665 | 0.83 | 0.61 | 0.00 | 0.00 | 1.00 | 0.75 | 0.535 |
-| same, calibrating the healthy ratios on the commissioning data | 0.790 | 0.83 | 0.61 | 0.00 | 0.00 | 1.00 | 0.88 | 0.535 |
-| same, absolute frequencies instead of ratios | 0.357 | 0.33 | 0.29 | 0.00 | 0.00 | 1.00 | 0.38 | 0.000 |
-| same, never declining | 0.513 | 1.00 | 0.70 | 0.50 | 0.30 | 0.00 | 1.00 | 0.249 |
-| same, coldest days instead of highest excitation | 0.684 | 0.83 | 0.66 | 0.00 | 0.10 | 1.00 | 0.88 | 0.271 |
-| same, one day instead of nine | 0.327 | 0.67 | 0.54 | 0.00 | 0.10 | 0.50 | 0.50 | 0.264 |
-| same, severity fixed at 0.25 instead of searched | 0.423 | 0.50 | 0.29 | 0.00 | 0.00 | 1.00 | 0.50 | 0.238 |
+| commissioning baseline + ratios + family search + relative-residual refusal (reference) | 0.733 | 0.83 | 0.46 | 0.00 | 0.10 | 1.00 | 1.00 | 0.587 |
+| same, healthy ratios from the published model instead of the campaign | 0.544 | 0.83 | 0.28 | 0.00 | 0.10 | 1.00 | 0.88 | 0.515 |
+| same, absolute frequencies instead of ratios | 0.418 | 0.33 | 0.11 | 0.00 | 0.00 | 1.00 | 0.50 | 0.214 |
+| same, never declining | 0.483 | 0.83 | 0.46 | 0.00 | 0.30 | 0.00 | 1.00 | 0.301 |
+| same, coldest days instead of highest excitation | 0.613 | 0.67 | 0.30 | 0.00 | 0.10 | 1.00 | 0.88 | 0.391 |
+| same, one day instead of nine | 0.250 | 0.50 | 0.17 | 0.00 | 0.20 | 1.00 | 0.62 | 0.239 |
+| same, severity grid of 0.05 instead of 0.01 | 0.721 | 0.83 | 0.42 | 0.00 | 0.10 | 1.00 | 1.00 | 0.691 |
 | temperature-extrapolated absolute frequencies, never declining (baseline) | 0.000 | 0.33 | 0.00 | 1.00 | 0.80 | 0.00 | 1.00 | 0.000 |
 | declining everything | 0.000 | — | — | 0.00 | 0.00 | 1.00 | 0.00 | 0.000 |
 | never claiming damage | 0.000 | — | — | 0.00 | 0.00 | 0.00 | 1.00 | 0.000 |
 
-The ladder is not a difficulty measurement; difficulty is measured by a frontier-model draw, which
-has not been run yet. What it shows is where the score lives: the ratio insight is worth +0.31, the
-budget +0.34, the severity search +0.24, the refusal +0.15, and the model calibration the reference
-does not do +0.125. The coldest-days row is the cautionary one — better on development, half as
-good on the held-out split.
+The ladder is not a difficulty measurement; that is the frontier draw below. What it shows is where
+the score lives: the campaign baseline is worth 0.19, the ratio insight 0.32, the refusal 0.25, the
+budget 0.48, and the day choice 0.12.
 
 ## Shortcut probe
 
 The question this repository learned to ask after a submitted task turned out to be solvable by a
 two-parameter grid search: **how far does a low-dimensional strategy get without the science?**
 
-1012 strategies of the form "average the shift over the highest-excitation days, declare healthy
+2812 strategies of the form "average the shift over the highest-excitation days, declare healthy
 below a threshold, decline above a second threshold, otherwise name the mode with the largest
 deviation as the element and set the severity from the shift" were evaluated:
 
 | family | strategies | best score |
 |---|---|---|
-| without the ratio insight, on temperature-extrapolated absolute frequencies | 506 | **0.459** |
-| with the ratio insight, but no family search | 506 | 0.321 |
-| reference | — | 0.665 |
+| without the ratio insight, on temperature-extrapolated absolute frequencies | 1406 | **0.382** |
+| with the ratio insight, but no family search | 1406 | 0.259 |
+| reference | — | 0.733 |
 | ceiling | — | 1.000 |
 
 ## Three construction errors, all found by the checkpoints before any model saw the task

@@ -76,7 +76,7 @@ def attribute_damage(problem, measure):
 | `measurement_budget_days` | how many days you may measure on this structure (9) |
 | `damage_element_range` | `[1, mass_count - 1]`: the internal springs, the only damage family |
 | `damage_severity_range` | `[0.12, 0.40]`: the stiffness fraction a damaged element loses |
-| `severity_tolerance` | absolute severity error at which the severity score reaches zero (0.12) |
+| `severity_tolerance` | absolute severity error at which the severity score reaches zero (0.04) |
 | `base_relative_noise` | relative frequency noise at excitation quality 1.0 (0.006) |
 | `baseline_temperature_range` | the band the commissioning campaign covers |
 | `nominal_masses` | `mass_count` floats: the validated healthy masses |
@@ -139,28 +139,27 @@ Ablating the reference — one choice changed at a time:
 
 | strategy | score | localisation | severity | healthy false alarm | false discovery | refusal | coverage | held out |
 |---|---|---|---|---|---|---|---|---|
-| ratios + family search + relative-residual refusal | **0.665** | 0.83 | 0.61 | 0.00 | 0.00 | 1.00 | 0.75 | 0.535 |
-| same, but calibrating the healthy ratios on the commissioning data | 0.790 | 0.83 | 0.61 | 0.00 | 0.00 | 1.00 | 0.88 | 0.535 |
-| same, absolute frequencies instead of ratios | 0.357 | 0.33 | 0.29 | 0.00 | 0.00 | 1.00 | 0.38 | 0.000 |
-| same, never declining | 0.513 | 1.00 | 0.70 | 0.50 | 0.30 | 0.00 | 1.00 | 0.249 |
-| same, coldest days instead of highest excitation | 0.684 | 0.83 | 0.66 | 0.00 | 0.10 | 1.00 | 0.88 | 0.271 |
-| same, one day instead of nine | 0.327 | 0.67 | 0.54 | 0.00 | 0.10 | 0.50 | 0.50 | 0.264 |
-| same, severity fixed at 0.25 instead of searched | 0.423 | 0.50 | 0.29 | 0.00 | 0.00 | 1.00 | 0.50 | 0.238 |
+| commissioning baseline + ratios + family search + relative-residual refusal | **0.733** | 0.83 | 0.46 | 0.00 | 0.10 | 1.00 | 1.00 | 0.587 |
+| same, healthy ratios from the published model instead of the campaign | 0.544 | 0.83 | 0.28 | 0.00 | 0.10 | 1.00 | 0.88 | 0.515 |
+| same, absolute frequencies instead of ratios | 0.418 | 0.33 | 0.11 | 0.00 | 0.00 | 1.00 | 0.50 | 0.214 |
+| same, never declining | 0.483 | 0.83 | 0.46 | 0.00 | 0.30 | 0.00 | 1.00 | 0.301 |
+| same, coldest days instead of highest excitation | 0.613 | 0.67 | 0.30 | 0.00 | 0.10 | 1.00 | 0.88 | 0.391 |
+| same, one day instead of nine | 0.250 | 0.50 | 0.17 | 0.00 | 0.20 | 1.00 | 0.62 | 0.239 |
+| same, severity grid of 0.05 instead of 0.01 | 0.721 | 0.83 | 0.42 | 0.00 | 0.10 | 1.00 | 1.00 | 0.691 |
 | temperature-extrapolated absolute frequencies, never declining | 0.000 | 0.33 | 0.00 | 1.00 | 0.80 | 0.00 | 1.00 | 0.000 |
-| declining everything | 0.000 | - | - | 0.00 | 0.00 | 1.00 | 0.00 | 0.000 |
-| never claiming damage | 0.000 | - | - | 0.00 | 0.00 | 0.00 | 1.00 | 0.000 |
+| declining everything | 0.000 | — | — | 0.00 | 0.00 | 1.00 | 0.00 | 0.000 |
+| never claiming damage | 0.000 | — | — | 0.00 | 0.00 | 0.00 | 1.00 | 0.000 |
 
-Two rows deserve reading together. **The reference declines two damaged structures it should have
-solved** (coverage 0.75), because it measures its shift against the model's own healthy ratios and
-the model carries three per cent of error; using the commissioning ratios instead recovers both
-and is worth +0.125. And the row that swaps highest-excitation days for coldest days scores
-slightly *better* on development and half as well on the held-out split — a reminder that a choice
-tuned on ten structures is not a method.
+Every row costs something real: taking the healthy ratios from the published model instead of the
+campaign costs 0.19, working in absolute frequencies 0.32, never declining 0.25, measuring once
+instead of nine times 0.48, and choosing the coldest days 0.12. The reference's severity score is
+0.46 against a tolerance of four per cent, and that is where most of what remains lives.
 
-**Low-dimensional shortcuts do not solve this task.** A sweep of 1012 strategies of the form
-"threshold the shift, declare healthy below, decline above, name the mode with the largest
-deviation" reaches **0.459** without the ratio insight and 0.321 with it, against the reference's
-0.665 and a ceiling of 1.0.
+**Low-dimensional shortcuts do not solve this task.** A sweep of 2812 strategies of the form
+"average the shift over the highest-excitation days, declare healthy below a threshold, decline
+above a second, otherwise name the mode with the largest deviation and scale the severity from the
+shift" reaches **0.382** without the ratio insight and 0.259 with it, against the reference's 0.733
+and a ceiling of 1.0.
 
 ## Rules
 

@@ -102,10 +102,15 @@ class ModalDamageAttributionTests(unittest.TestCase):
         self.assertEqual(reference["valid"], 1.0)
         self.assertEqual(baseline["combined_score"], 0.0)
         self.assertEqual(baseline["development_healthy_false_alarm_rate"], 1.0)
-        self.assertGreater(reference["combined_score"], 0.4)
+        self.assertGreater(reference["combined_score"], 0.5)
         self.assertLess(reference["combined_score"], 1.0)
-        # The reference leaves the model-calibration step on the table, and pays for it in coverage.
-        self.assertLess(reference["development_discovery_coverage"], 0.9)
+        # The reference answers every determinable structure and refuses every support change, so
+        # what it leaves on the table is precision, not coverage: its severity score is under a
+        # half against a four per cent tolerance. If that ever reaches the ceiling the task has
+        # stopped measuring the axis it was built around.
+        self.assertEqual(reference["development_discovery_coverage"], 1.0)
+        self.assertEqual(reference["development_correct_refusal_rate"], 1.0)
+        self.assertLess(reference["development_severity_score"], 0.7)
 
 
 if __name__ == "__main__":
