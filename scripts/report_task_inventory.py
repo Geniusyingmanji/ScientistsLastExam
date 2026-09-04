@@ -66,6 +66,7 @@ CHINESE_NAMES = {
     "Mathematics/RamseyLowerBound": "Ramsey 下界染色",
     "Mathematics/SequenceLawRecovery": "整数序列递推恢复",
     "Mathematics/Superpermutation": "超排列最短串",
+    "Mathematics/NonlinearCodeRecords": "非线性码规模纪录",
     "MedicinalChemistry/MolecularLeadOptimization": "分子先导组合优化",
     "MolecularDynamics/ForceFieldCalibration": "力场假设判别",
     "NuclearEngineering/NeutronDiffusionCriticality": "中子扩散临界优化",
@@ -196,6 +197,9 @@ CHINESE_BRIEFS = {
     "Mathematics/SequenceLawRecovery": (
         "给出整数序列前若干项,说出产生它的线性递推;项数不足以定唯一最小规则时拒答",
         "延续准确率;误发现率与不定性拒答分开报告"),
+    "Mathematics/NonlinearCodeRecords": (
+        "在四个 A(n,d) 未闭合的参数上构造尽可能大的二元码;已发表纪录全部由非线性码持有,线性构造够不到",
+        "从平凡分块重复构造到已发表纪录的平均进度,无上限;验证只是逐对汉明距离计数,与构造方法无关"),
     "Mathematics/Superpermutation": (
         "构造更短的超排列字符串,使其包含全部排列作为连续子串",
         "对最短已知长度的平均进度;无上限"),

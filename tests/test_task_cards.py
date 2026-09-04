@@ -23,6 +23,7 @@ RECORDED_LINEAGE = {
     "Mathematics/KissingNumber",
     "Algorithm/TensorRank555",
     "Mathematics/Superpermutation",
+    "Mathematics/NonlinearCodeRecords",
     "Mathematics/CapSetFrontier",
     "ParticlePhysics/LookElsewhereAnomaly",
     "CausalDiscovery/SurvivorshipConfoundedDesign",

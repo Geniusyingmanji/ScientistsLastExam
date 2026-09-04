@@ -4,16 +4,16 @@
 
 | | |
 |---|---:|
-| 任务包 | 62 |
-| optimization | 29 |
+| 任务包 | 63 |
+| optimization | 30 |
 | discovery | 33 |
 | certified | 5 |
-| candidate | 57 |
-| 学科 | 7(Biology 7,Chemistry 13,ComputerScience 6,EarthScience 5,Engineering 11,Mathematics 9,Physics 11) |
+| candidate | 58 |
+| 学科 | 7(Biology 7,Chemistry 13,ComputerScience 6,EarthScience 5,Engineering 11,Mathematics 10,Physics 11) |
 
 认证描述的是证据质量,不是难度。标 on-ramp 的任务首个前沿模型提案已够到参考解,不用于配对 Δ 测量。
 
-## Optimization(29)
+## Optimization(30)
 
 ### 工程设计(engineering_design) — 15
 
@@ -35,7 +35,7 @@
 | [`DiffractionGratingDesign`](benchmarks/Physics/DiffractionGratingDesign/)<br>衍射光栅设计 | Physics | Optics | uncapped | fourier_modal_rcwa | candidate | polarization-tolerant multilayer relief design | 设计五层一维二元介质浮雕,把透射光导入 +1 衍射级,且对偏振与角度容差 | 开发集目标级效率;偏振/角度/波长与工艺偏移稳健性分列,无上限 |
 | [`MultilayerThinFilm`](benchmarks/Physics/MultilayerThinFilm/)<br>多层减反射膜 | Physics | Photonics | clipped | physical_sim | certified | design a broadband antireflection coating | 设计可见光全谱段的多层宽带减反射膜 | 宽带减反射质量;物理下界为零平均反射 |
 
-### 开放组合纪录(combinatorial,无上限) — 9
+### 开放组合纪录(combinatorial,无上限) — 10
 
 | 任务 | 学科 | 领域 | 打分 | oracle | 认证 | 说明 | 中文题意 | 中文评估方法 |
 |---|---|---|---|---|---|---|---|---|
@@ -45,6 +45,7 @@
 | [`CapSetFrontier`](benchmarks/Mathematics/CapSetFrontier/)<br>Cap Set 未证明维度 | Mathematics | Mathematics | uncapped | analytical | candidate | large cap sets in dimensions that are still open | 在最大值尚未证明的 n=7,8,9 上构造更大的 cap set | 对最好已知规模的平均进度;无上限,与 CapSet 的维度不相交 |
 | [`CirclePacking`](benchmarks/Mathematics/CirclePacking/)<br>圆堆积 | Mathematics | Optimization | uncapped | analytical | certified | pack unit circles into the smallest square | 把 N 个单位圆装进边长最小的正方形 | 对最好已知装填的平均缺口闭合;无上限 |
 | [`KissingNumber`](benchmarks/Mathematics/KissingNumber/)<br>接触数构造 | Mathematics | Mathematics | uncapped | analytical | candidate | pack more unit spheres around one sphere | 在 9、10、12 维构造更多与中心球相切的单位球 | 固定容差下对最好已知接触数的平均进度;无上限 |
+| [`NonlinearCodeRecords`](benchmarks/Mathematics/NonlinearCodeRecords/)<br>非线性码规模纪录 | Mathematics | Mathematics | uncapped | analytical | candidate | build a bigger binary code than a linear one can be | 在四个 A(n,d) 未闭合的参数上构造尽可能大的二元码;已发表纪录全部由非线性码持有,线性构造够不到 | 从平凡分块重复构造到已发表纪录的平均进度,无上限;验证只是逐对汉明距离计数,与构造方法无关 |
 | [`RamseyLowerBound`](benchmarks/Mathematics/RamseyLowerBound/)<br>Ramsey 下界染色 | Mathematics | Mathematics | uncapped | analytical | candidate | construct larger (s,t)-Ramsey colorings | 构造更大的 (s,t)-Ramsey 染色以提高下界 | 对最好已知染色阶数的平均进度;无上限 |
 | [`Superpermutation`](benchmarks/Mathematics/Superpermutation/)<br>超排列最短串 | Mathematics | Mathematics | uncapped | analytical | candidate | shorter strings that contain every permutation | 构造更短的超排列字符串,使其包含全部排列作为连续子串 | 对最短已知长度的平均进度;无上限 |
 | [`QuantumErrorDecoder`](benchmarks/Physics/QuantumErrorDecoder/)<br>表面码解码器 | Physics | QuantumErrorCorrection | uncapped | stim_stabilizer_circuit_sampling | candidate | decode rotated surface-code memory below threshold | 为旋转表面码存储设计阈值以下的解码器 | 相对最小权完美匹配的逻辑错误率对数下降;无上限 |

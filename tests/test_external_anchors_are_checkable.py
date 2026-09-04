@@ -43,6 +43,7 @@ ANCHOR_KEYS = re.compile(
 # the pattern does not match is a literal nothing checks, which is the CirclePacking failure with
 # a different spelling.
 DECLARED_EXTERNAL_ANCHORS = {
+    "Mathematics/NonlinearCodeRecords",
     "Optimization/CirclePacking",
     "Algorithm/MatrixMultiplicationRank",
     "Mathematics/CapSet",

@@ -52,6 +52,7 @@ tasks:
   Mathematics/RamseyLowerBound: {form: optimization, analogue: combinatorial}
   Mathematics/KissingNumber: {form: optimization, analogue: combinatorial}
   Mathematics/Superpermutation: {form: optimization, analogue: combinatorial}
+  Mathematics/NonlinearCodeRecords: {form: optimization, analogue: combinatorial}
   Algorithm/MatrixMultiplicationRank: {form: optimization, analogue: combinatorial}
   Algorithm/TensorRank555: {form: optimization, analogue: combinatorial, note: new_sizes_not_extension_of_certified_matmul}
   QuantumErrorCorrection/QuantumErrorDecoder: {form: optimization, analogue: combinatorial}

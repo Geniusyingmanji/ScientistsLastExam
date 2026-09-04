@@ -1,0 +1,33 @@
+{
+  "anchors": [
+    {"name": "published_lower_A_23_10", "value": 80,
+     "source_url": "https://aeb.win.tue.nl/codes/binary-1.html",
+     "derivation": "Brouwer's table of bounds on A(n,d) for general binary codes, row n=23, column d=10, lower entry. Read from the live table rather than from a secondary citation.",
+     "retrieved_on": "2026-09-04"},
+    {"name": "published_lower_A_24_10", "value": 136,
+     "source_url": "https://aeb.win.tue.nl/codes/binary-1.html",
+     "derivation": "Same table, row n=24, column d=10, lower entry.",
+     "retrieved_on": "2026-09-04"},
+    {"name": "published_lower_A_25_10", "value": 192,
+     "source_url": "https://aeb.win.tue.nl/codes/binary-1.html",
+     "derivation": "Same table, row n=25, column d=10, lower entry.",
+     "retrieved_on": "2026-09-04"},
+    {"name": "published_lower_A_26_10", "value": 384,
+     "source_url": "https://aeb.win.tue.nl/codes/binary-1.html",
+     "derivation": "Same table, row n=26, column d=10, lower entry.",
+     "retrieved_on": "2026-09-04"},
+    {"name": "published_upper_A_23_10", "value": 150,
+     "source_url": "https://aeb.win.tue.nl/codes/binary-1.html",
+     "derivation": "Same table, upper entry. Reported to the searcher as context; the score does not divide by it.",
+     "retrieved_on": "2026-09-04"},
+    {"name": "published_upper_A_24_10", "value": 268,
+     "source_url": "https://aeb.win.tue.nl/codes/binary-1.html",
+     "derivation": "Same table, upper entry.", "retrieved_on": "2026-09-04"},
+    {"name": "published_upper_A_25_10", "value": 466,
+     "source_url": "https://aeb.win.tue.nl/codes/binary-1.html",
+     "derivation": "Same table, upper entry.", "retrieved_on": "2026-09-04"},
+    {"name": "published_upper_A_26_10", "value": 836,
+     "source_url": "https://aeb.win.tue.nl/codes/binary-1.html",
+     "derivation": "Same table, upper entry.", "retrieved_on": "2026-09-04"}
+  ]
+}

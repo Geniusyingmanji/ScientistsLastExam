@@ -1,0 +1,71 @@
+schema_version: 2
+scientific_question: Construct binary codes of length n and minimum distance d larger than any linear code admits, at four (n, d) where the maximum size A(n, d) is open and every published record is held by a nonlinear code.
+artifact: A list of distinct binary words, pairwise at Hamming distance at least d.
+oracle:
+  model: exact combinatorics - the submission is checked by chunked exclusive-or and popcount against the pairwise distance condition, and scored by its size against the published record for that (n, d)
+  feasibility: distinctness, length, binarity, the distance condition and a word cap; any failure scores that instance zero
+  deterministic: true
+normalization:
+  baseline: block-repetition construction, one bit repeated across each block of d coordinates, 2^(n//d) words
+  reference: largest linear code from a greedy parity-check construction over the smallest field extension that admits n columns
+  score: mean over four instances of the progress from the block-repetition construction to the published record, uncapped above
+citations:
+- id: url:https://aeb.win.tue.nl/codes/binary-1.html
+  title: Brouwer, Tables of general binary codes
+- id: doi:10.1109/TIT.1978.1055827
+  title: Bounds for binary codes of length less than 25
+- id: doi:10.1109/TIT.1972.1054727
+  title: A class of optimum nonlinear double-error-correcting codes
+invariants:
+- all four instances are open in Brouwer's table - the lower and upper entries disagree - and every published lower entry is held by a nonlinear code, so a linear construction cannot reach the ceiling by effort
+- the largest linear code is computed by the evaluator rather than stored, so the reference cannot drift from the anchor it is measured against
+- a union of cosets, the obvious route out of linearity, admits no coset at any of these instances because the covering radius of the codes involved is below d; measured, not assumed
+- verification is counting, so how a code was found is irrelevant and only its size is scored
+- the scale is uncapped - the published record is a witness worth 1, not a ceiling - and two counters report separately how many instances beat the trivial construction and how many beat the record
+- malformed submissions score zero and never raise out of the evaluator
+known_shortcuts: A sweep of 39 low-dimensional strategies - random greedy accretion at six seeds and two effort levels, and constant-weight codes at every weight - scores 0.000 against a reference of 0.642. At distance 10 a random word is almost never far enough from the words already chosen. The task was first built as a two-sided sandwich with a Delsarte linear-programming certificate for the upper bound; measurement showed the published upper bounds at these parameters essentially are the linear program (151.9 against 150, 6553.6 against 6552, 13107.2 against 13104), so the certificate half would have measured whether a candidate can call a linear-programming routine, and it was removed. The checker was validated first against seven exactly-known A(n, d) and was sound in all seven and tight in four, so this is a fact about the field rather than an implementation error.
+review:
+  domain: pending_external
+  evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_shortcut_probe
+provenance:
+  class: known_answer
+  target_source: Published lower and upper bounds on A(n, d) read from Brouwer's table of general binary codes on 2026-09-04, recorded with their source in references/anchors.json.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: The Kerdock and Preparata families are textbook and a model may recall that nonlinear codes hold these records. What it cannot recall is a specific 136-word code of length 24 at distance 10, and the shortcut probe bounds what generic search gets at 0.000. The risk that matters here is the opposite one - that the published record moves - which is why the anchors carry retrieval dates and are flagged as actively researched by the freshness checker.
+lineage:
+  status: complete
+  builder_model_ids:
+  - claude-fable-5-1
+  builder_scaffolds:
+  - claude-code
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    None yet, but three construction checkpoints changed the task before any model saw it. The
+    first instance set (d = 4 and d = 6 at n = 17 and 18) was discarded: linear codes already match
+    the published lower bounds at d = 6 and the Delsarte linear program already matches the
+    published upper bounds at d = 4, so the task would have measured nothing. The certificate half
+    was removed for the same reason. And the scale was re-anchored from the linear construction to
+    the trivial one after the coset-union reference turned out to find no admissible coset at all.
+    The admission bar this task is built under: a first frontier-model proposal must not reach the
+    reference's 0.642; the draw has not been run.
+  shortcut_discoverer: builder_self_audit_with_a_low_dimensional_strategy_probe
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: claude-fable-5-1
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 3
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: the reference, the baseline, the 39-strategy shortcut probe, the coset-union negative result, the Delsarte soundness check against seven exactly-known A(n,d) and the twelve bad-candidate shapes are all runnable from this directory

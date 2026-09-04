@@ -469,6 +469,17 @@ tasks:
     citation_ids:
       - arxiv:2502.04514
       - doi:10.1007/BF02165411
+  Mathematics/NonlinearCodeRecords:
+    status: candidate
+    reason: >-
+      Construct binary codes larger than any linear code admits, at four lengths where the maximum
+      size A(n, d) is open and every published record is held by a nonlinear code. Verification is
+      counting, the scale is uncapped, and the reference is the largest linear code. Two earlier
+      versions of the task were discarded after measurement - a Delsarte certificate half that the
+      published upper bounds already matched, and a coset-union reference that admits no coset at
+      these parameters - and both negative results are recorded. Pending a frontier-model draw and
+      external coding-theory review.
+    citation_ids: [doi:10.1109/TIT.1978.1055827, doi:10.1109/TIT.1972.1054727]
   Mathematics/Superpermutation:
     status: candidate
     reason: >-

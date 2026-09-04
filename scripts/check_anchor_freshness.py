@@ -44,6 +44,7 @@ from sle.registry import list_tasks  # noqa: E402
 LIVE_RESEARCH_HINTS = (
     "cap set", "kissing", "matrix multiplication", "tensor rank", "ramsey",
     "superpermutation", "packing", "max-cut", "maxcut", "stabilizer", "quantum code",
+    "binary code", "a(n,d)", "brouwer",
 )
 DEFAULT_MAX_AGE_DAYS = 180
 
