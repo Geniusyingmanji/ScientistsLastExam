@@ -430,60 +430,86 @@ def calibrate():
     determinism = _determinism_check(oracle)
     near_equivalence = _near_equivalence_limits(oracle)
 
-    difficulty_passed = bool(
-        classical["combined_score"] > 0.05
-        and classical["heldout_policy_score"] > 0.05
-        and classical["development_supported_claim_coverage"] > 0.0
-        and classical["heldout_supported_claim_coverage"] > 0.0
-        and classical["development_unsupported_refusal_rate"] == 1.0
-        and classical["heldout_unsupported_refusal_rate"] == 1.0
-        and classical["development_false_discovery_rate"] == 0.0
-        and classical["heldout_false_discovery_rate"] == 0.0
-        and classical["development_mean_budget_used"] == 8.0
-        and classical["heldout_mean_budget_used"] == 8.0
-        and underinformative["development_mean_budget_used"] == 1.0
-        and underinformative["heldout_mean_budget_used"] == 1.0
-        and classical["combined_score"] > underinformative["combined_score"]
-        and equal_budget_small_sample["development_mean_budget_used"] == 8.0
-        and equal_budget_small_sample["heldout_mean_budget_used"] == 8.0
-        and classical["combined_score"]
-        > equal_budget_small_sample["combined_score"] + 0.15
-        and classical["heldout_policy_score"]
-        > equal_budget_small_sample["heldout_policy_score"] + 0.08
-        and equal_budget_small_sample["development_supported_claim_coverage"] == 1.0
-        and equal_budget_small_sample["heldout_supported_claim_coverage"] == 1.0
-        and equal_budget_small_sample["development_unsupported_refusal_rate"] == 1.0
-        and equal_budget_small_sample["heldout_unsupported_refusal_rate"] == 1.0
-        and equal_budget_small_sample["development_false_discovery_rate"] == 0.0
-        and equal_budget_small_sample["heldout_false_discovery_rate"] == 0.0
-    )
-    execution_passed = bool(
-        oracle.DEMOGRAPHIC_SFS_V2
-        and baseline["valid"] == 1.0
-        and baseline["combined_score"] == 0.0
-        and baseline["heldout_policy_score"] == 0.0
-        and classical["valid"] == 1.0
-        and classical["heldout_feasibility_rate"] == 1.0
-        and underinformative["valid"] == 1.0
-        and equal_budget_small_sample["valid"] == 1.0
-        and equal_budget_small_sample["heldout_feasibility_rate"] == 1.0
-        and reference["valid"] == 1.0
-        and reference["combined_score"] == 1.0
-        and reference["heldout_policy_score"] == 1.0
-        and reference["robustness_score"] == 1.0
-        and reference["heldout_robustness_score"] == 1.0
-        and difficulty_passed
-        and all(row["passed"] for row in exact)
-        and all(row["passed"] for row in identifiability)
-        and all(row["passed"] for row in misspecified)
-        and all(row["passed"] for row in ode_checks)
-        and all(row["passed"] for row in constant_checks)
-        and determinism["passed"]
-        and all(
-            row["indistinguishable_under_registered_threshold"]
-            for row in near_equivalence
-        )
-    )
+    # Named predicates rather than one boolean chain, for two reasons. Exact equality on a
+    # float that a numerical pipeline produced is not a property, it is a coincidence: this
+    # calibration failed once on a continuous-integration runner and passed on the benchmark host
+    # with the same source, because the two machines dispatch different BLAS kernels and the last
+    # bit of a rate that should be 1.0 differed. And a chain of twenty `and`s reports "False is not
+    # true", which says nothing about which of the twenty moved. The tolerance is 1e-9 - far below
+    # any difference that would matter scientifically, far above the last bit of a double.
+    tolerance = 1e-9
+
+    def close(value, target):
+        return abs(float(value) - float(target)) <= tolerance
+
+    difficulty_predicates = [
+        ("classical_score_above_floor", classical["combined_score"] > 0.05),
+        ("classical_heldout_above_floor", classical["heldout_policy_score"] > 0.05),
+        ("classical_covers_supported", classical["development_supported_claim_coverage"] > 0.0),
+        ("classical_covers_supported_heldout", classical["heldout_supported_claim_coverage"] > 0.0),
+        ("classical_refuses_unsupported", close(classical["development_unsupported_refusal_rate"], 1.0)),
+        ("classical_refuses_unsupported_heldout", close(classical["heldout_unsupported_refusal_rate"], 1.0)),
+        ("classical_no_false_discovery", close(classical["development_false_discovery_rate"], 0.0)),
+        ("classical_no_false_discovery_heldout", close(classical["heldout_false_discovery_rate"], 0.0)),
+        ("classical_spends_full_budget", close(classical["development_mean_budget_used"], 8.0)),
+        ("classical_spends_full_budget_heldout", close(classical["heldout_mean_budget_used"], 8.0)),
+        ("underinformative_spends_one", close(underinformative["development_mean_budget_used"], 1.0)),
+        ("underinformative_spends_one_heldout", close(underinformative["heldout_mean_budget_used"], 1.0)),
+        ("classical_beats_underinformative",
+         classical["combined_score"] > underinformative["combined_score"]),
+        ("equal_budget_spends_full_budget",
+         close(equal_budget_small_sample["development_mean_budget_used"], 8.0)),
+        ("equal_budget_spends_full_budget_heldout",
+         close(equal_budget_small_sample["heldout_mean_budget_used"], 8.0)),
+        ("classical_beats_equal_budget",
+         classical["combined_score"] > equal_budget_small_sample["combined_score"] + 0.15),
+        ("classical_beats_equal_budget_heldout",
+         classical["heldout_policy_score"] > equal_budget_small_sample["heldout_policy_score"] + 0.08),
+        ("equal_budget_covers_supported",
+         close(equal_budget_small_sample["development_supported_claim_coverage"], 1.0)),
+        ("equal_budget_covers_supported_heldout",
+         close(equal_budget_small_sample["heldout_supported_claim_coverage"], 1.0)),
+        ("equal_budget_refuses_unsupported",
+         close(equal_budget_small_sample["development_unsupported_refusal_rate"], 1.0)),
+        ("equal_budget_refuses_unsupported_heldout",
+         close(equal_budget_small_sample["heldout_unsupported_refusal_rate"], 1.0)),
+        ("equal_budget_no_false_discovery",
+         close(equal_budget_small_sample["development_false_discovery_rate"], 0.0)),
+        ("equal_budget_no_false_discovery_heldout",
+         close(equal_budget_small_sample["heldout_false_discovery_rate"], 0.0)),
+    ]
+    difficulty_failures = [name for name, ok in difficulty_predicates if not ok]
+    difficulty_passed = not difficulty_failures
+
+    execution_predicates = [
+        ("oracle_is_v2", bool(oracle.DEMOGRAPHIC_SFS_V2)),
+        ("baseline_valid", close(baseline["valid"], 1.0)),
+        ("baseline_scores_zero", close(baseline["combined_score"], 0.0)),
+        ("baseline_heldout_zero", close(baseline["heldout_policy_score"], 0.0)),
+        ("classical_valid", close(classical["valid"], 1.0)),
+        ("classical_heldout_feasible", close(classical["heldout_feasibility_rate"], 1.0)),
+        ("underinformative_valid", close(underinformative["valid"], 1.0)),
+        ("equal_budget_valid", close(equal_budget_small_sample["valid"], 1.0)),
+        ("equal_budget_heldout_feasible",
+         close(equal_budget_small_sample["heldout_feasibility_rate"], 1.0)),
+        ("reference_valid", close(reference["valid"], 1.0)),
+        ("reference_scores_one", close(reference["combined_score"], 1.0)),
+        ("reference_heldout_one", close(reference["heldout_policy_score"], 1.0)),
+        ("reference_robust", close(reference["robustness_score"], 1.0)),
+        ("reference_heldout_robust", close(reference["heldout_robustness_score"], 1.0)),
+        ("difficulty_ladder", difficulty_passed),
+        ("exact_checks", all(row["passed"] for row in exact)),
+        ("identifiability_checks", all(row["passed"] for row in identifiability)),
+        ("misspecification_checks", all(row["passed"] for row in misspecified)),
+        ("ode_checks", all(row["passed"] for row in ode_checks)),
+        ("constant_checks", all(row["passed"] for row in constant_checks)),
+        ("determinism", bool(determinism["passed"])),
+        ("near_equivalence",
+         all(row["indistinguishable_under_registered_threshold"] for row in near_equivalence)),
+    ]
+    execution_failures = [name for name, ok in execution_predicates if not ok]
+    execution_passed = not execution_failures
+
     report = {
         "schema_version": 1,
         "trust_status": "TRUSTED_TASK_CALIBRATION",
@@ -492,6 +518,9 @@ def calibrate():
             "POPULATION_OR_AUTONOMOUS_DISCOVERY_EVIDENCE"
         ),
         "created_at": datetime.now(timezone.utc).isoformat(),
+        "failed_predicates": execution_failures,
+        "failed_difficulty_predicates": difficulty_failures,
+        "predicate_tolerance": tolerance,
         "source_provenance": source_provenance(ROOT),
         "environment": {"python": sys.version, "platform": platform.platform()},
         "task_dimensions": {
