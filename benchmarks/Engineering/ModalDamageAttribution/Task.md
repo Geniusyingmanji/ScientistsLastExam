@@ -86,7 +86,7 @@ def attribute_damage(problem, measure):
 | `commissioning_baseline` | rows of `{"temperature_celsius", "frequencies_hz"}` measured on the healthy structure |
 | `structure_model` | prose: how frequencies follow from masses and springs |
 | `damage_model` | prose: exactly one internal spring loses stiffness; the ground springs are not in the family |
-| `temperature_model` | prose: temperature is one common factor, and the law is not linear outside the baseline band |
+| `thermal_confound` | prose: temperature is one common factor, and the law is not linear outside the baseline band |
 | `measurement_model` | prose: what a day of measurement returns and how its noise scales |
 | `abstain_when` | prose: when the evidence fits no single-element damage |
 

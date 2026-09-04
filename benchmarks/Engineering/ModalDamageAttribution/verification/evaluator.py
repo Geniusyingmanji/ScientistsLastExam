@@ -243,7 +243,10 @@ PUBLIC_PROBLEM = {
                        "matrix against the mass matrix, divided by two pi",
     "damage_model": "exactly one internal spring, indexed 1..mass_count-1, loses a fraction of its "
                     "stiffness; the ground springs are not part of the damage family",
-    "temperature_model": "temperature scales every spring by one common factor, so it multiplies "
+    # Named "thermal_confound" rather than "temperature_model": a key whose name contains a
+    # numeric-sounding word is read as a number by the inventory guard, and a candidate that calls
+    # float() on it crashes before its first oracle call. That failure once took out a whole cohort.
+    "thermal_confound": "temperature scales every spring by one common factor, so it multiplies "
                          "every eigenvalue equally; the commissioning campaign measured only "
                          "inside baseline_temperature_range and the law is not linear outside it, "
                          "at either end",
