@@ -155,6 +155,65 @@ normalized = (raw_mechanism - always_abstain) / (1.0 - always_abstain)
 
 ---
 
+## 范例任务
+
+`benchmarks/Engineering/ModalDamageAttribution` 是照着抄的那一个。它的每份文件都为一件事存在:
+
+| 文件 | 它回答什么 |
+|---|---|
+| `Task.md` | 「关系与区别」小节点名仓库内最近的三到五个任务并说清差别;每个 `problem` 键都列出;消融阶梯与捷径探针的数字都在里面 |
+| `verification/evaluator.py` | 冻结 oracle。三类世界(可判、可判但答案是「没有」、不可判须拒答),全弃权恰好得零,畸形提交得零且不抛出 |
+| `verification/reference_*.py` | 真值盲参考解,只读公开问题与收费接口。**要能力完整**:它是「称职方法的可运行见证」,不是归一化基准。缺一步标准实践的参考解会让准入线形同虚设 |
+| `solution.py` | 自信地错的基线,分数为零。它该做仪器诱导你做的那件事,然后掉进陷阱 |
+| `references/known_best.md` | 参考解、基线、消融阶梯、捷径探针、前沿 draw、构造错误、稳健性,七节 |
+| `TASK_CARD.yaml` | `known_shortcuts` 写捷径探针上限;`lineage.edits_triggered_by_model` 写清哪些改动是被模型逼出来的 |
+| `tests/test_<task>.py` | 钉住任务赖以成立的性质,不是钉分数。这题钉的是「温度在频率比上精确抵消」和「测一天必须明显差于测九天」 |
+
+这个范例的建造过程本身是记录的一部分:检查点在任何模型看到题目之前抓到三处构造错误(预算是免费的、混淆可以靠挑暖日绕过、一个拒答世界不可判),第一次前沿 draw 又证明参考解建造不足。全部写在 `references/known_best.md` 里,没有删掉难看的部分。
+
+## 任务贡献检查点
+
+提 PR 前逐条跑。范例任务的实测结果见 `references/known_best.md`。
+
+**A 科学与新颖性**
+1. 填补 `sle/conf/exam_taxonomy.yaml` 的学科 × 形式空格(`python scripts/report_exam_taxonomy.py`)。
+2. `Task.md` 有「关系与区别」小节,点名仓库内最近邻并说明差在哪(产物形式、可判错世界、拒答轴、实例集)。
+3. 与 Frontier-Eng 的两份目录(论文附录 47 题、仓库 `TASK_DETAILS` 95 条)逐条对照,同一问题类不立题。
+4. 引用支撑 oracle 里的模型本身,不是只支撑领域。
+
+**B Oracle 合约**
+5. 确定:同一候选两次评测键级一致。
+6. 十种以上畸形提交全部 `valid=0`、`combined_score=0`,且不抛出。
+7. 预算收费,超支 fail closed。
+8. 全弃权恰好 0;若有「没有机制」的世界,全盘否认也恰好 0。
+9. heldout 与机制轴不在 `SEARCH_VISIBLE_KEYS` 里。
+10. `python scripts/check_numeric_keys_hold_numbers.py` 通过 —— 读起来像数值的键不能装散文。
+11. 公开问题字典的每个键都在 `Task.md` 列出。
+
+**C 难度与不可捷径**
+12. **捷径探针**:对提交做低维参数化的网格搜索(数百到数千次评测),报告最好分,写进卡片 `known_shortcuts`。超过参考解就必须加固。这一条是被一个两参数网格搜索能拿 0.94 的投稿逼出来的。
+13. 消融阶梯:每拿掉参考解的一项能力都要掉分,掉幅写进 `Task.md`。不掉分的能力说明那部分设计没起作用。
+14. 参考解真值盲、可独立运行、**能力完整但故意不打满**,留的空间要说清是哪一项。
+15. 基线自信地错,分数为零。
+
+**D 证据与准入**
+16. 前沿模型 draw(`batch_evolve.py --run-role calibration`,干净树上跑)。准入线:首提案不得够到参考解。
+17. 卡片记录建造过程,包括失败的 draw 和被逼出来的改动。
+
+**E 注册与文档**
+18. `exam_taxonomy.yaml` 占恰好一格。
+19. `certification.yaml` 列 `candidate`,写理由与引用 DOI。
+20. `python scripts/report_task_inventory.py` 生成 TASKS.md 行,含中文名、中文题意、中文评估方法。
+21. `references/known_best.md` 七节齐备。
+22. `tests/test_<task>.py` 钉住关键性质。
+
+**F 集成**
+23. 黑盒 `frontier_eval/run_eval.py` 的 entrypoint 与 TASK_ID 正确,且真的跑得通。
+24. Linux 主机沙箱内实跑,分数与本地一致;`python scripts/check_task_contribution.py --task <id>` 通过。
+25. 全量测试绿;若改了任务包内文件,还要刷新全局证据。
+
+---
+
 ## 提 PR 前的检查清单
 
 - [ ] 先把新任务以 `candidate` 加入 `sle/certification.yaml`;**不要自我认证**未经评审的任务。
