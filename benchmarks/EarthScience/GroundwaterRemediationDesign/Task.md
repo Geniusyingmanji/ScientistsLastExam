@@ -1,0 +1,75 @@
+# GroundwaterRemediationDesign — build a robust pump-and-treat Pareto archive
+
+## Scientific setting
+
+Pump-and-treat remediation trades contaminant removal and receptor protection against well,
+energy and treatment cost. A cheap homogeneous transport proxy can promote a plan that fails
+under heterogeneous velocity, dispersion, decay or continued source release. The candidate
+therefore submits an archive of remediation plans rather than one arbitrarily weighted design.
+
+Each plan is an array whose rows are
+
+```text
+[x_m, y_m, start_year, pumping_rate_m3_day]
+```
+
+The candidate receives one `problem` mapping with every public key below:
+
+| key | meaning |
+|---|---|
+| `domain_size_m` | `[length,width]` |
+| `horizon_years`, `evaluation_times_years` | remediation horizon and reporting times |
+| `source_location_m`, `initial_contaminant_mass_kg` | public initial plume |
+| `longitudinal_sigma_m`, `transverse_sigma_m` | proxy plume scales |
+| `groundwater_velocity_m_day`, `decay_per_day` | proxy transport parameters |
+| `aquifer_thickness_m`, `effective_porosity` | concentration conversion |
+| `receptor_locations_m`, `concentration_limit_kg_m3` | hard cleanup target |
+| `well_count_bounds`, `pumping_rate_bounds_m3_day` | per-plan bounds |
+| `max_total_pumping_m3_day`, `start_year_bounds` | operating bounds |
+| `fixed_well_cost_usd`, `pumping_cost_usd_per_m3`, `discount_rate` | lifecycle cost model |
+| `archive_size_bounds`, `well_columns` | artifact contract |
+
+## Your task
+
+```python
+def design_remediation(problem):
+    """Return {"plans": [plan_1, ..., plan_n]} with 4-16 unique plans."""
+```
+
+Every plan contains 1–5 unique wells. Coordinates must lie inside the domain, start years and
+pumping rates must lie inside their public bounds, and total pumping must not exceed the public
+limit. All values must be finite.
+
+## Evaluation
+
+The public proxy and hidden exact simulator report:
+
+- remaining contaminant mass in kg;
+- maximum receptor concentration in kg/m3 and cleanup compliance;
+- discounted lifecycle cost in USD;
+- total pumped water in m3; and
+- the Pareto hypervolume for maximizing cleanup and minimizing lifecycle cost.
+
+`combined_score` is normalized development exact-model hypervolume. Regulatory compliance is a
+hard gate: a cheap plan cannot compensate for receptor exceedance. The evaluator separately
+retains proxy hypervolume, false promotion, held-out aquifers and the worst hidden velocity,
+dispersion, decay and continued-release shift. `robustness_score` is the worst shifted normalized
+hypervolume.
+
+Evaluator-only per-problem diagnostics use the keys `split`, `problem_index`, `valid`, `score`,
+`exact_feasibility_rate`, `raw_exact_hypervolume`, `raw_proxy_hypervolume`,
+`mean_remaining_mass_kg`, `mean_lifecycle_cost_usd` and
+`worst_shifted_raw_hypervolume`. Their values and split membership are never candidate inputs.
+
+The transport model is a deterministic Gaussian-plume/capture approximation. It is not a site
+remediation decision and requires MODFLOW or field replication before scientific use.
+
+## Rules
+
+- Only edit `solution.py`; keep `design_remediation(problem)`.
+- Deterministic Python/NumPy/SciPy code only; no network or process creation.
+- Do not read `verification/` or `frontier_eval/`.
+- Malformed, duplicated-only, non-finite or out-of-bound archives fail closed.
+
+References: Bayer & Finkel (2007), DOI `10.1016/S0309-1708(01)00020-3`; Matott et al.
+(2013), DOI `10.1186/2193-2697-2-6`.

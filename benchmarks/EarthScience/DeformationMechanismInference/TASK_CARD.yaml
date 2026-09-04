@@ -1,0 +1,56 @@
+schema_version: 2
+scientific_question: Can a charged GNSS/InSAR survey identify a supported volcanic source family and parameters while refusing null or resolvably out-of-family deformation?
+artifact: Probabilities over a public source family, one bounded parameter row, confidence and optional model-inadequacy abstention.
+oracle:
+  model: deterministic elastic Mogi, sill and dike responses with procedural sources, zero-deformation nulls and two-source or rheological misspecification
+  feasibility: finite bounded source artifacts and unique charged station surveys under an eighteen-unit budget
+  deterministic: true
+normalization:
+  baseline: one coarse GNSS survey followed by abstention on every world
+  reference: a shipped truth-blind family-and-parameter grid-search witness and exact supported-world ceiling
+  score: source probability, parameter recovery and sealed displacement prediction normalized above always abstaining; Brier calibration and refusal remain separate
+citations:
+- id: doi:10.1029/2009JB006958
+  title: Statistical selection of the best seismic source mechanisms from inversions of synthetic volcanic long-period events
+invariants:
+- translated sources produce correspondingly translated displacement fields
+- exact source families and parameters attain unit mechanism and sealed-prediction scores
+- null and resolvable two-source or rheological responses reward refusal
+- GNSS and InSAR observations agree under the public look-vector projection
+- survey cost is charged and malformed or overspent surveys fail closed
+known_shortcuts: The public half-space source expressions are reduced-order elastic abstractions with synthetic independent noise. They omit topography, heterogeneous elastic structure, temporal source evolution and atmospheric InSAR errors. Public procedural worlds require server-held confirmation and real claims require independent geodetic and geological evidence.
+review:
+  domain: pending_external_volcanology
+  evaluator_security: automated_budget_geometry_projection_parameter_refusal_determinism_and_metric_sealing_tests
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic source models with development and held-out parameters, geometry, noise, null and misspecified regimes.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Source parameters are hidden but the compact model library and procedural family are public and builder-model independence is not established.
+lineage:
+  status: complete
+  builder_model_ids: [openai-codex]
+  builder_scaffolds: [repository-native-earth-science-task-pattern]
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: Initial AI-assisted construction; no model calibration edits have yet been made.
+  shortcut_discoverer: initial_internal_red_team
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: initial_internal
+  author_domain: AI-assisted benchmark engineering
+  reviewer_domain: pending_external_volcanology
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: shipped_reference_witness_only
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []

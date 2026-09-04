@@ -10,6 +10,36 @@ policy:
   statuses: [certified, candidate, quarantined]
 
 tasks:
+  WavePropagation/ActiveFullWaveformInversion:
+    status: candidate
+    reason: deterministic reduced-order 2-D acoustic full-waveform discovery task with charged shot selection, supported/null/acoustic-model-misspecification worlds, sealed shot and frequency transfer, and separate mechanism, false-discovery, refusal, coverage and confidence metrics; pending independent seismology review, higher-fidelity replication, server-held worlds and model calibration
+    citation_ids:
+      - doi:10.1190/1.3238367
+      - arxiv:2003.14181
+  Hydrology/GroundwaterRemediationDesign:
+    status: candidate
+    reason: deterministic pump-and-treat archive optimization over cost, remaining contaminant mass and receptor compliance with evaluator-only transport shifts and risk diagnostics; pending MODFLOW replication, independent hydrogeology review, server-held aquifers and model calibration
+    citation_ids:
+      - doi:10.1186/2193-2697-2-6
+      - doi:10.1016/S0309-1708(01)00020-3
+  Paleoclimate/ChronologyAssimilation:
+    status: candidate
+    reason: active chronology and climate-field reconstruction with charged dates, supported/null/nonstationary-proxy worlds, CE/RMSE/CRPS diagnostics and separate discovery/refusal axes; pending independent paleoclimate review, public-data replay, server-held proxy systems and model calibration
+    citation_ids:
+      - doi:10.1029/2020GL090485
+      - doi:10.5194/cp-16-1325-2020
+  Cryosphere/IceObservationNetworkDesign:
+    status: candidate
+    reason: deterministic linear-Gaussian ice-sheet OSSE observation-network archive design using forecast-error-versus-cost hypervolume, posterior uncertainty diagnostics and sealed sensitivity shifts; pending full ice-flow replication, independent cryosphere review, server-held regimes and model calibration
+    citation_ids:
+      - doi:10.5194/tc-19-5423-2025
+      - doi:10.5194/tc-17-4661-2023
+  Volcanology/DeformationMechanismInference:
+    status: candidate
+    reason: active GNSS/InSAR source-mechanism inference with a public source family, charged station design, null and multi-source misspecification worlds, sealed spatial prediction and separately reported mechanism, false-discovery, refusal, coverage and probability calibration; pending independent volcanology review, elastic-model replication, server-held worlds and model calibration
+    citation_ids:
+      - doi:10.1029/2009JB006958
+
   MedicinalChemistry/MolecularLeadOptimization:
     status: candidate
     reason: RDKit community-standard oracle with a verified approved-drug reference panel; pending external medicinal-chemistry review

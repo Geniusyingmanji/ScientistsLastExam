@@ -1,0 +1,58 @@
+schema_version: 2
+scientific_question: Can a bounded dating program jointly recover chronology and a probabilistic paleotemperature history while refusing null or nonstationary proxy systems?
+artifact: Temperature mean and uncertainty on a public time grid, one age offset per proxy, confidence and optional model-inadequacy abstention.
+oracle:
+  model: deterministic procedural linear pseudoproxies with hidden chronology offsets, red-noise climate histories, independent dating noise, nulls and nonlinear nonstationary misspecification
+  feasibility: finite aligned reconstructions, positive uncertainty and charged per-record dating under a sixteen-unit budget
+  deterministic: true
+normalization:
+  baseline: three sparse dating calls followed by abstention on every world
+  reference: a shipped truth-blind dated-proxy interpolation witness and exact pseudoproxy ceiling
+  score: CE, chronology and CRPS recovery normalized above always abstaining; raw RMSE, uncertainty calibration, refusal and held-out transfer remain separate
+citations:
+- id: doi:10.1029/2020GL090485
+  title: Quantifying Structural Uncertainty in Paleoclimate Data Assimilation
+- id: doi:10.5194/cp-16-1325-2020
+  title: Greenland temperature and precipitation over the last 20,000 years using data assimilation
+invariants:
+- exact climate and chronology attain unit mechanism skill on supported pseudoproxies
+- coefficient of efficiency and RMSE agree with independent direct formulas
+- normal CRPS is finite, proper and decreases for sharper calibrated reconstructions
+- null and resolvable nonlinear or nonstationary proxy systems reward refusal
+- every date consumes budget and invalid or overspent requests fail closed
+known_shortcuts: The benchmark uses global standardized pseudoproxies, a single offset per archive and independent Gaussian observation errors. It omits preservation bias, depth-dependent accumulation, multivariate local climate and real proxy-system calibration. Public procedural worlds need server-held confirmation and no result is an Earth reconstruction.
+review:
+  domain: pending_external_paleoclimate
+  evaluator_security: automated_budget_chronology_shape_crps_refusal_determinism_and_metric_sealing_tests
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic pseudoproxy generator with development and held-out spectra, proxy mixes, chronology noise, null and misspecified regimes.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Hidden climate histories and offsets are procedural, but the proxy family and builder scaffold remain public and model independence is not established.
+lineage:
+  status: complete
+  builder_model_ids: [openai-codex]
+  builder_scaffolds: [repository-native-earth-science-task-pattern]
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: Initial AI-assisted construction; no model calibration edits have yet been made.
+  shortcut_discoverer: initial_internal_red_team
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: initial_internal
+  author_domain: AI-assisted benchmark engineering
+  reviewer_domain: pending_external_paleoclimate
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: shipped_reference_witness_only
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
