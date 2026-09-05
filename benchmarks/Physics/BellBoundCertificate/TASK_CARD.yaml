@@ -70,7 +70,10 @@ known_shortcuts: >-
   match an independent solve and no primary source was on hand to settle it.
 review:
   status: pending_external
-  domain: quantum information / semidefinite optimisation
+  # The pending marker lives in this field, not in `status` alone: scripts/audit_benchmark_standards.py
+  # reads `review.domain` to count external sign-offs, and a bare discipline name here reads as a
+  # review that has happened. Nothing in this inventory has been externally reviewed.
+  domain: pending_external_quantum_information
   evaluator_security: >-
     The oracle's work is bounded by the submission's declared size rather than by its content:
     verification is MAX_SQUARES * max_basis^2 rational multiplications with every entry capped at
