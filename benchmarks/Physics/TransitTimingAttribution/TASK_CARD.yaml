@@ -1,0 +1,64 @@
+schema_version: 2
+scientific_question: Can an agent actively distinguish planet-induced transit-timing variations from stellar activity, clock drift, and unsupported non-periodic signals under a follow-up observation budget?
+artifact: A TTV mechanism claim, perturbation period, next-offset forecast, confidence and immutable evidence lineage, or calibrated refusal.
+oracle:
+  model: deterministic reduced-order transit-timing residual laboratory with planet, activity, clock and unsupported worlds
+  feasibility: bounded integer transit queries, finite mechanism parameters, evidence IDs from current measurements and calibrated refusal
+  deterministic: true
+normalization:
+  baseline: one legal follow-up timing followed by abstention
+  reference: late-baseline active sampling, linear-clock removal and periodic residual comparison
+  score: development mechanism/forecast mean; held-out transfer and false discovery remain separately reported
+citations:
+- id: doi:10.1111/j.1365-2966.2005.08922.x
+  title: On detecting terrestrial planets with timing of giant planet transits
+- id: doi:10.1126/science.1107822
+  title: The Use of Transit Timing to Detect Terrestrial-Mass Extrasolar Planets
+invariants:
+- repeated evaluation is deterministic
+- unsupported-world refusals and false discoveries are reported separately from supported-world quality
+- every non-abstaining claim cites at least two current query IDs
+- overspending, invented IDs and malformed output fail closed
+- mechanism, forecast, coverage and false-discovery metrics remain separate
+- held-out worlds and exact descriptors remain evaluator-only
+known_shortcuts: This is a procedural TTV emulator, not a photodynamical N-body or telescope scheduler. Public periods and seeds require server-held families before certification.
+review:
+  domain: pending_external_astronomy
+  evaluator_security: automated_determinism_budget_lineage_and_bad_candidate_checks_passed
+provenance:
+  class: procedural
+  target_source: repository-visible deterministic TTV generator with development and shifted held-out worlds
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: crossref_metadata_confirmed_2026-09-05
+  license: procedural repository-local code; no external dataset bundled
+novelty_risk:
+  level: medium
+  rationale: Unlike Exoplanets/RadialVelocityPlanets, this task uses transit timing residuals, active cadence design and clock/activity attribution rather than Doppler periodogram detection.
+lineage:
+  status: complete
+  builder_model_ids:
+  - openai-codex:gpt-5
+  builder_scaffolds:
+  - science-benchmark-construction
+  calibrator_model_ids:
+  - deepseek-v4-flash
+  calibration_runs:
+  - experiments/transit_timing_deepseek_flash_2026-09-05.json
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: none; reference replay completed before the valid model calibration after replacing last-observation copying with public model comparison and a true future-transit forecast. Development supported-world mean is 0.9034 and held-out supported-world mean is 0.8992; one held-out unsupported-world false discovery remains. DeepSeek Flash then reached 0.4777/0.2170 and 0.5719/0.5201 development/held-out; its development/validation false-discovery rates were 0.5/0.6667 and 0.4/0.4.
+  shortcut_discoverer: truth_blind_reference_and_deepseek_flash_calibration
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: candidate_pending_review
+  author_domain: computational_astronomy
+  reviewer_domain: pending_external_astronomy
+  expert_hours: null
+  red_team_rounds: 0
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: server baseline/reference replay completed; independent photodynamical recomputation pending

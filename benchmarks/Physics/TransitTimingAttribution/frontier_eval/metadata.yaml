@@ -1,0 +1,18 @@
+domain: Exoplanets
+task: TransitTimingAttribution
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: physical_sim
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 120
+science_metric: active_transit_timing_mechanism_attribution_with_clock_activity_refusal
+reference_baseline: abstain after one legal low-cost follow-up timing
+reference_sota: truth-blind late-baseline follow-up, linear-clock removal and periodic residual comparison
+tool_level: L2
+tools_suggested:
+  - literature_search
+  - offline_numerical_fitting
+tool_rationale: Transit timing variation analysis uses cadence design, timing residuals, and model comparison rather than radial-velocity periodogram peaks.
+citation: "Agol et al., MNRAS 2005, DOI 10.1111/j.1365-2966.2005.08922.x; Holman and Murray, Science 2005, DOI 10.1126/science.1107822"
