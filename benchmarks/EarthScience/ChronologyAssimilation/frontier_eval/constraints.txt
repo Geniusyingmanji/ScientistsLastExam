@@ -1,4 +1,4 @@
 1) Only edit solution.py and keep reconstruct_climate(time_grid_years, proxy_catalog, date_sample, budget_units).
-2) Return temperature_mean, temperature_std, age_offsets_years, confidence and abstain exactly as documented in Task.md.
+2) Return temperature_mean, temperature_std, sample_ages_years (or legacy age_offsets_years), confidence and abstain exactly as documented in Task.md.
 3) Every date_sample call is charged; invalid calls and overspending invalidate that world even when caught.
 4) Deterministic Python/NumPy/SciPy/stdlib only; no network/process creation and no reading verification/ or frontier_eval/.

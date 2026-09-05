@@ -12,11 +12,11 @@ DIFFICULTY = 1
 
 _DIFFICULTY_LADDER = {
     1: {"offset_bound_years": 150.0, "proxy_noise_multiplier": 1.00,
-        "date_noise_multiplier": 1.00},
+        "date_noise_multiplier": 1.00, "accumulation_segments": 6},
     2: {"offset_bound_years": 190.0, "proxy_noise_multiplier": 1.18,
-        "date_noise_multiplier": 1.25},
+        "date_noise_multiplier": 1.25, "accumulation_segments": 9},
     3: {"offset_bound_years": 230.0, "proxy_noise_multiplier": 1.38,
-        "date_noise_multiplier": 1.55},
+        "date_noise_multiplier": 1.55, "accumulation_segments": 12},
 }
 
 TIME_GRID = np.linspace(0.0, 2000.0, 81)
@@ -70,7 +70,12 @@ def _world(spec):
         nominal = np.linspace(30.0, 1970.0, N_SAMPLE)
         nominal += rng.normal(0.0, 8.0, N_SAMPLE)
         nominal.sort()
-        actual = np.clip(nominal + offsets[proxy_index], 0.0, 2000.0)
+        # Positive variable accumulation rates give a monotone, nonlinear age-depth map.
+        # Segments, not just observation noise, grow across difficulty levels.
+        knots = np.linspace(0., 2000., profile["accumulation_segments"] + 1)
+        duration = np.exp(rng.normal(0., .65, len(knots) - 1))
+        knot_ages = np.r_[0., 2000. * np.cumsum(duration) / np.sum(duration)]
+        actual = np.clip(np.interp(nominal, knots, knot_ages) + offsets[proxy_index], 0., 2000.)
         sensitivity = 0.65 + 0.12 * (proxy_index % 4)
         noise = ((0.16 + 0.025 * (proxy_index % 3))
                  * profile["proxy_noise_multiplier"])
@@ -84,10 +89,22 @@ def _world(spec):
             else:
                 values = sensitivity * temperature
             values += rng.normal(0.0, noise, N_SAMPLE)
+        calibration_temperature = np.linspace(-1.5, 1.5, 7)
+        calibration_response = sensitivity * calibration_temperature
+        if kind == "misspecified":
+            calibration_response += sensitivity * .55 * calibration_temperature ** 2
+        calibration_sigma = .04 * profile["proxy_noise_multiplier"]
+        calibration_response += rng.normal(0.0, calibration_sigma, len(calibration_temperature))
         catalog.append({
             "proxy_index": proxy_index, "proxy_type": PROXY_TYPES[proxy_index % 4],
             "nominal_age_years": nominal, "values": values, "noise_std": noise,
+            "chronology_model": "monotone piecewise-linear age-depth; variable positive accumulation",
+            "accumulation_segments": profile["accumulation_segments"],
+            "age_bounds_years": [0., 2000.],
             "sensitivity": sensitivity, "site_weight": 0.8 + 0.05 * proxy_index,
+            "calibration_temperature_c": calibration_temperature,
+            "calibration_proxy_values": calibration_response,
+            "calibration_noise_std": calibration_sigma,
         })
         true_ages.append(actual)
     return {"seed": seed, "kind": kind, "variant": variant, "climate": climate,
@@ -105,35 +122,41 @@ class _DatingLab:
 
     def date_sample(self, proxy_index, sample_indices):
         try:
-            proxy = int(proxy_index)
-        except Exception as exc:
+            try:
+                if not isinstance(proxy_index, (int, np.integer)) or isinstance(proxy_index, (bool, np.bool_)):
+                    raise ValueError("proxy_index must be integer")
+                proxy = int(proxy_index)
+            except Exception as exc:
+                self.violated = True
+                raise ValueError("proxy_index must be integer") from exc
+            indices = np.asarray(sample_indices)
+            if proxy < 0 or proxy >= N_PROXY or indices.ndim != 1 or not 1 <= len(indices) <= 10:
+                self.violated = True
+                raise ValueError("invalid proxy or sample index vector")
+            if np.any(indices != indices.astype(int)):
+                self.violated = True
+                raise ValueError("sample indices must be integers")
+            indices = indices.astype(int)
+            if len(np.unique(indices)) != len(indices) or np.any(indices < 0) or np.any(indices >= N_SAMPLE):
+                self.violated = True
+                raise ValueError("sample indices must be unique and in range")
+            cost = 1 + int(math.ceil(len(indices) / 5.0))
+            if self.used + cost > BUDGET_UNITS:
+                self.violated = True
+                raise RuntimeError("dating budget exceeded")
+            self.used += cost
+            self.calls += 1
+            payload = np.asarray(indices, dtype="<i8").tobytes()
+            digest = int.from_bytes(hashlib.sha256(payload).digest()[:4], "little")
+            rng = np.random.default_rng(self.world["seed"] + 1009 * proxy + digest + self.calls)
+            sigma = self.world["date_noise"]
+            dated = self.world["true_ages"][proxy][indices] + rng.normal(0.0, sigma, len(indices))
+            return {"proxy_index": proxy, "sample_indices": indices,
+                    "dated_age_years": dated, "date_noise_std_years": sigma,
+                    "budget_cost": cost}
+        except Exception:
             self.violated = True
-            raise ValueError("proxy_index must be integer") from exc
-        indices = np.asarray(sample_indices)
-        if proxy < 0 or proxy >= N_PROXY or indices.ndim != 1 or not 1 <= len(indices) <= 10:
-            self.violated = True
-            raise ValueError("invalid proxy or sample index vector")
-        if np.any(indices != indices.astype(int)):
-            self.violated = True
-            raise ValueError("sample indices must be integers")
-        indices = indices.astype(int)
-        if len(np.unique(indices)) != len(indices) or np.any(indices < 0) or np.any(indices >= N_SAMPLE):
-            self.violated = True
-            raise ValueError("sample indices must be unique and in range")
-        cost = 1 + int(math.ceil(len(indices) / 5.0))
-        if self.used + cost > BUDGET_UNITS:
-            self.violated = True
-            raise RuntimeError("dating budget exceeded")
-        self.used += cost
-        self.calls += 1
-        payload = np.asarray(indices, dtype="<i8").tobytes()
-        digest = int.from_bytes(hashlib.sha256(payload).digest()[:4], "little")
-        rng = np.random.default_rng(self.world["seed"] + 1009 * proxy + digest + self.calls)
-        sigma = self.world["date_noise"]
-        dated = self.world["true_ages"][proxy][indices] + rng.normal(0.0, sigma, len(indices))
-        return {"proxy_index": proxy, "sample_indices": indices,
-                "dated_age_years": dated, "date_noise_std_years": sigma,
-                "budget_cost": cost}
+            raise
 
 
 def _public_catalog(world):
@@ -155,17 +178,24 @@ def _validate(submission):
     abstain = bool(submission["abstain"])
     mean = np.asarray(submission.get("temperature_mean"), dtype=float)
     std = np.asarray(submission.get("temperature_std"), dtype=float)
-    offsets = np.asarray(submission.get("age_offsets_years"), dtype=float)
+    offsets = np.asarray(submission.get("age_offsets_years", []), dtype=float)
+    curves = np.asarray(submission.get("sample_ages_years", []), dtype=float)
     if abstain:
-        if mean.size or std.size or offsets.size:
+        if mean.size or std.size or offsets.size or curves.size:
             raise ValueError("abstention requires empty reconstruction arrays")
         return None, None, None, confidence, True
-    if mean.shape != TIME_GRID.shape or std.shape != TIME_GRID.shape or offsets.shape != (N_PROXY,):
+    if mean.shape != TIME_GRID.shape or std.shape != TIME_GRID.shape or (not curves.size and offsets.shape != (N_PROXY,)):
         raise ValueError("reconstruction arrays have the wrong shape")
     if np.any(~np.isfinite(mean)) or np.any(~np.isfinite(std)) or np.any(std <= 0.0) or np.any(~np.isfinite(offsets)):
         raise ValueError("reconstruction arrays must be finite and uncertainty positive")
     if np.any(np.abs(offsets) > 300.0):
         raise ValueError("age offsets must lie in [-300,300] years")
+    if curves.size:
+        if (curves.shape != (N_PROXY, N_SAMPLE) or np.any(~np.isfinite(curves))
+                or np.any(curves < 0.) or np.any(curves > 2000.)
+                or np.any(np.diff(curves, axis=1) < 0.)):
+            raise ValueError("sample ages must be finite monotone 8x36 arrays within [0,2000]")
+        return mean, std, curves, confidence, False
     return mean, std, offsets, confidence, False
 
 
@@ -216,7 +246,11 @@ def _evaluate_world(candidate, spec, split, index):
         if supported and not abstain:
             truth = world["climate"]
             ce, rmse = _climate_field_metrics(mean, truth)
-            age_mae = float(np.mean(np.abs(offsets - world["offsets"])))
+            # Legacy offset submissions remain legal but are assessed as entire age-depth curves.
+            estimated_ages = offsets if offsets.ndim == 2 else np.array([
+                np.clip(record["nominal_age_years"] + offset, 0., 2000.)
+                for record, offset in zip(world["catalog"], offsets)])
+            age_mae = float(np.mean(np.abs(estimated_ages - world["true_ages"])))
             crps = float(np.mean(_crps_normal(mean, std, truth)))
             ce_score = float(np.clip(ce, 0.0, 1.0))
             age_score = float(math.exp(-age_mae / 65.0))

@@ -149,32 +149,38 @@ class _Acquisition:
 
     def acquire(self, source_index):
         try:
-            source = int(source_index)
-        except Exception as exc:
+            try:
+                if not isinstance(source_index, (int, np.integer)) or isinstance(source_index, (bool, np.bool_)):
+                    raise ValueError("source_index must be integer")
+                source = int(source_index)
+            except Exception as exc:
+                self.violated = True
+                raise ValueError("source_index must be an integer") from exc
+            if source not in set(int(value) for value in SOURCE_INDICES):
+                self.violated = True
+                raise ValueError("source_index is not in source_indices")
+            if self.used + 1 > BUDGET_UNITS:
+                self.violated = True
+                raise RuntimeError("shot budget exceeded")
+            self.used += 1
+            self.calls.append(source)
+            attenuation = 1.8 if self.world["kind"] == "misspecified" else 0.0
+            clean = simulate_waveforms(self.world["velocity"], source, 12.0, attenuation)
+            scale = max(float(np.std(clean)), 1e-8)
+            sigma = self.world["noise"] * scale
+            rng = np.random.default_rng(self.world["seed"] * 101 + source * 17 + self.used)
+            pressure = clean + rng.normal(0.0, sigma, clean.shape)
+            return {
+                "source_index": source,
+                "receiver_x_m": RECEIVER_X_M.copy(),
+                "time_s": np.arange(N_TIME, dtype=float) * DT_S,
+                "pressure": pressure,
+                "noise_std": float(sigma),
+                "budget_cost": 1,
+            }
+        except Exception:
             self.violated = True
-            raise ValueError("source_index must be an integer") from exc
-        if source not in set(int(value) for value in SOURCE_INDICES):
-            self.violated = True
-            raise ValueError("source_index is not in source_indices")
-        if self.used + 1 > BUDGET_UNITS:
-            self.violated = True
-            raise RuntimeError("shot budget exceeded")
-        self.used += 1
-        self.calls.append(source)
-        attenuation = 1.8 if self.world["kind"] == "misspecified" else 0.0
-        clean = simulate_waveforms(self.world["velocity"], source, 12.0, attenuation)
-        scale = max(float(np.std(clean)), 1e-8)
-        sigma = self.world["noise"] * scale
-        rng = np.random.default_rng(self.world["seed"] * 101 + source * 17 + self.used)
-        pressure = clean + rng.normal(0.0, sigma, clean.shape)
-        return {
-            "source_index": source,
-            "receiver_x_m": RECEIVER_X_M.copy(),
-            "time_s": np.arange(N_TIME, dtype=float) * DT_S,
-            "pressure": pressure,
-            "noise_std": float(sigma),
-            "budget_cost": 1,
-        }
+            raise
 
 
 def _validate(submission):

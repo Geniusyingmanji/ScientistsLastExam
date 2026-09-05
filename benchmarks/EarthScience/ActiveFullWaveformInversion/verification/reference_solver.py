@@ -39,24 +39,44 @@ def invert_velocity_model(
     grid_shape, spacing_m, background_velocity_m_s, velocity_bounds_m_s,
     source_indices, receiver_x_m, time_s, acquire, budget_units,
 ):
-    del receiver_x_m, budget_units
-    gathers = [acquire(int(source_indices[index])) for index in (0, 2, 4)]
+    from scipy.ndimage import zoom, gaussian_filter1d
+    from scipy.optimize import least_squares
+    del receiver_x_m
+    count = min(int(budget_units), 3)
+    indices = np.linspace(0, len(source_indices) - 1, count, dtype=int)
+    gathers = [acquire(int(source_indices[i])) for i in indices]
     background = np.asarray(background_velocity_m_s, dtype=float)
-    residuals = []
-    energy_ratios = []
-    for row in gathers:
-        observed = np.asarray(row["pressure"], dtype=float)
-        predicted = _simulate(background, int(row["source_index"]), float(spacing_m), np.asarray(time_s))
-        residuals.append(np.linalg.norm(observed - predicted) / max(np.linalg.norm(predicted), 1e-12))
-        energy_ratios.append(np.linalg.norm(observed) / max(np.linalg.norm(predicted), 1e-12))
-    relative = float(np.mean(residuals))
-    energy_ratio = float(np.mean(energy_ratios))
-    if relative < 0.006 or relative > 0.28 or energy_ratio < 0.95:
-        return {"velocity_m_s": [], "confidence": 0.15, "abstain": True}
-    # A conservative smooth low-velocity lens is a useful but intentionally non-oracle witness.
-    zz, xx = np.mgrid[0:grid_shape[0], 0:grid_shape[1]]
-    lens = np.exp(-0.5 * (((xx - 0.5 * grid_shape[1]) / 4.5) ** 2
-                         + ((zz - 0.58 * grid_shape[0]) / 3.0) ** 2))
-    amplitude = np.clip(180.0 + 950.0 * relative, 180.0, 620.0)
-    velocity = np.clip(background - amplitude * lens, *velocity_bounds_m_s)
-    return {"velocity_m_s": velocity, "confidence": 0.55, "abstain": False}
+    observed = np.asarray([row["pressure"] for row in gathers])
+    sources = [int(row["source_index"]) for row in gathers]
+    def forward(velocity):
+        return np.asarray([_simulate(velocity, source, spacing_m, np.asarray(time_s)) for source in sources])
+    background_traces = forward(background)
+    relative = np.linalg.norm(observed - background_traces) / max(np.linalg.norm(background_traces), 1e-12)
+    energy_ratio = np.linalg.norm(observed) / max(np.linalg.norm(background_traces), 1e-12)
+    if relative < .006 or energy_ratio < .95:
+        return {"velocity_m_s": [], "confidence": .1, "abstain": True}
+    shape = (3, 5)
+    scale = np.asarray(grid_shape) / np.asarray(shape)
+    def velocity(parameters):
+        correction = zoom(parameters.reshape(shape), scale, order=1)
+        return np.clip(background + 900.0 * correction, *velocity_bounds_m_s)
+    parameters = np.zeros(np.prod(shape))
+    normalization = max(float(np.linalg.norm(observed)), 1e-12)
+    for smoothing, iterations in ((3.0, 8), (0.0, 10)):
+        target = gaussian_filter1d(observed, smoothing, axis=1) if smoothing else observed
+        def residual(values):
+            prediction = forward(velocity(values))
+            if smoothing:
+                prediction = gaussian_filter1d(prediction, smoothing, axis=1)
+            data = ((prediction - target) / normalization).ravel()[::3]
+            grid = values.reshape(shape)
+            regularizer = .0005 * np.r_[np.diff(grid,axis=0).ravel(),np.diff(grid,axis=1).ravel()]
+            return np.r_[data, regularizer]
+        result = least_squares(residual, parameters, bounds=(-1.5,1.5), max_nfev=iterations,
+                               diff_step=.002, ftol=1e-5, xtol=1e-5, gtol=1e-6)
+        parameters = result.x
+    prediction = velocity(parameters)
+    misfit = np.linalg.norm(forward(prediction) - observed) / normalization
+    if misfit > .12:
+        return {"velocity_m_s": [], "confidence": .1, "abstain": True}
+    return {"velocity_m_s": prediction, "confidence": .8, "abstain": False}

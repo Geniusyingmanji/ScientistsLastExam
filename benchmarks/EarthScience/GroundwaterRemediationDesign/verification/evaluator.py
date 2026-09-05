@@ -8,6 +8,7 @@ import numpy as np
 import xarray as xr
 
 DIFFICULTY = 1
+_REFERENCE_CACHE = {}
 
 _DIFFICULTY_LADDER = {
     1: {"exact_discrepancy_strength": 1.00, "stress_strength": 1.00,
@@ -75,6 +76,8 @@ def _public_problem(spec):
         "horizon_years": 20.0,
         "evaluation_times_years": np.linspace(1.0, 20.0, 20),
         "source_location_m": np.asarray((900.0 + 120.0 * index, source_y)),
+        "plume_components": [[0.0, -650.0, 0.40], [800.0, 550.0, 0.35], [1700.0, -50.0, 0.25]],
+        "transport_step_days": 30.0,
         "initial_contaminant_mass_kg": 1800.0 + 90.0 * index,
         "longitudinal_sigma_m": float(sigma_x),
         "transverse_sigma_m": float(sigma_y),
@@ -144,32 +147,49 @@ def _plan_metrics(problem, wells, shift=None):
     source_x, source_y = problem["source_location_m"]
     thickness = problem["aquifer_thickness_m"]
     porosity = problem["effective_porosity"]
-    mass_history = []
-    concentration_history = []
+    # Each initial Gaussian component advects continuously. Pump extraction is
+    # Q*C at the *current* well concentration, integrated in time, not distance
+    # from the source at the instant pumping was switched on.
+    components = np.asarray(problem["plume_components"], dtype=float)
+    masses = initial_mass * components[:, 2]
+    removed = 0.0
+    decayed = 0.0
+    time_days = 0.0
+    mass_history, concentration_history = [], []
+    wells = np.asarray(wells, dtype=float)
     for year in problem["evaluation_times_years"]:
-        days = 365.25 * float(year)
-        center_x = source_x + velocity * days
-        sigma_x = math.sqrt(sigma_x0 ** 2 + 2.0 * 8.0 * days)
-        sigma_y = math.sqrt(sigma_y0 ** 2 + 2.0 * 2.2 * days)
-        natural = math.exp(-decay * days)
-        removal = 0.0
-        for x, y, start_year, rate in wells:
-            active_days = max(0.0, days - 365.25 * start_year)
-            path_x = source_x + velocity * 365.25 * start_year
-            along = (x - path_x) / max(sigma_x, 1.0)
-            across = (y - source_y) / max(sigma_y, 1.0)
-            proximity = math.exp(-0.5 * (0.32 * along * along + across * across))
-            removal += 2.4e-7 * rate * active_days * proximity
-        mass = initial_mass * natural * math.exp(-removal)
-        mass_history.append(mass)
-        denominator = 2.0 * math.pi * sigma_x * sigma_y * thickness * porosity
-        receptor_row = []
-        for receptor_x, receptor_y in problem["receptor_locations_m"]:
-            exponent = -0.5 * (((receptor_x - center_x) / sigma_x) ** 2
-                               + ((receptor_y - source_y) / sigma_y) ** 2)
-            concentration = mass / max(denominator, 1e-12) * math.exp(exponent)
-            receptor_row.append(concentration)
-        concentration_history.append(receptor_row)
+        stop = 365.25 * float(year)
+        while time_days < stop - 1e-9:
+            dt = min(float(problem["transport_step_days"]), stop - time_days)
+            # Split at activation times so delaying a well never gets a free full step.
+            starts = 365.25 * wells[:, 2]
+            future = starts[(starts > time_days + 1e-9) & (starts < time_days + dt)]
+            if len(future):
+                dt = float(np.min(future) - time_days)
+            mid = time_days + 0.5 * dt
+            sx = math.sqrt(sigma_x0 ** 2 + 16.0 * mid)
+            sy = math.sqrt(sigma_y0 ** 2 + 4.4 * mid)
+            cx = source_x + components[:, 0] + velocity * mid
+            cy = source_y + components[:, 1]
+            distance = ((wells[:, 0, None] - cx) / sx) ** 2 + ((wells[:, 1, None] - cy) / sy) ** 2
+            density = np.exp(-0.5 * distance) / (2 * math.pi * sx * sy * thickness * porosity)
+            active_rates = wells[:, 3] * (starts <= mid)
+            capture = np.sum(active_rates[:, None] * density, axis=0)
+            hazard = capture + decay
+            lost = masses * (-np.expm1(-hazard * dt))
+            removed += float(np.sum(lost * capture / np.maximum(hazard, 1e-30)))
+            decayed += float(np.sum(lost * decay / np.maximum(hazard, 1e-30)))
+            masses -= lost
+            time_days += dt
+        mass_history.append(float(np.sum(masses)))
+        sx = math.sqrt(sigma_x0 ** 2 + 16.0 * stop)
+        sy = math.sqrt(sigma_y0 ** 2 + 4.4 * stop)
+        receptors = np.asarray(problem["receptor_locations_m"])
+        cx = source_x + components[:, 0] + velocity * stop
+        cy = source_y + components[:, 1]
+        distance = ((receptors[:, 0, None] - cx) / sx) ** 2 + ((receptors[:, 1, None] - cy) / sy) ** 2
+        concentration_history.append(np.sum(masses * np.exp(-0.5 * distance) /
+                                            (2 * math.pi * sx * sy * thickness * porosity), axis=1))
     transport = xr.Dataset(
         data_vars={
             "remaining_mass_kg": ("time_years", np.asarray(mass_history, dtype=float)),
@@ -192,7 +212,9 @@ def _plan_metrics(problem, wells, shift=None):
     cost = len(wells) * problem["fixed_well_cost_usd"] + pumped * problem["pumping_cost_usd_per_m3"] * mean_discount
     compliance = max_receptor <= problem["concentration_limit_kg_m3"]
     return {"remaining_mass_kg": final_mass, "max_receptor_concentration_kg_m3": max_receptor,
-            "lifecycle_cost_usd": float(cost), "total_pumped_m3": pumped, "compliant": bool(compliance)}
+            "lifecycle_cost_usd": float(cost), "total_pumped_m3": pumped, "compliant": bool(compliance),
+            "captured_mass_kg": removed, "decayed_mass_kg": decayed,
+            "mass_balance_error_kg": abs(initial_mass - final_mass - removed - decayed)}
 
 
 def _point(problem, metrics):
@@ -239,25 +261,46 @@ def _baseline_archive(problem):
 
 
 def _reference_archive(problem):
+    """Public-model archive search, including the single-source and weak baselines."""
+    key = repr(problem)
+    if key in _REFERENCE_CACHE:
+        return [p.copy() for p in _REFERENCE_CACHE[key]]
     source_x, source_y = problem["source_location_m"]
     velocity = problem["groundwater_velocity_m_day"]
-    plans = []
-    for count in (2, 3, 4, 5):
-        for rate in (420.0, 620.0, 820.0):
-            rate = min(rate, problem["max_total_pumping_m3_day"] / count)
-            xs = np.linspace(source_x + 1400.0, min(problem["domain_size_m"][0] - 300.0,
-                                                    source_x + velocity * 365.25 * 13.0), count)
-            wells = np.column_stack((xs, source_y + np.linspace(-180.0, 180.0, count),
-                                     np.linspace(0.5, 2.5, count), np.full(count, rate)))
-            plans.append(wells)
-    unique = []
-    fingerprints = set()
-    for plan in plans:
-        fingerprint = tuple(np.round(plan.ravel(), 8))
-        if fingerprint not in fingerprints:
-            fingerprints.add(fingerprint)
-            unique.append(plan)
-    return unique
+    candidates = _baseline_archive(problem)
+    for rate in np.linspace(80.0, 950.0, 16):
+        candidates.append(np.asarray([[source_x, source_y, 0.0, rate]]))
+    # Build treatment transects intercepting different moving plume components.
+    components = np.asarray(problem["plume_components"])
+    for count in (1, 2, 3, 4, 5):
+        for encounter in (1.0, 4.0, 8.0, 12.0):
+            for rate in (160., 380., 650., 950.):
+                component = np.arange(count) % len(components)
+                x = source_x + components[component, 0] + velocity * 365.25 * encounter
+                y = source_y + components[component, 1] + 100.0 * (np.arange(count) // len(components))
+                start = max(0.0, encounter - 3.0)
+                wells = np.column_stack((np.clip(x, 0, problem["domain_size_m"][0]),
+                                        np.clip(y, 0, problem["domain_size_m"][1]),
+                                        np.full(count, min(8., start)),
+                                        np.full(count, min(rate, problem["max_total_pumping_m3_day"] / count))))
+                candidates.append(wells)
+    points = [_point(problem, _plan_metrics(problem, p)) for p in candidates]
+    # Greedy hypervolume coverage uses only public homogeneous transport.
+    selected = list(range(4))
+    def area(indices):
+        values = sorted(set(points[i] for i in indices if points[i] is not None))
+        frontier = [p for p in values if not any(q[0] >= p[0] and q[1] >= p[1] and q != p for q in values)]
+        previous = 0.0; result = 0.0
+        for x, y in frontier:
+            result += (x - previous) * y; previous = x
+        return result
+    for _ in range(12):
+        best = max((i for i in range(len(candidates)) if i not in selected),
+                   key=lambda i: area(selected + [i]))
+        selected.append(best)
+    answer = [candidates[i] for i in selected]
+    _REFERENCE_CACHE[key] = [p.copy() for p in answer]
+    return answer
 
 
 def _normalize(value, baseline, reference):

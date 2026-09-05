@@ -684,7 +684,7 @@ tasks:
       - doi:10.1016/j.compstruct.2016.01.052
   WaterDistribution/ResilientPumpScheduling:
     status: candidate
-    reason: deterministic extended-period storage, pressure and energy scheduling with an uncapped public-forecast LP witness and separate demand-growth and pump-outage resilience; pending EPANET/WNTR replication, independent water-systems review, server-held networks and frontier-model calibration
+    reason: deterministic extended-period storage, pressure and energy scheduling with an uncapped public-forecast convex-optimization witness and separate demand-growth and pump-outage resilience; pending EPANET/WNTR replication, independent water-systems review, server-held networks and frontier-model calibration
     citation_ids:
       - url:https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P10113EM.TXT
       - doi:10.5194/dwes-7-53-2014

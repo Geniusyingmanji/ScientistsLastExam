@@ -1,21 +1,26 @@
 schema_version: 2
-scientific_question: Can a bounded dating program jointly recover chronology and a probabilistic paleotemperature history while refusing null or nonstationary proxy systems?
-artifact: Temperature mean and uncertainty on a public time grid, one age offset per proxy, confidence and optional model-inadequacy abstention.
+scientific_question: Can a bounded dating program jointly recover chronology and a probabilistic paleotemperature
+  history while refusing null or nonstationary proxy systems?
+artifact: Temperature mean/std and monotone sample ages, with legacy constant offsets accepted.
 oracle:
-  model: deterministic procedural linear pseudoproxies with hidden chronology offsets, red-noise climate histories, independent dating noise, nulls and nonlinear nonstationary misspecification; climate fields are coordinate-aligned and reduced with xarray
-  feasibility: finite aligned reconstructions, positive uncertainty and charged per-record dating under a sixteen-unit budget
+  model: Monotone piecewise-linear variable-accumulation age-depth maps, linear pseudoproxies, red-noise
+    climate, dating noise and unsupported regimes; xarray climate scoring.
+  feasibility: finite aligned reconstructions, positive uncertainty and charged per-record dating under
+    a sixteen-unit budget
   deterministic: true
-  external_tooling: xarray 2023.6.0 for coordinate-labeled climate time-series alignment, CE and RMSE reduction
+  external_tooling: xarray 2023.6.0 for coordinate-labeled climate time-series alignment, CE and RMSE
+    reduction
 difficulty_ladder:
   default_level: 1
   levels:
-    1: offsets within 150 years and working proxy/dating noise
-    2: offsets within 190 years with 18 percent more proxy noise and 25 percent more dating noise
-    3: offsets within 230 years with 38 percent more proxy noise and 55 percent more dating noise
+    1: 6 accumulation segments, offset <=150 years
+    2: 9 accumulation segments, offset <=190 years and elevated noise
+    3: 12 accumulation segments, offset <=230 years and elevated noise
 normalization:
   baseline: three sparse dating calls followed by abstention on every world
-  reference: the evaluator recomputes a shipped truth-blind dated-proxy interpolation witness and exact pseudoproxy ceiling on every world
-  score: CE, chronology and CRPS recovery normalized above always abstaining; raw RMSE, uncertainty calibration, refusal and held-out transfer remain separate
+  reference: Sparse-date monotone age-depth interpolation followed by age-error-aware GP reconstruction.
+  score: CE, chronology and CRPS recovery normalized above always abstaining; raw RMSE, uncertainty calibration,
+    refusal and held-out transfer remain separate
 citations:
 - id: doi:10.1029/2020GL090485
   title: Quantifying Structural Uncertainty in Paleoclimate Data Assimilation
@@ -27,33 +32,43 @@ invariants:
 - normal CRPS is finite, proper and decreases for sharper calibrated reconstructions
 - null and resolvable nonlinear or nonstationary proxy systems reward refusal
 - every date consumes budget and invalid or overspent requests fail closed
-known_shortcuts: xarray supplies authoritative labeled climate-array alignment and reduction, not the proxy-system physics. The benchmark uses global standardized pseudoproxies, a single offset per archive and independent Gaussian observation errors. It omits preservation bias, depth-dependent accumulation, multivariate local climate and real proxy-system calibration. Public procedural worlds need server-held confirmation and no result is an Earth reconstruction.
+known_shortcuts: Variable positive accumulation across 6/9/12 segments; joint age/climate inference remains
+  approximate. Formal clean Linux calibration and independent domain validation remain pending.
 licensing:
   task_package: repository_license_not_declared
   external_assets: none
-  note: All pseudoproxy records are generated from original repository code; cited publications are not redistributed.
+  note: All pseudoproxy records are generated from original repository code; cited publications are not
+    redistributed.
 contamination:
   status: cannot_be_ruled_out
-  rationale: The pseudoproxy family and scaffold are public and AI-assisted; server-held records and independent data-assimilation validation are still required.
+  rationale: The pseudoproxy family and scaffold are public and AI-assisted; server-held records and independent
+    data-assimilation validation are still required.
 review:
   domain: pending_external_paleoclimate
-  evaluator_security: automated_budget_chronology_shape_crps_refusal_determinism_and_metric_sealing_tests
+  evaluator_security: targeted_local_regressions_added_clean_linux_sandbox_replay_pending
 provenance:
   class: procedural
-  target_source: Repository-visible deterministic pseudoproxy generator with development and held-out spectra, proxy mixes, chronology noise, null and misspecified regimes.
+  target_source: Repository-visible deterministic pseudoproxy generator with development and held-out
+    spectra, proxy mixes, chronology noise, null and misspecified regimes.
   task_contract_public_before_evaluation: true
   fresh_confirmation_status: not_completed
 novelty_risk:
   level: medium
-  rationale: Hidden climate histories and offsets are procedural, but the proxy family and builder scaffold remain public and model independence is not established.
+  rationale: Hidden climate histories and offsets are procedural, but the proxy family and builder scaffold
+    remain public and model independence is not established.
 lineage:
   status: complete
-  builder_model_ids: [openai-codex]
-  builder_scaffolds: [repository-native-earth-science-task-pattern]
+  builder_model_ids:
+  - openai-codex
+  builder_scaffolds:
+  - repository-native-earth-science-task-pattern
   calibrator_model_ids: []
   calibration_runs: []
   calibration_evidence_status: missing
-  edits_triggered_by_model: Initial AI-assisted construction; no model calibration edits have yet been made.
+  edits_triggered_by_model: 2026-09-05 local code-review probes triggered identifiable sill scoring, feasible
+    HVAC heldout anchors, moving-plume capture, stronger public-data references, contract documentation
+    and regression tests. No frontier calibration draw has been run. Second local hardening adds nonlinear
+    chronology, frame nuisance, transient control and pump commitment; no frontier-model draw.
   shortcut_discoverer: initial_internal_red_team
   frozen_before_eval: false
   freeze_timestamp: null
@@ -62,11 +77,17 @@ construction_audit:
   author_domain: AI-assisted benchmark engineering
   reviewer_domain: pending_external_paleoclimate
   expert_hours: null
-  red_team_rounds: 1
+  red_team_rounds: 2
   oracle_disagreement_status: not_quantified
-  independent_recomputation_status: shipped_reference_witness_only
+  independent_recomputation_status: standalone_public_model_references_high_fidelity_replication_pending
 long_horizon:
   status: not_tested
   measurement_health_passed: false
   material_headroom_after_2h: false
   evidence: []
+difficulty_assessment:
+  status: unverified_candidate
+  requirement: standard-method and low-dimensional shortcut sweeps, capability ablations and clean frontier-model
+    calibration before certification
+  remaining_risk: Variable positive accumulation across 6/9/12 segments; joint age/climate inference remains
+    approximate.

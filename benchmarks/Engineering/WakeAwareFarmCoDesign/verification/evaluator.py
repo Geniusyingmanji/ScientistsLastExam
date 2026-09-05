@@ -7,7 +7,7 @@ import math
 import numpy as np
 
 
-DIFFICULTY = "flagship"
+DIFFICULTY = "hard"
 DIRECTIONS = np.arange(0.0, 360.0, 30.0)
 _REFERENCE_CACHE = {}
 INSTANCE_SPECS = (
@@ -113,6 +113,19 @@ def _reference(problem):
                 yaw[d,j]=value; q=_farm_value(problem,layout,yaw)
                 if q>best: best,chosen=q,value
             yaw[d,j]=chosen
+    for step_size in (80., 40., 20.):
+        best = _farm_value(problem, layout, yaw)
+        for j in range(len(layout)):
+            for axis in range(2):
+                for sign in (-1., 1.):
+                    trial = layout.copy(); trial[j,axis] += sign * step_size
+                    try:
+                        _validate(problem, {"layout_xy_m": trial, "yaw_by_direction_deg": yaw})
+                    except ValueError:
+                        continue
+                    value = _farm_value(problem, trial, yaw)
+                    if value > best:
+                        layout, best = trial, value
     _REFERENCE_CACHE[key]=(layout.copy(),yaw.copy())
     return layout,yaw
 
@@ -136,7 +149,7 @@ def _score_instance(candidate,spec):
 
 def evaluate(design_wind_farm):
     rows=[_score_instance(design_wind_farm,s) for s in INSTANCE_SPECS]; dev=[r for r in rows if r["split"]=="development"]; held=[r for r in rows if r["split"]=="heldout"]
-    return {"combined_score":float(np.mean([r["score"] for r in dev])),"valid":float(all(r["valid"] for r in dev)),
+    return {"combined_score":max(0.0,float(np.mean([r["score"] for r in dev]))) if all(r["valid"] for r in dev) else 0.0,"valid":float(all(r["valid"] for r in dev)),
             "feasibility_rate":float(np.mean([r["valid"] for r in dev])),"robustness_score":float(np.mean([r["robustness_score"] for r in dev])),
             "heldout_policy_score":float(np.mean([r["score"] for r in held])),"heldout_robustness_score":float(np.mean([r["robustness_score"] for r in held])),
             "heldout_feasibility_rate":float(np.mean([r["valid"] for r in held])),"per_instance":rows}

@@ -1,11 +1,18 @@
 schema_version: 2
-scientific_question: Can a charged GNSS/InSAR survey identify a supported volcanic source family and parameters while refusing null or resolvably out-of-family deformation?
-artifact: Probabilities over a public source family, one bounded parameter row, confidence and optional model-inadequacy abstention.
+scientific_question: Can a charged GNSS/InSAR survey identify a supported volcanic source family and parameters
+  while refusing null or resolvably out-of-family deformation?
+artifact: Probabilities over a public source family, one bounded parameter row, confidence and optional
+  model-inadequacy abstention.
 oracle:
-  model: deterministic elastic Mogi, sill and dike responses with procedural sources, zero-deformation nulls and two-source or rheological misspecification; station/component fields and InSAR projection are coordinate-aligned with xarray
-  feasibility: finite bounded source artifacts and unique charged station surveys under an eighteen-unit budget
+  model: deterministic elastic Mogi, sill and dike responses with procedural sources, zero-deformation
+    nulls and two-source or rheological misspecification; station/component fields and InSAR projection
+    are coordinate-aligned with xarray Shared three-component frame translation and a vertical spatial
+    plane contaminate every survey, including null worlds; source scoring excludes these nuisance terms.
+  feasibility: finite bounded source artifacts and unique charged station surveys under an eighteen-unit
+    budget
   deterministic: true
-  external_tooling: xarray 2023.6.0 for labeled station/component displacement alignment, projection and residual reduction
+  external_tooling: xarray 2023.6.0 for labeled station/component displacement alignment, projection and
+    residual reduction
 difficulty_ladder:
   default_level: 1
   levels:
@@ -14,8 +21,10 @@ difficulty_ladder:
     3: 65 percent more noise, stronger misspecification and two extra supported sources
 normalization:
   baseline: one coarse GNSS survey followed by abstention on every world
-  reference: the evaluator recomputes a shipped truth-blind family-and-parameter grid-search witness and exact supported-world ceiling on every world
-  score: source probability, parameter recovery and sealed displacement prediction normalized above always abstaining; Brier calibration and refusal remain separate
+  reference: Variable projection of shared frame translation and vertical-plane errors inside bounded
+    source-family fitting.
+  score: source probability, parameter recovery and sealed displacement prediction normalized above always
+    abstaining; Brier calibration and refusal remain separate
 citations:
 - id: doi:10.1029/2001RG000107
   title: A comprehensive approach to monitoring volcano deformation as a window on the eruption cycle
@@ -23,37 +32,48 @@ citations:
   title: Earthquake and Volcano Deformation
 invariants:
 - translated sources produce correspondingly translated displacement fields
-- exact source families and identifiable parameters attain unit mechanism and sealed-prediction scores; inactive placeholder coordinates are not scored
+- exact source families and identifiable parameters attain unit mechanism and sealed-prediction scores;
+  inactive placeholder coordinates are not scored
 - null and resolvable two-source or rheological responses reward refusal
 - GNSS and InSAR observations agree under the public look-vector projection
 - survey cost is charged and malformed or overspent surveys fail closed
-known_shortcuts: xarray supplies authoritative labeled-array projection and aggregation, not elastic source physics. The public half-space source expressions are local reduced-order abstractions with synthetic independent noise. They omit topography, heterogeneous elastic structure, temporal source evolution and atmospheric InSAR errors. Public procedural worlds require server-held confirmation and real claims require independent geodetic and geological evidence.
+known_shortcuts: Five linear nuisance terms now require separation from physical sources; single-source
+  nonlinear least squares still approaches the ceiling. Formal clean Linux calibration and independent
+  domain validation remain pending.
 licensing:
   task_package: repository_license_not_declared
   external_assets: none
   note: All runtime worlds are generated from original repository code; cited publications are not redistributed.
 contamination:
   status: cannot_be_ruled_out
-  rationale: The equations, scaffold and fixed procedural family are public and were built with AI assistance; server-held worlds and an independent model family are still required.
+  rationale: The equations, scaffold and fixed procedural family are public and were built with AI assistance;
+    server-held worlds and an independent model family are still required.
 review:
   domain: pending_external_volcanology
-  evaluator_security: automated_budget_geometry_projection_parameter_refusal_determinism_and_metric_sealing_tests
+  evaluator_security: targeted_local_regressions_added_clean_linux_sandbox_replay_pending
 provenance:
   class: procedural
-  target_source: Repository-visible deterministic source models with development and held-out parameters, geometry, noise, null and misspecified regimes.
+  target_source: Repository-visible deterministic source models with development and held-out parameters,
+    geometry, noise, null and misspecified regimes.
   task_contract_public_before_evaluation: true
   fresh_confirmation_status: not_completed
 novelty_risk:
   level: medium
-  rationale: Source parameters are hidden but the compact model library and procedural family are public and builder-model independence is not established.
+  rationale: Source parameters are hidden but the compact model library and procedural family are public
+    and builder-model independence is not established.
 lineage:
   status: complete
-  builder_model_ids: [openai-codex]
-  builder_scaffolds: [repository-native-earth-science-task-pattern]
+  builder_model_ids:
+  - openai-codex
+  builder_scaffolds:
+  - repository-native-earth-science-task-pattern
   calibrator_model_ids: []
   calibration_runs: []
   calibration_evidence_status: missing
-  edits_triggered_by_model: Initial AI-assisted construction; no model calibration edits have yet been made.
+  edits_triggered_by_model: 2026-09-05 local code-review probes triggered identifiable sill scoring, feasible
+    HVAC heldout anchors, moving-plume capture, stronger public-data references, contract documentation
+    and regression tests. No frontier calibration draw has been run. Second local hardening adds nonlinear
+    chronology, frame nuisance, transient control and pump commitment; no frontier-model draw.
   shortcut_discoverer: initial_internal_red_team
   frozen_before_eval: false
   freeze_timestamp: null
@@ -62,11 +82,17 @@ construction_audit:
   author_domain: AI-assisted benchmark engineering
   reviewer_domain: pending_external_volcanology
   expert_hours: null
-  red_team_rounds: 1
+  red_team_rounds: 2
   oracle_disagreement_status: not_quantified
-  independent_recomputation_status: shipped_reference_witness_only
+  independent_recomputation_status: standalone_public_model_references_high_fidelity_replication_pending
 long_horizon:
   status: not_tested
   measurement_health_passed: false
   material_headroom_after_2h: false
   evidence: []
+difficulty_assessment:
+  status: unverified_candidate
+  requirement: standard-method and low-dimensional shortcut sweeps, capability ablations and clean frontier-model
+    calibration before certification
+  remaining_risk: Five linear nuisance terms now require separation from physical sources; single-source
+    nonlinear least squares still approaches the ceiling.

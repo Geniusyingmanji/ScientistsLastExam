@@ -50,10 +50,11 @@ def _problem(spec):
         "required_angle_counts": counts, "symmetric": True, "balanced": True,
         "maximum_consecutive_equal_plies": MAX_RUN, "ply_thickness_m": 0.000125,
         "panel_length_m": float(spec["a"]), "panel_width_m": float(spec["b"]),
-        "load_cases_n_per_m": [list(row) for row in spec["loads"]],
+        "load_cases_n_per_m": [[0.01*value for value in row] for row in spec["loads"]],
+        "moment_cases_n": [[160.0, 32.0, 56.0], [-64.0, 144.0, -48.0]],
         "material": {"e1_pa": e1, "e2_pa": e2, "g12_pa": g12, "nu12": nu12,
                      "xt_pa": xt, "xc_pa": xc, "yt_pa": yt, "yc_pa": yc, "s_pa": s},
-        "model": "classical laminate A/D matrices; simply-supported Navier buckling modes 1..4; Tsai-Hill first-ply reserve",
+        "model": "classical laminate A/D matrices; simply-supported Navier buckling modes 1..4; Tsai-Hill first-ply reserve under membrane and bending loads",
     }
 
 
@@ -75,7 +76,7 @@ def _qbar(material, angle):
     ], dtype=float)
 
 
-def _laminate(problem, sequence, material=None, loads=None):
+def _laminate(problem, sequence, material=None, loads=None, return_components=False):
     material = material or problem["material"]
     loads = loads or problem["load_cases_n_per_m"]
     t = float(problem["ply_thickness_m"]); h = len(sequence) * t
@@ -87,7 +88,8 @@ def _laminate(problem, sequence, material=None, loads=None):
         d_mat += q * (edges[k+1]**3-edges[k]**3) / 3.0
     a, b = float(problem["panel_length_m"]), float(problem["panel_width_m"])
     reserve = float("inf")
-    for nx, ny, nxy in loads:
+    buckling_reserve = first_ply_reserve = float("inf")
+    for load_index, (nx, ny, nxy) in enumerate(loads):
         best = float("inf")
         for mx in range(1, 5):
             for my in range(1, 5):
@@ -96,19 +98,27 @@ def _laminate(problem, sequence, material=None, loads=None):
                 denominator = max(nx*x*x + ny*y*y + 2*abs(nxy)*x*y, 1e-12)
                 best = min(best, numerator / denominator)
         strain = np.linalg.solve(a_mat, np.asarray([nx, ny, nxy], dtype=float))
+        curvature = np.linalg.solve(d_mat, np.asarray(problem["moment_cases_n"][load_index]))
         failure_index = 0.0
-        for angle, q in zip(sequence, qbars):
-            sx, sy, txy = q @ strain
-            r = math.radians(angle); m, n = math.cos(r), math.sin(r)
-            s1 = m*m*sx+n*n*sy+2*m*n*txy
-            s2 = n*n*sx+m*m*sy-2*m*n*txy
-            t12 = -m*n*sx+m*n*sy+(m*m-n*n)*txy
-            xallow = material["xt_pa"] if s1 >= 0 else material["xc_pa"]
-            yallow = material["yt_pa"] if s2 >= 0 else material["yc_pa"]
-            idx = (s1/xallow)**2 - (s1*s2)/(xallow*xallow) + (s2/yallow)**2 + (t12/material["s_pa"])**2
-            failure_index = max(failure_index, float(idx))
+        for ply, (angle, q) in enumerate(zip(sequence, qbars)):
+            # Check both ply faces: bending stresses depend on distance from the midplane.
+            for face in (edges[ply], edges[ply + 1]):
+                sx, sy, txy = q @ (strain + face * curvature)
+                r = math.radians(angle); m, n = math.cos(r), math.sin(r)
+                s1 = m*m*sx+n*n*sy+2*m*n*txy
+                s2 = n*n*sx+m*m*sy-2*m*n*txy
+                t12 = -m*n*sx+m*n*sy+(m*m-n*n)*txy
+                xallow = material["xt_pa"] if s1 >= 0 else material["xc_pa"]
+                yallow = material["yt_pa"] if s2 >= 0 else material["yc_pa"]
+                idx = (s1/xallow)**2 - (s1*s2)/(xallow*xallow) + (s2/yallow)**2 + (t12/material["s_pa"])**2
+                failure_index = max(failure_index, float(idx))
         first_ply = 1.0 / math.sqrt(max(failure_index, 1e-18))
         reserve = min(reserve, best, first_ply)
+        buckling_reserve = min(buckling_reserve, best)
+        first_ply_reserve = min(first_ply_reserve, first_ply)
+    if return_components:
+        return {"reserve_factor":float(reserve), "buckling_reserve":float(buckling_reserve),
+                "first_ply_reserve":float(first_ply_reserve)}
     return float(reserve)
 
 
@@ -148,6 +158,7 @@ def _baseline(problem):
 def _reference(problem):
     key = (problem["ply_count"], problem["panel_length_m"], problem["panel_width_m"],
            tuple(tuple(x) for x in problem["load_cases_n_per_m"]),
+           tuple(tuple(x) for x in problem["moment_cases_n"]),
            tuple(sorted(problem["material"].items())))
     if key in _REFERENCE_CACHE:
         return list(_REFERENCE_CACHE[key])
@@ -162,6 +173,27 @@ def _reference(problem):
             continue
         q = _laminate(problem, trial)
         if q > best_q: best, best_q = trial, q
+    # A competent discrete witness must refine random starts, not only sample them.
+    for _pass in range(12):
+        improved = False
+        half = best[:len(best)//2]
+        for i in range(len(half)):
+            for j in range(i + 1, len(half)):
+                if half[i] == half[j]:
+                    continue
+                trial_half = half.copy()
+                trial_half[i], trial_half[j] = trial_half[j], trial_half[i]
+                trial = trial_half + trial_half[::-1]
+                try:
+                    _validate(problem, trial)
+                except ValueError:
+                    continue
+                quality = _laminate(problem, trial)
+                if quality > best_q + 1e-14:
+                    best, best_q = trial, quality
+                    improved = True
+        if not improved:
+            break
     _REFERENCE_CACHE[key] = tuple(best)
     return list(best)
 
@@ -199,7 +231,7 @@ def evaluate(design_laminate):
     dev = [r for r in rows if r["split"] == "development"]
     held = [r for r in rows if r["split"] == "heldout"]
     return {
-        "combined_score": float(np.mean([r["score"] for r in dev])),
+        "combined_score": max(0.0, float(np.mean([r["score"] for r in dev]))) if all(r["valid"] for r in dev) else 0.0,
         "valid": float(all(r["valid"] for r in dev)),
         "feasibility_rate": float(np.mean([r["valid"] for r in dev])),
         "robustness_score": float(np.mean([r["robustness_score"] for r in dev])),

@@ -7,7 +7,9 @@ oracle_type: physical_sim
 score_mode: clipped
 gpu_required: false
 eval_time_seconds: 150
-science_metric: charged-shot acoustic velocity mechanism recovery with sealed waveform transfer and calibrated model-inadequacy refusal
+science_metric: charged-shot acoustic velocity mechanism recovery with sealed waveform transfer and calibrated
+  model-inadequacy refusal
 reference_baseline: one central shot followed by abstention on every world
-reference_sota: shipped deterministic multishot spectral-travel-time witness and an exact supported-world ceiling; no field-scale claim
-citation: "Virieux and Operto 2009, DOI 10.1190/1.3238367; Symes 2020, arXiv:2003.14181"
+reference_sota: Bounded two-stage smoothed/full-waveform least squares over a 3x5 velocity correction
+  grid. This is a runnable witness, not a published SoTA claim.
+citation: Virieux and Operto 2009, DOI 10.1190/1.3238367; Symes 2020, arXiv:2003.14181

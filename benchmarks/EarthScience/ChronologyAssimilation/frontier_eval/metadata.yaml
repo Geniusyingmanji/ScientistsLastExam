@@ -7,7 +7,9 @@ oracle_type: physical_sim
 score_mode: clipped
 gpu_required: false
 eval_time_seconds: 45
-science_metric: charged chronology correction and probabilistic paleotemperature recovery with CE, RMSE, CRPS and calibrated model-inadequacy refusal
+science_metric: charged chronology correction and probabilistic paleotemperature recovery with CE, RMSE,
+  CRPS and calibrated model-inadequacy refusal
 reference_baseline: three sparse dating calls followed by abstention on every world
-reference_sota: shipped truth-blind dated-proxy interpolation witness and exact pseudoproxy ceiling; no Earth reconstruction claim
-citation: "Amrhein et al. 2020, DOI 10.1029/2020GL090485; Badgeley et al. 2020, DOI 10.5194/cp-16-1325-2020"
+reference_sota: Sparse-date monotone age-depth interpolation followed by age-error-aware GP reconstruction.
+  Runnable witness, not a published SoTA claim.
+citation: Amrhein et al. 2020, DOI 10.1029/2020GL090485; Badgeley et al. 2020, DOI 10.5194/cp-16-1325-2020

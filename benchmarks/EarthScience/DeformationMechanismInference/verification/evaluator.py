@@ -63,10 +63,13 @@ def model_library():
         "mechanisms": list(MECHANISMS),
         "parameter_names": ["x_center_m", "y_center_m", "depth_m", "strength", "horizontal_scale_m"],
         "parameter_bounds": PARAMETER_BOUNDS.copy(),
+        "nuisance_model": "observations add a shared three-component frame translation and vertical plane ax*x/5000+ay*y/5000; infer or marginalize these without including them in the source prediction",
+        "frame_translation_bounds_m": [-.08, .08],
+        "vertical_plane_coefficient_bounds_m": [-.12, .12],
         "equations": {
             "mogi": "u = strength * [dx,dy,depth] / (dx^2+dy^2+depth^2)^(3/2)",
-            "sill": "uz=(strength/1e9) exp(-r^2/(2 scale^2)); ur=0.25 uz r/scale",
-            "dike": "ux=(strength/1e9) exp(-y'^2/(2 scale^2)) tanh(x'/scale); uz=0.55 abs(ux)",
+            "sill": "r=sqrt(dx^2+dy^2)+1e-12; uz=(strength/1e9)*(1500/depth)*exp(-r^2/(2*scale^2)); ur=0.25*uz*r/scale; u=[ur*dx/r,ur*dy/r,uz]; only strength/depth is identifiable",
+            "dike": "along=(dx+0.35*dy)/sqrt(1+0.35^2); across=(dy-0.35*dx)/sqrt(1+0.35^2); h=(strength/1e9)*exp(-across^2/(2*scale^2))*tanh(along/scale); u=[0.94*h,0.34*h,0.55*abs(h)]",
         },
     }
 
@@ -105,6 +108,8 @@ def _identifiable_parameter_mask(mechanism):
     if mechanism == "dike":
         return np.asarray((True, True, False, True, True))
     if mechanism == "sill":
+        # All coordinates occur, but they are not separately identifiable.
+        # _parameter_score handles the strength/depth equivalence class.
         return np.ones(5, dtype=bool)
     raise ValueError("unknown mechanism")
 
@@ -117,11 +122,31 @@ def _parameters(seed):
     return values
 
 
+def _parameter_score(mechanism, proposed, truth):
+    """Score identifiable coordinates, not arbitrary representatives of an equivalence class."""
+    proposed, truth = np.asarray(proposed), np.asarray(truth)
+    if mechanism == "sill":
+        # The forward map contains strength/depth only. Log ratio measures relative
+        # amplitude error without granting a huge tolerance from the extreme ratio bounds.
+        bounds = PARAMETER_BOUNDS[[0, 1, 4]]
+        geometry = (proposed[[0, 1, 4]] - truth[[0, 1, 4]]) / (bounds[:, 1] - bounds[:, 0])
+        amplitude = math.log((proposed[3] / proposed[2]) / (truth[3] / truth[2]))
+        error = np.r_[geometry, amplitude]
+    else:
+        active = _identifiable_parameter_mask(mechanism)
+        scale = PARAMETER_BOUNDS[active, 1] - PARAMETER_BOUNDS[active, 0]
+        error = (proposed[active] - truth[active]) / scale
+    return float(math.exp(-8.0 * np.sqrt(np.mean(error ** 2))))
+
+
 def _world(spec):
     seed, kind, mechanism = spec
     parameters = _parameters(seed)
     noise_multiplier = _difficulty_profile()["noise_multiplier"]
+    rng = np.random.default_rng(int(seed) + 891)
+    nuisance = np.r_[rng.uniform(-.08,.08,3), rng.uniform(-.12,.12,2)]
     return {"seed": seed, "kind": kind, "mechanism": mechanism, "parameters": parameters,
+            "nuisance": nuisance,
             "noise_gnss": 0.0035 * noise_multiplier,
             "noise_insar": 0.006 * noise_multiplier}
 
@@ -182,39 +207,46 @@ class _Survey:
         self.violated = False
 
     def measure(self, stations_xy_m, modality="gnss"):
-        stations = np.asarray(stations_xy_m, dtype=float)
-        if stations.ndim != 2 or stations.shape[1] != 2 or not 3 <= len(stations) <= 20:
+        try:
+            stations = np.asarray(stations_xy_m, dtype=float)
+            if stations.ndim != 2 or stations.shape[1] != 2 or not 3 <= len(stations) <= 20:
+                self.violated = True
+                raise ValueError("stations_xy_m must have shape (3-20,2)")
+            if np.any(~np.isfinite(stations)) or np.any(stations < BOUNDS_M[0]) or np.any(stations > BOUNDS_M[1]):
+                self.violated = True
+                raise ValueError("station outside survey bounds")
+            if len(np.unique(stations, axis=0)) != len(stations):
+                self.violated = True
+                raise ValueError("stations must be unique")
+            if modality not in {"gnss", "insar"}:
+                self.violated = True
+                raise ValueError("modality must be gnss or insar")
+            cost = 1 + int(math.ceil(len(stations) / 5.0))
+            if self.used + cost > BUDGET_UNITS:
+                self.violated = True
+                raise RuntimeError("survey budget exceeded")
+            self.used += cost
+            self.calls += 1
+            clean = _field(self.world, stations)
+            nuisance = self.world["nuisance"]
+            clean = clean + nuisance[:3]
+            clean[:,2] += stations @ nuisance[3:] / 5000.
+            sigma = self.world["noise_gnss"] if modality == "gnss" else self.world["noise_insar"]
+            payload = np.asarray(stations, dtype="<f8").tobytes() + modality.encode()
+            digest = int.from_bytes(hashlib.sha256(payload).digest()[:4], "little")
+            rng = np.random.default_rng(self.world["seed"] + digest + 1009 * self.calls)
+            if modality == "gnss":
+                observed = clean + rng.normal(0.0, sigma, clean.shape)
+                look = []
+            else:
+                observed = _insar_projection(clean, stations) + rng.normal(0.0, sigma, len(stations))
+                look = LOOK_VECTOR.copy()
+            return {"stations_xy_m": stations.copy(), "modality": modality,
+                    "displacement_m": observed, "noise_std_m": sigma,
+                    "look_vector": look, "budget_cost": cost}
+        except Exception:
             self.violated = True
-            raise ValueError("stations_xy_m must have shape (3-20,2)")
-        if np.any(~np.isfinite(stations)) or np.any(stations < BOUNDS_M[0]) or np.any(stations > BOUNDS_M[1]):
-            self.violated = True
-            raise ValueError("station outside survey bounds")
-        if len(np.unique(stations, axis=0)) != len(stations):
-            self.violated = True
-            raise ValueError("stations must be unique")
-        if modality not in {"gnss", "insar"}:
-            self.violated = True
-            raise ValueError("modality must be gnss or insar")
-        cost = 1 + int(math.ceil(len(stations) / 5.0))
-        if self.used + cost > BUDGET_UNITS:
-            self.violated = True
-            raise RuntimeError("survey budget exceeded")
-        self.used += cost
-        self.calls += 1
-        clean = _field(self.world, stations)
-        sigma = self.world["noise_gnss"] if modality == "gnss" else self.world["noise_insar"]
-        payload = np.asarray(stations, dtype="<f8").tobytes() + modality.encode()
-        digest = int.from_bytes(hashlib.sha256(payload).digest()[:4], "little")
-        rng = np.random.default_rng(self.world["seed"] + digest + 1009 * self.calls)
-        if modality == "gnss":
-            observed = clean + rng.normal(0.0, sigma, clean.shape)
-            look = []
-        else:
-            observed = _insar_projection(clean, stations) + rng.normal(0.0, sigma, len(stations))
-            look = LOOK_VECTOR.copy()
-        return {"stations_xy_m": stations.copy(), "modality": modality,
-                "displacement_m": observed, "noise_std_m": sigma,
-                "look_vector": look, "budget_cost": cost}
+            raise
 
 
 def _validate(submission):
@@ -265,12 +297,7 @@ def _evaluate_world(candidate, spec, split, index):
         if supported and not abstain:
             truth_index = MECHANISMS.index(world["mechanism"])
             class_probability = float(probs[truth_index])
-            active = _identifiable_parameter_mask(world["mechanism"])
-            scale = PARAMETER_BOUNDS[active, 1] - PARAMETER_BOUNDS[active, 0]
-            parameter_error = float(np.sqrt(np.mean(
-                ((parameters[active] - world["parameters"][active]) / scale) ** 2
-            )))
-            parameter_score = float(math.exp(-8.0 * parameter_error))
+            parameter_score = _parameter_score(world["mechanism"], parameters, world["parameters"])
             axis = np.linspace(-4700.0, 4700.0, 9)
             sealed = np.asarray([(x, y) for x in axis for y in axis if (int(x + y) // 100) % 3 == 0])
             truth = _field(world, sealed)
@@ -328,11 +355,13 @@ def _summary(rows, specs):
 
 
 def evaluate(infer_deformation_source):
+    development_specs = (_BASE_DEVELOPMENT_SPECS
+                         + _EXTRA_DEVELOPMENT_SPECS[:_difficulty_profile()["extra_supported_worlds"]])
     development = [_evaluate_world(infer_deformation_source, spec, "development", i)
-                   for i, spec in enumerate(DEVELOPMENT_SPECS)]
+                   for i, spec in enumerate(development_specs)]
     heldout = [_evaluate_world(infer_deformation_source, spec, "heldout", i)
                for i, spec in enumerate(HELDOUT_SPECS)]
-    dev, hold = _summary(development, DEVELOPMENT_SPECS), _summary(heldout, HELDOUT_SPECS)
+    dev, hold = _summary(development, development_specs), _summary(heldout, HELDOUT_SPECS)
     dev_valid = dev["valid_count"] == len(development)
     hold_valid = hold["valid_count"] == len(heldout)
     return {

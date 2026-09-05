@@ -76,3 +76,15 @@ simultaneous anomalies; level 1 is the shipped default.
 
 References: Virieux & Operto (2009), DOI `10.1190/1.3238367`; Symes (2020), arXiv
 `2003.14181`.
+
+## 关系与区别 / Relationship to nearby tasks
+
+GravityInversion fits a potential field, DeformationMechanismInference chooses an elastic source family, and RadialVelocityPlanets infers orbital signals. This task pays for acoustic shots and reconstructs a velocity field, with no-anomaly and attenuating worlds requiring refusal.
+
+## Admission and reference scope
+
+This package remains **candidate**. The metadata difficulty is a target, not a certified result. The runnable reference uses public inputs only. Local shortcut and ablation diagnostics are recorded in `references/known_best.md`; they do not replace clean Linux sandbox replay, independent domain review, Frontier-Eng overlap review or a frozen frontier-model calibration draw.
+
+### Current reference and remaining difficulty
+
+Bounded two-stage smoothed/full-waveform least squares over a 3x5 velocity correction grid. The reference now optimizes signed spatial velocity corrections instead of drawing a fixed negative lens. A finer grid, source design and more complete inversion remain open. The optimization reference defines 1 by construction; a discovery reference is evaluated against the fixed recovery ceiling. Neither fact certifies difficulty.

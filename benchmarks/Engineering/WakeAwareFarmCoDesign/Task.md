@@ -21,3 +21,37 @@ No network, process creation, or reads from `verification/` and `frontier_eval/`
 
 References: Fleming et al., *Journal of Physics: Conference Series* 1618, 022028 (2020),
 doi:10.1088/1742-6596/1618/2/022028; NREL FLORIS documentation.
+
+## Complete public input contract
+
+Numeric values below are the first public example; per-instance arrays and coefficients vary.
+All keys and shapes are part of the contract; forecasts contain exactly `horizon_steps` samples.
+
+| Key | Type, shape or meaning |
+|---|---|
+| `turbine_count` | 9 |
+| `boundary_width_m` | 1900.0 |
+| `boundary_height_m` | 1700.0 |
+| `rotor_diameter_m` | 120.0 |
+| `minimum_spacing_rotor_diameters` | 4.0 |
+| `wind_directions_deg` | array [12] |
+| `wind_speeds_m_s` | array [12] |
+| `wind_probabilities` | array [12] |
+| `yaw_limit_deg` | 25.0 |
+| `air_density_kg_m3` | 1.225 |
+| `power_coefficient` | 0.44 |
+| `thrust_coefficient` | 0.8 |
+| `wake_expansion_public` | 0.055 |
+| `contract` | return layout_xy_m [n,2] and yaw_by_direction_deg [12,n] |
+
+## 关系与区别 / Relationship to nearby tasks
+
+ResilientPumpScheduling optimizes time allocation, CompositeLaminateStacking optimizes discrete order, and DiffractionGratingDesign optimizes optical propagation. This task jointly chooses spatial turbine positions and wind-direction-dependent yaw; its wake model is a reduced screening model.
+
+## Admission and reference scope
+
+This package remains **candidate**. The metadata difficulty is a target, not a certified result. The runnable reference uses public inputs only. Local shortcut and ablation diagnostics are recorded in `references/known_best.md`; they do not replace clean Linux sandbox replay, independent domain review, Frontier-Eng overlap review or a frozen frontier-model calibration draw.
+
+### Current reference and remaining difficulty
+
+Seeded layout screening, coordinate yaw search and three scales of feasible layout refinement. Adds layout refinement after yaw selection. Cross-model robustness, restarts and independent FLORIS validation remain open. The optimization reference defines 1 by construction; a discovery reference is evaluated against the fixed recovery ceiling. Neither fact certifies difficulty.

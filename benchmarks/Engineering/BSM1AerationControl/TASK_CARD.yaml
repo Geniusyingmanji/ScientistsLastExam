@@ -1,44 +1,60 @@
 schema_version: 2
-scientific_question: Can a stateful aeration and recycle controller meet effluent limits with less energy and smoother operation while transferring to storms, biased sensors and degraded actuators?
+scientific_question: Can a stateful aeration and recycle controller meet effluent limits with less energy
+  and smoother operation while transferring to storms, biased sensors and degraded actuators?
 artifact: A stateful observation-to-action controller for oxygen-transfer intensity and internal recycle.
 oracle:
-  model: Deterministic five-state ASM1-inspired reactor with substrate oxidation, nitrification, denitrification, oxygen transfer and biomass dynamics.
-  feasibility: Finite bounded actions at every step and hard mean ammonia, total-nitrogen and COD-proxy limits after warmup.
+  model: Deterministic five-state ASM1-inspired bounded reactor, 0.5-hour control intervals with ten 0.05-hour
+    Euler integration steps; not official BSM1. Concentrated return-flow ammonia, observed compressor
+    derating and time-varying electricity prices.
+  feasibility: Finite bounded actions at every step and hard mean ammonia, total-nitrogen and COD-proxy
+    limits after warmup.
   deterministic: true
 normalization:
   baseline: Dissolved-oxygen PI control with fixed internal recycle.
-  reference: Truth-blind flow and ammonia feed-forward PI recomputed per run with adaptive recycle and smoothing.
-  score: Development water-quality, energy and movement cost is uncapped; storm, sensor-bias and actuator-loss transfer remains held out.
+  reference: Ammonia/oxygen feedback with observed compressor derating compensation and electricity-price
+    moderation.
+  score: Uncapped savings in flow-weighted effluent, upper-decile ammonia, priced energy and variation
+    above a feasible PI baseline.
 citations:
 - id: url:https://iwa-mia.org/wp-content/uploads/2018/01/BSM_TG_Tech_Report_no_1_BSM1_General_Description.pdf
   title: Benchmark Simulation Model No. 1 general description
 - id: doi:10.3182/20110828-6-IT-1002.01664
   title: Dynamic optimization of aeration operations for BSM1
 invariants:
-- Increasing oxygen transfer cannot directly remove nitrogen or substrate without the declared kinetic rates.
+- Increasing oxygen transfer cannot directly remove nitrogen or substrate without the declared kinetic
+  rates.
 - Effluent limits gate energy comparison so an off controller cannot win by saving power.
 - Every candidate receives only the current observation and no future or sealed plant state.
 - Malformed actions and controller exceptions score zero without crashing the trusted evaluator.
-known_shortcuts: This local five-state model is structurally inspired by BSM1 but is not an official ASM1 implementation. Admission requires frozen IWA BSM1 trajectory matching, server-held influent and external wastewater-process review.
+known_shortcuts: Transient ammonia, compressor availability, flow-weighted effluent, tail ammonia and
+  time-priced energy are active. Fixed controls remain strong. Formal clean Linux calibration and independent
+  domain validation remain pending.
 review:
   domain: pending_external
-  evaluator_security: local_baseline_reference_bad_candidate_determinism_and_contract_tests_passed_secure_sandbox_replay_pending
+  evaluator_security: targeted_local_regressions_added_clean_linux_sandbox_replay_pending
 provenance:
   class: procedural
-  target_source: Repository-visible deterministic influent generator and reduced activated-sludge simulator with interleaved nominal and disturbed worlds.
+  target_source: Repository-visible deterministic influent generator and reduced activated-sludge simulator
+    with interleaved nominal and disturbed worlds.
   task_contract_public_before_evaluation: true
   fresh_confirmation_status: not_completed
 novelty_risk:
   level: medium
-  rationale: DO PI and feed-forward control are standard; difficulty depends on transfer and coupled objectives and must be confirmed against stronger MPC agents.
+  rationale: DO PI and feed-forward control are standard; difficulty depends on transfer and coupled objectives
+    and must be confirmed against stronger MPC agents.
 lineage:
   status: complete
-  builder_model_ids: [openai:codex-gpt-5]
-  builder_scaffolds: [codex-desktop]
+  builder_model_ids:
+  - openai:codex-gpt-5
+  builder_scaffolds:
+  - codex-desktop
   calibrator_model_ids: []
   calibration_runs: []
   calibration_evidence_status: missing
-  edits_triggered_by_model: No frontier model has evaluated the task; construction changes came from local baseline, reference, invariant and failure-path checks only.
+  edits_triggered_by_model: 2026-09-05 local code-review probes triggered identifiable sill scoring, feasible
+    HVAC heldout anchors, moving-plume capture, stronger public-data references, contract documentation
+    and regression tests. No frontier calibration draw has been run. Second local hardening adds nonlinear
+    chronology, frame nuisance, transient control and pump commitment; no frontier-model draw.
   shortcut_discoverer: local_deterministic_probe_only
   frozen_before_eval: false
   freeze_timestamp: null
@@ -47,11 +63,25 @@ construction_audit:
   author_domain: general_scientific_software
   reviewer_domain: pending_external_wastewater_control
   expert_hours: null
-  red_team_rounds: 1
+  red_team_rounds: 2
   oracle_disagreement_status: not_quantified
-  independent_recomputation_status: pending_official_bsm1_replication
+  independent_recomputation_status: standalone_public_model_references_high_fidelity_replication_pending
 long_horizon:
   status: not_tested
   measurement_health_passed: false
   material_headroom_after_2h: false
   evidence: []
+licensing:
+  task_package: repository_license_not_declared
+  external_assets: none
+  note: Original procedural code; cited papers and external simulator assets are not redistributed.
+contamination:
+  status: cannot_be_ruled_out
+  rationale: Public procedural families and AI-assisted reference implementations; sealed worlds and independent
+    model calibration are pending.
+difficulty_assessment:
+  status: unverified_candidate
+  requirement: standard-method and low-dimensional shortcut sweeps, capability ablations and clean frontier-model
+    calibration before certification
+  remaining_risk: Transient ammonia, compressor availability, flow-weighted effluent, tail ammonia and
+    time-priced energy are active. Fixed controls remain strong.

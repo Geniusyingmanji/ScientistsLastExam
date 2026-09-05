@@ -17,7 +17,7 @@ The public source library contains `mogi`, `sill` and `dike`. Every source uses 
 with public bounds supplied in `model_library`. The exact public forward expressions and units
 are included in that mapping. The common row contains two mechanism-inactive placeholders:
 `horizontal_scale_m` is not scored for `mogi`, and `depth_m` is not scored for the reduced-order
-`dike`; all five coordinates are active for `sill`. Hidden information consists of source type
+`dike`; `sill` is scored on center, horizontal scale and the identifiable `strength/depth` ratio; simultaneous rescaling of strength and depth is not penalized. Hidden information consists of source type
 and identifiable parameters, noise, null or out-of-family status, and sealed station locations.
 
 ## Your task
@@ -75,3 +75,28 @@ References: Dzurisin (2003), *Reviews of Geophysics*, doi:`10.1029/2001RG000107`
 Segall (2010), *Earthquake and Volcano Deformation*, ISBN `9780691133027`. These
 references motivate the source families and deformation-observation setting; the benchmark
 uses the reduced-order equations stated in its public model library.
+
+## 关系与区别 / Relationship to nearby tasks
+
+GravityInversion reconstructs density, ActiveFullWaveformInversion reconstructs acoustic velocity, and ModalDamageAttribution infers structural damage. This task designs geodetic surveys and identifies a supported source family and identifiable parameter combinations, including a refusal axis.
+
+## Admission and reference scope
+
+This package remains **candidate**. The metadata difficulty is a target, not a certified result. The runnable reference uses public inputs only. Local shortcut and ablation diagnostics are recorded in `references/known_best.md`; they do not replace clean Linux sandbox replay, independent domain review, Frontier-Eng overlap review or a frozen frontier-model calibration draw.
+
+### Current reference and remaining difficulty
+
+Coarse multistart source-family search refined by bounded least squares; sill scores strength/depth equivalence classes. Equivalent sill strength/depth pairs now receive identical parameter credit. The complete sill and rotated dike equations are public. Multi-source/elastic high-fidelity replication remains pending. The optimization reference defines 1 by construction; a discovery reference is evaluated against the fixed recovery ceiling. Neither fact certifies difficulty.
+
+### Shared observation-frame uncertainty
+
+`model_library` also publishes `nuisance_model`, `frame_translation_bounds_m` ([-0.08,0.08])
+and `vertical_plane_coefficient_bounds_m` ([-0.12,0.12]). Every survey shares an unknown
+three-component translation `b` and vertical plane `ax*x/5000 + ay*y/5000`. The instrument
+adds these to the source field before the InSAR projection and independent noise. Null worlds
+also carry these nuisance signals. Returned source parameters and sealed prediction scores
+refer to the physical field with these nuisance terms removed; nuisance coefficients need not
+be submitted. Joint estimation or marginalization is necessary to avoid false source attribution.
+The reference uses variable projection for the five linear nuisance coefficients inside bounded
+source-family fitting. This remains a reduced single-source problem, with multi-source support
+and high-fidelity validation still outstanding.

@@ -1,13 +1,25 @@
-"""Weak valid occupied/unoccupied rule controller."""
+"""Conservative valid public-data controller baseline."""
 import numpy as np
 
-
 def make_hvac_controller(problem):
-    del problem
-    def step(observation):
-        temp=np.asarray(observation["zone_temperature_c"],dtype=float); occ=np.asarray(observation["occupancy"],dtype=float)
-        heat=np.where(occ>0,np.clip(4.2*(21.6-temp),0,18),np.clip(2.0*(17.0-temp),0,18))
-        cool=np.where(occ>0,np.clip(4.2*(temp-24.4),0,18),np.clip(2.0*(temp-29.0),0,18))
-        vent=np.clip(.25+.025*occ,.15,1.55)
-        return {"heating_kw":heat.tolist(),"cooling_kw":cool.tolist(),"ventilation_ach":vent.tolist()}
+    """Conservative load-compensated thermostat, feasible across the declared shifts."""
+    ua = np.asarray(problem["thermal_model"]["envelope_ua_w_k"]) / 1000.0
+    occupancy = np.asarray(problem["occupancy_forecast"])
+    def step(obs):
+        k = int(obs["step"])
+        temp = np.asarray(obs["zone_temperature_c"])
+        occ = np.asarray(obs["occupancy"])
+        occupied_soon = np.any(occupancy[k:min(k + 9, len(occupancy))] > 0, axis=0)
+        low = np.where(occupied_soon, 22.0, 19.0)
+        high = np.where(occupied_soon, 24.0, 27.0)
+        outdoor = float(obs["outdoor_temperature_c"])
+        gains = .095 * occ + np.array([.65, .45])
+        free = ua * (outdoor - temp) + gains
+        heat = np.clip(12.0 * (low - temp) - free, 0, 30)
+        cool = np.clip(12.0 * (temp - high) + free, 0, 30)
+        net = heat - cool
+        vent = np.clip(.35 + .024 * occ, .15, 1.8)
+        return {"heating_kw": np.maximum(net, 0).tolist(),
+                "cooling_kw": np.maximum(-net, 0).tolist(),
+                "ventilation_ach": vent.tolist()}
     return step

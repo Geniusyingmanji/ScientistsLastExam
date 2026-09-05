@@ -73,3 +73,15 @@ model discrepancy and sealed physical stresses; level 1 is the shipped default.
 
 References: Choi et al. (2025), DOI `10.5194/tc-19-5423-2025`; Edwards et al. (2023),
 DOI `10.5194/tc-17-4661-2023`.
+
+## 关系与区别 / Relationship to nearby tasks
+
+GroundwaterRemediationDesign changes remediation actions, ActiveFullWaveformInversion acquires waveforms for inversion, and ChronologyAssimilation acquires dates. This task selects a budgeted sensor archive for a six-state linear-Gaussian forecast surrogate, not a nonlinear ice-flow solver.
+
+## Admission and reference scope
+
+This package remains **candidate**. The metadata difficulty is a target, not a certified result. The runnable reference uses public inputs only. Local shortcut and ablation diagnostics are recorded in `references/known_best.md`; they do not replace clean Linux sandbox replay, independent domain review, Frontier-Eng overlap review or a frozen frontier-model calibration draw.
+
+### Current reference and remaining difficulty
+
+Unit-normalized forecast A-optimal greedy selection with budget-feasible exchange refinement. Normalizing each forecast by its prior standard deviation prevents meters from dominating millimeters. Three exchange passes improve the greedy archive; nonlinear ice-flow validation is still pending. The optimization reference defines 1 by construction; a discovery reference is evaluated against the fixed recovery ceiling. Neither fact certifies difficulty.

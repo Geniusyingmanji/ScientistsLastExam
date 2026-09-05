@@ -20,6 +20,8 @@ The candidate receives one `problem` mapping with every public key below:
 | `domain_size_m` | `[length,width]` |
 | `horizon_years`, `evaluation_times_years` | remediation horizon and reporting times |
 | `source_location_m`, `initial_contaminant_mass_kg` | public initial plume |
+| `plume_components` | rows `[x_offset_m,y_offset_m,mass_fraction]` relative to source; fractions sum to one |
+| `transport_step_days` | maximum internal integration step, split at each well activation |
 | `longitudinal_sigma_m`, `transverse_sigma_m` | proxy plume scales |
 | `groundwater_velocity_m_day`, `decay_per_day` | proxy transport parameters |
 | `aquifer_thickness_m`, `effective_porosity` | concentration conversion |
@@ -81,3 +83,17 @@ proxy-to-exact discrepancy and robustness stresses; level 1 is the shipped defau
 
 References: Erickson, Mayer & Horn (2002), DOI `10.1016/S0309-1708(01)00020-3`;
 Deschaine, Lillys & Pintér (2013), DOI `10.1186/2193-2697-2-6`.
+
+## 关系与区别 / Relationship to nearby tasks
+
+ResilientPumpScheduling operates a tank, IceObservationNetworkDesign selects observations, and RadiativeTransferFit fits a forward model. This task selects wells, start times and pumping rates for a multi-component moving plume, returning a cost/cleanup Pareto archive.
+
+## Admission and reference scope
+
+This package remains **candidate**. The metadata difficulty is a target, not a certified result. The runnable reference uses public inputs only. Local shortcut and ablation diagnostics are recorded in `references/known_best.md`; they do not replace clean Linux sandbox replay, independent domain review, Frontier-Eng overlap review or a frozen frontier-model calibration draw.
+
+The surrogate advects each initial Gaussian component at the declared velocity. At every internal step, extraction is local `Q*C` evaluated at the current well coordinates and moving plume center. Remaining component mass is advanced with an exponential combined extraction/decay hazard; extracted plus decayed plus remaining mass equals initial mass. Spread variances grow by `16*t` and `4.4*t` m² with time in days. This replaces the obsolete capture-at-start approximation.
+
+### Current reference and remaining difficulty
+
+Public moving-plume mass-balance search over single wells and treatment transects, greedily selecting a hypervolume archive. Local extraction uses Q*C at the evolving plume position, with activation-aware integration and an extracted/decayed/remaining mass ledger. Three public initial plume components replace the spatially collapsed capture-at-start model. The optimization reference defines 1 by construction; a discovery reference is evaluated against the fixed recovery ceiling. Neither fact certifies difficulty.
