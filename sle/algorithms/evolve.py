@@ -139,7 +139,14 @@ def extract_signed_submission(
 RETAINED_REJECTIONS = 5
 
 
-def _retain_rejected(workdir, step, code, metrics, valid, *, response=None, parse_status=None):
+# Provider names for "I stopped because I ran out of output tokens". A reply that ends here is
+# not evidence that the model cannot write a program; it is evidence that it was not given room
+# to finish one, and the run verdict has to say which.
+OUTPUT_CAP_STOP_REASONS = frozenset({"max_tokens", "max_output_tokens", "length", "incomplete"})
+
+
+def _retain_rejected(workdir, step, code, metrics, valid, *, response=None, parse_status=None,
+                     stop_reason=None):
     """Keep the first few rejected candidates on disk so a rejection can be diagnosed later.
 
     The evaluation ledger records a candidate by hash and never stores its source, and the
@@ -169,6 +176,8 @@ def _retain_rejected(workdir, step, code, metrics, valid, *, response=None, pars
                             "combined_score")}
         if parse_status:
             payload["parse_status"] = parse_status
+        if stop_reason:
+            payload["provider_stop_reason"] = stop_reason
         if code:
             (directory / ("step_%03d.py" % int(step))).write_text(code, encoding="utf-8")
         if response is not None and not code:
@@ -176,7 +185,12 @@ def _retain_rejected(workdir, step, code, metrics, valid, *, response=None, pars
             (directory / ("step_%03d.reply.txt" % int(step))).write_bytes(
                 encoded[:_REPLY_RETAIN_BYTES])
             payload["response_utf8_bytes"] = len(encoded)
-            payload["response_truncated"] = len(encoded) > _REPLY_RETAIN_BYTES
+            # Named for what it is. `response_truncated` read as "the model's reply was cut off",
+            # which is the question a `no_code` draw actually raises, and it answered a different
+            # one - whether this diagnostic copy was clipped at _REPLY_RETAIN_BYTES. The reply
+            # that prompted the rename was 36 KB, stopped mid-word at the provider's output cap,
+            # and was recorded as `response_truncated: false`.
+            payload["retained_reply_truncated"] = len(encoded) > _REPLY_RETAIN_BYTES
         (directory / ("step_%03d.json" % int(step))).write_text(
             json.dumps(payload, indent=2), encoding="utf-8")
     except OSError:
@@ -352,6 +366,7 @@ def _greedy_rewrite_impl(
     workdir.mkdir(parents=True, exist_ok=True)
     cand_path = workdir / Path(spec.candidate_destination).name
     trajectory_path = workdir / "trajectory.jsonl"
+    output_cap_no_code_steps: list[int] = []
     checkpoint_path = workdir / "checkpoint.json"
     manifest_path = workdir / "run_manifest.json"
     if not resume and (trajectory_path.exists() or checkpoint_path.exists()):
@@ -802,6 +817,7 @@ def _greedy_rewrite_impl(
                     system=system_prompt,
                 )
                 llm_usage = dict(getattr(llm, "last_usage", {}) or {})
+                provider_stop_reason = getattr(llm, "last_stop_reason", None)
             except Exception as exc:  # noqa: BLE001
                 log_fn(
                     f"[{spec.task_id}] iter {it}: provider infrastructure failure"
@@ -831,6 +847,9 @@ def _greedy_rewrite_impl(
                 "schema_version": 1,
                 "step": it,
                 "parse_status": parse_status,
+                # Charged to the model only if the model had room to answer. See
+                # `_retain_rejected` and the output-budget branch of the protocol verdict below.
+                "provider_stop_reason": provider_stop_reason,
                 "program": code,
                 "candidate_sha256": sha256_text(code) if code else "",
                 "response_sha256": sha256_text(reply),
@@ -931,6 +950,8 @@ def _greedy_rewrite_impl(
             evaluation_started = time.monotonic()
             log_fn(f"[{spec.task_id}] iter {it}: no code block parsed")
             error = "signed_decision_contract_invalid" if signed_contract_invalid else "no_code"
+            if str(pending_record.get("provider_stop_reason") or "").lower() in OUTPUT_CAP_STOP_REASONS:
+                output_cap_no_code_steps.append(it)
             m = {"combined_score": INVALID_SCORE, "valid": 0.0, "error_message": error}
             score, valid, accepted = INVALID_SCORE, False, False
             candidate_sha = ""
@@ -938,6 +959,7 @@ def _greedy_rewrite_impl(
                 workdir, it, "", m, valid=False,
                 response=pending_record.get("response"),
                 parse_status=pending_record.get("parse_status"),
+                stop_reason=pending_record.get("provider_stop_reason"),
             )
         else:
             cand_path.write_text(code, encoding="utf-8")
@@ -1178,15 +1200,29 @@ def _greedy_rewrite_impl(
         1 for row in trajectory_rows
         if int(row.get("step", 0) or 0) > 0 and row.get("valid"))
     result.summary["valid_proposal_count"] = valid_proposal_count
+    if output_cap_no_code_steps:
+        # Recorded whether or not the run is otherwise complete: a task that spends half its
+        # proposal slots on replies the provider cut off is being scored on its output cap, and
+        # the calibration that reads "the model produced no code" is reading the wrong thing.
+        result.summary["output_cap_no_code_steps"] = list(output_cap_no_code_steps)
     if budget > 0 and valid_proposal_count == 0 and "protocol_incomplete" not in result.summary:
-        result.summary["protocol_incomplete"] = "no_valid_proposal"
-        result.summary["protocol_incomplete_detail"] = (
-            "%d proposal(s) evaluated, none valid; first failure: %s" % (
-                sum(1 for row in trajectory_rows if int(row.get("step", 0) or 0) > 0),
-                next((row.get("error") or (row.get("metrics") or {}).get("candidate_failure_kind")
-                      for row in trajectory_rows if int(row.get("step", 0) or 0) > 0), None)))
-        log_fn("[%s] PROTOCOL INCOMPLETE: no valid proposal in %d - this run is not evidence "
-               "about the model" % (spec.task_id, budget))
+        evaluated_steps = sum(1 for row in trajectory_rows if int(row.get("step", 0) or 0) > 0)
+        capped = len(output_cap_no_code_steps)
+        if capped and capped == evaluated_steps:
+            result.summary["protocol_incomplete"] = "output_budget_exhausted"
+            result.summary["protocol_incomplete_detail"] = (
+                "all %d proposal(s) ended at the provider output cap with no code block; "
+                "raise max_output_tokens" % evaluated_steps)
+        else:
+            result.summary["protocol_incomplete"] = "no_valid_proposal"
+            result.summary["protocol_incomplete_detail"] = (
+                "%d proposal(s) evaluated, none valid%s; first failure: %s" % (
+                    evaluated_steps,
+                    ", %d at the provider output cap" % capped if capped else "",
+                    next((row.get("error") or (row.get("metrics") or {}).get("candidate_failure_kind")
+                          for row in trajectory_rows if int(row.get("step", 0) or 0) > 0), None)))
+        log_fn("[%s] PROTOCOL INCOMPLETE (%s): no valid proposal in %d - this run is not evidence "
+               "about the model" % (spec.task_id, result.summary["protocol_incomplete"], budget))
     atomic_write_text(
         workdir / "summary.json",
         json.dumps(result.summary, indent=2, allow_nan=False) + "\n",

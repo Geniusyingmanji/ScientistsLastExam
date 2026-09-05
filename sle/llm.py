@@ -94,6 +94,12 @@ class LLMClient:
     def __init__(self, config: LLMConfig):
         self.config = config
         self.last_usage: dict[str, Any] = {}
+        # Why this is recorded separately from the reply text: a reply that carries no code block
+        # is charged to the model as `no_code`, and that reading is only true when the model had
+        # room to finish. Measured on Mathematics/NonlinearCodeRecords, six of nine Opus 5
+        # proposals were 36 KB of coding-theory prose that stop mid-word - the output cap, not a
+        # refusal to write a program - and the ledger said nothing that could tell the two apart.
+        self.last_stop_reason: Optional[str] = None
         self.total_usage: dict[str, Any] = {
             "calls": 0, "input_tokens": 0, "output_tokens": 0,
             "total_tokens": 0,
@@ -105,6 +111,7 @@ class LLMClient:
 
     # ---- public API -----------------------------------------------------
     def complete(self, prompt: str, system: Optional[str] = None) -> str:
+        self.last_stop_reason = None
         if self.config.wire == "responses":
             return self._complete_responses(prompt, system)
         if self.config.wire == "anthropic":
@@ -133,7 +140,8 @@ class LLMClient:
             payload["stream"] = True
             payload["stream_options"] = {"include_usage": True}
             raw = self._post_sse(url, payload, headers)
-            text, usage, reasoning = self._assemble_chat_sse(raw)
+            text, usage, reasoning, finish_reason = self._assemble_chat_sse(raw)
+            self.last_stop_reason = finish_reason
             self._record_usage(usage)
             if (text or "").strip():
                 return text
@@ -152,6 +160,8 @@ class LLMClient:
             return text
         data = self._post(url, payload, headers)
         self._record_usage(data.get("usage") or {})
+        choices = data.get("choices") or [{}]
+        self.last_stop_reason = choices[0].get("finish_reason")
         return data["choices"][0]["message"]["content"] or ""
 
     # ---- wire: responses API -------------------------------------------
@@ -174,6 +184,8 @@ class LLMClient:
         headers.update(self.config.extra_headers)
         data = self._post(url, payload, headers)
         self._record_usage(data.get("usage") or {})
+        incomplete = data.get("incomplete_details") or {}
+        self.last_stop_reason = incomplete.get("reason") or data.get("status")
         return self._extract_responses_text(data)
 
     # ---- wire: anthropic messages ---------------------------------------
@@ -223,6 +235,7 @@ class LLMClient:
             "total_tokens": (usage.get("input_tokens", 0) or 0)
                             + (usage.get("output_tokens", 0) or 0),
         })
+        self.last_stop_reason = data.get("stop_reason")
         blocks = [b for b in (data.get("content") or []) if isinstance(b, dict)]
         parts = [b.get("text", "") for b in blocks if b.get("type") == "text"]
         answer = "".join(parts)
@@ -306,7 +319,7 @@ class LLMClient:
         raise RuntimeError(f"LLM request failed after {retries} attempts: {last_err}")
 
     @staticmethod
-    def _assemble_chat_sse(raw: str) -> tuple[str, dict, str]:
+    def _assemble_chat_sse(raw: str) -> tuple[str, dict, str, str | None]:
         """Join OpenAI-style `data:` chunks. Usage, if present, is on the last chunk.
 
         Visible `content` and `reasoning_content` are assembled separately. The
@@ -316,6 +329,7 @@ class LLMClient:
         parts: list[str] = []
         reasoning_parts: list[str] = []
         usage: dict[str, Any] = {}
+        finish_reason: Optional[str] = None
         for line in raw.splitlines():
             if not line.startswith("data:"):
                 continue
@@ -343,6 +357,8 @@ class LLMClient:
             choices = chunk.get("choices") or []
             if not choices or not isinstance(choices[0], dict):
                 continue
+            if choices[0].get("finish_reason"):
+                finish_reason = str(choices[0]["finish_reason"])
             delta = choices[0].get("delta") or {}
             if isinstance(delta, dict):
                 piece = delta.get("content")
@@ -351,7 +367,7 @@ class LLMClient:
                 thought = delta.get("reasoning_content")
                 if isinstance(thought, str) and thought:
                     reasoning_parts.append(thought)
-        return "".join(parts), usage, "".join(reasoning_parts)
+        return "".join(parts), usage, "".join(reasoning_parts), finish_reason
 
     def _post_sse(self, url: str, payload: dict, headers: dict, retries: int = 3) -> str:
         body = json.dumps(payload).encode("utf-8")

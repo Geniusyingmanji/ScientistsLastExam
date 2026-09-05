@@ -25,7 +25,7 @@ data: [DONE]
 
 class ChatStreamTests(unittest.TestCase):
     def test_sse_chunks_join_into_the_answer(self):
-        text, usage, reasoning = LLMClient._assemble_chat_sse(SSE)
+        text, usage, reasoning, finish_reason = LLMClient._assemble_chat_sse(SSE)
         self.assertEqual(text, "FS_SMOKE_OK")
         self.assertEqual(usage["total_tokens"], 30)
         self.assertEqual(reasoning, "")
