@@ -27,7 +27,7 @@ FAMILIES = (
 # references/known_best.md). The trivial floor — any two compatible words — anchors
 # zero, so progress is (size - floor) / (witness - floor) and larger libraries score
 # above one.
-WITNESS_SIZE = {"dna16": 28, "dna12": 27}
+WITNESS_SIZE = {"dna16": 32, "dna12": 29}
 TRIVIAL_SIZE = {"dna16": 2, "dna12": 2}
 
 

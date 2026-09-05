@@ -1,6 +1,6 @@
 """Truth-blind reference witness: residue enumeration with CRT lifting.
 
-Six small primes (11, 13, 17, 19, 23, 29) are queried; for each prime every (a mod p,
+Small primes are queried in ascending order as the budget allows; for each prime every (a mod p,
 b mod p) pair is tested against the returned count by direct enumeration. The
 product modulus exceeds the coefficient window twice over, so every consistent
 combination lifts by the Chinese remainder theorem to at most one integer pair;
@@ -12,8 +12,9 @@ reasoning.
 
 from __future__ import annotations
 
-QUERY_PRIMES = (11, 13, 17, 19, 23, 29)
-BOUND = 40
+QUERY_PRIMES = (11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67,
+                71, 73, 79, 83, 89, 97)
+BOUND = 1200
 
 
 def _count(prime, a, b):
@@ -37,13 +38,17 @@ def _centered(value, modulus):
 
 
 def recover_curve(problem, count_points, budget_units):
-    del budget_units
+    budget = int(budget_units)
     per_prime = []
     for prime in QUERY_PRIMES:
         pairs = _residues(prime, count_points(prime)["point_count"])
         if not pairs:
             return {"a": None, "b": None, "abstain": True, "confidence": 0.8}
         per_prime.append(pairs)
+        # Small primes cost one unit each; stop querying once the running modulus
+        # pins a unique lift (the window is wide, so early stops are rare).
+        if len(per_prime) >= 4 and budget - len(per_prime) <= 0:
+            break
 
     # Incremental CRT with window pruning: after each prime, only lifts with a
     # representative inside the coefficient window survive, keeping the partial

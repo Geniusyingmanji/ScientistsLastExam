@@ -17,12 +17,12 @@ DIFFICULTY = 1
 
 CLASSES = ("constant", "logarithmic", "linear", "linearithmic", "quadratic",
            "exponential")
-SIZE_BOUNDS = (8, 1024)
-COST_TIERS = ((128, 1), (512, 2), (1024, 3))
-BUDGET_UNITS = 12
-NOISE_SIGMA = 0.03
+SIZE_BOUNDS = (8, 384)
+COST_TIERS = ((64, 1), (192, 2), (384, 3))
+BUDGET_UNITS = 9
+NOISE_SIGMA = 0.07
 JITTER_SIGMA = 0.60
-SEALED_SIZE = 800
+SEALED_SIZE = 700
 
 _BASE_DEVELOPMENT_SPECS = (
     (30011, "supported", "constant"), (30017, "supported", "logarithmic"),
@@ -81,15 +81,17 @@ def problem_statement(world):
         "budget_units": BUDGET_UNITS,
         "noise_note": "run times carry multiplicative noise; repeats draw fresh noise",
         "refusal_note": (
-            "runtimes that branch on the input size follow no single class, and "
-            "noise floors far above three percent make the law unrecoverable; both "
-            "must be refused"
+            "runtimes that branch on the input size follow no single class and must "
+            "be refused -- the branching residue need not be one a geometric size "
+            "ladder ever samples; noise floors well above five percent make the law "
+            "unrecoverable and must be refused"
         ),
     }
 
 
 def _true_runtime(world, size):
     if world["kind"] == "branch":
+        # The branch predicate is public: sizes congruent to 1 mod 3 run quadratic.
         value = world["scale"] * (size ** 2 if size % 3 == 1
                                   else size * math.log2(max(size, 2)))
     else:

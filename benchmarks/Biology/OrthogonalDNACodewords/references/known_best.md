@@ -21,14 +21,12 @@ sizes anchor one; the span is (witness − 2) per family.
 
 | variant | dna16 | dna12 | score |
 |---|---:|---:|---:|
-| witness (240 restarts) | 28 | 27 | 1.000 |
-| shipped reference (40 restarts) | 28 | 27 | 1.000 |
-| 10 restarts | 26 | 27 | 0.960 |
-| 3 restarts | 21 | 27 | 0.844 |
-| 5 restarts, different seed | 23 | 25 | 0.864 |
+| frozen witness (greedy + repair) | 32 | 29 | 1.000 |
+| shipped reference (greedy only, 240 restarts) | 28 | 27 | 0.896 |
+| 5 restarts, different seed | 23 | 25 | 0.776 |
 
-Restart count and seed both move the result: the search, not the verification, carries
-the difficulty. These are local debugging numbers, not frozen benchmark evidence.
+The removal-repair phase carries the last step to the witness; greedy alone
+plateaus at 28. These are local debugging numbers, not frozen benchmark evidence.
 
 ## 4. Shortcut probes
 

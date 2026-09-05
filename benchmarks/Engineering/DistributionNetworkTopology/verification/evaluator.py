@@ -16,7 +16,7 @@ from itertools import combinations
 
 import numpy as np
 
-DIFFICULTY = 1
+DIFFICULTY = 2
 
 _DIFFICULTY_LADDER = {
     1: {"flip_probability": 0.02, "max_broken": 1},

@@ -12,33 +12,38 @@ sealed draws, not just the textbook case.
 
 ```python
 def design_strain(problem):
-    """Return {"knockouts": [reaction names], "overexpressions": {name: multiplier}}."""
+    """Return {"knockouts": [enzyme names], "overexpressions": {enzyme: multiplier}}."""
 ```
 
 `problem` is a mapping with the keys
 
 ```text
-reactions                ten public reaction names
+reactions                seventeen public reaction names
 stoichiometry            metabolite -> reaction -> coefficient (steady-state rows)
 nominal_capacity         public upper bounds per reaction
-essential_reactions      knockouts that cannot yield a viable strain
-editable_reactions       reaction names edits may target
-biomass_fraction_gate    the strain must hold biomass at or above this fraction of the
-                         un-engineered maximum under the same capacities
-max_edits                at most five knockouts plus overexpressions combined
+enzymes                  the six editable enzymes, each mapping to the reactions it
+                         catalyzes — an edit acts on every reaction in its map
+max_enzyme_edits         at most three knockouts plus overexpressions combined
 overexpression_range     [1.0, 4.0]
+engineering_budget       the sum of (multiplier - 1) over overexpressed enzymes
+biomass_fraction_gate    the strain must hold biomass at or above half the
+                         un-engineered maximum under the same capacities
 capacity_note            true capacities deviate from nominal by up to 35 percent and
-                         are sealed
+                         are sealed; the alternative route and glyoxylate shunt give
+                         the network real trade-offs
 ```
 
 ## Evaluation
 
 - The oracle re-solves the linear programs under sealed capacity draws: the wild
   type anchors zero, the frozen truth-blind witness design anchors one, and your
-  design's product flux closes the gap. No literal anchors are stored.
+  design's product flux closes the gap. No literal anchors are stored, and every
+  scored draw is checked to keep the witness strictly above the wild type.
 - Beating the witness design on a draw scores above one — the record is open.
-- Feasibility requires the biomass gate under each scored draw; infeasible or
-  contract-violating designs score zero.
+- Feasibility requires the biomass gate under each scored draw and the shared
+  engineering budget; infeasible or contract-violating designs score zero, and
+  degenerate draws (witness no better than the wild type) are excluded by
+  construction so no draw hands out free points.
 - `robustness_score` repeats the audit on held-out draws.
 
 This is a toy stoichiometric network, not a claim about any organism.
@@ -62,7 +67,9 @@ under sealed capacity draws, with the witness anchor recomputed rather than stor
 ## Admission and reference scope
 
 This package remains **candidate**. The runnable reference is a worst-case greedy
-edit search over stratified draws from the public deviation model. Local shortcut
+enzyme-edit search over stratified draws from the public deviation model, under
+the shared engineering budget; it reaches 0.85 and leaves continuous-multiplier
+allocation as documented headroom. Local shortcut
 and ablation diagnostics are recorded in `references/known_best.md`; they do not
 replace clean Linux sandbox replay, independent metabolic-engineering review or a
 frozen frontier-model calibration draw.

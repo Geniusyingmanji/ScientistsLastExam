@@ -5,9 +5,9 @@ scientific_question: Can a budgeted choice of primes recover an elliptic curve's
 artifact: A bounded integer coefficient pair, optional abstention and a confidence
   scalar.
 oracle:
-  model: seeded nonsingular curves with |a|,|b| <= 40, exact Legendre-sum point
-    counts over a published prime list with tiered costs, singular cubics (a = -3t^2,
-    b = 2t^3) and genus-two quartics as refusal worlds
+  model: seeded nonsingular curves with |a|,|b| <= 1200, exact Legendre-sum point
+    counts over a published prime list with tiered costs (<= 100 costs one),
+    singular cubics (a = -3t^2, b = 2t^3) and genus-two quartics as refusal worlds
   feasibility: primes from the published list, charged by tier within an
     eight-unit budget, bounded integer coefficients
   deterministic: true
@@ -18,8 +18,8 @@ difficulty_ladder:
     1: the shipped coefficient window and prime tiers
 normalization:
   baseline: one small-prime query and a fixed (0, 1) guess
-  reference: six small primes, per-prime residue enumeration, incremental CRT with
-    window pruning, discriminant filtering
+  reference: budgeted ascending small primes, per-prime residue enumeration,
+    incremental CRT with wide-window pruning, discriminant filtering
   score: exp of normalized total absolute coefficient error, normalized above
     always abstaining
 citations:

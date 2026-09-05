@@ -2,13 +2,15 @@
 
 ## 1. Reference method
 
-`verification/reference_solver.py` is standalone: greedy set-cover probing of the
-route family (several hundred routes, far beyond the budget), majority-vote
-re-probes of every failed route against flips, exhaustive minimal hitting sets over
-the candidate pipes, a discrimination loop probing routes that separate rival
-candidates, and refusal when the surviving ambiguity is structural (identical
-incidence columns — the twin corridor) or unresolved. It deliberately lacks
-information-theoretic probe selection and Bayesian flip handling.
+`verification/reference_solver.py` is standalone: a likelihood-tracked hypothesis
+search. Hypotheses are break sets of at most two pipes (extended to three when
+every hypothesis accrues heavy flip penalties); each probe updates a
+log-likelihood under the published flip rate with a per-pipe complexity penalty so
+supersets never tie the truth; the next route is chosen to split the leading
+hypothesis cluster as evenly as possible; a three-log-unit margin settles a claim,
+and unresolvable rivalries are checked for structural twins (identical incidence
+columns) before refusing. It deliberately lacks full entropy computation and
+Bayesian model averaging.
 
 ## 2. Baseline and normalization
 
@@ -21,11 +23,12 @@ discoveries and full refusal.
 
 | variant | level 1 | level 2 | level 3 |
 |---|---:|---:|---:|
-| full reference | 1.000 | 0.400 | 0.200 |
-| discrimination disabled | 0.400 | — | — |
+| likelihood reference | 1.000 | 0.900 | 0.600 |
+| pre-hardening set-cover reference | 1.000 | 0.400 | 0.200 |
 
-The difficulty ladder is steep: multi-break worlds under flips are where honest
-tomography starts costing. Local debugging numbers, not frozen benchmark evidence.
+The rework replaced cover-probing with hypothesis tracking; the level-2 default now
+carries real multi-break ambiguity under flips. Local debugging numbers, not frozen
+benchmark evidence.
 
 ## 4. Shortcut probes
 
@@ -40,14 +43,18 @@ exposure, must show that the first proposal does not reach the reference at leve
 
 ## 6. Construction errors and revisions
 
-Six construction errors were caught locally on 2026-09-05. (i) The route
-enumeration revisited cells and never terminated. (ii) An alphabetical truncation
-to eighteen routes left pipes that no route could test. (iii) Mirror-symmetric break
-sets appeared in supported worlds — truth sampling now enforces signature
-uniqueness at generation. (iv) The twin pipe ids did not match the route table.
-(v) A tie rule biased toward failure widened the failed set under flips. (vi) The
-reference swept routes alphabetically and burned the budget before covering. All
-pinned in `tests/test_distribution_network_topology.py`.
+Seven construction errors were caught locally, the seventh in the 2026-09-06
+difficulty rework. (i) The route enumeration revisited cells and never terminated.
+(ii) An alphabetical truncation to eighteen routes left pipes that no route could
+test. (iii) Mirror-symmetric break sets appeared in supported worlds — truth
+sampling now enforces signature uniqueness at generation. (iv) The twin pipe ids
+did not match the route table. (v) A tie rule biased toward failure widened the
+failed set under flips. (vi) The reference swept routes alphabetically and burned
+the budget before covering. (vii) The difficulty audit found the shipped level-1
+default saturated (reference 1.000, single breaks trivially recoverable) while the
+set-cover reference collapsed at level 2 (0.400/0.000) — the reference was rebuilt
+as a likelihood tracker and the default raised to level 2. All pinned in
+`tests/test_round4_new_tasks.py`.
 
 ## 7. Robustness and reproducibility
 

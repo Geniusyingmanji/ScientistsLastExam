@@ -1,10 +1,10 @@
-"""Truth-blind reference witness: seeded random-pool greedy construction.
+"""Truth-blind reference witness: greedy construction plus local repair.
 
-Deterministic: one numpy RNG from the fixed master seed, a fixed pool size and restart
-count. Each restart scans a fresh shuffled pool of constraint-clean candidate words in
-vectorized blocks and greedily accepts compatible words; the best restart is kept.
-Run with restarts=240 and seed 0 it reproduces the frozen witness sizes recorded in the
-evaluator and references/known_best.md.
+Deterministic: seeded pool-greedy restarts build an initial library, then a repair
+phase removes each word in turn and greedily re-fills against a fresh large pool,
+keeping any net gain — libraries are not locally maximal under removal. Run with
+restarts=240, seed 0 plus the shipped repair phase it reproduces the frozen witness
+sizes (dna16 32, dna12 29) recorded in the evaluator and references/known_best.md.
 """
 
 from __future__ import annotations

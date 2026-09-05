@@ -36,7 +36,8 @@ Overspending or unknown ids invalidate the world even when caught.
 ## Evaluation
 
 - `combined_score` is development broken-set recovery above the always-abstain
-  baseline: F1 of the claimed set against the truth.
+  baseline: F1 of the claimed set against the truth. The default regime allows up
+  to two broken pipes under four percent report flips.
 - Twin-corridor worlds score refusal only; abstaining scores one and any claim
   scores zero.
 - Set F1, false discovery rate, correct refusal rate and discovery coverage are
@@ -67,8 +68,9 @@ signatures that no probe can separate.
 ## Admission and reference scope
 
 This package remains **candidate**. The runnable reference uses public inputs only:
-greedy set-cover probing, majority-vote re-probes of failed routes, exhaustive
-minimal hitting sets and a discrimination loop over rival candidates. Local shortcut
+likelihood-tracked hypothesis search: break sets of at most two pipes scored
+under the published flip probability, information-splitting route choice, and
+margin-based claims with structural-twin refusal. Local shortcut
 and ablation diagnostics are recorded in `references/known_best.md`; they do not
 replace clean Linux sandbox replay, independent review or a frozen frontier-model
 calibration draw.

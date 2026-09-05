@@ -108,24 +108,36 @@ class ChronoamperometryPins(unittest.TestCase):
 
 class MetabolicStrainPins(unittest.TestCase):
     def test_witness_anchor_recomputed_not_literal(self):
-        ev = _load(ROOT / "benchmarks/MetabolicEngineering/MetabolicStrainDesign"
-                   "/../benchmarks/Biology/MetabolicStrainDesign/verification/evaluator.py"
-                   if False else "benchmarks/Biology/MetabolicStrainDesign/verification/evaluator.py",
+        ev = _load("benchmarks/Biology/MetabolicStrainDesign/verification/evaluator.py",
                    "r4_fba")
         scores = ev._score_design(ev.WITNESS_DESIGN, ev.DEVELOPMENT_DRAWS)
         self.assertEqual(scores, [1.0] * len(ev.DEVELOPMENT_DRAWS))
+        # No scored draw is degenerate: the witness strictly beats the wild type.
+        for seed in ev.DEVELOPMENT_DRAWS + ev.HELDOUT_DRAWS:
+            capacities = ev._capacities(seed)
+            demand = ev._max_biomass(capacities)
+            wild = ev.solve_fluxes(ev._applied_capacities(
+                capacities, {"knockouts": [], "overexpressions": {}}), demand)
+            witness = ev.solve_fluxes(ev._applied_capacities(
+                capacities, ev.WITNESS_DESIGN), demand)
+            self.assertGreater(witness["product"] - wild["product"], 1e-6, seed)
 
     def test_gate_uses_unengineered_capacities(self):
+        # The v2 network is enzyme-level: every enzyme touches several reactions,
+        # so no single enzyme name equals a biomass reaction.
         ev = _load("benchmarks/Biology/MetabolicStrainDesign/verification/evaluator.py",
                    "r4_fba")
         capacities = ev._capacities(21001)
-        demand = ev._viability_demand(capacities)
-        knockout = ev.solve_fluxes(
-            ev._applied_capacities(capacities,
-                                   {"knockouts": ["biosynthesis"],
-                                    "overexpressions": {}}), demand)
-        # Knocking out biosynthesis cannot meet the biomass demand.
-        self.assertIsNone(knockout)
+        demand = ev._max_biomass(capacities)
+        self.assertIsNotNone(demand)
+        self.assertGreater(demand, 0.0)
+        # A design that knocks out every enzyme feeding biosynthesis must fail
+        # the viability gate on every scored draw.
+        all_off = {"knockouts": sorted(ev.ENZYMES)[:ev.MAX_ENZYME_EDITS],
+                   "overexpressions": {}}
+        result = ev.evaluate(lambda problem, design=all_off: design)
+        self.assertEqual(result["valid"], 1.0)
+        self.assertEqual(result["combined_score"], 0.0)
 
 
 class MetagenomicPins(unittest.TestCase):
@@ -135,6 +147,7 @@ class MetagenomicPins(unittest.TestCase):
         world = ev._world((24037, "novel"))
         library_mass = sum(world["abundance"].values())
         self.assertAlmostEqual(library_mass + world["novel_share"], 1.0)
+        self.assertLessEqual(world["novel_share"], 0.18)
 
     def test_repeats_draw_fresh_noise(self):
         ev = _load("benchmarks/Biology/MetagenomicMixtureID/verification/evaluator.py",
@@ -143,6 +156,16 @@ class MetagenomicPins(unittest.TestCase):
         first = ev._run(world, 10, 1)["marker_counts"]
         second = ev._run(world, 10, 2)["marker_counts"]
         self.assertNotEqual(first, second)
+
+    def test_cross_mapping_conserves_the_unique_total(self):
+        # Pins the doubling bug: cross-mapping relocates hits, it never creates them.
+        ev = _load("benchmarks/Biology/MetagenomicMixtureID/verification/evaluator.py",
+                   "r4_meta")
+        world = ev._world((24011, "supported"))
+        report = ev._run(world, 10, 1)
+        unique = sum(v for m, v in report["marker_counts"].items()
+                     if int(m[1:]) < 1200)
+        self.assertLess(unique, report["total_reads"])
 
 
 class HodgkinHuxleyPins(unittest.TestCase):
@@ -166,11 +189,27 @@ class ScalingLawPins(unittest.TestCase):
         ev = _load("benchmarks/ComputerScience/ScalingLawIdentification"
                    "/verification/evaluator.py", "r4_scale")
         world = ev._world((30041, "branch", "branch"))
-        first = ev._true_runtime(world, 1024)
-        second = ev._true_runtime(world, 1024)
-        self.assertEqual(first, second)
-        # Sizes 1 mod 3 follow the quadratic branch.
-        self.assertGreater(first / ev._true_runtime(world, 1022), 100.0)
+        self.assertEqual(ev._true_runtime(world, 334), ev._true_runtime(world, 334))
+        # The branch predicate splits sizes into two runtime regimes; under either
+        # the mod-three or mod-seven design the split is at least 25x at size ~330.
+        ratio = max(ev._true_runtime(world, 331) / ev._true_runtime(world, 332),
+                    ev._true_runtime(world, 332) / ev._true_runtime(world, 331))
+        self.assertGreater(ratio, 25.0)
+
+    def test_tightened_statistics_beat_lazy_ladders(self):
+        # The fixed-shape BIC reference with the predicate-agnostic branch scan
+        # sits near the statistical ceiling while free-slope regression (v1)
+        # collapsed the power-law classes into one family and scored 0.470.
+        ev = _load("benchmarks/ComputerScience/ScalingLawIdentification"
+                   "/verification/evaluator.py", "r4_scale")
+        ref = _load(ROOT / "benchmarks/ComputerScience/ScalingLawIdentification"
+                    "/verification" / "reference_solver.py", "r4_scale_ref")
+        reference = ev.evaluate(ref.identify_scaling_law)
+        self.assertLess(reference["combined_score"], 0.97)
+        self.assertGreater(reference["combined_score"], 0.80)
+        self.assertEqual(reference["development_correct_refusal_rate"], 1.0)
+        self.assertEqual(reference["development_false_discovery_rate"], 0.0)
+        self.assertGreater(reference["robustness_score"], 0.85)
 
     def test_jitter_worlds_carry_a_lawful_family(self):
         ev = _load("benchmarks/ComputerScience/ScalingLawIdentification"
@@ -182,6 +221,12 @@ class ScalingLawPins(unittest.TestCase):
 
 
 class DistributionNetworkPins(unittest.TestCase):
+    def test_default_level_carries_two_break_ambiguity(self):
+        ev = _load("benchmarks/Engineering/DistributionNetworkTopology"
+                   "/verification/evaluator.py", "r4_water")
+        self.assertEqual(ev.DIFFICULTY, 2)
+        self.assertEqual(ev._difficulty_profile()["max_broken"], 2)
+
     def test_twin_pipes_share_route_signatures(self):
         ev = _load("benchmarks/Engineering/DistributionNetworkTopology"
                    "/verification/evaluator.py", "r4_water")
@@ -199,7 +244,7 @@ class DistributionNetworkPins(unittest.TestCase):
         for spec in ev._BASE_DEVELOPMENT_SPECS + ev.HELDOUT_SPECS:
             world = ev._world(spec)
             if world["kind"] == "supported":
-                self.assertTrue(ev._identifiable(world["broken"], 2), spec)
+                self.assertTrue(ev._identifiable(world["broken"], 3), spec)
 
 
 class MineralMixturePins(unittest.TestCase):

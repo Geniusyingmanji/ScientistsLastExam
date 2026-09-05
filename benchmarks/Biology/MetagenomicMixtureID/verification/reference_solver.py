@@ -16,7 +16,7 @@ import math
 import numpy as np
 
 UNIQUE_THRESHOLD_FACTOR = 6.0
-NOVELTY_SIGMA = 4.0
+NOVELTY_SIGMA = 3.0
 
 
 def identify_mixture(problem, run_sequencing, budget_units):
@@ -27,7 +27,7 @@ def identify_mixture(problem, run_sequencing, budget_units):
     genomes = problem["genome_ids"]
     unique_per_genome = sum(1 for name in unique_owner.values()) // len(genomes)
 
-    runs = [run_sequencing(depth) for depth in (10, 10, 5)]
+    runs = [run_sequencing(depth) for depth in (5, 5, 5, 5)]
     total_depth = sum(run["depth_units"] for run in runs)
     counts = {}
     for run in runs:
@@ -46,19 +46,27 @@ def identify_mixture(problem, run_sequencing, budget_units):
     if not present:
         present = [max(genomes, key=lambda g: unique_depth[g])]
 
-    # Novelty: conserved mass minus the library expectation.
+    # Novelty: conserved mass minus the library expectation. Cross-mapping
+    # redistributes unique hits but conserves their total, so the share needs no
+    # inflation correction.
     conserved_count = sum(counts.get(name, 0) for name in conserved)
     total_reads = total_depth * problem["reads_per_depth_unit"]
-    # 0.3 of every read targets conserved markers; library fraction of unique mass.
     unique_total = sum(unique_depth.values())
-    library_share = min(1.0, unique_total / max(0.6 * (total_reads - 0), 1.0)) \
+    library_share = min(1.0, unique_total / max(0.6 * total_reads, 1.0)) \
         if total_reads else 0.0
-    expected_conserved = 0.3 * total_reads * max(0.0, min(1.0, library_share))
+    expected_conserved = 0.3 * total_reads * max(0.0, library_share)
     sigma = math.sqrt(max(expected_conserved, 1.0))
     if conserved_count > expected_conserved + NOVELTY_SIGMA * sigma:
         return {"present": [], "abundances": {}, "abstain": True, "confidence": 0.8}
 
-    weights = {g: unique_depth[g] for g in present}
+    # Median over each genome's markers absorbs the hidden per-marker efficiency
+    # bias; sums would systematically overweight efficient markers.
+    def genome_median(genome):
+        rows = [counts.get(m, 0) for m in unique_owner
+                if unique_owner[m] == genome]
+        rows = sorted(rows)
+        return rows[len(rows) // 2] if rows else 0.0
+    weights = {g: genome_median(g) for g in present}
     norm = sum(weights.values()) or 1.0
     abundances = {g: weights[g] / norm for g in present}
     return {"present": present, "abundances": abundances,

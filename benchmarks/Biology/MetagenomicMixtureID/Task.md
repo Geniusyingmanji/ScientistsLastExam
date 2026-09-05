@@ -23,9 +23,13 @@ def identify_mixture(problem, run_sequencing, budget_units):
 genome_ids            thirty library genomes
 marker_database       marker -> {genome, type} with unique and conserved types
 sequencing_depths     [1, 2, 5, 10, 20] purchasable depth units
-reads_per_depth_unit  5000 reads per depth unit
-mapping_note          the public read-allocation statement
-run_cost / budget_units  1 / 6
+reads_per_depth_unit  1200 reads per depth unit
+mapping_note          the public read-allocation statement (per-marker
+                      lognormal efficiencies near 35 percent, five percent of unique
+                      hits cross-map onto the wrong genome) (per-marker
+                      efficiencies vary ~35 percent; ~5 percent of unique hits
+                      cross-map)
+run_cost / budget_units  1 / 4
 ```
 
 `run_sequencing(depth_units)` charges one unit per run (repeated depths allowed,
@@ -37,8 +41,9 @@ the world even when caught.
 
 - `combined_score` is development mixture recovery above the always-abstain
   baseline: 0.7 x set F1 plus 0.3 x an abundance score exp(-2 x mean |log ratio|).
-- Novel-organism worlds score refusal only: abstaining scores one, any library
-  mixture claim scores zero and counts as a false discovery.
+- Novel-organism worlds (six to sixteen percent read mass) score refusal only:
+  abstaining scores one, any library mixture claim scores zero and counts as a
+  false discovery.
 - Set F1, false discovery rate, correct refusal rate and discovery coverage are
   reported with denominators; a full abstention scores exactly zero.
 - `robustness_score` repeats the audit on held-out mixtures and novel shares.
@@ -47,10 +52,12 @@ This is a deterministic marker-count simulation, not a claim about any real biom
 
 ## Oracle and difficulty
 
-Mixtures hold two to five seeded strains with Dirichlet weights; novel worlds give a
-hidden organism 15 to 40 percent of the read mass. Read allocation follows the
-public statement (0.6 unique / 0.3 conserved / remainder dropped, novel reads only
-on conserved markers).
+Mixtures hold two to five seeded strains with uneven Dirichlet weights; novel
+worlds give a hidden organism 8 to 18 percent of the read mass. Read allocation
+follows the public statement (0.6 unique / 0.3 conserved / remainder dropped,
+novel reads only on conserved markers, per-marker lognormal efficiency bias of
+roughly 35 percent, and five percent of unique hits relocated to a random other
+marker).
 
 ## Rules
 
@@ -74,8 +81,9 @@ signature rather than an unresolvable peak overlap.
 ## Admission and reference scope
 
 This package remains **candidate**. The runnable reference uses public inputs only:
-pooled runs, a Poisson presence threshold per genome, unique-mass abundance
-normalization and a four-sigma conserved-excess novelty test. Local shortcut and
+pooled runs, a Poisson presence threshold per genome, median-over-markers
+abundance estimation (robust to the hidden efficiency bias) and a three-sigma
+conserved-excess novelty test. Local shortcut and
 ablation diagnostics are recorded in `references/known_best.md`; they do not replace
 clean Linux sandbox replay, independent review or a frozen frontier-model
 calibration draw.

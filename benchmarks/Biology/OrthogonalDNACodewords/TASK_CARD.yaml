@@ -18,8 +18,8 @@ difficulty_ladder:
     1: two constraint families (dna16, dna12) with the frozen witness anchor
 normalization:
   baseline: the trivial two-word library per family, scoring exactly zero
-  reference: seeded random-pool greedy constructor, restarts=240 reproducing the frozen
-    witness sizes (dna16 28, dna12 27)
+  reference: seeded pool-greedy restarts plus a removal-repair phase; the frozen
+    witness sizes are dna16 32 and dna12 29
   score: mean over families of (size - 2)/(witness - 2); larger libraries score above
     one with no cap
 citations:

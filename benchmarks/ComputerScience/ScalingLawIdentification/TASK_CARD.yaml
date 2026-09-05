@@ -5,9 +5,9 @@ scientific_question: Can a budgeted size ladder identify which asymptotic class 
 artifact: Six-class probabilities, a positive scale constant, optional abstention
   and a confidence scalar.
 oracle:
-  model: deterministic seeded class worlds with log-uniform scales, three percent
-    multiplicative timing noise, branch worlds mixing c*m^2 and c*m*log2(m) by size
-    mod 3, and jitter worlds at sixty percent noise
+  model: deterministic seeded class worlds with log-uniform scales, seven percent
+    multiplicative timing noise, sizes bounded by 384, branch worlds mixing c*m^2
+    and c*m*log2(m) by size mod 3, and jitter worlds at sixty percent noise
   feasibility: probabilities over exactly the six classes, positive finite scale,
     charged tiers within a twelve-unit budget
   deterministic: true
@@ -15,11 +15,12 @@ oracle:
 difficulty_ladder:
   default_level: 1
   levels:
-    1: the shipped noise, scale and refusal structure
+    1: five percent noise, mod-seven branching, eighteen percent jitter
 normalization:
   baseline: one timing, uniform probabilities and a fixed mid-range scale
-  reference: seven-size ladder, log-space per-class regression, split-fit branch
-    test, repeat-estimated jitter gate
+  reference: residue-covering eight-size ladder with a 192 top, fixed-shape BIC
+    class selection, predicate-agnostic mod-3/mod-7 branch scan with a doubled F
+    gate, triple-repeat jitter gate
   score: geometric mean of class probability, log-scale score and sealed
     extrapolation, normalized above always abstaining
 citations:
@@ -30,8 +31,10 @@ invariants:
 - branch worlds are exact deterministic functions of the size
 - a full abstention scores exactly zero after normalization
 known_shortcuts: Uniform probabilities with a fixed scale score 0.000; the reference
-  reaches 0.929/0.622 with zero false discoveries. Disabling the jitter gate costs
-  0.167. Formal clean Linux calibration and independent review remain pending.
+  reaches 0.948/0.604 and a competent first-shot regression ladder reaches only
+  0.692 — the gap is real but the reference sits near the statistical ceiling of
+  log-space regression, so difficulty rests on the refusal axes and budget. Formal
+  clean Linux calibration and independent review remain pending.
 licensing:
   task_package: repository_license_not_declared
   external_assets: none
@@ -84,5 +87,6 @@ difficulty_assessment:
   status: unverified_candidate
   requirement: standard-method and low-dimensional shortcut sweeps, capability ablations
     and clean frontier-model calibration before certification
-  remaining_risk: Class identification is nearly saturated on development; headroom
-    concentrates in held-out robustness and the sealed extrapolation.
+  remaining_risk: The fixed-shape BIC selection is stable on the frozen worlds;
+    the frontier question is whether models find the residue-covering ladder and
+    the triple-repeat noise floor unprompted.

@@ -4,11 +4,12 @@ scientific_question: Can an edit set under a five-edit budget raise product flux
   frozen truth-blind witness design?
 artifact: A knockout list and overexpression multipliers over public reactions.
 oracle:
-  model: ten-reaction steady-state network solved as linear programs per sealed
+  model: seventeen-reaction steady-state network with six pleiotropic editable
+    enzymes and a shared engineering budget, solved as linear programs per sealed
     capacity draw (nominal capacities perturbed up to 35 percent), wild-type and
     witness anchors recomputed by the same solver
-  feasibility: known reactions only, essential reactions untouched, at most five
-    edits, multipliers within the public range
+  feasibility: known enzymes only, at most three edits, multipliers within the
+    public range and the shared engineering budget
   deterministic: true
   external_tooling: scipy linprog (HiGHS)
 difficulty_ladder:
@@ -17,7 +18,8 @@ difficulty_ladder:
     1: the shipped draw structure and gate
 normalization:
   baseline: the wild type with no edits, scoring exactly zero by construction
-  reference: worst-case greedy edit search over stratified public deviation draws
+  reference: worst-case greedy enzyme-edit search over stratified public
+    deviation draws under the engineering budget
   score: per-draw gap closed between wild type and the frozen witness design,
     averaged; beating the witness scores above one with no cap
 citations:
@@ -27,10 +29,11 @@ invariants:
 - wild-type and witness fluxes are recomputed per draw; no literal anchors are stored
 - the biomass gate is a fraction of the un-engineered maximum under the same draw
 - essential knockouts and out-of-range multipliers invalidate the design
-known_shortcuts: A single pdh overexpression closes most of the gap; the greedy
-  reference reaches 0.998/1.000. The remaining headroom sits in capacity-corner
-  draws where higher multipliers beat the witness. Formal clean Linux calibration
-  and independent review remain pending.
+known_shortcuts: The v1 single-reaction edits score zero against the v2 enzyme
+  map — the old hand-computed design is not even expressible. The worst-case
+  greedy reference reaches 0.851/0.839 under pleiotropy and the shared
+  engineering budget, leaving headroom in hedged designs. Formal clean Linux
+  calibration and independent review remain pending.
 licensing:
   task_package: repository_license_not_declared
   external_assets: none
@@ -82,6 +85,6 @@ difficulty_assessment:
   status: unverified_candidate
   requirement: standard-method and low-dimensional shortcut sweeps, capability ablations
     and clean frontier-model calibration before certification
-  remaining_risk: The linear program is small enough that greedy search nearly
-    saturates the witness; headroom above one concentrates in capacity corners, so a
-    frontier draw must confirm the record side is live.
+  remaining_risk: The v2 network restores a real gap (reference 0.851); a
+    frontier draw must confirm first proposals sit below it and that capacity-corner
+    hedging is where the remaining difficulty lives.

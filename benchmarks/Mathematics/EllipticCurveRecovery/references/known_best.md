@@ -2,14 +2,14 @@
 
 ## 1. Reference method
 
-`verification/reference_solver.py` is standalone: six small primes (11, 13, 17, 19,
-23, 29; total cost six units of eight), per-prime enumeration of every (a mod p,
-b mod p) reproducing the returned count by direct Legendre sums, incremental
-Chinese-remainder lifting with coefficient-window pruning at each step (keeping
-the partial sets small instead of exploding over the cartesian product), singular
-lift filtering, and refusal when zero or multiple lifts survive. It deliberately
-lacks large-prime confirmation queries, quadratic-form acceleration and
-Hasse-interval reasoning.
+`verification/reference_solver.py` is standalone: ascending small primes queried
+until the budget binds (eight units; the wide +-1200 window needs most of them),
+per-prime enumeration of every (a mod p, b mod p) reproducing the returned count
+by direct Legendre sums, incremental Chinese-remainder lifting with
+coefficient-window pruning at each step (keeping the partial sets small instead of
+exploding over the cartesian product), singular lift filtering, and refusal when
+zero or multiple lifts survive. It deliberately lacks quadratic-form acceleration
+and Hasse-interval reasoning.
 
 ## 2. Baseline and normalization
 
@@ -21,13 +21,12 @@ development and robustness with zero false discoveries and full refusal.
 
 | variant | development |
 |---|---:|
-| full reference (six primes) | 1.000 |
-| five primes | 0.800 |
-| four primes | 0.000 |
+| full reference (budgeted ascending primes) | 1.000 |
+| six primes in the wide window | 0.000 |
 
-The prime ladder is load-bearing: four small primes leave twin curves that share
-all counts, six resolve them. Local debugging numbers, not frozen benchmark
-evidence.
+The wide window makes the prime ladder load-bearing: six primes leave twin curves
+sharing all counts, the budget buys eight. Local debugging numbers, not frozen
+benchmark evidence.
 
 ## 4. Shortcut probes
 
@@ -43,14 +42,17 @@ residue-then-CRT strategy is the admission question.
 
 ## 6. Construction errors and revisions
 
-Four construction errors were caught locally on 2026-09-05. (i) A half-written
-compatibility shim never constrained residues across primes. (ii) The cartesian
-CRT enumeration exploded once a fifth prime was added — rebuilt incrementally
-with window pruning. (iii) Four primes left twin-curve ambiguity on two
-development worlds — two more primes resolve it. (iv) The point counter dropped
-the y = 0 point at roots of the cubic (x^3 + 1 over F_11 counted 22 against the
-classical 12) — corrected in both the oracle and the reference, and pinned against
-the classical value. All pinned in `tests/test_round4_new_tasks.py`.
+Five construction errors were caught locally, the fifth in the 2026-09-06
+difficulty rework. (i) A half-written compatibility shim never constrained
+residues across primes. (ii) The cartesian CRT enumeration exploded once a fifth
+prime was added — rebuilt incrementally with window pruning. (iii) Four primes
+left twin-curve ambiguity on two development worlds. (iv) The point counter
+dropped the y = 0 point at roots of the cubic (x^3 + 1 over F_11 counted 22
+against the classical 12) — corrected in both the oracle and the reference, and
+pinned against the classical value. (v) The difficulty audit judged the +-40
+window knowledge-gated with budget to spare — the window widened to +-1200 and
+primes repriced so the residue-then-CRT strategy now has to manage a real
+information budget. All pinned in `tests/test_round4_new_tasks.py`.
 
 ## 7. Robustness and reproducibility
 

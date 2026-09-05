@@ -21,9 +21,9 @@ def identify_scaling_law(problem, time_run, budget_units):
 ```text
 classes / class_shapes   the six public forms c, c*log2(m), c*m, c*m*log2(m),
                           c*m^2, c*2^(m/8)
-size_bounds              [8, 1024]
-cost_tiers               size <= 128 costs 1, <= 512 costs 2, otherwise 3
-budget_units             12
+size_bounds              [8, 384]
+cost_tiers               size <= 64 costs 1, <= 192 costs 2, otherwise 3
+budget_units             9
 noise_note               multiplicative noise; repeats draw fresh noise
 refusal_note             branching runtimes and jitter floors must be refused
 ```
@@ -36,7 +36,8 @@ invalidate the world even when caught.
 
 - `combined_score` is development mechanism recovery above the always-abstain
   baseline: geometric mean of the true class probability, a log-scale score for the
-  constant, and a sealed extrapolation of the runtime at size 800.
+  constant, and a sealed extrapolation of the runtime at size 700 under seven
+  percent multiplicative noise.
 - Branch and jitter worlds score refusal only; abstaining scores one and any class
   claim scores zero.
 - Class probability, false discovery rate, correct refusal rate and discovery

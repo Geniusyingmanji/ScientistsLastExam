@@ -18,10 +18,10 @@ DIFFICULTY = 1
 GENOME_COUNT = 30
 UNIQUE_PER_GENOME = 40
 CONSERVED_COUNT = 30
-READS_PER_DEPTH = 5000
+READS_PER_DEPTH = 1200
 DEPTHS = (1, 2, 5, 10, 20)
 RUN_COST = 1
-BUDGET_UNITS = 6
+BUDGET_UNITS = 4
 
 UNIQUE_MARKER_IDS = ["m%04d" % index for index in range(GENOME_COUNT * UNIQUE_PER_GENOME)]
 CONSERVED_MARKER_IDS = ["m%04d" % index
@@ -44,17 +44,21 @@ def _world(spec):
     rng = np.random.default_rng(int(seed))
     strain_count = int(rng.integers(2, 6))
     chosen = rng.choice(GENOME_COUNT, size=strain_count, replace=False)
-    weights = rng.dirichlet(np.full(strain_count, 1.2))
+    weights = rng.dirichlet(np.full(strain_count, 0.8))
     if kind == "novel":
         # A novel organism claims a fixed share; library strains share the rest.
-        novel_share = float(rng.uniform(0.15, 0.40))
+        novel_share = float(rng.uniform(0.08, 0.18))
         weights = weights * (1.0 - novel_share)
     else:
         novel_share = 0.0
     abundance = {GENOME_IDS[index]: float(weight)
                  for index, weight in zip(chosen, weights)}
+    efficiency = {}
+    for genome in GENOME_IDS:
+        factors = rng.normal(0.0, 0.35, size=UNIQUE_PER_GENOME)
+        efficiency[genome] = np.exp(factors)
     return {"seed": int(seed), "kind": kind, "abundance": abundance,
-            "novel_share": novel_share}
+            "novel_share": novel_share, "marker_efficiency": efficiency}
 
 
 def problem_statement(world):
@@ -73,7 +77,9 @@ def problem_statement(world):
         "reads_per_depth_unit": READS_PER_DEPTH,
         "mapping_note": (
             "about 60 percent of a library strain's reads map to its unique markers, "
-            "about 30 percent to the conserved core, and the rest drop; a novel "
+            "about 30 percent to the conserved core, and the rest drop; per-marker "
+            "efficiencies vary by roughly 35 percent (lognormal); about 5 percent of "
+            "unique hits cross-map onto the wrong genome's markers; a novel "
             "organism's reads can only appear on conserved markers"
         ),
         "run_cost": RUN_COST,
@@ -97,15 +103,30 @@ def _run(world, depth, call_index):
         [world["abundance"].get(genome, 0.0) / max(1e-12, 1.0 - world["novel_share"])
          if world["novel_share"] > 0 else world["abundance"].get(genome, 0.0)
          for genome in GENOME_IDS])
-    unique_shares = np.repeat(unique_genome_shares, UNIQUE_PER_GENOME)
+    # Marker efficiency bias (hidden): per-genome, per-marker lognormal factors.
+    efficiencies = np.concatenate([world["marker_efficiency"][genome]
+                                   for genome in GENOME_IDS])
+    weighted = np.repeat(unique_genome_shares, UNIQUE_PER_GENOME) * efficiencies
+    unique_shares = weighted / weighted.sum() if weighted.sum() > 0 else weighted
     probabilities = np.concatenate([
-        unique_mass * unique_shares / unique_shares.sum() if unique_shares.sum() > 0
-        else np.zeros(len(unique_shares)),
+        unique_mass * unique_shares,
         np.full(CONSERVED_COUNT, conserved_mass / CONSERVED_COUNT),
         [unmapped_mass],
     ])
     probabilities = probabilities / probabilities.sum()
     counts = rng.multinomial(reads, probabilities)
+    # Cross-mapping: about five percent of unique-marker hits are relocated to a
+    # uniformly random marker of another genome, per the public mapping statement.
+    unique_slice = counts[:len(unique_shares)]
+    cross_budget = int(0.05 * unique_slice.sum())
+    if cross_budget > 0:
+        donors = rng.multinomial(cross_budget,
+                                 np.full(len(unique_shares),
+                                         1.0 / len(unique_shares)))
+        scatter = rng.multinomial(cross_budget,
+                                  np.full(len(unique_shares),
+                                          1.0 / len(unique_shares)))
+        counts[:len(unique_shares)] = unique_slice - donors + scatter
     marker_counts = {}
     for name, value in zip(UNIQUE_MARKER_IDS + CONSERVED_MARKER_IDS, counts):
         if value:

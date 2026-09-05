@@ -21,10 +21,10 @@ def recover_curve(problem, count_points, budget_units):
 `problem` is a mapping with the keys
 
 ```text
-curve_family      y^2 = x^3 + a*x + b, |a|,|b| <= 40, nonzero discriminant
+curve_family      y^2 = x^3 + a*x + b, |a|,|b| <= 1200, nonzero discriminant
 prime_list        the queryable primes
-cost_tiers        prime <= 200 costs 1, <= 2000 costs 2, otherwise 3
-budget_units      8
+cost_tiers        prime <= 100 costs 1, <= 1000 costs 2, otherwise 3
+budget_units      6
 answer_semantics  the oracle returns #E(F_p) exactly
 refusal_note      singular cubics and genus-two quartics must be refused
 ```
@@ -66,8 +66,8 @@ itself.
 ## Admission and reference scope
 
 This package remains **candidate**. The runnable reference uses public inputs
-only: six small-prime queries, per-prime residue enumeration by direct Legendre
-sums, incremental CRT with coefficient-window pruning, and refusal when no
-nonsingular lift survives. Local shortcut and ablation diagnostics are recorded in
+only: ascending small-prime queries within the budget, per-prime residue enumeration
+by direct Legendre sums, incremental CRT with coefficient-window pruning across
+the wide +-1200 window, and refusal when no nonsingular lift survives. Local shortcut and ablation diagnostics are recorded in
 `references/known_best.md`; they do not replace clean Linux sandbox replay,
 independent review or a frozen frontier-model calibration draw.

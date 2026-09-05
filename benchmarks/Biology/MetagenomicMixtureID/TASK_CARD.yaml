@@ -6,8 +6,10 @@ artifact: A claimed genome set, nonnegative abundances summing to one, optional
   abstention and a confidence scalar.
 oracle:
   model: deterministic multinomial read allocation over unique and conserved markers
-    per purchased depth run, seeded Dirichlet mixtures of two to five strains, novel
-    organisms contributing only conserved-marker reads at 15-40 percent mass
+    per purchased depth run (1200 reads per unit), seeded uneven Dirichlet mixtures
+    of two to five strains, hidden lognormal per-marker efficiency bias of ~35
+    percent, five percent cross-mapping of unique hits, novel organisms
+    contributing only conserved-marker reads at 8-18 percent mass
   feasibility: known genome ids, unique claims, abundances summing to one, charged
     runs within a six-unit budget
   deterministic: true
@@ -18,8 +20,8 @@ difficulty_ladder:
     1: the shipped mixture structure and mapping statement
 normalization:
   baseline: three fixed genomes with uniform abundances, ignoring the data
-  reference: pooled runs, Poisson presence thresholds, unique-mass normalization,
-    four-sigma conserved-excess novelty refusal
+  reference: pooled runs, Poisson presence thresholds, median-over-markers
+    abundance estimation, three-sigma conserved-excess novelty refusal
   score: 0.7 set F1 plus 0.3 abundance score on supported worlds, normalized above
     always abstaining; false discovery and refusal separate
 citations:
@@ -29,9 +31,10 @@ invariants:
 - novel organisms contribute zero unique-marker reads
 - repeated runs at the same depth draw independent multinomial noise
 - a full abstention scores exactly zero after normalization
-known_shortcuts: A single shallow run already clears the presence threshold (0.983);
-  the difficulty concentrates in abundance precision and the novelty test. Formal
-  clean Linux calibration and independent review remain pending.
+known_shortcuts: A single depth-5 run reaches 0.888 against the 0.897 reference;
+  the difficulty sits in abundance accuracy under hidden marker bias and the
+  novelty margin at 8 percent share. Formal clean Linux calibration and
+  independent review remain pending.
 licensing:
   task_package: repository_license_not_declared
   external_assets: none
@@ -85,5 +88,5 @@ difficulty_assessment:
   status: unverified_candidate
   requirement: standard-method and low-dimensional shortcut sweeps, capability ablations
     and clean frontier-model calibration before certification
-  remaining_risk: Presence detection saturates quickly; the frontier headroom is
-    abundance accuracy and calibrated novelty refusal at low novel shares.
+  remaining_risk: Set recovery is still cheap at high depth; the remaining risk
+    is that abundance precision under efficiency jitter is the only live axis.

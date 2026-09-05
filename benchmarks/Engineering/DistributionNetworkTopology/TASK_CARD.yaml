@@ -11,15 +11,16 @@ oracle:
   deterministic: true
   external_tooling: none beyond NumPy
 difficulty_ladder:
-  default_level: 1
+  default_level: 2
   levels:
     1: single breaks, two percent flips
     2: up to two breaks, four percent flips
     3: up to three breaks, seven percent flips
 normalization:
   baseline: one probe blaming the first pipe of the first failed route
-  reference: greedy cover, majority re-probes, minimal hitting sets, discrimination
-    loop, structural-alias refusal
+  reference: likelihood-tracked hypothesis search with information-splitting route
+    choice, complexity-penalized break sets, margin claims and structural-alias
+    refusal
   score: broken-set F1 on supported worlds, normalized above always abstaining
 citations:
 - id: doi:10.1061/(ASCE)0733-9496(2008)134:6(556)
@@ -82,5 +83,5 @@ difficulty_assessment:
   status: unverified_candidate
   requirement: standard-method and low-dimensional shortcut sweeps, capability ablations
     and clean frontier-model calibration before certification
-  remaining_risk: Level 1 saturates for the reference; the default may need raising
-    to level 2 after a frontier draw shows the single-break regime is too easy.
+  remaining_risk: The default is now level 2 (reference 0.900); a frontier draw
+    must confirm first proposals sit below the reference at this level.

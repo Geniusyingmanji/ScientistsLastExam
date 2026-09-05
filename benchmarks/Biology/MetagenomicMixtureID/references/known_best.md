@@ -3,31 +3,36 @@
 ## 1. Reference method
 
 `verification/reference_solver.py` is standalone and uses only the public database
-and charged sequencer. Three runs (10, 10, 5 depth units) are pooled; a genome is
-called present when its unique-marker depth clears a Poisson background by six
-standard deviations; abundances normalize the unique masses; refusal fires when the
-conserved-marker count exceeds the library expectation by four standard errors — the
-signature of reads no unique marker can absorb. It deliberately lacks
-expectation-maximization refinement, marker-bias correction and per-run variance
-weighting.
+and charged sequencer. Four runs (5, 5, 5, 5 depth units) are pooled; a genome is
+called present when its unique-marker depth clears a Poisson background; abundance
+per genome is the median over its markers, which absorbs the hidden lognormal
+efficiency bias (sums would systematically overweight efficient markers); refusal
+fires when the conserved-marker count exceeds the library expectation by three
+standard errors — cross-mapping conserves the unique total, so no inflation
+correction is needed. It deliberately lacks expectation-maximization refinement
+and per-run variance weighting.
 
 ## 2. Baseline and normalization
 
 The shipped `solution.py` names three fixed genomes with uniform abundances and
-scores exactly `0.000000` after normalization. A truth-informed mixture claim scores
-one. Measured on 2026-09-05 the reference reaches `0.9961` development and `0.9952`
-robustness with zero false discoveries and full refusal.
+scores exactly `0.000000` after normalization. A truth-informed mixture claim
+scores one. After the 2026-09-06 read-economy tightening (1200 reads per unit,
+four-run budget, marker-efficiency jitter, cross-mapping, six-to-sixteen-percent
+novel shares) the reference reaches `0.8969` development and `0.9594` robustness
+with zero false discoveries and full refusal.
 
 ## 3. Capability comparisons and ablations
 
 | variant | development | FDR | refusal |
 |---|---:|---:|---:|
-| full reference | 0.9961 | 0.00 | 1.00 |
-| single depth-1 run | 0.9825 | — | — |
-| novelty test disabled | 0.5961 | 1.00 | 0.00 |
+| full reference (4 x depth 5) | 0.8969 | 0.00 | 1.00 |
+| single depth-5 run | 0.8877 | 0.00 | 1.00 |
+| single depth-5 run, pre-hardening statistics | 0.9825 | — | — |
 
-Presence is cheap; the novelty test carries the refusal axis entirely. Local
-debugging numbers, not frozen benchmark evidence.
+The hardening moved 1000-fold read mass out of the shallow probe's reach: presence
+is still easy, abundance under hidden marker bias is not (a five-genome uneven
+world scores 0.56 for the reference). Local debugging numbers, not frozen benchmark
+evidence.
 
 ## 4. Shortcut probes
 
@@ -43,11 +48,17 @@ abundance and refusal axes together.
 
 ## 6. Construction errors and revisions
 
-Two construction errors were caught locally on 2026-09-05. (i) The read-allocation
-probabilities renormalized a full-strength unique block, shrinking the conserved
-excess of novel organisms to two sigma — undetectable by the honest test. (ii) The
-first baseline ranked the observed markers and scored 0.35; it now ships the
-copy-paste fixed claim. Both are pinned in `tests/test_metagenomic_mixture_id.py`.
+Four construction errors were caught locally, the last two in the 2026-09-06
+difficulty rework. (i) The read-allocation probabilities renormalized a
+full-strength unique block, shrinking the conserved excess of novel organisms to
+two sigma. (ii) The first baseline ranked the observed markers and scored 0.35.
+(iii) A cross-mapping block accidentally doubled every unique count, making novel
+worlds look library-heavy. (iv) A 1.05 inflation correction on the unique total
+was applied although cross-mapping conserves the total — supported worlds were
+refused as novel; a difficulty audit also found a single shallow run scoring 0.98
+against the 0.996 reference, so the statistics were tightened to 1200 reads per
+unit, 8-18 percent novel shares, hidden efficiency bias, cross-mapping and a
+four-run budget. All pinned in `tests/test_round4_new_tasks.py`.
 
 ## 7. Robustness and reproducibility
 
