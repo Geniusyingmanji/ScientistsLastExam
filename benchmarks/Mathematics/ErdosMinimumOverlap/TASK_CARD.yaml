@@ -1,0 +1,73 @@
+schema_version: 2
+scientific_question: Can a policy build a balanced partition of {1,...,2n} matching the exactly-known minimum possible difference-overlap M(n), at three sizes where M(n) has been settled by exhaustive search?
+artifact: A balanced partition of {1,...,2n} into two sets of size n (given as 2n labels), for n in {8, 11, 15}.
+oracle:
+  model: exact cross-correlation of the two sets' indicator vectors to compute max_k M_k (a finite, deterministic computation), no floating point
+  feasibility: exactly 2n labels in {0,1}, exactly n zeros and n ones
+  deterministic: true
+normalization:
+  baseline: first-half/second-half split (A={1..n}, B={n+1..2n}), giving max-overlap n at every size (8, 11, 15)
+  reference: the proven-exact minimum overlap M(n) at each size (4, 5, 6), settled by exhaustive computer search
+  score: mean over the three sizes of (baseline_overlap - overlap) / (baseline_overlap - sota_ref), clipped below at 0, unbounded above in form -- matching the exact value scores 1.0; exceeding it is mathematically impossible at these three sizes since M(n) is proven exact
+citations:
+- id: arxiv:1609.08000
+  title: The minimum overlap problem revisited
+- id: arxiv:2201.05704
+  title: Erdos' minimum overlap problem
+- id: arxiv:2506.13131
+  title: "AlphaEvolve: A coding agent for scientific and algorithmic discovery"
+invariants:
+- the max-overlap check is exact cross-correlation of integer indicator vectors (numpy.correlate), no floating point tolerance and no sampling
+- the baseline (first-half/second-half split) is checked to score exactly 0.0000 on all three sizes
+- all three sota_ref anchors (4, 5, 6) are proven exact values of M(n), independently re-confirmed against the cited record table and cross-checked with a from-scratch brute-force search for n=1..6 during this task's construction
+- because M(n) is proven exact at n=8, 11, 15, combined_score has a hard ceiling of 1.0 in practice for this task -- disclosed rather than hidden; the asymptotic constant c that IS still open (and whose upper bound AlphaEvolve and others improved in 2025-2026) does not reduce to a finite partition for one concrete large n, so this task does not use it as an anchor
+- reciting a max-overlap value is worth nothing without producing the literal partition; the oracle checks the submitted partition directly, never a claimed number
+- the shipped reference construction (randomized hill-climbing) reaches the true optimum at n=8 and n=11 but not at n=15 (reaches 7, not the true 6), leaving real headroom there
+known_shortcuts: Erdos' minimum overlap problem and its small exact values are documented (e.g. on Wikipedia) and may occur in training data; reciting a max-overlap value is not sufficient, since the oracle requires an actual balanced partition that passes the same exact cross-correlation check anyone else would run.
+review:
+  domain: pending_external_additive_combinatorics
+  evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_uncapped_normalization_checks
+provenance:
+  class: known_answer
+  target_source: Proven-exact M(n) values (exhaustive search), used as score=1.0 witnesses; exceeding them is mathematically impossible at these three sizes, disclosed rather than hidden.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: high
+  rationale: Erdos' minimum overlap problem and its exact small values are documented and may be recalled directly by a capable model, but the exact literal partition achieving M(8), M(11) or M(15) is not something a model can merely recite -- reconstructing it is the actual task.
+lineage:
+  status: complete
+  builder_model_ids:
+  - anthropic:claude-sonnet-5
+  builder_scaffolds:
+  - claude-code
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    Built at the user's request after identifying, from AlphaEvolve's mathematics catalogue
+    and its 2026 follow-up papers, that Erdos' minimum overlap problem is a real, actively
+    worked construction problem, alongside the Heilbronn triangle problem (built in the
+    same batch as Mathematics/HeilbronnTrianglePacking). Investigated whether the
+    asymptotic constant c's 2025-2026 upper-bound improvements could serve as a genuinely
+    open (uncapped) anchor; found that those improvements optimize a continuous density
+    function via Fourier analysis rather than an explicit finite-n partition, so no citable
+    best-known M(n) exists for any n > 15 -- used the proven-exact table instead and
+    disclosed the resulting hard ceiling rather than inventing an anchor. No frontier
+    searcher draw has been run.
+  shortcut_discoverer: builder_self_audit
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: anthropic:claude-sonnet-5
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: the reference, the baseline, the max-overlap checker and the bad-candidate shapes are all runnable from this directory

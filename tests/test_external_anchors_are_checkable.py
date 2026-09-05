@@ -56,6 +56,8 @@ DECLARED_EXTERNAL_ANCHORS = {
     "Mathematics/DegreeDiameterGraph",
     "Mathematics/VanDerWaerdenColoring",
     "Mathematics/SchurPartition",
+    "Mathematics/ErdosMinimumOverlap",
+    "Mathematics/HeilbronnTrianglePacking",
     "Algorithm/TensorRank555",
     "Superconductivity/SuperconductorTcRecord",
 }

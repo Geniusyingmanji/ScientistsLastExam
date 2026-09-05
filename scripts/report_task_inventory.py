@@ -62,6 +62,8 @@ CHINESE_NAMES = {
     "Mathematics/BlackBoxGroupIdentification": "黑盒群同构辨识",
     "Mathematics/CapSet": "Cap Set 构造",
     "Mathematics/CapSetFrontier": "Cap Set 未证明维度",
+    "Mathematics/ErdosMinimumOverlap": "Erdős 最小重叠划分",
+    "Mathematics/HeilbronnTrianglePacking": "Heilbronn 三角形点集",
     "Mathematics/KissingNumber": "接触数构造",
     "Mathematics/NarrowAdmissibleTuple": "窄可容许素数元组",
     "Mathematics/RamseyLowerBound": "Ramsey 下界染色",
@@ -194,6 +196,12 @@ CHINESE_BRIEFS = {
     "Mathematics/CapSetFrontier": (
         "在最大值尚未证明的 n=7,8,9 上构造更大的 cap set",
         "对最好已知规模的平均进度;无上限,与 CapSet 的维度不相交"),
+    "Mathematics/ErdosMinimumOverlap": (
+        "把 {1,...,2n} 分成两个等大小的集合,让某个差值出现的最多次数尽量小——Erdős 最小重叠问题,渐近常数在 2025-2026 年被 AlphaEvolve 等多次刷新",
+        "对三个 n(8、11、15)已被穷举搜索证明的精确最优值的平均进度;这三个规模都是硬上限,已披露,因为超过 n=15 没有可核实的具体最好记录"),
+    "Mathematics/HeilbronnTrianglePacking": (
+        "在单位正方形内放 n 个点,让任意 3 点构成的三角形最小面积尽量大——经典的 Heilbronn 三角形问题",
+        "对 Erich's Packing Center 维护的记录表的平均进度;n=8 已证明最优(硬上限,已披露),n=10、n=11、n=12 仅是最好已知记录,真实无上限"),
     "Mathematics/KissingNumber": (
         "在 9、10、12 维构造更多与中心球相切的单位球",
         "固定容差下对最好已知接触数的平均进度;无上限"),

@@ -57,6 +57,8 @@ tasks:
   Mathematics/DegreeDiameterGraph: {form: optimization, analogue: combinatorial, note: bounded_degree_diameter_graph_order_not_kissing_or_ramsey}
   Mathematics/VanDerWaerdenColoring: {form: optimization, analogue: combinatorial, note: AP_free_coloring_length_not_ramsey_lower_bound_replay}
   Mathematics/SchurPartition: {form: optimization, analogue: combinatorial, note: sum_free_partition_length_not_capset_or_ramsey}
+  Mathematics/ErdosMinimumOverlap: {form: optimization, analogue: combinatorial, note: balanced_partition_difference_overlap_not_admissible_tuple_or_ramsey}
+  Mathematics/HeilbronnTrianglePacking: {form: optimization, analogue: combinatorial, note: unit_square_point_placement_min_triangle_area_not_capset_kissing_or_circle_packing}
   Mathematics/Superpermutation: {form: optimization, analogue: combinatorial}
   Mathematics/NonlinearCodeRecords: {form: optimization, analogue: combinatorial}
   Algorithm/MatrixMultiplicationRank: {form: optimization, analogue: combinatorial}

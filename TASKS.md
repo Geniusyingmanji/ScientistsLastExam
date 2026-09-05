@@ -4,16 +4,16 @@
 
 | | |
 |---|---:|
-| 任务包 | 69 |
-| optimization | 36 |
+| 任务包 | 71 |
+| optimization | 38 |
 | discovery | 33 |
 | certified | 5 |
-| candidate | 64 |
-| 学科 | 7(Biology 7,Chemistry 13,ComputerScience 6,EarthScience 5,Engineering 11,Mathematics 15,Physics 12) |
+| candidate | 66 |
+| 学科 | 7(Biology 7,Chemistry 13,ComputerScience 6,EarthScience 5,Engineering 11,Mathematics 17,Physics 12) |
 
 认证描述的是证据质量,不是难度。标 on-ramp 的任务首个前沿模型提案已够到参考解,不用于配对 Δ 测量。
 
-## Optimization(36)
+## Optimization(38)
 
 ### 工程设计(engineering_design) — 16
 
@@ -36,7 +36,7 @@
 | [`MultilayerThinFilm`](benchmarks/Physics/MultilayerThinFilm/)<br>多层减反射膜 | Physics | Photonics | clipped | physical_sim | certified | design a broadband antireflection coating | 设计可见光全谱段的多层宽带减反射膜 | 宽带减反射质量;物理下界为零平均反射 |
 | [`SuperconductorTcRecord`](benchmarks/Physics/SuperconductorTcRecord/)<br>超导临界温度纪录搜索 | Physics | Superconductivity | uncapped | allen_dynes_formula_solved_to_real_anchors | candidate | beat the published record by computing where Allen-Dynes says to look | 在真实设备压力上限下,用 Allen-Dynes 公式在五个真实超导体系间搜索已确认临界温度最高的(体系,压力)组合,并避开一个从未被实现的理论预测(隐含电子-声子耦合超过物理合理上限) | 真实Tc除以已发表记录250K的直接比值;无上限,可超过已发表记录 |
 
-### 开放组合纪录(combinatorial,无上限) — 15
+### 开放组合纪录(combinatorial,无上限) — 17
 
 | 任务 | 学科 | 领域 | 打分 | oracle | 认证 | 说明 | 中文题意 | 中文评估方法 |
 |---|---|---|---|---|---|---|---|---|
@@ -46,6 +46,8 @@
 | [`CapSetFrontier`](benchmarks/Mathematics/CapSetFrontier/)<br>Cap Set 未证明维度 | Mathematics | Mathematics | uncapped | analytical | candidate | large cap sets in dimensions that are still open | 在最大值尚未证明的 n=7,8,9 上构造更大的 cap set | 对最好已知规模的平均进度;无上限,与 CapSet 的维度不相交 |
 | [`CirclePacking`](benchmarks/Mathematics/CirclePacking/)<br>圆堆积 | Mathematics | Optimization | uncapped | analytical | certified | pack unit circles into the smallest square | 把 N 个单位圆装进边长最小的正方形 | 对最好已知装填的平均缺口闭合;无上限 |
 | [`DegreeDiameterGraph`](benchmarks/Mathematics/DegreeDiameterGraph/)<br>度-直径极值图构造 | Mathematics | Mathematics | uncapped | analytical | candidate | build a bigger bounded-degree, bounded-diameter graph than the published record | 在三组给定的 (最大度 d, 直径 k) 上构造尽可能大的图——2026 年有论文报道通过与可浏览器访问的 LLM 交互刷新过下界 | 对度-直径问题维护表中最好已知顶点数的平均进度;无上限,均未被证明最优 |
+| [`ErdosMinimumOverlap`](benchmarks/Mathematics/ErdosMinimumOverlap/)<br>Erdős 最小重叠划分 | Mathematics | Mathematics | uncapped | analytical | candidate | match the exactly-known minimum overlap at three sizes | 把 {1,...,2n} 分成两个等大小的集合,让某个差值出现的最多次数尽量小——Erdős 最小重叠问题,渐近常数在 2025-2026 年被 AlphaEvolve 等多次刷新 | 对三个 n(8、11、15)已被穷举搜索证明的精确最优值的平均进度;这三个规模都是硬上限,已披露,因为超过 n=15 没有可核实的具体最好记录 |
+| [`HeilbronnTrianglePacking`](benchmarks/Mathematics/HeilbronnTrianglePacking/)<br>Heilbronn 三角形点集 | Mathematics | Mathematics | uncapped | analytical | candidate | beat the published record for well-spread points in a square | 在单位正方形内放 n 个点,让任意 3 点构成的三角形最小面积尽量大——经典的 Heilbronn 三角形问题 | 对 Erich's Packing Center 维护的记录表的平均进度;n=8 已证明最优(硬上限,已披露),n=10、n=11、n=12 仅是最好已知记录,真实无上限 |
 | [`KissingNumber`](benchmarks/Mathematics/KissingNumber/)<br>接触数构造 | Mathematics | Mathematics | uncapped | analytical | candidate | pack more unit spheres around one sphere | 在 9、10、12 维构造更多与中心球相切的单位球 | 固定容差下对最好已知接触数的平均进度;无上限 |
 | [`NarrowAdmissibleTuple`](benchmarks/Mathematics/NarrowAdmissibleTuple/)<br>窄可容许素数元组 | Mathematics | Mathematics | uncapped | analytical | candidate | find a narrower admissible k-tuple than Polymath8b's | 构造比 Polymath8b 已发表直径更小的可容许 k-元组(k=50、54)——有界素数间隔猜想计算核心的同一对象 | 已发表直径的归一化进度(k=50 锚点 246 一手引用确认,k=54 锚点 270 仅二手来源);无上限 |
 | [`NonlinearCodeRecords`](benchmarks/Mathematics/NonlinearCodeRecords/)<br>非线性码规模纪录 | Mathematics | Mathematics | uncapped | analytical | candidate | build a bigger binary code than a linear one can be | 在四个 A(n,d) 未闭合的参数上构造尽可能大的二元码;已发表纪录全部由非线性码持有,线性构造够不到 | 从平凡分块重复构造到已发表纪录的平均进度,无上限;验证只是逐对汉明距离计数,与构造方法无关 |

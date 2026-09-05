@@ -25,6 +25,8 @@ RECORDED_LINEAGE = {
     "Mathematics/DegreeDiameterGraph",
     "Mathematics/VanDerWaerdenColoring",
     "Mathematics/SchurPartition",
+    "Mathematics/ErdosMinimumOverlap",
+    "Mathematics/HeilbronnTrianglePacking",
     "Algorithm/TensorRank555",
     "Mathematics/Superpermutation",
     "Mathematics/NonlinearCodeRecords",

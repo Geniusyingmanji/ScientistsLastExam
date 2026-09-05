@@ -34,6 +34,14 @@ tasks:
     status: candidate
     reason: exact sum-free-partition oracle (convolution-based membership check) scored against a proven-exact Schur number and 2 best-known lower bounds; a disclosed mix of a hard ceiling and genuine uncapped headroom, pending external Ramsey-theory review
     citation_ids: [doi:10.1145/321296.321300, arxiv:1711.08076, doi:10.37236/1510, arxiv:2107.03560]
+  Mathematics/ErdosMinimumOverlap:
+    status: candidate
+    reason: exact cross-correlation oracle scored against proven-exact minimum-overlap values M(8)=4, M(11)=5, M(15)=6 (exhaustive search); all three sizes are hard ceilings, disclosed rather than hidden, since no citable best-known M(n) exists for n>15; pending external additive-combinatorics review
+    citation_ids: [arxiv:1609.08000, arxiv:2201.05704, arxiv:2506.13131]
+  Mathematics/HeilbronnTrianglePacking:
+    status: candidate
+    reason: exact min-triangle-area oracle scored uncapped against the maintained unit-square Heilbronn record table (Erich's Packing Center) -- proven optimal at n=8, best-known-only with genuine headroom at n=10, n=11 and n=12; pending external discrete-geometry review
+    citation_ids: [web:erich-friedman-heilbronn-packing-center, doi:10.37236/1623, arxiv:2506.13131]
   MedicinalChemistry/MolecularLeadOptimization:
     status: candidate
     reason: RDKit community-standard oracle with a verified approved-drug reference panel; pending external medicinal-chemistry review
