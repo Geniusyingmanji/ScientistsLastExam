@@ -14,7 +14,7 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from sle.algorithms.evolve import OUTPUT_CAP_STOP_REASONS, _retain_rejected
+from sle.algorithms.evolve import OUTPUT_CAP_STOP_REASONS, _hit_output_cap, _retain_rejected
 from sle.llm import LLMClient, LLMConfig
 
 
@@ -87,3 +87,30 @@ class RejectedDiagnosticTests(unittest.TestCase):
         # measures: whether the copy kept on disk was clipped.
         self.assertFalse(record["retained_reply_truncated"])
         self.assertNotIn("response_truncated", record)
+
+
+class OutputCapDetectionTests(unittest.TestCase):
+    """The token count is the signal that survives a provider that reports no stop reason."""
+
+    CAP = 16000
+
+    def test_the_recorded_opus5_no_code_steps_are_the_cap(self):
+        # Verbatim from
+        # runs/.../Mathematics__NonlinearCodeRecords/greedy_rewrite/normal/seed_0/trajectory.jsonl.
+        for step_usage in ({"input_tokens": 2487, "output_tokens": 16000, "total_tokens": 18487},) * 2:
+            self.assertTrue(_hit_output_cap(None, step_usage, self.CAP))
+
+    def test_the_step_that_produced_a_program_is_not_the_cap(self):
+        usage = {"input_tokens": 2487, "output_tokens": 14179, "total_tokens": 16666}
+        self.assertFalse(_hit_output_cap(None, usage, self.CAP))
+        self.assertFalse(_hit_output_cap("end_turn", usage, self.CAP))
+
+    def test_the_stop_reason_wins_when_the_wire_reports_one(self):
+        under_cap = {"output_tokens": 12}
+        self.assertTrue(_hit_output_cap("max_tokens", under_cap, self.CAP))
+
+    def test_missing_or_unusable_accounting_is_not_read_as_a_cap(self):
+        self.assertFalse(_hit_output_cap(None, {}, self.CAP))
+        self.assertFalse(_hit_output_cap(None, None, self.CAP))
+        self.assertFalse(_hit_output_cap(None, {"output_tokens": 16000}, None))
+        self.assertFalse(_hit_output_cap(None, {"output_tokens": "many"}, self.CAP))

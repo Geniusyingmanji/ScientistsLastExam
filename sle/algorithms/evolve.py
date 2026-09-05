@@ -145,6 +145,26 @@ RETAINED_REJECTIONS = 5
 OUTPUT_CAP_STOP_REASONS = frozenset({"max_tokens", "max_output_tokens", "length", "incomplete"})
 
 
+def _hit_output_cap(stop_reason, usage, configured_max_output_tokens) -> bool:
+    """True when the reply ended because the provider ran out of output tokens.
+
+    Two independent signals, because neither is always present. The stop reason is authoritative
+    when the wire reports one; the token count is what remains when it does not, and it is also
+    what makes an already-recorded run re-readable. On the Opus 5 draw that prompted this, both
+    no-code steps recorded `output_tokens: 16000` against a configured cap of 16000 while the
+    third, which produced a program, used 14179 - the answer was sitting in the ledger the whole
+    time under a key nothing compared against the config.
+    """
+    if str(stop_reason or "").lower() in OUTPUT_CAP_STOP_REASONS:
+        return True
+    try:
+        cap = int(configured_max_output_tokens)
+        used = int((usage or {}).get("output_tokens") or 0)
+    except (TypeError, ValueError):
+        return False
+    return cap > 0 and used >= cap
+
+
 def _retain_rejected(workdir, step, code, metrics, valid, *, response=None, parse_status=None,
                      stop_reason=None):
     """Keep the first few rejected candidates on disk so a rejection can be diagnosed later.
@@ -950,7 +970,11 @@ def _greedy_rewrite_impl(
             evaluation_started = time.monotonic()
             log_fn(f"[{spec.task_id}] iter {it}: no code block parsed")
             error = "signed_decision_contract_invalid" if signed_contract_invalid else "no_code"
-            if str(pending_record.get("provider_stop_reason") or "").lower() in OUTPUT_CAP_STOP_REASONS:
+            if _hit_output_cap(
+                pending_record.get("provider_stop_reason"),
+                pending_record.get("llm_usage"),
+                getattr(getattr(llm, "config", None), "max_output_tokens", None),
+            ):
                 output_cap_no_code_steps.append(it)
             m = {"combined_score": INVALID_SCORE, "valid": 0.0, "error_message": error}
             score, valid, accepted = INVALID_SCORE, False, False
