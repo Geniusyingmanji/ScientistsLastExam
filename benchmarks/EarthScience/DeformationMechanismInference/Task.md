@@ -69,6 +69,7 @@ out-of-family responses and add supported source worlds; level 1 is the shipped 
 - Deterministic Python/NumPy/SciPy code only; no network or process creation.
 - Do not read `verification/` or `frontier_eval/`.
 - Survey errors and overspending invalidate the world even when caught.
+- Use `sle.contract_lint` for free local shape checks before returning an inference.
 
 References: Dzurisin (2003), *Reviews of Geophysics*, doi:`10.1029/2001RG000107`;
 Segall (2010), *Earthquake and Volcano Deformation*, ISBN `9780691133027`. These

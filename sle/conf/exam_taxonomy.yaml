@@ -45,6 +45,13 @@ tasks:
   SignalProcessing/SparseRecovery: {form: optimization, analogue: engineering_design}
   Electrochemistry/ElectrolyteConductivityDesign: {form: optimization, analogue: engineering_design}
   MaterialsScience/AlloyHardnessOptimization: {form: optimization, analogue: engineering_design}
+  Cryosphere/IceObservationNetworkDesign: {form: optimization, analogue: engineering_design}
+  Hydrology/GroundwaterRemediationDesign: {form: optimization, analogue: engineering_design}
+  AerospaceStructures/CompositeLaminateStacking: {form: optimization, analogue: engineering_design}
+  WaterDistribution/ResilientPumpScheduling: {form: optimization, analogue: engineering_design}
+  Wastewater/BSM1AerationControl: {form: optimization, analogue: engineering_design}
+  WindEnergy/WakeAwareFarmCoDesign: {form: optimization, analogue: engineering_design}
+  BuildingControls/BOPTESTSupervisoryControl: {form: optimization, analogue: engineering_design}
   # --- optimization / combinatorial (open records: Ramsey, kissing, tensors, caps) ---
   Optimization/CirclePacking: {form: optimization, analogue: combinatorial}
   Mathematics/CapSet: {form: optimization, analogue: combinatorial}
@@ -100,3 +107,6 @@ tasks:
   Catalysis/CatalystDeactivationLab: {form: discovery, kind: parameter_inversion}
   Sensors/QuartzCrystalMicrobalanceLab: {form: discovery, kind: parameter_inversion}
   Spectroscopy/NMRSpectrumFitting: {form: discovery, kind: parameter_inversion}
+  Paleoclimate/ChronologyAssimilation: {form: discovery, kind: parameter_inversion}
+  Volcanology/DeformationMechanismInference: {form: discovery, kind: parameter_inversion}
+  WavePropagation/ActiveFullWaveformInversion: {form: discovery, kind: parameter_inversion}

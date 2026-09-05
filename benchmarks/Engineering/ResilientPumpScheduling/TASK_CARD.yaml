@@ -1,0 +1,57 @@
+schema_version: 2
+scientific_question: Can one open-loop pumping policy reduce tariff-weighted energy while respecting pressure, storage and terminal recovery and retaining service under demand growth and pump outage?
+artifact: A bounded 24-hour pump-speed schedule satisfying a public ramp-rate contract.
+oracle:
+  model: Deterministic extended-period mass balance, tank-head remote-pressure calculation and speed-dependent pump energy model.
+  feasibility: Hourly tank bounds, remote pressure at least 20 metres, terminal storage recovery, finite speed bounds and ramp limits.
+  deterministic: true
+normalization:
+  baseline: Conservative constant-speed schedule sized above mean public demand.
+  reference: Deterministic public-forecast tariff coordinate search recomputed per run with storage, pressure and ramp replay.
+  score: Development energy-cost savings are uncapped; held-out networks, demand growth and four-hour outage resilience remain separate.
+citations:
+- id: url:https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P10113EM.TXT
+  title: EPANET 2.2 User Manual
+- id: doi:10.5194/dwes-7-53-2014
+  title: A multiobjective approach to optimal pump scheduling in water distribution systems
+invariants:
+- Tank volume equals initial storage plus cumulative pump inflow minus cumulative actual demand.
+- Pump power is nonnegative and increases with delivered flow and head.
+- Invalid shapes, nonfinite speeds, bound violations, ramp violations and nominal hydraulic failures score zero.
+- Forecast growth and outage axes remain evaluator-only.
+known_shortcuts: The compact storage-pressure oracle omits a full pipe-network nonlinear solve. It must be independently reproduced on frozen EPANET/WNTR networks; visible deterministic profiles also require server-held replacements.
+review:
+  domain: pending_external
+  evaluator_security: local_baseline_reference_bad_candidate_determinism_and_contract_tests_passed_secure_sandbox_replay_pending
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic extended-period generator with interleaved systems and sealed demand and outage shifts.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Pump scheduling is established and public profiles may be recognizable; the benchmark contribution is the separated nominal and resilience evaluation, pending server-held networks.
+lineage:
+  status: complete
+  builder_model_ids: [openai:codex-gpt-5]
+  builder_scaffolds: [codex-desktop]
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: No frontier model has evaluated the task; construction changes came from local baseline, reference, invariant and failure-path checks only.
+  shortcut_discoverer: local_deterministic_probe_only
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: prototype_complete_calibration_pending
+  author_domain: general_scientific_software
+  reviewer_domain: pending_external_water_distribution
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: pending_epanet_wntr_replication
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []

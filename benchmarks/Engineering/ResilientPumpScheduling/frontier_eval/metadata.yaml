@@ -1,0 +1,13 @@
+domain: WaterDistribution
+task: ResilientPumpScheduling
+scientific_role: optimization
+difficulty: hard
+tier: T2
+oracle_type: physical_sim
+score_mode: uncapped
+gpu_required: false
+eval_time_seconds: 10
+science_metric: development tariff cost savings with exact storage and pressure feasibility plus held-out demand and outage resilience
+reference_baseline: conservative constant-speed pumping with terminal storage recovery
+reference_sota: truth-blind deterministic storage-feasible tariff coordinate search on the public forecast
+citation: "EPA EPANET 2.2 User Manual, EPA/600/R-20/133"

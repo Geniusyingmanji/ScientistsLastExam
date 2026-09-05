@@ -1,0 +1,57 @@
+schema_version: 2
+scientific_question: Can a stateful aeration and recycle controller meet effluent limits with less energy and smoother operation while transferring to storms, biased sensors and degraded actuators?
+artifact: A stateful observation-to-action controller for oxygen-transfer intensity and internal recycle.
+oracle:
+  model: Deterministic five-state ASM1-inspired reactor with substrate oxidation, nitrification, denitrification, oxygen transfer and biomass dynamics.
+  feasibility: Finite bounded actions at every step and hard mean ammonia, total-nitrogen and COD-proxy limits after warmup.
+  deterministic: true
+normalization:
+  baseline: Dissolved-oxygen PI control with fixed internal recycle.
+  reference: Truth-blind flow and ammonia feed-forward PI recomputed per run with adaptive recycle and smoothing.
+  score: Development water-quality, energy and movement cost is uncapped; storm, sensor-bias and actuator-loss transfer remains held out.
+citations:
+- id: url:https://iwa-mia.org/wp-content/uploads/2018/01/BSM_TG_Tech_Report_no_1_BSM1_General_Description.pdf
+  title: Benchmark Simulation Model No. 1 general description
+- id: doi:10.3182/20110828-6-IT-1002.01664
+  title: Dynamic optimization of aeration operations for BSM1
+invariants:
+- Increasing oxygen transfer cannot directly remove nitrogen or substrate without the declared kinetic rates.
+- Effluent limits gate energy comparison so an off controller cannot win by saving power.
+- Every candidate receives only the current observation and no future or sealed plant state.
+- Malformed actions and controller exceptions score zero without crashing the trusted evaluator.
+known_shortcuts: This local five-state model is structurally inspired by BSM1 but is not an official ASM1 implementation. Admission requires frozen IWA BSM1 trajectory matching, server-held influent and external wastewater-process review.
+review:
+  domain: pending_external
+  evaluator_security: local_baseline_reference_bad_candidate_determinism_and_contract_tests_passed_secure_sandbox_replay_pending
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic influent generator and reduced activated-sludge simulator with interleaved nominal and disturbed worlds.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: DO PI and feed-forward control are standard; difficulty depends on transfer and coupled objectives and must be confirmed against stronger MPC agents.
+lineage:
+  status: complete
+  builder_model_ids: [openai:codex-gpt-5]
+  builder_scaffolds: [codex-desktop]
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: No frontier model has evaluated the task; construction changes came from local baseline, reference, invariant and failure-path checks only.
+  shortcut_discoverer: local_deterministic_probe_only
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: prototype_complete_calibration_pending
+  author_domain: general_scientific_software
+  reviewer_domain: pending_external_wastewater_control
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: pending_official_bsm1_replication
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []

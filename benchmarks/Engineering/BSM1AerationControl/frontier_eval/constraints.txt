@@ -1,0 +1,5 @@
+1) Only edit solution.py. Keep make_aeration_controller(problem).
+2) Return a callable step(observation) producing finite bounded kla_per_hour and internal_recycle.
+3) The controller may use current observations and public metadata, never future sealed states.
+4) Deterministic numpy/scipy/stdlib CPU only. No network or process creation.
+5) Do not read verification/ or frontier_eval/.

@@ -1,0 +1,57 @@
+schema_version: 2
+scientific_question: Can one stateful HVAC supervisory policy reduce cost, carbon and peak power across climates while meeting occupied comfort and indoor-air-quality constraints under forecast and plant error?
+artifact: A stateful two-zone observation-to-heating, cooling and ventilation controller.
+oracle:
+  model: Deterministic coupled two-zone RC thermal and CO2 emulator at fifteen-minute resolution with weather, occupancy, tariff and grid-carbon traces.
+  feasibility: Finite bounded actions, no simultaneous material heating and cooling, occupied comfort-rate and maximum-excursion limits, and occupied CO2 limit.
+  deterministic: true
+normalization:
+  baseline: Occupied and unoccupied thermostat rules with demand-based ventilation.
+  reference: Truth-blind forecast-aware preconditioning controller recomputed per run with action smoothing and CO2 feedback.
+  score: Development cost-carbon-peak-comfort improvement is uncapped; held-out climates, forecast bias, sensor bias, parameter drift and actuator loss stay separate.
+citations:
+- id: doi:10.1080/19401493.2021.1986574
+  title: Building optimization testing framework BOPTEST
+- id: url:https://ibpsa.github.io/project1-boptest/docs-userguide/introduction.html
+  title: BOPTEST user guide introduction
+invariants:
+- With HVAC and gains disabled, zone temperature moves toward outdoor temperature under positive envelope conductance.
+- CO2 generation occurs only with occupancy and ventilation removes indoor excess above outdoor concentration.
+- Comfort and IAQ gate economic comparison so disabling equipment cannot win.
+- Controller errors and malformed actions fail closed; held-out metrics remain sealed.
+known_shortcuts: The lightweight emulator follows the BOPTEST interaction and KPI shape but is not an official Modelica FMU. The name must not be read as certification; pinned official test-case replay, server-held traces and external controls review are required.
+review:
+  domain: pending_external
+  evaluator_security: local_baseline_reference_bad_candidate_determinism_and_contract_tests_passed_secure_sandbox_replay_pending
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic two-zone emulator with interleaved climates and sealed forecast, sensor, plant and actuator shifts.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: high
+  rationale: BOPTEST and MPC examples are public and the current emulator is reduced; difficulty must survive official cross-building test cases and contamination-aware model draws.
+lineage:
+  status: complete
+  builder_model_ids: [openai:codex-gpt-5]
+  builder_scaffolds: [codex-desktop]
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: No frontier model has evaluated the task; construction changes came from local baseline, reference, invariant and failure-path checks only.
+  shortcut_discoverer: local_deterministic_probe_only
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: prototype_complete_calibration_pending
+  author_domain: general_scientific_software
+  reviewer_domain: pending_external_building_controls
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: pending_official_boptest_fmu_replay
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []

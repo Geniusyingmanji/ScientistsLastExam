@@ -69,6 +69,7 @@ shipped default and every level remains inside the public `[-300, 300]` offset c
 - Deterministic Python/NumPy/SciPy code only; no network or process creation.
 - Do not read `verification/` or `frontier_eval/`.
 - Invalid or overspent dating calls invalidate the world even when caught.
+- Use `sle.contract_lint` for free local shape checks before returning a reconstruction.
 
 References: Amrhein et al. (2020), DOI `10.1029/2020GL090485`; Badgeley et al. (2020),
 DOI `10.5194/cp-16-1325-2020`.

@@ -1,0 +1,13 @@
+domain: WindEnergy
+task: WakeAwareFarmCoDesign
+scientific_role: optimization
+difficulty: flagship
+tier: T2
+oracle_type: physical_sim
+score_mode: uncapped
+gpu_required: false
+eval_time_seconds: 45
+science_metric: annual wake-aware farm value over development wind roses with held-out geometry and wake-model shift
+reference_baseline: regular zero-yaw grid
+reference_sota: fixed-seed valid layout jitter plus public-model coordinate yaw refinement
+citation: "Fleming et al., J. Phys. Conf. Ser. 1618, DOI 10.1088/1742-6596/1618/2/022028"

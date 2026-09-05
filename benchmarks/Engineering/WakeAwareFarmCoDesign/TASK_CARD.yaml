@@ -1,0 +1,57 @@
+schema_version: 2
+scientific_question: Can one policy jointly place turbines and schedule direction-dependent yaw to improve annual farm value while transferring across wind roses, boundaries and wake-model uncertainty?
+artifact: A continuous two-dimensional turbine layout and a direction-by-turbine yaw matrix.
+oracle:
+  model: Deterministic Gaussian and Jensen hybrid wake superposition with yaw deflection, own-power loss, rated-power cap and wind-rose integration.
+  feasibility: Exact shapes, finite values, rectangular boundary, pairwise minimum spacing and yaw bounds; violations fail closed.
+  deterministic: true
+normalization:
+  baseline: Regular rectangular grid with zero yaw.
+  reference: Fixed-seed valid layout jitter recomputed per run followed by truth-blind coordinate yaw refinement on the public model.
+  score: Development annual-value gain is uncapped; held-out geometries and direction, wake-expansion and turbulence shifts stay separate.
+citations:
+- id: doi:10.1088/1742-6596/1618/2/022028
+  title: Overview of FLORIS updates
+- id: url:https://nrel.sitefinity.cloud/wind/floris
+  title: NREL FLORIS wake modeling and controls software
+invariants:
+- With wake interaction removed and zero yaw, identical turbines have identical free-stream power.
+- Yaw decreases own-turbine power while potentially deflecting its downstream wake.
+- Duplicated, too-close, out-of-bound, malformed and over-yawed layouts fail closed.
+- Held-out model-shift metrics never control combined_score.
+known_shortcuts: The visible wind roses and reduced wake equations may be overfit. The oracle omits terrain, electrical balance, availability, loads and high-fidelity atmospheric effects; independent pinned-FLORIS replay and server-held roses are mandatory.
+review:
+  domain: pending_external
+  evaluator_security: local_baseline_reference_bad_candidate_determinism_and_contract_tests_passed_secure_sandbox_replay_pending
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic wind-rose and farm-geometry generator with sealed wake and direction shifts.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: high
+  rationale: Wake steering and farm layout are prominent public benchmark families; only cross-geometry and cross-model transfer can make this non-recall, and that evidence is not yet complete.
+lineage:
+  status: complete
+  builder_model_ids: [openai:codex-gpt-5]
+  builder_scaffolds: [codex-desktop]
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: No frontier model has evaluated the task; construction changes came from local baseline, reference, invariant and failure-path checks only.
+  shortcut_discoverer: local_deterministic_probe_only
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: prototype_complete_calibration_pending
+  author_domain: general_scientific_software
+  reviewer_domain: pending_external_wind_energy
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: pending_pinned_floris_replication
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []

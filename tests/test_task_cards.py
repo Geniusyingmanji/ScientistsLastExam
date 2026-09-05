@@ -36,6 +36,11 @@ RECORDED_LINEAGE = {
     "Gravitation/PTAHellingsDowns",
     "Physics/ComplexBoseLaw",
     "MaterialsScience/QuinaryConvexHull",
+    "AerospaceStructures/CompositeLaminateStacking",
+    "WaterDistribution/ResilientPumpScheduling",
+    "Wastewater/BSM1AerationControl",
+    "WindEnergy/WakeAwareFarmCoDesign",
+    "BuildingControls/BOPTESTSupervisoryControl",
 }
 
 

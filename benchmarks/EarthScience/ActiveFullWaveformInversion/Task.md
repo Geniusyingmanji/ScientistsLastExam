@@ -72,6 +72,7 @@ simultaneous anomalies; level 1 is the shipped default.
 - Deterministic Python/NumPy/SciPy code only; no network or process creation.
 - Do not read `verification/` or `frontier_eval/`.
 - Do not assume hidden-world order, anomaly count, noise level or response family.
+- Use `sle.contract_lint` for free local shape checks before returning a reconstruction.
 
 References: Virieux & Operto (2009), DOI `10.1190/1.3238367`; Symes (2020), arXiv
 `2003.14181`.

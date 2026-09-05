@@ -1,0 +1,57 @@
+schema_version: 2
+scientific_question: Can a structure-general policy order a fixed composite ply multiset to improve buckling and first-ply reserve while transferring across aspect ratios, load mixtures and orthotropic materials?
+artifact: A symmetric balanced discrete ply-angle sequence with fixed composition and manufacturing constraints.
+oracle:
+  exact: Classical laminate A and D matrices, Navier simply-supported buckling modes 1 through 4, and Tsai-Hill first-ply reserve.
+  feasibility: Exact ply count and multiset, allowed angles, symmetry, balance, and maximum consecutive equal plies; malformed values fail closed.
+  deterministic: true
+normalization:
+  baseline: Quasi-isotropic repeating sequence satisfying every manufacturing rule.
+  reference: Fixed-seed truth-blind permutation search recomputed per run over the public half-laminate.
+  score: Development reserve improvement is uncapped; held-out panels and sealed material/load degradation remain separate.
+citations:
+- id: doi:10.2514/3.11710
+  title: Optimization of laminate stacking sequence for buckling load maximization by genetic algorithm
+- id: doi:10.1016/j.compstruct.2016.01.052
+  title: An improved genetic algorithm for optimal design of composite laminates
+invariants:
+- Extensional stiffness is invariant to sequence permutations with fixed ply counts while bending stiffness is not.
+- Symmetric balanced sequences have vanishing bending-extension coupling and paired off-axis counts.
+- Malformed, asymmetric, unbalanced, composition-changing and over-consecutive sequences score zero without escaping the evaluator.
+- Held-out and degradation metrics never control combined_score.
+known_shortcuts: Fixed ply counts remove thickness and composition optimization but retain the order-sensitive bending problem. The CLT and Navier model omit holes, delamination, postbuckling and nonlinear finite-element effects; server-held panels and independent FEA remain required.
+review:
+  domain: pending_external
+  evaluator_security: local_baseline_reference_bad_candidate_determinism_and_contract_tests_passed_secure_sandbox_replay_pending
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic CLT panel generator with interleaved development and held-out panels.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: The optimization family and equations are public; only the instance mixture and sealed shifts are evaluator-only, so contamination-resistant server-held panels are still required.
+lineage:
+  status: complete
+  builder_model_ids: [openai:codex-gpt-5]
+  builder_scaffolds: [codex-desktop]
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: No frontier model has evaluated the task; construction changes came from local baseline, reference, invariant and failure-path checks only.
+  shortcut_discoverer: local_deterministic_probe_only
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: prototype_complete_calibration_pending
+  author_domain: general_scientific_software
+  reviewer_domain: pending_external_composite_structures
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: pending_finite_element_replication
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
