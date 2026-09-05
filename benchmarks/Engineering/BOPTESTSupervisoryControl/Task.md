@@ -53,7 +53,7 @@ Controller observations: `step` is a zero-based integer, `zone_temperature_c`, `
 
 ## 关系与区别 / Relationship to nearby tasks
 
-BSM1AerationControl regulates a reacting fluid, ResilientPumpScheduling submits an open-loop schedule, and HeatExchangerDesign chooses a static component. Here a stateful two-zone controller receives forecasts and live temperature/CO2 observations across weather and actuator shifts.
+ResilientPumpScheduling submits an open-loop schedule and HeatExchangerDesign chooses a static component. Here a stateful two-zone controller receives forecasts and live temperature/CO2 observations across weather and actuator shifts.
 
 ## Admission and reference scope
 

@@ -20,11 +20,6 @@ tasks:
     reason: uncapped flux-balance strain design over a seventeen-reaction network with six pleiotropic editable enzymes, a shared engineering budget and an alternative product route; anchors are recomputed per sealed draw with degenerate draws excluded by construction; the worst-draw-optimal witness strictly beats the wild type everywhere while the greedy reference reaches 0.851/0.839 and the intuitive knockout scores 0.10; pending clean Linux calibration, independent metabolic-engineering review and frontier draws on the record side
     citation_ids:
       - doi:10.1038/nbt.1614
-  Metagenomics/MetagenomicMixtureID:
-    status: candidate
-    reason: deterministic multinomial read-count mixture identification with genome-specific and conserved markers at 1200 reads per depth unit, hidden lognormal marker-efficiency bias, five percent cross-mapping and an 8-18 percent novel-organism share; median-over-markers abundance estimation and a three-sigma conserved-excess refusal reach 0.897/0.959 with zero false discoveries while a single shallow run saturates at 0.888; pending clean Linux calibration, independent metagenomics review and server-held mixtures
-    citation_ids:
-      - doi:10.1038/nmeth.3589
   Electrophysiology/HodgkinHuxleyCurrentID:
     status: candidate
     reason: deterministic voltage-clamp channel-parameter recovery over the public 1952 gating equations in closed form, with sealed-protocol prediction and A-type/rectifying extra-current refusal; the multistart least-squares witness reaches 0.718/0.594 with zero false discoveries, leaving parameter-recovery headroom; pending clean Linux calibration, independent electrophysiology review and server-held membranes
@@ -32,7 +27,7 @@ tasks:
       - doi:10.1113/jphysiol.1952.sp004764
   Algorithm/ScalingLawIdentification:
     status: candidate
-    reason: deterministic asymptotic-class identification from budgeted seven-percent-noise timings bounded at size 384, with the public mod-3 branch predicate and sixty-percent-jitter refusal worlds and a sealed size-700 extrapolation; the truth-blind witness reaches 0.948/0.604 while a competent first-shot ladder reaches only 0.692; pending clean Linux calibration, independent algorithms review and server-held programs
+    reason: deterministic asymptotic-class identification from budgeted seven-percent-noise timings bounded at size 384, with the public mod-3 branch predicate and sixty-percent-jitter refusal worlds and a sealed size-700 extrapolation; the truth-blind witness reaches 0.948/0.937 while a competent first-shot ladder reaches only 0.692; pending clean Linux calibration, independent algorithms review and server-held programs
     citation_ids:
       - isbn:9780262033848
   WaterDistribution/DistributionNetworkTopology:
@@ -110,12 +105,6 @@ tasks:
     citation_ids:
       - doi:10.5194/tc-19-5423-2025
       - doi:10.5194/tc-17-4661-2023
-  Volcanology/DeformationMechanismInference:
-    status: candidate
-    reason: active GNSS/InSAR source-mechanism inference with a public source family, charged station design, null and multi-source misspecification worlds, sealed spatial prediction and separately reported mechanism, false-discovery, refusal, coverage and probability calibration; pending independent volcanology review, elastic-model replication, server-held worlds and model calibration
-    citation_ids:
-      - doi:10.1029/2001RG000107
-      - isbn:9780691133027
 
   MedicinalChemistry/MolecularLeadOptimization:
     status: candidate
@@ -764,12 +753,6 @@ tasks:
     citation_ids:
       - url:https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P10113EM.TXT
       - doi:10.5194/dwes-7-53-2014
-  Wastewater/BSM1AerationControl:
-    status: candidate
-    reason: deterministic stateful activated-sludge aeration and recycle control with effluent hard gates and separate storm, sensor-bias and actuator-loss transfer; pending official IWA BSM1 trajectory matching, independent wastewater review, server-held influent and frontier-model calibration
-    citation_ids:
-      - url:https://iwa-mia.org/wp-content/uploads/2018/01/BSM_TG_Tech_Report_no_1_BSM1_General_Description.pdf
-      - doi:10.3182/20110828-6-IT-1002.01664
   WindEnergy/WakeAwareFarmCoDesign:
     status: candidate
     reason: deterministic mixed continuous layout-yaw co-design with boundary and spacing hard gates, uncapped truth-blind search normalization and separate wake/direction/turbulence transfer; pending pinned FLORIS replication, independent wind-energy review, server-held wind roses and frontier-model calibration

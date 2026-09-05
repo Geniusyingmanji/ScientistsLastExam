@@ -50,7 +50,6 @@ tasks:
   Hydrology/GroundwaterRemediationDesign: {form: optimization, analogue: engineering_design}
   AerospaceStructures/CompositeLaminateStacking: {form: optimization, analogue: engineering_design}
   WaterDistribution/ResilientPumpScheduling: {form: optimization, analogue: engineering_design}
-  Wastewater/BSM1AerationControl: {form: optimization, analogue: engineering_design}
   WindEnergy/WakeAwareFarmCoDesign: {form: optimization, analogue: engineering_design}
   BuildingControls/BOPTESTSupervisoryControl: {form: optimization, analogue: engineering_design}
   # --- optimization / combinatorial (open records: Ramsey, kissing, tensors, caps) ---
@@ -96,7 +95,6 @@ tasks:
   ClimateScience/ForcedSignalAttribution: {form: discovery, kind: evidence}
   StructuralEngineering/ModalDamageAttribution: {form: discovery, kind: evidence}
   ChemicalProcess/ThermochemicalCycleAudit: {form: discovery, kind: evidence, note: hess_closure_network_not_single_constant_reconciliation}
-  Metagenomics/MetagenomicMixtureID: {form: discovery, kind: substance, note: read_budget_and_novel_organism_not_spectral_zoom}
   Mineralogy/MineralMixtureXRD: {form: discovery, kind: substance, note: hump_vs_unknown_refusal_not_phase_diagram}
   Mathematics/ExactIdentityEvidence: {form: discovery, kind: evidence, note: purchasable_precision_verdicts_not_recurrence_recovery}
   Mathematics/BlackBoxGroupIdentification: {form: discovery, kind: structure}
@@ -121,6 +119,5 @@ tasks:
   Spectroscopy/NMRSpectrumFitting: {form: discovery, kind: parameter_inversion}
   Paleoclimate/ChronologyAssimilation: {form: discovery, kind: parameter_inversion}
   Electrophysiology/HodgkinHuxleyCurrentID: {form: discovery, kind: parameter_inversion, note: clamp_protocols_with_extra_current_refusal}
-  Volcanology/DeformationMechanismInference: {form: discovery, kind: parameter_inversion}
   WavePropagation/ActiveFullWaveformInversion: {form: discovery, kind: parameter_inversion}
   Mathematics/EllipticCurveRecovery: {form: discovery, kind: parameter_inversion, note: crt_lifting_from_prime_counts}

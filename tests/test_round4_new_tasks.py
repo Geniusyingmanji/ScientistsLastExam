@@ -1,4 +1,4 @@
-"""Pinned invariants for the eight 2026-09-05 round-four candidate tasks.
+"""Pinned invariants for the 2026-09-05 round-four candidate tasks.
 
 Each class pins the construction errors recorded in the task's known_best.md and
 the repo-wide baseline/reference/bad-candidate contract. Tests load evaluators
@@ -19,8 +19,6 @@ TASKS = {
         ("benchmarks/Chemistry/ChronoamperometryLawID", "identify_current_law"),
     "MetabolicEngineering/MetabolicStrainDesign":
         ("benchmarks/Biology/MetabolicStrainDesign", "design_strain"),
-    "Metagenomics/MetagenomicMixtureID":
-        ("benchmarks/Biology/MetagenomicMixtureID", "identify_mixture"),
     "Electrophysiology/HodgkinHuxleyCurrentID":
         ("benchmarks/Biology/HodgkinHuxleyCurrentID", "recover_channel_parameters"),
     "Algorithm/ScalingLawIdentification":
@@ -138,34 +136,6 @@ class MetabolicStrainPins(unittest.TestCase):
         result = ev.evaluate(lambda problem, design=all_off: design)
         self.assertEqual(result["valid"], 1.0)
         self.assertEqual(result["combined_score"], 0.0)
-
-
-class MetagenomicPins(unittest.TestCase):
-    def test_novel_organism_reads_never_hit_unique_markers(self):
-        ev = _load("benchmarks/Biology/MetagenomicMixtureID/verification/evaluator.py",
-                   "r4_meta")
-        world = ev._world((24037, "novel"))
-        library_mass = sum(world["abundance"].values())
-        self.assertAlmostEqual(library_mass + world["novel_share"], 1.0)
-        self.assertLessEqual(world["novel_share"], 0.18)
-
-    def test_repeats_draw_fresh_noise(self):
-        ev = _load("benchmarks/Biology/MetagenomicMixtureID/verification/evaluator.py",
-                   "r4_meta")
-        world = ev._world((24011, "supported"))
-        first = ev._run(world, 10, 1)["marker_counts"]
-        second = ev._run(world, 10, 2)["marker_counts"]
-        self.assertNotEqual(first, second)
-
-    def test_cross_mapping_conserves_the_unique_total(self):
-        # Pins the doubling bug: cross-mapping relocates hits, it never creates them.
-        ev = _load("benchmarks/Biology/MetagenomicMixtureID/verification/evaluator.py",
-                   "r4_meta")
-        world = ev._world((24011, "supported"))
-        report = ev._run(world, 10, 1)
-        unique = sum(v for m, v in report["marker_counts"].items()
-                     if int(m[1:]) < 1200)
-        self.assertLess(unique, report["total_reads"])
 
 
 class HodgkinHuxleyPins(unittest.TestCase):

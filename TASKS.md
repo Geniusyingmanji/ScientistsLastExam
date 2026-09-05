@@ -4,18 +4,18 @@
 
 | | |
 |---|---:|
-| 任务包 | 87 |
-| optimization | 40 |
-| discovery | 47 |
+| 任务包 | 84 |
+| optimization | 39 |
+| discovery | 45 |
 | certified | 5 |
-| candidate | 82 |
-| 学科 | 7(Biology 11,Chemistry 16,ComputerScience 7,EarthScience 12,Engineering 18,Mathematics 12,Physics 11) |
+| candidate | 79 |
+| 学科 | 7(Biology 10,Chemistry 16,ComputerScience 7,EarthScience 11,Engineering 17,Mathematics 12,Physics 11) |
 
 认证描述的是证据质量,不是难度。标 on-ramp 的任务首个前沿模型提案已够到参考解,不用于配对 Δ 测量。
 
-## Optimization(40)
+## Optimization(39)
 
-### 工程设计(engineering_design) — 23
+### 工程设计(engineering_design) — 22
 
 | 任务 | 学科 | 领域 | 打分 | oracle | 认证 | 说明 | 中文题意 | 中文评估方法 |
 |---|---|---|---|---|---|---|---|---|
@@ -27,7 +27,6 @@
 | [`GroundwaterRemediationDesign`](benchmarks/EarthScience/GroundwaterRemediationDesign/)<br>地下水修复设计 | EarthScience | Hydrology | uncapped | physical_sim | candidate | build a robust pump-and-treat Pareto archive | 设计抽水处理井与运行方案,权衡全生命周期成本、污染物去除和受体达标 | 成本对残余污染质量的帕累托超体积;受体合规硬门控与密封输运偏移分列,无上限 |
 | [`IceObservationNetworkDesign`](benchmarks/EarthScience/IceObservationNetworkDesign/)<br>冰盖观测网络设计 | EarthScience | Cryosphere | uncapped | analytical | candidate | design a cost-aware ice-sheet observing system | 在成本约束下选择冰盖观测位置与类型,最大化未来状态估计和预报信息量 | 预报误差对观测成本的帕累托超体积;密封灵敏度、噪声与动力学偏移分列,无上限 |
 | [`BOPTESTSupervisoryControl`](benchmarks/Engineering/BOPTESTSupervisoryControl/)<br>跨气候建筑 HVAC 控制 | Engineering | BuildingControls | uncapped | physical_sim | candidate | cross-climate HVAC supervisory control | 编写跨气候双区建筑 HVAC 监督控制器,联合控制供热、制冷与新风 | 舒适与 IAQ 硬门控后的成本/碳/峰值效用;留出预测、传感器和执行器偏移分列,无上限 |
-| [`BSM1AerationControl`](benchmarks/Engineering/BSM1AerationControl/)<br>BSM1 曝气与回流控制 | Engineering | Wastewater | uncapped | physical_sim | candidate | robust aeration and recycle control | 用状态反馈联合调节活性污泥曝气强度和内回流,兼顾出水水质与能耗 | 水质硬门控后的能耗与平滑性提升;暴雨、传感器偏差和执行器退化分列,无上限 |
 | [`CompositeLaminateStacking`](benchmarks/Engineering/CompositeLaminateStacking/)<br>复合材料层合板铺层 | Engineering | AerospaceStructures | uncapped | physical_sim | candidate | robust composite-laminate sequencing | 排列固定组成的对称平衡复合材料铺层,提高多载荷下的屈曲与首层失效裕度 | 相对准各向同性基线的储备系数提升;留出板型与材料/载荷退化分列,无上限 |
 | [`HeatExchangerDesign`](benchmarks/Engineering/HeatExchangerDesign/)<br>换热器帕累托设计 | Engineering | Thermodynamics | uncapped | physical_sim | candidate | discover a multi-fidelity Pareto design archive | 发现换热器的多保真帕累托设计档案,权衡换热量、成本与泵功 | 成本对换热量的帕累托超体积;密封代理一致性、留出迁移与结垢/制造/堵塞稳健性分列,无上限 |
 | [`InvertedPendulumSwingUp`](benchmarks/Engineering/InvertedPendulumSwingUp/)<br>倒立摆摆起控制 | Engineering | ControlTheory | clipped | physical_sim | candidate | swing up and robustly stabilize a cart-pole | 设计小车倒立摆的摆起与稳定控制律,兼顾轨道限位与作动器约束 | 摆起效用;偏移工况稳健性分列 |
@@ -70,7 +69,7 @@
 | [`LennardJonesCluster`](benchmarks/Chemistry/LennardJonesCluster/)<br>Lennard-Jones 团簇 | Chemistry | Chemistry | uncapped | analytical | certified | minimize the energy of atomic clusters | 求 Lennard-Jones 原子簇的最低能量几何构型 | 对全局最小的平均缺口闭合;无上限 |
 | [`MolecularLeadOptimization`](benchmarks/Chemistry/MolecularLeadOptimization/)<br>分子先导组合优化 | Chemistry | MedicinalChemistry | uncapped | rdkit_cheminformatics_property_filter | candidate | build a diverse portfolio of novel, developable leads | 构建结构多样、可开发的新颖先导化合物组合,而非单个分子 | 多样性约束下的组合价值,对标已上市药物;无上限 |
 
-## Discovery(47)
+## Discovery(45)
 
 ### 公式(formula) — 7
 
@@ -111,17 +110,16 @@
 | [`LookElsewhereAnomaly`](benchmarks/Physics/LookElsewhereAnomaly/)<br>多窗口扫描的全局显著性 | Physics | ParticlePhysics | clipped | physical_sim | candidate | local 5σ is not a discovery | 一张质量谱在多个窗口里扫描,判定局域 5σ 在计入试验因子后还剩多少 | look-elsewhere 后的全局显著性;边带拒绝公开本底时须拒答 |
 | [`PTAHellingsDowns`](benchmarks/Physics/PTAHellingsDowns/)<br>脉冲星阵四极相关 | Physics | Gravitation | clipped | physical_sim | candidate | a common process is not a gravitational-wave background | 脉冲星计时阵里区分 Hellings-Downs 四极相关(引力波背景)与钟差单极、星历偶极、共同红噪声 | 四极 vs 单极判别与拒答;共同过程不等于引力波背景 |
 
-### 物质(substance) — 5
+### 物质(substance) — 4
 
 | 任务 | 学科 | 领域 | 打分 | oracle | 认证 | 说明 | 中文题意 | 中文评估方法 |
 |---|---|---|---|---|---|---|---|---|
-| [`MetagenomicMixtureID`](benchmarks/Biology/MetagenomicMixtureID/)<br>宏基因组混合辨识 | Biology | Metagenomics | clipped | physical_sim | candidate | recover a strain mixture from purchased sequencing depth | 在测序深度预算下恢复菌株混合与丰度,文库外新物种仅现于保守标记须拒答 | 集合F1+丰度对数误差;保守标记超额 4σ 拒答,全面弃权为零 |
 | [`CrowdedSpectrumAssignment`](benchmarks/Chemistry/CrowdedSpectrumAssignment/)<br>混叠谱物种指认 | Chemistry | Spectroscopy | clipped | physical_sim | candidate | name the library species in a blended spectrum | 在混叠谱里指认封闭库中的物种;两个近线的混合与第三个物种不可区分,变焦要花预算 | 库物种指认 + 别名拒答 |
 | [`PhaseDiagramDiscovery`](benchmarks/Chemistry/PhaseDiagramDiscovery/)<br>相图发现 | Chemistry | MaterialsScience | clipped | physical_sim | candidate | An isothermal section of a binary system A-B. | 在合成预算下测定二元等温相图:哪些平衡相存在、各占哪段成分,或该体系根本达不到平衡 | 相集精确门控 + 杠杆定律边界精度;两相区叠加、杂质峰、动力学冻结须区分,冻结体系须拒答 |
 | [`QuinaryConvexHull`](benchmarks/Chemistry/QuinaryConvexHull/)<br>五元凸包稳定相 | Chemistry | MaterialsScience | clipped | analytical | candidate | E_f < 0 is not a new stable | 五元体系里给出凸包上真正稳定的非一元相;生成焓小于零不等于新稳定相 | 精确非一元凸包顶点;玻璃态须拒答 |
 | [`MineralMixtureXRD`](benchmarks/EarthScience/MineralMixtureXRD/)<br>矿物混合衍射定量 | EarthScience | Mineralogy | clipped | physical_sim | candidate | quantify a mineral mixture from powder diffraction | 在慢扫描窗口预算下定量矿物混合,非晶鼓包不拒答、未知尖锐相须拒答 | 集合F1+分数对数误差;残差局部对比度拒答,全面弃权为零 |
 
-### 参数反演(parameter_inversion) — 18
+### 参数反演(parameter_inversion) — 17
 
 | 任务 | 学科 | 领域 | 打分 | oracle | 认证 | 说明 | 中文题意 | 中文评估方法 |
 |---|---|---|---|---|---|---|---|---|
@@ -134,7 +132,6 @@
 | [`SpinSystemInference`](benchmarks/Chemistry/SpinSystemInference/)<br>自旋体系反演 | Chemistry | Spectroscopy | clipped | community_spin_dynamics_nmrsim | candidate | Given a high-resolution proton NMR spectrum, recover the spin system that produced it: the | 从高分辨质子谱恢复自旋体系的化学位移与两两耦合;二级体系下一级读谱失效 | 机制恢复;误发现率与校准拒答分开报告 |
 | [`ActiveFullWaveformInversion`](benchmarks/EarthScience/ActiveFullWaveformInversion/)<br>主动全波形反演 | EarthScience | WavePropagation | clipped | physical_sim | candidate | acquire shots and recover an acoustic velocity model | 在震源预算内主动选择激发并恢复声学速度异常;空模型和族外机制须拒答 | 速度机制恢复、密封波形预测、误发现与拒答分列;留出拓扑、噪声和速度反差 |
 | [`ChronologyAssimilation`](benchmarks/EarthScience/ChronologyAssimilation/)<br>古气候年代同化 | EarthScience | Paleoclimate | clipped | physical_sim | candidate | date proxy records and reconstruct a climate history | 在有限测年预算下校正多条代用记录年代并重建共同古温度场,模型不足时拒答 | 年代偏移、CE、RMSE、CRPS 与拒答分列;留出谱形和噪声偏移 |
-| [`DeformationMechanismInference`](benchmarks/EarthScience/DeformationMechanismInference/)<br>火山形变机制反演 | EarthScience | Volcanology | clipped | analytical | candidate | design a geodetic survey and identify volcanic deformation | 主动布设 GNSS/InSAR 观测,识别火山形变源族并反演参数;多源或流变不符时拒答 | 源族与参数恢复、空间预测、误发现和拒答分列;留出几何与噪声偏移 |
 | [`EnergyBalanceModel`](benchmarks/EarthScience/EnergyBalanceModel/)<br>能量平衡模型辨识 | EarthScience | ClimateScience | clipped | active_system_identification | candidate | identify climate response by choosing forcing experiments | 自选辐射强迫实验,辨识两层气候响应的五个参数;需状态依赖反馈或第三层时拒答 | 参数恢复 + 强迫迁移 + 模型不足拒答;实验预算受限 |
 | [`GravityInversion`](benchmarks/EarthScience/GravityInversion/)<br>重力反演 | EarthScience | Geophysics | clipped | physical_sim | candidate | actively survey and infer subsurface density bodies | 主动布设重力测线,反演地下密度体的位置与强度;声明的源族不支持时拒答 | 源恢复 + 外场校验 + 拒答;许多密度分布产生相似地表场 |
 | [`RadiativeTransferFit`](benchmarks/EarthScience/RadiativeTransferFit/)<br>辐射传输反演 | EarthScience | AtmosphericScience | clipped | physical_sim | candidate | actively select thermal channels and retrieve an atmospheric mechanism | 主动选择热红外通道与观测角,反演大气温度与光学厚度剖面;未建模的吸收体或云须拒答 | 机制恢复 + 模型不足拒答;观测预算受限,残差低不足以判对 |

@@ -13,7 +13,6 @@ from scripts.audit_tasks import LINEAGE_STATUSES, _task_card_issues, audit
 RECORDED_LINEAGE = {
     "Electrochemistry/ChronoamperometryLawID",
     "MetabolicEngineering/MetabolicStrainDesign",
-    "Metagenomics/MetagenomicMixtureID",
     "Electrophysiology/HodgkinHuxleyCurrentID",
     "Algorithm/ScalingLawIdentification",
     "WaterDistribution/DistributionNetworkTopology",
@@ -28,7 +27,6 @@ RECORDED_LINEAGE = {
     "Cryosphere/IceObservationNetworkDesign",
     "Hydrology/GroundwaterRemediationDesign",
     "Paleoclimate/ChronologyAssimilation",
-    "Volcanology/DeformationMechanismInference",
     "WavePropagation/ActiveFullWaveformInversion",
     "SystemsBiology/EnzymeKineticsLaw",
     "ParticlePhysics/DiscrepantMeasurements",
@@ -52,7 +50,6 @@ RECORDED_LINEAGE = {
     "MaterialsScience/QuinaryConvexHull",
     "AerospaceStructures/CompositeLaminateStacking",
     "WaterDistribution/ResilientPumpScheduling",
-    "Wastewater/BSM1AerationControl",
     "WindEnergy/WakeAwareFarmCoDesign",
     "BuildingControls/BOPTESTSupervisoryControl",
 }

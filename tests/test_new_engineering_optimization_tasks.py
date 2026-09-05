@@ -1,4 +1,4 @@
-"""Contract and normalization checks for the five engineering candidate tasks."""
+"""Contract and normalization checks for the four engineering candidate tasks."""
 from __future__ import annotations
 
 import importlib.util
@@ -11,7 +11,6 @@ TASK_ROOT = ROOT / "benchmarks" / "Engineering"
 TASKS = (
     "CompositeLaminateStacking",
     "ResilientPumpScheduling",
-    "BSM1AerationControl",
     "WakeAwareFarmCoDesign",
     "BOPTESTSupervisoryControl",
 )

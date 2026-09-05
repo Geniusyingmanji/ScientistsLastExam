@@ -83,7 +83,7 @@ catalog stated above.
 
 ## 关系与区别 / Relationship to nearby tasks
 
-GravityInversion and DeformationMechanismInference recover continuous parameters from
+GravityInversion recovers continuous parameters from
 active surveys; GeneNetworkIntervention recovers a signed network from interventions;
 BlackBoxGroupIdentification identifies an algebraic structure from black-box queries.
 This task's hidden structure is a second-rank tensor behind a per-event two-fold

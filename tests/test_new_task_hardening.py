@@ -14,18 +14,6 @@ def load(domain, task, file="verification/evaluator.py"):
     return module
 
 
-def test_sill_equivalent_parameters_have_equal_score_and_observations():
-    m=load("EarthScience","DeformationMechanismInference")
-    truth=np.array([0.,0.,1500.,3e8,1500.]); equivalent=truth.copy(); equivalent[2:4]*=2
-    stations=np.array([[0.,0.],[100.,250.],[-2500.,2000.]])
-    np.testing.assert_allclose(m.forward_displacement('sill',truth,stations),m.forward_displacement('sill',equivalent,stations),atol=1e-14)
-    assert m._parameter_score('sill',equivalent,truth)==pytest.approx(1.)
-    changed=truth.copy();changed[3]*=2
-    assert m._parameter_score('sill',changed,truth)<.5
-    assert '1500/depth' in m.model_library()['equations']['sill']
-    assert '0.94*h' in m.model_library()['equations']['dike']
-
-
 def test_hvac_anchors_are_feasible_and_ordered_on_every_split():
     m=load('Engineering','BOPTESTSupervisoryControl')
     r=load('Engineering','BOPTESTSupervisoryControl','verification/reference.py')
@@ -75,19 +63,6 @@ def test_source_well_shortcut_no_longer_beats_groundwater_reference():
     assert result['heldout_score']<.5
 
 
-def test_constant_wastewater_shortcut_loses_to_feedback_and_step_refinement():
-    m=load('Engineering','BSM1AerationControl')
-    constant=lambda p:lambda o:{'kla_per_hour':1.,'internal_recycle':1.}
-    for spec in m.INSTANCE_SPECS:
-        p=m._problem()
-        ref=m._run(m._reference_factory,p,spec)
-        fixed=m._run(constant,p,spec)
-        refined=m._run(m._reference_factory,p,spec,integration_substeps=20)
-        assert ref['feasible']
-        assert ref['cost']<fixed['cost']
-        assert abs(refined['cost']-ref['cost'])<.01*ref['cost']
-
-
 def test_ice_public_selection_is_invariant_to_forecast_units():
     ref=load('EarthScience','IceObservationNetworkDesign','verification/reference_solver.py')
     m=load('EarthScience','IceObservationNetworkDesign')
@@ -100,7 +75,7 @@ def test_ice_public_selection_is_invariant_to_forecast_units():
 
 
 @pytest.mark.parametrize('task',[
-    'CompositeLaminateStacking','ResilientPumpScheduling','BSM1AerationControl',
+    'CompositeLaminateStacking','ResilientPumpScheduling',
     'WakeAwareFarmCoDesign','BOPTESTSupervisoryControl'])
 def test_engineering_references_do_not_import_oracle(task):
     source=(ROOT/'benchmarks/Engineering'/task/'verification/reference.py').read_text()
@@ -113,9 +88,9 @@ def test_engineering_references_do_not_import_oracle(task):
 
 @pytest.mark.parametrize('domain,task',[
     ('EarthScience',name) for name in ('ActiveFullWaveformInversion','ChronologyAssimilation',
-        'DeformationMechanismInference','GroundwaterRemediationDesign','IceObservationNetworkDesign')
+        'GroundwaterRemediationDesign','IceObservationNetworkDesign')
 ]+[('Engineering',name) for name in ('CompositeLaminateStacking','ResilientPumpScheduling',
-        'BSM1AerationControl','WakeAwareFarmCoDesign','BOPTESTSupervisoryControl')])
+        'WakeAwareFarmCoDesign','BOPTESTSupervisoryControl')])
 def test_twelve_malformed_candidates_fail_closed(domain,task):
     m=load(domain,task)
     invalid=[None,{},'',True,12,float('nan'),float('inf'),[],[0],{'plans':[]},
@@ -152,12 +127,6 @@ def test_caught_malformed_instrument_call_still_invalidates_world():
         except (ValueError,TypeError):pass
         return {'temperature_mean':[],'temperature_std':[],'age_offsets_years':[],'confidence':0.,'abstain':True}
     assert chronology.evaluate(bad_date)['valid']==0
-    deformation=load('EarthScience','DeformationMechanismInference')
-    def bad_survey(bounds,models,survey,budget):
-        try:survey('not coordinates')
-        except (ValueError,TypeError):pass
-        return {'mechanism_probabilities':{'mogi':1/3,'sill':1/3,'dike':1/3},'parameters':[],'confidence':0.,'abstain':True}
-    assert deformation.evaluate(bad_survey)['valid']==0
 
 
 def test_laminate_bending_activates_order_dependent_ply_strength():
@@ -198,21 +167,6 @@ def test_nonlinear_chronology_requires_curves_and_enforces_monotonicity():
     assert m._evaluate_world(perfect,m.DEVELOPMENT_SPECS[0],'development',0)['age_mae_years']==0.
 
 
-def test_deformation_reference_marginalizes_shared_frame_errors():
-    m=load('EarthScience','DeformationMechanismInference')
-    ref=load('EarthScience','DeformationMechanismInference','verification/reference_solver.py')
-    truth=np.array([500.,-400.,1800.,4e8,1400.])
-    def survey(stations,modality='gnss'):
-        stations=np.asarray(stations)
-        field=m.forward_displacement('sill',truth,stations)+np.array([.07,-.06,.04])
-        field[:,2]+=stations@np.array([.1,-.08])/5000.
-        return {'displacement_m':field,'noise_std_m':.0035,'budget_cost':5}
-    answer=ref.infer_deformation_source(m.BOUNDS_M,m.model_library(),survey,18)
-    assert not answer['abstain']
-    assert max(answer['mechanism_probabilities'],key=answer['mechanism_probabilities'].get)=='sill'
-    assert m._parameter_score('sill',answer['parameters'],truth)>.99
-
-
 def test_pump_commitment_contract_and_auxiliary_cost():
     m=load('Engineering','ResilientPumpScheduling')
     p=m._problem(m.INSTANCE_SPECS[0])
@@ -227,13 +181,3 @@ def test_pump_commitment_contract_and_auxiliary_cost():
     with_cost=m._simulate(p,speed,actual)['cost']
     no_aux=m._simulate(dict(p,running_auxiliary_power_kw=0.,startup_cost_usd=0.),speed,actual)['cost']
     assert with_cost-no_aux==pytest.approx(.3+2.5*sum(p['electricity_usd_kwh'][5:7]))
-
-
-def test_deformation_difficulty_selects_extra_worlds_at_evaluation_time():
-    m=load('EarthScience','DeformationMechanismInference')
-    base=load('EarthScience','DeformationMechanismInference','solution.py')
-    for level, count in [(1,4),(2,5),(3,6)]:
-        m.DIFFICULTY=level
-        result=m.evaluate(base.infer_deformation_source)
-        assert result['supported_world_count']==count
-        assert result['valid']==1 and result['combined_score']==0.

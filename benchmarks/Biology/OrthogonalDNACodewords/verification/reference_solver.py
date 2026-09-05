@@ -1,10 +1,12 @@
-"""Truth-blind reference witness: greedy construction plus local repair.
+"""Truth-blind reference witness: seeded greedy construction.
 
-Deterministic: seeded pool-greedy restarts build an initial library, then a repair
-phase removes each word in turn and greedily re-fills against a fresh large pool,
-keeping any net gain — libraries are not locally maximal under removal. Run with
-restarts=240, seed 0 plus the shipped repair phase it reproduces the frozen witness
-sizes (dna16 32, dna12 29) recorded in the evaluator and references/known_best.md.
+Deterministic: each restart draws a 40,000-word pool with the family's GC content
+and homopolymer cap, shuffles it deterministically, and greedily accepts
+compatible words in vectorized blocks; the best restart is kept. With
+restarts=240, seed=0 it reaches 28 words (dna16) and 27 (dna12). The frozen
+witness sizes (dna16 32, dna12 29) require an additional removal-repair phase
+that the shipped reference deliberately omits, so the reference scores 0.896
+against the witness anchor by design; see references/known_best.md.
 """
 
 from __future__ import annotations

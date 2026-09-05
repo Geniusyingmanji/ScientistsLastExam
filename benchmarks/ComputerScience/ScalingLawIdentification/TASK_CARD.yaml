@@ -31,9 +31,10 @@ invariants:
 - branch worlds are exact deterministic functions of the size
 - a full abstention scores exactly zero after normalization
 known_shortcuts: Uniform probabilities with a fixed scale score 0.000; the reference
-  reaches 0.948/0.604 and a competent first-shot regression ladder reaches only
-  0.692 — the gap is real but the reference sits near the statistical ceiling of
-  log-space regression, so difficulty rests on the refusal axes and budget. Formal
+  reaches 0.948/0.937 and a competent first-shot regression ladder reaches only
+  0.692 — the dev-versus-first-shot gap is real but the reference sits near the
+  statistical ceiling of log-space regression, so difficulty rests on that gap,
+  the refusal axes and budget. Formal
   clean Linux calibration and independent review remain pending.
 licensing:
   task_package: repository_license_not_declared

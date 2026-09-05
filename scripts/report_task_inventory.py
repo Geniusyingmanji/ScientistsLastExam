@@ -66,7 +66,6 @@ CHINESE_NAMES = {
     "Mineralogy/MineralMixtureXRD": "矿物混合衍射定量",
     "MaterialsScience/QuinaryConvexHull": "五元凸包稳定相",
     "MetabolicEngineering/MetabolicStrainDesign": "代谢工程菌株设计",
-    "Metagenomics/MetagenomicMixtureID": "宏基因组混合辨识",
     "Mathematics/EllipticCurveRecovery": "椭圆曲线系数恢复",
     "Mathematics/BlackBoxGroupIdentification": "黑盒群同构辨识",
     "Mathematics/ExactIdentityEvidence": "精确身份证据审计",
@@ -115,8 +114,6 @@ CHINESE_NAMES = {
     "Cryosphere/IceObservationNetworkDesign": "冰盖观测网络设计",
     "Hydrology/GroundwaterRemediationDesign": "地下水修复设计",
     "Paleoclimate/ChronologyAssimilation": "古气候年代同化",
-    "Volcanology/DeformationMechanismInference": "火山形变机制反演",
-    "Wastewater/BSM1AerationControl": "BSM1 曝气与回流控制",
     "WaterDistribution/DistributionNetworkTopology": "供水管网布尔断层扫描",
     "WaterDistribution/ResilientPumpScheduling": "供水管网韧性泵调度",
     "WavePropagation/ActiveFullWaveformInversion": "主动全波形反演",
@@ -332,12 +329,6 @@ CHINESE_BRIEFS = {
     "Paleoclimate/ChronologyAssimilation": (
         "在有限测年预算下校正多条代用记录年代并重建共同古温度场,模型不足时拒答",
         "年代偏移、CE、RMSE、CRPS 与拒答分列;留出谱形和噪声偏移"),
-    "Volcanology/DeformationMechanismInference": (
-        "主动布设 GNSS/InSAR 观测,识别火山形变源族并反演参数;多源或流变不符时拒答",
-        "源族与参数恢复、空间预测、误发现和拒答分列;留出几何与噪声偏移"),
-    "Wastewater/BSM1AerationControl": (
-        "用状态反馈联合调节活性污泥曝气强度和内回流,兼顾出水水质与能耗",
-        "水质硬门控后的能耗与平滑性提升;暴雨、传感器偏差和执行器退化分列,无上限"),
     "WaterDistribution/ResilientPumpScheduling": (
         "根据需求和电价安排 24 小时泵速,满足水箱、压力、爬坡与终端储水约束",
         "相对恒速基线的电费节省;需求增长与高峰泵故障韧性分列,无上限"),
@@ -371,9 +362,6 @@ CHINESE_BRIEFS = {
     "MetabolicEngineering/MetabolicStrainDesign": (
         "在密封酶容量扰动下选敲除与过表达集,最大化产物通量并保生物质门",
         "以野生型为零点、冻结见证设计为1的缺口闭合;无上限,corner 扰动可超1"),
-    "Metagenomics/MetagenomicMixtureID": (
-        "在测序深度预算下恢复菌株混合与丰度,文库外新物种仅现于保守标记须拒答",
-        "集合F1+丰度对数误差;保守标记超额 4σ 拒答,全面弃权为零"),
     "Electrophysiology/HodgkinHuxleyCurrentID": (
         "自选电压钳协议恢复八参数通道模型,A 型或整流额外电流须拒答",
         "参数恢复+密封协议预测几何均值;失配门拒答,全面弃权为零"),

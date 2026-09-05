@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Local diagnostics for the ten candidate tasks; never certification evidence.
+"""Local diagnostics for the candidate tasks; never certification evidence.
 
 Run: python scripts/diagnose_new_task_hardening.py --output tmp/hardening/diagnostics.json
-Add --sweeps for 528 constant wastewater and 48 thermostat parameter probes.
+Add --sweeps for the 48 thermostat parameter probes.
 No model calls, promotions, source mutation, or global evidence refresh occur here.
 """
 from __future__ import annotations
@@ -22,8 +22,8 @@ sys.path.insert(0,str(ROOT))
 from scripts.check_task_contribution import check_task
 
 TASKS={
-    'EarthScience':['ActiveFullWaveformInversion','ChronologyAssimilation','DeformationMechanismInference','GroundwaterRemediationDesign','IceObservationNetworkDesign'],
-    'Engineering':['CompositeLaminateStacking','ResilientPumpScheduling','BSM1AerationControl','WakeAwareFarmCoDesign','BOPTESTSupervisoryControl'],
+    'EarthScience':['ActiveFullWaveformInversion','ChronologyAssimilation','GroundwaterRemediationDesign','IceObservationNetworkDesign'],
+    'Engineering':['CompositeLaminateStacking','ResilientPumpScheduling','WakeAwareFarmCoDesign','BOPTESTSupervisoryControl'],
 }
 
 def load(path):
@@ -33,25 +33,6 @@ def load(path):
 
 def summary(metrics):
     return {k:v for k,v in metrics.items() if isinstance(v,(int,float,bool))}
-
-
-def constant_wastewater(m):
-    specs=[s for s in m.INSTANCE_SPECS if s[1]=='development'];p=m._problem()
-    base=np.array([m._run(m._baseline_factory,p,s)['cost'] for s in specs])
-    ref=np.array([m._run(m._reference_factory,p,s)['cost'] for s in specs])
-    best=None
-    for kla in np.linspace(.25,12.,48):
-        for recycle in np.linspace(0.,1.,11):
-            factory=lambda p:lambda obs:{'kla_per_hour':float(kla),'internal_recycle':float(recycle)}
-            rows=[m._run(factory,p,s) for s in specs]
-            if all(r['feasible'] for r in rows):
-                score=max(0.,float(np.mean((base-np.array([r['cost'] for r in rows]))/(base-ref))))
-                if best is None or score>best['score']:
-                    best={'score':score,'parameters':[float(kla),float(recycle)]}
-    if best is not None:
-        kla,recycle=best['parameters']
-        best['metrics']=summary(m.evaluate(lambda p:lambda obs:{'kla_per_hour':kla,'internal_recycle':recycle}))
-    return {'trials':528,'best':best,'selection_split':'development_only'}
 
 
 def thermostat_sweep(m):
@@ -135,9 +116,6 @@ def main():
                     x,y=p['source_location_m']
                     return {'plans':[[[x,y,0.,q]] for q in np.linspace(80.,950.,16)]}
                 row['single_source_shortcut']=summary(evaluator.evaluate(source))
-            if name=='BSM1AerationControl':
-                row['constant_control']=summary(evaluator.evaluate(lambda p:lambda obs:{'kla_per_hour':1.,'internal_recycle':1.}))
-                if args.sweeps:row['constant_grid']=constant_wastewater(evaluator)
             if name=='BOPTESTSupervisoryControl' and args.sweeps:
                 row['thermostat_grid']=thermostat_sweep(evaluator)
             if name=='BOPTESTSupervisoryControl':

@@ -79,7 +79,7 @@ References: Virieux & Operto (2009), DOI `10.1190/1.3238367`; Symes (2020), arXi
 
 ## 关系与区别 / Relationship to nearby tasks
 
-GravityInversion fits a potential field, DeformationMechanismInference chooses an elastic source family, and RadialVelocityPlanets infers orbital signals. This task pays for acoustic shots and reconstructs a velocity field, with no-anomaly and attenuating worlds requiring refusal.
+GravityInversion fits a potential field and RadialVelocityPlanets infers orbital signals. This task pays for acoustic shots and reconstructs a velocity field, with no-anomaly and attenuating worlds requiring refusal.
 
 ## Admission and reference scope
 

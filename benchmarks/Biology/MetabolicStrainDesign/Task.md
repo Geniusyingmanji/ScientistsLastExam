@@ -59,7 +59,7 @@ It motivates flux-balance analysis; the benchmark uses the declared toy network.
 
 ## 关系与区别 / Relationship to nearby tasks
 
-BSM1AerationControl and BOPTESTSupervisoryControl operate dynamic control loops;
+BOPTESTSupervisoryControl operates a dynamic control loop;
 GeneNetworkIntervention recovers network structure from perturbation data. This task
 is a single-shot edit-set design evaluated by re-solving steady-state linear programs
 under sealed capacity draws, with the witness anchor recomputed rather than stored.

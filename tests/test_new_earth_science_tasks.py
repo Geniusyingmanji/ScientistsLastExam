@@ -17,8 +17,6 @@ TASKS = {
         ("ActiveFullWaveformInversion", "invert_velocity_model", "discovery"),
     "Paleoclimate/ChronologyAssimilation":
         ("ChronologyAssimilation", "reconstruct_climate", "discovery"),
-    "Volcanology/DeformationMechanismInference":
-        ("DeformationMechanismInference", "infer_deformation_source", "discovery"),
     "Hydrology/GroundwaterRemediationDesign":
         ("GroundwaterRemediationDesign", "design_remediation", "optimization"),
     "Cryosphere/IceObservationNetworkDesign":
@@ -35,14 +33,14 @@ def _load(path: Path, name: str):
 
 
 class NewEarthSciencePackageTests(unittest.TestCase):
-    def test_inventory_has_three_discovery_and_two_optimization_tasks(self):
+    def test_inventory_has_two_discovery_and_two_optimization_tasks(self):
         roles = []
         for task_id, (_, _, role) in TASKS.items():
             spec = find_task(task_id, include_uncertified=True)
             self.assertEqual(spec.discipline, "EarthScience")
             self.assertEqual(spec.metadata["scientific_role"], role)
             roles.append(role)
-        self.assertEqual(roles.count("discovery"), 3)
+        self.assertEqual(roles.count("discovery"), 2)
         self.assertEqual(roles.count("optimization"), 2)
 
     def test_baselines_are_valid_zero_and_deterministic(self):
@@ -113,17 +111,6 @@ class NewEarthScienceInvariantTests(unittest.TestCase):
         self.assertAlmostEqual(ce, 1.0)
         self.assertAlmostEqual(rmse, 0.0)
 
-        deformation = _load(
-            EARTH / "DeformationMechanismInference" / "verification" / "evaluator.py",
-            "new_earth_xarray_deformation_metric",
-        )
-        stations = np.asarray(((0.0, 0.0), (100.0, -200.0)))
-        field = np.asarray(((1.0, 2.0, 3.0), (-1.0, 0.5, 4.0)))
-        np.testing.assert_allclose(
-            deformation._insar_projection(field, stations),
-            field @ deformation.LOOK_VECTOR,
-        )
-
     def test_difficulty_ladders_change_scientific_regimes(self):
         fwi = _load(EARTH / "ActiveFullWaveformInversion" / "verification" / "evaluator.py",
                     "new_earth_fwi_ladder")
@@ -145,15 +132,6 @@ class NewEarthScienceInvariantTests(unittest.TestCase):
         self.assertGreater(hard_chronology["date_noise"], easy_chronology["date_noise"])
         self.assertGreater(np.max(np.abs(hard_chronology["offsets"])),
                            np.max(np.abs(easy_chronology["offsets"])))
-
-        deformation = _load(
-            EARTH / "DeformationMechanismInference" / "verification" / "evaluator.py",
-            "new_earth_deformation_ladder",
-        )
-        self.assertLess(deformation._difficulty_profile(1)["noise_multiplier"],
-                        deformation._difficulty_profile(3)["noise_multiplier"])
-        self.assertLess(deformation._difficulty_profile(1)["extra_supported_worlds"],
-                        deformation._difficulty_profile(3)["extra_supported_worlds"])
 
         groundwater = _load(
             EARTH / "GroundwaterRemediationDesign" / "verification" / "evaluator.py",
@@ -243,45 +221,6 @@ class NewEarthScienceInvariantTests(unittest.TestCase):
         broad = evaluator._crps_normal(truth, np.full(3, 1.0), truth)
         self.assertTrue(np.all(np.isfinite(sharp)))
         self.assertTrue(np.all(sharp < broad))
-
-    def test_volcano_mogi_translation_is_equivariant(self):
-        evaluator = _load(EARTH / "DeformationMechanismInference" / "verification" / "evaluator.py",
-                          "new_earth_volcano_invariant")
-        parameters = np.asarray((200.0, -300.0, 1800.0, 4.0e8, 1200.0))
-        stations = np.asarray(((-1000.0, 200.0), (700.0, 1300.0)))
-        shift = np.asarray((350.0, -120.0))
-        original = evaluator.forward_displacement("mogi", parameters, stations)
-        moved = parameters.copy()
-        moved[:2] += shift
-        translated = evaluator.forward_displacement("mogi", moved, stations + shift)
-        np.testing.assert_allclose(original, translated, rtol=1e-12, atol=1e-12)
-
-    def test_volcano_scores_only_forward_identifiable_parameters(self):
-        evaluator = _load(EARTH / "DeformationMechanismInference" / "verification" / "evaluator.py",
-                          "new_earth_volcano_identifiability")
-        np.testing.assert_array_equal(
-            evaluator._identifiable_parameter_mask("mogi"),
-            np.asarray((True, True, True, True, False)),
-        )
-        np.testing.assert_array_equal(
-            evaluator._identifiable_parameter_mask("dike"),
-            np.asarray((True, True, False, True, True)),
-        )
-
-    def test_volcano_brier_excludes_unsupported_worlds(self):
-        evaluator = _load(EARTH / "DeformationMechanismInference" / "verification" / "evaluator.py",
-                          "new_earth_volcano_brier")
-        rows = []
-        for index, spec in enumerate(evaluator.DEVELOPMENT_SPECS):
-            rows.append(evaluator._evaluate_world(
-                lambda *args: {
-                    "mechanism_probabilities": {name: 1.0 / 3.0 for name in evaluator.MECHANISMS},
-                    "parameters": [], "confidence": 0.0, "abstain": True,
-                },
-                spec, "development", index,
-            ))
-        summary = evaluator._summary(rows, evaluator.DEVELOPMENT_SPECS)
-        self.assertAlmostEqual(summary["brier"], 2.0 / 3.0)
 
 
 if __name__ == "__main__":

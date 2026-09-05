@@ -42,17 +42,22 @@ class OrthogonalDNACodewordsTests(unittest.TestCase):
         dimer = self.ev._max_crossdimer_matrix(codes)
         self.assertGreater(int(dimer[0, 0]), 0)  # but self-dimerization counts
 
-    def test_witness_library_passes_verification(self):
-        # Full restart count reproduces the frozen witness on the smaller family;
-        # short runs stay at or below it (restarts help monotonically).
+    def test_greedy_reference_stays_below_the_frozen_witness(self):
+        # The shipped reference is greedy only; the frozen witness sizes require
+        # the removal-repair phase it deliberately omits. At 240 restarts the
+        # greedy plateau is exactly 28/27, short runs stay at or below it.
         library = self.ref.build_codeword_library(self.ev.problem_statement(),
                                                   restarts=240, seed=0)
-        self.assertEqual(len(library["dna12"]), self.ev.WITNESS_SIZE["dna12"])
+        self.assertEqual({family: len(words) for family, words in library.items()},
+                         {"dna16": 28, "dna12": 27})
+        for family in self.ev.FAMILIES:
+            self.assertLess(len(library[family["family"]]),
+                            self.ev.WITNESS_SIZE[family["family"]])
         short = self.ref.build_codeword_library(self.ev.problem_statement(),
                                                 restarts=5, seed=0)
         for family in self.ev.FAMILIES:
             self.assertLessEqual(len(short[family["family"]]),
-                                 self.ev.WITNESS_SIZE[family["family"]])
+                                 len(library[family["family"]]))
 
     def test_trivial_pair_baseline_scores_zero(self):
         first = self.ev.evaluate(self.sol.build_codeword_library)
@@ -62,10 +67,13 @@ class OrthogonalDNACodewordsTests(unittest.TestCase):
         self.assertEqual(json.dumps(first, sort_keys=True, default=str),
                          json.dumps(second, sort_keys=True, default=str))
 
-    def test_reference_reaches_the_witness(self):
+    def test_reference_scores_below_the_frozen_witness(self):
+        # 28/27 against the 32/29 witness anchor: (28-2)/(32-2) and (27-2)/(29-2)
+        # average to 0.8963 — the deliberate gap a first proposal must not close.
         result = self.ev.evaluate(self.ref.build_codeword_library)
         self.assertEqual(result["valid"], 1.0)
-        self.assertAlmostEqual(result["combined_score"], 1.0, places=6)
+        self.assertAlmostEqual(result["combined_score"], 0.8963, places=3)
+        self.assertLess(result["combined_score"], 0.95)
 
     def test_constraint_violations_score_zero(self):
         family = self.ev.FAMILIES[0]

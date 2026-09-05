@@ -56,7 +56,7 @@ All keys and shapes are part of the contract; forecasts contain exactly `horizon
 
 ## 关系与区别 / Relationship to nearby tasks
 
-GroundwaterRemediationDesign chooses remediation wells and an archive, BSM1AerationControl closes an effluent feedback loop, and BOPTESTSupervisoryControl controls zone conditions. This task submits a 24-hour open-loop pump schedule for a single storage system; it has no pipe-network hydraulic solve.
+GroundwaterRemediationDesign chooses remediation wells and an archive, and BOPTESTSupervisoryControl controls zone conditions. This task submits a 24-hour open-loop pump schedule for a single storage system; it has no pipe-network hydraulic solve.
 
 ## Admission and reference scope
 

@@ -119,7 +119,6 @@ class InventoryTests(unittest.TestCase):
             "QuantumDynamics/HamiltonianLearning",
             "WavePropagation/ActiveFullWaveformInversion",
             "Paleoclimate/ChronologyAssimilation",
-            "Volcanology/DeformationMechanismInference",
             "Hydrology/GroundwaterRemediationDesign",
             "Cryosphere/IceObservationNetworkDesign",
         })

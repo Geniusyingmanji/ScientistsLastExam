@@ -5,9 +5,10 @@
 `verification/reference_solver.py` is a seeded random-pool greedy constructor: each
 restart draws a 40,000-word pool with the family's GC content and homopolymer cap,
 shuffles it deterministically, and greedily accepts compatible words in vectorized
-blocks; the best restart is kept. With `restarts=240, seed=0` it produces the frozen
-witness libraries (dna16: 28 words, dna12: 27 words); the shipped default of 40
-restarts reaches the same sizes on these seeds. It is a search witness, not a claimed
+blocks; the best restart is kept. With `restarts=240, seed=0` it reaches 28 words
+(dna16) and 27 (dna12). The frozen witness (32/29) additionally requires the
+removal-repair search described in section 3, which the shipped reference
+deliberately omits. The witness is a search witness, not a claimed
 optimum; published DNA-word-design constructions under comparable constraints may
 exceed it, and beating the witness scores above one by design.
 
