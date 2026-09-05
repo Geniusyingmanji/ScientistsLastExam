@@ -10,6 +10,14 @@ policy:
   statuses: [certified, candidate, quarantined]
 
 tasks:
+  Mathematics/NarrowAdmissibleTuple:
+    status: candidate
+    reason: exact admissibility/diameter oracle scored uncapped against Polymath8b's own published narrow-admissible-tuple diameters (246 at k=50, direct primary-source quote; 270 at k=54, secondary-source only, disclosed); no frontier searcher draw yet, pending external number-theory review
+    citation_ids: [doi:10.4007/annals.2014.179.3.7, doi:10.4007/annals.2015.181.1.7, arxiv:1409.8361, doi:10.1186/s40687-014-0012-7]
+  Superconductivity/SuperconductorTcRecord:
+    status: candidate
+    reason: Tc computed via the literal Allen-Dynes formula at a lambda(pressure) solved to reproduce six cited records from nine papers exactly, scored as a plain uncapped ratio to the actual published record (250 K) with a computable lambda<=3.5 plausibility gate; no frontier searcher draw yet, pending external condensed-matter review
+    citation_ids: [doi:10.1038/35065039, doi:10.1038/srep06968, doi:10.1038/nature14964, doi:10.1073/pnas.1704505114, doi:10.1038/s41586-019-1201-8, doi:10.1103/PhysRevLett.122.027001, doi:10.1038/s41586-020-1955-z, doi:10.1002/adma.202006832, doi:10.1038/s41467-021-25372-2, doi:10.1103/PhysRevB.12.905]
   MedicinalChemistry/MolecularLeadOptimization:
     status: candidate
     reason: RDKit community-standard oracle with a verified approved-drug reference panel; pending external medicinal-chemistry review

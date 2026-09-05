@@ -1,0 +1,15 @@
+domain: Mathematics
+task: NarrowAdmissibleTuple
+scientific_role: optimization
+difficulty: flagship
+tier: T3
+oracle_type: analytical
+score_mode: uncapped
+gpu_required: false
+eval_time_seconds: 20
+science_metric: mean_diameter_improvement_toward_published_narrow_admissible_k_tuple_records
+sizes: [50, 54]
+reference_baseline: naive_residue_zero_avoiding_sieve_diameters_310_and_346
+reference_sota: "Polymath8b admissible-tuple diameters used to certify prime-gap bounds: 246 at k=50, 270 at k=54"
+citation: "Polymath8b, arXiv:1409.8361 (H_1 <= 246 via an admissible 50-tuple); Engelsma narrow-admissible-tuple tables; Maynard 2015, Annals of Math 181, 383"
+claim_boundary: "k=50/diameter=246 is a direct quote from the Polymath8b retrospective; the k=54/diameter=270 figure came from secondary tracking sources this task could not independently verify against a primary source during construction -- see references/known_best.md."

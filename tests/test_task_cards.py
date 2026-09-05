@@ -31,6 +31,8 @@ RECORDED_LINEAGE = {
     "Gravitation/PTAHellingsDowns",
     "Physics/ComplexBoseLaw",
     "MaterialsScience/QuinaryConvexHull",
+    "Mathematics/NarrowAdmissibleTuple",
+    "Superconductivity/SuperconductorTcRecord",
 }
 
 

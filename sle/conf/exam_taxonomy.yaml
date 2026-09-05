@@ -45,12 +45,14 @@ tasks:
   SignalProcessing/SparseRecovery: {form: optimization, analogue: engineering_design}
   Electrochemistry/ElectrolyteConductivityDesign: {form: optimization, analogue: engineering_design}
   MaterialsScience/AlloyHardnessOptimization: {form: optimization, analogue: engineering_design}
+  Superconductivity/SuperconductorTcRecord: {form: optimization, analogue: engineering_design, note: continuous_pressure_search_uncapped_not_conductivity_or_hardness_replay}
   # --- optimization / combinatorial (open records: Ramsey, kissing, tensors, caps) ---
   Optimization/CirclePacking: {form: optimization, analogue: combinatorial}
   Mathematics/CapSet: {form: optimization, analogue: combinatorial}
   Mathematics/CapSetFrontier: {form: optimization, analogue: combinatorial, note: open_dims_not_extension_of_certified_capset}
   Mathematics/RamseyLowerBound: {form: optimization, analogue: combinatorial}
   Mathematics/KissingNumber: {form: optimization, analogue: combinatorial}
+  Mathematics/NarrowAdmissibleTuple: {form: optimization, analogue: combinatorial, note: admissible_prime_tuples_not_capset_kissing_ramsey_or_matmul}
   Mathematics/Superpermutation: {form: optimization, analogue: combinatorial}
   Mathematics/NonlinearCodeRecords: {form: optimization, analogue: combinatorial}
   Algorithm/MatrixMultiplicationRank: {form: optimization, analogue: combinatorial}

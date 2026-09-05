@@ -1,0 +1,71 @@
+schema_version: 2
+scientific_question: Can a policy construct a narrower admissible k-tuple (k=50, k=54) than the diameters Polymath8b used to certify bounded prime gaps -- a real, exactly-checkable improvement on a problem still open today?
+artifact: A list of k distinct integers forming an admissible k-tuple, for k in {50, 54}.
+oracle:
+  model: exact residue-coverage check against every prime p <= k (a finite, deterministic computation), plus an exact diameter (max-min) computation
+  feasibility: exactly k distinct integers, diameter in (0, 200000], no prime's residues covering all its classes
+  deterministic: true
+normalization:
+  baseline: naive sieve avoiding residue 0 mod every prime p<=k (diameters 310 at k=50, 346 at k=54)
+  reference: Polymath8b's own published admissible-tuple diameters (246 at k=50, 270 at k=54)
+  score: mean over k in {50,54} of (baseline_diameter - diameter) / (baseline_diameter - sota_diameter), clipped below at 0, unbounded above -- matching the published record scores 1.0 on that size, a verified smaller diameter scores above 1.0
+citations:
+- id: doi:10.4007/annals.2014.179.3.7
+  title: Bounded gaps between primes
+- id: doi:10.4007/annals.2015.181.1.7
+  title: Small gaps between primes
+- id: arxiv:1409.8361
+  title: The bounded gaps between primes Polymath project - a retrospective
+- id: doi:10.1186/s40687-014-0012-7
+  title: Variants of the Selberg sieve, and bounded intervals containing many primes
+invariants:
+- admissibility is checked against every prime p <= k, not a fixed small set; the check is exact integer arithmetic, no floating point
+- a k-tuple's diameter can never be improved (validly) below what genuine admissibility allows; the oracle never accepts a tuple that covers all residues mod any prime p <= k
+- the baseline (naive residue-0-avoiding sieve) is always admissible by construction and is checked to score exactly 0.0000 on both sizes
+- the k=50 anchor (246) is a direct quote from Polymath8b's own retrospective (arXiv:1409.8361); the k=54 anchor (270) came from secondary sources this task could not independently confirm against a primary source, and this is disclosed rather than asserted with unearned confidence
+- combined_score is the mean over exactly two sizes (50 and 54); a wrong k=54 anchor would change how generous that one term is but does not affect the exactness of the admissibility check itself
+- reciting a diameter number is worth nothing without producing the literal integers; the oracle checks the submitted tuple directly, never a claimed number
+- the shipped reference construction (greedy residue-sieve with randomized restarts) is a real, standard technique for this problem, not an exhaustive search, and does not reach either published record, leaving real headroom
+known_shortcuts: The headline Polymath8b number (246) and the general shape of the admissible-tuple problem are well-documented and may occur in training data; reciting "246" is not sufficient, since the oracle requires an actual list of 50 integers that passes the same exact admissibility check anyone else would run, and finding a genuinely narrower tuple is a real result the oracle cannot be talked out of accepting or rejecting. The k=54 anchor's precision is weaker than the k=50 anchor and is disclosed as such rather than treated as equally certain.
+review:
+  domain: pending_external_number_theory
+  evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_uncapped_normalization_checks
+provenance:
+  class: known_answer
+  target_source: Published records (Polymath8b) used only as score=1.0 witnesses; a narrower verified tuple scores above 1.0 and is a real mathematical result, not a benchmark artifact.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: high
+  rationale: The k=50/diameter=246 connection to bounded prime gaps is extremely well known and likely recalled directly by a capable model; the exact 50 (or 54) integers achieving it are not something a model can merely recite, so reconstructing or improving on them is the actual task, but pretraining familiarity with the general result is real and should be weighed accordingly.
+lineage:
+  status: complete
+  builder_model_ids:
+  - anthropic:claude-sonnet-5
+  builder_scaffolds:
+  - claude-code
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    Built at the user's request after a review of several candidate "provable in stages" problems
+    (Riemann Hypothesis, Goldbach, twin primes, P vs NP, Navier-Stokes, Collatz, Hodge); admissible
+    k-tuples was selected as the one with a genuine, real, computationally-verifiable open
+    combinatorial record (unlike the others, none of which reduce to a finite checkable
+    construction task). No frontier searcher draw has been run.
+  shortcut_discoverer: builder_self_audit
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: anthropic:claude-sonnet-5
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: the reference, the baseline, the admissibility checker and the bad-candidate shapes are all runnable from this directory

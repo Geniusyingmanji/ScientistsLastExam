@@ -1,0 +1,97 @@
+schema_version: 2
+scientific_question: At what real conventional-superconductor family and continuous pressure does the public Allen-Dynes formula, evaluated at parameters solved to reproduce six cited records exactly, predict the highest dynamically plausible Tc -- and can a budgeted search find a point that beats the actual published record of 250 K?
+artifact: A single (family, pressure_gpa) choice with a diagnostic Tc prediction and confidence, produced under a per-instance probe budget over a continuous pressure variable.
+oracle:
+  model: the public Allen-Dynes formula evaluated at a per-family lambda(pressure) solved (scipy.optimize.brentq) so it reproduces six cited (family, pressure, Tc) anchors from nine papers exactly, including one theoretical prediction never experimentally realized
+  feasibility: a single (family, pressure_gpa) pair with family in problem["families"] and pressure_gpa finite and within [0, apparatus_pressure_ceiling_gpa], a finite non-negative predicted_tc_k, a finite confidence in [0,1], and no more than probe_budget_calls charged probe() calls; dynamical plausibility is gated by a disclosed, computable lambda <= 3.5 criterion, not by laboratory-confirmation history
+  deterministic: true
+normalization:
+  baseline: proxy-trusting policy -- the family with the highest quoted historical-proxy Tc upper bound (a family with no quoted number can never win), submitted at that proxy's own quoted pressure, zero probes spent, never checking the implied lambda
+  reference: budgeted replicate-screened probe-and-climb search (verification/reference_search.py) that avoids the one real, never-realized prediction (lambda=3.95 > 3.5) and climbs LaH10 toward its stability-window edge
+  score: true Tc at the submitted (family, pressure_gpa), computed via the same Allen-Dynes formula from the true lambda/omega_log (0 if not dynamically plausible), divided by 250.0 K -- Drozdov et al. 2019's own confirmed record, not a search-algorithm reward; a plain, uncapped ratio with no baseline subtraction. heldout apparatus score, probe usage and predicted_tc_k calibration error remain evaluator-only diagnostics
+citations:
+- id: doi:10.1038/35065039
+  title: Superconductivity at 39 K in magnesium diboride
+- id: doi:10.1038/srep06968
+  title: Pressure-induced metallization of dense (H2S)2H2 with high-Tc superconductivity
+- id: doi:10.1038/nature14964
+  title: Conventional superconductivity at 203 kelvin at high pressures in the sulfur hydride system
+- id: doi:10.1073/pnas.1704505114
+  title: Potential high-Tc superconducting lanthanum and yttrium hydrides at high pressure
+- id: doi:10.1038/s41586-019-1201-8
+  title: Superconductivity at 250 K in lanthanum hydride under high pressures
+- id: doi:10.1103/PhysRevLett.122.027001
+  title: Evidence for Superconductivity above 260 K in Lanthanum Superhydride at Megabar Pressures
+- id: doi:10.1038/s41586-020-1955-z
+  title: Quantum crystal structure in the 250-kelvin superconducting lanthanum hydride
+- id: doi:10.1002/adma.202006832
+  title: Anomalous High-Temperature Superconductivity in YH6
+- id: doi:10.1038/s41467-021-25372-2
+  title: Superconductivity up to 243 K in the yttrium-hydrogen system under high pressure
+- id: doi:10.1103/PhysRevB.12.905
+  title: Transition temperatures of strong-coupled superconductors reanalyzed
+invariants:
+- Tc is always computed by evaluating the public Allen-Dynes formula at (lambda, omega_log); it is never a fitted curve whose only justification is agreement with citations
+- lambda at every literal citation is solved by root-finding, not chosen, and is checked numerically to reproduce the cited Tc to within floating-point precision
+- the two independently solved LaH10 lambdas (2.343 at 136 GPa, 2.344 at 170 GPa) agree to three decimal places, an emergent numerical confirmation of Errea et al. 2020's own "weakly pressure-dependent" characterization, not an assumption built into the model
+- dynamical plausibility is exactly (no noise) lambda <= 3.5 AND pressure within a family's disclosed window; lambda_max_plausible is itself a literal citation (Errea et al. 2020's anharmonic lambda for LaH10), not an arbitrary threshold
+- YH10fcc's proxy claim (305-326 K) implies lambda=3.951 at a comparable omega_log, above lambda_max_plausible -- a computable, re-derivable reason it is excluded, not a "never synthesized" flag
+- combined_score is true_tc_k divided by 250.0 (KNOWN_RECORD_TC_K, Drozdov et al. 2019's literal confirmed record); there is no baseline subtraction, so normalization is well-defined in every regime without a numerical floor guard
+- tc_model("LaH10hydride", 240.0) = 258.24 K, exceeding the 250 K published record, because omega_log rises mildly with pressure while lambda stays roughly flat within the disclosed window -- a real, checkable consequence of pushing the same formula to the edge of a window the record-setting paper itself did not test at
+- a synthetic near-optimal policy submitting LaH10hydride at 240 GPa scores 1.033 on the development instance, and the shipped reference search itself scores 1.026, both confirming uncapped exceedance is real and reachable, not nominal
+- the shipped reference search uses two-probe replicate screening on top candidate families specifically because a single probe cannot reliably separate LaH10 from YH9 (true Tc ~12 K apart, within one probe's ~5% noise); an earlier single-probe version of this search scored below the baseline on both apparatus instances for these fixed seeds, which is why replication is not optional in the shipped algorithm
+- heldout score, probe efficiency and predicted_tc_k calibration error remain evaluator-only
+known_shortcuts: Allen-Dynes theory and several of these six systems' headline Tc numbers are well-known facts a model may recall directly from training data; reciting them is necessary but not sufficient, since finding a pressure that beats the published record requires applying the formula at an untested point and correctly discounting the unrealized fcc-YH10 prediction via the lambda ceiling, not reciting a number. lambda(pressure)'s piecewise-linear shape between and beyond exact citations is a disclosed research abstraction, not literal DFT/Eliashberg output. mu_star is fixed at 0.10 for every family and pressure, a simplification; real Coulomb pseudopotentials vary by system and method. "Never realized as of construction" (2026-09) is a claim about search results gathered then, not a permanent physical claim.
+review:
+  domain: pending_external_condensed_matter_physics
+  evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_budget_checks
+provenance:
+  class: public_data_replay
+  target_source: The public Allen-Dynes formula, evaluated at parameters solved to exactly reproduce six real, cited (family, pressure, Tc) anchors from nine published papers; the source and finite anchor set were available before evaluation.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Allen-Dynes theory and the headline Tc numbers for well-known systems (H3S, LaH10) are textbook facts a model may recall directly. What is not obviously recallable is the precise implied lambda at each citation, that lambda=3.95 places the fcc-YH10 prediction above every confirmed system's coupling strength, and that pushing LaH10 to its window edge exceeds the published record -- these require applying the formula and searching, not reciting a number.
+lineage:
+  status: complete
+  builder_model_ids:
+  - anthropic:claude-sonnet-5
+  builder_scaffolds:
+  - claude-code
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    Three rounds of user review drove four successive versions. v1 was a purely procedural model
+    with an invented continuous doping axis and per-world random physics jitter, rejected as not
+    comparable to the cited papers' real conditions. v2 replaced it with a finite 8-row lookup
+    table of literal citations, fixing comparability but making the score incapable of exceeding
+    the table's own maximum. v3 modeled pressure continuously via a Gaussian fit to Tc and
+    normalized against a fixed search-algorithm witness, making uncapped scoring real but leaving
+    the metric one step removed from an actual physical quantity. v4 (this version), on explicit
+    request that the objective match what human scientists report (Tc and pressure) and that
+    feasibility be verifiable by code rather than tied to synthesis history, replaced the Gaussian
+    fit with the literal Allen-Dynes formula evaluated at a solved lambda(pressure), replaced the
+    search-witness normalization with a plain ratio to the actual published record (250 K), and
+    replaced the "never realized in lab" flag with a computable lambda <= 3.5 criterion grounded in
+    Errea et al. 2020's own reported value. Building v4 also caught and fixed a reference-search
+    fragility v3's design could not have exposed: single-probe screening occasionally misranked
+    LaH10 against YH9 (true Tc ~12 K apart, within one probe's noise), which a two-probe replicate
+    screen fixed. No frontier searcher draw has been run against any version.
+  shortcut_discoverer: user_review_plus_builder_self_audit
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: anthropic:claude-sonnet-5
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 3
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: the reference, the baseline, the full per-anchor citation table, the lambda root-finding derivation, and the bad-candidate shapes are all runnable/readable from this directory

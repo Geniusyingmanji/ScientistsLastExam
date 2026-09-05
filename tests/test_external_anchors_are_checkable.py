@@ -49,9 +49,11 @@ DECLARED_EXTERNAL_ANCHORS = {
     "Mathematics/CapSet",
     "Mathematics/CapSetFrontier",
     "Mathematics/KissingNumber",
+    "Mathematics/NarrowAdmissibleTuple",
     "Mathematics/RamseyLowerBound",
     "Mathematics/Superpermutation",
     "Algorithm/TensorRank555",
+    "Superconductivity/SuperconductorTcRecord",
 }
 
 
