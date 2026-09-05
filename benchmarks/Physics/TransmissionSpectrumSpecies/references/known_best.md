@@ -52,7 +52,7 @@ situation.
 | claim no species | 0.000000 | 0.000 | 0.000 | 0.000 | 1.000 | 1 |
 | guess without observing | 0.000000 | 0.083 | 0.562 | 0.000 | 1.000 | 1 |
 
-Both degenerate strategies score exactly zero, for opposite reasons, and `attempted_rate` — 0.000
+Both degenerate strategies score exactly zero, for opposite reasons, and `discovery_coverage` — 0.000
 against 1.000 — is what tells them apart in the report. The baseline is the analysis the field's own
 critiques are about: it fits, it reports what fits, and it has no notion that a spectrum can fail to
 decide.

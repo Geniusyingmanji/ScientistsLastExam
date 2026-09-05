@@ -110,17 +110,19 @@ class DeterminismTests(unittest.TestCase):
         first = EVALUATOR.evaluate(REFERENCE.analyze)
         second = EVALUATOR.evaluate(REFERENCE.analyze)
         self.assertEqual(first["combined_score"], second["combined_score"])
-        self.assertEqual(first["mechanism_recovery"], second["mechanism_recovery"])
+        self.assertEqual(first["mechanism_score"], second["mechanism_score"])
         self.assertEqual(first["correct_refusal_rate"], second["correct_refusal_rate"])
 
 
 class ContractTests(unittest.TestCase):
     def test_the_three_axes_are_reported_with_their_denominators(self):
         result = EVALUATOR.evaluate(REFERENCE.analyze)
-        for axis in ("mechanism_recovery", "false_discovery_rate", "correct_refusal_rate"):
+        for axis in ("mechanism_score", "false_discovery_rate", "correct_refusal_rate"):
             self.assertIn(axis, result)
-            self.assertIn(axis.replace("_rate", "") + "_denominator", result)
-        self.assertIn("attempted_rate", result)
+        for denominator in ("mechanism_score_denominator", "false_discovery_denominator",
+                            "correct_refusal_denominator"):
+            self.assertIn(denominator, result)
+        self.assertIn("discovery_coverage", result)
 
     def test_both_degenerate_strategies_score_zero_and_are_distinguishable(self):
         blanket = EVALUATOR.evaluate(_abstain_always)
@@ -128,15 +130,15 @@ class ContractTests(unittest.TestCase):
         self.assertEqual(blanket["combined_score"], 0.0)
         self.assertEqual(never["combined_score"], 0.0)
         # Same score, opposite failure - the report has to tell them apart.
-        self.assertEqual(blanket["attempted_rate"], 0.0)
-        self.assertEqual(never["attempted_rate"], 1.0)
+        self.assertEqual(blanket["discovery_coverage"], 0.0)
+        self.assertEqual(never["discovery_coverage"], 1.0)
         self.assertEqual(blanket["correct_refusal_rate"], 1.0)
         self.assertEqual(never["correct_refusal_rate"], 0.0)
 
     def test_the_reference_beats_both(self):
         reference = EVALUATOR.evaluate(REFERENCE.analyze)
         self.assertGreater(reference["combined_score"], 0.0)
-        self.assertGreater(reference["mechanism_recovery"], 0.0)
+        self.assertGreater(reference["mechanism_score"], 0.0)
         self.assertGreater(reference["correct_refusal_rate"], 0.0)
 
     def test_naming_either_confusable_member_is_a_false_discovery(self):

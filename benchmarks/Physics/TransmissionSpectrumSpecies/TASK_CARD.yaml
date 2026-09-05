@@ -52,7 +52,7 @@ invariants:
     present, because the world does not determine which
   - >-
     both degenerate strategies score exactly zero - blanket abstention because it recovers nothing,
-    never abstaining because its refusal rate is zero - and attempted_rate tells them apart
+    never abstaining because its refusal rate is zero - and discovery_coverage tells them apart
   - >-
     every rate is published with its denominator, so the triple can be recomposed rather than
     trusted

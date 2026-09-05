@@ -59,11 +59,11 @@ and a single number hides which one moved:
 
 | axis | meaning | denominator published |
 |---|---|---|
-| `mechanism_recovery` | on identifiable systems, is the species set exactly right? | yes |
+| `mechanism_score` | on identifiable systems, is the species set exactly right? | yes |
 | `false_discovery_rate` | of the species claimed present, how many are absent? | yes |
 | `correct_refusal_rate` | on unidentifiable systems, does the searcher abstain? | yes |
 
-A fourth counter, `attempted_rate`, records how often the searcher declined to abstain. Without it,
+A fourth counter, `discovery_coverage`, records how often the searcher declined to abstain. Without it,
 "abstained on everything" and "the science is too hard" look identical in the report, and they call
 for opposite responses.
 

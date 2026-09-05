@@ -310,14 +310,19 @@ def evaluate(analyze, seed=DEV_SEED, count=SYSTEM_COUNT, budget=BUDGET_TRANSITS)
         "valid": 1.0 if any(r["valid"] for r in rows) else 0.0,
         "feasibility_rate": sum(1 for r in rows if r["valid"]) / len(rows),
         "raw_score": float(raw_combined),
-        # The triple, separately. Never averaged into one another.
-        "mechanism_recovery": float(raw_recovery),
-        "mechanism_recovery_denominator": len(resolvable),
+        # The triple, separately. Never averaged into one another. The key names are the ones the
+        # rest of this repository uses for discovery tasks - scripts/check_task_contribution.py
+        # looks for `mechanism_score` and `discovery_coverage` by name - so that the cross-task
+        # tooling can read this report without a special case.
+        "mechanism_score": float(raw_recovery),
+        "mechanism_score_denominator": len(resolvable),
         "false_discovery_rate": float(false_discovery_rate),
         "false_discovery_denominator": claims,
         "correct_refusal_rate": float(correct_refusal),
         "correct_refusal_denominator": len(unresolvable),
-        "attempted_rate": float(attempted),
+        # How often the searcher declined to abstain. Without it, "abstained on everything" and
+        # "the science is too hard" look identical in the report.
+        "discovery_coverage": float(attempted),
         "always_abstain_anchor": float(always_abstain),
         "per_system": rows,
     }
