@@ -1,0 +1,3 @@
+1) Only edit solution.py and keep schedule_flow_shop(problem).
+2) Return one permutation per instance listing every job index exactly once; malformed permutations score zero.
+3) Deterministic Python/NumPy/SciPy/stdlib only; no network/process creation and no reading verification/ or frontier_eval/.

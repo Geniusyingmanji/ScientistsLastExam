@@ -1,0 +1,15 @@
+domain: Mathematics
+task: ExactIdentityEvidence
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: analytical
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 30
+science_metric: identity verdict accuracy with certified refusal below purchasable
+  precision
+reference_baseline: refuses every claim without spending (the passive floor)
+reference_sota: truth-blind base-precision row fits with cap-driven refusal and
+  fewest-missing-first tier purchases; runnable witness, not a published SoTA claim
+citation: Ferguson, Bailey & Arno 1999 Math Comp doi:10.1090/S0025-5718-99-01081-3

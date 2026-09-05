@@ -45,6 +45,7 @@ CHINESE_NAMES = {
     "CausalDiscovery/SurvivorshipConfoundedDesign": "幸存者偏差下的效应估计",
     "ChemicalKinetics/ReactionMechanismFitting": "反应机理辨识",
     "ChemicalProcess/DistillationColumnDesign": "精馏塔设计",
+    "ChemicalProcess/ThermochemicalCycleAudit": "热化学闭环审计",
     "Chemistry/LennardJonesCluster": "Lennard-Jones 团簇",
     "ClimateScience/EnergyBalanceModel": "能量平衡模型辨识",
     "ClimateScience/ForcedSignalAttribution": "强迫信号检测归因",
@@ -53,6 +54,7 @@ CHINESE_NAMES = {
     "Electrochemistry/ElectrolyteConductivityDesign": "电解液电导率设计",
     "EvidenceSynthesis/ProspectiveMetaAnalysis": "前瞻荟萃分析",
     "Exoplanets/RadialVelocityPlanets": "视向速度找行星",
+    "Geophysics/FocalMechanismStressInversion": "震源机制应力反演",
     "Geophysics/GravityInversion": "重力反演",
     "Gravitation/PTAHellingsDowns": "脉冲星阵四极相关",
     "HeatTransfer/ConvectionDiffusionOpt": "对流扩散辨识与加热器设计",
@@ -60,6 +62,7 @@ CHINESE_NAMES = {
     "MaterialsScience/PhaseDiagramDiscovery": "相图发现",
     "MaterialsScience/QuinaryConvexHull": "五元凸包稳定相",
     "Mathematics/BlackBoxGroupIdentification": "黑盒群同构辨识",
+    "Mathematics/ExactIdentityEvidence": "精确身份证据审计",
     "Mathematics/CapSet": "Cap Set 构造",
     "Mathematics/CapSetFrontier": "Cap Set 未证明维度",
     "Mathematics/KissingNumber": "接触数构造",
@@ -73,6 +76,8 @@ CHINESE_NAMES = {
     "Oceanography/AMOCTippingRefusal": "AMOC 折叠拒答",
     "Optics/DiffractionGratingDesign": "衍射光栅设计",
     "Optimization/CirclePacking": "圆堆积",
+    "ProductionSystems/PermutationFlowShop": "置换流水车间调度",
+    "SyntheticBiology/OrthogonalDNACodewords": "正交 DNA 密码词库",
     "ParticlePhysics/CalorimeterDesign": "量能器设计",
     "ParticlePhysics/DiscrepantMeasurements": "不相容测量调和",
     "ParticlePhysics/LookElsewhereAnomaly": "多窗口扫描的全局显著性",
@@ -90,6 +95,7 @@ CHINESE_NAMES = {
     "SignalProcessing/SparseRecovery": "压缩感知稀疏恢复",
     "Spectroscopy/CrowdedSpectrumAssignment": "混叠谱物种指认",
     "StructuralEngineering/ModalDamageAttribution": "模态损伤归因",
+    "Spectroscopy/MassFragmentationTree": "多碰撞能碎裂树恢复",
     "Spectroscopy/NMRSpectrumFitting": "核磁谱峰机制恢复",
     "Spectroscopy/SpinSystemInference": "自旋体系反演",
     "StructuralEngineering/TrussWeightMinimization": "桁架减重",
@@ -333,8 +339,25 @@ CHINESE_BRIEFS = {
     "WindEnergy/WakeAwareFarmCoDesign": (
         "联合设计风机平面位置与分风向偏航策略,减弱尾流损失并保持布置可制造",
         "相对规则零偏航风场的年发电价值提升;留出风况和尾流模型偏移分列,无上限"),
+    "Spectroscopy/MassFragmentationTree": (
+        "在能量/变焦预算下从多级质谱恢复中性丢失碎裂树;无分子离子或共洗脱杂质须拒答",
+        "节点/边 F1(质量容差最优匹配)平均;误发现与拒答分列,全面弃权为零"),
+    "ChemicalProcess/ThermochemicalCycleAudit": (
+        "在复测/交叉验证预算下审计焓闭环网络:一致、单点错误、仪器漂移或归因欠定",
+        "校正增益+判决+诊断融合,被动审计为零;pendant 对取证前归因欠定,盲指名记假发现"),
+    "ProductionSystems/PermutationFlowShop": (
+        "在新种子 Taillard 型实例上排工件序最小化完工时间;背不了题,实例由种子即时生成",
+        "以 NEH 构造为零点的缺口闭合均值;无上限,破冻结见证>1"),
+    "Geophysics/FocalMechanismStressInversion": (
+        "在双节面歧义下反演主应力轴、形状比与逐事件断层面;混合应力机制或无信号须拒答",
+        "轴/形状比/平面指派几何均值;误发现与拒答分列,全面弃权为零"),
+    "SyntheticBiology/OrthogonalDNACodewords": (
+        "在 GC/汉明/全位移交叉二聚/均聚物约束下建更大的正交寡核苷酸词库",
+        "相对冻结贪心见证的规模进度;无上限,验证与构造方法无关"),
+    "Mathematics/ExactIdentityEvidence": (
+        "在购位预算下裁决整数关系断言:精确(附系数行)、巧合、或精度封顶不可判",
+        "判决+系数恢复,被动全拒为零;把真关系认成假计负分,封顶值断言只可拒答"),
 }
-
 
 FORM_TITLES = OrderedDict([("optimization", "Optimization"), ("discovery", "Discovery")])
 ANALOGUE_TITLES = OrderedDict([

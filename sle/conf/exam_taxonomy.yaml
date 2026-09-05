@@ -63,6 +63,8 @@ tasks:
   Algorithm/MatrixMultiplicationRank: {form: optimization, analogue: combinatorial}
   Algorithm/TensorRank555: {form: optimization, analogue: combinatorial, note: new_sizes_not_extension_of_certified_matmul}
   QuantumErrorCorrection/QuantumErrorDecoder: {form: optimization, analogue: combinatorial}
+  ProductionSystems/PermutationFlowShop: {form: optimization, analogue: combinatorial, note: fresh_seeded_taillard_family_not_published_tables}
+  SyntheticBiology/OrthogonalDNACodewords: {form: optimization, analogue: combinatorial, note: hybridization_constraints_not_molecular_design}
   # --- optimization / molecular & macromolecular design (PMO / BioDesign) -----
   MedicinalChemistry/MolecularLeadOptimization: {form: optimization, analogue: molecular_design}
   ProteinEngineering/ProteinStabilityDesign: {form: optimization, analogue: molecular_design}
@@ -90,7 +92,11 @@ tasks:
   Physics/HiddenCouplingNetwork: {form: discovery, kind: structure}
   ClimateScience/ForcedSignalAttribution: {form: discovery, kind: evidence}
   StructuralEngineering/ModalDamageAttribution: {form: discovery, kind: evidence}
+  ChemicalProcess/ThermochemicalCycleAudit: {form: discovery, kind: evidence, note: hess_closure_network_not_single_constant_reconciliation}
+  Mathematics/ExactIdentityEvidence: {form: discovery, kind: evidence, note: purchasable_precision_verdicts_not_recurrence_recovery}
   Mathematics/BlackBoxGroupIdentification: {form: discovery, kind: structure}
+  Spectroscopy/MassFragmentationTree: {form: discovery, kind: structure, note: fragmentation_dag_from_multienergy_msms_not_library_matching}
+  Geophysics/FocalMechanismStressInversion: {form: discovery, kind: structure, note: stress_tensor_behind_nodal_plane_ambiguity}
   Spectroscopy/CrowdedSpectrumAssignment: {form: discovery, kind: substance}
   MaterialsScience/QuinaryConvexHull: {form: discovery, kind: substance, note: quinary_hull_not_binary_xrd}
   # --- discovery / parameter inversion (SLE's remaining empty-looking cell) ---

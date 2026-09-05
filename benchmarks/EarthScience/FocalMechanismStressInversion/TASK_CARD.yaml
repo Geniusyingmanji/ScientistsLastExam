@@ -1,0 +1,99 @@
+schema_version: 2
+scientific_question: Can a noisy focal-mechanism catalog with two-fold nodal-plane
+  ambiguity be resolved into one stress regime (axes, shape ratio, plane assignments),
+  while refusing catalogs that mix regimes or carry no coherent signal?
+artifact: Principal stress axes as (trend, plunge) pairs, the shape ratio R, a 0/1
+  plane choice per event, optional abstention and a confidence scalar.
+oracle:
+  model: deterministic seeded deviatoric stress tensors, slip-tendency-filtered fault
+    sampling with Wallace-Bott slip directions, Aki-Richards nodal-plane geometry,
+    Gaussian angular perturbation of both planes per event in seeded order, regime
+    mixtures and uniform incoherent catalogs
+  feasibility: bounded axis angles and R, a complete 0/1 plane row, charged unique
+    re-analysis within a sixteen-credit budget
+  deterministic: true
+  external_tooling: none beyond NumPy
+difficulty_ladder:
+  default_level: 1
+  levels:
+    1: 4-degree coarse noise, 1.2-degree re-analysis
+    2: 6-degree coarse noise, 1.8-degree re-analysis
+    3: 8.5-degree coarse noise, 2.6-degree re-analysis
+normalization:
+  baseline: single un-iterated tensor fit on first-listed planes
+  reference: multi-start Michael inversion with plane swaps, budgeted re-analysis and
+    misfit-distribution refusal
+  score: geometric mean of axis, shape-ratio and plane-assignment scores on supported
+    worlds, normalized above always abstaining; false discovery and refusal separate
+citations:
+- id: doi:10.1029/JB089iB13p11517
+  title: "Determination of stress from slip data: Faults and folds"
+- id: doi:10.1017/S0016756800059987
+  title: The mechanics of oblique slip faulting
+invariants:
+- the Wallace-Bott shear of the true tensor lies along every true slip direction
+- both nodal planes of an event are perturbed independently and listed in seeded order
+- axes are scored on absolute cosine so sign flips are free
+- a full abstention scores exactly zero after normalization
+- re-analysis is charged, once per event, and overspending invalidates the world
+known_shortcuts: A constant-regime family (twelve azimuths, fixed R and plane-a
+  assignment) scores 0.000. Removing the refusal gates drops the score to 0.098 with
+  false-discovery rate 1.0. Formal clean Linux calibration and independent seismology
+  review remain pending.
+licensing:
+  task_package: repository_license_not_declared
+  external_assets: none
+  note: All runtime worlds are generated from original repository code; cited publications
+    are not redistributed.
+contamination:
+  status: cannot_be_ruled_out
+  rationale: The catalog generator, plane convention and refusal regimes are public and
+    were built with AI assistance; server-held catalogs and independent samplers are
+    still required.
+review:
+  domain: pending_external_seismology
+  evaluator_security: targeted_local_regressions_added_clean_linux_sandbox_replay_pending
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic focal-mechanism catalogs with
+    development and held-out tensors, mixtures, incoherent regimes and noise.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Stress inversion from focal mechanisms is a mature field; the hidden
+    procedural catalogs, budgeted re-analysis and refusal worlds are original to this
+    package and builder-model independence is not established.
+lineage:
+  status: complete
+  builder_model_ids:
+  - glm-5.3
+  builder_scaffolds:
+  - repository-native-earth-science-task-pattern
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: 2026-09-05 local build caught a broken plane-row generator scope bug, a single-start tensor fit stuck in a plane-assignment local optimum on a held-out world, and refusal gates miscalibrated against the converged misfit distribution; each was fixed and pinned by tests.
+  shortcut_discoverer: initial_internal_red_team
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: initial_internal
+  author_domain: AI-assisted benchmark engineering
+  reviewer_domain: pending_external_seismology
+  expert_hours: null
+  red_team_rounds: 2
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: standalone_public_model_references_pending
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+difficulty_assessment:
+  status: unverified_candidate
+  requirement: standard-method and low-dimensional shortcut sweeps, capability ablations
+    and clean frontier-model calibration before certification
+  remaining_risk: Plane assignment sits at 0.46 against an axis score near 0.99; the
+    headroom concentrates in the combinatorial ambiguity, so a frontier draw must show
+    it is not trivially closable.

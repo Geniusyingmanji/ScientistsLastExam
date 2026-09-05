@@ -1,0 +1,16 @@
+domain: ChemicalProcess
+task: ThermochemicalCycleAudit
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: physical_sim
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 20
+science_metric: Hess-closure audit quality with drift transcription and pendant-pair
+  refusal axes
+reference_baseline: trusts every reported value and calls the batch consistent
+reference_sota: truth-blind weighted network adjustment with dominant-outlier and drift
+  triage; runnable witness, not a published SoTA claim
+citation: Ruscic et al. 2004 J Phys Chem A doi:10.1021/jp047912y; Ruscic 2024 J Phys Chem
+  A doi:10.1021/acs.jpca.6c03567
