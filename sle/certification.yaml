@@ -501,6 +501,16 @@ tasks:
     citation_ids:
       - arxiv:2502.04514
       - doi:10.1007/BF02165411
+  QuantumFoundations/BellBoundCertificate:
+    status: candidate
+    reason: >-
+      exact rational sum-of-squares certificates for upper bounds on Bell functionals, scored
+      uncapped by the logarithmic distance from the free level-1 relaxation to the published NPA
+      level-2 bound; the I3322 transcription is validated against four independent published
+      quantities (classical bound 0, NPA1 0.37500001, the two-qubit maximum 1/4, and the best
+      known quantum value) and eighteen degenerate submissions score zero; no frontier searcher
+      draw yet, pending external quantum-information review
+    citation_ids: [arxiv:2607.14755, arxiv:2608.29734, doi:10.1103/PhysRevLett.98.010401, doi:10.1103/PhysRevLett.23.880]
   Mathematics/NonlinearCodeRecords:
     status: candidate
     reason: >-

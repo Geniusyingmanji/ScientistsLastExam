@@ -21,6 +21,10 @@ optimization_analogue:
   engineering_design: engineering design under a frozen simulator (same form as Frontier-Eng; no task is shared with it)
   combinatorial: open-record construction with an executable mathematical verifier
   molecular_design: molecular or macromolecular design under a frozen scientific oracle
+  certificate_bound: >-
+    the product is a verifiable argument rather than an object, and the score is the strength
+    of the bound the argument proves; admitted only where the standard relaxation is not
+    already tight, which is why the Delsarte half of NonlinearCodeRecords was cut instead
 discovery_kind:
   formula: recover a law, or refuse when no law in the family holds
   structure: recover a graph, network or geometry
@@ -60,6 +64,7 @@ tasks:
   Mathematics/ErdosMinimumOverlap: {form: optimization, analogue: combinatorial, note: balanced_partition_difference_overlap_not_admissible_tuple_or_ramsey}
   Mathematics/HeilbronnTrianglePacking: {form: optimization, analogue: combinatorial, note: unit_square_point_placement_min_triangle_area_not_capset_kissing_or_circle_packing}
   Mathematics/Superpermutation: {form: optimization, analogue: combinatorial}
+  QuantumFoundations/BellBoundCertificate: {form: optimization, analogue: certificate_bound, note: exact_rational_SOS_bound_on_a_Bell_functional_not_a_construction}
   Mathematics/NonlinearCodeRecords: {form: optimization, analogue: combinatorial}
   Algorithm/MatrixMultiplicationRank: {form: optimization, analogue: combinatorial}
   Algorithm/TensorRank555: {form: optimization, analogue: combinatorial, note: new_sizes_not_extension_of_certified_matmul}

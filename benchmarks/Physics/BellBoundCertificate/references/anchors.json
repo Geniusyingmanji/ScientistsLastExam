@@ -1,0 +1,46 @@
+{
+  "anchors": [
+    {
+      "name": "i3322_npa_level_1",
+      "value": 0.37500001,
+      "source_url": "https://arxiv.org/abs/2607.14755",
+      "derivation": "Flora et al., Moment optimization in the Navascues-Pironio-Acin hierarchy, section 3.1: 'the NPA1 relaxation gives 0.375 000 01'. Independently reproduced here: the level-1 dual of the same functional, after converting it out of the Collins-Gisin picture, gives 0.37500000.",
+      "retrieved_on": "2026-09-06"
+    },
+    {
+      "name": "i3322_npa_level_2",
+      "value": 0.25102173,
+      "source_url": "https://arxiv.org/abs/2607.14755",
+      "derivation": "Same paper, same section: 'and NPA2 gives 0.251 021 73'. Used as the target worth 1 on the scale, not as a ceiling.",
+      "retrieved_on": "2026-09-06"
+    },
+    {
+      "name": "i3322_best_known_quantum_value",
+      "value": 0.25087538,
+      "source_url": "https://arxiv.org/abs/2607.14755",
+      "derivation": "Same paper, same section: 'the best currently known quantum value is approximately 0.250 875 38, obtained at NPA4 or higher'. This is the value the score measures distance to. It is a supremum: arXiv:2608.29734 shows it is not attained in any finite dimension.",
+      "retrieved_on": "2026-09-06"
+    },
+    {
+      "name": "i3322_classical_bound",
+      "value": 0.0,
+      "source_url": "https://arxiv.org/abs/2607.14755",
+      "derivation": "Same paper, same section: 'The classical bound is 0'. Used here as a transcription check rather than as a score anchor - exhaustive enumeration over the 64 deterministic strategies of the converted correlator form returns exactly 0, which is what confirms eq. (18) is Collins-Gisin probabilities and not the +-1 correlators the paper's wording suggests.",
+      "retrieved_on": "2026-09-06"
+    },
+    {
+      "name": "i3322_qubit_bound",
+      "value": 0.25,
+      "source_url": "https://arxiv.org/abs/1006.3032",
+      "derivation": "Pal and Vertesi, Maximal violation of the I3322 inequality using infinite dimensional quantum systems: two-qubit strategies cap at 1/4 and higher dimensions are required to exceed it. Reproduced here by numerical maximisation over two-qubit states and projective measurements, which returns 0.250000000 to nine digits. Used as a soundness check: every certificate this task scores must exceed it.",
+      "retrieved_on": "2026-09-06"
+    },
+    {
+      "name": "chsh_tsirelson_bound",
+      "value": 2.8284271247461903,
+      "source_url": "https://doi.org/10.1007/BF00417500",
+      "derivation": "Tsirelson, Quantum generalizations of Bell's inequality (1980): the CHSH quantum maximum is 2*sqrt(2). Textbook and exact. Irrational, so no rational certificate attains it, which is what makes the CHSH instance a graded rung rather than a pass/fail one.",
+      "retrieved_on": "2026-09-06"
+    }
+  ]
+}

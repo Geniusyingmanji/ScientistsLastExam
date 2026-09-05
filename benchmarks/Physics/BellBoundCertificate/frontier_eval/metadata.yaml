@@ -1,0 +1,13 @@
+domain: QuantumFoundations
+task: BellBoundCertificate
+scientific_role: optimization
+difficulty: hard
+tier: T2
+oracle_type: analytical
+score_mode: uncapped
+gpu_required: false
+eval_time_seconds: 5
+science_metric: mean_logarithmic_progress_from_the_level_one_relaxation_to_the_published_level_two_bound_in_distance_to_the_best_known_quantum_value
+reference_baseline: the triangle inequality written as squares, proving the algebraic bound
+reference_sota: "published NPA level-2 bound 0.25102173 for I3322; the best known quantum value 0.25087538 is a supremum not attained in finite dimension"
+citation: "Flora et al., Moment optimization in the Navascues-Pironio-Acin hierarchy, arXiv:2607.14755; Navascues, Pironio and Acin, Bounding the set of quantum correlations, DOI 10.1103/PhysRevLett.98.010401"

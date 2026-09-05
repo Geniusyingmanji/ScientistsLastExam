@@ -1,0 +1,8 @@
+1) Only edit solution.py. Keep build_certificate(instance).
+2) Return {"basis": [[[a...],[b...]], ...], "squares": [{"weight": w, "vector": [...]}, ...]}.
+   Weights and vector entries are integers or exact [numerator, denominator] pairs. Floats are
+   rejected, not rounded: a numerical SDP solution is not a certificate.
+3) Weights must be non-negative; basis words reduced, distinct and within the instance budget;
+   one vector entry per basis word. Anything else scores that instance zero.
+4) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read
+   verification/ or frontier_eval/.

@@ -1,0 +1,137 @@
+schema_version: 2
+scientific_question: >-
+  Produce an exact rational sum-of-squares certificate that proves an upper bound on the quantum
+  value of a Bell functional, at four budgets, on a functional (I3322) whose quantum value is open
+  and whose supremum is known not to be attained in any finite dimension.
+artifact: >-
+  A set of words in the observables and a list of weighted squares over them, all rational, whose
+  sum equals beta*I - B as an operator identity.
+oracle:
+  model: >-
+    exact rational arithmetic - the submitted squares are expanded in the free product of two
+    groups of involutions, and the resulting coefficient of every canonical word is compared to the
+    functional with no tolerance; the bound is the coefficient of the identity
+  feasibility: >-
+    non-negative weights, reduced and distinct basis words within the budget and letter cap,
+    rational entries within the magnitude cap, and one vector entry per basis word; any failure
+    scores that instance zero
+  deterministic: true
+normalization:
+  baseline: >-
+    the triangle inequality written as squares - one square per term of the functional over the
+    first-level basis - which proves the algebraic bound and scores exactly zero
+  reference: >-
+    numerical solve over Q = R^T R with an analytic gradient, rounded to rationals at 1e-9,
+    identity repaired exactly, positive semidefiniteness bought back with a diagonal shift, and
+    decomposed by exact LDL into squares; basis is the shortest-first truncation to the budget
+  score: >-
+    mean over four instances of the logarithmic progress from the free level-1 bound to the best
+    published bound, measured in distance to the best known quantum value, uncapped above
+citations:
+  - id: arxiv:2607.14755
+    title: "Flora et al., Moment optimization in the Navascues-Pironio-Acin hierarchy"
+  - id: arxiv:2608.29734
+    title: "The quantum supremum of the I3322 Bell inequality is not attained in finite dimension"
+  - id: doi:10.1103/PhysRevLett.98.010401
+    title: "Navascues, Pironio, Acin, Bounding the set of quantum correlations"
+  - id: doi:10.1103/PhysRevLett.23.880
+    title: "Clauser, Horne, Shimony, Holt, Proposed experiment to test local hidden-variable theories"
+invariants:
+  - >-
+    the certificate is sound by construction rather than by trust - weights are required
+    non-negative and the operator identity is checked exactly, so a submitted bound is a proof and
+    the oracle cannot be fooled by a numerically plausible matrix
+  - >-
+    the transcription of I3322 is validated four independent ways: its classical bound is 0 as
+    published, its level-1 relaxation reproduces the published NPA1 = 0.37500001 to seven digits,
+    an explicit two-qubit strategy reaches exactly 1/4 as known, and every certificate produced
+    here exceeds that value
+  - >-
+    positive semidefiniteness costs the oracle nothing because the certificate is submitted as the
+    squares; the alternative, testing a submitted matrix by exact elimination, has a cost that is
+    not bounded by the submission's size and was dropped for that reason
+  - >-
+    the scale is uncapped - the published level-2 bound is a witness worth 1, not a ceiling - and
+    the reference already beats it on the largest budget
+  - >-
+    a certificate below the best known quantum value is reported and scored zero rather than
+    rewarded, because it would contradict an explicit published strategy
+  - malformed submissions score zero and never raise out of the evaluator
+known_shortcuts: >-
+  Eighteen degenerate and adversarial submissions - floats in place of rationals, negative weights,
+  all-zero vectors, the identity-only basis, duplicated and unreduced words, an over-budget basis,
+  a 5000-digit rational aimed at the verifier's running time, a zero denominator, a boolean posing
+  as an integer, a raising callable and mismatched vector lengths - all score 0.000000 with
+  valid = 0, and none raises out of the evaluator. The float rejection is the load-bearing one: a
+  numerical SDP solution is not a certificate, and accepting one would have turned the task into a
+  solver call. Two earlier designs were discarded before any model saw this: instances at a
+  100-word budget, because exact verification of a submitted matrix at that size is unbounded in
+  cost, and a tilted-CHSH instance, because the closed form recalled for its quantum value did not
+  match an independent solve and no primary source was on hand to settle it.
+review:
+  status: pending_external
+  domain: quantum information / semidefinite optimisation
+  evaluator_security: >-
+    The oracle's work is bounded by the submission's declared size rather than by its content:
+    verification is MAX_SQUARES * max_basis^2 rational multiplications with every entry capped at
+    10^2000, measured at 0.28 s on the largest instance. This is why the certificate is submitted
+    as squares. The first design accepted a matrix and proved it semidefinite by exact rational
+    elimination, whose intermediate entries are ratios of leading minors and grow with the input's
+    values rather than its size, so a well-formed submission could have held the grader
+    indefinitely. Candidate code never runs in the oracle's process: it is executed in the
+    Bubblewrap sandbox over the standard trusted-driver boundary, and the certificate crosses that
+    boundary as data. Eighteen malformed and adversarial submissions, including a 5000-digit
+    rational aimed at the running time, score zero without raising.
+provenance:
+  class: known_answer
+  target_source: >-
+    Published NPA values for I3322 quoted verbatim from arXiv:2607.14755 section 3.1 and recorded
+    with their retrieval date in references/anchors.json. Tsirelson's bound for CHSH is textbook.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: >-
+    A model can certainly recall that the I3322 quantum value is about 0.2508754 and that CHSH is
+    2*sqrt(2). Neither number is what is scored. What is scored is an exact rational certificate at
+    a stated budget, which is not in any table and cannot be recalled; the baseline shows the
+    recallable content is worth 0.000. The residual risk is the opposite one - that the published
+    anchors move - which is why they carry retrieval dates and the freshness checker treats this
+    as an actively researched cell.
+lineage:
+  status: complete
+  builder_model_ids: ["claude-opus-5"]
+  builder_scaffolds: ["claude-code"]
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    None yet. Four construction checkpoints changed the task before any model saw it: the
+    certificate representation moved from a submitted matrix to submitted squares once the exact
+    PSD test proved unbounded in cost; the numerical solver moved from alternating projections to a
+    factored quasi-Newton solve after Dykstra stalled 4e-2 from Tsirelson's bound where the
+    factored solve reached 1e-7; the basis enumeration was reordered shortest-first after budget
+    truncation left the operator identity unsatisfiable; and the largest budget was reduced from
+    100 words to 40.
+  shortcut_discoverer: builder_red_team
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: claude-opus-5
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 3
+  oracle_disagreement_status: >-
+    quantified against three independent references - the published classical bound, the published
+    NPA1 value, and an explicit numerical two-qubit strategy - with no disagreement
+  independent_recomputation_status: >-
+    the exact positive-semidefinite test was checked against numpy eigenvalues on 800 random
+    matrices with zero disagreements before it was replaced; the reference, the baseline, the
+    18-probe shortcut sweep and the quantum-strategy soundness check are all reproducible from
+    verification/
