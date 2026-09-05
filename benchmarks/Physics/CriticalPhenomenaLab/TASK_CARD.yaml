@@ -1,0 +1,66 @@
+schema_version: 2
+scientific_question: Can an agent actively distinguish continuous and first-order phase transitions from smooth crossover or unsupported BKT-like behavior, and recover finite-size scaling parameters under a measurement budget?
+artifact: A transition type, thermodynamic critical temperature, continuous-transition exponents, finite-size shift, confidence, evidence lineage, or calibrated refusal.
+oracle:
+  model: deterministic reduced-order finite-size-scaling laboratory with continuous, first-order, crossover and BKT-like hidden worlds
+  feasibility: valid bounded experiment queries, finite physical parameter claims, evidence IDs from the current laboratory, and calibrated refusal
+  deterministic: true
+normalization:
+  baseline: one low-cost experiment followed by abstention on every hidden world
+  reference: exact hidden descriptors for supported worlds and correct refusal on crossover and BKT-like worlds
+  score: development mechanism recovery normalized above always-abstain; sealed-size prediction and shifted validation remain separate
+citations:
+- id: doi:10.1103/PhysRevB.30.1477
+  title: Finite-size scaling at first-order phase transitions
+- id: doi:10.1038/NPHYS4037
+  title: Learning phase transitions by confusion
+- id: doi:10.1103/PhysRevLett.132.207301
+  title: Mapping Out Phase Diagrams with Generative Classifiers
+invariants:
+- exact supported-world descriptors and correct unsupported-world refusal attain score one
+- always abstaining attains normalized score zero
+- repeated evaluation of the same candidate is deterministic
+- every accepted non-abstaining claim cites at least two immutable observations from its own world
+- overspending or malformed callback requests fail closed
+- mechanism recovery, false discovery, calibrated refusal and discovery coverage remain separately reported
+- sealed-size prediction and validation-world metrics remain evaluator-only
+known_shortcuts: The finite-size laboratory is a reduced-order emulator rather than raw material data or a full Monte Carlo engine. Public world families can create recognition shortcuts; server-held families, independent simulators and domain review are required before certification. Reference witnesses are calibration anchors, not experimental claims. No external dataset or restricted source is bundled; task code and generated observations are procedural and repository-local.
+review:
+  domain: pending_external_statistical_physics
+  evaluator_security: automated_determinism_bad_candidate_budget_lineage_and_metric_sealing_checks_pending
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic finite-size-scaling generator with development, shifted validation, null and misspecified worlds.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_yet_available
+  license: Procedural repository-local code and generated observations; no external dataset bundled
+  pollution_note: Public emulator family and interface are visible, while hidden parameters, split membership and sealed-size checks remain evaluator-only; server-held families are required before certification.
+novelty_risk:
+  level: medium
+  rationale: Phase-transition and universality-class discovery is distinct from microscopic Hamiltonian recovery and equation regression in the current repository, but the public emulator families require future held-out expansion.
+lineage:
+  status: complete
+  builder_model_ids:
+  - openai-codex:gpt-5
+  builder_scaffolds:
+  - science-benchmark-construction
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: Initial candidate implementation; observation-noise and BKT-like-width calibration was followed by a server truth-blind reference replay on 2026-09-05. The final replay was valid and budget-compliant with development combined_score 0.2763086, held-out robustness 0.52079975, zero false discoveries and full supported/unsupported coverage; no external model calibration yet.
+  shortcut_discoverer: pending
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: candidate_pending_review
+  author_domain: computational_science
+  reviewer_domain: pending_external_statistical_physics
+  expert_hours: null
+  red_team_rounds: 0
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: server reference replay completed; independent Monte Carlo recomputation pending
