@@ -40,9 +40,103 @@ from __future__ import annotations
 import math
 from fractions import Fraction
 
-from lp_algebra import (
-    laguerre, nonnegative_on_half_line, poly_add, poly_eval, poly_scale, poly_shift,
-)
+# The algebra is inlined rather than imported from a sibling. The trusted driver loads this file by
+# path, not as a package, so `from lp_algebra import ...` resolves against the harness's sys.path
+# and not against this directory - it raised ModuleNotFoundError inside the sandbox while working
+# perfectly when imported directly, which is the worst way for this to fail. verification/lp_algebra.py
+# remains the readable statement of the same rules and the task's tests check the copies agree.
+
+
+def laguerre(k: int, alpha: Fraction) -> list:
+    """Coefficients of L_k^{(alpha)}(w) in ascending powers of w, exact for rational alpha.
+
+    L_k^{(alpha)}(w) = sum_i (-1)^i * binom(k + alpha, k - i) * w^i / i!
+    """
+    out = []
+    for i in range(k + 1):
+        binomial = Fraction(1)
+        for j in range(1, k - i + 1):
+            binomial *= (alpha + i + j)
+            binomial /= j
+        factorial = Fraction(1)
+        for j in range(1, i + 1):
+            factorial *= j
+        out.append((-1) ** i * binomial / factorial)
+    return out
+
+
+def poly_add(left: list, right: list) -> list:
+    size = max(len(left), len(right))
+    out = [Fraction(0)] * size
+    for i, value in enumerate(left):
+        out[i] += value
+    for i, value in enumerate(right):
+        out[i] += value
+    return _trim(out)
+
+
+def poly_scale(poly: list, factor) -> list:
+    return _trim([factor * value for value in poly])
+
+
+def poly_mul(left: list, right: list) -> list:
+    if not left or not right:
+        return []
+    out = [Fraction(0)] * (len(left) + len(right) - 1)
+    for i, a in enumerate(left):
+        if a == 0:
+            continue
+        for j, b in enumerate(right):
+            if b == 0:
+                continue
+            out[i + j] += a * b
+    return _trim(out)
+
+
+def poly_shift(poly: list, offset) -> list:
+    """p(w) -> p(w + offset), by repeated synthetic division. Exact."""
+    out = [Fraction(0)]
+    for coefficient in reversed(poly):
+        out = poly_add(poly_mul(out, [Fraction(offset), Fraction(1)]), [Fraction(coefficient)])
+    return _trim(out)
+
+
+def poly_eval(poly: list, point) -> Fraction:
+    total = Fraction(0)
+    for coefficient in reversed(poly):
+        total = total * point + coefficient
+    return total
+
+
+def _trim(poly: list) -> list:
+    while poly and poly[-1] == 0:
+        poly.pop()
+    return poly
+
+
+def sum_of_squares(terms) -> list:
+    """sum_k weight_k * q_k(w)^2 from [(weight, coefficients), ...]. Weights must be >= 0."""
+    total: list = []
+    for weight, polynomial in terms:
+        if weight < 0:
+            raise ValueError("a square carries a negative weight")
+        if weight == 0:
+            continue
+        total = poly_add(total, poly_scale(poly_mul(polynomial, polynomial), weight))
+    return total
+
+
+def nonnegative_on_half_line(target: list, sigma0, sigma1) -> bool:
+    """Verify `target(w) >= 0 for all w >= 0` from a Positivstellensatz certificate.
+
+    A univariate polynomial is non-negative on [0, infinity) exactly when it can be written
+    `sigma0(w) + w * sigma1(w)` with both parts sums of squares, so the certificate is complete:
+    anything true has one, and anything with one is true. That is what makes this checkable rather
+    than merely testable - no sampling, no tolerance, no root isolation.
+    """
+    reconstructed = poly_add(sum_of_squares(sigma0),
+                             poly_mul([Fraction(0), Fraction(1)], sum_of_squares(sigma1)))
+    return _trim(list(target)) == reconstructed
 
 DIFFICULTY = 1
 
@@ -54,15 +148,31 @@ MAX_DENOMINATOR = 10 ** 2000
 # Cohn and Elkies, New upper bounds on sphere packings I, Annals of Mathematics 157 (2003),
 # Table 3, page 711. Columns, verbatim: "Dimension | Best Packing Known | Rogers' Bound | New Upper
 # Bound", all in centre density. Recorded with the retrieval date in references/anchors.json.
+#
+# The zero of the scale is not Rogers' bound. Rogers' bound comes from a different technique and is
+# not reachable by this one at any degree anyone has managed to certify exactly; anchoring there
+# would score every honest submission at zero. The zero is instead what *this* method gives with no
+# work at all - the two-term certificate, whose value is closed form and derived in solution.py:
+#
+#     trivial(n) = ((n + 2) / (2*pi))^(n/2) * (n + 2) / 2^(n + 1)
+#
+# The one is the published Cohn-Elkies bound. Reaching it means writing down an exact rational
+# certificate as strong as their numerical one, which as far as we can find nobody has published in
+# any dimension; the scale is uncapped above it.
 INSTANCES = (
-    # Dimension 8 is the rung with a known answer. Viazovska (2017) proved the optimal centre
-    # density is exactly 1/16, and that the linear programming bound is tight there, so the ceiling
-    # on this instance is 1.013 and the score is how much of the last 0.001 a submission certifies.
+    # Dimension 8 is the rung with a known answer: Viazovska proved the optimum is exactly 1/16 and
+    # that the linear programming bound is tight there.
     {"dimension": 8, "best_packing": 0.0625, "rogers": 0.06326, "cohn_elkies": 0.06251},
     {"dimension": 12, "best_packing": 0.03704, "rogers": 0.06559, "cohn_elkies": 0.06279},
     {"dimension": 16, "best_packing": 0.0625, "rogers": 0.11774, "cohn_elkies": 0.10738},
     {"dimension": 20, "best_packing": 0.13154, "rogers": 0.32454, "cohn_elkies": 0.27855},
 )
+
+
+def trivial_bound(dimension):
+    """The two-term certificate's bound, in closed form. See solution.py for the derivation."""
+    return (((dimension + 2) / (2.0 * math.pi)) ** (dimension / 2.0)
+            * (dimension + 2) / 2.0 ** (dimension + 1))
 
 
 def _fraction(value):
@@ -173,18 +283,19 @@ def certified_bound(submission, instance):
 
 
 def _instance_score(instance, bound):
-    """Linear from Rogers' bound to the published Cohn-Elkies bound, uncapped above.
+    """Linear from the two-term certificate to the published Cohn-Elkies bound, uncapped above.
 
-    A linear scale is right here and a logarithmic one is not, because the two anchors sit close
-    together in absolute terms - 0.06559 against 0.06279 in dimension 12 - while the distance from
-    either to the best packing known is much larger. On a log scale of the distance to the packing
-    the whole interval between the two published bounds would compress to 0.04 of the range.
+    Linear rather than logarithmic: the interesting region here spans a factor of two in the bound,
+    not orders of magnitude, and the distance to the best packing known is not the right ruler
+    because in dimension 8 that distance is zero at the answer while in dimension 20 it is most of
+    the interval.
     """
     if bound <= instance["best_packing"]:
         # Below an explicitly exhibited packing. Reported, never scored.
         return 0.0, True
-    span = instance["rogers"] - instance["cohn_elkies"]
-    return max(0.0, (instance["rogers"] - bound) / span), False
+    easy = trivial_bound(instance["dimension"])
+    span = easy - instance["cohn_elkies"]
+    return max(0.0, (easy - bound) / span), False
 
 
 def _public_instance(instance):
@@ -198,6 +309,7 @@ def _public_instance(instance):
         "best_packing_known": instance["best_packing"],
         "rogers_bound": instance["rogers"],
         "cohn_elkies_bound": instance["cohn_elkies"],
+        "two_term_certificate_bound": trivial_bound(instance["dimension"]),
     }
 
 
@@ -209,6 +321,7 @@ def evaluate(build_certificate):
             "best_packing_known": instance["best_packing"],
             "rogers_bound": instance["rogers"],
             "cohn_elkies_bound": instance["cohn_elkies"],
+            "two_term_certificate_bound": trivial_bound(instance["dimension"]),
         }
         try:
             bound = certified_bound(build_certificate(_public_instance(instance)), instance)

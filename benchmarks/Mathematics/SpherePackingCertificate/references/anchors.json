@@ -1,0 +1,33 @@
+{
+  "anchors": [
+    {"name": "cohn_elkies_bound_dim_8", "value": 0.06251,
+     "source_url": "https://doi.org/10.4007/annals.2003.157.689",
+     "derivation": "Cohn and Elkies, New upper bounds on sphere packings I, Annals of Mathematics 157 (2003), Table 3, page 711, column 'New Upper Bound', row 8. Centre density. Read from the paper.",
+     "retrieved_on": "2026-09-06"},
+    {"name": "cohn_elkies_bound_dim_12", "value": 0.06279,
+     "source_url": "https://doi.org/10.4007/annals.2003.157.689",
+     "derivation": "Same table, row 12.", "retrieved_on": "2026-09-06"},
+    {"name": "cohn_elkies_bound_dim_16", "value": 0.10738,
+     "source_url": "https://doi.org/10.4007/annals.2003.157.689",
+     "derivation": "Same table, row 16.", "retrieved_on": "2026-09-06"},
+    {"name": "cohn_elkies_bound_dim_20", "value": 0.27855,
+     "source_url": "https://doi.org/10.4007/annals.2003.157.689",
+     "derivation": "Same table, row 20.", "retrieved_on": "2026-09-06"},
+    {"name": "best_packing_known_dim_12", "value": 0.03704,
+     "source_url": "https://doi.org/10.4007/annals.2003.157.689",
+     "derivation": "Same table, column 'Best Packing Known', row 12. Used as the floor: a certified bound below it would contradict an exhibited packing and is reported rather than scored.",
+     "retrieved_on": "2026-09-06"},
+    {"name": "rogers_bound_dim_12", "value": 0.06559,
+     "source_url": "https://doi.org/10.4007/annals.2003.157.689",
+     "derivation": "Same table, column \"Rogers' Bound\", row 12. Reported as a milestone, not used as a score anchor: Rogers comes from a different technique and no exactly certifiable submission has reached it at any degree tried here.",
+     "retrieved_on": "2026-09-06"},
+    {"name": "optimal_centre_density_dim_8", "value": 0.0625,
+     "source_url": "https://doi.org/10.4007/annals.2017.185.3.7",
+     "derivation": "Viazovska, The sphere packing problem in dimension eight: the optimum is exactly 1/16, attained by E8, and the Cohn-Elkies linear programming bound is tight there. This is what makes dimension 8 the rung with a known answer.",
+     "retrieved_on": "2026-09-06"},
+    {"name": "three_point_bound_dim_4", "value": 0.12891,
+     "source_url": "https://arxiv.org/abs/2206.15373",
+     "derivation": "Cohn, de Laat and Salmon, Three-point bounds for sphere packing: 0.125 <= delta_4 <= 0.12891. Recorded because it shows the two-point linear programming bound this task certifies is no longer the strongest known technique in low dimensions, which is a live line of work and the reason the anchors carry retrieval dates.",
+     "retrieved_on": "2026-09-06"}
+  ]
+}

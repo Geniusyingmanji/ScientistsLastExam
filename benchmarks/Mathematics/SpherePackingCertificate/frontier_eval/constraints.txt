@@ -1,0 +1,11 @@
+1) Only edit solution.py. Keep build_certificate(instance).
+2) Return {"threshold": [num,den], "coefficients": [[num,den],...],
+   "transform_nonnegative": {"sigma0": [...], "sigma1": [...]},
+   "tail_nonpositive": {"sigma0": [...], "sigma1": [...]}}.
+   Every number is an integer or an exact [numerator, denominator] pair. Floats are rejected, not
+   rounded: a numerical solution of the linear program is not a certificate, and the grid
+   relaxation is known to return bounds that are false.
+3) Square weights must be non-negative, and sigma0 + w*sigma1 must reconstruct its target exactly.
+   f(0) and fhat(0) must both be positive. Anything else scores that dimension zero.
+4) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read
+   verification/ or frontier_eval/.

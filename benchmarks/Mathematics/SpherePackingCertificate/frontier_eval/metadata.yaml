@@ -1,0 +1,13 @@
+domain: DiscreteGeometry
+task: SpherePackingCertificate
+scientific_role: optimization
+difficulty: hard
+tier: T2
+oracle_type: analytical
+score_mode: uncapped
+gpu_required: false
+eval_time_seconds: 60
+science_metric: mean_linear_progress_from_the_two_term_certificate_to_the_published_cohn_elkies_bound
+reference_baseline: the two-term Cohn-Elkies certificate, closed form
+reference_sota: "published Cohn-Elkies linear programming bounds (Ann. of Math. 157 (2003), Table 3); an exact rational certificate of that strength does not appear to be published in any dimension"
+citation: "Cohn and Elkies, New upper bounds on sphere packings I, Annals of Mathematics 157 (2003) 689-714, DOI 10.4007/annals.2003.157.689; Viazovska, The sphere packing problem in dimension 8, DOI 10.4007/annals.2017.185.3.7"

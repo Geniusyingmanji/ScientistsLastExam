@@ -47,6 +47,7 @@ DISCIPLINE_DOMAINS: dict[str, tuple[str, ...]] = {
         "WavePropagation",
     ),
     "Mathematics": (
+        "DiscreteGeometry",
         "BayesianInference",
         "DynamicalSystems",
         "Mathematics",

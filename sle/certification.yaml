@@ -501,6 +501,17 @@ tasks:
     citation_ids:
       - arxiv:2502.04514
       - doi:10.1007/BF02165411
+  DiscreteGeometry/SpherePackingCertificate:
+    status: candidate
+    reason: >-
+      exact rational Cohn-Elkies certificates bounding sphere-packing centre density in four open
+      dimensions, scored uncapped from the closed-form two-term certificate to the published
+      linear programming bound; the Fourier eigenbasis is verified against a numerical Hankel
+      transform to 1e-16, the baseline's bound is reproduced from an independent closed form, and
+      fifteen degenerate submissions score zero; the textbook grid relaxation was measured to
+      return false bounds and is recorded; no frontier searcher draw yet, pending external
+      discrete-geometry review
+    citation_ids: [doi:10.4007/annals.2003.157.689, doi:10.4007/annals.2017.185.3.7, arxiv:2206.15373]
   QuantumFoundations/BellBoundCertificate:
     status: candidate
     reason: >-

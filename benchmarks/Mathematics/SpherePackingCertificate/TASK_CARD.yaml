@@ -1,0 +1,134 @@
+schema_version: 2
+scientific_question: >-
+  Produce an exact rational Cohn-Elkies certificate bounding the sphere-packing centre density from
+  above, in four dimensions where the packing problem is open, scored against the published linear
+  programming bound.
+artifact: >-
+  Rational Laguerre coefficients, a rational support threshold, and two sum-of-squares certificates
+  proving the two hypotheses of Cohn-Elkies Theorem 3.1.
+oracle:
+  model: >-
+    exact rational arithmetic - the Laguerre expansion gives the Fourier transform as a sign flip,
+    and each hypothesis is verified by reconstructing a rational polynomial as sigma0 + w*sigma1
+    with both parts sums of squares, a characterisation that is complete on the half-line
+  feasibility: >-
+    positive rational threshold, positive f(0) and fhat(0), non-negative square weights, degree and
+    magnitude caps, and exact reconstruction of both targets; any failure scores that dimension zero
+  deterministic: true
+normalization:
+  baseline: >-
+    the two-term certificate, f = (n/2 + 2) L_0 + L_1, whose two polynomials collapse to
+    P(w) = n + 2 - w and Q(w) = w + 2 so that both hypotheses hold by inspection; its bound is
+    closed form and is the zero of the scale
+  reference: >-
+    a seeded bounded search over the structural parametrisation -f(R+s) = q0(s)^2 + s q1(s)^2, which
+    makes the tail hypothesis automatic, followed by one exact sum-of-squares extraction for the
+    transform
+  score: >-
+    mean over four dimensions of the linear progress from the two-term certificate to the published
+    Cohn-Elkies bound, uncapped above
+citations:
+  - id: doi:10.4007/annals.2003.157.689
+    title: "Cohn and Elkies, New upper bounds on sphere packings I, Ann. of Math. 157 (2003)"
+  - id: doi:10.4007/annals.2017.185.3.7
+    title: "Viazovska, The sphere packing problem in dimension 8"
+  - id: arxiv:1006.3032
+    title: "Pal and Vertesi (used only for the algebra check shared with BellBoundCertificate)"
+  - id: arxiv:2206.15373
+    title: "Cohn, de Laat and Salmon, Three-point bounds for sphere packing"
+invariants:
+  - >-
+    the Fourier eigenbasis is verified rather than assumed - L_k^{(n/2-1)}(2 pi |x|^2) e^{-pi|x|^2}
+    was checked against the radial Hankel transform in dimensions 4, 8 and 12 at orders 0 to 3, with
+    relative error between 5e-17 and 8e-16
+  - >-
+    the Laguerre coefficients agree with scipy.special.genlaguerre for dimensions 4, 8, 12 and 13 at
+    orders 0 to 5, and the half-line certificate check accepts (w-1)^2 and w while rejecting w - 1
+  - >-
+    the two-term baseline's bound is closed form, ((n+2)/(2 pi))^(n/2) (n+2) / 2^(n+1), and the
+    evaluator reproduces it to six digits in all four dimensions from the submitted certificate
+  - >-
+    the scale is uncapped - the published Cohn-Elkies bound is a witness worth 1, not a ceiling -
+    and reaching it means an exact rational certificate as strong as their numerical one
+  - >-
+    a bound below the best packing known is reported and scored zero rather than rewarded, because
+    it would contradict an explicitly exhibited packing
+  - malformed submissions score zero and never raise out of the evaluator
+known_shortcuts: >-
+  Fifteen degenerate and adversarial submissions - floats for coefficients, floats for weights,
+  negative weights, a certificate that does not reconstruct its target, a negative threshold, a zero
+  threshold, a zero denominator, an empty coefficient list, a 5000-digit rational, a submission over
+  the degree cap, a boolean posing as an integer, a missing certificate, a raising callable, None
+  and {} - all score 0.000000 with valid = 0, and none raises out of the evaluator. A sixteenth,
+  the legitimate two-term certificate, scores 0.000000 with valid = 1, which is the distinction that
+  matters: invalid and valid-but-worthless are different states.
+  The float rejection is load-bearing in a stronger sense here than usual. The grid linear program -
+  the textbook numerical method - returns bounds that are false: at degree 16 it reports 0.06237 in
+  dimension 8, below what the E8 lattice achieves, and 0.00066 in dimension 16 against a packing of
+  0.0625, because the polynomial satisfies every grid constraint and dips between the points. Exact
+  extraction refuses every one of its solutions.
+review:
+  status: pending_external
+  domain: pending_external_discrete_geometry
+  evaluator_security: >-
+    The oracle's work is bounded by the submission's declared size: polynomial multiplication and
+    one reconstruction per hypothesis, with degree and magnitude caps, measured well under a second.
+    Positive semidefiniteness is never tested by the oracle - the certificate is submitted as the
+    squares - so the unbounded cost of rational elimination, whose intermediate entries are ratios
+    of leading minors, is never incurred. Candidate code runs in the Bubblewrap sandbox over the
+    standard trusted-driver boundary and the certificate crosses it as data.
+provenance:
+  class: known_answer
+  target_source: >-
+    Cohn and Elkies, Ann. of Math. 157 (2003), Table 3 p. 711, read from the paper: columns
+    "Dimension | Best Packing Known | Rogers' Bound | New Upper Bound", all centre density. Recorded
+    with the retrieval date in references/anchors.json.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: >-
+    A model can recall that dimension 8 is solved and that its answer is 1/16, and can probably
+    recall the shape of Table 3. Neither is what is scored. What is scored is an exact rational
+    certificate at a stated dimension, which is not in any table and, at the strength of the
+    published bound, does not appear to exist in the literature at all; the baseline shows the
+    recallable content is worth 0.000. The residual risk is that the published bounds improve, which
+    is why the anchors carry retrieval dates and this is treated as an actively researched cell -
+    three-point bounds already beat the two-point bound in dimensions 4 to 7 and 9 to 16, and that
+    line of work is live.
+lineage:
+  status: complete
+  builder_model_ids: ["claude-opus-5"]
+  builder_scaffolds: ["claude-code"]
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    None yet. Four construction decisions were made by measurement before any model saw this: the
+    grid linear program was discarded after it produced bounds below the E8 packing; direct search
+    over Laguerre coefficients was discarded after 4000 draws produced no candidate that passed a
+    numerical screen; a semidefinite formulation over Gram factors with the tail as a penalty was
+    discarded after no configuration yielded an extractable certificate; and the zero of the scale
+    was moved from Rogers' bound to the two-term certificate once it was clear that no exactly
+    certifiable submission reaches Rogers at any degree tried.
+  shortcut_discoverer: builder_red_team
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: claude-opus-5
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 3
+  oracle_disagreement_status: >-
+    the Fourier eigenbasis was cross-checked against a numerical Hankel transform and the Laguerre
+    coefficients against scipy, with no disagreement; the baseline's bound was checked against an
+    independent closed-form derivation
+  independent_recomputation_status: >-
+    the baseline, the reference, the 15-probe shortcut sweep and the false-bound demonstration for
+    the grid linear program are all reproducible from verification/
