@@ -1,0 +1,15 @@
+domain: Mathematics
+task: VanDerWaerdenColoring
+scientific_role: optimization
+difficulty: flagship
+tier: T3
+oracle_type: analytical
+score_mode: uncapped
+gpu_required: false
+eval_time_seconds: 20
+science_metric: mean_coloring_length_improvement_toward_published_van_der_waerden_witnesses
+sizes: ["k4r2", "k5r2", "k7r2"]
+reference_baseline: r_blocks_of_k_minus_1_elements_structurally_AP_free_lengths_6_8_12
+reference_sota: "W(2,4)-1=34 and W(2,5)-1=177 (proven exact); best-known W(2,7) lower-bound witness length 3703 (not proven exact)"
+citation: "Chvatal 1970; Stevens & Shantaram 1978; Rabung & Lotts (W(2,7) > 3703 via the zipper construction method)"
+claim_boundary: "(2,4) and (2,5) anchors are proven exact, so no valid coloring can exceed them; the (2,7) anchor is a best-known lower bound with genuine headroom, corroborated across three independent lookups but without a stable primary-source URL for the original Rabung-Lotts paper -- see references/known_best.md."

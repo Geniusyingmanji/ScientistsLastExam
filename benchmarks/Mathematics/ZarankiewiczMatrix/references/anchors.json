@@ -1,0 +1,26 @@
+{
+  "task": "Mathematics/ZarankiewiczMatrix",
+  "anchors": [
+    {
+      "name": "sota_ref_13x19",
+      "value": 118,
+      "source_url": "https://arxiv.org/abs/2608.26603",
+      "derivation": "A. Saurabh, \"Five improved lower bounds for Zarankiewicz numbers z(m,n;3,3),\" arXiv:2608.26603. Results table reports z(13,19;3,3) >= 118, improving the prior lower bound of 114.",
+      "retrieved_on": "2026-09-05"
+    },
+    {
+      "name": "sota_ref_14x19",
+      "value": 126,
+      "source_url": "https://arxiv.org/abs/2608.26603",
+      "derivation": "A. Saurabh, \"Five improved lower bounds for Zarankiewicz numbers z(m,n;3,3),\" arXiv:2608.26603. Results table reports z(14,19;3,3) >= 126, improving the prior lower bound of 121.",
+      "retrieved_on": "2026-09-05"
+    },
+    {
+      "name": "sota_ref_16x18",
+      "value": 136,
+      "source_url": "https://arxiv.org/abs/2608.26603",
+      "derivation": "A. Saurabh, \"Five improved lower bounds for Zarankiewicz numbers z(m,n;3,3),\" arXiv:2608.26603. Results table reports z(16,18;3,3) >= 136, improving the prior lower bound of 130.",
+      "retrieved_on": "2026-09-05"
+    }
+  ]
+}

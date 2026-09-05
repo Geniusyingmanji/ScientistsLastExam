@@ -64,6 +64,10 @@ CHINESE_NAMES = {
     "Mathematics/CapSetFrontier": "Cap Set 未证明维度",
     "Mathematics/KissingNumber": "接触数构造",
     "Mathematics/RamseyLowerBound": "Ramsey 下界染色",
+    "Mathematics/ZarankiewiczMatrix": "Zarankiewicz 极值矩阵",
+    "Mathematics/DegreeDiameterGraph": "度-直径极值图构造",
+    "Mathematics/VanDerWaerdenColoring": "van der Waerden 无进染色",
+    "Mathematics/SchurPartition": "Schur 无和分拆",
     "Mathematics/SequenceLawRecovery": "整数序列递推恢复",
     "Mathematics/Superpermutation": "超排列最短串",
     "Mathematics/NonlinearCodeRecords": "非线性码规模纪录",
@@ -194,6 +198,18 @@ CHINESE_BRIEFS = {
     "Mathematics/RamseyLowerBound": (
         "构造更大的 (s,t)-Ramsey 染色以提高下界",
         "对最好已知染色阶数的平均进度;无上限"),
+    "Mathematics/ZarankiewiczMatrix": (
+        "在三组给定的 (m,n) 规模上构造不含 3x3 全一子矩阵的更密 0/1 矩阵——2026 年 LLM 进化搜索(OpenEvolve,本仓库自带的搜索后端之一)刚刷新过的极值图论问题",
+        "对最新发表下界(z(m,n;3,3) 的已发表值)的平均进度;无上限,且这些是尚未被上界证明封顶的下界纪录"),
+    "Mathematics/DegreeDiameterGraph": (
+        "在三组给定的 (最大度 d, 直径 k) 上构造尽可能大的图——2026 年有论文报道通过与可浏览器访问的 LLM 交互刷新过下界",
+        "对度-直径问题维护表中最好已知顶点数的平均进度;无上限,均未被证明最优"),
+    "Mathematics/VanDerWaerdenColoring": (
+        "为给定的颜色数与等差数列长度构造尽可能长的、不含单色等差数列的染色",
+        "两组对照证明最优的 van der Waerden 数(硬上限,已披露)、一组对照尚未证明最优的最好已知下界(真实无上限空间)"),
+    "Mathematics/SchurPartition": (
+        "为给定的分组数 k 构造尽可能长的无和分拆(每组内不含 a+b=c,允许 a=b)",
+        "k=4 对照证明最优的 Schur 数(硬上限,已披露);k=6、k=7 对照尚未证明最优的最好已知下界(真实无上限空间)"),
     "Mathematics/SequenceLawRecovery": (
         "给出整数序列前若干项,说出产生它的线性递推;项数不足以定唯一最小规则时拒答",
         "延续准确率;误发现率与不定性拒答分开报告"),

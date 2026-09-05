@@ -10,6 +10,22 @@ policy:
   statuses: [certified, candidate, quarantined]
 
 tasks:
+  Mathematics/ZarankiewiczMatrix:
+    status: candidate
+    reason: exact K3,3-freeness oracle (enumeration over every 3-row combination's shared-column bitmask) scored uncapped against the most recent published Zarankiewicz lower bounds (arXiv:2608.26603); no frontier searcher draw yet, pending external extremal-graph-theory review
+    citation_ids: [arxiv:2605.01120, arxiv:2608.26603, doi:10.4064/cm-3-1-50-57]
+  Mathematics/DegreeDiameterGraph:
+    status: candidate
+    reason: exact degree/diameter oracle (adjacency degree count plus BFS from every vertex) scored uncapped against the maintained degree/diameter record table, independently re-fetched; no frontier searcher draw yet, pending external graph-theory review
+    citation_ids: [arxiv:2606.15860, web:combinatoricswiki-degree-diameter-table]
+  Mathematics/VanDerWaerdenColoring:
+    status: candidate
+    reason: exact monochromatic-AP oracle (vectorized comparison across every common difference) scored against 2 proven-exact van der Waerden numbers and 1 best-known lower bound; a disclosed mix of a hard ceiling and genuine uncapped headroom, pending external Ramsey-theory review
+    citation_ids: [web:vdw-chvatal-1970, web:vdw-stevens-shantaram-1978, web:vdw-rabung-lotts-w27]
+  Mathematics/SchurPartition:
+    status: candidate
+    reason: exact sum-free-partition oracle (convolution-based membership check) scored against a proven-exact Schur number and 2 best-known lower bounds; a disclosed mix of a hard ceiling and genuine uncapped headroom, pending external Ramsey-theory review
+    citation_ids: [doi:10.1145/321296.321300, arxiv:1711.08076, doi:10.37236/1510, arxiv:2107.03560]
   MedicinalChemistry/MolecularLeadOptimization:
     status: candidate
     reason: RDKit community-standard oracle with a verified approved-drug reference panel; pending external medicinal-chemistry review

@@ -1,0 +1,67 @@
+schema_version: 2
+scientific_question: Can a policy build a larger max-degree-d, diameter-k graph, at three concrete (d,k) sizes, than the current best-known graph on the maintained degree/diameter record table -- a real, exactly-checkable improvement on a problem still open today?
+artifact: An edge list (vertex labels 0..N-1) with max degree <= d and diameter <= k, for (d,k) in {(4,3), (5,3), (6,3)}.
+oracle:
+  model: exact max-degree count plus breadth-first search from every vertex to determine connectivity and diameter (a finite, deterministic computation)
+  feasibility: contiguous 0-indexed vertex labels, no self-loops or duplicate edges, max degree <= d, connected with diameter <= k
+  deterministic: true
+normalization:
+  baseline: the "central-edge double tree" (two roots joined by an edge, each growing a (d-1)-ary depth-1 tree), giving 8/10/12 vertices at the three sizes, diameter exactly k=3 by construction
+  reference: the current best-known vertex count on the maintained "Table of the largest known graphs of a given diameter and maximal degree" (41, 72, 111), none proven optimal
+  score: mean over the three sizes of (N - baseline_N) / (sota_ref_N - baseline_N), clipped below at 0, unbounded above -- matching the current record scores 1.0 at that size, a verified larger graph scores above 1.0
+citations:
+- id: arxiv:2606.15860
+  title: New lower bounds for the degree/diameter problem via interaction with a browser-accessible LLM
+- id: web:combinatoricswiki-degree-diameter-table
+  title: Table of the largest known graphs of a given diameter and maximal degree
+invariants:
+- the degree and diameter checks are exact integer/graph arithmetic (adjacency-list degree counts and BFS distances), no floating point and no sampling
+- the baseline (central-edge double tree) has diameter exactly k=3 by construction and is checked to score exactly 0.0000 on all three sizes
+- all three sota_ref anchors (41, 72, 111) come from a single maintained record table, independently re-fetched and confirmed at construction time; none is marked proven-optimal in that table, so real headroom exists above the anchor
+- combined_score has genuine uncapped headroom above 1.0, since these are "largest found so far" records, not proven-optimal values
+- reciting a vertex count is worth nothing without producing the literal edge list; the oracle checks the submitted graph directly (every vertex's degree and every pairwise distance), never a claimed number
+- the shipped reference construction (randomized circulant-graph search) is a real, standard technique, not the algebraic/computer-search construction behind the published records, and does not reach any of the three current records, leaving real headroom
+known_shortcuts: The degree/diameter problem's general shape, the Moore bound, and the cited 2026 LLM paper are well-documented and may occur in training data; reciting a vertex count or the paper's headline numbers is not sufficient, since the oracle requires an actual edge list that passes the same exact degree/diameter check anyone else would run, and finding a genuinely larger graph at these exact (d,k) sizes is a real result the oracle cannot be talked out of accepting or rejecting.
+review:
+  domain: pending_external_graph_theory
+  evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_uncapped_normalization_checks
+provenance:
+  class: known_answer
+  target_source: Best-known-graph records from a maintained public table, used only as score=1.0 witnesses; a verified larger graph scores above 1.0 and is a real mathematical result, not a benchmark artifact.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: high
+  rationale: The degree/diameter problem, the Moore bound, and the cited 2026 LLM paper are recent enough to plausibly be in pretraining data and circulant-graph search is a well-known technique, but the exact literal edge list achieving any of these three specific (d,k) records is not something a model can merely recite -- reconstructing or improving on it is the actual task.
+lineage:
+  status: complete
+  builder_model_ids:
+  - anthropic:claude-sonnet-5
+  builder_scaffolds:
+  - claude-code
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    Built at the user's request after a broader search for math problems with a genuine,
+    real, computationally-tracked "progress bar" record beyond bounded-gaps-between-primes
+    (already built as NarrowAdmissibleTuple). Selected alongside the Zarankiewicz problem,
+    van der Waerden numbers and Schur numbers as the strongest four candidates, on the strength
+    of a directly-cited 2026 paper using LLM-guided search to make genuine new progress on
+    exactly this construction. No frontier searcher draw has been run.
+  shortcut_discoverer: builder_self_audit
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: anthropic:claude-sonnet-5
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: the reference, the baseline, the degree/diameter checker and the bad-candidate shapes are all runnable from this directory

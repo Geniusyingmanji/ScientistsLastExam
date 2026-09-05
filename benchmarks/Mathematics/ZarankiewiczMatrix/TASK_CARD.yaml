@@ -1,0 +1,70 @@
+schema_version: 2
+scientific_question: Can a policy build a denser K3,3-free 0/1 matrix, at three concrete (m,n) sizes, than the most recent published lower bound (arXiv:2608.26603) -- a real, exactly-checkable improvement on the Zarankiewicz problem, still open today?
+artifact: An m x n 0/1 matrix with no s x t all-ones submatrix, for (m,n,s,t) in {(13,19,3,3), (14,19,3,3), (16,18,3,3)}.
+oracle:
+  model: exact enumeration of every s-row combination's shared-column bitmask against every t-column threshold (a finite, deterministic computation), plus an exact ones-count
+  feasibility: exact m x n shape, entries in {0,1}, no s rows and t columns all equal to 1 simultaneously
+  deterministic: true
+normalization:
+  baseline: fills exactly 2 full columns per row (structurally K3,3-free by construction), giving 26/28/32 ones at the three sizes
+  reference: the most recently published lower bound for z(m,n;3,3) at each size (118, 126, 136), from arXiv:2608.26603
+  score: mean over the three sizes of (ones - baseline_ones) / (sota_ref_ones - baseline_ones), clipped below at 0, unbounded above -- matching the published record scores 1.0 at that size, a verified denser matrix scores above 1.0
+citations:
+- id: arxiv:2605.01120
+  title: New Bounds for Zarankiewicz Numbers via Reinforced LLM Evolutionary Search
+- id: arxiv:2608.26603
+  title: Five improved lower bounds for Zarankiewicz numbers z(m,n;3,3)
+- id: doi:10.4064/cm-3-1-50-57
+  title: On a problem of K. Zarankiewicz
+invariants:
+- the s x t all-ones check is exact integer/bitmask arithmetic over every combination of s rows, no floating point and no sampling
+- the baseline (2-full-columns construction) is K3,3-free by construction regardless of m, n and is checked to score exactly 0.0000 on all three sizes
+- all three sota_ref anchors (118, 126, 136) are direct quotes from a single primary source (arXiv:2608.26603's own results table), not a mix of primary and secondary sources
+- these are lower-bound records without a matching upper-bound proof, so combined_score has genuine uncapped headroom above 1.0 rather than a hidden ceiling
+- reciting a ones-count is worth nothing without producing the literal matrix; the oracle checks the submitted matrix directly, never a claimed number
+- the shipped reference construction (randomized greedy with incremental K3,3 checking) is a real, standard technique, not an exhaustive or SAT/evolutionary search, and does not reach any of the three published records, leaving real (if numerically modest) headroom
+known_shortcuts: The Zarankiewicz problem's general shape and the existence of the cited 2026 LLM-evolutionary-search results are well-documented and may occur in training data; reciting a ones-count or the paper's headline numbers is not sufficient, since the oracle requires an actual m x n matrix that passes the same exact K3,3-freeness check anyone else would run, and finding a genuinely denser matrix at these exact sizes is a real result the oracle cannot be talked out of accepting or rejecting.
+review:
+  domain: pending_external_extremal_graph_theory
+  evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_uncapped_normalization_checks
+provenance:
+  class: known_answer
+  target_source: Published lower-bound records (arXiv:2608.26603) used only as score=1.0 witnesses; a verified denser matrix scores above 1.0 and is a real mathematical result, not a benchmark artifact.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: high
+  rationale: The Zarankiewicz problem and the cited 2026 LLM-evolutionary-search papers are recent enough to plausibly be in pretraining data and the general technique (greedy/evolutionary densification of a K_{s,t}-free bipartite graph) is well known, but the exact literal matrix achieving any of these three specific (m,n) records is not something a model can merely recite -- reconstructing or improving on it is the actual task.
+lineage:
+  status: complete
+  builder_model_ids:
+  - anthropic:claude-sonnet-5
+  builder_scaffolds:
+  - claude-code
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    Built at the user's request after a broader search for math problems with a genuine,
+    real, computationally-tracked "progress bar" record beyond bounded-gaps-between-primes
+    (already built as NarrowAdmissibleTuple). Selected alongside the degree/diameter problem,
+    van der Waerden numbers and Schur numbers as the strongest four candidates, on the strength
+    of a directly-cited 2026 paper using OpenEvolve (a search backend this repository already
+    supports) to make genuine new progress on exactly this construction. No frontier searcher
+    draw has been run.
+  shortcut_discoverer: builder_self_audit
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: anthropic:claude-sonnet-5
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: the reference, the baseline, the K3,3-freeness checker and the bad-candidate shapes are all runnable from this directory

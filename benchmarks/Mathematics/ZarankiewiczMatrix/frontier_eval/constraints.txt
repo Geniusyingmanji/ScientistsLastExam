@@ -1,0 +1,4 @@
+1) Only edit solution.py. Keep construct_matrix(m, n, s, t) -> m x n list of lists of 0/1 ints.
+2) No s rows and t columns may all be 1 simultaneously. Invalid -> score 0.
+3) Shape must be exactly m x n. numpy/stdlib only, CPU.
+4) Do not read verification/ or frontier_eval/.

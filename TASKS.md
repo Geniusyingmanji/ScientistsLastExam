@@ -4,16 +4,16 @@
 
 | | |
 |---|---:|
-| 任务包 | 63 |
-| optimization | 30 |
+| 任务包 | 67 |
+| optimization | 34 |
 | discovery | 33 |
 | certified | 5 |
-| candidate | 58 |
-| 学科 | 7(Biology 7,Chemistry 13,ComputerScience 6,EarthScience 5,Engineering 11,Mathematics 10,Physics 11) |
+| candidate | 62 |
+| 学科 | 7(Biology 7,Chemistry 13,ComputerScience 6,EarthScience 5,Engineering 11,Mathematics 14,Physics 11) |
 
 认证描述的是证据质量,不是难度。标 on-ramp 的任务首个前沿模型提案已够到参考解,不用于配对 Δ 测量。
 
-## Optimization(30)
+## Optimization(34)
 
 ### 工程设计(engineering_design) — 15
 
@@ -35,7 +35,7 @@
 | [`DiffractionGratingDesign`](benchmarks/Physics/DiffractionGratingDesign/)<br>衍射光栅设计 | Physics | Optics | uncapped | fourier_modal_rcwa | candidate | polarization-tolerant multilayer relief design | 设计五层一维二元介质浮雕,把透射光导入 +1 衍射级,且对偏振与角度容差 | 开发集目标级效率;偏振/角度/波长与工艺偏移稳健性分列,无上限 |
 | [`MultilayerThinFilm`](benchmarks/Physics/MultilayerThinFilm/)<br>多层减反射膜 | Physics | Photonics | clipped | physical_sim | certified | design a broadband antireflection coating | 设计可见光全谱段的多层宽带减反射膜 | 宽带减反射质量;物理下界为零平均反射 |
 
-### 开放组合纪录(combinatorial,无上限) — 10
+### 开放组合纪录(combinatorial,无上限) — 14
 
 | 任务 | 学科 | 领域 | 打分 | oracle | 认证 | 说明 | 中文题意 | 中文评估方法 |
 |---|---|---|---|---|---|---|---|---|
@@ -44,10 +44,14 @@
 | [`CapSet`](benchmarks/Mathematics/CapSet/)<br>Cap Set 构造 | Mathematics | Mathematics | uncapped | analytical | certified | find large cap sets in Z_3^n | 在 Z_3^n 里构造更大的 cap set(无三点共线) | 对最好已知规模的平均进度;无上限 |
 | [`CapSetFrontier`](benchmarks/Mathematics/CapSetFrontier/)<br>Cap Set 未证明维度 | Mathematics | Mathematics | uncapped | analytical | candidate | large cap sets in dimensions that are still open | 在最大值尚未证明的 n=7,8,9 上构造更大的 cap set | 对最好已知规模的平均进度;无上限,与 CapSet 的维度不相交 |
 | [`CirclePacking`](benchmarks/Mathematics/CirclePacking/)<br>圆堆积 | Mathematics | Optimization | uncapped | analytical | certified | pack unit circles into the smallest square | 把 N 个单位圆装进边长最小的正方形 | 对最好已知装填的平均缺口闭合;无上限 |
+| [`DegreeDiameterGraph`](benchmarks/Mathematics/DegreeDiameterGraph/)<br>度-直径极值图构造 | Mathematics | Mathematics | uncapped | analytical | candidate | build a bigger bounded-degree, bounded-diameter graph than the published record | 在三组给定的 (最大度 d, 直径 k) 上构造尽可能大的图——2026 年有论文报道通过与可浏览器访问的 LLM 交互刷新过下界 | 对度-直径问题维护表中最好已知顶点数的平均进度;无上限,均未被证明最优 |
 | [`KissingNumber`](benchmarks/Mathematics/KissingNumber/)<br>接触数构造 | Mathematics | Mathematics | uncapped | analytical | candidate | pack more unit spheres around one sphere | 在 9、10、12 维构造更多与中心球相切的单位球 | 固定容差下对最好已知接触数的平均进度;无上限 |
 | [`NonlinearCodeRecords`](benchmarks/Mathematics/NonlinearCodeRecords/)<br>非线性码规模纪录 | Mathematics | Mathematics | uncapped | analytical | candidate | build a bigger binary code than a linear one can be | 在四个 A(n,d) 未闭合的参数上构造尽可能大的二元码;已发表纪录全部由非线性码持有,线性构造够不到 | 从平凡分块重复构造到已发表纪录的平均进度,无上限;验证只是逐对汉明距离计数,与构造方法无关 |
 | [`RamseyLowerBound`](benchmarks/Mathematics/RamseyLowerBound/)<br>Ramsey 下界染色 | Mathematics | Mathematics | uncapped | analytical | candidate | construct larger (s,t)-Ramsey colorings | 构造更大的 (s,t)-Ramsey 染色以提高下界 | 对最好已知染色阶数的平均进度;无上限 |
+| [`SchurPartition`](benchmarks/Mathematics/SchurPartition/)<br>Schur 无和分拆 | Mathematics | Mathematics | uncapped | analytical | candidate | build a longer sum-free k-partition than the published record | 为给定的分组数 k 构造尽可能长的无和分拆(每组内不含 a+b=c,允许 a=b) | k=4 对照证明最优的 Schur 数(硬上限,已披露);k=6、k=7 对照尚未证明最优的最好已知下界(真实无上限空间) |
 | [`Superpermutation`](benchmarks/Mathematics/Superpermutation/)<br>超排列最短串 | Mathematics | Mathematics | uncapped | analytical | candidate | shorter strings that contain every permutation | 构造更短的超排列字符串,使其包含全部排列作为连续子串 | 对最短已知长度的平均进度;无上限 |
+| [`VanDerWaerdenColoring`](benchmarks/Mathematics/VanDerWaerdenColoring/)<br>van der Waerden 无进染色 | Mathematics | Mathematics | uncapped | analytical | candidate | build a longer AP-free coloring than the published witness | 为给定的颜色数与等差数列长度构造尽可能长的、不含单色等差数列的染色 | 两组对照证明最优的 van der Waerden 数(硬上限,已披露)、一组对照尚未证明最优的最好已知下界(真实无上限空间) |
+| [`ZarankiewiczMatrix`](benchmarks/Mathematics/ZarankiewiczMatrix/)<br>Zarankiewicz 极值矩阵 | Mathematics | Mathematics | uncapped | analytical | candidate | build a denser K3,3-free 0/1 matrix than the published record | 在三组给定的 (m,n) 规模上构造不含 3x3 全一子矩阵的更密 0/1 矩阵——2026 年 LLM 进化搜索(OpenEvolve,本仓库自带的搜索后端之一)刚刷新过的极值图论问题 | 对最新发表下界(z(m,n;3,3) 的已发表值)的平均进度;无上限,且这些是尚未被上界证明封顶的下界纪录 |
 | [`QuantumErrorDecoder`](benchmarks/Physics/QuantumErrorDecoder/)<br>表面码解码器 | Physics | QuantumErrorCorrection | uncapped | stim_stabilizer_circuit_sampling | candidate | decode rotated surface-code memory below threshold | 为旋转表面码存储设计阈值以下的解码器 | 相对最小权完美匹配的逻辑错误率对数下降;无上限 |
 
 ### 分子与大分子设计(molecular_design) — 5

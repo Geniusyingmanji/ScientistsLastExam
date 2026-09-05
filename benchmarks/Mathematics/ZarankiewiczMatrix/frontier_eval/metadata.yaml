@@ -1,0 +1,15 @@
+domain: Mathematics
+task: ZarankiewiczMatrix
+scientific_role: optimization
+difficulty: flagship
+tier: T3
+oracle_type: analytical
+score_mode: uncapped
+gpu_required: false
+eval_time_seconds: 20
+science_metric: mean_ones_count_improvement_toward_published_zarankiewicz_lower_bound_records
+sizes: ["13x19", "14x19", "16x18"]
+reference_baseline: two_full_columns_construction_structurally_K33_free_26_28_32_ones
+reference_sota: "most recent published lower bounds for z(m,n;3,3): 118 at (13,19), 126 at (14,19), 136 at (16,18)"
+citation: "Bhan, Nobili, Langer, arXiv:2605.01120 (New Bounds for Zarankiewicz Numbers via Reinforced LLM Evolutionary Search); Saurabh, arXiv:2608.26603 (Five improved lower bounds for Zarankiewicz numbers z(m,n;3,3))"
+claim_boundary: "all three sota_ref anchors are direct quotes from arXiv:2608.26603's own results table -- see references/known_best.md."

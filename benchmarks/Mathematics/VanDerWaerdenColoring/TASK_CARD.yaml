@@ -1,0 +1,71 @@
+schema_version: 2
+scientific_question: Can a policy build a longer monochromatic-AP-free coloring, at three concrete (r,k) sizes, than the best published witness -- matching or exceeding a proven exact ceiling at two sizes, and making a genuine new improvement to a still-open lower bound at the third?
+artifact: A list of colors in {0,...,r-1} of self-chosen length, avoiding every monochromatic k-term arithmetic progression, for (r,k) in {(2,4), (2,5), (2,7)}.
+oracle:
+  model: exact, vectorized comparison of every k-term arithmetic progression's colors for every common difference (a finite, deterministic computation), plus an exact length count
+  feasibility: colors in {0,...,r-1}, no monochromatic k-term arithmetic progression for any starting point or common difference
+  deterministic: true
+normalization:
+  baseline: splits the coloring into r blocks of (k-1) elements each (structurally AP-free by construction), giving 6/8/12 valid length at the three sizes
+  reference: proven exact W(r,k)-1 at (2,4) and (2,5) (34, 177); best-known lower-bound witness length at (2,7) (3703, not yet proven exact)
+  score: mean over the three sizes of (n - baseline_n) / (sota_ref_n - baseline_n), clipped below at 0, unbounded above -- matching the published witness scores 1.0 at that size, a verified longer coloring scores above 1.0 (mathematically impossible at (2,4) and (2,5), since those are proven exact; genuinely open at (2,7))
+citations:
+- id: web:vdw-chvatal-1970
+  title: Some unknown van der Waerden numbers
+- id: web:vdw-stevens-shantaram-1978
+  title: Computer-generated van der Waerden partitions
+- id: web:vdw-rabung-lotts-w27
+  title: "W(2,7) > 3703 via the zipper construction method (Rabung, Lotts)"
+invariants:
+- the monochromatic-AP check is exact vectorized integer comparison across every common difference, no floating point and no sampling
+- the baseline (r blocks of k-1 elements) is AP-free by construction regardless of r, k and is checked to score exactly 0.0000 on all three sizes
+- the (2,4) and (2,5) anchors are proven exact van der Waerden numbers; the (2,7) anchor is a best-known lower bound, not proven exact -- this task discloses rather than hides the resulting difference in whether combined_score can genuinely exceed 1.0 per size
+- reciting a coloring length is worth nothing without producing the literal coloring; the oracle checks the submitted coloring directly, never a claimed number
+- the shipped reference construction (randomized greedy AP-avoidance) is a real, standard technique, not a SAT-solver or zipper-method search, and does not reach any of the three published witness lengths, leaving real headroom
+known_shortcuts: Van der Waerden's theorem and the small exact values (35, 178) are extremely well documented and may occur in training data; reciting a coloring length is not sufficient, since the oracle requires an actual coloring that passes the same exact AP-freeness check anyone else would run, and extending the (2,7) witness past 3703 is a real result the oracle cannot be talked out of accepting or rejecting.
+review:
+  domain: pending_external_ramsey_theory
+  evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_uncapped_normalization_checks
+provenance:
+  class: known_answer
+  target_source: Proven exact values (2,4)/(2,5) and a best-known lower bound (2,7), used only as score=1.0 witnesses; a verified longer (2,7) coloring scores above 1.0 and is a real mathematical result, not a benchmark artifact.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: high
+  rationale: Van der Waerden's theorem and the small exact values are extremely well known and likely recalled directly by a capable model, but the exact literal coloring achieving any of these three specific witness lengths (particularly the (2,7) lower bound) is not something a model can merely recite -- reconstructing or extending it is the actual task.
+lineage:
+  status: complete
+  builder_model_ids:
+  - anthropic:claude-sonnet-5
+  builder_scaffolds:
+  - claude-code
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    Built at the user's request after a broader search for math problems with a genuine,
+    real, computationally-tracked "progress bar" record beyond bounded-gaps-between-primes
+    (already built as NarrowAdmissibleTuple). Selected alongside the Zarankiewicz problem,
+    the degree/diameter problem and Schur numbers as the strongest four candidates. Initially
+    built with three proven-exact anchors (34/177/1131), then revised after noticing that a
+    proven exact W(r,k) makes exceeding the witness length mathematically impossible, unlike
+    this task family's other three members -- the third size was swapped to a best-known
+    lower bound (W(2,7) > 3703) specifically to restore genuine uncapped headroom, and the
+    difference is disclosed rather than smoothed over. No frontier searcher draw has been run.
+  shortcut_discoverer: builder_self_audit
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: anthropic:claude-sonnet-5
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: the reference, the baseline, the AP-freeness checker and the bad-candidate shapes are all runnable from this directory

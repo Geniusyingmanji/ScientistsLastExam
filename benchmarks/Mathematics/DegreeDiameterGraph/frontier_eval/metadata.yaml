@@ -1,0 +1,15 @@
+domain: Mathematics
+task: DegreeDiameterGraph
+scientific_role: optimization
+difficulty: flagship
+tier: T3
+oracle_type: analytical
+score_mode: uncapped
+gpu_required: false
+eval_time_seconds: 20
+science_metric: mean_vertex_count_improvement_toward_published_degree_diameter_records
+sizes: ["d4k3", "d5k3", "d6k3"]
+reference_baseline: central_edge_double_tree_diameter_3_by_construction_8_10_12_vertices
+reference_sota: "current best-known vertex counts on the maintained degree/diameter record table: 41 at (4,3), 72 at (5,3), 111 at (6,3), none proven optimal"
+citation: "Mizuno, arXiv:2606.15860 (New lower bounds for the degree/diameter problem via interaction with a browser-accessible LLM); Table of the largest known graphs of a given diameter and maximal degree (Allwright 1992, Exoo 1998-2010)"
+claim_boundary: "all three sota_ref anchors come from a single maintained record table, independently re-fetched at construction time -- see references/known_best.md."
