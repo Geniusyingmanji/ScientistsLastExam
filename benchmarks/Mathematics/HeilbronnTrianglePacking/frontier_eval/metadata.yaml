@@ -1,0 +1,15 @@
+domain: Mathematics
+task: HeilbronnTrianglePacking
+scientific_role: optimization
+difficulty: flagship
+tier: T3
+oracle_type: analytical
+score_mode: uncapped
+gpu_required: false
+eval_time_seconds: 60
+science_metric: mean_min_triangle_area_improvement_toward_published_heilbronn_records
+sizes: [8, 10, 11]
+reference_baseline: regular_ngon_inscribed_in_unit_square_circle
+reference_sota: "Erich's Packing Center record table: n=8 proven optimal (sqrt(13)-1)/36, n=10 best-known ~0.04654, n=11 best-known 1/27"
+citation: "Erich's Packing Center (Heilbronn triangle problem record table); Dehbi & Zeng 2022 (n=8 proof); AlphaEvolve, arXiv:2506.13131 (motivating 2026 progress on Heilbronn variants)"
+claim_boundary: "n=8 anchor is proven optimal, so no valid point set can exceed it; n=10 and n=11 anchors are best-known-only with genuine headroom -- see references/known_best.md."

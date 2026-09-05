@@ -51,6 +51,8 @@ DECLARED_EXTERNAL_ANCHORS = {
     "Mathematics/KissingNumber",
     "Mathematics/RamseyLowerBound",
     "Mathematics/Superpermutation",
+    "Mathematics/ErdosMinimumOverlap",
+    "Mathematics/HeilbronnTrianglePacking",
     "Algorithm/TensorRank555",
 }
 

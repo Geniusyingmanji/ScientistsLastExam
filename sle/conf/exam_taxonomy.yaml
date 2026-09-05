@@ -51,6 +51,8 @@ tasks:
   Mathematics/CapSetFrontier: {form: optimization, analogue: combinatorial, note: open_dims_not_extension_of_certified_capset}
   Mathematics/RamseyLowerBound: {form: optimization, analogue: combinatorial}
   Mathematics/KissingNumber: {form: optimization, analogue: combinatorial}
+  Mathematics/ErdosMinimumOverlap: {form: optimization, analogue: combinatorial, note: balanced_partition_difference_overlap_not_admissible_tuple_or_ramsey}
+  Mathematics/HeilbronnTrianglePacking: {form: optimization, analogue: combinatorial, note: unit_square_point_placement_min_triangle_area_not_capset_kissing_or_circle_packing}
   Mathematics/Superpermutation: {form: optimization, analogue: combinatorial}
   Mathematics/NonlinearCodeRecords: {form: optimization, analogue: combinatorial}
   Algorithm/MatrixMultiplicationRank: {form: optimization, analogue: combinatorial}

@@ -1,0 +1,26 @@
+{
+  "task": "Mathematics/ErdosMinimumOverlap",
+  "anchors": [
+    {
+      "name": "sota_ref_n8",
+      "value": 4,
+      "source_url": "https://en.wikipedia.org/wiki/Minimum_overlap_problem",
+      "derivation": "M(8) = 4, from the table of exact values of the minimum overlap function for n <= 15 (determined by exhaustive computer search), independently re-confirmed by direct fetch on 2026-09-06. A proven exact value: no valid partition can score below this max-overlap.",
+      "retrieved_on": "2026-09-06"
+    },
+    {
+      "name": "sota_ref_n11",
+      "value": 5,
+      "source_url": "https://en.wikipedia.org/wiki/Minimum_overlap_problem",
+      "derivation": "M(11) = 5, from the same exact-values table, independently re-confirmed by direct fetch on 2026-09-06.",
+      "retrieved_on": "2026-09-06"
+    },
+    {
+      "name": "sota_ref_n15",
+      "value": 6,
+      "source_url": "https://en.wikipedia.org/wiki/Minimum_overlap_problem",
+      "derivation": "M(15) = 6, from the same exact-values table, independently re-confirmed by direct fetch on 2026-09-06. This is the largest n for which M(n) is currently known exactly.",
+      "retrieved_on": "2026-09-06"
+    }
+  ]
+}

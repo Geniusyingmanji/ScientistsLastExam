@@ -1,0 +1,26 @@
+{
+  "task": "Mathematics/HeilbronnTrianglePacking",
+  "anchors": [
+    {
+      "name": "sota_ref_n8",
+      "value": 0.07237642431844414,
+      "source_url": "https://erich-friedman.github.io/packing/heilbronn/",
+      "derivation": "Heilbronn triangle problem, unit square, n=8: minimum area (sqrt(13)-1)/36 = 0.07237642431844414 (computed directly from the closed form during this task's construction), proved optimal by L. Dehbi and Z. Zeng in 2022. Independently re-confirmed by direct fetch of Erich's Packing Center on 2026-09-06.",
+      "retrieved_on": "2026-09-06"
+    },
+    {
+      "name": "sota_ref_n10",
+      "value": 0.04654,
+      "source_url": "https://erich-friedman.github.io/packing/heilbronn/",
+      "derivation": "Heilbronn triangle problem, unit square, n=10: best-known minimum area approx 0.04654 (decimal as given by the source; no closed form or proof of optimality is claimed for n>=10). Independently re-confirmed by direct fetch on 2026-09-06.",
+      "retrieved_on": "2026-09-06"
+    },
+    {
+      "name": "sota_ref_n11",
+      "value": 0.037037037037037035,
+      "source_url": "https://erich-friedman.github.io/packing/heilbronn/",
+      "derivation": "Heilbronn triangle problem, unit square, n=11: best-known minimum area 1/27 = 0.037037037037037035, not proven optimal. Independently re-confirmed by direct fetch on 2026-09-06.",
+      "retrieved_on": "2026-09-06"
+    }
+  ]
+}

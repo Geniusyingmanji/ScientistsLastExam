@@ -1,0 +1,15 @@
+domain: Mathematics
+task: ErdosMinimumOverlap
+scientific_role: optimization
+difficulty: flagship
+tier: T3
+oracle_type: analytical
+score_mode: uncapped
+gpu_required: false
+eval_time_seconds: 20
+science_metric: mean_max_overlap_reduction_toward_proven_exact_minimum_overlap_values
+sizes: [8, 11, 15]
+reference_baseline: first_half_second_half_split_max_overlap_equals_n
+reference_sota: "proven-exact M(n) via exhaustive search: M(8)=4, M(11)=5, M(15)=6"
+citation: "Haugland, arXiv:1609.08000; White, arXiv:2201.05704; AlphaEvolve, arXiv:2506.13131"
+claim_boundary: "all three sota_ref anchors are proven exact (exhaustive search), so combined_score has a hard ceiling of 1.0 in practice -- see references/known_best.md."

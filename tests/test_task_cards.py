@@ -21,6 +21,8 @@ RECORDED_LINEAGE = {
     "Spectroscopy/CrowdedSpectrumAssignment",
     "Mathematics/RamseyLowerBound",
     "Mathematics/KissingNumber",
+    "Mathematics/ErdosMinimumOverlap",
+    "Mathematics/HeilbronnTrianglePacking",
     "Algorithm/TensorRank555",
     "Mathematics/Superpermutation",
     "Mathematics/NonlinearCodeRecords",
