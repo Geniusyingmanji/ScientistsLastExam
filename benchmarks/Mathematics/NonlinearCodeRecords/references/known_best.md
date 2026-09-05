@@ -133,3 +133,23 @@ answer can get past that wall is unmeasured.
 
 Status therefore stays **candidate**, and the two open items are a re-draw with a larger output
 budget and a second searcher.
+
+## Re-draw at a larger output budget (Opus 5, 2026-09-05)
+
+The draw above was run at `max_output_tokens = 16000` and six of its nine proposals ended exactly
+at that cap with no code block. Repeating it at 24000 changes the picture completely:
+
+| seed | proposal 1 | proposal 2 | proposal 3 | best | output tokens used |
+|---|---|---|---|---|---|
+| 0 | 0.026447 | timeout | 0.393174 | 0.393174 | 8968 / 10956 / 10250 |
+| 1 | 0.472371 | 0.568003 | 0.472371 | 0.568003 | — |
+
+No proposal came near the new cap, so nothing here is an artefact of it. Two seeds of the three
+completed; the third stopped on a transient provider failure and is excluded rather than counted.
+
+**The admission bar passes.** The first valid proposal of each seed - 0.026 and 0.472 - is below the
+reference of 0.6417, and so is the best of each run, 0.393 and 0.568. The earlier draw's single
+valid proposal that landed key-identical to the reference is not reproduced here, and reads in
+hindsight as one draw of a searcher that had almost no room to work in.
+
+Status stays **candidate**: two usable seeds is thin, and a second searcher has still not been run.
