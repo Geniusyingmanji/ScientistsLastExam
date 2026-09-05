@@ -21,7 +21,7 @@ invariants:
 - overspending, invented IDs and malformed output fail closed
 - mechanism, forecast, coverage and false-discovery metrics remain separate
 - held-out worlds and exact descriptors remain evaluator-only
-known_shortcuts: This is a procedural TTV emulator, not a photodynamical N-body or telescope scheduler. Public periods and seeds require server-held families before certification.
+known_shortcuts: The period grids and procedural world family are public; certification requires a server-held split.
 review:
   domain: pending_external_astronomy
   evaluator_security: automated_determinism_budget_lineage_and_bad_candidate_checks_passed
@@ -33,7 +33,7 @@ provenance:
   license: procedural repository-local code; no external dataset bundled
 novelty_risk:
   level: medium
-  rationale: Unlike Exoplanets/RadialVelocityPlanets, this task uses transit timing residuals, active cadence design and clock/activity attribution rather than Doppler periodogram detection.
+  rationale: Standard periodic model fitting may transfer directly, while active scheduling and refusal remain task-specific.
 lineage:
   status: complete
   builder_model_ids:
@@ -45,7 +45,7 @@ lineage:
   calibration_runs:
   - experiments/transit_timing_deepseek_flash_2026-09-05.json
   calibration_evidence_status: current_or_migration_replayed
-  edits_triggered_by_model: none; reference replay completed before the valid model calibration after replacing last-observation copying with public model comparison and a true future-transit forecast. Development supported-world mean is 0.9034 and held-out supported-world mean is 0.8992; one held-out unsupported-world false discovery remains. DeepSeek Flash then reached 0.4777/0.2170 and 0.5719/0.5201 development/held-out; its development/validation false-discovery rates were 0.5/0.6667 and 0.4/0.4.
+  edits_triggered_by_model: none
   shortcut_discoverer: truth_blind_reference_and_deepseek_flash_calibration
   frozen_before_eval: false
   freeze_timestamp: null
@@ -61,4 +61,4 @@ construction_audit:
   expert_hours: null
   red_team_rounds: 0
   oracle_disagreement_status: not_quantified
-  independent_recomputation_status: server baseline/reference replay completed; independent photodynamical recomputation pending
+  independent_recomputation_status: baseline and reference replayed; independent photodynamical recomputation pending
