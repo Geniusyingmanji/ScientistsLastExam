@@ -47,4 +47,13 @@ jobs:
           /usr/bin/python3 scripts/check_numeric_keys_hold_numbers.py
       - name: Test suite
         # The exit code is the gate. Never pipe this into anything.
+        #
+        # SLE_REQUIRE_FROZEN_INVENTORY is set on main and not on a pull request. The frozen
+        # certification and baseline documents can only be regenerated on a Linux host with the
+        # candidate sandbox, by a maintainer, so a task PR necessarily arrives with its tasks
+        # outside them. Failing the contributor's run for that tests nothing about their work and
+        # trains everyone to ignore a red check. Failing main for it is exactly right: by then
+        # the refresh is the maintainer's own step, and skipping it is the regression.
+        env:
+          SLE_REQUIRE_FROZEN_INVENTORY: ${{ github.ref == 'refs/heads/main' && '1' || '0' }}
         run: /usr/bin/python3 -m pytest tests/ -q -p no:cacheprovider

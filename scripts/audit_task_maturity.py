@@ -962,11 +962,23 @@ def build_report(full_test_suite: Optional[str] = None) -> dict[str, Any]:
         if card["schema_issues"]:
             internal_blockers.append("task_card_schema_failed")
         cert_row = certification_rows.get(task_id)
-        if cert_row is None or cert_row.get("issues"):
+        # A task the frozen documents have never seen is a different situation from a task whose
+        # frozen evidence has gone stale, and until now both produced the same two blockers. Only
+        # a maintainer on the benchmark host can run scripts/refresh_global_evidence.py, so every
+        # external task PR arrived red for a reason the contributor could not act on - which is
+        # how three of them landed with the suite unread. Name the two apart: `awaiting_freeze`
+        # is a statement about the merge queue, staleness is a statement about the repository.
+        awaiting_freeze = cert_row is None and baseline is None
+        if cert_row is None:
+            internal_blockers.append("not_in_frozen_certification_inventory")
+        elif cert_row.get("issues"):
             internal_blockers.append("current_certification_record_failed")
         if not baseline_passed:
-            internal_blockers.append("no_current_or_migration_replayed_deterministic_baseline")
+            internal_blockers.append(
+                "not_in_frozen_baseline_inventory" if baseline is None
+                else "no_current_or_migration_replayed_deterministic_baseline")
         internal = _gate(not internal_blockers, internal_blockers)
+        internal["awaiting_freeze"] = bool(awaiting_freeze and not internal["passed"])
 
         release_blockers = []
         if not internal["passed"]:

@@ -258,6 +258,18 @@ normalized = (raw_mechanism - always_abstain) / (1.0 - always_abstain)
    - 基线分数与参考 SoTA。
 6. **评审**:维护者会在合并前检查 oracle 正确性、黑盒安全与打分校准。
 
+### 关于 CI 里 `test_task_maturity` 的那条断言
+
+新任务包必然不在冻结证据(`experiments/task_certification_audit_*.json` 与
+`secure_baseline_determinism_*.json`)里,因为这两份文档只能由维护者在带沙箱的 Linux 主机上用
+`scripts/refresh_global_evidence.py` 重新生成。**这不是你的 PR 的缺陷,你也修不了。**
+
+因此该断言在 PR 上只检查"已冻结任务的证据有没有漂",新任务归入 `awaiting_freeze` 不判红;
+在 `main` 上(`SLE_REQUIRE_FROZEN_INVENTORY=1`)则一并要求,合并后由维护者跑一次 refresh 并推送。
+你的 PR 里**不要**提交重新生成的证据文档 —— 它们会记录你本机的 revision,反而把绑定弄脏。
+
+CI 其余部分对 PR 一视同仁:审计、卡片校验、沙箱测试全部要绿。
+
 ---
 
 ## 运行环境:哪里能跑什么
