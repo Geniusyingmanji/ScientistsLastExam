@@ -61,6 +61,7 @@ DISCIPLINE_DOMAINS: dict[str, tuple[str, ...]] = {
         "Physics",
         "QuantumControl",
         "QuantumDynamics",
+        "QuantumFoundations",
         "Exoplanets",
         "QuantumErrorCorrection",
         "Gravitation",

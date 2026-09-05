@@ -73,6 +73,7 @@ CHINESE_NAMES = {
     "Mathematics/SchurPartition": "Schur 无和分拆",
     "Mathematics/SequenceLawRecovery": "整数序列递推恢复",
     "Mathematics/Superpermutation": "超排列最短串",
+    "QuantumFoundations/BellBoundCertificate": "贝尔不等式上界证书",
     "Mathematics/NonlinearCodeRecords": "非线性码规模纪录",
     "MedicinalChemistry/MolecularLeadOptimization": "分子先导组合优化",
     "MolecularDynamics/ForceFieldCalibration": "力场假设判别",
@@ -226,6 +227,13 @@ CHINESE_BRIEFS = {
     "Mathematics/SequenceLawRecovery": (
         "给出整数序列前若干项,说出产生它的线性递推;项数不足以定唯一最小规则时拒答",
         "延续准确率;误发现率与不定性拒答分开报告"),
+    "QuantumFoundations/BellBoundCertificate": (
+        "为贝尔泛函的量子最大值给出一份可精确验证的上界证明:提交一组基词与若干加权平方,"
+        "使它们的和恰好等于 beta*I - B。CHSH 的答案是无理数 2√2,只能逼近;I3322 的量子值至今未知,"
+        "NPA 层级 1 给 0.375、层级 2 给 0.25102173、已知最好值 0.25087538 要到层级 4 以上。",
+        "四个实例(CHSH 与三种基词预算下的 I3322)取均值,不设上限。分数是所证界到已知量子值距离的"
+        "对数进步:免费的层级 1 界记 0,已发表的层级 2 界记 1,超过则大于 1。有理数精确验证,"
+        "提交浮点数直接判零——数值 SDP 解不是证明。"),
     "Mathematics/NonlinearCodeRecords": (
         "在四个 A(n,d) 未闭合的参数上构造尽可能大的二元码;已发表纪录全部由非线性码持有,线性构造够不到",
         "从平凡分块重复构造到已发表纪录的平均进度,无上限;验证只是逐对汉明距离计数,与构造方法无关"),

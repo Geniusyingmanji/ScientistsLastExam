@@ -29,6 +29,7 @@ RECORDED_LINEAGE = {
     "Mathematics/HeilbronnTrianglePacking",
     "Algorithm/TensorRank555",
     "Mathematics/Superpermutation",
+    "QuantumFoundations/BellBoundCertificate",
     "Mathematics/NonlinearCodeRecords",
     "Mathematics/CapSetFrontier",
     "ParticlePhysics/LookElsewhereAnomaly",
