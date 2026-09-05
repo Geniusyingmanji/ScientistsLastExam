@@ -20,12 +20,13 @@ from itertools import combinations
 
 import numpy as np
 
-# n -> (naive-baseline min-triangle-area, best-known/proven min-triangle-area). See
-# references/known_best.md for exactly which are proven optimal vs best-known only.
+# n -> (naive-baseline min-triangle-area, best-known/proven min-triangle-area). n=8 is proven
+# optimal; n=10, 11, 12 are best-known only. See references/known_best.md.
 SIZES = {
     8: {"baseline": 0.051776695296636845, "sota_ref": 0.07237642431844414},   # (sqrt(13)-1)/36
     10: {"baseline": 0.028064248536224072, "sota_ref": 0.04654},
     11: {"baseline": 0.02145620494458457, "sota_ref": 0.037037037037037035},   # 1/27
+    12: {"baseline": 0.016746824526945148, "sota_ref": 0.0325988586918197},
 }
 COORD_ATOL = 1e-9  # small slack for floating-point boundary placement
 

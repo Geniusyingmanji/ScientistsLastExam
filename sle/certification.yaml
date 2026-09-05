@@ -16,8 +16,8 @@ tasks:
     citation_ids: [arxiv:1609.08000, arxiv:2201.05704, arxiv:2506.13131]
   Mathematics/HeilbronnTrianglePacking:
     status: candidate
-    reason: exact min-triangle-area oracle scored uncapped against the maintained unit-square Heilbronn record table (Erich's Packing Center) -- proven optimal at n=8, best-known-only with genuine headroom at n=10 and n=11; pending external discrete-geometry review
-    citation_ids: [web:erich-friedman-heilbronn-packing-center, arxiv:2506.13131]
+    reason: exact min-triangle-area oracle scored uncapped against the maintained unit-square Heilbronn record table (Erich's Packing Center) -- proven optimal at n=8, best-known-only with genuine headroom at n=10, n=11 and n=12; pending external discrete-geometry review
+    citation_ids: [web:erich-friedman-heilbronn-packing-center, doi:10.37236/1623, arxiv:2506.13131]
   MedicinalChemistry/MolecularLeadOptimization:
     status: candidate
     reason: RDKit community-standard oracle with a verified approved-drug reference panel; pending external medicinal-chemistry review

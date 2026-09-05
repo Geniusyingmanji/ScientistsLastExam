@@ -18,8 +18,9 @@ independently re-fetched and confirmed on 2026-09-06:
 | n | min-area | status |
 |---|---|---|
 | 8 | (sqrt(13)-1)/36 = 0.07237642431844414 | proven optimal (L. Dehbi, Z. Zeng, 2022) |
-| 10 | approx 0.04654 | best-known only, not proven optimal |
+| 10 | approx 0.04654 | best-known only, not proven optimal (Comellas & Yebra, 2002) |
 | 11 | 1/27 = 0.037037037037037035 | best-known only, not proven optimal |
+| 12 | 0.0325988586918197 | best-known only, not proven optimal (F. Comellas, J. L. A. Yebra, "New Lower Bounds for Heilbronn Numbers," Electron. J. Combin. 9 (2002), #R6, DOI 10.37236/1623 -- a simulated-annealing computational lower bound) |
 
 `n=10` and `n=11` are genuinely open: a candidate that finds a valid point set with a
 larger minimum triangle area at either size would be a real, new, checkable record. `n=8`
@@ -43,6 +44,7 @@ largest inscribed circle (motivated by Goldberg's conjecture, which holds only f
 | 8 | 0.05177669529663685 | 0.0000 |
 | 10 | 0.02806424853622407 | 0.0000 |
 | 11 | 0.02145620494458457 | 0.0000 |
+| 12 | 0.016746824526945148 | 0.0000 |
 
 ## Reference — `verification/reference_construction.py`
 
@@ -55,8 +57,9 @@ strictly increase the minimum triangle area.
 | 8 | 0.05880463869361249 | 0.3412 |
 | 10 | 0.03602903364872838 | 0.4311 |
 | 11 | 0.03101732325860153 | 0.6136 |
+| 12 | 0.02181832475720849 | 0.3199 |
 
-`combined_score = 0.4620`. Measured directly by running
+`combined_score = 0.4265`. Measured directly by running
 `verification/reference_construction.py` through the oracle above (runtime approx 18s for
 all three sizes together). Plain hill-climbing improves substantially on the regular-
 polygon baseline but falls well short of every published record here, most at `n=11` --
