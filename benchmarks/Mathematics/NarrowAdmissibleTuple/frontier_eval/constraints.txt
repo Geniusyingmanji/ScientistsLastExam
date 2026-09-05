@@ -1,0 +1,4 @@
+1) Only edit solution.py. Keep construct_tuple(k) -> list of k distinct integers.
+2) For every prime p <= k, the residues {h mod p} of your k integers must not cover all p residue classes. Invalid -> score 0.
+3) Diameter (max - min) must be a positive integer no larger than 200000. numpy/stdlib only, CPU.
+4) Do not read verification/ or frontier_eval/.

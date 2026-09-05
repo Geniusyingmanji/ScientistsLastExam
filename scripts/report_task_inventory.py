@@ -63,6 +63,7 @@ CHINESE_NAMES = {
     "Mathematics/CapSet": "Cap Set 构造",
     "Mathematics/CapSetFrontier": "Cap Set 未证明维度",
     "Mathematics/KissingNumber": "接触数构造",
+    "Mathematics/NarrowAdmissibleTuple": "窄可容许素数元组",
     "Mathematics/RamseyLowerBound": "Ramsey 下界染色",
     "Mathematics/SequenceLawRecovery": "整数序列递推恢复",
     "Mathematics/Superpermutation": "超排列最短串",
@@ -93,6 +94,7 @@ CHINESE_NAMES = {
     "Spectroscopy/NMRSpectrumFitting": "核磁谱峰机制恢复",
     "Spectroscopy/SpinSystemInference": "自旋体系反演",
     "StructuralEngineering/TrussWeightMinimization": "桁架减重",
+    "Superconductivity/SuperconductorTcRecord": "超导临界温度纪录搜索",
     "SystemsBiology/EnzymeKineticsLaw": "酶动力学律辨识",
     "SystemsBiology/GeneNetworkIntervention": "基因网络干预设计",
     "Thermodynamics/HeatExchangerDesign": "换热器帕累托设计",
@@ -191,6 +193,9 @@ CHINESE_BRIEFS = {
     "Mathematics/KissingNumber": (
         "在 9、10、12 维构造更多与中心球相切的单位球",
         "固定容差下对最好已知接触数的平均进度;无上限"),
+    "Mathematics/NarrowAdmissibleTuple": (
+        "构造比 Polymath8b 已发表直径更小的可容许 k-元组(k=50、54)——有界素数间隔猜想计算核心的同一对象",
+        "已发表直径的归一化进度(k=50 锚点 246 一手引用确认,k=54 锚点 270 仅二手来源);无上限"),
     "Mathematics/RamseyLowerBound": (
         "构造更大的 (s,t)-Ramsey 染色以提高下界",
         "对最好已知染色阶数的平均进度;无上限"),
@@ -281,6 +286,10 @@ CHINESE_BRIEFS = {
     "StructuralEngineering/TrussWeightMinimization": (
         "给出跨结构通用的桁架截面尺寸策略,在应力、位移与欧拉屈曲约束下减重",
         "标称减重;密封拓扑迁移与载荷/材料/制造稳健性分列,无上限"),
+    "Superconductivity/SuperconductorTcRecord": (
+        "在真实设备压力上限下,用 Allen-Dynes 公式在五个真实超导体系间搜索已确认临界温度最高的"
+        "(体系,压力)组合,并避开一个从未被实现的理论预测(隐含电子-声子耦合超过物理合理上限)",
+        "真实Tc除以已发表记录250K的直接比值;无上限,可超过已发表记录"),
     "SystemsBiology/EnzymeKineticsLaw": (
         "在测定预算内自选底物与抑制剂浓度,判定这个酶服从六条已发表速率律中的哪条,或都不服从",
         "速率律辨识 + 拒答 + 密封外推预测"),

@@ -64,6 +64,7 @@ DISCIPLINE_DOMAINS: dict[str, tuple[str, ...]] = {
         "Exoplanets",
         "QuantumErrorCorrection",
         "Gravitation",
+        "Superconductivity",
     ),
     "Engineering": (
         "AcousticMetamaterials",

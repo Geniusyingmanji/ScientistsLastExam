@@ -1,0 +1,4 @@
+1) Only edit solution.py. Keep design_superconductor(problem, probe).
+2) Return {"catalog_id", "predicted_tc_k", "confidence"}. catalog_id must be an id from problem["catalog"]; predicted_tc_k a finite number >= 0; confidence in [0,1].
+3) probe(catalog_id) charges one call and catalog_id must be in problem["catalog"]. Do not exceed problem["probe_budget_calls"].
+4) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read verification/ or frontier_eval/.

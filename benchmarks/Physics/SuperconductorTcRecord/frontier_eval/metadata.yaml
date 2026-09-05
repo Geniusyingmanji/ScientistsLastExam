@@ -1,0 +1,13 @@
+domain: Superconductivity
+task: SuperconductorTcRecord
+scientific_role: optimization
+difficulty: hard
+tier: T2
+oracle_type: allen_dynes_formula_solved_to_real_anchors
+score_mode: uncapped
+gpu_required: false
+eval_time_seconds: 5
+science_metric: true_Tc_via_Allen_Dynes_at_the_submitted_family_and_pressure_divided_by_the_250K_confirmed_record_gated_by_a_computable_lambda_le_3p5_dynamical_plausibility_criterion
+reference_baseline: proxy-trusting policy that always takes the family with the highest quoted pre-experimental Tc estimate and submits at that proxy's own quoted pressure, never probing to check the implied electron-phonon coupling against lambda_max_plausible
+reference_sota: budgeted replicate-screened probe-and-climb search (verification/reference_search.py) that avoids the one real, never-realized theoretical prediction (fcc YH10, lambda=3.95 > 3.5) and climbs LaH10 toward its stability-window edge, exceeding the published 250 K record; a policy that searches this continuous space better can score higher still
+citation: "Nagamatsu et al. 2001, Nature 410, 63; Duan et al. 2014, Sci. Rep. 4, 6968; Drozdov et al. 2015, Nature 525, 73; Liu et al. 2017, PNAS 114, 6990; Drozdov et al. 2019, Nature 569, 528; Somayazulu et al. 2019, PRL 122, 027001; Errea et al. 2020, Nature 578, 66; Troyan et al. 2021, Adv. Mater. 33, 2006832; Kong et al. 2021, Nat. Commun. 12, 5075"

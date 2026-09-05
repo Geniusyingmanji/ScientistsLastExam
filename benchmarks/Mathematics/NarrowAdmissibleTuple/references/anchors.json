@@ -1,0 +1,19 @@
+{
+  "task": "Mathematics/NarrowAdmissibleTuple",
+  "anchors": [
+    {
+      "name": "sota_ref_k50",
+      "value": 246,
+      "source_url": "https://arxiv.org/abs/1409.8361",
+      "derivation": "D.H.J. Polymath, \"The 'bounded gaps between primes' Polymath project - a retrospective,\" arXiv:1409.8361. Quoted directly during this task's construction: \"the bound on H₁ had been lowered unconditionally to 246\" -- the diameter of the admissible 50-tuple Polymath8b used to certify that bound.",
+      "retrieved_on": "2026-09-05"
+    },
+    {
+      "name": "sota_ref_k54",
+      "value": 270,
+      "source_url": "https://michaelnielsen.org/polymath/index.php?title=Finding_narrow_admissible_tuples",
+      "derivation": "Reported consistently across secondary search summaries of the Polymath narrow-admissible-tuples tracking project as H(54)=270, but this task's construction could not fetch the underlying table data directly (the page loads its rows dynamically) to confirm it against a primary source. Disclosed as secondary-source-only in references/known_best.md rather than asserted with the same confidence as the k=50 anchor.",
+      "retrieved_on": "2026-09-05"
+    }
+  ]
+}
