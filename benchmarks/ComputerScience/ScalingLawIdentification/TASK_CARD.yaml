@@ -1,0 +1,88 @@
+schema_version: 2
+scientific_question: Can a budgeted size ladder identify which asymptotic class a
+  black-box program belongs to, while refusing branching runtimes and noise floors
+  that no single law explains?
+artifact: Six-class probabilities, a positive scale constant, optional abstention
+  and a confidence scalar.
+oracle:
+  model: deterministic seeded class worlds with log-uniform scales, three percent
+    multiplicative timing noise, branch worlds mixing c*m^2 and c*m*log2(m) by size
+    mod 3, and jitter worlds at sixty percent noise
+  feasibility: probabilities over exactly the six classes, positive finite scale,
+    charged tiers within a twelve-unit budget
+  deterministic: true
+  external_tooling: none beyond NumPy
+difficulty_ladder:
+  default_level: 1
+  levels:
+    1: the shipped noise, scale and refusal structure
+normalization:
+  baseline: one timing, uniform probabilities and a fixed mid-range scale
+  reference: seven-size ladder, log-space per-class regression, split-fit branch
+    test, repeat-estimated jitter gate
+  score: geometric mean of class probability, log-scale score and sealed
+    extrapolation, normalized above always abstaining
+citations:
+- id: isbn:9780262033848
+  title: Introduction to Algorithms
+invariants:
+- repeated sizes draw fresh multiplicative noise
+- branch worlds are exact deterministic functions of the size
+- a full abstention scores exactly zero after normalization
+known_shortcuts: Uniform probabilities with a fixed scale score 0.000; the reference
+  reaches 0.929/0.622 with zero false discoveries. Disabling the jitter gate costs
+  0.167. Formal clean Linux calibration and independent review remain pending.
+licensing:
+  task_package: repository_license_not_declared
+  external_assets: none
+  note: All runtime worlds are generated from original repository code; cited
+    publications are not redistributed.
+contamination:
+  status: cannot_be_ruled_out
+  rationale: The class family is textbook; seeded scales and refusal regimes are
+    procedural.
+review:
+  domain: pending_external_algorithms
+  evaluator_security: targeted_local_regressions_added_clean_linux_sandbox_replay_pending
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic profiler worlds with development
+    and held-out classes, scales and failures.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Empirical complexity fitting is standard practice; the mod-3 branching
+    and jitter refusal worlds with budgeted ladders are original to this package.
+lineage:
+  status: complete
+  builder_model_ids:
+  - glm-5.3
+  builder_scaffolds:
+  - repository-native-computer-science-task-pattern
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: 2026-09-05 local build caught jitter worlds carrying a non-class family field, a degenerate constant-class regression, a repeated-size index that no longer repeated after the ladder grew, a one-point branch split, and an exponent-difference branch criterion that could never fire; each was fixed and pinned by tests.
+  shortcut_discoverer: initial_internal_red_team
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: initial_internal
+  author_domain: AI-assisted benchmark engineering
+  reviewer_domain: pending_external_algorithms
+  expert_hours: null
+  red_team_rounds: 2
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: standalone_public_model_references_pending
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+difficulty_assessment:
+  status: unverified_candidate
+  requirement: standard-method and low-dimensional shortcut sweeps, capability ablations
+    and clean frontier-model calibration before certification
+  remaining_risk: Class identification is nearly saturated on development; headroom
+    concentrates in held-out robustness and the sealed extrapolation.

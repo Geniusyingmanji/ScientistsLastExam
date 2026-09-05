@@ -44,6 +44,7 @@ tasks:
   Optics/DiffractionGratingDesign: {form: optimization, analogue: engineering_design}
   SignalProcessing/SparseRecovery: {form: optimization, analogue: engineering_design}
   Electrochemistry/ElectrolyteConductivityDesign: {form: optimization, analogue: engineering_design}
+  MetabolicEngineering/MetabolicStrainDesign: {form: optimization, analogue: engineering_design, note: fba_edit_set_not_control_loop}
   MaterialsScience/AlloyHardnessOptimization: {form: optimization, analogue: engineering_design}
   Cryosphere/IceObservationNetworkDesign: {form: optimization, analogue: engineering_design}
   Hydrology/GroundwaterRemediationDesign: {form: optimization, analogue: engineering_design}
@@ -74,6 +75,8 @@ tasks:
   # --- discovery / formula ----------------------------------------------------
   Mathematics/SequenceLawRecovery: {form: discovery, kind: formula}
   DynamicalSystems/ActiveLawDiscovery: {form: discovery, kind: formula}
+  Electrochemistry/ChronoamperometryLawID: {form: discovery, kind: formula, note: transient_families_not_initial_rates}
+  Algorithm/ScalingLawIdentification: {form: discovery, kind: formula, note: asymptotic_classes_not_recurrences}
   SystemsBiology/EnzymeKineticsLaw: {form: discovery, kind: formula, note: on_ramp_do_not_pair}
   Oceanography/AMOCTippingRefusal: {form: discovery, kind: formula, note: fold_refusal_not_ebm_parameter_fit}
   Physics/ComplexBoseLaw: {form: discovery, kind: formula, note: bose_exponents_not_activelaw_ode}
@@ -93,10 +96,13 @@ tasks:
   ClimateScience/ForcedSignalAttribution: {form: discovery, kind: evidence}
   StructuralEngineering/ModalDamageAttribution: {form: discovery, kind: evidence}
   ChemicalProcess/ThermochemicalCycleAudit: {form: discovery, kind: evidence, note: hess_closure_network_not_single_constant_reconciliation}
+  Metagenomics/MetagenomicMixtureID: {form: discovery, kind: substance, note: read_budget_and_novel_organism_not_spectral_zoom}
+  Mineralogy/MineralMixtureXRD: {form: discovery, kind: substance, note: hump_vs_unknown_refusal_not_phase_diagram}
   Mathematics/ExactIdentityEvidence: {form: discovery, kind: evidence, note: purchasable_precision_verdicts_not_recurrence_recovery}
   Mathematics/BlackBoxGroupIdentification: {form: discovery, kind: structure}
   Spectroscopy/MassFragmentationTree: {form: discovery, kind: structure, note: fragmentation_dag_from_multienergy_msms_not_library_matching}
   Geophysics/FocalMechanismStressInversion: {form: discovery, kind: structure, note: stress_tensor_behind_nodal_plane_ambiguity}
+  WaterDistribution/DistributionNetworkTopology: {form: discovery, kind: structure, note: boolean_tomography_not_pressure_inversion}
   Spectroscopy/CrowdedSpectrumAssignment: {form: discovery, kind: substance}
   MaterialsScience/QuinaryConvexHull: {form: discovery, kind: substance, note: quinary_hull_not_binary_xrd}
   # --- discovery / parameter inversion (SLE's remaining empty-looking cell) ---
@@ -114,5 +120,7 @@ tasks:
   Sensors/QuartzCrystalMicrobalanceLab: {form: discovery, kind: parameter_inversion}
   Spectroscopy/NMRSpectrumFitting: {form: discovery, kind: parameter_inversion}
   Paleoclimate/ChronologyAssimilation: {form: discovery, kind: parameter_inversion}
+  Electrophysiology/HodgkinHuxleyCurrentID: {form: discovery, kind: parameter_inversion, note: clamp_protocols_with_extra_current_refusal}
   Volcanology/DeformationMechanismInference: {form: discovery, kind: parameter_inversion}
   WavePropagation/ActiveFullWaveformInversion: {form: discovery, kind: parameter_inversion}
+  Mathematics/EllipticCurveRecovery: {form: discovery, kind: parameter_inversion, note: crt_lifting_from_prime_counts}

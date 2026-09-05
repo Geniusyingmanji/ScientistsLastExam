@@ -4,21 +4,22 @@
 
 | | |
 |---|---:|
-| 任务包 | 79 |
-| optimization | 39 |
-| discovery | 40 |
+| 任务包 | 87 |
+| optimization | 40 |
+| discovery | 47 |
 | certified | 5 |
-| candidate | 74 |
-| 学科 | 7(Biology 8,Chemistry 15,ComputerScience 6,EarthScience 11,Engineering 17,Mathematics 11,Physics 11) |
+| candidate | 82 |
+| 学科 | 7(Biology 11,Chemistry 16,ComputerScience 7,EarthScience 12,Engineering 18,Mathematics 12,Physics 11) |
 
 认证描述的是证据质量,不是难度。标 on-ramp 的任务首个前沿模型提案已够到参考解,不用于配对 Δ 测量。
 
-## Optimization(39)
+## Optimization(40)
 
-### 工程设计(engineering_design) — 22
+### 工程设计(engineering_design) — 23
 
 | 任务 | 学科 | 领域 | 打分 | oracle | 认证 | 说明 | 中文题意 | 中文评估方法 |
 |---|---|---|---|---|---|---|---|---|
+| [`MetabolicStrainDesign`](benchmarks/Biology/MetabolicStrainDesign/)<br>代谢工程菌株设计 | Biology | MetabolicEngineering | uncapped | analytical | candidate | engineer product flux under sealed capacity draws | 在密封酶容量扰动下选敲除与过表达集,最大化产物通量并保生物质门 | 以野生型为零点、冻结见证设计为1的缺口闭合;无上限,corner 扰动可超1 |
 | [`AlloyHardnessOptimization`](benchmarks/Chemistry/AlloyHardnessOptimization/)<br>合金硬度实验设计 | Chemistry | MaterialsScience | uncapped | real_data_replay | candidate | design a study-held alloy batch | 在按论文 DOI 分组的多主元合金数据里做实验设计,选出研究外留出的硬度批次 | 留出硬度 + 多样性 + 代理失效 + 不确定性 + 来源迁移 + 稀疏独立确认;无上限 |
 | [`DistillationColumnDesign`](benchmarks/Chemistry/DistillationColumnDesign/)<br>精馏塔设计 | Chemistry | ChemicalProcess | uncapped | equilibrium_stage_process_sim | candidate | robust mixed-integer equilibrium-stage design | 混合整数精馏塔设计:塔板数与进料位置离散,兼顾纯度回收约束与再沸冷凝能耗 | 年化成本;留出迁移与密封变工况分列,无上限 |
 | [`ElectrolyteConductivityDesign`](benchmarks/Chemistry/ElectrolyteConductivityDesign/)<br>电解液电导率设计 | Chemistry | Electrochemistry | uncapped | real_data_replay | candidate | allocate EIS assays and select a robust formulation batch | 在高通量电解液数据回放里分配阻抗测定预算,选出稳健的配方批次 | 温度剖面电导率 + 批次多样性 + 重复稳健性 + 留出迁移;无上限 |
@@ -69,19 +70,21 @@
 | [`LennardJonesCluster`](benchmarks/Chemistry/LennardJonesCluster/)<br>Lennard-Jones 团簇 | Chemistry | Chemistry | uncapped | analytical | certified | minimize the energy of atomic clusters | 求 Lennard-Jones 原子簇的最低能量几何构型 | 对全局最小的平均缺口闭合;无上限 |
 | [`MolecularLeadOptimization`](benchmarks/Chemistry/MolecularLeadOptimization/)<br>分子先导组合优化 | Chemistry | MedicinalChemistry | uncapped | rdkit_cheminformatics_property_filter | candidate | build a diverse portfolio of novel, developable leads | 构建结构多样、可开发的新颖先导化合物组合,而非单个分子 | 多样性约束下的组合价值,对标已上市药物;无上限 |
 
-## Discovery(40)
+## Discovery(47)
 
-### 公式(formula) — 5
+### 公式(formula) — 7
 
 | 任务 | 学科 | 领域 | 打分 | oracle | 认证 | 说明 | 中文题意 | 中文评估方法 |
 |---|---|---|---|---|---|---|---|---|
 | [`EnzymeKineticsLaw`](benchmarks/Biology/EnzymeKineticsLaw/)<br>酶动力学律辨识 | Biology | SystemsBiology | clipped | physical_sim | candidate | A purified enzyme is in front of you. · on-ramp,不配对 | 在测定预算内自选底物与抑制剂浓度,判定这个酶服从六条已发表速率律中的哪条,或都不服从 | 速率律辨识 + 拒答 + 密封外推预测 |
+| [`ChronoamperometryLawID`](benchmarks/Chemistry/ChronoamperometryLawID/)<br>计时电流法律辨识 | Chemistry | Electrochemistry | clipped | physical_sim | candidate | identify the current law behind potential-step transients | 在电位阶跃预算下辨识六条计时电流律,反常扩散或基线漂移须拒答 | 类概率+参数+密封外推几何均值;χ² 门与共享线性项变量投影拒答分列 |
+| [`ScalingLawIdentification`](benchmarks/ComputerScience/ScalingLawIdentification/)<br>渐近复杂度定律辨识 | ComputerScience | Algorithm | clipped | analytical | candidate | identify the asymptotic law of a black-box program | 在计时预算下辨识黑盒程序渐近复杂度类,双分支或抖动须拒答 | 类概率+尺度+密封外推几何均值;分裂拟合与噪声地板拒答分列 |
 | [`AMOCTippingRefusal`](benchmarks/EarthScience/AMOCTippingRefusal/)<br>AMOC 折叠拒答 | EarthScience | Oceanography | clipped | physical_sim | candidate | a dip in the fingerprint is not a fold | AMOC 指纹序列里区分尚未发生的立方折叠、纯红噪声与冰约束唯一吸引子 | 折叠恢复 + 红噪声与冰约束拒答;指纹下降不等于将要崩溃 |
 | [`ActiveLawDiscovery`](benchmarks/Mathematics/ActiveLawDiscovery/)<br>主动定律发现 | Mathematics | DynamicalSystems | clipped | physical_sim | candidate | discover dynamical laws by choosing experiments | 自选初值与外部驱动,从候选项库里恢复二维受控系统的稀疏控制方程 | 稀疏律恢复 + 密封轨迹外推;库不足时拒答 |
 | [`SequenceLawRecovery`](benchmarks/Mathematics/SequenceLawRecovery/)<br>整数序列递推恢复 | Mathematics | Mathematics | clipped | community_symbolic_sympy | candidate | Given the first terms of an integer sequence, state the linear recurrence that produced it. | 给出整数序列前若干项,说出产生它的线性递推;项数不足以定唯一最小规则时拒答 | 延续准确率;误发现率与不定性拒答分开报告 |
 | [`ComplexBoseLaw`](benchmarks/Physics/ComplexBoseLaw/)<br>复玻色占据律 | Physics | Physics | clipped | physical_sim | candidate | a mixed cavity occupancy is not textbook Planck | 在模式混合下恢复玻色占据律的移位指数;费米型世界须拒答 | 指数恢复 + 费米拒答;不是教科书普朗克曲线的直接拟合 |
 
-### 结构(structure) — 8
+### 结构(structure) — 9
 
 | 任务 | 学科 | 领域 | 打分 | oracle | 认证 | 说明 | 中文题意 | 中文评估方法 |
 |---|---|---|---|---|---|---|---|---|
@@ -91,6 +94,7 @@
 | [`InterventionalSCM`](benchmarks/ComputerScience/InterventionalSCM/)<br>干预式结构因果模型 | ComputerScience | CausalDiscovery | clipped | physical_sim | candidate | recover hidden causal mechanisms by experimentation | 用干预实验打破马尔可夫等价,恢复隐藏线性无环结构因果模型的有向图与系数 | 有向图与结构系数恢复;观测关联不足以定向 |
 | [`SurvivorshipConfoundedDesign`](benchmarks/ComputerScience/SurvivorshipConfoundedDesign/)<br>幸存者偏差下的效应估计 | ComputerScience | CausalDiscovery | clipped | physical_sim | candidate | association among survivors is not a treatment effect | 每一行数据都已被结果相关的筛选选中,在幸存者表里估计真实处理效应 | 处理效应恢复;混杂开启的伪关联须识别,无 T→Y 边时不得宣称效应 |
 | [`FocalMechanismStressInversion`](benchmarks/EarthScience/FocalMechanismStressInversion/)<br>震源机制应力反演 | EarthScience | Geophysics | clipped | physical_sim | candidate | resolve nodal-plane ambiguity into a stress regime | 在双节面歧义下反演主应力轴、形状比与逐事件断层面;混合应力机制或无信号须拒答 | 轴/形状比/平面指派几何均值;误发现与拒答分列,全面弃权为零 |
+| [`DistributionNetworkTopology`](benchmarks/Engineering/DistributionNetworkTopology/)<br>供水管网布尔断层扫描 | Engineering | WaterDistribution | clipped | analytical | candidate | boolean tomography of a water grid | 在路径探针预算下定位管网破损管段,孪生服务廊道不可辨识须拒答 | 破损集 F1;结构别名拒答,翻转噪声靠多数投票,全面弃权为零 |
 | [`BlackBoxGroupIdentification`](benchmarks/Mathematics/BlackBoxGroupIdentification/)<br>黑盒群同构辨识 | Mathematics | Mathematics | clipped | analytical | candidate | A finite set of `order` labelled elements and a black-box product: `mul(a, b)` returns the label | 只给黑盒乘法与随机标号,在查询预算内从公开构造目录里辨识群的同构类 | 目录 id 精确门控;非群与目录外两种拒答理由分开计分,阶数分布不足以辨识 |
 | [`HiddenCouplingNetwork`](benchmarks/Physics/HiddenCouplingNetwork/)<br>隐藏耦合网络重建 | Physics | Physics | clipped | physical_sim | candidate | A network of `units` observed units relaxes to a steady state under constant drive. | 实验次数少于单元数,从多单元驱动的稳态里恢复带符号的直接耦合图;存在未观测单元时拒答 | 带符号边 F1;间接路径、tanh 非线性与隐藏单元造成的稠密低秩耦合分别记误发现 |
 
@@ -107,19 +111,22 @@
 | [`LookElsewhereAnomaly`](benchmarks/Physics/LookElsewhereAnomaly/)<br>多窗口扫描的全局显著性 | Physics | ParticlePhysics | clipped | physical_sim | candidate | local 5σ is not a discovery | 一张质量谱在多个窗口里扫描,判定局域 5σ 在计入试验因子后还剩多少 | look-elsewhere 后的全局显著性;边带拒绝公开本底时须拒答 |
 | [`PTAHellingsDowns`](benchmarks/Physics/PTAHellingsDowns/)<br>脉冲星阵四极相关 | Physics | Gravitation | clipped | physical_sim | candidate | a common process is not a gravitational-wave background | 脉冲星计时阵里区分 Hellings-Downs 四极相关(引力波背景)与钟差单极、星历偶极、共同红噪声 | 四极 vs 单极判别与拒答;共同过程不等于引力波背景 |
 
-### 物质(substance) — 3
+### 物质(substance) — 5
 
 | 任务 | 学科 | 领域 | 打分 | oracle | 认证 | 说明 | 中文题意 | 中文评估方法 |
 |---|---|---|---|---|---|---|---|---|
+| [`MetagenomicMixtureID`](benchmarks/Biology/MetagenomicMixtureID/)<br>宏基因组混合辨识 | Biology | Metagenomics | clipped | physical_sim | candidate | recover a strain mixture from purchased sequencing depth | 在测序深度预算下恢复菌株混合与丰度,文库外新物种仅现于保守标记须拒答 | 集合F1+丰度对数误差;保守标记超额 4σ 拒答,全面弃权为零 |
 | [`CrowdedSpectrumAssignment`](benchmarks/Chemistry/CrowdedSpectrumAssignment/)<br>混叠谱物种指认 | Chemistry | Spectroscopy | clipped | physical_sim | candidate | name the library species in a blended spectrum | 在混叠谱里指认封闭库中的物种;两个近线的混合与第三个物种不可区分,变焦要花预算 | 库物种指认 + 别名拒答 |
 | [`PhaseDiagramDiscovery`](benchmarks/Chemistry/PhaseDiagramDiscovery/)<br>相图发现 | Chemistry | MaterialsScience | clipped | physical_sim | candidate | An isothermal section of a binary system A-B. | 在合成预算下测定二元等温相图:哪些平衡相存在、各占哪段成分,或该体系根本达不到平衡 | 相集精确门控 + 杠杆定律边界精度;两相区叠加、杂质峰、动力学冻结须区分,冻结体系须拒答 |
 | [`QuinaryConvexHull`](benchmarks/Chemistry/QuinaryConvexHull/)<br>五元凸包稳定相 | Chemistry | MaterialsScience | clipped | analytical | candidate | E_f < 0 is not a new stable | 五元体系里给出凸包上真正稳定的非一元相;生成焓小于零不等于新稳定相 | 精确非一元凸包顶点;玻璃态须拒答 |
+| [`MineralMixtureXRD`](benchmarks/EarthScience/MineralMixtureXRD/)<br>矿物混合衍射定量 | EarthScience | Mineralogy | clipped | physical_sim | candidate | quantify a mineral mixture from powder diffraction | 在慢扫描窗口预算下定量矿物混合,非晶鼓包不拒答、未知尖锐相须拒答 | 集合F1+分数对数误差;残差局部对比度拒答,全面弃权为零 |
 
-### 参数反演(parameter_inversion) — 16
+### 参数反演(parameter_inversion) — 18
 
 | 任务 | 学科 | 领域 | 打分 | oracle | 认证 | 说明 | 中文题意 | 中文评估方法 |
 |---|---|---|---|---|---|---|---|---|
 | [`DemographicSFS`](benchmarks/Biology/DemographicSFS/)<br>位点频率谱人口史反演 | Biology | PopulationGenetics | clipped | active_coalescent_inference | candidate | infer population history with a finite sequencing budget | 在测序预算内跨样本量分配测序,从位点频率谱恢复常量或三期人口史 | 参数恢复 + 留出样本量预测 + 模型不足拒答 + 预算设计 |
+| [`HodgkinHuxleyCurrentID`](benchmarks/Biology/HodgkinHuxleyCurrentID/)<br>电压钳通道参数恢复 | Biology | Electrophysiology | clipped | physical_sim | candidate | recover channel parameters from voltage-clamp protocols | 自选电压钳协议恢复八参数通道模型,A 型或整流额外电流须拒答 | 参数恢复+密封协议预测几何均值;失配门拒答,全面弃权为零 |
 | [`CatalystDeactivationLab`](benchmarks/Chemistry/CatalystDeactivationLab/)<br>催化剂失活实验室 | Chemistry | Catalysis | clipped | stateful_reduced_order_kinetics | candidate | run a stateful catalyst laboratory under instrument drift | 在仪器漂移与不可逆失活的催化剂试片上做动力学实验,并行反应器乱序返回 | 动力学参数与漂移恢复;错认试片血缘、重试破坏性实验即失败;密封新批次决策 |
 | [`ForceFieldCalibration`](benchmarks/Chemistry/ForceFieldCalibration/)<br>力场假设判别 | Chemistry | MolecularDynamics | clipped | active_pair_potential_hypothesis_laboratory | candidate | discriminate pair-potential hypotheses by active force queries | 主动查询构型的能量与力,在 Mie 12-6 与 Morse 之间判别对势律,并给参数区间 | 竞争假设保留、判别、区间恢复、密封预测与模型拒答分列;库外世界须拒答 |
 | [`NMRSpectrumFitting`](benchmarks/Chemistry/NMRSpectrumFitting/)<br>核磁谱峰机制恢复 | Chemistry | Spectroscopy | clipped | physical_sim | candidate | recover supported peak mechanisms across spectra | 从一维核磁谱里恢复未知个数的重叠共振、区分线型与基线漂移;线型族不支持时拒答 | 峰机制恢复 + 移位重建 + 模型不足拒答;残差低会奖励虚假峰 |
@@ -133,5 +140,6 @@
 | [`RadiativeTransferFit`](benchmarks/EarthScience/RadiativeTransferFit/)<br>辐射传输反演 | EarthScience | AtmosphericScience | clipped | physical_sim | candidate | actively select thermal channels and retrieve an atmospheric mechanism | 主动选择热红外通道与观测角,反演大气温度与光学厚度剖面;未建模的吸收体或云须拒答 | 机制恢复 + 模型不足拒答;观测预算受限,残差低不足以判对 |
 | [`ConvectionDiffusionOpt`](benchmarks/Engineering/ConvectionDiffusionOpt/)<br>对流扩散辨识与加热器设计 | Engineering | HeatTransfer | clipped | active_pde_identification_and_robust_design | candidate | identify transport and design a robust heater layout | 在预算内辨识各向异性对流扩散参数,并设计使温度场达标的加热器布局 | 机制恢复 + 目标场设计 + 物理偏移稳健性 + 模型不足拒答 |
 | [`QuartzCrystalMicrobalanceLab`](benchmarks/Engineering/QuartzCrystalMicrobalanceLab/)<br>石英微天平原始信号反演 | Engineering | Sensors | clipped | raw_complex_instrument_pipeline | candidate | infer deposition from raw I/Q sweeps | 从石英微天平的原始 I/Q 扫频里标定复增益漂移、提取谐振并反演薄膜质量与沉积速率 | 原始 IQ 标定、BVD 谐振提取、质量与速率恢复、故障与模型判别、密封停止决策分列 |
+| [`EllipticCurveRecovery`](benchmarks/Mathematics/EllipticCurveRecovery/)<br>椭圆曲线系数恢复 | Mathematics | Mathematics | clipped | analytical | candidate | recover curve coefficients from prime point counts | 在素数点数预算下恢复 y²=x³+ax+b 的整数系数,奇异或亏格2须拒答 | 系数误差指数分;剩余类枚举+CRT 提升歧义即拒答,全面弃权为零 |
 | [`HamiltonianLearning`](benchmarks/Physics/HamiltonianLearning/)<br>哈密顿量学习 | Physics | QuantumDynamics | clipped | community_quantum_dynamics_qutip | candidate | Recover the Hamiltonian of a closed quantum spin chain from the dynamics it generates. | 从自旋链的少数可观测量时间演化里恢复哈密顿量参数 | 参数恢复;误发现率与对称性不可辨识拒答分开报告 |
 | [`RadialVelocityPlanets`](benchmarks/Physics/RadialVelocityPlanets/)<br>视向速度找行星 | Physics | Exoplanets | clipped | community_timeseries_astropy | candidate | A star's spectrum shows a periodic Doppler shift. | 从视向速度序列里指认哪些周期是行星:自转、谐波与采样别名不是行星 | 行星恢复;误发现率与别名拒答分开报告 |

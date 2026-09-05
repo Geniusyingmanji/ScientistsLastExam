@@ -10,6 +10,46 @@ policy:
   statuses: [certified, candidate, quarantined]
 
 tasks:
+  Electrochemistry/ChronoamperometryLawID:
+    status: candidate
+    reason: deterministic multi-potential chronoamperometric law identification with Akaike-penalized family fits, chi-square and variable-projection drift gates, and anomalous-transport refusal; the truth-blind witness reaches 0.963/0.882 with zero false discoveries while a no-penalty variant drops to 0.876; pending clean Linux calibration, independent electrochemistry review and server-held transients
+    citation_ids:
+      - isbn:9780471057528
+  MetabolicEngineering/MetabolicStrainDesign:
+    status: candidate
+    reason: uncapped flux-balance strain design under sealed enzyme-capacity draws with wild-type zero anchor and a witness design whose fluxes the oracle recomputes; the worst-case greedy witness reaches 0.998/1.000 and capacity-corner draws leave record headroom; pending clean Linux calibration, independent metabolic-engineering review and frontier draws on the record side
+    citation_ids:
+      - doi:10.1038/nbt.1614
+  Metagenomics/MetagenomicMixtureID:
+    status: candidate
+    reason: deterministic multinomial read-count mixture identification with genome-specific and conserved markers, depth purchasing, and a four-sigma conserved-excess novel-organism refusal; the truth-blind witness reaches 0.996/0.995 with zero false discoveries and disabling the novelty test collapses it to 0.596; pending clean Linux calibration, independent metagenomics review and server-held mixtures
+    citation_ids:
+      - doi:10.1038/nmeth.3589
+  Electrophysiology/HodgkinHuxleyCurrentID:
+    status: candidate
+    reason: deterministic voltage-clamp channel-parameter recovery over the public 1952 gating equations in closed form, with sealed-protocol prediction and A-type/rectifying extra-current refusal; the multistart least-squares witness reaches 0.718/0.594 with zero false discoveries, leaving parameter-recovery headroom; pending clean Linux calibration, independent electrophysiology review and server-held membranes
+    citation_ids:
+      - doi:10.1113/jphysiol.1952.sp004764
+  Algorithm/ScalingLawIdentification:
+    status: candidate
+    reason: deterministic asymptotic-class identification from budgeted noisy timings with mod-3 branching and sixty-percent-jitter refusal worlds and a sealed out-of-ladder extrapolation; the truth-blind witness reaches 0.929/0.622 with zero false discoveries and the jitter-gate ablation costs 0.167; pending clean Linux calibration, independent algorithms review and server-held programs
+    citation_ids:
+      - isbn:9780262033848
+  WaterDistribution/DistributionNetworkTopology:
+    status: candidate
+    reason: boolean network tomography over a 4x4 grid with several hundred monotone routes, signature-uniqueness-filtered break sets, twin-corridor refusal and flip noise; the greedy-cover witness saturates level 1 (1.000/1.000) while levels 2-3 fall to 0.400/0.200; pending clean Linux calibration, independent water-systems review and a decision on the default level
+    citation_ids:
+      - doi:10.1061/(ASCE)0733-9496(2008)134:6(556)
+  Mineralogy/MineralMixtureXRD:
+    status: candidate
+    reason: deterministic powder-diffraction mixture quantification with a public twelve-mineral library, budgeted slow windows, amorphous-hump distractors and sharp unknown-phase refusal; the weighted-NNLS witness reaches 0.396/0.450 with zero false discoveries and full refusal, deliberately leaving fraction-accuracy headroom; pending clean Linux calibration, independent mineralogy review and full-pattern refinement comparison
+    citation_ids:
+      - doi:10.1107/S0021889869006558
+  Mathematics/EllipticCurveRecovery:
+    status: candidate
+    reason: exact integer curve recovery from tiered-budget prime point counts with per-prime residue enumeration, incremental CRT lifting with window pruning, and singular/genus-two refusal; the six-prime witness reaches 1.000/1.000 with zero false discoveries and the four-prime ablation collapses to 0.000 via twin-curve ambiguity; pending clean Linux calibration, independent mathematics review and the frontier draw on the residue-then-CRT strategy
+    citation_ids:
+      - isbn:9780387094939
   Spectroscopy/MassFragmentationTree:
     status: candidate
     reason: deterministic multi-energy MS/MS fragmentation-tree discovery with charged energy/zoom budget, flat-background filtering, in-source precursor loss and one-dalton co-isolate refusal worlds; a truth-blind decomposition-plus-greedy-attachment witness reaches 0.565/0.525 development/robustness with zero false discoveries while shortcut probes stay at or below 0.104; pending clean Linux calibration, server-held molecules, independent mass-spectrometry review and higher-fidelity cascade replication

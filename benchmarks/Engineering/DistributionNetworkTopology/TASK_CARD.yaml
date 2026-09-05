@@ -1,0 +1,86 @@
+schema_version: 2
+scientific_question: Can budgeted route tests localize broken pipes in a water grid,
+  while refusing failures on twin lines no route can separate?
+artifact: A broken-pipe id set, optional abstention and a confidence scalar.
+oracle:
+  model: 4x4 grid with several hundred monotone testable routes plus a twin service
+    corridor, seeded identifiable break sets (signature uniqueness enforced at
+    generation), twin and mirrored unidentifiable worlds, two percent report flips
+  feasibility: known pipe ids, unique nonempty claims of at most six pipes, charged
+    probes within a twenty-six-unit budget
+  deterministic: true
+  external_tooling: none beyond NumPy
+difficulty_ladder:
+  default_level: 1
+  levels:
+    1: single breaks, two percent flips
+    2: up to two breaks, four percent flips
+    3: up to three breaks, seven percent flips
+normalization:
+  baseline: one probe blaming the first pipe of the first failed route
+  reference: greedy cover, majority re-probes, minimal hitting sets, discrimination
+    loop, structural-alias refusal
+  score: broken-set F1 on supported worlds, normalized above always abstaining
+citations:
+- id: doi:10.1061/(ASCE)0733-9496(2008)134:6(556)
+  title: The battle of the water sensor networks
+invariants:
+- supported-world break sets are signature-unique over the full route family
+- twin pipes share exactly the same route signatures
+- repeated probes of one route draw fresh flip noise
+- a full abstention scores exactly zero after normalization
+known_shortcuts: The reference saturates level 1 (1.000/1.000); levels 2 and 3 drop to 0.400 and 0.200 as multi-break ambiguity and flips bite. The shipped default is level 1; certification requires showing the frontier gap at level 2 plus. Formal clean Linux calibration and independent review remain pending.
+licensing:
+  task_package: repository_license_not_declared
+  external_assets: none
+  note: All runtime worlds are generated from original repository code; cited
+    publications are not redistributed.
+contamination:
+  status: cannot_be_contaminated
+  rationale: The grid, route family and break sets are procedural and
+    repository-original.
+review:
+  domain: pending_external_water_systems
+  evaluator_security: targeted_local_regressions_added_clean_linux_sandbox_replay_pending
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic route-probe worlds with
+    development and held-out break sets and twin-corridor regimes.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Boolean network tomography is an established field; the twin-corridor
+    refusal world and budgeted route family are original to this package.
+lineage:
+  status: complete
+  builder_model_ids:
+  - glm-5.3
+  builder_scaffolds:
+  - repository-native-engineering-task-pattern
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: 2026-09-05 local build caught a route enumeration that looped without a visited set, an alphabetical truncation of the route family that left pipes untestable, mirror-symmetric break sets in supported worlds (now signature-filtered at generation), twin ids that did not match the route table, a tie rule that widened the failed set under flips, and a reference that swept routes alphabetically instead of greedily; each was fixed and pinned by tests.
+  shortcut_discoverer: initial_internal_red_team
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: initial_internal
+  author_domain: AI-assisted benchmark engineering
+  reviewer_domain: pending_external_water_systems
+  expert_hours: null
+  red_team_rounds: 3
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: standalone_public_model_references_pending
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+difficulty_assessment:
+  status: unverified_candidate
+  requirement: standard-method and low-dimensional shortcut sweeps, capability ablations
+    and clean frontier-model calibration before certification
+  remaining_risk: Level 1 saturates for the reference; the default may need raising
+    to level 2 after a frontier draw shows the single-break regime is too easy.

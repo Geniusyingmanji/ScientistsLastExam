@@ -1,0 +1,13 @@
+domain: Metagenomics
+task: MetagenomicMixtureID
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: physical_sim
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 25
+science_metric: metagenomic mixture recovery with novel-organism refusal
+reference_baseline: one shallow sequencing run followed by abstention
+reference_sota: truth-blind marker statistics with conserved-excess novelty test; runnable witness
+citation: Truong et al. 2015 Nat Methods doi:10.1038/nmeth.3589
