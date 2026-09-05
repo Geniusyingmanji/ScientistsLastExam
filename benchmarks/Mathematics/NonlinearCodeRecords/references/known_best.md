@@ -100,3 +100,36 @@ tight; Bell-inequality bounds under the NPA hierarchy are the candidate.
   one-dimensional return and a three-dimensional one — all score zero with `valid = 0`, and none
   raises out of the evaluator.
 - Two consecutive evaluations of the reference are key-identical.
+
+## Frontier calibration draw (Opus 5, 2026-09-04)
+
+Three seeds, greedy rewrite, `normal` feedback, budget 3, one calibration run
+(`experiments/opus5_nonlinear_code_records_calibration_2026-09-04.json`).
+
+| seed | proposal 1 | proposal 2 | proposal 3 | best |
+|---|---|---|---|---|
+| 0 | no code | no code | 0.641688 | 0.641688 |
+| 1 | no code | no code | 0.383065 | 0.383065 |
+| 2 | no code | no code | no code | protocol incomplete |
+
+Two readings of this table are wrong and worth naming, because the second one changed the harness.
+
+**It is not "the model scored zero two thirds of the time."** Every one of the six `no_code` draws
+is a reply of 35-37 KB that stops in the middle of a word — the provider's output cap, reached
+while the model was still reasoning about hyperplane weight distributions in PG(6,2). The
+proposals never got as far as a program. At the time the run was recorded the ledger said
+`response_truncated: false` on all six, because that field described the retained diagnostic copy
+rather than the model's reply. The harness now records the provider's stop reason and reports
+`protocol_incomplete: output_budget_exhausted` for a run in this shape; seed 2 is that run. A
+re-draw at a larger `max_output_tokens` is required before any of this counts as model evidence.
+
+**It is not a passed admission bar either.** Seed 0's single valid proposal scored 0.641688 —
+key-identical to the reference, to eight digits. Opus 5 rebuilt the greedy parity-check linear
+code. The admission bar asks that the first frontier proposal not *reach* the reference, and this
+one reaches it exactly. What the draw does establish is the shape of the gap: a valid proposal
+lands on the best linear code and stops there, which is the wall the task is about — every
+published record at these lengths is held by a nonlinear code. Whether a searcher with room to
+answer can get past that wall is unmeasured.
+
+Status therefore stays **candidate**, and the two open items are a re-draw with a larger output
+budget and a second searcher.
