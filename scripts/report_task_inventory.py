@@ -73,6 +73,7 @@ CHINESE_NAMES = {
     "Mathematics/SchurPartition": "Schur 无和分拆",
     "Mathematics/SequenceLawRecovery": "整数序列递推恢复",
     "Mathematics/Superpermutation": "超排列最短串",
+    "Exoplanets/TransmissionSpectrumSpecies": "透射光谱分子判定",
     "DiscreteGeometry/SpherePackingCertificate": "球堆积上界证书",
     "QuantumFoundations/BellBoundCertificate": "贝尔不等式上界证书",
     "Mathematics/NonlinearCodeRecords": "非线性码规模纪录",
@@ -228,6 +229,14 @@ CHINESE_BRIEFS = {
     "Mathematics/SequenceLawRecovery": (
         "给出整数序列前若干项,说出产生它的线性递推;项数不足以定唯一最小规则时拒答",
         "延续准确率;误发现率与不定性拒答分开报告"),
+    "Exoplanets/TransmissionSpectrumSpecies": (
+        "在固定的凌星次数预算下,判断系外行星大气里有哪些分子——以及在观测无法判定时说出无法判定。"
+        "K2-18b 的 DMS 之争正是这个问题:多次重分析的结论是那些特征并非唯一可辨识。四类世界里有三类"
+        "不可辨识,而且原因各不相同:灰云层一次压平所有特征;混淆对在任何预算分配下都分不开(单振幅"
+        "误差是其和的 24.5 倍);暗弱系统把整个预算压在最好波段也到不了 1σ。只有第三类是噪声。",
+        "三轴分开报、永不平均:机制恢复率、假发现率(带分母)、校准拒答率,外加是否尝试过的计数。"
+        "总分是三者之积,归一化到全弃权恰好得零——从不弃权因拒答率为零也得零,两种退化策略都是零,"
+        "靠尝试率把它们区分开。点名混淆对里任何一方都算假发现,即使其中一个确实存在:世界不决定是哪一个。"),
     "DiscreteGeometry/SpherePackingCertificate": (
         "为球堆积密度给出一份可精确验证的上界证明。Cohn-Elkies 定理把上界化为分析问题:找一个函数,"
         "它在半径外非正、其傅里叶变换处处非负。除 1/2/3/8/24 维外全部开放——12 维已知最好堆积 0.03704,"

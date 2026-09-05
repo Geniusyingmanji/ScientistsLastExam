@@ -1,0 +1,20 @@
+{
+  "anchors": [
+    {"name": "k2_18b_dms_not_uniquely_identifiable", "value": 1.0,
+     "source_url": "https://www.aanda.org/articles/aa/full_html/2025/08/aa55580-25/aa55580-25.html",
+     "derivation": "Insufficient evidence for DMS and DMDS in the atmosphere of K2-18 b, A&A 700 (2025) A55: a joint reanalysis of JWST NIRISS, NIRSpec and MIRI finds the reported absorption features are not uniquely identifiable. Recorded as the scientific situation this task reproduces, not as a numeric target: value 1.0 is a marker that the claim was verified against the source.",
+     "retrieved_on": "2026-09-06"},
+    {"name": "k2_18b_competing_molecules_preferred", "value": 1.0,
+     "source_url": "https://arxiv.org/abs/2505.10539",
+     "derivation": "A systematic search for trace molecules in the atmosphere of K2-18 b: retrieval over 661 candidate molecules finds ethylene and chloroethane at least as favoured as, and in many cases preferred over, DMS/DMDS. This is the confusable-pair regime of the task, and the reason naming either member counts as a false discovery.",
+     "retrieved_on": "2026-09-06"},
+    {"name": "dms_dmds_mutually_degenerate_mid_infrared", "value": 1.0,
+     "source_url": "https://iopscience.iop.org/article/10.3847/2041-8213/adc1c8",
+     "derivation": "New constraints on DMS and DMDS in the atmosphere of K2-18 b from JWST MIRI: the spectral features can be explained to a large extent by either molecule because of degeneracy in the mid-infrared. The task's pair is built to the same shape - templates correlated at 0.9997 after band averaging.",
+     "retrieved_on": "2026-09-06"},
+    {"name": "standards_of_evidence_dispute", "value": 1.0,
+     "source_url": "https://iopscience.iop.org/article/10.3847/1538-3881/ae0338",
+     "derivation": "K2-18 b does not meet the standards of evidence for life. Recorded because it is the clearest statement that the disputed axis is calibration of a claim rather than identification of a molecule, which is the axis this task scores separately from recovery.",
+     "retrieved_on": "2026-09-06"}
+  ]
+}

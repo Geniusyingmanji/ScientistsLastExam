@@ -1,0 +1,13 @@
+domain: Exoplanets
+task: TransmissionSpectrumSpecies
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: analytical
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 10
+science_metric: product_of_mechanism_recovery_one_minus_false_discovery_rate_and_correct_refusal_rate_with_the_three_axes_reported_separately
+reference_baseline: uniform allocation, least squares, report anything above a threshold, never abstain
+reference_sota: "no external SOTA: the truth is procedural. The scientific situation reproduced is the K2-18 b DMS dispute, where reanalysis found the features not uniquely identifiable"
+citation: "Insufficient evidence for DMS and DMDS in the atmosphere of K2-18 b, A&A 700 (2025) A55, DOI 10.1051/0004-6361/202555580; A systematic search for trace molecules in the atmosphere of K2-18 b, arXiv:2505.10539"

@@ -1,0 +1,9 @@
+1) Only edit solution.py. Keep analyze(problem, observe).
+2) Return {"abstain": bool, "species": {name: bool, ...}, "confidence": float in [0,1]}.
+   Species names must come from problem["species_catalogue"]; values must be booleans.
+3) observe(allocation) takes one non-negative integer transit count per band. The budget is
+   cumulative and cannot be exceeded, and there are at most 64 calls per system.
+4) Naming either member of problem["known_confusable_group"] counts as a false discovery: the
+   observation does not determine which of them it is.
+5) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read
+   verification/ or frontier_eval/.

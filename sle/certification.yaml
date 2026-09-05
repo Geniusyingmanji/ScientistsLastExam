@@ -501,6 +501,17 @@ tasks:
     citation_ids:
       - arxiv:2502.04514
       - doi:10.1007/BF02165411
+  Exoplanets/TransmissionSpectrumSpecies:
+    status: candidate
+    reason: >-
+      budgeted molecular identification in transiting-planet transmission spectra with a refusal
+      axis, reproducing the K2-18 b situation in which reanalysis found the reported features not
+      uniquely identifiable; three of four regimes are unidentifiable for three different reasons
+      and only one is noise, the confusable pair carries 24.5 times the uncertainty on individual
+      amplitudes as on their sum, both degenerate strategies score exactly zero, and fifteen
+      adversarial submissions score zero without raising; no frontier searcher draw yet, pending
+      external exoplanet-atmospheres review
+    citation_ids: [doi:10.1051/0004-6361/202555580, arxiv:2505.10539, doi:10.3847/2041-8213/adc1c8, doi:10.3847/1538-3881/ae0338]
   DiscreteGeometry/SpherePackingCertificate:
     status: candidate
     reason: >-

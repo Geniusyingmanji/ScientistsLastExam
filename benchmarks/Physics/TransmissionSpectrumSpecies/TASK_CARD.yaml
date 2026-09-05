@@ -1,0 +1,132 @@
+schema_version: 2
+scientific_question: >-
+  Under a fixed transit budget, decide which molecules are present in a transiting planet's
+  atmosphere - and, on the two thirds of systems where the observation cannot decide, say so.
+artifact: >-
+  Per system, a species present/absent report with a confidence, or an abstention.
+oracle:
+  model: >-
+    a frozen isothermal transmission forward model in which species enter as the logarithm of their
+    cross-section, with a grey cloud deck, a Rayleigh slope and per-band photon noise that averages
+    down with the transits spent on that band
+  feasibility: >-
+    a boolean abstain flag, a finite confidence in [0,1], species names from the supplied catalogue
+    with boolean values, at most 64 observation calls and never more transits than the budget; any
+    failure scores that system zero
+  deterministic: true
+normalization:
+  baseline: >-
+    uniform allocation, ordinary least squares against the catalogue, report anything above a fixed
+    threshold, never abstain; scores exactly zero because the refusal rate is zero by construction
+  reference: >-
+    a fixed width-weighted allocation, a weighted fit, per-species significance from the linear
+    covariance, and abstention on three grounds - no signal above the noise, a degenerate pair the
+    fit cannot separate, and individually weak detections
+  score: >-
+    product of mechanism recovery, one minus the false discovery rate, and the correct refusal rate,
+    normalised so that blanket abstention is exactly zero; the three axes are also reported
+    separately with their denominators and are never averaged
+citations:
+  - id: doi:10.1051/0004-6361/202555580
+    title: "Insufficient evidence for DMS and DMDS in the atmosphere of K2-18 b, A&A 700 (2025) A55"
+  - id: arxiv:2505.10539
+    title: "A systematic search for trace molecules in the atmosphere of K2-18 b"
+  - id: doi:10.3847/2041-8213/adc1c8
+    title: "New constraints on DMS and DMDS in the atmosphere of K2-18 b from JWST MIRI"
+  - id: doi:10.3847/1538-3881/ae0338
+    title: "K2-18 b does not meet the standards of evidence for life"
+invariants:
+  - >-
+    three of the four regimes are unidentifiable for three different reasons and only one of them is
+    noise, so a searcher that abstains whenever the spectrum looks noisy catches one and misses two
+  - >-
+    the regimes are calibrated against the budget rather than chosen by eye - the best achievable
+    signal-to-noise with the whole budget on the best band is 23-54 for identifiable systems and
+    below 1 for every unidentifiable one
+  - >-
+    the confusable pair is genuinely inseparable, not merely hard - templates correlate at 0.9997,
+    the fit correlates at -0.9992, and individual amplitudes carry 24.5 times the uncertainty of
+    their sum, so no allocation of the budget separates them
+  - >-
+    naming either member of the confusable pair counts as a false discovery even when one is
+    present, because the world does not determine which
+  - >-
+    both degenerate strategies score exactly zero - blanket abstention because it recovers nothing,
+    never abstaining because its refusal rate is zero - and attempted_rate tells them apart
+  - >-
+    every rate is published with its denominator, so the triple can be recomposed rather than
+    trusted
+  - malformed reports score zero and never raise out of the evaluator
+known_shortcuts: >-
+  Fifteen degenerate and adversarial submissions - blanket abstention, never abstaining, claiming
+  every species, claiming none, guessing without observing, None, {}, a non-boolean abstain flag, a
+  NaN confidence, an out-of-range confidence, an unknown species name, a non-boolean species value,
+  a raising callable, an allocation over the budget, sixty-four-plus observation calls and a
+  negative transit count - all score 0.000000, and none raises out of the evaluator. The malformed
+  ones report valid = 0 and the well-formed-but-useless ones report valid = 1, which is the
+  distinction that matters.
+  The construction's own worst bug was caught this way: the noise realisation was seeded from
+  hash() of the system id, which Python randomises per process, so the same reference scored 0.4231
+  in one interpreter and 0.2092 in the next. It is now seeded from a stable digest and three runs
+  under randomised PYTHONHASHSEED agree exactly.
+review:
+  status: pending_external
+  domain: pending_external_exoplanet_atmospheres
+  evaluator_security: >-
+    The oracle's work is bounded by the contract: at most 64 observation calls per system, each a
+    binned average over a fixed grid, with the transit budget enforced on every call and negative or
+    non-integer counts refused. The forward model is evaluated once per system and cached. Candidate
+    code runs in the Bubblewrap sandbox over the standard trusted-driver boundary; the report
+    crosses it as data.
+provenance:
+  class: procedural
+  target_source: >-
+    The system set is generated from a fixed seed by verification/systems.py, so the truth is
+    procedural rather than published. The scientific situation it reproduces - a reported molecular
+    detection that reanalysis found not uniquely identifiable - is cited from the K2-18 b
+    literature and recorded in references/anchors.json.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: low
+  rationale: >-
+    Nothing here can be recalled. The species catalogue is synthetic, the systems are drawn from a
+    seed, and the graded quantity is a decision about a specific noisy spectrum. A model that knows
+    the K2-18 b dispute in detail gains exactly the thing the task wants it to have - the idea that
+    a spectral feature can fail to identify a molecule - and still has to decide which of these
+    thirty-six systems are which.
+lineage:
+  status: complete
+  builder_model_ids: ["claude-opus-5"]
+  builder_scaffolds: ["claude-code"]
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    None yet. Three construction rounds changed the world before any model saw it. The muted and
+    faint regimes were first set by eye and were measured to be identifiable once the budget
+    accumulated - signal-to-noise 6 to 25 rather than below 1 - so the cloud opacity and the noise
+    were recalibrated against the budget. The confusable pair was first offset by 0.02 microns and
+    the fit could still separate it, condition number 93, so the offsets were reduced until the
+    individual amplitudes carried 24.5 times the uncertainty of their sum. And the noise seed was
+    moved off hash().
+  shortcut_discoverer: builder_red_team
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: claude-opus-5
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 3
+  oracle_disagreement_status: >-
+    not applicable - the truth is procedural and the forward model is the definition rather than an
+    approximation to an external one; the limit this places on the task is stated in Task.md
+  independent_recomputation_status: >-
+    the regime calibration, the degeneracy measurement, the baseline, the reference and the
+    15-probe sweep are all reproducible from verification/
