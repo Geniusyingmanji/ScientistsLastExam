@@ -47,7 +47,38 @@ from __future__ import annotations
 import math
 from fractions import Fraction
 
-from algebra import canonical, dagger, multiply
+
+# The algebra is inlined rather than imported from a sibling module. The trusted driver loads this
+# file by path, not as a package, so `from algebra import ...` resolves against the harness's
+# sys.path and not against this directory - it raised ModuleNotFoundError inside the sandbox while
+# working perfectly when the file was imported directly, which is the worst way for this to fail.
+# verification/algebra.py is kept as the readable statement of the same rules and is checked
+# against this copy by the task's tests.
+
+
+def reduce_side(letters) -> tuple:
+    """Free reduction under X_i^2 = I."""
+    out: list = []
+    for x in letters:
+        if out and out[-1] == x:
+            out.pop()
+        else:
+            out.append(x)
+    return tuple(out)
+
+
+def canonical(a, b) -> tuple:
+    return (reduce_side(a), reduce_side(b))
+
+
+def dagger(word: tuple) -> tuple:
+    a, b = word
+    return (tuple(reversed(a)), tuple(reversed(b)))
+
+
+def multiply(u: tuple, v: tuple) -> tuple:
+    """u * v, using [A_x, B_y] = 0 to keep the A-part and B-part separate."""
+    return canonical(u[0] + v[0], u[1] + v[1])
 
 DIFFICULTY = 1
 

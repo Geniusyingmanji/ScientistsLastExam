@@ -16,12 +16,18 @@ from __future__ import annotations
 
 import itertools
 import math
+import sys
 from fractions import Fraction
+from pathlib import Path
 
 import numpy as np
 from scipy.optimize import minimize
 
-from algebra import dagger, is_positive_semidefinite, multiply
+# Same reason as the evaluator: this file is run by path. Resolve the sibling against this
+# directory rather than against whatever sys.path happens to hold.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+from algebra import dagger, is_positive_semidefinite, multiply  # noqa: E402
 
 
 def word_groups(basis):
