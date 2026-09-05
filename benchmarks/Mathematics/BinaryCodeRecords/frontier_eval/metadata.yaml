@@ -1,0 +1,15 @@
+domain: Mathematics
+task: BinaryCodeRecords
+scientific_role: optimization
+difficulty: flagship
+tier: T3
+oracle_type: analytical
+score_mode: uncapped
+gpu_required: false
+eval_time_seconds: 30
+science_metric: mean_progress_toward_published_binary_code_records
+sizes: ["linear_68_15", "general_21_10"]
+reference_baseline: identity_padded_generator_and_two_complementary_codewords
+reference_sota: "codetables.de [68,15] min distance 24; Kaikkonen 1989 A(21,10) >= 42"
+citation: "Grassl, codetables.de; Kaikkonen 1989; Gijswijt-Mittelmann-Schrijver SDP upper bounds"
+claim_boundary: "both anchors are best-known lower bounds, not proven optimal -- see references/known_best.md."

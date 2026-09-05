@@ -1,0 +1,12 @@
+{
+  "task": "Mathematics/DifferenceBasisRatio",
+  "anchors": [
+    {
+      "name": "sota_ratio",
+      "value": 2.639,
+      "source_url": "https://arxiv.org/abs/2511.02864",
+      "derivation": "B. Georgiev, J. Gomez-Serrano, T. Tao, A. Z. Wagner, \"Mathematical exploration and discovery at scale,\" arXiv:2511.02864, Section 3 (\"Difference bases\"): AlphaEvolve improved the published upper bound on C = inf_n Delta(n)^2/n from 2.6571 to 2.6390 -- the first improvement since the bound's prior published value. Independently corroborated via web search (author list, venue, and the 67-problem catalogue this paper reports on) on 2026-09-06.",
+      "retrieved_on": "2026-09-06"
+    }
+  ]
+}

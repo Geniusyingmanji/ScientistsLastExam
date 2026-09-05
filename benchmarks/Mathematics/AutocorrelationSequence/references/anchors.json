@@ -1,0 +1,19 @@
+{
+  "task": "Mathematics/AutocorrelationSequence",
+  "anchors": [
+    {
+      "name": "unsigned_sota_ref",
+      "value": 1.5028503020710076,
+      "source_url": "https://einsteinarena.com/problems/first-autocorrelation-inequality",
+      "derivation": "EinsteinArena's benchmark certificate for the (unsigned) autocorrelation constant C: a fixed 90,000-step nonnegative step-function certificate achieves autoconvolution ratio 1.5028503020710076. Cross-context: the known lower bound is C >= 1.28 (A. Cloninger, S. Steinerberger, \"On Suprema of Autoconvolutions with an Application to Sidon sets,\" Proc. Amer. Math. Soc. 145 (2017), 3191-3200, improving Matolcsi & Vinuesa's 2010 bound of 1.2748), independently corroborated by web search on 2026-09-06.",
+      "retrieved_on": "2026-09-06"
+    },
+    {
+      "name": "signed_sota_ref",
+      "value": 1.4545548626983325,
+      "source_url": "https://github.com/togethercomputer/EinsteinArena-new-SOTA/blob/main/third-autocorrelation/solutions/ours_2026.py",
+      "derivation": "Together AI, \"New State-of-the-Art on the Third Autocorrelation Inequality\" (2026): a fixed 400-step signed step-function certificate achieves the one-sided signed-autoconvolution ratio 1.4545548626983325, improving the prior published upper bound of 1.4581 (M. Matolcsi, C. Vinuesa, \"Improved bounds on the supremum of autoconvolutions,\" J. Math. Anal. Appl. (2010), arXiv:0907.1379, as cited in the AlphaEvolve paper).",
+      "retrieved_on": "2026-09-06"
+    }
+  ]
+}

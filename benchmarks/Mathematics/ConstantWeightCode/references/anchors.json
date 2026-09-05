@@ -1,0 +1,12 @@
+{
+  "task": "Mathematics/ConstantWeightCode",
+  "anchors": [
+    {
+      "name": "SOTA_REF",
+      "value": 36,
+      "source_url": "https://aeb.win.tue.nl/codes/Andw.html",
+      "derivation": "I. Bluskov, \"New Constant Weight Codes and Packing Numbers,\" Electron. Notes Discrete Math. 65 (2018), 31-36: A(29,8,5) >= 36, an explicit construction. Summarized in A. Brouwer's maintained constant-weight-code table (upper bound 39). Independently corroborated via web search (paper title, venue, volume/pages) on 2026-09-06.",
+      "retrieved_on": "2026-09-06"
+    }
+  ]
+}

@@ -10,6 +10,34 @@ policy:
   statuses: [certified, candidate, quarantined]
 
 tasks:
+  Mathematics/TammesSphericalCode:
+    status: candidate
+    reason: exact pairwise-dot-product oracle scored uncapped against Cohn et al.'s best-known, not-proven-optimal n=15 Tammes-problem configuration; pending external discrete-geometry review
+    citation_ids: [web:cohn-spherical-codes, doi:10.1080/10586458.2015.1022842]
+  Mathematics/DifferenceBasisRatio:
+    status: candidate
+    reason: exact convolution-based coverage oracle scored uncapped against the published upper bound (2.6390) on an infimum-defined constant, allowing the candidate to choose its own n; pending external additive-combinatorics review
+    citation_ids: [arxiv:2506.13131, arxiv:2511.02864]
+  Mathematics/AutocorrelationSequence:
+    status: candidate
+    reason: exact discrete-autoconvolution oracle scored uncapped against published upper-bound certificates for the unsigned and signed autocorrelation constants; pending external harmonic-analysis review
+    citation_ids: [web:einsteinarena-first-autocorrelation-inequality, arxiv:1403.7988, arxiv:0907.1379]
+  Mathematics/MeritFactorSequence:
+    status: candidate
+    reason: exact aperiodic-autocorrelation oracle scored uncapped against a documented merit-factor record whose provenance (an asymptotic construction family's specific finite instance) is explicitly disclosed; pending external coding-theory review
+    citation_ids: [doi:10.1109/TIT.2004.838341]
+  Mathematics/BinaryCodeRecords:
+    status: candidate
+    reason: exhaustive-enumeration oracle (linear code) and exact pairwise-Hamming-distance oracle (general code) scored uncapped against two maintained best-known-lower-bound tables; pending external coding-theory review
+    citation_ids: [web:codetables-de-bklc, web:kaikkonen-1989-a21-10]
+  Mathematics/ConstantWeightCode:
+    status: candidate
+    reason: exact pairwise-sharing oracle scored uncapped against Bluskov's published A(29,8,5) lower bound; pending external coding-theory review
+    citation_ids: [web:bluskov-2018-constant-weight-codes]
+  Mathematics/CoveringDesignBlocks:
+    status: candidate
+    reason: exact coverage oracle scored uncapped against the La Jolla Covering Repository's C(13,7,4) record, whose direct re-fetch failed (DNS error) during construction and is disclosed rather than hidden; pending external design-theory review
+    citation_ids: [web:ljcr-c13-7-4]
   MedicinalChemistry/MolecularLeadOptimization:
     status: candidate
     reason: RDKit community-standard oracle with a verified approved-drug reference panel; pending external medicinal-chemistry review

@@ -1,0 +1,67 @@
+schema_version: 2
+scientific_question: Can a policy build a binary linear [68,15] code with a larger minimum distance, and a length-21 distance-10 binary code with more codewords, than the published lower-bound records?
+artifact: For linear_68_15, a 15x68 0/1 generator matrix; for general_21_10, a list of 0/1 codewords of length 21.
+oracle:
+  model: exact exhaustive enumeration of all 2^15 linear-code codewords (linear_68_15), or exact pairwise Hamming distance over the submitted codeword list (general_21_10) -- both finite, deterministic computations
+  feasibility: linear_68_15 -- exact 15x68 0/1 shape; general_21_10 -- distinct length-21 0/1 codewords, pairwise distance >= 10
+  deterministic: true
+normalization:
+  baseline: identity-padded generator matrix (min distance 1); two complementary codewords (count 2)
+  reference: codetables.de best-known minimum distance 24 for [68,15]; Kaikkonen (1989) best-known A(21,10) >= 42
+  score: mean over both kinds of (value - baseline) / (sota_ref - baseline), clipped below at 0, unbounded above -- matching the published record scores 1.0 for that kind, a verified better result scores above 1.0
+citations:
+- id: web:codetables-de-bklc
+  title: Bounds on the minimum distance of linear codes and quantum codes
+- id: web:kaikkonen-1989-a21-10
+  title: A new four-error-correcting code of length 20
+invariants:
+- both checks are exact (exhaustive codeword enumeration for the linear code; direct pairwise Hamming distance for the general code), no floating point and no sampling
+- both baselines are checked to score exactly 0.0000
+- both sota_ref anchors are best-known lower bounds, not proven optimal (upper bounds 26 and 47 respectively), so combined_score has genuine uncapped headroom above 1.0 for both kinds
+- reciting a minimum distance or codeword count is worth nothing without producing the literal matrix or codeword list; the oracle checks the submission directly, never a claimed number
+- the shipped reference construction (random linear codes for linear_68_15; randomized greedy for general_21_10) is a real, standard technique for each, and does not reach either published record, leaving real headroom
+known_shortcuts: Both code parameter records are documented on maintained public tables and may occur in training data; reciting a minimum distance or codeword count is not sufficient, since the oracle requires an actual generator matrix or codeword list that passes the same exact check anyone else would run, and beating either published record is a real result the oracle cannot be talked out of accepting or rejecting.
+review:
+  domain: pending_external_coding_theory
+  evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_uncapped_normalization_checks
+provenance:
+  class: known_answer
+  target_source: Best-known lower-bound records from maintained public tables, used only as score=1.0 witnesses; a verified better result scores above 1.0 and is a real mathematical result, not a benchmark artifact.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: high
+  rationale: Both code-parameter records are documented and may be recalled directly by a capable model, but the exact literal generator matrix or codeword list achieving a competitive result is not something a model can merely recite -- constructing one is the actual task.
+lineage:
+  status: complete
+  builder_model_ids:
+  - anthropic:claude-sonnet-5
+  builder_scaffolds:
+  - claude-code
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    Built at the user's request after reviewing HorizonMath (github.com/ewang26/HorizonMath)
+    for coding-theory problems reusable in this repository's own style, chosen specifically
+    because neither parameter set ([68,15] linear code; length-21 distance-10 general code)
+    duplicates the existing Mathematics/NonlinearCodeRecords task's A(24,10) instance. The
+    two parameter sets were combined into one task since both are "binary code" objects,
+    scored by two different dispatch paths within the same evaluator. No frontier searcher
+    draw has been run.
+  shortcut_discoverer: builder_self_audit
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: anthropic:claude-sonnet-5
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: the reference, the baseline, both checkers and the bad-candidate shapes are all runnable from this directory

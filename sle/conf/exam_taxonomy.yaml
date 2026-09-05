@@ -52,6 +52,13 @@ tasks:
   Mathematics/RamseyLowerBound: {form: optimization, analogue: combinatorial}
   Mathematics/KissingNumber: {form: optimization, analogue: combinatorial}
   Mathematics/Superpermutation: {form: optimization, analogue: combinatorial}
+  Mathematics/TammesSphericalCode: {form: optimization, analogue: combinatorial, note: fixed_n15_min_angle_not_kissing_number_dimension_sweep}
+  Mathematics/DifferenceBasisRatio: {form: optimization, analogue: combinatorial, note: self_chosen_n_difference_basis_ratio_not_admissible_tuple_or_sparse_ruler}
+  Mathematics/AutocorrelationSequence: {form: optimization, analogue: combinatorial, note: discretized_step_function_autoconvolution_ratio}
+  Mathematics/MeritFactorSequence: {form: optimization, analogue: combinatorial, note: binary_sequence_merit_factor_not_autocorrelation_sequence}
+  Mathematics/BinaryCodeRecords: {form: optimization, analogue: combinatorial, note: linear_68_15_and_general_21_10_not_nonlinearcoderecords_a24_10}
+  Mathematics/ConstantWeightCode: {form: optimization, analogue: combinatorial, note: A2985_pairwise_sharing_pack_not_covering_design}
+  Mathematics/CoveringDesignBlocks: {form: optimization, analogue: combinatorial, note: C1374_minimize_blocks_not_constant_weight_code}
   Mathematics/NonlinearCodeRecords: {form: optimization, analogue: combinatorial}
   Algorithm/MatrixMultiplicationRank: {form: optimization, analogue: combinatorial}
   Algorithm/TensorRank555: {form: optimization, analogue: combinatorial, note: new_sizes_not_extension_of_certified_matmul}

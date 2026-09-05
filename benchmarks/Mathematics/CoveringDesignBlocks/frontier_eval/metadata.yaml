@@ -1,0 +1,15 @@
+domain: Mathematics
+task: CoveringDesignBlocks
+scientific_role: optimization
+difficulty: flagship
+tier: T3
+oracle_type: analytical
+score_mode: uncapped
+gpu_required: false
+eval_time_seconds: 20
+science_metric: block_count_reduction_toward_published_C1374_record
+sizes: ["default"]
+reference_baseline: weak_first_improvement_greedy_73_blocks
+reference_sota: "La Jolla Covering Repository C(13,7,4) explicit cover, 30 blocks"
+citation: "La Jolla Covering Repository (ljcr.dmgordon.org), entry C(13,7,4)"
+claim_boundary: "the anchor is a best-known cover, not proven optimal (lower bound 28); a direct re-fetch of LJCR failed (DNS error) during construction and the value is sourced via a cross-referencing secondary aggregator -- see references/known_best.md."

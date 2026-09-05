@@ -1,0 +1,64 @@
+schema_version: 2
+scientific_question: Can a policy build a binary +/-1 sequence of length >= 100 whose merit factor beats the documented record (9.5851, Borwein-Choi-Jedwab 2004)?
+artifact: A list of +/-1 coefficients, length >= 100.
+oracle:
+  model: exact aperiodic autocorrelation computation (numpy correlate) and the merit-factor formula, a finite deterministic computation
+  feasibility: every coefficient exactly 1 or -1, length >= 100
+  deterministic: true
+normalization:
+  baseline: an all-ones sequence of length 100, merit factor 0.015227653418608192
+  reference: the documented record F=9.5851 at length 191 (Borwein, Choi, Jedwab, 2004)
+  score: (merit_factor - baseline) / (9.5851 - baseline), clipped below at 0, unbounded above -- matching the documented record scores 1.0, a verified higher merit factor scores above 1.0
+citations:
+- id: doi:10.1109/TIT.2004.838341
+  title: Binary sequences with merit factor greater than 6.34
+invariants:
+- the merit-factor computation is exact discrete autocorrelation (numpy correlate), no floating point tolerance beyond ordinary arithmetic and no sampling
+- the baseline (all-ones sequence) is checked to score exactly 0.0000
+- the sota_ref anchor's confidence is explicitly disclosed as a documented instance of an asymptotic construction family, not independently proven to be the single best finite-length value for every n>=100 -- see references/known_best.md
+- reciting a merit-factor value is worth nothing without producing the literal sequence; the oracle computes it from the submitted coefficients directly, never a claimed number
+- the shipped reference construction (bit-flip hill-climbing) is a real, standard local-search technique, not the algebraic construction behind the cited record, and does not reach it, leaving real headroom
+known_shortcuts: The merit factor problem and the Borwein-Choi-Jedwab result are documented and may occur in training data; reciting a merit-factor value is not sufficient, since the oracle requires an actual +/-1 sequence that passes the same exact computation anyone else would run, and beating 9.5851 is a real result the oracle cannot be talked out of accepting or rejecting.
+review:
+  domain: pending_external_combinatorics_coding_theory
+  evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_uncapped_normalization_checks
+provenance:
+  class: known_answer
+  target_source: A documented record from an asymptotic construction family, used only as a score=1.0 witness, with its confidence level explicitly disclosed; a verified higher merit factor scores above 1.0 and is a real mathematical result, not a benchmark artifact.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: high
+  rationale: The merit factor problem and its known asymptotic bound are documented and may be recalled directly by a capable model, but the exact literal sequence achieving a competitive merit factor is not something a model can merely recite -- constructing one is the actual task.
+lineage:
+  status: complete
+  builder_model_ids:
+  - anthropic:claude-sonnet-5
+  builder_scaffolds:
+  - claude-code
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    Built at the user's request after reviewing HorizonMath (github.com/ewang26/HorizonMath)
+    and its constant-weight/coding-theory catalogue for problems reusable in this
+    repository's own style. During construction, the exact numeric anchor value's provenance
+    (an asymptotic paper's specific finite-length instance) was checked and disclosed rather
+    than presented with unearned confidence as a proven global record. No frontier searcher
+    draw has been run.
+  shortcut_discoverer: builder_self_audit
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: anthropic:claude-sonnet-5
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: the reference, the baseline, the merit-factor checker and the bad-candidate shapes are all runnable from this directory

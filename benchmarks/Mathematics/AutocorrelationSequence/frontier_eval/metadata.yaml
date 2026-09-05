@@ -1,0 +1,15 @@
+domain: Mathematics
+task: AutocorrelationSequence
+scientific_role: optimization
+difficulty: flagship
+tier: T3
+oracle_type: analytical
+score_mode: uncapped
+gpu_required: false
+eval_time_seconds: 20
+science_metric: mean_autoconvolution_ratio_reduction_toward_published_bounds
+sizes: ["unsigned", "signed"]
+reference_baseline: uniform_sequence_ratio_exactly_2_0
+reference_sota: "unsigned C <= 1.5028503020710076; signed C' <= 1.4545548626983325 (Together AI, 2026)"
+citation: "EinsteinArena First Autocorrelation Inequality certificate; Cloninger & Steinerberger, arXiv:1403.7988; Matolcsi & Vinuesa, arXiv:0907.1379; Together AI (2026)"
+claim_boundary: "both anchors are published upper-bound certificates, not proven-optimal values -- see references/known_best.md."

@@ -1,0 +1,68 @@
+schema_version: 2
+scientific_question: Can a policy build a discretized step function whose autoconvolution ratio beats the published upper bound on the (unsigned or signed) autocorrelation constant?
+artifact: A list of N step heights on [-1/4,1/4] (non-negative if unsigned, N>=100; any finite reals if signed, N>=10), for the unsigned and signed variants.
+oracle:
+  model: exact discrete autoconvolution ratio (2*N*max(convolve(a,a))/(sum(a))^2), a finite deterministic computation
+  feasibility: finite values (non-negative for the unsigned variant), minimum interval count, nonzero sum
+  deterministic: true
+normalization:
+  baseline: uniform (all-ones) sequence, ratio exactly 2.0 for both variants (a scale-invariant fact)
+  reference: published upper bounds -- 1.5028503020710076 (unsigned) and 1.4545548626983325 (signed, Together AI 2026)
+  score: mean over both variants of (2.0 - ratio) / (2.0 - sota_ref), clipped below at 0, unbounded above -- matching the published bound scores 1.0, a verified smaller ratio scores above 1.0
+citations:
+- id: web:einsteinarena-first-autocorrelation-inequality
+  title: First Autocorrelation Inequality benchmark certificate
+- id: arxiv:1403.7988
+  title: On Suprema of Autoconvolutions with an Application to Sidon sets
+- id: arxiv:0907.1379
+  title: Improved bounds on the supremum of autoconvolutions
+invariants:
+- the ratio computation is exact discrete convolution (numpy), no floating point tolerance beyond ordinary arithmetic and no sampling
+- the baseline (uniform sequence) is checked to score exactly 0.0000 for both variants, and its ratio is exactly 2.0 regardless of sequence length -- a provable, scale-invariant fact
+- both sota_ref anchors are published upper-bound certificates, not proven-optimal values, so combined_score has genuine uncapped headroom above 1.0 for both variants
+- reciting a ratio value is worth nothing without producing the literal sequence; the oracle computes the ratio from the submitted values directly, never a claimed number
+- the shipped reference construction (tapered-window hill-climbing) is a real, standard technique, not the Fourier-analytic optimization behind either cited certificate, and does not reach either bound, leaving real headroom
+known_shortcuts: The autocorrelation constant and its published bounds are documented and may occur in training data; reciting a ratio value is not sufficient, since the oracle requires an actual sequence that passes the same exact ratio computation anyone else would run, and beating either published bound is a real result the oracle cannot be talked out of accepting or rejecting.
+review:
+  domain: pending_external_harmonic_analysis
+  evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_uncapped_normalization_checks
+provenance:
+  class: known_answer
+  target_source: Published upper-bound certificates, used only as score=1.0 witnesses; a verified smaller ratio scores above 1.0 and is a real mathematical result, not a benchmark artifact.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: high
+  rationale: The autocorrelation constant and its known bounds are documented and may be recalled directly by a capable model, but the exact literal sequence achieving either published certificate is not something a model can merely recite -- reconstructing or improving on it is the actual task.
+lineage:
+  status: complete
+  builder_model_ids:
+  - anthropic:claude-sonnet-5
+  builder_scaffolds:
+  - claude-code
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    Built at the user's request after reviewing HorizonMath (github.com/ewang26/HorizonMath)
+    and the AlphaEvolve mathematics catalogue for problems reusable in this repository's own
+    style. Initially assumed to be too continuous/analytic to reduce to a finite checkable
+    object, but HorizonMath's own required-output-format specifies the exact discretization
+    (step heights on N equal-width intervals) and validator formula, which this task adopts
+    directly. No frontier searcher draw has been run.
+  shortcut_discoverer: builder_self_audit
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: anthropic:claude-sonnet-5
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: the reference, the baseline, the ratio checker and the bad-candidate shapes are all runnable from this directory

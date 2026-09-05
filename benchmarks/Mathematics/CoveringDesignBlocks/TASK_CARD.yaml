@@ -1,0 +1,66 @@
+schema_version: 2
+scientific_question: Can a policy cover every 4-element subset of {0,...,12} with fewer 7-element blocks than the published C(13,7,4) covering-design record?
+artifact: A list of 7-element subsets of {0,...,12} jointly covering every 4-element subset.
+oracle:
+  model: exact coverage check (every one of the C(13,4) 4-subsets must be contained in some submitted block), a finite deterministic computation
+  feasibility: each block exactly 7 distinct entries in 0..12, full coverage of all C(13,4) 4-subsets, at most 500 blocks
+  deterministic: true
+normalization:
+  baseline: a weak randomized first-improvement greedy, giving 73 blocks
+  reference: La Jolla Covering Repository's explicit best-known cover, 30 blocks (28 <= C(13,7,4) <= 30)
+  score: (73 - num_blocks) / (73 - 30), clipped below at 0, unbounded above -- matching the published record scores 1.0, a verified smaller cover scores above 1.0
+citations:
+- id: web:ljcr-c13-7-4
+  title: La Jolla Covering Repository, entry C(13,7,4)
+invariants:
+- the coverage check is exact (every 4-subset checked against every block directly), no floating point and no sampling
+- the baseline (weak greedy) is checked to score exactly 0.0000
+- the sota_ref anchor (30) is a best-known cover, not proven optimal (lower bound 28), so combined_score has genuine uncapped headroom above 1.0; its sourcing gap (a direct LJCR re-fetch failed due to a DNS resolution error in this environment) is explicitly disclosed rather than hidden
+- reciting a block count is worth nothing without producing the literal blocks; the oracle checks the submitted blocks directly, never a claimed number
+- the shipped reference construction (max-gain greedy set cover) is a real, standard, well-known algorithm, not the exhaustive/algebraic search behind the published record, and does not reach it, leaving real headroom
+known_shortcuts: Covering designs and the C(13,7,4) record are documented on maintained tables and may occur in training data; reciting a block count is not sufficient, since the oracle requires an actual set of blocks that passes the same exact coverage check anyone else would run, and beating 30 is a real result the oracle cannot be talked out of accepting or rejecting.
+review:
+  domain: pending_external_design_theory
+  evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_uncapped_normalization_checks
+provenance:
+  class: known_answer
+  target_source: A best-known cover from a maintained public repository, used only as a score=1.0 witness (its sourcing gap explicitly disclosed); a verified smaller cover scores above 1.0 and is a real mathematical result, not a benchmark artifact.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: high
+  rationale: Covering designs and the C(13,7,4) record are documented and may be recalled directly by a capable model, but the exact literal set of blocks achieving a competitive cover is not something a model can merely recite -- constructing one is the actual task.
+lineage:
+  status: complete
+  builder_model_ids:
+  - anthropic:claude-sonnet-5
+  builder_scaffolds:
+  - claude-code
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    Built at the user's request after reviewing HorizonMath (github.com/ewang26/HorizonMath)
+    for design-theory problems reusable in this repository's own style, built as a standalone
+    task (rather than folded into Mathematics/ConstantWeightCode) since covering designs
+    minimize blocks (an opposite optimization direction) and are a genuinely different
+    combinatorial object from constant-weight codes. A direct attempt to re-fetch the La
+    Jolla Covering Repository page failed (DNS resolution error) during construction; this
+    is disclosed in references/known_best.md rather than hidden. No frontier searcher draw
+    has been run.
+  shortcut_discoverer: builder_self_audit
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: anthropic:claude-sonnet-5
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: the reference, the baseline, the coverage checker and the bad-candidate shapes are all runnable from this directory

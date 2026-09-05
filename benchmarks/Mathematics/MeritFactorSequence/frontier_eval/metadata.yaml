@@ -1,0 +1,15 @@
+domain: Mathematics
+task: MeritFactorSequence
+scientific_role: optimization
+difficulty: flagship
+tier: T3
+oracle_type: analytical
+score_mode: uncapped
+gpu_required: false
+eval_time_seconds: 20
+science_metric: merit_factor_improvement_toward_documented_record
+sizes: ["default"]
+reference_baseline: all_ones_sequence_length_100
+reference_sota: "documented record F=9.5851 at length 191 (Borwein, Choi, Jedwab, 2004)"
+citation: "Borwein, Choi, Jedwab, DOI 10.1109/TIT.2004.838341"
+claim_boundary: "the anchor is a documented finite-length instance of an asymptotic construction family, disclosed as not independently proven to be the single best value for every n>=100 -- see references/known_best.md."

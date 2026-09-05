@@ -1,0 +1,3 @@
+1) Only edit solution.py. Keep construct_sequence() -> list of +/-1 floats, length >= 100.
+2) Every coefficient must be exactly 1 or -1. Invalid -> score 0.
+3) numpy/stdlib only, CPU. Do not read verification/ or frontier_eval/.

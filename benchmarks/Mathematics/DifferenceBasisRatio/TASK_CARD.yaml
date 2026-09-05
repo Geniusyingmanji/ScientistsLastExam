@@ -1,0 +1,68 @@
+schema_version: 2
+scientific_question: Can a policy build a difference basis for {1,...,n} (any self-chosen n) whose size-squared-over-n ratio beats the published upper bound on the constant C = inf_n Delta(n)^2/n?
+artifact: >-
+  A dict with keys n and basis -- a self-chosen n and a set of distinct integers covering
+  every difference 1..n.
+oracle:
+  model: exact convolution-based coverage check (every k in 1..n must appear as some pair's difference), a finite deterministic computation
+  feasibility: distinct integer basis entries, span (max-min) at most 5x n, every k in 1..n covered
+  deterministic: true
+normalization:
+  baseline: a fixed-k two-level construction (k=round(sqrt(2n))), giving ratios 12.168/12.168/12.3201 at three hint scales
+  reference: the published upper bound on C (2.6390, AlphaEvolve / arXiv:2511.02864), the same target for every call since C is an infimum over all n
+  score: mean over three calls of (baseline_ratio - ratio) / (baseline_ratio - 2.6390), clipped below at 0, unbounded above -- matching the bound scores 1.0, a verified smaller ratio scores above 1.0
+citations:
+- id: arxiv:2506.13131
+  title: "AlphaEvolve: A coding agent for scientific and algorithmic discovery"
+- id: arxiv:2511.02864
+  title: Mathematical exploration and discovery at scale
+invariants:
+- the coverage check is exact integer convolution (numpy), no floating point tolerance and no sampling
+- the baseline (fixed-k two-level construction) is checked to score exactly 0.0000 at all three hint scales
+- the sota_ref anchor (2.6390) is the most recently published upper bound on a constant defined as an infimum over every n, so combined_score has genuine uncapped headroom above 1.0 -- a candidate is free to pick whichever n makes its construction strongest
+- reciting a ratio value is worth nothing without producing the literal basis; the oracle checks the submitted (n, basis) pair directly, never a claimed number
+- the shipped reference construction (k-search plus pruning on a two-level basis) is a real, standard technique, not the Fourier-analytic optimization behind the published bound, and does not reach it, leaving real headroom
+known_shortcuts: Difference bases and the 2.6390 AlphaEvolve result are documented and may occur in training data; reciting the ratio is not sufficient, since the oracle requires an actual (n, basis) pair that passes the same exact coverage check anyone else would run, and beating 2.6390 at any self-chosen n is a real result the oracle cannot be talked out of accepting or rejecting.
+review:
+  domain: pending_external_additive_combinatorics
+  evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_uncapped_normalization_checks
+provenance:
+  class: known_answer
+  target_source: A published upper bound (arXiv:2511.02864), used only as a score=1.0 witness; a verified smaller ratio scores above 1.0 and is a real mathematical result, not a benchmark artifact.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: high
+  rationale: Difference bases and the recent AlphaEvolve result are documented and may be recalled directly by a capable model, but the exact literal (n, basis) pair achieving a competitive ratio is not something a model can merely recite -- constructing one is the actual task.
+lineage:
+  status: complete
+  builder_model_ids:
+  - anthropic:claude-sonnet-5
+  builder_scaffolds:
+  - claude-code
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    Built at the user's request after reviewing HorizonMath (github.com/ewang26/HorizonMath)
+    and the AlphaEvolve mathematics catalogue for problems reusable in this repository's own
+    style. The companion fixed-n=10000 "sparse ruler" instance from the same source was
+    considered but folded into this task's third hint size rather than built separately,
+    since both are the same underlying object (a difference basis) scored the same way. No
+    frontier searcher draw has been run.
+  shortcut_discoverer: builder_self_audit
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: anthropic:claude-sonnet-5
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: the reference, the baseline, the coverage checker and the bad-candidate shapes are all runnable from this directory

@@ -1,0 +1,66 @@
+schema_version: 2
+scientific_question: Can a policy place 15 points on the unit sphere with a smaller maximum pairwise dot product (larger minimum angular separation) than the best-known, genuinely open, Tammes-problem configuration?
+artifact: A list of 15 [x, y, z] points on (or near) the unit sphere.
+oracle:
+  model: exact pairwise dot product of normalized points, maximum taken over all pairs (a finite, deterministic computation)
+  feasibility: 15 finite, non-(near-)origin points
+  deterministic: true
+normalization:
+  baseline: a Fibonacci-sphere (golden-angle) spiral, giving max dot product 0.8571428571428572
+  reference: Cohn et al.'s Spherical Codes database best-known n=15 configuration (max dot product 0.59260590292507377809642492233276), not proven optimal
+  score: (baseline_max_dot - max_dot) / (baseline_max_dot - sota_ref), clipped below at 0, unbounded above -- matching the published record scores 1.0, a verified smaller maximum dot product scores above 1.0
+citations:
+- id: web:cohn-spherical-codes
+  title: Spherical Codes (Cohn et al. maintained record database)
+- id: doi:10.1080/10586458.2015.1022842
+  title: The Tammes problem for N=14
+invariants:
+- the pairwise dot product check is exact vectorized floating-point arithmetic over every pair, no sampling
+- the baseline (Fibonacci spiral) is checked to score exactly 0.0000
+- the sota_ref anchor is a best-known, not proven-optimal, value -- n=14 is the last dimension proven optimal (Musin & Tarasov, 2015), making n=15 the first genuinely open case, so combined_score has real uncapped headroom above 1.0
+- reciting an angle or cosine value is worth nothing without producing the literal point set; the oracle checks the submitted points directly, never a claimed number
+- the shipped reference construction (randomized hill-climbing) is a real, standard technique, not the certified global-optimization methods behind the cited record, and does not reach it, leaving real headroom
+known_shortcuts: The Tammes problem and its small known-optimal values are documented and may occur in training data; reciting a cosine value is not sufficient, since the oracle requires an actual point set that passes the same exact pairwise check anyone else would run, and beating the n=15 best-known record is a real result the oracle cannot be talked out of accepting or rejecting.
+review:
+  domain: pending_external_discrete_geometry
+  evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_uncapped_normalization_checks
+provenance:
+  class: known_answer
+  target_source: A best-known, not proven-optimal, configuration from a maintained public database, used only as a score=1.0 witness; a verified smaller maximum dot product scores above 1.0 and is a real mathematical result, not a benchmark artifact.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: high
+  rationale: The Tammes problem and its small known-optimal values are well known and likely recalled directly by a capable model, but the exact literal coordinates achieving the n=15 best-known record are not something a model can merely recite -- reconstructing or improving on them is the actual task.
+lineage:
+  status: complete
+  builder_model_ids:
+  - anthropic:claude-sonnet-5
+  builder_scaffolds:
+  - claude-code
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    Built at the user's request after reviewing HorizonMath (github.com/ewang26/HorizonMath),
+    a research benchmark whose "benchmark_best_known" problems overlap this repository's own
+    style (submit an explicit construction, score against a real published record). Tammes
+    n=15 was one of several problems selected as directly reusable: it does not duplicate any
+    dimension or parameter already covered by Mathematics/KissingNumber. No frontier searcher
+    draw has been run.
+  shortcut_discoverer: builder_self_audit
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: anthropic:claude-sonnet-5
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: the reference, the baseline, the pairwise-dot-product checker and the bad-candidate shapes are all runnable from this directory

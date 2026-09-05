@@ -51,6 +51,13 @@ DECLARED_EXTERNAL_ANCHORS = {
     "Mathematics/KissingNumber",
     "Mathematics/RamseyLowerBound",
     "Mathematics/Superpermutation",
+    "Mathematics/TammesSphericalCode",
+    "Mathematics/DifferenceBasisRatio",
+    "Mathematics/AutocorrelationSequence",
+    "Mathematics/MeritFactorSequence",
+    "Mathematics/BinaryCodeRecords",
+    "Mathematics/ConstantWeightCode",
+    "Mathematics/CoveringDesignBlocks",
     "Algorithm/TensorRank555",
 }
 

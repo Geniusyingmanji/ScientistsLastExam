@@ -1,0 +1,19 @@
+{
+  "task": "Mathematics/BinaryCodeRecords",
+  "anchors": [
+    {
+      "name": "sota_ref_linear_68_15",
+      "value": 24,
+      "source_url": "https://www.codetables.de/BKLC/BKLC.php?q=2&n=68&k=15",
+      "derivation": "M. Grassl's maintained code-tables database (codetables.de): bounds on linear codes [68,15] over GF(2) -- lower bound 24, upper bound 26. Independently re-confirmed by direct fetch on 2026-09-06.",
+      "retrieved_on": "2026-09-06"
+    },
+    {
+      "name": "sota_ref_general_21_10",
+      "value": 42,
+      "source_url": "https://aeb.win.tue.nl/codes/binary-1.html",
+      "derivation": "M. K. Kaikkonen, \"A new four-error-correcting code of length 20,\" IEEE Trans. Inform. Theory 35 (1989), 1344: A(21,10) >= 42. Independently corroborated via web search (lower bound 42, upper bound 47 via Gijswijt-Mittelmann-Schrijver semidefinite programming) on 2026-09-06.",
+      "retrieved_on": "2026-09-06"
+    }
+  ]
+}

@@ -66,6 +66,13 @@ CHINESE_NAMES = {
     "Mathematics/RamseyLowerBound": "Ramsey 下界染色",
     "Mathematics/SequenceLawRecovery": "整数序列递推恢复",
     "Mathematics/Superpermutation": "超排列最短串",
+    "Mathematics/TammesSphericalCode": "Tammes 球面点排布",
+    "Mathematics/DifferenceBasisRatio": "差集基比值常数",
+    "Mathematics/AutocorrelationSequence": "自相关常数序列",
+    "Mathematics/MeritFactorSequence": "二元序列品质因子",
+    "Mathematics/BinaryCodeRecords": "二元码距离纪录",
+    "Mathematics/ConstantWeightCode": "定重码打包",
+    "Mathematics/CoveringDesignBlocks": "覆盖设计区组",
     "Mathematics/NonlinearCodeRecords": "非线性码规模纪录",
     "MedicinalChemistry/MolecularLeadOptimization": "分子先导组合优化",
     "MolecularDynamics/ForceFieldCalibration": "力场假设判别",
@@ -203,6 +210,27 @@ CHINESE_BRIEFS = {
     "Mathematics/Superpermutation": (
         "构造更短的超排列字符串,使其包含全部排列作为连续子串",
         "对最短已知长度的平均进度;无上限"),
+    "Mathematics/TammesSphericalCode": (
+        "在球面上放 15 个点,让任意两点的最小夹角尽量大——Tammes 问题,n=14 已证明最优,n=15 是第一个开放情形",
+        "对 Cohn 等人维护的最好已知记录的进度;无上限"),
+    "Mathematics/DifferenceBasisRatio": (
+        "构造覆盖 1..n 所有差值的整数集合(n 自选),让集合大小的平方除以 n 尽量小——2025年被 AlphaEvolve 刷新的常数上界",
+        "对最新发表上界 2.6390 的进度;无上限,可任选 n"),
+    "Mathematics/AutocorrelationSequence": (
+        "构造一个离散阶梯函数,让自卷积峰值与积分平方之比尽量小——无符号与带符号两个变体,都是真实的、正在被刷新的常数",
+        "对两个变体已发表上界的平均进度;无上限"),
+    "Mathematics/MeritFactorSequence": (
+        "构造长度≥100 的 ±1 二元序列,让品质因子(merit factor)尽量大",
+        "对已记录的品质因子(9.5851)的进度;无上限,来源置信度已披露"),
+    "Mathematics/BinaryCodeRecords": (
+        "构造 [68,15] 二元线性码(生成矩阵)使最小距离更大,以及长度21距离10的二元码使码字更多",
+        "对两个已知最好下界的平均进度;无上限,与已有的 NonlinearCodeRecords(A(24,10))参数不重叠"),
+    "Mathematics/ConstantWeightCode": (
+        "在 {0,...,28} 上打包 5 元子集,使任意两个子集至多共享一个点——即 A(29,8,5) 定重码",
+        "对 Bluskov 2018 发表下界 36 的进度;无上限"),
+    "Mathematics/CoveringDesignBlocks": (
+        "用尽量少的 7 元子集覆盖 {0,...,12} 的所有 4 元子集——覆盖设计 C(13,7,4)",
+        "对 La Jolla 覆盖设计仓库记录(30)的进度;无上限,来源因 DNS 解析失败未能直接核实,已披露"),
     "MedicinalChemistry/MolecularLeadOptimization": (
         "构建结构多样、可开发的新颖先导化合物组合,而非单个分子",
         "多样性约束下的组合价值,对标已上市药物;无上限"),

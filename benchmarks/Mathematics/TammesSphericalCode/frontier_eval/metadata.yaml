@@ -1,0 +1,15 @@
+domain: Mathematics
+task: TammesSphericalCode
+scientific_role: optimization
+difficulty: flagship
+tier: T3
+oracle_type: analytical
+score_mode: uncapped
+gpu_required: false
+eval_time_seconds: 30
+science_metric: max_pairwise_dot_product_reduction_toward_published_tammes_n15_record
+sizes: [15]
+reference_baseline: fibonacci_sphere_spiral_max_dot_0_857143
+reference_sota: "Cohn et al. Spherical Codes database best-known n=15 configuration, max dot product 0.592606, not proven optimal"
+citation: "Cohn et al., Spherical Codes (cohn.mit.edu/spherical-codes); Musin & Tarasov, DOI 10.1080/10586458.2015.1022842 (n=14 proof)"
+claim_boundary: "n=15 is the first case not proven optimal (n=14 was, by Musin & Tarasov 2015) -- see references/known_best.md."

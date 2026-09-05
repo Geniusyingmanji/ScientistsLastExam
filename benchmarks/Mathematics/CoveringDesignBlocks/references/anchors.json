@@ -1,0 +1,12 @@
+{
+  "task": "Mathematics/CoveringDesignBlocks",
+  "anchors": [
+    {
+      "name": "SOTA_REF",
+      "value": 30,
+      "source_url": "https://ljcr.dmgordon.org/",
+      "derivation": "La Jolla Covering Repository (maintained by Daniel Gordon), entry C(13,7,4): explicit cover with 30 blocks, known bounds 28 <= C(13,7,4) <= 30. This task's construction could not re-fetch the specific per-parameter LJCR page directly (DNS resolution failed for ljcr.dmgordon.org from this environment on 2026-09-06); the value is taken from a cross-referencing aggregator (HorizonMath's baselines.json, itself citing LJCR directly with a 'verified' status) rather than independently re-confirmed against the live page. Disclosed rather than asserted with unearned confidence.",
+      "retrieved_on": "2026-09-06"
+    }
+  ]
+}

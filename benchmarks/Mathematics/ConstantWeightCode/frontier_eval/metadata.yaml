@@ -1,0 +1,15 @@
+domain: Mathematics
+task: ConstantWeightCode
+scientific_role: optimization
+difficulty: flagship
+tier: T3
+oracle_type: analytical
+score_mode: uncapped
+gpu_required: false
+eval_time_seconds: 20
+science_metric: block_count_improvement_toward_published_A2985_record
+sizes: ["default"]
+reference_baseline: disjoint_partition_5_blocks
+reference_sota: "A(29,8,5) >= 36 (Bluskov, 2018)"
+citation: "Bluskov, Electron. Notes Discrete Math. 65 (2018), 31-36"
+claim_boundary: "the anchor is a best-known lower bound, not proven optimal (upper bound 39) -- see references/known_best.md."

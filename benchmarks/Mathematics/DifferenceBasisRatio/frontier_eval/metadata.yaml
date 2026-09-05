@@ -1,0 +1,15 @@
+domain: Mathematics
+task: DifferenceBasisRatio
+scientific_role: optimization
+difficulty: flagship
+tier: T3
+oracle_type: analytical
+score_mode: uncapped
+gpu_required: false
+eval_time_seconds: 60
+science_metric: mean_ratio_improvement_toward_published_difference_basis_constant_bound
+sizes: [500, 2000, 10000]
+reference_baseline: fixed_k_two_level_construction_k_round_sqrt_2n
+reference_sota: "published upper bound on C = inf_n Delta(n)^2/n: 2.6390 (AlphaEvolve, arXiv:2511.02864)"
+citation: "AlphaEvolve, arXiv:2506.13131; Georgiev, Gomez-Serrano, Tao, Wagner, arXiv:2511.02864 (2.6390 bound)"
+claim_boundary: "the sota_ref is the most recent published upper bound on an infimum-defined constant; a candidate may choose any n -- see references/known_best.md."

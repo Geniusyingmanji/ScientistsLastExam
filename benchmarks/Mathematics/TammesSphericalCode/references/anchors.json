@@ -1,0 +1,12 @@
+{
+  "task": "Mathematics/TammesSphericalCode",
+  "anchors": [
+    {
+      "name": "sota_ref_n15",
+      "value": 0.59260590292507377809642492233276,
+      "source_url": "https://cohn.mit.edu/spherical-codes/",
+      "derivation": "Cohn et al.'s Spherical Codes database: best-known n=15 configuration on S^2 has minimal angular separation with cosine 0.59260590292507377809642492233276 (minimal polynomial 13x^5 - x^4 + 6x^3 + 2x^2 - 3x - 1). Not proven optimal. n=14 was proven optimal by O. R. Musin, A. S. Tarasov, \"The Tammes problem for N=14,\" Exp. Math. 24 (2015), 460-468, establishing n=15 as the first open case.",
+      "retrieved_on": "2026-09-06"
+    }
+  ]
+}

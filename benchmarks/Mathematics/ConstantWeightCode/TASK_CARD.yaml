@@ -1,0 +1,64 @@
+schema_version: 2
+scientific_question: Can a policy pack more 5-element blocks of {0,...,28} (no pair of points shared by more than one block) than the published A(29,8,5) lower-bound record?
+artifact: A list of 5-element subsets of {0,...,28}.
+oracle:
+  model: exact pairwise-sharing check over every block (a finite, deterministic computation)
+  feasibility: each block exactly 5 distinct entries in 0..28, no pair shared by more than one block, at most 200 blocks
+  deterministic: true
+normalization:
+  baseline: a disjoint partition into 5-element blocks, giving 5 blocks
+  reference: published lower bound A(29,8,5) >= 36 (Bluskov, 2018)
+  score: (num_blocks - 5) / (36 - 5), clipped below at 0, unbounded above -- matching the published record scores 1.0, a verified larger code scores above 1.0
+citations:
+- id: web:bluskov-2018-constant-weight-codes
+  title: New Constant Weight Codes and Packing Numbers
+invariants:
+- the pairwise-sharing check is exact (every pair of points across every block), no floating point and no sampling
+- the baseline (disjoint partition) is checked to score exactly 0.0000
+- the sota_ref anchor (36) is a best-known lower bound, not proven optimal (upper bound 39), so combined_score has genuine uncapped headroom above 1.0
+- reciting a block count is worth nothing without producing the literal blocks; the oracle checks the submitted blocks directly, never a claimed number
+- the shipped reference construction (randomized greedy packing) is a real, standard technique, not the algebraic/computer-search construction behind the published record, and does not reach it, leaving real headroom
+known_shortcuts: A(29,8,5) and its published bounds are documented on maintained tables and may occur in training data; reciting a block count is not sufficient, since the oracle requires an actual set of blocks that passes the same exact pairwise-sharing check anyone else would run, and beating 36 is a real result the oracle cannot be talked out of accepting or rejecting.
+review:
+  domain: pending_external_coding_theory
+  evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_uncapped_normalization_checks
+provenance:
+  class: known_answer
+  target_source: A best-known lower-bound record (Bluskov, 2018), used only as a score=1.0 witness; a verified larger code scores above 1.0 and is a real mathematical result, not a benchmark artifact.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: high
+  rationale: A(29,8,5) and its published bounds are documented and may be recalled directly by a capable model, but the exact literal set of blocks achieving a competitive count is not something a model can merely recite -- constructing one is the actual task.
+lineage:
+  status: complete
+  builder_model_ids:
+  - anthropic:claude-sonnet-5
+  builder_scaffolds:
+  - claude-code
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    Built at the user's request after reviewing HorizonMath (github.com/ewang26/HorizonMath)
+    for coding-theory problems reusable in this repository's own style, built as a standalone
+    task (rather than folded into Mathematics/BinaryCodeRecords) since the "minimize blocks"
+    covering-design objective in the same source material has an opposite optimization
+    direction and a genuinely different combinatorial object. No frontier searcher draw has
+    been run.
+  shortcut_discoverer: builder_self_audit
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: anthropic:claude-sonnet-5
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: the reference, the baseline, the pairwise checker and the bad-candidate shapes are all runnable from this directory

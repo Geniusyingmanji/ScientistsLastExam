@@ -1,0 +1,12 @@
+{
+  "task": "Mathematics/MeritFactorSequence",
+  "anchors": [
+    {
+      "name": "SOTA_REF",
+      "value": 9.5851,
+      "source_url": "https://ieeexplore.ieee.org/document/1362908/",
+      "derivation": "P. Borwein, K.-K. S. Choi, J. Jedwab, \"Binary sequences with merit factor greater than 6.34,\" IEEE Trans. Inform. Theory 50 (2004), 3234-3249, DOI 10.1109/TIT.2004.838341. The paper's headline result is an asymptotic construction family (merit factor > 6.34 in the n -> infinity limit); the specific finite value F=9.5851 at length L=191 (parameter E=1903) is a documented instance from this construction, corroborated independently via web search against low-autocorrelation-binary-sequence (LABS) survey literature discussing lengths in the 191-225 range on 2026-09-06. Disclosed rather than asserted with unearned confidence: this task could not independently confirm that no other published finite-length sequence at some other n>=100 exceeds 9.5851, only that no search result found one.",
+      "retrieved_on": "2026-09-06"
+    }
+  ]
+}
