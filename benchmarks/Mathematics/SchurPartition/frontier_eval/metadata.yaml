@@ -1,0 +1,15 @@
+domain: Mathematics
+task: SchurPartition
+scientific_role: optimization
+difficulty: flagship
+tier: T3
+oracle_type: analytical
+score_mode: uncapped
+gpu_required: false
+eval_time_seconds: 20
+science_metric: mean_partition_length_improvement_toward_published_schur_number_witnesses
+sizes: [4, 6, 7]
+reference_baseline: single_greedy_pass_no_backtracking_lengths_15_63_127
+reference_sota: "S(4)=44 (proven exact); best-known lower-bound witnesses S(6)>=536, S(7)>=1696 (not proven exact)"
+citation: "Golomb & Baumert 1965, J. ACM 12(4) (S(4)=44); Heule, arXiv:1711.08076 (S(5)=160); Fredricksen & Sweet, EJC 2000 (S(6)>=536); Rowley, arXiv:2107.03560 (S(7)>=1696)"
+claim_boundary: "k=4 anchor is proven exact, so no valid partition can exceed it; k=6 and k=7 anchors are best-known lower bounds with genuine headroom -- see references/known_best.md."

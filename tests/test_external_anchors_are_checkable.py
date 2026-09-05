@@ -52,6 +52,10 @@ DECLARED_EXTERNAL_ANCHORS = {
     "Mathematics/NarrowAdmissibleTuple",
     "Mathematics/RamseyLowerBound",
     "Mathematics/Superpermutation",
+    "Mathematics/ZarankiewiczMatrix",
+    "Mathematics/DegreeDiameterGraph",
+    "Mathematics/VanDerWaerdenColoring",
+    "Mathematics/SchurPartition",
     "Algorithm/TensorRank555",
     "Superconductivity/SuperconductorTcRecord",
 }

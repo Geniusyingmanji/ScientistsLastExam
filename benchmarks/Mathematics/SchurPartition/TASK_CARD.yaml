@@ -1,0 +1,73 @@
+schema_version: 2
+scientific_question: Can a policy build a longer sum-free k-partition, at three concrete k sizes, than the best published witness -- matching a proven exact ceiling at k=4, and making a genuine new improvement to still-open lower bounds at k=6 and k=7?
+artifact: A list of part indices in {0,...,k-1}, one per element 1..n (n self-chosen), such that every part is sum-free, for k in {4, 6, 7}.
+oracle:
+  model: exact convolution-based sum-free check per part (a finite, deterministic computation over integer membership masks), plus an exact length count
+  feasibility: part indices in {0,...,k-1}, no part contains a, b, c (a=b allowed) with a + b = c
+  deterministic: true
+normalization:
+  baseline: a single greedy pass with no backtracking (fixed part order), giving 15/63/127 valid length at the three sizes
+  reference: proven exact S(4)=44; best-known lower-bound witness lengths at k=6 (536) and k=7 (1696), neither proven exact
+  score: mean over the three sizes of (n - baseline_n) / (sota_ref_n - baseline_n), clipped below at 0, unbounded above -- matching the published witness scores 1.0 at that size, a verified longer partition scores above 1.0 (mathematically impossible at k=4, since S(4) is proven exact; genuinely open at k=6 and k=7)
+citations:
+- id: doi:10.1145/321296.321300
+  title: Backtrack Programming
+- id: arxiv:1711.08076
+  title: Schur Number Five
+- id: doi:10.37236/1510
+  title: Symmetric sum-free partitions and lower bounds for Schur numbers
+- id: arxiv:2107.03560
+  title: An Improved Lower Bound for S(7) and Some Interesting Templates
+invariants:
+- the sum-free check is exact (convolution over integer membership masks, thresholded at zero), no floating point tolerance and no sampling
+- the baseline (single greedy pass, no backtracking) is checked to score exactly 0.0000 on all three sizes
+- the k=4 anchor (44) is a proven exact Schur number; the k=6 (536) and k=7 (1696) anchors are best-known lower bounds, not proven exact -- this task discloses rather than hides the resulting difference in whether combined_score can genuinely exceed 1.0 per size
+- reciting a partition length is worth nothing without producing the literal partition; the oracle checks the submitted partition directly, never a claimed number
+- the shipped reference construction (Schur's classical recursive doubling rule) is a real, standard technique, not a SAT-solver search, and matches the true Schur numbers only for k<=3, falling further behind the published records as k grows -- real headroom is left at all three sizes
+known_shortcuts: Schur numbers and the small exact values (S(1)-S(5)) are well documented and may occur in training data; reciting a partition length is not sufficient, since the oracle requires an actual partition that passes the same exact sum-free check anyone else would run, and extending the k=6 or k=7 witnesses past 536/1696 is a real result the oracle cannot be talked out of accepting or rejecting.
+review:
+  domain: pending_external_ramsey_theory
+  evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_uncapped_normalization_checks
+provenance:
+  class: known_answer
+  target_source: A proven exact value (k=4) and best-known lower bounds (k=6, k=7), used only as score=1.0 witnesses; a verified longer k=6 or k=7 partition scores above 1.0 and is a real mathematical result, not a benchmark artifact.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: high
+  rationale: Schur numbers and the small exact values are well known and likely recalled directly by a capable model, but the exact literal partition achieving any of these three specific witness lengths (particularly the k=6/k=7 lower bounds) is not something a model can merely recite -- reconstructing or extending it is the actual task.
+lineage:
+  status: complete
+  builder_model_ids:
+  - anthropic:claude-sonnet-5
+  builder_scaffolds:
+  - claude-code
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    Built at the user's request after a broader search for math problems with a genuine,
+    real, computationally-tracked "progress bar" record beyond bounded-gaps-between-primes
+    (already built as NarrowAdmissibleTuple). Selected alongside the Zarankiewicz problem,
+    the degree/diameter problem and van der Waerden numbers as the strongest four candidates.
+    During construction, a first-draft reference construction (plain element-by-element
+    greedy) scored *worse* than the naive baseline it was meant to improve on; the two roles
+    were swapped once this was measured (Schur's classical recursive-doubling rule became the
+    shipped reference, plain greedy became the baseline) rather than leaving a reference that
+    fails to out-perform its own baseline. No frontier searcher draw has been run.
+  shortcut_discoverer: builder_self_audit
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: anthropic:claude-sonnet-5
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: the reference, the baseline, the sum-free checker and the bad-candidate shapes are all runnable from this directory

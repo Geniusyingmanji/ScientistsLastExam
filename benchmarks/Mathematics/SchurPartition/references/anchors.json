@@ -1,0 +1,26 @@
+{
+  "task": "Mathematics/SchurPartition",
+  "anchors": [
+    {
+      "name": "sota_ref_k4",
+      "value": 44,
+      "source_url": "https://doi.org/10.1145/321296.321300",
+      "derivation": "S. W. Golomb, L. D. Baumert, \"Backtrack Programming,\" J. ACM 12(4) (1965), 516-524, DOI 10.1145/321296.321300 (confirmed directly by web search during this task's construction). Established S(4)=44 by backtracking search (an explicit sum-free 4-partition of {1,...,44}, plus an exhaustive proof that no partition of {1,...,45} exists). A proven exact value: no valid 4-partition can exceed length 44.",
+      "retrieved_on": "2026-09-05"
+    },
+    {
+      "name": "sota_ref_k6",
+      "value": 536,
+      "source_url": "https://doi.org/10.37236/1510",
+      "derivation": "H. Fredricksen, M. Sweet, \"Symmetric sum-free partitions and lower bounds for Schur numbers,\" Electron. J. Combin. 7 (2000), #R32. Reports S(6) >= 536. Not proven exact (S(6) remains open); this is the best-known lower-bound witness, confirmed unchanged as of a July 2026 paper (arXiv:2607.15034) that explicitly cites both S(6)=536 and S(7)=1696 as the current, unimproved bounds while improving S(8) and S(13) instead.",
+      "retrieved_on": "2026-09-05"
+    },
+    {
+      "name": "sota_ref_k7",
+      "value": 1696,
+      "source_url": "https://arxiv.org/abs/2107.03560",
+      "derivation": "F. Rowley, \"An Improved Lower Bound for S(7) and Some Interesting Templates,\" arXiv:2107.03560 (2021). Reports S(7) >= 1696, superseding the older S(7) >= 1680 bound (Fredricksen & Sweet, 2000). Not proven exact; confirmed unchanged as of a July 2026 paper (arXiv:2607.15034) that cites 1696 as the current bound.",
+      "retrieved_on": "2026-09-05"
+    }
+  ]
+}

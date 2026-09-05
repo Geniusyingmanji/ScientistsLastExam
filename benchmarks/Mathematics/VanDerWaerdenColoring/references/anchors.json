@@ -1,0 +1,26 @@
+{
+  "task": "Mathematics/VanDerWaerdenColoring",
+  "anchors": [
+    {
+      "name": "sota_ref_k4r2",
+      "value": 34,
+      "source_url": "https://en.wikipedia.org/wiki/Van_der_Waerden_number",
+      "derivation": "W(2,4) = 35 (V. Chvatal, 1970), independently re-confirmed by direct fetch on 2026-09-05. This is a proven exact value, so no valid 2-coloring avoiding a monochromatic 4-term AP can exceed length W-1 = 34.",
+      "retrieved_on": "2026-09-05"
+    },
+    {
+      "name": "sota_ref_k5r2",
+      "value": 177,
+      "source_url": "https://en.wikipedia.org/wiki/Van_der_Waerden_number",
+      "derivation": "W(2,5) = 178 (R. Stevens, R. Shantaram, 1978), independently re-confirmed by direct fetch on 2026-09-05. This is a proven exact value, so no valid 2-coloring avoiding a monochromatic 5-term AP can exceed length W-1 = 177.",
+      "retrieved_on": "2026-09-05"
+    },
+    {
+      "name": "sota_ref_k7r2",
+      "value": 3703,
+      "source_url": "https://en.wikipedia.org/wiki/Van_der_Waerden_number",
+      "derivation": "W(2,7) > 3703, attributed to J. Rabung and M. Lotts via the 'zipper' construction method. Confirmed consistently across three independent lookups during this task's construction (a research pass, a direct raw-table transcription fetch of the Wikipedia page's lower-bounds table showing '2 colors, k=7: >3,703', and a separate web search corroborating the Rabung/Lotts attribution) but this task could not locate a stable primary-source URL for the original Rabung-Lotts paper itself -- disclosed as a well-corroborated but secondary-sourced attribution in references/known_best.md, the same disclosure pattern used for the k=54 anchor in Mathematics/NarrowAdmissibleTuple. Unlike the k4r2 and k5r2 anchors above, W(2,7) is NOT proven exact, so this anchor is a genuine best-known lower bound with real headroom above it.",
+      "retrieved_on": "2026-09-05"
+    }
+  ]
+}

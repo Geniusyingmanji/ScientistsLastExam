@@ -53,6 +53,10 @@ tasks:
   Mathematics/RamseyLowerBound: {form: optimization, analogue: combinatorial}
   Mathematics/KissingNumber: {form: optimization, analogue: combinatorial}
   Mathematics/NarrowAdmissibleTuple: {form: optimization, analogue: combinatorial, note: admissible_prime_tuples_not_capset_kissing_ramsey_or_matmul}
+  Mathematics/ZarankiewiczMatrix: {form: optimization, analogue: combinatorial, note: K33_free_bipartite_matrix_not_capset_kissing_ramsey_or_matmul}
+  Mathematics/DegreeDiameterGraph: {form: optimization, analogue: combinatorial, note: bounded_degree_diameter_graph_order_not_kissing_or_ramsey}
+  Mathematics/VanDerWaerdenColoring: {form: optimization, analogue: combinatorial, note: AP_free_coloring_length_not_ramsey_lower_bound_replay}
+  Mathematics/SchurPartition: {form: optimization, analogue: combinatorial, note: sum_free_partition_length_not_capset_or_ramsey}
   Mathematics/Superpermutation: {form: optimization, analogue: combinatorial}
   Mathematics/NonlinearCodeRecords: {form: optimization, analogue: combinatorial}
   Algorithm/MatrixMultiplicationRank: {form: optimization, analogue: combinatorial}

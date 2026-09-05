@@ -1,0 +1,4 @@
+1) Only edit solution.py. Keep construct_coloring(r, k) -> list of ints in {0,...,r-1}.
+2) No k positions in arithmetic progression (any start, any common difference) may share a color.
+3) Colors must be in {0,...,r-1}. Invalid -> score 0. numpy/stdlib only, CPU.
+4) Do not read verification/ or frontier_eval/.

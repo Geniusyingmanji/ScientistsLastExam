@@ -1,0 +1,26 @@
+{
+  "task": "Mathematics/DegreeDiameterGraph",
+  "anchors": [
+    {
+      "name": "sota_ref_d4k3",
+      "value": 41,
+      "source_url": "https://en.wikipedia.org/wiki/Table_of_the_largest_known_graphs_of_a_given_diameter_and_maximal_degree",
+      "derivation": "Table of the largest known graphs of a given diameter and maximal degree, entry for degree 4, diameter 3: 41 vertices, cited to J. G. Allwright (1992), not marked bold (i.e. not proven optimal -- the largest graph found so far). Independently confirmed by direct fetch on 2026-09-05.",
+      "retrieved_on": "2026-09-05"
+    },
+    {
+      "name": "sota_ref_d5k3",
+      "value": 72,
+      "source_url": "https://en.wikipedia.org/wiki/Table_of_the_largest_known_graphs_of_a_given_diameter_and_maximal_degree",
+      "derivation": "Table of the largest known graphs of a given diameter and maximal degree, entry for degree 5, diameter 3: 72 vertices, cited to Geoffrey Exoo (1998-2010), not marked bold (not proven optimal). Independently confirmed by direct fetch on 2026-09-05.",
+      "retrieved_on": "2026-09-05"
+    },
+    {
+      "name": "sota_ref_d6k3",
+      "value": 111,
+      "source_url": "https://en.wikipedia.org/wiki/Table_of_the_largest_known_graphs_of_a_given_diameter_and_maximal_degree",
+      "derivation": "Table of the largest known graphs of a given diameter and maximal degree, entry for degree 6, diameter 3: 111 vertices, cited to Geoffrey Exoo (1998-2010), not marked bold (not proven optimal). Independently confirmed by direct fetch on 2026-09-05.",
+      "retrieved_on": "2026-09-05"
+    }
+  ]
+}
