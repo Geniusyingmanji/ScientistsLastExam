@@ -57,6 +57,19 @@ level, and the greedy shortest-first basis the reference uses gets almost nothin
 This is the instance where the moment-selection result of arXiv:2607.14755 — a non-monotone
 landscape with real synergy between moments — should bite hardest.
 
+## The reference is not bit-reproducible across machines, and that is fine
+
+Run on the benchmark host inside the sandbox, the same reference program returns 0.618108 rather
+than the 0.623217 measured on the builder's laptop; `i3322_k40` lands at 0.25096456 instead of
+0.25095522. The numerical solve underneath it is a quasi-Newton method whose iterates depend on the
+BLAS, so the certificate it happens to find differs.
+
+This does not touch the oracle's determinism, which is what the benchmark actually requires: given
+a certificate, verification is exact rational arithmetic and returns the same bound everywhere. The
+variation is a property of one candidate program, and both certificates are equally valid proofs of
+their respective bounds. It is recorded here so that a reference figure quoted from one machine and
+checked on another is not mistaken for drift.
+
 ## Where the headroom is
 
 The reference is deliberately the obvious procedure, and each of its four steps is beatable:
