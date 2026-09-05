@@ -8,8 +8,8 @@ score_mode: uncapped
 gpu_required: false
 eval_time_seconds: 20
 science_metric: mean_fixed_tolerance_progress_to_best_known_kissing_number
-dims: [9, 10, 12]
+dims: [5, 6, 9, 10, 12]
 reference_baseline: coordinate_axes_plus_minus_e_i
-reference_sota: "Cohn table lower bounds 306 / 510 / 841 in dimensions 9 / 10 / 12"
+reference_sota: "Cohn table lower bounds 40 / 72 / 306 / 510 / 841 in dimensions 5 / 6 / 9 / 10 / 12"
 citation: "Cohn kissing-number table; AlphaEvolve arXiv:2506.13131; Takhanov-Yun-Assylbekov arXiv:2606.18984 (d=12, 841)"
 claim_boundary: "Primitive integer witnesses are exact; non-integral floating witnesses require exact or interval certification for a scientific record claim."

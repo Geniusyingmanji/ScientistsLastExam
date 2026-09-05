@@ -22,7 +22,7 @@ def build_kissing(d: int) -> list:
     every pair of distinct vectors must have inner product at most 1/2."""
 ```
 
-The evaluator calls it for dimensions 9, 10 and 12, **verifies the 60° condition**, and reads off
+The evaluator calls it for dimensions 5, 6, 9, 10 and 12, **verifies the 60° condition**, and reads off
 the number of distinct directions. Integer vectors are reduced by their positive gcd (`x` and
 `2x` count once) and checked exactly (`4⟨x,y⟩² ≤ ||x||²||y||²` whenever `⟨x,y⟩ > 0`). Antipodes
 remain distinct kissing points. Exact duplicate vectors are dropped. Zero vectors are rejected.
@@ -39,8 +39,8 @@ score(d) = max(0, (|C| − 2d) / (sota − 2d))      # UNCAPPED above
 ```
 
 So the axis baseline scores 0, matching the published lower bound scores 1.0, and **exceeding it
-scores above 1.0**. `combined_score` is the mean over dimensions. Anchors: d=9 (306), d=10 (510),
-d=12 (841). An invalid set scores 0 for that dimension.
+scores above 1.0**. `combined_score` is the mean over dimensions. Anchors: d=5 (40), d=6 (72),
+d=9 (306), d=10 (510), d=12 (841). An invalid set scores 0 for that dimension.
 
 For primitive integer witnesses, a score above 1.0 is backed by exact integer inequalities. For
 non-integral floating witnesses, it is a benchmark candidate only: an exact or interval

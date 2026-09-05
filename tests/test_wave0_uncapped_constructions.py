@@ -231,7 +231,13 @@ class KissingNumberTests(unittest.TestCase):
         for row in metrics["per_dim"]:
             self.assertEqual(row["size"], 2 * row["d"] * (row["d"] - 1))
             self.assertGreater(row["score"], 0.0)
-            self.assertLess(row["score"], 1.0)
+            if row["d"] == 5:
+                # D_5 (40 vectors) is not a mid-ladder here: it IS the published dimension-5
+                # kissing-number record (the D5 root system), so this specific dimension scores
+                # exactly 1.0 rather than strictly between 0 and 1 like every other dimension.
+                self.assertAlmostEqual(row["score"], 1.0)
+            else:
+                self.assertLess(row["score"], 1.0)
 
 
 class TensorRank555Tests(unittest.TestCase):

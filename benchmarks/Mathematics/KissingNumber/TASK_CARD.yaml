@@ -7,7 +7,7 @@ oracle:
   deterministic: true
 normalization:
   baseline: the 2d coordinate axes plus or minus e_i
-  reference: Cohn-table lower bounds 306, 510 and 841 in dimensions 9, 10 and 12
+  reference: Cohn-table lower bounds 40, 72, 306, 510 and 841 in dimensions 5, 6, 9, 10 and 12
   score: uncapped fraction of cardinality improvement; beating the witness exceeds 1, but floating-witness acceptance is only a numerical benchmark result
 citations:
 - id: url:https://cohn.mit.edu/kissing-numbers/

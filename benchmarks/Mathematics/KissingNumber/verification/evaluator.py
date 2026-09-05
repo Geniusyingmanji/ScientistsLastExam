@@ -12,8 +12,11 @@ import math
 
 import numpy as np
 
-# dim d -> (baseline 2d, Cohn-table lower bound). Dimension 11 is omitted on purpose.
+# dim d -> (baseline 2d, Cohn-table lower bound). Dimension 11 is omitted on purpose (see
+# references/known_best.md: recent AI-search claims there are contested).
 SIZES = {
+    5: {"baseline": 10, "sota_ref": 40},
+    6: {"baseline": 12, "sota_ref": 72},
     9: {"baseline": 18, "sota_ref": 306},
     10: {"baseline": 20, "sota_ref": 510},
     12: {"baseline": 24, "sota_ref": 841},

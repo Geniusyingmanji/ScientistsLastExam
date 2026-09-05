@@ -189,7 +189,7 @@ CHINESE_BRIEFS = {
         "在最大值尚未证明的 n=7,8,9 上构造更大的 cap set",
         "对最好已知规模的平均进度;无上限,与 CapSet 的维度不相交"),
     "Mathematics/KissingNumber": (
-        "在 9、10、12 维构造更多与中心球相切的单位球",
+        "在 5、6、9、10、12 维构造更多与中心球相切的单位球",
         "固定容差下对最好已知接触数的平均进度;无上限"),
     "Mathematics/RamseyLowerBound": (
         "构造更大的 (s,t)-Ramsey 染色以提高下界",

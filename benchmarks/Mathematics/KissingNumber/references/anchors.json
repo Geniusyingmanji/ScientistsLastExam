@@ -2,6 +2,20 @@
   "task": "Mathematics/KissingNumber",
   "anchors": [
     {
+      "name": "sota_ref_d5",
+      "value": 40,
+      "source_url": "https://cohn.mit.edu/kissing-numbers/",
+      "derivation": "Cohn table lower bound for dimension 5 (achieved by the D5 root system among other constructions); independently corroborated via H. Cohn, A. Rajagopal, \"Variations on five-dimensional sphere packings,\" arXiv:2412.00937, which presents a fourth construction reaching the same value but does not improve it. The exact kissing number in dimension 5 remains unknown (upper bound 44, Levenshtein 1979).",
+      "retrieved_on": "2026-09-06"
+    },
+    {
+      "name": "sota_ref_d6",
+      "value": 72,
+      "source_url": "https://cohn.mit.edu/kissing-numbers/",
+      "derivation": "Cohn table lower bound for dimension 6, achieved by the E6 root system (A. Korkine, G. Zolotareff, 1873). The exact kissing number in dimension 6 remains unknown (upper bound 77, de Laat, Leijenhorst, de Muinck Keizer, arXiv:2404.18794, via exact semidefinite programming).",
+      "retrieved_on": "2026-09-06"
+    },
+    {
       "name": "sota_ref_d9",
       "value": 306,
       "source_url": "https://cohn.mit.edu/kissing-numbers/",

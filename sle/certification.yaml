@@ -446,9 +446,9 @@ tasks:
   Mathematics/KissingNumber:
     status: candidate
     reason: >-
-      Uncapped kissing configurations in dimensions 9, 10 and 12, where the exact number is
+      Uncapped kissing configurations in dimensions 5, 6, 9, 10 and 12, where the exact number is
       still open. Dimension 11 is withheld because recent AI-search claims there are contested.
-      The Cohn-table lower bounds 306/510/841 are the score=1 anchors; the 2d axes baseline
+      The Cohn-table lower bounds 40/72/306/510/841 are the score=1 anchors; the 2d axes baseline
       scores 0. Pairwise 60-degree checks are exact on primitive integer vectors; accepted
       floating witnesses use a fixed tolerance and require separate exact or interval
       certification before a scientific record claim. No required configuration. Candidate,
