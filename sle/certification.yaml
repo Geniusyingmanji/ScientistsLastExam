@@ -10,6 +10,113 @@ policy:
   statuses: [certified, candidate, quarantined]
 
 tasks:
+  Electrochemistry/ChronoamperometryLawID:
+    status: candidate
+    reason: deterministic multi-potential chronoamperometric law identification with Akaike-penalized family fits, chi-square and variable-projection drift gates, and anomalous-transport refusal; the truth-blind witness reaches 0.963/0.882 with zero false discoveries while a no-penalty variant drops to 0.876; pending clean Linux calibration, independent electrochemistry review and server-held transients
+    citation_ids:
+      - isbn:9780471057528
+  MetabolicEngineering/MetabolicStrainDesign:
+    status: candidate
+    reason: uncapped flux-balance strain design over a seventeen-reaction network with six pleiotropic editable enzymes, a shared engineering budget and an alternative product route; anchors are recomputed per sealed draw with degenerate draws excluded by construction; the worst-draw-optimal witness strictly beats the wild type everywhere while the greedy reference reaches 0.851/0.839 and the intuitive knockout scores 0.10; pending clean Linux calibration, independent metabolic-engineering review and frontier draws on the record side
+    citation_ids:
+      - doi:10.1038/nbt.1614
+  Metagenomics/MetagenomicMixtureID:
+    status: candidate
+    reason: deterministic multinomial read-count mixture identification with genome-specific and conserved markers at 1200 reads per depth unit, hidden lognormal marker-efficiency bias, five percent cross-mapping and an 8-18 percent novel-organism share; median-over-markers abundance estimation and a three-sigma conserved-excess refusal reach 0.897/0.959 with zero false discoveries while a single shallow run saturates at 0.888; pending clean Linux calibration, independent metagenomics review and server-held mixtures
+    citation_ids:
+      - doi:10.1038/nmeth.3589
+  Electrophysiology/HodgkinHuxleyCurrentID:
+    status: candidate
+    reason: deterministic voltage-clamp channel-parameter recovery over the public 1952 gating equations in closed form, with sealed-protocol prediction and A-type/rectifying extra-current refusal; the multistart least-squares witness reaches 0.718/0.594 with zero false discoveries, leaving parameter-recovery headroom; pending clean Linux calibration, independent electrophysiology review and server-held membranes
+    citation_ids:
+      - doi:10.1113/jphysiol.1952.sp004764
+  Algorithm/ScalingLawIdentification:
+    status: candidate
+    reason: deterministic asymptotic-class identification from budgeted seven-percent-noise timings bounded at size 384, with the public mod-3 branch predicate and sixty-percent-jitter refusal worlds and a sealed size-700 extrapolation; the truth-blind witness reaches 0.948/0.604 while a competent first-shot ladder reaches only 0.692; pending clean Linux calibration, independent algorithms review and server-held programs
+    citation_ids:
+      - isbn:9780262033848
+  WaterDistribution/DistributionNetworkTopology:
+    status: candidate
+    reason: boolean network tomography over a 4x4 grid with several hundred monotone routes, signature-uniqueness-filtered break sets, twin-corridor refusal and flip noise at the two-break level-2 default; the likelihood-tracked witness reaches 0.900/1.000 (level 3 drops to 0.600) where the pre-hardening set-cover witness managed 0.400; pending clean Linux calibration, independent water-systems review and frontier draws at the new default
+    citation_ids:
+      - doi:10.1061/(ASCE)0733-9496(2008)134:6(556)
+  Mineralogy/MineralMixtureXRD:
+    status: candidate
+    reason: deterministic powder-diffraction mixture quantification with a public twelve-mineral library, budgeted slow windows, amorphous-hump distractors and sharp unknown-phase refusal; the weighted-NNLS witness reaches 0.396/0.450 with zero false discoveries and full refusal, deliberately leaving fraction-accuracy headroom; pending clean Linux calibration, independent mineralogy review and full-pattern refinement comparison
+    citation_ids:
+      - doi:10.1107/S0021889869006558
+  Mathematics/EllipticCurveRecovery:
+    status: candidate
+    reason: exact integer curve recovery over a +-1200 coefficient window from tiered-budget prime point counts with per-prime residue enumeration, incremental CRT lifting with wide-window pruning, and singular/genus-two refusal; the budgeted witness reaches 1.000/1.000 with zero false discoveries while a six-prime ablation collapses to 0.000 via twin-curve ambiguity; pending clean Linux calibration, independent mathematics review and the frontier draw on the residue-then-CRT strategy
+    citation_ids:
+      - isbn:9780387094939
+  Spectroscopy/MassFragmentationTree:
+    status: candidate
+    reason: deterministic multi-energy MS/MS fragmentation-tree discovery with charged energy/zoom budget, flat-background filtering, in-source precursor loss and one-dalton co-isolate refusal worlds; a truth-blind decomposition-plus-greedy-attachment witness reaches 0.565/0.525 development/robustness with zero false discoveries while shortcut probes stay at or below 0.104; pending clean Linux calibration, server-held molecules, independent mass-spectrometry review and higher-fidelity cascade replication
+    citation_ids:
+      - doi:10.1073/pnas.1509788112
+      - doi:10.1186/s13321-016-0116-8
+  ChemicalProcess/ThermochemicalCycleAudit:
+    status: candidate
+    reason: deterministic Hess-closure network audit with instrument drift, transcription slips, reference-state offsets and an information-conditioned pendant-pair refusal axis, replicate/cross-check budget against systematic-versus-random error; the truth-blind adjustment witness reaches 0.557/0.656 with perfect verdicts and diagnosis on development while probes stay at or below 0.202; pending clean Linux calibration, server-held networks, independent thermochemistry review and ATcT-style replication
+    citation_ids:
+      - doi:10.1021/jp047912y
+      - doi:10.1021/acs.jpca.6c03567
+  ProductionSystems/PermutationFlowShop:
+    status: candidate
+    reason: uncapped makespan record chase on fresh-seeded Taillard-style permutation flow shops (20x5 to 50x10) with exact integer verification, NEH zero-anchor and a frozen 3000-iteration ILS witness (anti-memorization by construction since no published table transfers to these seeds); the shipped 400-iteration witness reaches 0.995/0.996 while NEH scores zero by anchor; pending clean Linux calibration, independent operations-research review and stronger-search headroom measurement
+    citation_ids:
+      - doi:10.1016/0377-2217(93)90182-M
+      - doi:10.1287/ijoc.2022.1193
+  Geophysics/FocalMechanismStressInversion:
+    status: candidate
+    reason: deterministic focal-mechanism stress inversion behind two-fold nodal-plane ambiguity with charged re-analysis, mixed-regime and incoherent refusal worlds; the truth-blind multi-start Michael witness reaches 0.698/0.731 with near-ceiling axes and 0.46 plane assignment (the genuine combinatorial headroom); pending clean Linux calibration, server-held catalogs, independent seismology review and bootstrapped-confidence replication
+    citation_ids:
+      - doi:10.1029/JB089iB13p11517
+      - doi:10.1017/S0016756800059987
+  SyntheticBiology/OrthogonalDNACodewords:
+    status: candidate
+    reason: uncapped orthogonal DNA word library record under exact GC, Hamming, all-shift reverse-complement cross-dimer and homopolymer constraints with a frozen seeded greedy witness (dna16 28, dna12 27 words) and a trivial-pair zero anchor; different-seed probes reach 0.864 so the search carries the difficulty; pending clean Linux calibration, independent review against the DNA-word-design literature and stronger-search headroom measurement
+    citation_ids:
+      - doi:10.1089/10665270152530818
+      - doi:10.1038/s43588-024-00646-z
+      - url:https://www.combinatorics.org/ojs/index.php/eljc/article/view/v10i1r33
+  Mathematics/ExactIdentityEvidence:
+    status: candidate
+    reason: deterministic exact-arithmetic identity audit with purchasable precision tiers, a public epsilon floor, cap-driven certified refusal and a false-rejection penalty, mixing exact, gross-false, hard-false and undecidable claims; the truth-blind certification witness reaches 0.900/0.925 with zero false discoveries while the base-precision-only shortcut sits at 0.600; pending clean Linux calibration, server-held worlds, independent mathematics review and PSLQ-grade solver comparison
+    citation_ids:
+      - doi:10.1090/S0025-5718-99-01081-3
+  WavePropagation/ActiveFullWaveformInversion:
+    status: candidate
+    reason: deterministic reduced-order 2-D acoustic full-waveform discovery task with charged shot selection, supported/null/acoustic-model-misspecification worlds, sealed shot and frequency transfer, and separate mechanism, false-discovery, refusal, coverage and confidence metrics; pending independent seismology review, higher-fidelity replication, server-held worlds and model calibration
+    citation_ids:
+      - doi:10.1190/1.3238367
+      - arxiv:2003.14181
+  Hydrology/GroundwaterRemediationDesign:
+    status: candidate
+    reason: deterministic pump-and-treat archive optimization over cost, remaining contaminant mass and receptor compliance with evaluator-only transport shifts and risk diagnostics; pending MODFLOW replication, independent hydrogeology review, server-held aquifers and model calibration
+    citation_ids:
+      - doi:10.1186/2193-2697-2-6
+      - doi:10.1016/S0309-1708(01)00020-3
+  Paleoclimate/ChronologyAssimilation:
+    status: candidate
+    reason: active chronology and climate-field reconstruction with charged dates, supported/null/nonstationary-proxy worlds, CE/RMSE/CRPS diagnostics and separate discovery/refusal axes; pending independent paleoclimate review, public-data replay, server-held proxy systems and model calibration
+    citation_ids:
+      - doi:10.1029/2020GL090485
+      - doi:10.5194/cp-16-1325-2020
+  Cryosphere/IceObservationNetworkDesign:
+    status: candidate
+    reason: deterministic linear-Gaussian ice-sheet OSSE observation-network archive design using forecast-error-versus-cost hypervolume, posterior uncertainty diagnostics and sealed sensitivity shifts; pending full ice-flow replication, independent cryosphere review, server-held regimes and model calibration
+    citation_ids:
+      - doi:10.5194/tc-19-5423-2025
+      - doi:10.5194/tc-17-4661-2023
+  Volcanology/DeformationMechanismInference:
+    status: candidate
+    reason: active GNSS/InSAR source-mechanism inference with a public source family, charged station design, null and multi-source misspecification worlds, sealed spatial prediction and separately reported mechanism, false-discovery, refusal, coverage and probability calibration; pending independent volcanology review, elastic-model replication, server-held worlds and model calibration
+    citation_ids:
+      - doi:10.1029/2001RG000107
+      - isbn:9780691133027
+
   MedicinalChemistry/MolecularLeadOptimization:
     status: candidate
     reason: RDKit community-standard oracle with a verified approved-drug reference panel; pending external medicinal-chemistry review
@@ -645,3 +752,33 @@ tasks:
       - doi:10.1103/PhysRevLett.93.165501
       - doi:10.1016/0375-9601(74)90847-0
       - doi:10.1063/1.1723844
+  AerospaceStructures/CompositeLaminateStacking:
+    status: candidate
+    reason: deterministic CLT stacking-sequence optimization with exact composition and manufacturing constraints, uncapped truth-blind permutation normalization, interleaved panels and sealed material/load degradation; pending independent composite-structures review, finite-element replication, server-held panels and frontier-model calibration
+    citation_ids:
+      - doi:10.2514/3.11710
+      - doi:10.1016/j.compstruct.2016.01.052
+  WaterDistribution/ResilientPumpScheduling:
+    status: candidate
+    reason: deterministic extended-period storage, pressure and energy scheduling with an uncapped public-forecast convex-optimization witness and separate demand-growth and pump-outage resilience; pending EPANET/WNTR replication, independent water-systems review, server-held networks and frontier-model calibration
+    citation_ids:
+      - url:https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P10113EM.TXT
+      - doi:10.5194/dwes-7-53-2014
+  Wastewater/BSM1AerationControl:
+    status: candidate
+    reason: deterministic stateful activated-sludge aeration and recycle control with effluent hard gates and separate storm, sensor-bias and actuator-loss transfer; pending official IWA BSM1 trajectory matching, independent wastewater review, server-held influent and frontier-model calibration
+    citation_ids:
+      - url:https://iwa-mia.org/wp-content/uploads/2018/01/BSM_TG_Tech_Report_no_1_BSM1_General_Description.pdf
+      - doi:10.3182/20110828-6-IT-1002.01664
+  WindEnergy/WakeAwareFarmCoDesign:
+    status: candidate
+    reason: deterministic mixed continuous layout-yaw co-design with boundary and spacing hard gates, uncapped truth-blind search normalization and separate wake/direction/turbulence transfer; pending pinned FLORIS replication, independent wind-energy review, server-held wind roses and frontier-model calibration
+    citation_ids:
+      - doi:10.1088/1742-6596/1618/2/022028
+      - url:https://nrel.sitefinity.cloud/wind/floris
+  BuildingControls/BOPTESTSupervisoryControl:
+    status: candidate
+    reason: deterministic stateful HVAC supervision over a local two-zone BOPTEST-style emulator with comfort and IAQ hard gates and separate forecast, sensor, plant and actuator shifts; pending official BOPTEST FMU replay, independent controls review, server-held traces and frontier-model calibration
+    citation_ids:
+      - doi:10.1080/19401493.2021.1986574
+      - url:https://ibpsa.github.io/project1-boptest/docs-userguide/introduction.html

@@ -1,0 +1,4 @@
+1) Only edit solution.py and keep recover_network exactly as documented in Task.md.
+2) Return every documented field exactly; malformed artifacts score zero.
+3) Every charged call is budgeted; invalid calls and overspending invalidate that world even when caught.
+4) Deterministic Python/NumPy/SciPy/stdlib only; no network/process creation and no reading verification/ or frontier_eval/.

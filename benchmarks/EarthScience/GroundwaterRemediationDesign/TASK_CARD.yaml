@@ -1,0 +1,100 @@
+schema_version: 2
+scientific_question: Can an agent construct a receptor-compliant pump-and-treat Pareto archive that balances
+  contaminant removal and lifecycle cost across uncertain transport regimes?
+artifact: Four to sixteen unique remediation plans, each containing bounded extraction-well locations,
+  start years and pumping rates.
+oracle:
+  model: Deterministic advecting three-component Gaussian plume with local Q*C extraction, decay, activation-aware
+    time integration and explicit mass conservation; labeled histories via xarray.
+  feasibility: finite unique archives, bounded wells and pumping, and receptor concentrations below the
+    public cleanup threshold
+  deterministic: true
+  external_tooling: xarray 2023.6.0 for labeled time/receptor transport histories and compliance reduction
+difficulty_ladder:
+  default_level: 1
+  levels:
+    1: working proxy-exact discrepancy and transport stresses
+    2: 15 percent tighter compliance, 25 percent stronger discrepancy and 18 percent stronger stresses
+    3: 30 percent tighter compliance, 55 percent stronger discrepancy and 38 percent stronger stresses
+normalization:
+  baseline: four low-intensity single-well plans recomputed for every aquifer
+  reference: Public moving-plume mass-balance search over single wells and treatment transects, greedily
+    selecting a hypervolume archive.
+  score: exact-model cleanup-versus-lifecycle-cost Pareto hypervolume above baseline, floored at zero
+    and uncapped above the reference; feasibility, proxy promotion, held-out transfer and worst-shift
+    robustness remain separate
+citations:
+- id: doi:10.1016/S0309-1708(01)00020-3
+  title: Multi-objective optimal design of groundwater remediation systems
+- id: doi:10.1186/2193-2697-2-6
+  title: Groundwater remediation design using physics-based flow, transport, and optimization technologies
+invariants:
+- zero pumping cannot remove more contaminant than an otherwise identical active plan
+- lifecycle cost increases with well count or pumping volume under fixed geometry
+- only receptor-compliant plans contribute Pareto hypervolume
+- exact and proxy transport agree when all hidden shift multipliers are one
+- exact evaluation applies an evaluator-only model-discrepancy shift, composed with each robustness stress
+- the shipped reference archive exceeds the weak baseline on development aquifers
+known_shortcuts: 'xarray supplies authoritative labeled transport-array representation and aggregation,
+  not groundwater physics. The deterministic Gaussian plume and empirical capture kernel are local reduced-order
+  abstractions. They omit transient heads, layered three-dimensional flow, sorption and treatment-plant
+  hydraulics. Public aquifers need server-held replacements, MODFLOW transport replication and independent
+  hydrogeology review before any field claim. Hardening: Local extraction uses Q*C at the evolving plume
+  position, with activation-aware integration and an extracted/decayed/remaining mass ledger. Three public
+  initial plume components replace the spatially collapsed capture-at-start model. Reproduce local sweeps
+  with scripts/diagnose_new_task_hardening.py --sweeps; numerical admission evidence is pending clean
+  Linux replay.'
+licensing:
+  task_package: repository_license_not_declared
+  external_assets: none
+  note: All evaluated aquifers are generated from original repository code; cited publications are not
+    redistributed.
+contamination:
+  status: cannot_be_ruled_out
+  rationale: The procedural aquifers and reference policy are public and AI-assisted; server-held aquifers
+    and independent transport replication are still required.
+review:
+  domain: pending_external_hydrogeology
+  evaluator_security: targeted_local_regressions_added_clean_linux_sandbox_replay_pending
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic transport and cost simulator with development, held-out
+    and sealed physical-shift aquifers.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Aquifer parameters are varied procedurally but the transport family and reference archive
+    policy are public and independent simulator agreement is not established.
+lineage:
+  status: complete
+  builder_model_ids:
+  - openai-codex
+  builder_scaffolds:
+  - repository-native-pareto-optimization-task-pattern
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: 2026-09-05 local code-review probes triggered identifiable sill scoring, feasible
+    HVAC heldout anchors, moving-plume capture, stronger public-data references, contract documentation
+    and regression tests. No frontier calibration draw has been run.
+  shortcut_discoverer: initial_internal_red_team
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: initial_internal
+  author_domain: AI-assisted benchmark engineering
+  reviewer_domain: pending_external_hydrogeology
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: standalone_public_model_references_high_fidelity_replication_pending
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+difficulty_assessment:
+  status: unverified_candidate
+  requirement: standard-method and low-dimensional shortcut sweeps, capability ablations and clean frontier-model
+    calibration before certification

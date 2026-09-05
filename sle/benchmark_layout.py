@@ -12,10 +12,14 @@ from pathlib import Path
 DISCIPLINE_DOMAINS: dict[str, tuple[str, ...]] = {
     "Biology": (
         "Biomechanics",
+        "Electrophysiology",
         "EvidenceSynthesis",
+        "MetabolicEngineering",
+        "Metagenomics",
         "PopulationGenetics",
         "ProteinEngineering",
         "RNAEngineering",
+        "SyntheticBiology",
         "SystemsBiology",
     ),
     "Chemistry": (
@@ -42,8 +46,13 @@ DISCIPLINE_DOMAINS: dict[str, tuple[str, ...]] = {
     "EarthScience": (
         "AtmosphericScience",
         "ClimateScience",
+        "Cryosphere",
         "Geophysics",
+        "Hydrology",
+        "Mineralogy",
         "Oceanography",
+        "Paleoclimate",
+        "Volcanology",
         "WavePropagation",
     ),
     "Mathematics": (
@@ -68,7 +77,9 @@ DISCIPLINE_DOMAINS: dict[str, tuple[str, ...]] = {
     "Engineering": (
         "AcousticMetamaterials",
         "Acoustics",
+        "AerospaceStructures",
         "Astrodynamics",
+        "BuildingControls",
         "ControlTheory",
         "FluidDynamics",
         "FluidMechanics",
@@ -77,12 +88,16 @@ DISCIPLINE_DOMAINS: dict[str, tuple[str, ...]] = {
         "InventoryManagement",
         "NuclearEngineering",
         "PowerSystems",
+        "ProductionSystems",
         "Semiconductor",
         "Sensors",
         "StructuralEngineering",
         "Thermodynamics",
         "Transportation",
         "Turbulence",
+        "Wastewater",
+        "WaterDistribution",
+        "WindEnergy",
     ),
 }
 

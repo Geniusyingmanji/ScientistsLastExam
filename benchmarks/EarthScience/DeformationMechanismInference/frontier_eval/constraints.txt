@@ -1,0 +1,4 @@
+1) Only edit solution.py and keep infer_deformation_source(survey_bounds_m, model_library, measure, budget_units).
+2) Return mechanism_probabilities, parameters, confidence and abstain exactly as documented in Task.md.
+3) Every measure call is charged; invalid calls and overspending invalidate that world even when caught.
+4) Deterministic Python/NumPy/SciPy/stdlib only; no network/process creation and no reading verification/ or frontier_eval/.

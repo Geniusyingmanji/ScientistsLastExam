@@ -1,0 +1,88 @@
+schema_version: 2
+scientific_question: Can one stateful HVAC supervisory policy reduce cost, carbon and peak power across
+  climates while meeting occupied comfort and indoor-air-quality constraints under forecast and plant
+  error?
+artifact: A stateful two-zone observation-to-heating, cooling and ventilation controller.
+oracle:
+  model: Deterministic coupled two-zone RC thermal and CO2 emulator at fifteen-minute resolution with
+    weather, occupancy, tariff and grid-carbon traces.
+  feasibility: Published finite action bounds, occupied mean excursion <=0.10 C, maximum <=0.50 C, excursion-rate
+    <=0.05 and CO2 <=1100 ppm.
+  deterministic: true
+normalization:
+  baseline: Load-compensated, occupancy-aware conservative thermostat with demand ventilation; feasible
+    on every development and heldout world.
+  reference: Forecast boundary tracking with online thermal disturbance estimation and one-step CO2 control.
+  score: Development cost-carbon-peak-comfort improvement is uncapped; held-out climates, forecast bias,
+    sensor bias, parameter drift and actuator loss stay separate.
+citations:
+- id: doi:10.1080/19401493.2021.1986574
+  title: Building optimization testing framework BOPTEST
+- id: url:https://ibpsa.github.io/project1-boptest/docs-userguide/introduction.html
+  title: BOPTEST user guide introduction
+invariants:
+- With HVAC and gains disabled, zone temperature moves toward outdoor temperature under positive envelope
+  conductance.
+- CO2 generation occurs only with occupancy and ventilation removes indoor excess above outdoor concentration.
+- Comfort and IAQ gate economic comparison so disabling equipment cannot win.
+- Controller errors and malformed actions fail closed; held-out metrics remain sealed.
+known_shortcuts: 'The lightweight emulator follows the BOPTEST interaction and KPI shape but is not an
+  official Modelica FMU. The name must not be read as certification; pinned official test-case replay,
+  server-held traces and external controls review are required. Hardening: A load-compensated baseline
+  and sufficient 30 kW capacity make all declared climates feasible. Public comfort excursion/rate tolerances
+  replace permissive hidden thresholds; CO2 enforces the published limit. Anchor errors are separated
+  from candidate errors. Reproduce local sweeps with scripts/diagnose_new_task_hardening.py --sweeps;
+  numerical admission evidence is pending clean Linux replay.'
+review:
+  domain: pending_external
+  evaluator_security: targeted_local_regressions_added_clean_linux_sandbox_replay_pending
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic two-zone emulator with interleaved climates and sealed
+    forecast, sensor, plant and actuator shifts.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: high
+  rationale: BOPTEST and MPC examples are public and the current emulator is reduced; difficulty must
+    survive official cross-building test cases and contamination-aware model draws.
+lineage:
+  status: complete
+  builder_model_ids:
+  - openai:codex-gpt-5
+  builder_scaffolds:
+  - codex-desktop
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: 2026-09-05 local code-review probes triggered identifiable sill scoring, feasible
+    HVAC heldout anchors, moving-plume capture, stronger public-data references, contract documentation
+    and regression tests. No frontier calibration draw has been run.
+  shortcut_discoverer: local_deterministic_probe_only
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: prototype_complete_calibration_pending
+  author_domain: general_scientific_software
+  reviewer_domain: pending_external_building_controls
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: standalone_public_model_references_high_fidelity_replication_pending
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+licensing:
+  task_package: repository_license_not_declared
+  external_assets: none
+  note: Original procedural code; cited papers and external simulator assets are not redistributed.
+contamination:
+  status: cannot_be_ruled_out
+  rationale: Public procedural families and AI-assisted reference implementations; sealed worlds and independent
+    model calibration are pending.
+difficulty_assessment:
+  status: unverified_candidate
+  requirement: standard-method and low-dimensional shortcut sweeps, capability ablations and clean frontier-model
+    calibration before certification

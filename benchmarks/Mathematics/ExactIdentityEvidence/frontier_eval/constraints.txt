@@ -1,0 +1,4 @@
+1) Only edit solution.py and keep audit_identity_claims(problem, purchase, budget_units).
+2) Return verdicts, coefficients and confidence exactly as documented in Task.md; default floating point cannot certify residuals, use exact arithmetic.
+3) Every purchase is charged; invalid calls and overspending invalidate that world even when caught.
+4) Deterministic Python/NumPy/SciPy/stdlib only; no network/process creation and no reading verification/ or frontier_eval/.

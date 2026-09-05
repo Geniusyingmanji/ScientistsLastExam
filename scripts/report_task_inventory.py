@@ -37,6 +37,7 @@ CHINESE_NAMES = {
     "Acoustics/RoomImpulseResponse": "房间声学处理设计",
     "Algorithm/GraphFromDistances": "距离查询重建图",
     "Algorithm/MatrixMultiplicationRank": "矩阵乘法秩",
+    "Algorithm/ScalingLawIdentification": "渐近复杂度定律辨识",
     "Algorithm/TensorRank555": "5x5 与 6x6 张量秩",
     "Astrodynamics/LowThrustTransfer": "小推力轨道转移",
     "AtmosphericScience/RadiativeTransferFit": "辐射传输反演",
@@ -45,21 +46,30 @@ CHINESE_NAMES = {
     "CausalDiscovery/SurvivorshipConfoundedDesign": "幸存者偏差下的效应估计",
     "ChemicalKinetics/ReactionMechanismFitting": "反应机理辨识",
     "ChemicalProcess/DistillationColumnDesign": "精馏塔设计",
+    "ChemicalProcess/ThermochemicalCycleAudit": "热化学闭环审计",
     "Chemistry/LennardJonesCluster": "Lennard-Jones 团簇",
     "ClimateScience/EnergyBalanceModel": "能量平衡模型辨识",
     "ClimateScience/ForcedSignalAttribution": "强迫信号检测归因",
     "ControlTheory/InvertedPendulumSwingUp": "倒立摆摆起控制",
     "DynamicalSystems/ActiveLawDiscovery": "主动定律发现",
+    "Electrochemistry/ChronoamperometryLawID": "计时电流法律辨识",
     "Electrochemistry/ElectrolyteConductivityDesign": "电解液电导率设计",
+    "Electrophysiology/HodgkinHuxleyCurrentID": "电压钳通道参数恢复",
     "EvidenceSynthesis/ProspectiveMetaAnalysis": "前瞻荟萃分析",
     "Exoplanets/RadialVelocityPlanets": "视向速度找行星",
+    "Geophysics/FocalMechanismStressInversion": "震源机制应力反演",
     "Geophysics/GravityInversion": "重力反演",
     "Gravitation/PTAHellingsDowns": "脉冲星阵四极相关",
     "HeatTransfer/ConvectionDiffusionOpt": "对流扩散辨识与加热器设计",
     "MaterialsScience/AlloyHardnessOptimization": "合金硬度实验设计",
     "MaterialsScience/PhaseDiagramDiscovery": "相图发现",
+    "Mineralogy/MineralMixtureXRD": "矿物混合衍射定量",
     "MaterialsScience/QuinaryConvexHull": "五元凸包稳定相",
+    "MetabolicEngineering/MetabolicStrainDesign": "代谢工程菌株设计",
+    "Metagenomics/MetagenomicMixtureID": "宏基因组混合辨识",
+    "Mathematics/EllipticCurveRecovery": "椭圆曲线系数恢复",
     "Mathematics/BlackBoxGroupIdentification": "黑盒群同构辨识",
+    "Mathematics/ExactIdentityEvidence": "精确身份证据审计",
     "Mathematics/CapSet": "Cap Set 构造",
     "Mathematics/CapSetFrontier": "Cap Set 未证明维度",
     "Mathematics/KissingNumber": "接触数构造",
@@ -73,6 +83,8 @@ CHINESE_NAMES = {
     "Oceanography/AMOCTippingRefusal": "AMOC 折叠拒答",
     "Optics/DiffractionGratingDesign": "衍射光栅设计",
     "Optimization/CirclePacking": "圆堆积",
+    "ProductionSystems/PermutationFlowShop": "置换流水车间调度",
+    "SyntheticBiology/OrthogonalDNACodewords": "正交 DNA 密码词库",
     "ParticlePhysics/CalorimeterDesign": "量能器设计",
     "ParticlePhysics/DiscrepantMeasurements": "不相容测量调和",
     "ParticlePhysics/LookElsewhereAnomaly": "多窗口扫描的全局显著性",
@@ -90,6 +102,7 @@ CHINESE_NAMES = {
     "SignalProcessing/SparseRecovery": "压缩感知稀疏恢复",
     "Spectroscopy/CrowdedSpectrumAssignment": "混叠谱物种指认",
     "StructuralEngineering/ModalDamageAttribution": "模态损伤归因",
+    "Spectroscopy/MassFragmentationTree": "多碰撞能碎裂树恢复",
     "Spectroscopy/NMRSpectrumFitting": "核磁谱峰机制恢复",
     "Spectroscopy/SpinSystemInference": "自旋体系反演",
     "StructuralEngineering/TrussWeightMinimization": "桁架减重",
@@ -97,6 +110,17 @@ CHINESE_NAMES = {
     "SystemsBiology/GeneNetworkIntervention": "基因网络干预设计",
     "Thermodynamics/HeatExchangerDesign": "换热器帕累托设计",
     "Turbulence/RANSCalibration": "RANS 封闭标定",
+    "AerospaceStructures/CompositeLaminateStacking": "复合材料层合板铺层",
+    "BuildingControls/BOPTESTSupervisoryControl": "跨气候建筑 HVAC 控制",
+    "Cryosphere/IceObservationNetworkDesign": "冰盖观测网络设计",
+    "Hydrology/GroundwaterRemediationDesign": "地下水修复设计",
+    "Paleoclimate/ChronologyAssimilation": "古气候年代同化",
+    "Volcanology/DeformationMechanismInference": "火山形变机制反演",
+    "Wastewater/BSM1AerationControl": "BSM1 曝气与回流控制",
+    "WaterDistribution/DistributionNetworkTopology": "供水管网布尔断层扫描",
+    "WaterDistribution/ResilientPumpScheduling": "供水管网韧性泵调度",
+    "WavePropagation/ActiveFullWaveformInversion": "主动全波形反演",
+    "WindEnergy/WakeAwareFarmCoDesign": "尾流感知风场协同设计",
 }
 
 # One-line Chinese brief and scoring note per task. Written by hand: the English Task.md
@@ -293,9 +317,79 @@ CHINESE_BRIEFS = {
     "Turbulence/RANSCalibration": (
         "标定可迁移的代数通道流涡黏封闭,同时匹配平均速度与雷诺剪应力",
         "真实 DNS 拟合;密封高雷诺数迁移与壁面坐标稳健性分列,无上限"),
+    "AerospaceStructures/CompositeLaminateStacking": (
+        "排列固定组成的对称平衡复合材料铺层,提高多载荷下的屈曲与首层失效裕度",
+        "相对准各向同性基线的储备系数提升;留出板型与材料/载荷退化分列,无上限"),
+    "BuildingControls/BOPTESTSupervisoryControl": (
+        "编写跨气候双区建筑 HVAC 监督控制器,联合控制供热、制冷与新风",
+        "舒适与 IAQ 硬门控后的成本/碳/峰值效用;留出预测、传感器和执行器偏移分列,无上限"),
+    "Cryosphere/IceObservationNetworkDesign": (
+        "在成本约束下选择冰盖观测位置与类型,最大化未来状态估计和预报信息量",
+        "预报误差对观测成本的帕累托超体积;密封灵敏度、噪声与动力学偏移分列,无上限"),
+    "Hydrology/GroundwaterRemediationDesign": (
+        "设计抽水处理井与运行方案,权衡全生命周期成本、污染物去除和受体达标",
+        "成本对残余污染质量的帕累托超体积;受体合规硬门控与密封输运偏移分列,无上限"),
+    "Paleoclimate/ChronologyAssimilation": (
+        "在有限测年预算下校正多条代用记录年代并重建共同古温度场,模型不足时拒答",
+        "年代偏移、CE、RMSE、CRPS 与拒答分列;留出谱形和噪声偏移"),
+    "Volcanology/DeformationMechanismInference": (
+        "主动布设 GNSS/InSAR 观测,识别火山形变源族并反演参数;多源或流变不符时拒答",
+        "源族与参数恢复、空间预测、误发现和拒答分列;留出几何与噪声偏移"),
+    "Wastewater/BSM1AerationControl": (
+        "用状态反馈联合调节活性污泥曝气强度和内回流,兼顾出水水质与能耗",
+        "水质硬门控后的能耗与平滑性提升;暴雨、传感器偏差和执行器退化分列,无上限"),
+    "WaterDistribution/ResilientPumpScheduling": (
+        "根据需求和电价安排 24 小时泵速,满足水箱、压力、爬坡与终端储水约束",
+        "相对恒速基线的电费节省;需求增长与高峰泵故障韧性分列,无上限"),
+    "WavePropagation/ActiveFullWaveformInversion": (
+        "在震源预算内主动选择激发并恢复声学速度异常;空模型和族外机制须拒答",
+        "速度机制恢复、密封波形预测、误发现与拒答分列;留出拓扑、噪声和速度反差"),
+    "WindEnergy/WakeAwareFarmCoDesign": (
+        "联合设计风机平面位置与分风向偏航策略,减弱尾流损失并保持布置可制造",
+        "相对规则零偏航风场的年发电价值提升;留出风况和尾流模型偏移分列,无上限"),
+    "Spectroscopy/MassFragmentationTree": (
+        "在能量/变焦预算下从多级质谱恢复中性丢失碎裂树;无分子离子或共洗脱杂质须拒答",
+        "节点/边 F1(质量容差最优匹配)平均;误发现与拒答分列,全面弃权为零"),
+    "ChemicalProcess/ThermochemicalCycleAudit": (
+        "在复测/交叉验证预算下审计焓闭环网络:一致、单点错误、仪器漂移或归因欠定",
+        "校正增益+判决+诊断融合,被动审计为零;pendant 对取证前归因欠定,盲指名记假发现"),
+    "ProductionSystems/PermutationFlowShop": (
+        "在新种子 Taillard 型实例上排工件序最小化完工时间;背不了题,实例由种子即时生成",
+        "以 NEH 构造为零点的缺口闭合均值;无上限,破冻结见证>1"),
+    "Geophysics/FocalMechanismStressInversion": (
+        "在双节面歧义下反演主应力轴、形状比与逐事件断层面;混合应力机制或无信号须拒答",
+        "轴/形状比/平面指派几何均值;误发现与拒答分列,全面弃权为零"),
+    "SyntheticBiology/OrthogonalDNACodewords": (
+        "在 GC/汉明/全位移交叉二聚/均聚物约束下建更大的正交寡核苷酸词库",
+        "相对冻结贪心见证的规模进度;无上限,验证与构造方法无关"),
+    "Mathematics/ExactIdentityEvidence": (
+        "在购位预算下裁决整数关系断言:精确(附系数行)、巧合、或精度封顶不可判",
+        "判决+系数恢复,被动全拒为零;把真关系认成假计负分,封顶值断言只可拒答"),
+    "Electrochemistry/ChronoamperometryLawID": (
+        "在电位阶跃预算下辨识六条计时电流律,反常扩散或基线漂移须拒答",
+        "类概率+参数+密封外推几何均值;χ² 门与共享线性项变量投影拒答分列"),
+    "MetabolicEngineering/MetabolicStrainDesign": (
+        "在密封酶容量扰动下选敲除与过表达集,最大化产物通量并保生物质门",
+        "以野生型为零点、冻结见证设计为1的缺口闭合;无上限,corner 扰动可超1"),
+    "Metagenomics/MetagenomicMixtureID": (
+        "在测序深度预算下恢复菌株混合与丰度,文库外新物种仅现于保守标记须拒答",
+        "集合F1+丰度对数误差;保守标记超额 4σ 拒答,全面弃权为零"),
+    "Electrophysiology/HodgkinHuxleyCurrentID": (
+        "自选电压钳协议恢复八参数通道模型,A 型或整流额外电流须拒答",
+        "参数恢复+密封协议预测几何均值;失配门拒答,全面弃权为零"),
+    "Algorithm/ScalingLawIdentification": (
+        "在计时预算下辨识黑盒程序渐近复杂度类,双分支或抖动须拒答",
+        "类概率+尺度+密封外推几何均值;分裂拟合与噪声地板拒答分列"),
+    "WaterDistribution/DistributionNetworkTopology": (
+        "在路径探针预算下定位管网破损管段,孪生服务廊道不可辨识须拒答",
+        "破损集 F1;结构别名拒答,翻转噪声靠多数投票,全面弃权为零"),
+    "Mineralogy/MineralMixtureXRD": (
+        "在慢扫描窗口预算下定量矿物混合,非晶鼓包不拒答、未知尖锐相须拒答",
+        "集合F1+分数对数误差;残差局部对比度拒答,全面弃权为零"),
+    "Mathematics/EllipticCurveRecovery": (
+        "在素数点数预算下恢复 y²=x³+ax+b 的整数系数,奇异或亏格2须拒答",
+        "系数误差指数分;剩余类枚举+CRT 提升歧义即拒答,全面弃权为零"),
 }
-
-
 FORM_TITLES = OrderedDict([("optimization", "Optimization"), ("discovery", "Discovery")])
 ANALOGUE_TITLES = OrderedDict([
     ("engineering_design", "工程设计(engineering_design)"),

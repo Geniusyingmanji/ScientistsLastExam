@@ -29,6 +29,11 @@ docs/
 !docs/
 docs/*
 !docs/edgebench_science_experiment_addendum.md
+
+# Second-hardening review record referenced by the four known_best version notes.
+!docs/reviews/
+docs/reviews/*
+!docs/reviews/new_tasks_difficulty_v2.md
 .venv-sle/
 
 # per-run locks held by scripts/run_cohort.sh

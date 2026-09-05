@@ -1,0 +1,5 @@
+1) Only edit solution.py. Keep make_hvac_controller(problem).
+2) Return a callable step(observation) producing two finite bounded values for heating, cooling and ventilation.
+3) Do not command material heating and cooling simultaneously in one zone.
+4) Use public forecasts and current observations only. Deterministic numpy/scipy/stdlib CPU; no network/processes.
+5) Do not read verification/ or frontier_eval/.

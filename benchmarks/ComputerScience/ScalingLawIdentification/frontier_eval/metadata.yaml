@@ -1,0 +1,13 @@
+domain: Algorithm
+task: ScalingLawIdentification
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: analytical
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 25
+science_metric: asymptotic complexity class identification with branch and jitter refusal
+reference_baseline: one timing at the smallest size followed by uniform class probabilities
+reference_sota: truth-blind log-log regression with residual bimodality and scatter tests; runnable witness
+citation: Cormen, Leiserson, Rivest & Stein, Introduction to Algorithms, ISBN 9780262033848

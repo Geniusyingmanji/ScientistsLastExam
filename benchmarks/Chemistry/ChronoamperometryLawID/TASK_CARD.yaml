@@ -1,0 +1,75 @@
+schema_version: 2
+scientific_question: Can a budgeted set of potential steps identify which published current-law family generated the transients, while refusing fractional transport and baseline drift that no family can express?
+artifact: Six-family probabilities, active bounded parameters, optional abstention and a confidence scalar.
+oracle:
+  model: deterministic seeded parameters in the six public closed forms, potential response through the public amplitude factor, Gaussian noise scaling with each step's peak current, plus t^-1/3 anomalous worlds and family-plus-linear-drift worlds
+  feasibility: probabilities over exactly the six families summing to one, bounded active parameter slots, charged steps within a six-unit budget
+  deterministic: true
+  external_tooling: none beyond NumPy/SciPy
+difficulty_ladder:
+  default_level: 1
+  levels:
+    1: 1.5 percent peak-current noise, unit drift strength
+    2: 2.8 percent noise, 1.5x drift
+    3: 4.5 percent noise, 2.2x drift
+normalization:
+  baseline: one step, uniform family probabilities and mid-range parameters
+  reference: three steps, per-family bounded least squares with Akaike-style penalty, chi-square gate and variable-projection drift test
+  score: geometric mean of family probability, active-parameter recovery and sealed extrapolation, normalized above always abstaining
+citations:
+- id: isbn:9780471057528
+  title: "Electrochemical Methods: Fundamentals and Applications"
+invariants:
+- every family current scales with the public amplitude factor, so a shared linear term across potentials is unmodellable drift
+- anomalous worlds decay as t^-1/3 and fit no family within the chi-square gate
+- a full abstention scores exactly zero after normalization
+- inactive parameter slots are unconstrained; active slots respect public bounds
+known_shortcuts: Uniform probabilities with mid-range parameters score 0.000; the reference reaches 0.963/0.882 development/robustness with zero false discoveries. Removing the model-selection penalty drops the reference to 0.876. Formal clean Linux calibration and independent review remain pending.
+licensing:
+  task_package: repository_license_not_declared
+  external_assets: none
+  note: All runtime worlds are generated from original repository code; cited publications are not redistributed.
+contamination:
+  status: cannot_be_ruled_out
+  rationale: The families and closed forms are public textbook material; the seeded worlds and refusal regimes are procedural and builder-model independence is not established.
+review:
+  domain: pending_external_electrochemistry
+  evaluator_security: targeted_local_regressions_added_clean_linux_sandbox_replay_pending
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic transient worlds with development and held-out families, parameters and failure regimes.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Transient-family identification is textbook methodology; the fractional and drift refusal worlds with sealed extrapolation are original to this package.
+lineage:
+  status: complete
+  builder_model_ids:
+  - glm-5.3
+  builder_scaffolds:
+  - repository-native-chemistry-task-pattern
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: 2026-09-05 local build caught drift worlds whose family field was not a lawful family (every transient raised), an unbounded-padding validation that rejected legal two-parameter answers, a noisy tail-slope refusal test replaced by a chi-square gate, a residual-correlation drift test replaced by variable projection of the shared linear term, and a softmax temperature that flattened family probabilities to uniform; each was fixed and pinned by tests.
+  shortcut_discoverer: initial_internal_red_team
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: initial_internal
+  author_domain: AI-assisted benchmark engineering
+  reviewer_domain: pending_external_electrochemistry
+  expert_hours: null
+  red_team_rounds: 2
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: standalone_public_model_references_pending
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+difficulty_assessment:
+  status: unverified_candidate
+  requirement: standard-method and low-dimensional shortcut sweeps, capability ablations and clean frontier-model calibration before certification
+  remaining_risk: The reference nearly saturates development; the headroom concentrates in held-out robustness and faster fits.

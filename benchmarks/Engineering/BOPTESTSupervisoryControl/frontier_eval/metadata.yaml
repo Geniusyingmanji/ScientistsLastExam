@@ -1,0 +1,16 @@
+domain: BuildingControls
+task: BOPTESTSupervisoryControl
+scientific_role: optimization
+difficulty: hard
+tier: T2
+oracle_type: physical_sim
+score_mode: uncapped
+gpu_required: false
+eval_time_seconds: 45
+science_metric: feasible cross-climate HVAC cost, carbon, peak, comfort and IAQ with held-out forecast
+  and plant shifts
+reference_baseline: Load-compensated, occupancy-aware conservative thermostat with demand ventilation;
+  feasible on every development and heldout world.
+reference_sota: Forecast boundary tracking with online thermal disturbance estimation and one-step CO2
+  control. This is a runnable witness, not a published SoTA claim.
+citation: Blum et al., J. Building Performance Simulation 14(5), DOI 10.1080/19401493.2021.1986574

@@ -117,6 +117,11 @@ class InventoryTests(unittest.TestCase):
             "Algorithm/GraphFromDistances",
             "Mathematics/SequenceLawRecovery",
             "QuantumDynamics/HamiltonianLearning",
+            "WavePropagation/ActiveFullWaveformInversion",
+            "Paleoclimate/ChronologyAssimilation",
+            "Volcanology/DeformationMechanismInference",
+            "Hydrology/GroundwaterRemediationDesign",
+            "Cryosphere/IceObservationNetworkDesign",
         })
 
     def test_a_toolkit_used_only_by_a_reference_does_not_make_the_oracle_community(self):

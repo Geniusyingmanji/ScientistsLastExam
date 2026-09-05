@@ -1,0 +1,15 @@
+domain: Wastewater
+task: BSM1AerationControl
+scientific_role: optimization
+difficulty: hard
+tier: T2
+oracle_type: physical_sim
+score_mode: uncapped
+gpu_required: false
+eval_time_seconds: 25
+science_metric: feasible effluent quality versus aeration and recycle energy with held-out storm, sensor
+  and actuator transfer
+reference_baseline: dissolved-oxygen PI control with fixed internal recycle
+reference_sota: Ammonia/oxygen feedback with observed compressor derating compensation and electricity-price
+  moderation. Runnable witness, not a published SoTA claim.
+citation: IWA Benchmark Simulation Model No. 1 general description

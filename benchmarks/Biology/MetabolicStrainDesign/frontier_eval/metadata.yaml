@@ -1,0 +1,13 @@
+domain: MetabolicEngineering
+task: MetabolicStrainDesign
+scientific_role: optimization
+difficulty: hard
+tier: T2
+oracle_type: analytical
+score_mode: uncapped
+gpu_required: false
+eval_time_seconds: 30
+science_metric: robust product flux under sealed capacity perturbations, uncapped against a witness design
+reference_baseline: the wild-type strain with no edits
+reference_sota: greedy knockout-and-overexpression search over the LP; runnable witness, not a published SoTA claim
+citation: Orth, Thiele & Palsson 2010 Nat Biotechnol doi:10.1038/nbt.1614

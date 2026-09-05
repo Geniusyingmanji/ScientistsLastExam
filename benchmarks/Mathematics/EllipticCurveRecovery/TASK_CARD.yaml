@@ -1,0 +1,89 @@
+schema_version: 2
+scientific_question: Can a budgeted choice of primes recover an elliptic curve's
+  integer coefficients from exact point counts, while refusing worlds whose
+  counts no elliptic pair can reproduce?
+artifact: A bounded integer coefficient pair, optional abstention and a confidence
+  scalar.
+oracle:
+  model: seeded nonsingular curves with |a|,|b| <= 1200, exact Legendre-sum point
+    counts over a published prime list with tiered costs (<= 100 costs one),
+    singular cubics (a = -3t^2, b = 2t^3) and genus-two quartics as refusal worlds
+  feasibility: primes from the published list, charged by tier within an
+    eight-unit budget, bounded integer coefficients
+  deterministic: true
+  external_tooling: none (pure integer arithmetic)
+difficulty_ladder:
+  default_level: 1
+  levels:
+    1: the shipped coefficient window and prime tiers
+normalization:
+  baseline: one small-prime query and a fixed (0, 1) guess
+  reference: budgeted ascending small primes, per-prime residue enumeration,
+    incremental CRT with wide-window pruning, discriminant filtering
+  score: exp of normalized total absolute coefficient error, normalized above
+    always abstaining
+citations:
+- id: isbn:9780387094939
+  title: The Arithmetic of Elliptic Curves
+invariants:
+- point counts are exact integer computations, reproducible by direct enumeration
+- the CRT modulus of six small primes exceeds the coefficient window twice over
+- singular lifts are filtered before claiming
+- a full abstention scores exactly zero after normalization
+known_shortcuts: A fixed (0, 1) guess scores 0.000; the six-prime reference reaches 1.000/1.000 with zero false discoveries, and the four-prime ablation collapses to 0.000 through twin-curve ambiguity. Formal clean Linux calibration and independent review remain pending.
+licensing:
+  task_package: repository_license_not_declared
+  external_assets: none
+  note: All runtime worlds are generated from original repository code; cited
+    publications are not redistributed.
+contamination:
+  status: cannot_be_contaminated
+  rationale: Curves, singular pairs and quartics are seeded per world; no published
+    table transfers.
+review:
+  domain: pending_external_mathematics
+  evaluator_security: targeted_local_regressions_added_clean_linux_sandbox_replay_pending
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic arithmetic worlds with
+    development and held-out curves and failure regimes.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Curve reconstruction from point counts touches active number theory;
+    the budgeted prime selection and family-refusal worlds are original to this
+    package.
+lineage:
+  status: complete
+  builder_model_ids:
+  - glm-5.3
+  builder_scaffolds:
+  - repository-native-mathematics-task-pattern
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: 2026-09-05 local build caught a cartesian-product CRT enumeration that exploded with five primes (rebuilt incrementally with window pruning), four small primes leaving twin-curve ambiguity on two worlds, and a half-written compatibility shim that never constrained residues; each was fixed and pinned by tests.
+  shortcut_discoverer: initial_internal_red_team
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: initial_internal
+  author_domain: AI-assisted benchmark engineering
+  reviewer_domain: pending_external_mathematics
+  expert_hours: null
+  red_team_rounds: 2
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: counts_reproducible_by_direct_enumeration
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+difficulty_assessment:
+  status: unverified_candidate
+  requirement: standard-method and low-dimensional shortcut sweeps, capability ablations
+    and clean frontier-model calibration before certification
+  remaining_risk: The reference saturates on the frozen worlds; difficulty rests on
+    whether models find the residue-then-CRT strategy unprompted, so the frontier
+    draw decides admission.

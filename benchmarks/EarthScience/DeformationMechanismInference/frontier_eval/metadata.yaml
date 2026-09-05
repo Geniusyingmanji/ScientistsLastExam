@@ -1,0 +1,16 @@
+domain: Volcanology
+task: DeformationMechanismInference
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: analytical
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 35
+science_metric: charged GNSS/InSAR source-family and parameter recovery with sealed spatial prediction
+  and calibrated model-inadequacy refusal
+reference_baseline: one coarse GNSS grid followed by abstention on every world
+reference_sota: Variable projection of shared frame translation and vertical-plane errors inside bounded
+  source-family fitting. Runnable witness, not a published SoTA claim.
+citation: Dzurisin 2003, Reviews of Geophysics, doi:10.1029/2001RG000107; Segall 2010, Earthquake and
+  Volcano Deformation, ISBN 9780691133027
