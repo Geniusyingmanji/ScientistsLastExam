@@ -10,6 +10,12 @@ policy:
   statuses: [certified, candidate, quarantined]
 
 tasks:
+  Ecology/OccupancyDetectionDesign:
+    status: candidate
+    reason: Active repeat-survey allocation and latent occupancy inference under imperfect detection, with explicit refusal for nonlinear habitat and spatially structured worlds; retained as a candidate pending server-held surveys, real field-data replication and independent ecology review.
+    citation_ids:
+      - doi:10.1890/0012-9658(2002)083[2248:EORWPD]2.0.CO;2
+      - doi:10.1890/0012-9658(2003)084[0777:EAFRPA]2.0.CO;2
   Physics/CriticalPhenomenaLab:
     status: candidate
     reason: Active finite-size-scaling discovery over continuous, first-order, crossover and BKT-like worlds; retained as a candidate pending external statistical-physics review and independent Monte Carlo replication.
