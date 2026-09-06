@@ -43,6 +43,7 @@ CHINESE_NAMES = {
     "Catalysis/CatalystDeactivationLab": "催化剂失活实验室",
     "CausalDiscovery/InterventionalSCM": "干预式结构因果模型",
     "CausalDiscovery/SurvivorshipConfoundedDesign": "幸存者偏差下的效应估计",
+    "ChemicalKinetics/OpenVocabularyReactionNetworkDiscovery": "开放词汇反应网络发现",
     "ChemicalKinetics/ReactionMechanismFitting": "反应机理辨识",
     "ChemicalProcess/DistillationColumnDesign": "精馏塔设计",
     "Chemistry/LennardJonesCluster": "Lennard-Jones 团簇",
@@ -59,6 +60,7 @@ CHINESE_NAMES = {
     "HeatTransfer/ConvectionDiffusionOpt": "对流扩散辨识与加热器设计",
     "MaterialsScience/AlloyHardnessOptimization": "合金硬度实验设计",
     "MaterialsScience/PhaseDiagramDiscovery": "相图发现",
+    "MaterialsScience/ProcessMicrostructurePropertyDesign": "过程-微结构-性质协同设计",
     "MaterialsScience/QuinaryConvexHull": "五元凸包稳定相",
     "Mathematics/BlackBoxGroupIdentification": "黑盒群同构辨识",
     "Mathematics/CapSet": "Cap Set 构造",
@@ -100,6 +102,7 @@ CHINESE_NAMES = {
     "QuantumErrorCorrection/QuantumErrorDecoder": "表面码解码器",
     "RNAEngineering/RNAEnsembleDesign": "RNA 系综设计",
     "RNAEngineering/RNAInverseDesign": "RNA 约束反折叠",
+    "ScientificComputing/AdaptiveConservativePDEMethod": "自适应守恒 PDE 方法设计",
     "Semiconductor/MOSFETDoping": "MOSFET 掺杂剖面",
     "Sensors/QuartzCrystalMicrobalanceLab": "石英微天平原始信号反演",
     "SignalProcessing/SparseRecovery": "压缩感知稀疏恢复",
@@ -147,6 +150,9 @@ CHINESE_BRIEFS = {
     "CausalDiscovery/SurvivorshipConfoundedDesign": (
         "每一行数据都已被结果相关的筛选选中,在幸存者表里估计真实处理效应",
         "处理效应恢复;混杂开启的伪关联须识别,无 T→Y 边时不得宣称效应"),
+    "ChemicalKinetics/OpenVocabularyReactionNetworkDiscovery": (
+        "从一个种子分子主动构造并探测未列出的分子图和基元反应边,同时识别空网络与模型不足",
+        "规范物种/反应恢复、总假发现率、校准拒答与尝试覆盖率分列;当前有限解析语法可穷举"),
     "ChemicalKinetics/ReactionMechanismFitting": (
         "自选温度、初始混合与采样时刻,从公开一阶反应库里认出稀疏反应网络与其温度依赖",
         "机制恢复 + 外推;库外世界须拒答"),
@@ -195,6 +201,9 @@ CHINESE_BRIEFS = {
     "MaterialsScience/PhaseDiagramDiscovery": (
         "在合成预算下测定二元等温相图:哪些平衡相存在、各占哪段成分,或该体系根本达不到平衡",
         "相集精确门控 + 杠杆定律边界精度;两相区叠加、杂质峰、动力学冻结须区分,冻结体系须拒答"),
+    "MaterialsScience/ProcessMicrostructurePropertyDesign": (
+        "联合设计共混、退火、冷却与拉伸工艺,经冻结相场和均匀化模型形成性质 Pareto 档案",
+        "三目标超体积;密封材料/工艺偏移决定能否进入 lifetime-credit ledger,固定 wave 仍有界但不在 reference=1 截断"),
     "MaterialsScience/QuinaryConvexHull": (
         "五元体系里给出凸包上真正稳定的非一元相;生成焓小于零不等于新稳定相",
         "精确非一元凸包顶点;玻璃态须拒答"),
@@ -346,6 +355,9 @@ CHINESE_BRIEFS = {
     "RNAEngineering/RNAInverseDesign": (
         "在长度、字母表、GC 与基序约束下设计目标系综概率高的 RNA 序列",
         "目标系综概率 + MFE 迁移 + 代理误升迁;配对相容只是代理,无上限"),
+    "ScientificComputing/AdaptiveConservativePDEMethod": (
+        "为多种光滑、激波与稳定性工况设计自适应守恒通量和时间推进方法",
+        "误差、守恒、激波、稳定性与计算量综合分;公开参考为 1,更强合法方法可继续超过"),
     "Semiconductor/MOSFETDoping": (
         "设计可迁移的短沟道硅 nMOS 晕环掺杂剖面帕累托档案",
         "驱动电流对漏电的帕累托超体积;密封留出迁移与最差偏移稳健性分列,无上限"),
@@ -392,7 +404,7 @@ CHINESE_BRIEFS = {
 FORM_TITLES = OrderedDict([("optimization", "Optimization"), ("discovery", "Discovery")])
 ANALOGUE_TITLES = OrderedDict([
     ("engineering_design", "工程设计(engineering_design)"),
-    ("combinatorial", "开放组合纪录(combinatorial,无上限)"),
+    ("combinatorial", "开放组合纪录(combinatorial,reference 不截断)"),
     ("molecular_design", "分子与大分子设计(molecular_design)"),
 ])
 KIND_TITLES = OrderedDict([
@@ -484,7 +496,10 @@ def render(rows: list[dict]) -> str:
     lines.append("| 学科 | %d(%s) |" % (
         len(disciplines), ",".join("%s %d" % (k, v) for k, v in sorted(disciplines.items()))))
     lines.append("")
-    lines.append("认证描述的是证据质量,不是难度。标 on-ramp 的任务首个前沿模型提案已够到参考解,不用于配对 Δ 测量。")
+    lines.append(
+        "认证描述的是证据质量,不是难度。`uncapped` 表示分数不在 reference=1 截断,"
+        "不保证固定 wave 数学无界；on-ramp 已被确定性搜索或模型证据判定易饱和,不用于 hard-task 配对。"
+    )
     lines.append("")
     for form, title in FORM_TITLES.items():
         subset = [r for r in rows if r["form"] == form]

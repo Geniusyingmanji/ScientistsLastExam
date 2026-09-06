@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "artifact": "manufacturing-resolution canonical archive of blend, anneal, cooling and draw schedules",
+  "process_fields": ["blend_fraction_b", "anneal_temperature", "anneal_time", "cooling_rate", "draw_ratio"],
+  "bounds": {
+    "blend_fraction_b": [0.15, 0.85],
+    "anneal_temperature": [0.45, 0.95],
+    "anneal_time": [0.5, 12.0],
+    "cooling_rate": [0.20, 4.0],
+    "draw_ratio": [1.0, 4.0]
+  },
+  "manufacturing_resolutions": {
+    "blend_fraction_b": 0.005,
+    "anneal_temperature": 0.005,
+    "anneal_time": 0.05,
+    "cooling_rate": 0.01,
+    "draw_ratio": 0.01
+  },
+  "archive_size_bounds": [4, 20],
+  "grid_cells": 48,
+  "hypervolume_reference_point": [0.0, 0.0, 0.0],
+  "objective_normalization": {
+    "specific_modulus": {"offset": 1.2, "scale": 4.4},
+    "barrier_index": {"offset": 0.70, "scale": 5.5},
+    "process_energy": {"maximum": 7.5},
+    "objective_clip": [0.0, 1.0],
+    "score_floor": 0.0,
+    "anchor_headroom_tolerance": 1e-8
+  },
+  "model_parameters": {
+    "phase_field": {
+      "perturbation_mode_count": 5,
+      "perturbation_amplitude": 0.018,
+      "spectral_mode_divisor": 3.0,
+      "cooling_duration_coefficient": 0.65,
+      "mobility_activation": 1.15,
+      "mobility_temperature_offset": 0.22,
+      "high_wave_coarsening_coefficient": 0.012,
+      "exponent_clip": [-24.0, 7.0],
+      "composition_capacity": 0.88,
+      "contrast_response": 0.07,
+      "growth_denominator_floor": 1e-12,
+      "field_clip": [0.0001, 0.9999],
+      "mean_restore_iterations": 4
+    },
+    "properties": {
+      "crystallinity_equilibrium_temperature_coefficient": 5.0,
+      "crystallinity_equilibrium_temperature_reference": 0.70,
+      "crystallinity_equilibrium_cooling_coefficient": 0.30,
+      "crystallization_rate_constant": 700.0,
+      "crystallization_activation_energy": 7.0,
+      "crystallization_temperature_offset": 0.22,
+      "crystallization_effective_time_cooling_coefficient": 0.65,
+      "modulus_voigt_base": 0.45,
+      "modulus_orientation_weight": 0.40,
+      "modulus_reuss_base": 0.55,
+      "crystallinity_base": 0.80,
+      "crystallinity_gain": 0.28,
+      "draw_modulus_gain": 0.35,
+      "minimum_interface_factor": 0.60,
+      "interface_factor_base": 1.0,
+      "density_base": 1.0,
+      "density_blend_coefficient": 0.18,
+      "permeability_parallel_base": 0.25,
+      "permeability_orientation_weight": 0.55,
+      "permeability_series_base": 0.75,
+      "draw_permeability_penalty": 0.20,
+      "tortuosity_base": 1.0,
+      "tortuosity_contrast_coefficient": 2.2,
+      "tortuosity_interface_coefficient": 3.0,
+      "permeability_floor": 1e-9,
+      "energy_time_base": 0.12,
+      "energy_temperature_coefficient": 0.72,
+      "energy_temperature_reference": 0.35,
+      "energy_draw_coefficient": 0.32,
+      "energy_draw_exponent": 1.5,
+      "energy_cooling_coefficient": 0.24,
+      "energy_saving_base": 1.0
+    }
+  },
+  "baseline_policy": {
+    "blend_unit_fractions": [0.0, 0.3333333333333333, 0.6666666666666666, 1.0],
+    "anneal_temperature_bound": "upper",
+    "anneal_time_bound": "lower",
+    "cooling_rate_bound": "upper",
+    "draw_ratio_bound": "lower"
+  },
+  "reference_policy": {
+    "path": "verification/reference_process_archive.py",
+    "sha256": "42059da547c4b9178e60d6e63c1437f926cbc4ee75d8baf530c59c301514d808"
+  },
+  "reference_search": {
+    "pool_size": 1024,
+    "archive_size": 20,
+    "coordinate_refinement_passes": 2,
+    "coordinate_refinement_points_per_axis": 11,
+    "latin_hypercube_multipliers": [1, 73, 127, 181, 239],
+    "latin_hypercube_offsets": [0, 19, 43, 71, 101],
+    "proxy_parameter_names": [
+      "crystallinity_equilibrium_temperature_coefficient",
+      "crystallinity_equilibrium_temperature_reference",
+      "crystallinity_equilibrium_cooling_coefficient",
+      "crystallization_rate_constant",
+      "crystallization_activation_energy",
+      "crystallization_temperature_offset",
+      "modulus_voigt_base",
+      "modulus_orientation_weight",
+      "modulus_reuss_base",
+      "crystallinity_base",
+      "crystallinity_gain",
+      "draw_modulus_gain",
+      "density_base",
+      "density_blend_coefficient",
+      "permeability_parallel_base",
+      "permeability_orientation_weight",
+      "permeability_series_base",
+      "draw_permeability_penalty",
+      "energy_time_base",
+      "energy_temperature_coefficient",
+      "energy_temperature_reference",
+      "energy_draw_coefficient",
+      "energy_draw_exponent",
+      "energy_cooling_coefficient"
+    ]
+  },
+  "frontier_promotion": {
+    "minimum_heldout_feasibility_rate": 1.0,
+    "minimum_transfer_ratio": 0.5,
+    "comparison_tolerance": 1e-12
+  },
+  "worlds": [
+    {"split": "development", "seed": 1701, "modulus_a": 2.2, "modulus_b": 5.4, "permeability_a": 0.62, "permeability_b": 1.55, "critical_temperature": 0.79, "mobility_scale": 1.00, "gradient_penalty": 0.050, "coarsening_scale": 1.00, "interface_penalty": 0.18},
+    {"split": "development", "seed": 1702, "modulus_a": 2.6, "modulus_b": 4.9, "permeability_a": 0.55, "permeability_b": 1.42, "critical_temperature": 0.75, "mobility_scale": 0.82, "gradient_penalty": 0.043, "coarsening_scale": 1.15, "interface_penalty": 0.22},
+    {"split": "development", "seed": 1703, "modulus_a": 1.9, "modulus_b": 5.8, "permeability_a": 0.68, "permeability_b": 1.66, "critical_temperature": 0.83, "mobility_scale": 1.18, "gradient_penalty": 0.058, "coarsening_scale": 0.88, "interface_penalty": 0.16},
+    {"split": "development", "seed": 1704, "modulus_a": 2.4, "modulus_b": 5.1, "permeability_a": 0.58, "permeability_b": 1.48, "critical_temperature": 0.77, "mobility_scale": 0.94, "gradient_penalty": 0.047, "coarsening_scale": 1.08, "interface_penalty": 0.20},
+    {"split": "heldout", "seed": 2901, "modulus_a": 2.0, "modulus_b": 6.0, "permeability_a": 0.72, "permeability_b": 1.72, "critical_temperature": 0.86, "mobility_scale": 0.76, "gradient_penalty": 0.062, "coarsening_scale": 1.22, "interface_penalty": 0.24},
+    {"split": "heldout", "seed": 2902, "modulus_a": 2.8, "modulus_b": 4.7, "permeability_a": 0.50, "permeability_b": 1.36, "critical_temperature": 0.72, "mobility_scale": 1.24, "gradient_penalty": 0.040, "coarsening_scale": 0.80, "interface_penalty": 0.14}
+  ],
+  "shift_specs": [
+    {"mobility_scale_factor": 0.72, "critical_temperature_delta": -0.045},
+    {"gradient_penalty_factor": 1.35, "interface_penalty_factor": 1.30},
+    {"modulus_b_factor": 0.90, "permeability_b_factor": 1.28}
+  ],
+  "objective": "maximize evaluator-derived mean raw three-objective hypervolume",
+  "claim_boundary": "Credit is benchmark-frontier credit under a frozen reduced model. Difficulty is uncalibrated and no real-material claim follows."
+}

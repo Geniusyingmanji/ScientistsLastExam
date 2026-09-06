@@ -1,0 +1,15 @@
+domain: ScientificComputing
+task: AdaptiveConservativePDEMethod
+scientific_role: optimization
+difficulty: on_ramp
+tier: candidate
+oracle_type: analytical_numerical_pde
+score_mode: uncapped
+gpu_required: false
+eval_time_seconds: 10
+science_metric: frozen scalar-law accuracy--stability--work tradeoff under a hard work budget and a discrete-conservation integrity gate
+reference_baseline: legal 32-cell first-order Rusanov/Euler method normalized to exactly zero
+reference_sota: executable 192-cell adaptive WENO3/Superbee/Godunov/SSPRK3 witness normalized to one; not globally optimal
+citation: "van Leer 1979, DOI 10.1016/0021-9991(79)90145-1; Jiang and Shu 1996, DOI 10.1006/jcph.1996.0130; Shu and Osher 1988, DOI 10.1016/0021-9991(88)90177-5"
+task_family_id: ScientificComputing/AdaptiveConservativePDEMethod
+wave_id: scalar-law-panel-v1

@@ -764,3 +764,42 @@ tasks:
       - doi:10.1103/PhysRevLett.93.165501
       - doi:10.1016/0375-9601(74)90847-0
       - doi:10.1063/1.1723844
+
+  ScientificComputing/AdaptiveConservativePDEMethod:
+    status: candidate
+    reason: >-
+      deterministic seven-world one-dimensional scalar conservation-law method-design prototype
+      with exact discrete flux-balance accounting, smooth/shock/stability/work axes, an executable
+      weak baseline and reference, held-out reporting, CandidateProxy isolation and a hash-bound
+      immutable frontier wave; finite public 432-method and 48-point neighborhood searches expose
+      the current search cell as an on-ramp that must not be paired as hard. No trusted HY3
+      calibration is yet attached. A hard successor requires a richer local
+      method-policy language, heterogeneous frozen equations and resource envelopes, independent
+      numerical-PDE review, convergence and entropy analysis, and application validation
+    citation_ids:
+      - doi:10.1016/0021-9991(79)90145-1
+      - doi:10.1016/0021-9991(88)90177-5
+      - doi:10.1006/jcph.1996.0130
+  ChemicalKinetics/OpenVocabularyReactionNetworkDiscovery:
+    status: candidate
+    reason: >-
+      deterministic open-vocabulary analytic reaction-network prototype with seed-reachable
+      species expansion, atom-map-invariant elementary edge checks, charged probes, candidate
+      session reset, separate recovery/FDR/refusal/attempt axes and canonical discovery records;
+      its small public graph grammar is exhaustible and synthetic, so it is not yet hard, scalable
+      or real-chemistry discovery evidence pending paired HY3 calibration, server-held chemistry,
+      higher-fidelity confirmation and independent kinetics review
+    citation_ids:
+      - doi:10.1021/acs.jctc.2c00193
+  MaterialsScience/ProcessMicrostructurePropertyDesign:
+    status: candidate
+    reason: >-
+      deterministic reduced-order process-to-microstructure-to-property Pareto-design prototype
+      with quantized manufacturing identity, public-model and sealed-shift reporting, an immutable
+      optimization wave, a held-out/shifted frontier-promotion gate and executable anchors; the first draft admitted a dominating corner
+      policy and was reworked to create genuine constituent trade-offs, but hard/T2 and scientific
+      materiality remain unverified pending paired HY3 calibration, independent Pareto
+      recomputation, higher-fidelity phase-field/homogenization replication and external materials
+      and process review
+    citation_ids:
+      - doi:10.1146/annurev.matsci.32.112001.132041

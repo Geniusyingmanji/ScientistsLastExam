@@ -1,0 +1,6 @@
+1) Only edit solution.py. Keep discover_reaction_network(problem, probe).
+2) There is no candidate_species or candidate_reactions list: construct connected valence-valid species graphs and directed elementary edges.
+3) A species has exact fields atoms and bonds; a reaction has reactant, product and activation_energy. Canonical isomorphic duplicates fail closed.
+4) Respect atom_inventory, allowed_bond_orders, element_valence_bounds, elementary_edge_rule, probe_budget, max_claimed_species and max_claimed_reactions.
+5) Return a Boolean abstain and finite confidence in [0,1]. Refuse null or model-inadequate worlds; blanket refusal scores exactly zero.
+6) sle.contract_lint is free. Deterministic CPU, NumPy/SciPy/stdlib only, no network/process creation. Do not read verification/ or frontier_eval/.

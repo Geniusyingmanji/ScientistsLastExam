@@ -1,0 +1,24 @@
+schema_version: 1
+task_family_id: MaterialsScience/ProcessMicrostructurePropertyDesign
+wave_id: reduced-process-property-pareto-v1
+predecessor_wave_sha256: null
+cells:
+  - id: process-property-pareto-hypervolume
+    kind: optimization
+    definition_sha256: "eba964fb654b2ebdcd4e3f0eae7fd602fcedb7f2a43da460e079994e20f195c8"
+    weight: 1
+    objective: maximize
+    reference_value: 0.05589055199212832
+    credit_scale: 0.01
+    minimum_delta: 0.0001
+    semantic_contract:
+      canonicalizer_id: manufacturing-resolution-process-archive-v1
+      canonicalizer_path: frontier_eval/contracts/process_canonicalizer_v1.py
+      canonicalizer_sha256: "a3429d63f9a4eda48e37cddbd38bf78ccd81cc23e13d3862e53ec82983a42812"
+      evidence_predicate_id: reduced-process-hypervolume-evidence-v1
+      evidence_predicate_path: frontier_eval/contracts/evidence_predicate_v1.py
+      evidence_predicate_sha256: "0ce784e247c5043d06a170b848f286072525d09c19ce1f7c5ac3effd0bb4ac39"
+      evaluation_panel_path: frontier_eval/contracts/evaluation_panel_v1.json
+      evaluation_panel_sha256: "01a732b128e995b6704d7fc61ef6ad9adc0e540fb924c39313e8173441bd0b53"
+      oracle_path: verification/evaluator.py
+      oracle_sha256: "1dc0bcf5c20d794d6528ed42b2e69df9c2d4f8a51aa1509129f3685f645b9634"

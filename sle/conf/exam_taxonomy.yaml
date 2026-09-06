@@ -18,6 +18,7 @@ out_of_scope:
     reason: closed exam items; SLE items are programs plus a frozen executable oracle
 
 optimization_analogue:
+  scientific_method: scientific algorithm or numerical-method design under a frozen validation panel
   engineering_design: engineering design under a frozen simulator (same form as Frontier-Eng; no task is shared with it)
   combinatorial: open-record construction with an executable mathematical verifier
   molecular_design: molecular or macromolecular design under a frozen scientific oracle
@@ -34,6 +35,9 @@ discovery_kind:
 
 tasks:
   Physics/CriticalPhenomenaLab: {form: discovery, kind: parameter_inversion, note: finite_size_scaling_not_microscopic_law}
+  MaterialsScience/ProcessMicrostructurePropertyDesign: {form: optimization, analogue: engineering_design}
+  ScientificComputing/AdaptiveConservativePDEMethod: {form: optimization, analogue: scientific_method, note: on_ramp_do_not_pair}
+  ChemicalKinetics/OpenVocabularyReactionNetworkDiscovery: {form: discovery, kind: structure, note: finite_analytic_grammar_candidate_not_real_reaction_discovery}
   # --- optimization / frontier-eng ------------------------------------------
   Thermodynamics/HeatExchangerDesign: {form: optimization, analogue: engineering_design}
   StructuralEngineering/TrussWeightMinimization: {form: optimization, analogue: engineering_design}

@@ -1,0 +1,15 @@
+domain: ChemicalKinetics
+task: OpenVocabularyReactionNetworkDiscovery
+scientific_role: discovery
+difficulty: uncalibrated_candidate
+tier: candidate
+oracle_type: analytical
+score_mode: uncapped
+gpu_required: false
+eval_time_seconds: 5
+science_metric: canonical open-vocabulary species-and-edge recovery with false-discovery control, calibrated refusal, attempted discovery and sealed transfer
+reference_baseline: fixed legal confidently wrong edge normalized to exactly zero; no-probe refusal is an independent zero-floor control
+reference_sota: independent active-frontier witness prioritizing novel products, a qualitative bond-strength barrier surrogate and public grammar branching with at most 24 charged probes; complete recovery may exceed one
+citation: "Unsleber and Reiher, SCINE Chemoton 2.0, DOI 10.1021/acs.jctc.2c00193"
+task_family_id: ChemicalKinetics/OpenVocabularyReactionNetworkDiscovery
+wave_id: open-graph-edge-discovery-v1
