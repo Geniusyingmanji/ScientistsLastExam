@@ -17,19 +17,19 @@ must not be compared as if their score differences were model improvements.
 ## 3. Capability comparisons and ablations
 
 Run `python scripts/diagnose_pr9_earth.py --output tmp/hardening/diagnostics.json --sweeps`.
-Historical public methods are replayed on the current oracle where available; these comparisons
-are **not** isolated causal ablations. HVAC additionally removes occupancy forecasting, and the
-wastewater constant controller removes all state feedback. A complete per-capability ladder,
-including measured nonzero drops, still requires clean Linux execution before admission.
+On the current dirty macOS tree, the joint age-curve reference scores `0.736298` development
+(`mechanism_score=0.824199`) and `0.708775` robustness. Collapsing every inferred sample-age curve
+to one clipped scalar offset scores `0.519860` development (`mechanism_score=0.679906`) and
+`0.541562` robustness. The current age-curve artifact therefore contributes `0.216438` development
+score in this diagnostic. The historical method is invalid on one development world and records
+two false discoveries, so it is not presented as a valid ladder rung.
 
 ## 4. Shortcut probes
 
-The diagnostic script includes 528 constant aeration/recycle pairs, 48 historical thermostat
-parameter pairs, a source-only single-well archive, and historical public search methods.
-`tests/test_new_task_hardening.py` pins the diagnosed scientific failures and known shortcuts.
-All remaining untested low-dimensional families are admission risks; passing these probes does
-not prove the absence of shortcuts. Numeric tables from a laptop are local debugging output,
-not frozen benchmark evidence.
+The scalar-offset collapse above is the only task-specific shortcut probe currently measured. It
+recovers substantial partial credit (`0.519860`), so the task is not claimed shortcut-free; affine
+age maps, shared-knot splines and confidence-threshold grids remain untested admission risks. These
+numbers are local diagnostics, not frozen benchmark evidence.
 
 ## 5. Frontier-model calibration
 

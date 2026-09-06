@@ -2,6 +2,7 @@
 import math
 import numpy as np
 _REFERENCE_CACHE={}
+REFERENCE_ARCHIVE_SIZE = 5
 
 def _plan_metrics(problem, wells, shift=None):
     shift = shift or {"velocity": 1.0, "dispersion": 1.0, "decay": 1.0, "release": 1.0}
@@ -125,7 +126,10 @@ def _reference_archive(problem):
         best = max((i for i in range(len(candidates)) if i not in selected),
                    key=lambda i: area(selected + [i]))
         selected.append(best)
-    answer = [candidates[i] for i in selected]
+    # A compact public witness deliberately returns only the first part of the
+    # greedy Pareto archive.  The oracle recomputes a wider 16-plan anchor, so
+    # candidates can improve by finding additional cleanup/cost trade-offs.
+    answer = [candidates[i] for i in selected[:REFERENCE_ARCHIVE_SIZE]]
     _REFERENCE_CACHE[key] = [p.copy() for p in answer]
     return answer
 

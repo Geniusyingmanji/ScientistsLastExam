@@ -45,8 +45,10 @@ sensitivity and dynamics shifts. It reports:
 - observation cost; and
 - forecast-skill-versus-cost Pareto hypervolume.
 
-`combined_score` is normalized development exact-OSSE hypervolume, floored at zero but not capped
-above the reference. Posterior trace/log determinant are diagnostics, not the primary objective:
+`combined_score` is normalized development exact-OSSE hypervolume, floored at zero but not capped.
+The shipped truth-blind reference searches eight coarse budget levels and scores `0.679581`.
+The oracle's score-one anchor uses the same public method at every integer budget from five through
+eighteen, so the headroom is specifically low-cost Pareto coverage. Posterior trace/log determinant are diagnostics, not the primary objective:
 an overconfident proxy cannot beat poor hidden
 forecast skill. `robustness_score` is the worst sensitivity/noise/dynamics shift.
 
@@ -84,7 +86,7 @@ This package remains **candidate**. The metadata difficulty is a target, not a c
 
 ### Current reference and remaining difficulty
 
-Unit-normalized forecast A-optimal greedy selection with budget-feasible exchange refinement. Normalizing each forecast by its prior standard deviation prevents meters from dominating millimeters. Three exchange passes improve the greedy archive; nonlinear ice-flow validation is still pending. The optimization reference defines 1 by construction; a discovery reference is evaluated against the fixed recovery ceiling. Neither fact certifies difficulty.
+Unit-normalized forecast A-optimal greedy selection with budget-feasible exchange refinement. Normalizing each forecast by its prior standard deviation prevents meters from dominating millimeters. Three exchange passes improve the greedy archive; nonlinear ice-flow validation is still pending. The coarse-budget runnable reference scores `0.679581` development / `0.554644` robustness against the dense-budget anchor. A probe using the previously omitted low-cost budgets exceeded the old anchor, which is why those budgets are now included in score one. This calibration does not certify difficulty.
 
 ## Frontier-Eng overlap comparison (2026-09-06)
 

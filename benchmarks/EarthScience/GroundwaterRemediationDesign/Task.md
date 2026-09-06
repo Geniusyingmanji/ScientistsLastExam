@@ -52,8 +52,11 @@ The public proxy and hidden exact simulator report:
 - total pumped water in m3; and
 - the Pareto hypervolume for maximizing cleanup and minimizing lifecycle cost.
 
-`combined_score` is normalized development exact-model hypervolume, floored at zero and uncapped
-above the shipped reference. Regulatory compliance is a hard gate: a cheap plan cannot compensate
+`combined_score` is normalized development exact-model hypervolume, floored at zero and uncapped.
+The shipped truth-blind reference returns a compact five-plan Pareto archive and scores
+`0.742776`; the oracle recomputes a wider sixteen-plan greedy archive as score one. The
+remaining space is therefore additional cleanup/cost coverage, not a constant score rescale.
+Regulatory compliance is a hard gate: a cheap plan cannot compensate
 for receptor exceedance. The evaluator separately
 retains proxy hypervolume, false promotion, held-out aquifers and the worst hidden velocity,
 dispersion, decay and continued-release shift. `robustness_score` is the worst shifted normalized
@@ -96,7 +99,7 @@ The surrogate advects each initial Gaussian component at the declared velocity. 
 
 ### Current reference and remaining difficulty
 
-Public moving-plume mass-balance search over single wells and treatment transects, greedily selecting a hypervolume archive. Local extraction uses Q*C at the evolving plume position, with activation-aware integration and an extracted/decayed/remaining mass ledger. Three public initial plume components replace the spatially collapsed capture-at-start model. The optimization reference defines 1 by construction; a discovery reference is evaluated against the fixed recovery ceiling. Neither fact certifies difficulty.
+Public moving-plume mass-balance search over single wells and treatment transects, greedily selecting a compact five-plan hypervolume archive. Local extraction uses Q*C at the evolving plume position, with activation-aware integration and an extracted/decayed/remaining mass ledger. Three public initial plume components replace the spatially collapsed capture-at-start model. Against the independently recomputed sixteen-plan anchor, the runnable reference scores `0.742776` development / `0.724797` robustness. Better Pareto coverage remains visible above one. This calibration does not certify difficulty.
 
 ## Frontier-Eng overlap comparison (2026-09-06)
 

@@ -32,8 +32,11 @@ invariants:
 - normal CRPS is finite, proper and decreases for sharper calibrated reconstructions
 - null and resolvable nonlinear or nonstationary proxy systems reward refusal
 - every date consumes budget and invalid or overspent requests fail closed
-known_shortcuts: Variable positive accumulation across 6/9/12 segments; joint age/climate inference remains
-  approximate. Formal clean Linux calibration and independent domain validation remain pending.
+known_shortcuts: Collapsing each inferred age curve to one clipped scalar offset scores 0.519860 development
+  against the 0.736298 reference, so substantial partial credit is available without the full artifact.
+  Affine maps, shared-knot splines and confidence-threshold grids remain unmeasured. The Gaussian-process
+  proxy model and diagonal chronology approximation require clean Linux replay, server-held proxy systems
+  and independent paleoclimate review.
 licensing:
   task_package: repository_license_not_declared
   external_assets: none
@@ -65,10 +68,9 @@ lineage:
   calibrator_model_ids: []
   calibration_runs: []
   calibration_evidence_status: missing
-  edits_triggered_by_model: 2026-09-05 local code-review probes triggered identifiable sill scoring, feasible
-    HVAC heldout anchors, moving-plume capture, stronger public-data references, contract documentation
-    and regression tests. No frontier calibration draw has been run. Second local hardening adds nonlinear
-    chronology, frame nuisance, transient control and pump commitment; no frontier-model draw.
+  edits_triggered_by_model: No frontier-model draw has been run. Local code review added variable positive
+    accumulation, noisy proxy calibration, non-clipped dating endpoints and a full age-curve artifact;
+    the scalar-offset collapse is retained as a measured local probe.
   shortcut_discoverer: initial_internal_red_team
   frozen_before_eval: false
   freeze_timestamp: null

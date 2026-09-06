@@ -7,27 +7,28 @@ It is a method witness, not independent high-fidelity verification. Normalizing 
 
 ## 2. Baseline and normalization
 
-The shipped `solution.py` is the baseline. Tests check valid near-zero development scores.
-Optimization references define one through recomputed objective differences; discovery scores
-retain their fixed supported-world ceilings and refusal normalization. Changed oracle versions
-must not be compared as if their score differences were model improvements.
+The shipped `solution.py` is the zero baseline. The runnable public reference searches the coarse
+budget grid 7/9/11/13/15/16/17/18 and scores `0.679581` development / `0.554644`
+robustness. The evaluator's score-one anchor uses the same public greedy/exchange method for every
+integer budget from 5 through 18. Better exact-OSSE archives remain visible above one.
+Changed oracle versions must not be compared as if their score differences were model improvements.
 
 ## 3. Capability comparisons and ablations
 
 Run `python scripts/diagnose_pr9_earth.py --output tmp/hardening/diagnostics.json --sweeps`.
-Historical public methods are replayed on the current oracle where available; these comparisons
-are **not** isolated causal ablations. HVAC additionally removes occupancy forecasting, and the
-wastewater constant controller removes all state feedback. A complete per-capability ladder,
-including measured nonzero drops, still requires clean Linux execution before admission.
+On the current dirty macOS tree, the dense-exchange reference scores `0.679581` development and
+`0.554644` robustness. Replaying the historical greedy method on the current OSSE scores
+`0.435609` / `0.317681`. This comparison measures the combined effect of forecast-unit
+normalization, exchange refinement and the changed oracle; it is not an isolated causal ablation.
 
 ## 4. Shortcut probes
 
-The diagnostic script includes 528 constant aeration/recycle pairs, 48 historical thermostat
-parameter pairs, a source-only single-well archive, and historical public search methods.
-`tests/test_new_task_hardening.py` pins the diagnosed scientific failures and known shortcuts.
-All remaining untested low-dimensional families are admission risks; passing these probes does
-not prove the absence of shortcuts. Numeric tables from a laptop are local debugging output,
-not frozen benchmark evidence.
+The historical greedy construction is the only task-specific shortcut probe currently measured;
+it remains below the current reference. Filling the omitted integer budgets with the same public
+greedy/exchange method reaches the score-one anchor by construction, so the `0.679581` reference
+score alone is not a difficulty result. Sensor-type quotas, cost-only selections and single-forecast
+A-optimal grids remain unmeasured. The values above are local diagnostics, not frozen benchmark
+evidence.
 
 ## 5. Frontier-model calibration
 
@@ -62,9 +63,9 @@ certified by those publications.
 archive. The evaluator recomputes its exact-OSSE hypervolume for every world and assigns it score
 1.0. The shipped clustered-network baseline scores approximately zero.
 
-The normalization is floored at zero and deliberately not capped above one. The greedy archive is
+The normalization was floored at zero and deliberately not capped above one. The greedy archive was
 a search witness, not a proven global optimum; a candidate network archive with greater exact-OSSE
-hypervolume must therefore remain visible with a score above 1.0.
+hypervolume remained visible above 1.0.
 
 The reference and all procedural OSSE worlds were introduced on 2026-09-05. They still require
 model calibration, server-held worlds, full ice-flow replication and independent cryosphere
@@ -73,7 +74,7 @@ review.
 ## Difficulty ladder measurement
 
 The same frozen truth-blind witness was evaluated at all three levels on 2026-09-05. Because this
-witness defines the per-level normalization anchor, its combined score remains one; raw exact
+witness defined the per-level normalization anchor, its combined score remained one; raw exact
 hypervolume and robustness show the harder regimes.
 
 | level | exact HV | proxy HV | robustness |

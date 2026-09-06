@@ -57,7 +57,7 @@ class NewEarthSciencePackageTests(unittest.TestCase):
                              json.dumps(second, sort_keys=True, default=str), task_id)
 
     def test_truth_blind_references_leave_measurable_headroom(self):
-        for task_id, (directory, entrypoint, _) in TASKS.items():
+        for task_id, (directory, entrypoint, role) in TASKS.items():
             evaluator = _load(EARTH / directory / "verification" / "evaluator.py",
                               "new_earth_reference_evaluator_" + directory)
             reference = _load(EARTH / directory / "verification" / "reference_solver.py",
@@ -65,6 +65,8 @@ class NewEarthSciencePackageTests(unittest.TestCase):
             result = evaluator.evaluate(getattr(reference, entrypoint))
             self.assertEqual(result["valid"], 1.0, task_id)
             self.assertGreater(result["combined_score"], 0.05, task_id)
+            if role == "optimization":
+                self.assertLess(result["combined_score"], 0.80, task_id)
 
     def test_bad_candidates_score_invalid_without_crashing_evaluator(self):
         def raises(*args, **kwargs):

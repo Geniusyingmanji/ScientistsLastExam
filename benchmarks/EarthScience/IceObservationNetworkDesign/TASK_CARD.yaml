@@ -19,9 +19,11 @@ difficulty_ladder:
     3: 32 percent more noise, 55 percent more mismatch and 38 percent stronger stresses
 normalization:
   baseline: four clustered low-cost velocity networks recomputed for each world
-  reference: Unit-normalized forecast A-optimal greedy selection with budget-feasible exchange refinement.
+  reference: Unit-normalized forecast A-optimal greedy selection with budget-feasible exchange refinement;
+    it searches a coarse budget grid and scores 0.680 against an oracle anchor that covers every
+    integer budget from five through eighteen.
   score: exact-OSSE forecast-skill-versus-cost Pareto hypervolume above baseline, floored at zero and
-    uncapped above the reference; CRPS, physical RMSE, posterior diagnostics, held-out transfer and worst-shift
+    uncapped above the dense-budget anchor; CRPS, physical RMSE, posterior diagnostics, held-out transfer and worst-shift
     robustness remain separate
 citations:
 - id: doi:10.5194/tc-19-5423-2025
@@ -36,14 +38,12 @@ invariants:
 - every design within a world is compared on the same deterministic truth and noise ensemble
 - identical fixed designs reproduce physical RMSE, CRPS and hypervolume exactly
 - the shipped greedy archive exceeds the clustered weak baseline on development worlds
-known_shortcuts: 'NumPy supplies fixed-grid shape checks and forecast-array reductions, not
-  ice-flow physics. The state and observation operators are local low-dimensional linear-Gaussian abstractions.
-  They omit nonlinear grounding-line migration, non-Gaussian structural error, orbital constraints and
-  correlated instrument bias. Public worlds need server-held replacements, full ice-flow replication and
-  mission-domain review before operational interpretation. Hardening: Normalizing each forecast by its
-  prior standard deviation prevents meters from dominating millimeters. Three exchange passes improve
-  the greedy archive; nonlinear ice-flow validation is still pending. Reproduce local sweeps with scripts/diagnose_pr9_earth.py
-  --sweeps; numerical admission evidence is pending clean Linux replay.'
+known_shortcuts: 'The historical greedy construction scores 0.435609 development and 0.317681
+  robustness against the current 0.679581/0.554644 witness. Filling every omitted integer budget
+  with the same public greedy/exchange method reaches the score-one anchor by construction, so the
+  reference score is not a model-difficulty result. Sensor-type quotas, cost-only and single-forecast
+  selections remain unmeasured. The linear-Gaussian OSSE requires clean Linux replay, server-held
+  worlds, nonlinear ice-flow replication and mission-domain review.'
 licensing:
   task_package: repository_license_not_declared
   external_assets: none
@@ -75,9 +75,9 @@ lineage:
   calibrator_model_ids: []
   calibration_runs: []
   calibration_evidence_status: missing
-  edits_triggered_by_model: 2026-09-05 local code-review probes triggered identifiable sill scoring, feasible
-    HVAC heldout anchors, moving-plume capture, stronger public-data references, contract documentation
-    and regression tests. No frontier calibration draw has been run.
+  edits_triggered_by_model: No frontier-model draw has been run. Local code review normalized forecast
+    targets by prior standard deviation, added budget-feasible exchange refinement and repaired the
+    score-one archive to cover every integer budget from five through eighteen.
   shortcut_discoverer: initial_internal_red_team
   frozen_before_eval: false
   freeze_timestamp: null

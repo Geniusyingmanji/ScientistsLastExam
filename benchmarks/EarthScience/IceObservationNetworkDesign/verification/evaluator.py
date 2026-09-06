@@ -231,7 +231,10 @@ def _reference_archive(world):
         post = prior - prior @ h.T @ np.linalg.solve(h @ prior @ h.T + r, h @ prior)
         return float(np.trace(normalized_g @ post @ normalized_g.T))
     plans = []
-    for target_cost in (7, 9, 11, 13, 15, 16, 17, 18):
+    # The score-one anchor covers every feasible integer budget from 5 through
+    # 18.  The public witness uses only the coarser 7/9/11/13/15/16/17/18 grid;
+    # filling the missing low-cost Pareto region is real, checkable headroom.
+    for target_cost in range(5, 19):
         selected = []
         while len(selected) < 10:
             best = None
@@ -295,7 +298,8 @@ def _evaluate_problem(candidate, seed, split, index):
         shifted = [_hypervolume(world, plans, shift)[0] for shift in SHIFTS]
         baseline_shifted = [_hypervolume(world, _baseline_archive(world), shift)[0] for shift in SHIFTS]
         reference_shifted = [_hypervolume(world, reference_plans, shift)[0] for shift in SHIFTS]
-        robust_scores = [_normalize(v, b, r) for v, b, r in zip(shifted, baseline_shifted, reference_shifted)]
+        robust_scores = [_normalize(v, b, r)
+                         for v, b, r in zip(shifted, baseline_shifted, reference_shifted)]
         best = min(rows, key=lambda row: np.mean(row["rmse"] / np.asarray((1000.0, 100.0, 0.3))))
         return {"split": split, "problem_index": index, "valid": True,
                 "score": _normalize(exact_hv, baseline_hv, reference_hv),

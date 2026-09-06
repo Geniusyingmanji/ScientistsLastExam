@@ -15,19 +15,19 @@ must not be compared as if their score differences were model improvements.
 ## 3. Capability comparisons and ablations
 
 Run `python scripts/diagnose_pr9_earth.py --output tmp/hardening/diagnostics.json --sweeps`.
-Historical public methods are replayed on the current oracle where available; these comparisons
-are **not** isolated causal ablations. HVAC additionally removes occupancy forecasting, and the
-wastewater constant controller removes all state feedback. A complete per-capability ladder,
-including measured nonzero drops, still requires clean Linux execution before admission.
+On the current dirty macOS tree, the signed multishot reference scores `0.356670` development
+(`mechanism_score=0.571113`) and `0.189769` robustness. Replaying the historical public method on
+the current oracle scores `0.249539` development (`mechanism_score=0.499693`) and `0.209638`
+robustness. This is a method comparison, not an isolated causal ablation: both the reference and
+oracle changed during hardening. A clean Linux per-capability ladder remains unmeasured.
 
 ## 4. Shortcut probes
 
-The diagnostic script includes 528 constant aeration/recycle pairs, 48 historical thermostat
-parameter pairs, a source-only single-well archive, and historical public search methods.
-`tests/test_new_task_hardening.py` pins the diagnosed scientific failures and known shortcuts.
-All remaining untested low-dimensional families are admission risks; passing these probes does
-not prove the absence of shortcuts. Numeric tables from a laptop are local debugging output,
-not frozen benchmark evidence.
+No low-dimensional velocity-family sweep has been run for this task. The only current probe is the
+historical smooth-lens method above, which remains well below the new reference but is not a broad
+shortcut search. A constant lens, source-only inversion and travel-time-only fit still need an
+explicit grid before admission. The numbers above are local diagnostics, not frozen benchmark
+evidence.
 
 ## 5. Frontier-model calibration
 

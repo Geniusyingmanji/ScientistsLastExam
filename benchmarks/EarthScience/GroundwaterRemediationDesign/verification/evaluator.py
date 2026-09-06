@@ -317,7 +317,8 @@ def _evaluate_problem(candidate, spec, split, index):
                             for shift in shifted_worlds]
         reference_shifted = [_hypervolume(problem, _reference_archive(problem), shift)[0]
                              for shift in shifted_worlds]
-        shifted_scores = [_normalize(v, b, r) for v, b, r in zip(shifted, baseline_shifted, reference_shifted)]
+        shifted_scores = [_normalize(v, b, r)
+                          for v, b, r in zip(shifted, baseline_shifted, reference_shifted)]
         compliant = [row for row in exact_rows if row["compliant"]]
         return {"split": split, "problem_index": index, "valid": True,
                 "score": _normalize(exact_hv, baseline_hv, reference_hv),

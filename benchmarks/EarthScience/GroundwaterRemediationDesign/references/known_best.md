@@ -7,27 +7,29 @@ It is a method witness, not independent high-fidelity verification. Local extrac
 
 ## 2. Baseline and normalization
 
-The shipped `solution.py` is the baseline. Tests check valid near-zero development scores.
-Optimization references define one through recomputed objective differences; discovery scores
-retain their fixed supported-world ceilings and refusal normalization. Changed oracle versions
-must not be compared as if their score differences were model improvements.
+The shipped `solution.py` is the zero baseline. The runnable public reference deliberately
+returns the first five plans of its greedy archive and scores `0.742776` development /
+`0.724797` robustness. The evaluator independently recomputes the full sixteen-plan greedy
+archive as score one. Wider or better Pareto coverage remains visible above one.
+Changed oracle versions must not be compared as if their score differences were model improvements.
 
 ## 3. Capability comparisons and ablations
 
 Run `python scripts/diagnose_pr9_earth.py --output tmp/hardening/diagnostics.json --sweeps`.
-Historical public methods are replayed on the current oracle where available; these comparisons
-are **not** isolated causal ablations. HVAC additionally removes occupancy forecasting, and the
-wastewater constant controller removes all state feedback. A complete per-capability ladder,
-including measured nonzero drops, still requires clean Linux execution before admission.
+On the current dirty macOS tree, the five-plan reference scores `0.742776` development and
+`0.724797` robustness. Replaying the historical public archive on the current oracle scores
+`0.408240` / `0.202947`. A source-centred, single-well rate sweep scores `0.030994` / `0.000000`.
+These are method comparisons rather than isolated causal ablations because the transport oracle
+also changed during hardening.
 
 ## 4. Shortcut probes
 
-The diagnostic script includes 528 constant aeration/recycle pairs, 48 historical thermostat
-parameter pairs, a source-only single-well archive, and historical public search methods.
-`tests/test_new_task_hardening.py` pins the diagnosed scientific failures and known shortcuts.
-All remaining untested low-dimensional families are admission risks; passing these probes does
-not prove the absence of shortcuts. Numeric tables from a laptop are local debugging output,
-not frozen benchmark evidence.
+The 16-point source-centred rate sweep is the measured low-dimensional probe and reaches only
+`0.030994`. The historical plume-aligned archive reaches `0.408240`, below the current reference.
+However, extending the same greedy construction from five to all sixteen allowed archive entries
+reaches the score-one anchor by construction. That is deliberate reference headroom, not evidence
+of model difficulty, and must be tested by a clean frontier draw before admission. All values in
+this section are local diagnostics, not frozen benchmark evidence.
 
 ## 5. Frontier-model calibration
 
@@ -58,13 +60,13 @@ certified by those publications.
 
 ## Scoring anchor
 
-`verification/reference_solver.py` is the shipped truth-blind plume-aligned multirate archive.
-The evaluator recomputes its exact-model hypervolume for every aquifer and assigns it score 1.0.
+`verification/reference_solver.py` was the shipped truth-blind plume-aligned multirate archive.
+The evaluator recomputed its exact-model hypervolume for every aquifer and assigned it score 1.0.
 The shipped baseline scores 0.0.
 
-The normalization is floored at zero and deliberately not capped above one. The reference is a
+The normalization was floored at zero and deliberately not capped above one. The reference was a
 search witness, not a proven global optimum; a candidate archive with greater exact-model
-hypervolume must therefore remain visible with a score above 1.0.
+hypervolume remained visible above 1.0.
 
 The reference and all procedural aquifers were introduced on 2026-09-05. They still require model
 calibration, server-held aquifers, MODFLOW replication and independent hydrogeology review.
@@ -72,7 +74,7 @@ calibration, server-held aquifers, MODFLOW replication and independent hydrogeol
 ## Difficulty ladder measurement
 
 The same frozen truth-blind witness was evaluated at all three levels on 2026-09-05. Because this
-witness defines the per-level normalization anchor, its combined score remains one; raw
+witness defined the per-level normalization anchor, its combined score remained one; raw
 hypervolume and worst-shift robustness expose the changed regime.
 
 | level | exact HV | proxy HV | robustness |

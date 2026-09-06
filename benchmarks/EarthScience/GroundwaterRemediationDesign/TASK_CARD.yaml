@@ -19,9 +19,10 @@ difficulty_ladder:
 normalization:
   baseline: four low-intensity single-well plans recomputed for every aquifer
   reference: Public moving-plume mass-balance search over single wells and treatment transects, greedily
-    selecting a hypervolume archive.
+    selecting a compact five-plan hypervolume archive; it scores 0.743 against the oracle's
+    reproducible sixteen-plan greedy anchor.
   score: exact-model cleanup-versus-lifecycle-cost Pareto hypervolume above baseline, floored at zero
-    and uncapped above the reference; feasibility, proxy promotion, held-out transfer and worst-shift
+    and uncapped above the wider archive anchor; feasibility, proxy promotion, held-out transfer and worst-shift
     robustness remain separate
 citations:
 - id: doi:10.1016/S0309-1708(01)00020-3
@@ -35,15 +36,12 @@ invariants:
 - exact and proxy transport agree when all hidden shift multipliers are one
 - exact evaluation applies an evaluator-only model-discrepancy shift, composed with each robustness stress
 - the shipped reference archive exceeds the weak baseline on development aquifers
-known_shortcuts: 'NumPy supplies fixed-grid shape checks and transport-array reductions,
-  not groundwater physics. The deterministic Gaussian plume and empirical capture kernel are local reduced-order
-  abstractions. They omit transient heads, layered three-dimensional flow, sorption and treatment-plant
-  hydraulics. Public aquifers need server-held replacements, MODFLOW transport replication and independent
-  hydrogeology review before any field claim. Hardening: Local extraction uses Q*C at the evolving plume
-  position, with activation-aware integration and an extracted/decayed/remaining mass ledger. Three public
-  initial plume components replace the spatially collapsed capture-at-start model. Reproduce local sweeps
-  with scripts/diagnose_pr9_earth.py --sweeps; numerical admission evidence is pending clean
-  Linux replay.'
+known_shortcuts: 'A 16-rate source-centred single-well sweep scores 0.030994 development and
+  0 robustness; the historical plume-aligned archive scores 0.408240/0.202947. Extending the
+  current five-plan greedy witness to all sixteen allowed archive entries reaches the score-one
+  anchor by construction, so 0.742776 is headroom calibration rather than proof of model difficulty.
+  The reduced Gaussian-plume model still requires clean Linux replay, server-held aquifers, MODFLOW
+  replication and independent hydrogeology review.'
 licensing:
   task_package: repository_license_not_declared
   external_assets: none
@@ -75,9 +73,9 @@ lineage:
   calibrator_model_ids: []
   calibration_runs: []
   calibration_evidence_status: missing
-  edits_triggered_by_model: 2026-09-05 local code-review probes triggered identifiable sill scoring, feasible
-    HVAC heldout anchors, moving-plume capture, stronger public-data references, contract documentation
-    and regression tests. No frontier calibration draw has been run.
+  edits_triggered_by_model: No frontier-model draw has been run. Local code review replaced capture-at-start
+    with activation-aware Q*C integration at the moving plume, added three plume components and a mass
+    ledger, and measured the source-centred and historical archive probes.
   shortcut_discoverer: initial_internal_red_team
   frozen_before_eval: false
   freeze_timestamp: null
