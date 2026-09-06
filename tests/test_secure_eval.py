@@ -17,7 +17,8 @@ from sle.evaluate import (
 )
 from sle.rpc_codec import CodecError, decode, encode
 from sle.secure_eval import (
-    CandidateProxy, _proc_mount_args, _seccomp_no_processes, validate_metrics,
+    CandidateProxy, _blocked_process_syscalls, _proc_mount_args,
+    _seccomp_no_processes, validate_metrics,
 )
 from sle.spec import load_task_spec
 
@@ -446,6 +447,12 @@ class SecureEvaluationTests(unittest.TestCase):
 
 
 class CodecTests(unittest.TestCase):
+    def test_process_syscalls_are_architecture_specific(self):
+        self.assertEqual(_blocked_process_syscalls("x86_64"), (56, 57, 58, 435))
+        self.assertEqual(_blocked_process_syscalls("aarch64"), (220, 435))
+        with self.assertRaises(RuntimeError):
+            _blocked_process_syscalls("unknown-cpu")
+
     def test_seccomp_file_fallback_is_available(self):
         with patch("sle.secure_eval.os.memfd_create", new=None, create=True):
             fd = None

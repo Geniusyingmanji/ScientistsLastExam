@@ -7,6 +7,7 @@ import importlib.util
 import json
 import math
 import os
+import platform
 import resource
 import select
 import shutil
@@ -154,6 +155,23 @@ def _limits(cpu_seconds: int, memory_bytes: int):
     return apply
 
 
+def _blocked_process_syscalls(machine: str | None = None) -> tuple[int, ...]:
+    """Return architecture-correct process-creation syscall numbers.
+
+    Using the x86_64 table on AArch64 blocks openat/close/vhangup instead of
+    clone/fork/vfork, so the candidate worker cannot even import its source.
+    Unknown architectures fail closed rather than installing the wrong filter.
+    """
+    architecture = (machine or platform.machine()).lower()
+    if architecture in {"x86_64", "amd64"}:
+        return (56, 57, 58, 435)  # clone, fork, vfork, clone3
+    if architecture in {"aarch64", "arm64"}:
+        return (220, 435)  # clone, clone3; fork/vfork are libc wrappers
+    if architecture in {"i386", "i686", "x86"}:
+        return (2, 120, 190, 435)  # fork, clone, vfork, clone3
+    raise RuntimeError("unsupported architecture for seccomp filter: %s" % architecture)
+
+
 def _seccomp_no_processes() -> int:
     """Return a memfd containing a classic-BPF seccomp program.
 
@@ -165,7 +183,7 @@ def _seccomp_no_processes() -> int:
     load_nr, jump_eq, ret = 0x20, 0x15, 0x06
     seccomp_allow = 0x7FFF0000
     seccomp_errno_eperm = 0x00050000 | 1
-    syscalls = (56, 57, 58, 435)  # x86_64: clone, fork, vfork, clone3
+    syscalls = _blocked_process_syscalls()
     filters = [(load_nr, 0, 0, 0)]
     for syscall_nr in syscalls:
         filters.extend(((jump_eq, 0, 1, syscall_nr), (ret, 0, 0, seccomp_errno_eperm)))
