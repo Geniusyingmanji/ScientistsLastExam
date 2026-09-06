@@ -15,12 +15,12 @@ Truth-blind: it reads only the public bounds and the budgeted `measure` callback
 
 | metric | development | held out |
 |---|---|---|
-| combined / mechanism score (normalized) | **~0.98** | **~0.97** |
-| signal recovery rate | ~0.98 | ~0.97 |
-| false discovery rate | 0.00 | 0.00 |
-| correct refusal rate | 1.00 | 1.00 |
+| combined / mechanism score (normalized) | **0.635** | **0.449** |
+| signal recovery rate | 0.968 | 0.949 |
+| false discovery rate | 0.20 | 0.25 |
+| correct refusal rate | 0.80 | 0.75 |
 
-It refuses when the log-log curvature exceeds 0.40 or when the apparent exponent is outside both families (plugs, sliding mixes). On in-family worlds it publishes the four-point slope as `n`. Fitting `A` jointly with `n` is leftover headroom, not an exploit. No frontier draw has been run yet.
+It refuses when the log-log curvature exceeds 0.40 or when the apparent exponent is outside both families (plugs, obvious sliding mixes). Weak sliding worlds (development seed 72003, held-out 82003) sit below that curvature threshold, so the scan publishes them as Glen; those publications are false discoveries and keep the witness in 0.3–0.8 instead of saturating. On in-family worlds it publishes the four-point slope as `n`. Fitting `A` jointly with `n` is leftover headroom, not an exploit. No frontier draw has been run yet.
 
 ## Baseline - `solution.py`
 

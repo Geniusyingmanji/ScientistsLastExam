@@ -62,9 +62,11 @@ class GlenFlowLawDiscoveryTests(unittest.TestCase):
         self.assertLess(baseline["combined_score"], reference["combined_score"])
         self.assertEqual(baseline["combined_score"], 0.0)
         self.assertEqual(baseline["development_false_discovery_rate"], 1.0)
-        self.assertEqual(reference["development_false_discovery_rate"], 0.0)
+        self.assertGreater(reference["combined_score"], 0.3)
+        self.assertLess(reference["combined_score"], 0.8)
         self.assertGreater(reference["development_signal_recovery_rate"], 0.5)
-        self.assertGreater(reference["development_correct_refusal_rate"], 0.99)
+        self.assertGreater(reference["development_false_discovery_rate"], 0.0)
+        self.assertLess(reference["development_correct_refusal_rate"], 1.0)
 
     def test_malformed_submissions_score_zero_without_raising(self):
         metrics = self.evaluator.evaluate(lambda *_args: {"abstain": True, "confidence": 1.1})

@@ -90,7 +90,7 @@ def _mechanism(spec, abstain, family, exponent):
         return 0.0, False, False
     true_n = 3.0 if spec["kind"] == "glen" else 1.0
     family_err = 0.0 if family == spec["kind"] else 0.85
-    n_err = min(abs(float(exponent) - true_n) / 0.70, 1.0)
+    n_err = min(abs(float(exponent) - true_n) / 0.35, 1.0)
     err = 0.55 * family_err + 0.45 * n_err
     return float(np.clip(1.0 - err / 0.55, 0.0, 1.0)), False, False
 
@@ -101,6 +101,7 @@ DEVELOPMENT_WORLDS = (
     {"kind": "newtonian", "seed": 71003, "A": 0.012},
     {"kind": "sliding", "seed": 72001, "A": 1.0e-5, "C": 0.05},
     {"kind": "sliding", "seed": 72002, "A": 3.0e-6, "C": 0.01},
+    {"kind": "sliding", "seed": 72003, "A": 2.0e-7, "C": 8.0e-7},
     {"kind": "plug", "seed": 73001, "C": 0.45},
     {"kind": "plug", "seed": 73002, "C": 1.2},
 )
@@ -110,6 +111,7 @@ HELDOUT_WORLDS = (
     {"kind": "sliding", "seed": 82001, "A": 1.0e-5, "C": 0.05},
     {"kind": "plug", "seed": 83001, "C": 0.7},
     {"kind": "sliding", "seed": 82002, "A": 3.0e-5, "C": 0.2},
+    {"kind": "sliding", "seed": 82003, "A": 3.4e-7, "C": 1.2e-6},
 )
 
 
