@@ -1,0 +1,4 @@
+1) Only edit solution.py and keep design_remediation(problem).
+2) Return a mapping with plans containing 4-16 unique plan arrays; every well row and every problem key is documented in Task.md.
+3) Respect coordinate, well-count, start-year, per-well pumping and total-pumping bounds.
+4) Deterministic Python/NumPy/SciPy/stdlib only; no network/process creation and no reading verification/ or frontier_eval/.

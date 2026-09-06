@@ -1,0 +1,106 @@
+schema_version: 2
+scientific_question: Can a bounded shot program recover a supported acoustic velocity structure and refuse
+  null or resolvably non-acoustic responses?
+artifact: A bounded two-dimensional velocity grid, confidence and an optional model-inadequacy abstention.
+oracle:
+  model: deterministic constant-density 2-D acoustic finite differences with procedural smooth anomalies,
+    no-anomaly nulls and attenuating out-of-family responses; waveform misfit is aligned and aggregated
+    with NumPy
+  feasibility: finite bounded velocity grids and strictly charged source acquisitions under a three-unit
+    budget
+  deterministic: true
+  external_tooling: NumPy for fixed-grid time/receiver waveform alignment and reduction
+difficulty_ladder:
+  default_level: 1
+  levels:
+    1: working noise and anomaly count
+    2: 30 percent more observation noise and one additional anomaly
+    3: 65 percent more observation noise and two additional anomalies
+normalization:
+  baseline: one central shot followed by abstention on every world
+  reference: Bounded two-stage smoothed/full-waveform least squares over a 3x5 velocity correction grid.
+  score: depth-weighted structure and sealed-frequency waveform recovery normalized above always abstaining;
+    refusal, calibration and held-out transfer remain separate
+citations:
+- id: doi:10.1190/1.3238367
+  title: An overview of full-waveform inversion in exploration geophysics
+- id: arxiv:2003.14181
+  title: 'Wavefield Reconstruction Inversion: an example'
+invariants:
+- constant velocity produces stable finite waveforms and identical repeated traces
+- exact supported velocity fields attain unit structural and sealed-waveform scores
+- no-anomaly and attenuating responses reward refusal instead of fabricated structure
+- every acquisition consumes budget and overspending fails closed
+- held-out shots, frequencies, worlds and mechanism metrics remain evaluator-only
+known_shortcuts: 'NumPy supplies fixed-grid shape checks and array reductions, not the wave
+  physics. The local simulator is a small constant-density acoustic benchmark with public grid geometry
+  and omits elasticity, three-dimensional acquisition, realistic source signatures and field preprocessing.
+  Public procedural worlds require future server-held replacements, and scientific claims require independent
+  wave solvers and field validation. Hardening: The reference now optimizes signed spatial velocity corrections
+  instead of drawing a fixed negative lens. A finer grid, source design and more complete inversion remain
+  open. Reproduce local sweeps with scripts/diagnose_pr9_earth.py --sweeps; numerical admission
+  evidence is pending clean Linux replay.'
+licensing:
+  task_package: repository_license_not_declared
+  external_assets: none
+  note: All waveforms and velocity worlds are generated from original repository code; cited publications
+    are not redistributed.
+contamination:
+  status: cannot_be_ruled_out
+  rationale: The acoustic family, grid and scaffold are public and AI-assisted; server-held worlds and
+    an independent solver are still required.
+review:
+  domain: pending_external_seismology
+  evaluator_security: targeted_local_regressions_added_clean_linux_sandbox_replay_pending
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic acoustic simulator with development and held-out structural,
+    noise and model-misspecification regimes.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: The exact hidden parameters are procedural, but the small acoustic family and public scaffold
+    remain visible and builder-model independence is not established.
+lineage:
+  status: complete
+  builder_model_ids:
+  - openai-codex
+  builder_scaffolds:
+  - repository-native-earth-science-task-pattern
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: 2026-09-05 local code-review probes triggered identifiable sill scoring, feasible
+    HVAC heldout anchors, moving-plume capture, stronger public-data references, contract documentation
+    and regression tests. No frontier calibration draw has been run.
+  shortcut_discoverer: initial_internal_red_team
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: initial_internal
+  author_domain: AI-assisted benchmark engineering
+  reviewer_domain: pending_external_seismology
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: standalone_public_model_references_high_fidelity_replication_pending
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+difficulty_assessment:
+  status: unverified_candidate
+  requirement: standard-method and low-dimensional shortcut sweeps, capability ablations and clean frontier-model
+    calibration before certification
+
+frontier_eng_overlap_review:
+  date: '2026-09-06'
+  classification: 无
+  nearest: CarAerodynamicsSensing; holographic_multiplane_focusing
+  distinction: Budgeted acoustic shots recover a subsurface velocity grid and test model
+    adequacy; FE selects car pressure sensors or designs optical phase masks. Neither
+    recovers acoustic velocity from acquired waveforms.
+  evidence: .research/pr9_frontier_eng_overlap_2026-09-06.md
+  status: source_count_discrepancy_pending_maintainer_confirmation

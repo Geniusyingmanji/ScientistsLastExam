@@ -10,6 +10,46 @@ policy:
   statuses: [certified, candidate, quarantined]
 
 tasks:
+  WavePropagation/ActiveFullWaveformInversion:
+    status: candidate
+    reason: deterministic reduced-order 2-D acoustic full-waveform discovery task with charged shot selection, supported/null/acoustic-model-misspecification worlds, sealed shot and frequency transfer, and separate mechanism, false-discovery, refusal, coverage and confidence metrics; pending independent seismology review, higher-fidelity replication, server-held worlds and model calibration
+    citation_ids:
+      - doi:10.1190/1.3238367
+      - arxiv:2003.14181
+  Paleoclimate/ChronologyAssimilation:
+    status: candidate
+    reason: active chronology and climate-field reconstruction with charged dates, supported/null/nonstationary-proxy worlds, CE/RMSE/CRPS diagnostics and separate discovery/refusal axes; pending independent paleoclimate review, public-data replay, server-held proxy systems and model calibration
+    citation_ids:
+      - doi:10.1029/2020GL090485
+      - doi:10.5194/cp-16-1325-2020
+  Geophysics/FocalMechanismStressInversion:
+    status: candidate
+    reason: deterministic focal-mechanism stress inversion behind two-fold nodal-plane ambiguity with charged re-analysis, mixed-regime and incoherent refusal worlds; the truth-blind multi-start Michael witness reaches 0.698/0.731 with near-ceiling axes and 0.46 plane assignment (the genuine combinatorial headroom); pending clean Linux calibration, server-held catalogs, independent seismology review and bootstrapped-confidence replication
+    citation_ids:
+      - doi:10.1029/JB089iB13p11517
+      - doi:10.1017/S0016756800059987
+  Hydrology/GroundwaterRemediationDesign:
+    status: candidate
+    reason: deterministic pump-and-treat archive optimization over cost, remaining contaminant mass and receptor compliance with evaluator-only transport shifts and risk diagnostics; pending MODFLOW replication, independent hydrogeology review, server-held aquifers and model calibration
+    citation_ids:
+      - doi:10.1186/2193-2697-2-6
+      - doi:10.1016/S0309-1708(01)00020-3
+  Cryosphere/IceObservationNetworkDesign:
+    status: candidate
+    reason: deterministic linear-Gaussian ice-sheet OSSE observation-network archive design using forecast-error-versus-cost hypervolume, posterior uncertainty diagnostics and sealed sensitivity shifts; pending full ice-flow replication, independent cryosphere review, server-held regimes and model calibration
+    citation_ids:
+      - doi:10.5194/tc-19-5423-2025
+      - doi:10.5194/tc-17-4661-2023
+
+  MedicinalChemistry/MolecularLeadOptimization:
+    status: candidate
+    reason: RDKit community-standard oracle with a verified approved-drug reference panel; pending external medicinal-chemistry review
+    citation_ids: [doi:10.1038/nchem.1243, doi:10.1186/1758-2946-1-8, doi:10.1021/jm901137j]
+  Mineralogy/MineralMixtureXRD:
+    status: candidate
+    reason: deterministic powder-diffraction mixture quantification with a public twelve-mineral library, budgeted slow windows, amorphous-hump distractors and sharp unknown-phase refusal; the weighted-NNLS witness reaches 0.396/0.450 with zero false discoveries and full refusal, deliberately leaving fraction-accuracy headroom; pending clean Linux calibration, independent mineralogy review and full-pattern refinement comparison
+    citation_ids:
+      - doi:10.1107/S0021889869006558
   Mathematics/NarrowAdmissibleTuple:
     status: candidate
     reason: exact admissibility/diameter oracle scored uncapped against Polymath8b's own published narrow-admissible-tuple diameters (246 at k=50, direct primary-source quote; 270 at k=54, secondary-source only, disclosed); no frontier searcher draw yet, pending external number-theory review

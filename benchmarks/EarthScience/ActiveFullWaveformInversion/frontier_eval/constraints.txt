@@ -1,0 +1,4 @@
+1) Only edit solution.py and keep invert_velocity_model(grid_shape, spacing_m, background_velocity_m_s, velocity_bounds_m_s, source_indices, receiver_x_m, time_s, acquire, budget_units).
+2) Return velocity_m_s, confidence and abstain exactly as documented in Task.md.
+3) Each acquire(source_index) call costs one unit; caught invalid calls or overspending invalidate that world.
+4) Deterministic Python/NumPy/SciPy/stdlib only; no network/process creation and no reading verification/ or frontier_eval/.

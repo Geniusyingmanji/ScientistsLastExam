@@ -1,0 +1,111 @@
+schema_version: 2
+scientific_question: Can an agent construct a cost-aware observation-network archive that improves ice-sheet
+  forecasts under uncertain sensitivities and dynamics?
+artifact: Four to sixteen unique, bounded-cost selections from a public catalog of velocity, elevation,
+  thickness, grounding-line and basal-radar observations.
+oracle:
+  model: deterministic linear-Gaussian ice-sheet OSSE with a public proxy sensitivity matrix, fixed Kalman
+    update, seeded state/noise ensembles and sealed sensitivity, noise and forecast-dynamics shifts; ensemble
+    forecast errors and CRPS are shape-checked and reduced with NumPy
+  feasibility: unique valid catalog selections with three to ten observations and total cost within the
+    public budget
+  deterministic: true
+  external_tooling: NumPy for ensemble/forecast shape checks, RMSE and CRPS reduction
+difficulty_ladder:
+  default_level: 1
+  levels:
+    1: working observation noise, proxy-exact mismatch and stresses
+    2: 15 percent more noise, 25 percent more mismatch and 18 percent stronger stresses
+    3: 32 percent more noise, 55 percent more mismatch and 38 percent stronger stresses
+normalization:
+  baseline: four clustered low-cost velocity networks recomputed for each world
+  reference: Unit-normalized forecast A-optimal greedy selection with budget-feasible exchange refinement.
+  score: exact-OSSE forecast-skill-versus-cost Pareto hypervolume above baseline, floored at zero and
+    uncapped above the reference; CRPS, physical RMSE, posterior diagnostics, held-out transfer and worst-shift
+    robustness remain separate
+citations:
+- id: doi:10.5194/tc-19-5423-2025
+  title: Estimation of the state and parameters in ice sheet model using an ensemble Kalman filter and
+    Observing System Simulation Experiments
+- id: doi:10.5194/tc-17-4661-2023
+  title: Choice of observation type affects Bayesian calibration of Greenland Ice Sheet model simulations
+invariants:
+- adding an independent finite-noise observation cannot increase public linear-Gaussian posterior covariance
+- posterior covariance remains symmetric positive definite for every valid design
+- zero proxy-exact shift makes proxy and exact OSSE metrics agree
+- every design within a world is compared on the same deterministic truth and noise ensemble
+- identical fixed designs reproduce physical RMSE, CRPS and hypervolume exactly
+- the shipped greedy archive exceeds the clustered weak baseline on development worlds
+known_shortcuts: 'NumPy supplies fixed-grid shape checks and forecast-array reductions, not
+  ice-flow physics. The state and observation operators are local low-dimensional linear-Gaussian abstractions.
+  They omit nonlinear grounding-line migration, non-Gaussian structural error, orbital constraints and
+  correlated instrument bias. Public worlds need server-held replacements, full ice-flow replication and
+  mission-domain review before operational interpretation. Hardening: Normalizing each forecast by its
+  prior standard deviation prevents meters from dominating millimeters. Three exchange passes improve
+  the greedy archive; nonlinear ice-flow validation is still pending. Reproduce local sweeps with scripts/diagnose_pr9_earth.py
+  --sweeps; numerical admission evidence is pending clean Linux replay.'
+licensing:
+  task_package: repository_license_not_declared
+  external_assets: none
+  note: All catalogs and OSSE arrays are generated from original repository code; cited publications are
+    not redistributed.
+contamination:
+  status: cannot_be_ruled_out
+  rationale: The procedural catalogs, linear model and greedy scaffold are public and AI-assisted; server-held
+    worlds and independent ice-flow replication are still required.
+review:
+  domain: pending_external_cryosphere
+  evaluator_security: targeted_local_regressions_added_clean_linux_sandbox_replay_pending
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic OSSE with development, held-out and sealed observation-sensitivity,
+    noise and dynamics regimes.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Catalogs and priors vary procedurally, but the low-dimensional proxy family and greedy scaffold
+    are public and independent simulator agreement is not established.
+lineage:
+  status: complete
+  builder_model_ids:
+  - openai-codex
+  builder_scaffolds:
+  - repository-native-pareto-optimization-task-pattern
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: 2026-09-05 local code-review probes triggered identifiable sill scoring, feasible
+    HVAC heldout anchors, moving-plume capture, stronger public-data references, contract documentation
+    and regression tests. No frontier calibration draw has been run.
+  shortcut_discoverer: initial_internal_red_team
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: initial_internal
+  author_domain: AI-assisted benchmark engineering
+  reviewer_domain: pending_external_cryosphere
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: standalone_public_model_references_high_fidelity_replication_pending
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+difficulty_assessment:
+  status: unverified_candidate
+  requirement: standard-method and low-dimensional shortcut sweeps, capability ablations and clean frontier-model
+    calibration before certification
+
+frontier_eng_overlap_review:
+  date: '2026-09-06'
+  classification: 同类不同题
+  nearest: CarAerodynamicsSensing; MuonTomography
+  distinction: Both choose observations. Here a costed mixed instrument subset reduces
+    three ice forecast errors under correlated noise and dynamics shifts; FE selects
+    car-surface pressure locations or muon detector geometry. Whether this observation-design
+    family is sufficiently distinct remains a maintainer judgment.
+  evidence: .research/pr9_frontier_eng_overlap_2026-09-06.md
+  status: source_count_discrepancy_pending_maintainer_confirmation

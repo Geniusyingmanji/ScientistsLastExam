@@ -1,0 +1,17 @@
+domain: Geophysics
+task: FocalMechanismStressInversion
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: physical_sim
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 30
+science_metric: focal-mechanism stress inversion with nodal-plane assignment and
+  mixed-regime or incoherent refusal
+reference_baseline: fits one tensor on the first-listed planes without iteration,
+  budget use or regime checks
+reference_sota: truth-blind multi-start Michael inversion with plane swaps and budgeted
+  re-analysis; runnable witness, not a published SoTA claim
+citation: Michael 1984 JGR doi:10.1029/JB089iB13p11517; Bott 1959 Geological Magazine
+  doi:10.1017/S0016756800059987

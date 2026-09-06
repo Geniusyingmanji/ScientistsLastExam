@@ -1,0 +1,16 @@
+domain: Hydrology
+task: GroundwaterRemediationDesign
+scientific_role: optimization
+difficulty: hard
+tier: T2
+oracle_type: physical_sim
+score_mode: uncapped
+gpu_required: false
+eval_time_seconds: 55
+science_metric: receptor-compliant lifecycle-cost versus contaminant-removal Pareto hypervolume with sealed
+  transport robustness
+reference_baseline: four valid low-intensity single-well plans with negligible compliant hypervolume
+reference_sota: Public moving-plume mass-balance search over single wells and treatment transects, greedily
+  selecting a hypervolume archive. This is a runnable witness, not a published SoTA claim.
+citation: Erickson, Mayer and Horn 2002, DOI 10.1016/S0309-1708(01)00020-3; Deschaine, Lillys and Pintér
+  2013, DOI 10.1186/2193-2697-2-6

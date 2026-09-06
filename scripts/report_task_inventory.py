@@ -34,6 +34,13 @@ CERTIFICATION = ROOT / "sle" / "certification.yaml"
 # Chinese name per task, shown in the first column beside the English directory name. The
 # directory name is the identifier and never changes; this is what a Chinese reader scans for.
 CHINESE_NAMES = {
+    "WavePropagation/ActiveFullWaveformInversion": "主动全波形反演",
+    "Paleoclimate/ChronologyAssimilation": "古气候年代同化",
+    "Geophysics/FocalMechanismStressInversion": "震源机制应力反演",
+    "Hydrology/GroundwaterRemediationDesign": "地下水修复设计",
+    "Cryosphere/IceObservationNetworkDesign": "冰盖观测网络设计",
+    "Mineralogy/MineralMixtureXRD": "矿物混合衍射定量",
+
     "Acoustics/RoomImpulseResponse": "房间声学处理设计",
     "Algorithm/GraphFromDistances": "距离查询重建图",
     "Algorithm/MatrixMultiplicationRank": "矩阵乘法秩",
@@ -117,6 +124,25 @@ CHINESE_NAMES = {
 # people deciding which task to look at. A task without an entry fails the inventory test,
 # so a new package cannot silently ship without one.
 CHINESE_BRIEFS = {
+    "WavePropagation/ActiveFullWaveformInversion": (
+        "在震源预算内主动选择激发并恢复声学速度异常;空模型和族外机制须拒答",
+        "速度机制恢复、密封波形预测、误发现与拒答分列;留出拓扑、噪声和速度反差"),
+    "Paleoclimate/ChronologyAssimilation": (
+        "在有限测年预算下校正多条代用记录年代并重建共同古温度场,模型不足时拒答",
+        "年代偏移、CE、RMSE、CRPS 与拒答分列;留出谱形和噪声偏移"),
+    "Geophysics/FocalMechanismStressInversion": (
+        "在双节面歧义下反演主应力轴、形状比与逐事件断层面;混合应力机制或无信号须拒答",
+        "轴/形状比/平面指派几何均值;误发现与拒答分列,全面弃权为零"),
+    "Hydrology/GroundwaterRemediationDesign": (
+        "设计抽水处理井与运行方案,权衡全生命周期成本、污染物去除和受体达标",
+        "成本对残余污染质量的帕累托超体积;受体合规硬门控与密封输运偏移分列,无上限"),
+    "Cryosphere/IceObservationNetworkDesign": (
+        "在成本约束下选择冰盖观测位置与类型,最大化未来状态估计和预报信息量",
+        "预报误差对观测成本的帕累托超体积;密封灵敏度、噪声与动力学偏移分列,无上限"),
+    "Mineralogy/MineralMixtureXRD": (
+        "在慢扫描窗口预算下定量矿物混合,非晶鼓包不拒答、未知尖锐相须拒答",
+        "集合F1+分数对数误差;残差局部对比度拒答,全面弃权为零"),
+
     "Acoustics/RoomImpulseResponse": (
         "布置声源、吸声与受点,让语音房间同时兼顾清晰度、混响时间与声场均匀度",
         "清晰度/混响/均匀度综合效用;一阶反射代理与镜像源长程计算排序不同,含安装误差与老化偏移"),
