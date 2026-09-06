@@ -2,8 +2,7 @@
 
 This combined local diff is intentionally separable by task directory. Both packages are registered
 as `candidate`, excluded from the default certified inventory, and uncalibrated. It does not request
-scientific admission. The MUB package remains removable from central registration if the pending
-positioning decision is resource-only rather than candidate.
+scientific admission.
 
 ## Mathematics/ChowlaCosineCertificate
 
@@ -35,13 +34,16 @@ known to be globally optimal.
 
 ## Dependencies and local structural acceptance
 
-SymPy `1.14.0` is added only to the CI test environment for independent algebraic tests. It is not
-added to candidate mounts, candidate dependency policy, or either standard-library oracle.
+The focused development checks require Python 3, NumPy, SciPy, PyYAML, pytest, and SymPy `1.14.0`.
+SymPy is added only to the CI test environment for independent algebraic tests; it is not added to
+candidate mounts, candidate dependency policy, or either standard-library oracle.
 
 On macOS, run only structural and focused checks:
 
 ```sh
-PYTHON=/Users/kel/Projects/daily_work/research/evolve_SAE/.venv-sle/bin/python
+PYTHON="${PYTHON:-python3}"
+command -v "$PYTHON" >/dev/null || { echo "Python interpreter not found: $PYTHON" >&2; exit 1; }
+"$PYTHON" -c 'import numpy, scipy, sympy, yaml, pytest; assert sympy.__version__ == "1.14.0"' || exit 1
 "$PYTHON" -m pytest -q tests/test_chowla_mub_registration.py tests/test_task_cards.py tests/test_exam_taxonomy.py tests/test_task_inventory_document.py
 "$PYTHON" -m pytest -q tests/test_chowla_cosine_certificate.py tests/test_mutually_unbiased_bases6.py
 "$PYTHON" scripts/check_task_contribution.py --task Mathematics/ChowlaCosineCertificate --skip-eval
@@ -63,11 +65,11 @@ worker path; there is no in-process candidate-import fallback.
 test "$(uname -s)" = Linux || { echo "Linux sandbox host required" >&2; exit 1; }
 command -v bwrap >/dev/null || { echo "bubblewrap missing" >&2; exit 1; }
 command -v flock >/dev/null || { echo "flock missing" >&2; exit 1; }
-python -c 'import sympy; assert sympy.__version__ == "1.14.0"' || exit 1
-python scripts/check_task_contribution.py --task Mathematics/ChowlaCosineCertificate || exit 1
-python scripts/check_task_contribution.py --task QuantumFoundations/MutuallyUnbiasedBases6 || exit 1
-python -m sle eval --allow-uncertified --task Mathematics/ChowlaCosineCertificate || exit 1
-python -m sle eval --allow-uncertified --task QuantumFoundations/MutuallyUnbiasedBases6 || exit 1
+/usr/bin/python3 -c 'import numpy, scipy, sympy, yaml, pytest; assert sympy.__version__ == "1.14.0"' || exit 1
+/usr/bin/python3 scripts/check_task_contribution.py --task Mathematics/ChowlaCosineCertificate || exit 1
+/usr/bin/python3 scripts/check_task_contribution.py --task QuantumFoundations/MutuallyUnbiasedBases6 || exit 1
+/usr/bin/python3 -m sle eval --allow-uncertified --task Mathematics/ChowlaCosineCertificate || exit 1
+/usr/bin/python3 -m sle eval --allow-uncertified --task QuantumFoundations/MutuallyUnbiasedBases6 || exit 1
 ```
 
 Before admission, maintainers must also run hard-model calibration, verify long-horizon headroom,

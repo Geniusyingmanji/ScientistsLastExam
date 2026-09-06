@@ -84,7 +84,7 @@ lineage:
   status: complete
   builder_model_ids: [gpt-6-astra]
   builder_scaffolds: [Codex]
-  collaborator_model_ids: [gpt-6-astra]
+  collaborator_model_ids: [gpt-6-astra, gpt-5.6-sol]
   calibrator_model_ids: []
   calibration_runs: []
   calibration_evidence_status: missing

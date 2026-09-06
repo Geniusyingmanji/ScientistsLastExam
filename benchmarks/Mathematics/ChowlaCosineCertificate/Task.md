@@ -59,8 +59,9 @@ The three calls contain these public keys:
 | `reference_bound` | exact `[numerator, denominator]` score-one reference bound |
 
 Sparse exponents within a factor must be unique and nonnegative; sparse coefficients must be
-nonzero. The returned `frequencies`, `bound`, and `factors` are all required. A malformed or false
-certificate scores zero for that world and cannot remove it from the aggregate.
+nonzero. The submitted rational bound must satisfy `0 < bound <= n_terms`. The returned
+`frequencies`, `bound`, and `factors` are all required. A malformed or false certificate scores zero
+for that world and cannot remove it from the aggregate.
 
 ## Public score-one Sidon construction
 
