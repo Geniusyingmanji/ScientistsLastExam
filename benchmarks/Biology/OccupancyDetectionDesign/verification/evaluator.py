@@ -5,15 +5,15 @@ import math
 
 import numpy as np
 
-SITE_COUNT = 24
-BUDGET = 42
+SITE_COUNT = 48
+BUDGET = 84
 MAX_VISITS = 3
 EFFECT_BOUNDS = (-4.0, 4.0)
 EFFECT_TOLERANCE = 1.0
 OCCUPANCY_TOLERANCE = 0.18
 METHODS = {
-    "rapid": {"cost": 1, "detection_boost": 0.0},
-    "intensive": {"cost": 2, "detection_boost": 1.35},
+    "rapid": {"cost": 1, "detection_boost": -0.50},
+    "intensive": {"cost": 2, "detection_boost": 1.50},
 }
 
 

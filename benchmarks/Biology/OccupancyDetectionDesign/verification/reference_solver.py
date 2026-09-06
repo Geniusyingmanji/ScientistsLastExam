@@ -60,7 +60,8 @@ def _fit(rows, descriptors, model):
 
 
 def infer_with_policy(problem, survey, use_intensive=True, site_limit=24,
-                      test_nonlinearity=True, force_claim=False):
+                      test_nonlinearity=True, force_claim=False, blend=0.50,
+                      effect_cutoff=0.25):
     descriptors = list(problem["site_descriptors"])
     if site_limit < len(descriptors):
         ordered = sorted(descriptors, key=lambda row: row["habitat_covariate"])
@@ -74,6 +75,12 @@ def infer_with_policy(problem, survey, use_intensive=True, site_limit=24,
         indices = np.linspace(0, len(ordered) - 1, intensive_count).round().astype(int)
         rows.extend(survey(ordered[int(i)]["site_id"], "intensive") for i in indices)
 
+    remaining = problem["survey_budget_units"] - sum(row["budget_cost"] for row in rows)
+    if remaining:
+        ordered = sorted(descriptors, key=lambda row: (row["habitat_covariate"], row["transect_position"]))
+        repeat_indices = np.linspace(0, len(ordered) - 1, min(len(ordered), remaining)).round().astype(int)
+        rows.extend(survey(ordered[int(i)]["site_id"], "rapid") for i in repeat_indices)
+
     linear, linear_nll, n_sites = _fit(rows, problem["site_descriptors"], "linear")
     best_alt_bic = float("inf")
     if test_nonlinearity:
@@ -85,15 +92,25 @@ def infer_with_policy(problem, survey, use_intensive=True, site_limit=24,
     if test_nonlinearity and not force_claim and best_alt_bic + 2.0 < linear_bic:
         return {"confidence": 0.80, "evidence_query_ids": evidence, "abstain": True}
 
-    beta = float(linear[1])
-    if beta > 0.45:
+    by_site = {}
+    for row in rows:
+        by_site.setdefault(int(row["site_id"]), []).append(bool(row["detected"]))
+    lookup = {int(row["site_id"]): row for row in problem["site_descriptors"]}
+    measured_ids = sorted(by_site)
+    measured_x = np.array([lookup[site_id]["habitat_covariate"] for site_id in measured_ids])
+    detected = np.array([float(any(by_site[site_id])) for site_id in measured_ids])
+    raw_slope = float(np.sum((measured_x - np.mean(measured_x)) * (detected - np.mean(detected)))
+                      / np.sum((measured_x - np.mean(measured_x)) ** 2))
+    beta = float(blend * linear[1] + (1.0 - blend) * 4.0 * raw_slope)
+    if beta > effect_cutoff:
         effect = "positive"
-    elif beta < -0.45:
+    elif beta < -effect_cutoff:
         effect = "negative"
     else:
         effect = "none"
     habitat = np.array([row["habitat_covariate"] for row in problem["site_descriptors"]])
-    prevalence = float(np.mean(_sigmoid(linear[0] + linear[1] * habitat)))
+    likelihood_prevalence = float(np.mean(_sigmoid(linear[0] + linear[1] * habitat)))
+    prevalence = float(blend * likelihood_prevalence + (1.0 - blend) * np.mean(detected))
     return {
         "effect": effect,
         "habitat_effect": beta,

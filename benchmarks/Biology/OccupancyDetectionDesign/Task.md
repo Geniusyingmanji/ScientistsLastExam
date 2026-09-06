@@ -21,8 +21,8 @@ Implement `infer_occupancy(problem, survey)`.
 
 | key | meaning |
 |---|---|
-| `site_descriptors` | 24 mappings with `site_id`, `habitat_covariate`, `transect_position`, and `accessibility_index` |
-| `survey_budget_units` | total cost allowance, 42 |
+| `site_descriptors` | 48 mappings with `site_id`, `habitat_covariate`, `transect_position`, and `accessibility_index` |
+| `survey_budget_units` | total cost allowance, 84 |
 | `max_visits_per_site` | maximum number of surveys at one site, 3 |
 | `survey_methods` | mapping from `rapid` and `intensive` to their integer `cost` (1 and 2) |
 | `habitat_effect_bounds` | inclusive bounds for the reported logit-scale effect, `[-4, 4]` |
@@ -60,6 +60,11 @@ refusal. `combined_score` is the development mean normalized so blanket abstenti
 zero. Effect accuracy, beta score, mean-occupancy score, false discovery, refusal, supported
 coverage, attempted discovery, confidence, budget use, and held-out transfer remain separate.
 Held-out worlds and per-world truth are not search-visible.
+
+The truth-blind reference scores 0.796 development / 0.788 held out. Raw detections without the
+occupancy likelihood score 0.766 / 0.727; likelihood alone scores 0.681 / 0.731; omitting
+intensive surveys scores 0.097 / 0.286; and omitting model comparison scores 0.014 / 0.000.
+Thus repeat-method allocation and model-inadequacy testing each change the measured capability.
 
 ## Relationship to nearby tasks
 
