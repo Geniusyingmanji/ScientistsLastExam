@@ -495,6 +495,38 @@ tasks:
       baseline never declines. Candidate, not certified. No frontier searcher draw.
     citation_ids:
       - doi:10.1137/070710111
+  PowerSystems/GridTopologyRecovery:
+    status: candidate
+    reason: >-
+      Structure cell that is not ModalDamageAttribution (known topology, which
+      member) and not HiddenCouplingNetwork: DC angles on a five-bus catalog
+      recover a unique graph, and an electrically equivalent twin must be
+      refused. The star baseline never declines. Candidate, not certified. No
+      frontier searcher draw.
+    citation_ids:
+      - doi:10.1007/978-1-4615-4999-4
+  ControlTheory/LyapunovDecayCertificate:
+    status: candidate
+    reason: >-
+      Certificate-bound cell that is not a cart-pole controller and not a Bell
+      SOS identity: an exact rational common quadratic Lyapunov function proves
+      a decay rate for a published switched linear plant. The identity Gram at a
+      token rate is valid and scores exactly zero. Candidate, not certified. No
+      frontier searcher draw.
+    citation_ids:
+      - doi:10.1137/1.9781611970777
+      - doi:10.1007/978-0-8176-4297-6
+  Sensors/UltrasonicDefectSpecies:
+    status: candidate
+    reason: >-
+      Substance cell that is not modal member localisation and not a QCM BVD
+      inversion: a budgeted pulse-echo A-scan recovers crack/pore/lack-of-fusion/
+      none, and a mixture or mode-converted extra echo must be refused. The
+      clean-scan baseline never declines. Candidate, not certified. No frontier
+      searcher draw.
+    citation_ids:
+      - doi:10.1109/PROC.1985.13367
+      - doi:10.1007/978-3-319-30463-2
   Mathematics/RamseyLowerBound:
     status: candidate
     reason: >-

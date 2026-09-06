@@ -1,0 +1,4 @@
+1) Only edit solution.py. Keep identify_species(problem, measure).
+2) Return {"species", "confidence", "abstain"}. `species` must be one of problem["family_names"] unless abstaining. `confidence` in [0,1]; `abstain` a boolean. Omit species when abstaining.
+3) measure(time_us) charges one call. Bounds are problem["time_bounds_us"]. Do not exceed problem["measure_budget_calls"]. problem["wave_speed_mm_per_us"] is the published longitudinal speed.
+4) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read verification/ or frontier_eval/.

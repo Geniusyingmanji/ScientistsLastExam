@@ -1,0 +1,4 @@
+1) Only edit solution.py. Keep recover_topology(problem, measure).
+2) Return {"catalog_name", "confidence", "abstain"}. `catalog_name` must be one of problem["catalog_names"] unless abstaining. Edges are in problem["catalog_edges"]. `confidence` in [0,1]; `abstain` a boolean. Omit catalog_name when abstaining.
+3) measure(pattern_index, bus_index) charges one call. pattern_index is 0 or 1; bus_index is in [0, bus_count). Do not exceed problem["measure_budget_calls"].
+4) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read verification/ or frontier_eval/.

@@ -70,6 +70,7 @@ tasks:
   Exoplanets/TransmissionSpectrumSpecies: {form: discovery, kind: substance, note: which_molecules_are_present_under_a_budget_with_an_unidentifiable_regime}
   DiscreteGeometry/SpherePackingCertificate: {form: optimization, analogue: certificate_bound, note: exact_rational_Cohn_Elkies_bound_not_a_packing_construction}
   QuantumFoundations/BellBoundCertificate: {form: optimization, analogue: certificate_bound, note: exact_rational_SOS_bound_on_a_Bell_functional_not_a_construction}
+  ControlTheory/LyapunovDecayCertificate: {form: optimization, analogue: certificate_bound, note: exact_rational_common_quadratic_lyapunov_not_a_controller}
   Mathematics/NonlinearCodeRecords: {form: optimization, analogue: combinatorial}
   Algorithm/MatrixMultiplicationRank: {form: optimization, analogue: combinatorial}
   Algorithm/TensorRank555: {form: optimization, analogue: combinatorial, note: new_sizes_not_extension_of_certified_matmul}
@@ -100,11 +101,13 @@ tasks:
   # --- discovery / substance --------------------------------------------------
   MaterialsScience/PhaseDiagramDiscovery: {form: discovery, kind: substance}
   Physics/HiddenCouplingNetwork: {form: discovery, kind: structure}
+  PowerSystems/GridTopologyRecovery: {form: discovery, kind: structure, note: dc_line_status_not_modal_damage}
   ClimateScience/ForcedSignalAttribution: {form: discovery, kind: evidence}
   StructuralEngineering/ModalDamageAttribution: {form: discovery, kind: evidence}
   Mathematics/BlackBoxGroupIdentification: {form: discovery, kind: structure}
   Spectroscopy/CrowdedSpectrumAssignment: {form: discovery, kind: substance}
   MaterialsScience/QuinaryConvexHull: {form: discovery, kind: substance, note: quinary_hull_not_binary_xrd}
+  Sensors/UltrasonicDefectSpecies: {form: discovery, kind: substance, note: pulse_echo_defect_species_not_modal_member_or_qcm}
   # --- discovery / parameter inversion (SLE's remaining empty-looking cell) ---
   QuantumDynamics/HamiltonianLearning: {form: discovery, kind: parameter_inversion}
   QuantumControl/ActiveNoiseSpectroscopy: {form: discovery, kind: parameter_inversion, note: matched_psd_non_gaussian_filter_function_inversion_not_hamiltonian_learning}

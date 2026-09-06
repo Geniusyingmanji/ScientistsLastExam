@@ -45,6 +45,9 @@ RECORDED_LINEAGE = {
     "Physics/ComplexBoseLaw",
     "MaterialsScience/QuinaryConvexHull",
     "Mathematics/HeavyTailEvidence",
+    "PowerSystems/GridTopologyRecovery",
+    "ControlTheory/LyapunovDecayCertificate",
+    "Sensors/UltrasonicDefectSpecies",
     "Mathematics/NarrowAdmissibleTuple",
     "Superconductivity/SuperconductorTcRecord",
 }
