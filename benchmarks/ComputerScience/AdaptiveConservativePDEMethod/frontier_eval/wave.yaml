@@ -20,4 +20,4 @@ cells:
       evaluation_panel_path: frontier_eval/contracts/evaluation_panel_v1.json
       evaluation_panel_sha256: "dd9e9563ed513d7ce42131b7b95f49e8b15ac702a25bd661b4493d686269fa21"
       oracle_path: verification/evaluator.py
-      oracle_sha256: "4e94ebb21e88115426f2e868a8b0ad004ef9072d7844878492a1701758bbaa43"
+      oracle_sha256: "9c3ac0882b7c0eb68c857785f810eac6ec323a1774056762d9cce6b17db61ecd"

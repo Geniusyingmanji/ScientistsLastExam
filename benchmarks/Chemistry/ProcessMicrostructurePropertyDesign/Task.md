@@ -170,6 +170,13 @@ platform rather than an easy improvement. Reference-archive ablations score
 `0.7708825121464876` at fastest cooling, and `0.6727115591109907` at one low temperature. These
 tests establish local separation and uncapped headroom, not model-level or long-horizon hardness.
 
+Sealed-shift measured anchors (evaluator-side; they do not enter `combined_score`):
+
+| archive | development raw HV | development shifted HV | held-out raw HV | held-out shifted HV |
+|---|---:|---:|---:|---:|
+| baseline | 0.03655170742063612 | 0.032344076195489124 | — | — |
+| reference | 0.05589055199212832 | 0.05004532824833629 | 0.06125903702179302 | 0.055433072836922594 |
+
 Reported separately are `development_hypervolume_score`,
 `development_shifted_hypervolume_score`, feasibility, raw hypervolume, mean specific modulus,
 mean barrier index, mean process energy and mean phase contrast. `heldout_hypervolume_score` and

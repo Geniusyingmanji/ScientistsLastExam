@@ -8,7 +8,7 @@ oracle:
 normalization:
   baseline: Legal 32-cell piecewise-constant Rusanov/Euler method with CFL 0.45 and dissipation multiplier 1.15.
   reference: Executable 192-cell adaptive WENO3/Superbee/Godunov/SSPRK3 witness with curvature-triggered fallback; it is not a global optimum.
-  score: Smooth/shock-stratified four-world utility whose primary estimand is an accuracy--stability--work tradeoff under a hard work budget; the conservation term audits the shared conservative update and the evidence predicate gates balance failure. It is affinely normalized above the baseline and uncapped at the reference; all held-out axes remain separate.
+  score: Smooth/shock-stratified four-world utility whose primary estimand is an accuracy--stability--work tradeoff under a hard work budget; the conservation term audits the shared conservative update and the evidence predicate gates balance failure. It is affinely normalized above the baseline and uncapped at the reference; all held-out axes remain separate. Reported combined_score and raw_utility values are rounded to 6 decimal places.
 citations:
 - id: doi:10.1016/0021-9991(79)90145-1
   title: Towards the ultimate conservative difference scheme. V. A second-order sequel to Godunov's method
@@ -53,7 +53,17 @@ lineage:
   calibrator_model_ids: []
   calibration_runs: []
   calibration_evidence_status: missing
-  edits_triggered_by_model: Independent code review exposed a harmful slope-suppression sensor, a 216-point nonadaptive shortcut, an exact-reference prompt leak, a 48-point local search gain, signed-zero and inactive-coordinate identity aliases, and quadrature-defined target averages; the task was rebuilt around WENO3 with sensor-triggered fallback, analytic targets and an independent second replay, the known local gain became the ledger incumbent, and the final package was checked with reproducible 48/432-point sweeps and six ablations. Earlier runtime-unbound model diagnostics are excluded from task evidence; no trusted calibration run is attached.
+  edits_triggered_by_model: >-
+    Independent code review exposed a harmful slope-suppression sensor, a 216-point
+    nonadaptive shortcut, an exact-reference prompt leak, a 48-point local search
+    gain, signed-zero and inactive-coordinate identity aliases, and quadrature-defined
+    target averages; the task was rebuilt around WENO3 with sensor-triggered fallback,
+    analytic targets and an independent second replay, the known local gain became
+    the ledger incumbent, and the final package was checked with reproducible 48/432-point
+    sweeps and six ablations. Review found SIMD pairwise sums drifting CI pins at
+    1e-7; reported combined_score and raw_utility are now rounded to 6 decimals.
+    Earlier runtime-unbound model diagnostics are excluded from task evidence; no
+    trusted calibration run is attached.
   shortcut_discoverer: builder_self_audit
   frozen_before_eval: true
   freeze_timestamp: '2026-09-05T22:15:00Z'

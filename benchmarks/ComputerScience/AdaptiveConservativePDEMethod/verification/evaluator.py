@@ -646,9 +646,21 @@ def _normalized(value, weak, reference):
     return max((float(value) - float(weak)) / (float(reference) - float(weak)), 0.0)
 
 
+def _quantize_report(metrics):
+    """Round reported scores to 6 decimals so SIMD pairwise sums do not drift CI pins."""
+    skip = {"per_world", "frontier_records", "evaluation_errors", "method_canonical_id"}
+    quantized = dict(metrics)
+    for key, value in metrics.items():
+        if key in skip:
+            continue
+        if isinstance(value, float):
+            quantized[key] = round(value, 6)
+    return quantized
+
+
 def _invalid_metrics(errors, call_count):
     weak, reference = _anchors()
-    return {
+    return _quantize_report({
         "combined_score": 0.0,
         "valid": 0.0,
         "development_raw_utility": 0.0,
@@ -659,7 +671,7 @@ def _invalid_metrics(errors, call_count):
         "evaluation_error_count": len(errors),
         "evaluation_errors": errors,
         "frontier_records": [],
-    }
+    })
 
 
 def evaluate(candidate):
@@ -693,21 +705,23 @@ def evaluate(candidate):
     heldout_rows = [row for row in rows if row["split"] == "heldout"]
     development = _aggregate(development_rows)
     heldout = _aggregate(heldout_rows)
+    development_raw = round(float(development["raw_utility"]), 6)
+    heldout_raw = round(float(heldout["raw_utility"]), 6)
     weak, reference = _anchors()
     score = _normalized(development["raw_utility"], weak, reference)
     canonical_id = _canonical_method_id(method)
     record = _EVIDENCE.make_frontier_record(
         canonical_id,
-        development["raw_utility"],
+        development_raw,
         development["max_conservation_error"],
         True,
     )
     frontier_records = [] if record is None else [record]
     valid = 1.0 if record is not None else 0.0
-    return {
+    return _quantize_report({
         "combined_score": score if valid else 0.0,
         "valid": valid,
-        "development_raw_utility": development["raw_utility"],
+        "development_raw_utility": development_raw,
         "development_accuracy_score": development["accuracy_score"],
         "development_smooth_accuracy_score": development["smooth_accuracy_score"],
         "development_shock_accuracy_score": development["shock_accuracy_score"],
@@ -716,7 +730,7 @@ def evaluate(candidate):
         "development_max_conservation_error": development["max_conservation_error"],
         "development_mean_work_units": development["mean_work_units"],
         "development_cost_score": development["cost_score"],
-        "heldout_raw_utility": heldout["raw_utility"],
+        "heldout_raw_utility": heldout_raw,
         "heldout_accuracy_score": heldout["accuracy_score"],
         "heldout_smooth_accuracy_score": heldout["smooth_accuracy_score"],
         "heldout_shock_accuracy_score": heldout["shock_accuracy_score"],
@@ -732,4 +746,4 @@ def evaluate(candidate):
         "method_canonical_id": canonical_id,
         "per_world": rows,
         "frontier_records": frontier_records,
-    }
+    })

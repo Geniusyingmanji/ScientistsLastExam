@@ -75,6 +75,9 @@ class OpenVocabularyReactionNetworkDiscoveryTests(unittest.TestCase):
         self.assertEqual(result["development_correct_refusal_rate"], 1.0)
         self.assertEqual(result["development_calibrated_refusal_score"], 1.0)
         self.assertEqual(result["development_attempted_discovery_rate"], 0.0)
+        self.assertGreater(result["development_supported_count"], 0.0)
+        self.assertGreater(result["development_unsupported_count"], 0.0)
+        self.assertEqual(result["development_claimed_edge_denominator"], 0.0)
         self.assertAlmostEqual(
             result["development_confidence_calibration"], 1.0, places=12
         )
@@ -294,6 +297,20 @@ class OpenVocabularyReactionNetworkDiscoveryTests(unittest.TestCase):
         self.assertEqual(result["combined_score"], 0.0)
         self.assertEqual(result["development_attempted_discovery_rate"], 1.0)
         self.assertEqual(result["development_false_discovery_rate"], 1.0)
+        self.assertEqual(result["development_correct_refusal_rate"], 0.0)
+        self.assertGreater(result["development_unsupported_count"], 0.0)
+        self.assertGreater(result["development_claimed_edge_denominator"], 0.0)
+        self.assertEqual(
+            result["development_claimed_edge_count"],
+            result["development_claimed_edge_denominator"],
+        )
+
+    def test_never_refuse_on_unsupported_worlds_scores_zero(self):
+        result = self.evaluator.evaluate(self.baseline.discover_reaction_network)
+        self.assertEqual(result["valid"], 1.0)
+        self.assertEqual(result["combined_score"], 0.0)
+        self.assertEqual(result["development_correct_refusal_rate"], 0.0)
+        self.assertGreater(result["development_unsupported_count"], 0.0)
 
     def test_probe_accepts_a_constructed_species_not_presented_as_a_candidate(self):
         saw_novel_probe = []
