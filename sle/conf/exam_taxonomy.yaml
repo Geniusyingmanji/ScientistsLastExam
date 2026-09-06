@@ -95,6 +95,7 @@ tasks:
   ParticlePhysics/DiscrepantMeasurements: {form: discovery, kind: evidence, note: on_ramp_do_not_pair}
   ParticlePhysics/LookElsewhereAnomaly: {form: discovery, kind: evidence, note: trials_factor_not_clone_of_discrepant_measurements}
   Gravitation/PTAHellingsDowns: {form: discovery, kind: evidence, note: hd_orf_not_lookelsewhere_bump}
+  Mathematics/HeavyTailEvidence: {form: discovery, kind: evidence, note: clauset_tails_not_lookelsewhere}
   EvidenceSynthesis/ProspectiveMetaAnalysis: {form: discovery, kind: evidence}
   # --- discovery / substance --------------------------------------------------
   MaterialsScience/PhaseDiagramDiscovery: {form: discovery, kind: substance}

@@ -1,0 +1,13 @@
+domain: Mathematics
+task: HeavyTailEvidence
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: physical_sim
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 8
+science_metric: power_law_versus_lognormal_evidence_with_small_n_refusal
+reference_baseline: always publish a power law with alpha=2
+reference_sota: truth-blind log-moment family test with charged extra draws and a small-n refusal
+citation: "Clauset, Shalizi, Newman, SIAM Review 51, 661 (2009)"

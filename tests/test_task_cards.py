@@ -44,6 +44,7 @@ RECORDED_LINEAGE = {
     "Gravitation/PTAHellingsDowns",
     "Physics/ComplexBoseLaw",
     "MaterialsScience/QuinaryConvexHull",
+    "Mathematics/HeavyTailEvidence",
     "Mathematics/NarrowAdmissibleTuple",
     "Superconductivity/SuperconductorTcRecord",
 }
