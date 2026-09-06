@@ -1,0 +1,90 @@
+schema_version: 2
+scientific_question: >-
+  Can one reusable primal heuristic improve a weak feasible integer assignment on three frozen
+  MIPLIB 2017 all-integer models whose dated status is proven optimal?
+artifact: >-
+  Candidate code implementing improve_primal(problem), returning one dense integer assignment in
+  frozen MPS column order for each instance.
+oracle:
+  model: >-
+    A task-local MPS parser checks the three hash-bound vendored files, then checks variable
+    bounds, every linear row at MIPLIB linear tolerances, and the objective. Duals are never
+    consulted.
+  feasibility: >-
+    Exactly one integer per variable; booleans and floats are rejected; lower bounds and L/G/E
+    rows must hold at the frozen tolerances.
+  deterministic: true
+normalization:
+  baseline: >-
+    Weak feasible integers: the origin on gen-ip002, and two small-magnitude feasible points on
+    gen-ip021 and gen-ip054. Returning them scores zero.
+  reference: >-
+    MIPLIB 2017 solufile v36 proven optima: -4783.733392, 2361.45419519, 6840.96564179. The
+    corresponding assignments are not redistributed.
+  score: >-
+    Mean of clip01((baseline_objective - objective) / (baseline_objective - reference_objective)).
+    Clipped because the three models are proven optimal; this is not an open-incumbent claim.
+citations:
+  - id: doi:10.1007/s12532-020-00194-3
+    title: "MIPLIB 2017: Data-Driven Compilation of the 6th Mixed-Integer Programming Library"
+  - id: web:miplib2017-v36
+    title: "MIPLIB 2017 solution file version 36, 2026-01-26"
+invariants:
+  - >-
+    The three MPS files are hash-bound and parsed on every evaluation; no live download and no
+    .sol files.
+  - The checker is primal-only. Dual unboundedness or dual feasible rays are not scored.
+  - Malformed submissions score zero and never raise out of the evaluator.
+  - The three models are MIPLIB-easy and proven optimal; score one is not a new library record.
+known_shortcuts: >-
+  Coordinate ±1 descent plus 200 random tweaks (1448 checks, seed 0) scores 0.734 and does
+  not reach the dated optima. Memorizing a published optimal assignment still scores one;
+  that is a protocol on-ramp, which is why the formula is clipped. SciPy is mounted.
+review:
+  status: pending_external
+  domain: pending_external_operations_research
+  evaluator_security: >-
+    Bounded dense-integer response; MPS parser accepts only the three named files; malformed
+    output scores zero.
+provenance:
+  class: public_data_replay
+  target_source: >-
+    Hash-frozen MIPLIB 2017 MPS files gen-ip002, gen-ip021, gen-ip054 and solufile-v36 objective
+    anchors.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: completed_2026_09_06_against_solufile_v36
+novelty_risk:
+  level: high
+  rationale: >-
+    Public instances and published optima may occur in training data. Only a verified feasible
+    assignment is scored, and score one is clipped at a proven optimum.
+lineage:
+  status: complete
+  builder_model_ids: ["cursor-grok-4.6"]
+  builder_scaffolds: ["cursor"]
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    Converted from a gated open-instance design that fetched official .sol files. The conversion
+    vendors three small proven-optimal models, drops live download, and clips the score.
+  shortcut_discoverer: builder_self_audit
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: cursor-grok-4.6
+  reviewer_domain: pending_external_operations_research
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: >-
+    Baseline assignments were rechecked against the parsed MPS at the frozen tolerances; gen-ip002
+    at the origin is feasible with objective 0.
+  independent_recomputation_status: >-
+    MPS hashes, dimensions, and dated =opt= values are reproducible from the package and solufile
+    v36.

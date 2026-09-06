@@ -1,0 +1,9 @@
+1) Only edit solution.py. Keep build_proofs(problem).
+2) Return a mapping theorem name -> list of proof lines. Each line is
+   {"axiom": name, "subst": {"X": ..., "Y": ..., "Z": ...?}} or
+   {"mp": [antecedent_index, implication_index]}.
+3) problem contains size_cap, axiom_names, atoms, and theorems. Each theorems entry
+   contains name, theorem, size_cap, axiom_names, atoms, and target_size.
+4) Last line must equal theorem. Proofs longer than size_cap are rejected. No sorry.
+5) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read
+   verification/ or frontier_eval/.

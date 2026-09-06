@@ -1,0 +1,13 @@
+domain: QuantumFoundations
+task: FourSettingMomentCertificate
+scientific_role: optimization
+difficulty: hard
+tier: T2
+oracle_type: analytical
+score_mode: uncapped
+gpu_required: false
+eval_time_seconds: 8
+science_metric: mean_log_progress_from_the_triangle_bound_to_a_wave_target_of_3_on_I4422_13
+reference_baseline: the triangle inequality written as squares over the NPA-1 basis
+reference_sota: "hand exact SOS proving 7/2; score one hung at bound 3.0, not at the catalog"
+citation: "Brunner and Gisin, Partial list of bipartite Bell inequalities with four binary settings, arXiv:0711.3362; Cruzeiro and Gisin, arXiv:1811.11820; Navascues, Pironio, Acin, DOI 10.1103/PhysRevLett.98.010401"

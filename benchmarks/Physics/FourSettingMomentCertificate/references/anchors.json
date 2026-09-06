@@ -1,0 +1,25 @@
+{
+  "anchors": [
+    {
+      "name": "i4422_13_classical",
+      "value": 0.0,
+      "source_url": "https://arxiv.org/abs/0711.3362",
+      "derivation": "Appendix A table I_4422^{13} <= 0. Enumerated here over all 256 deterministic ±1 strategies of the correlator form, maximum exactly 0.",
+      "retrieved_on": "2026-09-06"
+    },
+    {
+      "name": "i4422_13_two_qubit",
+      "value": 0.25,
+      "source_url": "https://arxiv.org/abs/0711.3362",
+      "derivation": "Table 1, quantum max violation 0.2500. Independently the affine form 1+I_CG has Q=1.25 in arXiv:1811.11820 Table I row 24.",
+      "retrieved_on": "2026-09-06"
+    },
+    {
+      "name": "i4422_13_catalog_sos",
+      "value": 3.5,
+      "source_url": "package:verification/reference_certificate.py",
+      "derivation": "Hand exact SOS replacing two CHSH 2x2 blocks using four frozen BB extras. Expanded here to (beta-8)/4 = 7/2.",
+      "retrieved_on": "2026-09-06"
+    }
+  ]
+}

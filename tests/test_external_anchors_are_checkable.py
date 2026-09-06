@@ -48,6 +48,7 @@ DECLARED_EXTERNAL_ANCHORS = {
     "Exoplanets/TransmissionSpectrumSpecies",
     "DiscreteGeometry/SpherePackingCertificate",
     "QuantumFoundations/BellBoundCertificate",
+    "DiscreteOptimization/MiplibPrimalIncumbent",
     "Mathematics/NonlinearCodeRecords",
     "Optimization/CirclePacking",
     "Algorithm/MatrixMultiplicationRank",

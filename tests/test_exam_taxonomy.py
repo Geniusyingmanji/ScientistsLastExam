@@ -92,6 +92,18 @@ class ExamTaxonomyTests(unittest.TestCase):
             tax["tasks"]["Mathematics/HeavyTailEvidence"].get("note"),
             "clauset_tails_not_lookelsewhere",
         )
+        self.assertEqual(
+            tax["tasks"]["DiscreteOptimization/MiplibPrimalIncumbent"].get("note"),
+            "miplib_primal_incumbents_not_permutation_flowshop",
+        )
+        self.assertEqual(
+            tax["tasks"]["QuantumFoundations/FourSettingMomentCertificate"].get("note"),
+            "i4422_moment_subset_not_i3322_word_budget_sos",
+        )
+        self.assertEqual(
+            tax["tasks"]["Mathematics/FrozenKernelProofFrontier"].get("note"),
+            "frozen_kernel_proof_size_not_lean_mathlib_or_tate",
+        )
 
 
 if __name__ == "__main__":
