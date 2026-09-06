@@ -1,0 +1,114 @@
+schema_version: 2
+scientific_question: Does a Hess-closure enthalpy network, under a replicate and
+  cross-check budget, support a consistency verdict, a localized fault or a named
+  drifting instrument — and is the refusal to attribute an unqueried pendant pair honest?
+artifact: A verdict string, flagged measurement ids, an optional instrument name,
+  corrected enthalpies for every determination and a confidence scalar.
+oracle:
+  model: deterministic seven-isomer interconversion network with rank-7 closure, seeded
+    enthalpies, balanced three-class instrument assignment with stated precisions,
+    Gaussian noise, systematic instrument offsets, single slips of 28-110 kJ/mol, and a
+    pendant duplicate/reverse pair whose attribution is resolvable only by a budgeted
+    cross-check
+  feasibility: complete corrected-enthalpy coverage, verdict from the public vocabulary,
+    unique flags, charged queries within a six-unit budget
+  deterministic: true
+  external_tooling: none beyond NumPy
+difficulty_ladder:
+  default_level: 1
+  levels:
+    1: stated instrument precisions, drift offsets 4-8 kJ/mol
+    2: 25 percent larger uncertainties and stronger drifts
+    3: 55 percent larger uncertainties and strongest drifts
+normalization:
+  baseline: trusts every reported value and calls the batch consistent
+  reference: weighted network adjustment with dominant-outlier drop-and-refit, coherent
+    same-direction class testing with one confirming cross-check, pendant triage
+  score: correction gain, verdict correctness and flagged-set diagnosis blended per
+    world, normalized above the passive auditor; false discovery and refusal remain
+    separate
+citations:
+- id: doi:10.1021/jp047912y
+  title: Introduction to Active Thermochemical Tables - Several key enthalpies revisited
+- id: doi:10.1021/acs.jpca.6c03567
+  title: A perspective on Active Thermochemical Tables as critical data infrastructure
+invariants:
+- Hess closure holds exactly on the noise-free network
+- replicates shrink random error but never a systematic offset; cross-checks reveal both
+- the pendant pair shares one instrument class and its tension is resolvable only by a
+  pendant cross-check
+- the passive auditor scores exactly zero after normalization
+- malformed or overspent laboratory calls invalidate the world even when caught
+known_shortcuts: Naive single-outlier flagging with least-squares corrections reaches
+  0.202, an always-underdetermined auditor reaches 0.117 and constant instrument-drift
+  claims reach 0.000 against the 0.556 reference; no tested shortcut approaches it.
+  Formal clean Linux calibration and independent domain validation remain pending.
+licensing:
+  task_package: repository_license_not_declared
+  external_assets: none
+  note: All runtime worlds are generated from original repository code; cited publications
+    are not redistributed.
+contamination:
+  status: cannot_be_ruled_out
+  rationale: The network, instrument classes and procedural corruptions are public and
+    were built with AI assistance; server-held networks and independent corruptions are
+    still required.
+review:
+  domain: pending_external_thermochemistry
+  evaluator_security: targeted_local_regressions_added_clean_linux_sandbox_replay_pending
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic thermochemical networks with development
+    and held-out enthalpies, instruments, noise and corruption regimes.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Evidence-audit over closure-constrained networks mirrors Active
+    Thermochemical Tables in shape but not data; builder-model independence is not
+    established.
+lineage:
+  status: complete
+  builder_model_ids:
+  - glm-5.3
+  builder_scaffolds:
+  - repository-native-chemistry-task-pattern
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: 2026-09-05 local build caught least-squares smearing of a
+    giant slip into a fake class drift, a length-truncated corrected-enthalpy artifact,
+    an over-tight chi-square gate that false-alarmed clean worlds, and an aggregate
+    drift signal absorbed below detection; each was fixed and pinned by tests.
+  shortcut_discoverer: initial_internal_red_team
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: initial_internal
+  author_domain: AI-assisted benchmark engineering
+  reviewer_domain: pending_external_thermochemistry
+  expert_hours: null
+  red_team_rounds: 2
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: standalone_public_model_references_pending
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+difficulty_assessment:
+  status: unverified_candidate
+  requirement: standard-method and low-dimensional shortcut sweeps, capability ablations
+    and clean frontier-model calibration before certification
+  remaining_risk: The reference leaves headroom on correction gain (0.15); stronger
+    robust adjustment could close it, so the difficulty target needs a frontier draw.
+
+frontier_eng_overlap_review:
+  date: '2026-09-06'
+  classification: 无
+  nearest: snar_multiobjective; mit_case1_mixed; reizman_suzuki_pareto
+  distinction: Replicates and cross-checks diagnose enthalpy-network inconsistency,
+    instrument drift and unidentifiable fault attribution. FE selects reaction conditions
+    for yield or waste; no measurement-consistency verdict is requested.
+  evidence: .research/pr9_frontier_eng_overlap_2026-09-06.md
+  status: source_count_discrepancy_pending_maintainer_confirmation

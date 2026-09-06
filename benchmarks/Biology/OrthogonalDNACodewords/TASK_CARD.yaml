@@ -1,0 +1,110 @@
+schema_version: 2
+scientific_question: How large an orthogonal DNA word library can be built under fixed
+  GC, Hamming, shifted cross-dimer and homopolymer constraints, where verification is
+  exact counting and the record is open?
+artifact: One word list per constraint family; every word and pair must pass exact
+  verification.
+oracle:
+  model: exact integer constraint counting over encoded words — pairwise Hamming
+    matrices with the diagonal excluded, Watson-Crick complementary matches over all
+    thirty-one shifted reverse-complement alignments including self-dimers, homopolymer
+    run lengths, exact GC counts
+  feasibility: 2..512 unique words per family, alphabet ACGT, fixed length
+  deterministic: true
+  external_tooling: none beyond NumPy
+difficulty_ladder:
+  default_level: 1
+  levels:
+    1: two constraint families (dna16, dna12) with the frozen witness anchor
+normalization:
+  baseline: the trivial two-word library per family, scoring exactly zero
+  reference: seeded pool-greedy restarts plus a removal-repair phase; the frozen
+    witness sizes are dna16 32 and dna12 29
+  score: mean over families of (size - 2)/(witness - 2); larger libraries score above
+    one with no cap
+citations:
+- id: doi:10.1089/10665270152530818
+  title: On combinatorial DNA word design
+- id: doi:10.1038/s43588-024-00646-z
+  title: Scalable design of orthogonal DNA barcode libraries
+- id: url:https://www.combinatorics.org/ojs/index.php/eljc/article/view/v10i1r33
+  title: Bounds for DNA codes with constant GC content
+invariants:
+- the verifier is independent of the construction method
+- a word never pairs with itself for Hamming purposes but must pass the self-dimer cap
+- zero-overlap alignments contribute nothing to the cross-dimer count
+- the trivial two-word library scores exactly zero and the witness exactly one
+known_shortcuts: A five-restart greedy under a different seed reaches 0.864 — the
+  search is seed-sensitive rather than shortcut-prone; no low-dimensional family
+  applies because the artifact is the object itself. Formal clean Linux calibration
+  and independent review remain pending.
+licensing:
+  task_package: repository_license_not_declared
+  external_assets: none
+  note: All witness libraries are generated from original repository code; cited
+    publications are not redistributed.
+contamination:
+  status: cannot_be_ruled_out
+  rationale: The constraint families mirror published DNA word design and published
+    constructions may exceed the witness; that is legitimate record-chasing, but a
+    memorized published library must still pass verification, which is the intended
+    difficulty.
+review:
+  domain: pending_external_synthetic_biology
+  evaluator_security: targeted_local_regressions_added_clean_linux_sandbox_replay_pending
+provenance:
+  class: public_data_replay
+  target_source: Frozen truth-blind greedy witness sizes reproduced by the runnable
+    reference in verification/.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: DNA word design is a mature field with published libraries; the
+    constraint family and witness anchor are original to this package and no registry
+    task covers this regime.
+lineage:
+  status: complete
+  builder_model_ids:
+  - glm-5.3
+  builder_scaffolds:
+  - repository-native-biology-task-pattern
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: 2026-09-05 local build caught a Hamming matrix that
+    counted the diagonal, a baseline that read verification/, and a missing self-dimer
+    check that let invalid libraries pass; each was fixed and pinned by tests.
+  shortcut_discoverer: initial_internal_red_team
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: initial_internal
+  author_domain: AI-assisted benchmark engineering
+  reviewer_domain: pending_external_synthetic_biology
+  expert_hours: null
+  red_team_rounds: 2
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: witness_reproduced_by_runnable_reference
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+difficulty_assessment:
+  status: unverified_candidate
+  requirement: standard-method and low-dimensional shortcut sweeps, capability ablations
+    and clean frontier-model calibration before certification
+  remaining_risk: The greedy witness saturates near 28 words; stronger search (local
+    repair, SAT or clique methods) may push well past it, which is the intended open
+    record but must be shown by a frontier draw.
+
+frontier_eng_overlap_review:
+  date: '2026-09-06'
+  classification: 无
+  nearest: HighReliableSimulation; LDPCErrorFloor
+  distinction: Construct a maximal DNA word library satisfying exact GC, homopolymer,
+    Hamming and shifted cross-dimer constraints. FE estimates error probabilities of
+    fixed communication codes; it does not construct biochemical codewords.
+  evidence: .research/pr9_frontier_eng_overlap_2026-09-06.md
+  status: source_count_discrepancy_pending_maintainer_confirmation

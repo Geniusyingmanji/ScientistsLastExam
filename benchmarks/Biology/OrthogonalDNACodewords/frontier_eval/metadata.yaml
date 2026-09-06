@@ -1,0 +1,16 @@
+domain: SyntheticBiology
+task: OrthogonalDNACodewords
+scientific_role: optimization
+difficulty: hard
+tier: T2
+oracle_type: analytical
+score_mode: uncapped
+gpu_required: false
+eval_time_seconds: 120
+science_metric: orthogonal DNA codeword library size under hybridization constraints
+  against a frozen witness search
+reference_baseline: the trivial two-word library per family
+reference_sota: seeded random-pool greedy constructor; runnable witness, not a claimed
+  optimum; published DNA word design constructions may exceed it
+citation: Marathe, Condon & Corn 2001 J Comput Biol doi:10.1089/10665270152530818;
+  Gowri, Sheng & Yin 2024 Nat Comput Sci doi:10.1038/s43588-024-00646-z
