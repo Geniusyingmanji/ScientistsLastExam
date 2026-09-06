@@ -932,6 +932,7 @@ def main(argv: list[str] | None = None) -> int:
             "max_output_tokens": llm.config.max_output_tokens,
             "temperature": llm.config.temperature,
             "reasoning_effort": llm.config.reasoning_effort,
+            "chat_thinking": llm.config.chat_thinking,
             "input_cost_per_million": llm.config.input_cost_per_million,
             "output_cost_per_million": llm.config.output_cost_per_million,
             "server_side_seed_control": False,

@@ -177,6 +177,7 @@ def llm_condition_descriptor(llm: LLMClient) -> dict[str, Any]:
         "model": getattr(config, "model", None),
         "wire": getattr(config, "wire", None),
         "reasoning_effort": getattr(config, "reasoning_effort", None),
+        "chat_thinking": getattr(config, "chat_thinking", None),
         "temperature": getattr(config, "temperature", None),
         "max_output_tokens": getattr(config, "max_output_tokens", None),
         "timeout_seconds": getattr(config, "timeout_seconds", None),
@@ -220,6 +221,9 @@ def llm_condition_sha256(llm: LLMClient) -> str:
     # hashes; turning the fallback on is a different searcher.
     if getattr(config, "chat_reasoning_fallback", False):
         payload["chat_reasoning_fallback"] = True
+    chat_thinking = getattr(config, "chat_thinking", None)
+    if chat_thinking is not None:
+        payload["chat_thinking"] = chat_thinking
     # Preserve legacy hashes for the original defaults, while binding every option that changes
     # the wire contract or reasoning budget when it is actually selected.
     chat_max_tokens_field = getattr(config, "chat_max_tokens_field", "max_tokens")
