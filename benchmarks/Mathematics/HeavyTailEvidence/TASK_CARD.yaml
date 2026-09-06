@@ -1,0 +1,60 @@
+schema_version: 2
+scientific_question: From a public positive sample and a budget of extra draws, decide whether the tail is a power law or a lognormal above a known xmin, or refuse when the sample is too small or the tail is an exponential cutoff outside both families.
+artifact: A family name, an alpha (used on power-law claims), a confidence, and an optional refusal.
+oracle:
+  model: procedurally parameterized power-law and lognormal tails plus exponential-cutoff and small-n out-of-family worlds
+  feasibility: charged extra draws, family recovery on in-family worlds, and calibrated refusal of cutoffs and small samples
+  deterministic: true
+normalization:
+  baseline: always publish a power law with alpha=2
+  reference: log-moment family test with extra draws, abstaining on public n<25 and on exponential cutoffs
+  score: development mechanism recovery normalized above always-abstain; signal recovery, false discovery, refusal, coverage and the held-out split stay separate
+citations:
+- id: doi:10.1137/070710111
+  title: "Power-Law Distributions in Empirical Data"
+invariants:
+- in-family tails are a power law with xmin known or a lognormal truncated below xmin
+- an exponential cutoff and a sample too small to separate the families are out-of-family and must be refused
+- declining every world scores exactly zero; the axes separate blanket abstention from confident publication
+- extra draws are charged and overspend fails closed; malformed submissions score zero and never raise out of the evaluator
+- held-out split, per-world rows and the discovery axes remain evaluator-only
+known_shortcuts: xmin is given, so the Clauset xmin search is not in the score. World seeds are repository-visible and require a future server-held split. A full likelihood-ratio test against a truncated power law can still tighten alpha and is leftover headroom, not an exploit.
+review:
+  domain: pending_external
+  evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_abstention_normalization_checks
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic generator with development and sealed held-out power-law, lognormal, cutoff and small-n worlds.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Power-law versus lognormal is a textbook Clauset question. What is not published is which world is a cutoff or too short, and the score turns on naming the family without publishing those out-of-family worlds.
+lineage:
+  status: complete
+  builder_model_ids:
+  - cursor-grok-4.6
+  builder_scaffolds:
+  - cursor
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    None. No frontier searcher draw has been run. In-process pins are tests/test_heavy_tail_evidence.py
+    (blanket abstention scores zero; the delivered baseline sits below the sealed reference).
+  shortcut_discoverer: builder_self_audit
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: cursor-grok-4.6
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: the reference, the baseline, the abstention normalisation and the three bad-candidate shapes are all runnable from this directory

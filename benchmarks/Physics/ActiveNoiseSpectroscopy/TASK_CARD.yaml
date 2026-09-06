@@ -1,0 +1,146 @@
+schema_version: 2
+scientific_question: >-
+  Can an active qubit-spectroscopy policy distinguish a single non-Gaussian fluctuator from
+  Gaussian noise with exactly the same Lorentzian power spectrum, recover the fluctuator's
+  switching rate, variance and occupancy, and refuse multi-source or finite-shot ambiguous data?
+artifact: >-
+  A single-telegraph physical noise model with three continuous parameters and confidence, or a
+  calibrated refusal, produced after freely designing bounded pi-pulse switching functions and
+  allocating a cumulative shot budget over a complete public eight-control panel.
+oracle:
+  model: >-
+    Gaussian Ornstein-Uhlenbeck coherence is evaluated by an exact piecewise solution of the
+    exponential-covariance filter integral. Single random-telegraph coherence is evaluated by
+    exact 2x2 tilted-Markov matrix exponentials on every constant switching-function interval;
+    independent fluctuators compose multiplicatively. X/Y readout uses deterministic seeded
+    binomial streams.
+  reference_designer: >-
+    A truth-blind nonlinear least-squares fit implemented independently in
+    verification/reference_spectroscopist.py; it measures six Ramsey, echo and offset-echo
+    controls, compares one-fluctuator and Gaussian residuals, and never imports the evaluator.
+  feasibility: >-
+    Strict finite parameter bounds, a complete allowlist of eight pulse controls,
+    non-boolean Python/NumPy integer allocations of 100-6000 shots per quadrature per call, and
+    24000 cumulative X/Y shots. Any callback protocol
+    error or overspend invalidates the world even when candidate code catches it.
+  deterministic: true
+  determinism_note: >-
+    Each world/control/quadrature owns a SHA-256-derived NumPy random stream. Successive calls
+    consume successive absolute shots, so splitting an allocation repeats no samples. Trusted
+    NumPy and SciPy versions remain runtime-bound by the repository evidence machinery.
+  external_tooling: numpy and scipy only
+normalization:
+  baseline: >-
+    Make no measurement and claim midpoint single-fluctuator parameters in every environment;
+    measured combined score 0 with unsupported false-positive rate 1.
+  reference: >-
+    Six-filter, 23400-shot transfer-matrix fit; measured development/heldout mechanism scores
+    0.9406/0.8823 before external review or model calibration.
+  score: >-
+    clip((sum supported three-parameter mechanism recovery - unsupported false-claim count) /
+    supported-world count, 0, 1). Correct refusal only avoids a penalty and never adds positive
+    score, so always-abstain is exactly zero. Heldout prediction, FDR, unsupported false-positive
+    rate, correct and unwarranted refusal, attempted discovery, calibration and shot use remain
+    separate with explicit denominators. Public valid/selection depend only on development;
+    heldout validity is published independently. On an incomplete heldout split, mechanism and
+    prediction become zero lower bounds while FDR, FPR, refusal and coverage proportions become
+    JSON null; status and count fields remain available.
+citations:
+  - id: doi:10.1038/s41467-019-11699-4
+    title: Non-Gaussian noise spectroscopy with a superconducting qubit sensor
+  - id: arxiv:1903.01043
+    title: Non-Gaussian noise spectroscopy with a superconducting qubit sensor
+  - id: doi:10.1103/PhysRevLett.116.150503
+    title: Qubit noise spectroscopy for non-Gaussian dephasing environments
+invariants:
+  - >-
+    Gaussian OU and stationary random-telegraph worlds with equal rate and variance have exactly
+    C2(tau)=variance*exp(-rate*abs(tau)) and the same Lorentzian PSD; a PSD-only method cannot
+    distinguish their mechanisms.
+  - >-
+    A symmetric telegraph source has zero odd cumulants and zero coherence phase but differs from
+    its Gaussian match in real coherence through even cumulants; phase-only classification must
+    miss this supported world.
+  - >-
+    Every supported world passes a full-budget matched-Gaussian KL screen, a free-rate/free-variance
+    Gaussian residual screen over the complete legal control panel, and rank three of the local
+    complex-coherence Jacobian for rate, variance and occupancy. The ambiguous worlds fail the
+    first screen by a large margin.
+  - >-
+    The submitted model is propagated on three evaluator-only pulse controls, so a correct family
+    label with generic parameters cannot inherit the reference's heldout prediction score.
+  - >-
+    Always-abstain scores exactly zero; every unsupported non-abstaining structural claim subtracts
+    one supported-world unit from the precision-weighted numerator.
+  - >-
+    Invalid heldout rows cannot silently improve heldout mechanism or FDR: heldout feasibility and
+    counts are explicit; an incomplete split uses zero only for mechanism/prediction lower bounds
+    and null for ratio estimates, without changing development valid or combined_score.
+  - malformed candidates and caught callback protocol violations score zero without escaping the evaluator
+known_shortcuts: >-
+  The public equations make a PSD fit easy, but it cannot distinguish the exactly matched Gaussian
+  and telegraph worlds. A one-control longest-Ramsey phase probe with generic parameters scores
+  0.3933 development / 0.3699 heldout: it finds asymmetric fluctuators and correctly refuses the
+  unsupported worlds, but has 0.25 / 0.333 unwarranted-refusal rates because symmetric supported
+  fluctuators have zero phase. The delivered no-measurement baseline scores zero and falsely claims
+  every unsupported world. The finite control panel and procedural world parameters are not a
+  claim of device realism; a future server-held generator and frontier calibration are required.
+review:
+  status: pending_external
+  domain: pending_external_quantum_control_and_noise_spectroscopy
+  evaluator_security: >-
+    Candidate code runs only through the repository sandbox boundary. The oracle receives data,
+    catches malformed outputs, invalidates any callback protocol violation, allowlists controls and
+    shots, and uses fixed-size 2x2 matrix exponentials; submission content cannot make trusted
+    work unbounded.
+  reference_implementation_verified: >-
+    Truth-blind and separately implemented; current targeted tests compare it with the evaluator
+    but no independent domain expert has reviewed the physics or thresholds.
+provenance:
+  class: procedural
+  target_source: >-
+    Repository-hidden fixed worlds derived from the OU and random-telegraph models supported by
+    the cited filter-function/non-Gaussian spectroscopy literature; no experimental records are
+    copied or claimed.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: >-
+    Filter functions, Gaussian OU noise, random telegraph noise and higher-order noise
+    spectroscopy are published methods. The benchmark contribution is their matched-PSD active
+    estimation/refusal protocol with sealed prediction, not a new physics result. It is distinct
+    from HamiltonianLearning, HiddenCouplingNetwork and PTAHellingsDowns, but still needs an
+    external overlap review before registry integration.
+lineage:
+  status: complete
+  builder_model_ids: [openai:gpt-5-codex]
+  builder_scaffolds: [codex]
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    Before any calibration draw, review added a symmetric supported telegraph world after a
+    one-Ramsey phase shortcut classified every earlier family; made the scoring's false-claim
+    penalty explicit; separated FDR from unsupported false-positive rate; added local Jacobian-rank
+    checks; and changed shot randomness to auditable per-control streams with caught protocol
+    errors remaining invalid.
+  shortcut_discoverer: multi_agent_builder_review
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: machine_generated_with_primary_source_grounding
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 2
+  oracle_disagreement_status: not_yet_cross_checked_against_an_independent_package
+  independent_recomputation_status: >-
+    Gaussian coherence is cross-checked against direct numerical covariance integration in the
+    task-specific tests; the one-fluctuator reference independently reimplements the transfer
+    propagation and is evaluated on every development and heldout world.
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []

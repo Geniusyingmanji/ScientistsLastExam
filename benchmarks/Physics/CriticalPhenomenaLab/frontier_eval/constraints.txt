@@ -1,0 +1,1 @@
+Edit only solution.py. Preserve discover_critical_behavior. Use deterministic CPU-only Python/NumPy/SciPy, stay within the experimental budget, and do not access verification or frontier_eval internals.
