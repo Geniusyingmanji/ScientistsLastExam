@@ -1,0 +1,14 @@
+domain: Mathematics
+task: ShannonCapacityConstruction
+scientific_role: optimization
+difficulty: hard
+tier: T2
+oracle_type: analytical
+score_mode: uncapped
+gpu_required: false
+eval_time_seconds: 2
+science_metric: exact_fifth_power_independent_set_size_gain_over_product_code
+reference_baseline: 243-word product code {0,2,4}^5
+reference_sota: >-
+  exact 367-word Polak-Schrijver 2018 historical fifth-power witness; not a current global record
+citation: Polak and Schrijver, arXiv:1808.07438v2, Appendix explicit code

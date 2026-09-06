@@ -1,0 +1,115 @@
+schema_version: 2
+scientific_question: >-
+  Construct four approximately mutually unbiased measurement bases in complex dimension six,
+  optimizing their average pairwise transition-probability distance under a finite exact
+  Gaussian-integer ray representation.
+artifact: >-
+  Three row-major 6 by 6 Gaussian-integer ray matrices whose columns are nonzero and exactly
+  orthogonal; the standard basis is implicit.
+oracle:
+  model: >-
+    exact integer inner products and rational transition probabilities, with ASD equal to one minus
+    the summed squared deviation from 1/6 divided by 30
+  feasibility: >-
+    exactly three explicit bases, each with six nonzero exactly orthogonal columns and integer-pair
+    coordinates within the public 384-bit cap; the evaluator does not round or repair submissions
+  deterministic: true
+normalization:
+  baseline: >-
+    three additional identity matrices, giving four coincident bases, ASD zero and score zero
+  reference: >-
+    an immutable 32-bit rounded and exactly Gram-Schmidt-orthogonalized rational reconstruction of
+    the public Raynal-Lu-Englert approximate construction; the oracle recomputes its exact ASD
+  score: >-
+    candidate exact ASD divided by the fixed rational fixture ASD, retained above one; a separate
+    exact interval gate, not ordinary score, identifies improvement beyond the algebraic construction
+citations:
+  - id: doi:10.1103/PhysRevA.83.062303
+    title: "Raynal, Lu and Englert, Mutually unbiased bases in dimension six: The four most distant bases"
+  - id: arxiv:1103.1025v1
+    title: "Raynal, Lu and Englert preprint with the explicit block construction"
+  - id: arxiv:2410.23997v2
+    title: "McNulty and Weigert, Mutually unbiased bases in composite dimensions, 2026 review"
+  - id: arxiv:2608.18053v1
+    title: "Order-six complex Hadamard classification preprint, August 2026"
+invariants:
+  - >-
+    independent SymPy conjugate-Gram calculations prove every stored reference basis is exactly
+    orthogonal, and every exact transition-probability matrix has unit row and column sums
+  - >-
+    Pauli X, Y and Z in dimension two give ASD exactly one, while four coincident identity bases in
+    dimension six give SSE 30 and ASD exactly zero
+  - >-
+    common exact unitary changes, column permutation, scaling and phase preserve the score; an
+    independent left change of one basis need not preserve it
+  - >-
+    an independently derived 80-bit rational interval encloses the algebraic Raynal ASD and makes
+    the beyond-published-reference comparison exact rather than a float tolerance
+  - >-
+    malformed coordinates, shapes, zero columns, arbitrarily small nonorthogonality, exceptions and
+    mutated problem limits all fail closed without oracle-side repair
+  - >-
+    the Gaussian-rational field obstruction excludes exact triples including I only for this
+    representation and is never generalized to arbitrary complex bases
+known_shortcuts: >-
+  The public Raynal-Lu-Englert equations plus the public integer Gram-Schmidt helper reconstruct the
+  score-one fixture cheaply. Requantizing at 36 bits already sets beyond_rational_fixture=true and
+  yields a normalized score above one, but remains about 6.34e-23 below the rigorous upper endpoint
+  for the algebraic construction. Three seeded full-space local searches and a warm-start control
+  found no candidate above that endpoint. Matching or requantizing a known formula is not a research
+  breakthrough, and these probes do not establish frontier difficulty or global optimality.
+review:
+  status: pending_external
+  domain: pending_external_quantum_information_and_numerical_optimization
+  evaluator_security: >-
+    Candidate code runs only in the standard Bubblewrap worker; the trusted standard-library oracle
+    receives integer data, validates complete shapes and 384-bit coordinate bounds before products,
+    and then performs bounded exact arithmetic. The immutable fixture stays under references/ and
+    is never exposed through agent_files. Trusted sandbox execution remains pending on Linux.
+provenance:
+  class: known_answer
+  target_source: >-
+    Raynal-Lu-Englert Eqs. (2)-(6) and (19)-(22) define the metric, matrices and algebraic ASD.
+    The March 2026 review retains that construction; the August 2026 classification source is used
+    only to bound status claims, not to infer that the unrestricted MUB problem is solved.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: sources_checked_2026-09-06_no_external_review
+novelty_risk:
+  level: high
+  rationale: >-
+    The exact score-one package is directly reconstructible from a public formula, and extra
+    quantization precision cheaply beats its rational fixture. Only the separately reported exact
+    beyond-algebraic-reference flag could support an improvement claim; no tested probe passed it.
+lineage:
+  status: complete
+  builder_model_ids: [gpt-6-astra]
+  builder_scaffolds: [Codex]
+  collaborator_model_ids: [gpt-6-astra, gpt-5.6-sol]
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    Builder and independent reviewer passes fixed the representation to exact Gaussian-integer rays,
+    separated fixture excess from algebraic-reference excess, added a rigorous rational interval,
+    bounded coordinate growth before products, and used hexadecimal exact-score serialization.
+    No frontier-searcher draw changed the task.
+  shortcut_discoverer: gpt-6-astra_builder_and_independent_review
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: gpt-6-astra_with_controller_scientific_audit
+  reviewer_domain: gpt-6-astra_independent_task_review_pending_external_domain_review
+  expert_hours: null
+  red_team_rounds: null
+  oracle_disagreement_status: >-
+    no disagreement between the direct block construction, independent closed ASD formula, SymPy
+    orthogonality/marginal checks, rational interval enclosure, or exact fixture recomputation
+  independent_recomputation_status: >-
+    33 focused core tests and the deterministic fixture check in references/known_best.md reproduce
+    the metric and reference; registration and Linux sandbox gates are separate

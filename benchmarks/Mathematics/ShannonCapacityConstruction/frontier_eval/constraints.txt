@@ -1,0 +1,9 @@
+1) Only edit solution.py. Keep build_code(problem).
+2) Return exactly {"codewords": rows}: 1..512 distinct Python lists of five native Python
+   integers in 0..6. Every distinct pair must have at least one coordinate of circular
+   distance greater than one. Do not return a claimed size or a repaired/rounded artifact.
+3) The 367-word reference is a public historical fifth-power witness. The full submission
+   schema, input fields and mathematical predicate are in Task.md.
+4) Deterministic CPU Python; NumPy/SciPy if useful. No network or process creation.
+   Do not read or import verification/, frontier_eval/, or references/. Implement public
+   constructions within solution.py using the mathematical contract in Task.md.

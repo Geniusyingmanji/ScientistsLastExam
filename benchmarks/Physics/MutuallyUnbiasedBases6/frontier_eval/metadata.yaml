@@ -1,0 +1,16 @@
+domain: QuantumFoundations
+task: MutuallyUnbiasedBases6
+scientific_role: optimization
+difficulty: hard
+tier: T2
+oracle_type: analytical
+score_mode: uncapped
+gpu_required: false
+eval_time_seconds: 2
+science_metric: exact_average_squared_distance_of_four_dimension_six_measurement_bases
+reference_baseline: four coincident identity bases with ASD zero
+reference_sota: >-
+  Raynal-Lu-Englert approximate construction as a score-one reference; global optimality is not known
+citation: >-
+  Raynal, Lu and Englert, Mutually unbiased bases in dimension six: The four most distant bases,
+  Physical Review A 83, 062303 (2011), DOI 10.1103/PhysRevA.83.062303

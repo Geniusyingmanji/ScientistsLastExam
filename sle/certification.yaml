@@ -10,6 +10,50 @@ policy:
   statuses: [certified, candidate, quarantined]
 
 tasks:
+  Mathematics/ShannonCapacityConstruction:
+    status: candidate
+    reason: >-
+      exact finite C7 fifth-strong-power independent-set optimization, with a valid 243-word
+      product baseline and a verified 367-word historical Polak-Schrijver reference; public replay
+      cheaply reaches one and above-one scores only exceed this fixture, not a certified current
+      global record; independent graph and metric-contract checks exist, while exploratory probes
+      await a separate report and formal SLE calibration and sandbox execution remain blocked on
+      H200 mount permissions; pending external graph/information-theory and evaluator review
+    citation_ids: [arxiv:1808.07438v2, arxiv:2607.21517v2, arxiv:2607.27869v1]
+  QuantumFoundations/DephrasureCodeDesign:
+    status: candidate
+    reason: >-
+      CPU finite-block input-state design scored by recomputed dephrasure coherent information
+      against a pointwise published 2020/2025 witness envelope with product closure; channel limits,
+      independent Kraus entropy and hash-pinned witness reconstruction support the numerical oracle,
+      but public reconstruction reaches one and the 1e-9 bits/use margin is not a formal certificate;
+      the finite witness library is not an exhaustive current global record; exploratory probes
+      await a separate report, formal SLE calibration and sandbox execution are blocked on H200
+      mount permissions, and independent quantum-information and evaluator review remains pending
+    citation_ids: [arxiv:1806.08327v3, arxiv:1806.08781v2, arxiv:2508.09978v1, arxiv:2509.15106v2]
+  Mathematics/ChowlaCosineCertificate:
+    status: candidate
+    reason: >-
+      exact rational Laurent certificates for finite Chowla cosine sets at n=15,28,45, scored
+      above the valid consecutive-frequency baseline against a reproducible greedy Sidon
+      construction; the public Sidon formula reaches score one cheaply and a bounded local
+      exact-corrected search already reaches aggregate score 1.007421511448179, so this remains an
+      explicitly uncalibrated candidate rather than evidence of frontier difficulty, global SoTA,
+      asymptotic Chowla progress, or scientific admission; pending Linux sandbox and hard-model
+      tests plus independent harmonic-analysis/additive-combinatorics and evaluator review
+    citation_ids: [arxiv:2509.05260v3, url:https://epoch.ai/frontiermath/open-problems/chowla-cosine]
+  QuantumFoundations/MutuallyUnbiasedBases6:
+    status: candidate
+    reason: >-
+      exact Gaussian-integer-ray optimization of four approximate measurement bases in dimension
+      six, scored against a rational reconstruction of the public Raynal-Lu-Englert construction;
+      the published equations reach score one cheaply and 36-bit requantization already exceeds the
+      fixed fixture, while the separate rigorous beyond-algebraic-reference flag remains unpassed;
+      the Q(i) representation excludes exact triples including I and therefore does not test the
+      unrestricted exact-MUB existence question; this is an explicitly uncalibrated local candidate
+      pending the user's positioning decision, Linux sandbox and hard-model tests, and independent
+      quantum-information, optimization and evaluator review
+    citation_ids: [doi:10.1103/PhysRevA.83.062303, arxiv:1103.1025v1, arxiv:2410.23997v2, arxiv:2608.18053v1]
   Physics/CriticalPhenomenaLab:
     status: candidate
     reason: Active finite-size-scaling discovery over continuous, first-order, crossover and BKT-like worlds; retained as a candidate pending external statistical-physics review and independent Monte Carlo replication.

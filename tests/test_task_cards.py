@@ -8,8 +8,8 @@ from sle.certification import certification_status
 from sle.registry import list_tasks
 from scripts.audit_tasks import LINEAGE_STATUSES, _task_card_issues, audit
 
-# Tasks built inside this repository, whose builder model, scaffold and red-team history are
-# recorded on the card rather than reconstructed after the fact. Everything else is inherited.
+# Tasks built inside this repository whose known construction history is recorded on the card.
+# Explicitly unknown inherited builder IDs remain unknown; everything else is legacy inherited.
 RECORDED_LINEAGE = {
     "Physics/CriticalPhenomenaLab",
     "SystemsBiology/EnzymeKineticsLaw",
@@ -47,6 +47,10 @@ RECORDED_LINEAGE = {
     "Mathematics/HeavyTailEvidence",
     "Mathematics/NarrowAdmissibleTuple",
     "Superconductivity/SuperconductorTcRecord",
+    "Mathematics/ChowlaCosineCertificate",
+    "QuantumFoundations/MutuallyUnbiasedBases6",
+    "Mathematics/ShannonCapacityConstruction",
+    "QuantumFoundations/DephrasureCodeDesign",
 }
 
 

@@ -38,9 +38,9 @@ jobs:
         run: |
           /usr/bin/python3 --version
           sudo /usr/bin/python3 -m pip install --upgrade pip
-          sudo /usr/bin/python3 -m pip install "numpy==1.24.4" "scipy==1.10.1" pyyaml pytest
+          sudo /usr/bin/python3 -m pip install "numpy==1.24.4" "scipy==1.10.1" "sympy==1.14.0" pyyaml pytest
           # The sandbox resolves site-packages for the interpreter it execs; prove they are there.
-          /usr/bin/python3 -c "import numpy, scipy, yaml; print(numpy.__file__)"
+          /usr/bin/python3 -c "import numpy, scipy, sympy, yaml; print(numpy.__file__)"
       - name: Inventory and card audits
         run: |
           /usr/bin/python3 scripts/audit_tasks.py --output /tmp/certification.json
