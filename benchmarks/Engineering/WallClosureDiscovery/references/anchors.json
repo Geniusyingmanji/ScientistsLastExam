@@ -1,0 +1,16 @@
+{
+  "anchors": [
+    {"name": "von_karman_constant_dns", "value": 0.384,
+     "source_url": "https://arxiv.org/abs/1410.7809",
+     "derivation": "Lee and Moser, Direct numerical simulation of turbulent channel flow up to Re_tau approx 5200, J. Fluid Mech. 774 (2015) 395-415: the mean velocity has a logarithmic region with kappa = 0.384 +- 0.004. Recorded because it is NOT the classic textbook 0.41, and the difference is a live question this task deliberately does not adjudicate: the solver check here recovers the constant the model was given, which validates the quadrature and says nothing about which value nature uses.",
+     "retrieved_on": "2026-09-06"},
+    {"name": "generalisation_is_the_standing_criticism", "value": 1.0,
+     "source_url": "https://www.annualreviews.org/content/journals/10.1146/annurev-fluid-010518-040547",
+     "derivation": "Duraisamy, Iaccarino and Xiao, Turbulence Modeling in the Age of Data, Annu. Rev. Fluid Mech. 51 (2019) 357-377. The review's framing - data-informed closures need foundational knowledge and physical constraints to be predictive rather than merely fitted - is the situation this task scores: a closure that reproduces the flows it was fitted to and fails elsewhere. Value 1.0 is a marker that the claim was checked against the source, not a numeric target.",
+     "retrieved_on": "2026-09-06"},
+    {"name": "log_law_intercept_textbook", "value": 5.2,
+     "source_url": "https://arxiv.org/abs/1410.7809",
+     "derivation": "The additive constant B of the log law is quoted in the 5.0-5.2 range in the channel-flow literature including this DNS. Used only as a sanity band for the frozen solver, whose van Driest closure returns B between 5.32 and 5.55 - close to but outside the band, which is expected for a mixing-length model rather than a measurement and is stated on the card.",
+     "retrieved_on": "2026-09-06"}
+  ]
+}

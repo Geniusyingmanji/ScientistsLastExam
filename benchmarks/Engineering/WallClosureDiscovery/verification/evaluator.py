@@ -39,9 +39,218 @@ import math
 
 import numpy as np
 
-from channel import velocity_profile
-from grammar import MAX_DEPTH, MAX_NODES, compile_closure, count_nodes
-from worlds import HELDOUT_RE, answerable, build
+from fractions import Fraction
+
+# The solver, the grammar and the world are inlined rather than imported from siblings. The trusted
+# driver loads this file by path, not as a package, so `from channel import ...` resolves against
+# the harness's sys.path and not against this directory - it raises ModuleNotFoundError inside the
+# sandbox while working perfectly when imported directly. verification/channel.py, grammar.py and
+# worlds.py remain the readable statements of the same code and the task's tests check they agree.
+
+
+def wall_normal_grid(re_tau, points=400):
+    """Stretched grid from the wall to the centreline, dense where the gradient is."""
+    uniform = np.linspace(0.0, 1.0, points)
+    return re_tau * (1.0 - np.cos(0.5 * np.pi * uniform))  # clusters near y+ = 0
+
+
+def velocity_profile(mixing_length, re_tau, points=400):
+    """Integrate the mean profile for a mixing-length closure.
+
+    The closure is a mixing length `l+(y+)`, and the eddy viscosity it implies is
+    `nu_t+ = l+^2 |dU+/dy+|`, which makes the momentum balance implicit:
+
+        l+^2 (dU+/dy+)^2 + dU+/dy+ - tau+ = 0,    tau+ = 1 - y+/Re_tau.
+
+    Taking the positive root and writing it in the numerically stable form
+
+        dU+/dy+ = 2 tau+ / (1 + sqrt(1 + 4 l+^2 tau+))
+
+    gives the profile by one quadrature. Writing the closure as an explicit `nu_t+(y+)` instead -
+    the first thing tried here - does not reproduce the log law at all: the fitted von Karman
+    constant came out between 13 and 31 against the accepted 0.41, because the implicit coupling
+    between eddy viscosity and mean gradient is exactly what produces `dU+/dy+ ~ 1/(kappa y+)`.
+    """
+    y = wall_normal_grid(re_tau, points)
+    length = np.asarray(mixing_length(y, re_tau), dtype=float)
+    if length.shape != y.shape:
+        raise ValueError("closure must return one mixing length per grid point")
+    if not np.all(np.isfinite(length)):
+        raise ValueError("closure returned a non-finite value")
+    if np.any(length < 0.0):
+        raise ValueError("mixing length must be non-negative")
+    stress = np.clip(1.0 - y / re_tau, 0.0, None)
+    gradient = 2.0 * stress / (1.0 + np.sqrt(1.0 + 4.0 * length ** 2 * stress))
+    velocity = np.concatenate(
+        [[0.0], np.cumsum(np.diff(y) * 0.5 * (gradient[1:] + gradient[:-1]))])
+    return y, velocity
+
+
+def van_driest(kappa=0.41, a_plus=26.0):
+    """The textbook mixing length: linear in the wall distance with exponential damping."""
+    def closure(y, re_tau):
+        return kappa * y * (1.0 - np.exp(-y / a_plus))
+    return closure
+
+
+MAX_NODES = 40
+MAX_DEPTH = 10
+UNARY = {"neg", "exp", "tanh", "sqrt", "square"}
+BINARY = {"add", "sub", "mul", "div"}
+
+
+def count_nodes(expression, depth=0):
+    if depth > MAX_DEPTH:
+        raise ValueError("expression deeper than the cap")
+    if not isinstance(expression, (list, tuple)) or not expression:
+        raise ValueError("an expression is a non-empty list")
+    head = expression[0]
+    if head == "const":
+        if len(expression) != 3:
+            raise ValueError("const takes a numerator and a denominator")
+        numerator, denominator = expression[1], expression[2]
+        for part in (numerator, denominator):
+            if isinstance(part, bool) or not isinstance(part, int):
+                raise ValueError("constants are exact rationals")
+        if denominator == 0:
+            raise ValueError("zero denominator")
+        if abs(numerator) > 10 ** 9 or abs(denominator) > 10 ** 9:
+            raise ValueError("constant outside the magnitude cap")
+        return 1
+    if head == "var":
+        if len(expression) != 2 or expression[1] not in ("y", "re"):
+            raise ValueError("the variables are 'y' and 're'")
+        return 1
+    if head in UNARY:
+        if len(expression) != 2:
+            raise ValueError("%s takes one argument" % head)
+        return 1 + count_nodes(expression[1], depth + 1)
+    if head in BINARY:
+        if len(expression) != 3:
+            raise ValueError("%s takes two arguments" % head)
+        return 1 + count_nodes(expression[1], depth + 1) + count_nodes(expression[2], depth + 1)
+    raise ValueError("unknown operator %r" % (head,))
+
+
+def evaluate_expression(expression, y, re_tau):
+    """Evaluate on a grid. Guards keep a malformed formula from producing nonsense silently."""
+    head = expression[0]
+    if head == "const":
+        return np.full_like(y, float(Fraction(expression[1], expression[2])), dtype=float)
+    if head == "var":
+        return y if expression[1] == "y" else np.full_like(y, float(re_tau), dtype=float)
+    if head in UNARY:
+        inner = evaluate_expression(expression[1], y, re_tau)
+        if head == "neg":
+            return -inner
+        if head == "exp":
+            # Clipped so that a runaway exponent is a bad formula rather than an overflow warning
+            # that turns into a silent inf downstream.
+            return np.exp(np.clip(inner, -700.0, 700.0))
+        if head == "tanh":
+            return np.tanh(inner)
+        if head == "sqrt":
+            return np.sqrt(np.clip(inner, 0.0, None))
+        return inner * inner
+    left = evaluate_expression(expression[1], y, re_tau)
+    right = evaluate_expression(expression[2], y, re_tau)
+    if head == "add":
+        return left + right
+    if head == "sub":
+        return left - right
+    if head == "mul":
+        return left * right
+    with np.errstate(divide="ignore", invalid="ignore"):
+        out = np.where(np.abs(right) < 1e-12, np.nan, left / np.where(right == 0, 1.0, right))
+    return out
+
+
+def compile_closure(expression):
+    """Validate once, then hand back something the solver can call.
+
+    The expression evaluator is `evaluate_expression`, not `evaluate`. Both this file and
+    verification/grammar.py once called it `evaluate`, and inlining the grammar into a module that
+    already has a top-level `evaluate(build_closure, ...)` silently rebound the name: every closure
+    call reached the task evaluator instead, every held-out check raised, and the mechanism score
+    read 0.000 for a reference that had measured 0.875 minutes earlier.
+    """
+    nodes = count_nodes(expression)
+    if nodes > MAX_NODES:
+        raise ValueError("expression uses %d nodes, cap is %d" % (nodes, MAX_NODES))
+
+    def closure(y, re_tau):
+        values = evaluate_expression(expression, np.asarray(y, dtype=float), float(re_tau))
+        if not np.all(np.isfinite(values)):
+            raise ValueError("closure is not finite on the grid")
+        return values
+    return closure
+
+
+# Wide span: the near-wall damping and the log-region slope are both exercised.
+WIDE_RE = (180.0, 950.0, 4000.0)
+# Narrow span: only low Reynolds numbers, where kappa and A+ trade off against each other.
+NARROW_RE = (180.0, 200.0, 220.0)
+HELDOUT_RE = (2000.0, 5200.0)
+
+
+def damped_mixing_length(kappa, a_plus):
+    def closure(y, re_tau):
+        return kappa * y * (1.0 - np.exp(-y / a_plus))
+    return closure
+
+
+def _span(rng, regime):
+    """Three sampled Reynolds numbers. The top one is what decides identifiability."""
+    low = 180.0
+    if regime == "recoverable":
+        top = float(rng.uniform(700.0, 4000.0))
+    else:
+        top = float(rng.uniform(230.0, 900.0))
+    middle = float(np.exp(0.5 * (np.log(low) + np.log(top))))
+    return (low, middle, top)
+
+
+def build(seed, count):
+    rng = np.random.default_rng(seed)
+    cases = []
+    for index in range(count):
+        regime = ("recoverable", "degenerate_parameters", "inconsistent")[index % 3]
+        kappa = float(rng.uniform(0.38, 0.44))
+        a_plus = float(rng.uniform(22.0, 30.0))
+        record = {
+            "case_id": "flow%03d" % index,
+            "regime": regime,
+            "kappa": kappa,
+            "a_plus": a_plus,
+            # The Reynolds span is drawn on a continuum rather than taken from two fixed sets.
+            # With two fixed spans the three regimes separate perfectly - measured reduced
+            # chi-square 0.23-0.51 against 0.71-2.30, and kappa width 0.025-0.045 against
+            # 0.050-0.110 - and a pair of thresholds scores one. Real cases are not sorted for you,
+            # so the top Reynolds number is drawn from a range that makes the two identifiable
+            # regimes overlap and forces a judgement per case instead of a rule.
+            "sampled_re": _span(rng, regime),
+            "noise": float(rng.uniform(0.008, 0.014)),
+            # The two systematics a profile measurement actually carries: where the wall is, and
+            # how the friction velocity was calibrated. Both are constant across a profile.
+            "wall_shift": float(rng.uniform(0.4, 0.9)),
+            "calibration": float(rng.uniform(0.010, 0.020)),
+            "seed": int(rng.integers(0, 2 ** 31 - 1)),
+        }
+        if regime == "inconsistent":
+            # Each sampled Reynolds number comes from a different closure, so nothing fits them all.
+            record["per_sample_truth"] = [damped_mixing_length(kappa * f, a_plus)
+                                          for f in (0.80, 1.0, 1.25)]
+            record["truth"] = record["per_sample_truth"][1]
+            record["heldout_truth"] = None
+        else:
+            record["truth"] = damped_mixing_length(kappa, a_plus)
+            record["heldout_truth"] = record["truth"]
+        cases.append(record)
+    return cases
+
+
+def answerable(case):
+    return case["regime"] == "recoverable"
 
 DIFFICULTY = 1
 

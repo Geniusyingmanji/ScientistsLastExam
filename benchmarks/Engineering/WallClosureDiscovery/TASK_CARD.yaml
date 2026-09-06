@@ -1,0 +1,138 @@
+schema_version: 2
+scientific_question: >-
+  Under a fixed budget of channel-flow profile measurements, recover the mixing-length closure as a
+  formula - and, on the two thirds of cases where the observations cannot pin one, say so.
+artifact: >-
+  Per case, a mixing-length expression in a small grammar with a confidence, or an abstention.
+oracle:
+  model: >-
+    a frozen mixing-length channel solver in wall units, where the total shear is exactly linear and
+    the closure fixes the mean profile through one quadrature of the positive root of
+    l+^2 (dU+/dy+)^2 + dU+/dy+ - tau+ = 0; profiles carry an unknown wall position and an unknown
+    friction-velocity calibration, both constant across a profile
+  feasibility: >-
+    a boolean abstain flag, a finite confidence in [0,1], an expression within the node and depth
+    caps using only the listed operators and exact rational constants, at most 64 observation calls
+    and never more runs than the budget; any failure scores that case zero
+  deterministic: true
+normalization:
+  baseline: >-
+    fit the two-parameter damped mixing length by grid search against the sampled profiles and
+    submit it, never abstaining; scores exactly zero because the refusal rate is zero by
+    construction, while recovering the law on every answerable case
+  reference: >-
+    the same fit with the two per-profile nuisances projected out, plus abstention on two separate
+    grounds - a reduced chi-square above 0.60, and an admissible kappa interval wider than 0.048
+  score: >-
+    product of mechanism recovery on held-out Reynolds numbers, one minus the false discovery rate,
+    and the correct refusal rate; the three axes are also reported separately with their
+    denominators and are never averaged
+citations:
+  - id: doi:10.1146/annurev-fluid-010518-040547
+    title: "Duraisamy, Iaccarino and Xiao, Turbulence Modeling in the Age of Data, Annu. Rev. Fluid Mech. 51 (2019) 357-377"
+  - id: arxiv:1410.7809
+    title: "Lee and Moser, Direct numerical simulation of turbulent channel flow up to Re_tau approx 5200, J. Fluid Mech. 774 (2015) 395-415"
+invariants:
+  - >-
+    the two refusal regimes fail in opposite directions and both are needed: measured across the
+    development set, inconsistent cases show reduced chi-square 0.71-2.30 while degenerate ones show
+    0.11-0.20 - the lowest of the three, better than the answerable cases - and what separates the
+    degenerate ones is the width of the admissible kappa interval, 0.050-0.105 against 0.025-0.045
+  - >-
+    the nuisances are not decoration: a fit that ignores the unknown wall position and calibration
+    returns kappa = 0.501 against a truth of 0.410, because the systematics have nowhere to go
+    except into the parameter being estimated
+  - >-
+    the Reynolds spans overlap between regimes on purpose; with two fixed spans the three separate
+    cleanly and a pair of thresholds scores one
+  - >-
+    both degenerate strategies score exactly zero - blanket abstention because it recovers nothing,
+    never abstaining because its refusal rate is zero - and discovery_coverage tells them apart
+  - >-
+    submitting the textbook closure blindly scores exactly zero while reaching a mechanism score of
+    0.750 - the hidden constants are close enough to the published ones that it lands 6 of 24 cases
+    - because it never abstains; recall buys a good-looking recovery number and no score at all
+  - >-
+    the formula is scored on Reynolds numbers never observed, so reproducing the sampled flows is
+    not evidence
+  - malformed reports score zero and never raise out of the evaluator
+known_shortcuts: >-
+  Nineteen degenerate and adversarial submissions - blanket abstention, never abstaining, the
+  textbook van Driest closure submitted blindly, a constant closure, a zero closure, a negative
+  closure, guessing without observing, None, {}, a non-boolean abstain flag, a NaN confidence, an
+  out-of-range confidence, not abstaining without a formula, an unknown operator, an unknown
+  variable, a float constant, a zero-denominator constant, an expression over the node cap, a
+  raising callable, flooding the observation budget and observing an unsampled Reynolds number -
+  all score 0.000000, and none raises out of the evaluator. The malformed ones report valid = 0 and
+  the well-formed-but-useless ones report valid = 1.
+  The sharpest of these is the textbook closure. Submitting van Driest with the published constants
+  scores 0.000000 while reaching mechanism 0.750 and a false discovery rate of 0.458: the hidden
+  constants are near enough to the published ones to land 6 of 24 cases, and it still scores nothing
+  because it never abstains. Recall buys a good-looking recovery number and no score.
+review:
+  status: pending_external
+  domain: pending_external_turbulence_modelling
+  evaluator_security: >-
+    The oracle's work is bounded by the contract: at most 64 observation calls per case, each a
+    quadrature on a fixed grid, with the run budget enforced per call and the sampled Reynolds
+    numbers restricted to a fixed set. The submitted formula is data, evaluated by a frozen
+    interpreter with node, depth and constant-magnitude caps and clipped exponentials, so a
+    submission cannot make the evaluation expensive or non-finite. Candidate code runs in the
+    Bubblewrap sandbox over the standard trusted-driver boundary.
+provenance:
+  class: procedural
+  target_source: >-
+    The cases are generated from a fixed seed by verification/worlds.py, so the truth is procedural.
+    The scientific situation reproduced - a fitted closure that is validated where it was trained -
+    is cited from the data-driven turbulence modelling literature and recorded in
+    references/anchors.json.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: low
+  rationale: >-
+    The closure family is textbook and a model will recall it. That is measured, and recall alone
+    scores zero: van Driest with the published constants reaches a mechanism score of 0.750 - the
+    hidden constants are near enough to land 6 of 24 cases - and still scores nothing, because two
+    thirds of the cases should not receive a formula at all and it submits one everywhere. What is
+    scored is a judgement about specific noisy profiles, not the family.
+lineage:
+  status: complete
+  builder_model_ids: ["claude-opus-5"]
+  builder_scaffolds: ["claude-code"]
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    None yet. Six measurements changed the design before any model saw it. The closure was first
+    written as an explicit eddy viscosity and the solver returned a von Karman constant between 13
+    and 31, because the implicit coupling is what produces the log law. The third regime was first
+    "structure above the sampled y+" and was discarded: that structure is unconstrained in every
+    regime, so blanket abstention would have been correct everywhere. Starving the data by binning
+    was tried and rejected - at 24 bins the degeneracy does not bite, at 12 the answerable regime
+    has already broken, and there is no window between. Fitting the nuisances turned out to be what
+    reveals the regime. Widening the Reynolds span was measured and does not help, so the tolerance
+    was moved instead. And the two fixed spans were replaced by overlapping draws once the regimes
+    proved to separate too cleanly.
+  shortcut_discoverer: builder_red_team
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: claude-opus-5
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 3
+  oracle_disagreement_status: >-
+    the solver reproduces the log law from its own input constants - kappa 0.418 to 0.421 against an
+    input of 0.41, intercept 5.32 to 5.55, and U+ = 1.01 at y+ = 1.0 - which validates the
+    quadrature and not the physics; the task does not adjudicate the measured value of kappa, which
+    the highest-Reynolds-number DNS puts at 0.384 +- 0.004
+  independent_recomputation_status: >-
+    the world calibration, the degeneracy and residual statistics per regime, the baseline, the
+    reference and the 19-probe sweep are all reproducible from verification/

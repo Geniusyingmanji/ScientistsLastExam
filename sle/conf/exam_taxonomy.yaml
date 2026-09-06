@@ -64,6 +64,7 @@ tasks:
   Mathematics/ErdosMinimumOverlap: {form: optimization, analogue: combinatorial, note: balanced_partition_difference_overlap_not_admissible_tuple_or_ramsey}
   Mathematics/HeilbronnTrianglePacking: {form: optimization, analogue: combinatorial, note: unit_square_point_placement_min_triangle_area_not_capset_kissing_or_circle_packing}
   Mathematics/Superpermutation: {form: optimization, analogue: combinatorial}
+  Turbulence/WallClosureDiscovery: {form: discovery, kind: formula, note: recover_a_wall_closure_or_refuse_when_the_reynolds_span_cannot_pin_one}
   Exoplanets/TransmissionSpectrumSpecies: {form: discovery, kind: substance, note: which_molecules_are_present_under_a_budget_with_an_unidentifiable_regime}
   DiscreteGeometry/SpherePackingCertificate: {form: optimization, analogue: certificate_bound, note: exact_rational_Cohn_Elkies_bound_not_a_packing_construction}
   QuantumFoundations/BellBoundCertificate: {form: optimization, analogue: certificate_bound, note: exact_rational_SOS_bound_on_a_Bell_functional_not_a_construction}

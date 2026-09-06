@@ -1,0 +1,13 @@
+domain: Turbulence
+task: WallClosureDiscovery
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: analytical
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 20
+science_metric: product_of_mechanism_recovery_one_minus_false_discovery_rate_and_correct_refusal_rate_with_the_three_axes_reported_separately
+reference_baseline: fit the two-parameter damped mixing length to the sampled profiles and never abstain
+reference_sota: "no external SOTA: the truth is procedural. The situation reproduced is the standing criticism of data-driven closure, that a fitted model is validated where it was trained"
+citation: "Duraisamy, Iaccarino and Xiao, Turbulence Modeling in the Age of Data, Annu. Rev. Fluid Mech. 51 (2019) 357-377, DOI 10.1146/annurev-fluid-010518-040547; Lee and Moser, DNS of turbulent channel flow up to Re_tau approx 5200, J. Fluid Mech. 774 (2015) 395-415, arXiv:1410.7809"

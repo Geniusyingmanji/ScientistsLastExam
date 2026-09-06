@@ -1,0 +1,12 @@
+1) Only edit solution.py. Keep analyze/build_closure(problem, observe).
+2) Return {"abstain": bool, "mixing_length": <expression or None>, "confidence": float in [0,1]}.
+   The expression is a nested list over "y" and "re" with the operators listed in
+   problem["grammar"], constants written ["const", numerator, denominator] as exact integers.
+   Floats are rejected. The node and depth caps are in the problem.
+3) observe(re_tau) returns a binned mean profile at one of problem["sampled_re_tau"], charged
+   against problem["observation_budget"]. At most 64 calls per case.
+4) The formula is scored by running it through the same frozen solver at held-out Reynolds
+   numbers you never observe. A fit that reproduces the sampled flows and not those is a false
+   discovery, which is the failure this task is about.
+5) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read
+   verification/ or frontier_eval/.

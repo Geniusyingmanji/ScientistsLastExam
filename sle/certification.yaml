@@ -501,6 +501,18 @@ tasks:
     citation_ids:
       - arxiv:2502.04514
       - doi:10.1007/BF02165411
+  Turbulence/WallClosureDiscovery:
+    status: candidate
+    reason: >-
+      budgeted discovery of a mixing-length closure as a formula, with a refusal axis whose two
+      reasons are orthogonal and measured - inconsistent cases show reduced chi-square 0.71 to 2.30
+      while degenerate ones show 0.11 to 0.20, the lowest of the three, and are separated instead by
+      the width of the admissible kappa interval; a fit that ignores the two per-profile systematics
+      is biased 22 per cent high, the textbook closure submitted blindly scores zero at a false
+      discovery rate of 1.00, and nineteen adversarial submissions score zero without raising; the
+      first Engineering task that is not engineering_design; no frontier searcher draw yet, pending
+      external turbulence-modelling review
+    citation_ids: [doi:10.1146/annurev-fluid-010518-040547, arxiv:1410.7809]
   Exoplanets/TransmissionSpectrumSpecies:
     status: candidate
     reason: >-

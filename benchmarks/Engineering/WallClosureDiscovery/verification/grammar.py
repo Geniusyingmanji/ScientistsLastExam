@@ -56,7 +56,7 @@ def count_nodes(expression, depth=0):
     raise ValueError("unknown operator %r" % (head,))
 
 
-def evaluate(expression, y, re_tau):
+def evaluate_expression(expression, y, re_tau):
     """Evaluate on a grid. Guards keep a malformed formula from producing nonsense silently."""
     head = expression[0]
     if head == "const":
@@ -64,7 +64,7 @@ def evaluate(expression, y, re_tau):
     if head == "var":
         return y if expression[1] == "y" else np.full_like(y, float(re_tau), dtype=float)
     if head in UNARY:
-        inner = evaluate(expression[1], y, re_tau)
+        inner = evaluate_expression(expression[1], y, re_tau)
         if head == "neg":
             return -inner
         if head == "exp":
@@ -76,8 +76,8 @@ def evaluate(expression, y, re_tau):
         if head == "sqrt":
             return np.sqrt(np.clip(inner, 0.0, None))
         return inner * inner
-    left = evaluate(expression[1], y, re_tau)
-    right = evaluate(expression[2], y, re_tau)
+    left = evaluate_expression(expression[1], y, re_tau)
+    right = evaluate_expression(expression[2], y, re_tau)
     if head == "add":
         return left + right
     if head == "sub":
@@ -96,7 +96,7 @@ def compile_closure(expression):
         raise ValueError("expression uses %d nodes, cap is %d" % (nodes, MAX_NODES))
 
     def closure(y, re_tau):
-        values = evaluate(expression, np.asarray(y, dtype=float), float(re_tau))
+        values = evaluate_expression(expression, np.asarray(y, dtype=float), float(re_tau))
         if not np.all(np.isfinite(values)):
             raise ValueError("closure is not finite on the grid")
         return values
