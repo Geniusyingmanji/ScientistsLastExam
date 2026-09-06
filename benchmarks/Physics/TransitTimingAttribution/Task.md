@@ -37,3 +37,4 @@ Malformed output, invented evidence, and budget overspend fail closed.
 - Only edit `solution.py`; preserve `attribute_ttv`.
 - Use deterministic CPU code with Python, NumPy, SciPy, and the standard library.
 - Do not read `verification/` or `frontier_eval/`, use the network, or create processes.
+- `sle.contract_lint` is available for checking the submission shape and costs no follow-up budget.
