@@ -85,6 +85,26 @@ everyone has worked on, and the largest published set at power 5 has stood since
 `C23` are the other end — their targets come from constructions at power 6 and beyond, and the
 classical two-coordinate value is a much stronger floor there than it is for `C7`.
 
+## What `build_certificate(instance)` is given
+
+Everything is public; nothing is withheld. The score is a proof, so there is nothing to hold back -
+a certificate cannot be tuned to a grader it has not seen, it can only be correct or not.
+
+| key | meaning |
+|---|---|
+| `name` | the instance label, `C7` / `C13` / `C19` / `C23` |
+| `cycle` | `n`, the number of vertices of the cycle |
+| `max_power` | the largest strong-product power a code may use |
+| `lovasz_theta` | `theta(C_n)` as a float, for orientation only - your upper bound has to be certified, not quoted |
+| `free_bound` | the zero of the scale |
+| `free_bound_note` | which set proves it, in words |
+| `published_target_bound` | the best published lower bound on the capacity, worth exactly 1 |
+| `published_target_note` | its source |
+| `max_codewords` | the largest code the oracle will read, per certificate |
+| `max_lower_certificates` | how many codes one instance may carry |
+| `max_numerator` | magnitude cap on a rational's numerator |
+| `max_denominator` | magnitude cap on a rational's denominator |
+
 ## Scoring
 
 Per instance, linear in the width of the interval you certify, and uncapped above:
