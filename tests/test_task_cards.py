@@ -29,6 +29,7 @@ RECORDED_LINEAGE = {
     "Mathematics/HeilbronnTrianglePacking",
     "Algorithm/TensorRank555",
     "Mathematics/Superpermutation",
+    "AtmosphericChemistry/MethaneSourceAttribution",
     "Turbulence/WallClosureDiscovery",
     "Exoplanets/TransmissionSpectrumSpecies",
     "DiscreteGeometry/SpherePackingCertificate",

@@ -501,6 +501,18 @@ tasks:
     citation_ids:
       - arxiv:2502.04514
       - doi:10.1007/BF02165411
+  AtmosphericChemistry/MethaneSourceAttribution:
+    status: candidate
+    reason: >-
+      budgeted attribution of a twenty-year methane change to source sectors with a refusal axis,
+      reproducing the unsettled attribution of the post-2007 rise; the sink and source confounding
+      is complete rather than approximate - a pure source change reproduces a sink-only trajectory
+      to a reduced misfit of 0.00 - the box model closes against the observed atmospheric d13C and
+      burden rather than being fitted to them, the baseline names waste in five of eight sink-only
+      cases and scores zero, and seventeen adversarial submissions score zero without raising; the
+      first EarthScience task in the substance cell; no frontier searcher draw yet, pending external
+      atmospheric-chemistry review
+    citation_ids: [url:https://essd.copernicus.org/preprints/essd-2025-668/, url:https://repository.library.noaa.gov/view/noaa/44561]
   Turbulence/WallClosureDiscovery:
     status: candidate
     reason: >-

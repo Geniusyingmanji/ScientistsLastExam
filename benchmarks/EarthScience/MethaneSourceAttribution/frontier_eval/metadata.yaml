@@ -1,0 +1,13 @@
+domain: AtmosphericChemistry
+task: MethaneSourceAttribution
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: analytical
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 15
+science_metric: product_of_mechanism_recovery_one_minus_false_discovery_rate_and_correct_refusal_rate_with_the_three_axes_reported_separately
+reference_baseline: read the isotopes, name the source that fits, never abstain
+reference_sota: "no external SOTA: the truth is procedural. The situation reproduced is the unsettled attribution of the post-2007 methane rise, where the isotopic reading has been challenged on source-signature variability and on the sinks"
+citation: "A global dataset of d13C-CH4 source signatures and associated uncertainties (1998-2022), ESSD preprint essd-2025-668; Improved constraints on global methane emissions and sinks using d13C-CH4, NOAA repository 44561"

@@ -1,0 +1,9 @@
+1) Only edit solution.py. Keep attribute(problem, measure).
+2) Return {"abstain": bool, "changed_sources": {name: bool, ...}, "confidence": float in [0,1]}.
+   Names must come from problem["source_catalogue"]; values must be booleans.
+3) measure(name) - or measure("inventory", sector) - charges problem["measurement_costs"][name]
+   against problem["observation_budget"]. At most 32 calls per case.
+4) The sink can move and is not one of the sources. Naming a source when the sink moved is a false
+   discovery, and the burden and d13C records alone cannot tell the two apart.
+5) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read
+   verification/ or frontier_eval/.
