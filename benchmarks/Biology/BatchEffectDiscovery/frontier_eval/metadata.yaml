@@ -1,0 +1,13 @@
+domain: Genomics
+task: BatchEffectDiscovery
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: active_negative_binomial_experiment
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 5
+science_metric: batch_aware_differential_expression_with_fdr_and_identifiability_refusal
+reference_baseline: marginal log-fold-change threshold that ignores batch
+reference_sota: truth-blind rank-aware negative-binomial-inspired regression and balanced follow-up witness
+citation: "Love et al. 2014, DOI 10.1186/s13059-014-0550-8; Zhang et al. 2020, DOI 10.1093/nargab/lqaa078"

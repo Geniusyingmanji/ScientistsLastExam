@@ -775,3 +775,12 @@ tasks:
       - doi:10.1103/PhysRevLett.93.165501
       - doi:10.1016/0375-9601(74)90847-0
       - doi:10.1063/1.1723844
+  Genomics/BatchEffectDiscovery:
+    status: candidate
+    reason: Deterministic charged negative-binomial count prototype with supported,
+      null and structurally confounded worlds plus separate recovery, false-discovery,
+      refusal and coverage metrics; pending stronger fixed-pipeline probes, server-held
+      panels, paired controls and independent biostatistics review
+    citation_ids:
+    - doi:10.1186/s13059-014-0550-8
+    - doi:10.1093/nargab/lqaa078
