@@ -50,6 +50,7 @@ CHINESE_NAMES = {
     "ClimateScience/ForcedSignalAttribution": "强迫信号检测归因",
     "ControlTheory/InvertedPendulumSwingUp": "倒立摆摆起控制",
     "DynamicalSystems/ActiveLawDiscovery": "主动定律发现",
+    "Ecology/OccupancyDetectionDesign": "生态占域与探测设计",
     "Electrochemistry/ElectrolyteConductivityDesign": "电解液电导率设计",
     "EvidenceSynthesis/ProspectiveMetaAnalysis": "前瞻荟萃分析",
     "Exoplanets/RadialVelocityPlanets": "视向速度找行星",
@@ -169,6 +170,9 @@ CHINESE_BRIEFS = {
     "DynamicalSystems/ActiveLawDiscovery": (
         "自选初值与外部驱动,从候选项库里恢复二维受控系统的稀疏控制方程",
         "稀疏律恢复 + 密封轨迹外推;库不足时拒答"),
+    "Ecology/OccupancyDetectionDesign": (
+        "在漏检条件下分配站点复访与调查方法,恢复栖息地占域效应或拒绝不充分模型",
+        "效应方向、效应量与平均占域率;误发现、拒答、覆盖率和留出迁移分列"),
     "Electrochemistry/ElectrolyteConductivityDesign": (
         "在高通量电解液数据回放里分配阻抗测定预算,选出稳健的配方批次",
         "温度剖面电导率 + 批次多样性 + 重复稳健性 + 留出迁移;无上限"),

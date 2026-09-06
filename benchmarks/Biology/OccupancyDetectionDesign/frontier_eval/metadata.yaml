@@ -1,0 +1,13 @@
+domain: Ecology
+task: OccupancyDetectionDesign
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: statistical_sim
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 4
+science_metric: active_occupancy_effect_recovery_under_imperfect_detection_and_model_inadequacy_refusal
+reference_baseline: four rapid surveys followed by a fixed positive habitat-effect claim
+reference_sota: fixed shrinkage of marginal occupancy likelihood and detection slope with nonlinear/spatial BIC refusal
+citation: "MacKenzie et al. 2002, DOI 10.1890/0012-9658(2002)083[2248:EORWPD]2.0.CO;2"
