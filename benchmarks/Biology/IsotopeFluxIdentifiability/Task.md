@@ -45,7 +45,7 @@ menus are identical across all worlds. At zero net influx all pools stay
 unlabeled for every x; refuse the pair because exchange cannot be recovered.
 
 For supported positive-net worlds mechanism quality is
-`max(0,1-mean(abs(estimate-truth)/maximum(truth,0.1))/0.6)` over (v,x).
+`max(0,1-mean(abs(estimate-truth)/maximum(truth,0.1))/0.025)` over (v,x).
 A supported refusal gets zero; a zero-net refusal gets one; a zero-net claim
 gets zero. Normalize development mean q as `max(0,(q-1/3)/(2/3))`, so always
 refusing gets exactly zero. Development has two supported worlds and one
@@ -57,15 +57,16 @@ All procedural worlds are repository-visible, not private test data.
 
 Baseline refuses. Input-only reference samples all full-tracer times, uses
 three-start bounded nonlinear least squares and a local Jacobian rank check.
-This is not a global profile-likelihood certification. Candidate budget is
-120 CPU seconds. Independent tests compare full isotopomers to a reduced
+This is not a global profile-likelihood certification. Default candidate wall-clock deadline is
+300 seconds across all worlds (`sle eval --timeout 300`); worker CPU limits also
+apply. Independent tests compare full isotopomers to a reduced
 mass-balance ODE, but comparison against INCA and external domain review remain
 pending; no frontier difficulty or general-network correctness is claimed.
 
 [Antoniewicz et al. (2007)](https://doi.org/10.1016/j.ymben.2006.09.001)
 motivates atom-subset balance, and [Young (2014)](https://doi.org/10.1093/bioinformatics/btu015)
 describes INCA. No external software/data is redistributed.
-Nearest tasks: MetabolicStrainDesign optimizes knockouts with known flux constraints;
+Nearest tasks: GeneNetworkIntervention discovers regulatory effects;
 ReactionMechanismFitting fits chemical rate models; DemographicSFS infers
 population history. Here isotope atom transport limits which flux combinations
 can be inferred from budgeted tracer measurements.

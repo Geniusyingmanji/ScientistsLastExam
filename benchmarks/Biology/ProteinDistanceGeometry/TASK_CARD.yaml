@@ -3,41 +3,37 @@ scientific_question: Coarse backbone distance geometry with handedness constrain
 artifact: Return the strict typed artifact specified in Task.md.
 oracle:
   model: Public interval, bond-angle, excluded-volume and signed-volume losses
-  feasibility: Strict output validation; trusted oracle recomputation; resource violations
-    fail closed.
+  feasibility: Strict output validation; trusted oracle recomputation; resource violations fail closed.
   deterministic: true
 normalization:
   baseline: Legal baseline in solution.py scores exactly zero.
-  reference: Input-only frozen reference; see references/known_best.md.
-  score: Clipped development score; held-out worlds reported separately.
+  reference: Shortest paths, MDS, reflection selection and 45 least-squares evaluations; a 120-evaluation
+    probe improves the loss.
+  score: Clipped inverse-loss quality q=1/(1+L/0.2), normalized from straight-line baseline to zero
+    public constraint loss.
 citations:
 - id: doi:10.1023/A:1008380219900
   title: Distance Geometry Optimization for Protein Structures
 invariants:
 - Frozen procedural worlds and deterministic oracle.
 - Candidate mutations do not modify trusted scoring inputs.
-known_shortcuts: A feasible procedural witness has zero public loss. Proper rigid
-  motions preserve it; reflections, collapse and rescaling incur loss. World-0 reference
-  loss is 0.0774017003; complete collapse scores only 0.00120734. This is synthetic
-  C-alpha geometry with local handedness, not all-atom stereochemistry or biological
-  folding accuracy. Sparse helical instances can be easy for general distance solvers;
-  DGSOL comparison and conformer-task overlap review remain pending.
+known_shortcuts: Zero-loss procedural witnesses exist. MDS plus longer least squares improves the
+  reference; real protein folding and external DGSOL comparisons remain out of scope.
 review:
   domain: pending_external_domain_review
-  evaluator_security: internal_strict_schema_budget_invariant_and_subprocess_tests;
-    shared Linux sandbox contribution gate
+  evaluator_security: internal_strict_schema_budget_invariant_and_subprocess_tests; shared Linux
+    sandbox contribution gate
 provenance:
   class: procedural
-  target_source: Procedural model; repository-visible development and shifted held-out
-    worlds, not server-secret data.
+  target_source: Procedural model; repository-visible development and shifted held-out worlds, not
+    server-secret data.
   task_contract_public_before_evaluation: true
   fresh_confirmation_status: not_completed
-  license: Original implementation and synthetic instances; no third-party source
-    code or datasets redistributed. External papers are citations only.
+  license: Original implementation and synthetic instances; no third-party source code or datasets
+    redistributed. External papers are citations only.
 novelty_risk:
   level: high
-  rationale: Established problem class; external scope and difficulty review remain
-    pending.
+  rationale: Established problem class; external scope and difficulty review remain pending.
 lineage:
   status: complete
   builder_model_ids:
@@ -47,8 +43,8 @@ lineage:
   calibrator_model_ids: []
   calibration_runs: []
   calibration_evidence_status: missing
-  edits_triggered_by_model: Sequential implementation requested by user; no frontier
-    calibration draws.
+  edits_triggered_by_model: Maintainer feedback prompted per-task endpoint measurements on 2026-09-06;
+    no frontier-model calibration draws.
   shortcut_discoverer: internal_reference_and_manual_review
   frozen_before_eval: false
   freeze_timestamp: null
@@ -58,12 +54,19 @@ construction_audit:
   reviewer_domain: pending_external
   expert_hours: null
   red_team_rounds: 1
-  oracle_disagreement_status: Independent task-specific analytic/invariant checks
-    pass; external implementation comparison pending.
-  independent_recomputation_status: See task-specific invariant tests; external package
-    cross-validation pending.
+  oracle_disagreement_status: Independent task-specific analytic/invariant checks pass; external
+    implementation comparison pending.
+  independent_recomputation_status: See task-specific invariant tests; external package cross-validation
+    pending.
 long_horizon:
   status: not_tested
   measurement_health_passed: false
   material_headroom_after_2h: false
   evidence: []
+evaluation_budget:
+  EVAL_TIMEOUT_S: 300
+  scope: Total candidate wall-clock deadline across all four worlds; repository CPU limits also apply.
+  maintainer_reference_seconds: 96
+  wrapper_grace_seconds: 120
+  rationale: More than three times the observed reference runtime; longer solver probe also measured.
+  override: Task wrapper --timeout or sle eval --timeout.

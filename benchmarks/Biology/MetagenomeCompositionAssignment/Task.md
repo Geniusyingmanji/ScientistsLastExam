@@ -45,3 +45,12 @@ in its [Chemistry/Biology split #22](https://github.com/Geniusyingmanji/Scientis
 This package is retained as the single marker-panel composition task in this
 contribution. Removal of the competing submission resolves the duplication
 concern; stronger difficulty calibration remains pending.
+
+## Accuracy normalization
+
+Absolute abundance tolerance is **0.025** (2.5 percentage points), exposed as
+`abundance_tolerance`. An abundance error at or above this value earns zero
+abundance credit; exact identifiable abundances define that component's 1.0.
+Taxon-set F1, alias grouping, false-claim penalties, library-inadequacy refusal
+and the blanket-refusal floor are unchanged. This tightens scientific accuracy,
+not the number of observations or the reference algorithm.

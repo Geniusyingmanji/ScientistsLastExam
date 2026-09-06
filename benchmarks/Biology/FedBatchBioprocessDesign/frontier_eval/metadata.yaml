@@ -9,5 +9,6 @@ gpu_required: false
 eval_time_seconds: 20
 science_metric: worst_case_productivity_under_growth_and_oxygen_transfer_shifts
 reference_baseline: constant low feed with fixed induction and harvest
-reference_sota: bounded robust grid-search witness; normalization anchor only
-citation: "Sbarciog et al. 2020, DOI 10.1016/j.ifacol.2020.12.1167"
+reference_sota: Original 54-schedule robust grid comparison; unchanged solver is below the refined
+  feasible anchor.
+citation: Sbarciog et al. 2020, DOI 10.1016/j.ifacol.2020.12.1167

@@ -70,14 +70,19 @@ def _upgma(problem):
  for k,row in enumerate(z): nodes[n+k]=f"({nodes[int(row[0])]},{nodes[int(row[1])]})"
  return nodes[2*n-2]+";"
 
+def _lower_bound(problem):
+ # Each distinct observed state needs at least one introduction on any tree.
+ return sum(len(set(column))-1 for column in zip(*problem["alignment"]))
+
 def evaluate(build_tree):
  rows=[]
  for seed in SPECS:
   p=_problem(seed); baseline=_fitch(_caterpillar(p["taxa"]),p); reference=_fitch(_upgma(p),p)
   try: tree=build_tree(p); score_value=_fitch(tree,p); valid=True
   except Exception: score_value=baseline; valid=False
-  score=float(max(0.0,(baseline-score_value)/max(1,baseline-reference)))
-  rows.append({"seed":seed,"valid":valid,"parsimony":score_value,"baseline":baseline,"reference":reference,"score":score})
+  score=float(max(0.0,(baseline-score_value)/max(1,baseline-_lower_bound(p))))
+  score=min(1.0,score)
+  rows.append({"seed":seed,"valid":valid,"parsimony":score_value,"baseline":baseline,"reference":reference,"lower_bound":_lower_bound(p),"score":score})
  dev=[rows[i] for i in DEV]; held=[rows[i] for i in HELD]
  return {"combined_score":float(np.mean([r["score"] for r in dev])),"valid":1.0 if all(r["valid"] for r in dev) else 0.0,
          "feasibility_rate":float(np.mean([r["valid"] for r in dev])),"heldout_score":float(np.mean([r["score"] for r in held])),"per_instance":rows}

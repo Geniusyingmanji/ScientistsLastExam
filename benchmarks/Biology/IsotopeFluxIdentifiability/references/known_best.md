@@ -1,59 +1,39 @@
-# Internal reference evidence — 2026-09-05
+# IsotopeFluxIdentifiability: scoring evidence — 2026-09-06
 
-## 1. Scoring anchor and baseline
+## Scientific endpoints
 
-The exact public model and normalization are in Task.md. The legal solution.py
-baseline has development score 0.00000000, valid=1.
-Scores are clipped; reference=1 is an anchor, not a record or frontier claim.
-Discovery tasks instead normalize above the no-discovery floor toward perfect
-scientific recovery; their classical reference need not reach one.
+Zero is the all-refusal scientific floor; perfect supported identifiable fluxes
+plus correct zero-net refusal defines one. The mean error over net and total
+exchange flux, divided componentwise by max(truth,0.1), now has a zero-credit
+tolerance of 0.025 instead of 0.6. The observation budget and three-start weighted
+least-squares reference are unchanged. Individual parallel exchange branches
+remain unidentifiable and are never accepted. The stricter tolerance was chosen
+with reference measurements; shifted held-out measurements are reported
+separately and do not constitute blind frontier validation.
 
-## 2. Input-only executable reference
+## Reproduction and measurements
 
-`references/reference.py` is standalone and accepts only the same public input
-and charged observation callback as a candidate. It contains no world generator,
-truth table, evaluator import, or lookup by world identity. Run it through
-`sle eval --allow-uncertified --task MetabolicEngineering/IsotopeFluxIdentifiability --candidate benchmarks/Biology/IsotopeFluxIdentifiability/references/reference.py`.
-Measured development score: **0.98904550**; separate held-out
-score/quality: **0.96614940**; validity: 1.0.
-Full internal payloads are in `.research/biology_wave2_measurements_2026-09-05.json`.
-These measurements are not frontier-model draws.
+The legal `solution.py` baseline scores **0.000000**, valid=1. The input-only
+comparison reference is `references/reference.py`.
+Run it with `python -m sle eval --allow-uncertified --task <logical ID from
+frontier_eval/metadata.yaml> --candidate <reference path> --timeout 300`.
 
-## 3. Ablations and shortcut probes
+| Solver | Development normalized score | heldout_scientific_score | Valid |
+| --- | ---: | ---: | ---: |
+| Original reference | 0.73709196 | 0.48395168 | 1 |
 
-Full four-isotopomer predictions agree with an independently coded three-mass ODE within 2e-8. Parallel reverse-route splits conserve steady-state mass and are observationally equivalent; zero influx leaves every exchange value unidentifiable. Always-refuse and all-zero claims score zero.
+The discovery held-out column is raw scientific quality, not the normalized
+development scale. Optimization held-out scores use the same normalization as
+development. All reference algorithms are unchanged by this calibration.
+The superseded reference=1 measurements do not describe this revision.
 
-## 4. Frontier calibration and missing headroom
+## Limits and provenance
 
-Only identifiable aggregate exchange is requested. The local Jacobian check is not profile likelihood; general EMU, INCA replication and broad shortcut sweeps remain pending. The small network is nearly saturated by classical fitting.
-No frontier draw, paired open-loop experiment, two-hour search or independent
-expert sign-off has run. This package remains **candidate**. A high reference
-score is not evidence that certification difficulty gates have passed.
+These original procedural worlds are repository-visible; held-out means excluded
+from search feedback, not server-secret. No external datasets or code are
+redistributed. Model simplifications and nearest-task overlap are in `Task.md`.
+Precision/headroom measurements do not establish expert difficulty: strong
+classical comparisons, frontier draws, long-horizon search and external domain
+review remain pending. The task stays **candidate**.
 
-## 5. Construction errors and corrections
-
-Strict nested output types, numeric ranges, invalid query handling and permanent
-budget-violation flags were implemented before registration. In geometry,
-linear normalization against a very poor straight line rewarded poor shapes;
-it was replaced by inverse-loss quality normalization before the recorded run.
-Reference seeds are algorithm constants; truth is never supplied to the solver.
-No data-dependent sample count or public world-type identifier is exposed by
-the two discovery tasks. Internal checks do not replace external oracle review.
-
-## 6. Robustness and held-out scope
-
-`tests/test_biology_wave2.py` covers at least twelve malformed artifacts per
-task, model invariants and cross-process baseline determinism. Discovery tests
-also cover correct refusal and caught budget overruns. Held-out panels shift
-instance size or parameters and are excluded from search feedback, but are
-repository-visible procedural examples, not an untouched server-side split.
-
-## 7. Provenance, novelty and review
-
-Scientific motivation: Elementary Metabolite Units (EMU): a novel framework for modeling isotopic distributions, doi:10.1016/j.ymben.2006.09.001.
-All implementation and synthetic instances are original to this contribution;
-no third-party implementation or dataset is redistributed. Model reductions
-and omissions are explicit in Task.md. Nearest existing tasks are listed there.
-The second-wave implementation report records the fixed paper/repository
-catalog comparison. External domain review, contamination-resistant server-held
-worlds, overlap adjudication and strong-solver calibration remain open.
+Scientific sources: doi:10.1016/j.ymben.2006.09.001.

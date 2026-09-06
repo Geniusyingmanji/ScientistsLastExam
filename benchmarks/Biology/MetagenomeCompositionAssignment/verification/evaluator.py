@@ -40,7 +40,7 @@ def _problem(kind,seed):
     return {"taxon_ids":TAXA,"marker_ids":MARKERS,"reference_profiles":REF.tolist(),
             "initial_observation":_counts(kind,seed,0,0),"available_panels":[1,2,3,4],
             "panel_markers":{p:[MARKERS[i] for i in ids] for p,ids in PANEL_MARKERS.items()},
-            "panel_budget":BUDGET,"minimum_reported_abundance":.08,"abundance_tolerance":.15,
+            "panel_budget":BUDGET,"minimum_reported_abundance":.08,"abundance_tolerance":.025,
             "known_alias_groups":[["t0","t1"]]}
 
 def _parse(out,problem):
@@ -73,7 +73,7 @@ def evaluate(assign_composition):
         ids,ab,_=_truth(kind,seed); truth={TAXA[i]:float(x) for i,x in zip(ids,ab)}
         if kind=="alias":
             alias_ok=frozenset(("t0","t1")) in groups
-            abundance_quality=max(0.0,1.0-abs(taxa.get("t2",-1.0)-truth["t2"])/.15) if "t2" in taxa else 0.0
+            abundance_quality=max(0.0,1.0-abs(taxa.get("t2",-1.0)-truth["t2"])/problem["abundance_tolerance"]) if "t2" in taxa else 0.0
             # Only the identifiable member and the unresolved group are supported.
             # Every other concrete taxon is a false claim, including t0/t1 themselves.
             false=len(set(taxa)-{"t2"})
@@ -86,7 +86,7 @@ def evaluate(assign_composition):
         else:
             common=set(taxa)&set(truth); precision=len(common)/max(1,len(taxa)); recall=len(common)/len(truth)
             setscore=2*precision*recall/max(1e-12,precision+recall)
-            abundance=1-np.mean([min(1,abs(taxa[x]-truth[x])/.15) for x in sorted(common)]) if common else 0
+            abundance=1-np.mean([min(1,abs(taxa[x]-truth[x])/problem["abundance_tolerance"]) for x in sorted(common)]) if common else 0
             mechanism=.7*setscore+.3*abundance; false=len(set(taxa)-set(truth)); refusal=0.0
         scientific=mechanism if kind!="out_of_library" else refusal
         rows.append({"kind":kind,"valid":valid,"mechanism":mechanism,"false":false,"claimed":len(taxa),

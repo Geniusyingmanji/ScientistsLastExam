@@ -100,7 +100,7 @@ def _parse(out):
 def _mechanism(index, out):
     estimate = np.array([out["fluxes"]["net"], out["fluxes"]["exchange_total"]])
     truth = np.array(SPECS[index])
-    return float(max(0., 1-np.mean(np.abs(estimate-truth)/np.maximum(truth, .1))/.6))
+    return float(max(0., 1-np.mean(np.abs(estimate-truth)/np.maximum(truth, .1))/.025))
 
 
 def evaluate(infer_fluxes):

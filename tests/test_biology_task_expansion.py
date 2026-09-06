@@ -18,7 +18,6 @@ def load(path,name):
     module=importlib.util.module_from_spec(spec); spec.loader.exec_module(module); return module
 
 TASKS=(
-    ("MetabolicStrainDesign","design_strain","reference_design.py"),
     ("BatchEffectDiscovery","analyze_expression","reference_analysis.py"),
     ("MetagenomeCompositionAssignment","assign_composition","reference_assignment.py"),
     ("FedBatchBioprocessDesign","design_process","reference_design.py"),
@@ -40,7 +39,8 @@ class BiologyExpansionTests(unittest.TestCase):
             self.assertEqual(baseline["valid"],1.0,task)
             self.assertAlmostEqual(baseline["combined_score"],0.0,places=12,msg=task)
             self.assertEqual(reference["valid"],1.0,task)
-            self.assertGreater(reference["combined_score"],0.35,task)
+            self.assertGreaterEqual(reference["combined_score"],0.5,task)
+            self.assertLessEqual(reference["combined_score"],0.8,task)
 
     def test_evaluators_are_deterministic(self):
         for task,entry,refname in TASKS:
@@ -95,38 +95,6 @@ print(json.dumps([ev.evaluate(getattr(base,entry)),ev.evaluate(getattr(ref,entry
         self.assertEqual(b["combined_score"],0.0)
         self.assertEqual(m["combined_score"],0.0)
 
-    def test_metabolic_worst_case_face_requires_blocking_all_competing_routes(self):
-        ev=self.loaded["MetabolicStrainDesign"][0]
-        # Independent two-pool fixture: either redox drain can evade product
-        # coupling, so a favorable single FBA optimum must not receive credit.
-        p={"reaction_ids":["up","biomass","product","drain_a","drain_b"],
-           "stoichiometric_matrix":[[1,-1,-1,0,0],[1,-.2,-2,-1,-1]],
-           "lower_bounds":[0]*5,"upper_bounds":[10,100,100,100,100],
-           "biomass_reaction":"biomass","product_reaction":"product",
-           "minimum_growth":1.,"growth_optimality_tolerance":1e-7}
-        competitors=["drain_a","drain_b"]
-        self.assertEqual(ev._utility(p,()),0.0)
-        self.assertEqual(ev._utility(p,tuple(competitors[:-1])),0.0)
-        self.assertGreater(ev._utility(p,tuple(competitors)),0.0)
-
-    def test_metabolic_structural_shortcuts_cannot_saturate(self):
-        ev=self.loaded["MetabolicStrainDesign"][0]
-        def rule(p, mode):
-            pairs=zip(p["reaction_ids"],zip(*p["stoichiometric_matrix"]))
-            return {"reaction_knockouts":[r for r,c in pairs
-                    if r in p["allowed_reaction_knockouts"] and
-                    (all(v<=0 for v in c) if mode=="drains" else c[0]==0 and c[1]<0)]}
-        for mode in ("drains","redox"):
-            metrics=ev.evaluate(lambda p:rule(p,mode))
-            self.assertEqual(metrics["valid"],1.0)
-            self.assertLess(metrics["combined_score"],.9)
-            self.assertLess(metrics["heldout_score"],.9)
-
-    def test_metabolic_fixed_positions_do_not_transfer(self):
-        ev=self.loaded["MetabolicStrainDesign"][0]
-        fixed=ev.evaluate(lambda p:{"reaction_knockouts":p["allowed_reaction_knockouts"][:4]})
-        self.assertLess(fixed["combined_score"],0.5)
-        self.assertLess(fixed["heldout_score"],0.5)
 
     def test_batch_scores_effects_and_reason_codes(self):
         ev=self.loaded["BatchEffectDiscovery"][0]
@@ -256,8 +224,12 @@ print(json.dumps([ev.evaluate(getattr(base,entry)),ev.evaluate(getattr(ref,entry
         ev=self.loaded["PhylogeneticParsimonySearch"][0]
         probe=load(BIO/"PhylogeneticParsimonySearch"/"verification"/"headroom_probe.py","phylo_headroom")
         metrics=ev.evaluate(probe.build_tree)
-        self.assertGreater(metrics["combined_score"],1.0)
-        self.assertGreater(metrics["heldout_score"],1.0)
+        reference=self.loaded["PhylogeneticParsimonySearch"][3]
+        self.assertGreater(metrics["combined_score"],reference["combined_score"])
+        self.assertGreater(metrics["heldout_score"],reference["heldout_score"])
+        self.assertLessEqual(metrics["combined_score"],1.0)
+        for row in metrics["per_instance"]:
+            self.assertLessEqual(row["lower_bound"],row["parsimony"])
 
 if __name__=="__main__":
     unittest.main()

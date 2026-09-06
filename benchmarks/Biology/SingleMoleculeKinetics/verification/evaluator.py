@@ -120,7 +120,7 @@ def _mechanism(index, out):
         rates = np.array(out["rates"])[list(perm)]
         efficiencies = np.array(out["efficiencies"])[list(perm)]
         errors.append(float(np.mean(np.abs(np.log(rates/[a, b])))) + 3*float(np.mean(np.abs(efficiencies-[e0, e1]))))
-    return float(max(0., 1-min(errors)/1.2))
+    return float(max(0., 1-min(errors)/0.10))
 
 
 def evaluate(infer_kinetics):

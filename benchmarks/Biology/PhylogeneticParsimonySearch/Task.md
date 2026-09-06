@@ -19,9 +19,14 @@ order; criterion is unordered_fitch_parsimony; missing_symbol reserves the quest
 
 Return one rooted representation of an unrooted binary topology, for example
 ((t0,t1),(t2,t3));. Branch lengths and internal labels are not accepted. The verifier parses the
-tree independently and computes Fitch cost site by site. Score is the nonnegative, uncapped fraction
-of the gap closed from a deterministic caterpillar baseline (0) to a truth-blind average-linkage
-starting-tree witness (1); stronger tree searches can exceed 1. Held-out alignments are separate.
+tree independently and computes Fitch cost site by site. Score is clipped to [0,1]:
+`clip((C_baseline-C_tree)/max(1,C_baseline-C_lower),0,1)`. The baseline is a
+caterpillar tree. `C_lower = sum_site(number_of_distinct_observed_states-1)`
+is a topology-independent lower bound: every additional observed state requires
+at least one change on any tree. Equality may require incompatible per-site trees,
+so 1.0 is a relaxation bound, not an asserted attainable optimum. Average linkage
+is a comparison reference below this bound; NNI search earns strictly more credit.
+Held-out alignments are separate. This task makes no uncapped record claim.
 
 The alignments are deterministic procedural panels designed to test tree search. They are not a
 new phylogeny or a biological inference result.

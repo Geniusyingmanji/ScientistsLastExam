@@ -1,1 +1,0 @@
-Only edit solution.py and keep design_strain(problem). Return only reaction_knockouts from the allowed list. NumPy/SciPy only; deterministic CPU code; no verification/frontier_eval access.

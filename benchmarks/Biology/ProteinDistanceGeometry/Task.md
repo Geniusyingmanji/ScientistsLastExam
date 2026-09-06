@@ -33,13 +33,21 @@ Collapsing or rescaling structures incurs independent bonded and steric losses.
 
 The straight-line baseline places bead i at [3.8*(i-(N-1)/2),0,0]. It is a legal
 artifact, not a physically valid conformation. Score is
-`clip((q-q_baseline)/(q_reference-q_baseline),0,1)`, where `q=1/(1+L)`. The input-only reference
+`clip((q-q_baseline)/(1-q_baseline),0,1)`, where `q=1/(1+L/0.2)`. Zero public loss
+defines perfect quality 1; the loss scale 0.2 resolves residual constraint errors.
+The input-only reference
 uses shortest-path distance completion, classical MDS, chooses the better
 reflection, then at most 45 nonlinear least-squares evaluations. It is a
-normalization anchor, not a global optimum. Development mean is the search
+comparison solver, not the normalization endpoint or a global optimum. Development mean is the search
 score; larger held-out worlds and raw constraint losses are sealed diagnostics.
 `valid` requires all four worlds valid. All worlds are repository-visible
-procedural panels. NumPy/SciPy are available; budget is 120 CPU seconds.
+procedural panels. NumPy/SciPy are available. `EVAL_TIMEOUT_S=300` in the task
+entrypoint sets the candidate wall-clock deadline for all four worlds, including
+held-out worlds, matching the default `sle eval --timeout 300`. The worker also
+has the repository CPU resource limit; it is not a separate 300 seconds per world.
+The maintainer measured 96 seconds for a full reference evaluation, so the default
+leaves over 3x that observation. The outer wrapper allows an additional 120 seconds
+for trusted evaluation and subprocess cleanup. See the task card and measured evidence.
 
 [DGSOL's author page](https://www.mcs.anl.gov/~more/dgsol/) and Moré & Wu,
 *Distance geometry optimization for protein structures* (1999), motivate the

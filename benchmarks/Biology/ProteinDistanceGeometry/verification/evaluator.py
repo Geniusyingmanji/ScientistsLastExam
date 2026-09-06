@@ -1,6 +1,5 @@
 """Coarse C-alpha geometry; evaluates public constraints, never hidden RMSD."""
 from copy import deepcopy
-from functools import lru_cache
 import numpy as np
 from scipy.optimize import least_squares
 from scipy.sparse.csgraph import shortest_path
@@ -93,12 +92,6 @@ def reference(problem, max_nfev=45):
     return {"coordinates": result.tolist()}
 
 
-@lru_cache(None)
-def _anchors(index):
-    p, _ = _world(index)
-    return loss(p, baseline(p)["coordinates"]), loss(p, reference(p)["coordinates"])
-
-
 def _score_output(index, problem, output):
     if not isinstance(output, dict) or set(output) != {"coordinates"}:
         return 0., False
@@ -110,9 +103,10 @@ def _score_output(index, problem, output):
             return 0., False
     if coords == baseline(problem)["coordinates"]:
         return 0., True
-    base, ref = _anchors(index)
-    quality = 1/(1+loss(problem, coords))
-    return float(np.clip((quality-1/(1+base))/(1/(1+ref)-1/(1+base)), 0, 1)), True
+    base = loss(problem, baseline(problem)["coordinates"])
+    quality = 1/(1+loss(problem, coords)/0.2)
+    floor = 1/(1+base/0.2)
+    return float(np.clip((quality-floor)/(1-floor), 0, 1)), True
 
 
 def evaluate(build_conformation):

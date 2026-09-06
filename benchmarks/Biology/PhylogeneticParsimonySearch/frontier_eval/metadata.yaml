@@ -4,10 +4,10 @@ scientific_role: optimization
 difficulty: hard
 tier: T2
 oracle_type: analytical_fitch_parsimony
-score_mode: uncapped
+score_mode: clipped
 gpu_required: false
 eval_time_seconds: 5
 science_metric: parsimony_gap_closed_on_unrooted_binary_trees
 reference_baseline: deterministic caterpillar tree
-reference_sota: average-linkage truth-blind starting-tree witness; normalization anchor only
-citation: "Nixon 1999, DOI 10.1111/j.1096-0031.1999.tb00277.x; Hoang et al. 2018, DOI 10.1186/s12859-018-2009-1"
+reference_sota: Truth-blind average linkage; NNI hill-climb demonstrates strictly better trees.
+citation: Nixon 1999, DOI 10.1111/j.1096-0031.1999.tb00277.x; Hoang et al. 2018, DOI 10.1186/s12859-018-2009-1

@@ -1,59 +1,53 @@
-# Internal reference evidence — 2026-09-05
+# ProteinDistanceGeometry: scoring evidence — 2026-09-06
 
-## 1. Scoring anchor and baseline
+## Scientific endpoints
 
-The exact public model and normalization are in Task.md. The legal solution.py
-baseline has development score 0.00000000, valid=1.
-Scores are clipped; reference=1 is an anchor, not a record or frontier claim.
-Discovery tasks instead normalize above the no-discovery floor toward perfect
-scientific recovery; their classical reference need not reach one.
+Zero is the straight-line baseline. One is zero loss on all public distance,
+bond, angle, excluded-volume and chirality constraints. Quality is
+`q=1/(1+loss/0.2)` and score is `(q-q_baseline)/(1-q_baseline)`, clipped to [0,1].
+The loss scale 0.2 resolves residual violations near a good conformation; it does
+not depend on the candidate or reference loss. A feasible zero-loss procedural
+witness exists and is tested independently of the reference. The reference
+remains MDS plus 45 least-squares evaluations; `references/headroom_probe.py`
+uses 120 evaluations with otherwise identical public inputs.
 
-## 2. Input-only executable reference
+## Reproduction and measurements
 
-`references/reference.py` is standalone and accepts only the same public input
-and charged observation callback as a candidate. It contains no world generator,
-truth table, evaluator import, or lookup by world identity. Run it through
-`sle eval --allow-uncertified --task StructuralBiology/ProteinDistanceGeometry --candidate benchmarks/Biology/ProteinDistanceGeometry/references/reference.py`.
-Measured development score: **1.00000000**; separate held-out
-score/quality: **1.00000000**; validity: 1.0.
-Full internal payloads are in `.research/biology_wave2_measurements_2026-09-05.json`.
-These measurements are not frontier-model draws.
+The legal `solution.py` baseline scores **0.000000**, valid=1. The input-only
+comparison reference is `references/reference.py`.
+Run it with `python -m sle eval --allow-uncertified --task <logical ID from
+frontier_eval/metadata.yaml> --candidate <reference path> --timeout 300`.
 
-## 3. Ablations and shortcut probes
+| Solver | Development normalized score | heldout_score | Valid |
+| --- | ---: | ---: | ---: |
+| Original reference | 0.68917271 | 0.67805589 | 1 |
+| Public-input headroom probe | 0.85186119 | 0.82711863 | 1 |
 
-A feasible procedural witness has zero public loss. Proper rigid motions preserve it; reflections, collapse and rescaling incur loss. World-0 reference loss is 0.0774017003; complete collapse scores only 0.00120734.
+The discovery held-out column is raw scientific quality, not the normalized
+development scale. Optimization held-out scores use the same normalization as
+development. All reference algorithms are unchanged by this calibration.
+The superseded reference=1 measurements do not describe this revision.
 
-## 4. Frontier calibration and missing headroom
+## Designed runtime budget
 
-This is synthetic C-alpha geometry with local handedness, not all-atom stereochemistry or biological folding accuracy. Sparse helical instances can be easy for general distance solvers; DGSOL comparison and conformer-task overlap review remain pending.
-No frontier draw, paired open-loop experiment, two-hour search or independent
-expert sign-off has run. This package remains **candidate**. A high reference
-score is not evidence that certification difficulty gates have passed.
+The maintainer observed **96 seconds** for one full reference evaluation. The
+task wrapper explicitly declares **EVAL_TIMEOUT_S=300**, matching its metadata,
+task card and the normal `sle eval --timeout 300` command. This is the total
+candidate wall-clock deadline across all four worlds; repository worker CPU
+limits also apply. The outer subprocess allowance adds 120 seconds for trusted
+work and cleanup. On this Linux x86_64 host, direct reference evaluation took
+23.95 seconds and the 120-evaluation probe took 67.15 seconds. Hardware and BLAS
+settings affect runtime; these measurements are not a portable speed guarantee.
+The evaluator no longer runs a second reference optimization to construct the
+anchor, avoiding unnecessary overhead.
 
-## 5. Construction errors and corrections
+## Limits and provenance
 
-Strict nested output types, numeric ranges, invalid query handling and permanent
-budget-violation flags were implemented before registration. In geometry,
-linear normalization against a very poor straight line rewarded poor shapes;
-it was replaced by inverse-loss quality normalization before the recorded run.
-Reference seeds are algorithm constants; truth is never supplied to the solver.
-No data-dependent sample count or public world-type identifier is exposed by
-the two discovery tasks. Internal checks do not replace external oracle review.
+These original procedural worlds are repository-visible; held-out means excluded
+from search feedback, not server-secret. No external datasets or code are
+redistributed. Model simplifications and nearest-task overlap are in `Task.md`.
+Precision/headroom measurements do not establish expert difficulty: strong
+classical comparisons, frontier draws, long-horizon search and external domain
+review remain pending. The task stays **candidate**.
 
-## 6. Robustness and held-out scope
-
-`tests/test_biology_wave2.py` covers at least twelve malformed artifacts per
-task, model invariants and cross-process baseline determinism. Discovery tests
-also cover correct refusal and caught budget overruns. Held-out panels shift
-instance size or parameters and are excluded from search feedback, but are
-repository-visible procedural examples, not an untouched server-side split.
-
-## 7. Provenance, novelty and review
-
-Scientific motivation: Distance Geometry Optimization for Protein Structures, doi:10.1023/A:1008380219900.
-All implementation and synthetic instances are original to this contribution;
-no third-party implementation or dataset is redistributed. Model reductions
-and omissions are explicit in Task.md. Nearest existing tasks are listed there.
-The second-wave implementation report records the fixed paper/repository
-catalog comparison. External domain review, contamination-resistant server-held
-worlds, overlap adjudication and strong-solver calibration remain open.
+Scientific sources: doi:10.1023/A:1008380219900.

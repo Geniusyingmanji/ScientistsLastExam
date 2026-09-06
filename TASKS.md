@@ -4,24 +4,22 @@
 
 | | |
 |---|---:|
-| 任务包 | 86 |
-| optimization | 46 |
+| 任务包 | 83 |
+| optimization | 43 |
 | discovery | 40 |
 | certified | 5 |
-| candidate | 81 |
-| 学科 | 7(Biology 17,Chemistry 13,ComputerScience 6,EarthScience 6,Engineering 12,Mathematics 18,Physics 14) |
+| candidate | 78 |
+| 学科 | 7(Biology 14,Chemistry 13,ComputerScience 6,EarthScience 6,Engineering 12,Mathematics 18,Physics 14) |
 
 认证描述的是证据质量,不是难度。标 on-ramp 的任务首个前沿模型提案已够到参考解,不用于配对 Δ 测量。
 
-## Optimization(46)
+## Optimization(43)
 
-### 工程设计(engineering_design) — 19
+### 工程设计(engineering_design) — 17
 
 | 任务 | 学科 | 领域 | 打分 | oracle | 认证 | 说明 | 中文题意 | 中文评估方法 |
 |---|---|---|---|---|---|---|---|---|
 | [`FedBatchBioprocessDesign`](benchmarks/Biology/FedBatchBioprocessDesign/)<br>补料发酵稳健设计 | Biology | Bioprocess | clipped | reduced_order_bioprocess_sim | candidate | robust feed and induction scheduling | 设计三阶段补料、诱导与收获时刻,在溢流代谢和氧传递限制下保持生产率 | 跨生长与氧传递偏移的最坏生产率;体积、乙酸和终态生物量硬门控 |
-| [`MetabolicStrainDesign`](benchmarks/Biology/MetabolicStrainDesign/)<br>生长偶联代谢菌株设计 | Biology | MetabolicEngineering | clipped | constraint_based_metabolic_lp | candidate | robust growth-coupled strain design | 在冻结化学计量网络上选择反应敲除,让产物与最优生长稳健偶联 | 在整个生长最优面上的最坏产量乘生长;留出代谢系数分列 |
-| [`RobustReserveNetworkDesign`](benchmarks/Biology/RobustReserveNetworkDesign/)<br>多物种保护区网络稳健设计 | Biology | ConservationBiology | clipped | frozen_procedural_model | candidate | Implement `design_reserve(problem) -> {"protected_patches": ["p0", ...]}`. | 预算内选择地块并维持动态占域 | 最坏情景占域效用 |
 | [`AlloyHardnessOptimization`](benchmarks/Chemistry/AlloyHardnessOptimization/)<br>合金硬度实验设计 | Chemistry | MaterialsScience | uncapped | real_data_replay | candidate | design a study-held alloy batch | 在按论文 DOI 分组的多主元合金数据里做实验设计,选出研究外留出的硬度批次 | 留出硬度 + 多样性 + 代理失效 + 不确定性 + 来源迁移 + 稀疏独立确认;无上限 |
 | [`DistillationColumnDesign`](benchmarks/Chemistry/DistillationColumnDesign/)<br>精馏塔设计 | Chemistry | ChemicalProcess | uncapped | equilibrium_stage_process_sim | candidate | robust mixed-integer equilibrium-stage design | 混合整数精馏塔设计:塔板数与进料位置离散,兼顾纯度回收约束与再沸冷凝能耗 | 年化成本;留出迁移与密封变工况分列,无上限 |
 | [`ElectrolyteConductivityDesign`](benchmarks/Chemistry/ElectrolyteConductivityDesign/)<br>电解液电导率设计 | Chemistry | Electrochemistry | uncapped | real_data_replay | candidate | allocate EIS assays and select a robust formulation batch | 在高通量电解液数据回放里分配阻抗测定预算,选出稳健的配方批次 | 温度剖面电导率 + 批次多样性 + 重复稳健性 + 留出迁移;无上限 |
@@ -39,12 +37,11 @@
 | [`MultilayerThinFilm`](benchmarks/Physics/MultilayerThinFilm/)<br>多层减反射膜 | Physics | Photonics | clipped | physical_sim | certified | design a broadband antireflection coating | 设计可见光全谱段的多层宽带减反射膜 | 宽带减反射质量;物理下界为零平均反射 |
 | [`SuperconductorTcRecord`](benchmarks/Physics/SuperconductorTcRecord/)<br>超导临界温度纪录搜索 | Physics | Superconductivity | uncapped | allen_dynes_formula_solved_to_real_anchors | candidate | beat the published record by computing where Allen-Dynes says to look | 在真实设备压力上限下,用 Allen-Dynes 公式在五个真实超导体系间搜索已确认临界温度最高的(体系,压力)组合,并避开一个从未被实现的理论预测(隐含电子-声子耦合超过物理合理上限) | 真实Tc除以已发表记录250K的直接比值;无上限,可超过已发表记录 |
 
-### 开放组合纪录(combinatorial,无上限) — 19
+### 开放组合纪录(combinatorial,无上限) — 18
 
 | 任务 | 学科 | 领域 | 打分 | oracle | 认证 | 说明 | 中文题意 | 中文评估方法 |
 |---|---|---|---|---|---|---|---|---|
-| [`DiploidHaplotypeAssembly`](benchmarks/Biology/DiploidHaplotypeAssembly/)<br>混合读段二倍体单倍型组装 | Biology | Genomics | clipped | frozen_procedural_model | candidate | Implement `assemble_haplotypes(problem) -> {"haplotype": [0, 1, ...]}`. | 在带错误率的多位点读段上恢复相位 | 读段混合似然相对参考的改进 |
-| [`PhylogeneticParsimonySearch`](benchmarks/Biology/PhylogeneticParsimonySearch/)<br>最大简约系统发育树搜索 | Biology | Phylogenetics | uncapped | analytical_fitch_parsimony | candidate | search unrooted binary tree space | 为给定序列比对搜索 Fitch 变化数更低的二叉 Newick 树 | 从 caterpillar 基线到真值盲聚类见证的简约得分缺口闭合 |
+| [`PhylogeneticParsimonySearch`](benchmarks/Biology/PhylogeneticParsimonySearch/)<br>最大简约系统发育树搜索 | Biology | Phylogenetics | clipped | analytical_fitch_parsimony | candidate | search unrooted binary tree space | 为给定序列比对搜索 Fitch 变化数更低的二叉 Newick 树 | 从 caterpillar 基线到逐位点简约下界的缺口闭合,封顶为一 |
 | [`MatrixMultiplicationRank`](benchmarks/ComputerScience/MatrixMultiplicationRank/)<br>矩阵乘法秩 | ComputerScience | Algorithm | uncapped | analytical | certified | discover faster matrix-multiplication algorithms | 搜索双线性张量分解,减少矩阵乘法所需的标量乘法次数 | 对最好已知乘法数的平均进度;无上限 |
 | [`TensorRank555`](benchmarks/ComputerScience/TensorRank555/)<br>5x5 与 6x6 张量秩 | ComputerScience | Algorithm | uncapped | analytical | candidate | numerical complex decompositions for 5×5 and 6×6 multiplication | 为 5x5 与 6x6 矩阵乘法找有限精度复系数分解,秩低于已知构造 | 对最好已知乘法数的平均进度;无上限,实例与 MatrixMultiplicationRank 不相交 |
 | [`CapSet`](benchmarks/Mathematics/CapSet/)<br>Cap Set 构造 | Mathematics | Mathematics | uncapped | analytical | certified | find large cap sets in Z_3^n | 在 Z_3^n 里构造更大的 cap set(无三点共线) | 对最好已知规模的平均进度;无上限 |
@@ -67,7 +64,7 @@
 
 | 任务 | 学科 | 领域 | 打分 | oracle | 认证 | 说明 | 中文题意 | 中文评估方法 |
 |---|---|---|---|---|---|---|---|---|
-| [`ProteinDistanceGeometry`](benchmarks/Biology/ProteinDistanceGeometry/)<br>蛋白主链距离几何 | Biology | StructuralBiology | clipped | frozen_procedural_model | candidate | Implement `build_conformation(problem) -> {"coordinates": [[x,y,z], ...]}`. | 构建满足距离、排斥和局部手性约束的粗粒化坐标 | 公开几何损失相对参考的质量提升 |
+| [`ProteinDistanceGeometry`](benchmarks/Biology/ProteinDistanceGeometry/)<br>蛋白主链距离几何 | Biology | StructuralBiology | clipped | frozen_procedural_model | candidate | Implement `build_conformation(problem) -> {"coordinates": [[x,y,z], ...]}`. | 构建满足距离、排斥和局部手性约束的粗粒化坐标 | 公开几何损失相对零损失锚点的质量 |
 | [`ProteinStabilityDesign`](benchmarks/Biology/ProteinStabilityDesign/)<br>蛋白稳定性批次设计 | Biology | ProteinEngineering | uncapped | real_data_replay | candidate | allocate assays and design a stable protein batch | 在蛋白稳定性实验回放里分配测定预算,设计双点突变批次 | 留出稳定性前十分位 + 多样性 + 蛋白酶稳健性 + 结构域迁移;无上限 |
 | [`RNAEnsembleDesign`](benchmarks/Biology/RNAEnsembleDesign/)<br>RNA 系综设计 | Biology | RNAEngineering | uncapped | community_thermodynamics_viennarna | candidate | Design an RNA sequence that folds into a given secondary structure — not merely as its | 设计 RNA 序列,使目标二级结构在整个玻尔兹曼系综上而非仅 MFE 上成立 | 对 ViennaRNA 反折叠的系综缺陷;密封目标,无上限 |
 | [`RNAInverseDesign`](benchmarks/Biology/RNAInverseDesign/)<br>RNA 约束反折叠 | Biology | RNAEngineering | uncapped | exact_dynamic_programming | candidate | design a constrained sequence for a target ensemble | 在长度、字母表、GC 与基序约束下设计目标系综概率高的 RNA 序列 | 目标系综概率 + MFE 迁移 + 代理误升迁;配对相容只是代理,无上限 |

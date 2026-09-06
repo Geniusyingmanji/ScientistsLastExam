@@ -32,7 +32,7 @@ over latent paths proves their observations are the same iid Poisson process
 as null worlds. Refusal is correct for either; no reason-label distinction is
 required. Supported worlds are scored under the best simultaneous permutation
 of the two rate and efficiency arrays. Mechanism quality is
-`max(0,1-(mean(abs(log(k/k_true)))+3*mean(abs(e-e_true)))/1.2)`.
+`max(0,1-(mean(abs(log(k/k_true)))+3*mean(abs(e-e_true)))/0.10)`.
 A supported refusal gets zero. An unsupported refusal gets one, a claim zero.
 Mean development scientific quality is normalized as `max(0,2*mean-1)`, making
 all-refusal and all-null policies exactly zero. There are four development
@@ -44,7 +44,8 @@ Sealed metrics separately report mechanism quality, false claims/total claims
 confidence Brier loss, and held-out scientific quality. Brier correctness uses
 the threshold 0.5 above. Invalid worlds receive no scientific credit.
 The repository contains procedural worlds; held-out means excluded from search
-score, not secret data. Candidate evaluation budget is 120 CPU seconds.
+score, not secret data. Default candidate wall-clock deadline is 300 seconds across all worlds
+(`sle eval --timeout 300`); worker CPU limits also apply.
 
 Baseline refuses without querying. Input-only reference acquires two 0.2-second
 traces, checks shot-noise-corrected efficiency variance, then fits a two-state

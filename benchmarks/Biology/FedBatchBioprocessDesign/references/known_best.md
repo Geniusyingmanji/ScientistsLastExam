@@ -1,19 +1,39 @@
-# FedBatchBioprocessDesign reference evidence
+# FedBatchBioprocessDesign: scoring evidence — 2026-09-06
 
-## Scoring
-Worst-shift productivity is clipped from the constant-feed baseline to a recomputed robust grid witness.
-## Anchor
-The witness is internal and recomputed; no published process record is used.
-## Baseline
-Constant feed 0.10 L/h with fixed induction/harvest scores 0.
-## Reference
-A bounded three-stage grid scores 1.0 development and held out by construction.
-## Ablations
-Constant feed, exponential-like profiles, nominal-only ranking and fixed induction/harvest remain required probes.
-## Shortcut and robustness
-Nested arrays, boolean/string rates, invalid lengths, and nonfinite/out-of-range values now
-fail closed; the public task supplies all model coefficients, state units, scenario shifts and
-Euler boundary conventions needed to implement a simulator independently.
-Low dimensionality is an explicit saturation risk; the task cannot pass admission without model and open-loop calibration.
-## Provenance
-The reduced overflow-control form follows doi:10.1016/j.ifacol.2020.12.1167. Retrieved 2026-09-05.
+## Scientific endpoints
+
+Zero is the constant-feed schedule's robust productivity. One is the utility
+of an independently recomputed feasible schedule obtained by bounded Nelder-Mead
+refinement (220 iterations) of the unchanged 54-schedule grid reference. All five
+frozen schedules are in `verification/evaluator.py::ANCHOR_DESIGNS`.
+`references/headroom_probe.py` reconstructs them from public inputs without
+world identifiers or a schedule lookup table. These feasible anchors are not
+claimed global optima; stronger schedules can tie at the clipped endpoint.
+
+## Reproduction and measurements
+
+The legal `solution.py` baseline scores **0.000000**, valid=1. The input-only
+comparison reference is `verification/reference_design.py`.
+Run it with `python -m sle eval --allow-uncertified --task <logical ID from
+frontier_eval/metadata.yaml> --candidate <reference path> --timeout 300`.
+
+| Solver | Development normalized score | heldout_robust_score | Valid |
+| --- | ---: | ---: | ---: |
+| Original reference | 0.51657669 | 0.64079264 | 1 |
+| Public-input headroom probe | 1.00000000 | 1.00000000 | 1 |
+
+The discovery held-out column is raw scientific quality, not the normalized
+development scale. Optimization held-out scores use the same normalization as
+development. All reference algorithms are unchanged by this calibration.
+The superseded reference=1 measurements do not describe this revision.
+
+## Limits and provenance
+
+These original procedural worlds are repository-visible; held-out means excluded
+from search feedback, not server-secret. No external datasets or code are
+redistributed. Model simplifications and nearest-task overlap are in `Task.md`.
+Precision/headroom measurements do not establish expert difficulty: strong
+classical comparisons, frontier draws, long-horizon search and external domain
+review remain pending. The task stays **candidate**.
+
+Scientific sources: doi:10.1016/j.ifacol.2020.12.1167.

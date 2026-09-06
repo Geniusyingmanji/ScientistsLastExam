@@ -1,6 +1,5 @@
 """Reduced-order robust fed-batch process-design oracle."""
 from __future__ import annotations
-import itertools
 from numbers import Real
 from functools import lru_cache
 import numpy as np
@@ -57,22 +56,26 @@ def _robust(p,d):
   u,ok=_simulate(p,d,shift); vals.append(u if ok else 0.0)
  return min(vals)
 
-def _reference(p):
- best=None; value=-1
- for rates in itertools.product((.05,.14,.23),repeat=3):
-  for ind in (7.,12.):
-   d={"feed_rates":np.asarray(rates),"induction_time_h":ind,"harvest_time_h":22.0}; u=_robust(p,d)
-   if u>value: best,value=d,u
- return best,value
+# Feasible normalization witnesses, obtained by bounded Nelder-Mead refinement
+# of the public grid reference. Recomputed under the same robust oracle.
+ANCHOR_DESIGNS = (
+    (0.06125224548653202, 0.28342693798243723, 0.15465464597351644, 5.360495653221568, 20.76813782050862),
+    (0.14671873254202084, 0.04647786785321378, 0.05210834726288588, 6.839427262885174, 23.169761424107094),
+    (0.07310093407850657, 0.1001552717480099, 0.29309138921969924, 4.016563550903443, 19.14464425066638),
+    (0.3073672088398642, 0.06729526380534877, 3.3329338648331064e-07, 7.68000933385389, 24.0),
+    (0.1475417697986247, 0.0514844549977644, 0.15250356667652282, 5.84000519820089, 23.29053089921647),
+)
 
 @lru_cache(maxsize=None)
-def _reference_value(index):
- return _reference(_problem(SPECS[index]))[1]
+def _anchor_value(index):
+ x = ANCHOR_DESIGNS[index]
+ d = {"feed_rates": np.asarray(x[:3]), "induction_time_h": x[3], "harvest_time_h": x[4]}
+ return _robust(_problem(SPECS[index]), d)
 
 def evaluate(design_process):
  rows=[]
  for index,spec in enumerate(SPECS):
-  p=_problem(spec); base=_robust(p,{**BASELINE,"feed_rates":np.asarray(BASELINE["feed_rates"]) }); ref=_reference_value(index)
+  p=_problem(spec); base=_robust(p,{**BASELINE,"feed_rates":np.asarray(BASELINE["feed_rates"]) }); ref=_anchor_value(index)
   try:
    d=_parse(p,design_process(p))
    valid=d is not None
@@ -80,7 +83,7 @@ def evaluate(design_process):
   except Exception:
    valid=False; utility=0.0
   score=np.clip((utility-base)/max(1e-12,ref-base),0,1)
-  rows.append({"valid":valid,"utility":utility,"baseline":base,"reference":ref,"score":float(score)})
+  rows.append({"valid":valid,"utility":utility,"baseline":base,"anchor":ref,"score":float(score)})
  dev=[rows[i] for i in DEV]; held=[rows[i] for i in HELD]
  return {"combined_score":float(np.mean([r["score"] for r in dev])),"valid":1.0 if all(r["valid"] for r in dev) else 0.0,
          "feasibility_rate":float(np.mean([r["valid"] for r in dev])),"heldout_robust_score":float(np.mean([r["score"] for r in held])),"per_instance":rows}

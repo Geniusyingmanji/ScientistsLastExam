@@ -1,21 +1,39 @@
-# MetagenomeCompositionAssignment reference evidence
+# MetagenomeCompositionAssignment: scoring evidence — 2026-09-06
 
-## Scoring
-Composition/refusal utility is normalized above blanket abstention and the single-marker baseline.
-## Anchor
-Reference profiles and procedural worlds are deterministically recomputed by the evaluator.
-## Baseline
-Single-marker nearest-reference assignment scores 0.
-## Reference
-Panel-conditional mixture fitting with exact alias grouping, abundance scoring and residual refusal
-scores about 0.903 development and 0.959 held out.
-## Ablations
-Unweighted nearest column, NNLS without alias handling, no residual refusal and blanket genus grouping are required probes.
-## Shortcut and robustness
-The PR-review probe adds five false taxa to each alias-world reference output. Previously the
-score and false-discovery count were unchanged. After repair the development score drops from
-0.903336 to 0.636460; held-out scientific utility drops from 0.959084 to 0.725724. The false
-claim count is 10, denominator 12, and unsupported-world FDR is 0.833333.
-The prototype omits read mapping and copy-number error; it is a mechanism test, not a real-sample benchmark.
-## Provenance
-Taxonomic profiling form is grounded in TIPP (doi:10.1093/bioinformatics/btu721). Retrieved 2026-09-05.
+## Scientific endpoints
+
+Zero is the blanket-refusal floor; one requires exact supported taxa/abundances,
+correct unresolved alias groups, and correct library-inadequacy refusal.
+Absolute abundance tolerance is now 0.025 (2.5 percentage points), replacing 0.15.
+Taxon F1, alias precision penalties and the two-panel budget are unchanged.
+The original conditional-profile fit is unchanged. Exact identifiable abundance
+still earns full component credit; tightening this precision threshold does
+not manufacture a reference-based ceiling. The reference informed calibration,
+so the measured procedural worlds are not blind validation.
+
+## Reproduction and measurements
+
+The legal `solution.py` baseline scores **0.000000**, valid=1. The input-only
+comparison reference is `verification/reference_assignment.py`.
+Run it with `python -m sle eval --allow-uncertified --task <logical ID from
+frontier_eval/metadata.yaml> --candidate <reference path> --timeout 300`.
+
+| Solver | Development normalized score | heldout_scientific_score | Valid |
+| --- | ---: | ---: | ---: |
+| Original reference | 0.69450426 | 0.86021894 | 1 |
+
+The discovery held-out column is raw scientific quality, not the normalized
+development scale. Optimization held-out scores use the same normalization as
+development. All reference algorithms are unchanged by this calibration.
+The superseded reference=1 measurements do not describe this revision.
+
+## Limits and provenance
+
+These original procedural worlds are repository-visible; held-out means excluded
+from search feedback, not server-secret. No external datasets or code are
+redistributed. Model simplifications and nearest-task overlap are in `Task.md`.
+Precision/headroom measurements do not establish expert difficulty: strong
+classical comparisons, frontier draws, long-horizon search and external domain
+review remain pending. The task stays **candidate**.
+
+Scientific sources: doi:10.1093/bioinformatics/btu721.

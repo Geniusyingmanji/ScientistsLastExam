@@ -21,8 +21,12 @@ kla_per_h, and induction_burden.
 There must be exactly three bounded feed rates. The trusted simulator recomputes the trajectory.
 Utility is the worst productivity across nominal, growth-rate-shifted, and oxygen-transfer-shifted
 conditions; any volume, acetate, or terminal biomass violation gives zero in that condition.
-Score is clipped between the fixed constant-feed baseline (0) and a bounded robust grid witness
-(1). Feed concentration, capacity, initial state, strain kinetics and oxygen transfer vary across
+Score is `clip((utility-baseline)/(anchor-baseline),0,1)`. The fixed constant-feed
+baseline defines zero. Frozen feasible schedules refined by bounded Nelder-Mead
+from the grid reference define one; the trusted oracle recomputes their utilities.
+The original 54-schedule grid reference remains unchanged and scores below one.
+The five anchor schedules and an input-only reproduction solver are documented in
+`references/known_best.md` and `references/headroom_probe.py`. Feed concentration, capacity, initial state, strain kinetics and oxygen transfer vary across
 instances; held-out strain/reactor parameters remain evaluator-only.
 
 This is a reduced-order process simulator, not a claim about a named production strain.

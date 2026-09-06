@@ -1,46 +1,42 @@
 schema_version: 2
-scientific_question: Isotope flux identifiability with carbon condensation and reversible
-  transport
+scientific_question: Isotope flux identifiability with carbon condensation and reversible transport
 artifact: Return the strict typed artifact specified in Task.md.
 oracle:
   model: Full two-carbon isotopomer propagation; identifiable aggregate exchange flux
-  feasibility: Strict output validation; trusted oracle recomputation; resource violations
-    fail closed.
+  feasibility: Strict output validation; trusted oracle recomputation; resource violations fail closed.
   deterministic: true
 normalization:
   baseline: Legal baseline in solution.py scores exactly zero.
-  reference: Input-only frozen reference; see references/known_best.md.
-  score: Clipped development score; held-out worlds reported separately.
+  reference: Six full-tracer samples and three-start weighted least squares with local rank refusal.
+  score: Clipped recovery above all-refusal floor; mean relative flux error uses denominator max(truth,0.1)
+    and tolerance 0.025.
 citations:
 - id: doi:10.1016/j.ymben.2006.09.001
-  title: 'Elementary Metabolite Units (EMU): a novel framework for modeling isotopic
-    distributions'
+  title: 'Elementary Metabolite Units (EMU): a novel framework for modeling isotopic distributions'
 invariants:
 - Frozen procedural worlds and deterministic oracle.
 - Candidate mutations do not modify trusted scoring inputs.
-known_shortcuts: Full four-isotopomer predictions agree with an independently coded
-  three-mass ODE within 2e-8. Parallel reverse-route splits conserve steady-state
-  mass and are observationally equivalent; zero influx leaves every exchange value
-  unidentifiable. Always-refuse and all-zero claims score zero. Only identifiable
-  aggregate exchange is requested. The local Jacobian check is not profile likelihood;
-  general EMU, INCA replication and broad shortcut sweeps remain pending. The small
-  network is nearly saturated by classical fitting.
+known_shortcuts: Full four-isotopomer predictions agree with an independently coded three-mass ODE
+  within 2e-8. Parallel reverse-route splits conserve steady-state mass and are observationally equivalent;
+  zero influx leaves every exchange value unidentifiable. Always-refuse and all-zero claims score
+  zero. Only identifiable aggregate exchange is requested. The local Jacobian check is not profile
+  likelihood; general EMU, INCA replication and broad shortcut sweeps remain pending. The small network
+  is nearly saturated by classical fitting.
 review:
   domain: pending_external_domain_review
-  evaluator_security: internal_strict_schema_budget_invariant_and_subprocess_tests;
-    shared Linux sandbox contribution gate
+  evaluator_security: internal_strict_schema_budget_invariant_and_subprocess_tests; shared Linux
+    sandbox contribution gate
 provenance:
   class: procedural
-  target_source: Procedural model; repository-visible development and shifted held-out
-    worlds, not server-secret data.
+  target_source: Procedural model; repository-visible development and shifted held-out worlds, not
+    server-secret data.
   task_contract_public_before_evaluation: true
   fresh_confirmation_status: not_completed
-  license: Original implementation and synthetic instances; no third-party source
-    code or datasets redistributed. External papers are citations only.
+  license: Original implementation and synthetic instances; no third-party source code or datasets
+    redistributed. External papers are citations only.
 novelty_risk:
   level: high
-  rationale: Established problem class; external scope and difficulty review remain
-    pending.
+  rationale: Established problem class; external scope and difficulty review remain pending.
 lineage:
   status: complete
   builder_model_ids:
@@ -50,8 +46,8 @@ lineage:
   calibrator_model_ids: []
   calibration_runs: []
   calibration_evidence_status: missing
-  edits_triggered_by_model: Sequential implementation requested by user; no frontier
-    calibration draws.
+  edits_triggered_by_model: Maintainer feedback prompted per-task endpoint measurements on 2026-09-06;
+    no frontier-model calibration draws.
   shortcut_discoverer: internal_reference_and_manual_review
   frozen_before_eval: false
   freeze_timestamp: null
@@ -61,10 +57,10 @@ construction_audit:
   reviewer_domain: pending_external
   expert_hours: null
   red_team_rounds: 1
-  oracle_disagreement_status: Independent task-specific analytic/invariant checks
-    pass; external implementation comparison pending.
-  independent_recomputation_status: See task-specific invariant tests; external package
-    cross-validation pending.
+  oracle_disagreement_status: Independent task-specific analytic/invariant checks pass; external
+    implementation comparison pending.
+  independent_recomputation_status: See task-specific invariant tests; external package cross-validation
+    pending.
 long_horizon:
   status: not_tested
   measurement_health_passed: false

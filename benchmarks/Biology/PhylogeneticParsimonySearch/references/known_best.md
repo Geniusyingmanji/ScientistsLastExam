@@ -1,18 +1,38 @@
-# PhylogeneticParsimonySearch reference evidence
+# PhylogeneticParsimonySearch: scoring evidence — 2026-09-06
 
-## Scoring
-Parsimony gap closure is nonnegative and uncapped above a recomputed average-linkage witness.
-## Anchor
-No external best-known score is embedded; both anchors are recomputed on every alignment.
-## Baseline
-The deterministic taxon-order caterpillar scores 0.
-## Reference
-The truth-blind average-linkage tree scores 1.0 development and held out by construction. The
-repository's truth-blind NNI headroom probe improves every frozen alignment and scores above 1.
-## Ablations
-Random taxa order, neighbor joining, SPR and ratchet probes remain required; NNI is executable in
-verification/headroom_probe.py.
-## Shortcut and robustness
-Mature search methods may exceed the witness; uncapped scoring preserves measurable headroom.
-## Provenance
-Search heuristics are grounded in the Parsimony Ratchet (doi:10.1111/j.1096-0031.1999.tb00277.x) and MPBoot (doi:10.1186/s12859-018-2009-1). Retrieved 2026-09-05.
+## Scientific endpoints
+
+Zero is the caterpillar tree. One is the sum across sites of distinct-state
+count minus one, a lower bound on every tree's Fitch cost. This relaxation may
+be unattainable jointly across sites; it is not a published record. Scoring is
+now explicitly **clipped**, and average linkage is no longer the endpoint.
+The unchanged input-only NNI probe in `verification/headroom_probe.py` improves
+both development and held-out scores, which remain bounded by one.
+
+## Reproduction and measurements
+
+The legal `solution.py` baseline scores **0.000000**, valid=1. The input-only
+comparison reference is `verification/reference_search.py`.
+Run it with `python -m sle eval --allow-uncertified --task <logical ID from
+frontier_eval/metadata.yaml> --candidate <reference path> --timeout 300`.
+
+| Solver | Development normalized score | heldout_score | Valid |
+| --- | ---: | ---: | ---: |
+| Original reference | 0.67836236 | 0.65117581 | 1 |
+| Public-input headroom probe | 0.70492678 | 0.69624860 | 1 |
+
+The discovery held-out column is raw scientific quality, not the normalized
+development scale. Optimization held-out scores use the same normalization as
+development. All reference algorithms are unchanged by this calibration.
+The superseded reference=1 measurements do not describe this revision.
+
+## Limits and provenance
+
+These original procedural worlds are repository-visible; held-out means excluded
+from search feedback, not server-secret. No external datasets or code are
+redistributed. Model simplifications and nearest-task overlap are in `Task.md`.
+Precision/headroom measurements do not establish expert difficulty: strong
+classical comparisons, frontier draws, long-horizon search and external domain
+review remain pending. The task stays **candidate**.
+
+Scientific sources: doi:10.1111/j.1096-0031.1999.tb00277.x, doi:10.1186/s12859-018-2009-1.

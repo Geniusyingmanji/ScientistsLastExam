@@ -733,16 +733,6 @@ tasks:
       - doi:10.1103/PhysRevLett.93.165501
       - doi:10.1016/0375-9601(74)90847-0
       - doi:10.1063/1.1723844
-  MetabolicEngineering/MetabolicStrainDesign:
-    status: candidate
-    reason: Deterministic reduced stoichiometric LP prototype with alternate-optimum
-      worst-case production scoring and held-out regimes; baseline/reference and invariants
-      pass locally, pending larger server-held networks, shortcut and frontier-model
-      calibration, paired open-loop controls, and independent metabolic-engineering
-      review
-    citation_ids:
-    - doi:10.1002/bit.10803
-    - doi:10.1093/bioinformatics/btp704
   Genomics/BatchEffectDiscovery:
     status: candidate
     reason: Deterministic charged negative-binomial count prototype with supported,
@@ -771,28 +761,12 @@ tasks:
   Phylogenetics/PhylogeneticParsimonySearch:
     status: candidate
     reason: Exact Fitch verifier on deterministic procedural alignments with strict
-      Newick validation and recomputed baseline/reference anchors; pending small-instance
+      Newick validation and recomputed caterpillar/sitewise-bound anchors; pending small-instance
       exhaustive cross-check, SPR and ratchet shortcut probes, open-loop saturation
       evidence and independent phylogenetics review
     citation_ids:
     - doi:10.1111/j.1096-0031.1999.tb00277.x
     - doi:10.1186/s12859-018-2009-1
-  Genomics/DiploidHaplotypeAssembly:
-    status: candidate
-    reason: Procedural reduced-model implementation with input-only classical reference;
-      independent invariant and sandbox checks are internal evidence only; external
-      domain review, frontier calibration, server-held worlds and long-horizon validation
-      remain pending
-    citation_ids:
-    - doi:10.1101/gr.213462.116
-  ConservationBiology/RobustReserveNetworkDesign:
-    status: candidate
-    reason: Procedural reduced-model implementation with input-only classical reference;
-      independent invariant and sandbox checks are internal evidence only; external
-      domain review, frontier calibration, server-held worlds and long-horizon validation
-      remain pending
-    citation_ids:
-    - doi:10.1038/35008063
   Biophysics/SingleMoleculeKinetics:
     status: candidate
     reason: Procedural reduced-model implementation with input-only classical reference;
