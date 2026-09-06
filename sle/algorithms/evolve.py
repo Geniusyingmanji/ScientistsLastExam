@@ -933,7 +933,8 @@ def _greedy_rewrite_impl(
                 code = extract_code(reply)
                 signed_decision = None
                 parse_status = "parsed_code" if code else "no_code"
-            proposal_published_wall = active_wall + (time.monotonic() - step_started)
+            pre_evaluation_wall = time.monotonic() - step_started
+            proposal_published_wall = active_wall + pre_evaluation_wall
             pending_proposal = {
                 "schema_version": 1,
                 "step": it,
@@ -955,7 +956,7 @@ def _greedy_rewrite_impl(
                 "prompt_metrics_sha256": sha256_text(prompt_metrics_rendered),
                 "system_prompt_sha256": sha256_text(system_prompt),
                 "llm_usage": llm_usage,
-                "pre_evaluation_wall_seconds": time.monotonic() - step_started,
+                "pre_evaluation_wall_seconds": pre_evaluation_wall,
                 "proposal_published_wall_seconds": proposal_published_wall,
                 "signed_decision": signed_decision,
             }
