@@ -1,0 +1,93 @@
+schema_version: 2
+scientific_question: >-
+  Split a synthetic noncoding DNA construct into a fixed number of bounded-length Golden Gate
+  fragments, choose a restriction-enzyme condition compatible with the full target, and maximize
+  predicted one-pot assembly fidelity from measured overhang-pair ligation counts.
+artifact: >-
+  One enzyme name, the complete ordered fragment sequences, and the four-base overlap at every
+  adjacent junction; overlaps must exactly reconstruct the supplied target.
+oracle:
+  model: >-
+    Pryor et al. equations 1-2 applied to exact integer ligation counts extracted from PLOS ONE
+    supplementary Tables S1-S4 for BsaI-HFv2, BsmBI-v2, Esp3I, and BbsI-HF.
+  deterministic: true
+  feasibility: >-
+    exact target reconstruction through four-base adjacent overlaps; fixed fragment count;
+    inclusive fragment-length bounds; unique non-palindromic reverse-complement classes from the
+    frozen measured panel; and no selected-enzyme recognition site in the assembled product.
+normalization:
+  baseline: evenly spaced fragments using the nearest legal unused measured junction
+  reference: >-
+    best of width-8 and width-32 deterministic public-data beam searches, each followed by four
+    coordinate-refinement passes
+  score: >-
+    uncapped logarithmic remaining-gap progress in log predicted fidelity: baseline is zero,
+    score one is hung at log fidelity -0.001 (~99.9% predicted fidelity), which the public-data
+    beam-search witness does not reach; malformed artifacts score zero
+  measured_anchors: see references/known_best.md
+citations:
+  - id: doi:10.1371/journal.pone.0238592
+    title: Enabling one-pot Golden Gate assemblies of unprecedented complexity using data-optimized assembly design
+invariants:
+  - every credited overhang is the exact four-base suffix and prefix shared by two submitted adjacent fragments
+  - concatenating the first fragment with bases after each later four-base overlap exactly equals target_sequence
+  - only overhangs actually used in the submitted assembly enter the crosstalk denominator
+  - the correct ligation cell for row s is column reverse_complement(s), and both directional counts enter its numerator
+  - original PLOS workbook hashes and the derived sparse-table hash are fixed and independently tested
+  - the baseline scores exactly zero; the beam-search witness is below one (score one is hung at log fidelity -0.001)
+known_shortcuts: >-
+  Empty or one-fragment artifacts cannot satisfy the fixed 14-17 fragment counts. A list of
+  high-fidelity overhangs without matching fragment ends cannot pass exact reconstruction. Reusing
+  an overhang or its reverse complement fails closed. Choosing an enzyme with an internal forward
+  or reverse-complement recognition site fails closed. Unused matrix rows do not enter fidelity.
+review:
+  domain: pending_external_synthetic_biology_and_dna_assembly
+  evaluator_security: >-
+    Candidate code runs across the standard trusted-driver boundary; validation and ligation data
+    stay in the trusted evaluator. Submission size is bounded by target and fragment counts.
+  reference_implementation_verified: >-
+    truth-blind and public-input-only; the builder replay checked orientation and every source
+    cell against the original PLOS workbooks and a fixed third-party CSV mirror; independent
+    source replay remains pending
+provenance:
+  class: public_data_replay
+  target_source: >-
+    Synthetic noncoding targets from fixed seeds; measured ligation counts from Pryor et al. 2020
+    PLOS ONE Tables S1-S4 under CC BY 4.0.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: source_workbooks_retrieved_and_hashed_2026-09-06
+novelty_risk:
+  level: medium
+  rationale: >-
+    Published high-fidelity overhang sets can be remembered, but they do not determine legal cut
+    positions in these seeded target sequences, enzyme compatibility, or bounded fragment lengths.
+lineage:
+  status: complete
+  builder_model_ids: []
+  builder_scaffolds: [codex]
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    Review: reference sat at 1.0 on an affine log-fidelity scale. Score one is
+    now hung at log fidelity -0.001 (~99.9% predicted F); remaining-gap log
+    progress puts the beam-search witness in 0.3-0.8. Timeout raised to 300s.
+  shortcut_discoverer: builder_red_team
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: computational_benchmark_engineering
+  reviewer_domain: pending_external_synthetic_biology_and_dna_assembly
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: builder_observed_zero_disagreement_across_all_four_256_by_256_tables
+  independent_recomputation_status: >-
+    pending independent source replay; the committed lightweight extractor and builder receipt
+    reproduce workbook hashes, dimensions, orientation, sparse extraction, mirror equality and
+    the derived data hash without bundling the four XLSX files
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []

@@ -53,6 +53,18 @@ tasks:
     status: candidate
     reason: RDKit community-standard oracle with a verified approved-drug reference panel; pending external medicinal-chemistry review
     citation_ids: [doi:10.1038/nchem.1243, doi:10.1186/1758-2946-1-8, doi:10.1021/jm901137j]
+  SyntheticBiology/GoldenGateAssemblyFrontier:
+    status: candidate
+    reason: >-
+      Exact target reconstruction from fixed-count bounded fragments with every scored four-base
+      overhang tied to an actual adjacent junction; predicted assembly fidelity uses independently
+      oriented and hashed integer counts from Pryor et al. PLOS ONE Tables S1-S4, while internal
+      Type IIS sites, reverse-complement reuse, malformed fragments and empty/single-fragment
+      avoidance fail closed. Score is uncapped remaining-gap log progress toward log fidelity
+      -0.001 (~99.9% predicted F); the public-data beam-search witness lands near 0.54, not
+      at one. No frontier-model calibration or wet-lab confirmation exists, pending external
+      synthetic-biology review.
+    citation_ids: [doi:10.1371/journal.pone.0238592]
   QuantumErrorCorrection/QuantumErrorDecoder:
     status: candidate
     reason: community-standard Stim oracle with a computed PyMatching anchor; pending external domain review and fresh unseeded confirmation

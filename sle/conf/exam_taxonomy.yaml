@@ -51,6 +51,7 @@ tasks:
   Electrochemistry/ElectrolyteConductivityDesign: {form: optimization, analogue: engineering_design}
   MaterialsScience/AlloyHardnessOptimization: {form: optimization, analogue: engineering_design}
   Superconductivity/SuperconductorTcRecord: {form: optimization, analogue: engineering_design, note: continuous_pressure_search_uncapped_not_conductivity_or_hardness_replay}
+  SyntheticBiology/GoldenGateAssemblyFrontier: {form: optimization, analogue: engineering_design, note: exact_target_fragmentation_and_measured_enzyme_crosstalk_not_abstract_dna_codeword_packing}
   # --- optimization / combinatorial (open records: Ramsey, kissing, tensors, caps) ---
   Optimization/CirclePacking: {form: optimization, analogue: combinatorial}
   Mathematics/CapSet: {form: optimization, analogue: combinatorial}

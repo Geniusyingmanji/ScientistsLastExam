@@ -1,0 +1,4 @@
+Edit only solution.py and preserve design_assembly(problem).
+Use deterministic CPU code; no network or process creation.
+Do not read verification/ or frontier_eval/.
+Return exact reconstructing fragments and their actual four-base overlaps.
