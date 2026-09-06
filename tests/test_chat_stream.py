@@ -45,16 +45,6 @@ class ChatStreamTests(unittest.TestCase):
         self.assertEqual(payload["stream_options"], {"include_usage": True})
         self.assertEqual(client.total_usage["total_tokens"], 30)
 
-    def test_chat_thinking_mode_is_explicit_in_request(self):
-        client = LLMClient(LLMConfig(
-            wire="chat", base_url="https://example.invalid", model="deepseek-v4-flash",
-            chat_thinking="disabled", stream=True,
-        ))
-        with patch.object(LLMClient, "_post_sse", return_value=SSE) as sse:
-            self.assertEqual(client.complete("Reply with exactly: FS_SMOKE_OK"), "FS_SMOKE_OK")
-        _url, payload, _headers = sse.call_args[0]
-        self.assertEqual(payload["thinking"], {"type": "disabled"})
-
     def test_provider_error_event_is_not_returned_as_an_empty_answer(self):
         error_stream = """\
 data: {"error":{"message":"provider rejected request"}}

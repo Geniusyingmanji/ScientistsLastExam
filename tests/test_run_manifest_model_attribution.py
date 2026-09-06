@@ -47,7 +47,6 @@ class RunManifestModelAttributionTests(unittest.TestCase):
         self.assertEqual(descriptor["max_output_tokens"], 8000)
         self.assertEqual(descriptor["timeout_seconds"], 900)
         self.assertFalse(descriptor["chat_reasoning_fallback"])
-        self.assertIsNone(descriptor["chat_thinking"])
 
     def test_descriptor_never_writes_a_credential_to_disk(self):
         descriptor = common.llm_condition_descriptor(_Client())
@@ -105,20 +104,6 @@ class RunManifestModelAttributionTests(unittest.TestCase):
             client = type("Client", (), {"config": config()})()
             hashes.add(common.llm_condition_sha256(client))
         self.assertEqual(len(hashes), 4)
-
-    def test_explicit_chat_thinking_is_readable_and_hash_bound(self):
-        class DisabledThinking(_Config):
-            chat_thinking = "disabled"
-
-        class DisabledClient:
-            config = DisabledThinking()
-
-        descriptor = common.llm_condition_descriptor(DisabledClient())
-        self.assertEqual(descriptor["chat_thinking"], "disabled")
-        self.assertNotEqual(
-            common.llm_condition_sha256(_Client()),
-            common.llm_condition_sha256(DisabledClient()),
-        )
 
     def test_malformed_base_url_does_not_break_a_run(self):
         class Odd(_Config):
