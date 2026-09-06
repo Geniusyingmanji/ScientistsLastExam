@@ -37,6 +37,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from sle.task_versions import version_class  # noqa: E402
+from sle.run_verification import verify_run  # noqa: E402
 
 # Published list prices per million tokens, used only to report what a comparison cost. Absent
 # for a model means the cost column is blank rather than guessed.
@@ -115,11 +116,45 @@ def read_runs(runs_root: Path) -> list[dict]:
             if row.get("llm"):
                 usage = row["llm"]
                 break
+        runtime_source = str(document.get("runtime_source_sha256") or "unrecorded")
+        trusted_runtime = str(
+            (document.get("trusted_evaluator_runtime") or {}).get(
+                "fingerprint_sha256"
+            ) or "unrecorded"
+        )
+        algorithm = str(document.get("algorithm") or "unrecorded")
+        condition = str(document.get("llm_condition_sha256") or "unrecorded")
+        model = (
+            str((document.get("llm_condition") or {}).get("model") or "")
+            or conditions.get(condition, "unrecorded")
+        )
+        verified_budget = None
+        trusted_evidence = False
+        try:
+            verification = verify_run(workdir)
+            verified_budget = verification.get("budget")
+            trusted_evidence = bool(
+                verification.get("verified") is True
+                and verification.get("trusted_evaluator_runtime_sha256")
+                == trusted_runtime
+                and str(document.get("task_id") or "")
+                and document.get("task_package_sha256")
+                and model != "unrecorded"
+                and condition != "unrecorded"
+                and algorithm != "unrecorded"
+                and runtime_source != "unrecorded"
+                and trusted_runtime != "unrecorded"
+                and str(document.get("feedback_mode") or "")
+                and isinstance(document.get("seed"), int)
+                and isinstance(verified_budget, int)
+                and not isinstance(verified_budget, bool)
+                and verified_budget >= 0
+            )
+        except (OSError, ValueError):
+            pass
         out.append({
             "task": str(document.get("task_id")),
-            "model": (str((document.get("llm_condition") or {}).get("model") or "")
-                      or conditions.get(str(document.get("llm_condition_sha256") or ""),
-                                        "unrecorded")),
+            "model": model,
             "mode": str(document.get("feedback_mode")),
             "seed": document.get("seed"),
             "best": max(scores) if scores else 0.0,
@@ -127,12 +162,53 @@ def read_runs(runs_root: Path) -> list[dict]:
             "proposals": len(proposals),
             "input_tokens": int(usage.get("input_tokens", 0) or 0),
             "output_tokens": int(usage.get("output_tokens", 0) or 0),
+            "llm_condition_sha256": condition,
+            "algorithm": algorithm,
+            "runtime_source_sha256": runtime_source,
+            "trusted_evaluator_runtime_sha256": trusted_runtime,
+            "trusted_evidence": trusted_evidence,
+            "proposal_budget": verified_budget,
             # The equivalence class, not the raw hash: sixteen tasks record two hashes that are
             # the same task, and comparing on the hash discarded that evidence.
             "contract": version_class(str(document.get("task_id")),
                                       str(document.get("task_package_sha256") or ""))[:14],
         })
     return out
+
+
+def condition_identity(run: dict) -> tuple[str, str, str, str, str]:
+    """A model condition before task, mode, seed and budget are added."""
+    return (
+        run["model"], run["llm_condition_sha256"], run["algorithm"],
+        run["runtime_source_sha256"],
+        run["trusted_evaluator_runtime_sha256"],
+    )
+
+
+def condition_document(identity: tuple[str, str, str, str, str]) -> dict:
+    return dict(zip((
+        "model", "llm_condition_sha256", "algorithm", "runtime_source_sha256",
+        "trusted_evaluator_runtime_sha256",
+    ), identity))
+
+
+def condition_label(identity: tuple[str, str, str, str, str]) -> str:
+    return "%s@%s/%s/%s/%s" % (
+        identity[0], identity[1][:12], identity[2], identity[3][:12],
+        identity[4][:12],
+    )
+
+
+def arm_document(arm: tuple[str, str, str, str, str, str, int]) -> dict:
+    return {
+        **condition_document(arm[:5]),
+        "feedback_mode": arm[5],
+        "proposal_budget": arm[6],
+    }
+
+
+def arm_label(arm: tuple[str, str, str, str, str, str, int]) -> str:
+    return "%s/%s/b%d" % (condition_label(arm[:5]), arm[5], arm[6])
 
 
 def spearman(a: list[float], b: list[float]) -> float | None:
@@ -172,7 +248,11 @@ def main(argv: list[str] | None = None) -> int:
     args = ap.parse_args(argv)
 
     runs = read_runs(Path(args.runs))
-    models = sorted({r["model"] for r in runs if r["model"] != "unrecorded"})
+    trusted_runs = [
+        run for run in runs
+        if run["trusted_evidence"] and run["model"] != "unrecorded"
+    ]
+    models = sorted({r["model"] for r in trusted_runs})
     if len(models) < 2:
         print("only %d model(s) with a recorded condition: %s"
               % (len(models), ", ".join(models) or "none"))
@@ -183,38 +263,46 @@ def main(argv: list[str] | None = None) -> int:
     # because tasks were edited between runs, and comparing across that difference reports a task
     # change as a model difference - on one task the gap looked like 18x. The hash was recorded
     # all along; nothing was checking it at comparison time.
-    contracts: dict[str, dict[str, set[str]]] = defaultdict(lambda: defaultdict(set))
-    # Separately over every arm, because a verdict is computed from both arms while the score
-    # ranking uses only the open-loop one. Keying the verdict check off the open-loop map dropped
-    # every task a model had only run under `normal`.
-    all_arm_contracts: dict[str, dict[str, set[str]]] = defaultdict(lambda: defaultdict(set))
-    for run in runs:
-        if run["model"] == "unrecorded":
-            continue
-        all_arm_contracts[run["task"]][run["model"]].add(run["contract"])
+    contracts: dict[str, dict[tuple[str, ...], set[str]]] = defaultdict(
+        lambda: defaultdict(set)
+    )
+    for run in trusted_runs:
         if run["mode"] in OPEN_LOOP_MODES:
-            contracts[run["task"]][run["model"]].add(run["contract"])
+            arm = condition_identity(run) + (
+                run["mode"], run["proposal_budget"],
+            )
+            contracts[run["task"]][arm].add(run["contract"])
 
     # Open-loop score per (model, task, contract), averaged over seeds. The open-loop arm is the
     # right axis for a ranking: it is what the task yields to independent sampling, independent of
     # whether the searcher's feedback loop happens to help.
-    scores: dict[str, dict[str, list[float]]] = defaultdict(lambda: defaultdict(list))
-    tokens: dict[str, list[tuple[int, int]]] = defaultdict(list)
-    validity: dict[str, dict[str, list[float]]] = defaultdict(lambda: defaultdict(list))
-    for run in runs:
-        tokens[run["model"]].append((run["input_tokens"], run["output_tokens"]))
-        if run["model"] == "unrecorded":
-            continue
+    scores: dict[tuple[str, ...], dict[str, list[float]]] = defaultdict(
+        lambda: defaultdict(list)
+    )
+    tokens: dict[tuple[str, ...], list[tuple[int, int]]] = defaultdict(list)
+    validity: dict[
+        tuple[tuple[str, ...], str, str, str, int], list[float]
+    ] = defaultdict(list)
+    for run in trusted_runs:
+        identity = condition_identity(run)
+        tokens[identity].append((run["input_tokens"], run["output_tokens"]))
         if run["mode"] in OPEN_LOOP_MODES:
-            scores[run["model"]][run["task"]].append(run["best"])
-        validity[run["model"]][run["mode"]].append(
+            arm = identity + (run["mode"], run["proposal_budget"])
+            scores[arm][run["task"]].append(run["best"])
+        validity[(
+            identity, run["task"], run["contract"], run["mode"],
+            run["proposal_budget"],
+        )].append(
             run["valid"] / run["proposals"] if run["proposals"] else 0.0)
 
     print("=== open-loop score, compared pairwise on shared task versions ===")
     # Pairwise rather than across all models at once. Requiring every model to share a contract
     # excluded every task here, because one model's runs predate a round of task edits - and that
     # would have thrown away the one comparison that is valid.
-    def shared_tasks(first: str, second: str) -> list[str]:
+    def comparable_conditions(first: tuple[str, ...], second: tuple[str, ...]) -> bool:
+        return bool(first[0] != second[0] and first[2:] == second[2:])
+
+    def shared_tasks(first: tuple[str, ...], second: tuple[str, ...]) -> list[str]:
         out = []
         for task in sorted(set(scores[first]) & set(scores[second])):
             a_contracts = contracts[task][first]
@@ -224,20 +312,40 @@ def main(argv: list[str] | None = None) -> int:
         return out
 
     comparisons = []
-    for i, first in enumerate(models):
-        for second in models[i + 1:]:
+    identities = sorted(scores)
+    incomparable_condition_pairs = []
+    for i, first in enumerate(identities):
+        for second in identities[i + 1:]:
+            if not comparable_conditions(first, second):
+                if first[0] != second[0] and set(scores[first]) & set(scores[second]):
+                    incomparable_condition_pairs.append({
+                        "conditions": [
+                            arm_document(first), arm_document(second)
+                        ],
+                        "shared_task_names": sorted(
+                            set(scores[first]) & set(scores[second])
+                        ),
+                        "reason": (
+                            "algorithm, runtime, feedback mode, or proposal budget differs"
+                        ),
+                    })
+                continue
             tasks_here = shared_tasks(first, second)
             skipped = sorted((set(scores[first]) & set(scores[second])) - set(tasks_here))
             print()
-            print("%s vs %s" % (first, second))
+            print("%s vs %s" % (arm_label(first), arm_label(second)))
+            base = {
+                "models": [first[0], second[0]],
+                "conditions": [arm_document(first), arm_document(second)],
+            }
             if not tasks_here:
                 print("  no task where both ran the same version"
                       + ("; %d excluded for differing versions" % len(skipped) if skipped else ""))
-                comparisons.append({"models": [first, second], "tasks": [], "rho": None,
+                comparisons.append({**base, "tasks": [], "rho": None,
                                     "excluded_for_contract_mismatch": skipped})
                 continue
             xs, ys = [], []
-            print("  %-30s %14s %14s" % ("task", first[:14], second[:14]))
+            print("  %-30s %14s %14s" % ("task", first[0][:14], second[0][:14]))
             for task in tasks_here:
                 x, y = st.mean(scores[first][task]), st.mean(scores[second][task])
                 xs.append(x)
@@ -250,73 +358,113 @@ def main(argv: list[str] | None = None) -> int:
             if skipped:
                 print("  %d further shared tasks excluded because the two ran different "
                       "versions" % len(skipped))
-            comparisons.append({"models": [first, second], "tasks": tasks_here, "rho": rho,
+            comparisons.append({**base, "tasks": tasks_here, "rho": rho,
                                 "excluded_for_contract_mismatch": skipped})
     shared = sorted({t for c in comparisons for t in c["tasks"]})
+    if incomparable_condition_pairs:
+        print()
+        print(
+            "%d cross-model condition pair(s) were not compared because algorithm or "
+            "runtime/statistical-arm identity differs" % len(incomparable_condition_pairs)
+        )
 
     print()
     print("=== proposal validity by model and arm ===")
-    for model in sorted(validity):
-        parts = ["%s %.2f" % (mode, st.mean(rates))
-                 for mode, rates in sorted(validity[model].items())]
-        print("  %-20s %s" % (model[:20], "  ".join(parts)))
+    validity_rows = []
+    for (identity, task, contract, mode, budget), rates in sorted(validity.items()):
+        validity_rows.append({
+            **condition_document(identity),
+            "task": task,
+            "task_version": contract,
+            "feedback_mode": mode,
+            "proposal_budget": budget,
+            "run_count": len(rates),
+            "mean_valid_rate": st.mean(rates),
+        })
+        print("  %-20s %-24s @%-8s %s %.2f" % (
+            condition_label(identity)[:20], task.split("/")[-1][:24],
+            contract[:8], "%s/b%d" % (mode, budget), st.mean(rates),
+        ))
 
     print()
     print("=== cost ===")
     cost_rows = []
-    for model in sorted(tokens):
-        total_in = sum(a for a, _ in tokens[model])
-        total_out = sum(b for _, b in tokens[model])
+    for identity in sorted(tokens):
+        model = identity[0]
+        total_in = sum(a for a, _ in tokens[identity])
+        total_out = sum(b for _, b in tokens[identity])
         price = PRICES.get(model)
         dollars = (total_in / 1e6 * price[0] + total_out / 1e6 * price[1]) if price else None
-        cost_rows.append({"model": model, "runs": len(tokens[model]),
+        cost_rows.append({**condition_document(identity), "runs": len(tokens[identity]),
                           "input_tokens": total_in, "output_tokens": total_out,
                           "estimated_usd": dollars})
         print("  %-20s %3d runs  in=%9d  out=%9d  %s"
-              % (model[:20], len(tokens[model]), total_in, total_out,
+              % (condition_label(identity)[:20], len(tokens[identity]), total_in, total_out,
                  "$%.2f" % dollars if dollars is not None else "no published price"))
 
     verdicts: dict[str, dict[str, str]] = {}
-    stated_versions: dict[str, dict[str, str]] = {}
     comparable: dict[str, dict[str, str]] = {}
     if args.admission and Path(args.admission).is_file():
         report = json.loads(Path(args.admission).read_text(encoding="utf-8"))
+        by_version: dict[
+            tuple[str, str, str, str, str, tuple[int, ...]], dict[str, str]
+        ] = defaultdict(dict)
+        unknown_version = 0
         for row in report.get("rows", []):
-            model = row.get("model", "unrecorded")
-            # Skip runs recorded before the manifest carried a model. "We do not know which model"
-            # cannot agree or disagree with anything.
-            if model == "unrecorded":
+            required = (
+                "task", "model", "llm_condition_sha256", "task_version",
+                "runtime_source_sha256", "trusted_evaluator_runtime_sha256",
+                "algorithm",
+            )
+            raw_signature = row.get("paired_budget_signature")
+            valid_signature = bool(
+                isinstance(raw_signature, list)
+                and raw_signature
+                and all(
+                    isinstance(value, int) and not isinstance(value, bool) and value >= 0
+                    for value in raw_signature
+                )
+            )
+            if (
+                row.get("model") == "unrecorded"
+                or row.get("trusted_evidence") is not True
+                or any(not row.get(field) for field in required)
+                or not valid_signature
+            ):
+                unknown_version += 1
                 continue
-            verdicts.setdefault(row["task"], {})[model] = row["verdict"]
-            # The admission report now states which version of the task a verdict was reached
-            # against. Prefer it over the version inferred from the run tree: it is the same
-            # fact, recorded by the report that formed the verdict rather than reconstructed.
-            stated = row.get("task_version")
-            if stated:
-                stated_versions.setdefault(row["task"], {})[model] = str(stated)
+            identity = (
+                str(row["model"]), str(row["llm_condition_sha256"]),
+                str(row["algorithm"]), str(row["runtime_source_sha256"]),
+                str(row["trusted_evaluator_runtime_sha256"]),
+            )
+            actor = condition_label(identity)
+            verdicts.setdefault(str(row["task"]), {})[actor] = str(row["verdict"])
+            comparison = (
+                str(row["task"]), str(row["task_version"]),
+                str(row["runtime_source_sha256"]),
+                str(row["trusted_evaluator_runtime_sha256"]),
+                str(row["algorithm"]),
+                tuple(raw_signature),
+            )
+            by_version[comparison][actor] = str(row["verdict"])
         # Grouped by task version, not filtered on global agreement across every model. An
         # earlier version required all models to share one version and so dropped a whole task
         # whenever a third model had run a different one - discarding the claude/gpt-5.5
         # comparison on six tasks where those two had in fact run the same version.
-        by_version: dict[tuple[str, str], dict[str, str]] = defaultdict(dict)
-        unknown_version = 0
-        for task, per_model in verdicts.items():
-            for model, state in per_model.items():
-                version = stated_versions.get(task, {}).get(model)
-                if version is None:
-                    seen = all_arm_contracts[task][model]
-                    version = next(iter(seen)) if len(seen) == 1 else None
-                if version is None:
-                    unknown_version += 1
-                    continue
-                by_version[(task, version)][model] = state
-        comparable = {"%s @%s" % (task, version): models_here
-                      for (task, version), models_here in by_version.items()
-                      if len(models_here) > 1}
+        comparable = {
+            "%s @%s runtime=%s trusted=%s algorithm=%s budgets=%s" % (
+                task, version, runtime[:12], trusted[:12], algorithm,
+                ",".join(str(value) for value in signature),
+            ): actors
+            for (task, version, runtime, trusted, algorithm, signature), actors
+            in by_version.items()
+            if len({actor.split("@", 1)[0] for actor in actors}) > 1
+        }
         contested = {k: v for k, v in comparable.items() if len(set(v.values())) > 1}
         agreed = {k: v for k, v in comparable.items() if len(set(v.values())) == 1}
-        split = sorted({task for task, _v in by_version
-                        if len({v for t, v in by_version if t == task}) > 1})
+        split = sorted({task for task, _v, _r, _tr, _a, _b in by_version
+                        if len({v for t, v, *_rest in by_version if t == task}) > 1})
         print()
         print("=== verdict agreement, within a task version ===")
         print("  task versions carrying a verdict from more than one model: %d"
@@ -335,13 +483,21 @@ def main(argv: list[str] | None = None) -> int:
                                     "; ".join("%s=%s" % kv for kv in sorted(per_model.items()))))
 
     Path(args.output).write_text(json.dumps({
-        "schema_version": 1,
+        "schema_version": 3,
         "note": "score ranking and admission verdicts are reported separately; they can disagree",
         "models": models,
         "shared_tasks": shared,
         "pairwise": comparisons,
-        "open_loop_scores": {m: {t: st.mean(v) for t, v in scores[m].items()} for m in scores},
+        "incomparable_condition_pairs": incomparable_condition_pairs,
+        "open_loop_scores": {
+            arm_label(identity): {
+                task: st.mean(values) for task, values in per_task.items()
+            }
+            for identity, per_task in scores.items()
+        },
         "cost": cost_rows,
+        "proposal_validity": validity_rows,
+        "unattributable_run_count": len(runs) - len(trusted_runs),
         "verdicts": verdicts,
         "verdicts_same_version": comparable,
     }, indent=2), encoding="utf-8")

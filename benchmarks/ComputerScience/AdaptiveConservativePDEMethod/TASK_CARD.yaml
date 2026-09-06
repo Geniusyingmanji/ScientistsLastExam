@@ -1,0 +1,82 @@
+schema_version: 2
+scientific_question: Can one deterministic adaptive finite-volume method improve cell-average accuracy across a frozen smooth-and-shock scalar conservation-law panel while balancing nonlinear stability and work under a hard work budget and satisfying the shared discrete-conservation gate?
+artifact: One exact-field numerical-method design containing a reconstruction, limiter, Riemann solver, time integrator, grid resolution, CFL factor, curvature-sensor threshold, shock blend and flux-dissipation coordinate.
+oracle:
+  model: Deterministic one-dimensional finite-volume replay of constant-coefficient advection and inviscid Burgers equations using closed-form cell-average targets for smooth, wrapped and Riemann profiles.
+  feasibility: One invariant exact-field method, finite public-bounded continuous coordinates, documented discrete choices, and no world exceeding 120000 cell-stage work units; malformed, inconsistent, nonfinite, exception-producing and overbudget methods fail closed.
+  deterministic: true
+normalization:
+  baseline: Legal 32-cell piecewise-constant Rusanov/Euler method with CFL 0.45 and dissipation multiplier 1.15.
+  reference: Executable 192-cell adaptive WENO3/Superbee/Godunov/SSPRK3 witness with curvature-triggered fallback; it is not a global optimum.
+  score: Smooth/shock-stratified four-world utility whose primary estimand is an accuracy--stability--work tradeoff under a hard work budget; the conservation term audits the shared conservative update and the evidence predicate gates balance failure. It is affinely normalized above the baseline and uncapped at the reference; all held-out axes remain separate. Reported combined_score and raw_utility values are rounded to 6 decimal places.
+citations:
+- id: doi:10.1016/0021-9991(79)90145-1
+  title: Towards the ultimate conservative difference scheme. V. A second-order sequel to Godunov's method
+- id: doi:10.1016/0021-9991(88)90177-5
+  title: Efficient implementation of essentially non-oscillatory shock-capturing schemes
+- id: doi:10.1006/jcph.1996.0130
+  title: Efficient Implementation of Weighted ENO Schemes
+invariants:
+- the artifact is one numerical discretization policy, not a PDE parameter fit, state estimate or physical design
+- the same public problem mapping is presented independently at all seven scientific world boundaries and one canonical method is required
+- candidate process, module, imported-module and private temporary-filesystem state is reset between panel worlds
+- every update is a conservative numerical flux difference and fixed-boundary balance uses the matching Runge--Kutta flux quadrature
+- accuracy, stability, discrete balance and cell-stage work remain separately reported; conservation is a shared conservative-update integrity gate rather than a separately learned capability
+- the four development worlds alone determine combined_score; three held-out worlds do not affect selection
+- the legal weak baseline scores exactly zero, the executable witness scores exactly one, and better utilities can exceed one
+- inactive DSL coordinates are canonicalized away before artifact identity is assigned
+- evaluator-produced frontier_records bind the canonical method to the frozen evidence predicate and evaluation panel
+- later task-family expansion requires a new immutable wave rather than mutation of this panel
+known_shortcuts: A first 216-point audit of the original MUSCL task found that removing the sensor improved the score to 1.104486, so that oracle was rejected before freeze. After adding WENO3 with sensor-triggered fallback, a 432-method nonadaptive grid over reconstruction, limiter, flux, integrator, grid and CFL reached 0.988555, below the reference. A 48-point local CFL/sensor search around the formerly exposed reference found score 1.002071 and raw utility 0.9716657335; the exact reference was removed from agent-visible text and the found point is now the wave ledger incumbent, so its reconstruction earns no lifetime credit. Those finite public searches are sufficient to classify this wave as an on-ramp that must not be paired or advertised as hard. The visible seven-world one-dimensional uniform-grid panel remains susceptible to direct deterministic search and omits convergence proofs, systems, multidimensional meshes, stiffness, general positivity, parallel cost and application validation.
+review:
+  domain: pending_external_numerical_pde_and_finite_volume_review
+  evaluator_security: analytic-cell-average and independent adaptive-quadrature regressions, independent second finite-volume replay, ninety-point DSL-grid one-step balance checks over sixty-six canonical methods, and automated baseline/reference/headroom/schema/budget/determinism/session-reset/wave-hash/frontier-record tests
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic analytic scalar-law generator with four development and three held-out worlds.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_applicable_synthetic_oracle
+novelty_risk:
+  level: high
+  rationale: MUSCL, WENO, TVD limiters, Godunov and SSP Runge--Kutta methods are established. The benchmark contribution is the frozen adaptive method-design search cell and evidence contract, not a claim of a new numerical scheme. A repository-side comparison found no matching task class in either Frontier-Eng's 47-paper-problem appendix or its 95-entry TASK_DETAILS catalogue; this is still not an external novelty certification.
+license_and_contamination:
+  task_text: Repository-authored benchmark text; no source problem statement is copied verbatim.
+  upstream_methods: Method names and equations are attributed to their DOI sources; no external code or dataset is redistributed.
+  repository_release: The repository has no top-level license file; public redistribution terms must be resolved by maintainers before release.
+  contamination: The named schemes and their standard parameter heuristics may occur in model training data; the exact frozen panel and score-one witness were repository-constructed and must be treated as potentially visible after publication.
+lineage:
+  status: complete
+  builder_model_ids:
+  - openai:codex-gpt-5
+  builder_scaffolds:
+  - codex-cli
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    Independent code review exposed a harmful slope-suppression sensor, a 216-point
+    nonadaptive shortcut, an exact-reference prompt leak, a 48-point local search
+    gain, signed-zero and inactive-coordinate identity aliases, and quadrature-defined
+    target averages; the task was rebuilt around WENO3 with sensor-triggered fallback,
+    analytic targets and an independent second replay, the known local gain became
+    the ledger incumbent, and the final package was checked with reproducible 48/432-point
+    sweeps and six ablations. Review found SIMD pairwise sums drifting CI pins at
+    1e-7; reported combined_score and raw_utility are now rounded to 6 decimals.
+    Earlier runtime-unbound model diagnostics are excluded from task evidence; no
+    trusted calibration run is attached.
+  shortcut_discoverer: builder_self_audit
+  frozen_before_eval: true
+  freeze_timestamp: '2026-09-05T22:15:00Z'
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: openai:codex-gpt-5
+  reviewer_domain: pending_external_numerical_pde_and_finite_volume_review
+  expert_hours: null
+  red_team_rounds: 2
+  oracle_disagreement_status: independent replay agrees on seven-world L1 within 2e-9, work exactly, each balance below 1e-12, and raw utility within 2e-6 for baseline, reference, incumbent and all six ablations
+  independent_recomputation_status: baseline, independent executable witness, analytic targets cross-checked by adaptive quadrature, 48-point incumbent, 432-method nonadaptive probe, six ablations, ninety DSL-grid one-step conservation points representing sixty-six canonical methods, deterministic replay, overbudget and malformed paths are runnable from the package

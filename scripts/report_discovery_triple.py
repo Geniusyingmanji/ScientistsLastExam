@@ -22,6 +22,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -30,6 +31,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from sle.registry import list_tasks  # noqa: E402
+from sle.run_verification import verify_run  # noqa: E402
 from sle.task_versions import version_class  # noqa: E402
 
 
@@ -100,12 +102,12 @@ def discovery_task_names() -> set[str]:
     return names
 
 
-def best_metrics(directory: Path) -> dict | None:
-    """Metrics of the highest-scoring valid proposal, which is what a leaderboard would show."""
+def best_proposal(directory: Path) -> dict | None:
+    """Deterministically select one valid proposal within one verified run."""
     path = directory / "trajectory.jsonl"
     if not path.is_file():
         return None
-    best, best_score = None, None
+    best = None
     for line in path.read_text(encoding="utf-8").splitlines():
         if not line.strip():
             continue
@@ -116,12 +118,21 @@ def best_metrics(directory: Path) -> dict | None:
         if int(row.get("step", 0) or 0) <= 0 or not row.get("valid"):
             continue
         score = float(row.get("score") or 0.0)
-        if best_score is None or score > best_score:
-            best, best_score = (row.get("metrics") or {}), score
+        candidate = str(row.get("candidate_sha256") or "")
+        if best is None or score > float(best.get("score") or 0.0) or (
+            score == float(best.get("score") or 0.0)
+            and candidate < str(best.get("candidate_sha256") or "")
+        ):
+            best = row
     return best
 
 
-def run_identity(document: dict) -> tuple[str, str, str, str, str] | None:
+def best_metrics(directory: Path) -> dict | None:
+    proposal = best_proposal(directory)
+    return None if proposal is None else (proposal.get("metrics") or {})
+
+
+def run_identity(document: dict) -> tuple[str, str, str, str, str, str, str] | None:
     """Return the full evidence identity shared with the admission report."""
     task = str(document.get("task_id") or "")
     if not task:
@@ -134,7 +145,13 @@ def run_identity(document: dict) -> tuple[str, str, str, str, str] | None:
         task, str(document.get("task_package_sha256") or "unknown")
     )[:14]
     runtime = str(document.get("runtime_source_sha256") or "unrecorded")
-    return task, model, condition, task_version, runtime
+    trusted_runtime = str(
+        (document.get("trusted_evaluator_runtime") or {}).get(
+            "fingerprint_sha256"
+        ) or "unrecorded"
+    )
+    algorithm = str(document.get("algorithm") or "unrecorded")
+    return task, model, condition, task_version, runtime, trusted_runtime, algorithm
 
 
 # Some evaluators publish a count where the report needs a rate, and do not publish the
@@ -183,8 +200,8 @@ def main(argv: list[str] | None = None) -> int:
     # tree holding hundreds of them, and would have reported one arbitrary run if it had found
     # any. Directory names are not reliable here either: budget-sweep cohorts are named for their
     # budget, not their task.
-    by_identity: dict[tuple[str, str, str, str, str], list[Path]] = {}
-    for manifest in root.rglob("run_manifest.json"):
+    run_records = []
+    for manifest in sorted(root.rglob("run_manifest.json")):
         try:
             document = json.loads(manifest.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError):
@@ -192,45 +209,85 @@ def main(argv: list[str] | None = None) -> int:
         identity = run_identity(document)
         if identity is None:
             continue
+        mode = document.get("feedback_mode")
+        seed = document.get("seed")
+        budget = None
+        trusted_evidence = False
+        try:
+            verification = verify_run(manifest.parent)
+            budget = verification.get("budget")
+            trusted_evidence = bool(
+                verification.get("verified") is True
+                and verification.get("trusted_evaluator_runtime_sha256")
+                == identity[-2]
+                and document.get("task_package_sha256")
+                and all(value not in {"", "unrecorded", "unknown"} for value in identity)
+                and isinstance(mode, str)
+                and mode
+                and isinstance(seed, int)
+                and not isinstance(seed, bool)
+                and isinstance(budget, int)
+                and not isinstance(budget, bool)
+                and budget >= 0
+            )
+        except (OSError, ValueError):
+            pass
         name = identity[0].split("/")[-1]
         if name in wanted:
-            by_identity.setdefault(identity, []).append(manifest.parent)
+            run_records.append({
+                "identity": identity,
+                "feedback_mode": mode,
+                "proposal_budget": budget,
+                "seed": seed,
+                "run_manifest_sha256": hashlib.sha256(
+                    manifest.read_bytes()
+                ).hexdigest(),
+                "workdir": manifest.parent,
+                "trusted_evidence": trusted_evidence,
+            })
 
     rows = []
     represented = set()
-    for identity, directories in sorted(by_identity.items()):
-        task, model, condition, task_version, runtime = identity
+    for run in run_records:
+        identity = run["identity"]
+        (
+            task, model, condition, task_version, runtime, trusted_runtime, algorithm,
+        ) = identity
+        trusted_evidence = run["trusted_evidence"]
         represented.add(task.split("/")[-1])
-        candidates = [m for m in (best_metrics(d) for d in directories)
-                      if m is not None]
-        # The best valid proposal anywhere, which is what a leaderboard would show.
-        metrics = max(candidates, key=lambda m: float(m.get("combined_score") or 0.0),
-                      default=None)
-        # Which axes any run of this task publishes, not just the best-scoring one. An evaluator
-        # that started publishing an axis after its best run was recorded would otherwise be
-        # reported as never measuring it, which is a different and more damning claim.
-        published_anywhere = {axis for m in candidates
-                              for axis, entry in extract(m).items() if entry is not None}
-        if metrics is None:
-            rows.append({
-                "task": task,
-                "model": model,
-                "llm_condition_sha256": condition,
-                "task_version": task_version,
-                "runtime_source_sha256": runtime,
-                "status": "no valid proposal",
-            })
-            continue
-        axes = extract(metrics)
-        rows.append({
+        proposal = best_proposal(run["workdir"])
+        metrics = None if proposal is None else (proposal.get("metrics") or {})
+        common = {
             "task": task,
             "model": model,
             "llm_condition_sha256": condition,
             "task_version": task_version,
             "runtime_source_sha256": runtime,
-            "status": "ok",
-            "runs_seen": len(directories),
-            "axes_published_by_some_run": sorted(published_anywhere),
+            "trusted_evaluator_runtime_sha256": trusted_runtime,
+            "algorithm": algorithm,
+            "feedback_mode": run["feedback_mode"],
+            "proposal_budget": run["proposal_budget"],
+            "seed": run["seed"],
+            "run_manifest_sha256": run["run_manifest_sha256"],
+            "trusted_evidence": trusted_evidence,
+        }
+        if metrics is None:
+            rows.append({
+                **common,
+                "status": (
+                    "no valid proposal" if trusted_evidence
+                    else "unattributable_evidence"
+                ),
+            })
+            continue
+        axes = extract(metrics)
+        rows.append({
+            **common,
+            "status": "ok" if trusted_evidence else "unattributable_evidence",
+            "selected_candidate_sha256": proposal.get("candidate_sha256"),
+            "axes_published_by_some_run": sorted(
+                axis for axis, entry in axes.items() if entry is not None
+            ),
             "combined_score": metrics.get("combined_score"),
             "axes": axes,
             "missing_axes": [a for a, v in axes.items() if v is None],
@@ -249,7 +306,8 @@ def main(argv: list[str] | None = None) -> int:
             return "  count "
         return "%8.4f" % entry["value"]
 
-    print("discovery triple, best valid proposal per task. never averaged.")
+    rows.sort(key=lambda row: json.dumps(row, sort_keys=True, default=str))
+    print("discovery triple, best valid proposal per verified run. never averaged.")
     print("coverage is not part of the triple: it says whether a discovery was attempted.")
     print("%-32s %9s %9s %9s %9s %9s"
           % ("task", "combined", "mechanism", "fdr", "refusal", "coverage"))
@@ -283,7 +341,7 @@ def main(argv: list[str] | None = None) -> int:
              and "coverage" in (r.get("axes_published_by_some_run") or [])]
     if declined:
         print()
-        print("tasks where the best valid proposal attempted no discovery at all: %d of %d"
+        print("run cells where the best valid proposal attempted no discovery at all: %d of %d"
               % (len(declined), sum(1 for r in rows if r["status"] == "ok")))
         for r in declined:
             print("  %-32s refusal %s, coverage 0" % (
@@ -293,12 +351,12 @@ def main(argv: list[str] | None = None) -> int:
         print("  anchor would be treating the wrong thing.")
     if unmeasured:
         print()
-        print("tasks whose evaluator publishes no coverage metric: %d" % len(unmeasured))
+        print("run cells whose evaluator publishes no coverage metric: %d" % len(unmeasured))
         print("  " + ", ".join(r["task"][:28] for r in unmeasured))
         print("  Whether a discovery was attempted cannot be read off any run of these.")
     if stale:
         print()
-        print("tasks whose best proposal predates their coverage metric: %d" % len(stale))
+        print("run cells whose best proposal predates their coverage metric: %d" % len(stale))
         print("  " + ", ".join(r["task"].split("/")[-1][:28] for r in stale))
         print("  The evaluator publishes it now; the highest-scoring run on record was made")
         print("  before it did, so the column is blank for that particular proposal.")
@@ -306,11 +364,12 @@ def main(argv: list[str] | None = None) -> int:
     incomplete = [r for r in rows if r.get("missing_axes")]
     countonly = [r for r in rows if r.get("count_without_denominator")]
     print()
-    print("tasks missing at least one axis outright: %d of %d" % (len(incomplete), len(rows)))
+    print("run cells missing at least one axis outright: %d of %d"
+          % (len(incomplete), len(rows)))
     for r in incomplete:
         print("  %-32s missing %s" % (r["task"][:32], r["missing_axes"]))
     print()
-    print("tasks publishing a count where a rate is needed: %d" % len(countonly))
+    print("run cells publishing a count where a rate is needed: %d" % len(countonly))
     for r in countonly:
         keys = [v["key"] for a, v in r["axes"].items()
                 if v is not None and v.get("status") == "count_without_denominator"]
@@ -322,9 +381,10 @@ def main(argv: list[str] | None = None) -> int:
         print("  rebinds that task's analysis artifacts - a governance step, not a cleanup.")
 
     Path(args.output).write_text(json.dumps({
-        "schema_version": 1,
+        "schema_version": 3,
         "note": "the three axes are reported separately and must not be averaged",
-        "task_count": len(rows),
+        "task_count": len({row["task"] for row in rows}),
+        "run_row_count": len(rows),
         "incomplete_count": len(incomplete),
         "count_without_denominator_count": len(countonly),
         "rows": rows,

@@ -1,0 +1,88 @@
+schema_version: 2
+scientific_question: Can a continuous process-design policy improve a specific-modulus, transport-barrier and process-energy Pareto frontier through a frozen phase-field/coarsening and homogenization mechanism while remaining robust to sealed process and material shifts?
+artifact: A set of distinct manufacturable blend, anneal, cooling and draw schedules; no image, latent microstructure or finite candidate-row selection is accepted.
+oracle:
+  model: Deterministic one-dimensional spectral conserved phase-field growth with bounded saturation and coarsening, mobility-limited crystallization completion, and frozen Voigt--Reuss-style homogenization with explicit draw modulus gain and permeability penalty.
+  feasibility: Four to twenty process schedules that remain unique after public manufacturing-resolution quantization, with finite values inside every public bound; images, extra fields, duplicates, malformed schedules and exceptions fail closed.
+  deterministic: true
+normalization:
+  baseline: Four shortest, hottest, fastest-cooled, undrawn schedules spread across the legal blend range.
+  reference: An independent candidate-equivalent 20-schedule witness performs greedy low-fidelity proxy-hypervolume selection over a declared 1024-point Latin hypercube, followed by two deterministic 11-point-per-axis coordinate-exchange passes, using only the public problem; it is not a global optimum.
+  score: Exact three-objective development hypervolume normalized above the baseline and left uncapped; shifted hypervolume, held-out transfer, feasibility and physical summary axes remain separate.
+citations:
+- id: doi:10.1146/annurev.matsci.32.112001.132041
+  title: Phase-field models for microstructure evolution
+- id: doi:10.1063/1.1744102
+  title: Free Energy of a Nonuniform System. I. Interfacial Free Energy
+- id: doi:10.1063/1.1750380
+  title: Kinetics of Phase Change. I General Theory
+- id: doi:10.1088/0370-1298/65/5/307
+  title: The Elastic Behaviour of a Crystalline Aggregate
+- id: doi:10.1080/10601326708053745
+  title: Models for the Permeability of Filled Polymer Systems
+- id: doi:10.1016/S0032-3861(99)00760-0
+  title: Simultaneous biaxial drawing of poly(epsilon-caprolactone) films
+- id: doi:10.1021/es8016655
+  title: Thermodynamic Analysis of Resources Used in Manufacturing Processes
+- id: doi:10.1007/s40192-017-0089-0
+  title: Materials Knowledge Systems in Python - a Data Science Framework for Accelerated Development of Hierarchical Materials
+invariants:
+- the submitted artifact is a bounded composition and processing schedule, never a target image or predicted property
+- the deterministic oracle applies process to phase-field/coarsening state before homogenizing macroscopic properties
+- the phase-field and homogenization equations are explicitly frozen reduced models and do not support a real-material discovery claim
+- exact three-dimensional hypervolume assigns marginal credit to each newly non-dominated property-energy tradeoff and remains uncapped above the witness
+- the shipped weak process archive is feasible and normalized to exactly zero while an independent 20-row witness produces strict Pareto gain
+- three sealed shifts separately perturb phase kinetics, gradient and interface penalties, and constituent properties
+- held-out material worlds, shifted scores and per-instance rows do not enter the public development objective
+- lifetime-credit records require legal held-out artifacts and at least 50 percent normalized-score retention on development shifts, held-out worlds and held-out shifts
+- frontier_record_emitted reports evaluator-side record emission only and never claims ledger admission
+- nonfinite, out-of-bounds, duplicate, image-like, malformed and exception-producing candidates score zero without escaping the evaluator
+known_shortcuts: The oracle is one-dimensional, uses a fixed 48-cell spectral reduced model, omits full nonlinear Cahn--Hilliard integration, mechanics, defects, degradation, scale-up and experimental noise, and employs a stylized Voigt--Reuss property closure. A tested 441-point blend-temperature shortcut and three tested 343-point coordinate-subspace shortcuts remain below the reference. A 2048-point public-proxy pool with the same refinement scores only 1.000374, while evaluator-aware coordinate exchange reaches 1.005083; neither result certifies model difficulty. New physical systems or fidelities require frozen new waves.
+review:
+  domain: pending_external_polymer_and_process_materials
+  evaluator_security: automated_determinism_process_schema_no_image_pareto_gain_sealed_shift_bad_candidate_and_baseline_normalization_tests
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic reduced process--structure--property generator with development, held-out and sealed shifted worlds.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_applicable_synthetic_oracle
+novelty_risk:
+  level: medium
+  rationale: Phase-field evolution, homogenization and multiobjective process design are established. Frontier-Eng contains fixed additive-manufacturing toolpath/laser-control tasks, but no task that submits a blend, anneal, cooling and draw archive and scores the resulting morphology-property-energy Pareto frontier. The cell's joint artifact and frozen coefficients are benchmark-specific, but model difficulty and resistance to analytic shortcut policies remain unmeasured.
+lineage:
+  status: complete
+  builder_model_ids:
+  - openai:codex-gpt-5
+  builder_scaffolds:
+  - codex-cli
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: No trusted model calibration was attached at freeze. Deterministic review found a high-B corner, a 441-point two-coordinate shortcut, three stronger 343-point subspace shortcuts, instantaneous-style crystallinity, loose energy scaling, hidden-oracle reference construction, and scalar pool-size improvement over the first public witness; these triggered the mobility-limited completion law, explicit draw tradeoff, kinetic and energy scaling repair, candidate-equivalent public reference search with coordinate exchange, ablations and reference-unclipped headroom probes.
+  shortcut_discoverer: builder_self_audit
+  shortcut_findings:
+  - a high-B low-energy corner exploited objectives that did not initially express the intended transport conflict
+  - a 441-point blend-temperature grid exposed the strength of fixing time, cooling and draw at one corner
+  - 343-point blend-time-draw, blend-cooling-draw and blend-temperature-draw grids scored 1.20449, 1.00999 and 1.01105 before the second hardening pass
+  - the former fixed-bin reference had been selected with evaluator-private objectives and therefore did not provide candidate-equivalent construction evidence
+  - increasing the first public witness from 320 to 512, 1024, 2048 and 4096 points continued to improve score, so raw pool-size inflation was an easy shortcut rather than meaningful optimization
+  remediation:
+  - freeze a mobility-limited crystallization-completion law and explicit 0.35 draw modulus gain versus 0.20 permeability penalty
+  - increase reduced Arrhenius selectivity to Ec 7 and k 700, cooling sensitivity to 0.30, and align the energy normalization with the reachable 7.5 envelope
+  - test no-draw, short-time, fast-cooling and single-low-temperature ablations with a 0.90 ceiling
+  - anchor to a deterministic 1024-point public proxy search followed by two 11-point-per-axis coordinate-exchange passes while retaining uncapped score and sealed transfer gates
+  frozen_before_eval: true
+  freeze_timestamp: '2026-09-05T22:15:00Z'
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: openai:codex-gpt-5
+  reviewer_domain: pending_external_polymer_and_process_materials
+  expert_hours: null
+  red_team_rounds: 3
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: baseline, candidate-equivalent public reference search through the isolated runner, 441-point and three 343-point shortcut probes, 2048-point public-platform stability, evaluator-aware uncapped headroom, four physical ablations, sealed shifts and malformed-candidate paths are runnable from the package

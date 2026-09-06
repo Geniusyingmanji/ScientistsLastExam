@@ -1,0 +1,23 @@
+schema_version: 1
+task_family_id: ScientificComputing/AdaptiveConservativePDEMethod
+wave_id: scalar-law-panel-v1
+predecessor_wave_sha256: null
+cells:
+  - id: conservative-scalar-law-method
+    kind: optimization
+    weight: 1
+    objective: maximize
+    reference_value: 0.9716657334958534
+    credit_scale: 0.5398700566758635
+    minimum_delta: 0.001
+    semantic_contract:
+      canonicalizer_id: adaptive-conservative-pde-method-v1
+      canonicalizer_path: frontier_eval/contracts/method_canonicalizer_v1.py
+      canonicalizer_sha256: "62904e1f9c6d301792608cfbd2e62f35e84d54efb57bc05ec9bd217a6610f56c"
+      evidence_predicate_id: adaptive-conservative-pde-evidence-v1
+      evidence_predicate_path: frontier_eval/contracts/evidence_predicate_v1.py
+      evidence_predicate_sha256: "d25abdf9576fb938036678320faf137a1037f70da6c911eb67a484d018166efc"
+      evaluation_panel_path: frontier_eval/contracts/evaluation_panel_v1.json
+      evaluation_panel_sha256: "dd9e9563ed513d7ce42131b7b95f49e8b15ac702a25bd661b4493d686269fa21"
+      oracle_path: verification/evaluator.py
+      oracle_sha256: "9c3ac0882b7c0eb68c857785f810eac6ec323a1774056762d9cce6b17db61ecd"

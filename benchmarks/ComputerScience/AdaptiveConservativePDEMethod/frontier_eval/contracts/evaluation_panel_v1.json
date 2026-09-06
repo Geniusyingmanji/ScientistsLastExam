@@ -1,0 +1,125 @@
+{
+  "schema_version": 2,
+  "baseline_method": {
+    "reconstruction": "constant",
+    "limiter": "minmod",
+    "riemann_solver": "rusanov",
+    "time_integrator": "euler",
+    "cells": 32,
+    "cfl": 0.45,
+    "sensor_threshold": 0.5,
+    "shock_blend": 1.0,
+    "flux_dissipation": 1.15
+  },
+  "reference_method": {
+    "reconstruction": "weno3",
+    "limiter": "superbee",
+    "riemann_solver": "godunov",
+    "time_integrator": "ssprk3",
+    "cells": 192,
+    "cfl": 0.7,
+    "sensor_threshold": 0.15,
+    "shock_blend": 1.0,
+    "flux_dissipation": 1.0
+  },
+  "oracle": {
+    "target_cell_averages": "closed-form antiderivatives with periodic wrap and exact shock or rarefaction cell intersections",
+    "physical_bound_points": 16384,
+    "time_tolerance": 1e-15,
+    "division_epsilon": 1e-15,
+    "sensor_epsilon": 1e-14,
+    "weno_epsilon": 0.01,
+    "speed_floor": 1e-12,
+    "work_padding_steps": 2,
+    "stability_overshoot_scale": 18.0,
+    "stability_tv_scale": 4.0,
+    "conservation_scale": 1e-11,
+    "utility_weights": {
+      "accuracy": 0.72,
+      "stability": 0.14,
+      "conservation": 0.1,
+      "cost": 0.04
+    },
+    "development_regime_weights": {
+      "smooth": 0.8,
+      "shock": 0.2
+    }
+  },
+  "worlds": [
+    {
+      "id": "dev-advection-sine",
+      "split": "development",
+      "equation": "advection",
+      "boundary": "periodic",
+      "speed": 1.0,
+      "initial": {"kind": "sine", "offset": 0.15, "amplitude": 0.75, "frequency": 1, "phase": 0.08},
+      "final_time": 0.37,
+      "accuracy_scale": 0.035,
+      "max_work_units": 120000
+    },
+    {
+      "id": "dev-advection-multisine",
+      "split": "development",
+      "equation": "advection",
+      "boundary": "periodic",
+      "speed": -0.7,
+      "initial": {"kind": "multisine", "offset": -0.1, "amplitude": 0.65, "phase": 0.21},
+      "final_time": 0.43,
+      "accuracy_scale": 0.045,
+      "max_work_units": 120000
+    },
+    {
+      "id": "dev-advection-top-hat",
+      "split": "development",
+      "equation": "advection",
+      "boundary": "periodic",
+      "speed": 0.85,
+      "initial": {"kind": "top_hat", "left": 0.19, "right": 0.58, "low": -0.15, "high": 0.9},
+      "final_time": 0.31,
+      "accuracy_scale": 0.075,
+      "max_work_units": 120000
+    },
+    {
+      "id": "dev-burgers-shock",
+      "split": "development",
+      "equation": "burgers",
+      "boundary": "fixed",
+      "initial": {"kind": "riemann", "location": 0.32, "left": 1.0, "right": 0.0},
+      "final_time": 0.24,
+      "accuracy_scale": 0.07,
+      "max_work_units": 120000
+    },
+    {
+      "id": "heldout-advection-gaussian",
+      "split": "heldout",
+      "equation": "advection",
+      "boundary": "periodic",
+      "speed": 1.3,
+      "initial": {"kind": "gaussian", "center": 0.72, "width": 0.085, "low": -0.2, "high": 0.8},
+      "final_time": 0.29,
+      "accuracy_scale": 0.045,
+      "max_work_units": 120000
+    },
+    {
+      "id": "heldout-advection-narrow-pulse",
+      "split": "heldout",
+      "equation": "advection",
+      "boundary": "periodic",
+      "speed": -1.1,
+      "initial": {"kind": "top_hat", "left": 0.41, "right": 0.59, "low": 0.05, "high": 1.0},
+      "final_time": 0.27,
+      "accuracy_scale": 0.075,
+      "max_work_units": 120000
+    },
+    {
+      "id": "heldout-burgers-rarefaction",
+      "split": "heldout",
+      "equation": "burgers",
+      "boundary": "fixed",
+      "initial": {"kind": "riemann", "location": 0.44, "left": -0.35, "right": 0.85},
+      "final_time": 0.21,
+      "accuracy_scale": 0.075,
+      "max_work_units": 120000
+    }
+  ]
+}

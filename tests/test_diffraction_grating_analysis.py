@@ -240,6 +240,16 @@ class DiffractionGratingAnalysisTests(unittest.TestCase):
         )
         self.assertFalse(failed["execution_passed"])
 
+        records = copy.deepcopy(self.report["records"])
+        records["normal_budget_three"]["trusted_evaluator_runtime_sha256"] = "f" * 64
+        failed = self.module._analyze_records(
+            self.report["task_calibration"],
+            self.report["independent_grcwa_crosscheck"],
+            records,
+        )
+        self.assertFalse(failed["execution_passed"])
+        self.assertFalse(failed["input_trusted_evaluator_runtime_equivalent"])
+
         failed = self.module._analyze_records(
             self.report["task_calibration"],
             self.report["independent_grcwa_crosscheck"],

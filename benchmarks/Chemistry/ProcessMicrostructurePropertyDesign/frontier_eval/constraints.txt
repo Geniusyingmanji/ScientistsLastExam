@@ -1,0 +1,6 @@
+1) Only edit solution.py. Keep design_process_archive(problem).
+2) Return only processes: 4-20 distinct rows with exact fields blend_fraction_b, anneal_temperature, anneal_time, cooling_rate and draw_ratio.
+3) Respect every public bounds and archive_size_bounds value. An image, microstructure array, latent vector, predicted property or duplicate schedule is invalid.
+4) Use process_fields, grid_cells, constituent_properties, reduced_modulus, reduced_permeability, critical_temperature_estimate, phase_field_model, homogenization_model, objectives, name, sense and scope_warning as documented public context; do not infer a hidden split.
+5) The oracle is a frozen reduced mechanism benchmark, not evidence for a real material discovery.
+6) Deterministic CPU, NumPy/SciPy/stdlib only, no network/process creation. Do not read verification/ or frontier_eval/.

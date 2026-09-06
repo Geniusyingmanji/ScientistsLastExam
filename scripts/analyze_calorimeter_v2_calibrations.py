@@ -22,6 +22,7 @@ from typing import Any
 
 
 from scripts.repo_paths import resolve_run_workdir  # noqa: E402
+from sle.run_verification import verify_run  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
@@ -289,6 +290,7 @@ def _load_model(label: str, relative: str, oracle) -> dict[str, Any]:
 
     manifest_path = workdir / "run_manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    verification = verify_run(workdir)
     summary = run.get("summary") or {}
     expected_policy = (
         "offline_best_of_open_loop_batch"
@@ -337,6 +339,9 @@ def _load_model(label: str, relative: str, oracle) -> dict[str, Any]:
         "run_manifest_sha256": _sha256(manifest_path),
         "task_contract_sha256": manifest.get("task_contract_sha256"),
         "runtime_source_sha256": manifest.get("runtime_source_sha256"),
+        "trusted_evaluator_runtime_sha256": (
+            manifest.get("trusted_evaluator_runtime") or {}
+        ).get("fingerprint_sha256"),
         "baseline_candidate_sha256": baseline_hash,
         "best_program": str(relative_workdir / "best_program.py"),
         "best_program_sha256": _sha256(best_program),
@@ -373,6 +378,9 @@ def _load_model(label: str, relative: str, oracle) -> dict[str, Any]:
         and terminal["sha256"] == trajectory[-1]["candidate_sha256"]
         and terminal["direct_oracle_valid"] == 0.0
         and terminal["candidate_instance_valid_rate"] == 0.0
+        and isinstance(record["trusted_evaluator_runtime_sha256"], str)
+        and verification.get("trusted_evaluator_runtime_sha256")
+        == record["trusted_evaluator_runtime_sha256"]
     )
     if not record["integrity_passed"]:
         raise ValueError("calorimeter lineage, accounting or artifact gate failed")
@@ -394,6 +402,9 @@ def _analyze_records(
     conditions = {record["llm_condition_sha256"] for record in records.values()}
     contracts = {record["task_contract_sha256"] for record in records.values()}
     runtimes = {record["runtime_source_sha256"] for record in records.values()}
+    trusted_runtimes = {
+        record["trusted_evaluator_runtime_sha256"] for record in records.values()
+    }
     all_proposals = [
         event
         for record in records.values()
@@ -417,6 +428,8 @@ def _analyze_records(
         and None not in contracts
         and len(runtimes) == 1
         and None not in runtimes
+        and len(trusted_runtimes) == 1
+        and None not in trusted_runtimes
         and all(record["integrity_passed"] for record in records.values())
         and one["proposal_budget"] == 1
         and normal["proposal_budget"] == blind["proposal_budget"] == 3
@@ -430,7 +443,7 @@ def _analyze_records(
         == blind["baseline_candidate_sha256"]
     )
     report: dict[str, Any] = {
-        "schema_version": 1,
+        "schema_version": 2,
         "trust_status": "TRUSTED_DERIVED_EVIDENCE",
         "evidence_scope": (
             "REDUCED_ORDER_CALORIMETER_SINGLE_RUN_GPT55_CALIBRATION_NOT_"
@@ -448,6 +461,7 @@ def _analyze_records(
         "input_llm_condition_equivalent": len(conditions) == 1,
         "input_task_contract_equivalent": len(contracts) == 1,
         "input_runtime_manifest_equivalent": len(runtimes) == 1,
+        "input_trusted_evaluator_runtime_equivalent": len(trusted_runtimes) == 1,
         "task_calibration": calibration,
         "records": records,
         "proposal_hurdle_summary": {

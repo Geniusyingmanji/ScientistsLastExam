@@ -1,0 +1,80 @@
+schema_version: 2
+scientific_question: Can a budgeted active policy construct previously unlisted molecular graphs and elementary edges, recover an exact synthetic reaction network, control false discoveries, and refuse null or model-inadequate worlds?
+artifact: A canonicalizable coloured-molecular-graph species set, directed bond-exchange reaction set with activation energies, Boolean refusal, and calibrated confidence.
+oracle:
+  model: Deterministic analytic heavy-atom graph grammar with element-preserving canonicalization, one-bond-exchange edges, minimum-barrier resolution across repeated-element atom maps, exact activation barriers, null worlds, and model-inadequate worlds.
+  feasibility: Every probed and submitted graph conserves the atom inventory, is connected and valence-valid; edges obey the public elementary grammar; canonical duplicate species or edges, malformed output, and budget violations fail closed.
+  deterministic: true
+normalization:
+  baseline: Submit one legal but confidently wrong fixed edge; an independent no-probe always-abstain control also scores zero.
+  reference: Independent active-frontier exploration prioritizing unseen products with a qualitative bond-strength barrier surrogate and public grammar-branching tie-break, using at most 24 charged probes per world.
+  score: Mean supported-network recovery and correct unsupported-world refusal, normalized above the exact always-abstain floor to the budgeted reference and left uncapped; complete recovery can exceed one.
+citations:
+- id: doi:10.1021/acs.jctc.2c00193
+  title: SCINE Chemoton 2.0 - Autonomous Exploration of Chemical Reaction Networks
+- id: doi:10.1002/jcc.26734
+  title: AutoMeKin2021 - An open-source program for automated reaction discovery
+- id: doi:10.1016/j.entcs.2004.12.033
+  title: Chemical Graphs, Chemical Reaction Graphs, and Chemical Graph Transformation
+- id: doi:10.1039/TF9383400011
+  title: Inertia and Driving Force of Chemical Reactions
+- id: doi:10.1063/1.1749604
+  title: The Activated Complex in Chemical Reactions
+invariants:
+- no candidate species or candidate reaction catalogue is exposed; every non-seed graph and every edge is constructed by candidate code
+- coloured-graph identities are canonical under every element-preserving atom permutation and duplicate canonical species or edges fail closed
+- repeated-element mapping ambiguity is resolved by the minimum barrier over every valid one-delete/one-add channel, never by a hidden atom-index tie-break
+- the exact analytic oracle is deterministic in a world specification and a canonical directed edge
+- supported-world mechanism recovery, edge false-discovery rate, correct unsupported-world refusal, attempted discovery and expected-recovery confidence calibration are reported separately; abstention has recovery target zero
+- declining every development world and the shipped confidently wrong edge are valid and normalized to exactly zero
+- malformed graphs, invalid transformations, over-budget probes, caught callback violations and malformed artifacts score zero without escaping the evaluator
+- held-out worlds change catalyst selectivity and refusal case placement while preserving the public graph grammar
+known_shortcuts: The frozen cell has only four heavy atoms, single bonds, unimolecular bond exchanges and exact noiseless probes, so exhaustive enumeration is feasible and chemistry is highly abstract. Hydrogens, charge, stereochemistry, bond orders, conformers, thermodynamics, kinetics and electronic-structure uncertainty are absent. Scaling those axes requires a new frozen wave and an oracle-cost policy; this cell alone cannot support a real mechanism claim.
+review:
+  domain: pending_external_chemical_kinetics
+  evaluator_security: automated_determinism_open_vocabulary_isomorphism_duplicate_budget_bad_candidate_and_abstention_normalization_tests
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic analytic graph generator with development and sealed held-out world specifications.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_applicable_synthetic_oracle
+novelty_risk:
+  level: medium
+  rationale: Reaction-network exploration and graph canonicalization are established. Frontier-Eng reaction tasks optimize continuous conditions or catalysts for fixed known reactions, whereas this cell constructs unlisted species graphs and directed edges, probes barriers, and scores false discovery and refusal without exposing a catalogue. The exact networks are benchmark-specific, and the small grammar makes exhaustive search a known shortcut, so difficulty must be measured rather than inferred.
+lineage:
+  status: complete
+  builder_model_ids:
+  - openai:codex-gpt-5
+  builder_scaffolds:
+  - codex-cli
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: No trusted model calibration was attached at freeze; deterministic review found that an 80-query exhaustive witness saturated the small grammar, a lexicographic atom-map tie-break changed graph-pair truth, and a 1024-ordering BFS sweep beat the first 24-query anchor. Pre-PR domain review also found that confidence mixed expected network recovery with world support on abstention; confidence was made a single expected-recovery estimand with abstention target zero. The budget, oracle semantics, reference, and calibration semantics were revised before release.
+  shortcut_discoverer: builder_self_audit
+  shortcut_findings:
+  - 80-query exhaustive grammar enumeration recovered the complete small-network oracle and exhausted meaningful score headroom.
+  - blanket abstention occupied the original shipped baseline and did not exercise false-discovery scoring.
+  - repeated C atoms allowed multiple bond-exchange channels whose barriers differed, while the original oracle selected one by lexicographic atom-map order.
+  - a 1024-seed deterministic BFS neighbour-order sweep reached development raw score 0.946080715974333, above the first 24-query lexicographic BFS anchor.
+  - a 1024-seed final-tie-order sweep around the first novelty-first reference reached raw 0.9730176503033645, exposing a coarse-surrogate tie-break weakness.
+  remediation:
+  - reduce the charged budget to 24 and resolve ambiguous graph-pair barriers as the minimum over all valid atom-map channels
+  - replace node-local BFS with novelty-first active-frontier acquisition, a qualitative chemical barrier surrogate, and a public grammar-branching information-gain tie-break
+  - normalize to that incomplete independent witness without an upper clip, leaving complete recovery above one
+  - ship a legal confidently wrong edge while retaining blanket abstention as an independent zero-score control
+  frozen_before_eval: true
+  freeze_timestamp: '2026-09-06T00:00:00Z'
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: openai:codex-gpt-5
+  reviewer_domain: pending_external_chemical_kinetics
+  expert_hours: null
+  red_team_rounds: 2
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: fixed wrong-edge baseline, independent 24-query active-frontier witness, complete-recovery headroom, 1024 seeded-ordering red team, ambiguous-map minimum-barrier case, deterministic replay, canonical duplicate rejection and malformed-candidate paths are runnable from the package

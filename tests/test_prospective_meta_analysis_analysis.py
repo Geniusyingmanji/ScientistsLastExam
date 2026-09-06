@@ -123,6 +123,12 @@ class ProspectiveMetaAnalysisCalibrationAnalysisTests(unittest.TestCase):
         self.assertFalse(self.report(records)["execution_passed"])
 
         records = copy.deepcopy(self.records)
+        records["normal_budget_three"]["trusted_evaluator_runtime_sha256"] = "f" * 64
+        altered = self.report(records)
+        self.assertFalse(altered["execution_passed"])
+        self.assertFalse(altered["input_trusted_evaluator_runtime_equivalent"])
+
+        records = copy.deepcopy(self.records)
         event = records["normal_budget_three"]["trajectory"][2]
         event["classification"] = "valid_scientific_workflow"
         self.assertFalse(self.report(records)["execution_passed"])

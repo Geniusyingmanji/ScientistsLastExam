@@ -10,6 +10,7 @@ import time
 from pathlib import Path
 from typing import Any, Callable, Optional
 
+from ..evaluate import resolve_trusted_runtime
 from ..llm import LLMClient
 from ..metric_visibility import load_full_metrics
 from ..protocol import sha256_text
@@ -109,11 +110,13 @@ def shinkaevolve(
         or spec.task_dir / "runs" / ("shinkaevolve_%s" % time.strftime("%Y%m%d_%H%M%S"))
     ).resolve()
     workdir.mkdir(parents=True, exist_ok=True)
+    trusted_runtime = resolve_trusted_runtime(spec.task_dir)
     ensure_run_manifest(
         workdir, spec=spec, llm=llm, algorithm="shinkaevolve", seed=seed,
         feedback_mode=feedback_mode, resume=resume,
         upstream={"name": "shinkaevolve", "version": SHINKA_VERSION,
                   "commit": SHINKA_COMMIT},
+        trusted_runtime=trusted_runtime,
     )
     upstream_dir = workdir / "upstream"
     database_path = upstream_dir / "programs.sqlite"
@@ -168,6 +171,7 @@ def shinkaevolve(
     evaluator_file = write_configured_wrapper(
         workdir / "upstream_evaluator.py", spec.task_id, timeout_s,
         full_metrics_dir=workdir / "trusted_full_metrics",
+        expected_trusted_runtime_sha256=trusted_runtime.fingerprint_sha256,
     )
     job = LocalJobConfig(
         eval_program_path=str(evaluator_file),

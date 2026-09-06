@@ -1,0 +1,15 @@
+domain: MaterialsScience
+task: ProcessMicrostructurePropertyDesign
+scientific_role: optimization
+difficulty: uncalibrated_candidate
+tier: candidate
+oracle_type: analytical_reduced_order_physics
+score_mode: uncapped
+gpu_required: false
+eval_time_seconds: 5
+science_metric: exact process-to-phase-field-to-homogenized-property three-objective Pareto hypervolume with sealed process and material shifts
+reference_baseline: conservative four-process archive normalized to exactly zero
+reference_sota: candidate-equivalent 20-process public-only witness selected by a declared low-fidelity proxy from a deterministic 1024-point Latin hypercube and two 11-point-per-axis coordinate-exchange passes; a 2048-point public search is on the same score platform and evaluator-aware refinement exceeds it, with no global-optimality or real-material claim
+citation: "Chen, Phase-field models for microstructure evolution, DOI 10.1146/annurev.matsci.32.112001.132041"
+task_family_id: MaterialsScience/ProcessMicrostructurePropertyDesign
+wave_id: reduced-process-property-pareto-v1
