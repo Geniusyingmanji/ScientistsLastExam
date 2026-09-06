@@ -1,0 +1,16 @@
+{
+  "anchors": [
+    {"name": "post_2007_rise_attribution_unsettled", "value": 1.0,
+     "source_url": "https://essd.copernicus.org/preprints/essd-2025-668/",
+     "derivation": "A global dataset of d13C-CH4 source signatures and associated uncertainties (1998-2022), with a sensitivity analysis to support isotopic inversions. Records that the isotopic reading of the post-2007 methane rise as largely microbial has been challenged on spatial variability in source signatures and on open questions in the sinks, and that source signatures remain poorly constrained. Value 1.0 is a marker that the claim was checked against the source, not a numeric target.",
+     "retrieved_on": "2026-09-06"},
+    {"name": "atmospheric_delta13c_ch4", "value": -47.2,
+     "source_url": "https://repository.library.noaa.gov/view/noaa/44561",
+     "derivation": "Improved constraints on global methane emissions and sinks using d13C-CH4: the atmospheric value is close to -47.2 per mil. Used as the observational target the box model must reproduce from its emission mix and effective sink fractionation, which is how the model is validated rather than fitted.",
+     "retrieved_on": "2026-09-06"},
+    {"name": "effective_sink_fractionation_permil", "value": 6.2,
+     "source_url": "https://repository.library.noaa.gov/view/noaa/44561",
+     "derivation": "The offset between the emission-weighted source signature and the atmospheric value is the effective total-sink fractionation. The nominal inventory here carries -53.37 per mil and the atmosphere -47.2, so the model uses 6.2, inside the 6-7 per mil the literature gives for the total sink (OH, soil and chlorine together). OH alone is about 3.9 and using that value left the model drifting three per mil over twenty years, which is how the error was caught.",
+     "retrieved_on": "2026-09-06"}
+  ]
+}

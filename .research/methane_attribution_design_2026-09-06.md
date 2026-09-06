@@ -55,6 +55,48 @@ objection raised against the microbial reading of the post-2007 rise.
 naming any source is unambiguously a false discovery, and a searcher can only avoid it by noticing
 it has no constraint on the sink rather than by looking at its residuals.
 
+## Four regimes, two answerable, and the budget cannot buy everything
+
+| measurement | cost | what it settles |
+|---|---|---|
+| `burden` | 1 | how much extra methane |
+| `d13c` | 1 | how light it is on average — moved by the sink too |
+| `ethane` | 3 | fossil against everything else, by co-emission |
+| `radiocarbon` | 5 | fossil against everything else, by being ¹⁴C-dead |
+| `inventory` | 3 | one named sector, bottom-up |
+| `oh_proxy` | 6 | the sink — uninformative in the confounded world |
+
+Budget 12. Ethane plus radiocarbon plus the sink proxy is 14, so the allocation is a real choice.
+
+| regime | what moved | correct answer |
+|---|---|---|
+| `tracer_identifiable` | fossil or biomass burning | attribute — a tracer sees it |
+| `inventory_identifiable` | one microbial source, 3.5–5σ of its own inventory | attribute — buy the right inventory |
+| `sink_confounded` | the sink only, no source | abstain |
+| `microbial_overlap` | two microbial sources, each 0.8–1.4σ | abstain |
+
+Measured across 32–40 development cases:
+
+| regime | ethane SNR | inventory SNR per changed source | δ¹³C change (‰) |
+|---|---|---|---|
+| `tracer_identifiable` | 0.7 – 8.8 | 0.3 – 12.2 | **+0.187 … +0.945** |
+| `inventory_identifiable` | 0.2 – 2.0 | **2.0 – 6.9** | −0.669 … −0.107 |
+| `sink_confounded` | 0.3 – 1.7 | — | **−0.083 … −0.044** |
+| `microbial_overlap` | 0.2 – 1.9 | 0.1 – 3.0 | −0.349 … −0.179 |
+
+The δ¹³C **sign** is the clean cut: `tracer_identifiable` is the only regime where it rises, because
+fossil (−44 ‰) and biomass burning (−25 ‰) are both heavier than the −53.4 ‰ emission-weighted mean.
+
+## The confounded world has a richer trap than it was designed with
+
+`sink_confounded` shows the burden rising with δ¹³C falling only slightly. A source explanation of
+that needs a source a little lighter than the mean — which is waste, at −55 ‰. So a searcher that
+buys the isotopes and the tracers concludes *waste increased*, confidently and wrongly.
+
+The way out is to buy the waste inventory, which shows no change, and to treat the contradiction
+between the top-down inference and the bottom-up number as the signal to abstain. That is the actual
+methane-budget problem, and it appeared from the construction rather than being placed in it.
+
 ## Three regimes
 
 | regime | what moved | why the answer is what it is |
@@ -66,10 +108,51 @@ it has no constraint on the sink rather than by looking at its residuals.
 The two refusal reasons are again different: one is an unmeasured dimension, the other is an
 unresolvable one.
 
+## Corrections made during calibration
+
+* The tracers first reported the change in the mean ethane-to-methane *ratio*, which moves whenever
+  any source changes because the denominator does. It responded to microbial changes almost as
+  strongly as to fossil ones and separated nothing. They now report the change in tracer
+  **emission**, which is a clean linear functional of the emission changes.
+* The answerable regime first drew `wetlands`, which is microbial: ethane and radiocarbon both say
+  only "not fossil", so a third of the supposedly answerable cases were not.
+* Regime sizes were set in absolute Tg and are now scaled to each sector's own inventory
+  uncertainty. A flat 10–18 Tg is under one sigma for wetlands and over three for waste, so one
+  member of the "unresolvable" pair was resolvable.
+
+## Baseline, reference, and the trap firing
+
+| submission | combined | mechanism | FDR | refusal | coverage |
+|---|---|---|---|---|---|
+| baseline | **0.000000** | 0.562 | 0.656 | 0.000 | 1.000 |
+| reference | **0.754464** | 0.812 | 0.071 | 1.000 | 0.438 |
+
+The baseline reads the isotopes, names the source that fits, and never abstains. It is genuinely
+competent where isotopes suffice — **8 of 8** on the tracer regime, because the δ¹³C *sign* is a
+clean cut — and scores zero. Its per-regime behaviour is the point:
+
+| regime | recovered | what it named |
+|---|---|---|
+| `tracer_identifiable` | 8/8 | biomass burning ×6, fossil ×2 |
+| `inventory_identifiable` | 1/8 | ruminants ×7 |
+| `microbial_overlap` | 0/8 | ruminants ×8 |
+| `sink_confounded` | 0/8 | **waste ×5, wetlands ×3** |
+
+The last row is the predicted trap firing. A sink-only rise looks like a modest increase in a source
+slightly lighter than the mean, and waste is that source. The baseline attributes a sink change to
+sources in every one of those cases.
+
+The reference routes on the δ¹³C sign, then makes the bottom-up number agree or abstains — either
+because the isotopes point at a source whose own inventory denies it, which means something outside
+the source list moved, or because several microbial inventories are equally marginal. Refusal 1.000;
+the headroom is in mechanism, where it still misses 3 of 16.
+
+Seventeen degenerate and adversarial submissions score 0.000000 without raising, and the malformed
+ones report `valid = 0` while the well-formed-but-useless ones report `valid = 1`.
+
 ## Remaining
 
-The observable menu and its budget (burden trend, δ¹³C trend, ethane ratio, radiocarbon, a bottom-up
-inventory, an OH proxy that is uninformative in the confounded world), the evaluator on the standard
-discovery triple, baseline, reference, the adversarial sweep, and packaging.
+Task statement, card, anchors, frontier_eval set, registration, invariant tests and the g450 sandbox
+gate. The science is measured; none of that changes a number.
 
 Working code in `.research/methane_wip/`.

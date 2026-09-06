@@ -1,0 +1,135 @@
+schema_version: 2
+scientific_question: >-
+  Under a fixed observing budget, decide which methane source sectors changed over a twenty-year
+  record - and, on the half of cases where the record cannot decide, say so.
+artifact: >-
+  Per case, a per-sector changed/unchanged report with a confidence, or an abstention.
+oracle:
+  model: >-
+    a frozen global budget for the methane burden and its d13C, in which the OH sink removes the
+    light isotopologue faster and therefore raises d13C, so that a weaker sink and a lighter source
+    move the observations the same way; six purchasable measurements with costs, one of which is
+    uninformative in the confounded regime
+  feasibility: >-
+    a boolean abstain flag, a finite confidence in [0,1], sector names from the supplied catalogue
+    with boolean values, at most 32 measurement calls and never more cost than the budget; any
+    failure scores that case zero
+  deterministic: true
+normalization:
+  baseline: >-
+    buy the burden and the d13C trend, invert for the single source signature that explains the
+    pair, name it, never abstain; scores exactly zero because the refusal rate is zero, while
+    recovering 8 of 8 on the regime where isotopes suffice
+  reference: >-
+    route on the sign of the d13C change, then require the bottom-up sector inventory to agree, and
+    abstain either when the isotopes point at a source whose own inventory denies it or when several
+    microbial inventories are equally marginal
+  score: >-
+    product of mechanism recovery, one minus the false discovery rate, and the correct refusal rate;
+    the three axes are also reported separately with their denominators and are never averaged
+citations:
+  - id: url:https://essd.copernicus.org/preprints/essd-2025-668/
+    title: "A global dataset of d13C-CH4 source signatures and associated uncertainties (1998-2022)"
+  - id: url:https://repository.library.noaa.gov/view/noaa/44561
+    title: "Improved constraints on global methane emissions and sinks using d13C-CH4"
+invariants:
+  - >-
+    the sink and source confounding is complete, not approximate: a pure source change reproduces a
+    sink-only trajectory to a reduced misfit of 0.00 against 5 Tg on the burden and 0.02 per mil on
+    d13C, so the two cheap measurements cannot separate them at any precision the task offers
+  - >-
+    the box model is validated by closure rather than fitted - the nominal inventory's
+    emission-weighted signature of -53.37 per mil plus the effective sink fractionation of 6.2
+    reproduces the observed atmospheric -47.2, and twenty years of integration drift 0 Tg and
+    +0.023 per mil
+  - >-
+    the two refusal regimes fail differently: the confounded one has an unmeasured dimension and the
+    overlap one an unresolvable one, so a searcher needs a reason to stop in each case rather than a
+    single rule
+  - >-
+    the d13C sign is the clean cut for the answerable tracer regime, because fossil at -44 and
+    biomass burning at -25 are the only sources heavier than the -53.37 emission-weighted mean
+  - >-
+    regime sizes are scaled to each sector's own inventory uncertainty rather than set in absolute
+    Tg, because a flat step is under one sigma for wetlands and over three for waste
+  - >-
+    both degenerate strategies score exactly zero and discovery_coverage tells them apart
+  - malformed reports score zero and never raise out of the evaluator
+known_shortcuts: >-
+  Seventeen degenerate and adversarial submissions - blanket abstention, never abstaining, claiming
+  every sector, claiming none, guessing without measuring, alternating abstention, None, {}, a
+  non-boolean abstain flag, a NaN confidence, an out-of-range confidence, an unknown sector name, a
+  non-boolean sector flag, a raising callable, overspending the budget, flooding the call count, an
+  unknown measurement name and an inventory request without a sector - all score 0.000000, and none
+  raises out of the evaluator. The malformed ones report valid = 0 and the well-formed-but-useless
+  ones report valid = 1.
+  The instructive one is the baseline rather than any probe. It reaches a mechanism score of 0.562
+  and recovers 8 of 8 on the regime where isotopes suffice, and still scores zero - and in the
+  sink-only regime it names waste in 5 cases of 8 and wetlands in 3, attributing a sink change to
+  sources every time. That is the trap the task is built around and it was produced by the
+  construction rather than placed in it.
+review:
+  status: pending_external
+  domain: pending_external_atmospheric_chemistry
+  evaluator_security: >-
+    The oracle's work is bounded by the contract: at most 32 measurement calls per case, each a
+    lookup on a precomputed twenty-year integration, with the cost budget enforced on every call and
+    unknown measurement names refused. The forward model runs once per case at construction.
+    Candidate code runs in the Bubblewrap sandbox over the standard trusted-driver boundary and the
+    report crosses it as data.
+provenance:
+  class: procedural
+  target_source: >-
+    Cases are generated from a fixed seed by verification/worlds.py, so the truth is procedural. The
+    scientific situation reproduced - an isotopic attribution challenged on source-signature
+    variability and on the sinks - and the atmospheric values the model must close against are cited
+    and recorded in references/anchors.json.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: low
+  rationale: >-
+    A model that knows the post-2007 methane debate in detail gains exactly the thing this task
+    wants it to have - the idea that a sink change and a source change look alike, and that
+    microbial signatures overlap - and still has to decide which of thirty-two specific cases are
+    which under a budget. The sector signatures are public and are handed to the searcher; nothing
+    scored can be recalled.
+lineage:
+  status: complete
+  builder_model_ids: ["claude-opus-5"]
+  builder_scaffolds: ["claude-code"]
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    None yet. Four measurements changed the world before any model saw it. The sink fractionation
+    was first set to the OH-only 3.9 per mil and the model drifted three per mil over twenty years,
+    so it was replaced by the effective total-sink value that closes the observed budget. The
+    tracers first reported the change in the mean ethane-to-methane ratio, whose denominator moves
+    with any source, so they responded to microbial changes almost as strongly as to fossil ones and
+    separated nothing; they now report the change in tracer emission. The answerable regime first
+    drew wetlands, which is microbial and which no purchasable tracer singles out, so a third of the
+    supposedly answerable cases were not. And the regime sizes were set in absolute Tg, which is
+    under one sigma for wetlands and over three for waste, leaving one member of the unresolvable
+    pair resolvable.
+  shortcut_discoverer: builder_red_team
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: claude-opus-5
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 3
+  oracle_disagreement_status: >-
+    the model closes against the observed atmospheric d13C and burden from its emission mix and
+    effective sink fractionation rather than being tuned to them; the limits of a global annual
+    five-sector box model are stated in Task.md and the task does not claim to be an inversion
+  independent_recomputation_status: >-
+    the budget closure, the confounding measurement, the per-regime tracer and inventory statistics,
+    the baseline, the reference and the 17-probe sweep are all reproducible from verification/
