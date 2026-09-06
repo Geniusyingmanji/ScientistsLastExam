@@ -94,6 +94,7 @@ CHINESE_NAMES = {
     "PopulationGenetics/DemographicSFS": "位点频率谱人口史反演",
     "ProteinEngineering/ProteinStabilityDesign": "蛋白稳定性批次设计",
     "QuantumDynamics/HamiltonianLearning": "哈密顿量学习",
+    "QuantumControl/ActiveNoiseSpectroscopy": "主动非高斯噪声谱辨识",
     "QuantumErrorCorrection/QuantumErrorDecoder": "表面码解码器",
     "RNAEngineering/RNAEnsembleDesign": "RNA 系综设计",
     "RNAEngineering/RNAInverseDesign": "RNA 约束反折叠",
@@ -325,6 +326,9 @@ CHINESE_BRIEFS = {
     "QuantumDynamics/HamiltonianLearning": (
         "从自旋链的少数可观测量时间演化里恢复哈密顿量参数",
         "参数恢复;误发现率与对称性不可辨识拒答分开报告"),
+    "QuantumControl/ActiveNoiseSpectroscopy": (
+        "在有限量子测量 shots 下选择 Ramsey、echo 与 CPMG 滤波序列,区分共享同一 Lorentzian 功率谱的高斯噪声与单随机电报源,恢复其切换率、方差和占据率",
+        "三参数机制恢复减不受支持宣称;密封控制外推、误发现率、拒答、尝试覆盖率与 shot 成本分列"),
     "QuantumErrorCorrection/QuantumErrorDecoder": (
         "为旋转表面码存储设计阈值以下的解码器",
         "相对最小权完美匹配的逻辑错误率对数下降;无上限"),

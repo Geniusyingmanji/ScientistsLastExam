@@ -105,6 +105,7 @@ tasks:
   MaterialsScience/QuinaryConvexHull: {form: discovery, kind: substance, note: quinary_hull_not_binary_xrd}
   # --- discovery / parameter inversion (SLE's remaining empty-looking cell) ---
   QuantumDynamics/HamiltonianLearning: {form: discovery, kind: parameter_inversion}
+  QuantumControl/ActiveNoiseSpectroscopy: {form: discovery, kind: parameter_inversion, note: matched_psd_non_gaussian_filter_function_inversion_not_hamiltonian_learning}
   ClimateScience/EnergyBalanceModel: {form: discovery, kind: parameter_inversion}
   AtmosphericScience/RadiativeTransferFit: {form: discovery, kind: parameter_inversion}
   MolecularDynamics/ForceFieldCalibration: {form: discovery, kind: parameter_inversion}

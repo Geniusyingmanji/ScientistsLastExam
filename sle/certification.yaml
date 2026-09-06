@@ -137,6 +137,21 @@ tasks:
     citation_ids:
       - doi:10.1103/PhysRevLett.112.190501
       - doi:10.1016/j.cpc.2012.11.019
+  QuantumControl/ActiveNoiseSpectroscopy:
+    status: candidate
+    reason: >-
+      active non-Gaussian dephasing-noise identification on a complete eight-control filter-function
+      panel, with Gaussian OU and random-telegraph worlds sharing exactly the same Lorentzian PSD;
+      exact two-state tilted-Markov propagation, cumulative binomial shot accounting, symmetric
+      zero-phase telegraph positives, free-Gaussian and multi-fluctuator refusal, three continuous
+      mechanism parameters and sealed-control prediction are checked separately. The truth-blind
+      task-local reference reaches about 0.94 development and 0.88 heldout on the construction
+      worktree, but no frontier-model calibration, server-held confirmation, independent oracle
+      recomputation or external quantum-noise review has been completed.
+    citation_ids:
+      - doi:10.1038/s41467-019-11699-4
+      - arxiv:1903.01043
+      - doi:10.1103/PhysRevLett.116.150503
   Exoplanets/RadialVelocityPlanets:
     status: candidate
     reason: >-
