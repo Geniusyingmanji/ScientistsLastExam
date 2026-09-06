@@ -1,0 +1,116 @@
+schema_version: 2
+scientific_question: >-
+  Design three- and four-use dephrasure-channel input states to improve coherent information per
+  channel use over a frozen pointwise envelope of reconstructed public code-state witnesses.
+artifact: >-
+  Real and imaginary finite nested lists define a nonzero bounded complex factor X; the physical
+  density matrix is X X-dagger divided by its trace, with dimension and rank bounded by 2^n.
+oracle:
+  model: >-
+    von Neumann output-minus-complement entropy for the tensor dephrasure channel, evaluated by
+    conditioning on erasure subsets and canceling common flag entropy; an independent tensor
+    Kraus/Gram-environment implementation audits the calculation
+  feasibility: >-
+    exact field set, rectangular shapes, ordinary finite numeric entries, dimension, rank and
+    coefficient magnitude are validated before linear algebra; X is rescaled before multiplication
+    and never repaired by projection from an arbitrary submitted density matrix
+  deterministic: true
+normalization:
+  baseline: the pure product input has zero coherent information and zero score
+  reference: >-
+    four recomputed n=3/4 witness-envelope rates at (p,q)=(.08,.4) and (.32,.1), selected from
+    published 2020/2025 witnesses, optimized weighted repetitions and finite-library product closure;
+    references/verified_reference.json records the audit, not an exhaustive current global record
+  score: >-
+    mean of max(0,(R-L)/(B-L)) across all four worlds, retained above one, with R in bits/use,
+    L the optimized single-letter rate and B the witness envelope; a separate 1e-9 bits/use margin
+    qualifies reference excess and is an engineering tolerance, not an interval certificate
+citations:
+  - id: arxiv:1806.08327v3
+    title: "Leditzky, Leung and Smith, dephrasure channel and coherent-information superadditivity, 2018"
+  - id: arxiv:1806.08781v2
+    title: "Bausch and Leditzky, neural-network code-state witnesses, Section 4.2 and Tables 2 and 10"
+  - id: arxiv:2508.09978v1
+    title: "Bhalerao and Leditzky, nonorthogonal repetition constructions, Section 5.2"
+  - id: arxiv:2509.15106v2
+    title: "Zhu et al., Riemannian code-state optimization, Section 4.4 and Tables 6 and 9"
+invariants:
+  - >-
+    pure inputs have zero coherent information; erasure/dephasing limits, q=1 and p=0,q=.5
+    controls agree with their analytic identities, and tensor-product coherent information is additive
+  - >-
+    random rank-one and mixed states agree between block and full Kraus/Gram implementations;
+    the initial published-witness audit's largest discrepancy is 6.697279449768834e-15 bits/use
+  - >-
+    all eight hash-pinned MAT witnesses reconstruct unitary code states whose rates agree with
+    independent entropy calculations and stored costs; trusted resource size and shape are bounded
+  - >-
+    invalid, throwing and input-mutating candidates preserve all four worlds as finite zero-score
+    failures; the pure baseline and public reference are deterministic under repeat development checks
+known_shortcuts: >-
+  Reconstructing public code-state data reaches score one. Weighted repetition and all tensor
+  products of the finite lower-n witness library already enter the pointwise envelope; this avoids
+  claiming the obvious product shortcut as progress. Published n=9 nonorthogonal parameters were
+  transferred but the small-n family was not globally optimized. Exploratory testing has occurred;
+  fresh model-produced objects and optimizer traces await a separate report, not formal SLE credit.
+review:
+  status: pending_external
+  domain: pending_external_quantum_information_and_numerical_optimization
+  evaluator_security: >-
+    The frontier wrapper delegates only to the trusted SLE CLI and Bubblewrap JSON-RPC worker,
+    never an in-process candidate import. Candidate shape, coefficient and reference-file checks
+    bound oracle work; the outer runner owns time, memory and output transport limits. Full
+    sandboxed candidate evaluation and formal calibration are blocked on H200 mount permissions.
+provenance:
+  class: public_data_replay
+  target_source: >-
+    Eight MIT-licensed MAT witnesses from Chengkai-Zhu/qcapacity-rieopt immutable commit
+    8af23430a130a66dbfe888dcdbe87894b0cf265a were retrieved on 2026-09-06 with frozen SHA-256
+    checks; six 2020 witnesses and 2025 nonorthogonal parameters are factual transcriptions from
+    the cited primary sources. The upstream license is included. references/README.md records
+    reconstruction, numeric precision and the unresolved printed n=2 NN discrepancy.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: public_witnesses_recomputed_2026-09-06_external_review_pending
+novelty_risk:
+  level: high
+  rationale: >-
+    Public witness retrieval cheaply attains the anchor and the finite library is not exhaustive.
+    Unlike QuantumErrorDecoder the artifact is an input state, not a syndrome decoder; unlike
+    MutuallyUnbiasedBases6 it optimizes channel coherent information, not basis distances. Numeric
+    excess does not establish global optimality, asymptotic capacity, experimental utility or novelty.
+lineage:
+  status: unknown
+  builder_model_ids: [unknown_inherited_codex_model]
+  builder_scaffolds: [Codex]
+  collaborator_model_ids: []
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    Construction and review added independent Kraus recomputation, scale-stable factor validation,
+    immutable MAT hashes, a pointwise witness envelope with product closure, and an explicit
+    roundoff margin. The printed n=2 NN disagreement was retained without repair. Core-builder
+    model IDs were inherited and not explicitly recorded by the controller. Exploratory probes
+    await a separate report; no formal SLE calibration run exists, and full-program calibration
+    is blocked on H200 mount permissions.
+  shortcut_discoverer: public_witness_reconstruction_and_exploratory_checks_pending_separate_report
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: inherited_codex_builder_model_id_not_recorded_by_controller
+  reviewer_domain: independent_codex_review_per_controller_external_domain_review_pending
+  expert_hours: null
+  red_team_rounds: null
+  oracle_disagreement_status: >-
+    both numerical oracles agree on all reconstructed states; one printed 2020 n=2 NN scalar
+    disagrees with its transcribed amplitudes and is disclosed and excluded as a scalar anchor
+  independent_recomputation_status: >-
+    tests/test_dephrasure_code_design.py covers channel limits, random-state dual-oracle agreement,
+    repetition formulas, product additivity, reference reconstruction and hostile artifact bounds;
+    references/verified_reference.json stores witness-by-witness rates and numerical discrepancies

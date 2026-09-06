@@ -70,6 +70,8 @@ tasks:
   DiscreteGeometry/SpherePackingCertificate: {form: optimization, analogue: certificate_bound, note: exact_rational_Cohn_Elkies_bound_not_a_packing_construction}
   QuantumFoundations/BellBoundCertificate: {form: optimization, analogue: certificate_bound, note: exact_rational_SOS_bound_on_a_Bell_functional_not_a_construction}
   Mathematics/ChowlaCosineCertificate: {form: optimization, analogue: certificate_bound, note: exact_rational_Laurent_lower_bound_for_a_constructed_cosine_set_not_asymptotic_Chowla_progress}
+  Mathematics/ShannonCapacityConstruction: {form: optimization, analogue: combinatorial, note: fixed_C7_fifth_strong_power_independent_set_not_asymptotic_Shannon_capacity_or_binary_Hamming_code}
+  QuantumFoundations/DephrasureCodeDesign: {form: optimization, analogue: engineering_design, note: finite_block_channel_input_state_not_decoder_or_asymptotic_quantum_capacity}
   QuantumFoundations/MutuallyUnbiasedBases6: {form: optimization, analogue: engineering_design, note: approximate_measurement_basis_design_in_a_finite_Qi_ray_family_not_exact_MUB_existence}
   Mathematics/NonlinearCodeRecords: {form: optimization, analogue: combinatorial}
   Algorithm/MatrixMultiplicationRank: {form: optimization, analogue: combinatorial}

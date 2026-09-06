@@ -1,0 +1,104 @@
+schema_version: 2
+scientific_question: >-
+  Construct a large independent set in the fixed fifth strong power of the seven-cycle; this
+  finite optimization does not determine the full Shannon capacity of C7.
+artifact: >-
+  Exactly one codewords field containing 1 to 512 distinct length-five lists of native integers
+  in 0..6, accepted only when every pair has a coordinate of circular distance greater than one.
+oracle:
+  model: exact integer circular distances on every distinct pair in the submitted matrix
+  feasibility: >-
+    full schema, row count, native integer types, range, distinctness and pairwise independence
+    are checked before any size receives credit; there is no rounding, repair or tolerance
+  deterministic: true
+normalization:
+  baseline: the valid product code {0,2,4}^5 has 243 words and score zero
+  reference: >-
+    the exact 367-word Appendix witness in Polak and Schrijver arXiv:1808.07438v2; the trusted
+    loader verifies its content hash and independence, and the standalone replay reproduces it
+  score: >-
+    max(0,(M-243)/(367-243)), retained above one; beyond_reference only means a valid artifact
+    larger than this historical fifth-power fixture, not a current global record
+citations:
+  - id: arxiv:1808.07438v2
+    title: "Polak and Schrijver, New lower bound on the Shannon capacity of C7 from circular graphs"
+  - id: arxiv:2607.21517v2
+    title: "Itty, Rosin, Carstensen and Reichman, higher-power construction context, Section 3.1"
+  - id: arxiv:2607.27869v1
+    title: "Gao, higher-power recursive construction context, Sections 4-5"
+invariants:
+  - >-
+    all 67,161 pairs of the 367-word fixture pass the production checker, while an independent
+    neighbor-enumeration algorithm checks all 88,814 nonzero-offset probes without conflicts
+  - >-
+    the fixture SHA-256 is 3f24988518568a090a7023079439281738c245dfe73171d7981cf589b02d77f3;
+    literal replay remains identical when copied outside the task directory
+  - >-
+    C5 squared controls and circular wraparound distinguish independent words from adjacent
+    words; valid sub-baseline artifacts remain valid with zero score
+  - >-
+    malformed and throwing candidates receive finite zero-score metrics; public-input mutation
+    cannot change fixed parameters, and valid is a numeric float accepted by the secure metric gate
+known_shortcuts: >-
+  The public Appendix and standalone literal replay cheaply reach score one. The product baseline
+  reaches 243 without search. Public retrieval is a contamination route, so neither score one nor
+  the resource label establishes frontier difficulty. Exploratory testing has occurred; fresh
+  model-produced objects are being checked and will be reported separately, not as formal SLE runs.
+review:
+  status: pending_external
+  domain: pending_external_graph_theory_and_information_theory
+  evaluator_security: >-
+    The frontier wrapper delegates only to the trusted SLE CLI and Bubblewrap JSON-RPC worker;
+    it never imports candidate code into the oracle process. Core artifact checks and secure
+    metric validation have development tests. Full candidate execution and formal calibration
+    remain unverified because the H200 sandbox mount permissions currently block that path.
+provenance:
+  class: known_answer
+  target_source: >-
+    The 367 literal words were retrieved on 2026-09-06 from the primary-source Appendix, compared
+    row-for-row, and stored as factual construction data with a content hash; references/known_best.md
+    records provenance and later higher-power context. No third-party executable is required.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: primary_source_witness_checked_2026-09-06_external_review_pending
+novelty_risk:
+  level: high
+  rationale: >-
+    A fixed public witness is cheaply reproducible. Unlike NonlinearCodeRecords, acceptance uses
+    strong-product confusability rather than binary Hamming distance; unlike CapSet it is not an
+    additive-progression constraint. Larger-power capacity advances do not change this fixed n=5
+    task. No current-record, hard-verified, or research-novelty claim is made.
+lineage:
+  status: unknown
+  builder_model_ids: [unknown_inherited_codex_model]
+  builder_scaffolds: [Codex]
+  collaborator_model_ids: []
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    Construction and review added a primary-source literal fixture, independent neighbor checks,
+    isolated replay and hostile-input controls. Integration review made valid numeric and removed
+    candidate-controlled exception names from failure metrics. The controller did not explicitly
+    record inherited core-builder model IDs. Exploratory probes await a separate report; no formal
+    SLE calibration run exists, and full-program calibration is blocked on H200 mount permissions.
+  shortcut_discoverer: public_construction_replay_and_exploratory_checks_pending_separate_report
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: inherited_codex_builder_model_id_not_recorded_by_controller
+  reviewer_domain: independent_codex_review_per_controller_external_domain_review_pending
+  expert_hours: null
+  red_team_rounds: null
+  oracle_disagreement_status: >-
+    pairwise circular-distance and independent neighbor-enumeration checks agree on the historical
+    fixture and small graph controls; this is finite artifact validation, not an optimality proof
+  independent_recomputation_status: >-
+    tests/test_shannon_capacity_construction.py checks the fixture hash, independent graph predicate,
+    baseline, standalone replay, monotone score, hostile inputs and secure metric compatibility;
+    core development checks are separate from sandboxed candidate evaluation and formal calibration

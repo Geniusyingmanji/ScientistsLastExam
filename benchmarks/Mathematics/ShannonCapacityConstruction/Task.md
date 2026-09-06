@@ -1,4 +1,4 @@
-# ShannonCapacityConstruction
+# ShannonCapacityConstruction — exact fixed-fifth-power C7 independent-set construction
 
 Construct a large independent set in the **fixed fifth strong power of the
 7-cycle**, represented by a list of length-five words over `{0,1,2,3,4,5,6}`.

@@ -1,4 +1,4 @@
-# DephrasureCodeDesign
+# DephrasureCodeDesign — finite-block dephrasure input-state design
 
 Find an input quantum state with high coherent information for three or four
 independent uses of a dephrasure channel. This is finite-block state design: a

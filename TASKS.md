@@ -4,18 +4,18 @@
 
 | | |
 |---|---:|
-| 任务包 | 78 |
-| optimization | 42 |
+| 任务包 | 80 |
+| optimization | 44 |
 | discovery | 36 |
 | certified | 5 |
-| candidate | 73 |
-| 学科 | 7(Biology 7,Chemistry 13,ComputerScience 6,EarthScience 6,Engineering 12,Mathematics 19,Physics 15) |
+| candidate | 75 |
+| 学科 | 7(Biology 7,Chemistry 13,ComputerScience 6,EarthScience 6,Engineering 12,Mathematics 20,Physics 16) |
 
 认证描述的是证据质量,不是难度。标 on-ramp 的任务首个前沿模型提案已够到参考解,不用于配对 Δ 测量。
 
-## Optimization(42)
+## Optimization(44)
 
-### 工程设计(engineering_design) — 17
+### 工程设计(engineering_design) — 18
 
 | 任务 | 学科 | 领域 | 打分 | oracle | 认证 | 说明 | 中文题意 | 中文评估方法 |
 |---|---|---|---|---|---|---|---|---|
@@ -32,12 +32,13 @@
 | [`RoomImpulseResponse`](benchmarks/Engineering/RoomImpulseResponse/)<br>房间声学处理设计 | Engineering | Acoustics | uncapped | physical_sim | candidate | robust room-acoustic treatment design | 布置声源、吸声与受点,让语音房间同时兼顾清晰度、混响时间与声场均匀度 | 清晰度/混响/均匀度综合效用;一阶反射代理与镜像源长程计算排序不同,含安装误差与老化偏移 |
 | [`TrussWeightMinimization`](benchmarks/Engineering/TrussWeightMinimization/)<br>桁架减重 | Engineering | StructuralEngineering | uncapped | analytical | candidate | general truss sizing under physical shifts | 给出跨结构通用的桁架截面尺寸策略,在应力、位移与欧拉屈曲约束下减重 | 标称减重;密封拓扑迁移与载荷/材料/制造稳健性分列,无上限 |
 | [`CalorimeterDesign`](benchmarks/Physics/CalorimeterDesign/)<br>量能器设计 | Physics | ParticlePhysics | uncapped | analytical_reduced_order_physics | candidate | graded sampling-calorimeter design curves | 设计分层取样量能器,使能量分辨、线性与簇射包容在多档成本约束下同时改善 | 多能点效用;留出探测器迁移与最差制造偏移分列,无上限 |
+| [`DephrasureCodeDesign`](benchmarks/Physics/DephrasureCodeDesign/)<br>退相位擦除信道有限块码态设计 | Physics | QuantumFoundations | uncapped | physical_sim | candidate | finite-block dephrasure input-state design | 为退相位擦除信道的三次或四次使用设计输入密度矩阵因子,提高每次使用的相干信息 | 四例相干信息相对单字母率和已重算公开见证包络的进度均值,不截断;另报超过包络 1e-9 bits/use 的量,不宣称全局纪录或渐近容量 |
 | [`DiffractionGratingDesign`](benchmarks/Physics/DiffractionGratingDesign/)<br>衍射光栅设计 | Physics | Optics | uncapped | fourier_modal_rcwa | candidate | polarization-tolerant multilayer relief design | 设计五层一维二元介质浮雕,把透射光导入 +1 衍射级,且对偏振与角度容差 | 开发集目标级效率;偏振/角度/波长与工艺偏移稳健性分列,无上限 |
 | [`MultilayerThinFilm`](benchmarks/Physics/MultilayerThinFilm/)<br>多层减反射膜 | Physics | Photonics | clipped | physical_sim | certified | design a broadband antireflection coating | 设计可见光全谱段的多层宽带减反射膜 | 宽带减反射质量;物理下界为零平均反射 |
 | [`MutuallyUnbiasedBases6`](benchmarks/Physics/MutuallyUnbiasedBases6/)<br>六维近似互无偏基 | Physics | QuantumFoundations | uncapped | analytical | candidate | optimize four approximate measurement bases exactly | 在六维复空间构造四组尽量互无偏的测量基,用有界 Gaussian 整数射线表示并精确验证正交性与跃迁概率 | 精确 ASD 对固定 Raynal 有理重构归一化且不截断;公式可廉价达到 1,真正超越另由严谨代数区间旗标判定,本表示不覆盖精确 MUB 存在性 |
 | [`SuperconductorTcRecord`](benchmarks/Physics/SuperconductorTcRecord/)<br>超导临界温度纪录搜索 | Physics | Superconductivity | uncapped | allen_dynes_formula_solved_to_real_anchors | candidate | beat the published record by computing where Allen-Dynes says to look | 在真实设备压力上限下,用 Allen-Dynes 公式在五个真实超导体系间搜索已确认临界温度最高的(体系,压力)组合,并避开一个从未被实现的理论预测(隐含电子-声子耦合超过物理合理上限) | 真实Tc除以已发表记录250K的直接比值;无上限,可超过已发表记录 |
 
-### 开放组合纪录(combinatorial,无上限) — 17
+### 开放组合纪录(combinatorial,无上限) — 18
 
 | 任务 | 学科 | 领域 | 打分 | oracle | 认证 | 说明 | 中文题意 | 中文评估方法 |
 |---|---|---|---|---|---|---|---|---|
@@ -54,6 +55,7 @@
 | [`NonlinearCodeRecords`](benchmarks/Mathematics/NonlinearCodeRecords/)<br>非线性码规模纪录 | Mathematics | Mathematics | uncapped | analytical | candidate | build a bigger binary code than a linear one can be | 在四个 A(n,d) 未闭合的参数上构造尽可能大的二元码;已发表纪录全部由非线性码持有,线性构造够不到 | 从平凡分块重复构造到已发表纪录的平均进度,无上限;验证只是逐对汉明距离计数,与构造方法无关 |
 | [`RamseyLowerBound`](benchmarks/Mathematics/RamseyLowerBound/)<br>Ramsey 下界染色 | Mathematics | Mathematics | uncapped | analytical | candidate | construct larger (s,t)-Ramsey colorings | 构造更大的 (s,t)-Ramsey 染色以提高下界 | 对最好已知染色阶数的平均进度;无上限 |
 | [`SchurPartition`](benchmarks/Mathematics/SchurPartition/)<br>Schur 无和分拆 | Mathematics | Mathematics | uncapped | analytical | candidate | build a longer sum-free k-partition than the published record | 为给定的分组数 k 构造尽可能长的无和分拆(每组内不含 a+b=c,允许 a=b) | k=4 对照证明最优的 Schur 数(硬上限,已披露);k=6、k=7 对照尚未证明最优的最好已知下界(真实无上限空间) |
+| [`ShannonCapacityConstruction`](benchmarks/Mathematics/ShannonCapacityConstruction/)<br>七环五次强积独立集构造 | Mathematics | Mathematics | uncapped | analytical | candidate | exact fixed-fifth-power C7 independent-set construction | 在七环的固定五次强积中构造更大的独立集,提交七元字母表上的五位码字;不求完整 Shannon 容量 | 逐对精确验证环距离,按码字数从 243 词乘积基线到 367 词历史构造归一化且不截断;公开重放得 1,超出仅表示超过该见证 |
 | [`Superpermutation`](benchmarks/Mathematics/Superpermutation/)<br>超排列最短串 | Mathematics | Mathematics | uncapped | analytical | candidate | shorter strings that contain every permutation | 构造更短的超排列字符串,使其包含全部排列作为连续子串 | 对最短已知长度的平均进度;无上限 |
 | [`VanDerWaerdenColoring`](benchmarks/Mathematics/VanDerWaerdenColoring/)<br>van der Waerden 无进染色 | Mathematics | Mathematics | uncapped | analytical | candidate | build a longer AP-free coloring than the published witness | 为给定的颜色数与等差数列长度构造尽可能长的、不含单色等差数列的染色 | 两组对照证明最优的 van der Waerden 数(硬上限,已披露)、一组对照尚未证明最优的最好已知下界(真实无上限空间) |
 | [`ZarankiewiczMatrix`](benchmarks/Mathematics/ZarankiewiczMatrix/)<br>Zarankiewicz 极值矩阵 | Mathematics | Mathematics | uncapped | analytical | candidate | build a denser K3,3-free 0/1 matrix than the published record | 在三组给定的 (m,n) 规模上构造不含 3x3 全一子矩阵的更密 0/1 矩阵——2026 年 LLM 进化搜索(OpenEvolve,本仓库自带的搜索后端之一)刚刷新过的极值图论问题 | 对最新发表下界(z(m,n;3,3) 的已发表值)的平均进度;无上限,且这些是尚未被上界证明封顶的下界纪录 |

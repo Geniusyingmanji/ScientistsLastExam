@@ -1,0 +1,17 @@
+domain: QuantumFoundations
+task: DephrasureCodeDesign
+scientific_role: optimization
+difficulty: hard
+tier: T2
+oracle_type: physical_sim
+score_mode: uncapped
+gpu_required: false
+eval_time_seconds: 15
+science_metric: mean_finite_block_coherent_information_gain_over_single_letter_rate
+reference_baseline: pure product input with zero coherent information
+reference_sota: >-
+  recomputed pointwise 2020/2025 public witness envelope with lower-n product closure;
+  not an exhaustive current global record or an asymptotic quantum-capacity value
+citation: >-
+  Leditzky-Leung-Smith arXiv:1806.08327v3; Bausch-Leditzky arXiv:1806.08781v2;
+  Bhalerao-Leditzky arXiv:2508.09978v1; Zhu et al. arXiv:2509.15106v2
