@@ -37,6 +37,17 @@ def damped_mixing_length(kappa, a_plus):
     return closure
 
 
+def _span(rng, regime):
+    """Three sampled Reynolds numbers. The top one is what decides identifiability."""
+    low = 180.0
+    if regime == "recoverable":
+        top = float(rng.uniform(700.0, 4000.0))
+    else:
+        top = float(rng.uniform(230.0, 900.0))
+    middle = float(np.exp(0.5 * (np.log(low) + np.log(top))))
+    return (low, middle, top)
+
+
 def build(seed, count):
     rng = np.random.default_rng(seed)
     cases = []
@@ -49,7 +60,13 @@ def build(seed, count):
             "regime": regime,
             "kappa": kappa,
             "a_plus": a_plus,
-            "sampled_re": WIDE_RE if regime == "recoverable" else NARROW_RE,
+            # The Reynolds span is drawn on a continuum rather than taken from two fixed sets.
+            # With two fixed spans the three regimes separate perfectly - measured reduced
+            # chi-square 0.23-0.51 against 0.71-2.30, and kappa width 0.025-0.045 against
+            # 0.050-0.110 - and a pair of thresholds scores one. Real cases are not sorted for you,
+            # so the top Reynolds number is drawn from a range that makes the two identifiable
+            # regimes overlap and forces a judgement per case instead of a rule.
+            "sampled_re": _span(rng, regime),
             "noise": float(rng.uniform(0.008, 0.014)),
             # The two systematics a profile measurement actually carries: where the wall is, and
             # how the friction velocity was calibrated. Both are constant across a profile.

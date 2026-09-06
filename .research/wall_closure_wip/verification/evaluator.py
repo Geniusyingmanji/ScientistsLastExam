@@ -53,7 +53,7 @@ BINS = 24
 # A formula counts as recovering the law when it reproduces the held-out profiles to within this
 # fraction of the centreline velocity - about four times the observation noise, so the bar is
 # "the same law", not "the same fit".
-HELDOUT_TOLERANCE = 0.04
+HELDOUT_TOLERANCE = 0.06
 
 
 class Windtunnel:

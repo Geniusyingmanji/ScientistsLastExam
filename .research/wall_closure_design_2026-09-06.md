@@ -126,9 +126,43 @@ clears it at 0.91 with a factor of 1.4 in hand and the narrow span misses it at 
 factor, so both verdicts have margin instead of one of them having none. Six per cent is still a
 tight bar for "you found the same law" — it is four to five times the observation noise.
 
-The design is settled and calibrated. What remains is the reference: a joint fit of `(kappa, A+)`
-with the two nuisances per profile, plus an abstention rule driven by the width of the `kappa`
-interval rather than by residual size — which is the distinction the whole task turns on.
+### Measured: the two refusal reasons are orthogonal, and the trap is real
+
+With the nuisances projected out, per regime across the 24 development cases:
+
+| regime | reduced chi-square | kappa interval width |
+|---|---|---|
+| `recoverable` | 0.23 – 0.51 | **0.025 – 0.045** |
+| `degenerate_parameters` | **0.11 – 0.20** | 0.050 – 0.105 |
+| `inconsistent` | **0.71 – 2.30** | 0.050 – 0.110 |
+
+Two things to read off. The axes are orthogonal - width separates `recoverable` from the rest, the
+residual separates `inconsistent` from the rest - so the two refusal reasons really are different
+tests and a searcher needs both. And `degenerate_parameters` has the *lowest* residuals of the
+three: its fits look better than the answerable ones. That is the trap, and it is not put there by
+hand; it is what happens when a whole interval of closures explains the data.
+
+### Measured: two fixed spans make it too easy, so the span is a continuum
+
+With `recoverable` always on 180/950/4000 and the others always on 180/200/220, the table above has
+clean gaps on both axes and a pair of thresholds scores 1.0. Real cases are not sorted for you, so
+the top Reynolds number is now drawn from overlapping ranges - 700-4000 for the answerable regime
+and 230-900 for the others - and the same thresholds no longer separate them cleanly.
+
+### Where it stands
+
+| submission | combined | mechanism | FDR | refusal | abstentions by regime |
+|---|---|---|---|---|---|
+| baseline | **0.000000** | 1.000 | 0.333 | 0.000 | none anywhere |
+| reference | **0.710938** | 0.875 | 0.000 | 0.812 | degenerate 5/8, inconsistent 8/8, recoverable 1/8 |
+
+The baseline fits the law perfectly on every answerable case and scores zero, because it never
+abstains. The reference misses three of eight degenerate cases and abstains once when it should not
+have - the headroom is real and it is in the regime the literature is about.
+
+The design is settled, calibrated and measured. What remains is packaging: the task card, the statement, the anchors, the
+frontier_eval set, registration, the invariant tests, the adversarial probe sweep and the g450
+sandbox gate. The science is done; none of that changes a number.
 
 Options not yet tried, in order of preference:
 
