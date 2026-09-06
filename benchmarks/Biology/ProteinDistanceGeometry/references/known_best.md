@@ -15,8 +15,15 @@ uses 120 evaluations with otherwise identical public inputs.
 
 The legal `solution.py` baseline scores **0.000000**, valid=1. The input-only
 comparison reference is `references/reference.py`.
-Run it with `python -m sle eval --allow-uncertified --task <logical ID from
-frontier_eval/metadata.yaml> --candidate <reference path> --timeout 300`.
+Reproduce using:
+
+```sh
+python -m sle eval --allow-uncertified --task StructuralBiology/ProteinDistanceGeometry \
+  --candidate benchmarks/Biology/ProteinDistanceGeometry/references/reference.py --timeout 300
+```
+
+Baseline and reference were validated through the Linux candidate sandbox on
+implementation commit `3b62c02`; baseline score was exactly zero and both were valid.
 
 | Solver | Development normalized score | heldout_score | Valid |
 | --- | ---: | ---: | ---: |
@@ -26,7 +33,7 @@ frontier_eval/metadata.yaml> --candidate <reference path> --timeout 300`.
 The discovery held-out column is raw scientific quality, not the normalized
 development scale. Optimization held-out scores use the same normalization as
 development. All reference algorithms are unchanged by this calibration.
-The superseded reference=1 measurements do not describe this revision.
+Pre-calibration score measurements do not describe this revision.
 
 ## Designed runtime budget
 
@@ -36,7 +43,9 @@ task card and the normal `sle eval --timeout 300` command. This is the total
 candidate wall-clock deadline across all four worlds; repository worker CPU
 limits also apply. The outer subprocess allowance adds 120 seconds for trusted
 work and cleanup. On this Linux x86_64 host, direct reference evaluation took
-23.95 seconds and the 120-evaluation probe took 67.15 seconds. Hardware and BLAS
+23.95 seconds; the formal sandbox reference took 32.63 seconds, and the
+120-evaluation probe took 67.15 seconds. The default task-local wrapper also
+returned valid=1 and score 0.68917271. Hardware and BLAS
 settings affect runtime; these measurements are not a portable speed guarantee.
 The evaluator no longer runs a second reference optimization to construct the
 anchor, avoiding unnecessary overhead.

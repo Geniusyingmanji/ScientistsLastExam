@@ -14,8 +14,15 @@ claimed global optima; stronger schedules can tie at the clipped endpoint.
 
 The legal `solution.py` baseline scores **0.000000**, valid=1. The input-only
 comparison reference is `verification/reference_design.py`.
-Run it with `python -m sle eval --allow-uncertified --task <logical ID from
-frontier_eval/metadata.yaml> --candidate <reference path> --timeout 300`.
+Reproduce using:
+
+```sh
+python -m sle eval --allow-uncertified --task Bioprocess/FedBatchBioprocessDesign \
+  --candidate benchmarks/Biology/FedBatchBioprocessDesign/verification/reference_design.py --timeout 300
+```
+
+Baseline and reference were validated through the Linux candidate sandbox on
+implementation commit `3b62c02`; baseline score was exactly zero and both were valid.
 
 | Solver | Development normalized score | heldout_robust_score | Valid |
 | --- | ---: | ---: | ---: |
@@ -25,7 +32,7 @@ frontier_eval/metadata.yaml> --candidate <reference path> --timeout 300`.
 The discovery held-out column is raw scientific quality, not the normalized
 development scale. Optimization held-out scores use the same normalization as
 development. All reference algorithms are unchanged by this calibration.
-The superseded reference=1 measurements do not describe this revision.
+Pre-calibration score measurements do not describe this revision.
 
 ## Limits and provenance
 
