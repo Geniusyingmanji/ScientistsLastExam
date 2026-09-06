@@ -1,0 +1,4 @@
+1) Only edit solution.py and keep design_ice_observation_network(problem).
+2) Return a mapping with plans containing 4-16 unique index lists; all problem and catalog keys are documented in Task.md.
+3) Every plan must contain 3-10 unique valid catalog indices and remain within budget_units.
+4) Deterministic Python/NumPy/SciPy/stdlib only; no network/process creation and no reading verification/ or frontier_eval/.

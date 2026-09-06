@@ -1,0 +1,96 @@
+schema_version: 2
+scientific_question: Can budgeted diffraction windows quantify a mineral mixture,
+  ignore an amorphous hump, and refuse an unknown crystalline phase?
+artifact: A claimed mineral set, crystalline weight fractions, optional abstention
+  and a confidence scalar.
+oracle:
+  model: twelve-mineral public peak library with Gaussian peaks and width jitter,
+    seeded Dirichlet mixtures of two to four phases, amorphous humps at 20-35
+    percent, and unknown-phase worlds with five sharp out-of-library peaks
+  feasibility: library names only, unique nonempty sets, fractions summing to one,
+    charged scans within a four-unit budget
+  deterministic: true
+  external_tooling: none beyond NumPy/SciPy
+difficulty_ladder:
+  default_level: 1
+  levels:
+    1: the shipped noise, library and mixture structure
+normalization:
+  baseline: two fixed minerals with uniform fractions
+  reference: weighted nonnegative least squares over merged windows with a
+    local-contrast sharpness refusal gate
+  score: 0.7 set F1 plus 0.3 log-ratio fraction score on supported worlds,
+    normalized above always abstaining
+citations:
+- id: doi:10.1107/S0021889869006558
+  title: A profile refinement method for nuclear and magnetic structures
+invariants:
+- claimed fractions are relative to the crystalline portion
+- the amorphous hump is broad and must not trigger refusal
+- unknown-phase peaks are sharp and unabsorbable by any library fit
+- a full abstention scores exactly zero after normalization
+known_shortcuts: Fixed two-mineral claims score zero; the reference reaches 0.396/0.450 with zero false discoveries and full refusal, leaving fraction accuracy as the documented headroom. Formal clean Linux calibration and independent review remain pending.
+licensing:
+  task_package: repository_license_not_declared
+  external_assets: none
+  note: All peak libraries are synthetic; cited publications are not redistributed.
+contamination:
+  status: cannot_be_ruled_out
+  rationale: The mineral names and peak positions echo real powder files; the
+    mixtures, humps and unknown phases are procedural.
+review:
+  domain: pending_external_mineralogy
+  evaluator_security: targeted_local_regressions_added_clean_linux_sandbox_replay_pending
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic diffraction worlds with
+    development and held-out mixtures, humps and unknown phases.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Quantitative phase analysis is a mature field; the hump-versus-unknown
+    refusal axis and budgeted slow windows are original to this package.
+lineage:
+  status: complete
+  builder_model_ids:
+  - glm-5.3
+  builder_scaffolds:
+  - repository-native-earth-science-task-pattern
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: 2026-09-05 local build caught absolute-noise semantics (noise now scales with peak intensity), library peaks outside the observable range, a matched filter that cross-contaminated overlapping peaks (replaced by nonnegative least squares), and a sharpness gate that fired on legitimate residuals; each was fixed and pinned by tests.
+  shortcut_discoverer: initial_internal_red_team
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: initial_internal
+  author_domain: AI-assisted benchmark engineering
+  reviewer_domain: pending_external_mineralogy
+  expert_hours: null
+  red_team_rounds: 3
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: standalone_public_model_references_pending
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+difficulty_assessment:
+  status: unverified_candidate
+  requirement: standard-method and low-dimensional shortcut sweeps, capability ablations
+    and clean frontier-model calibration before certification
+  remaining_risk: The reference is deliberately mid-strength on fraction accuracy;
+    full-pattern refinement would close much of the gap, so a frontier draw must
+    confirm the mixture axis is not trivially saturable.
+
+frontier_eng_overlap_review:
+  date: '2026-09-06'
+  classification: 无
+  nearest: predict_modality; phase_fourier_pattern_holography
+  distinction: Paid diffraction windows identify crystalline phases and weights, separating
+    amorphous background and unknown phases; FE predicts molecular modalities or synthesizes
+    a holographic phase mask, rather than identifying a mineral mixture.
+  evidence: .research/pr9_frontier_eng_overlap_2026-09-06.md
+  status: source_count_discrepancy_pending_maintainer_confirmation

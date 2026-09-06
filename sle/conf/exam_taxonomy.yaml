@@ -33,6 +33,12 @@ discovery_kind:
   parameter_inversion: recover numbers of a form that is already named
 
 tasks:
+  WavePropagation/ActiveFullWaveformInversion: {form: discovery, kind: parameter_inversion}
+  Paleoclimate/ChronologyAssimilation: {form: discovery, kind: parameter_inversion}
+  Geophysics/FocalMechanismStressInversion: {form: discovery, kind: structure, note: stress_tensor_behind_nodal_plane_ambiguity}
+  Hydrology/GroundwaterRemediationDesign: {form: optimization, analogue: engineering_design}
+  Cryosphere/IceObservationNetworkDesign: {form: optimization, analogue: engineering_design}
+  Mineralogy/MineralMixtureXRD: {form: discovery, kind: substance, note: hump_vs_unknown_refusal_not_phase_diagram}
   # --- optimization / frontier-eng ------------------------------------------
   Thermodynamics/HeatExchangerDesign: {form: optimization, analogue: engineering_design}
   StructuralEngineering/TrussWeightMinimization: {form: optimization, analogue: engineering_design}

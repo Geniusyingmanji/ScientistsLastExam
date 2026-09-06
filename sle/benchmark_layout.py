@@ -40,6 +40,10 @@ DISCIPLINE_DOMAINS: dict[str, tuple[str, ...]] = {
         "SignalProcessing",
     ),
     "EarthScience": (
+        "Cryosphere",
+        "Hydrology",
+        "Mineralogy",
+        "Paleoclimate",
         "AtmosphericChemistry",
         "AtmosphericScience",
         "ClimateScience",

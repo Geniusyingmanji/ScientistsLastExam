@@ -1,0 +1,13 @@
+domain: Mineralogy
+task: MineralMixtureXRD
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: physical_sim
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 25
+science_metric: powder diffraction mixture quantification with unknown-phase refusal and amorphous false-refusal control
+reference_baseline: one coarse scan naming the tallest peaks' minerals
+reference_sota: truth-blind peak-matching least squares with hump separation; runnable witness
+citation: Rietveld 1969 J Appl Crystallogr doi:10.1107/S0021889869006558
