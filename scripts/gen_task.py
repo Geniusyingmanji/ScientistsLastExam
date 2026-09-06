@@ -7,7 +7,7 @@ Usage:
     create_task({
         "domain": "Physics",
         "task": "HarmonicOscillatorControl",
-        "difficulty": "hard",        # on_ramp | uncalibrated_candidate | hard | flagship
+        "difficulty": "hard",        # on_ramp | uncalibrated_candidate | unmeasured | hard | flagship
         "tier": "T2",                # candidate | T2 | T3
         "oracle_type": "physical_sim",
         "score_mode": "clipped",
@@ -72,14 +72,15 @@ def create_task(spec: dict, repo: Path = REPO) -> Path:
     task = spec["task"]
     difficulty = str(spec.get("difficulty", "")).strip().lower()
     if difficulty not in {
-        "on_ramp", "uncalibrated_candidate", "hard", "flagship",
+        "on_ramp", "uncalibrated_candidate", "unmeasured", "hard", "flagship",
     }:
         raise ValueError(
-            "difficulty must be on_ramp, uncalibrated_candidate, hard or flagship"
+            "difficulty must be on_ramp, uncalibrated_candidate, unmeasured, hard or flagship"
         )
     default_tier = {
         "on_ramp": "candidate",
         "uncalibrated_candidate": "candidate",
+        "unmeasured": "candidate",
         "hard": "T2",
         "flagship": "T3",
     }[difficulty]
