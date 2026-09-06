@@ -1,0 +1,4 @@
+1) Only edit solution.py. Keep build_ranking(instance).
+2) Return {"r", "s", "delta", "nonneg_lambdas", "decrease_lambdas"} as integers or [numerator, denominator] pairs. Floats are rejected, not rounded. r must have exact 1-norm 1. delta must be positive. nonneg_lambdas and decrease_lambdas are one Farkas multiplier per guard in instance["guards"].
+3) Entries must stay inside instance["max_numerator"] and instance["max_denominator"]. instance["dimension"] is 2 or 3. instance["A"] and instance["b"] are the affine update. instance["name"] is a label.
+4) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read verification/ or frontier_eval/.

@@ -495,6 +495,17 @@ tasks:
       baseline never declines. Candidate, not certified. No frontier searcher draw.
     citation_ids:
       - doi:10.1137/070710111
+  ScientificComputing/AffineLoopRankingCertificate:
+    status: candidate
+    reason: >-
+      Certificate-bound cell that is not a continuous Lyapunov function and not
+      a graph reconstruction: an exact rational linear ranking function with
+      Farkas multipliers proves a uniform decrease for a published integer
+      affine loop at 1-norm 1. The e1 ranking at a token rate is valid and
+      scores near zero. Candidate, not certified. No frontier searcher draw.
+    citation_ids:
+      - doi:10.1007/3-540-45319-9_17
+      - doi:10.1007/978-3-540-24622-0_20
   Mathematics/RamseyLowerBound:
     status: candidate
     reason: >-

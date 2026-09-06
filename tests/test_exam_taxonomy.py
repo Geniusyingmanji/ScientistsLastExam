@@ -92,6 +92,10 @@ class ExamTaxonomyTests(unittest.TestCase):
             tax["tasks"]["Mathematics/HeavyTailEvidence"].get("note"),
             "clauset_tails_not_lookelsewhere",
         )
+        self.assertEqual(
+            tax["tasks"]["ScientificComputing/AffineLoopRankingCertificate"].get("note"),
+            "exact_rational_linear_ranking_not_a_lyapunov_ode",
+        )
 
 
 if __name__ == "__main__":
