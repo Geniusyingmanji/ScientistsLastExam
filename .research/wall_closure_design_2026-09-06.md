@@ -82,6 +82,35 @@ constrain the near-wall and log regions separately - and find a flat likelihood 
 That is the measurement to make next, and if a competent fitter *also* cannot tell the two spans
 apart, then the regime is not real and the task needs a different third world.
 
+### Measured: the regime is real, and the fitter is what reveals it
+
+The deciding experiment. Truth `(kappa, A+) = (0.41, 26.0)`, both spans, 24 bins, with and without
+fitting the two per-profile nuisances, scanning the 1-sigma region of `kappa`:
+
+| span | nuisances fitted | best kappa | 1-sigma width in kappa |
+|---|---|---|---|
+| wide 180/950/4000 | no | 0.413 | 0.029 |
+| wide 180/950/4000 | **yes** | 0.398 | **0.054** |
+| narrow 180/200/220 | no | **0.501** | 0.078 |
+| narrow 180/200/220 | **yes** | 0.413 | **0.112** |
+
+Two things fall out, and both are what the task wants to measure.
+
+**The narrow span carries roughly twice the uncertainty of the wide one** — 0.112 against 0.054 —
+so the regime is real: the same law, the same noise, and a Reynolds span too narrow to pin it. At
+the measured held-out sensitivity of about 17 in centreline velocity per unit `kappa`, ±0.054 is
+±0.92 and ±0.112 is ±1.9, against a tolerance near 0.9. The wide span just clears it and the narrow
+span cannot.
+
+**A fitter that ignores the nuisances is biased, not merely uncertain**: 0.501 against a truth of
+0.410, 22 per cent high, because the unknown wall position and calibration have nowhere to go
+except into `kappa`. That is the failure mode this subject actually has, and it appears here without
+being put there.
+
+Remaining: widen the answerable span (180/1500/8000) so it clears the tolerance with margin rather
+than at it, then build the reference on a joint fit and confirm it recovers on wide and abstains on
+narrow. The design question is settled; what is left is calibration.
+
 Options not yet tried, in order of preference:
 
 1. Fit the nuisances rather than starve the data (above).
