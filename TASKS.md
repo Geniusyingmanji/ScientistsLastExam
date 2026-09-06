@@ -4,16 +4,16 @@
 
 | | |
 |---|---:|
-| 任务包 | 80 |
-| optimization | 41 |
+| 任务包 | 81 |
+| optimization | 42 |
 | discovery | 39 |
 | certified | 5 |
-| candidate | 75 |
-| 学科 | 7(Biology 7,Chemistry 13,ComputerScience 7,EarthScience 6,Engineering 12,Mathematics 19,Physics 16) |
+| candidate | 76 |
+| 学科 | 7(Biology 8,Chemistry 13,ComputerScience 7,EarthScience 6,Engineering 12,Mathematics 19,Physics 16) |
 
 认证描述的是证据质量,不是难度。标 on-ramp 的任务首个前沿模型提案已够到参考解,不用于配对 Δ 测量。
 
-## Optimization(41)
+## Optimization(42)
 
 ### 工程设计(engineering_design) — 16
 
@@ -36,10 +36,11 @@
 | [`MultilayerThinFilm`](benchmarks/Physics/MultilayerThinFilm/)<br>多层减反射膜 | Physics | Photonics | clipped | physical_sim | certified | design a broadband antireflection coating | 设计可见光全谱段的多层宽带减反射膜 | 宽带减反射质量;物理下界为零平均反射 |
 | [`SuperconductorTcRecord`](benchmarks/Physics/SuperconductorTcRecord/)<br>超导临界温度纪录搜索 | Physics | Superconductivity | uncapped | allen_dynes_formula_solved_to_real_anchors | candidate | beat the published record by computing where Allen-Dynes says to look | 在真实设备压力上限下,用 Allen-Dynes 公式在五个真实超导体系间搜索已确认临界温度最高的(体系,压力)组合,并避开一个从未被实现的理论预测(隐含电子-声子耦合超过物理合理上限) | 真实Tc除以已发表记录250K的直接比值;无上限,可超过已发表记录 |
 
-### 开放组合纪录(combinatorial,无上限) — 17
+### 开放组合纪录(combinatorial,无上限) — 18
 
 | 任务 | 学科 | 领域 | 打分 | oracle | 认证 | 说明 | 中文题意 | 中文评估方法 |
 |---|---|---|---|---|---|---|---|---|
+| [`PhylogeneticParsimonySearch`](benchmarks/Biology/PhylogeneticParsimonySearch/)<br>最大简约系统发育树搜索 | Biology | Phylogenetics | clipped | analytical_fitch_parsimony | candidate | search unrooted binary tree space | 为给定序列比对搜索 Fitch 变化数更低的二叉 Newick 树 | 从 caterpillar 基线到逐位点简约下界的缺口闭合,封顶为一 |
 | [`MatrixMultiplicationRank`](benchmarks/ComputerScience/MatrixMultiplicationRank/)<br>矩阵乘法秩 | ComputerScience | Algorithm | uncapped | analytical | certified | discover faster matrix-multiplication algorithms | 搜索双线性张量分解,减少矩阵乘法所需的标量乘法次数 | 对最好已知乘法数的平均进度;无上限 |
 | [`TensorRank555`](benchmarks/ComputerScience/TensorRank555/)<br>5x5 与 6x6 张量秩 | ComputerScience | Algorithm | uncapped | analytical | candidate | numerical complex decompositions for 5×5 and 6×6 multiplication | 为 5x5 与 6x6 矩阵乘法找有限精度复系数分解,秩低于已知构造 | 对最好已知乘法数的平均进度;无上限,实例与 MatrixMultiplicationRank 不相交 |
 | [`CapSet`](benchmarks/Mathematics/CapSet/)<br>Cap Set 构造 | Mathematics | Mathematics | uncapped | analytical | certified | find large cap sets in Z_3^n | 在 Z_3^n 里构造更大的 cap set(无三点共线) | 对最好已知规模的平均进度;无上限 |
