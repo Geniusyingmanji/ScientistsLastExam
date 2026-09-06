@@ -2,7 +2,7 @@
 
 The task-only contribution has been reconstructed on upstream `2cbf72b` (76 tasks).
 The resulting inventory contains 86 tasks: the complete upstream set plus the
-original ten biology candidates. All task authors/committers use
+original ten biology candidates. New commits for this contribution use
 `outliers1106 <tuyanlun9716@163.com>` for this contribution.
 
 ## Collision findings and current scope
@@ -27,7 +27,7 @@ The two task cards and contracts now explain the overlap and coordination outcom
   resolve additive certification conflicts by taking their union and regenerate `TASKS.md`.
 - Update README counts to 86 packages: 46 optimization, 40 discovery; 5 certified and 81 candidate.
 - Extract the unrelated seccomp architecture change into branch `fix/seccomp-architecture`
-  and a separate PR. Neither `sle/secure_eval.py` nor its test file differs from upstream in #13.
+  and [PR #25](https://github.com/Geniusyingmanji/ScientistsLastExam/pull/25). Neither `sle/secure_eval.py` nor its test file differs from upstream in #13.
 - Keep the shared `sle/frontier_eval_entrypoint.py`. The maintainer accepted this direction;
   repository-wide metric visibility is tracked separately in #14.
 - Preserve upstream global audit reports and pointers without contributing local generated snapshots.
@@ -38,7 +38,20 @@ The two task cards and contracts now explain the overlap and coordination outcom
 
 The extracted seccomp change passed all 27 `tests/test_secure_eval.py` tests in the
 Linux x86_64 candidate sandbox. Native AArch64/i386 runs remain outside this host's
-coverage. The rebased task validation results are recorded after the final run.
+coverage.
+
+On the clean task contribution commit `f9ebe9013909f05992afb392daf7fc67b20241be`:
+
+- Full test suite: **1119 passed, 48 skipped, 0 failed** across all 147 test files,
+  partitioned into four disjoint groups in the Linux sandbox. Used upstream PR CI
+  mode, `SLE_REQUIRE_FROZEN_INVENTORY=0`; this does not claim refreshed frozen evidence.
+- All ten full `check_task_contribution.py --task <id>` gates passed.
+- All 86 task cards passed `audit_tasks.py`; taxonomy and generated inventory checks passed.
+- All 76 upstream certification and taxonomy records remain unchanged. Global audit
+  reports, audit scripts, and the two security-fix files have no diff from upstream.
+
+The following documentation-only commit records these results; local generated
+validation reports are not included in Git.
 
 Historical validation reports remain historical: rebasing changes source revisions,
 and local audit snapshots are not evidence for the reconciled branch. Expert review,
