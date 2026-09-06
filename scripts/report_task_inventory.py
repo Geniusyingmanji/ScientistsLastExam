@@ -44,6 +44,7 @@ CHINESE_NAMES = {
     "CausalDiscovery/InterventionalSCM": "干预式结构因果模型",
     "CausalDiscovery/SurvivorshipConfoundedDesign": "幸存者偏差下的效应估计",
     "ChemicalKinetics/ReactionMechanismFitting": "反应机理辨识",
+    "ChemicalKinetics/UnimolecularFalloffLaw": "单分子降压律",
     "ChemicalProcess/DistillationColumnDesign": "精馏塔设计",
     "Chemistry/LennardJonesCluster": "Lennard-Jones 团簇",
     "ClimateScience/EnergyBalanceModel": "能量平衡模型辨识",
@@ -90,6 +91,7 @@ CHINESE_NAMES = {
     "ParticlePhysics/LookElsewhereAnomaly": "多窗口扫描的全局显著性",
     "Photonics/MultilayerThinFilm": "多层减反射膜",
     "Physics/ComplexBoseLaw": "复玻色占据律",
+    "PolymerScience/DiblockMorphologyDiscovery": "双嵌段形貌发现",
     "Physics/HiddenCouplingNetwork": "隐藏耦合网络重建",
     "PopulationGenetics/DemographicSFS": "位点频率谱人口史反演",
     "ProteinEngineering/ProteinStabilityDesign": "蛋白稳定性批次设计",
@@ -147,6 +149,9 @@ CHINESE_BRIEFS = {
     "ChemicalKinetics/ReactionMechanismFitting": (
         "自选温度、初始混合与采样时刻,从公开一阶反应库里认出稀疏反应网络与其温度依赖",
         "机制恢复 + 外推;库外世界须拒答"),
+    "ChemicalKinetics/UnimolecularFalloffLaw": (
+        "在有限次 (T,P) 测定下区分 Lindemann 与 Troe 降压,并恢复 300 K 的 k_inf 与 Pr;双通道或负压阶须拒答",
+        "机制恢复 + 双通道/负压阶拒答;不是反应网络辨识,也不是酶动力学"),
     "ChemicalProcess/DistillationColumnDesign": (
         "混合整数精馏塔设计:塔板数与进料位置离散,兼顾纯度回收约束与再沸冷凝能耗",
         "年化成本;留出迁移与密封变工况分列,无上限"),
@@ -313,6 +318,9 @@ CHINESE_BRIEFS = {
     "Physics/ComplexBoseLaw": (
         "在模式混合下恢复玻色占据律的移位指数;费米型世界须拒答",
         "指数恢复 + 费米拒答;不是教科书普朗克曲线的直接拟合"),
+    "PolymerScience/DiblockMorphologyDiscovery": (
+        "从预算内一维 SAXS 认出双嵌段熔体的层状/六方/BCC/螺旋或无序;两套 q* 的混合物或 ABC 三嵌段须拒答",
+        "形貌恢复 + 非平衡混合拒答;不是二元 XRD 相图,也不是分子谱指认"),
     "Physics/HiddenCouplingNetwork": (
         "实验次数少于单元数,从多单元驱动的稳态里恢复带符号的直接耦合图;存在未观测单元时拒答",
         "带符号边 F1;间接路径、tanh 非线性与隐藏单元造成的稠密低秩耦合分别记误发现"),

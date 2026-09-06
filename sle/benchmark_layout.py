@@ -30,6 +30,7 @@ DISCIPLINE_DOMAINS: dict[str, tuple[str, ...]] = {
         "MedicinalChemistry",
         "MolecularDynamics",
         "Photovoltaics",
+        "PolymerScience",
         "QuantumChemistry",
         "Spectroscopy",
     ),

@@ -1,0 +1,63 @@
+schema_version: 2
+scientific_question: From budgeted (T,P) assays of ln k, recover whether a unimolecular rate is Lindemann or Troe, including k_inf and Pr at 300 K and 1 bar, and decline when a second pressure-independent channel is open or k falls as pressure rises.
+artifact: A family name, log k_inf(300 K), log Pr(300 K, 1 bar), Fcent, a confidence, and an optional refusal.
+oracle:
+  model: procedurally parameterized Lindemann or Troe falloff, plus two-channel and negative-order out-of-family worlds, with frozen Gaussian noise on ln k
+  feasibility: charged (T,P) measurements, family recovery on in-family worlds, and calibrated refusal of two-channel and negative-order worlds
+  deterministic: true
+normalization:
+  baseline: always publish a pressure-independent Arrhenius law as Lindemann
+  reference: P-scan at 300 K for reaction order and Fcent, plus a high-T slope check for negative order
+  score: development mechanism recovery normalized above always-abstain; signal recovery, false discovery, refusal, coverage and the held-out split stay separate
+citations:
+- id: doi:10.1002/bbpc.19830870218
+  title: "Theory of thermal unimolecular reactions at low pressures. I. Solutions of the master equation"
+- id: doi:10.1002/bbpc.19830870219
+  title: "Theory of thermal unimolecular reactions in the fall-off range. I. Strong collision rate constants"
+invariants:
+- in-family k interpolates between a third-body low-pressure limit and a high-pressure limit; Lindemann has F=1 and Troe has Fcent in (0,1)
+- a second pressure-independent channel leaves a low-P floor, so the apparent reaction order at the lowest pressures is not 1
+- k that falls as P rises is outside the family
+- declining every world scores exactly zero; the axes separate blanket abstention from confident publication
+- measure calls are charged and overspend fails closed; malformed submissions score zero and never raise out of the evaluator
+- held-out split, per-world rows and the discovery axes remain evaluator-only
+known_shortcuts: The laboratory is a reduced Troe Fcent, not a full master-equation RRKM solve. World seeds are repository-visible and require a future server-held split. Fitting the full T-dependence of k0 and k_inf is leftover headroom, not an exploit.
+review:
+  domain: pending_external
+  evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_abstention_normalization_checks
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic generator with development and sealed held-out falloff, two-channel and negative-order worlds.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Lindemann and Troe are textbook. What is not published is which world is two-channel or negative-order, and the score turns on recovering Fcent and Pr without publishing those out-of-family worlds.
+lineage:
+  status: complete
+  builder_model_ids:
+  - cursor-grok-4.6
+  builder_scaffolds:
+  - cursor
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    None. No frontier searcher draw has been run. In-process pins are tests/test_unimolecular_falloff_law.py
+    (blanket abstention scores zero; the delivered baseline sits below the sealed reference).
+  shortcut_discoverer: builder_self_audit
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: cursor-grok-4.6
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: the reference, the baseline, the abstention normalisation and the three bad-candidate shapes are all runnable from this directory

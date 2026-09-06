@@ -1,0 +1,4 @@
+1) Only edit solution.py. Keep identify_falloff(problem, measure).
+2) Return {"family", "log_k_inf_300K", "log_Pr_300K_1bar", "Fcent", "confidence", "abstain"}. `family` must be one of problem["family_names"] unless abstaining. Lindemann sets Fcent to 1. Troe sets Fcent in [0.05, 1). `confidence` in [0,1]; `abstain` a boolean. Omit the rate fields when abstaining.
+3) measure(temperature_K, pressure_bar) charges one call. Bounds are problem["temperature_bounds_K"] and problem["pressure_bounds_bar"]. Do not exceed problem["measure_budget_calls"].
+4) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read verification/ or frontier_eval/.

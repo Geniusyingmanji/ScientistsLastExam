@@ -464,6 +464,27 @@ tasks:
     citation_ids:
       - arxiv:2601.20996
       - doi:10.1103/PhysRevB.78.104102
+  ChemicalKinetics/UnimolecularFalloffLaw:
+    status: candidate
+    reason: >-
+      Formula cell that is not ReactionMechanismFitting network recovery and not
+      EnzymeKinetics: budgeted (T,P) ln k recovers Lindemann versus Troe, and a
+      second pressure-independent channel or a negative pressure order must be
+      refused. The Arrhenius baseline never declines. Candidate, not certified.
+      No frontier searcher draw.
+    citation_ids:
+      - doi:10.1002/bbpc.19830870218
+      - doi:10.1002/bbpc.19830870219
+  PolymerScience/DiblockMorphologyDiscovery:
+    status: candidate
+    reason: >-
+      Substance cell that is not a binary XRD phase diagram and not a crowded
+      molecular line list: frozen SAXS harmonics recover lamella/hex/bcc/gyroid/
+      disorder, and a mixture or ABC triblock must be refused. The lamella
+      baseline never declines. Candidate, not certified. No frontier searcher draw.
+    citation_ids:
+      - doi:10.1021/ma9512115
+      - doi:10.1021/ma60080a030
   Mathematics/RamseyLowerBound:
     status: candidate
     reason: >-

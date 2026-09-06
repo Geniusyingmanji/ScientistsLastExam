@@ -1,0 +1,63 @@
+schema_version: 2
+scientific_question: From a budgeted one-dimensional SAXS trace, name the diblock melt morphology (lamella, hex, bcc, gyroid, or disorder) or refuse when the trace is a kinetically trapped mixture of two lattices or an ABC triblock with two q* families.
+artifact: A morphology name from the public family list, a confidence, and an optional refusal.
+oracle:
+  model: frozen SAXS traces built from textbook diblock harmonic ratios plus a Leibler-like RPA peak, with mixture and ABC out-of-family worlds
+  feasibility: charged I(q) measurements, morphology recovery on in-family worlds, and calibrated refusal of mixture and ABC traces
+  deterministic: true
+normalization:
+  baseline: always publish lamellae
+  reference: first-Bragg-peak location plus distinctive-harmonic probes, with an incommensurate second-peak refusal
+  score: development mechanism recovery normalized above always-abstain; signal recovery, false discovery, refusal, coverage and the held-out split stay separate
+citations:
+- id: doi:10.1021/ma9512115
+  title: "Unifying Weak- and Strong-Segregation Block Copolymer Theories"
+- id: doi:10.1021/ma60080a030
+  title: "Theory of Microphase Separation in Block Copolymers"
+invariants:
+- in-family ordered traces are a single q* family with the Matsen-Bates / Leibler harmonic ratios
+- a kinetically trapped mixture and an ABC triblock each put two incommensurate q* families on the same trace
+- a single broad RPA peak with no Bragg harmonics is disorder and is in-family
+- declining every world scores exactly zero; the axes separate blanket abstention from confident publication
+- measure calls are charged and overspend fails closed; malformed submissions score zero and never raise out of the evaluator
+- held-out split, per-world rows and the discovery axes remain evaluator-only
+known_shortcuts: The generator is a reduced one-dimensional harmonic trace, not a live SCFT solve and not a digitization of Matsen and Bates Figure 2. World seeds are repository-visible and require a future server-held split. A denser q mesh can still improve q* and is leftover headroom, not an exploit.
+review:
+  domain: pending_external
+  evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_abstention_normalization_checks
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic generator with development and sealed held-out lamellar, hexagonal, BCC, gyroid, disordered, mixture and ABC traces.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Diblock SAXS ratios are textbook. What is not published is which trace is a mixture or an ABC triblock, and the score turns on naming one q* family without publishing those out-of-family worlds.
+lineage:
+  status: complete
+  builder_model_ids:
+  - cursor-grok-4.6
+  builder_scaffolds:
+  - cursor
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    None. No frontier searcher draw has been run. In-process pins are tests/test_diblock_morphology_discovery.py
+    (blanket abstention scores zero; the delivered baseline sits below the sealed reference).
+  shortcut_discoverer: builder_self_audit
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: cursor-grok-4.6
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: the reference, the baseline, the abstention normalisation and the three bad-candidate shapes are all runnable from this directory
