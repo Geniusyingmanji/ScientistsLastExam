@@ -495,6 +495,18 @@ tasks:
       baseline never declines. Candidate, not certified. No frontier searcher draw.
     citation_ids:
       - doi:10.1137/070710111
+  Glaciology/GlenFlowLawDiscovery:
+    status: candidate
+    reason: >-
+      Formula cell that is not an AMOC fold and not a wall mixing-length: budgeted
+      ln v versus driving stress recovers Glen n~3 versus Newtonian n=1, and a
+      sliding mix or a stress-independent plug must be refused. Weak sliding worlds sit
+      below a four-point curvature scan, so the shipped witness scores about 0.64 rather
+      than saturating. The Newtonian baseline never declines and scores exactly zero.
+      Candidate, not certified. No frontier searcher draw.
+    citation_ids:
+      - doi:10.1098/rspa.1955.0066
+      - doi:10.3189/S0022143000024709
   Mathematics/RamseyLowerBound:
     status: candidate
     reason: >-

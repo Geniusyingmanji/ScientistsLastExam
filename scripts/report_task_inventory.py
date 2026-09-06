@@ -55,6 +55,7 @@ CHINESE_NAMES = {
     "Exoplanets/RadialVelocityPlanets": "视向速度找行星",
     "Physics/CriticalPhenomenaLab": "有限尺寸临界现象发现",
     "Geophysics/GravityInversion": "重力反演",
+    "Glaciology/GlenFlowLawDiscovery": "冰川 Glen 流变律发现",
     "Gravitation/PTAHellingsDowns": "脉冲星阵四极相关",
     "HeatTransfer/ConvectionDiffusionOpt": "对流扩散辨识与加热器设计",
     "MaterialsScience/AlloyHardnessOptimization": "合金硬度实验设计",
@@ -183,6 +184,9 @@ CHINESE_BRIEFS = {
     "Geophysics/GravityInversion": (
         "主动布设重力测线,反演地下密度体的位置与强度;声明的源族不支持时拒答",
         "源恢复 + 外场校验 + 拒答;许多密度分布产生相似地表场"),
+    "Glaciology/GlenFlowLawDiscovery": (
+        "在有限次表面流速对驱动应力测定下区分 Glen n~3 与牛顿粘性 n=1;基底滑动使双对数弯曲或塞流须拒答",
+        "指数恢复 + 滑动/塞流拒答;不是 AMOC 折叠,也不是壁面混合长闭合"),
     "Gravitation/PTAHellingsDowns": (
         "脉冲星计时阵里区分 Hellings-Downs 四极相关(引力波背景)与钟差单极、星历偶极、共同红噪声",
         "四极 vs 单极判别与拒答;共同过程不等于引力波背景"),

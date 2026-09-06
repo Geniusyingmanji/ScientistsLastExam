@@ -1,0 +1,13 @@
+domain: Glaciology
+task: GlenFlowLawDiscovery
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: physical_sim
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 8
+science_metric: glen_exponent_recovery_with_sliding_refusal
+reference_baseline: always publish Newtonian n=1
+reference_sota: truth-blind log-log slope and curvature scan that refuses sliding and plugs
+citation: "Glen, Proc. R. Soc. Lond. A 228, 519 (1955); Weertman, J. Glaciol. 3, 33 (1957)"
