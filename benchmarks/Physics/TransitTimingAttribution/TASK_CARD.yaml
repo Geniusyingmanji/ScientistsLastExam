@@ -42,8 +42,10 @@ lineage:
   - science-benchmark-construction
   calibrator_model_ids:
   - deepseek-v4-flash
+  - deepseek-v4-pro
   calibration_runs:
   - experiments/transit_timing_deepseek_flash_2026-09-05.json
+  - experiments/transit_timing_deepseek_calibration_2026-09-06.json
   calibration_evidence_status: current_or_migration_replayed
   edits_triggered_by_model: none
   shortcut_discoverer: truth_blind_reference_and_deepseek_flash_calibration
