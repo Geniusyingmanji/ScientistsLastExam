@@ -713,6 +713,21 @@ tasks:
     citation_ids:
       - doi:10.1029/JZ064i001p00049
       - doi:10.1190/1.1444302
+  Geophysics/UPbConcordiaInference:
+    status: candidate
+    reason: >-
+      An active zircon U-Pb evidence task over concordant, single lead-loss and resolvable
+      multi-event suites, with charged precision choices, coupled Wetherill concordia geometry,
+      continuous event-age scoring, evidence lineage and calibrated model-inadequacy refusal; the
+      valid one-grain baseline is normalized to zero, a truth-blind six-grain concordia/discordia
+      fit scores 0.914/0.818 development/held-out, 192 apparent-age threshold shortcuts peak at
+      0.345, and two clean thinking-disabled runs each of DeepSeek V4 Flash and Pro keep every first
+      proposal below the reference while terminal best scores range from 0.203 to 0.560; retain
+      pending server-held geological histories and independent geochronology review
+    citation_ids:
+      - doi:10.1029/TR037i003p00320
+      - doi:10.1016/S0016-7037(98)00059-3
+      - doi:10.5194/gchron-6-37-2024
   PopulationGenetics/DemographicSFS:
     status: candidate
     reason: v2 replaces the rank-two time-index surrogate with exact finite-sample Kingman lineage-count CTMC occupancy, a fixed ancestral scale, charged sample-size/replicate sequencing, constant and three-epoch mechanism recovery, evaluator-only sample-size projection and resolvable ancestral-state-polarization-error refusal; the constant-size theta/i identity and an independent ODE occupancy implementation agree, all seven nonconstant supported histories have full-rank log-parameter sensitivities, and a truth-blind eight-unit multisample design reaches 0.770/0.510 development/held-out mechanism with 0.988/0.983 sample-size prediction and zero false discovery, versus 0.538/0.397 for an equal-budget repeated-small-sample design; finite four-epoch and population-mixture histories remain explicitly non-rejectable under the registered SFS threshold, so retain as a conditioned demographic-inference candidate pending server-held histories, linkage/recombination and structure, sequence-data QC and independent population-genetics review

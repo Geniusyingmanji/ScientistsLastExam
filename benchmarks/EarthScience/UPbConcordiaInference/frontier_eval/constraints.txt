@@ -1,0 +1,4 @@
+1) Only edit solution.py. Keep infer_upb_history(problem, measure).
+2) Return history, crystallization_age_myr, confidence, evidence_query_ids and abstain. For lead_loss also return lead_loss_age_myr. When abstaining, history and ages may be omitted.
+3) measure(grain_id, precision) charges the published cost. Each grain may be measured once; do not exceed measurement_budget_units. Precision is screen or analytical.
+4) Python standard library and NumPy only. Deterministic CPU code. No network/process creation. Do not read verification/ or frontier_eval/.
