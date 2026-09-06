@@ -20,6 +20,11 @@ CLASSES = ("constant", "logarithmic", "linear", "linearithmic", "quadratic",
 SIZE_BOUNDS = (8, 384)
 COST_TIERS = ((64, 1), (192, 2), (384, 3))
 BUDGET_UNITS = 9
+
+# Profiling efficiency is part of mechanism recovery. Consuming the full budget
+# carries a 25% evidence-efficiency penalty, so an accurate but exhaustive ladder
+# remains a competent reference rather than saturating the clipped score.
+MAX_EVIDENCE_COST_PENALTY = 0.25
 NOISE_SIGMA = 0.07
 JITTER_SIGMA = 0.60
 SEALED_SIZE = 700
@@ -176,7 +181,8 @@ def _extrapolation_score(world, scale, family):
 
 def _empty(split, index):
     return {"split": split, "world_index": index, "valid": False, "abstained": False,
-            "mechanism_score": 0.0, "class_probability": 0.0, "scale_score": 0.0,
+            "mechanism_score": 0.0, "intrinsic_mechanism_score": 0.0,
+            "evidence_efficiency_score": 0.0, "class_probability": 0.0, "scale_score": 0.0,
             "extrapolation_score": 0.0, "false_discovery": False,
             "correct_refusal": False, "confidence_score": 0.0, "budget_used": 0}
 
@@ -206,8 +212,16 @@ def _evaluate_world(candidate, spec, split, index):
             class_probability = scale_score = extrapolation = mechanism = \
                 1.0 if correct else 0.0
         target = 1.0 if (supported != abstain or (not supported and abstain)) else 0.0
+        evidence_efficiency = 1.0 - MAX_EVIDENCE_COST_PENALTY * (
+            profiler.used / BUDGET_UNITS)
+        # Efficiency adjusts supported discovery only. Refusal quality remains a
+        # separate axis so evidence-backed refusal is not penalized relative to
+        # the always-abstain normalization baseline.
+        scored_mechanism = mechanism * evidence_efficiency if supported else mechanism
         row.update({"valid": True, "abstained": abstain,
-                    "mechanism_score": mechanism,
+                    "mechanism_score": scored_mechanism,
+                    "intrinsic_mechanism_score": mechanism,
+                    "evidence_efficiency_score": evidence_efficiency,
                     "class_probability": class_probability,
                     "scale_score": scale_score,
                     "extrapolation_score": extrapolation,
@@ -229,6 +243,7 @@ def _summary(rows, specs):
         "normalized": float(np.clip((raw - abstain_base) / (1.0 - abstain_base), 0.0, 1.0)),
         "raw": raw,
         "valid_count": sum(r["valid"] for r in rows),
+        "evidence_efficiency": float(np.mean([r["evidence_efficiency_score"] for r in rows])),
         "class_probability": float(np.mean([r["class_probability"] for r in supported])) if supported else 0.0,
         "scale_score": float(np.mean([r["scale_score"] for r in supported])) if supported else 0.0,
         "extrapolation_score": float(np.mean([r["extrapolation_score"] for r in supported])) if supported else 0.0,
@@ -252,6 +267,7 @@ def evaluate(identify_scaling_law):
         "valid": 1.0 if dev_valid else 0.0,
         "feasibility_rate": dev["valid_count"] / len(development),
         "mechanism_score": dev["raw"],
+        "development_evidence_efficiency_score": dev["evidence_efficiency"],
         "development_class_probability": dev["class_probability"],
         "development_scale_score": dev["scale_score"],
         "development_extrapolation_score": dev["extrapolation_score"],
@@ -263,6 +279,7 @@ def evaluate(identify_scaling_law):
         "false_discovery_count": dev["false_count"],
         "correct_refusal_count": dev["refusal_count"],
         "robustness_score": hold["normalized"] if hold_valid else 0.0,
+        "heldout_evidence_efficiency_score": hold["evidence_efficiency"],
         "heldout_feasibility_rate": hold["valid_count"] / len(heldout),
         "heldout_false_discovery_rate": hold["false_count"] / hold["unsupported_count"],
         "heldout_correct_refusal_rate": hold["refusal_count"] / hold["unsupported_count"],

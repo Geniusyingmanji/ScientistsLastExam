@@ -14,20 +14,26 @@ information-criterion averaging.
 
 ## 2. Baseline and normalization
 
-The shipped `solution.py` times one size and guesses uniformly: `0.000000`. A
-truth-informed claim scores one. Measured on 2026-09-05 the reference reaches
-`0.9294` development and `0.6223` robustness with zero false discoveries and full
-refusal.
+The shipped `solution.py` times one size and guesses uniformly: `0.000000`. Supported
+mechanism recovery is multiplied by `1 - 0.25 * budget_used / 9`; correct-refusal
+credit stays unweighted and separately reported. The full-budget reference therefore
+has profiling efficiency `0.750`. Re-measured on 2026-09-06, it reaches `0.710786`
+development and `0.702993` robustness with zero false discoveries and full refusal.
 
 ## 3. Capability comparisons and ablations
 
 | variant | development | robustness |
 |---|---:|---:|
-| full reference | 0.9477 | 0.6041 |
-| competent first-shot ladder | 0.6922 | 0.7955 |
-| jitter gate disabled | 0.6926 | — |
+| full reference | 0.710786 | 0.702993 |
+| minimal first-shot ladder (reconstructed 2026-09-07, no refusal gates) | 0.363590 | 0.029903 |
+| jitter gate disabled | 0.544119 | 0.369660 |
 
-Local debugging numbers, not frozen benchmark evidence.
+The 2026-09-07 remeasurement uses a freshly reconstructed first-shot (one timing per
+size on an ascending 16..256 ladder, fixed-shape selection, no branch or jitter
+gates), because the original 2026-09-06 audit harness was not preserved; it is a
+weaker, honestly labelled baseline than the historical competent first-shot, whose
+original 0.692 predates efficiency weighting and is no longer comparable. Local
+debugging numbers, not frozen benchmark evidence.
 
 ## 4. Shortcut probes
 

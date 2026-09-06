@@ -87,18 +87,20 @@ class ScalingLawPins(unittest.TestCase):
 
     def test_tightened_statistics_beat_lazy_ladders(self):
         # The fixed-shape BIC reference with the predicate-agnostic branch scan
-        # sits near the statistical ceiling while free-slope regression (v1)
+        # remains accurate while the evidence-efficiency axis prevents saturation;
+        # free-slope regression (v1)
         # collapsed the power-law classes into one family and scored 0.470.
         ev = _load("benchmarks/ComputerScience/ScalingLawIdentification"
                    "/verification/evaluator.py", "r4_scale")
         ref = _load(ROOT / "benchmarks/ComputerScience/ScalingLawIdentification"
                     "/verification" / "reference_solver.py", "r4_scale_ref")
         reference = ev.evaluate(ref.identify_scaling_law)
-        self.assertLess(reference["combined_score"], 0.97)
-        self.assertGreater(reference["combined_score"], 0.80)
+        self.assertLess(reference["combined_score"], 0.75)
+        self.assertGreater(reference["combined_score"], 0.65)
+        self.assertAlmostEqual(reference["development_evidence_efficiency_score"], 0.75)
         self.assertEqual(reference["development_correct_refusal_rate"], 1.0)
         self.assertEqual(reference["development_false_discovery_rate"], 0.0)
-        self.assertGreater(reference["robustness_score"], 0.85)
+        self.assertGreater(reference["robustness_score"], 0.60)
 
     def test_jitter_worlds_carry_a_lawful_family(self):
         ev = _load("benchmarks/ComputerScience/ScalingLawIdentification"

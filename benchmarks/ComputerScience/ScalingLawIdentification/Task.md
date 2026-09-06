@@ -37,12 +37,20 @@ invalidate the world even when caught.
 - `combined_score` is development mechanism recovery above the always-abstain
   baseline: geometric mean of the true class probability, a log-scale score for the
   constant, and a sealed extrapolation of the runtime at size 700 under seven
-  percent multiplicative noise.
+  percent multiplicative noise, multiplied on supported discoveries by the profiling-efficiency factor
+  `1 - 0.25 * budget_used / 9`. An equally accurate adaptive ladder using less than
+  the full budget can therefore outperform the exhaustive reference.
 - Branch and jitter worlds score refusal only; abstaining scores one and any class
-  claim scores zero.
-- Class probability, false discovery rate, correct refusal rate and discovery
+  claim scores zero. Refusal credit is not efficiency-weighted, so evidence-backed
+  refusal is not penalized relative to blind abstention.
+- Intrinsic and efficiency-adjusted mechanism recovery, profiling efficiency, class probability, false discovery rate, correct refusal rate and discovery
   coverage are reported with denominators; a full abstention scores exactly zero.
 - `robustness_score` repeats the audit on held-out classes, scales and failures.
+
+The aggregate efficiency diagnostics are `development_evidence_efficiency_score` and
+`heldout_evidence_efficiency_score`; per-world rows also retain
+`intrinsic_mechanism_score`, `mechanism_score`, `evidence_efficiency_score` and
+`budget_used`. Split membership and hidden truth are never candidate inputs.
 
 This is a deterministic synthetic profiler, not a claim about any real program.
 

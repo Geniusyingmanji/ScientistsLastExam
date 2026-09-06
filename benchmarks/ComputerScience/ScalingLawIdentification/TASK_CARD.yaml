@@ -9,20 +9,20 @@ oracle:
     multiplicative timing noise, sizes bounded by 384, branch worlds mixing c*m^2
     and c*m*log2(m) by size mod 3, and jitter worlds at sixty percent noise
   feasibility: probabilities over exactly the six classes, positive finite scale,
-    charged tiers within a twelve-unit budget
+    charged tiers within a nine-unit budget
   deterministic: true
   external_tooling: none beyond NumPy
 difficulty_ladder:
   default_level: 1
   levels:
-    1: five percent noise, mod-seven branching, eighteen percent jitter
+    1: seven percent noise, public mod-three branching, sixty percent jitter
 normalization:
   baseline: one timing, uniform probabilities and a fixed mid-range scale
-  reference: residue-covering eight-size ladder with a 192 top, fixed-shape BIC
-    class selection, predicate-agnostic mod-3/mod-7 branch scan with a doubled F
-    gate, triple-repeat jitter gate
+  reference: residue-covering six-size ladder with a 192 top, fixed-shape penalized
+    class selection, public mod-three split-fit branch test and repeated-size jitter gate
   score: geometric mean of class probability, log-scale score and sealed
-    extrapolation, normalized above always abstaining
+    extrapolation, multiplied by 1 - 0.25 * budget_used / 9 on supported discoveries and normalized
+    above always abstaining; refusal credit remains unweighted on its separate axis
 citations:
 - id: isbn:9780262033848
   title: Introduction to Algorithms
@@ -30,11 +30,11 @@ invariants:
 - repeated sizes draw fresh multiplicative noise
 - branch worlds are exact deterministic functions of the size
 - a full abstention scores exactly zero after normalization
-known_shortcuts: Uniform probabilities with a fixed scale score 0.000; the reference
-  reaches 0.948/0.937 and a competent first-shot regression ladder reaches only
-  0.692 — the dev-versus-first-shot gap is real but the reference sits near the
-  statistical ceiling of log-space regression, so difficulty rests on that gap,
-  the refusal axes and budget. Formal
+known_shortcuts: Uniform probabilities with a fixed scale score 0.000; the full-budget reference
+  reaches 0.711/0.703 after profiling-efficiency calibration with zero false discoveries.
+  A reconstructed minimal first-shot ladder without refusal gates reaches 0.364/0.030 and
+  disabling the jitter gate drops the reference to 0.544/0.370, so difficulty rests on the
+  class-separation gap, refusal axes and budget. Formal
   clean Linux calibration and independent review remain pending.
 licensing:
   task_package: repository_license_not_declared
