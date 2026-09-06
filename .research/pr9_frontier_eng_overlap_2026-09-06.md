@@ -4,6 +4,7 @@
 
 - Paper: https://arxiv.org/html/2604.12290v1#A1 — all 47 Appendix A entries, including the seven EngDesign subproblems.
 - Repository: https://github.com/Einsia/Frontier-Engineering/blob/e3fa29c193356af2ce1ec8b3d23ab1a2e2410071/TASK_DETAILS.md — retrieved 2026-09-06. The catalog contains **78 table rows / 84 tasks after expanding EngDesign**, not 95. The recursive tree likewise has 78 Task.md paths. This discrepancy is unresolved; we do not claim to have reviewed an unavailable 95-entry version. Please identify that revision or the missing entries before treating the requested review as complete.
+- Additional source reconciliation: `TASK_DETAILS_zh-CN.md` at the same main commit also has 78 rows / 84 expanded tasks. The `v1-arxiv` branch and first catalog revision `57cb4e52ea1c553f0bf36e956502f4135f7a9dee` each have 77 rows / 83 expanded tasks. None supplies the requested 95-entry list.
 - EngDesign subtask prompts at the same commit were checked: CY_03 (block driver), WJ_01 (image filtering), XY_05 (CPU control), AM_02/AM_03 (robot navigation), YJ_02 (beam compliance), YJ_03 (crack stress intensity).
 - SLE source: original PR #9 head 3106a1e; split batches based on upstream 2cbf72b (76 tasks). 20 submitted tasks are split into five independent batches; MetabolicStrainDesign is deferred.
 
