@@ -1,0 +1,63 @@
+schema_version: 2
+scientific_question: Produce an exact rational common quadratic Lyapunov certificate that proves a uniform exponential decay rate for a published switched linear system, independently of the switching signal.
+artifact: A 2-by-2 rational Gram matrix P and a positive rational rate alpha such that P is positive definite and A_i^T P + P A_i + alpha P is negative semidefinite on every published mode.
+oracle:
+  model: exact rational Sylvester criteria on 2-by-2 matrices; no floating-point SDP
+  feasibility: integer or [numerator, denominator] entries inside the public magnitude cap; floats, indefinite P, non-positive alpha, or a mode that violates the LMI each score that instance zero
+  deterministic: true
+normalization:
+  baseline: the identity Gram at alpha = 1/10000, which is a valid common Lyapunov function on every instance and scores near zero
+  reference: a finite catalog of sheared rational quadratics, each checked exactly, taking the largest feasible catalog rate
+  score: mean of min(alpha / (3/4), 1) over four instances; the unit 3/4 is a clip, not a published record
+citations:
+- id: doi:10.1137/1.9781611970777
+  title: "Linear Matrix Inequalities in System and Control Theory"
+- id: doi:10.1007/978-0-8176-4297-6
+  title: "Switching in Systems and Control"
+invariants:
+- a valid certificate is a proof, not a simulation of one switching path
+- the identity Gram is a Lyapunov function because every published mode has a negative numerical abscissa, but the proven rate is small
+- a sheared Gram proves a strictly larger rate on the same modes
+- floats are rejected rather than rounded
+- malformed submissions score zero and never raise out of the evaluator
+known_shortcuts: The plants are 2-by-2, so Sylvester criteria replace a general PSD test. World matrices are repository-visible. Searching a larger rational catalog than the shipped reference is leftover headroom, not an exploit. A numerical LMI solver whose output is rounded would be rejected as floats.
+review:
+  domain: pending_external
+  evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_exact_arithmetic_checks
+provenance:
+  class: procedural
+  target_source: Repository-visible switched linear plants with exact rational certificates.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Common quadratic Lyapunov functions for switched linear systems are textbook LMI material. What is scored is an exact rational certificate of a stated rate, which is not a recalled controller gain and cannot be read from a simulation.
+lineage:
+  status: complete
+  builder_model_ids:
+  - cursor-grok-4.6
+  builder_scaffolds:
+  - cursor
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    None. No frontier searcher draw has been run. In-process pins are
+    tests/test_lyapunov_decay_certificate.py (identity token rate below the catalog
+    reference; floats rejected).
+  shortcut_discoverer: builder_self_audit
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: cursor-grok-4.6
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: the reference, the baseline, the exact Sylvester check and the three bad-candidate shapes are all runnable from this directory

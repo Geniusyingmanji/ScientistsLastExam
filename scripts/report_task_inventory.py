@@ -49,6 +49,7 @@ CHINESE_NAMES = {
     "ClimateScience/EnergyBalanceModel": "能量平衡模型辨识",
     "ClimateScience/ForcedSignalAttribution": "强迫信号检测归因",
     "ControlTheory/InvertedPendulumSwingUp": "倒立摆摆起控制",
+    "ControlTheory/LyapunovDecayCertificate": "切换系统 Lyapunov 衰减证书",
     "DynamicalSystems/ActiveLawDiscovery": "主动定律发现",
     "Electrochemistry/ElectrolyteConductivityDesign": "电解液电导率设计",
     "EvidenceSynthesis/ProspectiveMetaAnalysis": "前瞻荟萃分析",
@@ -93,6 +94,7 @@ CHINESE_NAMES = {
     "Photonics/MultilayerThinFilm": "多层减反射膜",
     "Physics/ComplexBoseLaw": "复玻色占据律",
     "Physics/HiddenCouplingNetwork": "隐藏耦合网络重建",
+    "PowerSystems/GridTopologyRecovery": "电网拓扑辨识",
     "PopulationGenetics/DemographicSFS": "位点频率谱人口史反演",
     "ProteinEngineering/ProteinStabilityDesign": "蛋白稳定性批次设计",
     "QuantumDynamics/HamiltonianLearning": "哈密顿量学习",
@@ -102,6 +104,7 @@ CHINESE_NAMES = {
     "RNAEngineering/RNAInverseDesign": "RNA 约束反折叠",
     "Semiconductor/MOSFETDoping": "MOSFET 掺杂剖面",
     "Sensors/QuartzCrystalMicrobalanceLab": "石英微天平原始信号反演",
+    "Sensors/UltrasonicDefectSpecies": "超声缺陷种类判别",
     "SignalProcessing/SparseRecovery": "压缩感知稀疏恢复",
     "Spectroscopy/CrowdedSpectrumAssignment": "混叠谱物种指认",
     "StructuralEngineering/ModalDamageAttribution": "模态损伤归因",
@@ -165,6 +168,9 @@ CHINESE_BRIEFS = {
     "ControlTheory/InvertedPendulumSwingUp": (
         "设计小车倒立摆的摆起与稳定控制律,兼顾轨道限位与作动器约束",
         "摆起效用;偏移工况稳健性分列"),
+    "ControlTheory/LyapunovDecayCertificate": (
+        "为已公布的切换线性系统提交精确有理共同二次 Lyapunov 证书,证明与切换信号无关的衰减率",
+        "所证 alpha 相对 3/4 裁剪单位的均值;单位阵小速率基线近零,浮点 LMI 直接判零"),
     "DynamicalSystems/ActiveLawDiscovery": (
         "自选初值与外部驱动,从候选项库里恢复二维受控系统的稀疏控制方程",
         "稀疏律恢复 + 密封轨迹外推;库不足时拒答"),
@@ -325,6 +331,9 @@ CHINESE_BRIEFS = {
     "Physics/HiddenCouplingNetwork": (
         "实验次数少于单元数,从多单元驱动的稳态里恢复带符号的直接耦合图;存在未观测单元时拒答",
         "带符号边 F1;间接路径、tanh 非线性与隐藏单元造成的稠密低秩耦合分别记误发现"),
+    "PowerSystems/GridTopologyRecovery": (
+        "用两次冻结注入下的母线相角,从五节点目录里认出在运拓扑;两个目录图电等价时须拒答",
+        "拓扑恢复 + 不可辨识拒答;不是已知拓扑下的构件损伤,也不是模拟耦合网络"),
     "PopulationGenetics/DemographicSFS": (
         "在测序预算内跨样本量分配测序,从位点频率谱恢复常量或三期人口史",
         "参数恢复 + 留出样本量预测 + 模型不足拒答 + 预算设计"),
@@ -352,6 +361,9 @@ CHINESE_BRIEFS = {
     "Sensors/QuartzCrystalMicrobalanceLab": (
         "从石英微天平的原始 I/Q 扫频里标定复增益漂移、提取谐振并反演薄膜质量与沉积速率",
         "原始 IQ 标定、BVD 谐振提取、质量与速率恢复、故障与模型判别、密封停止决策分列"),
+    "Sensors/UltrasonicDefectSpecies": (
+        "从预算内脉冲回波 A 扫认出裂纹、气孔、未熔合或无缺陷;两种缺陷同时存在或波型转换附加回波须拒答",
+        "缺陷种类恢复 + 混合/波型转换拒答;不是已知拓扑下的构件损伤,也不是石英微天平电路反演"),
     "SignalProcessing/SparseRecovery": (
         "从远少于奈奎斯特的测量里恢复 k 稀疏信号",
         "平均恢复信噪比"),

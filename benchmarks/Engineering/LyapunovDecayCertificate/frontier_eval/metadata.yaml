@@ -1,0 +1,13 @@
+domain: ControlTheory
+task: LyapunovDecayCertificate
+scientific_role: optimization
+difficulty: hard
+tier: T2
+oracle_type: analytical
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 8
+science_metric: proven_common_quadratic_decay_rate
+reference_baseline: identity Gram at alpha = 1/10000
+reference_sota: catalog search over sheared rational quadratics, exact Sylvester check
+citation: "Boyd, El Ghaoui, Feron, Balakrishnan, Linear Matrix Inequalities in System and Control Theory, SIAM 1994, DOI 10.1137/1.9781611970777; Liberzon, Switching in Systems and Control, 2003"

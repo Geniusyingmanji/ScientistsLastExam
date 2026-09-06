@@ -1,0 +1,4 @@
+1) Only edit solution.py. Keep build_lyapunov(instance).
+2) Return {"p11", "p12", "p22", "alpha"} as integers or [numerator, denominator] pairs. Floats are rejected, not rounded: a numerical LMI solution is not a certificate. alpha must be positive. P must be positive definite and A_i^T P + P A_i + alpha P negative semidefinite on every mode in instance["mode_matrices"].
+3) Entries must stay inside instance["max_numerator"] and instance["max_denominator"]. instance["state_dimension"] is 2. instance["name"] is a label.
+4) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read verification/ or frontier_eval/.

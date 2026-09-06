@@ -92,6 +92,18 @@ class ExamTaxonomyTests(unittest.TestCase):
             tax["tasks"]["Mathematics/HeavyTailEvidence"].get("note"),
             "clauset_tails_not_lookelsewhere",
         )
+        self.assertEqual(
+            tax["tasks"]["PowerSystems/GridTopologyRecovery"].get("note"),
+            "dc_line_status_not_modal_damage",
+        )
+        self.assertEqual(
+            tax["tasks"]["Sensors/UltrasonicDefectSpecies"].get("note"),
+            "pulse_echo_defect_species_not_modal_member_or_qcm",
+        )
+        self.assertEqual(
+            tax["tasks"]["ControlTheory/LyapunovDecayCertificate"].get("note"),
+            "exact_rational_common_quadratic_lyapunov_not_a_controller",
+        )
 
 
 if __name__ == "__main__":

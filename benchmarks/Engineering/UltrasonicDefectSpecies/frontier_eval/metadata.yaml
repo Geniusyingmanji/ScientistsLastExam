@@ -1,0 +1,13 @@
+domain: Sensors
+task: UltrasonicDefectSpecies
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: physical_sim
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 8
+science_metric: pulse_echo_defect_species_recovery_with_mode_conversion_refusal
+reference_baseline: always publish a clean scan
+reference_sota: truth-blind polarity and doublet scan that refuses mixed-sign echoes
+citation: "Thompson and Thompson, Ultrasonics in nondestructive evaluation, Proc. IEEE 73, 1716 (1985); Schmerr, Fundamentals of Ultrasonic Nondestructive Evaluation, Springer"

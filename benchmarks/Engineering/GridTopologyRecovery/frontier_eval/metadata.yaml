@@ -1,0 +1,13 @@
+domain: PowerSystems
+task: GridTopologyRecovery
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: physical_sim
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 8
+science_metric: dc_power_flow_line_status_recovery_with_equivalent_graph_refusal
+reference_baseline: always publish the star graph
+reference_sota: truth-blind residual ranking over the public topology catalog
+citation: "Monticelli, State Estimation in Electric Power Systems, Springer 1999"

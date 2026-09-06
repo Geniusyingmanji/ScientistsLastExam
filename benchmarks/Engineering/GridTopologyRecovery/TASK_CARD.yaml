@@ -1,0 +1,60 @@
+schema_version: 2
+scientific_question: From two frozen DC injection patterns and a budget of bus-angle measurements, name which five-bus catalog graph is in service, or refuse when two catalog graphs produce the same angles.
+artifact: A catalog name, a confidence, and an optional refusal.
+oracle:
+  model: DC power flow on a frozen five-bus catalog, with a hidden twin whose edges are electrically identical to two public catalog graphs on the published injections
+  feasibility: charged angle measurements, unique-graph recovery on identifiable worlds, and calibrated refusal when two catalog graphs tie
+  deterministic: true
+normalization:
+  baseline: always publish the star graph
+  reference: residual ranking over the public catalog, abstaining when the top two residuals are indistinguishable
+  score: development mechanism recovery normalized above always-abstain; signal recovery, false discovery, refusal, coverage and the held-out split stay separate
+citations:
+- id: doi:10.1007/978-1-4615-4999-4
+  title: "State Estimation in Electric Power Systems: A Generalized Approach"
+invariants:
+- in-family worlds have a unique catalog graph on both frozen injections
+- an extra chord between already-equipotential buses is invisible on those injections, so two catalog names fit and must be refused
+- declining every world scores exactly zero; the axes separate blanket abstention from confident publication
+- measure calls are charged and overspend fails closed; malformed submissions score zero and never raise out of the evaluator
+- held-out split, per-world rows and the discovery axes remain evaluator-only
+known_shortcuts: Equal series admittance and a DC angle model are a teaching reduction of topology-error identification, not an AC state estimator. World seeds are repository-visible and require a future server-held split. Measuring the slack bus wastes budget and is leftover headroom, not an exploit.
+review:
+  domain: pending_external
+  evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_abstention_normalization_checks
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic generator with development and sealed held-out unique graphs plus electrically equivalent twins.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Five-bus DC power flow is textbook. What is not published is which catalog pair is electrically identical on the frozen injections, and the score turns on naming a unique graph without publishing the twin.
+lineage:
+  status: complete
+  builder_model_ids:
+  - cursor-grok-4.6
+  builder_scaffolds:
+  - cursor
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    None. No frontier searcher draw has been run. In-process pins are tests/test_grid_topology_recovery.py
+    (blanket abstention scores zero; the delivered baseline sits below the sealed reference).
+  shortcut_discoverer: builder_self_audit
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: cursor-grok-4.6
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: the reference, the baseline, the abstention normalisation and the three bad-candidate shapes are all runnable from this directory
