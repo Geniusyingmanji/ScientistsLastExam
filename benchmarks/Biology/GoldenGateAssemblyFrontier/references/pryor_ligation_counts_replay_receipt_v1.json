@@ -1,0 +1,54 @@
+{
+  "builder_source_replay_status": "pass",
+  "claim_limit": "This records a builder replay of source hashes, dimensions, orientation, extraction, and optional fixed-mirror equality. It is not an independent scientific review.",
+  "derived_output_sha256": "f6cf8c7ff9cf73a85e56085092c0cc725b01dbf7f3c77ce9a840c312b4486f50",
+  "evidence_role": "builder_source_replay_receipt",
+  "independent_source_replay_status": "pending",
+  "schema_version": 1,
+  "source_tables": [
+    {
+      "condition": "BsaI-HFv2",
+      "matrix_columns": 256,
+      "matrix_rows": 256,
+      "mirror_commit": "160be2f",
+      "mirror_exact_cell_match": true,
+      "mirror_sha256": "7d5d36ff9d21f3ca92b89d061fde2a9ae4dbec7b8787db0f5a9480efbf25d708",
+      "orientation_check": "pass",
+      "source_sha256": "320dd058f3ca6372768c7ddfe9cda2a2ea2a076c4f86dd08587d8f295aae1d15",
+      "source_url": "https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0238592.s001&type=supplementary"
+    },
+    {
+      "condition": "BsmBI-v2",
+      "matrix_columns": 256,
+      "matrix_rows": 256,
+      "mirror_commit": "160be2f",
+      "mirror_exact_cell_match": true,
+      "mirror_sha256": "6b22f2a3b6fbc601faea06a6a8c59292f753925b2a398575f8333c987c562fb7",
+      "orientation_check": "pass",
+      "source_sha256": "7c444e99e5e4d245461a892e8543a35c84987f93abcee7098de9d9d817237e94",
+      "source_url": "https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0238592.s002&type=supplementary"
+    },
+    {
+      "condition": "Esp3I",
+      "matrix_columns": 256,
+      "matrix_rows": 256,
+      "mirror_commit": "160be2f",
+      "mirror_exact_cell_match": true,
+      "mirror_sha256": "1888a07d2ff1044583ea0528cdba66b0248c1f4d37e5ad7c29ddef3850a98cf2",
+      "orientation_check": "pass",
+      "source_sha256": "1557e62cfa4f89cd021420b75e145dae2f453ecf26dcca340a8c29008736ea66",
+      "source_url": "https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0238592.s003&type=supplementary"
+    },
+    {
+      "condition": "BbsI-HF",
+      "matrix_columns": 256,
+      "matrix_rows": 256,
+      "mirror_commit": "160be2f",
+      "mirror_exact_cell_match": true,
+      "mirror_sha256": "d7b35aecc0d3e57839ec3315a13796a38bf818c7a1304022afa65d4b72f2c87f",
+      "orientation_check": "pass",
+      "source_sha256": "56143bb445e6d84bba646429402e0948793395269cc5d8ba0e80962c0cac6492",
+      "source_url": "https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0238592.s004&type=supplementary"
+    }
+  ]
+}

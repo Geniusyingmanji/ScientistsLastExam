@@ -645,7 +645,7 @@
   "schema_version": 1,
   "source": {
     "article": "Pryor et al., PLOS ONE 15:e0238592 (2020)",
-    "derivation": "Exact integer cells for 24 deterministic reverse-complement classes and both orientations, extracted independently from PLOS S1-S4 XLSX; absent sparse entries are zero.",
+    "derivation": "Exact integer cells for 24 deterministic reverse-complement classes and both orientations, builder-extracted directly from PLOS S1-S4 XLSX; absent sparse entries are zero.",
     "doi": "10.1371/journal.pone.0238592",
     "license": "CC BY 4.0",
     "orientation": "Rows are 5-prime overhangs; columns are ligation partners; the correct partner of row s is reverse_complement(s)."

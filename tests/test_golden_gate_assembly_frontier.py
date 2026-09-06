@@ -5,6 +5,8 @@ import hashlib
 import importlib.util
 import json
 import math
+import shutil
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
@@ -31,6 +33,37 @@ REFERENCE = _load(
 
 
 class GoldenGateAssemblyFrontierTests(unittest.TestCase):
+    def test_canonical_python38_imports_and_executes_the_baseline(self):
+        python38 = shutil.which("python3.8")
+        if python38 is None:
+            self.skipTest("canonical Python 3.8 interpreter is not installed")
+        program = f"""
+import importlib.util, json
+from pathlib import Path
+task = Path({str(TASK)!r})
+def load(name, path):
+    spec = importlib.util.spec_from_file_location(name, path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+evaluator = load('golden_gate_py38_evaluator', task / 'verification' / 'evaluator.py')
+solution = load('golden_gate_py38_solution', task / 'solution.py')
+result = evaluator.evaluate(solution.design_assembly)
+print(json.dumps({{'combined_score': result['combined_score'], 'valid': result['valid']}}))
+"""
+        completed = subprocess.run(
+            [python38, "-c", program],
+            cwd=str(ROOT),
+            capture_output=True,
+            text=True,
+            check=False,
+            timeout=60,
+        )
+        self.assertEqual(completed.returncode, 0, completed.stderr)
+        self.assertEqual(
+            json.loads(completed.stdout), {"combined_score": 0.0, "valid": 1.0}
+        )
+
     def test_source_data_hash_orientation_and_condition_cells_are_pinned(self):
         path = TASK / "data" / "pryor_ligation_counts_v1.json"
         self.assertEqual(
@@ -65,6 +98,33 @@ class GoldenGateAssemblyFrontierTests(unittest.TestCase):
             ):
                 EVALUATOR._public_problem(EVALUATOR._DEVELOPMENT_PROFILES[0])
         EVALUATOR._source_data.cache_clear()
+
+    def test_builder_source_replay_receipt_is_bound_and_not_overclaimed(self):
+        source = json.loads(
+            (TASK / "data" / "pryor_ligation_counts_v1.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        receipt = json.loads(
+            (
+                TASK / "references" / "pryor_ligation_counts_replay_receipt_v1.json"
+            ).read_text(encoding="utf-8")
+        )
+        self.assertEqual(receipt["builder_source_replay_status"], "pass")
+        self.assertEqual(receipt["independent_source_replay_status"], "pending")
+        self.assertEqual(receipt["derived_output_sha256"], EVALUATOR.DATA_SHA256)
+        self.assertIn("not an independent scientific review", receipt["claim_limit"])
+        self.assertEqual(len(receipt["source_tables"]), 4)
+        for row in receipt["source_tables"]:
+            with self.subTest(condition=row["condition"]):
+                condition = source["conditions"][row["condition"]]
+                self.assertEqual(row["source_url"], condition["url"])
+                self.assertEqual(row["source_sha256"], condition["xlsx_sha256"])
+                self.assertEqual(
+                    (row["matrix_rows"], row["matrix_columns"]), (256, 256)
+                )
+                self.assertEqual(row["orientation_check"], "pass")
+                self.assertTrue(row["mirror_exact_cell_match"])
 
     def test_published_bidirectional_pool_formula_is_recomputed_independently(self):
         source = EVALUATOR._source_data()
@@ -116,6 +176,69 @@ class GoldenGateAssemblyFrontierTests(unittest.TestCase):
                     for fragment in submission["fragments"][1:]
                 )
                 self.assertEqual(reconstructed, problem["target_sequence"])
+
+    def test_each_world_resets_candidate_state_and_hides_split_identity(self):
+        class StatefulCandidate:
+            def __init__(self):
+                self.calls_since_reset = 0
+                self.reset_count = 0
+                self.public_keys = []
+
+            def reset_session(self):
+                self.calls_since_reset = 0
+                self.reset_count += 1
+
+            def __call__(self, problem):
+                self.public_keys.append(set(problem))
+                self.calls_since_reset += 1
+                if self.calls_since_reset != 1:
+                    return {}
+                return SOLUTION.design_assembly(problem)
+
+        candidate = StatefulCandidate()
+        result = EVALUATOR.evaluate(candidate)
+        self.assertEqual(candidate.reset_count, 5)
+        self.assertEqual(result["feasibility_rate"], 1.0)
+        self.assertTrue(
+            all("instance_id" not in keys for keys in candidate.public_keys)
+        )
+
+    def test_heldout_completion_and_validity_are_reported_independently(self):
+        def candidate_with_valid_heldout():
+            calls = {"count": 0}
+
+            def candidate(problem):
+                calls["count"] += 1
+                if calls["count"] <= 3:
+                    return {}
+                return SOLUTION.design_assembly(problem)
+
+            return candidate
+
+        invalid_development = EVALUATOR.evaluate(candidate_with_valid_heldout())
+        self.assertEqual(invalid_development["valid"], 0.0)
+        self.assertEqual(invalid_development["development_valid_count"], 0)
+        self.assertEqual(invalid_development["development_invalid_count"], 3)
+        self.assertEqual(invalid_development["heldout_complete"], 1.0)
+        self.assertEqual(invalid_development["heldout_valid_count"], 2)
+        self.assertEqual(invalid_development["heldout_invalid_count"], 0)
+        self.assertEqual(invalid_development["heldout_feasibility_rate"], 1.0)
+
+        calls = {"count": 0}
+
+        def candidate_with_invalid_heldout(problem):
+            calls["count"] += 1
+            if calls["count"] > 3:
+                return {}
+            return SOLUTION.design_assembly(problem)
+
+        invalid_heldout = EVALUATOR.evaluate(candidate_with_invalid_heldout)
+        self.assertEqual(invalid_heldout["valid"], 1.0)
+        self.assertEqual(invalid_heldout["development_valid_count"], 3)
+        self.assertEqual(invalid_heldout["heldout_complete"], 1.0)
+        self.assertEqual(invalid_heldout["heldout_valid_count"], 0)
+        self.assertEqual(invalid_heldout["heldout_invalid_count"], 2)
+        self.assertEqual(invalid_heldout["heldout_feasibility_rate"], 0.0)
 
     def test_empty_mutated_and_restriction_incompatible_artifacts_fail_closed(self):
         problem = EVALUATOR._public_problem(EVALUATOR._DEVELOPMENT_PROFILES[0])

@@ -14,7 +14,7 @@ import importlib.util
 import json
 import math
 import random
-from functools import cache, lru_cache
+from functools import lru_cache
 from pathlib import Path
 
 OVERHANG_LENGTH = 4
@@ -22,7 +22,7 @@ DNA = frozenset("ACGT")
 DATA_PATH = (
     Path(__file__).resolve().parents[1] / "data" / "pryor_ligation_counts_v1.json"
 )
-DATA_SHA256 = "2ec0191f2ca3a8c87c5a63f8080dc03876e29965aa06e7b3faf0cb2820e7dfb5"
+DATA_SHA256 = "f6cf8c7ff9cf73a85e56085092c0cc725b01dbf7f3c77ce9a840c312b4486f50"
 ENZYME_RECOGNITION_SITES = {
     "BsaI-HFv2": "GGTCTC",
     "BsmBI-v2": "CGTCTC",
@@ -116,7 +116,6 @@ def _target(profile: dict) -> str:
 def _public_problem(profile: dict) -> dict:
     source = _source_data()
     return {
-        "instance_id": profile["id"],
         "target_sequence": _target(profile),
         "fragment_count": profile["fragment_count"],
         "fragment_length_bounds": list(profile["fragment_length_bounds"]),
@@ -432,7 +431,7 @@ def _reference_callable():
     return module.design_assembly
 
 
-@cache
+@lru_cache(maxsize=None)  # noqa: UP033 - canonical trusted runtime is Python 3.8
 def _anchors(instance_id: str) -> tuple[float, float]:
     profile = next(
         row
@@ -459,6 +458,9 @@ def _score_world(design_assembly, profile: dict, split: str) -> dict:
         "reference_log_fidelity": reference,
     }
     try:
+        reset_session = getattr(design_assembly, "reset_session", None)
+        if callable(reset_session):
+            reset_session()
         submission = design_assembly(copy.deepcopy(problem))
         value, error = _validate(problem, submission)
         if error or value is None:
@@ -496,13 +498,25 @@ def evaluate(design_assembly) -> dict:
         _score_world(design_assembly, row, "heldout") for row in _HELDOUT_PROFILES
     ]
     all_rows = development + heldout
+    development_valid = sum(row["valid"] for row in development)
+    heldout_valid = sum(row["valid"] for row in heldout)
     return {
         "combined_score": sum(row["instance_score"] for row in development)
         / len(development),
         "robustness_score": sum(row["instance_score"] for row in heldout)
         / len(heldout),
-        "valid": 1.0 if all(row["valid"] for row in development) else 0.0,
+        "valid": 1.0 if development_valid == len(development) else 0.0,
         "feasibility_rate": sum(row["valid"] for row in all_rows) / len(all_rows),
+        "development_complete": 1.0,
+        "development_complete_count": len(development),
+        "development_valid_count": development_valid,
+        "development_invalid_count": len(development) - development_valid,
+        "development_feasibility_rate": development_valid / len(development),
+        "heldout_complete": 1.0,
+        "heldout_complete_count": len(heldout),
+        "heldout_valid_count": heldout_valid,
+        "heldout_invalid_count": len(heldout) - heldout_valid,
+        "heldout_feasibility_rate": heldout_valid / len(heldout),
         "mean_predicted_fidelity": sum(row["predicted_fidelity"] for row in all_rows)
         / len(all_rows),
         "instances_beating_reference": sum(

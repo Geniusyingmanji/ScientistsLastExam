@@ -1,9 +1,9 @@
 domain: SyntheticBiology
 task: GoldenGateAssemblyFrontier
 scientific_role: optimization
-difficulty: uncalibrated_candidate
+difficulty: unmeasured
 tier: candidate
-oracle_type: real_data_replay
+oracle_type: dataset_oracle
 score_mode: uncapped
 gpu_required: false
 eval_time_seconds: 30

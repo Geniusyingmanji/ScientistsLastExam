@@ -49,7 +49,6 @@ families, so choosing the matrix is part of the design rather than a decorative 
 
 | key | meaning |
 |---|---|
-| `instance_id` | stable synthetic target identifier |
 | `target_sequence` | complete noncoding A/C/G/T construct to reproduce exactly |
 | `fragment_count` | fixed required number of fragments, currently 14--17 |
 | `fragment_length_bounds` | inclusive oligo length bounds, including each four-base overlap |
@@ -97,6 +96,11 @@ higher measured fidelity can score above 1. `combined_score` averages the three 
 targets; `robustness_score` reports the two held-out targets. Feasibility, predicted fidelity,
 chosen condition and the number of instances beating the reference remain separate. Invalid
 submissions score zero for that target and never receive a small-pool reward.
+`development_complete`, `development_valid_count`, `development_invalid_count` and
+`development_feasibility_rate` describe the public panel. The parallel `heldout_complete`,
+`heldout_valid_count`, `heldout_invalid_count` and `heldout_feasibility_rate` fields are computed
+from held-out calls regardless of development validity; failure on one split cannot erase or
+upgrade the other split's execution record.
 
 The reference is not claimed optimal. A wider deterministic search scores `1.014924` on the
 development mean because it improves one target, while falling to `0.660575` on the two held-out

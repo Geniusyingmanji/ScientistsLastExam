@@ -19,7 +19,10 @@ Pryor JM et al., *PLOS ONE* 15:e0238592 (2020), DOI
 
 Each workbook is 257 by 257 including labels, hence a 256 by 256 count matrix. Row labels equal the
 reverse complements of the lexicographically ordered column labels. The sparse 24-class extraction
-has SHA-256 `2ec0191f2ca3a8c87c5a63f8080dc03876e29965aa06e7b3faf0cb2820e7dfb5`.
+has SHA-256 `f6cf8c7ff9cf73a85e56085092c0cc725b01dbf7f3c77ce9a840c312b4486f50`.
+`references/extract_pryor_ligation_counts.py` rebuilds it from prefetched source files and optionally
+checks all cells against the fixed OMEGA `160be2f` CSV mirror. The committed replay receipt records
+a successful builder replay and explicitly leaves independent source replay pending.
 
 ## 3. Measured anchors
 

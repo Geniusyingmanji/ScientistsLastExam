@@ -45,8 +45,9 @@ review:
     Candidate code runs across the standard trusted-driver boundary; validation and ligation data
     stay in the trusted evaluator. Submission size is bounded by target and fragment counts.
   reference_implementation_verified: >-
-    truth-blind and public-input-only; orientation and all extracted cells were independently
-    checked against the original PLOS workbooks and a fixed third-party CSV mirror
+    truth-blind and public-input-only; the builder replay checked orientation and every source
+    cell against the original PLOS workbooks and a fixed third-party CSV mirror; independent
+    source replay remains pending
 provenance:
   class: public_data_replay
   target_source: >-
@@ -76,10 +77,11 @@ construction_audit:
   reviewer_domain: pending_external_synthetic_biology_and_dna_assembly
   expert_hours: null
   red_team_rounds: 1
-  oracle_disagreement_status: zero_disagreement_across_all_four_256_by_256_tables
+  oracle_disagreement_status: builder_observed_zero_disagreement_across_all_four_256_by_256_tables
   independent_recomputation_status: >-
-    workbook dimensions, orientation, counts, formula anchors, exact reconstruction, and malformed
-    submissions independently recomputed in tests
+    pending independent source replay; the committed lightweight extractor and builder receipt
+    reproduce workbook hashes, dimensions, orientation, sparse extraction, mirror equality and
+    the derived data hash without bundling the four XLSX files
 long_horizon:
   status: not_tested
   measurement_health_passed: false
