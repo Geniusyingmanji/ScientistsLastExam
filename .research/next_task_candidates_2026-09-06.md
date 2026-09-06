@@ -73,3 +73,21 @@ in every branch, which is what makes the refusal axis trustworthy rather than a 
 
 Build order: this one before the turbulence closure, because it needs no solver and its verifier is
 exact in all three branches.
+
+
+## Revision after prototyping the Mathematics x evidence design
+
+Prototyped and set aside for now. The controllable construction that survived - a predicate
+`(a*n + b) mod M >= T` whose least failure can be placed anywhere, is provable-for-all-n when the
+reachable residues miss `[0, T)`, and rewards solving the congruence over brute search - is clean
+and exactly checkable in all three branches. But it is a *constructed puzzle* that reproduces the
+shape of a famous phenomenon rather than an open problem a field is working on, and the goal here
+asks for the latter. Recorded rather than built; the design is above and stands if the priority
+changes.
+
+**Building Engineering x formula instead.** Engineering has sixteen tasks and every one of them is
+`engineering_design` - the most lopsided discipline in the inventory - and data-driven turbulence
+closure is a genuinely field-wide open problem with a large live literature. It also lands squarely
+on the cell's definition, "recover a law, or refuse when no law in the family holds": the refusal
+case is the one the literature is quietest about, where the data constrains the closure only in the
+region it sampled and several forms fit it equally.
