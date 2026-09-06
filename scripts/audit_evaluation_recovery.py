@@ -48,7 +48,7 @@ def _sha256(path: Path) -> str:
 def _run_fault(mode: str, workdir: Path) -> dict[str, Any]:
     command = [
         sys.executable,
-        str(WORKER),
+        str(WORKER.relative_to(ROOT)),
         "--mode", mode,
         "--workdir", str(workdir),
     ]
@@ -217,7 +217,7 @@ def _audit_direct_mode(root: Path, mode: str) -> dict[str, Any]:
 def _audit_run_lease(root: Path) -> dict[str, Any]:
     workdir = root / "concurrent_run_lease"
     command = [
-        sys.executable, str(WORKER), "--mode", "hold_run_lease",
+        sys.executable, str(WORKER.relative_to(ROOT)), "--mode", "hold_run_lease",
         "--workdir", str(workdir),
     ]
     process = subprocess.Popen(
