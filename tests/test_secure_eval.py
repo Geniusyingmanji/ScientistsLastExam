@@ -4,6 +4,12 @@ import dataclasses
 import json
 import hashlib
 import math
+import os
+import platform
+import signal
+import struct
+import subprocess
+import sys
 import tempfile
 import textwrap
 import unittest
@@ -446,10 +452,123 @@ class SecureEvaluationTests(unittest.TestCase):
             self.assertEqual(result.get("infrastructure_failure"), 1.0)
 
 
+
+class SeccompFilterTests(unittest.TestCase):
+    """Interpret the emitted BPF, then exercise it in disposable native processes."""
+
+    def program(self, machine):
+        with patch("sle.secure_eval.platform.machine", return_value=machine):
+            fd = _seccomp_no_processes()
+        try:
+            return os.read(fd, 4096)
+        finally:
+            os.close(fd)
+
+    def action(self, program, arch, nr):
+        instructions = list(struct.iter_unpack("=HBBI", program))
+        data = struct.pack("=II", nr, arch)
+        accumulator, pc = 0, 0
+        for _ in range(len(instructions)):
+            opcode, jt, jf, constant = instructions[pc]
+            if opcode == 0x20:  # LD W ABS
+                accumulator = struct.unpack_from("=I", data, constant)[0]
+            elif opcode in (0x15, 0x35):  # JEQ K / JGE K, offsets relative to next insn
+                condition = accumulator == constant if opcode == 0x15 else accumulator >= constant
+                pc += jt if condition else jf
+            elif opcode == 0x06:  # RET K
+                return constant
+            else:
+                self.fail("unexpected BPF opcode")
+            pc += 1
+        self.fail("filter did not return")
+
+    def test_native_tables_and_foreign_abis(self):
+        # AArch64/i386 are code-level checks, not native execution on this host.
+        tables = [
+            (("x86_64", "amd64"), 0xC000003E, {56, 57, 58, 435}),
+            (("aarch64", "arm64"), 0xC00000B7, {220, 435}),
+            (("i386", "i686", "x86"), 0x40000003, {2, 120, 190, 435}),
+        ]
+        for aliases, arch, blocked in tables:
+            for machine in aliases:
+                with self.subTest(machine=machine):
+                    program = self.program(machine)
+                    self.assertEqual(set(_blocked_process_syscalls(machine)), blocked)
+                    for nr in range(513):
+                        expected = 0x00050001 if nr in blocked else 0x7FFF0000
+                        self.assertEqual(self.action(program, arch, nr), expected, nr)
+                    for foreign in {0, 0xC000003E, 0xC00000B7, 0x40000003} - {arch}:
+                        for nr in (0, 2, 20, 39, 56, 120, 220, 435):
+                            self.assertEqual(self.action(program, foreign, nr), 0x80000000)
+
+    def test_x32_and_high_syscall_numbers_are_killed(self):
+        for machine in ("x86_64", "amd64"):
+            program = self.program(machine)
+            for nr in (0, 39, 56, 57, 58, 435):
+                self.assertEqual(self.action(program, 0xC000003E, 0x40000000 | nr), 0x80000000)
+            self.assertEqual(self.action(program, 0xC000003E, 0x3FFFFFFF), 0x7FFF0000)
+            self.assertEqual(self.action(program, 0xC000003E, 0xFFFFFFFF), 0x80000000)
+
+    def test_unknown_architecture_fails_before_allocating_filter(self):
+        with patch("sle.secure_eval.platform.machine", return_value="unknown-cpu"), \
+             patch("sle.secure_eval.os.memfd_create", create=True) as allocate:
+            with self.assertRaisesRegex(RuntimeError, "unsupported architecture"):
+                _seccomp_no_processes()
+            allocate.assert_not_called()
+
+    @unittest.skipUnless(sys.platform == "linux" and platform.machine().lower() in {"x86_64", "amd64"}
+                         and struct.calcsize("P") == 8, "requires native Linux x86_64")
+    def test_kernel_enforces_native_arch_and_x32_guards(self):
+        # Only harmless getpid calls cross ABIs. No compat fork/clone is ever executed.
+        # seccomp filters and executable mappings are confined to short-lived children.
+        script = r"""
+import ctypes, mmap, os, resource, sys
+resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
+class Filter(ctypes.Structure):
+    _fields_ = [('code', ctypes.c_ushort), ('jt', ctypes.c_ubyte),
+                ('jf', ctypes.c_ubyte), ('k', ctypes.c_uint32)]
+class Program(ctypes.Structure):
+    _fields_ = [('length', ctypes.c_ushort), ('filter', ctypes.POINTER(Filter))]
+raw = bytes.fromhex(sys.argv[1])
+filters = (Filter * (len(raw)//8)).from_buffer_copy(raw)
+program = Program(len(filters), filters)
+libc = ctypes.CDLL(None, use_errno=True)
+libc.syscall.restype = ctypes.c_long
+mode = sys.argv[2]
+if mode == 'compat':
+    code = mmap.mmap(-1, mmap.PAGESIZE, prot=mmap.PROT_READ | mmap.PROT_WRITE | mmap.PROT_EXEC)
+    code.write(bytes.fromhex('b814000000cd80c3'))  # mov eax,20; int 0x80; ret (i386 getpid)
+    compat_getpid = ctypes.CFUNCTYPE(ctypes.c_int)(ctypes.addressof(ctypes.c_char.from_buffer(code)))
+    assert compat_getpid() == os.getpid(), 'i386 getpid control failed before installing filter'
+for option, arg in ((38, 1), (22, 2)):  # NO_NEW_PRIVS; SECCOMP_MODE_FILTER
+    pointer = ctypes.byref(program) if option == 22 else 0
+    if libc.prctl(option, arg, pointer, 0, 0) != 0:
+        raise OSError(ctypes.get_errno(), 'prctl failed')
+if mode == 'native':
+    assert libc.syscall(39) == os.getpid()
+    with open('/dev/null', 'rb') as stream:
+        assert stream.read() == b''
+elif mode == 'x32':
+    libc.syscall(0x40000000 | 39)
+elif mode == 'compat':
+    compat_getpid()
+else:
+    raise AssertionError(mode)
+"""
+        program = self.program("x86_64").hex()
+        for mode in ("native", "x32", "compat"):
+            with self.subTest(mode=mode):
+                result = subprocess.run([sys.executable, "-c", script, program, mode],
+                                        capture_output=True, text=True, timeout=10)
+                expected = 0 if mode == "native" else -signal.SIGSYS
+                self.assertEqual(result.returncode, expected, result.stderr)
+
+
 class CodecTests(unittest.TestCase):
     def test_process_syscalls_are_architecture_specific(self):
         self.assertEqual(_blocked_process_syscalls("x86_64"), (56, 57, 58, 435))
         self.assertEqual(_blocked_process_syscalls("aarch64"), (220, 435))
+        self.assertEqual(_blocked_process_syscalls("i386"), (2, 120, 190, 435))
         with self.assertRaises(RuntimeError):
             _blocked_process_syscalls("unknown-cpu")
 

@@ -179,12 +179,33 @@ def _seccomp_no_processes() -> int:
     untrusted code single-process and single-threaded; numeric libraries are configured
     for one thread, so benchmark candidates do not need these syscalls.
     """
-    # BPF_LD|BPF_W|BPF_ABS; BPF_JMP|BPF_JEQ|BPF_K; BPF_RET|BPF_K.
-    load_nr, jump_eq, ret = 0x20, 0x15, 0x06
+    # Select the expected native ABI, then verify it for every syscall. machine()
+    # alone cannot prevent a process from issuing calls through a compatibility ABI.
+    # Native AArch64 and i386 execution have not been tested on this host;
+    # those filter paths have code-level coverage, not native runtime validation.
+    architecture = platform.machine().lower()
+    syscalls = _blocked_process_syscalls(architecture)  # Unknown CPUs fail closed.
+    # AUDIT_ARCH_* from linux/audit.h: ELF machine ID | 64-bit flag | LE flag.
+    audit_arch = {
+        "x86_64": 0xC000003E, "amd64": 0xC000003E,
+        "aarch64": 0xC00000B7, "arm64": 0xC00000B7,
+        "i386": 0x40000003, "i686": 0x40000003, "x86": 0x40000003,
+    }[architecture]
+    # BPF_LD|BPF_W|BPF_ABS; BPF_JMP|BPF_JEQ/JGE|BPF_K; BPF_RET|BPF_K.
+    load_w, jump_eq, jump_ge, ret = 0x20, 0x15, 0x35, 0x06
+    seccomp_kill_process = 0x80000000
     seccomp_allow = 0x7FFF0000
     seccomp_errno_eperm = 0x00050000 | 1
-    syscalls = _blocked_process_syscalls()
-    filters = [(load_nr, 0, 0, 0)]
+    filters = [
+        (load_w, 0, 0, 4),  # seccomp_data.arch
+        (jump_eq, 1, 0, audit_arch),  # Matching ABI skips KILL; mismatch falls through.
+        (ret, 0, 0, seccomp_kill_process),
+        (load_w, 0, 0, 0),  # seccomp_data.nr
+    ]
+    if architecture in {"x86_64", "amd64"}:
+        # x32 shares AUDIT_ARCH_X86_64 but sets __X32_SYSCALL_BIT in the number.
+        filters.extend(((jump_ge, 0, 1, 0x40000000),
+                        (ret, 0, 0, seccomp_kill_process)))
     for syscall_nr in syscalls:
         filters.extend(((jump_eq, 0, 1, syscall_nr), (ret, 0, 0, seccomp_errno_eperm)))
     filters.append((ret, 0, 0, seccomp_allow))
