@@ -64,6 +64,7 @@ CHINESE_NAMES = {
     "Mathematics/CapSetFrontier": "Cap Set 未证明维度",
     "Mathematics/ErdosMinimumOverlap": "Erdős 最小重叠划分",
     "Mathematics/HeilbronnTrianglePacking": "Heilbronn 三角形点集",
+    "Mathematics/HeavyTailEvidence": "重尾证据判别",
     "Mathematics/KissingNumber": "接触数构造",
     "Mathematics/NarrowAdmissibleTuple": "窄可容许素数元组",
     "Mathematics/RamseyLowerBound": "Ramsey 下界染色",
@@ -207,6 +208,9 @@ CHINESE_BRIEFS = {
     "Mathematics/HeilbronnTrianglePacking": (
         "在单位正方形内放 n 个点,让任意 3 点构成的三角形最小面积尽量大——经典的 Heilbronn 三角形问题",
         "对 Erich's Packing Center 维护的记录表的平均进度;n=8 已证明最优(硬上限,已披露),n=10、n=11、n=12 仅是最好已知记录,真实无上限"),
+    "Mathematics/HeavyTailEvidence": (
+        "在已知 xmin 下判断样本是幂律还是对数正态;指数截断或样本过短须拒答",
+        "家族恢复 + 截断/小样本拒答;不是质量窗口的 look-elsewhere,也不是不相容常数调和"),
     "Mathematics/KissingNumber": (
         "在 9、10、12 维构造更多与中心球相切的单位球",
         "固定容差下对最好已知接触数的平均进度;无上限"),

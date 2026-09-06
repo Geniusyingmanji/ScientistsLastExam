@@ -464,6 +464,15 @@ tasks:
     citation_ids:
       - arxiv:2601.20996
       - doi:10.1103/PhysRevB.78.104102
+  Mathematics/HeavyTailEvidence:
+    status: candidate
+    reason: >-
+      Evidence cell that is not a LookElsewhere bump hunt and not discrepant
+      constants: a Clauset-style sample is a power law or a lognormal, and an
+      exponential cutoff or a too-small sample must be refused. The alpha=2
+      baseline never declines. Candidate, not certified. No frontier searcher draw.
+    citation_ids:
+      - doi:10.1137/070710111
   Mathematics/RamseyLowerBound:
     status: candidate
     reason: >-
