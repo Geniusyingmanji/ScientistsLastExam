@@ -170,3 +170,50 @@ def test_precision_endpoints_and_geometry_perfect_witness():
     score, valid = geometry._score_output(0, p, dict(coordinates=xyz.tolist()))
     assert valid and score == pytest.approx(1)
     assert geometry._score_output(0, p, dict(coordinates=np.zeros_like(xyz).tolist()))[0] < .01
+
+
+@pytest.mark.parametrize('name,values,keys', [
+    ('SingleMoleculeKinetics', (.1, 400), ('exposure', 'length')),
+    ('IsotopeFluxIdentifiability', ('full', [0]), ('tracer_id', 'time_ids')),
+])
+@pytest.mark.parametrize('bad_call', ['missing', 'extra', 'unknown', 'duplicate'])
+def test_caught_callback_binding_errors_permanently_invalidate(name, values, keys, bad_call):
+    m = module(name)
+    def misuse(lab):
+        if bad_call == 'missing':
+            lab(values[0])
+        elif bad_call == 'extra':
+            lab(*values, None)
+        elif bad_call == 'unknown':
+            lab(unexpected_keyword=True)
+        else:
+            lab(*values, **{keys[0]: values[0]})
+    lab = m._Lab(0)
+    with pytest.raises(TypeError):
+        misuse(lab)
+    assert lab.violated and lab.spent == lab.calls == 0
+    def caught(problem, callback):
+        try:
+            misuse(callback)
+        except TypeError:
+            pass
+        callback(**dict(zip(keys, values)))
+        if name == 'SingleMoleculeKinetics':
+            return dict(abstain=True, rates=[], efficiencies=[], confidence=.5)
+        return dict(abstain=True, fluxes={}, confidence=.5)
+    result = m.evaluate(caught)
+    assert result['valid'] == result['combined_score'] == 0
+    assert all(not row['valid'] for row in result['per_world'])
+
+
+@pytest.mark.parametrize('name,values,keys', [
+    ('SingleMoleculeKinetics', (.1, 400), ('exposure', 'length')),
+    ('IsotopeFluxIdentifiability', ('full', [2, 0, 1]), ('tracer_id', 'time_ids')),
+])
+def test_callback_keyword_and_mixed_arguments_preserve_observations(name, values, keys):
+    m = module(name)
+    positional, keyword, mixed = [m._Lab(0) for _ in range(3)]
+    expected = positional(*values)
+    assert keyword(**dict(zip(keys, values))) == expected
+    assert mixed(values[0], **{keys[1]: values[1]}) == expected
+    assert not any(lab.violated for lab in (positional, keyword, mixed))

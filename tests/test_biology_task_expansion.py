@@ -1,4 +1,4 @@
-"""Executable validity checks for the five biology expansion prototypes."""
+"""Executable validity checks for the first biology expansion prototypes."""
 from __future__ import annotations
 import importlib.util
 import sys
@@ -181,6 +181,39 @@ print(json.dumps([ev.evaluate(getattr(base,entry)),ev.evaluate(getattr(ref,entry
         self.assertGreater(metrics["development_false_discovery_rate"],0.0)
         self.assertLess(metrics["combined_score"],self.loaded["MetagenomeCompositionAssignment"][3]["combined_score"])
         self.assertLess(metrics["heldout_scientific_score"],self.loaded["MetagenomeCompositionAssignment"][3]["heldout_scientific_score"])
+
+    def test_metagenome_absent_alias_groups_reduce_supported_credit(self):
+        ev=self.loaded["MetagenomeCompositionAssignment"][0]
+        ref=load(BIO/"MetagenomeCompositionAssignment"/"verification/reference_assignment.py","meta_group_ref")
+        def extra(p,sequence):
+            out=ref.assign_composition(p,sequence)
+            if not out["abstain"] and not out["ambiguous_groups"]:
+                out["ambiguous_groups"]=[["t0","t1"]]
+            return out
+        clean=ev.evaluate(ref.assign_composition)
+        result=ev.evaluate(extra)
+        self.assertEqual(result["valid"],1.)
+        self.assertLess(result["combined_score"],clean["combined_score"])
+        self.assertLess(result["heldout_scientific_score"],clean["heldout_scientific_score"])
+        for before,after in zip(clean["per_world"],result["per_world"]):
+            if before["kind"]=="supported":
+                self.assertEqual(after["false"],before["false"]+1)
+                self.assertEqual(after["claimed"],before["claimed"]+1)
+                self.assertLess(after["scientific"],before["scientific"])
+            else:
+                self.assertEqual(before,after)
+
+    def test_metagenome_group_only_claims_count_in_false_discovery_rate(self):
+        ev=self.loaded["MetagenomeCompositionAssignment"][0]
+        result=ev.evaluate(lambda p,s:dict(taxa=[],ambiguous_groups=[["t0","t1"]],abstain=False))
+        self.assertEqual(result["valid"],1.)
+        self.assertEqual(result["development_false_discovery_count"],1)
+        self.assertEqual(result["development_unsupported_claim_count"],3)
+        self.assertAlmostEqual(result["development_false_discovery_rate"],1/3)
+        for row in result["per_world"]:
+            self.assertEqual(row["claimed"],1)
+            self.assertEqual(row["false"],int(row["kind"]!="alias"))
+            self.assertEqual(row["scientific"],.5 if row["kind"]=="alias" else 0.)
 
     def test_fedbatch_rejects_malformed_schedule_values_without_crashing(self):
         ev=self.loaded["FedBatchBioprocessDesign"][0]

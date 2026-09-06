@@ -82,14 +82,14 @@ def evaluate(assign_composition):
             mechanism=(.5*alias_ok + .5*abundance_quality)*precision
             refusal=float(alias_ok)
         elif kind=="out_of_library":
-            mechanism=0.0; false=len(taxa); refusal=float(abstain)
+            mechanism=0.0; false=len(taxa)+len(groups); refusal=float(abstain)
         else:
-            common=set(taxa)&set(truth); precision=len(common)/max(1,len(taxa)); recall=len(common)/len(truth)
+            common=set(taxa)&set(truth); precision=len(common)/max(1,len(taxa)+len(groups)); recall=len(common)/len(truth)
             setscore=2*precision*recall/max(1e-12,precision+recall)
             abundance=1-np.mean([min(1,abs(taxa[x]-truth[x])/problem["abundance_tolerance"]) for x in sorted(common)]) if common else 0
-            mechanism=.7*setscore+.3*abundance; false=len(set(taxa)-set(truth)); refusal=0.0
+            mechanism=.7*setscore+.3*abundance; false=len(set(taxa)-set(truth))+len(groups); refusal=0.0
         scientific=mechanism if kind!="out_of_library" else refusal
-        rows.append({"kind":kind,"valid":valid,"mechanism":mechanism,"false":false,"claimed":len(taxa),
+        rows.append({"kind":kind,"valid":valid,"mechanism":mechanism,"false":false,"claimed":len(taxa)+len(groups),
                      "refusal":refusal,"coverage":float(bool(taxa) or bool(groups)),"scientific":scientific})
     dev=[rows[i] for i in DEV]; held=[rows[i] for i in HELD]; floor=sum(r["kind"]=="out_of_library" for r in dev)/len(dev)
     raw=float(np.mean([r["scientific"] for r in dev])); combined=max(0,(raw-floor)/(1-floor))

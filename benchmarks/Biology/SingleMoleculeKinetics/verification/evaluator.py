@@ -25,7 +25,16 @@ class _Lab:
     def __init__(self, index):
         self.index, self.spent, self.calls, self.violated = index, 0, 0, False
 
-    def __call__(self, exposure, length):
+    def __call__(self, *args, **kwargs):
+        # Bind arguments inside the guarded call so caught arity errors also
+        # permanently invalidate the world, just like invalid values.
+        try:
+            return self._acquire(*args, **kwargs)
+        except (TypeError, ValueError, RuntimeError):
+            self.violated = True
+            raise
+
+    def _acquire(self, exposure, length):
         if type(exposure) not in (int, float) or exposure not in (.1, .2, .4) or type(length) is not int or length != 400:
             self.violated = True
             raise ValueError("invalid acquisition")

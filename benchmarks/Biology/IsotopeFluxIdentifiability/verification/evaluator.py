@@ -46,7 +46,16 @@ class _Lab:
     def __init__(self, index):
         self.index, self.spent, self.calls, self.violated = index, 0, 0, False
 
-    def __call__(self, tracer_id, time_ids):
+    def __call__(self, *args, **kwargs):
+        # Bind arguments inside the guarded call so caught arity errors also
+        # permanently invalidate the world, just like invalid values.
+        try:
+            return self._acquire(*args, **kwargs)
+        except (TypeError, ValueError, RuntimeError):
+            self.violated = True
+            raise
+
+    def _acquire(self, tracer_id, time_ids):
         if type(tracer_id) is not str or tracer_id not in ("full", "half") or not isinstance(time_ids, list) or not time_ids or any(type(i) is not int or not 0 <= i < 6 for i in time_ids) or len(set(time_ids)) != len(time_ids):
             self.violated = True
             raise ValueError("invalid trace acquisition")

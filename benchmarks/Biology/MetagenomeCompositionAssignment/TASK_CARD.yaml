@@ -24,7 +24,10 @@ invariants:
 - Taxon and marker permutations preserve scores.
 - False-discovery rates publish numerator and denominator.
 known_shortcuts: Regression probes add five false taxa to each alias-world reference output; every
-  extra claim is counted and reduces composition credit. The controlled marker abstraction omits
+  extra claim is counted and reduces composition credit. Absent alias groups also reduce supported-world
+  precision; group-only claims in library-inadequate worlds count toward false discoveries.
+  Each concrete taxon or alias group contributes one claim to the reported denominator.
+  The controlled marker abstraction omits
   read mapping, copy-number variation and real specimens; no sample-identification claim is supported.
 review:
   domain: pending_external_metagenomics

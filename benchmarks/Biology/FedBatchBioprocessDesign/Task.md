@@ -63,14 +63,17 @@ step's start time. This discrete simulator, including boundary conventions, defi
 frozen numerical objective. No independent integrator agreement is claimed yet.
 Any nonfinite state or component below -0.1 terminates that scenario with utility zero.
 At every completed step record the maximum acetate concentration. A scenario is feasible
-only if final V <= `maximum_volume_l` + 1e-6, maximum A <= `maximum_acetate_gpl`,
+only if final V <= `maximum_volume_l` + 1e-6, maximum A <= `maximum_acetate_gpl` + 1e-6,
 and final X*V >= `minimum_final_biomass_g`.
 
 Scenario utility is final P*V divided by harvest time (g/h); an infeasible scenario gets
 zero. Robust utility U is the minimum over the three public scenarios. The baseline uses
 feeds `[0.10, 0.10, 0.10]`, induction 10 h, harvest 20 h. The reference searches the 54
 combinations of feed rates in `{0.05, 0.14, 0.23}^3`, induction in `{7, 12}` h, and harvest
-22 h. Both are recomputed for the current public problem. Score is
-`clip((U-U_baseline)/max(1e-12, U_reference-U_baseline), 0, 1)`.
+22 h. This grid reference is a comparison solver, scoring about 0.516577.
+The upper anchor U_anchor is the robust utility of the world-specific frozen feasible
+schedule in `verification/evaluator.py::ANCHOR_DESIGNS`, obtained by Nelder-Mead
+refinement. Baseline and anchor utilities are recomputed for the current public problem.
+Score is `clip((U-U_baseline)/max(1e-12, U_anchor-U_baseline), 0, 1)`.
 `valid` and `feasibility_rate` currently describe submission-contract validity; physical
 constraint violations give zero utility and are not represented by these two fields.

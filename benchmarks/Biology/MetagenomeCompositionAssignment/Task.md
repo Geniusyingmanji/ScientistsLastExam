@@ -26,7 +26,11 @@ Return exactly:
 
 Taxa must be unique and abundances finite in [0,1]. Ambiguous groups must exactly match a declared
 known_alias_groups entry, cannot overlap concrete taxa, and earn credit jointly with the abundance
-of identifiable mixture members. In alias worlds, all extra unsupported concrete taxa
+of identifiable mixture members. Each reported group counts as one claim. A known alias
+group is not evidence that its members occur in the sample: in supported worlds an
+absent group reduces taxon-set precision and counts as a false claim; in library-inadequate
+worlds every taxon or group claim is false. Unsupported-world false-discovery rates
+count both concrete taxa and groups in their denominator. In alias worlds, all extra unsupported concrete taxa
 count as false discoveries and reduce composition credit through claim precision; a correct
 alias group does not excuse unrelated false species. Use abstain only when the reference library cannot explain the
 sample; then taxa and groups must be empty. The evaluator separately reports composition
