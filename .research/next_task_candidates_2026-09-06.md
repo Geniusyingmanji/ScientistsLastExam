@@ -46,3 +46,30 @@ both outcomes.
 - Discovery tasks must report `mechanism_score`, `false_discovery_rate`, `correct_refusal_rate` and
   `discovery_coverage` under exactly those names, with denominators; the cross-task tooling looks
   for them.
+
+## Design sketch for Mathematics × evidence
+
+The phenomenon: a conjecture can hold for hundreds of millions of cases and then fail. Pólya's
+conjecture is the canonical instance — least counterexample 906,150,257 — and Mertens' is worse.
+The scientific point is that **absence of a counterexample in a searched range is not evidence of
+truth** when the family is known to admit late failures, and the honest verdict is usually neither
+"holds" nor "fails".
+
+A first design made the task degenerate: if the only ways to answer are "found a counterexample" or
+"searched and found none", then "undecided" is always right in the absence of a find, and the task
+collapses to a search. The fix is to make **"holds" earn its keep**: some instances carry a
+checkable algebraic reason why the predicate holds for all `n`, and the searcher must produce it.
+Three verdicts then correspond to three genuinely different epistemic states:
+
+| verdict | what the searcher must supply | when it is correct |
+|---|---|---|
+| `holds` | a certificate the frozen checker verifies | the identity really does imply it |
+| `fails` | an explicit `n` the checker evaluates | a counterexample exists within reach |
+| `undecided` | nothing | no certificate exists and the least counterexample is out of budget |
+
+Scored on the usual triple, with naming a counterexample that does not check, or asserting `holds`
+without a valid certificate, both counting as false discoveries. Verification is exact and cheap
+in every branch, which is what makes the refusal axis trustworthy rather than a matter of taste.
+
+Build order: this one before the turbulence closure, because it needs no solver and its verifier is
+exact in all three branches.
