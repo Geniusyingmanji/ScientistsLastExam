@@ -33,7 +33,7 @@ provenance:
   license: procedural repository-local code; no external dataset bundled
 novelty_risk:
   level: medium
-  rationale: Standard periodic model fitting may transfer directly, while active scheduling and refusal remain task-specific.
+  rationale: Unlike Physics/RadialVelocityPlanets, this task attributes transit-timing residuals under an active follow-up schedule rather than detecting planets in a fixed radial-velocity series; unlike Physics/LookElsewhereAnomaly, refusal is triggered by physically unsupported or non-identifiable timing histories rather than insufficient global statistical significance, and the claimed object is a physical timing mechanism rather than an anomaly significance class.
 lineage:
   status: complete
   builder_model_ids:
