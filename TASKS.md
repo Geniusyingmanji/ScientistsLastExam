@@ -4,16 +4,16 @@
 
 | | |
 |---|---:|
-| 任务包 | 80 |
-| optimization | 41 |
+| 任务包 | 81 |
+| optimization | 42 |
 | discovery | 39 |
 | certified | 5 |
-| candidate | 75 |
-| 学科 | 7(Biology 7,Chemistry 13,ComputerScience 7,EarthScience 6,Engineering 12,Mathematics 19,Physics 16) |
+| candidate | 76 |
+| 学科 | 7(Biology 8,Chemistry 13,ComputerScience 7,EarthScience 6,Engineering 12,Mathematics 19,Physics 16) |
 
 认证描述的是证据质量,不是难度。标 on-ramp 的任务首个前沿模型提案已够到参考解,不用于配对 Δ 测量。
 
-## Optimization(41)
+## Optimization(42)
 
 ### 工程设计(engineering_design) — 16
 
@@ -58,10 +58,11 @@
 | [`ZarankiewiczMatrix`](benchmarks/Mathematics/ZarankiewiczMatrix/)<br>Zarankiewicz 极值矩阵 | Mathematics | Mathematics | uncapped | analytical | candidate | build a denser K3,3-free 0/1 matrix than the published record | 在三组给定的 (m,n) 规模上构造不含 3x3 全一子矩阵的更密 0/1 矩阵——2026 年 LLM 进化搜索(OpenEvolve,本仓库自带的搜索后端之一)刚刷新过的极值图论问题 | 对最新发表下界(z(m,n;3,3) 的已发表值)的平均进度;无上限,且这些是尚未被上界证明封顶的下界纪录 |
 | [`QuantumErrorDecoder`](benchmarks/Physics/QuantumErrorDecoder/)<br>表面码解码器 | Physics | QuantumErrorCorrection | uncapped | stim_stabilizer_circuit_sampling | candidate | decode rotated surface-code memory below threshold | 为旋转表面码存储设计阈值以下的解码器 | 相对最小权完美匹配的逻辑错误率对数下降;无上限 |
 
-### 分子与大分子设计(molecular_design) — 5
+### 分子与大分子设计(molecular_design) — 6
 
 | 任务 | 学科 | 领域 | 打分 | oracle | 认证 | 说明 | 中文题意 | 中文评估方法 |
 |---|---|---|---|---|---|---|---|---|
+| [`ProteinDistanceGeometry`](benchmarks/Biology/ProteinDistanceGeometry/)<br>蛋白主链距离几何 | Biology | StructuralBiology | clipped | frozen_procedural_model | candidate | Implement `build_conformation(problem) -> {"coordinates": [[x,y,z], ...]}`. | 构建满足距离、排斥和局部手性约束的粗粒化坐标 | 公开几何损失相对零损失锚点的质量 |
 | [`ProteinStabilityDesign`](benchmarks/Biology/ProteinStabilityDesign/)<br>蛋白稳定性批次设计 | Biology | ProteinEngineering | uncapped | real_data_replay | candidate | allocate assays and design a stable protein batch | 在蛋白稳定性实验回放里分配测定预算,设计双点突变批次 | 留出稳定性前十分位 + 多样性 + 蛋白酶稳健性 + 结构域迁移;无上限 |
 | [`RNAEnsembleDesign`](benchmarks/Biology/RNAEnsembleDesign/)<br>RNA 系综设计 | Biology | RNAEngineering | uncapped | community_thermodynamics_viennarna | candidate | Design an RNA sequence that folds into a given secondary structure — not merely as its | 设计 RNA 序列,使目标二级结构在整个玻尔兹曼系综上而非仅 MFE 上成立 | 对 ViennaRNA 反折叠的系综缺陷;密封目标,无上限 |
 | [`RNAInverseDesign`](benchmarks/Biology/RNAInverseDesign/)<br>RNA 约束反折叠 | Biology | RNAEngineering | uncapped | exact_dynamic_programming | candidate | design a constrained sequence for a target ensemble | 在长度、字母表、GC 与基序约束下设计目标系综概率高的 RNA 序列 | 目标系综概率 + MFE 迁移 + 代理误升迁;配对相容只是代理,无上限 |
