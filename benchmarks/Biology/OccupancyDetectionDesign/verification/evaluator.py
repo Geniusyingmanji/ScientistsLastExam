@@ -161,7 +161,7 @@ def _validate_submission(submission, query_ids):
         "abstain": False,
         "effect": effect,
         "beta": beta,
-        "prevalence": prevalence,
+        "mean_occupancy": prevalence,
         "confidence": confidence,
         "evidence": evidence,
     }
@@ -199,7 +199,7 @@ def _score_world(world, claim):
         return row
     beta_score = max(0.0, 1.0 - abs(claim["beta"] - world["beta"]) / EFFECT_TOLERANCE)
     prevalence = float(np.mean(world["psi"]))
-    prevalence_score = max(0.0, 1.0 - abs(claim["prevalence"] - prevalence) / OCCUPANCY_TOLERANCE)
+    prevalence_score = max(0.0, 1.0 - abs(claim["mean_occupancy"] - prevalence) / OCCUPANCY_TOLERANCE)
     row["habitat_effect_score"] = beta_score
     row["mean_occupancy_score"] = prevalence_score
     row["mechanism_score"] = 0.45 + 0.35 * beta_score + 0.20 * prevalence_score
