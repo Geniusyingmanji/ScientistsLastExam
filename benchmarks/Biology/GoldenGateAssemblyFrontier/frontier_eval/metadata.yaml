@@ -1,0 +1,13 @@
+domain: SyntheticBiology
+task: GoldenGateAssemblyFrontier
+scientific_role: optimization
+difficulty: uncalibrated_candidate
+tier: candidate
+oracle_type: real_data_replay
+score_mode: uncapped
+gpu_required: false
+eval_time_seconds: 30
+science_metric: mean_log_predicted_ligation_fidelity_progress_with_exact_reconstruction
+reference_baseline: evenly spaced target fragments using the nearest legal unused measured junction
+reference_sota: deterministic public-data beam search plus coordinate refinement; a witness, not an optimum
+citation: "Pryor et al., PLOS ONE 15:e0238592 (2020), DOI 10.1371/journal.pone.0238592, CC BY 4.0"
