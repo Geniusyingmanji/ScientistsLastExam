@@ -1,0 +1,14 @@
+domain: Biophysics
+task: SingleMoleculeKinetics
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: frozen_procedural_model
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 120
+science_metric: Two-state CTMC with instantaneous Poisson emissions and identifiable-rate claims
+reference_baseline: Legal zero-score baseline in solution.py
+reference_sota: Two-trace, two-start Baum-Welch CTMC reference; measured independently of scoring
+  endpoints.
+citation: 10.1016/j.bpj.2013.12.055
