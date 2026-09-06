@@ -51,7 +51,7 @@ def shortcut(site_limit, revisit, effect_threshold, alternative_threshold, beta_
         sites = [ordered[int(i)] for i in indices]
         rows = [survey(site["site_id"], "rapid") for site in sites]
         remaining = problem["survey_budget_units"] - len(rows)
-        cost = problem["survey_methods"][revisit]["cost"]
+        cost = problem["survey_methods"][revisit]
         count = min(len(sites), remaining // cost)
         revisit_indices = np.linspace(0, len(sites) - 1, count).round().astype(int)
         rows.extend(survey(sites[int(i)]["site_id"], revisit) for i in revisit_indices)

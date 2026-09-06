@@ -116,9 +116,7 @@ PUBLIC_PROBLEM = {
     "site_descriptors": None,
     "survey_budget_units": BUDGET,
     "max_visits_per_site": MAX_VISITS,
-    "survey_methods": {
-        key: {"cost": value["cost"]} for key, value in METHODS.items()
-    },
+    "survey_methods": {key: value["cost"] for key, value in METHODS.items()},
     "habitat_effect_bounds": list(EFFECT_BOUNDS),
     "supported_effects": ["positive", "negative", "none"],
     "effect_tolerance": EFFECT_TOLERANCE,

@@ -24,7 +24,7 @@ Implement `infer_occupancy(problem, survey)`.
 | `site_descriptors` | 48 mappings with `site_id`, `habitat_covariate`, `transect_position`, and `accessibility_index` |
 | `survey_budget_units` | total cost allowance, 84 |
 | `max_visits_per_site` | maximum number of surveys at one site, 3 |
-| `survey_methods` | mapping from `rapid` and `intensive` to their integer `cost` (1 and 2) |
+| `survey_methods` | exactly `{"rapid": 1, "intensive": 2}`, mapping each method to its integer cost |
 | `habitat_effect_bounds` | inclusive bounds for the reported logit-scale effect, `[-4, 4]` |
 | `supported_effects` | allowed labels: `positive`, `negative`, `none` |
 | `effect_tolerance` | absolute beta error where its continuous score reaches zero |

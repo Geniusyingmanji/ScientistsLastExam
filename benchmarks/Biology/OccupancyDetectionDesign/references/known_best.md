@@ -70,7 +70,11 @@ unstable. Expanding to 48 sites with a proportional 84-unit budget made both sup
 and model inadequacy identifiable. A second rejected design made rapid surveys too informative,
 allowing rapid-only repetition to beat the intended paired-method analysis. The final method
 contrast restores the value of intensive revisits. The shortcut sweep then exceeded the initial
-likelihood-only reference, motivating the fixed shrinkage estimator before any model draw.
+likelihood-only reference, motivating the fixed shrinkage estimator before any scored model draw.
+An excluded protocol draw then exposed an ambiguous public representation of method costs: model
+candidates treated the documented costs as integers while the callback supplied nested mappings.
+The public value was simplified to the documented integer mapping before scored calibration; this
+did not change the worlds, costs, observations, or scoring.
 
 ## Robustness
 

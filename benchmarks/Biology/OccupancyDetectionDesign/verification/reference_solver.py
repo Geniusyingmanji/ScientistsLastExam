@@ -70,7 +70,7 @@ def infer_with_policy(problem, survey, use_intensive=True, site_limit=24,
     rows = [survey(row["site_id"], "rapid") for row in descriptors]
     if use_intensive:
         remaining = problem["survey_budget_units"] - len(rows)
-        intensive_count = min(len(descriptors), remaining // problem["survey_methods"]["intensive"]["cost"])
+        intensive_count = min(len(descriptors), remaining // problem["survey_methods"]["intensive"])
         ordered = sorted(descriptors, key=lambda row: (row["transect_position"] + row["habitat_covariate"] * 0.17))
         indices = np.linspace(0, len(ordered) - 1, intensive_count).round().astype(int)
         rows.extend(survey(ordered[int(i)]["site_id"], "intensive") for i in indices)
