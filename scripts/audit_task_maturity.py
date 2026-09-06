@@ -67,8 +67,8 @@ PROVENANCE_CLASSES = {
     "prospective",
 }
 GLOBAL_REPORTS = {
-    "certification": "experiments/task_certification_audit_2026-09-06_v81.json",
-    "secure_baseline": "experiments/secure_baseline_determinism_2026-09-06_v64.json",
+    "certification": "experiments/task_certification_audit_2026-09-06_v82.json",
+    "secure_baseline": "experiments/secure_baseline_determinism_2026-09-06_v65.json",
     "security": "experiments/security_audit_2026-07-26_v47.json",
     "full_test_suite": "experiments/full_test_suite_2026-07-26_v23.json",
     "cross_task_calibration": "experiments/science_calibration_summary_2026-07-26_v31.json",
