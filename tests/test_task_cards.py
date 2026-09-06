@@ -35,6 +35,7 @@ RECORDED_LINEAGE = {
     "Exoplanets/TransmissionSpectrumSpecies",
     "DiscreteGeometry/SpherePackingCertificate",
     "QuantumFoundations/BellBoundCertificate",
+    "InformationTheory/ShannonCapacityCertificate",
     "QuantumControl/ActiveNoiseSpectroscopy",
     "Mathematics/NonlinearCodeRecords",
     "Mathematics/CapSetFrontier",

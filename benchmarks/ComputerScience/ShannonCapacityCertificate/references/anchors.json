@@ -1,0 +1,185 @@
+{
+ "retrieved": "2026-09-06",
+ "note": "Published numbers only. Nothing here is a measurement of this package; every value is quoted from the source named beside it. The two facts this package re-derives rather than trusts are marked under `reproduced_here`.",
+ "upper_bound": {
+  "quantity": "theta(C_n) = n cos(pi/n) / (1 + cos(pi/n))",
+  "source": "L. Lovasz, On the Shannon capacity of a graph, IEEE Transactions on Information Theory 25(1):1-7, 1979",
+  "doi": "10.1109/TIT.1979.1055985",
+  "values": {
+   "C7": 3.317667207394096,
+   "C13": 6.404168562937425,
+   "C19": 9.434771374446239,
+   "C23": 11.446193611907761
+  },
+  "standing": "No upper bound better than theta is known for the Shannon capacity of any odd cycle beyond C5. This is why the top of the certified interval is the same for a submission as for the literature, and why the task scores the bottom."
+ },
+ "published_lower_bounds": {
+  "source": "P. Buys, S. Polak and J. Zuiddam, Lean-verified lower bounds for the Shannon capacity of odd cycles, arXiv:2607.29681, submitted 31 July 2026",
+  "quoted_from": "the abstract, verbatim: Theta(C_7)>=3.258805369885..., Theta(C_13)>=6.302455083464..., Theta(C_19)>=9.357192705918..., Theta(C_23)>=11.328224257774...",
+  "values": {
+   "C7": 3.258805369885,
+   "C13": 6.302455083464,
+   "C19": 9.357192705918,
+   "C23": 11.328224257774
+  },
+  "note": "Each of these is worth exactly 1 on this task's scale, and none was reached at a power this task allows: the constructions behind them run to power 6 and beyond, and for C7 to power 200 by recursion. The scale is uncapped above anyway - the published number is a witness, not a ceiling."
+ },
+ "free_bounds": {
+  "note": "The zero of the scale. Not a citation: each is an explicit set in references/free_sets.json that the oracle's own independence test accepts.",
+  "values": {
+   "C7": {
+    "size": 108,
+    "power": 4,
+    "bound": 3.2237097954706257,
+    "provenance": "matches the published power-4 value (A. Vesel and J. Zerovnik, Improved lower bound on the Shannon capacity of C7, Information Processing Letters 81(5):277-282, 2002, doi 10.1016/S0020-0190(01)00229-0); found here independently by iterated local search, three of six seeds reaching 108"
+   },
+   "C13": {
+    "size": 1521,
+    "power": 4,
+    "bound": 6.244997998398398,
+    "provenance": "39 codewords at power 2, squared; 39 = floor(13*12/4), the classical two-cycle value"
+   },
+   "C19": {
+    "size": 85,
+    "power": 2,
+    "bound": 9.219544457292887,
+    "provenance": "85 = floor(19*18/4), the classical two-cycle value"
+   },
+   "C23": {
+    "size": 126,
+    "power": 2,
+    "bound": 11.224972160321824,
+    "provenance": "126 = floor(23*22/4), the classical two-cycle value"
+   }
+  }
+ },
+ "history_of_the_seven_cycle": [
+  {
+   "bound": "33^(1/3) = 3.2075",
+   "year": 1971,
+   "how": "independent set in the third strong power"
+  },
+  {
+   "bound": "350^(1/5) > 3.2271",
+   "year": 2002,
+   "source": "Vesel and Zerovnik, Information Processing Letters 81:277-282",
+   "doi": "10.1016/S0020-0190(01)00229-0",
+   "how": "genetic search in the fifth strong power"
+  },
+  {
+   "bound": "367^(1/5) > 3.2578",
+   "year": 2019,
+   "source": "S. Polak and A. Schrijver, New lower bound on the Shannon capacity of C7 from circular graphs, Information Processing Letters 143:37-40",
+   "doi": "10.1016/j.ipl.2018.11.006",
+   "how": "the circular graph C_{108,382} and the cyclic code {t*(1,7,49,343,2401) : t in Z_382}",
+   "note": "still the largest published independent set at any power this task allows"
+  },
+  {
+   "bound": "134753^(1/10) > 3.258020",
+   "year": 2026,
+   "source": "N. Itty, C. D. Rosin, C. Carstensen and D. Reichman, Improved lower bounds for the Shannon capacity of odd cycles, arXiv:2607.21517, 23 July 2026"
+  },
+  {
+   "bound": "3.2587891539...",
+   "year": 2026,
+   "source": "A recursive construction improving the lower bound on the Shannon capacity of C7, arXiv:2607.27869",
+   "how": "recursion from the 367-codeword set out to the two-hundredth strong power"
+  },
+  {
+   "bound": "3.258805369885...",
+   "year": 2026,
+   "source": "Buys, Polak and Zuiddam, arXiv:2607.29681, 31 July 2026",
+   "note": "current best as of the retrieval date; three improvements landed in July 2026 alone, which is why this cell is treated as actively researched"
+  }
+ ],
+ "reproduced_here": {
+  "circular_code_parameters": "verification/reference_certificate.py sweeps (modulus, multiplier) with no hint and rediscovers Polak and Schrijver's modulus 382 with multiplier 7 for C7 at power 5 in about fifteen seconds; the resulting set passes the same independence test the oracle applies to a submission.",
+  "theta_closed_form": "theta is not read from the table above. The reference bisects the one free variable of the circulant Lovasz matrix and then certifies the bound in exact rational arithmetic, landing about 1.5e-6 above the closed form for all four cycles - which is the check that the closed form is right."
+ },
+ "anchors": [
+  {
+   "name": "theta_c7",
+   "value": 3.317667207394096,
+   "source_url": "https://doi.org/10.1109/TIT.1979.1055985",
+   "derivation": "L. Lovasz, On the Shannon capacity of a graph, IEEE Transactions on Information Theory 25(1):1-7, 1979: theta(C_n) = n cos(pi/n)/(1+cos(pi/n)) for the odd cycle. Independently reproduced here rather than read: verification/reference_certificate.py bisects the one free variable of the circulant Lovasz matrix and certifies the result in exact rational arithmetic, landing about 1.5e-6 above this value without naming cos(pi/n). No better upper bound is known for any odd cycle beyond C5.",
+   "retrieved_on": "2026-09-06"
+  },
+  {
+   "name": "published_lower_bound_c7",
+   "value": 3.258805369885,
+   "source_url": "https://arxiv.org/abs/2607.29681",
+   "derivation": "P. Buys, S. Polak and J. Zuiddam, Lean-verified lower bounds for the Shannon capacity of odd cycles, arXiv:2607.29681, submitted 31 July 2026. Quoted verbatim from the abstract. Worth exactly 1 on this task's scale. Not reached at any power this task allows: the constructions run to power 6 and beyond, and for C7 to power 200 by recursion. Three improvements landed in July 2026 alone, so this anchor is expected to move.",
+   "retrieved_on": "2026-09-06"
+  },
+  {
+   "name": "free_bound_c7",
+   "value": 3.2237097954706257,
+   "source_url": "https://doi.org/10.1016/S0020-0190(01)00229-0",
+   "derivation": "matches the published power-4 value (A. Vesel and J. Zerovnik, Improved lower bound on the Shannon capacity of C7, Information Processing Letters 81(5):277-282, 2002, doi 10.1016/S0020-0190(01)00229-0); found here independently by iterated local search, three of six seeds reaching 108. This is a witness rather than a citation: the 108-codeword set at power 4 is shipped in references/free_sets.json and the oracle's own independence test accepts it, so a wrong published number cannot move the zero of the scale.",
+   "retrieved_on": "2026-09-06"
+  },
+  {
+   "name": "theta_c13",
+   "value": 6.404168562937425,
+   "source_url": "https://doi.org/10.1109/TIT.1979.1055985",
+   "derivation": "L. Lovasz, On the Shannon capacity of a graph, IEEE Transactions on Information Theory 25(1):1-7, 1979: theta(C_n) = n cos(pi/n)/(1+cos(pi/n)) for the odd cycle. Independently reproduced here rather than read: verification/reference_certificate.py bisects the one free variable of the circulant Lovasz matrix and certifies the result in exact rational arithmetic, landing about 1.5e-6 above this value without naming cos(pi/n). No better upper bound is known for any odd cycle beyond C5.",
+   "retrieved_on": "2026-09-06"
+  },
+  {
+   "name": "published_lower_bound_c13",
+   "value": 6.302455083464,
+   "source_url": "https://arxiv.org/abs/2607.29681",
+   "derivation": "P. Buys, S. Polak and J. Zuiddam, Lean-verified lower bounds for the Shannon capacity of odd cycles, arXiv:2607.29681, submitted 31 July 2026. Quoted verbatim from the abstract. Worth exactly 1 on this task's scale. Not reached at any power this task allows: the constructions run to power 6 and beyond, and for C7 to power 200 by recursion. Three improvements landed in July 2026 alone, so this anchor is expected to move.",
+   "retrieved_on": "2026-09-06"
+  },
+  {
+   "name": "free_bound_c13",
+   "value": 6.244997998398398,
+   "source_url": "https://doi.org/10.1016/0095-8956(73)90014-2",
+   "derivation": "39 codewords at power 2, squared; 39 = floor(13*12/4), the classical two-cycle value. This is a witness rather than a citation: the 1521-codeword set at power 4 is shipped in references/free_sets.json and the oracle's own independence test accepts it, so a wrong published number cannot move the zero of the scale. The classical source for the two-cycle value is R. S. Hales, Numerical invariants and the strong product of graphs, Journal of Combinatorial Theory Series B 15:146-155 (1973). What was verified here: the DOI resolves (302 to Elsevier PII 0095895673900142, a JCTB 1973 article); the article text is paywalled and was not read. That is why the anchor does not rest on it - the value is re-found by search in seconds and the set is shipped.",
+   "retrieved_on": "2026-09-06"
+  },
+  {
+   "name": "theta_c19",
+   "value": 9.434771374446239,
+   "source_url": "https://doi.org/10.1109/TIT.1979.1055985",
+   "derivation": "L. Lovasz, On the Shannon capacity of a graph, IEEE Transactions on Information Theory 25(1):1-7, 1979: theta(C_n) = n cos(pi/n)/(1+cos(pi/n)) for the odd cycle. Independently reproduced here rather than read: verification/reference_certificate.py bisects the one free variable of the circulant Lovasz matrix and certifies the result in exact rational arithmetic, landing about 1.5e-6 above this value without naming cos(pi/n). No better upper bound is known for any odd cycle beyond C5.",
+   "retrieved_on": "2026-09-06"
+  },
+  {
+   "name": "published_lower_bound_c19",
+   "value": 9.357192705918,
+   "source_url": "https://arxiv.org/abs/2607.29681",
+   "derivation": "P. Buys, S. Polak and J. Zuiddam, Lean-verified lower bounds for the Shannon capacity of odd cycles, arXiv:2607.29681, submitted 31 July 2026. Quoted verbatim from the abstract. Worth exactly 1 on this task's scale. Not reached at any power this task allows: the constructions run to power 6 and beyond, and for C7 to power 200 by recursion. Three improvements landed in July 2026 alone, so this anchor is expected to move.",
+   "retrieved_on": "2026-09-06"
+  },
+  {
+   "name": "free_bound_c19",
+   "value": 9.219544457292887,
+   "source_url": "https://doi.org/10.1016/0095-8956(73)90014-2",
+   "derivation": "85 = floor(19*18/4), the classical two-cycle value. This is a witness rather than a citation: the 85-codeword set at power 2 is shipped in references/free_sets.json and the oracle's own independence test accepts it, so a wrong published number cannot move the zero of the scale. The classical source for the two-cycle value is R. S. Hales, Numerical invariants and the strong product of graphs, Journal of Combinatorial Theory Series B 15:146-155 (1973). What was verified here: the DOI resolves (302 to Elsevier PII 0095895673900142, a JCTB 1973 article); the article text is paywalled and was not read. That is why the anchor does not rest on it - the value is re-found by search in seconds and the set is shipped.",
+   "retrieved_on": "2026-09-06"
+  },
+  {
+   "name": "theta_c23",
+   "value": 11.446193611907761,
+   "source_url": "https://doi.org/10.1109/TIT.1979.1055985",
+   "derivation": "L. Lovasz, On the Shannon capacity of a graph, IEEE Transactions on Information Theory 25(1):1-7, 1979: theta(C_n) = n cos(pi/n)/(1+cos(pi/n)) for the odd cycle. Independently reproduced here rather than read: verification/reference_certificate.py bisects the one free variable of the circulant Lovasz matrix and certifies the result in exact rational arithmetic, landing about 1.5e-6 above this value without naming cos(pi/n). No better upper bound is known for any odd cycle beyond C5.",
+   "retrieved_on": "2026-09-06"
+  },
+  {
+   "name": "published_lower_bound_c23",
+   "value": 11.328224257774,
+   "source_url": "https://arxiv.org/abs/2607.29681",
+   "derivation": "P. Buys, S. Polak and J. Zuiddam, Lean-verified lower bounds for the Shannon capacity of odd cycles, arXiv:2607.29681, submitted 31 July 2026. Quoted verbatim from the abstract. Worth exactly 1 on this task's scale. Not reached at any power this task allows: the constructions run to power 6 and beyond, and for C7 to power 200 by recursion. Three improvements landed in July 2026 alone, so this anchor is expected to move.",
+   "retrieved_on": "2026-09-06"
+  },
+  {
+   "name": "free_bound_c23",
+   "value": 11.224972160321824,
+   "source_url": "https://doi.org/10.1016/0095-8956(73)90014-2",
+   "derivation": "126 = floor(23*22/4), the classical two-cycle value. This is a witness rather than a citation: the 126-codeword set at power 2 is shipped in references/free_sets.json and the oracle's own independence test accepts it, so a wrong published number cannot move the zero of the scale. The classical source for the two-cycle value is R. S. Hales, Numerical invariants and the strong product of graphs, Journal of Combinatorial Theory Series B 15:146-155 (1973). What was verified here: the DOI resolves (302 to Elsevier PII 0095895673900142, a JCTB 1973 article); the article text is paywalled and was not read. That is why the anchor does not rest on it - the value is re-found by search in seconds and the set is shipped.",
+   "retrieved_on": "2026-09-06"
+  }
+ ]
+}

@@ -1,0 +1,13 @@
+domain: InformationTheory
+task: ShannonCapacityCertificate
+scientific_role: optimization
+difficulty: hard
+tier: T2
+oracle_type: analytical
+score_mode: uncapped
+gpu_required: false
+eval_time_seconds: 1
+science_metric: mean_progress_in_certified_capacity_interval_width_from_the_free_product_construction_to_the_best_published_lower_bound
+reference_baseline: every second vertex of the cycle as a block-length-one code, with the all-ones Lovasz matrix
+reference_sota: "best published lower bounds on the Shannon capacity of odd cycles as of 2026-09-06; the upper end theta(C_n) has stood since Lovasz 1979 and no better upper bound is known for any odd cycle beyond the fifth"
+citation: "Buys, Polak and Zuiddam, Lean-verified lower bounds for the Shannon capacity of odd cycles, arXiv:2607.29681; Polak and Schrijver, New lower bound on the Shannon capacity of C7 from circular graphs, DOI 10.1016/j.ipl.2018.11.006; Lovasz, On the Shannon capacity of a graph, DOI 10.1109/TIT.1979.1055985"
