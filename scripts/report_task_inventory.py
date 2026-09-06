@@ -34,6 +34,13 @@ CERTIFICATION = ROOT / "sle" / "certification.yaml"
 # Chinese name per task, shown in the first column beside the English directory name. The
 # directory name is the identifier and never changes; this is what a Chinese reader scans for.
 CHINESE_NAMES = {
+    "BuildingControls/BOPTESTSupervisoryControl": "跨气候建筑 HVAC 控制",
+    "AerospaceStructures/CompositeLaminateStacking": "复合材料层合板铺层",
+    "WaterDistribution/DistributionNetworkTopology": "供水管网布尔断层扫描",
+    "ProductionSystems/PermutationFlowShop": "置换流水车间调度",
+    "WaterDistribution/ResilientPumpScheduling": "供水管网韧性泵调度",
+    "WindEnergy/WakeAwareFarmCoDesign": "尾流感知风场协同设计",
+
     "Acoustics/RoomImpulseResponse": "房间声学处理设计",
     "Algorithm/GraphFromDistances": "距离查询重建图",
     "Algorithm/MatrixMultiplicationRank": "矩阵乘法秩",
@@ -117,6 +124,25 @@ CHINESE_NAMES = {
 # people deciding which task to look at. A task without an entry fails the inventory test,
 # so a new package cannot silently ship without one.
 CHINESE_BRIEFS = {
+    "BuildingControls/BOPTESTSupervisoryControl": (
+        "编写跨气候双区建筑 HVAC 监督控制器,联合控制供热、制冷与新风",
+        "舒适与 IAQ 硬门控后的成本/碳/峰值效用;留出预测、传感器和执行器偏移分列,无上限"),
+    "AerospaceStructures/CompositeLaminateStacking": (
+        "排列固定组成的对称平衡复合材料铺层,提高多载荷下的屈曲与首层失效裕度",
+        "相对准各向同性基线的储备系数提升;留出板型与材料/载荷退化分列,无上限"),
+    "WaterDistribution/DistributionNetworkTopology": (
+        "在路径探针预算下定位管网破损管段,孪生服务廊道不可辨识须拒答",
+        "破损集 F1;结构别名拒答,翻转噪声靠多数投票,全面弃权为零"),
+    "ProductionSystems/PermutationFlowShop": (
+        "在新种子 Taillard 型实例上排工件序最小化完工时间;背不了题,实例由种子即时生成",
+        "以 NEH 构造为零点的缺口闭合均值;无上限,破冻结见证>1"),
+    "WaterDistribution/ResilientPumpScheduling": (
+        "根据需求和电价安排 24 小时泵速,满足水箱、压力、爬坡与终端储水约束",
+        "相对恒速基线的电费节省;需求增长与高峰泵故障韧性分列,无上限"),
+    "WindEnergy/WakeAwareFarmCoDesign": (
+        "联合设计风机平面位置与分风向偏航策略,减弱尾流损失并保持布置可制造",
+        "相对规则零偏航风场的年发电价值提升;留出风况和尾流模型偏移分列,无上限"),
+
     "Acoustics/RoomImpulseResponse": (
         "布置声源、吸声与受点,让语音房间同时兼顾清晰度、混响时间与声场均匀度",
         "清晰度/混响/均匀度综合效用;一阶反射代理与镜像源长程计算排序不同,含安装误差与老化偏移"),

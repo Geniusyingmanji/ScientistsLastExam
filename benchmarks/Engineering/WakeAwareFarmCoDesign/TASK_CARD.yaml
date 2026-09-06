@@ -1,0 +1,93 @@
+schema_version: 2
+scientific_question: Can one policy jointly place turbines and schedule direction-dependent yaw to improve
+  annual farm value while transferring across wind roses, boundaries and wake-model uncertainty?
+artifact: A continuous two-dimensional turbine layout and a direction-by-turbine yaw matrix.
+oracle:
+  model: Deterministic Gaussian and Jensen hybrid wake superposition with yaw deflection, own-power loss,
+    rated-power cap and wind-rose integration.
+  feasibility: Exact shapes, finite values, rectangular boundary, pairwise minimum spacing and yaw bounds;
+    violations fail closed.
+  deterministic: true
+normalization:
+  baseline: Regular rectangular grid with zero yaw.
+  reference: Seeded layout screening, coordinate yaw search and three scales of feasible layout refinement.
+  score: Development annual-value gain is uncapped; held-out geometries and direction, wake-expansion
+    and turbulence shifts stay separate.
+citations:
+- id: doi:10.1088/1742-6596/1618/2/022028
+  title: Overview of FLORIS updates
+- id: url:https://nrel.sitefinity.cloud/wind/floris
+  title: NREL FLORIS wake modeling and controls software
+invariants:
+- With wake interaction removed and zero yaw, identical turbines have identical free-stream power.
+- Yaw decreases own-turbine power while potentially deflecting its downstream wake.
+- Duplicated, too-close, out-of-bound, malformed and over-yawed layouts fail closed.
+- Held-out model-shift metrics never control combined_score.
+known_shortcuts: 'The visible wind roses and reduced wake equations may be overfit. The oracle omits terrain,
+  electrical balance, availability, loads and high-fidelity atmospheric effects; independent pinned-FLORIS
+  replay and server-held roses are mandatory. Hardening: Adds layout refinement after yaw selection. Cross-model
+  robustness, restarts and independent FLORIS validation remain open. Reproduce local sweeps with scripts/diagnose_pr9_engineering.py
+  --sweeps; numerical admission evidence is pending clean Linux replay.'
+review:
+  domain: pending_external
+  evaluator_security: targeted_local_regressions_added_clean_linux_sandbox_replay_pending
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic wind-rose and farm-geometry generator with sealed wake
+    and direction shifts.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: high
+  rationale: Wake steering and farm layout are prominent public benchmark families; only cross-geometry
+    and cross-model transfer can make this non-recall, and that evidence is not yet complete.
+lineage:
+  status: complete
+  builder_model_ids:
+  - openai:codex-gpt-5
+  builder_scaffolds:
+  - codex-desktop
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: 2026-09-05 local code-review probes triggered identifiable sill scoring, feasible
+    HVAC heldout anchors, moving-plume capture, stronger public-data references, contract documentation
+    and regression tests. No frontier calibration draw has been run.
+  shortcut_discoverer: local_deterministic_probe_only
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: prototype_complete_calibration_pending
+  author_domain: general_scientific_software
+  reviewer_domain: pending_external_wind_energy
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: standalone_public_model_references_high_fidelity_replication_pending
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+licensing:
+  task_package: repository_license_not_declared
+  external_assets: none
+  note: Original procedural code; cited papers and external simulator assets are not redistributed.
+contamination:
+  status: cannot_be_ruled_out
+  rationale: Public procedural families and AI-assisted reference implementations; sealed worlds and independent
+    model calibration are pending.
+difficulty_assessment:
+  status: unverified_candidate
+  requirement: standard-method and low-dimensional shortcut sweeps, capability ablations and clean frontier-model
+    calibration before certification
+
+frontier_eng_overlap_review:
+  date: '2026-09-06'
+  classification: 无
+  nearest: UAVInspectionCoverageWithWind; DawnAircraftDesignOptimization
+  distinction: Joint static turbine locations and directional yaw optimize farm value
+    with wake interactions and wind-rose transfer. FE optimizes flight coverage in wind
+    or aircraft mass/geometry, without turbine-to-turbine wakes or wind-farm yield.
+  evidence: .research/pr9_frontier_eng_overlap_2026-09-06.md
+  status: source_count_discrepancy_pending_maintainer_confirmation

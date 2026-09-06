@@ -1,0 +1,105 @@
+schema_version: 2
+scientific_question: How much of the gap between a naive dispatch order and a frozen
+  iterated-local-search witness can a searcher close on fresh-seeded permutation flow
+  shops, and can it beat the witness?
+artifact: One job permutation per instance; the makespan is simulated exactly in
+  integers.
+oracle:
+  model: deterministic Taillard-style fresh-seeded instances (processing times uniform
+    on {1..99}), exact integer completion-time simulation, gap normalization against
+    an as-given-order baseline recomputed per instance and a frozen witness search
+  feasibility: a permutation listing every job index exactly once
+  deterministic: true
+  external_tooling: none beyond NumPy
+difficulty_ladder:
+  default_level: 1
+  levels:
+    1: four development sizes (20x5, 30x10, 50x5, 50x10) with the frozen witness anchor
+normalization:
+  baseline: the NEH construction computed inside the oracle (zero anchor); the
+    as-given order clips to zero as well
+  reference: NEH plus seeded ILS with accelerated insertion evaluation; 3000 iterations
+    freeze the witness makespans (20x5 1180, 30x10 2182, 50x5 3023, 50x10 2979;
+    held-out 1222, 1734, 3012)
+  score: mean closed gap per instance; beating the witness scores above one with no cap
+citations:
+- id: doi:10.1016/0377-2217(93)90182-M
+  title: Benchmarks for basic scheduling problems
+- id: doi:10.1287/ijoc.2022.1193
+  title: Exactly solving hard permutation flowshop scheduling problems
+invariants:
+- verification is integer simulation independent of the construction method
+- fresh seeds mean no published table or memorized solution transfers
+- the as-given order scores exactly zero and the witness exactly one
+known_shortcuts: NEH alone is the zero anchor, so the classic construction scores
+  zero and the difficulty above it is genuine search (50 ILS iterations reach 0.929,
+  150 reach 0.983). No low-dimensional parameterization applies because the artifact
+  is the permutation itself. Formal clean Linux calibration and independent review
+  remain pending.
+licensing:
+  task_package: repository_license_not_declared
+  external_assets: none
+  note: Instances are generated from original repository code; cited publications are
+    not redistributed.
+contamination:
+  status: cannot_be_contaminated
+  rationale: Instances are fresh-seeded by the frozen generator; published Taillard
+    instances, tables and best solutions do not transfer to these processing times.
+review:
+  domain: pending_external_operations_research
+  evaluator_security: targeted_local_regressions_added_clean_linux_sandbox_replay_pending
+provenance:
+  class: public_data_replay
+  target_source: Frozen truth-blind ILS witness makespans reproduced by the runnable
+    reference in verification/ at 3000 iterations, seed 0.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Permutation flow shop scheduling is a mature field; the fresh-seeded
+    instance family and witness anchor are original to this package and no registry
+    task covers production scheduling.
+lineage:
+  status: complete
+  builder_model_ids:
+  - glm-5.3
+  builder_scaffolds:
+  - repository-native-engineering-task-pattern
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: 2026-09-05 local build found the pure-Python insertion descent unusable at 100 jobs (ten seconds per iteration); instances were capped at fifty jobs and the descent rebuilt on accelerated prefix/suffix insertion tables whose positions match brute force on thirty random cases.
+  shortcut_discoverer: initial_internal_red_team
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: initial_internal
+  author_domain: AI-assisted benchmark engineering
+  reviewer_domain: pending_external_operations_research
+  expert_hours: null
+  red_team_rounds: 2
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: witness_reproduced_by_runnable_reference
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+difficulty_assessment:
+  status: unverified_candidate
+  requirement: standard-method and low-dimensional shortcut sweeps, capability ablations
+    and clean frontier-model calibration before certification
+  remaining_risk: The witness sits roughly one to two percent above the best-known heuristic plateau for this size class; a frontier draw must show that first proposals do not reach it by construction alone.
+
+frontier_eng_overlap_review:
+  date: '2026-09-06'
+  classification: 同类不同题
+  nearest: JobShop/abz; JobShop/ft; JobShop/la; JobShop/orb; JobShop/swv; JobShop/ta;
+    JobShop/yn
+  distinction: 'Submit one common job permutation on all machines with a fixed common
+    route; FE JSSP permits job-specific routes and operation schedules. Fresh seeds
+    prevent table lookup but do not establish novelty. PFSP is a restricted scheduling
+    problem with the same makespan objective: admission is explicitly pending a maintainer
+    decision, not declared clear.'
+  evidence: .research/pr9_frontier_eng_overlap_2026-09-06.md
+  status: source_count_discrepancy_pending_maintainer_confirmation

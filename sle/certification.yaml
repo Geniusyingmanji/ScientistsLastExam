@@ -10,6 +10,41 @@ policy:
   statuses: [certified, candidate, quarantined]
 
 tasks:
+  BuildingControls/BOPTESTSupervisoryControl:
+    status: candidate
+    reason: deterministic stateful HVAC supervision over a local two-zone BOPTEST-style emulator with comfort and IAQ hard gates and separate forecast, sensor, plant and actuator shifts; pending official BOPTEST FMU replay, independent controls review, server-held traces and frontier-model calibration
+    citation_ids:
+      - doi:10.1080/19401493.2021.1986574
+      - url:https://ibpsa.github.io/project1-boptest/docs-userguide/introduction.html
+  AerospaceStructures/CompositeLaminateStacking:
+    status: candidate
+    reason: deterministic CLT stacking-sequence optimization with exact composition and manufacturing constraints, uncapped truth-blind permutation normalization, interleaved panels and sealed material/load degradation; pending independent composite-structures review, finite-element replication, server-held panels and frontier-model calibration
+    citation_ids:
+      - doi:10.2514/3.11710
+      - doi:10.1016/j.compstruct.2016.01.052
+  WaterDistribution/DistributionNetworkTopology:
+    status: candidate
+    reason: boolean network tomography over a 4x4 grid with several hundred monotone routes, signature-uniqueness-filtered break sets, twin-corridor refusal and flip noise at the two-break level-2 default; the likelihood-tracked witness reaches 0.900/1.000 (level 3 drops to 0.600) where the pre-hardening set-cover witness managed 0.400; pending clean Linux calibration, independent water-systems review and frontier draws at the new default
+    citation_ids:
+      - doi:10.1061/(ASCE)0733-9496(2008)134:6(556)
+  ProductionSystems/PermutationFlowShop:
+    status: candidate
+    reason: uncapped makespan record chase on fresh-seeded Taillard-style permutation flow shops (20x5 to 50x10) with exact integer verification, NEH zero-anchor and a frozen 3000-iteration ILS witness (anti-memorization by construction since no published table transfers to these seeds); the shipped 400-iteration witness reaches 0.995/0.996 while NEH scores zero by anchor; pending clean Linux calibration, independent operations-research review and stronger-search headroom measurement
+    citation_ids:
+      - doi:10.1016/0377-2217(93)90182-M
+      - doi:10.1287/ijoc.2022.1193
+  WaterDistribution/ResilientPumpScheduling:
+    status: candidate
+    reason: deterministic extended-period storage, pressure and energy scheduling with an uncapped public-forecast convex-optimization witness and separate demand-growth and pump-outage resilience; pending EPANET/WNTR replication, independent water-systems review, server-held networks and frontier-model calibration
+    citation_ids:
+      - url:https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P10113EM.TXT
+      - doi:10.5194/dwes-7-53-2014
+  WindEnergy/WakeAwareFarmCoDesign:
+    status: candidate
+    reason: deterministic mixed continuous layout-yaw co-design with boundary and spacing hard gates, uncapped truth-blind search normalization and separate wake/direction/turbulence transfer; pending pinned FLORIS replication, independent wind-energy review, server-held wind roses and frontier-model calibration
+    citation_ids:
+      - doi:10.1088/1742-6596/1618/2/022028
+      - url:https://nrel.sitefinity.cloud/wind/floris
   Mathematics/NarrowAdmissibleTuple:
     status: candidate
     reason: exact admissibility/diameter oracle scored uncapped against Polymath8b's own published narrow-admissible-tuple diameters (246 at k=50, direct primary-source quote; 270 at k=54, secondary-source only, disclosed); no frontier searcher draw yet, pending external number-theory review

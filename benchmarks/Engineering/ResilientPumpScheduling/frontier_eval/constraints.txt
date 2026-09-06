@@ -1,0 +1,5 @@
+1) Only edit solution.py. Keep schedule_pumps(problem).
+2) Return 24 speeds, each zero or in [minimum_operating_speed,1]; respect minimum_run_hours and maximum_speed_change between running hours as specified in Task.md.
+3) Use the public forecast and system parameters; do not hard-code one network.
+4) Deterministic numpy/scipy/stdlib CPU only. No network or process creation.
+5) Do not read verification/ or frontier_eval/.

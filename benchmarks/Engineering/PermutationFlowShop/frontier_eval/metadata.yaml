@@ -1,0 +1,16 @@
+domain: ProductionSystems
+task: PermutationFlowShop
+scientific_role: optimization
+difficulty: hard
+tier: T2
+oracle_type: analytical
+score_mode: uncapped
+gpu_required: false
+eval_time_seconds: 240
+science_metric: makespan gap closed between the as-given order and a frozen iterated
+  local search witness on fresh-seeded Taillard-style instances
+reference_baseline: jobs scheduled in their as-given order
+reference_sota: NEH construction plus seeded ILS with accelerated insertion evaluation;
+  runnable witness at 3000 iterations, not a claimed optimum
+citation: Taillard 1993 EJOR doi:10.1016/0377-2217(93)90182-M; Gmys et al. 2022 INFORMS
+  J Comput doi:10.1287/ijoc.2022.1193
