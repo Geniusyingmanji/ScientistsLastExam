@@ -48,7 +48,7 @@ review:
     truth-blind and public-input-only; orientation and all extracted cells were independently
     checked against the original PLOS workbooks and a fixed third-party CSV mirror
 provenance:
-  class: real_data_replay
+  class: public_data_replay
   target_source: >-
     Synthetic noncoding targets from fixed seeds; measured ligation counts from Pryor et al. 2020
     PLOS ONE Tables S1-S4 under CC BY 4.0.
@@ -60,7 +60,7 @@ novelty_risk:
     Published high-fidelity overhang sets can be remembered, but they do not determine legal cut
     positions in these seeded target sequences, enzyme compatibility, or bounded fragment lengths.
 lineage:
-  status: builder_audited_pending_external
+  status: complete
   builder_model_ids: []
   builder_scaffolds: [codex]
   calibrator_model_ids: []

@@ -98,7 +98,7 @@ targets; `robustness_score` reports the two held-out targets. Feasibility, predi
 chosen condition and the number of instances beating the reference remain separate. Invalid
 submissions score zero for that target and never receive a small-pool reward.
 
-The reference is not claimed optimal. A wider deterministic search scores `1.027675` on the
+The reference is not claimed optimal. A wider deterministic search scores `1.014924` on the
 development mean because it improves one target, while falling to `0.660575` on the two held-out
 targets. This is executable headroom and an explicit warning against selecting only on development,
 not evidence that the task is frontier-model hard.

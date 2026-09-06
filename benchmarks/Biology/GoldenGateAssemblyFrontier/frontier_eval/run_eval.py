@@ -10,7 +10,7 @@ import sys
 from pathlib import Path
 
 INVALID = -1e18
-TASK_ID = "Biology/GoldenGateAssemblyFrontier"
+TASK_ID = "SyntheticBiology/GoldenGateAssemblyFrontier"
 ROOT = Path(__file__).resolve().parents[4]
 EVAL_TIMEOUT_S = 30
 

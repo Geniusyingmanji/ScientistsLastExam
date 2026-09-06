@@ -47,6 +47,7 @@ RECORDED_LINEAGE = {
     "Mathematics/HeavyTailEvidence",
     "Mathematics/NarrowAdmissibleTuple",
     "Superconductivity/SuperconductorTcRecord",
+    "SyntheticBiology/GoldenGateAssemblyFrontier",
 }
 
 

@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import copy
 import hashlib
+import importlib.util
 import json
 import math
 import random
@@ -368,21 +369,6 @@ def baseline_design(problem: dict) -> dict:
     }
 
 
-def reference_design(problem: dict) -> dict:
-    """Best of two deterministic beam starts followed by coordinate refinement."""
-    candidates = [
-        search_design(problem, beam_width=8, refinement_passes=4),
-        search_design(problem, beam_width=32, refinement_passes=4),
-    ]
-    scored = []
-    for submission in candidates:
-        value, error = _validate(problem, submission)
-        if error or value is None:
-            raise RuntimeError(error)
-        scored.append((value, submission["enzyme"], submission))
-    return max(scored, key=lambda row: (row[0], row[1]))[2]
-
-
 def _validate(problem: dict, submission) -> tuple[float | None, str | None]:
     if not isinstance(submission, dict) or set(submission) != {
         "enzyme",
@@ -437,6 +423,15 @@ def _validate(problem: dict, submission) -> tuple[float | None, str | None]:
     return value, None
 
 
+@lru_cache(maxsize=1)
+def _reference_callable():
+    path = Path(__file__).with_name("reference_solver.py")
+    spec = importlib.util.spec_from_file_location("golden_gate_reference", path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module.design_assembly
+
+
 @cache
 def _anchors(instance_id: str) -> tuple[float, float]:
     profile = next(
@@ -448,7 +443,7 @@ def _anchors(instance_id: str) -> tuple[float, float]:
     baseline, error = _validate(problem, baseline_design(problem))
     if error:
         raise RuntimeError(error)
-    reference, error = _validate(problem, reference_design(problem))
+    reference, error = _validate(problem, _reference_callable()(copy.deepcopy(problem)))
     if error or reference is None or baseline is None or reference <= baseline:
         raise RuntimeError("reference must strictly improve the baseline")
     return baseline, reference

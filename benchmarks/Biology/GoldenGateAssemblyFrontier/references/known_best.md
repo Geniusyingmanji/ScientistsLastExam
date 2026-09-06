@@ -25,8 +25,8 @@ has SHA-256 `2ec0191f2ca3a8c87c5a63f8080dc03876e29965aa06e7b3faf0cb2820e7dfb5`.
 
 | instance | baseline F | reference F | reference enzyme |
 |---|---:|---:|---|
-| dev_a | 0.357734140583 | 0.979643802091 | BsmBI-v2 |
-| dev_b | 0.408787569678 | 0.888639898982 | BbsI-HF |
+| dev_a | 0.357734140583 | 0.981847600177 | BsmBI-v2 |
+| dev_b | 0.408787569678 | 0.912298512850 | BbsI-HF |
 | dev_c | 0.634301231956 | 0.993554931378 | Esp3I |
 | heldout_a | 0.391224288743 | 0.975436592666 | Esp3I |
 | heldout_b | 0.538027379186 | 0.970806376807 | BsaI-HFv2 |
@@ -37,8 +37,8 @@ beam searches after four coordinate-refinement passes.
 
 ## 4. Headroom and ablation
 
-A width-128, eight-refinement-pass red team reaches development scores `0.984862`, `1.101841`, and
-`0.996324`, for mean `1.027675`. It therefore provides executable score-above-one headroom, but its
+A width-128, eight-refinement-pass red team reaches development scores `0.982670`, `1.065777`, and
+`0.996324`, for mean `1.014924`. It therefore provides executable score-above-one headroom, but its
 held-out scores are `0.986089` and `0.335061`. Wider search is not uniformly better because partial
 set fidelity is not a monotone admissible bound; a wide beam can prune a lower-scoring partial set
 that later avoids crosstalk. This makes held-out reporting load-bearing.

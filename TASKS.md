@@ -4,21 +4,22 @@
 
 | | |
 |---|---:|
-| 任务包 | 79 |
-| optimization | 40 |
+| 任务包 | 80 |
+| optimization | 41 |
 | discovery | 39 |
 | certified | 5 |
-| candidate | 74 |
-| 学科 | 7(Biology 7,Chemistry 13,ComputerScience 6,EarthScience 6,Engineering 12,Mathematics 19,Physics 16) |
+| candidate | 75 |
+| 学科 | 7(Biology 8,Chemistry 13,ComputerScience 6,EarthScience 6,Engineering 12,Mathematics 19,Physics 16) |
 
 认证描述的是证据质量,不是难度。标 on-ramp 的任务首个前沿模型提案已够到参考解,不用于配对 Δ 测量。
 
-## Optimization(40)
+## Optimization(41)
 
-### 工程设计(engineering_design) — 16
+### 工程设计(engineering_design) — 17
 
 | 任务 | 学科 | 领域 | 打分 | oracle | 认证 | 说明 | 中文题意 | 中文评估方法 |
 |---|---|---|---|---|---|---|---|---|
+| [`GoldenGateAssemblyFrontier`](benchmarks/Biology/GoldenGateAssemblyFrontier/)<br>Golden Gate 组装前沿设计 | Biology | SyntheticBiology | uncapped | real_data_replay | candidate | segment a construct using measured ligation fidelity | 为给定非编码 DNA 目标选择 Type IIS 酶并切分成定长范围内的片段,让每个四碱基接头都来自真实相邻片段边界 | 精确重构和内部限制位点硬门控;按 PLOS 实测连接矩阵计算已用接头池的组装保真度,开发与留出酶条件分列,不截断于参考值 |
 | [`AlloyHardnessOptimization`](benchmarks/Chemistry/AlloyHardnessOptimization/)<br>合金硬度实验设计 | Chemistry | MaterialsScience | uncapped | real_data_replay | candidate | design a study-held alloy batch | 在按论文 DOI 分组的多主元合金数据里做实验设计,选出研究外留出的硬度批次 | 留出硬度 + 多样性 + 代理失效 + 不确定性 + 来源迁移 + 稀疏独立确认;无上限 |
 | [`DistillationColumnDesign`](benchmarks/Chemistry/DistillationColumnDesign/)<br>精馏塔设计 | Chemistry | ChemicalProcess | uncapped | equilibrium_stage_process_sim | candidate | robust mixed-integer equilibrium-stage design | 混合整数精馏塔设计:塔板数与进料位置离散,兼顾纯度回收约束与再沸冷凝能耗 | 年化成本;留出迁移与密封变工况分列,无上限 |
 | [`ElectrolyteConductivityDesign`](benchmarks/Chemistry/ElectrolyteConductivityDesign/)<br>电解液电导率设计 | Chemistry | Electrochemistry | uncapped | real_data_replay | candidate | allocate EIS assays and select a robust formulation batch | 在高通量电解液数据回放里分配阻抗测定预算,选出稳健的配方批次 | 温度剖面电导率 + 批次多样性 + 重复稳健性 + 留出迁移;无上限 |

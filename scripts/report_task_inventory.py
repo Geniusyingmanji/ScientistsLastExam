@@ -109,6 +109,7 @@ CHINESE_NAMES = {
     "Spectroscopy/SpinSystemInference": "自旋体系反演",
     "StructuralEngineering/TrussWeightMinimization": "桁架减重",
     "Superconductivity/SuperconductorTcRecord": "超导临界温度纪录搜索",
+    "SyntheticBiology/GoldenGateAssemblyFrontier": "Golden Gate 组装前沿设计",
     "SystemsBiology/EnzymeKineticsLaw": "酶动力学律辨识",
     "SystemsBiology/GeneNetworkIntervention": "基因网络干预设计",
     "Thermodynamics/HeatExchangerDesign": "换热器帕累托设计",
@@ -374,6 +375,9 @@ CHINESE_BRIEFS = {
         "在真实设备压力上限下,用 Allen-Dynes 公式在五个真实超导体系间搜索已确认临界温度最高的"
         "(体系,压力)组合,并避开一个从未被实现的理论预测(隐含电子-声子耦合超过物理合理上限)",
         "真实Tc除以已发表记录250K的直接比值;无上限,可超过已发表记录"),
+    "SyntheticBiology/GoldenGateAssemblyFrontier": (
+        "为给定非编码 DNA 目标选择 Type IIS 酶并切分成定长范围内的片段,让每个四碱基接头都来自真实相邻片段边界",
+        "精确重构和内部限制位点硬门控;按 PLOS 实测连接矩阵计算已用接头池的组装保真度,开发与留出酶条件分列,不截断于参考值"),
     "SystemsBiology/EnzymeKineticsLaw": (
         "在测定预算内自选底物与抑制剂浓度,判定这个酶服从六条已发表速率律中的哪条,或都不服从",
         "速率律辨识 + 拒答 + 密封外推预测"),
