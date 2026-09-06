@@ -120,9 +120,39 @@ unresolvable one.
   uncertainty. A flat 10–18 Tg is under one sigma for wetlands and over three for waste, so one
   member of the "unresolvable" pair was resolvable.
 
+## Baseline, reference, and the trap firing
+
+| submission | combined | mechanism | FDR | refusal | coverage |
+|---|---|---|---|---|---|
+| baseline | **0.000000** | 0.562 | 0.656 | 0.000 | 1.000 |
+| reference | **0.754464** | 0.812 | 0.071 | 1.000 | 0.438 |
+
+The baseline reads the isotopes, names the source that fits, and never abstains. It is genuinely
+competent where isotopes suffice — **8 of 8** on the tracer regime, because the δ¹³C *sign* is a
+clean cut — and scores zero. Its per-regime behaviour is the point:
+
+| regime | recovered | what it named |
+|---|---|---|
+| `tracer_identifiable` | 8/8 | biomass burning ×6, fossil ×2 |
+| `inventory_identifiable` | 1/8 | ruminants ×7 |
+| `microbial_overlap` | 0/8 | ruminants ×8 |
+| `sink_confounded` | 0/8 | **waste ×5, wetlands ×3** |
+
+The last row is the predicted trap firing. A sink-only rise looks like a modest increase in a source
+slightly lighter than the mean, and waste is that source. The baseline attributes a sink change to
+sources in every one of those cases.
+
+The reference routes on the δ¹³C sign, then makes the bottom-up number agree or abstains — either
+because the isotopes point at a source whose own inventory denies it, which means something outside
+the source list moved, or because several microbial inventories are equally marginal. Refusal 1.000;
+the headroom is in mechanism, where it still misses 3 of 16.
+
+Seventeen degenerate and adversarial submissions score 0.000000 without raising, and the malformed
+ones report `valid = 0` while the well-formed-but-useless ones report `valid = 1`.
+
 ## Remaining
 
-The evaluator on the standard discovery triple, baseline, reference, the adversarial sweep, and
-packaging.
+Task statement, card, anchors, frontier_eval set, registration, invariant tests and the g450 sandbox
+gate. The science is measured; none of that changes a number.
 
 Working code in `.research/methane_wip/`.
