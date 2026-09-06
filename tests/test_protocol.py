@@ -619,7 +619,7 @@ class GreedyRewriteTests(unittest.TestCase):
             {"combined_score": 0.1, "valid": 1.0},
             {"combined_score": 0.9, "valid": 1.0},
         ]
-        clock = iter([0.0, 0.1, 0.1, 0.2, 0.2, 0.3, 2.0])
+        clock = iter([0.0, 0.1, 0.1, 0.2, 0.3, 2.0])
         with tempfile.TemporaryDirectory() as tmp, patch(
             "sle.algorithms.evolve.evaluate_candidate",
             side_effect=metrics,
@@ -812,6 +812,46 @@ class GreedyRewriteTests(unittest.TestCase):
                 (work / "checkpoint.json").read_text(encoding="utf-8")
             )
             self.assertIsNone(completed["pending_proposal"])
+
+    def test_proposal_publication_and_prefix_share_one_clock_sample(self):
+        spec = find_task("LennardJonesCluster")
+        baseline = spec.initial_program_path.read_text(encoding="utf-8")
+        fenced = "```python\n" + baseline + "\n```"
+        clock = iter([0.0, 0.0, 10.0, 11.0, 12.0, 20.0])
+        with tempfile.TemporaryDirectory() as tmp, patch(
+            "sle.algorithms.evolve.evaluate_candidate",
+            side_effect=runtime_bound_evaluator([
+                {"combined_score": 0.1, "valid": 1.0},
+                {
+                    "combined_score": -1.0e18,
+                    "valid": 0.0,
+                    "infrastructure_failure": 1.0,
+                    "error_message": "trusted evaluator process failure",
+                },
+            ]),
+        ), patch(
+            "sle.algorithms.evolve.time.monotonic",
+            side_effect=lambda: next(clock),
+        ):
+            with self.assertRaisesRegex(
+                RuntimeError, "candidate trusted evaluator"
+            ):
+                greedy_rewrite(
+                    spec,
+                    FakeLLM([fenced]),
+                    budget=1,
+                    timeout_s=20,
+                    workdir=Path(tmp),
+                    log_fn=lambda _: None,
+                )
+
+            pending = json.loads(
+                (Path(tmp) / "checkpoint.json").read_text(encoding="utf-8")
+            )["pending_proposal"]
+            self.assertEqual(
+                pending["proposal_published_wall_seconds"],
+                pending["pre_evaluation_wall_seconds"],
+            )
 
     def test_baseline_receipt_survives_crash_before_trajectory_commit(self):
         spec = find_task("LennardJonesCluster")
