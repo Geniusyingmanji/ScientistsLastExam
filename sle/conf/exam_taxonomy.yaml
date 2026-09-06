@@ -33,6 +33,12 @@ discovery_kind:
   parameter_inversion: recover numbers of a form that is already named
 
 tasks:
+  BuildingControls/BOPTESTSupervisoryControl: {form: optimization, analogue: engineering_design}
+  AerospaceStructures/CompositeLaminateStacking: {form: optimization, analogue: engineering_design}
+  WaterDistribution/DistributionNetworkTopology: {form: discovery, kind: structure, note: boolean_tomography_not_pressure_inversion}
+  ProductionSystems/PermutationFlowShop: {form: optimization, analogue: combinatorial, note: fresh_seeded_taillard_family_not_published_tables}
+  WaterDistribution/ResilientPumpScheduling: {form: optimization, analogue: engineering_design}
+  WindEnergy/WakeAwareFarmCoDesign: {form: optimization, analogue: engineering_design}
   # --- optimization / frontier-eng ------------------------------------------
   Thermodynamics/HeatExchangerDesign: {form: optimization, analogue: engineering_design}
   StructuralEngineering/TrussWeightMinimization: {form: optimization, analogue: engineering_design}

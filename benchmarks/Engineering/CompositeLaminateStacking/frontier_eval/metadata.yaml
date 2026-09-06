@@ -1,0 +1,15 @@
+domain: AerospaceStructures
+task: CompositeLaminateStacking
+scientific_role: optimization
+difficulty: hard
+tier: T2
+oracle_type: physical_sim
+score_mode: uncapped
+gpu_required: false
+eval_time_seconds: 20
+science_metric: development first-ply-and-buckling reserve improvement with held-out panel and sealed
+  material/load robustness
+reference_baseline: symmetric balanced quasi-isotropic repeating sequence
+reference_sota: 900 seeded permutation starts followed by up to twelve feasible pair-exchange refinement
+  passes. This is a runnable witness, not a published SoTA claim.
+citation: Le Riche and Haftka, AIAA Journal 31(5), DOI 10.2514/3.11710

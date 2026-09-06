@@ -1,0 +1,13 @@
+domain: WaterDistribution
+task: DistributionNetworkTopology
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: analytical
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 60
+science_metric: hydraulic topology recovery from injection scenarios with alias and sensor-fault refusal
+reference_baseline: one scenario followed by abstention
+reference_sota: truth-blind flow-consistency edge elimination with redundancy checks; runnable witness
+citation: Ostfeld et al. 2008 J Water Resour Plan Manage doi:10.1061/(ASCE)0733-9496(2008)134:6(556)
