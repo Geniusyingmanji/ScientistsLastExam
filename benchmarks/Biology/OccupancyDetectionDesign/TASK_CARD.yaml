@@ -48,8 +48,8 @@ lineage:
   calibration_evidence_status: current_or_migration_replayed
   edits_triggered_by_model: An excluded DeepSeek protocol draw exposed that the prose description of survey_methods could be read as an integer mapping while the callback supplied nested cost mappings. The public value was simplified to the documented integer mapping before the scored calibration draw; the scientific worlds, survey costs and scoring were unchanged.
   shortcut_discoverer: builder_self_audit_with_task_local_ablation_sweep_and_deepseek_flash_pro_calibration
-  frozen_before_eval: true
-  freeze_timestamp: '2026-09-06T15:43:04Z'
+  frozen_before_eval: false
+  freeze_timestamp: null
 long_horizon:
   status: not_tested
   measurement_health_passed: false
