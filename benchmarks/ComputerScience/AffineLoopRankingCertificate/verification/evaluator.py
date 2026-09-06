@@ -186,6 +186,9 @@ def certificate_holds(guards, update_a, update_b, ranking, shift, delta, nonneg,
     return True, None
 
 
+BASELINE_DELTA = Fraction(1, 10000)
+
+
 def _score_instance(build, instance):
     published = {
         "name": instance["name"],
@@ -206,7 +209,7 @@ def _score_instance(build, instance):
         )
         if not holds:
             raise ValueError("Farkas certificate fails on %s" % reason)
-        score = min(float(delta / DELTA_UNIT), 1.0)
+        score = min(max(0.0, float((delta - BASELINE_DELTA) / DELTA_UNIT)), 1.0)
         published.update({
             "valid": True,
             "proven_delta": [delta.numerator, delta.denominator],

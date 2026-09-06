@@ -79,7 +79,7 @@ class AffineLoopRankingCertificateTests(unittest.TestCase):
         self.assertEqual(baseline["valid"], 1.0)
         self.assertEqual(reference["valid"], 1.0)
         self.assertLess(baseline["combined_score"], reference["combined_score"])
-        self.assertLess(baseline["combined_score"], 0.05)
+        self.assertEqual(baseline["combined_score"], 0.0)
         self.assertGreater(reference["combined_score"], 0.5)
 
     def test_malformed_submissions_score_zero_without_raising(self):

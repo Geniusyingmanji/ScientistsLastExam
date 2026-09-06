@@ -17,7 +17,7 @@ decrease.
 
 | metric | value |
 |---|---|
-| combined score | **0.75** |
+| combined score | **0.749975** |
 | instances with a valid certificate | 4 / 4 |
 | cut_x proven delta | 2 |
 | cut_y proven delta | 3 |
@@ -34,5 +34,5 @@ ranking on every published loop.
 
 | metric | value |
 |---|---|
-| combined score | **0.000033** |
+| combined score | **0.000000** |
 | instances with a valid certificate | 4 / 4 |
