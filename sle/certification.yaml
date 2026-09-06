@@ -10,6 +10,16 @@ policy:
   statuses: [certified, candidate, quarantined]
 
 tasks:
+  Mathematics/EllipticCurveRecovery:
+    status: candidate
+    reason: exact integer curve recovery over a +-1200 coefficient window from tiered-budget prime point counts with per-prime residue enumeration, incremental CRT lifting with wide-window pruning, and singular/genus-two refusal; the budgeted witness reaches 1.000/1.000 with zero false discoveries while a six-prime ablation collapses to 0.000 via twin-curve ambiguity; pending clean Linux calibration, independent mathematics review and the frontier draw on the residue-then-CRT strategy
+    citation_ids:
+      - isbn:9780387094939
+  Mathematics/ExactIdentityEvidence:
+    status: candidate
+    reason: deterministic exact-arithmetic identity audit with purchasable precision tiers, a public epsilon floor, cap-driven certified refusal and a false-rejection penalty, mixing exact, gross-false, hard-false and undecidable claims; the truth-blind certification witness reaches 0.900/0.925 with zero false discoveries while the base-precision-only shortcut sits at 0.600; pending clean Linux calibration, server-held worlds, independent mathematics review and PSLQ-grade solver comparison
+    citation_ids:
+      - doi:10.1090/S0025-5718-99-01081-3
   Mathematics/NarrowAdmissibleTuple:
     status: candidate
     reason: exact admissibility/diameter oracle scored uncapped against Polymath8b's own published narrow-admissible-tuple diameters (246 at k=50, direct primary-source quote; 270 at k=54, secondary-source only, disclosed); no frontier searcher draw yet, pending external number-theory review

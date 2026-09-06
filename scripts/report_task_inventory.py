@@ -34,6 +34,9 @@ CERTIFICATION = ROOT / "sle" / "certification.yaml"
 # Chinese name per task, shown in the first column beside the English directory name. The
 # directory name is the identifier and never changes; this is what a Chinese reader scans for.
 CHINESE_NAMES = {
+    "Mathematics/EllipticCurveRecovery": "椭圆曲线系数恢复",
+    "Mathematics/ExactIdentityEvidence": "精确身份证据审计",
+
     "Acoustics/RoomImpulseResponse": "房间声学处理设计",
     "Algorithm/GraphFromDistances": "距离查询重建图",
     "Algorithm/MatrixMultiplicationRank": "矩阵乘法秩",
@@ -117,6 +120,13 @@ CHINESE_NAMES = {
 # people deciding which task to look at. A task without an entry fails the inventory test,
 # so a new package cannot silently ship without one.
 CHINESE_BRIEFS = {
+    "Mathematics/EllipticCurveRecovery": (
+        "在素数点数预算下恢复 y²=x³+ax+b 的整数系数,奇异或亏格2须拒答",
+        "系数误差指数分;剩余类枚举+CRT 提升歧义即拒答,全面弃权为零"),
+    "Mathematics/ExactIdentityEvidence": (
+        "在购位预算下裁决整数关系断言:精确(附系数行)、巧合、或精度封顶不可判",
+        "判决+系数恢复,被动全拒为零;把真关系认成假计负分,封顶值断言只可拒答"),
+
     "Acoustics/RoomImpulseResponse": (
         "布置声源、吸声与受点,让语音房间同时兼顾清晰度、混响时间与声场均匀度",
         "清晰度/混响/均匀度综合效用;一阶反射代理与镜像源长程计算排序不同,含安装误差与老化偏移"),

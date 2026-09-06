@@ -33,6 +33,8 @@ discovery_kind:
   parameter_inversion: recover numbers of a form that is already named
 
 tasks:
+  Mathematics/EllipticCurveRecovery: {form: discovery, kind: parameter_inversion, note: crt_lifting_from_prime_counts}
+  Mathematics/ExactIdentityEvidence: {form: discovery, kind: evidence, note: purchasable_precision_verdicts_not_recurrence_recovery}
   # --- optimization / frontier-eng ------------------------------------------
   Thermodynamics/HeatExchangerDesign: {form: optimization, analogue: engineering_design}
   StructuralEngineering/TrussWeightMinimization: {form: optimization, analogue: engineering_design}
