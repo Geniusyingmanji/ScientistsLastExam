@@ -85,6 +85,7 @@ tasks:
   SystemsBiology/EnzymeKineticsLaw: {form: discovery, kind: formula, note: on_ramp_do_not_pair}
   Oceanography/AMOCTippingRefusal: {form: discovery, kind: formula, note: fold_refusal_not_ebm_parameter_fit}
   Physics/ComplexBoseLaw: {form: discovery, kind: formula, note: bose_exponents_not_activelaw_ode}
+  ChemicalKinetics/UnimolecularFalloffLaw: {form: discovery, kind: formula, note: troe_lindemann_not_reaction_network}
   # --- discovery / structure --------------------------------------------------
   CausalDiscovery/InterventionalSCM: {form: discovery, kind: structure}
   CausalDiscovery/SurvivorshipConfoundedDesign: {form: discovery, kind: structure, note: selection_not_clone_of_interventional_scm}
@@ -103,6 +104,7 @@ tasks:
   Mathematics/BlackBoxGroupIdentification: {form: discovery, kind: structure}
   Spectroscopy/CrowdedSpectrumAssignment: {form: discovery, kind: substance}
   MaterialsScience/QuinaryConvexHull: {form: discovery, kind: substance, note: quinary_hull_not_binary_xrd}
+  PolymerScience/DiblockMorphologyDiscovery: {form: discovery, kind: substance, note: diblock_saxs_not_binary_xrd}
   # --- discovery / parameter inversion (SLE's remaining empty-looking cell) ---
   QuantumDynamics/HamiltonianLearning: {form: discovery, kind: parameter_inversion}
   ClimateScience/EnergyBalanceModel: {form: discovery, kind: parameter_inversion}

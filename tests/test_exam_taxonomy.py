@@ -88,6 +88,14 @@ class ExamTaxonomyTests(unittest.TestCase):
             tax["tasks"]["MaterialsScience/QuinaryConvexHull"].get("note"),
             "quinary_hull_not_binary_xrd",
         )
+        self.assertEqual(
+            tax["tasks"]["ChemicalKinetics/UnimolecularFalloffLaw"].get("note"),
+            "troe_lindemann_not_reaction_network",
+        )
+        self.assertEqual(
+            tax["tasks"]["PolymerScience/DiblockMorphologyDiscovery"].get("note"),
+            "diblock_saxs_not_binary_xrd",
+        )
 
 
 if __name__ == "__main__":

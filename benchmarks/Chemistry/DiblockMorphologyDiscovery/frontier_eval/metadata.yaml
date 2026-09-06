@@ -1,0 +1,13 @@
+domain: PolymerScience
+task: DiblockMorphologyDiscovery
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: physical_sim
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 8
+science_metric: diblock_SAXS_peak_morphology_recovery_with_nonequilibrium_refusal
+reference_baseline: always publish lamellae
+reference_sota: truth-blind first-peak plus distinctive-harmonic matching of frozen SAXS traces
+citation: "Matsen and Bates, Macromolecules 29, 1091 (1996); Leibler, Macromolecules 13, 1602 (1980)"

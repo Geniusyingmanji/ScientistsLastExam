@@ -1,0 +1,13 @@
+domain: ChemicalKinetics
+task: UnimolecularFalloffLaw
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: physical_sim
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 8
+science_metric: troe_lindemann_recovery_with_two_channel_refusal
+reference_baseline: always publish a pressure-independent Arrhenius law as Lindemann
+reference_sota: truth-blind P-scan that distinguishes Lindemann from Troe and refuses a second channel or negative order
+citation: "Troe, Ber. Bunsenges. Phys. Chem. 87, 161 (1983); Gilbert, Luther, Troe 1983"
