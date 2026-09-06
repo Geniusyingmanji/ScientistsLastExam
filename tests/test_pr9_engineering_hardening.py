@@ -39,7 +39,8 @@ def test_hvac_anchors_are_feasible_and_ordered_on_every_split():
         assert reference['cost']<baseline['cost']
     result=m.evaluate(r.make_hvac_controller)
     assert result['heldout_feasibility_rate']==1
-    assert result['heldout_policy_score']==pytest.approx(1.)
+    assert .65 < result['combined_score'] < .75
+    assert .75 < result['heldout_policy_score'] < .90
 
 
 def test_invalid_hvac_anchor_is_infrastructure_error_not_candidate_failure(monkeypatch):

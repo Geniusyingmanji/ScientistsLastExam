@@ -10,8 +10,9 @@ oracle:
   deterministic: true
 normalization:
   baseline: Regular rectangular grid with zero yaw.
-  reference: Seeded layout screening, coordinate yaw search and three scales of feasible layout refinement.
-  score: Development annual-value gain is uncapped; held-out geometries and direction, wake-expansion
+  reference: Ten seeded layout starts, coordinate yaw search and one 80 m feasible layout-refinement
+    scale; it scores 0.741 against the oracle's 180-start, three-scale anchor.
+  score: Development annual-value gain is uncapped above the stronger search anchor; held-out geometries and direction, wake-expansion
     and turbulence shifts stay separate.
 citations:
 - id: doi:10.1088/1742-6596/1618/2/022028
@@ -23,11 +24,12 @@ invariants:
 - Yaw decreases own-turbine power while potentially deflecting its downstream wake.
 - Duplicated, too-close, out-of-bound, malformed and over-yawed layouts fail closed.
 - Held-out model-shift metrics never control combined_score.
-known_shortcuts: 'The visible wind roses and reduced wake equations may be overfit. The oracle omits terrain,
-  electrical balance, availability, loads and high-fidelity atmospheric effects; independent pinned-FLORIS
-  replay and server-held roses are mandatory. Hardening: Adds layout refinement after yaw selection. Cross-model
-  robustness, restarts and independent FLORIS validation remain open. Reproduce local sweeps with scripts/diagnose_pr9_engineering.py
-  --sweeps; numerical admission evidence is pending clean Linux replay.'
+known_shortcuts: 'The regular-grid zero-yaw baseline scores 0, while the historical yaw-only search
+  reaches 0.490932 development and 0.347172 robustness against the current 0.741392/0.613817
+  co-design witness. Yaw is therefore a substantial partial shortcut; row staggering, boundary
+  packing and fixed-yaw grids remain unmeasured. The visible wind roses and reduced wake equations
+  may be overfit, and the oracle omits terrain, electrical balance, availability and loads; clean
+  Linux replay, pinned FLORIS comparison and server-held roses remain required.'
 review:
   domain: pending_external
   evaluator_security: targeted_local_regressions_added_clean_linux_sandbox_replay_pending
@@ -50,9 +52,9 @@ lineage:
   calibrator_model_ids: []
   calibration_runs: []
   calibration_evidence_status: missing
-  edits_triggered_by_model: 2026-09-05 local code-review probes triggered identifiable sill scoring, feasible
-    HVAC heldout anchors, moving-plume capture, stronger public-data references, contract documentation
-    and regression tests. No frontier calibration draw has been run.
+  edits_triggered_by_model: No frontier-model draw has been run. Local code review added feasible layout
+    refinement after coordinate yaw selection, measured the historical yaw-only method and retained
+    cross-model FLORIS validation as an explicit open item.
   shortcut_discoverer: local_deterministic_probe_only
   frozen_before_eval: false
   freeze_timestamp: null

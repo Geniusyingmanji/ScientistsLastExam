@@ -12,9 +12,10 @@ wire-to-water efficiency. Every nominal hour must keep tank volume within bounds
 pressure above 20 m; terminal storage must recover to its published target. Submissions are
 rejected rather than clipped or repaired.
 
-`combined_score` is development energy-cost savings above a conservative constant-speed schedule,
-normalized by a truth-blind public-demand-band commitment search with convex dispatch subproblems. Scores
-are uncapped. Held-out systems, 12% demand growth and a four-hour peak-period pump outage are
+`combined_score` is development energy-cost savings above a conservative constant-speed schedule.
+The truth-blind runnable witness solves convex public-demand-band dispatch on an all-on commitment
+and scores `0.569407`; the oracle's wider block-exchange commitment search is score one. The scale
+remains uncapped. Held-out systems, 12% demand growth and a four-hour peak-period pump outage are
 reported separately and cannot be selected against.
 
 This compact model preserves the storage, tariff, pressure and outage couplings needed for a local
@@ -64,7 +65,7 @@ This package remains **candidate**. The metadata difficulty is a target, not a c
 
 ### Current reference and remaining difficulty
 
-Public-demand-band block-exchange commitment search with linear storage/pressure constraints and fixed-mask convex dispatch. Replaces tariff coordinate moves with constrained convex optimization. No invented 0.92-baseline anchor is used when the reference fails; an invalid anchor is an infrastructure error. This remains a single-tank surrogate, not a pipe-network solver. The optimization reference defines 1 by construction; a discovery reference is evaluated against the fixed recovery ceiling. Neither fact certifies difficulty.
+The runnable reference performs constrained convex dispatch for a conservative all-on commitment. The evaluator separately recomputes a public-demand-band block-exchange anchor with the same linear storage/pressure constraints and fixed-mask solver. The witness scores `0.569407` development / `0.493703` held-out; discrete pump commitment is therefore the explicit headroom. No invented fallback anchor is used: an invalid anchor is an infrastructure error. This remains a single-tank surrogate, not a pipe-network solver. The maintainer reported 79 seconds for the baseline on a different host; the package declares 120 seconds expected evaluation time and the black-box wrapper enforces a 300-second candidate timeout. This calibration and timing record do not certify difficulty.
 
 The cost adds running auxiliary electricity at the current tariff and the startup charge to
 hydraulic electricity and speed variation. This creates a genuine discrete commitment decision:

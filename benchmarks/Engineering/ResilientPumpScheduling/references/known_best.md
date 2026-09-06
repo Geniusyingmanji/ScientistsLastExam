@@ -4,31 +4,31 @@
 
 ## 1. Reference method
 
-`verification/reference.py` is standalone and uses only public inputs and charged interfaces. Public-demand-band convex schedule optimization with linear storage/pressure/ramp constraints and a switching epigraph.
+`verification/reference.py` is standalone and uses only public inputs and charged interfaces. It solves public-demand-band convex dispatch on a conservative all-on commitment with linear storage/pressure/ramp constraints and a switching epigraph.
 It is a method witness, not independent high-fidelity verification. Replaces tariff coordinate moves with constrained convex optimization. No invented 0.92-baseline anchor is used when the reference fails; an invalid anchor is an infrastructure error. This remains a single-tank surrogate, not a pipe-network solver.
 
 ## 2. Baseline and normalization
 
-The shipped `solution.py` is the baseline. Tests check valid near-zero development scores.
-Optimization references define one through recomputed objective differences; discovery scores
-retain their fixed supported-world ceilings and refusal normalization. Changed oracle versions
-must not be compared as if their score differences were model improvements.
+The shipped `solution.py` is the zero baseline. The runnable all-on convex dispatch scores
+`0.569407` development / `0.493703` held-out. The evaluator's block-exchange commitment search
+is the reproducible score-one anchor; discrete commitment is the measured headroom. The scale is
+floored at zero and uncapped. The maintainer observed 79 seconds for the baseline on another host;
+the declared expected time is 120 seconds and the wrapper timeout is 300 seconds.
 
 ## 3. Capability comparisons and ablations
 
 Run `python scripts/diagnose_pr9_engineering.py --output tmp/hardening/diagnostics.json --sweeps`.
-Historical public methods are replayed on the current oracle where available; these comparisons
-are **not** isolated causal ablations. HVAC additionally removes occupancy forecasting, and the
-wastewater constant controller removes all state feedback. A complete per-capability ladder,
-including measured nonzero drops, still requires clean Linux execution before admission.
+On the current dirty macOS tree, convex dispatch on the all-on commitment scores `0.569407`
+development and `0.493703` held out. The historical coordinate-move method is invalid on every
+development instance and one of two held-out instances. The evaluator's block-exchange commitment
+search defines score one, but it has not yet been packaged as a separately runnable ablation.
 
 ## 4. Shortcut probes
 
-The diagnostic script includes 528 constant aeration/recycle pairs, 48 historical thermostat
-parameter pairs, a source-only single-well archive, and historical public search methods.
-`tests/test_new_task_hardening.py` pins the diagnosed scientific failures and known shortcuts.
-All remaining untested low-dimensional families are admission risks; passing these probes does
-not prove the absence of shortcuts. Numeric tables from a laptop are local debugging output,
+The conservative constant-speed baseline scores zero. The all-on convex policy is both the current
+reference and the measured no-commitment-search probe (`0.569407`); its gap to one is therefore
+discrete-commitment search headroom, not independent evidence of difficulty. Fixed tariff-window,
+two-block and threshold-on/off schedules remain unmeasured. These values are local diagnostics,
 not frozen benchmark evidence.
 
 ## 5. Frontier-model calibration
@@ -60,5 +60,5 @@ certified by those publications.
 
 The normalization witness performs deterministic public-demand coordinate moves that reduce
 costly-hour pumping while replaying public storage, pressure and ramp constraints. It never sees forecast error or outage hours. It is a strong
-feasible witness rather than a global optimum for the nonlinear energy model; scores above 1.0 are
-valid. EPANET/WNTR replication and frontier-model calibration are pending.
+feasible witness rather than a global optimum for the nonlinear energy model; in the historical
+version it defined score one and stronger savings could exceed 1.0. EPANET/WNTR replication and frontier-model calibration are pending.

@@ -9,6 +9,8 @@ import numpy as np
 ANGLES=(-45,0,45,90)
 MAX_RUN=3
 _REFERENCE_CACHE={}
+RANDOM_STARTS = 10
+ADJACENT_REFINEMENT_PASSES = 1
 
 def _qbar(material, angle):
     e1, e2, g, nu12 = (float(material[k]) for k in ("e1_pa", "e2_pa", "g12_pa", "nu12"))
@@ -113,7 +115,7 @@ def _reference(problem):
     base = _baseline(problem); half = base[:len(base)//2]
     rng = np.random.default_rng(41073 + len(base))
     best, best_q = base, _laminate(problem, base)
-    for _ in range(900):
+    for _ in range(RANDOM_STARTS):
         trial_half = list(rng.permutation(half)); trial = trial_half + trial_half[::-1]
         try:
             trial = _validate(problem, trial)
@@ -121,25 +123,27 @@ def _reference(problem):
             continue
         q = _laminate(problem, trial)
         if q > best_q: best, best_q = trial, q
-    # A competent discrete witness must refine random starts, not only sample them.
-    for _pass in range(12):
+    # Retain a real local-refinement capability, but deliberately bound it to one
+    # adjacent-exchange sweep.  The oracle's wider pair-exchange search is the
+    # reproducible score-one anchor.
+    for _pass in range(ADJACENT_REFINEMENT_PASSES):
         improved = False
-        half = best[:len(best)//2]
-        for i in range(len(half)):
-            for j in range(i + 1, len(half)):
-                if half[i] == half[j]:
-                    continue
-                trial_half = half.copy()
-                trial_half[i], trial_half[j] = trial_half[j], trial_half[i]
-                trial = trial_half + trial_half[::-1]
-                try:
-                    _validate(problem, trial)
-                except ValueError:
-                    continue
-                quality = _laminate(problem, trial)
-                if quality > best_q + 1e-14:
-                    best, best_q = trial, quality
-                    improved = True
+        for i in range(len(best)//2 - 1):
+            half = best[:len(best)//2]
+            j = i + 1
+            if half[i] == half[j]:
+                continue
+            trial_half = half.copy()
+            trial_half[i], trial_half[j] = trial_half[j], trial_half[i]
+            trial = trial_half + trial_half[::-1]
+            try:
+                _validate(problem, trial)
+            except ValueError:
+                continue
+            quality = _laminate(problem, trial)
+            if quality > best_q + 1e-14:
+                best, best_q = trial, quality
+                improved = True
         if not improved:
             break
     _REFERENCE_CACHE[key] = tuple(best)

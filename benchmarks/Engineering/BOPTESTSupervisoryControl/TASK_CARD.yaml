@@ -12,8 +12,9 @@ oracle:
 normalization:
   baseline: Load-compensated, occupancy-aware conservative thermostat with demand ventilation; feasible
     on every development and heldout world.
-  reference: Forecast boundary tracking with online thermal disturbance estimation and one-step CO2 control.
-  score: Development cost-carbon-peak-comfort improvement is uncapped; held-out climates, forecast bias,
+  reference: A feasible blend of the conservative thermostat and forecast boundary tracking with
+    online disturbance estimation; it scores 0.681 against the pure public-model controller anchor.
+  score: Development cost-carbon-peak-comfort improvement is uncapped above the public-model anchor; held-out climates, forecast bias,
     sensor bias, parameter drift and actuator loss stay separate.
 citations:
 - id: doi:10.1080/19401493.2021.1986574
@@ -26,13 +27,12 @@ invariants:
 - CO2 generation occurs only with occupancy and ventilation removes indoor excess above outdoor concentration.
 - Comfort and IAQ gate economic comparison so disabling equipment cannot win.
 - Controller errors and malformed actions fail closed; held-out metrics remain sealed.
-known_shortcuts: 'The lightweight emulator follows the BOPTEST interaction and KPI shape but is not an
-  official Modelica FMU. The name must not be read as certification; pinned official test-case replay,
-  server-held traces and external controls review are required. Hardening: A load-compensated baseline
-  and sufficient 30 kW capacity make all declared climates feasible. Public comfort excursion/rate tolerances
-  replace permissive hidden thresholds; CO2 enforces the published limit. Anchor errors are separated
-  from candidate errors. Reproduce local sweeps with scripts/diagnose_pr9_engineering.py --sweeps;
-  numerical admission evidence is pending clean Linux replay.'
+known_shortcuts: 'All 48 tested proportional-thermostat gain/ventilation pairs fail the published
+  comfort/IAQ gate on at least one development climate. Removing the occupancy forecast from the
+  safety-blended controller reduces it from 0.681069 to 0.230030 development and to -0.570399 held
+  out. The pure public-model controller remains the score-one anchor, so this is reference headroom
+  rather than a frontier difficulty result. The lightweight emulator is not an official Modelica
+  FMU; clean Linux replay, pinned BOPTEST cases and external controls review remain required.'
 review:
   domain: pending_external
   evaluator_security: targeted_local_regressions_added_clean_linux_sandbox_replay_pending
@@ -55,9 +55,9 @@ lineage:
   calibrator_model_ids: []
   calibration_runs: []
   calibration_evidence_status: missing
-  edits_triggered_by_model: 2026-09-05 local code-review probes triggered identifiable sill scoring, feasible
-    HVAC heldout anchors, moving-plume capture, stronger public-data references, contract documentation
-    and regression tests. No frontier calibration draw has been run.
+  edits_triggered_by_model: No frontier-model draw has been run. Local code review made every declared
+    climate feasible, published the comfort/IAQ tolerances, separated anchor failures from candidate
+    failures and measured the 48-controller grid and no-occupancy ablation.
   shortcut_discoverer: local_deterministic_probe_only
   frozen_before_eval: false
   freeze_timestamp: null

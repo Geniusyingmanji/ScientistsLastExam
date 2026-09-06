@@ -34,23 +34,18 @@ class EngineeringCandidateTests(unittest.TestCase):
             name: load(TASK_ROOT / name / "solution.py", "solution_" + name)
             for name in TASKS
         }
+        cls.references = {
+            name: load(TASK_ROOT / name / "verification" / "reference.py", "reference_" + name)
+            for name in TASKS
+        }
 
     def _baseline(self, name):
         entry = (TASK_ROOT / name / "frontier_eval" / "entrypoint.txt").read_text().strip()
         return getattr(self.solutions[name], entry)
 
     def _reference(self, name):
-        evaluator = self.evaluators[name]
-        if name == "CompositeLaminateStacking":
-            return lambda problem: evaluator._reference(problem)
-        if name == "ResilientPumpScheduling":
-            return lambda problem: {"pump_speed": evaluator._reference(problem).tolist()}
-        if name == "WakeAwareFarmCoDesign":
-            def design(problem):
-                layout, yaw = evaluator._reference(problem)
-                return {"layout_xy_m": layout.tolist(), "yaw_by_direction_deg": yaw.tolist()}
-            return design
-        return evaluator._reference_factory
+        entry = (TASK_ROOT / name / "frontier_eval" / "entrypoint.txt").read_text().strip()
+        return getattr(self.references[name], entry)
 
     def test_shipped_baselines_are_valid_and_define_zero(self):
         for name in TASKS:
@@ -62,12 +57,13 @@ class EngineeringCandidateTests(unittest.TestCase):
                 self.assertIn("heldout_policy_score", result)
                 self.assertEqual(result, repeated)
 
-    def test_truth_blind_references_define_one_on_development(self):
+    def test_truth_blind_references_leave_headroom_on_development(self):
         for name in TASKS:
             with self.subTest(name=name):
                 result = self.evaluators[name].evaluate(self._reference(name))
                 self.assertEqual(result["valid"], 1.0)
-                self.assertAlmostEqual(result["combined_score"], 1.0, places=8)
+                self.assertGreater(result["combined_score"], 0.50)
+                self.assertLess(result["combined_score"], 0.80)
 
     def test_malformed_candidates_fail_closed(self):
         def malformed(*_args, **_kwargs):

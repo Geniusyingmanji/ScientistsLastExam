@@ -47,6 +47,11 @@ class PermutationFlowShopTests(unittest.TestCase):
                      for k in range(len(rest) + 1)]
             self.assertEqual(fast, brute)
 
+    def test_runnable_reference_budget_is_bounded(self):
+        self.assertEqual(self.ref.DEFAULT_ITERATIONS, 1)
+        runner = (TASK / "frontier_eval" / "run_eval.py").read_text(encoding="utf-8")
+        self.assertIn("EVAL_TIMEOUT_S = 300.0", runner)
+
     def test_instances_are_fresh_and_deterministic(self):
         for spec in self.ev.DEVELOPMENT_SPECS + self.ev.HELDOUT_SPECS:
             first = self.ev.instance(spec)
@@ -64,10 +69,20 @@ class PermutationFlowShopTests(unittest.TestCase):
             achieved = self.ev.makespan(problem["processing_times"], order)
             self.assertLessEqual(self.ev.WITNESS_MAKESPAN[spec[0]], achieved)
 
-    def test_witness_reaches_one_and_baseline_zero(self):
+    def test_witness_leaves_uncapped_headroom_and_baseline_is_zero(self):
         baseline = self.ev.evaluate(self.sol.schedule_flow_shop)
         self.assertEqual(baseline["valid"], 1.0)
         self.assertLessEqual(abs(baseline["combined_score"]), 0.01)
+        for spec in self.ev.DEVELOPMENT_SPECS:
+            seed = spec[0]
+            times = np.asarray(self.ev.instance(spec)["processing_times"])
+            neh = self.ev._neh_makespan(times)
+            witness = self.ev.WITNESS_MAKESPAN[seed]
+            self.assertAlmostEqual(self.ev._normalized_score(witness, neh, witness), 1.0)
+            self.assertGreater(self.ev._normalized_score(witness - 1, neh, witness), 1.0)
+        runnable = self.ev.evaluate(self.ref.schedule_flow_shop)
+        self.assertGreater(runnable["combined_score"], 0.60)
+        self.assertLess(runnable["combined_score"], 0.70)
         def witness(problem):
             return self.ref.schedule_flow_shop(problem, iterations=3000, seed=0)
         # Spot-check one small instance at full witness budget (fast) and verify the

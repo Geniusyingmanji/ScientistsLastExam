@@ -2,32 +2,31 @@
 
 ## 1. Reference method
 
-`verification/reference.py` is standalone and uses only public inputs and charged interfaces. 900 seeded permutation starts followed by up to twelve feasible pair-exchange refinement passes.
+`verification/reference.py` is standalone and uses only public inputs and charged interfaces. Ten seeded permutation starts are followed by one adjacent-exchange refinement pass; the evaluator independently runs the stronger 900-start/full-pair anchor.
 It is a method witness, not independent high-fidelity verification. The new witness refines permutations rather than stopping after random screening. Paired bending moments and both-face Tsai-Hill stress now make first-ply failure depend on stacking order; the old membrane-only invariant-strength limitation was corrected. Independent anisotropic buckling review is pending.
 
 ## 2. Baseline and normalization
 
-The shipped `solution.py` is the baseline. Tests check valid near-zero development scores.
-Optimization references define one through recomputed objective differences; discovery scores
-retain their fixed supported-world ceilings and refusal normalization. Changed oracle versions
-must not be compared as if their score differences were model improvements.
+The shipped `solution.py` is the zero baseline. The runnable budgeted search scores `0.732584`
+development / `0.724395` held-out against the reproducible stronger search anchor. Denser starts
+and wider pair exchanges are the measured headroom. The scale is floored at zero and uncapped.
 
 ## 3. Capability comparisons and ablations
 
 Run `python scripts/diagnose_pr9_engineering.py --output tmp/hardening/diagnostics.json --sweeps`.
-Historical public methods are replayed on the current oracle where available; these comparisons
-are **not** isolated causal ablations. HVAC additionally removes occupancy forecasting, and the
-wastewater constant controller removes all state feedback. A complete per-capability ladder,
-including measured nonzero drops, still requires clean Linux execution before admission.
+On the current dirty macOS tree, ten starts plus one adjacent-exchange pass score `0.732584`
+development and `0.724395` robustness. Replaying the historical random-screening construction on
+the current bending-sensitive oracle clips to `0.000000` development, with `0.290505` robustness
+and `0.599186` held-out policy score. This is a cross-version method comparison, not an isolated
+ablation.
 
 ## 4. Shortcut probes
 
-The diagnostic script includes 528 constant aeration/recycle pairs, 48 historical thermostat
-parameter pairs, a source-only single-well archive, and historical public search methods.
-`tests/test_new_task_hardening.py` pins the diagnosed scientific failures and known shortcuts.
-All remaining untested low-dimensional families are admission risks; passing these probes does
-not prove the absence of shortcuts. Numeric tables from a laptop are local debugging output,
-not frozen benchmark evidence.
+The quasi-isotropic repeating baseline scores zero, and the historical random-screening method
+also clips to zero on development. The current reference-to-anchor gap is entirely additional
+permutation starts and wider pair exchanges, so it is genuine finite-search headroom but not yet a
+frontier-model difficulty result. Lamination-parameter rounding and deterministic block-pattern
+families remain unmeasured. These values are local diagnostics, not frozen benchmark evidence.
 
 ## 5. Frontier-model calibration
 
@@ -58,5 +57,6 @@ certified by those publications.
 
 The normalization witness performs 900 fixed-seed permutations of the public symmetric half
 laminate and retains the best valid sequence under the same nominal CLT oracle. It is truth-blind,
-deterministic and deliberately not a proof of global optimality. A better sequence may score above
-1.0. No frontier-model or two-hour calibration has yet been run.
+deterministic and deliberately not a proof of global optimality. It defined score one in the
+historical version and stronger sequences could exceed one. No frontier-model or
+two-hour calibration has yet been run.

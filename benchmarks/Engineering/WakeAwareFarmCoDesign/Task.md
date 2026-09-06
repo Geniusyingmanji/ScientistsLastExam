@@ -8,8 +8,9 @@ spacing, and stay within the yaw limit. Invalid designs are rejected, never repa
 The deterministic trusted model rotates the farm into each wind direction, combines upstream
 Gaussian/Jensen-style wake deficits, includes yaw-induced wake displacement and own-turbine power
 loss, caps rated power, and integrates the public wind rose. `combined_score` is annual-value
-improvement over a regular zero-yaw grid, normalized by a truth-blind jittered-layout and
-coordinate-yaw witness. It is uncapped. Held-out farm geometries and a sealed wind-direction,
+improvement over a regular zero-yaw grid. The truth-blind runnable witness uses ten layout starts,
+coordinate yaw search and one 80 m layout-refinement scale, scoring `0.741392`; the oracle's
+180-start, 80/40/20 m search is score one. The scale remains uncapped. Held-out farm geometries and a sealed wind-direction,
 wake-expansion and turbulence shift are reported separately.
 
 The oracle is a reduced engineering wake model, not wind-tunnel or field truth. Before admission,
@@ -54,7 +55,7 @@ This package remains **candidate**. The metadata difficulty is a target, not a c
 
 ### Current reference and remaining difficulty
 
-Seeded layout screening, coordinate yaw search and three scales of feasible layout refinement. Adds layout refinement after yaw selection. Cross-model robustness, restarts and independent FLORIS validation remain open. The optimization reference defines 1 by construction; a discovery reference is evaluated against the fixed recovery ceiling. Neither fact certifies difficulty.
+Ten seeded layout starts, coordinate yaw search and one 80 m feasible layout-refinement scale form the runnable witness; the evaluator independently uses 180 starts and 80/40/20 m refinement as score one. The witness scores `0.741392` development / `0.613817` held-out. More global restarts and finer feasible layout refinement are the explicit headroom. Cross-model robustness and independent FLORIS validation remain open. This calibration does not certify difficulty.
 
 ## Frontier-Eng overlap comparison (2026-09-06)
 

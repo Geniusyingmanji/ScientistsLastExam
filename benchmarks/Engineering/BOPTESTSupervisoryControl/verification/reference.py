@@ -6,6 +6,32 @@ import math
 import copy
 import numpy as np
 
+REFERENCE_MODEL_WEIGHT = 0.40
+
+
+def _conservative_factory(problem):
+    """Feasible public thermostat used as the robust side of the witness."""
+    ua = np.asarray(problem["thermal_model"]["envelope_ua_w_k"]) / 1000.0
+    occupancy = np.asarray(problem["occupancy_forecast"])
+    def step(obs):
+        k = int(obs["step"])
+        temp = np.asarray(obs["zone_temperature_c"])
+        occ = np.asarray(obs["occupancy"])
+        occupied_soon = np.any(occupancy[k:min(k + 9, len(occupancy))] > 0, axis=0)
+        low = np.where(occupied_soon, 22.0, 19.0)
+        high = np.where(occupied_soon, 24.0, 27.0)
+        outdoor = float(obs["outdoor_temperature_c"])
+        gains = .095 * occ + np.array([.65, .45])
+        free = ua * (outdoor - temp) + gains
+        heat = np.clip(12.0 * (low - temp) - free, 0, 30)
+        cool = np.clip(12.0 * (temp - high) + free, 0, 30)
+        net = heat - cool
+        vent = np.clip(.35 + .024 * occ, .15, 1.8)
+        return {"heating_kw": np.maximum(net, 0).tolist(),
+                "cooling_kw": np.maximum(-net, 0).tolist(),
+                "ventilation_ach": vent.tolist()}
+    return step
+
 
 def _reference_factory(problem):
     """Forecast boundary tracking with online heat-balance disturbance estimation."""
@@ -44,4 +70,21 @@ def _reference_factory(problem):
     return step
 
 def make_hvac_controller(problem):
-    return _reference_factory(problem)
+    # Blend a conservative feasible thermostat with the public-model controller.
+    # The oracle's pure model controller is the score-one anchor; a candidate can
+    # improve by trusting/adapting the model more effectively without hidden data.
+    conservative = _conservative_factory(problem)
+    model = _reference_factory(problem)
+    def step(obs):
+        safe = conservative(obs)
+        forecast = model(obs)
+        safe_net = np.asarray(safe["heating_kw"]) - np.asarray(safe["cooling_kw"])
+        model_net = np.asarray(forecast["heating_kw"]) - np.asarray(forecast["cooling_kw"])
+        net = ((1.0 - REFERENCE_MODEL_WEIGHT) * safe_net
+               + REFERENCE_MODEL_WEIGHT * model_net)
+        vent = ((1.0 - REFERENCE_MODEL_WEIGHT) * np.asarray(safe["ventilation_ach"])
+                + REFERENCE_MODEL_WEIGHT * np.asarray(forecast["ventilation_ach"]))
+        return {"heating_kw": np.maximum(net, 0).tolist(),
+                "cooling_kw": np.maximum(-net, 0).tolist(),
+                "ventilation_ach": vent.tolist()}
+    return step

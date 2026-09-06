@@ -20,8 +20,10 @@ normalization:
     as-given order clips to zero as well
   reference: NEH plus seeded ILS with accelerated insertion evaluation; 3000 iterations
     freeze the witness makespans (20x5 1180, 30x10 2182, 50x5 3023, 50x10 2979;
-    held-out 1222, 1734, 3012)
-  score: mean closed gap per instance; beating the witness scores above one with no cap
+    held-out 1222, 1734, 3012); the runnable reference performs one complete ILS cycle
+    and scores 0.636 development
+  score: mean NEH-to-record gap closed per instance; beating the frozen 3000-iteration
+    record anchor scores above one with no cap
 citations:
 - id: doi:10.1016/0377-2217(93)90182-M
   title: Benchmarks for basic scheduling problems

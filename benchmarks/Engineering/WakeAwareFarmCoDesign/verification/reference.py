@@ -8,6 +8,8 @@ import numpy as np
 
 DIRECTIONS=np.arange(0.,360.,30.)
 _REFERENCE_CACHE={}
+RANDOM_LAYOUT_STARTS = 10
+LAYOUT_REFINEMENT_STEPS_M = (80.0,)
 
 def _grid(problem, stagger=False):
     n=int(problem["turbine_count"]); cols=int(math.ceil(math.sqrt(n*float(problem["boundary_width_m"])/float(problem["boundary_height_m"]))))
@@ -62,7 +64,7 @@ def _reference(problem):
         layout,yaw=_REFERENCE_CACHE[key]; return layout.copy(),yaw.copy()
     rng=np.random.default_rng(7201+int(problem["turbine_count"])); candidates=[_grid(problem,False),_grid(problem,True)]
     base=_grid(problem,True)
-    for _ in range(180):
+    for _ in range(RANDOM_LAYOUT_STARTS):
         trial=base+rng.normal(0,70,base.shape); trial[:,0]=np.clip(trial[:,0],40,float(problem["boundary_width_m"])-40); trial[:,1]=np.clip(trial[:,1],40,float(problem["boundary_height_m"])-40)
         try: _validate(problem,{"layout_xy_m":trial,"yaw_by_direction_deg":np.zeros((len(DIRECTIONS),len(trial)))})
         except ValueError: continue
@@ -78,7 +80,9 @@ def _reference(problem):
                 yaw[d,j]=value; q=_farm_value(problem,layout,yaw)
                 if q>best: best,chosen=q,value
             yaw[d,j]=chosen
-    for step_size in (80., 40., 20.):
+    # Keep all three capabilities (screening, yaw search, layout refinement), but
+    # reserve denser starts and the 40/20 m refinement scales for better methods.
+    for step_size in LAYOUT_REFINEMENT_STEPS_M:
         best = _farm_value(problem, layout, yaw)
         for j in range(len(layout)):
             for axis in range(2):

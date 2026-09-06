@@ -2,32 +2,32 @@
 
 ## 1. Reference method
 
-`verification/reference.py` is standalone and uses only public inputs and charged interfaces. Seeded layout screening, coordinate yaw search and three scales of feasible layout refinement.
+`verification/reference.py` is standalone and uses only public inputs and charged interfaces. It uses ten seeded layout starts, coordinate yaw search and one 80 m feasible layout-refinement scale; the evaluator independently runs the stronger 180-start, three-scale anchor.
 It is a method witness, not independent high-fidelity verification. Adds layout refinement after yaw selection. Cross-model robustness, restarts and independent FLORIS validation remain open.
 
 ## 2. Baseline and normalization
 
-The shipped `solution.py` is the baseline. Tests check valid near-zero development scores.
-Optimization references define one through recomputed objective differences; discovery scores
-retain their fixed supported-world ceilings and refusal normalization. Changed oracle versions
-must not be compared as if their score differences were model improvements.
+The shipped `solution.py` is the zero baseline. The runnable co-design search scores `0.741392`
+development / `0.613817` held-out against the stronger reproducible search anchor. Additional
+starts and finer 40/20 m layout moves are the measured headroom. The scale is floored at zero and
+uncapped.
 
 ## 3. Capability comparisons and ablations
 
 Run `python scripts/diagnose_pr9_engineering.py --output tmp/hardening/diagnostics.json --sweeps`.
-Historical public methods are replayed on the current oracle where available; these comparisons
-are **not** isolated causal ablations. HVAC additionally removes occupancy forecasting, and the
-wastewater constant controller removes all state feedback. A complete per-capability ladder,
-including measured nonzero drops, still requires clean Linux execution before admission.
+On the current dirty macOS tree, ten layout starts, coordinate yaw and one 80 m layout-refinement
+scale score `0.741392` development, `0.613817` robustness and `0.735669` held-out policy. Replaying
+the historical yaw-only construction scores `0.490932`, `0.347172` and `0.494141` respectively.
+The added layout refinement and restarts contribute `0.250460` development score in this method
+comparison.
 
 ## 4. Shortcut probes
 
-The diagnostic script includes 528 constant aeration/recycle pairs, 48 historical thermostat
-parameter pairs, a source-only single-well archive, and historical public search methods.
-`tests/test_new_task_hardening.py` pins the diagnosed scientific failures and known shortcuts.
-All remaining untested low-dimensional families are admission risks; passing these probes does
-not prove the absence of shortcuts. Numeric tables from a laptop are local debugging output,
-not frozen benchmark evidence.
+The regular-grid, zero-yaw baseline scores zero. The historical yaw-only search reaches
+`0.490932`, below the co-design reference but high enough to show that yaw is a substantial partial
+shortcut. The remaining reference-to-anchor gap is finite search over starts and 40/20 m layout
+moves, not a frontier-model measurement. Row staggering, boundary packing and fixed-yaw grids
+remain unmeasured. These values are local diagnostics, not frozen benchmark evidence.
 
 ## 5. Frontier-model calibration
 
@@ -58,5 +58,5 @@ certified by those publications.
 
 The witness screens 180 deterministic valid jitters around a staggered grid and then performs
 coordinate yaw refinement using only the public wake model and wind rose. It is not a global
-layout or yaw optimum, so the normalization is uncapped. FLORIS cross-model rankings and
+layout or yaw optimum, so the historical normalization remained uncapped above it. FLORIS cross-model rankings and
 frontier-model calibration are pending.

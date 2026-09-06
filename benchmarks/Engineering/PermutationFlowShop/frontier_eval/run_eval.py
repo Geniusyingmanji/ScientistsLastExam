@@ -1,37 +1,43 @@
 from __future__ import annotations
 
 import argparse
-import importlib.util
 import json
+import os
+import subprocess
 import sys
 from pathlib import Path
 
 INVALID = -1e18
-TASK_DIR = Path(__file__).resolve().parent.parent
-
-
-def _load(path, name):
-    spec = importlib.util.spec_from_file_location("candidate", path)
-    if spec is None or spec.loader is None:
-        raise ImportError("cannot load candidate")
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return getattr(module, name)
+TASK_ID = "ProductionSystems/PermutationFlowShop"
+ROOT = Path(__file__).resolve().parents[4]
+EVAL_TIMEOUT_S = 300.0
 
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--candidate", required=True)
     parser.add_argument("--metrics-out", required=True)
+    parser.add_argument("--timeout", type=float, default=EVAL_TIMEOUT_S)
     args = parser.parse_args()
     metrics = {"combined_score": INVALID, "valid": 0.0}
     try:
-        sys.path.insert(0, str(TASK_DIR / "verification"))
-        import evaluator as oracle
-        candidate = _load(Path(args.candidate).resolve(), "schedule_flow_shop")
-        result = oracle.evaluate(candidate)
+        done = subprocess.run(
+            [
+                sys.executable, "-m", "sle", "eval", "--task", TASK_ID,
+                "--allow-uncertified", "--candidate", str(Path(args.candidate).resolve()),
+                "--timeout", str(args.timeout),
+            ],
+            cwd=str(ROOT), capture_output=True, text=True,
+            timeout=args.timeout + 120,
+            env={**os.environ, "PYTHONPATH": str(ROOT)},
+        )
+        if done.returncode != 0:
+            raise RuntimeError(
+                "sle eval exited %d: %s" % (done.returncode, (done.stderr or "")[-500:])
+            )
+        result = json.loads(done.stdout)
         metrics.update(result)
-        metrics["raw_score"] = result.get("combined_score")
+        metrics.setdefault("raw_score", result.get("combined_score"))
     except Exception as exc:
         metrics["error_message"] = f"{type(exc).__name__}: {exc}"
     Path(args.metrics_out).write_text(json.dumps(metrics, indent=2, default=str), encoding="utf-8")

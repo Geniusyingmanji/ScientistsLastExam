@@ -5,12 +5,13 @@ every job visits the machines in the same order, and the candidate fixes the job
 sequence. Instances are fresh-seeded in the Taillard style (processing times uniform on
 {1..99}), so no published table or memorized best solution transfers. The score is the
 fraction of the gap closed between the shipped baseline (as-given job order) and a
-frozen truth-blind iterated-local-search witness; beating the witness scores above one.
+frozen truth-blind iterated-local-search record anchor; beating it scores above one.
 """
 
 from __future__ import annotations
 
 import numpy as np
+
 
 # (seed, jobs, machines) — development and held-out instance families.
 DEVELOPMENT_SPECS = (

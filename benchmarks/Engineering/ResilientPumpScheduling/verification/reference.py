@@ -105,41 +105,19 @@ def _continuous_schedule(problem, on):
     return speeds
 
 def _reference(problem):
-    """Mixed commitment/local continuous dispatch search using public demand bands.
+    """Public-demand-band convex dispatch on a conservative all-on commitment.
 
-    Fixed masks have convex dispatch subproblems. Block exchanges change commitment;
-    this is a feasible heuristic, not a certificate of global mixed-integer optimality.
+    This is a competent feasible fixed-mask method.  The oracle's wider block-mask
+    search is the score-one anchor, leaving discrete commitment optimization as
+    explicit, reproducible headroom.
     """
     key = repr(problem)
     if key in _REFERENCE_CACHE:
         return _REFERENCE_CACHE[key].copy()
-    demand = np.asarray(problem["demand_forecast_m3_h"])
-    cache = {}
-    def solve(on):
-        key = tuple(on)
-        if key not in cache:
-            edges = np.diff(np.r_[False,on,False].astype(int))
-            if np.any(np.flatnonzero(edges == -1)-np.flatnonzero(edges == 1) < problem["minimum_run_hours"]):
-                cache[key] = (float('inf'),None)
-            else:
-                speeds = _continuous_schedule(problem,on)
-                cache[key] = (float('inf'),None) if speeds is None else (_simulate(problem,speeds,demand)["cost"],speeds)
-        return cache[key]
     on = np.ones(HOURS,dtype=bool)
-    cost, best = solve(on)
+    best = _continuous_schedule(problem,on)
     if best is None:
         raise RuntimeError("no feasible public pumping reference")
-    for _ in range(2):
-        next_mask, next_best, next_cost = on, best, cost
-        for width in (2,3,4):
-            for start in range(HOURS-width+1):
-                trial = on.copy(); trial[start:start+width] = ~trial[start:start+width]
-                value, speeds = solve(trial)
-                if value < next_cost - 1e-8:
-                    next_mask, next_best, next_cost = trial, speeds, value
-        if next_cost >= cost - 1e-8:
-            break
-        on,best,cost = next_mask,next_best,next_cost
     _REFERENCE_CACHE[key] = best.copy()
     return best
 

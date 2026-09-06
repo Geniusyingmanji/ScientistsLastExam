@@ -11,8 +11,9 @@ oracle:
   deterministic: true
 normalization:
   baseline: Conservative constant-speed schedule sized above mean public demand.
-  reference: Block-exchange commitment search with convex public-band dispatch on each mask.
-  score: Development energy-cost savings are uncapped; held-out networks, demand growth and four-hour
+  reference: Convex public-band dispatch on a conservative all-on commitment; it scores 0.569 against
+    the oracle's block-exchange commitment anchor.
+  score: Development energy-cost savings are uncapped above the block-search anchor; held-out networks, demand growth and four-hour
     outage resilience remain separate.
 citations:
 - id: url:https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P10113EM.TXT
@@ -25,9 +26,11 @@ invariants:
 - Invalid shapes, nonfinite speeds, bound violations, ramp violations and nominal hydraulic failures score
   zero.
 - Forecast growth and outage axes remain evaluator-only.
-known_shortcuts: Discrete stable-speed/minimum-run commitment and auxiliary/start costs are active. Single-pump/single-tank
-  fidelity and global optimality remain limited. Formal clean Linux calibration and independent domain
-  validation remain pending.
+known_shortcuts: The conservative constant-speed baseline scores 0. The all-on convex dispatch is both
+  the 0.569407 reference and the measured no-commitment-search probe; its gap to one is discrete-commitment
+  search headroom rather than independent model-difficulty evidence. Fixed tariff-window, two-block and
+  threshold on/off policies remain unmeasured. Single-pump/single-tank fidelity and global optimality remain
+  limited; clean Linux replay and independent water-network review are pending.
 review:
   domain: pending_external
   evaluator_security: targeted_local_regressions_added_clean_linux_sandbox_replay_pending
@@ -50,10 +53,9 @@ lineage:
   calibrator_model_ids: []
   calibration_runs: []
   calibration_evidence_status: missing
-  edits_triggered_by_model: 2026-09-05 local code-review probes triggered identifiable sill scoring, feasible
-    HVAC heldout anchors, moving-plume capture, stronger public-data references, contract documentation
-    and regression tests. No frontier calibration draw has been run. Second local hardening adds nonlinear
-    chronology, frame nuisance, transient control and pump commitment; no frontier-model draw.
+  edits_triggered_by_model: No frontier-model draw has been run. Local code review replaced tariff
+    coordinate moves with constrained convex dispatch, added stable-speed/minimum-run commitment and
+    start/auxiliary costs, and retained the invalid historical method as a failure record.
   shortcut_discoverer: local_deterministic_probe_only
   frozen_before_eval: false
   freeze_timestamp: null

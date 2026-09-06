@@ -12,9 +12,9 @@ oracle:
     failure and reduced Navier buckling screening.
 normalization:
   baseline: Quasi-isotropic repeating sequence satisfying every manufacturing rule.
-  reference: 900 seeded permutation starts followed by up to twelve feasible pair-exchange refinement
-    passes.
-  score: Development reserve improvement is uncapped; held-out panels and sealed material/load degradation
+  reference: Ten seeded permutation starts followed by one adjacent-exchange refinement pass; it
+    scores 0.733 against a 900-start, full pair-exchange anchor recomputed by the oracle.
+  score: Development reserve improvement is uncapped above the stronger search anchor; held-out panels and sealed material/load degradation
     remain separate.
 citations:
 - id: doi:10.2514/3.11710
@@ -28,15 +28,13 @@ invariants:
 - Malformed, asymmetric, unbalanced, composition-changing and over-consecutive sequences score zero without
   escaping the evaluator.
 - Held-out and degradation metrics never control combined_score.
-known_shortcuts: 'Fixed ply counts remove thickness and composition optimization but retain the order-sensitive
-  bending problem. The CLT and Navier model omit holes, delamination, postbuckling and nonlinear finite-element
-  effects; server-held panels and independent FEA remain required. Hardening: The new witness refines
-  permutations rather than stopping after random screening. Fixed-composition membrane strength is order-invariant
-  in this surrogate; scientific difficulty primarily comes from bending/buckling and still needs independent
-  review. Reproduce local sweeps with scripts/diagnose_pr9_engineering.py --sweeps; numerical admission
-  evidence is pending clean Linux replay. The former order-invariant membrane-strength path is replaced
-  with ply-face bending stress. Buckling still omits anisotropic mode coupling; independent FE validation
-  remains pending.'
+known_shortcuts: 'The quasi-isotropic repeating baseline and historical random-screening method
+  both score 0 on current development panels; the latter retains 0.290505 robustness. The current
+  0.732584 witness-to-anchor gap comes from additional permutation starts and wider pair exchanges
+  and is finite-search headroom, not a frontier-model result. Lamination-parameter rounding and
+  block-pattern families remain unmeasured. Fixed ply counts remove composition optimization, and
+  the CLT/Navier surrogate still omits holes, delamination, postbuckling and anisotropic mode coupling;
+  clean Linux replay and independent FEA remain required.'
 review:
   domain: pending_external
   evaluator_security: targeted_local_regressions_added_clean_linux_sandbox_replay_pending
@@ -59,9 +57,9 @@ lineage:
   calibrator_model_ids: []
   calibration_runs: []
   calibration_evidence_status: missing
-  edits_triggered_by_model: 2026-09-05 local code-review probes triggered identifiable sill scoring, feasible
-    HVAC heldout anchors, moving-plume capture, stronger public-data references, contract documentation
-    and regression tests. No frontier calibration draw has been run.
+  edits_triggered_by_model: No frontier-model draw has been run. Local code review replaced the
+    order-invariant membrane-only strength path with both-face bending stress and added deterministic
+    adjacent and full-pair permutation searches plus regression tests.
   shortcut_discoverer: local_deterministic_probe_only
   frozen_before_eval: false
   freeze_timestamp: null
