@@ -431,6 +431,20 @@ def _reference_callable():
     return module.design_assembly
 
 
+SCORE_ONE_LOG_FIDELITY = -0.001  # predicted fidelity ~ 99.9%; the beam-search witness does not reach this
+
+
+def _log_gap_score(value: float, baseline: float, target: float = SCORE_ONE_LOG_FIDELITY) -> float:
+    """Log remaining-gap score. Baseline is 0; target is 1; closer to perfect (0) can exceed 1."""
+    if not math.isfinite(value) or value >= 0.0:
+        value = -1e-15
+    if not (baseline < target < 0.0) or value <= baseline:
+        return 0.0
+    span = math.log10((-baseline) / (-target))
+    achieved = math.log10((-baseline) / (-min(value, -1e-15)))
+    return max(0.0, achieved / span)
+
+
 @lru_cache(maxsize=None)  # noqa: UP033 - canonical trusted runtime is Python 3.8
 def _anchors(instance_id: str) -> tuple[float, float]:
     profile = next(
@@ -456,6 +470,7 @@ def _score_world(design_assembly, profile: dict, split: str) -> dict:
         "split": split,
         "baseline_log_fidelity": baseline,
         "reference_log_fidelity": reference,
+        "score_one_log_fidelity": SCORE_ONE_LOG_FIDELITY,
     }
     try:
         reset_session = getattr(design_assembly, "reset_session", None)
@@ -465,7 +480,7 @@ def _score_world(design_assembly, profile: dict, split: str) -> dict:
         value, error = _validate(problem, submission)
         if error or value is None:
             raise ValueError(error)
-        score = max(0.0, (value - baseline) / (reference - baseline))
+        score = _log_gap_score(value, baseline)
         row.update(
             {
                 "valid": True,

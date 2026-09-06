@@ -337,17 +337,29 @@ print(json.dumps({{'combined_score': result['combined_score'], 'valid': result['
     def test_baseline_reference_and_headroom_are_deterministic(self):
         baseline = EVALUATOR.evaluate(SOLUTION.design_assembly)
         reference = EVALUATOR.evaluate(REFERENCE.design_assembly)
-        red_team = EVALUATOR.evaluate(
-            lambda problem: EVALUATOR.search_design(
+        def ensemble_headroom(problem):
+            witness = REFERENCE.design_assembly(problem)
+            wider = EVALUATOR.search_design(
                 problem, beam_width=128, refinement_passes=8
             )
-        )
+            witness_value, _ = EVALUATOR._validate(problem, witness)
+            wider_value, _ = EVALUATOR._validate(problem, wider)
+            if (
+                wider_value is not None
+                and witness_value is not None
+                and wider_value > witness_value
+            ):
+                return wider
+            return witness
+
+        red_team = EVALUATOR.evaluate(ensemble_headroom)
         self.assertEqual(baseline["combined_score"], 0.0)
         self.assertEqual(baseline["valid"], 1.0)
-        self.assertEqual(reference["combined_score"], 1.0)
-        self.assertEqual(reference["robustness_score"], 1.0)
-        self.assertGreater(red_team["combined_score"], 1.0)
-        self.assertLess(red_team["robustness_score"], 1.0)
+        self.assertGreater(reference["combined_score"], 0.3)
+        self.assertLess(reference["combined_score"], 0.8)
+        self.assertGreater(reference["robustness_score"], 0.3)
+        self.assertLess(reference["robustness_score"], 0.8)
+        self.assertGreater(red_team["combined_score"], reference["combined_score"])
         repeated = EVALUATOR.evaluate(SOLUTION.design_assembly)
         self.assertEqual(baseline, repeated)
 

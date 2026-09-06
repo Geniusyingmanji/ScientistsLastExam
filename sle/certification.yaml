@@ -60,9 +60,10 @@ tasks:
       overhang tied to an actual adjacent junction; predicted assembly fidelity uses independently
       oriented and hashed integer counts from Pryor et al. PLOS ONE Tables S1-S4, while internal
       Type IIS sites, reverse-complement reuse, malformed fragments and empty/single-fragment
-      avoidance fail closed. The public-data reference is a normalization witness, not an optimum
-      or difficulty certification; no frontier-model calibration or wet-lab confirmation exists,
-      pending external synthetic-biology review.
+      avoidance fail closed. Score is uncapped remaining-gap log progress toward log fidelity
+      -0.001 (~99.9% predicted F); the public-data beam-search witness lands near 0.54, not
+      at one. No frontier-model calibration or wet-lab confirmation exists, pending external
+      synthetic-biology review.
     citation_ids: [doi:10.1371/journal.pone.0238592]
   QuantumErrorCorrection/QuantumErrorDecoder:
     status: candidate

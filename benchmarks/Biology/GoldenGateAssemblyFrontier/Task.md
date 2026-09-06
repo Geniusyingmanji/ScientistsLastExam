@@ -85,14 +85,15 @@ passed to the candidate; the complete target and measured design inputs are.
 
 For each target, the baseline evenly spaces fragments and takes the nearest legal unused junction.
 The reference performs two deterministic public-data beam searches followed by coordinate
-refinement. If `L = log(F)`, the uncapped instance score is
+refinement. If `L = log(F)`, the uncapped instance score is logarithmic remaining-gap progress
+toward a wave-1 target of `L = -0.001` (~99.9% predicted fidelity):
 
 ```text
-max(0, (L_candidate - L_baseline) / (L_reference - L_baseline)).
+log10((-L_baseline) / (-L_candidate)) / log10((-L_baseline) / 0.001)
 ```
 
-Thus the shipped baseline is exactly 0, the truth-blind reference is exactly 1, and a design with
-higher measured fidelity can score above 1. `combined_score` averages the three development
+The shipped baseline is exactly 0. The public-data beam-search witness lands below
+one (about 0.3–0.8). A design with `L` closer to 0 than `-0.001` scores above 1.
 targets; `robustness_score` reports the two held-out targets. Feasibility, predicted fidelity,
 chosen condition and the number of instances beating the reference remain separate. Invalid
 submissions score zero for that target and never receive a small-pool reward.

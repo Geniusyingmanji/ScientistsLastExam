@@ -36,15 +36,17 @@ a successful builder replay and explicitly leaves independent source replay pend
 
 The baseline is the public even-spacing construction in `solution.py`. The reference uses only the
 public target, enzyme descriptions and count matrices. It takes the better of width-8 and width-32
-beam searches after four coordinate-refinement passes.
+beam searches after four coordinate-refinement passes. Score is uncapped remaining-gap log progress
+toward log fidelity `-0.001` (~99.9% predicted F); that witness lands near combined score `0.54`,
+not at one.
 
 ## 4. Headroom and ablation
 
-A width-128, eight-refinement-pass red team reaches development scores `0.982670`, `1.065777`, and
-`0.996324`, for mean `1.014924`. It therefore provides executable score-above-one headroom, but its
-held-out scores are `0.986089` and `0.335061`. Wider search is not uniformly better because partial
-set fidelity is not a monotone admissible bound; a wide beam can prune a lower-scoring partial set
-that later avoids crosstalk. This makes held-out reporting load-bearing.
+A width-128, eight-refinement-pass search is not uniformly better than the width-32 witness
+(partial-set fidelity is not a monotone admissible bound). The executable headroom program takes,
+per instance, the better of the two; it strictly improves development combined score above the
+witness. Wider search is not uniformly better because a wide beam can prune a lower-scoring
+partial set that later avoids crosstalk. This makes held-out reporting load-bearing.
 
 ## 5. Failure and shortcut probes
 
