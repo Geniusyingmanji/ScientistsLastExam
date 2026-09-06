@@ -47,6 +47,24 @@ def test_product_baseline_is_valid_and_scores_zero():
     assert independent_by_neighbors(baseline.build_code({})["codewords"], 7)
 
 
+@pytest.mark.parametrize("candidate_kind, expected_valid", [
+    ("baseline", 1.0), ("malformed_schema", 0.0), ("malformed_matrix", 0.0),
+])
+def test_metrics_are_accepted_by_real_secure_eval(candidate_kind, expected_valid):
+    from sle.secure_eval import validate_metrics
+
+    evaluator = load("verification/evaluator.py")
+    candidates = {
+        "baseline": load("solution.py").build_code,
+        "malformed_schema": lambda _: {},
+        "malformed_matrix": lambda _: {"codewords": [[True] * 5]},
+    }
+    metrics = evaluator.evaluate(candidates[candidate_kind])
+    checked = validate_metrics(metrics, "uncapped")
+    assert checked["valid"] == expected_valid
+    assert type(metrics["valid"]) is float
+
+
 def test_primary_fixture_is_exact_and_reference_replays_it():
     reference = fixture()
     rows = reference["codewords"]
@@ -115,6 +133,25 @@ def test_candidate_exception_is_a_finite_deterministic_failure():
     assert not result["valid"] and result["reason"].startswith("candidate raised")
     assert json.dumps(result, sort_keys=True, allow_nan=False) == json.dumps(
         evaluator.evaluate(raises), sort_keys=True, allow_nan=False)
+
+
+def test_exception_type_and_message_cannot_change_failure_metrics():
+    from sle.secure_eval import validate_metrics
+
+    evaluator = load("verification/evaluator.py")
+    first_error = type("candidate_controlled_first", (Exception,), {})
+    second_error = type("candidate_controlled_second", (Exception,), {})
+
+    def first(_):
+        raise first_error("candidate-controlled first message")
+
+    def second(_):
+        raise second_error("candidate-controlled second message")
+
+    first_result = evaluator.evaluate(first)
+    second_result = evaluator.evaluate(second)
+    assert json.dumps(first_result, sort_keys=True) == json.dumps(second_result, sort_keys=True)
+    assert validate_metrics(first_result, "uncapped")["valid"] == 0.0
 
 
 def test_input_mutation_cannot_change_fixed_problem_or_next_evaluation():

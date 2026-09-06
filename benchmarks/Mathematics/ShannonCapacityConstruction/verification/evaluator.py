@@ -71,7 +71,7 @@ def normalized_size_gain(size, reference_size):
 def evaluate(build_code):
     reference_size = len(load_reference_codewords())
     result = {
-        "combined_score": 0.0, "valid": False, "schema_valid": False,
+        "combined_score": 0.0, "valid": 0.0, "schema_valid": False,
         "raw_size": None, "reference_size": reference_size,
         "baseline_size": BASELINE_SIZE, "beyond_reference": False, "reason": "",
     }
@@ -80,8 +80,8 @@ def evaluate(build_code):
                "max_codewords": MAX_CODEWORDS, "reference_size": reference_size}
     try:
         artifact = build_code(problem)
-    except Exception as exc:
-        result["reason"] = "candidate raised " + type(exc).__name__
+    except Exception:
+        result["reason"] = "candidate raised an exception"
         return result
     if type(artifact) is not dict or set(artifact) != {"codewords"}:
         result["reason"] = "return exactly a dictionary with the key codewords"
@@ -89,6 +89,7 @@ def evaluate(build_code):
     checked = verify_codewords(artifact["codewords"], alphabet_size=ALPHABET_SIZE,
                                block_length=BLOCK_LENGTH, max_codewords=MAX_CODEWORDS)
     result.update(checked)
+    result["valid"] = float(checked["valid"])
     if result["valid"]:
         result["combined_score"] = normalized_size_gain(result["raw_size"], reference_size)
         result["beyond_reference"] = result["raw_size"] > reference_size
