@@ -33,6 +33,11 @@ discovery_kind:
   parameter_inversion: recover numbers of a form that is already named
 
 tasks:
+  Electrophysiology/HodgkinHuxleyCurrentID: {form: discovery, kind: parameter_inversion, note: clamp_protocols_with_extra_current_refusal}
+  SyntheticBiology/OrthogonalDNACodewords: {form: optimization, analogue: combinatorial, note: hybridization_constraints_not_molecular_design}
+  Electrochemistry/ChronoamperometryLawID: {form: discovery, kind: formula, note: transient_families_not_initial_rates}
+  Spectroscopy/MassFragmentationTree: {form: discovery, kind: structure, note: fragmentation_dag_from_multienergy_msms_not_library_matching}
+  ChemicalProcess/ThermochemicalCycleAudit: {form: discovery, kind: evidence, note: hess_closure_network_not_single_constant_reconciliation}
   # --- optimization / frontier-eng ------------------------------------------
   Thermodynamics/HeatExchangerDesign: {form: optimization, analogue: engineering_design}
   StructuralEngineering/TrussWeightMinimization: {form: optimization, analogue: engineering_design}

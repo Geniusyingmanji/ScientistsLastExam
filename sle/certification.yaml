@@ -10,6 +10,35 @@ policy:
   statuses: [certified, candidate, quarantined]
 
 tasks:
+  Electrophysiology/HodgkinHuxleyCurrentID:
+    status: candidate
+    reason: deterministic voltage-clamp channel-parameter recovery over the public 1952 gating equations in closed form, with sealed-protocol prediction and A-type/rectifying extra-current refusal; the multistart least-squares witness reaches 0.718/0.594 with zero false discoveries, leaving parameter-recovery headroom; pending clean Linux calibration, independent electrophysiology review and server-held membranes
+    citation_ids:
+      - doi:10.1113/jphysiol.1952.sp004764
+  SyntheticBiology/OrthogonalDNACodewords:
+    status: candidate
+    reason: uncapped orthogonal DNA word library record under exact GC, Hamming, all-shift reverse-complement cross-dimer and homopolymer constraints with a frozen seeded greedy witness (dna16 28, dna12 27 words) and a trivial-pair zero anchor; different-seed probes reach 0.864 so the search carries the difficulty; pending clean Linux calibration, independent review against the DNA-word-design literature and stronger-search headroom measurement
+    citation_ids:
+      - doi:10.1089/10665270152530818
+      - doi:10.1038/s43588-024-00646-z
+      - url:https://www.combinatorics.org/ojs/index.php/eljc/article/view/v10i1r33
+  Electrochemistry/ChronoamperometryLawID:
+    status: candidate
+    reason: deterministic multi-potential chronoamperometric law identification with Akaike-penalized family fits, chi-square and variable-projection drift gates, and anomalous-transport refusal; the truth-blind witness reaches 0.963/0.882 with zero false discoveries while a no-penalty variant drops to 0.876; pending clean Linux calibration, independent electrochemistry review and server-held transients
+    citation_ids:
+      - isbn:9780471057528
+  Spectroscopy/MassFragmentationTree:
+    status: candidate
+    reason: deterministic multi-energy MS/MS fragmentation-tree discovery with charged energy/zoom budget, flat-background filtering, in-source precursor loss and one-dalton co-isolate refusal worlds; a truth-blind decomposition-plus-greedy-attachment witness reaches 0.565/0.525 development/robustness with zero false discoveries while shortcut probes stay at or below 0.104; pending clean Linux calibration, server-held molecules, independent mass-spectrometry review and higher-fidelity cascade replication
+    citation_ids:
+      - doi:10.1073/pnas.1509788112
+      - doi:10.1186/s13321-016-0116-8
+  ChemicalProcess/ThermochemicalCycleAudit:
+    status: candidate
+    reason: deterministic Hess-closure network audit with instrument drift, transcription slips, reference-state offsets and an information-conditioned pendant-pair refusal axis, replicate/cross-check budget against systematic-versus-random error; the truth-blind adjustment witness reaches 0.557/0.656 with perfect verdicts and diagnosis on development while probes stay at or below 0.202; pending clean Linux calibration, server-held networks, independent thermochemistry review and ATcT-style replication
+    citation_ids:
+      - doi:10.1021/jp047912y
+      - doi:10.1021/acs.jpca.6c03567
   Mathematics/NarrowAdmissibleTuple:
     status: candidate
     reason: exact admissibility/diameter oracle scored uncapped against Polymath8b's own published narrow-admissible-tuple diameters (246 at k=50, direct primary-source quote; 270 at k=54, secondary-source only, disclosed); no frontier searcher draw yet, pending external number-theory review

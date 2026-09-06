@@ -1,0 +1,105 @@
+schema_version: 2
+scientific_question: Can budgeted voltage-clamp protocols recover the eight
+  Hodgkin-Huxley parameters of a three-current membrane, while refusing membranes
+  carrying a current outside the family?
+artifact: A bounded length-8 parameter row, optional abstention and a confidence
+  scalar.
+oracle:
+  model: classic 1952 gating kinetics in closed form at clamped voltages, seeded
+    bounded parameters, Gaussian trace noise, plus A-type and rectifying
+    extra-current worlds
+  feasibility: bounded finite parameters, charged unique protocols within an
+    eight-unit budget
+  deterministic: true
+  external_tooling: none beyond NumPy/SciPy
+difficulty_ladder:
+  default_level: 1
+  levels:
+    1: 0.5 percent peak-current noise, unit extra-current scale
+    2: 1.0 percent noise, 1.4x extra current
+    3: 1.8 percent noise, 1.9x extra current
+normalization:
+  baseline: one protocol and mid-range parameters, never refusing
+  reference: four steps, closed-form gating, five-start bounded least squares with a
+    residual misfit gate
+  score: geometric mean of normalized parameter recovery and a sealed held-out
+    protocol prediction, normalized above always abstaining
+citations:
+- id: doi:10.1113/jphysiol.1952.sp004764
+  title: A quantitative description of membrane current and its application to
+    conduction and excitation in nerve
+invariants:
+- at clamped voltage the public gating equations relax exponentially from the holding
+  steady state
+- extra-current worlds leave structural residual no three-current fit absorbs
+- a full abstention scores exactly zero after normalization
+known_shortcuts: Mid-range guesses with one protocol score 0.000; the reference
+  reaches 0.718/0.594 with zero false discoveries. The parameter axis is the
+  difficulty (0.565); shifts and conductances trade off under trace noise. Formal
+  clean Linux calibration and independent review remain pending.
+licensing:
+  task_package: repository_license_not_declared
+  external_assets: none
+  note: All runtime worlds are generated from original repository code; cited
+    publications are not redistributed.
+contamination:
+  status: cannot_be_ruled_out
+  rationale: The model is textbook-public; seeded parameters, protocols and refusal
+    regimes are procedural.
+review:
+  domain: pending_external_electrophysiology
+  evaluator_security: targeted_local_regressions_added_clean_linux_sandbox_replay_pending
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic clamp worlds with development and
+    held-out parameters and extra-current regimes.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Hodgkin-Huxley fitting is classical; the activation-shift
+    parameterization, budgeted protocol choice and extra-current refusal are
+    original to this package.
+lineage:
+  status: complete
+  builder_model_ids:
+  - glm-5.3
+  builder_scaffolds:
+  - repository-native-biology-task-pattern
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: 2026-09-05 local build caught a 0/0 singularity in the public alpha forms at shifted 25 mV (replaced by a stable series form), a constant-trace closed-form bug that started relaxation from the step steady state, a math.exp call on an array in the A-type current, an undetectably weak rectifying world, and a reference that imported the hidden evaluator; each was fixed and pinned by tests.
+  shortcut_discoverer: initial_internal_red_team
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: initial_internal
+  author_domain: AI-assisted benchmark engineering
+  reviewer_domain: pending_external_electrophysiology
+  expert_hours: null
+  red_team_rounds: 2
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: standalone_public_model_references_pending
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+difficulty_assessment:
+  status: unverified_candidate
+  requirement: standard-method and low-dimensional shortcut sweeps, capability ablations
+    and clean frontier-model calibration before certification
+  remaining_risk: The reference leaves real headroom on parameter recovery and one
+    held-out world sits in a local minimum; a frontier draw must confirm the gap is
+    science and not optimizer tuning.
+
+frontier_eng_overlap_review:
+  date: '2026-09-06'
+  classification: 无
+  nearest: predict_modality; perturbation_prediction; PIDTuning
+  distinction: Budgeted voltage-clamp experiments recover membrane-current parameters
+    and refuse extra-current worlds. FE predicts cell responses or tunes a flying controller,
+    not membrane conductance inference.
+  evidence: .research/pr9_frontier_eng_overlap_2026-09-06.md
+  status: source_count_discrepancy_pending_maintainer_confirmation

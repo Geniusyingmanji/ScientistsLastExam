@@ -34,6 +34,12 @@ CERTIFICATION = ROOT / "sle" / "certification.yaml"
 # Chinese name per task, shown in the first column beside the English directory name. The
 # directory name is the identifier and never changes; this is what a Chinese reader scans for.
 CHINESE_NAMES = {
+    "Electrophysiology/HodgkinHuxleyCurrentID": "电压钳通道参数恢复",
+    "SyntheticBiology/OrthogonalDNACodewords": "正交 DNA 密码词库",
+    "Electrochemistry/ChronoamperometryLawID": "计时电流法律辨识",
+    "Spectroscopy/MassFragmentationTree": "多碰撞能碎裂树恢复",
+    "ChemicalProcess/ThermochemicalCycleAudit": "热化学闭环审计",
+
     "Acoustics/RoomImpulseResponse": "房间声学处理设计",
     "Algorithm/GraphFromDistances": "距离查询重建图",
     "Algorithm/MatrixMultiplicationRank": "矩阵乘法秩",
@@ -117,6 +123,22 @@ CHINESE_NAMES = {
 # people deciding which task to look at. A task without an entry fails the inventory test,
 # so a new package cannot silently ship without one.
 CHINESE_BRIEFS = {
+    "Electrophysiology/HodgkinHuxleyCurrentID": (
+        "自选电压钳协议恢复八参数通道模型,A 型或整流额外电流须拒答",
+        "参数恢复+密封协议预测几何均值;失配门拒答,全面弃权为零"),
+    "SyntheticBiology/OrthogonalDNACodewords": (
+        "在 GC/汉明/全位移交叉二聚/均聚物约束下建更大的正交寡核苷酸词库",
+        "相对冻结贪心见证的规模进度;无上限,验证与构造方法无关"),
+    "Electrochemistry/ChronoamperometryLawID": (
+        "在电位阶跃预算下辨识六条计时电流律,反常扩散或基线漂移须拒答",
+        "类概率+参数+密封外推几何均值;χ² 门与共享线性项变量投影拒答分列"),
+    "Spectroscopy/MassFragmentationTree": (
+        "在能量/变焦预算下从多级质谱恢复中性丢失碎裂树;无分子离子或共洗脱杂质须拒答",
+        "节点/边 F1(质量容差最优匹配)平均;误发现与拒答分列,全面弃权为零"),
+    "ChemicalProcess/ThermochemicalCycleAudit": (
+        "在复测/交叉验证预算下审计焓闭环网络:一致、单点错误、仪器漂移或归因欠定",
+        "校正增益+判决+诊断融合,被动审计为零;pendant 对取证前归因欠定,盲指名记假发现"),
+
     "Acoustics/RoomImpulseResponse": (
         "布置声源、吸声与受点,让语音房间同时兼顾清晰度、混响时间与声场均匀度",
         "清晰度/混响/均匀度综合效用;一阶反射代理与镜像源长程计算排序不同,含安装误差与老化偏移"),
