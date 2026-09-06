@@ -10,6 +10,8 @@ from pathlib import Path
 import numpy as np
 import yaml
 
+from sle.secure_eval import validate_metrics
+
 
 ROOT = Path(__file__).resolve().parents[1]
 TASK = ROOT / "benchmarks" / "Physics" / "ActiveNoiseSpectroscopy"
@@ -210,6 +212,19 @@ class ScoringAndContractTests(unittest.TestCase):
         self.assertLess(result["heldout_feasibility_rate"], 1.0)
         self.assertEqual(result["heldout_mechanism_score"], 0.0)
         self.assertEqual(result["heldout_prediction_score"], 0.0)
+        for field in (
+            "heldout_false_discovery_rate",
+            "heldout_unsupported_false_positive_rate",
+            "heldout_correct_refusal_rate",
+            "heldout_attempted_discovery_rate",
+            "heldout_discovery_coverage",
+            "heldout_unwarranted_refusal_rate",
+        ):
+            self.assertIsNone(result[field], field)
+        # The trusted JSON round-trip accepts null science estimates while
+        # retaining numeric combined_score and valid for development selection.
+        validated = validate_metrics(result, "clipped")
+        self.assertIsNone(validated["heldout_false_discovery_rate"])
 
     def test_malformed_submissions_fail_closed(self):
         cases = (

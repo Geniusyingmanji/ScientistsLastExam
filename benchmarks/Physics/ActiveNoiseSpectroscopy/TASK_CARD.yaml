@@ -42,8 +42,9 @@ normalization:
     score, so always-abstain is exactly zero. Heldout prediction, FDR, unsupported false-positive
     rate, correct and unwarranted refusal, attempted discovery, calibration and shot use remain
     separate with explicit denominators. Public valid/selection depend only on development;
-    heldout validity is published independently and any incomplete heldout split suppresses all
-    heldout scientific estimates to zero.
+    heldout validity is published independently. On an incomplete heldout split, mechanism and
+    prediction become zero lower bounds while FDR, FPR, refusal and coverage proportions become
+    JSON null; status and count fields remain available.
 citations:
   - id: doi:10.1038/s41467-019-11699-4
     title: Non-Gaussian noise spectroscopy with a superconducting qubit sensor
@@ -73,8 +74,8 @@ invariants:
     one supported-world unit from the precision-weighted numerator.
   - >-
     Invalid heldout rows cannot silently improve heldout mechanism or FDR: heldout feasibility and
-    counts are explicit and any incomplete heldout split suppresses its scientific estimates,
-    without changing development valid or combined_score.
+    counts are explicit; an incomplete split uses zero only for mechanism/prediction lower bounds
+    and null for ratio estimates, without changing development valid or combined_score.
   - malformed candidates and caught callback protocol violations score zero without escaping the evaluator
 known_shortcuts: >-
   The public equations make a PSD fit easy, but it cannot distinguish the exactly matched Gaussian

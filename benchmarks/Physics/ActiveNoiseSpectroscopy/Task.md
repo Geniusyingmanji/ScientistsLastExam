@@ -142,8 +142,10 @@ code catches the exception.
 - Public selection uses development only: `valid` and `combined_score` do not read heldout
   outcomes. The evaluator separately publishes heldout valid/world/invalid counts, feasibility,
   `heldout_science_complete`, and `heldout_science_estimates_suppressed`. If any heldout world is
-  invalid, every heldout scientific estimate is conservatively reported as zero and must not be
-  interpreted as success.
+  invalid, mechanism and prediction are reported as explicit zero lower bounds, while FDR, FPR,
+  refusal and coverage proportions are JSON `null` rather than a favorable or meaningful zero.
+  The status mask and raw counts remain available; none of these heldout fields may be interpreted
+  as success when the split is incomplete.
 - false-discovery rate, unsupported false-positive rate, correct refusal, unwarranted refusal, attempted discovery, confidence
   calibration, and shot use are separate diagnostics and are never averaged into the discovery
   score. Correctly saying “not a discovery” on a Gaussian null is a necessary true negative, not

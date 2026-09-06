@@ -87,8 +87,9 @@ quadrature and consumed sequentially: `N` shots in one call equal the sum of leg
 `N`. Overspend, an unknown control, `None`/NaN/string/float shot counts, malformed output,
 nonfinite parameters, and a raising callable all fail closed without escaping `evaluate`.
 Development validity remains the only public selection gate. Heldout validity has its own
-feasibility and count fields; any incomplete heldout split sets all heldout scientific estimates to
-zero and marks them suppressed.
+feasibility and count fields. An incomplete heldout split marks estimates suppressed, places
+mechanism and prediction at explicit zero lower bounds, and leaves FDR, FPR, refusal and coverage
+ratios null. This avoids manufacturing a favorable zero false-discovery estimate from missing rows.
 
 ## 7. Remaining gates
 

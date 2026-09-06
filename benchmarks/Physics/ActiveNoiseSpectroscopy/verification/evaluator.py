@@ -586,10 +586,15 @@ def evaluate(discover_noise):
     development_valid = development["valid_count"] == development["world_count"]
     heldout_complete = heldout["valid_count"] == heldout["world_count"]
 
-    def heldout_science(value):
+    def heldout_lower_bound(value):
         # Heldout validity never changes the public development selection score.
-        # It only gates claims made from the heldout split itself.
+        # Mechanism and prediction have an explicit conservative lower bound.
         return value if heldout_complete else 0.0
+
+    def heldout_ratio(value):
+        # Zero is favorable for FDR/FPR and meaningful for refusal/coverage.
+        # Missing rows therefore suppress ratios instead of being imputed as zero.
+        return value if heldout_complete else None
 
     return {
         "combined_score": development["normalized"] if development_valid else 0.0,
@@ -624,25 +629,25 @@ def evaluate(discover_noise):
         "heldout_world_count": heldout["world_count"],
         "heldout_invalid_count": heldout["world_count"] - heldout["valid_count"],
         "heldout_feasibility_rate": heldout["valid_count"] / heldout["world_count"],
-        "heldout_mechanism_score": heldout_science(heldout["normalized"]),
+        "heldout_mechanism_score": heldout_lower_bound(heldout["normalized"]),
         "heldout_supported_world_count": heldout["supported_count"],
         "heldout_unsupported_world_count": heldout["unsupported_count"],
         "heldout_false_claim_count": heldout["false_claim_count"],
         "heldout_claimed_mechanism_count": heldout["claimed_mechanism_count"],
-        "heldout_mechanism_recovery": heldout_science(heldout["mechanism_recovery"]),
-        "heldout_prediction_score": heldout_science(heldout["heldout_prediction"]),
-        "heldout_false_discovery_rate": heldout_science(heldout["false_discovery_rate"]),
-        "heldout_unsupported_false_positive_rate": heldout_science(
+        "heldout_mechanism_recovery": heldout_lower_bound(heldout["mechanism_recovery"]),
+        "heldout_prediction_score": heldout_lower_bound(heldout["heldout_prediction"]),
+        "heldout_false_discovery_rate": heldout_ratio(heldout["false_discovery_rate"]),
+        "heldout_unsupported_false_positive_rate": heldout_ratio(
             heldout["unsupported_false_positive_rate"]
         ),
-        "heldout_correct_refusal_rate": heldout_science(heldout["correct_refusal_rate"]),
-        "heldout_attempted_discovery_rate": heldout_science(
+        "heldout_correct_refusal_rate": heldout_ratio(heldout["correct_refusal_rate"]),
+        "heldout_attempted_discovery_rate": heldout_ratio(
             heldout["attempted_discovery_rate"]
         ),
-        "heldout_discovery_coverage": heldout_science(
+        "heldout_discovery_coverage": heldout_ratio(
             heldout["attempted_discovery_rate"]
         ),
-        "heldout_unwarranted_refusal_rate": heldout_science(
+        "heldout_unwarranted_refusal_rate": heldout_ratio(
             heldout["unwarranted_refusal_rate"]
         ),
         "per_instance": development["rows"] + heldout["rows"],
