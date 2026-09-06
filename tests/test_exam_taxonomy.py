@@ -92,6 +92,10 @@ class ExamTaxonomyTests(unittest.TestCase):
             tax["tasks"]["Mathematics/HeavyTailEvidence"].get("note"),
             "clauset_tails_not_lookelsewhere",
         )
+        self.assertEqual(
+            tax["tasks"]["Glaciology/GlenFlowLawDiscovery"].get("note"),
+            "glen_exponent_not_amoc_fold_or_wall_closure",
+        )
 
 
 if __name__ == "__main__":

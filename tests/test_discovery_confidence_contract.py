@@ -16,6 +16,7 @@ EVALUATORS = (
     "benchmarks/Physics/LookElsewhereAnomaly/verification/evaluator.py",
     "benchmarks/Physics/PTAHellingsDowns/verification/evaluator.py",
     "benchmarks/Mathematics/HeavyTailEvidence/verification/evaluator.py",
+    "benchmarks/EarthScience/GlenFlowLawDiscovery/verification/evaluator.py",
 )
 
 REQUIRED_BOOLEAN_FIELDS = (

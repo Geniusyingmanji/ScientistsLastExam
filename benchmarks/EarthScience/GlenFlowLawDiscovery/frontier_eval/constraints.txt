@@ -1,0 +1,4 @@
+1) Only edit solution.py. Keep identify_flow_law(problem, measure).
+2) Return {"family", "n", "confidence", "abstain"}. `family` must be one of problem["family_names"] unless abstaining. `n` a positive finite exponent. `confidence` in [0,1]; `abstain` a boolean. Omit family and n when abstaining.
+3) measure(stress_kPa) charges one call. Bounds are problem["stress_bounds_kPa"]. Do not exceed problem["measure_budget_calls"]. problem["rate_law"] is the in-family formula.
+4) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read verification/ or frontier_eval/.
