@@ -58,6 +58,9 @@ class TaskCardAuditTests(unittest.TestCase):
             "difficulty": "on_ramp", "tier": "candidate", "score_mode": "uncapped",
         }), [])
         self.assertEqual(_metadata_issues({
+            "difficulty": "unmeasured", "tier": "candidate", "score_mode": "clipped",
+        }), [])
+        self.assertEqual(_metadata_issues({
             "difficulty": "easy", "tier": "T1", "score_mode": "bounded",
         }), [
             "metadata difficulty is invalid",

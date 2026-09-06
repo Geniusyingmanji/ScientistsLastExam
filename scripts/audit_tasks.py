@@ -43,7 +43,7 @@ PROVENANCE_CLASSES = {
 NOVELTY_RISK_LEVELS = {"low", "medium", "high", "unknown"}
 LINEAGE_STATUSES = {"complete", "incomplete_legacy", "unknown"}
 METADATA_DIFFICULTIES = {
-    "on_ramp", "uncalibrated_candidate", "hard", "flagship",
+    "on_ramp", "uncalibrated_candidate", "unmeasured", "hard", "flagship",
 }
 METADATA_TIERS = {"candidate", "T2", "T3"}
 SCORE_MODES = {"clipped", "uncapped"}
