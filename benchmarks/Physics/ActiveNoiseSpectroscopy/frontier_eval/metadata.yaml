@@ -1,0 +1,18 @@
+domain: QuantumControl
+task: ActiveNoiseSpectroscopy
+scientific_role: discovery
+difficulty: unmeasured
+tier: candidate
+oracle_type: analytical_quantum_filter_function
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 8
+science_metric: precision_weighted_single_fluctuator_parameter_recovery_with_separate_prediction_false_discovery_and_refusal
+reference_baseline: no measurements; claim one generic fluctuator in every environment
+reference_sota: truth-blind multi-filter complex-coherence fit shipped under verification; no experimental or hardness-certification claim
+tool_level: L2
+tools_suggested:
+  - literature_search
+  - offline_numerical_optimization
+tool_rationale: Filter-function and higher-order-spectrum literature supplies the physical discriminator; nonlinear transfer-matrix fitting is needed to recover rate, variance and occupancy.
+citation: "Sung et al., Nature Communications 2019, DOI 10.1038/s41467-019-11699-4; Norris et al., Physical Review Letters 2016, DOI 10.1103/PhysRevLett.116.150503"

@@ -1,0 +1,14 @@
+1) Only edit solution.py. Keep discover_noise(problem, measure).
+2) Return either {"abstain": True, "confidence": ...} or a single_telegraph model with finite
+   switching_rate_per_us, noise_variance_rad2_per_us2, high_state_probability, and confidence
+   inside the public bounds.
+3) Select from the complete public control_catalog through measure(sequence_id,
+   shots_per_quadrature). Sequence id, non-boolean Python/NumPy integer per-call shots, and the
+   cumulative 24,000-shot budget are strict;
+   catching any callback error cannot make that world valid.
+4) Gaussian OU and single telegraph worlds share exactly the same Lorentzian PSD. A symmetric
+   telegraph source also has zero coherence phase, so neither PSD-only fitting nor phase-only
+   classification is sufficient.
+5) Deterministic CPU code using the standard library, NumPy, and SciPy only. No network or process
+   creation. Do not read verification/ or frontier_eval/.
+6) `sle.contract_lint` is importable and free to use for shape checks.
