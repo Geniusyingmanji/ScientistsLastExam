@@ -15,7 +15,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Callable, Optional
 
-from ..evaluate import INVALID_SCORE, evaluate_candidate
+from ..evaluate import INVALID_SCORE, evaluate_candidate, resolve_trusted_runtime
 from ..llm import LLMClient
 from ..metric_visibility import search_visible_metrics
 from ..protocol import sha256_text
@@ -88,11 +88,13 @@ def abmcts(
         workdir or spec.task_dir / "runs" / ("abmcts_%s" % time.strftime("%Y%m%d_%H%M%S"))
     ).resolve()
     workdir.mkdir(parents=True, exist_ok=True)
+    trusted_runtime = resolve_trusted_runtime(spec.task_dir)
     ensure_run_manifest(
         workdir, spec=spec, llm=llm, algorithm="abmcts", seed=seed,
         feedback_mode=feedback_mode, resume=resume,
         upstream={"name": "treequest", "version": TREEQUEST_VERSION,
                   "commit": TREEQUEST_COMMIT},
+        trusted_runtime=trusted_runtime,
     )
     candidate_path = workdir / Path(spec.candidate_destination).name
     checkpoint_path = workdir / "checkpoint.pkl"
@@ -137,7 +139,10 @@ def abmcts(
     if not resume:
         candidate_path.write_text(baseline_code, encoding="utf-8")
         started = time.monotonic()
-        baseline_metrics = evaluate_candidate(spec, candidate_path, timeout_s=timeout_s)
+        baseline_metrics = evaluate_candidate(
+            spec, candidate_path, timeout_s=timeout_s,
+            trusted_runtime=trusted_runtime,
+        )
         baseline_score, baseline_valid = metrics_score(baseline_metrics)
         # TreeQuest search state must never contain evaluator-only science metrics.
         baseline_state = ProgramState(
@@ -228,7 +233,10 @@ def abmcts(
 
         if code:
             candidate_path.write_text(code, encoding="utf-8")
-            metrics = evaluate_candidate(spec, candidate_path, timeout_s=timeout_s)
+            metrics = evaluate_candidate(
+                spec, candidate_path, timeout_s=timeout_s,
+                trusted_runtime=trusted_runtime,
+            )
             oracle_calls += 1
         else:
             code = parent_state.code

@@ -18,42 +18,85 @@
 # sle/secure_eval.py.
 #
 # Usage:
-#     bash scripts/setup_oracle_env.sh            # install everything
-#     bash scripts/setup_oracle_env.sh --check    # report what is present, install nothing
+#     ORACLE_PYTHON=/path/to/python3.8 bash scripts/setup_oracle_env.sh
+#     ORACLE_PYTHON=/path/to/python3.8 bash scripts/setup_oracle_env.sh --check
+# Full oracle setup is certified only for Python 3.8 and fails before resolution otherwise.
 set -euo pipefail
 
 ORACLE_PYTHON="${ORACLE_PYTHON:-/usr/bin/python3}"
 BOOTSTRAP_VENV="${BOOTSTRAP_VENV:-$HOME/.cache/sle-bootstrap-venv}"
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(dirname "$SCRIPT_DIR")"
 
-# Pinned to match the versions every reference record was measured against. Changing one of these
-# invalidates that task's recorded anchors, which is why they are pinned rather than floated.
-PACKAGES=(
-  "stim==1.13.0"          # QuantumErrorDecoder: seeded sampling is not stable across versions
-  "pymatching==2.4.0"     # QuantumErrorDecoder anchor
-  "rdkit==2024.03.5"      # MolecularLeadOptimization; last line with cp38 wheels
-  "ViennaRNA==2.7.2"      # RNAEnsembleDesign
-  "nmrsim==0.6.0"         # SpinSystemInference
-  "networkx==3.1"         # GraphFromDistances
-  "qutip==4.7.6"          # physics discovery tasks; 5.x needs a toolchain this host lacks
-)
+# One canonical map now drives both this install transaction and secure_eval's runtime checks.
+# Installing every pin in one resolver transaction prevents a later toolkit's dependency upgrade
+# from silently changing NumPy, SciPy or Astropy's numerical dependencies.
+PACKAGE_OUTPUT="$(
+  PYTHONPATH="$REPO_ROOT${PYTHONPATH:+:$PYTHONPATH}" "$ORACLE_PYTHON" -c \
+    "from sle.oracle_package_pins import setup_requirements; import sys; print(*setup_requirements(sys.version_info[:2]), sep='\\n')"
+)"
+mapfile -t PACKAGES <<< "$PACKAGE_OUTPUT"
 
 # import name -> pip name, since several differ
 declare -A IMPORT_NAME=(
-  ["stim==1.13.0"]="stim"
-  ["pymatching==2.4.0"]="pymatching"
-  ["rdkit==2024.03.5"]="rdkit"
-  ["ViennaRNA==2.7.2"]="RNA"
-  ["nmrsim==0.6.0"]="nmrsim"
-  ["networkx==3.1"]="networkx"
-  ["qutip==4.7.6"]="qutip"
+  ["stim"]="stim"
+  ["pymatching"]="pymatching"
+  ["rdkit"]="rdkit"
+  ["ViennaRNA"]="RNA"
+  ["nmrsim"]="nmrsim"
+  ["networkx"]="networkx"
+  ["sympy"]="sympy"
+  ["qutip"]="qutip"
+  ["astropy"]="astropy"
+  ["numpy"]="numpy"
+  ["scipy"]="scipy"
+  ["pyerfa"]="erfa"
+  ["PyYAML"]="yaml"
+  ["Pillow"]="PIL"
+  ["mpmath"]="mpmath"
+  ["sparse"]="sparse"
+  ["numba"]="numba"
+  ["llvmlite"]="llvmlite"
+  ["numpy-groupies"]="numpy_groupies"
+  ["importlib-metadata"]="importlib_metadata"
+  ["typing-extensions"]="typing_extensions"
+  ["zipp"]="zipp"
+  ["packaging"]="packaging"
+  ["matplotlib"]="matplotlib"
+  ["contourpy"]="contourpy"
+  ["cycler"]="cycler"
+  ["fonttools"]="fontTools"
+  ["importlib-resources"]="importlib_resources"
+  ["kiwisolver"]="kiwisolver"
+  ["pyparsing"]="pyparsing"
+  ["python-dateutil"]="dateutil"
+  ["six"]="six"
 )
 
 site_dir() {
-  # The user site-packages, not a system one. A first version preferred any path containing
-  # "local" and picked /usr/local/lib/python3.8/dist-packages, which needs root and is not where
-  # the existing toolkits live - a fresh host would have installed to a second location and the
-  # two would have drifted.
-  "$ORACLE_PYTHON" -c "import site; print(site.getusersitepackages())"
+  # A configured virtualenv must own its packages; its user site is disabled and installing
+  # there creates a plausible-looking environment that the interpreter never imports.
+  # Preserve the historical user-site target only for a system interpreter.
+  "$ORACLE_PYTHON" -c \
+    "import site, sys, sysconfig; print(sysconfig.get_path('purelib') if sys.prefix != sys.base_prefix else site.getusersitepackages())"
+}
+
+installed_version() {
+  local distribution="$1"
+  "$ORACLE_PYTHON" -c \
+    "import importlib.metadata, sys; print(importlib.metadata.version(sys.argv[1]))" \
+    "$distribution" 2>/dev/null
+}
+
+package_matches() {
+  local spec="$1"
+  local distribution="${spec%%==*}"
+  local expected="${spec#*==}"
+  local mod="${IMPORT_NAME[$distribution]}"
+  local actual
+  "$ORACLE_PYTHON" -c "import $mod" >/dev/null 2>&1 || return 1
+  actual="$(installed_version "$distribution")" || return 1
+  [[ "$actual" == "$expected" ]]
 }
 
 report() {
@@ -61,9 +104,17 @@ report() {
   echo "target site-packages: $(site_dir)"
   local missing=0
   for spec in "${PACKAGES[@]}"; do
-    local mod="${IMPORT_NAME[$spec]}"
-    if version=$("$ORACLE_PYTHON" -c "import $mod, sys; print(getattr($mod, '__version__', '?'))" 2>/dev/null); then
+    local distribution="${spec%%==*}"
+    local expected="${spec#*==}"
+    local mod="${IMPORT_NAME[$distribution]}"
+    local version
+    version="$(installed_version "$distribution")" 2>/dev/null || true
+    if package_matches "$spec"; then
       printf '  %-22s present  %s\n' "$mod" "$version"
+    elif [[ -n "$version" ]]; then
+      printf '  %-22s MISMATCH %s (expected %s)\n' \
+        "$mod" "$version" "$expected"
+      missing=$((missing + 1))
     else
       printf '  %-22s MISSING  (%s)\n' "$mod" "$spec"
       missing=$((missing + 1))
@@ -73,11 +124,13 @@ report() {
 }
 
 if [[ "${1:-}" == "--check" ]]; then
-  report || true
-  exit 0
+  report
+  exit $?
 fi
 
-if ! "$BOOTSTRAP_VENV/bin/python" -m pip --version >/dev/null 2>&1; then
+if ! "$BOOTSTRAP_VENV/bin/python" -c \
+    'import sys; raise SystemExit(sys.version_info[:2] != (3, 8))' >/dev/null 2>&1 \
+    || ! "$BOOTSTRAP_VENV/bin/python" -m pip --version >/dev/null 2>&1; then
   echo "creating bootstrap venv at $BOOTSTRAP_VENV"
   # No --system-site-packages: inheriting them is what pulls in the broken OpenSSL bindings.
   rm -rf "$BOOTSTRAP_VENV"
@@ -86,15 +139,15 @@ fi
 
 TARGET="$(site_dir)"
 echo "installing into $TARGET"
+needs_install=0
 for spec in "${PACKAGES[@]}"; do
-  mod="${IMPORT_NAME[$spec]}"
-  if "$ORACLE_PYTHON" -c "import $mod" >/dev/null 2>&1; then
-    echo "  $mod already present, skipping"
-    continue
-  fi
-  echo "  installing $spec"
-  "$BOOTSTRAP_VENV/bin/pip" install --quiet --target "$TARGET" "$spec"
+  package_matches "$spec" || needs_install=1
 done
+if (( needs_install )); then
+  "$BOOTSTRAP_VENV/bin/pip" install --quiet --upgrade --target "$TARGET" "${PACKAGES[@]}"
+else
+  echo "  all pinned packages already present, skipping"
+fi
 
 echo
 report

@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Any, Callable, Optional
 
 from ..llm import LLMClient
-from ..evaluate import INVALID_SCORE
+from ..evaluate import INVALID_SCORE, resolve_trusted_runtime
 from ..metric_visibility import load_full_metrics
 from ..protocol import sha256_text
 from ..spec import TaskSpec
@@ -87,11 +87,13 @@ def openevolve(
         or spec.task_dir / "runs" / ("openevolve_%s" % time.strftime("%Y%m%d_%H%M%S"))
     ).resolve()
     workdir.mkdir(parents=True, exist_ok=True)
+    trusted_runtime = resolve_trusted_runtime(spec.task_dir)
     ensure_run_manifest(
         workdir, spec=spec, llm=llm, algorithm="openevolve", seed=seed,
         feedback_mode=feedback_mode, resume=resume,
         upstream={"name": "openevolve", "version": OPENEVOLVE_VERSION,
                   "commit": OPENEVOLVE_COMMIT},
+        trusted_runtime=trusted_runtime,
     )
     upstream_dir = workdir / "upstream"
     upstream_dir.mkdir(parents=True, exist_ok=True)
@@ -154,6 +156,7 @@ def openevolve(
     evaluator_file = write_configured_wrapper(
         workdir / "upstream_evaluator.py", spec.task_id, timeout_s,
         full_metrics_dir=workdir / "trusted_full_metrics",
+        expected_trusted_runtime_sha256=trusted_runtime.fingerprint_sha256,
     )
     controller = OpenEvolve(
         initial_program_path=str(spec.initial_program_path),

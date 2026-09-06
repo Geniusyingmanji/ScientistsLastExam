@@ -87,8 +87,8 @@ benchmarks/
 ```yaml
 domain: Chemistry                    # 稳定的逻辑 domain(不是顶层目录名)
 task: LennardJonesCluster            # 任务目录名
-difficulty: hard                     # hard | flagship
-tier: T2                             # T2(专家)| T3(flagship)
+difficulty: hard                     # on_ramp | uncalibrated_candidate | hard | flagship
+tier: T2                             # candidate | T2(专家) | T3(flagship)
 oracle_type: analytical              # analytical | physical_sim | dataset_oracle | neural_surrogate
 score_mode: clipped                  # clipped(压在 [0,1])| uncapped(相对 SoTA,>1 表示超越)
 gpu_required: false
@@ -97,7 +97,15 @@ science_metric: <name>               # 主指标的可读名称
 reference_baseline: <description>    # 初始程序做了什么
 reference_sota: <description>        # 已知最优结果及其出处
 citation: "Author, Journal, Year"    # 可引用的出处
+# 可选:持续前沿 task family
+task_family_id: Chemistry/OpenReactionNetwork
+wave_id: wave-1
 ```
+
+一旦设置 `task_family_id` 或 `wave_id`,就必须同时提供
+`frontier_eval/wave.yaml`。wave manifest 的语义哈希会进入 run manifest 和 task contract;
+同一 `wave_id` 改写语义、跳过 predecessor 或复用已变更的 cell 定义都会 fail closed。
+不要给普通单版本任务机械补这两个字段。
 
 ### `frontier_eval/entrypoint.txt`
 
@@ -135,11 +143,19 @@ normalized = (raw_mechanism - always_abstain) / (1.0 - always_abstain)
 | 模式 | 何时使用 | 分数范围 |
 |---|---|---|
 | `clipped` | hard 任务有一个可靠的已知参考值 | `[0, 1]` |
-| `uncapped` | 已知最优值是活跃的研究前沿(flagship 任务) | `[0, ∞)` —— 追平 SoTA 为 1.0,超越 > 1.0 |
+| `uncapped` | reference 是见证或当前纪录，超过它的结果必须保留 | 输出契约为 `[0, ∞)` 且不在 1 截断；固定任务的可达分数仍可能有界 |
 
 `uncapped` 任务还须提供 `references/known_best.md`,记录当前已知最优值、来源与日期。
 **不要在 `uncapped` 任务里保留上限** —— 那会让"追平参考解"与"超越它"无法区分,
 而这正是本基准要测的那个区别。`tests/test_uncapped_scoring.py` 会检查。
+
+`uncapped` 不等于数学上“无上限”，也不自动证明任务足够困难。`uncapped` 与
+`lifetime_frontier_credit` 不是同一个概念。前者是一个冻结 release 内不在 reference=1
+截断的模型分数，其任务空间、资源包络与可达效用仍可能有界；
+后者是同一 task family 跨不可变 waves 的科学前沿账本。优化记录只累计超过 incumbent 与
+`minimum_delta` 的边际增益;发现记录只累计 trusted evaluator 产生的唯一 canonical claim。
+账本不能把候选提交次数、置信度、重复结构或新增容易 cell 当成进步。具体 manifest schema、
+链式账本和 threat model 见 [`docs/frontier_families.md`](docs/frontier_families.md)。
 
 ---
 
@@ -227,6 +243,7 @@ normalized = (raw_mechanism - always_abstain) / (1.0 - always_abstain)
       且**已列出候选会收到的所有输入键名**。
 - [ ] 无绝对路径、无 `.env`、无 API key、无 `__pycache__`、无大数据文件。
 - [ ] `metadata.yaml` 字段填全。
+- [ ] 若加入 frontier family:`wave.yaml` 通过语义校验,predecessor 链正确,cell ID/定义未被改写。
 - [ ] flagship(`uncapped`)任务:`references/known_best.md` 存在且值有出处。
 - [ ] `python scripts/audit_tasks.py` 无准入问题,不变量测试全部通过。
 - [ ] 在 `sle/conf/exam_taxonomy.yaml` 里占**恰好一格**(optimization analogue 或
@@ -280,9 +297,12 @@ CI 其余部分对 PR 一视同仁:审计、卡片校验、沙箱测试全部要
 | Linux 主机(bubblewrap + util-linux flock) | 以上全部;`refresh_global_evidence.py`;恢复审计;`rebind_measurement_health_spec.py` | 在脏树上生成证据 |
 | CI(GitHub Actions,ubuntu-22.04) | 全量测试 + 审计,合并前唯一算数的绿灯 | 生成证据(runner 不是可信来源) |
 
-原因写在沙箱里:候选代码在 bubblewrap 中由 `/usr/bin` 的解释器执行,只挂载 `/usr /lib /lib64`,
-所以依赖必须装进系统解释器(`sudo /usr/bin/python3 -m pip install numpy scipy pyyaml`),
-`actions/setup-python` 或 conda 里的包沙箱看不见。macOS 没有 bubblewrap,沙箱路径一律不可用。
+原因写在沙箱里:候选代码在 bubblewrap 中由启动测试的同一 CPython ABI 执行。沙箱只读挂载该
+解释器、标准库、显式允许的包入口和解析出的共享库闭包,不会整体暴露 `/usr /lib /lib64`。
+因此依赖必须安装到启动测试的解释器可见的位置;CI 使用 `/usr/bin/python3`,维护者的完整 oracle
+环境则必须显式设置 `ORACLE_PYTHON=/path/to/python3.8`。其他 Python 版本可运行其已固定的基础
+candidate 包组合,但完整 oracle 安装目前只认证 Python 3.8并会对其他版本提前 fail closed。
+macOS 没有 bubblewrap,沙箱路径一律不可用。
 
 证据文档(`experiments/*.json`、`.research/*_spec_*.json`)都带 `source_provenance`:git 修订、
 树是否干净、运行时源码哈希。脏树、笔记本产出、或运行时文件已变的文档会被标为不可信,测试直接拒收。

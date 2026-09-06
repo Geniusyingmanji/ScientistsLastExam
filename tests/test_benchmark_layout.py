@@ -62,10 +62,47 @@ class BenchmarkLayoutTests(unittest.TestCase):
                 "baseline_code": "def solve(): return 0\n",
                 "evaluator_code": "def evaluate(candidate): return {'combined_score': 0.0, 'valid': 1.0}\n",
             }, repo=Path(temporary))
+            metadata = (task_dir / "frontier_eval" / "metadata.yaml").read_text()
         self.assertEqual(
             task_dir.relative_to(temporary),
             Path("benchmarks/Chemistry/GeneratedLayoutSmoke"),
         )
+        self.assertIn("tier: T2", metadata)
+
+    def test_generator_accepts_honest_uncalibrated_candidate_metadata(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            task_dir = create_task({
+                "domain": "Chemistry",
+                "task": "GeneratedCandidateSmoke",
+                "difficulty": "uncalibrated_candidate",
+                "oracle_type": "analytical",
+                "score_mode": "uncapped",
+                "eval_time_seconds": 1,
+                "science_metric": "smoke",
+                "reference_baseline": "none",
+                "reference_sota": "none",
+                "citation": "none",
+                "entrypoint": "solve",
+                "task_md": "# Smoke\n",
+                "baseline_code": "def solve(): return 0\n",
+                "evaluator_code": "def evaluate(candidate): return {'combined_score': 0.0, 'valid': 1.0}\n",
+            }, repo=Path(temporary))
+            metadata = (task_dir / "frontier_eval" / "metadata.yaml").read_text()
+        self.assertIn("difficulty: uncalibrated_candidate", metadata)
+        self.assertIn("tier: candidate", metadata)
+
+    def test_generator_rejects_unknown_difficulty_and_tier(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            with self.assertRaisesRegex(ValueError, "difficulty must"):
+                create_task({
+                    "domain": "Chemistry", "task": "BadDifficulty",
+                    "difficulty": "easy",
+                }, repo=Path(temporary))
+            with self.assertRaisesRegex(ValueError, "tier must"):
+                create_task({
+                    "domain": "Chemistry", "task": "BadTier",
+                    "difficulty": "hard", "tier": "T1",
+                }, repo=Path(temporary))
 
     def test_unknown_domain_fails_closed(self):
         with self.assertRaisesRegex(ValueError, "Unknown benchmark domain"):

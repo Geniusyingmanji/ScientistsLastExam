@@ -7,7 +7,8 @@ Usage:
     create_task({
         "domain": "Physics",
         "task": "HarmonicOscillatorControl",
-        "difficulty": "hard",        # hard | flagship only
+        "difficulty": "hard",        # on_ramp | uncalibrated_candidate | hard | flagship
+        "tier": "T2",                # candidate | T2 | T3
         "oracle_type": "physical_sim",
         "score_mode": "clipped",
         "eval_time_seconds": 5,
@@ -54,6 +55,7 @@ if __name__=="__main__": raise SystemExit(main())
 METADATA_TEMPLATE = """domain: {domain}
 task: {task}
 difficulty: {difficulty}
+tier: {tier}
 oracle_type: {oracle_type}
 score_mode: {score_mode}
 gpu_required: false
@@ -69,11 +71,21 @@ def create_task(spec: dict, repo: Path = REPO) -> Path:
     domain = spec["domain"]
     task = spec["task"]
     difficulty = str(spec.get("difficulty", "")).strip().lower()
-    if difficulty not in {"hard", "flagship"}:
+    if difficulty not in {
+        "on_ramp", "uncalibrated_candidate", "hard", "flagship",
+    }:
         raise ValueError(
-            "Frontier-Science tasks must be PhD/expert difficulty: "
-            "set difficulty to 'hard' or 'flagship'."
+            "difficulty must be on_ramp, uncalibrated_candidate, hard or flagship"
         )
+    default_tier = {
+        "on_ramp": "candidate",
+        "uncalibrated_candidate": "candidate",
+        "hard": "T2",
+        "flagship": "T3",
+    }[difficulty]
+    tier = str(spec.get("tier", default_tier)).strip()
+    if tier not in {"candidate", "T2", "T3"}:
+        raise ValueError("tier must be candidate, T2 or T3")
     discipline = discipline_for_domain(domain)
     requested_discipline = spec.get("discipline")
     if requested_discipline not in {None, discipline}:
@@ -101,11 +113,13 @@ def create_task(spec: dict, repo: Path = REPO) -> Path:
     entrypoint = spec.get("entrypoint", "solve")
     (eval_dir / "run_eval.py").write_text(
         RUN_EVAL_TEMPLATE.format(entrypoint=entrypoint), encoding="utf-8")
+    metadata = {k: spec.get(k, "") for k in
+                ["domain", "task", "oracle_type", "score_mode",
+                 "eval_time_seconds", "science_metric", "reference_baseline",
+                 "reference_sota", "citation"]}
+    metadata.update({"difficulty": difficulty, "tier": tier})
     (eval_dir / "metadata.yaml").write_text(
-        METADATA_TEMPLATE.format(**{k: spec.get(k, "") for k in
-            ["domain","task","difficulty","oracle_type","score_mode",
-             "eval_time_seconds","science_metric","reference_baseline",
-             "reference_sota","citation"]}), encoding="utf-8")
+        METADATA_TEMPLATE.format(**metadata), encoding="utf-8")
     (eval_dir / "initial_program.txt").write_text("solution.py\n", encoding="utf-8")
     (eval_dir / "candidate_destination.txt").write_text("solution.py\n", encoding="utf-8")
     (eval_dir / "entrypoint.txt").write_text(entrypoint + "\n", encoding="utf-8")

@@ -16,8 +16,10 @@ from pathlib import Path
 from .algorithms import ALGORITHMS, get_algorithm
 from .config import load_llm_client, resolve_llm_config_path
 from .evaluate import evaluate_candidate
+from .frontier import promote_frontier_receipt
 from .registry import find_task, list_tasks
 from .certification import certification_status
+from .run_verification import verify_run
 
 
 def _cmd_list(args) -> int:
@@ -69,6 +71,26 @@ def _cmd_smoke(args) -> int:
     return 0 if "FS_SMOKE_OK" in out else 1
 
 
+def _cmd_frontier_promote(args) -> int:
+    spec = find_task(args.task, include_uncertified=args.allow_uncertified)
+    decision = promote_frontier_receipt(
+        spec,
+        run_workdir=Path(args.run_workdir),
+        ledger_root=Path(args.ledger_root),
+        request_id=args.request_id,
+    )
+    print(json.dumps(decision, indent=2))
+    return 0
+
+
+def _cmd_verify_run(args) -> int:
+    print(json.dumps(
+        verify_run(Path(args.workdir), expected_budget=args.expected_budget),
+        indent=2,
+    ))
+    return 0
+
+
 def main(argv=None) -> int:
     p = argparse.ArgumentParser(prog="sle")
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -101,6 +123,17 @@ def main(argv=None) -> int:
 
     ps = sub.add_parser("smoke"); ps.set_defaults(fn=_cmd_smoke)
     ps.add_argument("--llm-config", default=None)
+
+    pf = sub.add_parser("frontier-promote"); pf.set_defaults(fn=_cmd_frontier_promote)
+    pf.add_argument("--task", required=True)
+    pf.add_argument("--run-workdir", required=True)
+    pf.add_argument("--ledger-root", required=True)
+    pf.add_argument("--request-id", required=True)
+    pf.add_argument("--allow-uncertified", action="store_true")
+
+    pv = sub.add_parser("verify-run"); pv.set_defaults(fn=_cmd_verify_run)
+    pv.add_argument("--workdir", required=True)
+    pv.add_argument("--expected-budget", type=int)
 
     args = p.parse_args(argv)
     return args.fn(args)

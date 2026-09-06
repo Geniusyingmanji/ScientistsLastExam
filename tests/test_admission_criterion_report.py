@@ -21,6 +21,7 @@ import json
 import unittest
 from pathlib import Path
 from tempfile import TemporaryDirectory
+from unittest.mock import patch
 
 
 def load_module():
@@ -37,7 +38,9 @@ MODULE = load_module()
 def write_run(root: Path, cohort: str, dirname: str, task: str, mode: str, seed: int,
               scores: list[float], write_manifest: bool = True,
               model: str = "gpt-5.5", contract: str | None = None,
-              condition: str | None = None, runtime: str = "runtime:default") -> None:
+              condition: str | None = None, runtime: str = "runtime:default",
+              trusted_runtime: str = "trusted:default",
+              algorithm: str = "greedy_rewrite") -> None:
     workdir = root / cohort / dirname
     workdir.mkdir(parents=True)
     if write_manifest:
@@ -46,6 +49,10 @@ def write_run(root: Path, cohort: str, dirname: str, task: str, mode: str, seed:
             "llm_condition": {"model": model},
             "llm_condition_sha256": condition or ("condition:" + model),
             "runtime_source_sha256": runtime,
+            "trusted_evaluator_runtime": {
+                "fingerprint_sha256": trusted_runtime,
+            },
+            "algorithm": algorithm,
             **({"task_package_sha256": contract} if contract else {}),
         }), encoding="utf-8")
     lines = [json.dumps({"step": 0, "valid": True, "score": 0.0})]
@@ -59,10 +66,48 @@ class RunIdentityTests(unittest.TestCase):
         with TemporaryDirectory() as tmp:
             root = Path(tmp)
             write_run(root, "crossover", "b20_normal_s0", "Astro/LowThrust", "normal", 0, [0.1])
-            found = MODULE.collect(root)
+            with patch.object(MODULE, "verify_run", return_value={
+                "verified": True,
+                "budget": 1,
+                "trusted_evaluator_runtime_sha256": "trusted:default",
+            }):
+                found = MODULE.collect(root)
             self.assertEqual(list(found),
                              [("Astro/LowThrust", "crossover", "gpt-5.5",
-                               "condition:gpt-5.5", "unknown", "runtime:default")])
+                               "condition:gpt-5.5", "unknown", "runtime:default",
+                               "trusted:default", "greedy_rewrite", True)])
+
+    def test_trusted_runtime_and_algorithm_are_part_of_the_pooling_identity(self):
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            write_run(root, "a", "first", "T/X", "selection_blind", 0, [0.1],
+                      trusted_runtime="trusted-a", algorithm="greedy_rewrite")
+            write_run(root, "a", "second", "T/X", "selection_blind", 1, [0.1],
+                      trusted_runtime="trusted-b", algorithm="other")
+            def verified(path, **_kwargs):
+                manifest = json.loads((Path(path) / "run_manifest.json").read_text())
+                return {
+                    "verified": True,
+                    "budget": 1,
+                    "trusted_evaluator_runtime_sha256": manifest[
+                        "trusted_evaluator_runtime"
+                    ]["fingerprint_sha256"],
+                }
+            with patch.object(MODULE, "verify_run", side_effect=verified):
+                found = MODULE.collect(root)
+            self.assertEqual(len(found), 2)
+
+    def test_a_failed_run_verification_marks_the_identity_unattributable(self):
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            write_run(root, "a", "run", "T/X", "selection_blind", 0, [0.1])
+            with patch.object(MODULE, "verify_run", side_effect=ValueError("tampered")):
+                identity = MODULE.run_identity(root / "a" / "run")
+            self.assertFalse(identity[-1])
+            self.assertFalse(MODULE._identity_is_recorded(
+                identity[3], identity[4], identity[5], identity[6], identity[7],
+                identity[8], identity[-1],
+            ))
 
     def test_a_run_without_a_manifest_is_skipped_rather_than_guessed(self):
         with TemporaryDirectory() as tmp:
@@ -96,6 +141,14 @@ class PoolingTests(unittest.TestCase):
             self.assertEqual(len(report["rows"]), 1)
             self.assertEqual(report["distinct_task_count"], 1)
 
+    def test_untrusted_paired_diagnostic_does_not_remove_next_pairing_candidate(self):
+        rows = [
+            {"task": "T/X", "trusted_evidence": True, "gap_by_budget": []},
+            {"task": "T/X", "trusted_evidence": False,
+             "gap_by_budget": [{"budget": 3}]},
+        ]
+        self.assertEqual(MODULE.paired_task_names(rows), set())
+
     @staticmethod
     def run_report(root: Path) -> dict:
         with TemporaryDirectory() as out:
@@ -103,7 +156,22 @@ class PoolingTests(unittest.TestCase):
             import contextlib
             import io
 
-            with contextlib.redirect_stdout(io.StringIO()):
+            def verified(path, **_kwargs):
+                manifest = json.loads((Path(path) / "run_manifest.json").read_text())
+                steps = [
+                    json.loads(line)["step"]
+                    for line in (Path(path) / "trajectory.jsonl").read_text().splitlines()
+                    if line.strip()
+                ]
+                return {
+                    "verified": True,
+                    "budget": max(steps),
+                    "trusted_evaluator_runtime_sha256": (
+                        manifest.get("trusted_evaluator_runtime") or {}
+                    ).get("fingerprint_sha256"),
+                }
+            with patch.object(MODULE, "verify_run", side_effect=verified), \
+                    contextlib.redirect_stdout(io.StringIO()):
                 MODULE.main(["--runs", str(root), "--output", str(target)])
             return json.loads(target.read_text(encoding="utf-8"))
 
@@ -267,7 +335,7 @@ class ModelSeparationTests(unittest.TestCase):
                 json.dumps({"step": 1, "valid": True, "score": 0.4}) + "\n", encoding="utf-8")
             self.assertEqual(list(MODULE.collect(root)),
                              [("T/X", "old", "unrecorded", "unrecorded", "unknown",
-                               "unrecorded")])
+                               "unrecorded", "unrecorded", "unrecorded", False)])
 
 
 class VerdictTests(unittest.TestCase):

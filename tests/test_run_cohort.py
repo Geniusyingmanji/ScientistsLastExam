@@ -78,6 +78,59 @@ class CohortRunnerTests(unittest.TestCase):
             '''), encoding="utf-8")
         (self.bin / "python3").chmod(0o755)
 
+    def install_runtime_contract(
+        self, home: Path, fingerprint: str, *, verify_error: str | None = None,
+    ) -> dict:
+        for cached in (home / "sle").rglob("*.pyc"):
+            cached.unlink()
+        descriptor = {
+            "schema_version": 1,
+            "implementation": "cpython",
+            "python_version": "3.8.20",
+            "cache_tag": "cpython-38",
+            "soabi": "cpython-38-x86_64-linux-gnu",
+            "distributions": {},
+            "fingerprint_sha256": fingerprint,
+        }
+        (home / "sle/algorithms").mkdir(parents=True, exist_ok=True)
+        for init in (home / "sle/__init__.py", home / "sle/algorithms/__init__.py"):
+            init.write_text("", encoding="utf-8")
+        (home / "sle/config.py").write_text(
+            "def load_llm_client(_path): return object()\n", encoding="utf-8")
+        (home / "sle/frontier.py").write_text(
+            "def frontier_binding(_spec): return {}\n", encoding="utf-8")
+        (home / "sle/registry.py").write_text(textwrap.dedent('''
+            class Spec:
+                task_dir = None
+            def find_task(_task, include_uncertified=False): return Spec()
+        '''), encoding="utf-8")
+        (home / "sle/algorithms/common.py").write_text(textwrap.dedent('''
+            def llm_condition_sha256(_client): return "condition-v1"
+            def task_contract_sha256(_spec): return "contract-v1"
+            def task_package_sha256(_spec): return "package-v1"
+            def runtime_source_sha256(): return "runtime-v1"
+        '''), encoding="utf-8")
+        (home / "sle/evaluate.py").write_text(
+            "import json\n"
+            "class Runtime:\n"
+            "    descriptor = json.loads(%r)\n"
+            "    fingerprint_sha256 = descriptor['fingerprint_sha256']\n"
+            "def resolve_trusted_runtime(_task_dir): return Runtime()\n"
+            % json.dumps(descriptor),
+            encoding="utf-8",
+        )
+        verification = (
+            "raise ValueError(%r)" % verify_error
+            if verify_error is not None else
+            "return {'trusted_evaluator_runtime_sha256': expected_trusted_runtime_sha256}"
+        )
+        (home / "sle/run_verification.py").write_text(textwrap.dedent('''
+            def verify_run(path, expected_budget=None,
+                           expected_trusted_runtime_sha256=None):
+                %s
+        ''') % verification, encoding="utf-8")
+        return descriptor
+
     def run_script(self, *args: str, root: Path | None = None, timeout: int = 60):
         env = dict(os.environ)
         env["PATH"] = "%s:%s" % (self.bin, env["PATH"])
@@ -202,6 +255,8 @@ class CohortRunnerTests(unittest.TestCase):
             init.write_text("", encoding="utf-8")
         (home / "sle/config.py").write_text(
             "def load_llm_client(_path): return object()\n", encoding="utf-8")
+        (home / "sle/frontier.py").write_text(
+            "def frontier_binding(_spec): return {}\n", encoding="utf-8")
         (home / "sle/registry.py").write_text(
             "def find_task(_task, include_uncertified=False): return object()\n",
             encoding="utf-8",
@@ -233,6 +288,180 @@ class CohortRunnerTests(unittest.TestCase):
         self.assertIn("CONFLICT t normal s0", changed.stdout)
         self.assertFalse(self.calls.exists())
 
+    def test_completed_run_is_rejected_after_trusted_runtime_changes(self):
+        self.fake_python('''
+            for arg in "$@"; do
+              case "$prev" in --workdir) out="$arg" ;; esac
+              prev="$arg"
+            done
+            mkdir -p "$out"
+            echo '{}' > "$out/run_manifest.json"
+            echo '{}' > "$out/summary.json"
+        ''')
+        home = self.tmp / "repo"
+        first = self.run_script(
+            "--cohort", "c", "--config", "x.yaml", "--seeds", "0",
+            "--modes", "normal", "T/t:t", root=home,
+        )
+        self.assertEqual(first.returncode, 0, first.stdout)
+        descriptor = self.install_runtime_contract(home, "1" * 64)
+        manifest_path = home / "runs/c/t_normal_s0/run_manifest.json"
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        manifest.update({
+            "llm_condition_sha256": "condition-v1",
+            "task_contract_sha256": "contract-v1",
+            "task_package_sha256": "package-v1",
+            "runtime_source_sha256": "runtime-v1",
+            "trusted_evaluator_runtime": descriptor,
+        })
+        manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+
+        self.fake_python('echo "SHOULD NOT RUN" >> "%s"; exit 1' % self.calls)
+        unchanged = self.run_script(
+            "--cohort", "c", "--config", "x.yaml", "--seeds", "0",
+            "--modes", "normal", "T/t:t", root=home,
+        )
+        self.assertEqual(unchanged.returncode, 0, unchanged.stdout)
+        self.assertIn("already complete", unchanged.stdout)
+
+        self.install_runtime_contract(home, "2" * 64)
+        changed = self.run_script(
+            "--cohort", "c", "--config", "x.yaml", "--seeds", "0",
+            "--modes", "normal", "T/t:t", root=home,
+        )
+        self.assertNotEqual(changed.returncode, 0, changed.stdout)
+        self.assertIn("CONFLICT t normal s0", changed.stdout)
+        self.assertFalse(self.calls.exists())
+
+    def test_completed_run_with_corrupt_ledger_is_a_conflict(self):
+        self.fake_python('''
+            for arg in "$@"; do
+              case "$prev" in --workdir) out="$arg" ;; esac
+              prev="$arg"
+            done
+            mkdir -p "$out"
+            echo '{}' > "$out/run_manifest.json"
+            echo '{}' > "$out/summary.json"
+        ''')
+        home = self.tmp / "repo"
+        first = self.run_script(
+            "--cohort", "c", "--config", "x.yaml", "--seeds", "0",
+            "--modes", "normal", "T/t:t", root=home,
+        )
+        self.assertEqual(first.returncode, 0, first.stdout)
+        descriptor = self.install_runtime_contract(
+            home, "1" * 64, verify_error="corrupt ledger",
+        )
+        manifest_path = home / "runs/c/t_normal_s0/run_manifest.json"
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        manifest.update({
+            "llm_condition_sha256": "condition-v1",
+            "task_contract_sha256": "contract-v1",
+            "task_package_sha256": "package-v1",
+            "runtime_source_sha256": "runtime-v1",
+            "trusted_evaluator_runtime": descriptor,
+        })
+        manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+        self.fake_python('echo "SHOULD NOT RUN" >> "%s"; exit 1' % self.calls)
+        result = self.run_script(
+            "--cohort", "c", "--config", "x.yaml", "--seeds", "0",
+            "--modes", "normal", "T/t:t", root=home,
+        )
+        self.assertNotEqual(result.returncode, 0, result.stdout)
+        self.assertIn("CONFLICT t normal s0", result.stdout)
+        self.assertFalse(self.calls.exists())
+
+    def test_runtime_probe_failure_stops_before_starting_a_run(self):
+        home = self.tmp / "repo"
+        self.install_runtime_contract(home, "1" * 64)
+        for cached in (home / "sle").rglob("*.pyc"):
+            cached.unlink()
+        (home / "sle/evaluate.py").write_text(textwrap.dedent('''
+            def resolve_trusted_runtime(_task_dir):
+                raise RuntimeError("oracle unavailable")
+        '''), encoding="utf-8")
+        self.fake_python('echo "SHOULD NOT RUN" >> "%s"; exit 1' % self.calls)
+        result = self.run_script(
+            "--cohort", "c", "--config", "x.yaml", "--seeds", "0",
+            "--modes", "normal", "T/t:t", root=home,
+        )
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("trusted evaluator runtime unavailable", result.stderr)
+        self.assertFalse(self.calls.exists())
+
+    def test_non_greedy_backend_is_rejected_before_any_python_process(self):
+        self.fake_python('echo "SHOULD NOT RUN" >> "%s"; exit 1' % self.calls)
+        result = self.run_script(
+            "--cohort", "c", "--config", "x.yaml", "--seeds", "0",
+            "--algorithm", "abmcts", "T/t:t",
+        )
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("durable receipt verification", result.stderr)
+        self.assertFalse(self.calls.exists())
+
+    def test_traversal_alias_is_rejected_without_deleting_outside_fixture(self):
+        home = self.tmp / "repo"
+        outside = home / "outside_normal_s0"
+        outside.mkdir(parents=True)
+        marker = outside / "keep.txt"
+        marker.write_text("keep", encoding="utf-8")
+        self.fake_python('''
+            for arg in "$@"; do
+              case "$prev" in --workdir) out="$arg" ;; esac
+              prev="$arg"
+            done
+            mkdir -p "$out"
+            echo '{}' > "$out/run_manifest.json"
+            echo '{}' > "$out/summary.json"
+        ''')
+        result = self.run_script(
+            "--cohort", "c", "--config", "x.yaml", "--seeds", "0",
+            "--modes", "normal", "T/t:../../outside", root=home,
+        )
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("invalid task alias", result.stderr)
+        self.assertEqual(marker.read_text(encoding="utf-8"), "keep")
+
+    def test_symlinked_run_target_outside_cohort_is_not_deleted(self):
+        home = self.tmp / "repo"
+        outside = home / "outside"
+        outside.mkdir(parents=True)
+        marker = outside / "keep.txt"
+        marker.write_text("keep", encoding="utf-8")
+        run_link = home / "runs/c/t_normal_s0"
+        run_link.parent.mkdir(parents=True)
+        run_link.symlink_to(outside, target_is_directory=True)
+        self.fake_python('echo "SHOULD NOT RUN" >> "%s"; exit 1' % self.calls)
+        result = self.run_script(
+            "--cohort", "c", "--config", "x.yaml", "--seeds", "0",
+            "--modes", "normal", "T/t:t", root=home,
+        )
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("unsafe run target", result.stdout)
+        self.assertTrue(run_link.is_symlink())
+        self.assertEqual(marker.read_text(encoding="utf-8"), "keep")
+        self.assertFalse(self.calls.exists())
+
+    def test_noncanonical_cohort_mode_and_seed_components_are_rejected(self):
+        self.fake_python('echo "SHOULD NOT RUN" >> "%s"; exit 1' % self.calls)
+        cases = (
+            (("--cohort", "../escape", "--config", "x.yaml", "T/t:t"),
+             "invalid cohort name"),
+            (("--cohort", "c", "--config", "x.yaml", "--modes", "../normal",
+              "T/t:t"), "invalid feedback mode"),
+            (("--cohort", "c", "--config", "x.yaml", "--seeds", "../0",
+              "T/t:t"), "invalid seed"),
+            (("--cohort", "c", "--config", "x.yaml", "--seeds", ",",
+              "T/t:t"), "invalid seed"),
+        )
+        for index, (args, message) in enumerate(cases):
+            with self.subTest(message=message):
+                home = self.tmp / ("repo_%d" % index)
+                result = self.run_script(*args, root=home)
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn(message, result.stderr)
+        self.assertFalse(self.calls.exists())
+
     # -- failure reporting ---------------------------------------------------------------------
 
     def test_a_failing_run_is_reported_rather_than_passing_silently(self):
@@ -248,7 +477,7 @@ class CohortRunnerTests(unittest.TestCase):
         result = self.run_script("--cohort", "c", "--config", "x.yaml", "--seeds", "0", "T/t:t")
         self.assertIn("FAIL  t normal s0", result.stdout)
 
-    def test_a_manifest_written_before_failure_is_not_complete_or_skipped(self):
+    def test_a_manifest_written_before_failure_is_a_conflict_not_deleted(self):
         self.fake_python('''
             for arg in "$@"; do
               case "$prev" in --workdir) out="$arg" ;; esac
@@ -268,7 +497,9 @@ class CohortRunnerTests(unittest.TestCase):
         self.assertNotEqual(first.returncode, 0, first.stdout)
         self.assertNotEqual(second.returncode, 0, second.stdout)
         self.assertNotIn("already complete", second.stdout)
-        self.assertEqual(len(self.calls.read_text(encoding="utf-8").splitlines()), 4)
+        self.assertIn("CONFLICT t normal s0", second.stdout)
+        self.assertIn("CONFLICT t selection_blind s0", second.stdout)
+        self.assertEqual(len(self.calls.read_text(encoding="utf-8").splitlines()), 2)
 
     # -- locking -------------------------------------------------------------------------------
 

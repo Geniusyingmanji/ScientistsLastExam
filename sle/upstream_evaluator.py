@@ -18,7 +18,7 @@ ROOT = Path(__file__).resolve().parent.parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from sle.evaluate import INVALID_SCORE, evaluate_candidate
+from sle.evaluate import INVALID_SCORE, evaluate_candidate, resolve_trusted_runtime
 from sle.metric_visibility import search_visible_metrics, store_full_metrics
 from sle.registry import find_task
 
@@ -26,35 +26,51 @@ from sle.registry import find_task
 TASK_ID = ""
 TIMEOUT_S = 300.0
 FULL_METRICS_DIR = ""
+EXPECTED_TRUSTED_RUNTIME_SHA256 = ""
 
 
-def configure(task_id: str, timeout_s: float, full_metrics_dir: str = "") -> None:
-    global TASK_ID, TIMEOUT_S, FULL_METRICS_DIR
+def _runtime_fingerprint(value: str) -> str:
+    rendered = str(value)
+    if len(rendered) != 64 or any(char not in "0123456789abcdef" for char in rendered):
+        raise ValueError("trusted runtime fingerprint must be 64 lowercase hex characters")
+    return rendered
+
+
+def configure(task_id: str, timeout_s: float, full_metrics_dir: str,
+              expected_trusted_runtime_sha256: str) -> None:
+    global TASK_ID, TIMEOUT_S, FULL_METRICS_DIR, EXPECTED_TRUSTED_RUNTIME_SHA256
+    expected_fingerprint = _runtime_fingerprint(expected_trusted_runtime_sha256)
     TASK_ID = str(task_id)
     TIMEOUT_S = float(timeout_s)
     FULL_METRICS_DIR = str(full_metrics_dir or "")
+    EXPECTED_TRUSTED_RUNTIME_SHA256 = expected_fingerprint
 
 
 def write_configured_wrapper(path: Path, task_id: str, timeout_s: float,
-                             full_metrics_dir: Path | None = None) -> Path:
+                             full_metrics_dir: Path | None = None, *,
+                             expected_trusted_runtime_sha256: str) -> Path:
     """Write a per-run wrapper without credentials or mutable process-global routing."""
+    expected_fingerprint = _runtime_fingerprint(expected_trusted_runtime_sha256)
     repository = str(ROOT)
     source = (
         "import sys\n"
         "sys.path.insert(0, %r)\n"
         "from sle.upstream_evaluator import configure, evaluate, main, shinka_main\n"
-        "configure(%r, %r, %r)\n"
+        "configure(%r, %r, %r, %r)\n"
         "if __name__ == '__main__':\n"
         "    raise SystemExit(main())\n"
-    ) % (repository, str(task_id), float(timeout_s),
-         str(Path(full_metrics_dir).resolve()) if full_metrics_dir else "")
+    ) % (
+        repository, str(task_id), float(timeout_s),
+        str(Path(full_metrics_dir).resolve()) if full_metrics_dir else "",
+        expected_fingerprint,
+    )
     path = Path(path)
     path.write_text(source, encoding="utf-8")
     return path
 
 
 def evaluate(program_path: str) -> dict[str, Any]:
-    if not TASK_ID:
+    if not TASK_ID or not EXPECTED_TRUSTED_RUNTIME_SHA256:
         raise RuntimeError("upstream evaluator is not configured")
     spec = find_task(TASK_ID, include_uncertified=True)
     sensitive = {}
@@ -63,8 +79,17 @@ def evaluate(program_path: str) -> dict[str, Any]:
         if any(marker in normalized for marker in ("API_KEY", "AUTHORIZATION", "TOKEN")):
             sensitive[key] = os.environ.pop(key)
     try:
+        trusted_runtime = resolve_trusted_runtime(spec.task_dir)
+        if (
+            trusted_runtime.fingerprint_sha256
+            != EXPECTED_TRUSTED_RUNTIME_SHA256
+        ):
+            raise RuntimeError("trusted evaluator runtime binding mismatch")
         candidate = Path(program_path).resolve()
-        full_metrics = evaluate_candidate(spec, candidate, timeout_s=TIMEOUT_S)
+        full_metrics = evaluate_candidate(
+            spec, candidate, timeout_s=TIMEOUT_S,
+            trusted_runtime=trusted_runtime,
+        )
         if FULL_METRICS_DIR:
             store_full_metrics(Path(FULL_METRICS_DIR), candidate, full_metrics)
         return search_visible_metrics(full_metrics)

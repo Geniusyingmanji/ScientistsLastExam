@@ -13,6 +13,11 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
+from .runtime_identity import (
+    TrustedRuntime,
+    task_runtime_distributions,
+    validate_runtime_descriptor,
+)
 from .secure_eval import INVALID_SCORE, validate_metrics
 from .spec import TaskSpec
 
@@ -46,12 +51,36 @@ def canonical_trusted_context(value: dict[str, Any]) -> bytes:
 
 
 def _trusted_python() -> str:
-    """Keep trusted evaluation independent from optional framework environments."""
+    """Use the configured oracle entrypoint, or the invoking interpreter when unset."""
     configured = os.environ.get("FRONTIER_SCIENCE_TRUSTED_PYTHON")
-    if configured:
-        return str(Path(configured).expanduser().resolve())
-    system_python = Path("/usr/bin/python3")
-    return str(system_python if system_python.is_file() else Path(sys.executable).resolve())
+    selected = configured or sys.executable
+    # Keep the virtualenv entrypoint. Resolving its symlink selects the base
+    # interpreter instead and drops the pinned oracle site-packages.
+    return str(Path(selected).expanduser().absolute())
+
+
+def resolve_trusted_runtime(task_dir: Path | None = None) -> TrustedRuntime:
+    """Resolve and inspect the interpreter that will execute the trusted oracle."""
+
+    executable = _trusted_python()
+    distributions = task_runtime_distributions(task_dir)
+    completed = subprocess.run(
+        [executable, "-m", "sle.runtime_identity", *distributions],
+        cwd=str(Path(__file__).resolve().parent.parent),
+        stdin=subprocess.DEVNULL,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+        timeout=30,
+        check=False,
+    )
+    if completed.returncode != 0:
+        raise RuntimeError("trusted evaluator runtime identity probe failed")
+    try:
+        descriptor = validate_runtime_descriptor(json.loads(completed.stdout))
+    except (json.JSONDecodeError, ValueError) as exc:
+        raise RuntimeError("trusted evaluator runtime identity probe is invalid") from exc
+    return TrustedRuntime(executable=executable, descriptor=descriptor)
 
 
 def evaluate_candidate(
@@ -60,6 +89,7 @@ def evaluate_candidate(
     timeout_s: float = 300.0,
     *,
     trusted_context: dict[str, Any] | None = None,
+    trusted_runtime: TrustedRuntime | None = None,
 ) -> dict[str, Any]:
     candidate_path = Path(candidate_path).resolve()
     if not candidate_path.is_file():
@@ -82,14 +112,24 @@ def evaluate_candidate(
                 "error_message": "invalid trusted evaluation context",
                 "infrastructure_failure": 1.0,
             }
+    try:
+        runtime = trusted_runtime or resolve_trusted_runtime(spec.task_dir)
+    except (OSError, RuntimeError, subprocess.TimeoutExpired):
+        return {
+            "combined_score": INVALID_SCORE,
+            "valid": 0.0,
+            "error_message": "trusted evaluator runtime identity unavailable",
+            "infrastructure_failure": 1.0,
+        }
     score_mode = str(spec.metadata.get("score_mode", "clipped"))
     with tempfile.TemporaryDirectory(prefix="fs_trusted_") as tmp:
         result_path = Path(tmp) / "metrics.json"
         cmd = [
-            _trusted_python(), "-m", "sle.trusted_driver",
+            runtime.executable, "-m", "sle.trusted_driver",
             "--task-dir", str(spec.task_dir), "--candidate", str(candidate_path),
             "--entrypoint", spec.entrypoint, "--score-mode", score_mode,
             "--timeout", str(timeout_s), "--result", str(result_path),
+            "--expected-runtime-sha256", runtime.fingerprint_sha256,
         ]
         if context_payload is not None:
             context_path = Path(tmp) / "trusted_context.json"
@@ -134,16 +174,31 @@ def evaluate_candidate(
                     "infrastructure_failure": 1.0}
         try:
             raw = json.loads(result_path.read_text(encoding="utf-8"))
+            if (
+                not isinstance(raw, dict)
+                or raw.get("trusted_evaluator_runtime_sha256")
+                != runtime.fingerprint_sha256
+            ):
+                return {
+                    "combined_score": INVALID_SCORE,
+                    "valid": 0.0,
+                    "error_message": "trusted evaluator runtime binding mismatch",
+                    "infrastructure_failure": 1.0,
+                }
+            if set(raw) != {
+                "schema_version", "trusted_evaluator_runtime_sha256", "metrics"
+            } or raw.get("schema_version") != 1 or not isinstance(raw.get("metrics"), dict):
+                raise ValueError("trusted evaluator result envelope is invalid")
             # The driver keeps its outward message fixed so nothing a candidate could read holds
             # evaluator internals, and it writes the cause to its stderr instead. Surface that to
             # the operator's log without putting it in `metrics`: an earlier attempt merged it
             # into `error_message`, which reaches the ledger and the trajectory, and a test
             # caught it leaking the oracle's entrypoint name. The record a candidate can reach
             # stays fixed; the log says why.
-            if raw.get("infrastructure_failure") and (stderr or "").strip():
+            if raw["metrics"].get("infrastructure_failure") and (stderr or "").strip():
                 print("trusted evaluator failure in %s:\n%s"
                       % (spec.task_id, (stderr or "").strip()[-2000:]), file=sys.stderr)
-            metrics = validate_metrics(raw, score_mode)
+            metrics = validate_metrics(raw["metrics"], score_mode)
             if context_payload is not None:
                 expected = hashlib.sha256(context_payload).hexdigest()
                 if metrics.get("trusted_context_sha256") != expected:

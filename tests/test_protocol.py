@@ -12,10 +12,12 @@ from sle.algorithms.evolve import (extract_signed_decision,
                                                 extract_signed_submission,
                                                 greedy_rewrite)
 from sle.algorithms.abmcts_backend import abmcts
-from sle.algorithms.shinkaevolve_backend import _evaluation_rows
+from sle.algorithms.openevolve_backend import openevolve
+from sle.algorithms.shinkaevolve_backend import _evaluation_rows, shinkaevolve
 from sle.algorithms.common import restore_committed_trajectory
 from sle.algorithms.common import require_evaluation_budget
 from sle.algorithms.common import llm_condition_sha256
+from sle.evaluation_ledger import EvaluationLedger
 from sle.llm import LLMClient, LLMConfig
 from sle.metric_visibility import (load_full_metrics, search_visible_metrics,
                                                 score_only_metrics, source_sha256,
@@ -26,6 +28,8 @@ from sle.protocol import (TrajectoryEvent, append_event, best_so_far_auc,
                                        realized_token_curve, sha256_text,
                                        summarize_at_token_horizon, summarize_trajectory)
 from sle.registry import find_task
+from sle.runtime_identity import TrustedRuntime
+from sle.run_verification import verify_run
 from sle import upstream_evaluator
 from sle.upstream_evaluator import write_configured_wrapper
 from _sandbox_tools import skip_unless_sandbox  # noqa: E402
@@ -49,6 +53,17 @@ class FakeLLM:
         if isinstance(value, Exception):
             raise value
         return value
+
+
+def runtime_bound_evaluator(rows):
+    """Build a fake evaluator that returns science metrics without ledger bindings."""
+    remaining = iter(rows)
+
+    def evaluate(_spec, _candidate, timeout_s, *, trusted_runtime):
+        del timeout_s, trusted_runtime
+        return next(remaining)
+
+    return evaluate
 
 
 class ProtocolMetricTests(unittest.TestCase):
@@ -220,11 +235,22 @@ class ProtocolMetricTests(unittest.TestCase):
 
     def test_upstream_wrapper_binds_task_without_credentials(self):
         with tempfile.TemporaryDirectory() as tmp:
-            path = write_configured_wrapper(Path(tmp) / "evaluator.py", "D/T", 12.5)
+            fingerprint = "a" * 64
+            path = write_configured_wrapper(
+                Path(tmp) / "evaluator.py", "D/T", 12.5,
+                expected_trusted_runtime_sha256=fingerprint,
+            )
             source = path.read_text(encoding="utf-8")
-            self.assertIn("configure('D/T', 12.5, '')", source)
+            self.assertIn("configure('D/T', 12.5, '', %r)" % fingerprint, source)
             self.assertIn("sys.path.insert", source)
+            self.assertIn(fingerprint, source)
+            self.assertNotIn("/private/oracle/bin/python", source)
             self.assertNotIn("API_KEY", source)
+            with self.assertRaisesRegex(ValueError, "fingerprint"):
+                write_configured_wrapper(
+                    Path(tmp) / "invalid.py", "D/T", 12.5,
+                    expected_trusted_runtime_sha256="/private/oracle/bin/python",
+                )
 
     def test_llm_condition_hash_does_not_serialize_secret_headers(self):
         client = LLMClient(LLMConfig(extra_headers={"Authorization": "secret-value"}))
@@ -234,16 +260,23 @@ class ProtocolMetricTests(unittest.TestCase):
 
     def test_upstream_evaluation_scrubs_and_restores_credentials(self):
         seen = {}
+        runtime = TrustedRuntime(
+            "/private/oracle/bin/python", {"fingerprint_sha256": "a" * 64}
+        )
 
         def fake_evaluate(*args, **kwargs):
             seen["credential"] = os.environ.get("OPENAI_API_KEY")
             seen["timeout_s"] = kwargs.get("timeout_s")
+            seen["trusted_runtime"] = kwargs.get("trusted_runtime")
             return {"combined_score": 0.1}
 
-        with patch.object(upstream_evaluator, "find_task", return_value=object()), patch.object(
+        spec = type("Spec", (), {"task_dir": Path("task")})()
+        with patch.object(upstream_evaluator, "find_task", return_value=spec), patch.object(
+            upstream_evaluator, "resolve_trusted_runtime", return_value=runtime
+        ), patch.object(
             upstream_evaluator, "evaluate_candidate", side_effect=fake_evaluate
         ):
-            upstream_evaluator.configure("D/T", 12.5)
+            upstream_evaluator.configure("D/T", 12.5, "", runtime.fingerprint_sha256)
             with patch.dict(os.environ, {"OPENAI_API_KEY": "secret"}, clear=False):
                 self.assertEqual(
                     upstream_evaluator.evaluate("candidate.py"), {"combined_score": 0.1}
@@ -251,6 +284,41 @@ class ProtocolMetricTests(unittest.TestCase):
                 self.assertEqual(os.environ["OPENAI_API_KEY"], "secret")
             self.assertIsNone(seen["credential"])
             self.assertEqual(seen["timeout_s"], 12.5)
+            self.assertIs(seen["trusted_runtime"], runtime)
+
+    def test_upstream_runtime_mismatch_fails_before_full_metrics_are_written(self):
+        actual = TrustedRuntime(
+            "/private/oracle/bin/python", {"fingerprint_sha256": "b" * 64}
+        )
+        spec = type("Spec", (), {"task_dir": Path("task")})()
+        with tempfile.TemporaryDirectory() as temporary:
+            full_metrics_dir = Path(temporary) / "trusted_full_metrics"
+            with patch.multiple(
+                upstream_evaluator,
+                TASK_ID="D/T",
+                TIMEOUT_S=12.5,
+                FULL_METRICS_DIR=str(full_metrics_dir),
+                EXPECTED_TRUSTED_RUNTIME_SHA256="a" * 64,
+            ), patch.object(
+                upstream_evaluator, "find_task", return_value=spec
+            ), patch.object(
+                upstream_evaluator,
+                "resolve_trusted_runtime",
+                return_value=actual,
+                create=True,
+            ), patch.object(
+                upstream_evaluator,
+                "evaluate_candidate",
+                side_effect=AssertionError("candidate evaluation must not run"),
+            ), patch.object(
+                upstream_evaluator, "store_full_metrics"
+            ) as store:
+                with self.assertRaisesRegex(
+                    RuntimeError, "trusted evaluator runtime binding mismatch"
+                ):
+                    upstream_evaluator.evaluate("candidate.py")
+                store.assert_not_called()
+            self.assertFalse(full_metrics_dir.exists())
 
     def test_science_metrics_are_sealed_by_default(self):
         full = {
@@ -318,21 +386,56 @@ class ProtocolMetricTests(unittest.TestCase):
             "combined_score": 0.4, "valid": 1.0,
             "robustness_score": 0.9, "mechanism_score": 0.8,
         }
+        runtime = TrustedRuntime(
+            "/private/oracle/bin/python", {"fingerprint_sha256": "a" * 64}
+        )
+        spec = type("Spec", (), {"task_dir": Path("task")})()
         with tempfile.TemporaryDirectory() as tmp, patch.object(
-            upstream_evaluator, "find_task", return_value=object()
+            upstream_evaluator, "find_task", return_value=spec
+        ), patch.object(
+            upstream_evaluator, "resolve_trusted_runtime", return_value=runtime
         ), patch.object(
             upstream_evaluator, "evaluate_candidate", return_value=full
         ):
             candidate = Path(tmp) / "candidate.py"
             candidate.write_text("x = 1\n", encoding="utf-8")
             sidecar = Path(tmp) / "sealed"
-            upstream_evaluator.configure("D/T", 12.5, str(sidecar))
+            upstream_evaluator.configure(
+                "D/T", 12.5, str(sidecar), runtime.fingerprint_sha256
+            )
             visible = upstream_evaluator.evaluate(str(candidate))
             self.assertEqual(visible, {"combined_score": 0.4, "valid": 1.0})
             self.assertEqual(load_full_metrics(sidecar, "x = 1\n"), full)
 
 
 class GreedyRewriteTests(unittest.TestCase):
+    def test_mismatched_bound_runtime_request_cannot_be_consumed(self):
+        spec = find_task("LennardJonesCluster")
+        original = EvaluationLedger.evaluate_once
+
+        def evaluate_with_mismatched_binding(
+            ledger, request, evaluator, *, clock
+        ):
+            mismatched = dict(request)
+            mismatched["trusted_evaluator_runtime_sha256"] = "0" * 64
+            return original(ledger, mismatched, evaluator, clock=clock)
+
+        with tempfile.TemporaryDirectory() as temporary, patch.object(
+            EvaluationLedger,
+            "evaluate_once",
+            new=evaluate_with_mismatched_binding,
+        ), patch(
+            "sle.algorithms.evolve.evaluate_candidate",
+            return_value={"combined_score": 0.1, "valid": 1.0},
+        ):
+            with self.assertRaisesRegex(
+                ValueError, "trusted evaluator runtime binding differs"
+            ):
+                greedy_rewrite(
+                    spec, FakeLLM([]), budget=0, timeout_s=20,
+                    workdir=Path(temporary), log_fn=lambda _: None,
+                )
+
     def test_signed_decision_parser_is_strict(self):
         self.assertEqual(
             extract_signed_decision(
@@ -673,7 +776,7 @@ class GreedyRewriteTests(unittest.TestCase):
             work = Path(tmp)
             with patch(
                 "sle.algorithms.evolve.evaluate_candidate",
-                side_effect=[baseline_metrics, infrastructure],
+                side_effect=runtime_bound_evaluator([baseline_metrics, infrastructure]),
             ):
                 with self.assertRaisesRegex(
                     RuntimeError, "candidate trusted evaluator"
@@ -695,7 +798,9 @@ class GreedyRewriteTests(unittest.TestCase):
             )
             with patch(
                 "sle.algorithms.evolve.evaluate_candidate",
-                return_value={"combined_score": 0.2, "valid": 1.0},
+                side_effect=runtime_bound_evaluator([
+                    {"combined_score": 0.2, "valid": 1.0},
+                ]),
             ):
                 resumed = greedy_rewrite(
                     spec, FakeLLM([]), budget=1, timeout_s=20,
@@ -712,7 +817,8 @@ class GreedyRewriteTests(unittest.TestCase):
         spec = find_task("LennardJonesCluster")
         calls = {"count": 0}
 
-        def evaluate(_spec, _candidate, timeout_s):
+        def evaluate(_spec, _candidate, timeout_s, *, trusted_runtime):
+            del timeout_s, trusted_runtime
             calls["count"] += 1
             return {"combined_score": 0.1, "valid": 1.0}
 
@@ -764,7 +870,8 @@ class GreedyRewriteTests(unittest.TestCase):
         spec = find_task("LennardJonesCluster")
         calls = {"count": 0}
 
-        def evaluate(_spec, _candidate, timeout_s):
+        def evaluate(_spec, _candidate, timeout_s, *, trusted_runtime):
+            del timeout_s, trusted_runtime
             calls["count"] += 1
             return {"combined_score": 0.1, "valid": 1.0}
 
@@ -817,7 +924,8 @@ class GreedyRewriteTests(unittest.TestCase):
         fenced = "```python\n" + baseline + "\n```"
         calls = {"count": 0}
 
-        def evaluate(_spec, _candidate, timeout_s):
+        def evaluate(_spec, _candidate, timeout_s, *, trusted_runtime):
+            del timeout_s, trusted_runtime
             calls["count"] += 1
             return {
                 "combined_score": 0.1 if calls["count"] == 1 else 0.2,
@@ -889,7 +997,8 @@ class GreedyRewriteTests(unittest.TestCase):
         fenced = "```python\n" + proposal + "\n```"
         calls = {"count": 0}
 
-        def evaluate(_spec, _candidate, timeout_s):
+        def evaluate(_spec, _candidate, timeout_s, *, trusted_runtime):
+            del timeout_s, trusted_runtime
             calls["count"] += 1
             return {
                 "combined_score": 0.1 if calls["count"] == 1 else 0.2,
@@ -1157,11 +1266,11 @@ class GreedyRewriteTests(unittest.TestCase):
             work = Path(tmp)
             with patch(
                 "sle.algorithms.evolve.evaluate_candidate",
-                side_effect=[
+                side_effect=runtime_bound_evaluator([
                     {"combined_score": 0.0, "valid": 1.0},
                     {"combined_score": 0.8, "valid": 1.0},
                     {"combined_score": 0.7, "valid": 1.0},
-                ],
+                ]),
             ):
                 greedy_rewrite(
                     spec,
@@ -1178,7 +1287,9 @@ class GreedyRewriteTests(unittest.TestCase):
             resumed_llm = FakeLLM(["```python\n%s\n```" % proposal_three])
             with patch(
                 "sle.algorithms.evolve.evaluate_candidate",
-                return_value={"combined_score": 0.6, "valid": 1.0},
+                side_effect=runtime_bound_evaluator([
+                    {"combined_score": 0.6, "valid": 1.0},
+                ]),
             ):
                 resumed = greedy_rewrite(
                     spec, resumed_llm, budget=3, timeout_s=20, workdir=work,
@@ -1191,8 +1302,205 @@ class GreedyRewriteTests(unittest.TestCase):
         self.assertEqual(events[3]["parent_sha256"], sha256_text(proposal_one.strip()))
         self.assertEqual(resumed.best_score, 0.8)
 
+    def test_shuffled_resume_matches_uninterrupted_feedback_sequence(self):
+        spec = find_task("LennardJonesCluster")
+        proposals = [
+            "# SHUFFLED_%d\ndef optimize_cluster(n_atoms):\n    return []\n" % step
+            for step in range(1, 4)
+        ]
+        replies = ["```python\n%s\n```" % proposal for proposal in proposals]
+        metrics = [
+            {"combined_score": score, "valid": 1.0, "raw_score": score}
+            for score in (0.0, 0.8, 0.7, 0.6)
+        ]
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            uninterrupted = root / "uninterrupted"
+            with patch(
+                "sle.algorithms.evolve.evaluate_candidate",
+                side_effect=runtime_bound_evaluator(metrics),
+            ):
+                greedy_rewrite(
+                    spec, FakeLLM(replies), budget=3, seed=4, timeout_s=20,
+                    workdir=uninterrupted, feedback_mode="shuffled",
+                    log_fn=lambda _: None,
+                )
+
+            resumed = root / "resumed"
+            with patch(
+                "sle.algorithms.evolve.evaluate_candidate",
+                side_effect=runtime_bound_evaluator(metrics[:2]),
+            ):
+                with self.assertRaisesRegex(RuntimeError, "provider request"):
+                    greedy_rewrite(
+                        spec,
+                        FakeLLM([replies[0], RuntimeError("interrupted")]),
+                        budget=3, seed=4, timeout_s=20, workdir=resumed,
+                        feedback_mode="shuffled", log_fn=lambda _: None,
+                    )
+            with patch(
+                "sle.algorithms.evolve.evaluate_candidate",
+                side_effect=runtime_bound_evaluator(metrics[2:]),
+            ):
+                greedy_rewrite(
+                    spec, FakeLLM(replies[1:]), budget=3, seed=4,
+                    timeout_s=20, workdir=resumed, feedback_mode="shuffled",
+                    resume=True, log_fn=lambda _: None,
+                )
+
+            def prompt_metric_hashes(workdir: Path) -> list[str]:
+                return [
+                    event["algorithm_metadata"]["prompt_metrics_sha256"]
+                    for event in load_trajectory(workdir / "trajectory.jsonl")[1:]
+                ]
+
+            self.assertEqual(
+                prompt_metric_hashes(resumed), prompt_metric_hashes(uninterrupted)
+            )
+            self.assertTrue(verify_run(resumed)["verified"])
+            self.assertTrue(verify_run(uninterrupted)["verified"])
+
 
 class AlgorithmAdapterTests(unittest.TestCase):
+    def test_abmcts_freezes_one_trusted_runtime_for_manifest_and_all_evaluations(self):
+        class FakeABMCTSA:
+            def __init__(self):
+                self.next_trial = 0
+
+            def init_tree(self):
+                return {}
+
+            def ask(self, tree, _kinds):
+                self.next_trial += 1
+                trial = type("Trial", (), {
+                    "trial_id": str(self.next_trial),
+                    "parent_state": tree.get("state"),
+                })()
+                return tree, trial
+
+            def tell(self, tree, _trial_id, outcome):
+                tree["state"] = outcome[0]
+                return tree
+
+        runtime = TrustedRuntime(
+            "/private/oracle/bin/python", {"fingerprint_sha256": "a" * 64}
+        )
+        calls = []
+
+        def fake_evaluate(_spec, _candidate, timeout_s, *, trusted_runtime):
+            calls.append((timeout_s, trusted_runtime))
+            return {"combined_score": 0.1 * len(calls), "valid": 1.0}
+
+        spec = find_task("LennardJonesCluster")
+        baseline = spec.initial_program_path.read_text(encoding="utf-8")
+        treequest = type("TreeQuest", (), {"ABMCTSA": FakeABMCTSA})()
+        with tempfile.TemporaryDirectory() as temporary, patch(
+            "sle.algorithms.abmcts_backend._load_treequest",
+            return_value=(treequest, {"package": "treequest", "version": "0.3.2"}),
+        ), patch(
+            "sle.algorithms.abmcts_backend.resolve_trusted_runtime",
+            return_value=runtime,
+            create=True,
+        ) as resolve, patch(
+            "sle.algorithms.abmcts_backend.evaluate_candidate",
+            side_effect=fake_evaluate,
+        ), patch(
+            "sle.algorithms.abmcts_backend.pickle.dump",
+        ):
+            workdir = Path(temporary)
+            abmcts(
+                spec, FakeLLM(["```python\n%s\n```" % baseline]), budget=1,
+                timeout_s=20, workdir=workdir, log_fn=lambda _: None,
+            )
+            manifest = json.loads((workdir / "run_manifest.json").read_text())
+
+        resolve.assert_called_once_with(spec.task_dir)
+        self.assertEqual(manifest["trusted_evaluator_runtime"], runtime.descriptor)
+        self.assertEqual(calls, [(20, runtime), (20, runtime)])
+
+    def test_openevolve_freezes_runtime_for_manifest_and_wrapper(self):
+        class FakeConfig:
+            def __init__(self):
+                self.max_code_length = 10000
+                self.database = type("Database", (), {})()
+                self.evaluator = type("Evaluator", (), {})()
+                self.prompt = type("Prompt", (), {})()
+                self.llm = type("LLM", (), {})()
+
+        runtime = TrustedRuntime(
+            "/private/oracle/bin/python", {"fingerprint_sha256": "b" * 64}
+        )
+        spec = find_task("LennardJonesCluster")
+        with tempfile.TemporaryDirectory() as temporary, patch(
+            "sle.algorithms.openevolve_backend._load_openevolve",
+            return_value=(
+                FakeConfig,
+                unittest.mock.Mock(side_effect=RuntimeError("stop after wrapper")),
+                lambda **kwargs: type(
+                    "Model", (), {"api_key": kwargs["api_key"]}
+                )(),
+                {"package": "openevolve", "version": "0.2.26"},
+            ),
+        ), patch(
+            "sle.algorithms.openevolve_backend.resolve_trusted_runtime",
+            return_value=runtime,
+            create=True,
+        ) as resolve, patch(
+            "sle.algorithms.openevolve_backend.write_configured_wrapper",
+            return_value=Path(temporary) / "upstream_evaluator.py",
+        ) as write_wrapper:
+            workdir = Path(temporary)
+            with self.assertRaisesRegex(RuntimeError, "stop after wrapper"):
+                openevolve(
+                    spec, FakeLLM([]), budget=0, timeout_s=20,
+                    workdir=workdir, log_fn=lambda _: None,
+                )
+            manifest = json.loads((workdir / "run_manifest.json").read_text())
+
+        resolve.assert_called_once_with(spec.task_dir)
+        self.assertEqual(manifest["trusted_evaluator_runtime"], runtime.descriptor)
+        self.assertEqual(
+            write_wrapper.call_args.kwargs["expected_trusted_runtime_sha256"],
+            runtime.fingerprint_sha256,
+        )
+
+    def test_shinka_freezes_runtime_for_manifest_and_wrapper(self):
+        runtime = TrustedRuntime(
+            "/private/oracle/bin/python", {"fingerprint_sha256": "c" * 64}
+        )
+        spec = find_task("LennardJonesCluster")
+        with tempfile.TemporaryDirectory() as temporary, patch(
+            "sle.algorithms.shinkaevolve_backend._load_shinka",
+            return_value=(
+                lambda **_kwargs: object(),
+                unittest.mock.Mock(side_effect=RuntimeError("stop after wrapper")),
+                lambda **_kwargs: object(),
+                lambda **_kwargs: object(),
+                {"package": "shinka-evolve", "version": "0.0.7"},
+            ),
+        ), patch(
+            "sle.algorithms.shinkaevolve_backend.resolve_trusted_runtime",
+            return_value=runtime,
+            create=True,
+        ) as resolve, patch(
+            "sle.algorithms.shinkaevolve_backend.write_configured_wrapper",
+            return_value=Path(temporary) / "upstream_evaluator.py",
+        ) as write_wrapper:
+            workdir = Path(temporary)
+            with self.assertRaisesRegex(RuntimeError, "stop after wrapper"):
+                shinkaevolve(
+                    spec, FakeLLM([]), budget=0, timeout_s=20,
+                    workdir=workdir, log_fn=lambda _: None,
+                )
+            manifest = json.loads((workdir / "run_manifest.json").read_text())
+
+        resolve.assert_called_once_with(spec.task_dir)
+        self.assertEqual(manifest["trusted_evaluator_runtime"], runtime.descriptor)
+        self.assertEqual(
+            write_wrapper.call_args.kwargs["expected_trusted_runtime_sha256"],
+            runtime.fingerprint_sha256,
+        )
+
     def test_named_algorithms_do_not_alias_greedy(self):
         self.assertEqual(set(ALGORITHMS), {"greedy_rewrite", "openevolve", "abmcts", "shinkaevolve"})
         for name in ("openevolve", "abmcts", "shinkaevolve"):
