@@ -516,13 +516,11 @@ class SeccompFilterTests(unittest.TestCase):
                 _seccomp_no_processes()
             allocate.assert_not_called()
 
-    @unittest.skipUnless(sys.platform == "linux" and platform.machine().lower() in {"x86_64", "amd64"}
-                         and struct.calcsize("P") == 8, "requires native Linux x86_64")
-    def test_kernel_enforces_native_arch_and_x32_guards(self):
+    def kernel_run(self, mode):
         # Only harmless getpid calls cross ABIs. No compat fork/clone is ever executed.
-        # seccomp filters and executable mappings are confined to short-lived children.
+        # All filters and executable mappings are confined to disposable children.
         script = r"""
-import ctypes, mmap, os, resource, sys
+import ctypes, errno, mmap, os, resource, sys
 resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
 class Filter(ctypes.Structure):
     _fields_ = [('code', ctypes.c_ushort), ('jt', ctypes.c_ubyte),
@@ -535,11 +533,24 @@ program = Program(len(filters), filters)
 libc = ctypes.CDLL(None, use_errno=True)
 libc.syscall.restype = ctypes.c_long
 mode = sys.argv[2]
-if mode == 'compat':
-    code = mmap.mmap(-1, mmap.PAGESIZE, prot=mmap.PROT_READ | mmap.PROT_WRITE | mmap.PROT_EXEC)
+if mode in ('compat', 'compat_probe'):
+    try:
+        code = mmap.mmap(-1, mmap.PAGESIZE, prot=mmap.PROT_READ | mmap.PROT_WRITE | mmap.PROT_EXEC)
+    except PermissionError:
+        if mode == 'compat_probe':
+            print('compat-probe-unavailable: executable mapping denied', flush=True)
+            sys.exit(77)
+        raise
     code.write(bytes.fromhex('b814000000cd80c3'))  # mov eax,20; int 0x80; ret (i386 getpid)
     compat_getpid = ctypes.CFUNCTYPE(ctypes.c_int)(ctypes.addressof(ctypes.c_char.from_buffer(code)))
-    assert compat_getpid() == os.getpid(), 'i386 getpid control failed before installing filter'
+    if mode == 'compat_probe':
+        print('compat-probe-ready', flush=True)
+        pid = compat_getpid()
+        if pid in (-errno.EPERM, -errno.EACCES, -errno.ENOSYS):
+            print('compat-probe-unavailable: syscall denied or unsupported', flush=True)
+            sys.exit(77)
+        assert pid == os.getpid(), 'unexpected i386 getpid control result'
+        sys.exit(0)  # Probe runs without installing this PR's filter.
 for option, arg in ((38, 1), (22, 2)):  # NO_NEW_PRIVS; SECCOMP_MODE_FILTER
     pointer = ctypes.byref(program) if option == 22 else 0
     if libc.prctl(option, arg, pointer, 0, 0) != 0:
@@ -556,12 +567,54 @@ else:
     raise AssertionError(mode)
 """
         program = self.program("x86_64").hex()
-        for mode in ("native", "x32", "compat"):
+        return subprocess.run([sys.executable, "-c", script, program, mode],
+                              capture_output=True, text=True, timeout=10)
+
+    def require_compat(self):
+        probe = self.kernel_run("compat_probe")
+        if ((probe.returncode == 77 and "compat-probe-unavailable:" in probe.stdout)
+                or (probe.returncode in {-signal.SIGSYS, -signal.SIGSEGV, -signal.SIGILL}
+                    and "compat-probe-ready" in probe.stdout)):
+            self.skipTest("i386 compatibility syscall probe is unavailable or blocked by this environment")
+        # Do not disguise setup/programming errors, unexpected results or timeouts as skips.
+        self.assertEqual(probe.returncode, 0, probe.stderr)
+
+    @unittest.skipUnless(sys.platform == "linux" and platform.machine().lower() in {"x86_64", "amd64"}
+                         and struct.calcsize("P") == 8, "requires native Linux x86_64")
+    def test_kernel_enforces_native_arch_and_x32_guards(self):
+        for mode in ("native", "x32"):
             with self.subTest(mode=mode):
-                result = subprocess.run([sys.executable, "-c", script, program, mode],
-                                        capture_output=True, text=True, timeout=10)
+                result = self.kernel_run(mode)
                 expected = 0 if mode == "native" else -signal.SIGSYS
                 self.assertEqual(result.returncode, expected, result.stderr)
+
+    @unittest.skipUnless(sys.platform == "linux" and platform.machine().lower() in {"x86_64", "amd64"}
+                         and struct.calcsize("P") == 8, "requires native Linux x86_64")
+    def test_kernel_rejects_available_i386_compat_abi(self):
+        self.require_compat()
+        result = self.kernel_run("compat")
+        self.assertEqual(result.returncode, -signal.SIGSYS, result.stderr)
+
+    def test_compat_probe_does_not_skip_unexpected_failures(self):
+        for code, output in ((1, ""), (77, ""), (-signal.SIGSEGV, ""),
+                             (1, "compat-probe-ready")):
+            with self.subTest(code=code, output=output), patch.object(
+                    self, "kernel_run", return_value=subprocess.CompletedProcess([], code, output, "probe error")):
+                with self.assertRaises(AssertionError):
+                    self.require_compat()
+        with patch.object(self, "kernel_run", side_effect=subprocess.TimeoutExpired("probe", 10)):
+            with self.assertRaises(subprocess.TimeoutExpired):
+                self.require_compat()
+
+    def test_compat_probe_reports_recognized_environment_limits(self):
+        for code, output in ((77, "compat-probe-unavailable: syscall denied"),
+                             (-signal.SIGSYS, "compat-probe-ready"),
+                             (-signal.SIGSEGV, "compat-probe-ready"),
+                             (-signal.SIGILL, "compat-probe-ready")):
+            with self.subTest(code=code), patch.object(
+                    self, "kernel_run", return_value=subprocess.CompletedProcess([], code, output, "")):
+                with self.assertRaises(unittest.SkipTest):
+                    self.require_compat()
 
 
 class CodecTests(unittest.TestCase):
