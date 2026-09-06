@@ -775,3 +775,11 @@ tasks:
       - doi:10.1103/PhysRevLett.93.165501
       - doi:10.1016/0375-9601(74)90847-0
       - doi:10.1063/1.1723844
+  Microbiology/MetagenomeCompositionAssignment:
+    status: candidate
+    reason: Deterministic charged marker-mixture prototype with identifiable, exact-alias
+      and detectably outside-reference-cone worlds plus separate discovery axes; pending
+      realistic mapping and copy-number shifts, fixed-pipeline saturation probes, paired
+      controls and independent metagenomics review
+    citation_ids:
+    - doi:10.1093/bioinformatics/btu721

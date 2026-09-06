@@ -1,0 +1,1 @@
+Only edit solution.py and keep assign_composition(problem, sequence). Respect the charged panel budget. NumPy/SciPy only; deterministic CPU code; no verification/frontier_eval access.

@@ -1,0 +1,14 @@
+domain: Microbiology
+task: MetagenomeCompositionAssignment
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: active_marker_count_mixture
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 5
+science_metric: taxon_and_abundance_recovery_with_alias_and_library_inadequacy_refusal
+reference_baseline: single-marker nearest-reference assignment
+reference_sota: Panel-conditional mixture fit, alias grouping and residual refusal; not the perfect-recovery
+  anchor.
+citation: Nguyen et al. 2014, DOI 10.1093/bioinformatics/btu721
