@@ -74,13 +74,21 @@ class RadialVelocityPackageContractTests(unittest.TestCase):
         ):
             setup_requirements((3, 12))
 
-        completed = subprocess.run(
-            ["bash", "scripts/setup_oracle_env.sh", "--check"],
-            cwd=str(ROOT),
-            capture_output=True,
-            text=True,
-            env={**os.environ, "ORACLE_PYTHON": "/usr/bin/python3.12"},
-        )
+        with tempfile.TemporaryDirectory() as temporary:
+            Path(temporary, "sitecustomize.py").write_text(
+                "import sys\nsys.version_info = (3, 12)\n", encoding="utf-8"
+            )
+            completed = subprocess.run(
+                ["bash", "scripts/setup_oracle_env.sh", "--check"],
+                cwd=str(ROOT),
+                capture_output=True,
+                text=True,
+                env={
+                    **os.environ,
+                    "ORACLE_PYTHON": sys.executable,
+                    "PYTHONPATH": temporary,
+                },
+            )
         self.assertNotEqual(completed.returncode, 0, completed.stdout)
         self.assertIn("full oracle setup supports only certified Python 3.8", completed.stderr)
         self.assertNotIn("oracle interpreter:", completed.stdout)
