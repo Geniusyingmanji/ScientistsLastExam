@@ -54,6 +54,7 @@ CHINESE_NAMES = {
     "EvidenceSynthesis/ProspectiveMetaAnalysis": "前瞻荟萃分析",
     "Exoplanets/RadialVelocityPlanets": "视向速度找行星",
     "Physics/CriticalPhenomenaLab": "有限尺寸临界现象发现",
+    "Exoplanets/TransitTimingAttribution": "凌星时刻变化归因",
     "Geophysics/GravityInversion": "重力反演",
     "Gravitation/PTAHellingsDowns": "脉冲星阵四极相关",
     "HeatTransfer/ConvectionDiffusionOpt": "对流扩散辨识与加热器设计",
@@ -181,6 +182,9 @@ CHINESE_BRIEFS = {
     "Physics/CriticalPhenomenaLab": (
         "主动选择有限尺寸实验,区分连续/一级相变与 crossover 或 BKT-like 世界",
         "机制与有限尺寸外推;误发现、拒答与覆盖率分开报告"),
+    "Exoplanets/TransitTimingAttribution": (
+        "主动选择后续凌星时刻,区分行星扰动、恒星活动与时钟漂移",
+        "机制、周期预测与拒答;误发现率和留出迁移分开报告"),
     "Geophysics/GravityInversion": (
         "主动布设重力测线,反演地下密度体的位置与强度;声明的源族不支持时拒答",
         "源恢复 + 外场校验 + 拒答;许多密度分布产生相似地表场"),

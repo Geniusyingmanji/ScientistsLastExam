@@ -34,6 +34,7 @@ discovery_kind:
 
 tasks:
   Physics/CriticalPhenomenaLab: {form: discovery, kind: parameter_inversion, note: finite_size_scaling_not_microscopic_law}
+  Exoplanets/TransitTimingAttribution: {form: discovery, kind: evidence, note: ttv_attribution_not_radial_velocity_detection}
   # --- optimization / frontier-eng ------------------------------------------
   Thermodynamics/HeatExchangerDesign: {form: optimization, analogue: engineering_design}
   StructuralEngineering/TrussWeightMinimization: {form: optimization, analogue: engineering_design}

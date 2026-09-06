@@ -17,6 +17,12 @@ tasks:
       - doi:10.1103/PhysRevB.30.1477
       - doi:10.1038/NPHYS4037
       - doi:10.1103/PhysRevLett.132.207301
+  Exoplanets/TransitTimingAttribution:
+    status: candidate
+    reason: Active transit-timing attribution over planet, stellar-activity, clock-drift and unsupported worlds; retained as a candidate pending external astronomy review and independent photodynamical replication.
+    citation_ids:
+      - doi:10.1111/j.1365-2966.2005.08922.x
+      - doi:10.1126/science.1107822
   Mathematics/NarrowAdmissibleTuple:
     status: candidate
     reason: exact admissibility/diameter oracle scored uncapped against Polymath8b's own published narrow-admissible-tuple diameters (246 at k=50, direct primary-source quote; 270 at k=54, secondary-source only, disclosed); no frontier searcher draw yet, pending external number-theory review
