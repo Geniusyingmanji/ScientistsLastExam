@@ -1,0 +1,9 @@
+{
+  "source": "https://github.com/sujeet-bhalerao/perm-inv-codes/blob/main/eval_codes.m",
+  "paper": "https://arxiv.org/html/2508.09978v1#S5.SS2",
+  "description": "Two single-qubit matrices and mixture weights printed in the official Table 4 evaluator. The dominant eigenvector defines each intended pure state; this follows the published ansatz and changes only rounded residual eigenvalues. These parameters were optimized at n=9, not claimed optimal at n=3/4.",
+  "codes": [
+    {"id":"pi008","p":0.08,"q":0.4,"weights":[0.946479051063245,0.053520948936755],"states":[[[0.000010563867768,0],[0.003165425138295,-0.000737454446143],[0.999989436132232,0]],[[0.057435121764494,0],[-0.226643706612390,0.052620897025158],[0.942564878235506,0]]]},
+    {"id":"pi032","p":0.32,"q":0.1,"weights":[0.121510021946101,0.878489978053899],"states":[[[0.241874051397906,0],[-0.021061828117332,-0.427700080633762],[0.758125948602094,0]],[[0.000000032826163,0],[0.000009517539051,-0.000180441224635],[0.999999967173837,0]]]}
+  ]
+}
