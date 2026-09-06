@@ -36,12 +36,20 @@ caught.
 ## Evaluation
 
 - `combined_score` is development coefficient recovery above the always-abstain
-  baseline: exp(-6 x normalized total absolute error of a and b).
+  baseline: exp(-6 x normalized total absolute error of a and b), multiplied on
+  supported curves by `1 - 0.25 * budget_used / 8`. Exact recovery with a smaller prime certificate
+  can therefore score above the full-budget reference.
 - Singular and genus-two worlds score refusal only; abstaining scores one and any
-  coefficient claim scores zero.
-- False discovery rate, correct refusal rate and discovery coverage are reported
+  coefficient claim scores zero. Refusal credit is not efficiency-weighted, so an
+  evidence-backed refusal is not penalized relative to blind abstention.
+- Intrinsic and efficiency-adjusted recovery, evidence efficiency, false discovery rate, correct refusal rate and discovery coverage are reported
   with denominators; a full abstention scores exactly zero.
 - `robustness_score` repeats the audit on held-out curves and failures.
+
+The aggregate efficiency diagnostics are `development_evidence_efficiency_score` and
+`heldout_evidence_efficiency_score`; per-world rows also retain
+`intrinsic_mechanism_score`, `mechanism_score`, `evidence_efficiency_score` and
+`budget_used`. Split membership and hidden truth are never candidate inputs.
 
 This is exact integer arithmetic, not a numerical experiment.
 

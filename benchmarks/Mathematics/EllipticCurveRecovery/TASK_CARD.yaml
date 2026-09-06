@@ -20,8 +20,9 @@ normalization:
   baseline: one small-prime query and a fixed (0, 1) guess
   reference: budgeted ascending small primes, per-prime residue enumeration,
     incremental CRT with wide-window pruning, discriminant filtering
-  score: exp of normalized total absolute coefficient error, normalized above
-    always abstaining
+  score: exp of normalized total absolute coefficient error, multiplied by
+    1 - 0.25 * budget_used / 8 on supported recoveries and normalized above always
+    abstaining; refusal credit remains unweighted on its separate axis
 citations:
 - id: isbn:9780387094939
   title: The Arithmetic of Elliptic Curves
@@ -30,7 +31,7 @@ invariants:
 - the CRT modulus of six small primes exceeds the coefficient window twice over
 - singular lifts are filtered before claiming
 - a full abstention scores exactly zero after normalization
-known_shortcuts: A fixed (0, 1) guess scores 0.000; the six-prime reference reaches 1.000/1.000 with zero false discoveries, and the four-prime ablation collapses to 0.000 through twin-curve ambiguity. Formal clean Linux calibration and independent review remain pending.
+known_shortcuts: A fixed (0, 1) guess scores 0.000; the full-budget reference reaches 0.750/0.750 development/robustness with zero false discoveries, and the smaller-prime ablation collapses through twin-curve ambiguity. Formal clean Linux calibration and independent review remain pending.
 licensing:
   task_package: repository_license_not_declared
   external_assets: none

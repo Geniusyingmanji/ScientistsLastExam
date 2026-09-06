@@ -32,6 +32,11 @@ COEFFICIENT_BOUND = 1200
 COST_TIERS = ((100, 1), (1000, 2), (1100, 3))
 BUDGET_UNITS = 8
 
+# Exact recovery alone should not saturate the clipped scale when it exhausts the
+# arithmetic budget. The score therefore retains 25% headroom for an equally exact
+# certificate obtained from fewer prime queries.
+MAX_EVIDENCE_COST_PENALTY = 0.25
+
 _BASE_DEVELOPMENT_SPECS = (
     (41011, "elliptic"), (41017, "elliptic"), (41023, "elliptic"),
     (41029, "elliptic"), (41031, "elliptic"),
@@ -177,7 +182,8 @@ def _validate(submission):
 
 def _empty(split, index):
     return {"split": split, "world_index": index, "valid": False, "abstained": False,
-            "mechanism_score": 0.0, "false_discovery": False,
+            "mechanism_score": 0.0, "intrinsic_mechanism_score": 0.0,
+            "evidence_efficiency_score": 0.0, "false_discovery": False,
             "correct_refusal": False, "confidence_score": 0.0, "budget_used": 0}
 
 
@@ -200,8 +206,16 @@ def _evaluate_world(candidate, spec, split, index):
         else:
             mechanism = 1.0 if abstain else 0.0
         target = 1.0 if (supported != abstain or (not supported and abstain)) else 0.0
+        evidence_efficiency = 1.0 - MAX_EVIDENCE_COST_PENALTY * (
+            oracle.used / BUDGET_UNITS)
+        # Efficiency adjusts supported recovery only. Correct-refusal credit stays
+        # on its own axis; otherwise evidence-backed refusal would score below the
+        # zero-information always-abstain baseline.
+        scored_mechanism = mechanism * evidence_efficiency if supported else mechanism
         row.update({"valid": True, "abstained": abstain,
-                    "mechanism_score": mechanism,
+                    "mechanism_score": scored_mechanism,
+                    "intrinsic_mechanism_score": mechanism,
+                    "evidence_efficiency_score": evidence_efficiency,
                     "false_discovery": bool(not supported and not abstain),
                     "correct_refusal": bool(not supported and abstain),
                     "confidence_score": 1.0 - (confidence - target) ** 2,
@@ -220,6 +234,7 @@ def _summary(rows, specs):
         "normalized": float(np.clip((raw - abstain_base) / (1.0 - abstain_base), 0.0, 1.0)),
         "raw": raw,
         "valid_count": sum(r["valid"] for r in rows),
+        "evidence_efficiency": float(np.mean([r["evidence_efficiency_score"] for r in rows])),
         "false_count": sum(r["false_discovery"] for r in unsupported),
         "refusal_count": sum(r["correct_refusal"] for r in unsupported),
         "attempt_count": sum(not r["abstained"] for r in supported),
@@ -240,6 +255,7 @@ def evaluate(recover_curve):
         "valid": 1.0 if dev_valid else 0.0,
         "feasibility_rate": dev["valid_count"] / len(development),
         "mechanism_score": dev["raw"],
+        "development_evidence_efficiency_score": dev["evidence_efficiency"],
         "development_false_discovery_rate": dev["false_count"] / dev["unsupported_count"],
         "development_correct_refusal_rate": dev["refusal_count"] / dev["unsupported_count"],
         "development_discovery_coverage": dev["attempt_count"] / dev["supported_count"],
@@ -248,6 +264,7 @@ def evaluate(recover_curve):
         "false_discovery_count": dev["false_count"],
         "correct_refusal_count": dev["refusal_count"],
         "robustness_score": hold["normalized"] if hold_valid else 0.0,
+        "heldout_evidence_efficiency_score": hold["evidence_efficiency"],
         "heldout_feasibility_rate": hold["valid_count"] / len(heldout),
         "heldout_false_discovery_rate": hold["false_count"] / hold["unsupported_count"],
         "heldout_correct_refusal_rate": hold["refusal_count"] / hold["unsupported_count"],

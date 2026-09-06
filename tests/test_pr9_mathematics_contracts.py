@@ -74,6 +74,17 @@ class RoundFourPackageTests(unittest.TestCase):
 
 
 class EllipticCurvePins(unittest.TestCase):
+    def test_exact_reference_leaves_room_for_a_smaller_prime_certificate(self):
+        task = ROOT / "benchmarks/Mathematics/EllipticCurveRecovery"
+        ev = _load(task / "verification/evaluator.py", "r4_ec_calibration")
+        ref = _load(task / "verification/reference_solver.py", "r4_ec_reference")
+        result = ev.evaluate(ref.recover_curve)
+        self.assertEqual(result["valid"], 1.0)
+        self.assertAlmostEqual(result["combined_score"], 0.75)
+        self.assertAlmostEqual(result["development_evidence_efficiency_score"], 0.75)
+        self.assertEqual(result["development_correct_refusal_rate"], 1.0)
+        self.assertEqual(result["development_false_discovery_rate"], 0.0)
+
     def test_counts_match_direct_enumeration(self):
         ev = _load("benchmarks/Mathematics/EllipticCurveRecovery/verification/evaluator.py",
                    "r4_ec")

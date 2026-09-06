@@ -13,15 +13,17 @@ and Hasse-interval reasoning.
 
 ## 2. Baseline and normalization
 
-The shipped `solution.py` queries one prime and guesses (0, 1): `0.000000`. The
-true pair scores one. Measured on 2026-09-05 the reference reaches `1.0000`
-development and robustness with zero false discoveries and full refusal.
+The shipped `solution.py` queries one prime and guesses (0, 1): `0.000000`. Supported
+recovery is multiplied by `1 - 0.25 * budget_used / 8`; correct-refusal credit stays
+unweighted and separately reported. The full-budget reference has evidence efficiency
+`0.750`. Re-measured on 2026-09-06, it reaches `0.750000` development and robustness
+with zero false discoveries and full refusal.
 
 ## 3. Capability comparisons and ablations
 
 | variant | development |
 |---|---:|
-| full reference (budgeted ascending primes) | 1.000 |
+| full reference (budgeted ascending primes) | 0.750 |
 | six primes in the wide window | 0.000 |
 
 The wide window makes the prime ladder load-bearing: six primes leave twin curves

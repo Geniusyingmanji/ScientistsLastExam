@@ -7,7 +7,7 @@ oracle_type: analytical
 score_mode: clipped
 gpu_required: false
 eval_time_seconds: 30
-science_metric: elliptic curve coefficient recovery from prime point counts with non-elliptic refusal
+science_metric: evidence-efficient elliptic curve coefficient recovery from prime point counts with non-elliptic refusal
 reference_baseline: mid-range coefficient guesses
 reference_sota: truth-blind small-prime residue search with CRT lifting; runnable witness
 citation: Silverman, The Arithmetic of Elliptic Curves, ISBN 9780387094939
