@@ -1,0 +1,63 @@
+schema_version: 2
+scientific_question: Produce an exact rational linear ranking function, with Farkas multipliers, that proves a uniform decrease on every guard-satisfying state of a published integer affine while-loop.
+artifact: A 1-norm ranking vector r, a constant s, a positive delta, and two Farkas multiplier vectors, all rational.
+oracle:
+  model: exact affine Farkas identities; no floating-point LP
+  feasibility: integer or [numerator, denominator] entries inside the public magnitude cap; floats, a ranking whose 1-norm is not 1, non-positive delta, or a failed Farkas identity each score that instance zero
+  deterministic: true
+normalization:
+  baseline: the first standard-basis ranking at delta = 1/10000, which is valid on every instance and scores exactly zero
+  reference: a finite catalog of 1-norm rational directions, each checked exactly, taking the largest feasible catalog decrease
+  score: mean of min(max(0, (delta - 1/10000) / 3), 1) over four instances; the unit 3 is a clip, not a published record
+citations:
+- id: doi:10.1007/3-540-45319-9_17
+  title: "Synthesis of Linear Ranking Functions"
+- id: doi:10.1007/978-3-540-24622-0_20
+  title: "A Complete Method for the Synthesis of Linear Ranking Functions"
+invariants:
+- a valid certificate is a proof of descent on the whole guard polyhedron, not a simulation of one start state
+- the 1-norm constraint makes delta comparable across ranking directions
+- putting the whole 1-norm on the fastest coordinate proves a strictly larger delta than a slow coordinate
+- floats are rejected rather than rounded
+- malformed submissions score zero and never raise out of the evaluator
+known_shortcuts: The published updates are translations (A = I), so the decrease is a constant and the second Farkas vector may be zero. Searching a larger rational catalog than the shipped reference is leftover headroom, not an exploit. A numerical LP solver whose output is rounded would be rejected as floats.
+review:
+  domain: pending_external
+  evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_exact_arithmetic_checks
+provenance:
+  class: procedural
+  target_source: Repository-visible affine integer loops with exact rational ranking certificates.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Linear ranking functions for affine loops are textbook program analysis. What is scored is an exact rational Farkas certificate of a stated decrease at 1-norm 1, which is not a recalled trace and cannot be read from running the loop once.
+lineage:
+  status: complete
+  builder_model_ids:
+  - cursor-grok-4.6
+  builder_scaffolds:
+  - cursor
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    None. No frontier searcher draw has been run. In-process pins are
+    tests/test_affine_loop_ranking_certificate.py (token e1 rate below the catalog
+    reference; floats rejected).
+  shortcut_discoverer: builder_self_audit
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: cursor-grok-4.6
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: the reference, the baseline, the exact Farkas check and the three bad-candidate shapes are all runnable from this directory

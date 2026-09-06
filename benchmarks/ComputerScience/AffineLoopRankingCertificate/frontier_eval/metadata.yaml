@@ -1,0 +1,13 @@
+domain: ScientificComputing
+task: AffineLoopRankingCertificate
+scientific_role: optimization
+difficulty: hard
+tier: T2
+oracle_type: analytical
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 8
+science_metric: proven_linear_ranking_decrease
+reference_baseline: first-coordinate ranking at delta = 1/10000
+reference_sota: catalog search over 1-norm rational ranking directions, exact Farkas check
+citation: "Colon and Sipma, TACAS 2001; Podelski and Rybalchenko, VMCAI 2004"

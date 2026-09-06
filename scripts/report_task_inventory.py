@@ -101,6 +101,7 @@ CHINESE_NAMES = {
     "RNAEngineering/RNAEnsembleDesign": "RNA 系综设计",
     "RNAEngineering/RNAInverseDesign": "RNA 约束反折叠",
     "Semiconductor/MOSFETDoping": "MOSFET 掺杂剖面",
+    "ScientificComputing/AffineLoopRankingCertificate": "仿射循环线性秩函数证书",
     "Sensors/QuartzCrystalMicrobalanceLab": "石英微天平原始信号反演",
     "SignalProcessing/SparseRecovery": "压缩感知稀疏恢复",
     "Spectroscopy/CrowdedSpectrumAssignment": "混叠谱物种指认",
@@ -349,6 +350,9 @@ CHINESE_BRIEFS = {
     "Semiconductor/MOSFETDoping": (
         "设计可迁移的短沟道硅 nMOS 晕环掺杂剖面帕累托档案",
         "驱动电流对漏电的帕累托超体积;密封留出迁移与最差偏移稳健性分列,无上限"),
+    "ScientificComputing/AffineLoopRankingCertificate": (
+        "为已公布的整数仿射 while 循环提交精确有理线性秩函数与 Farkas 乘子,证明守卫多面体上的均匀下降",
+        "所证 delta 相对 3 裁剪单位的均值;e1 小步长基线近零,浮点 LP 直接判零,不是连续 Lyapunov"),
     "Sensors/QuartzCrystalMicrobalanceLab": (
         "从石英微天平的原始 I/Q 扫频里标定复增益漂移、提取谐振并反演薄膜质量与沉积速率",
         "原始 IQ 标定、BVD 谐振提取、质量与速率恢复、故障与模型判别、密封停止决策分列"),

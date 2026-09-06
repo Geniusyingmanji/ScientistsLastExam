@@ -45,6 +45,7 @@ RECORDED_LINEAGE = {
     "Physics/ComplexBoseLaw",
     "MaterialsScience/QuinaryConvexHull",
     "Mathematics/HeavyTailEvidence",
+    "ScientificComputing/AffineLoopRankingCertificate",
     "Mathematics/NarrowAdmissibleTuple",
     "Superconductivity/SuperconductorTcRecord",
 }
