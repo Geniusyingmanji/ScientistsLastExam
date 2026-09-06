@@ -791,7 +791,7 @@ def design_finite_volume_method(problem):
         self.assertAlmostEqual(
             cell["reference_value"],
             0.9716657334958534,
-            delta=RAW_REPLAY_ATOL,
+            places=12,
         )
         self.assertAlmostEqual(
             cell["credit_scale"],
