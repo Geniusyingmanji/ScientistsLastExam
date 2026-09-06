@@ -107,9 +107,28 @@ span cannot.
 except into `kappa`. That is the failure mode this subject actually has, and it appears here without
 being put there.
 
-Remaining: widen the answerable span (180/1500/8000) so it clears the tolerance with margin rather
-than at it, then build the reference on a joint fit and confirm it recovers on wide and abstains on
-narrow. The design question is settled; what is left is calibration.
+### Measured: widening the span does not help, the tolerance is the lever
+
+| sampled Reynolds numbers | 1-sigma width in kappa | implied held-out spread |
+|---|---|---|
+| 180 / 200 / 220 | 0.112 | 1.90 |
+| 180 / 950 / 4000 | 0.054 | 0.91 |
+| 180 / 1500 / 8000 | 0.058 | 0.99 |
+| 200 / 2000 / 10000 | 0.054 | 0.91 |
+
+The answerable span is already at its information limit: pushing the top Reynolds number from 4000
+to 10000 buys nothing, because what limits `kappa` is the two unknown nuisances per profile, not the
+Reynolds range. At a tolerance of 0.9 the answerable case sits exactly on the line, which is not a
+task, it is a coin flip.
+
+**Set the tolerance to 6 per cent of the centreline velocity, about 1.3.** The answerable span then
+clears it at 0.91 with a factor of 1.4 in hand and the narrow span misses it at 1.90 by the same
+factor, so both verdicts have margin instead of one of them having none. Six per cent is still a
+tight bar for "you found the same law" — it is four to five times the observation noise.
+
+The design is settled and calibrated. What remains is the reference: a joint fit of `(kappa, A+)`
+with the two nuisances per profile, plus an abstention rule driven by the width of the `kappa`
+interval rather than by residual size — which is the distinction the whole task turns on.
 
 Options not yet tried, in order of preference:
 
