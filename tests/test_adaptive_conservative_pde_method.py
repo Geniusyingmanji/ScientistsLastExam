@@ -19,6 +19,11 @@ from sle.registry import find_task
 
 ROOT = Path(__file__).resolve().parents[1]
 TASK_DIR = ROOT / "benchmarks" / "ComputerScience" / "AdaptiveConservativePDEMethod"
+# Cross-platform snapshot regression tolerances, aligned with the independently implemented
+# finite-volume replay below. These are not a theorem about every hardware or libm implementation.
+RAW_REPLAY_ATOL = 2.0e-6
+# RAW_REPLAY_ATOL / the roughly 0.54 anchor scale, rounded upward.
+NORMALIZED_REPLAY_ATOL = 4.0e-6
 
 
 def _load(name: str, path: Path):
@@ -67,16 +72,24 @@ class AdaptiveConservativePDEMethodTests(unittest.TestCase):
         self.assertEqual(reference["valid"], 1.0)
         self.assertAlmostEqual(reference["combined_score"], 1.0, places=12)
         self.assertAlmostEqual(
-            baseline["development_raw_utility"], 0.43067750623620715, places=12
+            baseline["development_raw_utility"],
+            0.43067750623620715,
+            delta=RAW_REPLAY_ATOL,
         )
         self.assertAlmostEqual(
-            reference["development_raw_utility"], 0.9705475629120707, places=12
+            reference["development_raw_utility"],
+            0.9705475629120707,
+            delta=RAW_REPLAY_ATOL,
         )
         self.assertAlmostEqual(
-            baseline["heldout_raw_utility"], 0.4476810274372647, places=12
+            baseline["heldout_raw_utility"],
+            0.4476810274372647,
+            delta=RAW_REPLAY_ATOL,
         )
         self.assertAlmostEqual(
-            reference["heldout_raw_utility"], 0.9720236479726634, places=12
+            reference["heldout_raw_utility"],
+            0.9720236479726634,
+            delta=RAW_REPLAY_ATOL,
         )
         self.assertGreater(
             reference["development_accuracy_score"],
@@ -104,11 +117,21 @@ class AdaptiveConservativePDEMethodTests(unittest.TestCase):
         metrics = self.evaluator.evaluate(lambda _problem: dict(stronger))
 
         self.assertEqual(metrics["valid"], 1.0)
-        self.assertAlmostEqual(metrics["combined_score"], 1.0020711846674135, places=12)
         self.assertAlmostEqual(
-            metrics["development_raw_utility"], 0.9716657334958534, places=12
+            metrics["combined_score"],
+            1.0020711846674135,
+            delta=NORMALIZED_REPLAY_ATOL,
         )
-        self.assertAlmostEqual(metrics["heldout_raw_utility"], 0.9727754615669326, places=12)
+        self.assertAlmostEqual(
+            metrics["development_raw_utility"],
+            0.9716657334958534,
+            delta=RAW_REPLAY_ATOL,
+        )
+        self.assertAlmostEqual(
+            metrics["heldout_raw_utility"],
+            0.9727754615669326,
+            delta=RAW_REPLAY_ATOL,
+        )
 
     def test_reference_capabilities_survive_ablation(self) -> None:
         problem = self.evaluator._public_problem()
@@ -144,7 +167,9 @@ class AdaptiveConservativePDEMethodTests(unittest.TestCase):
                     reference["development_raw_utility"],
                 )
                 self.assertAlmostEqual(
-                    metrics["combined_score"], expected_scores[name], places=12
+                    metrics["combined_score"],
+                    expected_scores[name],
+                    delta=NORMALIZED_REPLAY_ATOL,
                 )
 
     def test_432_nonadaptive_shortcut_grid_stays_below_reference(self) -> None:
@@ -191,7 +216,9 @@ class AdaptiveConservativePDEMethodTests(unittest.TestCase):
             count += 1
 
         self.assertEqual(count, 432)
-        self.assertAlmostEqual(best[0], 0.9643685859747075, places=12)
+        self.assertAlmostEqual(
+            best[0], 0.9643685859747075, delta=RAW_REPLAY_ATOL
+        )
         self.assertEqual(
             best[1],
             {
@@ -228,7 +255,9 @@ class AdaptiveConservativePDEMethodTests(unittest.TestCase):
             raw = self.evaluator._aggregate(rows)["raw_utility"]
             best = max(best, (raw, method), key=lambda item: item[0])
 
-        self.assertAlmostEqual(best[0], 0.9716657334958534, places=12)
+        self.assertAlmostEqual(
+            best[0], 0.9716657334958534, delta=RAW_REPLAY_ATOL
+        )
         self.assertEqual(best[1]["cfl"], 0.85)
         self.assertEqual(best[1]["sensor_threshold"], 0.10)
         metrics = self.evaluator.evaluate(lambda _problem: dict(best[1]))
@@ -240,7 +269,9 @@ class AdaptiveConservativePDEMethodTests(unittest.TestCase):
         assert wave is not None
         cell = wave.cells["conservative-scalar-law-method"]
         self.assertEqual(metrics["frontier_records"][0]["value"], best[0])
-        self.assertEqual(cell["reference_value"], best[0])
+        self.assertAlmostEqual(
+            cell["reference_value"], best[0], delta=RAW_REPLAY_ATOL
+        )
 
     def test_inactive_coordinates_share_one_canonical_identity(self) -> None:
         reference = self.evaluator._reference_method()
@@ -752,15 +783,22 @@ def design_finite_volume_method(problem):
         expected_id = self.evaluator._canonical_method_id(method)
         record = metrics["frontier_records"][0]
         self.assertEqual(record["canonical_id"], expected_id)
-        self.assertAlmostEqual(record["value"], metrics["development_raw_utility"])
+        self.assertEqual(record["value"], metrics["development_raw_utility"])
 
         contract = wave.cells["conservative-scalar-law-method"]["semantic_contract"]
         baseline_raw, reference_raw = self.evaluator._anchors()
         cell = wave.cells["conservative-scalar-law-method"]
         self.assertAlmostEqual(
-            cell["reference_value"], 0.9716657334958534, places=12
+            cell["reference_value"],
+            0.9716657334958534,
+            delta=RAW_REPLAY_ATOL,
         )
-        self.assertAlmostEqual(cell["credit_scale"], reference_raw - baseline_raw)
+        self.assertAlmostEqual(
+            cell["credit_scale"],
+            reference_raw - baseline_raw,
+            delta=RAW_REPLAY_ATOL,
+        )
+        self.assertLess(2.0 * RAW_REPLAY_ATOL, cell["minimum_delta"])
         for path_key, hash_key in (
             ("canonicalizer_path", "canonicalizer_sha256"),
             ("evidence_predicate_path", "evidence_predicate_sha256"),
