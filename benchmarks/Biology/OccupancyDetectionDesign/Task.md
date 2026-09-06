@@ -62,8 +62,8 @@ coverage, attempted discovery, confidence, budget use, and held-out transfer rem
 Held-out worlds and per-world truth are not search-visible.
 
 The truth-blind reference scores 0.796 development / 0.788 held out. Raw detections without the
-occupancy likelihood score 0.766 / 0.727; likelihood alone scores 0.681 / 0.731; omitting
-intensive surveys scores 0.097 / 0.286; and omitting model comparison scores 0.014 / 0.000.
+occupancy likelihood score 0.766 / 0.727; likelihood alone scores 0.681 / 0.567; omitting
+intensive surveys scores 0.118 / 0.416; and omitting model comparison scores 0.129 / 0.000.
 Thus repeat-method allocation and model-inadequacy testing each change the measured capability.
 
 ## Relationship to nearby tasks

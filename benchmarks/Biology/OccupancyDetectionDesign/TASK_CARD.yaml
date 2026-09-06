@@ -22,10 +22,10 @@ invariants:
 - blanket abstention is exactly zero after normalization; effect, false discovery, refusal and coverage remain separate with denominators
 - malformed candidates score invalid without escaping the evaluator
 - held-out worlds, latent occupancy and per-world truth remain evaluator-only
-known_shortcuts: A 432-strategy grid using raw detection fractions, ordinary correlations and thresholds without a latent occupancy likelihood reaches 0.754 development and 0.563 held out, below the truth-blind reference at 0.796 and 0.788. Pure raw-detection estimation reaches 0.766/0.727, likelihood only 0.681/0.731, omitting intensive surveys 0.097/0.286, and omitting model comparison 0.014/0.000. The reduced-order model omits closure, colonization, abundance, correlated detection, observer effects and misidentification; certification remains blocked on server-held surveys, independent ecological review and real field-data replication.
+known_shortcuts: A 432-strategy grid using raw detection fractions, ordinary correlations and thresholds without a latent occupancy likelihood reaches 0.754 development and 0.563 held out, below the truth-blind reference at 0.796 and 0.788. Pure raw-detection estimation reaches 0.766/0.727, likelihood only 0.681/0.567, omitting intensive surveys 0.118/0.416, and omitting model comparison 0.129/0.000. The reduced-order model omits closure, colonization, abundance, correlated detection, observer effects and misidentification; certification remains blocked on server-held surveys, independent ecological review and real field-data replication.
 review:
   domain: pending_external_ecology
-  evaluator_security: automated_budget_determinism_abstention_and_malformed_candidate_tests_written_pending_clean_linux_replay
+  evaluator_security: automated_budget_determinism_abstention_and_malformed_candidate_checks_passed_on_clean_linux_revision
 provenance:
   class: procedural
   target_source: Repository-visible deterministic generator with development and shifted held-out worlds spanning linear positive, negative and null effects plus nonlinear habitat and spatial model inadequacy.
@@ -40,11 +40,14 @@ lineage:
   - openai-codex:gpt-5
   builder_scaffolds:
   - science-benchmark-construction
-  calibrator_model_ids: []
-  calibration_runs: []
-  calibration_evidence_status: missing
+  calibrator_model_ids:
+  - deepseek-v4-flash
+  - deepseek-v4-pro
+  calibration_runs:
+  - experiments/occupancy_detection_design_deepseek_calibration_2026-09-07.json
+  calibration_evidence_status: current_or_migration_replayed
   edits_triggered_by_model: An excluded DeepSeek protocol draw exposed that the prose description of survey_methods could be read as an integer mapping while the callback supplied nested cost mappings. The public value was simplified to the documented integer mapping before the scored calibration draw; the scientific worlds, survey costs and scoring were unchanged.
-  shortcut_discoverer: builder_self_audit_with_task_local_ablation_sweep
+  shortcut_discoverer: builder_self_audit_with_task_local_ablation_sweep_and_deepseek_flash_pro_calibration
   frozen_before_eval: true
   freeze_timestamp: '2026-09-06T15:43:04Z'
 long_horizon:

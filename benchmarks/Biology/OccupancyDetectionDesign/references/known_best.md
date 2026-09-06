@@ -31,7 +31,16 @@ not optimized per world, leaving continuous effect and occupancy headroom below 
 
 ## Model draws
 
-No model draw has been run yet. The task will remain a candidate.
+One `greedy_rewrite` calibration run per model used seed 17, a three-proposal budget, temperature
+0.7, and explicit `chat_thinking: disabled`. DeepSeek v4 Flash produced one valid proposal out of
+three and reached 0.381693 development / 0.000000 held out; its two invalid proposals were one
+candidate runtime error and one timeout. DeepSeek v4 Pro produced three valid proposals and
+reached 0.310287 / 0.000000. Neither first proposal reached the 0.795577 reference. The compact,
+credential-free record is `experiments/occupancy_detection_design_deepseek_calibration_2026-09-07.json`.
+
+An earlier draw for each model is excluded from performance evidence because all proposals used an
+ambiguous nested-versus-integer method-cost representation and failed at runtime. That draw
+triggered the public-contract correction described below. The task remains a candidate.
 
 ## Baseline
 
@@ -44,12 +53,12 @@ every world and has `combined_score = 0.000000`, with false-discovery rate 0.8.
 |---|---:|---:|---:|---:|---:|
 | fixed shrinkage reference | **0.795577** | **0.787752** | 0.000 | 1.000 | 1.000 |
 | raw-detection estimate only | 0.765634 | 0.726880 | 0.000 | 1.000 | 1.000 |
-| occupancy likelihood only | 0.680809 | 0.730628 | 0.000 | 1.000 | 1.000 |
-| 20 stratified sites | 0.549492 | 0.310913 | 0.167 | 1.000 | 1.000 |
-| 32 sites with fewer revisits | 0.348338 | 0.750890 | 0.286 | 0.750 | 1.000 |
-| no intensive surveys | 0.096994 | 0.286106 | 0.333 | 0.500 | 0.667 |
-| no model comparison | 0.014143 | 0.000000 | 0.400 | 0.000 | 1.000 |
-| never refuse | 0.014143 | 0.000000 | 0.400 | 0.000 | 1.000 |
+| occupancy likelihood only | 0.680809 | 0.567110 | 0.000 | 1.000 | 1.000 |
+| 20 stratified sites | 0.549528 | 0.432313 | 0.167 | 1.000 | 1.000 |
+| 32 sites with fewer revisits | 0.374474 | 0.806373 | 0.286 | 0.750 | 1.000 |
+| no intensive surveys | 0.118457 | 0.416167 | 0.333 | 0.500 | 0.667 |
+| no model comparison | 0.128910 | 0.000000 | 0.400 | 0.000 | 1.000 |
+| never refuse | 0.128910 | 0.000000 | 0.400 | 0.000 | 1.000 |
 | blanket abstention | 0.000000 | 0.000000 | 0.000 | 1.000 | 0.000 |
 
 Paired methods identify detection, broad habitat coverage identifies effect direction, and model
