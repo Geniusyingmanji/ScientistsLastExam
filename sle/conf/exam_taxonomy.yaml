@@ -114,6 +114,7 @@ tasks:
   MolecularDynamics/ForceFieldCalibration: {form: discovery, kind: parameter_inversion}
   HeatTransfer/ConvectionDiffusionOpt: {form: discovery, kind: parameter_inversion}
   Geophysics/GravityInversion: {form: discovery, kind: parameter_inversion}
+  Geophysics/UPbConcordiaInference: {form: discovery, kind: evidence, note: coupled_decay_event_history_not_spatial_gravity_source_inversion}
   PopulationGenetics/DemographicSFS: {form: discovery, kind: parameter_inversion}
   ChemicalKinetics/ReactionMechanismFitting: {form: discovery, kind: parameter_inversion}
   Spectroscopy/SpinSystemInference: {form: discovery, kind: parameter_inversion}

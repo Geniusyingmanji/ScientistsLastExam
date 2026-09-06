@@ -60,6 +60,9 @@ class LLMConfig:
     chat_max_tokens_field: str = "max_tokens"
     temperature: Optional[float] = 0.7
     reasoning_effort: Optional[str] = None  # for reasoning models on the responses wire
+    # Some OpenAI-compatible chat APIs default to reasoning unless this is explicit. Keep it
+    # declarative so calibration manifests distinguish visible-answer and thinking-only runs.
+    chat_thinking: Optional[str] = None  # "enabled" | "disabled"
     # Anthropic wire only. The API version header is required and pinned rather than defaulted
     # so a recorded run says which contract it spoke.
     anthropic_version: str = "2023-06-01"
@@ -131,6 +134,8 @@ class LLMClient:
         }
         if self.config.temperature is not None:
             payload["temperature"] = float(self.config.temperature)
+        if self.config.chat_thinking is not None:
+            payload["thinking"] = {"type": self.config.chat_thinking}
         url = self.config.base_url.rstrip("/") + "/chat/completions"
         headers = {"Content-Type": "application/json"}
         if self.config.api_key:
