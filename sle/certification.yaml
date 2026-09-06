@@ -10,6 +10,11 @@ policy:
   statuses: [certified, candidate, quarantined]
 
 tasks:
+  Algorithm/ScalingLawIdentification:
+    status: candidate
+    reason: deterministic asymptotic-class identification from budgeted seven-percent-noise timings bounded at size 384, with the public mod-3 branch predicate and sixty-percent-jitter refusal worlds and a sealed size-700 extrapolation; the truth-blind witness reaches 0.948/0.937 while a competent first-shot ladder reaches only 0.692; pending clean Linux calibration, independent algorithms review and server-held programs
+    citation_ids:
+      - isbn:9780262033848
   Mathematics/NarrowAdmissibleTuple:
     status: candidate
     reason: exact admissibility/diameter oracle scored uncapped against Polymath8b's own published narrow-admissible-tuple diameters (246 at k=50, direct primary-source quote; 270 at k=54, secondary-source only, disclosed); no frontier searcher draw yet, pending external number-theory review
