@@ -57,11 +57,34 @@ Correlated systematics were added for this reason — an unknown wall position a
 velocity calibration, both constant across a profile, which is what a real profile measurement
 carries and which averaging does not beat down. They were not sufficient on their own.
 
+### Measured: binning alone does not separate the regimes
+
+Option 1 was tried. Reporting the profile binned instead of at all 400 solver nodes, swept against
+the systematics, with the crude grid-search baseline:
+
+| bins | wall shift | calibration | recoverable passes | degenerate passes | inconsistent passes |
+|---|---|---|---|---|---|
+| 24 | 0.7 | 0.015 | 8/8 | 7/8 | 0/8 |
+| 24 | 2.5 | 0.045 | 6/8 | 6/8 | 0/8 |
+| 12 | 0.7 | 0.015 | **0/8** | 2/8 | 0/8 |
+| 12 | 2.5 | 0.045 | 2/8 | 4/8 | 0/8 |
+| 8 | any | any | 0/8 | 0/8 | 0/8 |
+
+There is no window. Information falls off a cliff that takes the answerable regime with it: at 24
+bins the degeneracy does not bite, at 12 the recoverable case has already broken. The separation
+cannot come from starving the data.
+
+**Where it has to come from instead: a fitter that marginalises the nuisances.** The wall position
+and the calibration are unknown per profile, and a fit that ignores them spends the parameter
+freedom of `kappa` and `A+` absorbing them. A reference that fits `(kappa, A+)` jointly with the two
+nuisances per profile should pin them at the wide span - where three decades of Reynolds number
+constrain the near-wall and log regions separately - and find a flat likelihood at the narrow span.
+That is the measurement to make next, and if a competent fitter *also* cannot tell the two spans
+apart, then the regime is not real and the task needs a different third world.
+
 Options not yet tried, in order of preference:
 
-1. Report profiles **binned** to a few tens of points rather than 400, which is what an experiment
-   or a coarse simulation actually delivers, and cuts the information volume by an order of
-   magnitude.
+1. Fit the nuisances rather than starve the data (above).
 2. Widen the systematics until the pair is genuinely unresolved, and verify by measuring the
    posterior spread rather than by looking at one fit.
 3. Choose the truth to sit *between* two grammar-expressible closures rather than on one.

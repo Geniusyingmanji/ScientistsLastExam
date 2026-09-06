@@ -48,6 +48,8 @@ DIFFICULTY = 1
 CASE_COUNT = 24
 DEV_SEED = 20260906
 OBSERVATION_BUDGET = 12
+# Points reported per profile.
+BINS = 24
 # A formula counts as recovering the law when it reproduces the held-out profiles to within this
 # fraction of the centreline velocity - about four times the observation noise, so the bar is
 # "the same law", not "the same fit".
@@ -95,9 +97,21 @@ class Windtunnel:
         shifted = np.interp(np.clip(y + wall_shift, 0.0, None), y, u)
         noisy = calibration * shifted + rng.normal(
             0.0, self._case["noise"] * max(u[-1], 1.0), size=u.shape)
+        # Binned to what an experiment or a coarse simulation actually delivers. Handing back all
+        # four hundred solver nodes gives the fit sqrt(1200) worth of averaging and dissolves the
+        # kappa/A+ degeneracy this task turns on - measured: a pair separated by 0.165 in the
+        # sampled range, at a noise scale of 0.167, was still resolved.
+        edges = np.geomspace(max(y[1], 0.3), y[-1], BINS + 1)
+        centres, means = [], []
+        for low, high in zip(edges[:-1], edges[1:]):
+            mask = (y >= low) & (y <= high)
+            if not mask.any():
+                continue
+            centres.append(float(y[mask].mean()))
+            means.append(float(noisy[mask].mean()))
         return {"re_tau": value,
-                "y_plus": [float(v) for v in y],
-                "u_plus": [float(v) for v in noisy],
+                "y_plus": centres,
+                "u_plus": means,
                 "noise_sigma": float(self._case["noise"] * max(u[-1], 1.0)),
                 "remaining_runs": self._remaining}
 
