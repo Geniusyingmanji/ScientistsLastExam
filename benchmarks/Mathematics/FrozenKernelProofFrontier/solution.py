@@ -1,7 +1,7 @@
 """Cap-length valid proofs. Returning them scores zero.
 
 The first five lines prove goal → goal. The reference derivation is not a prefix of
-this file: taking the first `reference_size` lines is not a proof of the theorem.
+this file: taking a compiled-size prefix is not a proof of the theorem.
 """
 import json
 from copy import deepcopy

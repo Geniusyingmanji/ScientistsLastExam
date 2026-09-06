@@ -7,18 +7,18 @@ Every size here is a count of Hilbert lines replayed by `verification/evaluator.
 Truth-blind: it returns compiled proofs of the four public theorems from the frozen
 axiom allowlist. Sorry does not exist. Lean is not involved.
 
-| theorem | reference size | baseline size | reference score |
+| theorem | compiled size | target size | compiled score |
 |---|---:|---:|---:|
-| identity | 5 | 64 | 1 |
-| conjunction_swap | 26 | 64 | 1 |
-| packed_composition | 35 | 64 | 1 |
-| modus_ponens_closed | 20 | 64 | 1 |
-| mean | | | **1** |
+| identity | 5 | 3 | 0.833 |
+| conjunction_swap | 26 | 14 | 0.593 |
+| packed_composition | 35 | 18 | 0.476 |
+| modus_ponens_closed | 20 | 11 | 0.661 |
+| mean | | | **0.641** |
 
 The reference is capability-complete for these four closed tautologies and
-deliberately not minimal on identity: a proof shorter than SKK would score above one
-on that instance. The other three sizes are compiled natural-deduction terms, not
-table lookups.
+deliberately not at the wave-1 target sizes. Matching the compiled terms scores
+about 0.64. A proof at the target sizes would score one; shorter still scores
+above one.
 
 ## Baseline — `solution.py`
 
@@ -26,7 +26,7 @@ Cap-length valid proofs, score **0**. Construction: five lines proving `goal →
 then a shifted copy of the reference derivation, then repeated modus ponens with that
 implication so extra lines stay in the last line's dependency cone.
 
-The first `reference_size` lines of the baseline are **not** a proof of the theorem
+The first compiled-size lines of the baseline are **not** a proof of the theorem
 (they prove `goal → goal`). Taking that prefix scores 0.
 
 ## Difficulty ladder
@@ -34,9 +34,8 @@ The first `reference_size` lines of the baseline are **not** a proof of the theo
 | ablation | combined_score | what was removed |
 |---|---:|---|
 | shipped baseline (length 64) | 0.000 | any shortening |
-| prefix of length `5 + reference_size` (I plus the reference block) | **0.874** | the trailing MP pad only |
-| hidden reference proofs | 1.000 | — |
-| prefix of length `reference_size` | 0.000 | last line is not the theorem |
+| hidden compiled proofs | 0.641 | — |
+| prefix of compiled length | 0.000 | last line is not the theorem |
 
 Per instance at the I+reference prefix: identity 0.915 (size 10), conjunction_swap
 0.868 (size 31), packed_composition 0.828 (size 40), modus_ponens_closed 0.886

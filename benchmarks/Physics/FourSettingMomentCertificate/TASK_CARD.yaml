@@ -17,10 +17,13 @@ normalization:
   baseline: >-
     the triangle inequality written as squares over the NPA-1 basis, proving 4 and scoring zero
   reference: >-
-    a hand exact SOS that replaces two CHSH blocks using four frozen BB extras and proves 7/2
+    a hand exact SOS that replaces two CHSH blocks using four frozen BB extras and proves 7/2;
+    on the logarithmic scale this lands near 0.46, not at one
   score: >-
-    mean of (4 - bound) / (4 - 3.5) over k=4,8,12, uncapped above; certificates below 0.25 are
-    reported and scored zero
+    mean over k=4,8,12 of log10 progress from the triangle gap (4-0.25) to a wave-1 score-one
+    bound of 3.0, measured in distance to the two-qubit value 0.25 and left uncapped; 3.0 is an
+    evaluator target the 36-point pairing grid does not reach, not a published NPA-2 number;
+    certificates below 0.25 are reported and scored zero
 citations:
   - id: arxiv:0711.3362
     title: "Brunner and Gisin, Partial list of bipartite Bell inequalities with four binary settings"
@@ -36,11 +39,11 @@ invariants:
   - malformed submissions score zero and never raise out of the evaluator
 known_shortcuts: >-
   A 36-point grid over A/B pairings and signs finds the catalog SOS on 2 of 36 points
-  (bound 3.5, score 1.0) and fails the identity on the rest. The grid reaches the
-  reference and does not exceed it. Recalling I3322 NPA numbers is worth nothing.
+  (bound 3.5, log-score about 0.46) and fails the identity on the rest. The grid does
+  not reach the score-one bound 3.0. Recalling I3322 NPA numbers is worth nothing.
   Degenerate floats, negative weights, pool-violating words, and over-budget extras
   score zero. Dropping one CHSH block of the catalog raises the bound to 3.75 and
-  scores 0.5.
+  scores about 0.22.
 review:
   status: pending_external
   domain: pending_external_quantum_information
@@ -57,8 +60,11 @@ provenance:
 novelty_risk:
   level: medium
   rationale: >-
-    The inequality is published. The scored object is an exact certificate at a frozen subset
-    budget, which is not a table lookup.
+    BellBoundCertificate scores I3322 (and CHSH) under a free word-length budget with a
+    published NPA-2 score-one anchor. This cell is a different inequality, I_4422^{13},
+    whose extra moments must be a Hamming-weight subset of a frozen 24-word same-party
+    NPA-2 pool. The evaluator algebra is adapted from BellBoundCertificate; the functional,
+    the pool, and the score-one bound of 3.0 are not.
 lineage:
   status: complete
   builder_model_ids: ["cursor-grok-4.6"]
@@ -67,8 +73,12 @@ lineage:
   calibration_runs: []
   calibration_evidence_status: missing
   edits_triggered_by_model: >-
-    Converted from a gated I3322 NPA-4 dual. The conversion uses a different inequality and a
-    frozen Hamming-weight extra-moment pool so it does not occupy the Bell SOS identity.
+    Converted from a gated I3322 NPA-4 dual. The inline algebra, certificate parser, and
+    exact identity checker in verification/evaluator.py are adapted from
+    QuantumFoundations/BellBoundCertificate (reduce_side / canonical / dagger / multiply /
+    _fraction / _read_certificate). Review found a 36-point pairing grid saturating the
+    linear 4→3.5 scale; the scale is now logarithmic in the gap to 0.25 with score one
+    hung at 3.0, which that grid does not reach.
   shortcut_discoverer: builder_red_team
   frozen_before_eval: false
   freeze_timestamp: null

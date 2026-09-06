@@ -17,10 +17,12 @@ normalization:
   baseline: >-
     Valid proofs lengthened to the size cap by cycling I and MP. Returning them scores zero.
   reference: >-
-    Compiled natural-deduction proofs of sizes 5, 26, 35, 20. Matching them scores one.
+    Compiled natural-deduction proofs of sizes 5, 26, 35, 20. Matching them scores about 0.64
+    on the logarithmic size scale, not one.
   score: >-
-    Mean of (size_cap - n) / (size_cap - reference_size), uncapped above if a shorter proof is
-    found. Closures are not the score.
+    Mean of log(size_cap / n) / log(size_cap / target_size) with wave-1 targets 3, 14, 18, 11.
+    Uncapped above those targets. Closures are not the score. Extracting the compiled proofs
+    no longer saturates.
 citations:
   - id: doi:10.1007/BF01455823
     title: "Schönfinkel, Über die Bausteine der mathematischen Logik, Mathematische Annalen 92 (1924)"
@@ -30,11 +32,10 @@ invariants:
   - malformed proofs score zero and never raise out of the evaluator
   - Tate, Birch-Tate, FLT, and Poincaré stay gated
 known_shortcuts: >-
-  After I-first padding, a prefix of length reference_size scores 0 (last line is not the
-  theorem). Dropping only the trailing MP pad scores 0.874. Extracting the middle reference
-  block still scores 1.0; that is an on-ramp, not a frontier result. Inventing a still-shorter
-  identity than SKK would score above one on that instance. The short proofs live only under
-  verification/.
+  After I-first padding, a prefix of compiled length scores 0 (last line is not the
+  theorem). Extracting the middle compiled block scores about 0.64, not one. Inventing
+  a proof at the wave-1 target sizes (3, 14, 18, 11) would score one; shorter still
+  scores above one. The short proofs live only under verification/.
 review:
   status: pending_external
   domain: pending_external_proof_theory
@@ -62,9 +63,11 @@ lineage:
   calibration_evidence_status: missing
   edits_triggered_by_model: >-
     Converted from a gated FormalResearchProof/Tate design. Review found the reference proofs
-    labeled SHORT in the visible baseline, then as a prefix of a suffix-pad. Both were
-    hardened: short proofs live only under verification/, and the baseline proves goal→goal
-    first so a reference-length prefix is not the theorem.
+    labeled SHORT in the visible baseline, then as a prefix of a suffix-pad, then saturating
+    score one. Hardening: short proofs live only under verification/; the baseline proves
+    goal→goal first so a compiled-length prefix is not the theorem; score one is hung on
+    target sizes 3/14/18/11 with a logarithmic length scale so the compiled terms score
+    about 0.64.
   shortcut_discoverer: builder_red_team
   frozen_before_eval: false
   freeze_timestamp: null

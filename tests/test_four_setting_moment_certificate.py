@@ -62,15 +62,18 @@ class ContractTests(unittest.TestCase):
         for row in result["per_instance"]:
             self.assertEqual(row["certified_bound"], 4.0)
 
-    def test_catalog_sos_scores_one_and_stays_above_the_qubit_floor(self):
+    def test_catalog_sos_scores_below_one_on_the_log_scale(self):
         result = EVALUATOR.evaluate(REFERENCE.build_certificate)
         self.assertEqual(result["valid"], 1.0)
-        self.assertEqual(result["combined_score"], 1.0)
+        self.assertAlmostEqual(result["combined_score"], 0.461385, places=5)
+        self.assertGreater(result["combined_score"], 0.3)
+        self.assertLess(result["combined_score"], 0.8)
         for row in result["per_instance"]:
             self.assertEqual(row["certified_bound"], 3.5)
             self.assertGreaterEqual(row["certified_bound"], 0.25)
+            self.assertEqual(row["score_one_bound"], 3.0)
 
-    def test_dropping_one_chsh_block_scores_half(self):
+    def test_dropping_one_chsh_block_is_strictly_below_the_catalog(self):
         original = REFERENCE.BLOCKS
 
         def candidate(instance):
@@ -81,7 +84,8 @@ class ContractTests(unittest.TestCase):
                 REFERENCE.BLOCKS = original
 
         result = EVALUATOR.evaluate(candidate)
-        self.assertAlmostEqual(result["combined_score"], 0.5)
+        self.assertAlmostEqual(result["combined_score"], 0.222446, places=5)
+        self.assertLess(result["combined_score"], 0.3)
         for row in result["per_instance"]:
             self.assertEqual(row["certified_bound"], 3.75)
 

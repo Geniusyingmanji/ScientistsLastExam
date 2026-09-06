@@ -215,7 +215,7 @@ CHINESE_BRIEFS = {
         "对三个 n(8、11、15)已被穷举搜索证明的精确最优值的平均进度;这三个规模都是硬上限,已披露,因为超过 n=15 没有可核实的具体最好记录"),
     "Mathematics/FrozenKernelProofFrontier": (
         "四个小重言式的 Hilbert 证明项缩短;不是 Lean 或 Tate,闭包次数不是分数。",
-        "从长度帽到参考证明长度的平均进度,更短可超过 1。"),
+        "从长度帽到 wave-1 目标长度的对数进度,编译参考约 0.64,更短可超过 1。"),
     "Mathematics/HeilbronnTrianglePacking": (
         "在单位正方形内放 n 个点,让任意 3 点构成的三角形最小面积尽量大——经典的 Heilbronn 三角形问题",
         "对 Erich's Packing Center 维护的记录表的平均进度;n=8 已证明最优(硬上限,已披露),n=10、n=11、n=12 仅是最好已知记录,真实无上限"),
@@ -294,7 +294,7 @@ CHINESE_BRIEFS = {
         "提交浮点数直接判零——数值 SDP 解不是证明。"),
     "QuantumFoundations/FourSettingMomentCertificate": (
         "I_4422^13 的精确 SOS,额外矩必须是冻结 NPA2 池的 Hamming-k 子集,不是 I3322 自由选词。",
-        "从三角不等式 4 到目录 SOS 3.5 的线性进度,无上限。"),
+        "从三角不等式 4 到 wave 目标 3.0 的对数进度,目录 SOS 3.5 约 0.46,无上限。"),
     "Mathematics/NonlinearCodeRecords": (
         "在四个 A(n,d) 未闭合的参数上构造尽可能大的二元码;已发表纪录全部由非线性码持有,线性构造够不到",
         "从平凡分块重复构造到已发表纪录的平均进度,无上限;验证只是逐对汉明距离计数,与构造方法无关"),

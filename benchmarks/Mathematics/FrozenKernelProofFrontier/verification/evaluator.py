@@ -3,9 +3,14 @@
 A first-wave conversion of FormalResearchProof: small closed tautologies in a frozen
 propositional Hilbert kernel, scored by proof size. Not Lean, not mathlib, not Tate.
 Closure count is not the score. Sorry is not a tactic here because there are no tactics.
+
+Score one is hung on target sizes strictly below the compiled natural-deduction
+proofs. Matching those compiled terms therefore lands in (0.3, 0.8), not at one.
+The scale is logarithmic in length so identity (size 5 vs cap 64) does not saturate.
 """
 from __future__ import annotations
 
+import math
 from typing import Any
 
 SIZE_CAP = 64
@@ -16,22 +21,26 @@ THEOREMS = (
     {
         "name": "identity",
         "goal": ("imp", "A", "A"),
-        "reference_size": 5,
+        "compiled_size": 5,
+        "target_size": 3,
     },
     {
         "name": "conjunction_swap",
         "goal": ("imp", ("and", "A", "B"), ("and", "B", "A")),
-        "reference_size": 26,
+        "compiled_size": 26,
+        "target_size": 14,
     },
     {
         "name": "packed_composition",
         "goal": ("imp", ("and", ("imp", "A", "B"), ("and", ("imp", "B", "C"), "A")), "C"),
-        "reference_size": 35,
+        "compiled_size": 35,
+        "target_size": 18,
     },
     {
         "name": "modus_ponens_closed",
         "goal": ("imp", ("and", ("imp", "A", "B"), "A"), "B"),
-        "reference_size": 20,
+        "compiled_size": 20,
+        "target_size": 11,
     },
 )
 
@@ -119,7 +128,7 @@ def _public_instance(row: dict) -> dict:
         "size_cap": SIZE_CAP,
         "axiom_names": list(AXIOMS),
         "atoms": list(ATOMS),
-        "reference_size": row["reference_size"],
+        "target_size": row["target_size"],
     }
 
 
@@ -140,7 +149,8 @@ def evaluate(build_proofs):
             "instance_index": index,
             "name": row["name"],
             "size_cap": SIZE_CAP,
-            "reference_size": row["reference_size"],
+            "target_size": row["target_size"],
+            "compiled_size": row["compiled_size"],
         }
         try:
             if isinstance(bundle, Exception):
@@ -148,8 +158,11 @@ def evaluate(build_proofs):
             if not isinstance(bundle, dict):
                 raise ValueError("build_proofs must return a mapping of name to proof")
             size = _check_proof(bundle.get(row["name"]), row["goal"])
-            span = SIZE_CAP - row["reference_size"]
-            score = (SIZE_CAP - size) / span
+            if size >= SIZE_CAP:
+                score = 0.0
+            else:
+                span = math.log(SIZE_CAP / row["target_size"])
+                score = math.log(SIZE_CAP / size) / span
             published.update({
                 "valid": True,
                 "proof_size": size,

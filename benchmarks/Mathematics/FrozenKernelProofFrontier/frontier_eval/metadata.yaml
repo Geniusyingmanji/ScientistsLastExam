@@ -7,7 +7,7 @@ oracle_type: analytical
 score_mode: uncapped
 gpu_required: false
 eval_time_seconds: 5
-science_metric: mean_normalized_proof_size_reduction_from_the_cap_to_compiled_reference_proofs
+science_metric: mean_log_proof_size_reduction_from_the_cap_to_wave_target_sizes
 reference_baseline: valid proofs padded to the size cap by cycling I and modus ponens
-reference_sota: "compiled Hilbert proofs of sizes 5, 26, 35, 20 for the four frozen tautologies"
+reference_sota: "compiled Hilbert proofs of sizes 5, 26, 35, 20; score one hung at 3, 14, 18, 11"
 citation: "Schönfinkel, Über die Bausteine der mathematischen Logik, Math. Ann. 92 (1924), DOI 10.1007/BF01455823; Hilbert-style K/S with conjunction introduction and elimination"

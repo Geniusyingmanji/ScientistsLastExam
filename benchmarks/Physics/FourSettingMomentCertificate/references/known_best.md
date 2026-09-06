@@ -13,8 +13,9 @@ Hand exact SOS: two CHSH 2×2 replacements using four frozen BB extras
 task (`k ≥ 4`).
 
 The reference is capability-complete for a small exact SOS and deliberately not at the
-two-qubit floor 0.25. Headroom below 3.5 is which extra moments to spend the rest of
-the Hamming-weight budget on, and how to write a tighter identity.
+two-qubit floor 0.25. On the logarithmic scale it scores about 0.46. Score one is hung
+at bound 3.0, which the 36-point pairing grid does not prove. Headroom below 3.5 is
+which extra moments to spend the rest of the Hamming-weight budget on.
 
 ## Baseline — `solution.py`
 
@@ -23,7 +24,7 @@ the Hamming-weight budget on, and how to write a tighter identity.
 | triangle bound | 4 | 4 | 4 | |
 | triangle score | 0 | 0 | 0 | **0** |
 | catalog SOS | 3.5 | 3.5 | 3.5 | |
-| catalog score | 1 | 1 | 1 | **1** |
+| catalog log-score | 0.461 | 0.461 | 0.461 | **0.461** |
 
 The baseline is the triangle inequality written as squares over the NPA-1 basis. It
 uses no extra moments.
@@ -33,29 +34,29 @@ uses no extra moments.
 | ablation | bound | combined_score | what was removed |
 |---|---:|---:|---|
 | triangle, no extras | 4.00 | 0.000 | all extra-moment SOS |
-| one CHSH block (two BB extras) | 3.75 | **0.500** | the second block |
-| two CHSH blocks (catalog) | 3.50 | 1.000 | — |
+| one CHSH block (two BB extras) | 3.75 | **0.222** | the second block |
+| two CHSH blocks (catalog) | 3.50 | 0.461 | — |
 | below two-qubit 0.25 | — | 0 (reported) | not rewarded |
 
-Dropping either CHSH block of the catalog raises the bound by 0.25 and halves the
-score. The extras are doing the work.
+Dropping either CHSH block of the catalog raises the bound by 0.25 and drops the
+log-score from 0.461 to 0.222. The extras are doing the work.
 
 ## Shortcut probe
 
 A 36-point grid over the three perfect matchings of four A settings, the three of
 four B settings, zip vs cross pairing, and two sign patterns. Two of 36 geometries
-are valid and both score **1.0** (bound 3.5); they are the catalog pairing and its
+are valid and both score **0.461** (bound 3.5); they are the catalog pairing and its
 sign-matched twin. The other 34 fail the operator identity (score 0).
 
-The grid reaches the reference and does not exceed it. Beating 3.5 requires a
-different SOS, not another pairing from this grid. Recalling I3322 NPA numbers is
-worth nothing: the functional is different.
+The grid reaches the reference and does not reach the score-one bound 3.0. Beating
+3.5 requires a different SOS, not another pairing from this grid. Recalling I3322
+NPA numbers is worth nothing: the functional is different.
 
 ## Model draws
 
 Not run. No frontier calibration on a clean tree. A searcher that enumerates the
-36-point CHSH-block grid would hit 1.0; that is disclosed rather than hidden. The
-untouched part of the scale is below 3.5.
+36-point CHSH-block grid would hit 0.461, not 1.0. The untouched part of the scale
+is below 3.5, toward the wave-1 target 3.0.
 
 ## Construction errors
 

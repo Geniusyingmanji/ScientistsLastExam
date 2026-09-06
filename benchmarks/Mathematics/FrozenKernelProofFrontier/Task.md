@@ -15,18 +15,19 @@ atoms `A`, `B`, `C`. The only axioms are schemas `K`, `S`, `ANDI`, `ANDEL`,
 
 Four closed tautologies, all library-ready and not number-theoretic:
 
-| name | theorem | reference size |
-|---|---|---:|
-| `identity` | `A → A` | 5 |
-| `conjunction_swap` | `(A ∧ B) → (B ∧ A)` | 26 |
-| `packed_composition` | `((A→B) ∧ ((B→C) ∧ A)) → C` | 35 |
-| `modus_ponens_closed` | `((A→B) ∧ A) → B` | 20 |
+| name | theorem | compiled size | score-one size |
+|---|---|---:|---:|
+| `identity` | `A → A` | 5 | 3 |
+| `conjunction_swap` | `(A ∧ B) → (B ∧ A)` | 26 | 14 |
+| `packed_composition` | `((A→B) ∧ ((B→C) ∧ A)) → C` | 35 | 18 |
+| `modus_ponens_closed` | `((A→B) ∧ A) → B` | 20 | 11 |
 
 The shipped baseline is a valid proof of each, length 64. It starts by proving
 `goal → goal`, then a longer derivation, then repeated MP so extra lines stay in
-the last line's dependency cone. The first `reference_size` lines are not a proof
-of the theorem. Returning the baseline scores zero. Shorter valid proofs score
-more. A proof shorter than the reference scores above one.
+the last line's dependency cone. A compiled-size prefix is not a proof of the
+theorem. Returning the baseline scores zero. Score one is hung at target sizes
+3, 14, 18, 11. The compiled terms score about 0.64. Shorter than the target
+scores above one.
 
 ## Your task
 
@@ -44,7 +45,7 @@ def build_proofs(problem):
 | `size_cap` | 64 |
 | `axiom_names` | `["K", "S", "ANDI", "ANDEL", "ANDER"]` |
 | `atoms` | `["A", "B", "C"]` |
-| `theorems` | list of `{name, theorem, size_cap, axiom_names, atoms, reference_size}` |
+| `theorems` | list of `{name, theorem, size_cap, axiom_names, atoms, target_size}` |
 
 Each `theorem` is a nested list: an atom, or `["imp", left, right]`, or
 `["and", left, right]`.
@@ -69,13 +70,14 @@ ANDI is `X → (Y → (X ∧ Y))`. ANDEL / ANDER project a conjunction.
 
 ## Scoring
 
-For a valid proof of size `n` and reference size `r`,
+For a valid proof of size `n` and wave-1 target size `t`,
 
 ```text
-(size_cap - n) / (size_cap - r)
+log(size_cap / n) / log(size_cap / t)
 ```
 
-Mean over the four theorems. Invalid proofs score zero on that theorem.
+Mean over the four theorems. Invalid proofs score zero on that theorem. Score one
+is hung at `t ∈ {3, 14, 18, 11}`. The compiled terms (5, 26, 35, 20) land near 0.64.
 
 ## Difficulty ladder
 
@@ -84,12 +86,11 @@ Measured on this package:
 | ablation | combined_score |
 |---|---:|
 | baseline, length 64 | 0.000 |
-| drop trailing MP only (keep I plus the inner derivation) | 0.874 |
-| hidden reference proofs | 1.000 |
-| take the first `reference_size` lines of the baseline | 0.000 |
+| hidden compiled proofs | ~0.641 |
+| take a compiled-size prefix of the baseline | 0.000 |
 
-The inner derivation is not a prefix. Extracting it still scores one; that is a
-known on-ramp, not a frontier result.
+Extracting the compiled block no longer saturates. Shorter than the target sizes
+scores above one.
 
 ## Tools and scope
 

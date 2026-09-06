@@ -8,12 +8,16 @@ Hamming-weight subset of a frozen 24-word NPA-2 same-party pool; free words are 
 A certificate is an exact rational sum of squares for beta * I - B. Floats are rejected,
 not rounded. The evaluator never solves an SDP.
 
-Scoring is linear from the triangle bound 4 (score 0) to a hand catalog SOS at 7/2
-(score 1), uncapped above. A certificate below the two-qubit value 0.25 is reported
-rather than scored.
+Scoring is logarithmic in the gap to the two-qubit value 0.25, matching
+BellBoundCertificate: the triangle bound 4 scores zero, and score one is hung at
+certified bound 3.0. That target is a wave-1 evaluator anchor, not a published
+NPA-2 number. The catalog SOS at 7/2 and the 36-point pairing grid both stop at
+3.5 and therefore land below one. A certificate below 0.25 is reported rather
+than scored.
 """
 from __future__ import annotations
 
+import math
 from fractions import Fraction
 
 
@@ -202,18 +206,24 @@ def certified_bound(basis, weights, vectors, instance):
 
 
 def _instance_score(instance, bound):
-    """Linear progress from the triangle bound to the catalog SOS, uncapped above.
+    """Logarithmic in the distance to the two-qubit value; uncapped above.
 
-    There is no published NPA-2 number for this functional that this package independently
-    recomputed, so the target is a hand exact SOS, not a recalled I3322 table. Certificates
-    below the two-qubit value 0.25 are reported rather than scored.
+    A linear ratio against the catalog SOS at 7/2 compressed the open region into
+    the last step of a 36-point pairing grid. Halving the remaining gap to 0.25 is
+    worth the same wherever it happens, which is the only scale on which 4 → 3.5
+    and 3.5 → 3.0 are comparable. Score one is hung at 3.0, which that grid does
+    not reach. There is still no independently recomputed NPA-2 number for this
+    functional; 3.0 is a wave-1 evaluator target, not a recalled I3322 table.
     """
     quantum = instance["quantum_value"]
-    if float(bound) < quantum:
+    gap = float(bound) - quantum
+    if gap < 0.0:
         return 0.0, True
-    span = instance["easy_bound"] - instance["target_bound"]
-    progress = (instance["easy_bound"] - float(bound)) / span
-    return max(0.0, progress), False
+    easy_gap = instance["easy_bound"] - quantum
+    target_gap = instance["target_bound"] - quantum
+    span = math.log10(easy_gap) - math.log10(target_gap)
+    achieved = math.log10(easy_gap) - math.log10(max(gap, target_gap * 1e-9))
+    return max(0.0, achieved / span), False
 
 
 # I_4422^{13} in Collins-Gisin form, Brunner and Gisin arXiv:0711.3362 Appendix A.
@@ -238,6 +248,9 @@ MOMENT_POOL = (
 I4422_QUANTUM = 0.25
 I4422_TRIANGLE = 4.0
 I4422_CATALOG = 3.5
+# Score one is hung here. The catalog SOS and the 36-point pairing grid prove 3.5
+# and stop; 3.0 is not a published NPA-2 value for this functional.
+I4422_SCORE_ONE = 3.0
 
 
 def _i4422(name, extra_budget):
@@ -252,7 +265,8 @@ def _i4422(name, extra_budget):
         "max_basis": 9 + extra_budget,
         "quantum_value": I4422_QUANTUM,
         "easy_bound": I4422_TRIANGLE,
-        "target_bound": I4422_CATALOG,
+        "catalog_bound": I4422_CATALOG,
+        "target_bound": I4422_SCORE_ONE,
     }
 
 
@@ -280,6 +294,8 @@ def evaluate(build_certificate):
             "extra_budget": instance["extra_budget"],
             "basis_budget": instance["max_basis"],
             "free_bound": instance["easy_bound"],
+            "catalog_sos_bound": instance["catalog_bound"],
+            "score_one_bound": instance["target_bound"],
             "published_target_bound": instance["target_bound"],
             "best_known_quantum_value": instance["quantum_value"],
         }
@@ -351,6 +367,8 @@ def _public_instance(instance):
         "max_numerator": MAX_NUMERATOR,
         "max_denominator": MAX_DENOMINATOR,
         "free_bound": instance["easy_bound"],
+        "catalog_sos_bound": instance["catalog_bound"],
+        "score_one_bound": instance["target_bound"],
         "published_target_bound": instance["target_bound"],
         "best_known_quantum_value": instance["quantum_value"],
     }

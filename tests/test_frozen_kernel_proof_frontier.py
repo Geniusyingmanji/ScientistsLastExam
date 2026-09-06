@@ -30,10 +30,12 @@ class FrozenKernelTests(unittest.TestCase):
         for row in result["per_instance"]:
             self.assertEqual(row["proof_size"], EVALUATOR.SIZE_CAP)
 
-    def test_reference_scores_one(self):
+    def test_reference_scores_below_one_on_the_log_size_scale(self):
         result = EVALUATOR.evaluate(REFERENCE.build_proofs)
         self.assertEqual(result["valid"], 1.0)
-        self.assertEqual(result["combined_score"], 1.0)
+        self.assertAlmostEqual(result["combined_score"], 0.640515, places=5)
+        self.assertGreater(result["combined_score"], 0.3)
+        self.assertLess(result["combined_score"], 0.8)
 
     def test_visible_baseline_does_not_name_the_short_proofs(self):
         source = (TASK / "solution.py").read_text(encoding="utf-8")
@@ -41,11 +43,13 @@ class FrozenKernelTests(unittest.TestCase):
         self.assertNotIn("_pad", source)
 
     def test_a_reference_length_prefix_of_the_baseline_is_not_the_theorem(self):
-        """I-first padding: the first reference_size lines prove goal→goal, not the goal."""
+        """I-first padding: a compiled-size prefix proves goal→goal, not the goal."""
+
+        compiled = {row["name"]: row["compiled_size"] for row in EVALUATOR.THEOREMS}
 
         def candidate(problem):
             proofs = BASELINE.build_proofs(problem)
-            return {row["name"]: proofs[row["name"]][: row["reference_size"]]
+            return {row["name"]: proofs[row["name"]][: compiled[row["name"]]]
                     for row in problem["theorems"]}
 
         result = EVALUATOR.evaluate(candidate)
@@ -60,8 +64,10 @@ class FrozenKernelTests(unittest.TestCase):
 
         result = EVALUATOR.evaluate(candidate)
         self.assertGreater(result["combined_score"], 0.0)
+        self.assertLess(result["combined_score"], 0.3)
         by_name = {row["name"]: row for row in result["per_instance"]}
-        self.assertEqual(by_name["identity"]["instance_score"], 1.0)
+        self.assertAlmostEqual(by_name["identity"]["instance_score"], 0.833078, places=5)
+        self.assertLess(by_name["identity"]["instance_score"], 1.0)
 
     def test_malformed_submissions_score_zero_without_raising(self):
         identity = {"axiom": "K", "subst": {"X": "A", "Y": "A"}}
