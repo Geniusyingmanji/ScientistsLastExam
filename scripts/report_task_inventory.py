@@ -53,6 +53,7 @@ CHINESE_NAMES = {
     "Electrochemistry/ElectrolyteConductivityDesign": "电解液电导率设计",
     "EvidenceSynthesis/ProspectiveMetaAnalysis": "前瞻荟萃分析",
     "Exoplanets/RadialVelocityPlanets": "视向速度找行星",
+    "Physics/CriticalPhenomenaLab": "有限尺寸临界现象发现",
     "Geophysics/GravityInversion": "重力反演",
     "Gravitation/PTAHellingsDowns": "脉冲星阵四极相关",
     "HeatTransfer/ConvectionDiffusionOpt": "对流扩散辨识与加热器设计",
@@ -174,6 +175,9 @@ CHINESE_BRIEFS = {
     "Exoplanets/RadialVelocityPlanets": (
         "从视向速度序列里指认哪些周期是行星:自转、谐波与采样别名不是行星",
         "行星恢复;误发现率与别名拒答分开报告"),
+    "Physics/CriticalPhenomenaLab": (
+        "主动选择有限尺寸实验,区分连续/一级相变与 crossover 或 BKT-like 世界",
+        "机制与有限尺寸外推;误发现、拒答与覆盖率分开报告"),
     "Geophysics/GravityInversion": (
         "主动布设重力测线,反演地下密度体的位置与强度;声明的源族不支持时拒答",
         "源恢复 + 外场校验 + 拒答;许多密度分布产生相似地表场"),
