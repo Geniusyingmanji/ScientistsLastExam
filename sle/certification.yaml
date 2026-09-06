@@ -10,6 +10,13 @@ policy:
   statuses: [certified, candidate, quarantined]
 
 tasks:
+  Physics/CriticalPhenomenaLab:
+    status: candidate
+    reason: Active finite-size-scaling discovery over continuous, first-order, crossover and BKT-like worlds; retained as a candidate pending external statistical-physics review and independent Monte Carlo replication.
+    citation_ids:
+      - doi:10.1103/PhysRevB.30.1477
+      - doi:10.1038/NPHYS4037
+      - doi:10.1103/PhysRevLett.132.207301
   Mathematics/NarrowAdmissibleTuple:
     status: candidate
     reason: exact admissibility/diameter oracle scored uncapped against Polymath8b's own published narrow-admissible-tuple diameters (246 at k=50, direct primary-source quote; 270 at k=54, secondary-source only, disclosed); no frontier searcher draw yet, pending external number-theory review

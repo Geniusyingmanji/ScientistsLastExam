@@ -92,30 +92,10 @@ two query IDs produced in that same world.
 - Crossover and BKT-like worlds reward calibrated refusal. Claiming a power-law critical mechanism
   in either is a false discovery.
 
-The laboratory is a reduced-order finite-size-scaling emulator with deterministic finite-sampling
-noise. It is designed to test critical-phenomena reasoning; it is not evidence for a particular
-material or a replacement for high-fidelity Monte Carlo and experiment.
-
 ## Rules
 
 - Only edit `solution.py`; preserve `discover_critical_behavior`.
 - Deterministic CPU code using Python, NumPy, SciPy and the standard library only.
 - Do not assume hidden-world order, transition family, critical parameters or noise realization.
 - No network or process creation. Do not read `verification/` or `frontier_eval/`.
-
-## Scientific references
-
-- Binder and Landau, *Finite-size scaling at first-order phase transitions*, Physical Review B 30,
-  1477 (1984), DOI `10.1103/PhysRevB.30.1477`.
-- van Nieuwenburg, Liu and Huber, *Learning phase transitions by confusion*, Nature Physics 13,
-  435–439 (2017), DOI `10.1038/NPHYS4037`.
-- Arnold et al., *Mapping Out Phase Diagrams with Generative Classifiers*, Physical Review Letters
-  132, 207301 (2024), DOI `10.1103/PhysRevLett.132.207301`.
-
-## Provenance and contamination note
-
-The laboratory is procedural repository-local code and does not bundle an external dataset or
-restricted source. The public emulator family and interface are visible to candidates, but hidden
-world parameters, split membership and evaluator-only sealed-size checks are not. Results should be
-treated as benchmark evidence rather than claims about a particular material; certification still
-requires server-held families and independent statistical-physics review.
+- `sle.contract_lint` is available for checking the submission shape and costs no experiment budget.
