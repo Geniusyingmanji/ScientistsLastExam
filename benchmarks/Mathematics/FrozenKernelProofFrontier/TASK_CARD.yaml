@@ -1,0 +1,86 @@
+schema_version: 2
+scientific_question: >-
+  In a frozen propositional Hilbert kernel, can one shorten valid proofs of four small closed
+  tautologies below a cap-length baseline, without Lean, mathlib, or Tate-class statements?
+artifact: >-
+  Candidate code implementing build_proofs(problem), returning one Hilbert proof per theorem
+  from the allowlisted axioms and modus ponens.
+oracle:
+  model: >-
+    A task-local Hilbert checker instantiates K, S, ANDI, ANDEL, ANDER and checks modus ponens
+    by exact formula equality. Sorry does not exist.
+  feasibility: >-
+    Non-empty proofs no longer than the size cap; axiom names on the allowlist; mp indices in
+    range and matching; last line equal to the theorem.
+  deterministic: true
+normalization:
+  baseline: >-
+    Valid proofs lengthened to the size cap by cycling I and MP. Returning them scores zero.
+  reference: >-
+    Compiled natural-deduction proofs of sizes 5, 26, 35, 20. Matching them scores one.
+  score: >-
+    Mean of (size_cap - n) / (size_cap - reference_size), uncapped above if a shorter proof is
+    found. Closures are not the score.
+citations:
+  - id: doi:10.1007/BF01455823
+    title: "Schönfinkel, Über die Bausteine der mathematischen Logik, Mathematische Annalen 92 (1924)"
+invariants:
+  - the axiom allowlist is frozen; no extra axioms, no sorry
+  - Lean and mathlib are not in this repository and are not this oracle
+  - malformed proofs score zero and never raise out of the evaluator
+  - Tate, Birch-Tate, FLT, and Poincaré stay gated
+known_shortcuts: >-
+  After I-first padding, a prefix of length reference_size scores 0 (last line is not the
+  theorem). Dropping only the trailing MP pad scores 0.874. Extracting the middle reference
+  block still scores 1.0; that is an on-ramp, not a frontier result. Inventing a still-shorter
+  identity than SKK would score above one on that instance. The short proofs live only under
+  verification/.
+review:
+  status: pending_external
+  domain: pending_external_proof_theory
+  evaluator_security: >-
+    Proof length is capped at 64 lines; formula trees mention only three atoms and two
+    connectives.
+provenance:
+  class: known_answer
+  target_source: >-
+    Four closed tautologies in a frozen Hilbert kernel compiled from natural deduction via the
+    deduction theorem; reference sizes counted from those compiled terms.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: completed_2026_09_06_kernel_replay
+novelty_risk:
+  level: medium
+  rationale: >-
+    SKK is textbook. The other three proofs are compiled, not recalled table entries, and the
+    score is length rather than a boolean.
+lineage:
+  status: complete
+  builder_model_ids: ["cursor-grok-4.6"]
+  builder_scaffolds: ["cursor"]
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    Converted from a gated FormalResearchProof/Tate design. Review found the reference proofs
+    labeled SHORT in the visible baseline, then as a prefix of a suffix-pad. Both were
+    hardened: short proofs live only under verification/, and the baseline proves goal→goal
+    first so a reference-length prefix is not the theorem.
+  shortcut_discoverer: builder_red_team
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: cursor-grok-4.6
+  reviewer_domain: pending_external_proof_theory
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: >-
+    Reference proofs were replayed by the checker; last lines match the four theorems.
+  independent_recomputation_status: >-
+    Proof sizes 5/26/35/20 and the padded baseline of length 64 are reproducible from
+    verification/ and solution.py.

@@ -47,6 +47,9 @@ RECORDED_LINEAGE = {
     "Mathematics/HeavyTailEvidence",
     "Mathematics/NarrowAdmissibleTuple",
     "Superconductivity/SuperconductorTcRecord",
+    "DiscreteOptimization/MiplibPrimalIncumbent",
+    "QuantumFoundations/FourSettingMomentCertificate",
+    "Mathematics/FrozenKernelProofFrontier",
 }
 
 

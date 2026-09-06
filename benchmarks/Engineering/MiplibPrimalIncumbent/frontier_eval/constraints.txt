@@ -1,0 +1,8 @@
+1) Only edit solution.py. Keep improve_primal(problem).
+2) Return a dense list of n_variables Python integers in frozen MPS column order. Floats,
+   booleans, and sparse mappings are rejected, not rounded.
+3) problem contains name, sense, n_variables, n_constraints, variable_names, objective,
+   lower_bounds, row_senses, rhs, row_ptr, column_indices, coefficients, mps_sha256,
+   constraint_abs_tol, constraint_rel_tol, and integrality_tol.
+4) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read
+   verification/ or frontier_eval/.

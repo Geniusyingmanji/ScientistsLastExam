@@ -1,0 +1,25 @@
+{
+  "anchors": [
+    {
+      "name": "gen-ip002_opt",
+      "value": -4783.733392,
+      "source_url": "https://miplib.zib.de/",
+      "derivation": "MIPLIB 2017 solufile v36 line `=opt= gen-ip002 -4783.733392`, retrieved 2026-09-06.",
+      "retrieved_on": "2026-09-06"
+    },
+    {
+      "name": "gen-ip021_opt",
+      "value": 2361.45419519,
+      "source_url": "https://miplib.zib.de/",
+      "derivation": "MIPLIB 2017 solufile v36 line `=opt= gen-ip021 2361.45419519`, retrieved 2026-09-06.",
+      "retrieved_on": "2026-09-06"
+    },
+    {
+      "name": "gen-ip054_opt",
+      "value": 6840.96564179,
+      "source_url": "https://miplib.zib.de/",
+      "derivation": "MIPLIB 2017 solufile v36 line `=opt= gen-ip054 6840.96564179`, retrieved 2026-09-06.",
+      "retrieved_on": "2026-09-06"
+    }
+  ]
+}

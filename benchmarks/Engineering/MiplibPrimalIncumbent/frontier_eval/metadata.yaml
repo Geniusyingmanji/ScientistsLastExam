@@ -1,0 +1,13 @@
+domain: DiscreteOptimization
+task: MiplibPrimalIncumbent
+scientific_role: optimization
+difficulty: hard
+tier: T2
+oracle_type: analytical
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 8
+science_metric: mean_clipped_progress_from_a_weak_feasible_integer_to_the_dated_miplib_optimum
+reference_baseline: origin on gen-ip002; two small-magnitude feasible integers on gen-ip021 and gen-ip054
+reference_sota: "MIPLIB 2017 solufile v36 proven optima for gen-ip002, gen-ip021, gen-ip054"
+citation: "Gleixner et al., MIPLIB 2017, Mathematical Programming Computation 2021, DOI 10.1007/s12532-020-00194-3"

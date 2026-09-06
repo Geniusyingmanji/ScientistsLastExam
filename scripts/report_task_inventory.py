@@ -64,6 +64,7 @@ CHINESE_NAMES = {
     "Mathematics/CapSet": "Cap Set 构造",
     "Mathematics/CapSetFrontier": "Cap Set 未证明维度",
     "Mathematics/ErdosMinimumOverlap": "Erdős 最小重叠划分",
+    "Mathematics/FrozenKernelProofFrontier": "冻结内核证明压缩",
     "Mathematics/HeilbronnTrianglePacking": "Heilbronn 三角形点集",
     "Mathematics/HeavyTailEvidence": "重尾证据判别",
     "Mathematics/KissingNumber": "接触数构造",
@@ -79,7 +80,9 @@ CHINESE_NAMES = {
     "Turbulence/WallClosureDiscovery": "壁面湍流闭合律发现",
     "Exoplanets/TransmissionSpectrumSpecies": "透射光谱分子判定",
     "DiscreteGeometry/SpherePackingCertificate": "球堆积上界证书",
+    "DiscreteOptimization/MiplibPrimalIncumbent": "MIPLIB 原可行解纪录",
     "QuantumFoundations/BellBoundCertificate": "贝尔不等式上界证书",
+    "QuantumFoundations/FourSettingMomentCertificate": "四设置矩子集证书",
     "Mathematics/NonlinearCodeRecords": "非线性码规模纪录",
     "MedicinalChemistry/MolecularLeadOptimization": "分子先导组合优化",
     "MolecularDynamics/ForceFieldCalibration": "力场假设判别",
@@ -210,6 +213,9 @@ CHINESE_BRIEFS = {
     "Mathematics/ErdosMinimumOverlap": (
         "把 {1,...,2n} 分成两个等大小的集合,让某个差值出现的最多次数尽量小——Erdős 最小重叠问题,渐近常数在 2025-2026 年被 AlphaEvolve 等多次刷新",
         "对三个 n(8、11、15)已被穷举搜索证明的精确最优值的平均进度;这三个规模都是硬上限,已披露,因为超过 n=15 没有可核实的具体最好记录"),
+    "Mathematics/FrozenKernelProofFrontier": (
+        "四个小重言式的 Hilbert 证明项缩短;不是 Lean 或 Tate,闭包次数不是分数。",
+        "从长度帽到参考证明长度的平均进度,更短可超过 1。"),
     "Mathematics/HeilbronnTrianglePacking": (
         "在单位正方形内放 n 个点,让任意 3 点构成的三角形最小面积尽量大——经典的 Heilbronn 三角形问题",
         "对 Erich's Packing Center 维护的记录表的平均进度;n=8 已证明最优(硬上限,已披露),n=10、n=11、n=12 仅是最好已知记录,真实无上限"),
@@ -276,6 +282,9 @@ CHINESE_BRIEFS = {
         "1.0 是已发表的 Cohn-Elkies 数值界,而与之等强的精确有理证书似乎在任何维度都还没有人发表过。"
         "有理数精确验证,提交浮点判零:网格线性规划这个教科书方法会给出假界(16 阶时 8 维报 0.06237,"
         "低于 E8 格实际达到的 0.0625)。"),
+    "DiscreteOptimization/MiplibPrimalIncumbent": (
+        "三个冻结 MIPLIB 整数规划上改进弱可行整数赋值;官方 checker 只查原可行,不是排列调度。",
+        "已证明最优故分数夹到 1。从弱可行点到 solufile v36 最优的平均进度。"),
     "QuantumFoundations/BellBoundCertificate": (
         "为贝尔泛函的量子最大值给出一份可精确验证的上界证明:提交一组基词与若干加权平方,"
         "使它们的和恰好等于 beta*I - B。CHSH 的答案是无理数 2√2,只能逼近;I3322 的量子值至今未知,"
@@ -283,6 +292,9 @@ CHINESE_BRIEFS = {
         "四个实例(CHSH 与三种基词预算下的 I3322)取均值,不设上限。分数是所证界到已知量子值距离的"
         "对数进步:免费的层级 1 界记 0,已发表的层级 2 界记 1,超过则大于 1。有理数精确验证,"
         "提交浮点数直接判零——数值 SDP 解不是证明。"),
+    "QuantumFoundations/FourSettingMomentCertificate": (
+        "I_4422^13 的精确 SOS,额外矩必须是冻结 NPA2 池的 Hamming-k 子集,不是 I3322 自由选词。",
+        "从三角不等式 4 到目录 SOS 3.5 的线性进度,无上限。"),
     "Mathematics/NonlinearCodeRecords": (
         "在四个 A(n,d) 未闭合的参数上构造尽可能大的二元码;已发表纪录全部由非线性码持有,线性构造够不到",
         "从平凡分块重复构造到已发表纪录的平均进度,无上限;验证只是逐对汉明距离计数,与构造方法无关"),
@@ -394,6 +406,7 @@ ANALOGUE_TITLES = OrderedDict([
     ("engineering_design", "工程设计(engineering_design)"),
     ("combinatorial", "开放组合纪录(combinatorial,无上限)"),
     ("molecular_design", "分子与大分子设计(molecular_design)"),
+    ("certificate_bound", "可验证上界证书(certificate_bound)"),
 ])
 KIND_TITLES = OrderedDict([
     ("formula", "公式(formula)"),

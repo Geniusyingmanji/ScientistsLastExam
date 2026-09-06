@@ -588,6 +588,32 @@ tasks:
       known quantum value) and eighteen degenerate submissions score zero; no frontier searcher
       draw yet, pending external quantum-information review
     citation_ids: [arxiv:2607.14755, arxiv:2608.29734, doi:10.1103/PhysRevLett.98.010401, doi:10.1103/PhysRevLett.23.880]
+  DiscreteOptimization/MiplibPrimalIncumbent:
+    status: candidate
+    reason: >-
+      primal-only integer assignments on three hash-frozen MIPLIB 2017 all-integer models, scored
+      as clipped progress from a weak feasible point to the dated solufile-v36 proven optimum;
+      duals are never consulted, no live download and no .sol files; this is not permutation
+      flow-shop scheduling; no frontier searcher draw yet, pending external operations-research
+      review
+    citation_ids: [doi:10.1007/s12532-020-00194-3, web:miplib2017-v36]
+  QuantumFoundations/FourSettingMomentCertificate:
+    status: candidate
+    reason: >-
+      exact rational SOS certificates for Brunner-Gisin I_4422^{13} whose extra moments are a
+      Hamming-weight subset of a frozen 24-word NPA-2 pool, scored uncapped by linear progress
+      from the triangle bound 4 to a hand catalog SOS at 7/2; not I3322 and not a free
+      word-budget SOS; classical bound 0 by enumeration of 256 strategies; floats rejected;
+      no frontier searcher draw yet, pending external quantum-information review
+    citation_ids: [arxiv:0711.3362, arxiv:1811.11820, doi:10.1103/PhysRevLett.98.010401]
+  Mathematics/FrozenKernelProofFrontier:
+    status: candidate
+    reason: >-
+      proof-size search for four small closed tautologies in a frozen propositional Hilbert
+      kernel (K, S, ANDI, ANDEL, ANDER, modus ponens only); scored uncapped by length against a
+      cap-length baseline; not Lean, not mathlib, not Tate; closures are not the score; no
+      frontier searcher draw yet, pending external proof-theory review
+    citation_ids: [doi:10.1007/BF01455823]
   Mathematics/NonlinearCodeRecords:
     status: candidate
     reason: >-

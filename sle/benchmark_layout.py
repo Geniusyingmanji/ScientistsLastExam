@@ -74,6 +74,7 @@ DISCIPLINE_DOMAINS: dict[str, tuple[str, ...]] = {
         "Acoustics",
         "Astrodynamics",
         "ControlTheory",
+        "DiscreteOptimization",
         "FluidDynamics",
         "FluidMechanics",
         "Geomechanics",
