@@ -15,7 +15,7 @@ Truth-blind: it reads only the published modes and searches a catalog of rationa
 
 | metric | value |
 |---|---|
-| combined score | **0.75** |
+| combined score | **0.749867** |
 | instances with a valid certificate | 4 / 4 |
 | shear / pair / three proven alpha | 1/2 |
 | mid proven alpha | 3/4 |
@@ -28,5 +28,5 @@ The identity Gram at `alpha = 1/10000`, which is a valid common Lyapunov functio
 
 | metric | value |
 |---|---|
-| combined score | **0.000133** |
+| combined score | **0.000000** |
 | instances with a valid certificate | 4 / 4 |

@@ -511,7 +511,7 @@ tasks:
       Certificate-bound cell that is not a cart-pole controller and not a Bell
       SOS identity: an exact rational common quadratic Lyapunov function proves
       a decay rate for a published switched linear plant. The identity Gram at a
-      token rate is valid and scores near zero. Candidate, not certified. No
+      token rate is valid and scores exactly zero. Candidate, not certified. No
       frontier searcher draw.
     citation_ids:
       - doi:10.1137/1.9781611970777

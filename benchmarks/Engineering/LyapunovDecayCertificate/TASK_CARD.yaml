@@ -6,9 +6,9 @@ oracle:
   feasibility: integer or [numerator, denominator] entries inside the public magnitude cap; floats, indefinite P, non-positive alpha, or a mode that violates the LMI each score that instance zero
   deterministic: true
 normalization:
-  baseline: the identity Gram at alpha = 1/10000, which is a valid common Lyapunov function on every instance and scores near zero
+  baseline: the identity Gram at alpha = 1/10000, which is a valid common Lyapunov function on every instance and scores exactly zero
   reference: a finite catalog of sheared rational quadratics, each checked exactly, taking the largest feasible catalog rate
-  score: mean of min(alpha / (3/4), 1) over four instances; the unit 3/4 is a clip, not a published record
+  score: mean of min(max(0, (alpha - 1/10000) / (3/4)), 1) over four instances; the unit 3/4 is a clip, not a published record
 citations:
 - id: doi:10.1137/1.9781611970777
   title: "Linear Matrix Inequalities in System and Control Theory"

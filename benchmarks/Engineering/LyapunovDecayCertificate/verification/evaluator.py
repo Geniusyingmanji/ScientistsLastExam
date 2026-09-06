@@ -12,8 +12,8 @@ DIFFICULTY = 1
 MAX_NUMERATOR = 10**6
 MAX_DENOMINATOR = 10**6
 # Clip scale. Not a published record: a development unit chosen so that the
-# identity certificate at a token rate scores near zero and a sheared quadratic
-# that proves alpha = 1/2 scores 2/3.
+# identity certificate at the shipped token rate scores exactly zero and a
+# sheared quadratic that proves alpha = 1/2 scores about 2/3.
 ALPHA_UNIT = Fraction(3, 4)
 
 
@@ -166,6 +166,9 @@ def certificate_holds(modes, gram, alpha):
     return True, None
 
 
+BASELINE_ALPHA = Fraction(1, 10000)
+
+
 def _score_instance(build, instance):
     published = {
         "name": instance["name"],
@@ -179,7 +182,7 @@ def _score_instance(build, instance):
         holds, bad_mode = certificate_holds(modes, gram, alpha)
         if not holds:
             raise ValueError("Vdot + alpha V is not negative semidefinite on mode %s" % bad_mode)
-        score = min(float(alpha / ALPHA_UNIT), 1.0)
+        score = min(max(0.0, float((alpha - BASELINE_ALPHA) / ALPHA_UNIT)), 1.0)
         published.update({
             "valid": True,
             "proven_alpha": [alpha.numerator, alpha.denominator],
