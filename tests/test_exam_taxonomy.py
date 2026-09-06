@@ -88,6 +88,10 @@ class ExamTaxonomyTests(unittest.TestCase):
             tax["tasks"]["MaterialsScience/QuinaryConvexHull"].get("note"),
             "quinary_hull_not_binary_xrd",
         )
+        self.assertEqual(
+            tax["tasks"]["Mathematics/HeavyTailEvidence"].get("note"),
+            "clauset_tails_not_lookelsewhere",
+        )
 
 
 if __name__ == "__main__":

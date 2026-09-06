@@ -53,6 +53,7 @@ CHINESE_NAMES = {
     "Electrochemistry/ElectrolyteConductivityDesign": "电解液电导率设计",
     "EvidenceSynthesis/ProspectiveMetaAnalysis": "前瞻荟萃分析",
     "Exoplanets/RadialVelocityPlanets": "视向速度找行星",
+    "Physics/CriticalPhenomenaLab": "有限尺寸临界现象发现",
     "Geophysics/GravityInversion": "重力反演",
     "Gravitation/PTAHellingsDowns": "脉冲星阵四极相关",
     "HeatTransfer/ConvectionDiffusionOpt": "对流扩散辨识与加热器设计",
@@ -66,6 +67,7 @@ CHINESE_NAMES = {
     "Mathematics/CapSetFrontier": "Cap Set 未证明维度",
     "Mathematics/ErdosMinimumOverlap": "Erdős 最小重叠划分",
     "Mathematics/HeilbronnTrianglePacking": "Heilbronn 三角形点集",
+    "Mathematics/HeavyTailEvidence": "重尾证据判别",
     "Mathematics/KissingNumber": "接触数构造",
     "Mathematics/NarrowAdmissibleTuple": "窄可容许素数元组",
     "Mathematics/RamseyLowerBound": "Ramsey 下界染色",
@@ -98,6 +100,7 @@ CHINESE_NAMES = {
     "PopulationGenetics/DemographicSFS": "位点频率谱人口史反演",
     "ProteinEngineering/ProteinStabilityDesign": "蛋白稳定性批次设计",
     "QuantumDynamics/HamiltonianLearning": "哈密顿量学习",
+    "QuantumControl/ActiveNoiseSpectroscopy": "主动非高斯噪声谱辨识",
     "QuantumErrorCorrection/QuantumErrorDecoder": "表面码解码器",
     "RNAEngineering/RNAEnsembleDesign": "RNA 系综设计",
     "RNAEngineering/RNAInverseDesign": "RNA 约束反折叠",
@@ -178,6 +181,9 @@ CHINESE_BRIEFS = {
     "Exoplanets/RadialVelocityPlanets": (
         "从视向速度序列里指认哪些周期是行星:自转、谐波与采样别名不是行星",
         "行星恢复;误发现率与别名拒答分开报告"),
+    "Physics/CriticalPhenomenaLab": (
+        "主动选择有限尺寸实验,区分连续/一级相变与 crossover 或 BKT-like 世界",
+        "机制与有限尺寸外推;误发现、拒答与覆盖率分开报告"),
     "Geophysics/GravityInversion": (
         "主动布设重力测线,反演地下密度体的位置与强度;声明的源族不支持时拒答",
         "源恢复 + 外场校验 + 拒答;许多密度分布产生相似地表场"),
@@ -217,6 +223,9 @@ CHINESE_BRIEFS = {
     "Mathematics/HeilbronnTrianglePacking": (
         "在单位正方形内放 n 个点,让任意 3 点构成的三角形最小面积尽量大——经典的 Heilbronn 三角形问题",
         "对 Erich's Packing Center 维护的记录表的平均进度;n=8 已证明最优(硬上限,已披露),n=10、n=11、n=12 仅是最好已知记录,真实无上限"),
+    "Mathematics/HeavyTailEvidence": (
+        "在已知 xmin 下判断样本是幂律还是对数正态;指数截断或样本过短须拒答",
+        "家族恢复 + 截断/小样本拒答;不是质量窗口的 look-elsewhere,也不是不相容常数调和"),
     "Mathematics/KissingNumber": (
         "在 9、10、12 维构造更多与中心球相切的单位球",
         "固定容差下对最好已知接触数的平均进度;无上限"),
@@ -341,6 +350,9 @@ CHINESE_BRIEFS = {
     "QuantumDynamics/HamiltonianLearning": (
         "从自旋链的少数可观测量时间演化里恢复哈密顿量参数",
         "参数恢复;误发现率与对称性不可辨识拒答分开报告"),
+    "QuantumControl/ActiveNoiseSpectroscopy": (
+        "在有限量子测量 shots 下选择 Ramsey、echo 与 CPMG 滤波序列,区分共享同一 Lorentzian 功率谱的高斯噪声与单随机电报源,恢复其切换率、方差和占据率",
+        "三参数机制恢复减不受支持宣称;密封控制外推、误发现率、拒答、尝试覆盖率与 shot 成本分列"),
     "QuantumErrorCorrection/QuantumErrorDecoder": (
         "为旋转表面码存储设计阈值以下的解码器",
         "相对最小权完美匹配的逻辑错误率对数下降;无上限"),

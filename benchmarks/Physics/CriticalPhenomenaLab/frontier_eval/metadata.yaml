@@ -1,0 +1,15 @@
+domain: Physics
+task: CriticalPhenomenaLab
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: physical_sim
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 3
+science_metric: active_finite_size_scaling_mechanism_recovery_with_refusal
+reference_baseline: one finite-size measurement followed by abstention on every world
+reference_sota: exact hidden transition descriptors with correct crossover and unsupported-family refusal
+citation: "Binder & Landau, Physical Review B 1984, DOI 10.1103/PhysRevB.30.1477"
+license: "Procedural repository-local code and generated observations; no external dataset bundled"
+pollution_note: "Public task code exposes the emulator family, while hidden world parameters and split membership remain evaluator-only; server-held families are required before certification."

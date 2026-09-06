@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "task": "Physics/CriticalPhenomenaLab",
+  "created_at": "2026-09-06",
+  "algorithm": "greedy_rewrite",
+  "proposal_budget": 3,
+  "temperature": 0.0,
+  "chat_thinking": "disabled",
+  "baseline": {
+    "combined_score": 0.0,
+    "valid": 1.0
+  },
+  "reference": {
+    "combined_score": 0.2763086,
+    "robustness_score": 0.52079975,
+    "development_false_discovery_rate": 0.0,
+    "validation_false_discovery_rate": 0.0
+  },
+  "runs": [
+    {
+      "model": "deepseek-v4-flash",
+      "seed": 17,
+      "valid_proposal_count": 3,
+      "best_score": 0.0,
+      "robustness_score": 0.0,
+      "development_false_discovery_rate": 0.0,
+      "validation_false_discovery_rate": 0.0,
+      "development_discovery_coverage": 0.0,
+      "validation_discovery_coverage": 0.0
+    },
+    {
+      "model": "deepseek-v4-pro",
+      "seed": 17,
+      "valid_proposal_count": 3,
+      "best_score": 0.1518034,
+      "robustness_score": 0.0,
+      "development_false_discovery_rate": 0.0,
+      "validation_false_discovery_rate": 0.5,
+      "development_discovery_coverage": 0.2,
+      "validation_discovery_coverage": 0.25
+    }
+  ],
+  "notes": "Summary contains no prompt, generated source, endpoint, credential, or API key. Full local run directories are intentionally not part of the contribution."
+}

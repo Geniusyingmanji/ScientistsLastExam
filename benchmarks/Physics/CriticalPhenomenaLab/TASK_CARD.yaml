@@ -1,0 +1,69 @@
+schema_version: 2
+scientific_question: Can an agent actively distinguish continuous and first-order phase transitions from smooth crossover or unsupported BKT-like behavior, and recover finite-size scaling parameters under a measurement budget?
+artifact: A transition type, thermodynamic critical temperature, continuous-transition exponents, finite-size shift, confidence, evidence lineage, or calibrated refusal.
+oracle:
+  model: deterministic reduced-order finite-size-scaling laboratory with continuous, first-order, crossover and BKT-like hidden worlds
+  feasibility: valid bounded experiment queries, finite physical parameter claims, evidence IDs from the current laboratory, and calibrated refusal
+  deterministic: true
+normalization:
+  baseline: one low-cost experiment followed by abstention on every hidden world
+  reference: exact hidden descriptors for supported worlds and correct refusal on crossover and BKT-like worlds
+  score: development mechanism recovery normalized above always-abstain; sealed-size prediction and shifted validation remain separate
+citations:
+- id: doi:10.1103/PhysRevB.30.1477
+  title: Finite-size scaling at first-order phase transitions
+- id: doi:10.1038/NPHYS4037
+  title: Learning phase transitions by confusion
+- id: doi:10.1103/PhysRevLett.132.207301
+  title: Mapping Out Phase Diagrams with Generative Classifiers
+invariants:
+- exact supported-world descriptors and correct unsupported-world refusal attain score one
+- always abstaining attains normalized score zero
+- repeated evaluation of the same candidate is deterministic
+- every accepted non-abstaining claim cites at least two immutable observations from its own world
+- overspending or malformed callback requests fail closed
+- mechanism recovery, false discovery, calibrated refusal and discovery coverage remain separately reported
+- sealed-size prediction and validation-world metrics remain evaluator-only
+known_shortcuts: The reduced-order world families are public and may be recognizable; certification requires server-held families and independent simulation.
+review:
+  domain: pending_external_statistical_physics
+  evaluator_security: automated_determinism_budget_lineage_and_bad_candidate_checks_passed
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic finite-size-scaling generator with development, shifted validation, null and misspecified worlds.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_yet_available
+  license: Procedural repository-local code and generated observations; no external dataset bundled
+  pollution_note: The emulator family is public; hidden parameters, split membership and sealed-size checks remain evaluator-only.
+novelty_risk:
+  level: medium
+  rationale: Standard finite-size-scaling methods may transfer directly to the public emulator families.
+lineage:
+  status: complete
+  builder_model_ids:
+  - openai-codex:gpt-5
+  builder_scaffolds:
+  - science-benchmark-construction
+  calibrator_model_ids:
+  - deepseek-v4-flash
+  - deepseek-v4-pro
+  calibration_runs:
+  - experiments/critical_phenomena_deepseek_calibration_2026-09-06.json
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: none
+  shortcut_discoverer: truth_blind_reference_and_deepseek_flash_pro_calibration
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: candidate_pending_review
+  author_domain: computational_science
+  reviewer_domain: pending_external_statistical_physics
+  expert_hours: null
+  red_team_rounds: 0
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: reference replayed; independent Monte Carlo recomputation pending

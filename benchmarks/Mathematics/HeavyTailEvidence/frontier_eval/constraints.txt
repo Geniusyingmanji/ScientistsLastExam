@@ -1,0 +1,4 @@
+1) Only edit solution.py. Keep synthesize_tail_evidence(problem, extra_draw).
+2) Return {"family", "alpha", "confidence", "abstain"}. `family` must be one of problem["family_names"] unless abstaining. `alpha` finite and greater than 1. `confidence` in [0,1]; `abstain` a boolean. Omit family and alpha when abstaining.
+3) extra_draw() charges one call and returns one draw from the same tail. Do not exceed problem["extra_draw_budget"]. The public sample is problem["public_sample"] with lower bound problem["xmin"].
+4) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read verification/ or frontier_eval/.

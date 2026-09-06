@@ -11,6 +11,7 @@ from scripts.audit_tasks import LINEAGE_STATUSES, _task_card_issues, audit
 # Tasks built inside this repository whose known construction history is recorded on the card.
 # Explicitly unknown inherited builder IDs remain unknown; everything else is legacy inherited.
 RECORDED_LINEAGE = {
+    "Physics/CriticalPhenomenaLab",
     "SystemsBiology/EnzymeKineticsLaw",
     "ParticlePhysics/DiscrepantMeasurements",
     "MaterialsScience/PhaseDiagramDiscovery",
@@ -34,6 +35,7 @@ RECORDED_LINEAGE = {
     "Exoplanets/TransmissionSpectrumSpecies",
     "DiscreteGeometry/SpherePackingCertificate",
     "QuantumFoundations/BellBoundCertificate",
+    "QuantumControl/ActiveNoiseSpectroscopy",
     "Mathematics/NonlinearCodeRecords",
     "Mathematics/CapSetFrontier",
     "ParticlePhysics/LookElsewhereAnomaly",
@@ -42,6 +44,7 @@ RECORDED_LINEAGE = {
     "Gravitation/PTAHellingsDowns",
     "Physics/ComplexBoseLaw",
     "MaterialsScience/QuinaryConvexHull",
+    "Mathematics/HeavyTailEvidence",
     "Mathematics/NarrowAdmissibleTuple",
     "Superconductivity/SuperconductorTcRecord",
     "Mathematics/ChowlaCosineCertificate",
