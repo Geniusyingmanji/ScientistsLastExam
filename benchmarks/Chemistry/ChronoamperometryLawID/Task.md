@@ -47,12 +47,20 @@ noise level. Overspending or malformed calls invalidate the world even when caug
 - `combined_score` is development mechanism recovery above the always-abstain
   baseline: geometric mean of the true family probability, active-parameter recovery
   (normalized by public bounds) and a sealed extrapolation of the transient to
-  t = 12 and 20 s at a sealed potential.
+  t = 12 and 20 s at a sealed potential, multiplied by an evidence-efficiency factor
+  `1 - 0.50 * budget_used / 6` on supported discoveries. Accurate identification with fewer potential steps
+  therefore retains measurable room above the three-step reference.
 - Anomalous and drift worlds score refusal only; abstaining scores one and claiming a
-  family scores zero.
-- Mechanism recovery, false discovery rate, correct refusal rate and discovery
+  family scores zero. Refusal credit is not multiplied by evidence efficiency, preventing
+  evidence-backed refusal from scoring below blind abstention.
+- Intrinsic and efficiency-adjusted mechanism recovery, evidence efficiency, false discovery rate, correct refusal rate and discovery
   coverage are reported separately; a full abstention scores exactly zero.
 - `robustness_score` repeats the audit on held-out families, parameters and failures.
+
+The aggregate efficiency diagnostics are `development_evidence_efficiency_score` and
+`heldout_evidence_efficiency_score`; per-world rows also retain
+`intrinsic_mechanism_score`, `mechanism_score`, `evidence_efficiency_score` and
+`budget_used`. Split membership and hidden truth are never candidate inputs.
 
 This is a deterministic reduced-order electroanalytical simulation, not evidence
 about any particular cell.

@@ -18,18 +18,21 @@ tail fitting and more than three steps.
 The shipped `solution.py` charges one step, splits probability evenly and guesses
 mid-range parameters: `0.000000` development and robustness. Submitting the true
 family with sharp probabilities, true active parameters and the sealed extrapolation
-scores one. Measured on 2026-09-05 the reference reaches `0.9625` development and
-`0.8817` robustness with zero false discoveries and full refusal.
+scores one only at the zero-cost ideal ceiling. Supported-world mechanism recovery is multiplied
+by `1 - 0.50 * budget_used / 6`; correct-refusal credit stays unweighted and separately reported.
+The three-step reference has evidence efficiency `0.750`. Re-measured on 2026-09-06, it reaches
+`0.721861` development and `0.661269` robustness with zero false discoveries and full refusal.
 
 ## 3. Capability comparisons and ablations
 
-Local oracle-direct ablations of the reference, measured 2026-09-05:
+Local oracle-direct ablations of the reference, measured 2026-09-05, remeasured
+2026-09-07 under evidence-efficiency weighting:
 
 | variant | development | robustness |
 |---|---:|---:|
-| full reference | 0.9625 | 0.8817 |
-| no Akaike penalty (raw chi-square selection) | 0.8757 | — |
-| chi-square gate alone disabled | 0.9625 | — |
+| full reference | 0.721861 | 0.661269 |
+| no Akaike penalty (raw chi-square selection) | 0.656793 | 0.661269 |
+| chi-square gate alone disabled | 0.721861 | 0.327936 |
 
 The freedom penalty is load-bearing (without it the three-parameter surface law beats
 the one-parameter Cottrell law on noise); the chi-square gate is redundant with the

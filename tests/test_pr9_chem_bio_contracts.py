@@ -76,6 +76,18 @@ class RoundFourPackageTests(unittest.TestCase):
 
 
 class ChronoamperometryPins(unittest.TestCase):
+    def test_reference_is_accurate_without_saturating_the_score(self):
+        task = ROOT / "benchmarks/Chemistry/ChronoamperometryLawID"
+        ev = _load(task / "verification/evaluator.py", "r4_chrono_calibration")
+        ref = _load(task / "verification/reference_solver.py", "r4_chrono_reference")
+        result = ev.evaluate(ref.identify_current_law)
+        self.assertEqual(result["valid"], 1.0)
+        self.assertGreater(result["combined_score"], 0.70)
+        self.assertLess(result["combined_score"], 0.75)
+        self.assertAlmostEqual(result["development_evidence_efficiency_score"], 0.75)
+        self.assertEqual(result["development_correct_refusal_rate"], 1.0)
+        self.assertEqual(result["development_false_discovery_rate"], 0.0)
+
     def test_padding_slots_are_free_but_active_slots_bounded(self):
         ev = _load(ROOT / "benchmarks/Chemistry/ChronoamperometryLawID"
                    "/verification/evaluator.py", "r4_chrono")

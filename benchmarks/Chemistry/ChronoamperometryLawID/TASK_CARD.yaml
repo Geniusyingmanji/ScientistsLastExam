@@ -15,7 +15,9 @@ difficulty_ladder:
 normalization:
   baseline: one step, uniform family probabilities and mid-range parameters
   reference: three steps, per-family bounded least squares with Akaike-style penalty, chi-square gate and variable-projection drift test
-  score: geometric mean of family probability, active-parameter recovery and sealed extrapolation, normalized above always abstaining
+  score: geometric mean of family probability, active-parameter recovery and sealed extrapolation,
+    multiplied by 1 - 0.50 * budget_used / 6 on supported discoveries and normalized above always
+    abstaining; refusal credit remains unweighted on its separate axis
 citations:
 - id: isbn:9780471057528
   title: "Electrochemical Methods: Fundamentals and Applications"
@@ -24,7 +26,7 @@ invariants:
 - anomalous worlds decay as t^-1/3 and fit no family within the chi-square gate
 - a full abstention scores exactly zero after normalization
 - inactive parameter slots are unconstrained; active slots respect public bounds
-known_shortcuts: Uniform probabilities with mid-range parameters score 0.000; the reference reaches 0.963/0.882 development/robustness with zero false discoveries. Removing the model-selection penalty drops the reference to 0.876. Formal clean Linux calibration and independent review remain pending.
+known_shortcuts: Uniform probabilities with mid-range parameters score 0.000; the three-step reference reaches 0.722/0.661 development/robustness after evidence-efficiency calibration, with zero false discoveries. Removing the model-selection penalty drops development to 0.657 and disabling the chi-square gate halves robustness to 0.328. Formal clean Linux calibration and independent review remain pending.
 licensing:
   task_package: repository_license_not_declared
   external_assets: none

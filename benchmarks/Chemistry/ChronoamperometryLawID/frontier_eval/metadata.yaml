@@ -7,7 +7,7 @@ oracle_type: physical_sim
 score_mode: clipped
 gpu_required: false
 eval_time_seconds: 25
-science_metric: chronoamperometric law identification with anomaly and drift refusal
+science_metric: evidence-efficient chronoamperometric law identification with anomaly and drift refusal
 reference_baseline: one potential step followed by family-blind abstention
 reference_sota: truth-blind multi-family least squares with log-slope residual tests; runnable witness, not a published SoTA claim
 citation: Bard & Faulkner, Electrochemical Methods, ISBN 9780471057528
