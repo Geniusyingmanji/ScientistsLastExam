@@ -30,7 +30,13 @@ from typing import Any, Optional
 def _expand(value: Any) -> Any:
     """Expand ``${ENV_VAR}`` references in strings using os.environ."""
     if isinstance(value, str) and value.startswith("${") and value.endswith("}"):
-        return os.environ.get(value[2:-1], "")
+        variable = value[2:-1]
+        resolved = os.environ.get(variable)
+        if not resolved:
+            raise ValueError(
+                f"required environment variable {variable} is missing or empty"
+            )
+        return resolved
     return value
 
 

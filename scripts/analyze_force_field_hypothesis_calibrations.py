@@ -23,6 +23,7 @@ from typing import Any
 
 
 from scripts.repo_paths import resolve_run_workdir  # noqa: E402
+from sle.run_verification import verify_run  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
@@ -650,6 +651,7 @@ def _load_model(label: str, relative: str) -> dict[str, Any]:
         raise ValueError("stored summary differs from report summary")
     manifest_path = workdir / "run_manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    verification = verify_run(workdir)
     checkpoint_path = workdir / "checkpoint.json"
     checkpoint = json.loads(checkpoint_path.read_text(encoding="utf-8"))
     expected_policy = (
@@ -716,6 +718,9 @@ def _load_model(label: str, relative: str) -> dict[str, Any]:
         "summary_sha256": _sha256(summary_path),
         "task_contract_sha256": manifest.get("task_contract_sha256"),
         "runtime_source_sha256": manifest.get("runtime_source_sha256"),
+        "trusted_evaluator_runtime_sha256": (
+            manifest.get("trusted_evaluator_runtime") or {}
+        ).get("fingerprint_sha256"),
         "baseline_candidate_sha256": trajectory[0]["candidate_sha256"],
         "best_program": str(relative_workdir / "best_program.py"),
         "best_program_sha256": best_hash,
@@ -812,6 +817,9 @@ def _load_model(label: str, relative: str) -> dict[str, Any]:
         == config.get("llm_condition_sha256")
         and record["task_contract_sha256"] is not None
         and record["runtime_source_sha256"] is not None
+        and record["trusted_evaluator_runtime_sha256"] is not None
+        and verification.get("trusted_evaluator_runtime_sha256")
+        == record["trusted_evaluator_runtime_sha256"]
     )
     if not record["integrity_passed"]:
         raise ValueError("force-field lineage, artifact or accounting gate failed")
@@ -835,6 +843,9 @@ def _analyze_records(
     conditions = {record["llm_condition_sha256"] for record in records.values()}
     contracts = {record["task_contract_sha256"] for record in records.values()}
     runtimes = {record["runtime_source_sha256"] for record in records.values()}
+    trusted_runtimes = {
+        record["trusted_evaluator_runtime_sha256"] for record in records.values()
+    }
     proposals = [
         event for record in records.values() for event in record["trajectory"][1:]
     ]
@@ -896,6 +907,8 @@ def _analyze_records(
         and None not in contracts
         and len(runtimes) == 1
         and None not in runtimes
+        and len(trusted_runtimes) == 1
+        and None not in trusted_runtimes
         and all(record["integrity_passed"] for record in records.values())
         and all(scan["shortcut_safe"] for scan in scans)
         and one["proposal_budget"] == 1
@@ -954,7 +967,7 @@ def _analyze_records(
     reference = calibration["truth_blind_reference"]
     baseline = calibration["weak_baseline"]
     report: dict[str, Any] = {
-        "schema_version": 1,
+        "schema_version": 2,
         "trust_status": "TRUSTED_DERIVED_EVIDENCE",
         "evidence_scope": (
             "SINGLE_RUN_SYNTHETIC_ACTIVE_FORCE_FIELD_HYPOTHESIS_CALIBRATION_"
@@ -972,6 +985,7 @@ def _analyze_records(
         "input_llm_condition_equivalent": len(conditions) == 1,
         "input_task_contract_equivalent": len(contracts) == 1,
         "input_runtime_manifest_equivalent": len(runtimes) == 1,
+        "input_trusted_evaluator_runtime_equivalent": len(trusted_runtimes) == 1,
         "task_calibration": calibration,
         "records": records,
         "proposal_hurdle_summary": {

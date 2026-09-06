@@ -150,6 +150,14 @@ class DemographicSFSAnalysisTests(unittest.TestCase):
         self.assertFalse(altered["execution_passed"])
 
         records = copy.deepcopy(self.report["records"])
+        records["normal_budget_three"]["trusted_evaluator_runtime_sha256"] = "f" * 64
+        altered = self.module._analyze_records(
+            self.report["task_calibration"], records,
+        )
+        self.assertFalse(altered["execution_passed"])
+        self.assertFalse(altered["input_trusted_evaluator_runtime_equivalent"])
+
+        records = copy.deepcopy(self.report["records"])
         event = records["blind_budget_three"]["trajectory"][1]
         event["valid"] = True
         event["failure_kind"] = None

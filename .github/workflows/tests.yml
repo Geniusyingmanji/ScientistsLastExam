@@ -4,12 +4,10 @@
 # PRs landed with zero checks, and a merge went out with five red tests because a pipe swallowed
 # pytest's exit code.
 #
-# Why the system interpreter and not actions/setup-python: the sandbox execs a /usr/bin
-# interpreter and mounts only /usr, /lib and /lib64 read-only, so packages must live where that
-# interpreter finds them. The first run of this workflow installed numpy into the toolcache Python
-# and every candidate in the sandbox died on `import numpy` - 159 failures that said nothing about
-# the code. `sudo /usr/bin/python3 -m pip install` lands in /usr/local/lib/python3.x/dist-packages,
-# inside the mount, which is also how the benchmark host is set up.
+# Why the system interpreter and not actions/setup-python: the suite runs under /usr/bin/python3,
+# and the candidate sandbox binds that exact CPython runtime, selected package entries, and their
+# resolved shared-library closure. Packages therefore have to be installed for the interpreter
+# that invokes pytest. The sandbox does not expose the rest of /usr, /lib, or /lib64.
 name: tests
 
 on:
@@ -30,8 +28,8 @@ jobs:
           sudo apt-get update -q
           sudo apt-get install -y -q bubblewrap util-linux python3-pip
           bwrap --version && flock --version
-          # Bubblewrap needs unprivileged user namespaces; make it explicit if the runner ever
-          # stops allowing them.
+          # This is only an availability probe. The test suite exercises the narrower production
+          # mount contract and will fail if the runner stops allowing unprivileged namespaces.
           bwrap --unshare-all --die-with-parent --ro-bind /usr /usr --ro-bind /lib /lib \
                 --ro-bind /lib64 /lib64 --proc /proc --dev /dev -- /usr/bin/true && echo "bwrap ok"
       - name: Python dependencies into the system interpreter

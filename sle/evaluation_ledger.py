@@ -164,8 +164,13 @@ class EvaluationLedger:
             raise ValueError("committed trajectory lacks a durable evaluation receipt")
         return receipt
 
+    def require_request_id(self, request_id: str) -> dict[str, Any]:
+        if not isinstance(request_id, str) or len(request_id) != 64:
+            raise ValueError("evaluation request id is invalid")
+        return self._load_request(request_id)
+
     def require_bound_record(self, request_id: str) -> dict[str, Any]:
-        request = self._load_request(request_id)
+        request = self.require_request_id(request_id)
         receipt = self.require_receipt_id(request_id)
         return {"request": request["request"], "receipt": receipt}
 

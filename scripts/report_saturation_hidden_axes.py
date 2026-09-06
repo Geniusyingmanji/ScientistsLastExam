@@ -31,9 +31,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from sle.evaluate import evaluate_candidate  # noqa: E402
+from sle.evaluate import evaluate_candidate, resolve_trusted_runtime  # noqa: E402
+from sle.algorithms.common import (  # noqa: E402
+    runtime_source_sha256,
+    task_package_sha256,
+)
 from sle.metric_visibility import SEARCH_VISIBLE_KEYS  # noqa: E402
 from sle.registry import find_task, list_tasks  # noqa: E402
+from sle.run_verification import verify_run  # noqa: E402
 
 # An axis is "hidden" when the searcher never receives it. Anything normalised the same way the
 # headline score is - zero at the shipped baseline, one at the reference - is comparable to it.
@@ -42,6 +47,10 @@ HIDDEN_AXIS_HINTS = ("robustness", "mechanism", "heldout", "confirmation", "refu
 
 def _best_candidate(task_id: str, runs_root: Path) -> Path | None:
     """The highest-scoring recorded program for this task, whichever cohort produced it."""
+    spec = find_task(task_id, include_uncertified=True)
+    expected_package = task_package_sha256(spec)
+    expected_source = runtime_source_sha256()
+    expected_trusted = resolve_trusted_runtime(spec.task_dir).fingerprint_sha256
     best, best_score = None, None
     for manifest in runs_root.rglob("run_manifest.json"):
         try:
@@ -50,12 +59,27 @@ def _best_candidate(task_id: str, runs_root: Path) -> Path | None:
             continue
         if document.get("task_id") != task_id:
             continue
-        program = manifest.parent / "best_program.py"
-        checkpoint = manifest.parent / "checkpoint.json"
-        if not program.is_file() or not checkpoint.is_file():
+        if (
+            document.get("task_package_sha256") != expected_package
+            or document.get("runtime_source_sha256") != expected_source
+            or (document.get("trusted_evaluator_runtime") or {}).get(
+                "fingerprint_sha256"
+            ) != expected_trusted
+        ):
             continue
         try:
-            score = json.loads(checkpoint.read_text(encoding="utf-8")).get("best_score")
+            verify_run(
+                manifest.parent,
+                expected_trusted_runtime_sha256=expected_trusted,
+            )
+        except (OSError, ValueError):
+            continue
+        program = manifest.parent / "best_program.py"
+        summary = manifest.parent / "summary.json"
+        if not program.is_file() or not summary.is_file():
+            continue
+        try:
+            score = json.loads(summary.read_text(encoding="utf-8")).get("best_score")
         except (OSError, ValueError):
             continue
         if isinstance(score, (int, float)) and (best_score is None or score > best_score):
@@ -136,7 +160,7 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.output:
         args.output.write_text(json.dumps({
-            "schema_version": 1,
+            "schema_version": 2,
             "note": "hidden axes are evaluator-only by the visibility contract, so they cannot be "
                     "read off a recorded trajectory and the candidate is scored again here",
             "scored_task_count": len(scored),

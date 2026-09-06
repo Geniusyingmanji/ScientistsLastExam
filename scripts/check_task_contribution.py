@@ -34,6 +34,7 @@ from scripts.check_evaluator_survives_bad_candidates import BAD_CANDIDATES  # no
 from scripts.check_numeric_keys_hold_numbers import offending_keys  # noqa: E402
 from sle.certification import certification_status, load_certification  # noqa: E402
 from sle.evaluate import INVALID_SCORE, evaluate_candidate  # noqa: E402
+from sle.frontier import load_frozen_wave  # noqa: E402
 from sle.registry import find_task, list_tasks  # noqa: E402
 
 DISCOVERY_AXES = (
@@ -119,6 +120,16 @@ def check_task(task_id: str, timeout_s: float = 180.0, *, skip_eval: bool = Fals
         _fail(rows, "metadata", "missing " + ", ".join(sorted(set(missing_meta))))
     else:
         _ok(rows, "metadata", spec.metadata.get("scientific_role", ""))
+
+    try:
+        wave = load_frozen_wave(spec)
+    except ValueError as exc:
+        _fail(rows, "frontier_wave", str(exc))
+    else:
+        detail = "legacy single wave" if wave is None else "%s/%s" % (
+            wave.task_family_id, wave.wave_id
+        )
+        _ok(rows, "frontier_wave", detail)
 
     role = str(spec.metadata.get("scientific_role") or "")
     task_md = spec.task_dir / "Task.md"

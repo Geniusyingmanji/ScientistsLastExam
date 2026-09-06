@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import copy
 import unittest
 from pathlib import Path
 
@@ -109,6 +110,7 @@ def _record(module, label, budget, seed, mode, reason_key, tokens):
         "run_manifest_sha256": "e" * 64,
         "task_contract_sha256": "f" * 64,
         "runtime_source_sha256": "0" * 64,
+        "trusted_evaluator_runtime_sha256": "9" * 64,
         "baseline_candidate_sha256": baseline,
         "best_program": "runs/example/best_program.py",
         "best_program_sha256": baseline,
@@ -186,6 +188,7 @@ class CalorimeterAnalysisTests(unittest.TestCase):
         self.assertTrue(report["input_llm_condition_equivalent"])
         self.assertTrue(report["input_task_contract_equivalent"])
         self.assertTrue(report["input_runtime_manifest_equivalent"])
+        self.assertTrue(report["input_trusted_evaluator_runtime_equivalent"])
         self.assertTrue(all(
             row["integrity_passed"]
             for row in report["records"].values()
@@ -281,6 +284,16 @@ class CalorimeterAnalysisTests(unittest.TestCase):
         report = self.report(
             runtime_source_equivalent=False,
             runtime_source_changes=["sle/example.py"],
+        )
+        self.assertFalse(report["execution_passed"])
+
+    def test_trusted_evaluator_runtime_mismatch_fails_closed(self):
+        records = copy.deepcopy(_records(self.analysis))
+        records["blind_budget_three"][
+            "trusted_evaluator_runtime_sha256"
+        ] = "8" * 64
+        report = self.analysis._analyze_records(
+            _calibration(self.analysis), records,
         )
         self.assertFalse(report["execution_passed"])
         self.assertEqual(report["trust_decision"], "execution_failed")

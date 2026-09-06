@@ -17,10 +17,15 @@ import time
 from pathlib import Path
 from typing import Any, Callable, Optional
 
-from ..evaluate import evaluate_candidate, INVALID_SCORE
+from ..evaluate import evaluate_candidate, INVALID_SCORE, resolve_trusted_runtime
 from ..evaluation_ledger import EvaluationLedger, RunLease
+from ..frontier import frontier_binding
 from ..llm import LLMClient
-from ..metric_visibility import score_only_metrics, search_visible_metrics
+from ..metric_visibility import (
+    score_only_metrics,
+    search_visible_metrics,
+    shuffled_feedback_metrics,
+)
 from ..spec import TaskSpec
 from ..protocol import TrajectoryEvent, append_event, load_trajectory, sha256_text, summarize_trajectory
 from ..sentinels import SentinelLedger
@@ -402,7 +407,8 @@ def _greedy_rewrite_impl(
         resume and manifest_path.is_file()
         and not checkpoint_path.exists() and trajectory_path.is_file()
     )
-    ensure_run_manifest(
+    trusted_runtime = resolve_trusted_runtime(spec.task_dir)
+    run_manifest = ensure_run_manifest(
         workdir, spec=spec, llm=llm, algorithm="greedy_rewrite", seed=seed,
         feedback_mode=feedback_mode, resume=resume,
         protocol={
@@ -420,6 +426,7 @@ def _greedy_rewrite_impl(
                 "signed_decision_policy": signed_decision_policy,
             } if active_wall_horizon_s is not None else {}),
         },
+        trusted_runtime=trusted_runtime,
     )
     if resume and not (full_resume or baseline_retry or baseline_commit_recovery):
         raise FileNotFoundError("--resume requires checkpoint.json and trajectory.jsonl")
@@ -433,9 +440,64 @@ def _greedy_rewrite_impl(
         if active_wall_horizon_s is not None else None
     )
     evaluation_ledger = EvaluationLedger(workdir)
-    frozen_task_contract = task_contract_sha256(spec)
-    frozen_task_package = task_package_sha256(spec)
-    frozen_runtime_source = runtime_source_sha256()
+    frozen_task_contract = str(run_manifest["task_contract_sha256"])
+    frozen_task_package = str(run_manifest["task_package_sha256"])
+    frozen_runtime_source = str(run_manifest["runtime_source_sha256"])
+    frozen_trusted_runtime = str(
+        run_manifest["trusted_evaluator_runtime"]["fingerprint_sha256"]
+    )
+    frozen_cell = {
+        "algorithm": str(run_manifest["algorithm"]),
+        "feedback_mode": str(run_manifest["feedback_mode"]),
+        "seed": int(run_manifest["seed"]),
+        "proposal_budget": int(budget),
+        "llm_condition_sha256": str(run_manifest["llm_condition_sha256"]),
+        "llm_condition": dict(run_manifest["llm_condition"]),
+    }
+    frozen_frontier = {
+        key: str(run_manifest[key])
+        for key in ("task_family_id", "wave_id", "wave_manifest_sha256")
+        if key in run_manifest
+    }
+
+    def consume_evaluation_receipt(receipt: dict[str, Any]) -> dict[str, Any]:
+        request = evaluation_ledger.require_request_id(receipt.get("request_id"))
+        if not (
+            request["request"].get("trusted_evaluator_runtime_sha256")
+            == frozen_trusted_runtime
+            and receipt.get("request_sha256") == request["request_sha256"]
+        ):
+            raise ValueError("trusted evaluator runtime binding differs")
+        return dict(receipt["metrics"])
+
+    def evaluate_frozen_candidate() -> dict[str, Any]:
+        expected = {
+            "task_contract_sha256": frozen_task_contract,
+            "task_package_sha256": frozen_task_package,
+            "runtime_source_sha256": frozen_runtime_source,
+            **frozen_frontier,
+        }
+        before = {
+            "task_contract_sha256": task_contract_sha256(spec),
+            "task_package_sha256": task_package_sha256(spec),
+            "runtime_source_sha256": runtime_source_sha256(),
+            **frontier_binding(spec),
+        }
+        if before != expected:
+            raise RuntimeError("frozen task/runtime binding changed before evaluation")
+        metrics = evaluate_candidate(
+            spec, cand_path, timeout_s=timeout_s,
+            trusted_runtime=trusted_runtime,
+        )
+        after = {
+            "task_contract_sha256": task_contract_sha256(spec),
+            "task_package_sha256": task_package_sha256(spec),
+            "runtime_source_sha256": runtime_source_sha256(),
+            **frontier_binding(spec),
+        }
+        if after != expected:
+            raise RuntimeError("frozen task/runtime binding changed during evaluation")
+        return metrics
 
     def validate_committed_evaluation_receipts(
         events: list[dict[str, Any]],
@@ -456,8 +518,12 @@ def _greedy_rewrite_impl(
                 and request.get("task_contract_sha256") == frozen_task_contract
                 and request.get("task_package_sha256") == frozen_task_package
                 and request.get("runtime_source_sha256") == frozen_runtime_source
+                and request.get("trusted_evaluator_runtime_sha256")
+                == frozen_trusted_runtime
+                and all(request.get(key) == value for key, value in frozen_frontier.items())
                 and request.get("step") == int(event["step"])
                 and request.get("candidate_sha256") == event["candidate_sha256"]
+                and "trusted_evaluator_runtime_sha256" not in receipt["metrics"]
                 and receipt["metrics"] == (event.get("metrics") or {})
             ):
                 raise ValueError("trajectory evaluation receipt binding differs")
@@ -589,14 +655,17 @@ def _greedy_rewrite_impl(
                 "task_contract_sha256": frozen_task_contract,
                 "task_package_sha256": frozen_task_package,
                 "runtime_source_sha256": frozen_runtime_source,
+                "trusted_evaluator_runtime_sha256": frozen_trusted_runtime,
+                **frozen_cell,
+                **frozen_frontier,
                 "step": 0,
                 "candidate_sha256": sha256_text(baseline_src),
                 "evaluator_timeout_seconds": float(timeout_s),
             },
-            lambda: evaluate_candidate(spec, cand_path, timeout_s=timeout_s),
+            evaluate_frozen_candidate,
             clock=time.monotonic,
         )
-        metrics = dict(baseline_receipt["metrics"])
+        metrics = consume_evaluation_receipt(baseline_receipt)
         if metrics.get("infrastructure_failure"):
             raise EvaluatorInfrastructureError(
                 "baseline trusted evaluator infrastructure failure: %s"
@@ -794,7 +863,9 @@ def _greedy_rewrite_impl(
         elif feedback_mode == "shuffled":
             shuffled = load_trajectory(trajectory_path)
             prior = [e.get("metrics", {}) for e in shuffled if int(e.get("step", 0)) < it]
-            prompt_metrics = random.choice(prior) if prior else best_metrics
+            prompt_metrics = shuffled_feedback_metrics(
+                prior, seed=seed, proposal_step=it
+            )
         elif feedback_mode == "delayed_replay":
             feedback_released_through_step = max(0, it - 2)
             eligible = [
@@ -862,7 +933,8 @@ def _greedy_rewrite_impl(
                 code = extract_code(reply)
                 signed_decision = None
                 parse_status = "parsed_code" if code else "no_code"
-            proposal_published_wall = active_wall + (time.monotonic() - step_started)
+            pre_evaluation_wall = time.monotonic() - step_started
+            proposal_published_wall = active_wall + pre_evaluation_wall
             pending_proposal = {
                 "schema_version": 1,
                 "step": it,
@@ -884,7 +956,7 @@ def _greedy_rewrite_impl(
                 "prompt_metrics_sha256": sha256_text(prompt_metrics_rendered),
                 "system_prompt_sha256": sha256_text(system_prompt),
                 "llm_usage": llm_usage,
-                "pre_evaluation_wall_seconds": time.monotonic() - step_started,
+                "pre_evaluation_wall_seconds": pre_evaluation_wall,
                 "proposal_published_wall_seconds": proposal_published_wall,
                 "signed_decision": signed_decision,
             }
@@ -994,16 +1066,19 @@ def _greedy_rewrite_impl(
                     "task_contract_sha256": frozen_task_contract,
                     "task_package_sha256": frozen_task_package,
                     "runtime_source_sha256": frozen_runtime_source,
+                    "trusted_evaluator_runtime_sha256": frozen_trusted_runtime,
+                    **frozen_cell,
+                    **frozen_frontier,
                     "step": int(it),
                     "candidate_sha256": sha256_text(code),
                     "parent_sha256": parent_sha,
                     "prompt_sha256": sha256_text(prompt),
                     "evaluator_timeout_seconds": float(timeout_s),
                 },
-                lambda: evaluate_candidate(spec, cand_path, timeout_s=timeout_s),
+                evaluate_frozen_candidate,
                 clock=time.monotonic,
             )
-            m = dict(evaluation_receipt["metrics"])
+            m = consume_evaluation_receipt(evaluation_receipt)
             if m.get("infrastructure_failure"):
                 raise EvaluatorInfrastructureError(
                     "candidate trusted evaluator infrastructure failure: %s"

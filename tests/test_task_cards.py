@@ -6,7 +6,12 @@ from pathlib import Path
 
 from sle.certification import certification_status
 from sle.registry import list_tasks
-from scripts.audit_tasks import LINEAGE_STATUSES, _task_card_issues, audit
+from scripts.audit_tasks import (
+    LINEAGE_STATUSES,
+    _metadata_issues,
+    _task_card_issues,
+    audit,
+)
 
 # Tasks built inside this repository, whose builder model, scaffold and red-team history are
 # recorded on the card rather than reconstructed after the fact. Everything else is inherited.
@@ -52,6 +57,21 @@ RECORDED_LINEAGE = {
 
 
 class TaskCardAuditTests(unittest.TestCase):
+    def test_metadata_enums_fail_closed(self):
+        self.assertEqual(_metadata_issues({
+            "difficulty": "on_ramp", "tier": "candidate", "score_mode": "uncapped",
+        }), [])
+        self.assertEqual(_metadata_issues({
+            "difficulty": "unmeasured", "tier": "candidate", "score_mode": "clipped",
+        }), [])
+        self.assertEqual(_metadata_issues({
+            "difficulty": "easy", "tier": "T1", "score_mode": "bounded",
+        }), [
+            "metadata difficulty is invalid",
+            "metadata tier is invalid",
+            "metadata score_mode is invalid",
+        ])
+
     def test_every_nonquarantined_task_has_a_valid_card(self):
         checked = 0
         for spec in list_tasks(None):
