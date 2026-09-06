@@ -10,6 +10,29 @@ policy:
   statuses: [certified, candidate, quarantined]
 
 tasks:
+  Mathematics/ChowlaCosineCertificate:
+    status: candidate
+    reason: >-
+      exact rational Laurent certificates for finite Chowla cosine sets at n=15,28,45, scored
+      above the valid consecutive-frequency baseline against a reproducible greedy Sidon
+      construction; the public Sidon formula reaches score one cheaply and a bounded local
+      exact-corrected search already reaches aggregate score 1.007421511448179, so this remains an
+      explicitly uncalibrated candidate rather than evidence of frontier difficulty, global SoTA,
+      asymptotic Chowla progress, or scientific admission; pending Linux sandbox and hard-model
+      tests plus independent harmonic-analysis/additive-combinatorics and evaluator review
+    citation_ids: [arxiv:2509.05260v3, url:https://epoch.ai/frontiermath/open-problems/chowla-cosine]
+  QuantumFoundations/MutuallyUnbiasedBases6:
+    status: candidate
+    reason: >-
+      exact Gaussian-integer-ray optimization of four approximate measurement bases in dimension
+      six, scored against a rational reconstruction of the public Raynal-Lu-Englert construction;
+      the published equations reach score one cheaply and 36-bit requantization already exceeds the
+      fixed fixture, while the separate rigorous beyond-algebraic-reference flag remains unpassed;
+      the Q(i) representation excludes exact triples including I and therefore does not test the
+      unrestricted exact-MUB existence question; this is an explicitly uncalibrated local candidate
+      pending the user's positioning decision, Linux sandbox and hard-model tests, and independent
+      quantum-information, optimization and evaluator review
+    citation_ids: [doi:10.1103/PhysRevA.83.062303, arxiv:1103.1025v1, arxiv:2410.23997v2, arxiv:2608.18053v1]
   Mathematics/NarrowAdmissibleTuple:
     status: candidate
     reason: exact admissibility/diameter oracle scored uncapped against Polymath8b's own published narrow-admissible-tuple diameters (246 at k=50, direct primary-source quote; 270 at k=54, secondary-source only, disclosed); no frontier searcher draw yet, pending external number-theory review

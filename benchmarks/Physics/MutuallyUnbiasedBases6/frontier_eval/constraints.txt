@@ -1,0 +1,9 @@
+1) Only edit solution.py. Keep build_bases(problem).
+2) Return {"bases": [B1, B2, B3]}; B0=I is implicit. Each B is row-major 6x6 and each entry is an
+   exact Gaussian-integer pair [real, imaginary]. Columns must be nonzero and exactly orthogonal.
+3) Respect dimension, num_bases and max_coordinate_bits. The oracle never rounds, normalizes or
+   Gram-Schmidt-repairs a submission. Ordinary score above one can come only from beating the fixed
+   rational fixture; beyond_published_reference is the separate stronger comparison.
+4) NumPy/SciPy only if constructing numerical starts; convert the final rays with the public helpers
+   in solution.py. Deterministic CPU code. No network/process creation. Do not read or import
+   verification/, frontier_eval/, or references/.

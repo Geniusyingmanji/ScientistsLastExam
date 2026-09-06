@@ -128,6 +128,38 @@ def test_malformed_payloads_fail_closed(submission):
     json.dumps(payload, allow_nan=False)
 
 
+@pytest.mark.parametrize("corrupt", [
+    lambda submission, _: submission["factors"][0].update(weight=[-1, 2]),
+    lambda submission, _: submission["factors"][0]["terms"].append([0, 1]),
+    lambda submission, _: submission["factors"][0]["terms"][1].__setitem__(1, True),
+    lambda submission, p: submission["factors"][0]["terms"][1].__setitem__(
+        0, p["max_frequency"] + 1),
+    lambda submission, p: submission.update(bound=[p["n_terms"] - 1, 1]),
+])
+def test_real_world_baseline_corruptions_reach_deep_evaluator_checks(corrupt):
+    """A real-sized payload must reach the corrupted field before failing.
+
+    The general malformed fixtures above have two frequencies, so evaluation against the frozen
+    15/28/45-term worlds rejects them at the outer length gate. Starting from each world's valid
+    baseline protects the deeper evaluator path itself.
+    """
+    evaluator = load("verification/evaluator.py")
+    baseline = load("solution.py")
+
+    def corrupted_candidate(problem):
+        candidate = baseline.build_certificate(problem)
+        corrupt(candidate, problem)
+        return candidate
+
+    payload = evaluator.evaluate(corrupted_candidate)
+    assert payload["valid"] == payload["combined_score"] == 0
+    assert payload["feasibility_rate"] == 0
+    assert len(payload["per_instance"]) == 3
+    assert all(row["valid"] is False and row["reason"] == "invalid submission"
+               for row in payload["per_instance"])
+    json.dumps(payload, allow_nan=False)
+
+
 @pytest.mark.parametrize("budget,value", [
     ("max_factors", 0), ("max_total_terms", 2),
     ("max_pair_products", 8), ("max_rational_bits", 3),

@@ -1,0 +1,108 @@
+schema_version: 2
+scientific_question: >-
+  Choose finite sets of positive integer frequencies and minimize a certified global lower-bound
+  magnitude for their unit-coefficient cosine sums at three fixed sizes.
+artifact: >-
+  A frequency set, a positive rational bound, and nonnegative rational weighted squared-modulus
+  factors whose full Laurent expansion exactly proves the bound on the unit circle.
+oracle:
+  model: >-
+    exact rational Laurent arithmetic: every submitted squared modulus is expanded at every signed
+    lag and compared with bound + sum_a (z^a+z^-a)/2, with no angular sampling or tolerance
+  feasibility: >-
+    the exact identity must hold; frequencies are distinct positive integers within their public
+    ceiling; weights are nonnegative; sparse exponents and rational scalars satisfy the public
+    factor, term, pair-product, scalar-bit and collective-denominator-LCM budgets
+  deterministic: true
+normalization:
+  baseline: >-
+    A={1,...,n} with one factor |1+z^a|^2/2 per frequency proves r=n and is the zero of the scale
+  reference: >-
+    the reproducible greedy distinct-difference/Sidon marks 0,1,3,7,... produce one exact factor,
+    with r=3,4,5 for n=15,28,45 respectively; this is a construction anchor, not global SoTA
+  score: >-
+    mean of max(0,(n-r)/(n-r_reference)) over the three fixed worlds, retained above one; the
+    fixed-world score is mathematically bounded because r is required positive
+citations:
+  - id: arxiv:2509.05260v3
+    title: "Bedert, Polynomial bounds for the Chowla Cosine Problem, revised 24 July 2026"
+  - id: url:https://epoch.ai/frontiermath/open-problems/chowla-cosine
+    title: "Epoch AI FrontierMath open problem: The Chowla Cosine Problem"
+invariants:
+  - >-
+    independent SymPy Laurent expansion and dense trigonometric controls agree with the exact
+    checker on the hand-derived identity 9/8+cos(x)+cos(2x)=|1+z/2+z^2|^2/2
+  - >-
+    the verifier compares complete signed Laurent support, so a factor that preserves all selected
+    coefficients but introduces an unsupported harmonic is rejected
+  - >-
+    repeated Sidon differences cannot be silently deduplicated: the exact expansion retains their
+    multiplicity and rejects the resulting unit-coefficient target
+  - >-
+    raw scalar bits, total work and the 512-bit collective denominator LCM are checked before
+    Fraction expansion, bounding adversarial exact-arithmetic growth
+  - >-
+    the baseline is valid with aggregate score zero, the greedy Sidon construction is valid with
+    aggregate score one, and exact certified improvements retain scores above one
+  - malformed, throwing and partially valid candidates preserve all three worlds and never raise out
+known_shortcuts: >-
+  The public greedy Sidon construction reaches score one with a single factor and negligible work.
+  A deterministic bounded spectral-search and exact-correction probe already reaches aggregate
+  score 1.007421511448179, principally through n=15 search and n=45 certificate tightening. These
+  are cheap exact-checked construction results, not evidence of a frontier-difficulty gap or a
+  global record. Public Chowla statements, Sidon sets, and certificate techniques are contamination
+  risks; the package is not suitable for certified admission without hard-model calibration.
+review:
+  status: pending_external
+  domain: pending_external_harmonic_analysis_and_additive_combinatorics
+  evaluator_security: >-
+    Candidate code runs only in the standard Bubblewrap worker and crosses into the trusted oracle
+    as data. The oracle performs bounded rational expansion after type, factor, term, pair-product,
+    bit and denominator-LCM checks. Local macOS checks cover structure and in-process unit tests only;
+    trusted sandbox execution remains pending on Linux.
+provenance:
+  class: known_answer
+  target_source: >-
+    The score-one Sidon anchor is regenerated from the public distinct-difference identity rather
+    than transcribed from a claimed optimum. Bedert v3 supplies current asymptotic context; the
+    Epoch page establishes the disclosed public problem-family overlap.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: sources_checked_2026-09-06_no_external_review
+novelty_risk:
+  level: high
+  rationale: >-
+    The problem family and a score-one constructor are public, and a cheap local exact-checked
+    method already scores above one. The finite certificate format is useful as a resource, but no
+    experimentally verified claim of frontier difficulty, global SoTA, or novel Chowla progress is made.
+lineage:
+  status: complete
+  builder_model_ids: [gpt-6-astra]
+  builder_scaffolds: [Codex]
+  collaborator_model_ids: [gpt-6-astra]
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    Builder and independent reviewer passes added full signed-support tests, exact rational
+    correction checks, the collective denominator-LCM budget, immutable world copies, and
+    real-world malformed evaluator-path coverage. No frontier-searcher draw changed the task.
+  shortcut_discoverer: gpt-6-astra_builder_and_independent_review
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: gpt-6-astra_with_controller_scientific_audit
+  reviewer_domain: gpt-6-astra_independent_task_review_pending_external_domain_review
+  expert_hours: null
+  red_team_rounds: null
+  oracle_disagreement_status: >-
+    no disagreement in independent symbolic Laurent identities, dense trigonometric controls,
+    exact correction checks, or recomputed baseline/reference payloads
+  independent_recomputation_status: >-
+    70 focused core tests and the reproducible reference diagnostics in references/known_best.md
+    independently exercise the exact checker; registration and Linux sandbox gates are separate

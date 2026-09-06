@@ -60,6 +60,7 @@ CHINESE_NAMES = {
     "MaterialsScience/PhaseDiagramDiscovery": "相图发现",
     "MaterialsScience/QuinaryConvexHull": "五元凸包稳定相",
     "Mathematics/BlackBoxGroupIdentification": "黑盒群同构辨识",
+    "Mathematics/ChowlaCosineCertificate": "Chowla 余弦下界证书",
     "Mathematics/CapSet": "Cap Set 构造",
     "Mathematics/CapSetFrontier": "Cap Set 未证明维度",
     "Mathematics/ErdosMinimumOverlap": "Erdős 最小重叠划分",
@@ -78,6 +79,7 @@ CHINESE_NAMES = {
     "Exoplanets/TransmissionSpectrumSpecies": "透射光谱分子判定",
     "DiscreteGeometry/SpherePackingCertificate": "球堆积上界证书",
     "QuantumFoundations/BellBoundCertificate": "贝尔不等式上界证书",
+    "QuantumFoundations/MutuallyUnbiasedBases6": "六维近似互无偏基",
     "Mathematics/NonlinearCodeRecords": "非线性码规模纪录",
     "MedicinalChemistry/MolecularLeadOptimization": "分子先导组合优化",
     "MolecularDynamics/ForceFieldCalibration": "力场假设判别",
@@ -195,6 +197,9 @@ CHINESE_BRIEFS = {
     "Mathematics/BlackBoxGroupIdentification": (
         "只给黑盒乘法与随机标号,在查询预算内从公开构造目录里辨识群的同构类",
         "目录 id 精确门控;非群与目录外两种拒答理由分开计分,阶数分布不足以辨识"),
+    "Mathematics/ChowlaCosineCertificate": (
+        "选择有限个整数频率,并用有理平方模的完整 Laurent 恒等式证明余弦和在整条圆周上的全局下界",
+        "三个规模的精确证书进度取均值且 1 以上不截断;1 是公开的贪心 Sidon 构造而非全局最优,廉价局部搜索已到约 1.0074"),
     "Mathematics/CapSet": (
         "在 Z_3^n 里构造更大的 cap set(无三点共线)",
         "对最好已知规模的平均进度;无上限"),
@@ -274,6 +279,9 @@ CHINESE_BRIEFS = {
         "四个实例(CHSH 与三种基词预算下的 I3322)取均值,不设上限。分数是所证界到已知量子值距离的"
         "对数进步:免费的层级 1 界记 0,已发表的层级 2 界记 1,超过则大于 1。有理数精确验证,"
         "提交浮点数直接判零——数值 SDP 解不是证明。"),
+    "QuantumFoundations/MutuallyUnbiasedBases6": (
+        "在六维复空间构造四组尽量互无偏的测量基,用有界 Gaussian 整数射线表示并精确验证正交性与跃迁概率",
+        "精确 ASD 对固定 Raynal 有理重构归一化且不截断;公式可廉价达到 1,真正超越另由严谨代数区间旗标判定,本表示不覆盖精确 MUB 存在性"),
     "Mathematics/NonlinearCodeRecords": (
         "在四个 A(n,d) 未闭合的参数上构造尽可能大的二元码;已发表纪录全部由非线性码持有,线性构造够不到",
         "从平凡分块重复构造到已发表纪录的平均进度,无上限;验证只是逐对汉明距离计数,与构造方法无关"),

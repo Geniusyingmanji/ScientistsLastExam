@@ -1,0 +1,16 @@
+domain: Mathematics
+task: ChowlaCosineCertificate
+scientific_role: optimization
+difficulty: hard
+tier: T2
+oracle_type: analytical
+score_mode: uncapped
+gpu_required: false
+eval_time_seconds: 2
+science_metric: mean_exact_progress_from_trivial_bound_to_greedy_sidon_certificate
+reference_baseline: consecutive frequencies with one two-term squared-modulus factor each
+reference_sota: >-
+  reproducible greedy Sidon construction worth score one; explicitly not a global optimum or SoTA
+citation: >-
+  Bedert, Polynomial bounds for the Chowla Cosine Problem, arXiv:2509.05260v3 (2026);
+  Epoch AI FrontierMath open problem, The Chowla Cosine Problem
