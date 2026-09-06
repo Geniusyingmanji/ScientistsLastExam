@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import tempfile
 import unittest
+from datetime import datetime
 from pathlib import Path
 
 from sle.certification import certification_status
@@ -52,6 +53,15 @@ RECORDED_LINEAGE = {
     "Mathematics/HeavyTailEvidence",
     "Mathematics/NarrowAdmissibleTuple",
     "Superconductivity/SuperconductorTcRecord",
+    "ScientificComputing/AdaptiveConservativePDEMethod",
+    "ChemicalKinetics/OpenVocabularyReactionNetworkDiscovery",
+    "MaterialsScience/ProcessMicrostructurePropertyDesign",
+}
+
+FROZEN_LINEAGE = {
+    "ScientificComputing/AdaptiveConservativePDEMethod",
+    "ChemicalKinetics/OpenVocabularyReactionNetworkDiscovery",
+    "MaterialsScience/ProcessMicrostructurePropertyDesign",
 }
 
 
@@ -132,8 +142,19 @@ class TaskCardAuditTests(unittest.TestCase):
                 self.assertEqual(card["lineage"]["status"], "incomplete_legacy", spec.task_id)
                 self.assertEqual(
                     card["construction_audit"]["status"], "incomplete_legacy", spec.task_id)
-            self.assertFalse(card["lineage"]["frozen_before_eval"])
-            self.assertIsNone(card["lineage"]["freeze_timestamp"])
+            if spec.task_id in FROZEN_LINEAGE:
+                self.assertTrue(card["lineage"]["frozen_before_eval"])
+                freeze_timestamp = card["lineage"]["freeze_timestamp"]
+                parsed_freeze = datetime.fromisoformat(
+                    freeze_timestamp.replace("Z", "+00:00")
+                )
+                self.assertIsNotNone(
+                    parsed_freeze.tzinfo,
+                    spec.task_id,
+                )
+            else:
+                self.assertFalse(card["lineage"]["frozen_before_eval"])
+                self.assertIsNone(card["lineage"]["freeze_timestamp"])
             self.assertFalse(card["long_horizon"]["measurement_health_passed"])
             self.assertFalse(card["long_horizon"]["material_headroom_after_2h"])
 
