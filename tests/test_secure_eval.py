@@ -4,6 +4,12 @@ import dataclasses
 import json
 import hashlib
 import math
+import os
+import platform
+import signal
+import struct
+import subprocess
+import sys
 import tempfile
 import textwrap
 import unittest
@@ -17,7 +23,8 @@ from sle.evaluate import (
 )
 from sle.rpc_codec import CodecError, decode, encode
 from sle.secure_eval import (
-    CandidateProxy, _proc_mount_args, _seccomp_no_processes, validate_metrics,
+    CandidateProxy, _blocked_process_syscalls, _proc_mount_args,
+    _seccomp_no_processes, validate_metrics,
 )
 from sle.spec import load_task_spec
 
@@ -445,7 +452,179 @@ class SecureEvaluationTests(unittest.TestCase):
             self.assertEqual(result.get("infrastructure_failure"), 1.0)
 
 
+
+class SeccompFilterTests(unittest.TestCase):
+    """Interpret the emitted BPF, then exercise it in disposable native processes."""
+
+    def program(self, machine):
+        with patch("sle.secure_eval.platform.machine", return_value=machine):
+            fd = _seccomp_no_processes()
+        try:
+            return os.read(fd, 4096)
+        finally:
+            os.close(fd)
+
+    def action(self, program, arch, nr):
+        instructions = list(struct.iter_unpack("=HBBI", program))
+        data = struct.pack("=II", nr, arch)
+        accumulator, pc = 0, 0
+        for _ in range(len(instructions)):
+            opcode, jt, jf, constant = instructions[pc]
+            if opcode == 0x20:  # LD W ABS
+                accumulator = struct.unpack_from("=I", data, constant)[0]
+            elif opcode in (0x15, 0x35):  # JEQ K / JGE K, offsets relative to next insn
+                condition = accumulator == constant if opcode == 0x15 else accumulator >= constant
+                pc += jt if condition else jf
+            elif opcode == 0x06:  # RET K
+                return constant
+            else:
+                self.fail("unexpected BPF opcode")
+            pc += 1
+        self.fail("filter did not return")
+
+    def test_native_tables_and_foreign_abis(self):
+        # AArch64/i386 are code-level checks, not native execution on this host.
+        tables = [
+            (("x86_64", "amd64"), 0xC000003E, {56, 57, 58, 435}),
+            (("aarch64", "arm64"), 0xC00000B7, {220, 435}),
+            (("i386", "i686", "x86"), 0x40000003, {2, 120, 190, 435}),
+        ]
+        for aliases, arch, blocked in tables:
+            for machine in aliases:
+                with self.subTest(machine=machine):
+                    program = self.program(machine)
+                    self.assertEqual(set(_blocked_process_syscalls(machine)), blocked)
+                    for nr in range(513):
+                        expected = 0x00050001 if nr in blocked else 0x7FFF0000
+                        self.assertEqual(self.action(program, arch, nr), expected, nr)
+                    for foreign in {0, 0xC000003E, 0xC00000B7, 0x40000003} - {arch}:
+                        for nr in (0, 2, 20, 39, 56, 120, 220, 435):
+                            self.assertEqual(self.action(program, foreign, nr), 0x80000000)
+
+    def test_x32_and_high_syscall_numbers_are_killed(self):
+        for machine in ("x86_64", "amd64"):
+            program = self.program(machine)
+            for nr in (0, 39, 56, 57, 58, 435):
+                self.assertEqual(self.action(program, 0xC000003E, 0x40000000 | nr), 0x80000000)
+            self.assertEqual(self.action(program, 0xC000003E, 0x3FFFFFFF), 0x7FFF0000)
+            self.assertEqual(self.action(program, 0xC000003E, 0xFFFFFFFF), 0x80000000)
+
+    def test_unknown_architecture_fails_before_allocating_filter(self):
+        with patch("sle.secure_eval.platform.machine", return_value="unknown-cpu"), \
+             patch("sle.secure_eval.os.memfd_create", create=True) as allocate:
+            with self.assertRaisesRegex(RuntimeError, "unsupported architecture"):
+                _seccomp_no_processes()
+            allocate.assert_not_called()
+
+    def kernel_run(self, mode):
+        # Only harmless getpid calls cross ABIs. No compat fork/clone is ever executed.
+        # All filters and executable mappings are confined to disposable children.
+        script = r"""
+import ctypes, errno, mmap, os, resource, sys
+resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
+class Filter(ctypes.Structure):
+    _fields_ = [('code', ctypes.c_ushort), ('jt', ctypes.c_ubyte),
+                ('jf', ctypes.c_ubyte), ('k', ctypes.c_uint32)]
+class Program(ctypes.Structure):
+    _fields_ = [('length', ctypes.c_ushort), ('filter', ctypes.POINTER(Filter))]
+raw = bytes.fromhex(sys.argv[1])
+filters = (Filter * (len(raw)//8)).from_buffer_copy(raw)
+program = Program(len(filters), filters)
+libc = ctypes.CDLL(None, use_errno=True)
+libc.syscall.restype = ctypes.c_long
+mode = sys.argv[2]
+if mode in ('compat', 'compat_probe'):
+    try:
+        code = mmap.mmap(-1, mmap.PAGESIZE, prot=mmap.PROT_READ | mmap.PROT_WRITE | mmap.PROT_EXEC)
+    except PermissionError:
+        if mode == 'compat_probe':
+            print('compat-probe-unavailable: executable mapping denied', flush=True)
+            sys.exit(77)
+        raise
+    code.write(bytes.fromhex('b814000000cd80c3'))  # mov eax,20; int 0x80; ret (i386 getpid)
+    compat_getpid = ctypes.CFUNCTYPE(ctypes.c_int)(ctypes.addressof(ctypes.c_char.from_buffer(code)))
+    if mode == 'compat_probe':
+        print('compat-probe-ready', flush=True)
+        pid = compat_getpid()
+        if pid in (-errno.EPERM, -errno.EACCES, -errno.ENOSYS):
+            print('compat-probe-unavailable: syscall denied or unsupported', flush=True)
+            sys.exit(77)
+        assert pid == os.getpid(), 'unexpected i386 getpid control result'
+        sys.exit(0)  # Probe runs without installing this PR's filter.
+for option, arg in ((38, 1), (22, 2)):  # NO_NEW_PRIVS; SECCOMP_MODE_FILTER
+    pointer = ctypes.byref(program) if option == 22 else 0
+    if libc.prctl(option, arg, pointer, 0, 0) != 0:
+        raise OSError(ctypes.get_errno(), 'prctl failed')
+if mode == 'native':
+    assert libc.syscall(39) == os.getpid()
+    with open('/dev/null', 'rb') as stream:
+        assert stream.read() == b''
+elif mode == 'x32':
+    libc.syscall(0x40000000 | 39)
+elif mode == 'compat':
+    compat_getpid()
+else:
+    raise AssertionError(mode)
+"""
+        program = self.program("x86_64").hex()
+        return subprocess.run([sys.executable, "-c", script, program, mode],
+                              capture_output=True, text=True, timeout=10)
+
+    def require_compat(self):
+        probe = self.kernel_run("compat_probe")
+        if ((probe.returncode == 77 and "compat-probe-unavailable:" in probe.stdout)
+                or (probe.returncode in {-signal.SIGSYS, -signal.SIGSEGV, -signal.SIGILL}
+                    and "compat-probe-ready" in probe.stdout)):
+            self.skipTest("i386 compatibility syscall probe is unavailable or blocked by this environment")
+        # Do not disguise setup/programming errors, unexpected results or timeouts as skips.
+        self.assertEqual(probe.returncode, 0, probe.stderr)
+
+    @unittest.skipUnless(sys.platform == "linux" and platform.machine().lower() in {"x86_64", "amd64"}
+                         and struct.calcsize("P") == 8, "requires native Linux x86_64")
+    def test_kernel_enforces_native_arch_and_x32_guards(self):
+        for mode in ("native", "x32"):
+            with self.subTest(mode=mode):
+                result = self.kernel_run(mode)
+                expected = 0 if mode == "native" else -signal.SIGSYS
+                self.assertEqual(result.returncode, expected, result.stderr)
+
+    @unittest.skipUnless(sys.platform == "linux" and platform.machine().lower() in {"x86_64", "amd64"}
+                         and struct.calcsize("P") == 8, "requires native Linux x86_64")
+    def test_kernel_rejects_available_i386_compat_abi(self):
+        self.require_compat()
+        result = self.kernel_run("compat")
+        self.assertEqual(result.returncode, -signal.SIGSYS, result.stderr)
+
+    def test_compat_probe_does_not_skip_unexpected_failures(self):
+        for code, output in ((1, ""), (77, ""), (-signal.SIGSEGV, ""),
+                             (1, "compat-probe-ready")):
+            with self.subTest(code=code, output=output), patch.object(
+                    self, "kernel_run", return_value=subprocess.CompletedProcess([], code, output, "probe error")):
+                with self.assertRaises(AssertionError):
+                    self.require_compat()
+        with patch.object(self, "kernel_run", side_effect=subprocess.TimeoutExpired("probe", 10)):
+            with self.assertRaises(subprocess.TimeoutExpired):
+                self.require_compat()
+
+    def test_compat_probe_reports_recognized_environment_limits(self):
+        for code, output in ((77, "compat-probe-unavailable: syscall denied"),
+                             (-signal.SIGSYS, "compat-probe-ready"),
+                             (-signal.SIGSEGV, "compat-probe-ready"),
+                             (-signal.SIGILL, "compat-probe-ready")):
+            with self.subTest(code=code), patch.object(
+                    self, "kernel_run", return_value=subprocess.CompletedProcess([], code, output, "")):
+                with self.assertRaises(unittest.SkipTest):
+                    self.require_compat()
+
+
 class CodecTests(unittest.TestCase):
+    def test_process_syscalls_are_architecture_specific(self):
+        self.assertEqual(_blocked_process_syscalls("x86_64"), (56, 57, 58, 435))
+        self.assertEqual(_blocked_process_syscalls("aarch64"), (220, 435))
+        self.assertEqual(_blocked_process_syscalls("i386"), (2, 120, 190, 435))
+        with self.assertRaises(RuntimeError):
+            _blocked_process_syscalls("unknown-cpu")
+
     def test_seccomp_file_fallback_is_available(self):
         with patch("sle.secure_eval.os.memfd_create", new=None, create=True):
             fd = None
