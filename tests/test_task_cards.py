@@ -48,6 +48,7 @@ RECORDED_LINEAGE = {
     "Mathematics/HeavyTailEvidence",
     "Mathematics/NarrowAdmissibleTuple",
     "Superconductivity/SuperconductorTcRecord",
+    "Geophysics/UPbConcordiaInference",
 }
 
 

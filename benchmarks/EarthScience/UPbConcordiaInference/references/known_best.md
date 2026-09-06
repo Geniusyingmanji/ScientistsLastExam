@@ -35,9 +35,25 @@ of 1.0 and a visible development-to-held-out gap.
 
 ## Model draws
 
-No frontier-model result is claimed yet. DeepSeek Flash and Pro calibration will be run only after
-the public contract and evaluator are frozen on a clean commit; its exact model identifiers,
-thinking setting, seeds and proposal scores will be added here and to `TASK_CARD.yaml`.
+The public contract and oracle were frozen at commit `984bb73`. Both exact model IDs passed a
+visible-output smoke test, and both configurations recorded `chat_thinking: disabled`. Each model
+then ran two replicate identifiers, three proposals, `greedy_rewrite`, normal feedback. These are
+calibration draws, not population model-performance claims.
+
+| model | replicate | proposal 1 | proposal 2 | proposal 3 | best |
+|---|---:|---:|---:|---:|---:|
+| `deepseek-v4-flash` | 17 | invalid | invalid | 0.231 | 0.231 |
+| `deepseek-v4-flash` | 43 | invalid | 0.176 | 0.560 | **0.560** |
+| `deepseek-v4-pro` | 17 | invalid/0.000 | 0.145 | 0.203 | 0.203 |
+| `deepseek-v4-pro` | 43 | 0.262 | 0.175 | 0.262 | 0.262 |
+
+All four first proposals are below the reference's 0.914, so the admission line holds. Flash seed
+43 shows a substantive trajectory: its final proposal reaches 0.625 history accuracy, 0.721
+lead-loss-age score, 1.0 refusal and 0.875 supported coverage, but retains 0.286 false discovery.
+Its held-out mechanism score is 0.546. Pro seed 17 improves age estimates across feedback but never
+refuses unsupported histories; Pro seed 43 refuses correctly but covers only half the supported
+worlds. The sanitized record is
+`experiments/deepseek_upb_concordia_calibration_2026-09-06.json`.
 
 ## Baseline
 
@@ -86,5 +102,6 @@ lead-loss-age score and 0.625 discovery coverage. This is well below the referen
 The reference is key-identical across consecutive evaluations. The baseline is valid and exactly
 zero, and a valid blanket-refusal method is exactly zero after normalization. Repeated-grain and
 over-budget calls, malformed outputs, non-finite ages, unsupported labels and fabricated evidence
-identifiers are caught per world and score invalid rather than raising from the evaluator. Full
-sandbox and bad-candidate script results will be recorded after Linux execution.
+identifiers are caught per world and score invalid rather than raising from the evaluator. On
+Linux, `check_task_contribution.py` passes every gate, all three standard bad candidates score
+invalid without crashing, and the reference scores 0.913758 through the secure subprocess path.

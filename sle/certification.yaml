@@ -713,9 +713,11 @@ tasks:
       An active zircon U-Pb evidence task over concordant, single lead-loss and resolvable
       multi-event suites, with charged precision choices, coupled Wetherill concordia geometry,
       continuous event-age scoring, evidence lineage and calibrated model-inadequacy refusal; the
-      valid one-grain baseline is normalized to zero and a truth-blind six-grain concordia/discordia
-      fit leaves age-precision headroom, pending shortcut sweeps, frontier-model calibration,
-      server-held geological histories and independent geochronology review
+      valid one-grain baseline is normalized to zero, a truth-blind six-grain concordia/discordia
+      fit scores 0.914/0.818 development/held-out, 192 apparent-age threshold shortcuts peak at
+      0.345, and two clean thinking-disabled runs each of DeepSeek V4 Flash and Pro keep every first
+      proposal below the reference while terminal best scores range from 0.203 to 0.560; retain
+      pending server-held geological histories and independent geochronology review
     citation_ids:
       - doi:10.1029/TR037i003p00320
       - doi:10.1016/S0016-7037(98)00059-3

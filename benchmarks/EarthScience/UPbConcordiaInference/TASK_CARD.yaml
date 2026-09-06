@@ -28,7 +28,7 @@ invariants:
 known_shortcuts: A sweep of 192 apparent-age threshold strategies that never fit the coupled concordia or a discordia reaches 0.345 against the truth-blind reference's 0.914; using three rather than six analytical domains reaches 0.861, contiguous-domain selection 0.550, all-screen measurements 0.494, ignoring uncertainties 0.000, never refusing 0.664 and rounding ages to 50 Myr 0.553. The reduced-order model omits common-Pb correction, decay-constant uncertainty, open-system diffusion profiles and inter-laboratory systematics, so the task remains a candidate pending server-held histories and independent geochronology review.
 review:
   domain: pending_external
-  evaluator_security: builder_determinism_budget_abstention_and_malformed_output_checks_pending_linux_sandbox_sweep
+  evaluator_security: automated_bad_candidate_sandbox_determinism_budget_abstention_and_visibility_checks
 provenance:
   class: procedural
   target_source: Repository-visible deterministic generator with ten development and nine evaluator-held suites spanning concordant, single lead-loss and resolvable multi-event histories.
@@ -38,15 +38,25 @@ novelty_risk:
   level: medium
   rationale: U-Pb concordia fitting is established geochronology, but no repository or Frontier-Eng task asks for active zircon-domain selection, coupled-decay event-history evidence and refusal of a resolvable multi-event suite. The nearest repository task recovers spatial gravity sources rather than geological time history.
 lineage:
-  status: incomplete_legacy
+  status: complete
   builder_model_ids:
   - openai:gpt-5
   builder_scaffolds:
   - codex-desktop
-  calibrator_model_ids: []
-  calibration_runs: []
-  calibration_evidence_status: missing
-  edits_triggered_by_model: No calibration model has seen the task yet; this field will be updated after the required frozen calibration runs.
+  calibrator_model_ids:
+  - deepseek-v4-flash
+  - deepseek-v4-pro
+  calibration_runs:
+  - experiments/deepseek_upb_concordia_calibration_2026-09-06.json
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: >-
+    No oracle or public-contract change followed calibration. Four clean-commit,
+    thinking-disabled trajectories all kept their first proposal below the 0.914 reference. Flash
+    reached terminal best scores of 0.231 and 0.560; Pro reached 0.203 and 0.262. The strongest
+    candidate recovered part of the history and age structure but retained false discoveries,
+    while invalid Flash proposals included candidate-side budget arithmetic despite costs being
+    published. These are useful scientific and implementation failures, not grounds to tune
+    evaluator worlds after seeing model output.
   shortcut_discoverer: builder_self_audit_with_192_strategy_apparent_age_threshold_sweep
   frozen_before_eval: false
   freeze_timestamp: null
@@ -56,7 +66,7 @@ long_horizon:
   material_headroom_after_2h: false
   evidence: []
 construction_audit:
-  status: incomplete_legacy
+  status: builder_audited_pending_external
   author_domain: openai:gpt-5
   reviewer_domain: pending_external
   expert_hours: null

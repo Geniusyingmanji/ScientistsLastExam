@@ -107,6 +107,21 @@ crystallization- and lead-loss-age scores, false-discovery rate, correct-refusal
 coverage and confidence calibration. It publishes denominators for false discovery, refusal and
 coverage. A sealed held-out suite reports transfer metrics but is not search-visible.
 
+## Measured difficulty
+
+| method | development | held out |
+|---|---:|---:|
+| truth-blind weighted concordia/discordia reference | 0.914 | 0.818 |
+| same fit with only three analytical measurements | 0.861 | 0.609 |
+| contiguous-domain sampling | 0.550 | 0.383 |
+| all-screen measurements | 0.494 | 0.487 |
+| best of 192 apparent-age threshold shortcuts | 0.345 | 0.379 |
+| fixed one-grain baseline | 0.000 | 0.000 |
+
+Two clean-run DeepSeek V4 Flash trajectories reached 0.231 and 0.560 after three proposals; two
+DeepSeek V4 Pro trajectories reached 0.203 and 0.262. All four first proposals remained below the
+reference. Exact runs and the wider ablation ladder are recorded in `references/known_best.md`.
+
 ## Rules
 
 - Only edit `solution.py`; retain `infer_upb_history(problem, measure)`.
