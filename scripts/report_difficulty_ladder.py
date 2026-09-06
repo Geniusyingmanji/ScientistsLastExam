@@ -33,7 +33,13 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from sle.evaluate import evaluate_candidate  # noqa: E402
+from sle.evaluate import resolve_trusted_runtime  # noqa: E402
+from sle.algorithms.common import (  # noqa: E402
+    runtime_source_sha256,
+    task_package_sha256,
+)
 from sle.registry import find_task, list_tasks  # noqa: E402
+from sle.run_verification import verify_run  # noqa: E402
 from sle.spec import load_task_spec  # noqa: E402
 
 DIFFICULTY_LINE = re.compile(r"^DIFFICULTY\s*=\s*\d+", re.MULTILINE)
@@ -65,6 +71,10 @@ def _task_at_level(task_id: str, level: int, root: Path):
 
 
 def _best_candidate(task_id: str, runs_root: Path) -> Path | None:
+    spec = find_task(task_id, include_uncertified=True)
+    expected_package = task_package_sha256(spec)
+    expected_source = runtime_source_sha256()
+    expected_trusted = resolve_trusted_runtime(spec.task_dir).fingerprint_sha256
     best, best_score = None, None
     for manifest in runs_root.rglob("run_manifest.json"):
         try:
@@ -73,12 +83,27 @@ def _best_candidate(task_id: str, runs_root: Path) -> Path | None:
             continue
         if document.get("task_id") != task_id:
             continue
-        program = manifest.parent / "best_program.py"
-        checkpoint = manifest.parent / "checkpoint.json"
-        if not program.is_file() or not checkpoint.is_file():
+        if (
+            document.get("task_package_sha256") != expected_package
+            or document.get("runtime_source_sha256") != expected_source
+            or (document.get("trusted_evaluator_runtime") or {}).get(
+                "fingerprint_sha256"
+            ) != expected_trusted
+        ):
             continue
         try:
-            score = json.loads(checkpoint.read_text(encoding="utf-8")).get("best_score")
+            verify_run(
+                manifest.parent,
+                expected_trusted_runtime_sha256=expected_trusted,
+            )
+        except (OSError, ValueError):
+            continue
+        program = manifest.parent / "best_program.py"
+        summary = manifest.parent / "summary.json"
+        if not program.is_file() or not summary.is_file():
+            continue
+        try:
+            score = json.loads(summary.read_text(encoding="utf-8")).get("best_score")
         except (OSError, ValueError):
             continue
         if isinstance(score, (int, float)) and (best_score is None or score > best_score):
@@ -158,7 +183,7 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.output:
         args.output.write_text(json.dumps({
-            "schema_version": 1,
+            "schema_version": 2,
             "note": "each level is scored by copying the task and rewriting DIFFICULTY in the "
                     "copy; the shipped task is never modified",
             "levels": levels,

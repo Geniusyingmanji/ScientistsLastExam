@@ -80,6 +80,13 @@ discovery(32 个):从受预算约束的观测里恢复一个机制,或判断根�
 
 分数经过归一化:0 是出厂基线,1 是参考见证解,uncapped 任务不设上限。
 发现类的归一化让全面弃权恰好得零。evaluator 至少返回有限数值的 `combined_score` 与 `valid`。
+
+需要跨版本持续优化或发现的任务可选择加入 **frontier family**。同一
+`task_family_id` 下的每个 `wave_id` 都有冻结的 `frontier_eval/wave.yaml`；运行清单同时绑定
+wave、task package 与 runtime hash。固定 wave 的 `combined_score` 用于公平比较，跨 wave 的
+`lifetime_frontier_credit` 只累计通过 trusted evaluator 规范化、去重且超过最小科学增量的记录。
+新增容易实例、重复 artifact 或候选自己定义的 cell 都不能增加 lifetime credit。完整契约见
+[`docs/frontier_families.md`](docs/frontier_families.md)。
 `python -m sle list --all` 是权威的实时清单。
 
 ## 评测形式

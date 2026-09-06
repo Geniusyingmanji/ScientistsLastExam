@@ -40,7 +40,12 @@ def role_index() -> dict[str, str]:
     return out
 
 
-def classify_discovery_row(row: dict, role: str, axes: dict | None = None) -> dict:
+def classify_discovery_row(
+    row: dict,
+    role: str,
+    axes: dict | None = None,
+    axis_evidence: list[dict] | None = None,
+) -> dict:
     """Rewrite one admission row. Optimization rows pass through."""
     public = str(row.get("verdict") or "unknown")
     out = dict(row)
@@ -62,6 +67,29 @@ def classify_discovery_row(row: dict, role: str, axes: dict | None = None) -> di
     else:
         out["verdict"] = public
         out["iteration_claim"] = "public_score_only"
+    if axis_evidence is not None:
+        out["axis_evidence"] = axis_evidence
+        out["missing_axes_by_run"] = [
+            {
+                "run_manifest_sha256": entry["run_manifest_sha256"],
+                "join_status": entry["join_status"],
+                "missing_axes": entry["missing_axes"],
+            }
+            for entry in axis_evidence
+        ]
+        out["count_without_denominator_by_run"] = [
+            {
+                "run_manifest_sha256": entry["run_manifest_sha256"],
+                "join_status": entry["join_status"],
+                "axes": entry["count_without_denominator"],
+            }
+            for entry in axis_evidence
+        ]
+        if len(axis_evidence) == 1 and axis_evidence[0]["join_status"] == "joined":
+            axes = axis_evidence[0].get("axes")
+        elif len(axis_evidence) > 1:
+            out.pop("axes", None)
+            return out
     axes = axes or {name: None for name in ("mechanism", "fdr", "refusal")}
     out["axes"] = axes
     out["count_without_denominator"] = [
@@ -81,22 +109,61 @@ IDENTITY_FIELDS = (
     "llm_condition_sha256",
     "task_version",
     "runtime_source_sha256",
+    "trusted_evaluator_runtime_sha256",
+    "algorithm",
+    "feedback_mode",
+    "proposal_budget",
+    "seed",
+    "run_manifest_sha256",
+)
+
+RUN_IDENTITY_FIELDS = (
+    "feedback_mode", "proposal_budget", "seed", "run_manifest_sha256",
 )
 
 
-def triple_index(document: dict) -> dict[tuple[str, ...], dict]:
-    """Index only fully attributable, unambiguous triple rows."""
-    grouped: dict[tuple[str, ...], list[dict]] = {}
+def _complete_identity(entry: dict) -> bool:
+    integer_fields = {"proposal_budget", "seed"}
+    return bool(
+        all(
+            isinstance(entry.get(field), int)
+            and not isinstance(entry[field], bool)
+            and entry[field] >= 0
+            if field in integer_fields
+            else isinstance(entry.get(field), str) and bool(entry[field])
+            for field in IDENTITY_FIELDS
+        )
+    )
+
+
+def triple_index(document: dict) -> dict[tuple[object, ...], dict]:
+    """Index every addressable triple row, retaining unusable states."""
+    grouped: dict[tuple[object, ...], list[dict]] = {}
     for entry in document.get("rows") or []:
-        if entry.get("status") != "ok" or any(entry.get(field) is None for field in IDENTITY_FIELDS):
+        if not _complete_identity(entry):
             continue
-        key = tuple(str(entry[field]) for field in IDENTITY_FIELDS)
+        key = tuple(entry[field] for field in IDENTITY_FIELDS)
         grouped.setdefault(key, []).append(entry)
-    return {
-        key: entries[0].get("axes")
-        for key, entries in grouped.items()
-        if len(entries) == 1
-    }
+    indexed = {}
+    for key, entries in grouped.items():
+        if len(entries) != 1:
+            indexed[key] = {
+                "join_status": "unusable",
+                "unusable_reason": "ambiguous_duplicate_triple_rows",
+                "triple_status": "ambiguous",
+            }
+            continue
+        entry = entries[0]
+        if entry.get("status") == "ok" and entry.get("trusted_evidence") is True:
+            indexed[key] = {**entry, "join_status": "joined"}
+        else:
+            indexed[key] = {
+                **entry,
+                "join_status": "unusable",
+                "unusable_reason": "triple_row_is_not_trusted_ok_evidence",
+                "triple_status": entry.get("status"),
+            }
+    return indexed
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -121,17 +188,74 @@ def main(argv: list[str] | None = None) -> int:
     for row in rows_in:
         task = str(row.get("task") or "")
         role = roles.get(task) or roles.get(task.split("/")[-1]) or ""
-        identity = tuple(str(row.get(field) or "") for field in IDENTITY_FIELDS)
-        axes = triples.get(identity)
-        rows.append(classify_discovery_row(row, role, axes))
+        axis_evidence = []
+        evidence_runs = row.get("evidence_runs") or []
+        for run in evidence_runs:
+            expected = {
+                field: run.get(field) if field in RUN_IDENTITY_FIELDS else row.get(field)
+                for field in IDENTITY_FIELDS
+            }
+            identity = tuple(expected[field] for field in IDENTITY_FIELDS)
+            matched = triples.get(identity)
+            if row.get("trusted_evidence") is not True:
+                matched = {
+                    "join_status": "unusable",
+                    "unusable_reason": "admission_row_is_not_trusted_evidence",
+                    "triple_status": None,
+                }
+            elif not _complete_identity(expected):
+                matched = {
+                    "join_status": "unusable",
+                    "unusable_reason": "expected_run_identity_is_incomplete",
+                    "triple_status": None,
+                }
+            elif matched is None:
+                matched = {
+                    "join_status": "missing",
+                    "missing_reason": "no_matching_triple_row",
+                    "triple_status": None,
+                }
+            axes = matched.get("axes") if matched["join_status"] == "joined" else None
+            missing_axes = [
+                name for name in ("mechanism", "fdr", "refusal")
+                if (axes or {}).get(name) is None
+            ]
+            count_without_denominator = [
+                name for name, value in (axes or {}).items()
+                if value is not None
+                and value.get("status") == "count_without_denominator"
+            ]
+            axis_evidence.append({
+                **{field: run.get(field) for field in RUN_IDENTITY_FIELDS},
+                "join_status": matched["join_status"],
+                "triple_status": matched.get("triple_status", matched.get("status")),
+                **({"reason": matched.get("unusable_reason")} if
+                   matched["join_status"] == "unusable" else {}),
+                **({"reason": matched.get("missing_reason")} if
+                   matched["join_status"] == "missing" else {}),
+                "selected_candidate_sha256": matched.get(
+                    "selected_candidate_sha256"
+                ),
+                "axes": axes,
+                "missing_axes": missing_axes,
+                "count_without_denominator": count_without_denominator,
+            })
+        rows.append(classify_discovery_row(
+            row, role, axis_evidence=axis_evidence,
+        ))
 
     discovery = [r for r in rows if r.get("scientific_role") == "discovery"]
     rewritten = sum(
         1 for r in discovery
         if r.get("verdict") != r.get("public_score_verdict")
     )
+    join_statuses = [
+        evidence["join_status"]
+        for row in discovery
+        for evidence in row.get("axis_evidence") or []
+    ]
     report = {
-        "schema_version": 1,
+        "schema_version": 4,
         "source_admission": str(Path(args.admission)),
         "note": (
             "Discovery rows never inherit measures_iteration from combined_score. "
@@ -140,8 +264,23 @@ def main(argv: list[str] | None = None) -> int:
         "row_count": len(rows),
         "discovery_row_count": len(discovery),
         "discovery_verdicts_rewritten": rewritten,
+        "expected_evidence_run_count": len(join_statuses),
+        "axis_join_status_counts": {
+            status: join_statuses.count(status)
+            for status in sorted(set(join_statuses))
+        },
+        "evidence_runs_missing_axes_count": sum(
+            bool(evidence.get("missing_axes"))
+            for row in discovery
+            for evidence in row.get("axis_evidence") or []
+        ),
         "discovery_rows_missing_axes": sum(
-            bool(row.get("missing_axes")) for row in discovery
+            bool(row.get("missing_axes"))
+            or any(
+                bool(run.get("missing_axes"))
+                for run in row.get("missing_axes_by_run") or []
+            )
+            for row in discovery
         ),
         "rows": rows,
     }

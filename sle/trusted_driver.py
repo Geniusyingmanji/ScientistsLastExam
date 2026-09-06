@@ -20,6 +20,7 @@ from .secure_eval import (
     trusted_evaluate,
 )
 from .evaluate import canonical_trusted_context
+from .runtime_identity import current_runtime_descriptor, task_runtime_distributions
 
 
 def main() -> int:
@@ -31,9 +32,13 @@ def main() -> int:
     parser.add_argument("--timeout", type=float, required=True)
     parser.add_argument("--result", type=Path, required=True)
     parser.add_argument("--trusted-context", type=Path, default=None)
+    parser.add_argument("--expected-runtime-sha256", required=True)
     args = parser.parse_args()
     trusted_context_sha256 = None
+    runtime = current_runtime_descriptor(task_runtime_distributions(args.task_dir))
     try:
+        if runtime["fingerprint_sha256"] != args.expected_runtime_sha256:
+            raise RuntimeError("trusted evaluator runtime binding mismatch")
         trusted_context = None
         if args.trusted_context is not None:
             trusted_context = json.loads(
@@ -67,7 +72,12 @@ def main() -> int:
         }
     if trusted_context_sha256 is not None:
         metrics["trusted_context_sha256"] = trusted_context_sha256
-    args.result.write_text(json.dumps(metrics, allow_nan=False), encoding="utf-8")
+    envelope = {
+        "schema_version": 1,
+        "trusted_evaluator_runtime_sha256": runtime["fingerprint_sha256"],
+        "metrics": metrics,
+    }
+    args.result.write_text(json.dumps(envelope, allow_nan=False), encoding="utf-8")
     return 0
 
 

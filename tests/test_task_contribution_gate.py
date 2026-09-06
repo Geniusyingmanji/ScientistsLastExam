@@ -34,6 +34,7 @@ class TaskContributionGateTests(unittest.TestCase):
             "required_files",
             "task_card",
             "metadata",
+            "frontier_wave",
             "discovery_contract_lint_documented",
             "numeric_keys",
             "documented_keys",

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import copy
 import tempfile
 import sys
 import unittest
@@ -179,6 +180,7 @@ def _record(label, mode, failures, tokens, missing_imports=None):
         "summary_sha256": "f" * 64,
         "task_contract_sha256": "1" * 64,
         "runtime_source_sha256": "2" * 64,
+        "trusted_evaluator_runtime_sha256": "9" * 64,
         "baseline_candidate_sha256": ANALYSIS.BASELINE_SHA256,
         "best_program": "runs/example/best_program.py",
         "best_program_sha256": ANALYSIS.BASELINE_SHA256,
@@ -269,6 +271,7 @@ class ForceFieldHypothesisAnalysisTests(unittest.TestCase):
 
     def test_failure_hurdle_is_exact_and_not_infrastructure(self):
         report = self.report()
+        self.assertTrue(report["input_trusted_evaluator_runtime_equivalent"])
         self.assertTrue(report["execution_passed"], report)
         hurdle = report["proposal_hurdle_summary"]
         self.assertEqual(hurdle["proposal_count"], 7)
@@ -355,6 +358,14 @@ class ForceFieldHypothesisAnalysisTests(unittest.TestCase):
             runtime_source_equivalent=False,
             runtime_source_changes=["benchmarks/Chemistry/ForceFieldCalibration/x.py"],
         )
+        self.assertFalse(report["execution_passed"])
+
+    def test_trusted_evaluator_runtime_mismatch_fails_closed(self):
+        records = copy.deepcopy(_records())
+        records["blind_budget_three"][
+            "trusted_evaluator_runtime_sha256"
+        ] = "8" * 64
+        report = ANALYSIS._analyze_records(_calibration(), records)
         self.assertFalse(report["execution_passed"])
         self.assertEqual(report["trust_decision"], "execution_failed")
 
