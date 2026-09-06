@@ -3,7 +3,8 @@
    switching_rate_per_us, noise_variance_rad2_per_us2, high_state_probability, and confidence
    inside the public bounds.
 3) Select from the complete public control_catalog through measure(sequence_id,
-   shots_per_quadrature). Sequence id, per-call shots, and the cumulative 24,000-shot budget are strict;
+   shots_per_quadrature). Sequence id, non-boolean Python/NumPy integer per-call shots, and the
+   cumulative 24,000-shot budget are strict;
    catching any callback error cannot make that world valid.
 4) Gaussian OU and single telegraph worlds share exactly the same Lorentzian PSD. A symmetric
    telegraph source also has zero coherence phase, so neither PSD-only fitting nor phase-only

@@ -8,6 +8,7 @@ import unittest
 from pathlib import Path
 
 import numpy as np
+import yaml
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -126,8 +127,30 @@ class ShotProtocolTests(unittest.TestCase):
         self.assertEqual(result["valid"], 0.0)
         self.assertEqual(result["combined_score"], 0.0)
 
+    def test_caught_non_integer_shot_types_still_invalidate_evaluation(self):
+        for bad_shots in (None, float("nan"), "100", 100.0):
+            with self.subTest(bad_shots=bad_shots):
+                def catches(problem, measure):
+                    del problem
+                    try:
+                        measure("ramsey_1p0", bad_shots)
+                    except (TypeError, ValueError):
+                        pass
+                    return {"abstain": True, "confidence": 0.5}
+
+                result = EVALUATOR.evaluate(catches)
+                self.assertEqual(result["valid"], 0.0)
+                self.assertEqual(result["combined_score"], 0.0)
+
 
 class ScoringAndContractTests(unittest.TestCase):
+    def test_metadata_does_not_claim_measured_difficulty(self):
+        metadata = yaml.safe_load(
+            (TASK / "frontier_eval" / "metadata.yaml").read_text(encoding="utf-8")
+        )
+        self.assertEqual(metadata["difficulty"], "unmeasured")
+        self.assertEqual(metadata["tier"], "candidate")
+
     def test_baseline_is_valid_but_false_claim_penalty_clips_it_to_zero(self):
         result = EVALUATOR.evaluate(BASELINE.discover_noise)
         self.assertEqual(result["valid"], 1.0)
@@ -164,6 +187,29 @@ class ScoringAndContractTests(unittest.TestCase):
         self.assertEqual(result["development_false_discovery_rate"], 0.0)
         self.assertEqual(result["development_correct_refusal_rate"], 1.0)
         self.assertEqual(result["development_unwarranted_refusal_rate"], 0.0)
+
+    def test_incomplete_heldout_split_cannot_report_success_or_change_selection(self):
+        class InvalidUnsupportedHeldout:
+            def __init__(self):
+                self.calls = 0
+
+            def __call__(self, problem, measure):
+                self.calls += 1
+                result = REFERENCE.discover_noise(problem, measure)
+                if (
+                    self.calls > len(EVALUATOR.DEVELOPMENT_WORLDS)
+                    and result["abstain"]
+                ):
+                    return None
+                return result
+
+        result = EVALUATOR.evaluate(InvalidUnsupportedHeldout())
+        self.assertEqual(result["valid"], 1.0)
+        self.assertGreater(result["combined_score"], 0.85)
+        self.assertFalse(result["heldout_science_complete"])
+        self.assertLess(result["heldout_feasibility_rate"], 1.0)
+        self.assertEqual(result["heldout_mechanism_score"], 0.0)
+        self.assertEqual(result["heldout_prediction_score"], 0.0)
 
     def test_malformed_submissions_fail_closed(self):
         cases = (

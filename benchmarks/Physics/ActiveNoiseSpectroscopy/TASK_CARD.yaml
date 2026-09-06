@@ -20,7 +20,8 @@ oracle:
     controls, compares one-fluctuator and Gaussian residuals, and never imports the evaluator.
   feasibility: >-
     Strict finite parameter bounds, a complete allowlist of eight pulse controls,
-    100-6000 shots per quadrature per call, and 24000 cumulative X/Y shots. Any callback protocol
+    non-boolean Python/NumPy integer allocations of 100-6000 shots per quadrature per call, and
+    24000 cumulative X/Y shots. Any callback protocol
     error or overspend invalidates the world even when candidate code catches it.
   deterministic: true
   determinism_note: >-
@@ -40,7 +41,9 @@ normalization:
     supported-world count, 0, 1). Correct refusal only avoids a penalty and never adds positive
     score, so always-abstain is exactly zero. Heldout prediction, FDR, unsupported false-positive
     rate, correct and unwarranted refusal, attempted discovery, calibration and shot use remain
-    separate with explicit denominators.
+    separate with explicit denominators. Public valid/selection depend only on development;
+    heldout validity is published independently and any incomplete heldout split suppresses all
+    heldout scientific estimates to zero.
 citations:
   - id: doi:10.1038/s41467-019-11699-4
     title: Non-Gaussian noise spectroscopy with a superconducting qubit sensor
@@ -68,6 +71,10 @@ invariants:
   - >-
     Always-abstain scores exactly zero; every unsupported non-abstaining structural claim subtracts
     one supported-world unit from the precision-weighted numerator.
+  - >-
+    Invalid heldout rows cannot silently improve heldout mechanism or FDR: heldout feasibility and
+    counts are explicit and any incomplete heldout split suppresses its scientific estimates,
+    without changing development valid or combined_score.
   - malformed candidates and caught callback protocol violations score zero without escaping the evaluator
 known_shortcuts: >-
   The public equations make a PSD fit easy, but it cannot distinguish the exactly matched Gaussian

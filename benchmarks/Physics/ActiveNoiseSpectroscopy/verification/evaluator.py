@@ -345,10 +345,12 @@ class _ShotLab:
         matches = [row for row in CONTROL_CATALOG if row["sequence_id"] == sequence_id]
         if len(matches) != 1:
             self._protocol_error("sequence_id is not in the public control pool")
-        if isinstance(shots_per_quadrature, bool):
+        if isinstance(shots_per_quadrature, (bool, np.bool_)) or not isinstance(
+            shots_per_quadrature, (int, np.integer)
+        ):
             self._protocol_error("shots_per_quadrature must be an integer")
         shots = int(shots_per_quadrature)
-        if shots != shots_per_quadrature or not (
+        if not (
             MIN_SHOTS_PER_QUADRATURE <= shots <= MAX_SHOTS_PER_QUADRATURE
         ):
             self._protocol_error("shots_per_quadrature lies outside the public bounds")
@@ -582,6 +584,13 @@ def evaluate(discover_noise):
         discover_noise, HELDOUT_WORLDS, "heldout", reset_before_first=True
     )
     development_valid = development["valid_count"] == development["world_count"]
+    heldout_complete = heldout["valid_count"] == heldout["world_count"]
+
+    def heldout_science(value):
+        # Heldout validity never changes the public development selection score.
+        # It only gates claims made from the heldout split itself.
+        return value if heldout_complete else 0.0
+
     return {
         "combined_score": development["normalized"] if development_valid else 0.0,
         "valid": 1.0 if development_valid else 0.0,
@@ -609,21 +618,33 @@ def evaluate(discover_noise):
         "development_unwarranted_refusal_rate": development["unwarranted_refusal_rate"],
         "development_confidence_calibration": development["confidence_calibration"],
         "development_mean_shot_units": development["mean_shot_units"],
-        "heldout_mechanism_score": heldout["normalized"],
+        "heldout_science_complete": heldout_complete,
+        "heldout_science_estimates_suppressed": not heldout_complete,
+        "heldout_valid_count": heldout["valid_count"],
+        "heldout_world_count": heldout["world_count"],
+        "heldout_invalid_count": heldout["world_count"] - heldout["valid_count"],
+        "heldout_feasibility_rate": heldout["valid_count"] / heldout["world_count"],
+        "heldout_mechanism_score": heldout_science(heldout["normalized"]),
         "heldout_supported_world_count": heldout["supported_count"],
         "heldout_unsupported_world_count": heldout["unsupported_count"],
         "heldout_false_claim_count": heldout["false_claim_count"],
         "heldout_claimed_mechanism_count": heldout["claimed_mechanism_count"],
-        "heldout_mechanism_recovery": heldout["mechanism_recovery"],
-        "heldout_prediction_score": heldout["heldout_prediction"],
-        "heldout_false_discovery_rate": heldout["false_discovery_rate"],
-        "heldout_unsupported_false_positive_rate": heldout[
-            "unsupported_false_positive_rate"
-        ],
-        "heldout_correct_refusal_rate": heldout["correct_refusal_rate"],
-        "heldout_attempted_discovery_rate": heldout["attempted_discovery_rate"],
-        "heldout_discovery_coverage": heldout["attempted_discovery_rate"],
-        "heldout_unwarranted_refusal_rate": heldout["unwarranted_refusal_rate"],
+        "heldout_mechanism_recovery": heldout_science(heldout["mechanism_recovery"]),
+        "heldout_prediction_score": heldout_science(heldout["heldout_prediction"]),
+        "heldout_false_discovery_rate": heldout_science(heldout["false_discovery_rate"]),
+        "heldout_unsupported_false_positive_rate": heldout_science(
+            heldout["unsupported_false_positive_rate"]
+        ),
+        "heldout_correct_refusal_rate": heldout_science(heldout["correct_refusal_rate"]),
+        "heldout_attempted_discovery_rate": heldout_science(
+            heldout["attempted_discovery_rate"]
+        ),
+        "heldout_discovery_coverage": heldout_science(
+            heldout["attempted_discovery_rate"]
+        ),
+        "heldout_unwarranted_refusal_rate": heldout_science(
+            heldout["unwarranted_refusal_rate"]
+        ),
         "per_instance": development["rows"] + heldout["rows"],
         "frontier_records": [],
     }

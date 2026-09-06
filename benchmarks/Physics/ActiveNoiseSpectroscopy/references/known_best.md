@@ -84,8 +84,11 @@ a claim about arbitrary continuous controls or a real device.
 The evaluator uses only fixed-size analytic/linear-algebra operations. Gaussian coherence has an
 independent direct-covariance quadrature check. Shot streams are keyed by world, exact control and
 quadrature and consumed sequentially: `N` shots in one call equal the sum of legal chunks totaling
-`N`. Overspend, invalid duration, unordered or crowded pulses, noninteger shots, malformed output,
+`N`. Overspend, an unknown control, `None`/NaN/string/float shot counts, malformed output,
 nonfinite parameters, and a raising callable all fail closed without escaping `evaluate`.
+Development validity remains the only public selection gate. Heldout validity has its own
+feasibility and count fields; any incomplete heldout split sets all heldout scientific estimates to
+zero and marks them suppressed.
 
 ## 7. Remaining gates
 

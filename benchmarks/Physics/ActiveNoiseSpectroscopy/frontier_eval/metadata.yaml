@@ -1,8 +1,8 @@
 domain: QuantumControl
 task: ActiveNoiseSpectroscopy
 scientific_role: discovery
-difficulty: hard
-tier: T2
+difficulty: unmeasured
+tier: candidate
 oracle_type: analytical_quantum_filter_function
 score_mode: clipped
 gpu_required: false

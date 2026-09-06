@@ -124,7 +124,9 @@ P(X+) = (1 + Re W)/2
 P(Y+) = (1 + Im W)/2.
 ```
 
-The total shot budget is 24,000. Calls are a single auditable random stream per world, control and
+`shots_per_quadrature` must be a non-boolean Python or NumPy integer; integer-valued floats,
+strings, `None`, and non-finite values are protocol errors. The total shot budget is 24,000. Calls
+are a single auditable random stream per world, control and
 quadrature: splitting one allocation into several calls neither repeats old shots nor creates an
 uncharged redraw. Every protocol error and every overspend invalidates that world even if your
 code catches the exception.
@@ -137,6 +139,11 @@ code catches the exception.
   parameter-recovery term scores all three parameters continuously.
 - `heldout_prediction_score` recomputes the complex coherence of the submitted mechanism on three
   evaluator-only controls. It is reported separately from mechanism recovery.
+- Public selection uses development only: `valid` and `combined_score` do not read heldout
+  outcomes. The evaluator separately publishes heldout valid/world/invalid counts, feasibility,
+  `heldout_science_complete`, and `heldout_science_estimates_suppressed`. If any heldout world is
+  invalid, every heldout scientific estimate is conservatively reported as zero and must not be
+  interpreted as success.
 - false-discovery rate, unsupported false-positive rate, correct refusal, unwarranted refusal, attempted discovery, confidence
   calibration, and shot use are separate diagnostics and are never averaged into the discovery
   score. Correctly saying “not a discovery” on a Gaussian null is a necessary true negative, not
