@@ -1,0 +1,11 @@
+1) Only edit solution.py. Keep build_certificate(instance).
+2) Return {"lower_certificates": [{"power": k, "vertices": [[c0, ..., c(k-1)], ...]}, ...],
+           "upper_certificate": {"matrix": [[...], ...], "bound": b}}.
+   Matrix entries and the bound are integers or exact [numerator, denominator] pairs. Floats are
+   rejected, not rounded: a numerical eigenvalue is not a certificate.
+3) Codewords are integer tuples over Z_cycle, distinct, at most instance["max_codewords"] of them,
+   power between 1 and instance["max_power"]; no two may be adjacent in the strong power. The
+   matrix is symmetric, has 1 on the diagonal and 1 at every non-adjacent pair, and bound*I-matrix
+   must be positive definite. Anything else scores that instance zero.
+4) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read
+   verification/ or frontier_eval/.

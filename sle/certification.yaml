@@ -578,6 +578,17 @@ tasks:
       return false bounds and is recorded; no frontier searcher draw yet, pending external
       discrete-geometry review
     citation_ids: [doi:10.4007/annals.2003.157.689, doi:10.4007/annals.2017.185.3.7, arxiv:2206.15373]
+  InformationTheory/ShannonCapacityCertificate:
+    status: candidate
+    reason: >-
+      two-sided certificates for the Shannon capacity of an odd cycle - a zero-error code in a
+      strong product power below, an exact rational Lovasz matrix above - scored by the width of
+      the interval they prove, uncapped. The zero of the scale is an explicit set shipped in
+      references/ rather than a citation, and the oracle's own independence test accepts all four;
+      the four published targets are quoted verbatim from arXiv:2607.29681 and carry retrieval
+      dates. Candidate rather than certified because no external information-theory review has
+      happened and the published anchors moved three times in July 2026.
+    citation_ids: [doi:10.1109/TIT.1979.1055985, arxiv:2607.29681, doi:10.1016/j.ipl.2018.11.006, doi:10.1016/S0020-0190(01)00229-0, arxiv:2607.21517]
   QuantumFoundations/BellBoundCertificate:
     status: candidate
     reason: >-

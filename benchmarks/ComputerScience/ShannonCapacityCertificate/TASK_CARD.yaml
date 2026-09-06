@@ -1,0 +1,178 @@
+schema_version: 2
+scientific_question: >-
+  Certify, rather than quote, an interval for the Shannon capacity of an odd cycle: exhibit a
+  zero-error code in a strong product power as the lower proof and an exact rational Lovasz matrix
+  as the upper proof, on four cycles whose capacities are all open and whose published lower bounds
+  moved three times in July 2026.
+artifact: >-
+  Per cycle, one or more sets of codewords over Z_n that are pairwise non-adjacent in the strong
+  power, plus a rational symmetric matrix with ones on the diagonal and at every non-edge together
+  with a rational bound that makes bound*I - matrix positive definite.
+oracle:
+  model: >-
+    exact combinatorial and exact rational arithmetic - a submitted code is checked by shifting
+    every codeword through the 3^k - 1 non-zero offsets in {0, +1, -1} and testing membership, and
+    a submitted matrix is checked for the forced-entry pattern and then for positive definiteness
+    by rational LDL with no tolerance; nothing is solved, only verified
+  feasibility: >-
+    distinct integer codewords inside the cycle, power within the instance cap, at most 4000
+    codewords and 8 codes per instance, rational entries within the magnitude cap, symmetric matrix
+    with every diagonal and non-edge entry exactly 1, and bound*I - matrix positive definite; any
+    failure scores that instance zero
+  deterministic: true
+normalization:
+  baseline: >-
+    every second vertex of the cycle as a block-length-one code, together with the all-ones matrix
+    whose largest eigenvalue is n - a correct certified interval, [floor(n/2), n], and an enormous
+    one; it scores exactly 0.000000 on all four instances with valid = 1
+  reference: >-
+    the classical two-coordinate code found by a plateau walk and squared where the cap allows, as
+    a floor, plus a sweep over cyclic codes {t*(1, m, m^2, ...) mod n} pushed into the cycle by
+    x -> floor(n_cycle*x/n), pruned of the collisions the rounding creates, extended greedily and
+    finished by a fixed-length plateau walk; the upper side bisects the one free variable of the
+    circulant Lovasz matrix on a rational grid and then bisects the bound upward until the exact
+    positive-definiteness test accepts
+  score: >-
+    mean over four instances of the linear progress in certified interval width, from the width the
+    shipped free set already proves to the width the best published lower bound would give,
+    uncapped above
+citations:
+  - id: doi:10.1109/TIT.1979.1055985
+    title: "Lovasz, On the Shannon capacity of a graph"
+  - id: arxiv:2607.29681
+    title: "Buys, Polak and Zuiddam, Lean-verified lower bounds for the Shannon capacity of odd cycles"
+  - id: doi:10.1016/j.ipl.2018.11.006
+    title: "Polak and Schrijver, New lower bound on the Shannon capacity of C7 from circular graphs"
+  - id: doi:10.1016/S0020-0190(01)00229-0
+    title: "Vesel and Zerovnik, Improved lower bound on the Shannon capacity of C7"
+  - id: arxiv:2607.21517
+    title: "Itty, Rosin, Carstensen and Reichman, Improved lower bounds for the Shannon capacity of odd cycles"
+invariants:
+  - >-
+    both sides of the interval are proofs rather than claims - a code either survives the shift test
+    or it does not, and a matrix either passes exact rational elimination or it does not - so the
+    oracle cannot be fooled by a numerically plausible object and nothing about how either was found
+    matters
+  - >-
+    the zero of the scale is a witness, not a citation: references/free_sets.json holds an explicit
+    set per instance and the oracle's own independence test accepts all four, so a wrong published
+    number cannot move the floor
+  - >-
+    exact elimination is affordable here for a reason that does not generalise - the matrix is n by n
+    with n fixed by the instance at 7, 13, 19 or 23 and the entries capped, so the cost is bounded by
+    the instance rather than by anything the candidate chooses; the sum-of-squares tasks in this
+    repository submit their certificate as squares precisely because that bound is absent there
+  - >-
+    verification of a code is |S| * 3^k dictionary lookups, bounded by the declared caps at
+    4000 * 243 for the largest instance; measured at 0.184 s for all four free-set certificates
+    together and 0.011 s to refuse an over-cap one
+  - >-
+    the scale is uncapped: the published target is a witness worth 1, and for C7 at power 5 a score
+    above 1 would be the first improvement on Polak and Schrijver since 2018
+  - malformed submissions score zero and never raise out of the evaluator
+known_shortcuts: >-
+  Twenty-four degenerate and adversarial submissions - floats in place of rationals, a bound below
+  theta, a non-edge entry relaxed from 1 to 0, an asymmetric matrix, a wrong-sized matrix, a zero
+  denominator, a boolean posing as an integer, a 4000-digit rational aimed at the verifier's running
+  time, a denominator over the cap, a coordinate outside the cycle, duplicated codewords, adjacent
+  codewords, a power of zero and a power above the cap, the whole vertex set at power one, an
+  over-cap code, an empty code, a missing upper certificate, a lower certificate that is not a list,
+  a codeword of the wrong length, a raising callable, a returned string and too many codes - all
+  score 0.000000 with valid = 0, and none raises out of the evaluator. The float rejection is
+  load-bearing: a numerical eigenvalue is not a proof, and accepting one would turn the upper side
+  into a solver call. The measured shortcut on the lower side is the more interesting one. Five
+  constructions that a competent submission reaches unaided all score exactly zero on C7 at power 5,
+  because all five land below the free bound the shipped power-4 set already proves: best of ten
+  random greedy 246, plateau walk from random starts 337, composition of the best power-2 and
+  power-3 codes 330, dimension-3 linear codes over GF(7) 343, and a plateau walk on the 2401-coset
+  quotient by a cyclic code 343. The GF(7) codes are the sharpest illusion - they are maximal, no
+  vertex can be added and no (1,1) swap improves them, and they are worth nothing. The recallable
+  content is worth something here and is disclosed rather than hidden: a submission that recalls
+  Polak and Schrijver's modulus 382 with multiplier 7, prunes and then runs a plateau walk reaches
+  366 of the 367 known codewords, which is most of the C7 instance. That is why the suite is four
+  cycles and not one - no comparable published parameter exists for C13, C19 or C23 at the powers
+  this task allows, so the construction has to be derived rather than recalled.
+review:
+  status: pending_external
+  # The pending marker lives in this field, not in `status` alone: scripts/audit_benchmark_standards.py
+  # reads `review.domain` to count external sign-offs, and a bare discipline name here reads as a
+  # review that has happened. Nothing in this inventory has been externally reviewed.
+  domain: pending_external_information_theory_and_combinatorics
+  evaluator_security: >-
+    The oracle's work is bounded by the submission's declared size and by the instance, never by the
+    submission's content. A code costs |S| * 3^k dictionary lookups with |S| capped at 4000 and k
+    capped at 5, and the matrix is n by n with n in {7, 13, 19, 23} and every entry capped at
+    10^9/10^6, so rational elimination is a few hundred operations on integers that cannot exceed
+    the cap raised to the twenty-third power. Measured: verifying all four free-set
+    certificates, the largest of which is a 1521-codeword power-4 code, costs the oracle
+    0.184 s, and refusing a 4000-codeword power-5 submission costs 0.011 s. This is why the matrix may be submitted directly here
+    while the sum-of-squares tasks in this repository must submit their certificate as squares:
+    there the matrix size is the candidate's choice and the elimination cost is unbounded. Candidate
+    code never runs in the oracle's process - it executes in the Bubblewrap sandbox over the
+    standard trusted-driver boundary, and both certificates cross that boundary as data. Twenty-four
+    malformed and adversarial submissions, including a 4000-digit rational aimed at the running
+    time, score zero without raising.
+provenance:
+  class: known_answer
+  target_source: >-
+    The four published lower bounds are quoted verbatim from the abstract of arXiv:2607.29681 and
+    recorded with their retrieval date in references/anchors.json. theta is Lovasz's closed form and
+    is independently re-derived by the reference rather than read from the table.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: high
+  rationale: >-
+    This is the highest novelty risk of any certificate task in this inventory and the card says so
+    rather than arguing it away. Polak and Schrijver's parameters for C7 at power 5 are published,
+    memorable and worth about 0.92 of that instance once combined with a plateau walk - measured,
+    not estimated. Three mitigations, in order of strength: the suite is four cycles and only C7 has
+    a published parameter at an allowed power, so three quarters of the score has to be derived; the
+    codeword sets themselves are not recallable, since 367 five-tuples cannot be reproduced from
+    memory and any single error fails the shift test; and the free bound is set at the last exactly
+    known value, so every construction short of the circular-graph route scores exactly zero rather
+    than partial credit. The residual risk is the opposite one - that the published anchors move.
+    Three of them moved in July 2026 alone, which is why they carry retrieval dates and why this
+    cell is treated as actively researched.
+lineage:
+  status: complete
+  builder_model_ids: ["claude-opus-5"]
+  builder_scaffolds: ["claude-code"]
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    None yet. Six construction checkpoints changed the task before any model saw it. The instance
+    suite went from one cycle to four after measurement showed a single C7 instance was most of the
+    way solved by a recallable parameter. C11 was cut because its power-3 circular code reaches
+    5.2898 against a published 5.2945, leaving a 5 per cent band. The C13 instance moved from power
+    4 to power 3 because the power-4 sweep reaches 1513 codewords and 1513^(1/4) is below what
+    squaring the two-coordinate set already proves, while 245 at power 3 is above it. The diagonal
+    shift v -> v + (1,...,1) was tried as the symmetry to quotient by and abandoned: it is adjacent
+    in every coordinate, so no orbit is internally independent and the quotient graph is empty. The
+    free bound for C7 was held at the published power-4 value 108 rather than the 106 the first
+    search runs reached, and 108 was then found here after six seeded restarts, three of which
+    reached it. The classical-floor budget was raised from half a million draws to three restarts of
+    two million after 500k reached 125 of the 126 codewords for C23.
+  shortcut_discoverer: builder_red_team
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: claude-opus-5
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 3
+  oracle_disagreement_status: >-
+    quantified against three independent references with no disagreement - the closed form for theta
+    is reproduced to 1.5e-6 by an exact rational certificate that never names cos(pi/n), the
+    classical two-coordinate value floor(n(n-1)/4) is re-found by search for all four cycles, and the
+    circular-code sweep independently rediscovers the published (382, 7) parameters for C7
+  independent_recomputation_status: >-
+    the free-bound witnesses, the reference, the twenty-four-probe shortcut sweep and the five
+    measured dead-end constructions are all reproducible from verification/ and references/
