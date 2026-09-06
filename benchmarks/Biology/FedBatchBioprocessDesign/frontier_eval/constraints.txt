@@ -1,0 +1,1 @@
+Only edit solution.py and keep design_process(problem). Return three bounded feed rates plus induction and harvest times. NumPy/SciPy only; deterministic CPU code; no verification/frontier_eval access.
