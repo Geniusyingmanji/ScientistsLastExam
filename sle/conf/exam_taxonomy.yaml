@@ -33,6 +33,7 @@ discovery_kind:
   parameter_inversion: recover numbers of a form that is already named
 
 tasks:
+  Algorithm/ScalingLawIdentification: {form: discovery, kind: formula, note: asymptotic_classes_not_recurrences}
   # --- optimization / frontier-eng ------------------------------------------
   Thermodynamics/HeatExchangerDesign: {form: optimization, analogue: engineering_design}
   StructuralEngineering/TrussWeightMinimization: {form: optimization, analogue: engineering_design}
