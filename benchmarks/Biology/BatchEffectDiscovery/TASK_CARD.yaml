@@ -1,0 +1,37 @@
+schema_version: 2
+scientific_question: Recover differential expression under batch effects and refuse when condition is structurally confounded.
+artifact: Gene-effect claims or a calibrated identifiability refusal after charged follow-up samples.
+oracle:
+  model: Deterministic negative-binomial procedural count panels with supported, null, and fully confounded worlds.
+  feasibility: Claims use declared genes and finite effects; only available cells may be sampled within budget.
+  deterministic: true
+normalization:
+  baseline: Batch-blind marginal fold-change thresholding normalizes to zero.
+  reference: Recomputed per run by truth-blind rank checks, balanced sampling and batch-aware log-count regression.
+  score: Development scientific utility is normalized above the baseline and all no-discovery policies; discovery axes remain separate.
+citations:
+- {id: "doi:10.1186/s13059-014-0550-8", title: "Moderated estimation of fold change and dispersion for RNA-seq data with DESeq2"}
+- {id: "doi:10.1093/nargab/lqaa078", title: "ComBat-seq: batch effect adjustment for RNA-seq count data"}
+invariants:
+- Floating-point aggregation order is independent of process hash randomization.
+- Fully confounded worlds expose no legal cross-cell sample.
+- Null worlds contain no condition effects.
+- False-discovery rates publish numerator and denominator.
+- Blanket abstention and the shipped baseline score zero.
+known_shortcuts: Identical initial layouts and identical supported/null query menus remove the sample-count label shortcut. Blanket denial and all layout-only no-discovery policies score zero. Fixed-regression saturation and independent calibration remain pending.
+review: {domain: pending_external_biostatistics, evaluator_security: internal_budget_rng_schema_refusal_and_metric_sealing_tests}
+provenance: {class: procedural, target_source: Repository-visible deterministic negative-binomial panels with held-out seeds., task_contract_public_before_evaluation: true, fresh_confirmation_status: not_completed}
+novelty_risk: {level: medium, rationale: Standard RNA-seq models are public and fixed workflows may solve the prototype.}
+lineage:
+  status: complete
+  builder_model_ids: ["openai-codex:current-session"]
+  builder_scaffolds: ["codex-desktop"]
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: Internal PR review reproduced scoring or shortcut failures; repaired on 2026-09-05. No frontier calibration draw has run.
+  shortcut_discoverer: internal_reference_and_manual_review
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit: {status: prototype_internal, author_domain: computational_science, reviewer_domain: pending_external, expert_hours: null, red_team_rounds: 1, oracle_disagreement_status: not_quantified, independent_recomputation_status: reference_and_invariant_tests_only}
+long_horizon: {status: not_tested, measurement_health_passed: false, material_headroom_after_2h: false, evidence: []}

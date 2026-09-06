@@ -733,3 +733,87 @@ tasks:
       - doi:10.1103/PhysRevLett.93.165501
       - doi:10.1016/0375-9601(74)90847-0
       - doi:10.1063/1.1723844
+  MetabolicEngineering/MetabolicStrainDesign:
+    status: candidate
+    reason: Deterministic reduced stoichiometric LP prototype with alternate-optimum
+      worst-case production scoring and held-out regimes; baseline/reference and invariants
+      pass locally, pending larger server-held networks, shortcut and frontier-model
+      calibration, paired open-loop controls, and independent metabolic-engineering
+      review
+    citation_ids:
+    - doi:10.1002/bit.10803
+    - doi:10.1093/bioinformatics/btp704
+  Genomics/BatchEffectDiscovery:
+    status: candidate
+    reason: Deterministic charged negative-binomial count prototype with supported,
+      null and structurally confounded worlds plus separate recovery, false-discovery,
+      refusal and coverage metrics; pending stronger fixed-pipeline probes, server-held
+      panels, paired controls and independent biostatistics review
+    citation_ids:
+    - doi:10.1186/s13059-014-0550-8
+    - doi:10.1093/nargab/lqaa078
+  Microbiology/MetagenomeCompositionAssignment:
+    status: candidate
+    reason: Deterministic charged marker-mixture prototype with identifiable, exact-alias
+      and detectably outside-reference-cone worlds plus separate discovery axes; pending
+      realistic mapping and copy-number shifts, fixed-pipeline saturation probes, paired
+      controls and independent metagenomics review
+    citation_ids:
+    - doi:10.1093/bioinformatics/btu721
+  Bioprocess/FedBatchBioprocessDesign:
+    status: candidate
+    reason: Deterministic reduced-order robust open-loop fed-batch prototype with overflow
+      inhibition, induction burden and hard process constraints; pending independent
+      integrator cross-check, low-dimensional saturation probes, paired controls and
+      independent bioprocess review
+    citation_ids:
+    - doi:10.1016/j.ifacol.2020.12.1167
+  Phylogenetics/PhylogeneticParsimonySearch:
+    status: candidate
+    reason: Exact Fitch verifier on deterministic procedural alignments with strict
+      Newick validation and recomputed baseline/reference anchors; pending small-instance
+      exhaustive cross-check, SPR and ratchet shortcut probes, open-loop saturation
+      evidence and independent phylogenetics review
+    citation_ids:
+    - doi:10.1111/j.1096-0031.1999.tb00277.x
+    - doi:10.1186/s12859-018-2009-1
+  Genomics/DiploidHaplotypeAssembly:
+    status: candidate
+    reason: Procedural reduced-model implementation with input-only classical reference;
+      independent invariant and sandbox checks are internal evidence only; external
+      domain review, frontier calibration, server-held worlds and long-horizon validation
+      remain pending
+    citation_ids:
+    - doi:10.1101/gr.213462.116
+  ConservationBiology/RobustReserveNetworkDesign:
+    status: candidate
+    reason: Procedural reduced-model implementation with input-only classical reference;
+      independent invariant and sandbox checks are internal evidence only; external
+      domain review, frontier calibration, server-held worlds and long-horizon validation
+      remain pending
+    citation_ids:
+    - doi:10.1038/35008063
+  Biophysics/SingleMoleculeKinetics:
+    status: candidate
+    reason: Procedural reduced-model implementation with input-only classical reference;
+      independent invariant and sandbox checks are internal evidence only; external
+      domain review, frontier calibration, server-held worlds and long-horizon validation
+      remain pending
+    citation_ids:
+    - doi:10.1016/j.bpj.2013.12.055
+  MetabolicEngineering/IsotopeFluxIdentifiability:
+    status: candidate
+    reason: Procedural reduced-model implementation with input-only classical reference;
+      independent invariant and sandbox checks are internal evidence only; external
+      domain review, frontier calibration, server-held worlds and long-horizon validation
+      remain pending
+    citation_ids:
+    - doi:10.1016/j.ymben.2006.09.001
+  StructuralBiology/ProteinDistanceGeometry:
+    status: candidate
+    reason: Procedural reduced-model implementation with input-only classical reference;
+      independent invariant and sandbox checks are internal evidence only; external
+      domain review, frontier calibration, server-held worlds and long-horizon validation
+      remain pending
+    citation_ids:
+    - doi:10.1023/A:1008380219900

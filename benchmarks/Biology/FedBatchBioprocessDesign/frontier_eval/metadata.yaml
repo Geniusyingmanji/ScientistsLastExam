@@ -1,0 +1,13 @@
+domain: Bioprocess
+task: FedBatchBioprocessDesign
+scientific_role: optimization
+difficulty: hard
+tier: T2
+oracle_type: reduced_order_bioprocess_sim
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 20
+science_metric: worst_case_productivity_under_growth_and_oxygen_transfer_shifts
+reference_baseline: constant low feed with fixed induction and harvest
+reference_sota: bounded robust grid-search witness; normalization anchor only
+citation: "Sbarciog et al. 2020, DOI 10.1016/j.ifacol.2020.12.1167"

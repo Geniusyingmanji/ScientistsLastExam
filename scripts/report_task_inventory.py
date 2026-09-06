@@ -34,6 +34,17 @@ CERTIFICATION = ROOT / "sle" / "certification.yaml"
 # Chinese name per task, shown in the first column beside the English directory name. The
 # directory name is the identifier and never changes; this is what a Chinese reader scans for.
 CHINESE_NAMES = {
+    "Genomics/DiploidHaplotypeAssembly": "混合读段二倍体单倍型组装",
+    "ConservationBiology/RobustReserveNetworkDesign": "多物种保护区网络稳健设计",
+    "Biophysics/SingleMoleculeKinetics": "单分子荧光动力学辨识",
+    "MetabolicEngineering/IsotopeFluxIdentifiability": "同位素示踪通量可辨识性",
+    "StructuralBiology/ProteinDistanceGeometry": "蛋白主链距离几何",
+
+    "Bioprocess/FedBatchBioprocessDesign": "补料发酵稳健设计",
+    "Genomics/BatchEffectDiscovery": "批次混杂差异表达发现",
+    "MetabolicEngineering/MetabolicStrainDesign": "生长偶联代谢菌株设计",
+    "Microbiology/MetagenomeCompositionAssignment": "宏基因组组成指认",
+    "Phylogenetics/PhylogeneticParsimonySearch": "最大简约系统发育树搜索",
     "Acoustics/RoomImpulseResponse": "房间声学处理设计",
     "Algorithm/GraphFromDistances": "距离查询重建图",
     "Algorithm/MatrixMultiplicationRank": "矩阵乘法秩",
@@ -117,6 +128,27 @@ CHINESE_NAMES = {
 # people deciding which task to look at. A task without an entry fails the inventory test,
 # so a new package cannot silently ship without one.
 CHINESE_BRIEFS = {
+    "Genomics/DiploidHaplotypeAssembly": ("在带错误率的多位点读段上恢复相位", "读段混合似然相对参考的改进"),
+    "ConservationBiology/RobustReserveNetworkDesign": ("预算内选择地块并维持动态占域", "最坏情景占域效用"),
+    "Biophysics/SingleMoleculeKinetics": ("通过有预算的光子轨迹恢复隐态切换速率", "机制恢复、假发现与拒答分别报告"),
+    "MetabolicEngineering/IsotopeFluxIdentifiability": ("从碳原子标记传播辨识净通量和总交换", "可辨识通量误差、假发现与拒答"),
+    "StructuralBiology/ProteinDistanceGeometry": ("构建满足距离、排斥和局部手性约束的粗粒化坐标", "公开几何损失相对参考的质量提升"),
+
+    "Bioprocess/FedBatchBioprocessDesign": (
+        "设计三阶段补料、诱导与收获时刻,在溢流代谢和氧传递限制下保持生产率",
+        "跨生长与氧传递偏移的最坏生产率;体积、乙酸和终态生物量硬门控"),
+    "Genomics/BatchEffectDiscovery": (
+        "在有限补测预算下从负二项 RNA 计数中区分真实条件效应与批次混杂",
+        "基因恢复、假发现率、结构不可辨识拒答和发现覆盖率分列"),
+    "MetabolicEngineering/MetabolicStrainDesign": (
+        "在冻结化学计量网络上选择反应敲除,让产物与最优生长稳健偶联",
+        "在整个生长最优面上的最坏产量乘生长;留出代谢系数分列"),
+    "Microbiology/MetagenomeCompositionAssignment": (
+        "从收费 marker 计数中恢复分类单元与丰度,保留近缘别名并识别参考库不足",
+        "组成恢复、别名/库外拒答与假发现率分列"),
+    "Phylogenetics/PhylogeneticParsimonySearch": (
+        "为给定序列比对搜索 Fitch 变化数更低的二叉 Newick 树",
+        "从 caterpillar 基线到真值盲聚类见证的简约得分缺口闭合"),
     "Acoustics/RoomImpulseResponse": (
         "布置声源、吸声与受点,让语音房间同时兼顾清晰度、混响时间与声场均匀度",
         "清晰度/混响/均匀度综合效用;一阶反射代理与镜像源长程计算排序不同,含安装误差与老化偏移"),

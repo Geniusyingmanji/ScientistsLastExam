@@ -1,0 +1,15 @@
+domain: MetabolicEngineering
+task: IsotopeFluxIdentifiability
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: frozen_procedural_model
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 120
+science_metric: Full two-carbon isotopomer propagation; identifiable aggregate exchange
+  flux
+reference_baseline: Legal zero-score baseline in solution.py
+reference_sota: Input-only reference in verification/evaluator.py; normalization anchor,
+  not a frontier claim
+citation: 10.1016/j.ymben.2006.09.001

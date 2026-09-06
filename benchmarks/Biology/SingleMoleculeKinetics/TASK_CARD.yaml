@@ -1,0 +1,71 @@
+schema_version: 2
+scientific_question: Single-molecule photon trajectory kinetics
+artifact: Return the strict typed artifact specified in Task.md.
+oracle:
+  model: Two-state CTMC with instantaneous Poisson emissions and identifiable-rate
+    claims
+  feasibility: Strict output validation; trusted oracle recomputation; resource violations
+    fail closed.
+  deterministic: true
+normalization:
+  baseline: Legal baseline in solution.py scores exactly zero.
+  reference: Input-only frozen reference; see references/known_best.md.
+  score: Clipped development score; held-out worlds reported separately.
+citations:
+- id: doi:10.1016/j.bpj.2013.12.055
+  title: Empirical Bayes Methods Enable Advanced Population-Level Analyses of Single-Molecule
+    FRET Experiments
+invariants:
+- Frozen procedural worlds and deterministic oracle.
+- Candidate mutations do not modify trusted scoring inputs.
+known_shortcuts: The reference correctly refuses the null and identical-emission worlds.
+  An analytic two-state transition check and a simultaneous label-swap check pass.
+  The all-claim equal-emitter candidate and the all-refusal candidate both score zero.
+  Two-state separated-emission HMMs are easy for classical estimation here. No bleaching
+  or population hierarchy is implemented. No ebFRET comparison, hundreds-of-probes
+  sweep or long-horizon headroom evidence is available.
+review:
+  domain: pending_external_domain_review
+  evaluator_security: internal_strict_schema_budget_invariant_and_subprocess_tests;
+    shared Linux sandbox contribution gate
+provenance:
+  class: procedural
+  target_source: Procedural model; repository-visible development and shifted held-out
+    worlds, not server-secret data.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+  license: Original implementation and synthetic instances; no third-party source
+    code or datasets redistributed. External papers are citations only.
+novelty_risk:
+  level: high
+  rationale: Established problem class; external scope and difficulty review remain
+    pending.
+lineage:
+  status: complete
+  builder_model_ids:
+  - openai-codex:current-session
+  builder_scaffolds:
+  - codex-desktop
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: Sequential implementation requested by user; no frontier
+    calibration draws.
+  shortcut_discoverer: internal_reference_and_manual_review
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: prototype_internal
+  author_domain: computational_science
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: Independent task-specific analytic/invariant checks
+    pass; external implementation comparison pending.
+  independent_recomputation_status: See task-specific invariant tests; external package
+    cross-validation pending.
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []

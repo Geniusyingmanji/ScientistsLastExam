@@ -1,0 +1,35 @@
+schema_version: 2
+scientific_question: Search binary tree space for lower Fitch parsimony cost without claiming that the objective identifies true history.
+artifact: A Newick topology containing every supplied taxon exactly once.
+oracle:
+  model: Exact unordered Fitch scoring on deterministic procedural alignments.
+  feasibility: The independent parser requires a finite-size strictly binary tree with exact leaf coverage.
+  deterministic: true
+normalization:
+  baseline: Deterministic caterpillar topology normalizes to zero.
+  reference: Recomputed per run by a truth-blind average-linkage starting-tree witness.
+  score: Nonnegative parsimony-gap closure is uncapped above the reference; held-out alignments are separate.
+citations:
+- {id: "doi:10.1111/j.1096-0031.1999.tb00277.x", title: "The Parsimony Ratchet, a New Method for Rapid Parsimony Analysis"}
+- {id: "doi:10.1186/s12859-018-2009-1", title: "MPBoot: fast phylogenetic maximum parsimony tree inference and bootstrap approximation"}
+invariants:
+- Leaf-order and internal-node naming do not enter the parsimony objective.
+- Every taxon appears exactly once and multifurcations are invalid.
+- Small trees are cross-checkable by topology enumeration.
+known_shortcuts: Average linkage reaches only the normalization witness; an NNI probe exceeds it, while mature ratchet or SPR implementations may still be strong on public procedural panels.
+review: {domain: pending_external_phylogenetics, evaluator_security: internal_parser_fitch_permutation_malformed_tree_and_small_instance_tests}
+provenance: {class: procedural, target_source: Repository-visible deterministic alignments with held-out seeds., task_contract_public_before_evaluation: true, fresh_confirmation_status: not_completed}
+novelty_risk: {level: high, rationale: Standard phylogenetic heuristics are mature and may be reproduced from pretraining.}
+lineage:
+  status: complete
+  builder_model_ids: ["openai-codex:current-session"]
+  builder_scaffolds: ["codex-desktop"]
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: Initial construction; no frontier calibration has yet triggered edits.
+  shortcut_discoverer: internal_reference_and_manual_review
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit: {status: prototype_internal, author_domain: computational_science, reviewer_domain: pending_external, expert_hours: null, red_team_rounds: 1, oracle_disagreement_status: not_quantified, independent_recomputation_status: reference_and_invariant_tests_only}
+long_horizon: {status: not_tested, measurement_health_passed: false, material_headroom_after_2h: false, evidence: []}

@@ -1,0 +1,1 @@
+Only edit solution.py; preserve design_reserve. Deterministic CPU NumPy/SciPy code. No access to verification or frontier_eval. Follow Task.md including all budgets.

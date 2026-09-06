@@ -33,7 +33,14 @@ discovery_kind:
   parameter_inversion: recover numbers of a form that is already named
 
 tasks:
+  Genomics/DiploidHaplotypeAssembly: {form: optimization, analogue: combinatorial}
+  ConservationBiology/RobustReserveNetworkDesign: {form: optimization, analogue: engineering_design}
+  Biophysics/SingleMoleculeKinetics: {form: discovery, kind: parameter_inversion}
+  MetabolicEngineering/IsotopeFluxIdentifiability: {form: discovery, kind: parameter_inversion}
+  StructuralBiology/ProteinDistanceGeometry: {form: optimization, analogue: molecular_design}
   # --- optimization / frontier-eng ------------------------------------------
+  MetabolicEngineering/MetabolicStrainDesign: {form: optimization, analogue: engineering_design}
+  Bioprocess/FedBatchBioprocessDesign: {form: optimization, analogue: engineering_design}
   Thermodynamics/HeatExchangerDesign: {form: optimization, analogue: engineering_design}
   StructuralEngineering/TrussWeightMinimization: {form: optimization, analogue: engineering_design}
   Semiconductor/MOSFETDoping: {form: optimization, analogue: engineering_design}
@@ -73,6 +80,7 @@ tasks:
   Algorithm/MatrixMultiplicationRank: {form: optimization, analogue: combinatorial}
   Algorithm/TensorRank555: {form: optimization, analogue: combinatorial, note: new_sizes_not_extension_of_certified_matmul}
   QuantumErrorCorrection/QuantumErrorDecoder: {form: optimization, analogue: combinatorial}
+  Phylogenetics/PhylogeneticParsimonySearch: {form: optimization, analogue: combinatorial}
   # --- optimization / molecular & macromolecular design (PMO / BioDesign) -----
   MedicinalChemistry/MolecularLeadOptimization: {form: optimization, analogue: molecular_design}
   ProteinEngineering/ProteinStabilityDesign: {form: optimization, analogue: molecular_design}
@@ -95,8 +103,10 @@ tasks:
   ParticlePhysics/LookElsewhereAnomaly: {form: discovery, kind: evidence, note: trials_factor_not_clone_of_discrepant_measurements}
   Gravitation/PTAHellingsDowns: {form: discovery, kind: evidence, note: hd_orf_not_lookelsewhere_bump}
   EvidenceSynthesis/ProspectiveMetaAnalysis: {form: discovery, kind: evidence}
+  Genomics/BatchEffectDiscovery: {form: discovery, kind: evidence}
   # --- discovery / substance --------------------------------------------------
   MaterialsScience/PhaseDiagramDiscovery: {form: discovery, kind: substance}
+  Microbiology/MetagenomeCompositionAssignment: {form: discovery, kind: substance}
   Physics/HiddenCouplingNetwork: {form: discovery, kind: structure}
   ClimateScience/ForcedSignalAttribution: {form: discovery, kind: evidence}
   StructuralEngineering/ModalDamageAttribution: {form: discovery, kind: evidence}

@@ -1,0 +1,1 @@
+Only edit solution.py and keep build_tree(problem). Return one binary Newick tree containing every declared taxon exactly once. NumPy/SciPy only; deterministic CPU code; no verification/frontier_eval access.

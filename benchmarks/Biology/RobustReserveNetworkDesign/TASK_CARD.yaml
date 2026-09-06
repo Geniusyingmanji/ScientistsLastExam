@@ -1,0 +1,69 @@
+schema_version: 2
+scientific_question: Robust multi-species reserve network design
+artifact: Return the strict typed artifact specified in Task.md.
+oracle:
+  model: Worst-scenario final quality-weighted dynamic occupancy
+  feasibility: Strict output validation; trusted oracle recomputation; resource violations
+    fail closed.
+  deterministic: true
+normalization:
+  baseline: Legal baseline in solution.py scores exactly zero.
+  reference: Input-only frozen reference; see references/known_best.md.
+  score: Clipped development score; held-out worlds reported separately.
+citations:
+- id: doi:10.1038/35008063
+  title: The metapopulation capacity of a fragmented landscape
+invariants:
+- Frozen procedural worlds and deterministic oracle.
+- Candidate mutations do not modify trusted scoring inputs.
+known_shortcuts: On development world 0, optimizing without dispersal yielded 0.630596
+  of full robust utility; optimizing only scenario 0 yielded 0.674500. The best of
+  256 random budget-feasible sets reached 0.802594 of the reference. The measured
+  loss from removing dynamics/scenarios supports those mechanisms. Expert ecological
+  review, stronger combinatorial baselines and larger spatially heterogeneous instances
+  are still needed.
+review:
+  domain: pending_external_domain_review
+  evaluator_security: internal_strict_schema_budget_invariant_and_subprocess_tests;
+    shared Linux sandbox contribution gate
+provenance:
+  class: procedural
+  target_source: Procedural model; repository-visible development and shifted held-out
+    worlds, not server-secret data.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+  license: Original implementation and synthetic instances; no third-party source
+    code or datasets redistributed. External papers are citations only.
+novelty_risk:
+  level: high
+  rationale: Established problem class; external scope and difficulty review remain
+    pending.
+lineage:
+  status: complete
+  builder_model_ids:
+  - openai-codex:current-session
+  builder_scaffolds:
+  - codex-desktop
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: Sequential implementation requested by user; no frontier
+    calibration draws.
+  shortcut_discoverer: internal_reference_and_manual_review
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: prototype_internal
+  author_domain: computational_science
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: Independent task-specific analytic/invariant checks
+    pass; external implementation comparison pending.
+  independent_recomputation_status: See task-specific invariant tests; external package
+    cross-validation pending.
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []

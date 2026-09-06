@@ -1,0 +1,19 @@
+# Project-local development and oracle environment (Python 3.11).
+#
+# Create with:
+#   /opt/homebrew/bin/python3.11 -m venv .venv
+#   .venv/bin/python -m pip install -r requirements-local.txt
+
+numpy>=1.24,<2
+scipy>=1.10,<1.12
+PyYAML>=6,<7
+pytest>=8,<9
+
+-r benchmarks/Biology/RNAEnsembleDesign/verification/requirements.txt
+-r benchmarks/Chemistry/MolecularLeadOptimization/verification/requirements.txt
+-r benchmarks/Chemistry/SpinSystemInference/verification/requirements.txt
+-r benchmarks/ComputerScience/GraphFromDistances/verification/requirements.txt
+-r benchmarks/Mathematics/SequenceLawRecovery/verification/requirements.txt
+-r benchmarks/Physics/HamiltonianLearning/verification/requirements.txt
+-r benchmarks/Physics/QuantumErrorDecoder/verification/requirements.txt
+-r benchmarks/Physics/RadialVelocityPlanets/verification/requirements.txt

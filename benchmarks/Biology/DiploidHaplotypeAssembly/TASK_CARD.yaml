@@ -1,0 +1,69 @@
+schema_version: 2
+scientific_question: Diploid phase assembly from linked noisy fragments
+artifact: Return the strict typed artifact specified in Task.md.
+oracle:
+  model: Exact equal-homolog fragment mixture log likelihood
+  feasibility: Strict output validation; trusted oracle recomputation; resource violations
+    fail closed.
+  deterministic: true
+normalization:
+  baseline: Legal baseline in solution.py scores exactly zero.
+  reference: Input-only frozen reference; see references/known_best.md.
+  score: Clipped development score; held-out worlds reported separately.
+citations:
+- id: doi:10.1101/gr.213462.116
+  title: 'HapCUT2: robust and accurate haplotype assembly for diverse sequencing technologies'
+invariants:
+- Frozen procedural worlds and deterministic oracle.
+- Candidate mutations do not modify trusted scoring inputs.
+known_shortcuts: 256 random phases achieved at most 0.106985; independent per-site
+  majority voting scored 0.138633 on development world 0. Eight random starts gained
+  0.0 log-likelihood over the spectral reference on that world. Read-level linkage
+  matters, but the current spectral/local-search reference may already saturate this
+  reduced panel. HapCUT2 comparison, correlated-error technologies and harder coverage
+  shifts remain unimplemented.
+review:
+  domain: pending_external_domain_review
+  evaluator_security: internal_strict_schema_budget_invariant_and_subprocess_tests;
+    shared Linux sandbox contribution gate
+provenance:
+  class: procedural
+  target_source: Procedural model; repository-visible development and shifted held-out
+    worlds, not server-secret data.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+  license: Original implementation and synthetic instances; no third-party source
+    code or datasets redistributed. External papers are citations only.
+novelty_risk:
+  level: high
+  rationale: Established problem class; external scope and difficulty review remain
+    pending.
+lineage:
+  status: complete
+  builder_model_ids:
+  - openai-codex:current-session
+  builder_scaffolds:
+  - codex-desktop
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: Sequential implementation requested by user; no frontier
+    calibration draws.
+  shortcut_discoverer: internal_reference_and_manual_review
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: prototype_internal
+  author_domain: computational_science
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: Independent task-specific analytic/invariant checks
+    pass; external implementation comparison pending.
+  independent_recomputation_status: See task-specific invariant tests; external package
+    cross-validation pending.
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []

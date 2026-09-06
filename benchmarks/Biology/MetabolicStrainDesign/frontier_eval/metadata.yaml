@@ -1,0 +1,13 @@
+domain: MetabolicEngineering
+task: MetabolicStrainDesign
+scientific_role: optimization
+difficulty: hard
+tier: T2
+oracle_type: constraint_based_metabolic_lp
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 5
+science_metric: worst_case_growth_coupled_product_yield_across_metabolic_regimes
+reference_baseline: unchanged strain with no reaction knockouts
+reference_sota: truth-blind exhaustive small-cardinality knockout witness; normalization anchor only
+citation: "Burgard et al. 2003, DOI 10.1002/bit.10803; Tepper and Shlomi 2010, DOI 10.1093/bioinformatics/btp704"

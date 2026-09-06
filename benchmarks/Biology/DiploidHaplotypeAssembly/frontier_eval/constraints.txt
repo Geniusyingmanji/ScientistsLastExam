@@ -1,0 +1,1 @@
+Only edit solution.py; preserve assemble_haplotypes. Deterministic CPU NumPy/SciPy code. No access to verification or frontier_eval. Follow Task.md including all budgets.

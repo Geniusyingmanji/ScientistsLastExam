@@ -1,0 +1,34 @@
+schema_version: 2
+scientific_question: Design feed, induction, and harvest schedules that retain productivity across growth and oxygen-transfer shifts.
+artifact: Three bounded feed rates and two process times; the oracle independently simulates trajectories.
+oracle:
+  model: Deterministic reduced-order fed-batch ODE with substrate limitation, overflow inhibition, induction burden and dilution.
+  feasibility: Feed, time, volume, acetate and terminal biomass constraints fail closed.
+  deterministic: true
+normalization:
+  baseline: Constant low feed with fixed induction and harvest normalizes to zero.
+  reference: Recomputed per run by a bounded truth-blind robust grid-search witness.
+  score: Worst-shift productivity is clipped between baseline and reference; held-out reactor regimes are separate.
+citations:
+- {id: "doi:10.1016/j.ifacol.2020.12.1167", title: "Optimal control of a fed-batch reactor with overflow metabolism"}
+invariants:
+- Negative or non-finite schedules are invalid.
+- Every design is evaluated under identical nominal and shifted regimes.
+- Candidate-reported trajectories and objectives are ignored.
+known_shortcuts: The three-stage open-loop policy is low dimensional and may be saturated by grid or differential-evolution search; calibration must show headroom before admission.
+review: {domain: pending_external_bioprocess_engineering, evaluator_security: internal_integrator_bounds_shift_schema_and_malformed_output_tests}
+provenance: {class: procedural, target_source: Repository-visible reduced-order reactor panels with held-out parameters., task_contract_public_before_evaluation: true, fresh_confirmation_status: not_completed}
+novelty_risk: {level: medium, rationale: The reduced kinetics and policy class are public and may admit simple parameter search.}
+lineage:
+  status: complete
+  builder_model_ids: ["openai-codex:current-session"]
+  builder_scaffolds: ["codex-desktop"]
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: Internal PR review reproduced nested-array evaluator failure and incomplete public model documentation; both repaired on 2026-09-05. No frontier calibration draw has run.
+  shortcut_discoverer: internal_reference_and_manual_review
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit: {status: prototype_internal, author_domain: computational_science, reviewer_domain: pending_external, expert_hours: null, red_team_rounds: 1, oracle_disagreement_status: not_quantified, independent_recomputation_status: reference_and_invariant_tests_only}
+long_horizon: {status: not_tested, measurement_health_passed: false, material_headroom_after_2h: false, evidence: []}

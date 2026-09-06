@@ -1,0 +1,73 @@
+schema_version: 2
+scientific_question: Recover taxa and abundance from marker counts while preserving
+  strain aliases and rejecting a detectably inadequate reference library.
+artifact: Concrete taxon-abundance claims, alias groups, or library-inadequacy refusal
+  after charged panels.
+oracle:
+  model: Deterministic multinomial marker mixtures with identifiable, exact-alias,
+    and outside-reference-cone worlds.
+  feasibility: Taxa, groups, abundances, panel identifiers and budget are strictly
+    checked.
+  deterministic: true
+normalization:
+  baseline: Single-marker nearest-reference assignment normalizes to zero.
+  reference: Recomputed per run by truth-blind panel-conditional mixture fitting with
+    alias grouping and residual refusal.
+  score: Composition and refusal utility is normalized above blanket abstention; discovery
+    axes and held-out worlds remain separate.
+citations:
+- id: doi:10.1093/bioinformatics/btu721
+  title: 'TIPP: taxonomic identification and phylogenetic profiling'
+invariants:
+- Floating-point aggregation order is independent of process hash randomization.
+- Identical reference columns cannot earn strain-level credit.
+- Detectable library-inadequacy worlds contain a marker outside the reference cone.
+- Taxon and marker permutations preserve scores.
+- False-discovery rates publish numerator and denominator.
+known_shortcuts: Regression probes add five false taxa to each alias-world reference
+  output; every extra claim is counted and reduces composition credit. The controlled
+  marker abstraction omits read mapping, copy-number variation and real specimens;
+  no sample-identification claim is supported.
+review:
+  domain: pending_external_metagenomics
+  evaluator_security: internal_budget_rng_alias_residual_schema_and_malformed_output_tests
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic marker-mixture panels with held-out
+    seeds.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: 'Marker-panel mixture inference is an established problem class. The
+    near-duplicate Metagenomics/MetagenomicMixtureID was removed by the PR #9 author
+    and is absent from split PR #22, so only this task remains in the pending submissions.
+    Alias handling and unsupported-taxon penalties do not themselves establish expert-level
+    novelty or difficulty.'
+lineage:
+  status: complete
+  builder_model_ids:
+  - openai-codex:current-session
+  builder_scaffolds:
+  - codex-desktop
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: Internal PR review reproduced scoring or shortcut failures;
+    repaired on 2026-09-05. No frontier calibration draw has run.
+  shortcut_discoverer: internal_reference_and_manual_review
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: prototype_internal
+  author_domain: computational_science
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: reference_and_invariant_tests_only
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
