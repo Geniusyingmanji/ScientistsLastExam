@@ -52,6 +52,10 @@ amplitude recovery (0.15), and confidence (0.10). Ambiguous worlds score only fo
 model accuracy, false discovery, refusal, budget, feasibility and held-out transfer are reported
 separately. Held-out worlds and per-world truth are not search-visible.
 
+The task-local reference scores 0.561. Removing g-band sampling or calibrated refusal lowers the
+development score to 0.118 or 0.000. A 4,116-strategy range/roughness/peak-threshold sweep reaches
+0.276, leaving measurable headroom for joint model fitting and active follow-up.
+
 ## Relationship to nearby tasks
 
 `Exoplanets/RadialVelocityPlanets` analyzes Doppler time series for orbital periods and activity

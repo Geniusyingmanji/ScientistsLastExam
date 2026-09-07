@@ -23,10 +23,10 @@ invariants:
 - duplicate queries, overspending, unknown epochs or malformed candidates fail closed
 - every answer cites at least six distinct current-world observations
 - model accuracy, false discovery, refusal, feasibility and held-out transfer are separate axes
-known_shortcuts: A fixed point-lens claim is valid but scores zero after normalization; omitting g-band checks and never refusing are task-local ablations. The reduced-order model omits parallax, finite-source limb darkening, blending, binary orbital motion and real cadence/weather systematics; certification requires server-held events and independent astrophysical review.
+known_shortcuts: A fixed point-lens claim scores zero. No-g-band and never-refuse ablations score 0.118333 and 0.000000 development. A 4,116-policy range/roughness/peak-threshold sweep peaks at 0.276213 development and 0.444646 held out, below the 0.560636/0.770906 reference. The reduced-order model omits parallax, finite-source limb darkening, blending, binary orbital motion and real cadence/weather systematics; certification requires server-held events and independent astrophysical review.
 review:
   domain: pending_external_astronomy
-  evaluator_security: automated_budget_determinism_refusal_and_malformed_candidate_checks_pending_clean_linux_replay
+  evaluator_security: automated_budget_determinism_refusal_and_malformed_candidate_checks_passed_clean_linux_replay
 provenance:
   class: procedural
   target_source: Repository-visible deterministic generator with development and shifted held-out point, binary, variable-source and ambiguous event families.
@@ -65,4 +65,4 @@ construction_audit:
   expert_hours: null
   red_team_rounds: 3
   oracle_disagreement_status: not_quantified
-  independent_recomputation_status: reference replay and deterministic tests pending clean Linux validation
+  independent_recomputation_status: reference, ablations, shortcut sweep and deterministic tests replayed on a clean Linux worktree

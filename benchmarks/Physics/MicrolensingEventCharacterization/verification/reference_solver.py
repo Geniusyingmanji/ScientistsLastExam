@@ -54,9 +54,9 @@ def infer_microlensing(problem, observe):
     anomaly = float(np.max(residual))
     point_excess = float(np.max(y) - np.median(y[np.abs(t) > 16.0]))
     evidence = [row["query_id"] for row in rows]
-    if min(point[0], sine_err) > 0.0025 or (point_excess < 0.16 and sine_amp < 0.09):
+    if min(point[0], sine_err) > 0.005 or (point_excess < 0.25 and sine_amp < 0.09):
         return {"abstain": True, "confidence": 0.72, "evidence_query_ids": evidence}
-    if anomaly > 0.09 and point_excess > 0.20:
+    if anomaly > 0.06 and point_excess > 0.20:
         model, amplitude, confidence = "binary_lens", float(np.clip(anomaly, 0.0, 1.0)), 0.78
         scale = point[1]
     elif point_excess > 0.20 and point[0] <= sine_err * 1.15:
