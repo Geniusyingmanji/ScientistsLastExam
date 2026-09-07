@@ -78,16 +78,21 @@ attribution of three ways in which that mechanism can fail.
 
 | key | meaning |
 |---|---|
-| `bleach_radii_um` | allowed bleach radii |
-| `sample_times_s` | allowed post-bleach sampling times |
+| `bleach_radii_um` | list of allowed bleach-radius numbers |
+| `sample_times_s` | list of allowed post-bleach time numbers |
 | `measurement_budget_units` | total one-unit measurement budget |
 | `minimum_evidence_measurements` | minimum evidence count for a supported or named unsupported diagnosis |
-| `prediction_contexts` | ordered `radius_um`/`time_s` pairs for `predicted_recovery` |
-| `parameter_bounds` | numeric lower and upper bounds for all four reported parameters |
+| `prediction_contexts` | ordered list of `{"radius_um": number, "time_s": number}` mappings for `predicted_recovery` |
+| `parameter_bounds` | mapping from each reported parameter key to a two-number `[lower, upper]` list |
 | `model_family` | supported reaction-diffusion family |
 | `unsupported_families` | allowed resolvable model-inadequacy diagnoses |
 | `measurement_model` | callback cost and observation description |
 | `abstain_when` | refusal rule |
+
+The keys of `parameter_bounds` are exactly `diffusion_coefficient_um2_s`, `mobile_fraction`,
+`binding_on_rate_s`, and `binding_off_rate_s`. Access a prediction context as
+`context["radius_um"]` and `context["time_s"]`; its position is the required position in
+`predicted_recovery`.
 
 The possible diagnoses are:
 
