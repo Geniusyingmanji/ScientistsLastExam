@@ -51,13 +51,6 @@ amplitude recovery (0.15), and confidence (0.10). Ambiguous worlds score only fo
 zero; model accuracy, false discovery, refusal, feasibility, budget, and held-out transfer remain
 separate axes. Held-out worlds and truth are evaluator-only.
 
-## Relationship to nearby tasks
-
-`Gravitation/PTAHellingsDowns` infers an angular correlation kernel across many pulsars; this task
-fits a single time-domain transient and uses detector coherence versus localization. It is also
-distinct from `Exoplanets/MicrolensingEventCharacterization`, which allocates photometric epochs
-and filters to lens-model selection rather than strain-waveform inference.
-
 ## Rules and references
 
 - Only edit `solution.py`; keep `infer_transient(problem, observe)`.
