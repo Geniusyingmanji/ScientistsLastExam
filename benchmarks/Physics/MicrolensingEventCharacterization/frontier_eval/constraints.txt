@@ -1,0 +1,6 @@
+1) Only edit solution.py. Keep infer_microlensing(problem, observe).
+2) Return abstain, confidence, evidence_query_ids, and when not abstaining model, timescale_days and amplitude.
+3) Use deterministic CPU Python, NumPy and the standard library only; do not read verification/ or access the network.
+4) Query only candidate_times and filters through observe; duplicate observations and overspending fail closed.
+5) Cite at least six distinct query_id values from the current event.
+6) sle.contract_lint is importable and free to call for shape checks.

@@ -1,0 +1,13 @@
+domain: Exoplanets
+task: MicrolensingEventCharacterization
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: statistical_sim
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 5
+science_metric: active_photometric_lens_model_selection_and_ambiguity_refusal
+reference_baseline: six fixed r-band observations followed by a fixed point-lens claim
+reference_sota: grid point-lens fit plus sinusoidal comparison, targeted anomaly epochs, color checks and calibrated refusal
+citation: "Paczynski, ApJ, 1986, DOI 10.1086/164140; Gaudi, ARA&A, 2012, DOI 10.1146/annurev-astro-081811-125518"

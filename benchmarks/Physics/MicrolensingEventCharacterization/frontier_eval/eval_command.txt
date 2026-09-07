@@ -1,0 +1,1 @@
+python -m sle eval --allow-uncertified --task Exoplanets/MicrolensingEventCharacterization --candidate solution.py

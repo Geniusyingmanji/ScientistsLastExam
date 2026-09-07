@@ -53,6 +53,7 @@ CHINESE_NAMES = {
     "Ecology/OccupancyDetectionDesign": "生态占域与探测设计",
     "Electrochemistry/ElectrolyteConductivityDesign": "电解液电导率设计",
     "EvidenceSynthesis/ProspectiveMetaAnalysis": "前瞻荟萃分析",
+    "Exoplanets/MicrolensingEventCharacterization": "微透镜事件表征",
     "Exoplanets/RadialVelocityPlanets": "视向速度找行星",
     "Physics/CriticalPhenomenaLab": "有限尺寸临界现象发现",
     "Geophysics/GravityInversion": "重力反演",
@@ -180,6 +181,9 @@ CHINESE_BRIEFS = {
     "EvidenceSynthesis/ProspectiveMetaAnalysis": (
         "在注册表加文献语料里筛研究、识别同一人群血缘的重复报告与换端点,做异质性荟萃回归",
         "筛选、证据血缘完整性、荟萃回归、校准拒答、下一步研究信息量与前瞻确认分列"),
+    "Exoplanets/MicrolensingEventCharacterization": (
+        "在有限随访预算下选择测光时刻与滤波带,区分点透镜、双透镜与变源事件",
+        "模型归因、时标与异常幅度;误发现、低信号拒答、预算和留出迁移分列"),
     "Exoplanets/RadialVelocityPlanets": (
         "从视向速度序列里指认哪些周期是行星:自转、谐波与采样别名不是行星",
         "行星恢复;误发现率与别名拒答分开报告"),

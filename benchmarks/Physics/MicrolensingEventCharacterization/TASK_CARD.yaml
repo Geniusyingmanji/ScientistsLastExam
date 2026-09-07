@@ -1,0 +1,65 @@
+schema_version: 2
+scientific_question: Can an agent actively distinguish point-lens, binary-lens and variable-source microlensing events under a finite photometric follow-up budget, recover characteristic time scales and amplitudes, and refuse low-signal ambiguity?
+artifact: A model label, time-scale estimate, anomaly or variability amplitude, confidence and immutable photometric evidence, or a calibrated refusal.
+oracle:
+  model: deterministic Paczynski point-lens curves with localized binary anomalies, sinusoidal source variability and evaluator-only low-SNR ambiguous worlds
+  feasibility: 24 unit-cost observations over fixed epochs and g/r filters, at most one query per epoch/filter pair, bounded finite claims and evidence restricted to current-world observations
+  deterministic: true
+normalization:
+  baseline: six fixed r-band observations followed by a point-lens claim with fixed parameters
+  reference: broad r-band cadence, targeted anomaly epochs, six g-band color checks, grid point-lens fit, sinusoidal comparison and calibrated ambiguity refusal
+  score: development mechanism recovery normalized above blanket abstention; model accuracy, false discovery, refusal, budget, feasibility and held-out transfer remain separate
+citations:
+- id: doi:10.1086/164140
+  title: Gravitational lens effect on the light from a distant star
+- id: doi:10.1086/171443
+  title: Extending the MACHO search to about 10^6 solar masses
+- id: doi:10.1146/annurev-astro-081811-125518
+  title: Microlensing and exoplanets
+invariants:
+- point-lens worlds follow the Paczynski magnification family and binary worlds add a localized anomaly
+- variable-source worlds have smooth periodic source variability without a lensing peak
+- ambiguous low-SNR worlds require refusal; blanket abstention is exactly zero after normalization
+- duplicate queries, overspending, unknown epochs or malformed candidates fail closed
+- every answer cites at least six distinct current-world observations
+- model accuracy, false discovery, refusal, feasibility and held-out transfer are separate axes
+known_shortcuts: A fixed point-lens claim is valid but scores zero after normalization; omitting g-band checks and never refusing are task-local ablations. The reduced-order model omits parallax, finite-source limb darkening, blending, binary orbital motion and real cadence/weather systematics; certification requires server-held events and independent astrophysical review.
+review:
+  domain: pending_external_astronomy
+  evaluator_security: automated_budget_determinism_refusal_and_malformed_candidate_checks_pending_clean_linux_replay
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic generator with development and shifted held-out point, binary, variable-source and ambiguous event families.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+  license: Procedural repository-local code and generated observations; no external dataset bundled
+  pollution_note: Hidden event parameters, world family and split membership remain evaluator-only.
+novelty_risk:
+  level: medium
+  rationale: Unlike Exoplanets/RadialVelocityPlanets, this is photometric lens-model selection rather than Doppler period search; unlike Exoplanets/TransmissionSpectrumSpecies, it is time-and-filter follow-up rather than atmospheric spectral composition; unlike Exoplanets/TransitTimingAttribution, it attributes magnification morphology rather than transit timing perturbations.
+lineage:
+  status: complete
+  builder_model_ids:
+  - openai-codex:gpt-5
+  builder_scaffolds:
+  - science-benchmark-construction
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: none
+  shortcut_discoverer: builder_self_audit_with_task_local_ablation_sweep
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: computational_astronomy
+  reviewer_domain: pending_external_astronomy
+  expert_hours: null
+  red_team_rounds: 3
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: reference replay and deterministic tests pending clean Linux validation
