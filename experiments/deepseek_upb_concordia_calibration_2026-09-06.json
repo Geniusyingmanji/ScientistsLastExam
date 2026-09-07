@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "evidence_scope": "MODEL_CALIBRATION_NOT_POPULATION_PERFORMANCE",
+  "task": "Geophysics/UPbConcordiaInference",
+  "source_revision": "984bb73726c2100faebe675837fd2d8d75314e68",
+  "source_tree_dirty": false,
+  "trusted_secure_eval": true,
+  "baseline_score": 0.0,
+  "reference_score": 0.9137579751435682,
+  "algorithm": "greedy_rewrite",
+  "feedback_mode": "normal",
+  "proposal_budget": 3,
+  "replicate_identifiers": [17, 43],
+  "conditions": [
+    {
+      "model": "deepseek-v4-flash",
+      "chat_thinking": "disabled",
+      "smoke_reply": "DEEPSEEK_SMOKE_OK",
+      "source_report_sha256": "9aea98f17bb16643b67a5880f4c272d4f6c5020c9d3ac95f487e12b3dab8d528",
+      "runs": [
+        {"replicate_identifier": 17, "proposal_scores": [-1e18, -1e18, 0.23070418951921737], "proposal_valid": [false, false, true], "terminal_best": 0.23070418951921737, "heldout_at_terminal": 0.270512536706804},
+        {"replicate_identifier": 43, "proposal_scores": [-1e18, 0.175852034028924, 0.559916392267511], "proposal_valid": [false, true, true], "terminal_best": 0.559916392267511, "heldout_at_terminal": 0.546221845719259}
+      ]
+    },
+    {
+      "model": "deepseek-v4-pro",
+      "chat_thinking": "disabled",
+      "smoke_reply": "DEEPSEEK_SMOKE_OK",
+      "source_report_sha256": "22f6da9284b32ec087fe65984afce45b30edea9a29840552c13bf262a1a7638d",
+      "runs": [
+        {"replicate_identifier": 17, "proposal_scores": [0.0, 0.145364123069288, 0.202840647569347], "proposal_valid": [false, true, true], "terminal_best": 0.202840647569347, "heldout_at_terminal": 0.173176296492864},
+        {"replicate_identifier": 43, "proposal_scores": [0.262092351220108, 0.17470288701056, 0.262092351220108], "proposal_valid": [true, true, true], "terminal_best": 0.262092351220108, "heldout_at_terminal": 0.100868413788221}
+      ]
+    }
+  ],
+  "admission_result": "pass: all four first proposals were below the truth-blind reference",
+  "builder_response": "No oracle or task-contract change was made after calibration. Invalid Flash proposals included a candidate-side budget arithmetic error despite the published costs; valid proposals exposed event-history, age-precision, false-discovery and coverage gaps."
+}

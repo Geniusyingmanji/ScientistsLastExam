@@ -51,11 +51,13 @@ CHINESE_NAMES = {
     "ClimateScience/ForcedSignalAttribution": "强迫信号检测归因",
     "ControlTheory/InvertedPendulumSwingUp": "倒立摆摆起控制",
     "DynamicalSystems/ActiveLawDiscovery": "主动定律发现",
+    "Ecology/OccupancyDetectionDesign": "生态占域与探测设计",
     "Electrochemistry/ElectrolyteConductivityDesign": "电解液电导率设计",
     "EvidenceSynthesis/ProspectiveMetaAnalysis": "前瞻荟萃分析",
     "Exoplanets/RadialVelocityPlanets": "视向速度找行星",
     "Physics/CriticalPhenomenaLab": "有限尺寸临界现象发现",
     "Geophysics/GravityInversion": "重力反演",
+    "Geophysics/UPbConcordiaInference": "铀铅谐和图事件归因",
     "Gravitation/PTAHellingsDowns": "脉冲星阵四极相关",
     "HeatTransfer/ConvectionDiffusionOpt": "对流扩散辨识与加热器设计",
     "MaterialsScience/AlloyHardnessOptimization": "合金硬度实验设计",
@@ -173,6 +175,9 @@ CHINESE_BRIEFS = {
     "DynamicalSystems/ActiveLawDiscovery": (
         "自选初值与外部驱动,从候选项库里恢复二维受控系统的稀疏控制方程",
         "稀疏律恢复 + 密封轨迹外推;库不足时拒答"),
+    "Ecology/OccupancyDetectionDesign": (
+        "在漏检条件下分配站点复访与调查方法,恢复栖息地占域效应或拒绝不充分模型",
+        "效应方向、效应量与平均占域率;误发现、拒答、覆盖率和留出迁移分列"),
     "Electrochemistry/ElectrolyteConductivityDesign": (
         "在高通量电解液数据回放里分配阻抗测定预算,选出稳健的配方批次",
         "温度剖面电导率 + 批次多样性 + 重复稳健性 + 留出迁移;无上限"),
@@ -188,6 +193,9 @@ CHINESE_BRIEFS = {
     "Geophysics/GravityInversion": (
         "主动布设重力测线,反演地下密度体的位置与强度;声明的源族不支持时拒答",
         "源恢复 + 外场校验 + 拒答;许多密度分布产生相似地表场"),
+    "Geophysics/UPbConcordiaInference": (
+        "在分析预算内选择锆石域,由两套铀铅衰变比判断单一结晶或一次铅丢失历史;可分辨的多事件历史须拒答",
+        "事件类型 + 结晶与铅丢失年龄 + 证据血缘;误发现、拒答、覆盖率和留出迁移分列"),
     "Gravitation/PTAHellingsDowns": (
         "脉冲星计时阵里区分 Hellings-Downs 四极相关(引力波背景)与钟差单极、星历偶极、共同红噪声",
         "四极 vs 单极判别与拒答;共同过程不等于引力波背景"),
