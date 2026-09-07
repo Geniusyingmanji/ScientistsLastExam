@@ -36,9 +36,18 @@ reference and retains a `0.333333` false-discovery rate.
 
 ## Model calibration
 
-Fresh DeepSeek Flash and Pro first-proposal results will be recorded only after the oracle is
-committed. The compact experiment record will exclude prompts, generated programs, endpoints,
-credentials, and request logs.
+One `greedy_rewrite` first proposal per model used replicate identifier 731, temperature 0.7,
+selection-blind feedback, and explicit `chat_thinking: disabled`. Both proposals were valid.
+DeepSeek v4 Flash scored `0.000000` development and `0.195556` held out: it abstained on every
+supported world and correctly refused one held-out unsupported world. DeepSeek v4 Pro scored
+`0.417694` development and `0.298301` held out: it covered every supported world with strong
+conditional-probability prediction, but falsely claimed all unsupported worlds. Both remained
+well below the truth-blind reference.
+
+The credential-free record is
+`experiments/spike_history_inference_deepseek_calibration_2026-09-07.json`. The generated programs,
+prompts, endpoint, credentials, request logs, and local run directories are intentionally excluded.
+No oracle or public-contract change followed model calibration.
 
 ## Limitations and provenance
 
