@@ -33,7 +33,7 @@ provenance:
   class: procedural
   target_source: Repository-visible deterministic multi-radius FRAP generator with development and held-out supported and misspecified worlds.
   task_contract_public_before_evaluation: true
-  fresh_confirmation_status: not_completed
+  fresh_confirmation_status: linux_secure_eval_completed_at_frozen_revision
 novelty_risk:
   level: medium
   rationale: No repository or Frontier-Eng task uses fluorescence photobleaching recovery or bleach-radius perturbations. EnzymeKineticsLaw classifies substrate-inhibitor rate laws, NMRSpectrumFitting recovers spectral peaks, and ForceFieldCalibration fits microscopic pair potentials; none separates cellular transport from reversible binding through spatial-scale-dependent recovery.
@@ -44,10 +44,13 @@ lineage:
   builder_scaffolds:
   - science-benchmark-construction
   - deterministic_multi_radius_frap_discovery
-  calibrator_model_ids: []
-  calibration_runs: []
-  calibration_evidence_status: missing
-  edits_triggered_by_model: Model calibration will be recorded only after the oracle and public contract are frozen.
+  calibrator_model_ids:
+  - deepseek-v4-flash
+  - deepseek-v4-pro
+  calibration_runs:
+  - experiments/deepseek_frap_binding_inference_calibration_2026-09-07.json
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: The first frozen draw exposed that Task.md named parameter_bounds and prediction_contexts without stating their container shapes; both models made incompatible assumptions and failed before scientific evaluation. The contract was clarified and frozen at c6bc78a before replay. DeepSeek Pro then produced a valid first proposal at 0.478/0.343 development/held out, while Flash's complete 7149-token proposal retained a candidate-side array/scalar runtime error and is recorded as protocol-incomplete rather than performance evidence.
   shortcut_discoverer: builder_self_audit_with_192_strategy_summary_statistic_sweep
   frozen_before_eval: false
   freeze_timestamp: null
