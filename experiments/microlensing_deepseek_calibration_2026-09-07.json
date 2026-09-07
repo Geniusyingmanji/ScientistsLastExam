@@ -1,0 +1,9 @@
+{
+  "task": "Exoplanets/MicrolensingEventCharacterization",
+  "protocol": {"algorithm": "greedy_rewrite", "budget": 10, "seed": 17, "thinking": "disabled", "server_side_seed_control": false},
+  "runs": [
+    {"model": "deepseek-v4-flash", "valid_proposal_count": 9, "accepted_count": 2, "best_combined_score": 0.25, "best_development_mechanism_score": 0.4375, "best_heldout_mechanism_score": 0.428125, "best_development_model_accuracy": 0.3333333333333333, "best_heldout_model_accuracy": 0.3333333333333333, "failure_summary": "one invalid proposal and valid proposals without a positive improvement"},
+    {"model": "deepseek-v4-pro", "valid_proposal_count": 8, "accepted_count": 1, "best_combined_score": 0.26087642746004763, "best_development_mechanism_score": 0.4456573205950357, "best_heldout_mechanism_score": 0.32889283431768945, "best_development_model_accuracy": 0.3333333333333333, "best_heldout_model_accuracy": 0.3333333333333333, "failure_summary": "two invalid proposals; valid proposals mostly failed to improve the baseline"}
+  ],
+  "notes": "Ten-proposal runs used explicit chat thinking disabled and completed normally. No prompts, generated programs, endpoints or credentials are retained."
+}

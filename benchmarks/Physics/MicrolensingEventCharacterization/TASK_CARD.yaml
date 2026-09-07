@@ -43,11 +43,14 @@ lineage:
   - openai-codex:gpt-5
   builder_scaffolds:
   - science-benchmark-construction
-  calibrator_model_ids: []
-  calibration_runs: []
-  calibration_evidence_status: missing
+  calibrator_model_ids:
+  - deepseek-v4-flash
+  - deepseek-v4-pro
+  calibration_runs:
+  - experiments/microlensing_deepseek_calibration_2026-09-07.json
+  calibration_evidence_status: current_or_migration_replayed
   edits_triggered_by_model: none
-  shortcut_discoverer: builder_self_audit_with_task_local_ablation_sweep
+  shortcut_discoverer: builder_self_audit_with_task_local_ablation_sweep_and_deepseek_flash_pro_calibration
   frozen_before_eval: false
   freeze_timestamp: null
 long_horizon:
