@@ -283,5 +283,13 @@ def evaluate(candidate) -> dict[str, Any]:
         "heldout": held,
         "development_combined_score": dev["combined_score"],
         "heldout_combined_score": held["combined_score"],
+        "development_mechanism_score": dev["science_score"],
+        "heldout_mechanism_score": held["science_score"],
+        "development_false_discovery_rate": dev["false_discovery_rate"],
+        "heldout_false_discovery_rate": held["false_discovery_rate"],
+        "development_correct_refusal_rate": dev["correct_refusal_rate"],
+        "heldout_correct_refusal_rate": held["correct_refusal_rate"],
+        "development_discovery_coverage": dev["supported_discovery_coverage"],
+        "heldout_discovery_coverage": held["supported_discovery_coverage"],
         "per_instance": development + heldout,
     }

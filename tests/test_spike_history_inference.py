@@ -39,6 +39,23 @@ class SpikeHistoryInferenceTests(unittest.TestCase):
         self.assertEqual(base["development_combined_score"], 0.0)
         self.assertEqual(base["heldout_combined_score"], 0.0)
         self.assertEqual(base["valid"], 1.0)
+        for split in ("development", "heldout"):
+            self.assertEqual(
+                base[f"{split}_mechanism_score"],
+                base[split]["science_score"],
+            )
+            self.assertEqual(
+                base[f"{split}_false_discovery_rate"],
+                base[split]["false_discovery_rate"],
+            )
+            self.assertEqual(
+                base[f"{split}_correct_refusal_rate"],
+                base[split]["correct_refusal_rate"],
+            )
+            self.assertEqual(
+                base[f"{split}_discovery_coverage"],
+                base[split]["supported_discovery_coverage"],
+            )
 
     def test_recent_spike_reduces_supported_probability(self):
         oracle = _load("spike_probability", TASK / "verification" / "evaluator.py")
