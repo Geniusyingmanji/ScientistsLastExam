@@ -10,6 +10,13 @@ policy:
   statuses: [certified, candidate, quarantined]
 
 tasks:
+  Exoplanets/MicrolensingEventCharacterization:
+    status: candidate
+    reason: Active time-and-filter photometric follow-up distinguishes point-lens, binary-lens and variable-source events with calibrated refusal for low-signal ambiguity; retained as a candidate pending server-held events, realistic cadence/weather/blending, real survey replay and independent microlensing review.
+    citation_ids:
+      - doi:10.1086/164140
+      - doi:10.1086/171443
+      - doi:10.1146/annurev-astro-081811-125518
   Ecology/OccupancyDetectionDesign:
     status: candidate
     reason: Active repeat-survey allocation and latent occupancy inference under imperfect detection, with explicit refusal for nonlinear habitat and spatially structured worlds; retained as a candidate pending server-held surveys, real field-data replication and independent ecology review.
