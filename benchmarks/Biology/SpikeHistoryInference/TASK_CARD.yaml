@@ -40,14 +40,18 @@ novelty_risk:
 lineage:
   status: complete
   builder_model_ids:
-  - codex-science-benchmark-construction
+  - openai-codex:gpt-5
   builder_scaffolds:
+  - science-benchmark-construction
   - deterministic_spike_train_discovery
-  calibrator_model_ids: []
-  calibration_runs: []
-  calibration_evidence_status: missing
-  edits_triggered_by_model: DeepSeek calibration will be recorded only after the oracle and public contract are frozen.
-  shortcut_discoverer: builder_self_audit
+  calibrator_model_ids:
+  - deepseek-v4-flash
+  - deepseek-v4-pro
+  calibration_runs:
+  - experiments/spike_history_inference_deepseek_calibration_2026-09-07.json
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: No oracle or public-contract change followed calibration. Both thinking-disabled first proposals were valid and remained below the truth-blind reference. Flash abstained on every supported world, while Pro recovered supported parameters and predictions but falsely discovered all unsupported worlds; these complementary scientific failures were retained rather than used to tune evaluator worlds.
+  shortcut_discoverer: builder_self_audit_with_192_strategy_sweep_and_deepseek_flash_pro_calibration
   frozen_before_eval: false
   freeze_timestamp: null
 long_horizon:
