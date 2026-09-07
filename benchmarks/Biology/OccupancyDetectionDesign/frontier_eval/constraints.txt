@@ -1,0 +1,1 @@
+Only edit solution.py. Keep infer_occupancy(problem, survey). Use deterministic CPU Python, NumPy, SciPy, and the standard library only. Do not read verification/ or frontier_eval/, access the network, or create processes.
