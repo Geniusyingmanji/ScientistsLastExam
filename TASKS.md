@@ -4,21 +4,22 @@
 
 | | |
 |---|---:|
-| 任务包 | 82 |
-| optimization | 41 |
+| 任务包 | 83 |
+| optimization | 42 |
 | discovery | 41 |
 | certified | 5 |
-| candidate | 77 |
-| 学科 | 7(Biology 8,Chemistry 13,ComputerScience 7,EarthScience 7,Engineering 12,Mathematics 19,Physics 16) |
+| candidate | 78 |
+| 学科 | 7(Biology 9,Chemistry 13,ComputerScience 7,EarthScience 7,Engineering 12,Mathematics 19,Physics 16) |
 
 认证描述的是证据质量,不是难度。标 on-ramp 的任务首个前沿模型提案已够到参考解,不用于配对 Δ 测量。
 
-## Optimization(41)
+## Optimization(42)
 
-### 工程设计(engineering_design) — 16
+### 工程设计(engineering_design) — 17
 
 | 任务 | 学科 | 领域 | 打分 | oracle | 认证 | 说明 | 中文题意 | 中文评估方法 |
 |---|---|---|---|---|---|---|---|---|
+| [`FedBatchBioprocessDesign`](benchmarks/Biology/FedBatchBioprocessDesign/)<br>补料发酵稳健设计 | Biology | Bioprocess | clipped | reduced_order_bioprocess_sim | candidate | robust feed and induction scheduling | 设计三阶段补料、诱导与收获时刻,在溢流代谢和氧传递限制下保持生产率 | 跨生长与氧传递偏移的最坏生产率;体积、乙酸和终态生物量硬门控 |
 | [`AlloyHardnessOptimization`](benchmarks/Chemistry/AlloyHardnessOptimization/)<br>合金硬度实验设计 | Chemistry | MaterialsScience | uncapped | real_data_replay | candidate | design a study-held alloy batch | 在按论文 DOI 分组的多主元合金数据里做实验设计,选出研究外留出的硬度批次 | 留出硬度 + 多样性 + 代理失效 + 不确定性 + 来源迁移 + 稀疏独立确认;无上限 |
 | [`DistillationColumnDesign`](benchmarks/Chemistry/DistillationColumnDesign/)<br>精馏塔设计 | Chemistry | ChemicalProcess | uncapped | equilibrium_stage_process_sim | candidate | robust mixed-integer equilibrium-stage design | 混合整数精馏塔设计:塔板数与进料位置离散,兼顾纯度回收约束与再沸冷凝能耗 | 年化成本;留出迁移与密封变工况分列,无上限 |
 | [`ElectrolyteConductivityDesign`](benchmarks/Chemistry/ElectrolyteConductivityDesign/)<br>电解液电导率设计 | Chemistry | Electrochemistry | uncapped | real_data_replay | candidate | allocate EIS assays and select a robust formulation batch | 在高通量电解液数据回放里分配阻抗测定预算,选出稳健的配方批次 | 温度剖面电导率 + 批次多样性 + 重复稳健性 + 留出迁移;无上限 |

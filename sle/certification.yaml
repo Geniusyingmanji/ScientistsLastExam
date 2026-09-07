@@ -796,3 +796,11 @@ tasks:
       - doi:10.1103/PhysRevLett.93.165501
       - doi:10.1016/0375-9601(74)90847-0
       - doi:10.1063/1.1723844
+  Bioprocess/FedBatchBioprocessDesign:
+    status: candidate
+    reason: Deterministic reduced-order robust open-loop fed-batch prototype with overflow
+      inhibition, induction burden and hard process constraints; pending independent
+      integrator cross-check, low-dimensional saturation probes, paired controls and
+      independent bioprocess review
+    citation_ids:
+    - doi:10.1016/j.ifacol.2020.12.1167
