@@ -60,3 +60,34 @@ classical comparisons, frontier draws, long-horizon search and external domain
 review remain pending. The task stays **candidate**.
 
 Scientific sources: doi:10.1023/A:1008380219900.
+
+## Numerical reproducibility follow-up — 2026-09-07
+
+The recorded score is scoped to a fixed numerical environment, not a promise of
+bit-identical optimization across machines or BLAS configurations. On this
+Linux x86_64 host, NumPy 1.26.4 / SciPy 1.11.4 with one BLAS thread produced
+**0.6891727077822446** in two direct host runs, two direct container runs, and
+two actual sandbox runs. All per-instance metrics matched within these runs.
+NumPy 2.2.6 / SciPy 1.15.3 with one thread also reproduced the same result twice.
+The sandbox explicitly sets OPENBLAS_NUM_THREADS, OMP_NUM_THREADS,
+MKL_NUM_THREADS and NUMEXPR_NUM_THREADS to 1 for candidate execution.
+
+With four BLAS threads, two direct runs instead produced development
+**0.6891726704740557** and held-out **0.6984321575313412**, compared with
+single-thread held-out **0.6780558879651339**. Small numerical changes can alter
+the path of the finite-budget nonlinear least-squares reference, especially on
+the larger held-out instances. The scoring oracle still evaluates the submitted
+coordinates against fixed public constraints; it does not rerun the reference.
+
+The maintainer reported **0.686377** in #37. That exact value has not been
+reproduced here (including direct runs with 1, 2, 4, 8, 16 and 32 BLAS threads).
+Its precise cause remains unconfirmed without the maintainer's platform,
+NumPy/SciPy/BLAS configuration and per-instance metrics. It should not be
+attributed to sandboxing itself: direct and sandbox runs agree in the matched
+single-thread environment. Freeze numeric environment and thread settings
+alongside evidence when exact score comparison is required.
+
+The task regression now repeats both baseline and original reference in fresh
+single-thread processes with distinct Python hash seeds and requires exact
+agreement. No reference algorithm, scoring formula or calibration endpoint was
+changed by this follow-up.

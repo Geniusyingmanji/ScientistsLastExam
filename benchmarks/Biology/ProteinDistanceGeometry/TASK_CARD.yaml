@@ -5,6 +5,8 @@ oracle:
   model: Public interval, bond-angle, excluded-volume and signed-volume losses
   feasibility: Strict output validation; trusted oracle recomputation; resource violations fail closed.
   deterministic: true
+  reproducibility: Fixed inputs and numerical environment; reference optimization is sensitive
+    to BLAS configuration. See references/known_best.md for repeatability measurements.
 normalization:
   baseline: Legal baseline in solution.py scores exactly zero.
   reference: Shortest paths, MDS, reflection selection and 45 least-squares evaluations; a 120-evaluation

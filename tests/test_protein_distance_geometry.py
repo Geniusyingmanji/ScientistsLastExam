@@ -37,10 +37,11 @@ def test_geometry_witness_rigid_invariance_chirality_and_collapse():
     assert row['sign'] * np.linalg.det(np.stack([b - a, c - a, d - a])) / 3.8 ** 3 >= row['minimum_volume']
 
 @pytest.mark.parametrize('name', ['ProteinDistanceGeometry'])
-def test_wave2_subprocess_determinism(name):
+@pytest.mark.parametrize('candidate', ['solution.py', 'references/reference.py'])
+def test_wave2_subprocess_determinism(name, candidate):
     import os, subprocess, sys
-    script = "import importlib.util,json\nfrom pathlib import Path\nname=NAME\np=Path('benchmarks/Biology')/name\ndef load(path):\n s=importlib.util.spec_from_file_location('loaded',path);m=importlib.util.module_from_spec(s);s.loader.exec_module(m);return m\nm=load(p/'verification/evaluator.py');b=load(p/'solution.py')\nentry=(p/'frontier_eval/entrypoint.txt').read_text().strip()\nprint(json.dumps(m.evaluate(getattr(b,entry)),sort_keys=True,allow_nan=False))\n".replace('NAME', repr(name))
-    outputs = [subprocess.check_output([sys.executable, '-c', script], cwd=ROOT, env={**os.environ, 'PYTHONHASHSEED': str(seed), 'OPENBLAS_NUM_THREADS': '1'}, text=True) for seed in (1, 7)]
+    script = "import importlib.util,json\nfrom pathlib import Path\nname=NAME\np=Path('benchmarks/Biology')/name\ndef load(path):\n s=importlib.util.spec_from_file_location('loaded',path);m=importlib.util.module_from_spec(s);s.loader.exec_module(m);return m\nm=load(p/'verification/evaluator.py');b=load(p/CANDIDATE)\nentry=(p/'frontier_eval/entrypoint.txt').read_text().strip()\nprint(json.dumps(m.evaluate(getattr(b,entry)),sort_keys=True,allow_nan=False))\n".replace('NAME', repr(name)).replace('CANDIDATE', repr(candidate))
+    outputs = [subprocess.check_output([sys.executable, '-c', script], cwd=ROOT, env={**os.environ, 'PYTHONHASHSEED': str(seed), 'OPENBLAS_NUM_THREADS': '1', 'OMP_NUM_THREADS': '1', 'MKL_NUM_THREADS': '1'}, text=True) for seed in (1, 7)]
     assert outputs[0] == outputs[1]
 
 @pytest.mark.parametrize('name', ['ProteinDistanceGeometry'])
