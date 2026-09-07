@@ -1,0 +1,65 @@
+schema_version: 2
+scientific_question: Can an agent allocate repeat ecological surveys under imperfect detection, recover the direction and magnitude of a linear habitat-occupancy effect, and refuse resolvable nonlinear or spatial occupancy structure?
+artifact: A habitat-effect class, logit-scale effect, mean occupancy, confidence and immutable survey evidence, or a model-inadequacy refusal.
+oracle:
+  model: deterministic latent Bernoulli site occupancy with method- and accessibility-dependent repeat detection; supported worlds use a linear-logit habitat response while unsupported worlds add quadratic habitat or sinusoidal transect structure
+  feasibility: rapid and intensive survey costs under an 84-unit budget, at most three visits per site, finite bounded effects and evidence identifiers restricted to current-world surveys
+  deterministic: true
+normalization:
+  baseline: four rapid surveys followed by a fixed positive habitat-effect claim
+  reference: stratified rapid coverage, balanced intensive and rapid revisits, a fixed half-likelihood half-raw-slope shrinkage estimate, and BIC comparison with quadratic and spatial alternatives
+  score: development effect and occupancy recovery normalized above valid blanket abstention; false discovery, refusal, coverage, confidence, budget and held-out transfer remain separate
+citations:
+- id: doi:10.1890/0012-9658(2002)083[2248:EORWPD]2.0.CO;2
+  title: Estimating Site Occupancy Rates When Detection Probabilities Are Less Than One
+- id: doi:10.1890/0012-9658(2003)084[0777:EAFRPA]2.0.CO;2
+  title: Estimating Abundance from Repeated Presence-Absence Data or Point Counts
+invariants:
+- supported occupancy follows the published linear-logit equation while detection remains a separate latent-state observation process
+- unoccupied sites never generate detections in the supported family
+- rapid and intensive calls cost one and two units; overspend, invalid methods and excessive revisits fail closed
+- every claim or refusal cites at least four distinct surveys made in the current world
+- blanket abstention is exactly zero after normalization; effect, false discovery, refusal and coverage remain separate with denominators
+- malformed candidates score invalid without escaping the evaluator
+- held-out worlds, latent occupancy and per-world truth remain evaluator-only
+known_shortcuts: A 432-strategy grid using raw detection fractions, ordinary correlations and thresholds without a latent occupancy likelihood reaches 0.754 development and 0.563 held out, below the truth-blind reference at 0.796 and 0.788. Pure raw-detection estimation reaches 0.766/0.727, likelihood only 0.681/0.567, omitting intensive surveys 0.118/0.416, and omitting model comparison 0.129/0.000. The reduced-order model omits closure, colonization, abundance, correlated detection, observer effects and misidentification; certification remains blocked on server-held surveys, independent ecological review and real field-data replication.
+review:
+  domain: pending_external_ecology
+  evaluator_security: automated_budget_determinism_abstention_and_malformed_candidate_checks_passed_on_clean_linux_revision
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic generator with development and shifted held-out worlds spanning linear positive, negative and null effects plus nonlinear habitat and spatial model inadequacy.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Unlike PopulationGenetics/DemographicSFS, this task estimates habitat occupancy rather than demographic history and must marginalize imperfect repeat detection; unlike ClimateScience/ForcedSignalAttribution, its active decision allocates site revisits and methods rather than control-run years, and its unsupported cases are ecological response forms rather than a bad physical fingerprint or variance model. No Frontier-Eng task uses an occupancy-detection likelihood.
+lineage:
+  status: complete
+  builder_model_ids:
+  - openai-codex:gpt-5
+  builder_scaffolds:
+  - science-benchmark-construction
+  calibrator_model_ids:
+  - deepseek-v4-flash
+  - deepseek-v4-pro
+  calibration_runs:
+  - experiments/occupancy_detection_design_deepseek_calibration_2026-09-07.json
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: An excluded DeepSeek protocol draw exposed that the prose description of survey_methods could be read as an integer mapping while the callback supplied nested cost mappings. The public value was simplified to the documented integer mapping before the scored calibration draw; the scientific worlds, survey costs and scoring were unchanged.
+  shortcut_discoverer: builder_self_audit_with_task_local_ablation_sweep_and_deepseek_flash_pro_calibration
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: openai-codex:gpt-5
+  reviewer_domain: pending_external_ecology
+  expert_hours: null
+  red_team_rounds: 3
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: baseline, reference, ablations and deterministic replay are executable from the task directory

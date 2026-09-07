@@ -91,3 +91,33 @@ The task regression now repeats both baseline and original reference in fresh
 single-thread processes with distinct Python hash seeds and requires exact
 agreement. No reference algorithm, scoring formula or calibration endpoint was
 changed by this follow-up.
+
+### Controlled initialization experiment
+
+Further diagnosis kept the same public worlds, residual function, scoring
+formula, one BLAS thread and 45-evaluation solver budget. Only the MDS
+eigendecomposition implementation was substituted in a local probe. Eigenvector
+signs were aligned to NumPy's result before optimization:
+
+| Initialization | Development score |
+| --- | ---: |
+| Original `numpy.linalg.eigh` | 0.6891727077822446 |
+| `scipy.linalg.eigh(..., driver="evd")` | 0.6891727077822446 |
+| Sign-aligned SciPy `driver="ev"` | 0.6776219265518619 |
+| Sign-aligned SciPy `driver="evr"` | 0.7761727694523910 |
+
+After sign alignment, initial coordinates differ by at most 3.56e-14 Angstrom
+and initial losses by less than 1e-13. A forward-difference Jacobian diagnostic
+using sqrt(machine-epsilon) relative steps differs by up to 6.34e-8. Its six
+smallest singular values are about 3e-9 to 2.1e-8, versus a largest value about
+0.73–0.78. The objective is invariant under global translations and rotations;
+these unconstrained directions make numerical derivatives and finite-budget
+steps sensitive to roundoff. Piecewise restraint residuals add nonsmoothness.
+This controlled experiment demonstrates how tiny initialization differences can
+produce materially different final reference scores. It does not identify the
+maintainer's exact environment or reproduce 0.686377. No production solver was
+changed; these alternate drivers are diagnostic interventions only.
+
+For exact cross-host diagnosis, record `platform.platform()`, NumPy/SciPy
+versions, `numpy.show_config()`, `scipy.show_config()`, BLAS thread environment
+variables and the complete per-instance metrics alongside the run.

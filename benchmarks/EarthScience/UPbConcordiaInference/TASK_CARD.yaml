@@ -1,0 +1,75 @@
+schema_version: 2
+scientific_question: Infer whether actively selected zircon U-Pb analyses support one concordant crystallization age or one crystallization-plus-lead-loss discordia, estimate the event ages, and refuse resolvable multi-event histories.
+artifact: A geological history label, one or two event ages, confidence, cited measurement identifiers, or a model-inadequacy refusal.
+oracle:
+  model: coupled 207Pb*/235U and 206Pb*/238U radioactive-growth curves; supported lead-loss analyses are noisy points on one chord between two concordia ages, while unsupported suites combine two distinct lower intercepts
+  feasibility: unique charged grain analyses under an 18-unit budget, two published precision levels, bounded finite ages, and evidence identifiers restricted to observations actually made
+  deterministic: true
+normalization:
+  baseline: one screen measurement followed by a fixed 1000 Myr concordant interpretation
+  reference: the six highest-signal analytical domains, followed by weighted concordia and discordia fits and residual-based family refusal
+  score: development event-history and age recovery normalized above valid blanket abstention; age, false-discovery, refusal, coverage, confidence and held-out transfer axes remain separate
+citations:
+- id: doi:10.1029/TR037i003p00320
+  title: Discordant uranium-lead ages, I
+- id: doi:10.1016/S0016-7037(98)00059-3
+  title: On the Treatment of Concordant Uranium-Lead Ages
+- id: doi:10.5194/gchron-6-37-2024
+  title: Modeling apparent Pb loss in zircon U-Pb geochronology
+invariants:
+- each concordant analysis lies on the two-decay-constant Wetherill concordia up to stated measurement noise
+- every supported lead-loss suite shares exactly two concordia intercepts and varies along their chord
+- unsupported suites combine two separated lower intercepts, so a single discordia leaves a resolvable residual
+- screen and analytical measurements consume one and three units respectively; repeats and overspend fail closed
+- cited evidence identifiers must come from distinct measurements actually made in the current world
+- blanket abstention is exactly zero after normalization; mechanism, false discovery, refusal and coverage remain separate with published denominators
+- malformed candidates score invalid without escaping the evaluator
+- held-out worlds and per-world truth remain evaluator-only
+known_shortcuts: A sweep of 192 apparent-age threshold strategies that never fit the coupled concordia or a discordia reaches 0.345 against the truth-blind reference's 0.914; using three rather than six analytical domains reaches 0.861, contiguous-domain selection 0.550, all-screen measurements 0.494, ignoring uncertainties 0.000, never refusing 0.664 and rounding ages to 50 Myr 0.553. The reduced-order model omits common-Pb correction, decay-constant uncertainty, open-system diffusion profiles and inter-laboratory systematics, so the task remains a candidate pending server-held histories and independent geochronology review.
+review:
+  domain: pending_external
+  evaluator_security: automated_bad_candidate_sandbox_determinism_budget_abstention_and_visibility_checks
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic generator with ten development and nine evaluator-held suites spanning concordant, single lead-loss and resolvable multi-event histories.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: U-Pb concordia fitting is established geochronology, but no repository or Frontier-Eng task asks for active zircon-domain selection, coupled-decay event-history evidence and refusal of a resolvable multi-event suite. The nearest repository task recovers spatial gravity sources rather than geological time history.
+lineage:
+  status: complete
+  builder_model_ids:
+  - openai:gpt-5
+  builder_scaffolds:
+  - codex-desktop
+  calibrator_model_ids:
+  - deepseek-v4-flash
+  - deepseek-v4-pro
+  calibration_runs:
+  - experiments/deepseek_upb_concordia_calibration_2026-09-06.json
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: >-
+    No oracle or public-contract change followed calibration. Four clean-commit,
+    thinking-disabled trajectories all kept their first proposal below the 0.914 reference. Flash
+    reached terminal best scores of 0.231 and 0.560; Pro reached 0.203 and 0.262. The strongest
+    candidate recovered part of the history and age structure but retained false discoveries,
+    while invalid Flash proposals included candidate-side budget arithmetic despite costs being
+    published. These are useful scientific and implementation failures, not grounds to tune
+    evaluator worlds after seeing model output.
+  shortcut_discoverer: builder_self_audit_with_192_strategy_apparent_age_threshold_sweep
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: openai:gpt-5
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 3
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: baseline, truth-blind reference, eight-rung ablation ladder and 192-strategy shortcut sweep are executable from this task directory
