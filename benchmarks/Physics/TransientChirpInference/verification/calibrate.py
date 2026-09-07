@@ -1,0 +1,174 @@
+"""Reproduce the reference ablations and low-dimensional shortcut probe."""
+from __future__ import annotations
+
+import importlib.util
+import itertools
+import json
+import math
+from pathlib import Path
+
+import numpy as np
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+def _load(path: Path, name: str):
+    spec = importlib.util.spec_from_file_location(name, path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+EVALUATOR = _load(ROOT / "verification" / "evaluator.py", "chirp_calibration_evaluator")
+REFERENCE = _load(ROOT / "verification" / "reference_solver.py", "chirp_calibration_reference")
+
+
+def _line_fit(times, values):
+    t = np.asarray(times, dtype=float)
+    y = np.asarray(values, dtype=float)
+    best = (float("inf"), 0.0)
+    for frequency in np.linspace(0.04, 0.18, 29):
+        phase = 2 * math.pi * frequency * t
+        design = np.column_stack([np.ones(len(t)), np.sin(phase), np.cos(phase)])
+        coefficients, _, _, _ = np.linalg.lstsq(design, y, rcond=None)
+        error = float(np.mean((y - design @ coefficients) ** 2))
+        amplitude = float(np.hypot(coefficients[1], coefficients[2]))
+        if error < best[0]:
+            best = (error, amplitude)
+    return best
+
+
+def no_chirp_grid(problem, observe):
+    times = [float(value) for value in problem["candidate_times"][:12]]
+    rows = [observe(time, detector) for detector in ("H1", "L1") for time in times]
+    h1 = np.asarray([row["strain"] for row in rows[:12]], dtype=float)
+    l1 = np.asarray([row["strain"] for row in rows[12:]], dtype=float)
+    difference = np.abs(h1 - l1)
+    peak = int(np.argmax(difference))
+    if float(difference[peak]) > 0.38 and float(np.median(np.abs(l1))) < 0.18:
+        model, event_time, amplitude, abstain = (
+            "glitch", times[peak], float(np.clip(np.max(np.abs(h1)), 0, 1)), False
+        )
+    else:
+        error, amplitude = _line_fit(times, h1)
+        model, event_time, abstain = "line", 9.0, error > 0.006 or amplitude < 0.20
+    answer = {
+        "abstain": abstain,
+        "confidence": 0.70,
+        "evidence_query_ids": [row["query_id"] for row in rows],
+    }
+    if not abstain:
+        answer.update(model=model, frequency_slope=0.0, event_time=event_time,
+                      amplitude=float(np.clip(amplitude, 0, 1)))
+    return answer
+
+
+def h1_only(problem, observe):
+    times = [float(value) for value in problem["candidate_times"][:12]]
+    rows = [observe(time, "H1") for time in times]
+    values = np.asarray([row["strain"] for row in rows], dtype=float)
+    fit = REFERENCE._fit_grid(np.asarray(times), values)
+    line_error, _ = _line_fit(times, values)
+    if fit[0] > 0.006 or fit[3] < 0.20:
+        return {"abstain": True, "confidence": 0.70,
+                "evidence_query_ids": [row["query_id"] for row in rows]}
+    model = "chirp" if fit[0] < line_error * 0.72 else "line"
+    return {
+        "abstain": False,
+        "model": model,
+        "frequency_slope": float(np.clip(fit[2] if model == "chirp" else 0.0, 0, 0.05)),
+        "event_time": 9.0,
+        "amplitude": float(np.clip(fit[3], 0, 1)),
+        "confidence": 0.76,
+        "evidence_query_ids": [row["query_id"] for row in rows],
+    }
+
+
+def never_refuse(problem, observe):
+    answer = REFERENCE.infer_transient(problem, observe)
+    if answer["abstain"]:
+        return {
+            "abstain": False,
+            "model": "line",
+            "frequency_slope": 0.0,
+            "event_time": 9.0,
+            "amplitude": 0.15,
+            "confidence": 0.55,
+            "evidence_query_ids": answer["evidence_query_ids"],
+        }
+    return answer
+
+
+def threshold_policy(sample_count, glitch_threshold, refusal_threshold, chirp_threshold):
+    def infer(problem, observe):
+        times = [float(value) for value in problem["candidate_times"][:sample_count]]
+        rows = [observe(time, detector) for detector in ("H1", "L1") for time in times]
+        h1 = np.asarray([row["strain"] for row in rows[:sample_count]], dtype=float)
+        l1 = np.asarray([row["strain"] for row in rows[sample_count:]], dtype=float)
+        difference = np.abs(h1 - l1)
+        peak = int(np.argmax(difference))
+        scale = float(np.sqrt(np.mean((0.5 * (h1 + l1)) ** 2)))
+        evidence = [row["query_id"] for row in rows]
+        if scale < refusal_threshold:
+            return {"abstain": True, "confidence": 0.6, "evidence_query_ids": evidence}
+        if float(difference[peak]) > glitch_threshold:
+            model, slope, event_time = "glitch", 0.0, times[peak]
+        else:
+            rough_change = float(abs(np.mean(np.diff(h1[: sample_count // 2]))
+                                     - np.mean(np.diff(h1[sample_count // 2 :]))))
+            model = "chirp" if rough_change > chirp_threshold else "line"
+            slope, event_time = (0.02 if model == "chirp" else 0.0), 9.0
+        return {
+            "abstain": False,
+            "model": model,
+            "frequency_slope": slope,
+            "event_time": event_time,
+            "amplitude": float(np.clip(np.sqrt(2) * scale, 0, 1)),
+            "confidence": 0.65,
+            "evidence_query_ids": evidence,
+        }
+    return infer
+
+
+def _summary(metrics):
+    keys = (
+        "combined_score", "development_mechanism_score", "heldout_mechanism_score",
+        "development_model_accuracy", "heldout_model_accuracy",
+        "development_false_discovery_rate", "heldout_false_discovery_rate",
+        "development_correct_refusal_rate", "heldout_correct_refusal_rate",
+    )
+    return {key: metrics[key] for key in keys}
+
+
+def main():
+    strategies = {
+        "reference": REFERENCE.infer_transient,
+        "h1_only": h1_only,
+        "no_chirp_grid": no_chirp_grid,
+        "never_refuse": never_refuse,
+    }
+    results = {name: _summary(EVALUATOR.evaluate(strategy))
+               for name, strategy in strategies.items()}
+    best = None
+    count = 0
+    grid = itertools.product(
+        (6, 8, 10, 12),
+        np.linspace(0.15, 0.55, 9),
+        np.linspace(0.04, 0.20, 9),
+        np.linspace(0.02, 0.18, 9),
+    )
+    for parameters in grid:
+        metrics = EVALUATOR.evaluate(threshold_policy(*parameters))
+        count += 1
+        if best is None or metrics["combined_score"] > best[0]:
+            best = (metrics["combined_score"], parameters, metrics)
+    results["shortcut_probe"] = {
+        "strategy_count": count,
+        "best_parameters": list(best[1]),
+        **_summary(best[2]),
+    }
+    print(json.dumps(results, indent=2, sort_keys=True))
+
+
+if __name__ == "__main__":
+    main()

@@ -51,6 +51,11 @@ amplitude recovery (0.15), and confidence (0.10). Ambiguous worlds score only fo
 zero; model accuracy, false discovery, refusal, feasibility, budget, and held-out transfer remain
 separate axes. Held-out worlds and truth are evaluator-only.
 
+The task-local reference scores 0.808. Removing detector coherence, chirp-grid fitting, or
+calibrated refusal lowers the score to 0.648, 0.314, or 0.475 respectively. A 2,916-strategy
+peak/amplitude-threshold sweep reaches 0.600, so the reference retains measurable headroom over
+the tested low-dimensional shortcuts.
+
 ## Relationship to nearby tasks
 
 `Gravitation/PTAHellingsDowns` uses angular correlations across many pulsars; this task fits one

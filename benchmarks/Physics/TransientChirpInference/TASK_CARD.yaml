@@ -21,10 +21,10 @@ invariants:
 - duplicate queries, overspending, unknown epochs/detectors and malformed candidates fail closed
 - every answer cites at least six distinct current-world observations
 - model accuracy, false discovery, refusal, feasibility and held-out transfer are separate axes
-known_shortcuts: A fixed line claim is valid but normalizes to zero. H1-only sampling cannot establish detector localization, and an amplitude threshold cannot distinguish chirps from coherent lines. The reduced-order model omits real detector calibration, colored nonstationary noise, sky-position delays, precession and full waveform families; certification requires server-held traces and independent review.
+known_shortcuts: The fixed-line baseline normalizes to zero. H1-only inference scores 0.648322, below the 0.808362 reference because it cannot establish detector localization. A 2,916-policy peak/amplitude-threshold sweep peaks at 0.600015 development and 0.351875 held out. The reduced-order model omits real detector calibration, colored nonstationary noise, sky-position delays, precession and full waveform families; certification requires server-held traces and independent review.
 review:
   domain: pending_external_gravitational_wave
-  evaluator_security: automated_budget_determinism_refusal_and_malformed_candidate_checks_pending_clean_linux_replay
+  evaluator_security: automated_budget_determinism_refusal_and_malformed_candidate_checks_passed_clean_linux_replay
 provenance:
   class: procedural
   target_source: Repository-visible deterministic generator with development and shifted held-out chirp, line, glitch and ambiguous families.
@@ -63,4 +63,4 @@ construction_audit:
   expert_hours: null
   red_team_rounds: 2
   oracle_disagreement_status: not_quantified
-  independent_recomputation_status: task-local reference and deterministic tests pending clean Linux validation
+  independent_recomputation_status: task-local reference, ablation sweep and deterministic tests replayed on a clean Linux worktree

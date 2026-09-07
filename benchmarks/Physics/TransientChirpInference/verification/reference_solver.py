@@ -33,12 +33,13 @@ def infer_transient(problem, observe):
         line_err = min(line_err, float(np.mean((h - x @ c) ** 2)))
     diff = np.abs(h - l)
     peak = int(np.argmax(diff))
-    if float(diff[peak]) > .38 and float(np.median(np.abs(l))) < .18:
+    if (float(diff[peak]) > .38 and float(np.max(np.abs(h))) > .45
+            and float(np.median(np.abs(l))) < .18):
         amp = float(np.clip(np.max(np.abs(h)), 0.0, 1.0))
         return {"abstain": False, "model": "glitch", "frequency_slope": 0.0,
                 "event_time": float(t[peak]), "amplitude": amp, "confidence": .82,
                 "evidence_query_ids": [r["query_id"] for r in rows]}
-    if fit[0] > .006 or fit[3] < .20:
+    if fit[0] > .006 or fit[3] < .35:
         return {"abstain": True, "confidence": .70, "evidence_query_ids": [r["query_id"] for r in rows]}
     if fit[0] < line_err * .72:
         model, slope, conf = "chirp", fit[2], .78

@@ -27,7 +27,9 @@ class TransientChirpInferenceTests(unittest.TestCase):
         a = self.ev.evaluate(self.ref.infer_transient)
         b = self.ev.evaluate(self.ref.infer_transient)
         self.assertEqual(a, b)
-        self.assertGreater(a["combined_score"], 0.2)
+        self.assertGreater(a["combined_score"], 0.8)
+        self.assertEqual(a["development_false_discovery_rate"], 0.0)
+        self.assertEqual(a["development_correct_refusal_rate"], 1.0)
 
     def test_blanket_abstention_is_zero(self):
         def abstain(problem, observe):
