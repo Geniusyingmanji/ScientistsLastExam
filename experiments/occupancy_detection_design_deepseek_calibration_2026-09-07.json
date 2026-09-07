@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "task": "Ecology/OccupancyDetectionDesign",
+  "created_at": "2026-09-07",
+  "algorithm": "greedy_rewrite",
+  "proposal_budget": 3,
+  "temperature": 0.7,
+  "wire": "chat",
+  "chat_thinking": "disabled",
+  "baseline": {
+    "combined_score": 0.0,
+    "valid": 1.0
+  },
+  "reference": {
+    "combined_score": 0.7955767244378708,
+    "heldout_mechanism_score": 0.7877516591676319,
+    "development_false_discovery_rate": 0.0,
+    "heldout_false_discovery_rate": 0.0,
+    "development_correct_refusal_rate": 1.0,
+    "heldout_correct_refusal_rate": 1.0
+  },
+  "runs": [
+    {
+      "model": "deepseek-v4-flash",
+      "seed": 17,
+      "valid_proposal_count": 1,
+      "invalid_proposal_categories": [
+        "candidate_runtime_error",
+        "candidate_timeout"
+      ],
+      "best_score": 0.3816930886226544,
+      "heldout_mechanism_score": 0.0,
+      "development_effect_accuracy": 0.8333333333333334,
+      "development_false_discovery_rate": 0.16666666666666666,
+      "heldout_false_discovery_rate": 0.75,
+      "development_correct_refusal_rate": 0.75,
+      "heldout_correct_refusal_rate": 0.75,
+      "development_discovery_coverage": 0.8333333333333334,
+      "heldout_discovery_coverage": 0.6
+    },
+    {
+      "model": "deepseek-v4-pro",
+      "seed": 17,
+      "valid_proposal_count": 3,
+      "invalid_proposal_categories": [],
+      "best_score": 0.31028697366736674,
+      "heldout_mechanism_score": 0.0,
+      "development_effect_accuracy": 0.5,
+      "development_false_discovery_rate": 0.25,
+      "heldout_false_discovery_rate": 0.6,
+      "development_correct_refusal_rate": 1.0,
+      "heldout_correct_refusal_rate": 0.5,
+      "development_discovery_coverage": 0.6666666666666666,
+      "heldout_discovery_coverage": 0.6
+    }
+  ],
+  "excluded_protocol_runs": {
+    "reason": "ambiguous public method-cost representation caused all proposals to fail at runtime before the contract was corrected",
+    "performance_evidence": false
+  },
+  "notes": "Summary contains no prompt, generated source, endpoint, credential, API key, or local run directory. Flash invalid proposals are excluded rather than scored as model performance."
+}

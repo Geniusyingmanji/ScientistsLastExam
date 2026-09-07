@@ -34,6 +34,7 @@ discovery_kind:
 
 tasks:
   Microbiology/MetagenomeCompositionAssignment: {form: discovery, kind: substance}
+  Ecology/OccupancyDetectionDesign: {form: discovery, kind: evidence, note: latent_occupancy_and_repeat_detection_not_population_history_or_climate_fingerprinting}
   Physics/CriticalPhenomenaLab: {form: discovery, kind: parameter_inversion, note: finite_size_scaling_not_microscopic_law}
   # --- optimization / frontier-eng ------------------------------------------
   Thermodynamics/HeatExchangerDesign: {form: optimization, analogue: engineering_design}
@@ -115,6 +116,7 @@ tasks:
   MolecularDynamics/ForceFieldCalibration: {form: discovery, kind: parameter_inversion}
   HeatTransfer/ConvectionDiffusionOpt: {form: discovery, kind: parameter_inversion}
   Geophysics/GravityInversion: {form: discovery, kind: parameter_inversion}
+  Geophysics/UPbConcordiaInference: {form: discovery, kind: evidence, note: coupled_decay_event_history_not_spatial_gravity_source_inversion}
   PopulationGenetics/DemographicSFS: {form: discovery, kind: parameter_inversion}
   ChemicalKinetics/ReactionMechanismFitting: {form: discovery, kind: parameter_inversion}
   Spectroscopy/SpinSystemInference: {form: discovery, kind: parameter_inversion}
