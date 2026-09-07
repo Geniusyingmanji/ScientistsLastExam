@@ -796,3 +796,11 @@ tasks:
       - doi:10.1103/PhysRevLett.93.165501
       - doi:10.1016/0375-9601(74)90847-0
       - doi:10.1063/1.1723844
+  Biophysics/SingleMoleculeKinetics:
+    status: candidate
+    reason: Procedural reduced-model implementation with input-only classical reference;
+      independent invariant and sandbox checks are internal evidence only; external
+      domain review, frontier calibration, server-held worlds and long-horizon validation
+      remain pending
+    citation_ids:
+    - doi:10.1016/j.bpj.2013.12.055
