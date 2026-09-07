@@ -1,0 +1,1 @@
+Only edit solution.py and keep analyze_expression(problem, measure). Respect the charged sample budget. NumPy/SciPy only; deterministic CPU code; no verification/frontier_eval access.
