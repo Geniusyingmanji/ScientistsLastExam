@@ -40,12 +40,14 @@ def assign_composition(problem, sequence):
                  constraints={"type":"eq","fun":lambda weights: weights.sum()-1.0},
                  options={"maxiter":500,"ftol":1e-12})
     coef=fit.x
-    if empirical[0][-1]>.12 or not fit.success or loss(coef)>.02:
+    if not fit.success or loss(coef)>.02:
         return {"taxa":[],"ambiguous_groups":[],"abstain":True}
-    rows=[]; groups=[]
-    for j,x in enumerate(coef):
-        if x<problem["minimum_reported_abundance"]: continue
-        if j in (0,1):
-            if not groups: groups.append(["t0","t1"])
-        else: rows.append({"taxon":problem["taxon_ids"][j],"abundance":float(x)})
-    return {"taxa":rows,"ambiguous_groups":groups,"abstain":False}
+    taxa = problem["taxon_ids"]
+    index = {taxon: j for j, taxon in enumerate(taxa)}
+    alias_members = {taxon for group in problem["known_alias_groups"] for taxon in group}
+    groups = [list(group) for group in problem["known_alias_groups"]
+              if sum(coef[index[taxon]] for taxon in group) >= problem["minimum_reported_abundance"]]
+    rows = [{"taxon": taxon, "abundance": float(coef[j])}
+            for j, taxon in enumerate(taxa)
+            if taxon not in alias_members and coef[j] >= problem["minimum_reported_abundance"]]
+    return {"taxa": rows, "ambiguous_groups": groups, "abstain": False}

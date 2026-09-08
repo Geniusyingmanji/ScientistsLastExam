@@ -1,11 +1,39 @@
-"""Run the trusted evaluator from any working directory."""
-from pathlib import Path
+"""Launch the shared trusted evaluator without importing project code."""
+import argparse
+import subprocess
 import sys
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[4]
-sys.path.insert(0, str(ROOT))
+TASK_ID = 'Microbiology/MetagenomeCompositionAssignment'
+EVAL_TIMEOUT_S = 5.0
 
-from sle.frontier_eval_entrypoint import run
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--candidate", required=True)
+    parser.add_argument("--metrics-out", required=True)
+    parser.add_argument("--timeout", type=float, default=EVAL_TIMEOUT_S)
+    parser.add_argument("--full-metrics-dir")
+    args = parser.parse_args()
+    command = [sys.executable, str(ROOT / "sle/frontier_eval_entrypoint.py"),
+               "--task", TASK_ID, "--root", str(ROOT), "--timeout", str(args.timeout),
+               "--candidate", args.candidate, "--metrics-out", args.metrics_out]
+    if args.full_metrics_dir:
+        command.extend(["--full-metrics-dir", args.full_metrics_dir])
+    try:
+        Path(args.metrics_out).unlink(missing_ok=True)
+        result = subprocess.run(command, capture_output=True, text=True)
+        if result.returncode:
+            print("evaluation entrypoint unavailable or infrastructure failure (exit %d)"
+                  % result.returncode, file=sys.stderr)
+            return 2
+        print(result.stdout, end="")
+        return 0
+    except OSError:
+        print("evaluation entrypoint could not be launched or report cleared", file=sys.stderr)
+        return 2
+
 
 if __name__ == "__main__":
-    raise SystemExit(run("Microbiology/MetagenomeCompositionAssignment", ROOT))
+    raise SystemExit(main())

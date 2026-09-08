@@ -23,12 +23,8 @@ invariants:
 - Detectable library-inadequacy worlds contain a marker outside the reference cone.
 - Taxon and marker permutations preserve scores.
 - False-discovery rates publish numerator and denominator.
-known_shortcuts: Regression probes add five false taxa to each alias-world reference output; every
-  extra claim is counted and reduces composition credit. Absent alias groups also reduce supported-world
-  precision; group-only claims in library-inadequate worlds count toward false discoveries.
-  Each concrete taxon or alias group contributes one claim to the reported denominator.
-  The controlled marker abstraction omits
-  read mapping, copy-number variation and real specimens; no sample-identification claim is supported.
+known_shortcuts: >-
+  Regression probes add five false taxa to each alias-world reference output; every extra claim is counted and reduces composition credit. Absent alias groups also reduce supported-world precision; group-only claims in library-inadequate worlds count toward false discoveries. Each concrete taxon or alias group contributes one claim to the reported denominator. The controlled marker abstraction omits read mapping, copy-number variation and real specimens; no sample-identification claim is supported. Maintainer probes: rounding abundances to the four construction constants scored 0.942 (held-out 1.0); a 0.05 grid scored 0.812. Fixed alias-group claims scored 0.27. Constant truths and sentinel-marker shortcuts remain admission blockers.
 review:
   domain: pending_external_metagenomics
   evaluator_security: internal_budget_rng_alias_residual_schema_and_malformed_output_tests
@@ -39,10 +35,9 @@ provenance:
   fresh_confirmation_status: not_completed
 novelty_risk:
   level: medium
-  rationale: 'Marker-panel mixture inference is an established problem class. The near-duplicate
-    Metagenomics/MetagenomicMixtureID was removed by the PR #9 author and is absent from split PR
-    #22, so only this task remains in the pending submissions. Alias handling and unsupported-taxon
-    penalties do not themselves establish expert-level novelty or difficulty.'
+  rationale: CrowdedSpectrumAssignment and TransmissionSpectrumSpecies also require evidence for distinguishable
+    components; this task uses marker-count mixtures, but current exact aliases and sentinel markers still
+    require redesign.
 lineage:
   status: complete
   builder_model_ids:
@@ -70,3 +65,8 @@ long_horizon:
   measurement_health_passed: false
   material_headroom_after_2h: false
   evidence: []
+
+evaluation_budget:
+  EVAL_TIMEOUT_S: 5
+  scope: Total candidate wall-clock deadline across all instances.
+  override: Task wrapper --timeout or sle eval --timeout.

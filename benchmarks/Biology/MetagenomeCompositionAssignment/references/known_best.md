@@ -44,3 +44,9 @@ classical comparisons, frontier draws, long-horizon search and external domain
 review remain pending. The task stays **candidate**.
 
 Scientific sources: doi:10.1093/bioinformatics/btu721.
+
+## Admission review — 2026-09-08
+
+Maintainer probes: rounding abundances to the four construction constants scored 0.942 (held-out 1.0); a 0.05 grid scored 0.812. Fixed alias-group claims scored 0.27. Constant truths and sentinel-marker shortcuts remain admission blockers.
+
+These findings are from the [maintainer review](https://github.com/Geniusyingmanji/ScientistsLastExam/pull/39) except the explicitly identified independent geometry reproduction. They supersede any earlier suggestion that a low reference score alone establishes useful headroom. Scientific instance/normalization revisions remain pending; passing software tests does not resolve these blockers. No frontier-model draws were performed in this follow-up.

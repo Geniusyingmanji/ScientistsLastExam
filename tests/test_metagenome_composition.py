@@ -1,4 +1,4 @@
-"""Executable validity checks for the first biology expansion prototypes."""
+"""Regression checks for MetagenomeCompositionAssignment."""
 from __future__ import annotations
 import importlib.util
 import sys
@@ -173,3 +173,42 @@ print(json.dumps([ev.evaluate(getattr(base,entry)),ev.evaluate(getattr(ref,entry
                                       cwd=tmp,env=env,capture_output=True,text=True,timeout=20)
                 self.assertEqual(result.returncode,0,result.stderr)
                 self.assertIn("--candidate",result.stdout)
+
+
+def test_single_invalid_instance_zeros_all_aggregate_scores():
+    import importlib.util
+    from pathlib import Path
+    path = Path(__file__).resolve().parents[1] / "benchmarks/Biology/MetagenomeCompositionAssignment/verification/evaluator.py"
+    spec = importlib.util.spec_from_file_location("invalid_instance_oracle", path)
+    oracle = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(oracle)
+    reference_spec = importlib.util.spec_from_file_location("reference", path.parents[1] / 'verification/reference_assignment.py')
+    reference = importlib.util.module_from_spec(reference_spec)
+    reference_spec.loader.exec_module(reference)
+    calls = 0
+    def malformed(*args):
+        nonlocal calls
+        calls += 1
+        if calls == 1:
+            raise ValueError("one invalid instance")
+        return reference.assign_composition(*args)
+    result = oracle.evaluate(malformed)
+    assert calls > 1
+    worlds = result.get("per_world", result.get("per_instance"))
+    assert not worlds[0]["valid"] and all(row["valid"] for row in worlds[1:])
+    assert result["valid"] == result["combined_score"] == 0
+    assert all(value == 0 for key, value in result.items()
+               if key.startswith("heldout_") and "score" in key)
+
+
+def test_reference_alias_groups_follow_public_taxon_names():
+    oracle = load(BIO/"MetagenomeCompositionAssignment/verification/evaluator.py", "renamed_oracle")
+    ref = load(BIO/"MetagenomeCompositionAssignment/verification/reference_assignment.py", "renamed_ref")
+    problem = oracle._problem("alias", 32)
+    renamed = {taxon: "renamed_" + taxon for taxon in problem["taxon_ids"]}
+    problem["taxon_ids"] = [renamed[t] for t in problem["taxon_ids"]]
+    problem["known_alias_groups"] = [[renamed[t] for t in group] for group in problem["known_alias_groups"]]
+    out = ref.assign_composition(problem, oracle._Sequencer("alias", 32))
+    assert not out["abstain"]
+    assert out["ambiguous_groups"] == problem["known_alias_groups"]
+    assert all(row["taxon"] in problem["taxon_ids"] for row in out["taxa"])

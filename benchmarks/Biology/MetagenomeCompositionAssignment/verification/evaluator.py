@@ -94,7 +94,7 @@ def evaluate(assign_composition):
     dev=[rows[i] for i in DEV]; held=[rows[i] for i in HELD]; floor=sum(r["kind"]=="out_of_library" for r in dev)/len(dev)
     raw=float(np.mean([r["scientific"] for r in dev])); combined=max(0,(raw-floor)/(1-floor))
     unsupported=[r for r in dev if r["kind"] in {"alias","out_of_library"}]
-    return {"combined_score":float(combined),"valid":1.0 if all(r["valid"] for r in dev) else 0.0,
+    metrics = {"combined_score":float(combined),"valid":1.0 if all(r["valid"] for r in dev) else 0.0,
             "feasibility_rate":float(np.mean([r["valid"] for r in dev])),
             "development_mechanism_score":float(np.mean([r["mechanism"] for r in dev if r["kind"]!="out_of_library"])),
             "development_false_discovery_rate":sum(r["false"] for r in unsupported)/max(1,sum(r["claimed"] for r in unsupported)),
@@ -103,3 +103,10 @@ def evaluate(assign_composition):
             "development_correct_refusal_rate":float(np.mean([r["refusal"] for r in unsupported])),
             "development_discovery_coverage":float(np.mean([r["coverage"] for r in dev if r["kind"]=="supported"])),
             "heldout_scientific_score":float(np.mean([r["scientific"] for r in held])),"per_world":rows}
+    if not all(row["valid"] for row in rows):
+        metrics["valid"] = 0.0
+        metrics["combined_score"] = 0.0
+        for key in tuple(metrics):
+            if key.startswith("heldout_") and "score" in key:
+                metrics[key] = 0.0
+    return metrics

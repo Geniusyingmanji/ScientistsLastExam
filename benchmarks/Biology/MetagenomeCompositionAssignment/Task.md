@@ -41,15 +41,6 @@ This is a controlled marker-count model. It evaluates mixture reasoning, not a c
 environmental identification claim.
 sle.contract_lint is importable and free to call for submission-shape checks.
 
-## PR scope coordination
-
-The near-duplicate `Metagenomics/MetagenomicMixtureID` has been removed from
-[PR #9](https://github.com/Geniusyingmanji/ScientistsLastExam/pull/9) and is not
-in its [Chemistry/Biology split #22](https://github.com/Geniusyingmanji/ScientistsLastExam/pull/22).
-This package is retained as the single marker-panel composition task in this
-contribution. Removal of the competing submission resolves the duplication
-concern; stronger difficulty calibration remains pending.
-
 ## Accuracy normalization
 
 Absolute abundance tolerance is **0.025** (2.5 percentage points), exposed as
@@ -58,3 +49,8 @@ abundance credit; exact identifiable abundances define that component's 1.0.
 Taxon-set F1, alias grouping, false-claim penalties, library-inadequacy refusal
 and the blanket-refusal floor are unchanged. This tightens scientific accuracy,
 not the number of observations or the reference algorithm.
+
+Any invalid world makes the entire submission invalid: aggregate development and
+held-out scores are zero. Per-world diagnostics are retained only in trusted reports.
+
+Nearest task forms: CrowdedSpectrumAssignment and TransmissionSpectrumSpecies also require evidence for distinguishable components; this task uses marker-count mixtures, but current exact aliases and sentinel markers still require redesign.
