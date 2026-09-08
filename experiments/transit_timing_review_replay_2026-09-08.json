@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "task": "Exoplanets/TransitTimingAttribution",
+  "source_revision": "1b7f39e1fe96dec95d85a74ea82a4bc87851aecc",
+  "source_tree_clean": true,
+  "execution": "ali Linux, /usr/bin/python3, trusted driver and bubblewrap",
+  "model_generation": false,
+  "complete_metrics_identical_on_two_runs_for_every_probe": true,
+  "all_probes_valid": true,
+  "scores": {
+    "baseline": [0.0, 0.0],
+    "reference": [0.889497285644142, 0.5484299095319594],
+    "always_abstain": [0.0, 0.0],
+    "order_keyed": [0.0, 0.0],
+    "never_abstain_reference": [0.0, 0.0],
+    "constant_planet": [0.0, 0.0],
+    "constant_activity": [0.0, 0.0],
+    "constant_clock": [0.0, 0.0],
+    "followups_2": [0.8972688811210714, 0.5245351725799818],
+    "followups_3": [0.8773080792377126, 0.533911013963547],
+    "followups_4": [0.889497285644142, 0.5484299095319594],
+    "no_activity_model": [0.5494721077493916, 0.33647401525821163],
+    "constant_forecast": [0.8335817821749416, 0.4806808771647917]
+  },
+  "score_columns": ["development_combined_score", "robustness_score"],
+  "reference_diagnostics": {
+    "development": {"mechanism_correct_count": 5, "mechanism_total_count": 5, "false_discovery_count": 0, "false_discovery_denominator": 5, "correct_refusal_count": 3, "correct_refusal_denominator": 3, "discovery_count": 5, "discovery_coverage_denominator": 5},
+    "validation": {"mechanism_correct_count": 6, "mechanism_total_count": 6, "false_discovery_count": 1, "false_discovery_denominator": 7, "correct_refusal_count": 3, "correct_refusal_denominator": 4, "discovery_count": 6, "discovery_coverage_denominator": 6}
+  },
+  "validation": {"contribution_gate_passed": 15, "contribution_gate_failed": 0, "targeted_pytest_passed": 74, "standard_bad_candidates_scored_invalid": 3, "task_unit_fault_cases": 15, "full_repository_tests_run": false},
+  "limitations": ["Budget ladder is not monotone on development; two follow-ups slightly outperform four there.", "These regression probes are not an exhaustive low-dimensional optimization bound.", "Prior DeepSeek draws use an older score and are historical only; no new model draw was performed."]
+}

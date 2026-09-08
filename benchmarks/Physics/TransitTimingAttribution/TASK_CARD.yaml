@@ -1,5 +1,5 @@
 schema_version: 2
-scientific_question: Can an agent actively distinguish planet-induced transit-timing variations from stellar activity, clock drift, and unsupported non-periodic signals under a follow-up observation budget?
+scientific_question: Can an agent actively distinguish planet-induced transit-timing variations from stellar activity, clock drift, and unsupported mixtures under a follow-up observation budget?
 artifact: A TTV mechanism claim, perturbation period, next-offset forecast, confidence and immutable evidence lineage, or calibrated refusal.
 oracle:
   model: deterministic reduced-order transit-timing residual laboratory with planet, activity, clock and unsupported worlds
@@ -7,7 +7,7 @@ oracle:
   deterministic: true
 normalization:
   baseline: one legal follow-up timing followed by abstention
-  reference: late-baseline active sampling, linear-clock removal and periodic residual comparison
+  reference: four follow-ups and least-squares/BIC comparison of quadratic clock and periodic models; clean Linux replay 0.889497 development and 0.548430 held-out
   score: all-world reward minus blanket-refusal reward, divided by supported count and clipped below at zero, multiplied by correct-refusal rate; wrong mechanisms receive no period or forecast credit
 citations:
 - id: doi:10.1111/j.1365-2966.2005.08922.x
@@ -21,7 +21,7 @@ invariants:
 - overspending, invented IDs and malformed output fail closed
 - mechanism, forecast, coverage and false-discovery metrics remain separate
 - held-out worlds and exact descriptors remain evaluator-only
-known_shortcuts: PR11 review identified a fixed-order counter exploit and free unsupported claims. Worlds now have independently seeded shuffled orders, distinct split sizes and fresh candidate sessions. Constant-family, counter and no-refusal probes are replayed by verification/replay_probes.py; final numbers are recorded in references/known_best.md. Public finite grids remain an acknowledged reduced-order limitation, not a proven low-dimensional shortcut bound.
+known_shortcuts: PR11 review identified a fixed-order counter exploit and free unsupported claims. Shuffled orders, distinct split sizes and fresh candidate sessions now block that path. Constant-family, counter and fitted no-refusal probes all score 0 on both splits; reference is 0.889497/0.548430. Reproduce with verification/replay_probes.py. These targeted regressions are not an exhaustive low-dimensional grid bound; finite period grids remain a reduced-order limitation.
 review:
   domain: pending_external_astronomy
   evaluator_security: automated_determinism_budget_lineage_and_bad_candidate_checks_passed
@@ -61,6 +61,6 @@ construction_audit:
   author_domain: computational_astronomy
   reviewer_domain: pending_external_astronomy
   expert_hours: null
-  red_team_rounds: 0
+  red_team_rounds: 1
   oracle_disagreement_status: not_quantified
   independent_recomputation_status: baseline and reference replayed; independent photodynamical recomputation pending
