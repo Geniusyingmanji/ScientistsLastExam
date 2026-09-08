@@ -1,1 +1,1 @@
-python -m sle eval --allow-uncertified --task Exoplanets/TransitTimingAttribution
+{python} frontier_eval/run_eval.py --candidate {candidate} --metrics-out {metrics}

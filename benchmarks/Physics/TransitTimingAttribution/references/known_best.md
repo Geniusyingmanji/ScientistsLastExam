@@ -4,6 +4,11 @@ This candidate uses a deterministic reduced-order transit-timing laboratory. The
 uses widely separated follow-up transit numbers, removes a linear clock component, compares a small
 period grid, and abstains when the residual signal is too small or unsupported.
 
+## Historical baseline and reference
+
+The following 2026-09-05 results use the old supported-only score and eight follow-ups.
+They are not calibration of the revised refusal-aware, four-follow-up evaluator.
+
 Server replay (2026-09-05, provisional candidate calibration):
 
 - baseline: `combined_score = 0.0000`, valid `1.0`; one legal follow-up is taken and the candidate
@@ -14,6 +19,8 @@ Server replay (2026-09-05, provisional candidate calibration):
   0.1667` over six claims), so the reference is not treated as a ceiling or certification evidence;
 - reference uses eight legal follow-up timings, a least-squares/BIC comparison of clock,
   planet and activity models, and a forecast at a future unmeasured transit.
+
+## Historical model draws
 
 DeepSeek Flash calibration after enabling the chat-wire `thinking: disabled` compatibility path
 (temperature `0.0`, `greedy_rewrite`, budget 3, 2026-09-05):

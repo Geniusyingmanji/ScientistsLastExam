@@ -8,7 +8,7 @@ oracle:
 normalization:
   baseline: one legal follow-up timing followed by abstention
   reference: late-baseline active sampling, linear-clock removal and periodic residual comparison
-  score: development mechanism/forecast mean; held-out transfer and false discovery remain separately reported
+  score: all-world reward minus blanket-refusal reward, divided by supported count and clipped below at zero; wrong mechanisms receive no period or forecast credit
 citations:
 - id: doi:10.1111/j.1365-2966.2005.08922.x
   title: On detecting terrestrial planets with timing of giant planet transits
@@ -21,7 +21,7 @@ invariants:
 - overspending, invented IDs and malformed output fail closed
 - mechanism, forecast, coverage and false-discovery metrics remain separate
 - held-out worlds and exact descriptors remain evaluator-only
-known_shortcuts: The period grids and procedural world family are public; certification requires a server-held split.
+known_shortcuts: PR11 review identified a fixed-order counter exploit and free unsupported claims. Worlds now have independently seeded shuffled orders, distinct split sizes and fresh candidate sessions. Constant-family, counter and no-refusal probes are replayed by verification/replay_probes.py; final numbers are recorded in references/known_best.md. Public finite grids remain an acknowledged reduced-order limitation, not a proven low-dimensional shortcut bound.
 review:
   domain: pending_external_astronomy
   evaluator_security: automated_determinism_budget_lineage_and_bad_candidate_checks_passed
@@ -46,9 +46,9 @@ lineage:
   calibration_runs:
   - experiments/transit_timing_deepseek_flash_2026-09-05.json
   - experiments/transit_timing_deepseek_calibration_2026-09-06.json
-  calibration_evidence_status: current_or_migration_replayed
+  calibration_evidence_status: historical_only
   edits_triggered_by_model: none
-  shortcut_discoverer: truth_blind_reference_and_deepseek_flash_calibration
+  shortcut_discoverer: maintainer_PR11_review_and_regression_probes
   frozen_before_eval: false
   freeze_timestamp: null
 long_horizon:

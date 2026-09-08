@@ -1,16 +1,42 @@
+"""Use the trusted driver and sandbox; never import a candidate beside the oracle."""
 from __future__ import annotations
-import argparse, importlib.util, json, sys
+import argparse
+import json
+import os
 from pathlib import Path
-INVALID=-1e18
-TASK_DIR=Path(__file__).resolve().parent.parent
-def _load(path,name):
-    spec=importlib.util.spec_from_file_location(name,path); mod=importlib.util.module_from_spec(spec); spec.loader.exec_module(mod); return mod
+import subprocess
+import sys
+
+TASK_ID = "Exoplanets/TransitTimingAttribution"
+ROOT = Path(__file__).resolve().parents[4]
+EVAL_TIMEOUT_S = 300
+
+
 def main():
-    ap=argparse.ArgumentParser(); ap.add_argument('--candidate',required=True); ap.add_argument('--metrics-out',required=True); args=ap.parse_args()
-    m={'combined_score':INVALID,'valid':0.0}
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--candidate", required=True)
+    parser.add_argument("--metrics-out", required=True)
+    parser.add_argument("--timeout", type=float, default=EVAL_TIMEOUT_S)
+    args = parser.parse_args()
+    metrics = {"combined_score": 0.0, "valid": 0.0}
+    exit_code = 0
     try:
-        o=_load(TASK_DIR/'verification'/'evaluator.py','oracle'); c=_load(Path(args.candidate).resolve(),'candidate')
-        r=o.evaluate(c.attribute_ttv); m.update(r); m['raw_score']=r.get('combined_score')
-    except Exception as e: m['error_message']=f'{type(e).__name__}: {e}'
-    Path(args.metrics_out).write_text(json.dumps(m,indent=2,default=str)); print(json.dumps({k:m.get(k) for k in ('combined_score','valid')})); return 0
-if __name__=='__main__': raise SystemExit(main())
+        result = subprocess.run(
+            [sys.executable, "-m", "sle", "eval", "--allow-uncertified", "--task", TASK_ID,
+             "--candidate", str(Path(args.candidate).resolve()), "--timeout", str(args.timeout)],
+            cwd=ROOT, capture_output=True, text=True, timeout=args.timeout + 120,
+            env={**os.environ, "PYTHONPATH": str(ROOT)})
+        if result.returncode:
+            exit_code = result.returncode
+            raise RuntimeError("sle eval exited %d: %s" % (exit_code, result.stderr[-500:]))
+        metrics.update(json.loads(result.stdout))
+    except Exception as exc:
+        exit_code = exit_code or 1
+        metrics["error_message"] = "%s: %s" % (type(exc).__name__, exc)
+    Path(args.metrics_out).write_text(json.dumps(metrics, indent=2), encoding="utf-8")
+    print(json.dumps({k: metrics[k] for k in ("combined_score", "valid")}))
+    return exit_code
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

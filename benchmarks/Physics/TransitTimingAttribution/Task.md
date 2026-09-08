@@ -34,7 +34,23 @@ unsupported family is rewarded. A sealed shifted set tests transfer to new noise
 worlds with a correctly claimed mechanism. Each has accompanying `mechanism_correct_count` and
 `mechanism_total_count` keys with the same split prefix. Abstention on a supported world counts as
 incorrect; unsupported worlds are assessed by the refusal and false-discovery metrics.
+Wrong mechanism claims receive no period or forecast credit. Each supported-world score is
+0.55 for a correct mechanism plus 0.25 times period quality and 0.20 times forecast quality;
+abstention scores zero. Period quality is exponential relative-period accuracy for planets and
+0.5 for other supported mechanisms; forecast quality is exponential absolute error with scale
+four times the timing uncertainty. An unsupported-world refusal scores one, any claim zero.
+The headline score is `max(0, (sum(world_scores) - unsupported_count) / supported_count)`.
+Thus blanket refusal scores zero and false claims on unsupported signals reduce the headline.
+Rate metrics include counts and denominators. Instance order and split sizes are not a contract;
+each world starts a fresh candidate session, and the follow-up budget is four measurements.
 Malformed output, invented evidence, and budget overspend fail closed.
+
+## Relationship to nearby tasks
+
+Unlike `Physics/RadialVelocityPlanets`, this task attributes transit residuals with paid follow-up
+choices rather than searching a fixed radial-velocity series. Unlike `ParticlePhysics/LookElsewhereAnomaly`,
+the claim is a physical timing mechanism, and refusal concerns unsupported residual structure,
+not global anomaly significance. Shifted timing/noise instances test transfer of that attribution.
 
 ## Rules
 
