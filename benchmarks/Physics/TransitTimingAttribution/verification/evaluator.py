@@ -81,6 +81,14 @@ def evaluate(candidate):
     dev_supported=[r for r in dev if r[4] != "unsupported"]
     val_supported=[r for r in val if r[4] != "unsupported"]
     dev_claims=sum(not r[3] for r in dev); val_claims=sum(not r[3] for r in val)
-    return {"combined_score":sum(r[1] for r in dev_supported)/len(dev_supported),"valid":1.0,"robustness_score":sum(r[1] for r in val_supported)/len(val_supported),"development_false_discovery_rate":sum(r[2] for r in dev)/dev_claims if dev_claims else 0.0,"validation_false_discovery_rate":sum(r[2] for r in val)/val_claims if val_claims else 0.0,"development_correct_refusal_rate":sum(r[3] and r[4] == "unsupported" for r in dev)/1,"validation_correct_refusal_rate":sum(r[3] and r[4] == "unsupported" for r in val)/1,"development_discovery_coverage":sum(not r[3] and r[4] != "unsupported" for r in dev)/len(dev_supported),"validation_discovery_coverage":sum(not r[3] and r[4] != "unsupported" for r in val)/len(val_supported)}
+    metrics = {"combined_score":sum(r[1] for r in dev_supported)/len(dev_supported),"valid":1.0,"robustness_score":sum(r[1] for r in val_supported)/len(val_supported),"development_false_discovery_rate":sum(r[2] for r in dev)/dev_claims if dev_claims else 0.0,"validation_false_discovery_rate":sum(r[2] for r in val)/val_claims if val_claims else 0.0,"development_correct_refusal_rate":sum(r[3] and r[4] == "unsupported" for r in dev)/1,"validation_correct_refusal_rate":sum(r[3] and r[4] == "unsupported" for r in val)/1,"development_discovery_coverage":sum(not r[3] and r[4] != "unsupported" for r in dev)/len(dev_supported),"validation_discovery_coverage":sum(not r[3] and r[4] != "unsupported" for r in val)/len(val_supported)}
+    for prefix, supported in (("development", dev_supported), ("validation", val_supported)):
+        # On supported worlds fd is true exactly when a claimed mechanism is wrong.
+        # Abstention must not remove a world from the accuracy denominator.
+        correct = sum(not row[3] and not row[2] for row in supported)
+        metrics[prefix + "_mechanism_correct_count"] = correct
+        metrics[prefix + "_mechanism_total_count"] = len(supported)
+        metrics[prefix + "_mechanism_score"] = correct / len(supported) if supported else 0.0
+    return metrics
 
 def reference_anchor(): return {"development_score":1.0,"validation_score":1.0}

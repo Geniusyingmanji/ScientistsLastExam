@@ -30,6 +30,10 @@ world.
 Development worlds contain planet, activity, clock, and unsupported cases. Valid claims receive
 mechanism, period, forecast, coverage, and false-discovery metrics; correctly abstaining on the
 unsupported family is rewarded. A sealed shifted set tests transfer to new noise and phases.
+`development_mechanism_score` and `validation_mechanism_score` report the fraction of supported
+worlds with a correctly claimed mechanism. Each has accompanying `mechanism_correct_count` and
+`mechanism_total_count` keys with the same split prefix. Abstention on a supported world counts as
+incorrect; unsupported worlds are assessed by the refusal and false-discovery metrics.
 Malformed output, invented evidence, and budget overspend fail closed.
 
 ## Rules
