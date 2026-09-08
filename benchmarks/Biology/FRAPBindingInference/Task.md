@@ -133,6 +133,12 @@ abstention requires at least one.
 
 ## Scoring
 
+The split-prefixed `mechanism_score` is the fraction of all worlds with the correct family
+diagnosis: a supported claim on a supported world, or the correct named refusal on an unsupported
+world. Each split publishes `mechanism_correct_count` and `mechanism_total_count`.
+Undetermined abstention and invalid submissions count as incorrect. This axis is separate from
+continuous parameter recovery, prediction, and the composite science score.
+
 Supported worlds score continuous recovery of the four parameters and the supplied conditional
 recovery predictions. Errors in `D`, `k_on`, and `k_off` are measured on a logarithmic scale;
 mobile-fraction and prediction errors are continuous. Named unsupported worlds score only when the
@@ -144,6 +150,11 @@ The evaluator separately reports mechanism recovery, false-discovery rate, corre
 supported discovery coverage, attempted-discovery rate, their denominators, and all held-out axes.
 
 ## Rules
+
+The truth-blind reference scores 0.965603 development / 0.958000 held out. Two radii only score
+0.901797 / 0.921424; omitting the latest intermediate time scores 0.917655 / 0.865443;
+fixed binding rates score 0.622044 / 0.595200; never refusing scores 0.469603 / 0.362800.
+A 192-strategy summary-statistic shortcut sweep reaches 0.369094 / 0.386000.
 
 - Only edit `solution.py`; preserve `infer_frap_binding(problem, measure)`.
 - Use deterministic CPU Python, NumPy, SciPy, and the standard library only.

@@ -21,6 +21,28 @@ def _load(name: str, path: Path):
 
 
 class FRAPBindingInferenceTests(unittest.TestCase):
+    def test_mechanism_axis_is_family_accuracy_not_composite(self):
+        from unittest.mock import patch
+        oracle = _load("frap_mechanism", TASK / "verification" / "evaluator.py")
+        rows = [
+            {"kind": "supported", "valid": True, "abstained": False, "correct_refusal": False},
+            {"kind": "supported", "valid": True, "abstained": True, "correct_refusal": False},
+            {"kind": "unsupported", "valid": True, "abstained": True, "correct_refusal": True},
+        ]
+        summary = dict(combined_score=0.2, valid=1.0, science_score=0.3,
+                       false_discovery_rate=0.0, correct_refusal_rate=1.0,
+                       supported_discovery_coverage=0.5)
+        with patch.object(oracle, "DEVELOPMENT_WORLDS", [None] * 3), \
+             patch.object(oracle, "HELDOUT_WORLDS", [None] * 3), \
+             patch.object(oracle, "_evaluate_world", side_effect=rows * 2), \
+             patch.object(oracle, "_summary", return_value=summary):
+            result = oracle.evaluate(None)
+        for split in ("development", "heldout"):
+            self.assertEqual(result[split + "_mechanism_score"], 2 / 3)
+            self.assertEqual(result[split + "_mechanism_correct_count"], 2)
+            self.assertEqual(result[split + "_mechanism_total_count"], 3)
+        self.assertEqual(result["combined_score"], 0.2)
+
     def test_reference_is_deterministic_capable_and_baseline_is_zero(self):
         evaluator = _load("frap_evaluator", TASK / "verification" / "evaluator.py")
         sys.path.insert(0, str(TASK / "verification"))
