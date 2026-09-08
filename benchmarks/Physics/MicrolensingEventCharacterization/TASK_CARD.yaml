@@ -7,7 +7,7 @@ oracle:
   deterministic: true
 normalization:
   baseline: six fixed r-band observations followed by a point-lens claim with fixed parameters
-  reference: broad r-band cadence, targeted anomaly epochs, six g-band color checks, grid point-lens fit, sinusoidal comparison and calibrated ambiguity refusal
+  reference: broad r-band cadence, targeted anomaly epochs, grid point-lens fit, sinusoidal comparison and calibrated ambiguity refusal; unused g-band evidence queries removed
   score: development mechanism recovery normalized above blanket abstention; model accuracy, false discovery, refusal, budget, feasibility and held-out transfer remain separate
 citations:
 - id: doi:10.1086/164140
@@ -23,7 +23,7 @@ invariants:
 - duplicate queries, overspending, unknown epochs or malformed candidates fail closed
 - every answer cites at least six distinct current-world observations
 - model accuracy, false discovery, refusal, feasibility and held-out transfer are separate axes
-known_shortcuts: A fixed point-lens claim scores zero. No-g-band and never-refuse ablations score 0.118333 and 0.000000 development. A 4,116-policy range/roughness/peak-threshold sweep peaks at 0.276213 development and 0.444646 held out, below the 0.560636/0.770906 reference. The reduced-order model omits parallax, finite-source limb darkening, blending, binary orbital motion and real cadence/weather systematics; certification requires server-held events and independent astrophysical review.
+known_shortcuts: A fixed point-lens claim scores zero. Removing unused g observations does not change the 0.560636 development reference score; the old 0.118333 figure belongs to a separate weak threshold policy, not an ablation. The recorded 4,116-policy range/roughness/peak sweep reaches 0.276213 but excludes uncertainty; PR46 review found an uncertainty-threshold refusal shortcut scoring 0.300 development. This is not a universal shortcut bound. Color discrimination, parallax, finite-source limb darkening, blending, binary orbital motion and real cadence/weather systematics are not modeled; certification requires server-held events and independent astrophysical review.
 review:
   domain: pending_external_astronomy
   evaluator_security: automated_budget_determinism_refusal_and_malformed_candidate_checks_passed_clean_linux_replay
@@ -50,6 +50,7 @@ lineage:
   - experiments/microlensing_deepseek_calibration_2026-09-07.json
   calibration_evidence_status: current_or_migration_replayed
   edits_triggered_by_model: none
+  reference_selection_note: The four reference decision thresholds were chosen by the recorded 81-policy development-score grid search; held-out scores were reporting-only. PR46 removes unused g queries without changing fitting thresholds, oracle or scoring.
   shortcut_discoverer: builder_self_audit_with_task_local_ablation_sweep_and_deepseek_flash_pro_calibration
   frozen_before_eval: false
   freeze_timestamp: null

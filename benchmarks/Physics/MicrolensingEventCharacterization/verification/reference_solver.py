@@ -38,14 +38,15 @@ def _sinusoid(times, flux):
     return best
 
 
-def infer_microlensing(problem, observe):
+def _infer(problem, observe, *, collect_g=False, refuse=True):
     times = np.asarray(problem["candidate_times"], dtype=float)
     chosen = list(times[::2])
     chosen += [float(x) for x in (-6.0, -2.0, 2.0, 6.0, 10.0, 14.0)]
     chosen = list(dict.fromkeys(round(x, 3) for x in chosen))[:18]
     rows = [observe(float(t), "r") for t in chosen]
-    extra = [-18.0, -10.0, 0.0, 4.0, 8.0, 16.0]
-    rows.extend(observe(float(t), "g") for t in extra)
+    # Legacy g-band observations never entered either fit; retained only for replay.
+    if collect_g:
+        rows.extend(observe(float(t), "g") for t in (-18.0, -10.0, 0.0, 4.0, 8.0, 16.0))
     t = np.array([row["time"] for row in rows if row["band"] == "r"], dtype=float)
     y = np.array([row["flux"] for row in rows if row["band"] == "r"], dtype=float)
     point = _fit_point(t, y)
@@ -54,7 +55,7 @@ def infer_microlensing(problem, observe):
     anomaly = float(np.max(residual))
     point_excess = float(np.max(y) - np.median(y[np.abs(t) > 16.0]))
     evidence = [row["query_id"] for row in rows]
-    if min(point[0], sine_err) > 0.005 or (point_excess < 0.25 and sine_amp < 0.09):
+    if refuse and (min(point[0], sine_err) > 0.005 or (point_excess < 0.25 and sine_amp < 0.09)):
         return {"abstain": True, "confidence": 0.72, "evidence_query_ids": evidence}
     if anomaly > 0.06 and point_excess > 0.20:
         model, amplitude, confidence = "binary_lens", float(np.clip(anomaly, 0.0, 1.0)), 0.78
@@ -67,3 +68,7 @@ def infer_microlensing(problem, observe):
         scale = period
     return {"abstain": False, "model": model, "timescale_days": float(np.clip(scale, 2.0, 20.0)),
             "amplitude": amplitude, "confidence": confidence, "evidence_query_ids": evidence}
+
+
+def infer_microlensing(problem, observe):
+    return _infer(problem, observe)

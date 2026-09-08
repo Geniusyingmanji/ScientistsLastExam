@@ -8,6 +8,10 @@ intrinsic variable-source activity; estimate its characteristic time scale and a
 amplitude. Abstain when the available observations do not distinguish a supported model from a
 low-signal ambiguous event.
 
+This reduced-order laboratory uses the same band scaling for every event family. It does not
+model the achromatic-lensing versus chromatic-variability discriminator. Either filter may provide
+photometric samples, but color is not a separate mechanism-identification signal here.
+
 ## Candidate interface
 
 Implement `infer_microlensing(problem, observe)`.
@@ -52,9 +56,13 @@ amplitude recovery (0.15), and confidence (0.10). Ambiguous worlds score only fo
 model accuracy, false discovery, refusal, budget, feasibility and held-out transfer are reported
 separately. Held-out worlds and per-world truth are not search-visible.
 
-The task-local reference scores 0.561. Removing g-band sampling or calibrated refusal lowers the
-development score to 0.118 or 0.000. A 4,116-strategy range/roughness/peak-threshold sweep reaches
-0.276, leaving measurable headroom for joint model fitting and active follow-up.
+The task-local reference scores 0.561 using r-band fitting. Its former six g-band queries did
+not enter the fit: removing them leaves the score unchanged. The previously reported 0.118
+belongs to a separate range-threshold, fixed-point-lens policy, not a reference ablation.
+A 4,116-strategy range/roughness/peak-threshold sweep reaches 0.276, but is not an upper bound
+over all shortcuts: an uncertainty-threshold refusal policy can do better. Remaining reference
+headroom includes variable-source recognition; it mislabels both development variable sources
+as binary lenses.
 
 ## Relationship to nearby tasks
 

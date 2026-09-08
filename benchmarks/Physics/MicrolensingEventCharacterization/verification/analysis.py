@@ -1,4 +1,4 @@
-"""Task-local reference, ablation and shortcut analysis."""
+"""Task-local diagnostics; weak threshold policies are not reference ablations."""
 from __future__ import annotations
 
 import importlib.util
@@ -20,7 +20,7 @@ REFERENCE = _load("microlensing_reference", HERE / "reference_solver.py")
 BASELINE = _load("microlensing_baseline", HERE.parent / "solution.py")
 
 
-def _policy(use_g=True, refuse=True):
+def threshold_policy(use_g=True, refuse=True):
     def run(problem, observe):
         times = problem["candidate_times"]
         rows = [observe(float(t), "r") for t in times[::2]][:18]
@@ -50,9 +50,13 @@ def compact(metrics):
 def main():
     report = {
         "reference": compact(EVALUATOR.evaluate(REFERENCE.infer_microlensing)),
+        "legacy_reference_with_unused_g": compact(EVALUATOR.evaluate(
+            lambda problem, observe: REFERENCE._infer(problem, observe, collect_g=True))),
+        "reference_without_refusal": compact(EVALUATOR.evaluate(
+            lambda problem, observe: REFERENCE._infer(problem, observe, refuse=False))),
         "baseline": compact(EVALUATOR.evaluate(BASELINE.infer_microlensing)),
-        "no_g_band": compact(EVALUATOR.evaluate(_policy(use_g=False))),
-        "never_refuse": compact(EVALUATOR.evaluate(_policy(refuse=False))),
+        "weak_threshold_r_only": compact(EVALUATOR.evaluate(threshold_policy(use_g=False))),
+        "weak_threshold_never_refuse": compact(EVALUATOR.evaluate(threshold_policy(refuse=False))),
         "blanket_abstain": compact(EVALUATOR.evaluate(blanket)),
     }
     print(json.dumps(report, indent=2, sort_keys=True))
