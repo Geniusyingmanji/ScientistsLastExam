@@ -76,8 +76,6 @@ def _infer(problem, measure, radius_count=4, allow_refusal=True, fixed_storage=N
     ordered = sorted(bic.values())
     if best != "confined" and bic["confined"] - bic[best] < 10.0:
         best = "undetermined"
-    elif best == "confined" and ordered[1] - ordered[0] < 4.0:
-        best = "undetermined"
     theta = fits["confined"][1]
     T, S = np.exp(theta[:2])
     if fixed_storage is not None:
