@@ -21,6 +21,28 @@ def _load(name: str, path: Path):
 
 
 class SpikeHistoryInferenceTests(unittest.TestCase):
+    def test_mechanism_axis_is_family_accuracy_not_composite(self):
+        from unittest.mock import patch
+        oracle = _load("spike_mechanism", TASK / "verification" / "evaluator.py")
+        rows = [
+            {"kind": "supported", "valid": True, "abstained": False, "correct_refusal": False},
+            {"kind": "supported", "valid": True, "abstained": True, "correct_refusal": False},
+            {"kind": "unsupported", "valid": True, "abstained": True, "correct_refusal": True},
+        ]
+        summary = dict(combined_score=0.2, valid=1.0, science_score=0.3,
+                       false_discovery_rate=0.0, correct_refusal_rate=1.0,
+                       supported_discovery_coverage=0.5)
+        with patch.object(oracle, "DEVELOPMENT_WORLDS", [None] * 3), \
+             patch.object(oracle, "HELDOUT_WORLDS", [None] * 3), \
+             patch.object(oracle, "_evaluate_world", side_effect=rows * 2), \
+             patch.object(oracle, "_summary", return_value=summary):
+            result = oracle.evaluate(None)
+        for split in ("development", "heldout"):
+            self.assertEqual(result[split + "_mechanism_score"], 2 / 3)
+            self.assertEqual(result[split + "_mechanism_correct_count"], 2)
+            self.assertEqual(result[split + "_mechanism_total_count"], 3)
+        self.assertEqual(result["combined_score"], 0.2)
+
     def test_reference_is_deterministic_and_baseline_is_zero(self):
         oracle = _load("spike_evaluator", TASK / "verification" / "evaluator.py")
         reference = _load("spike_reference", TASK / "verification" / "reference_solver.py")
@@ -42,7 +64,7 @@ class SpikeHistoryInferenceTests(unittest.TestCase):
         for split in ("development", "heldout"):
             self.assertEqual(
                 base[f"{split}_mechanism_score"],
-                base[split]["science_score"],
+                base[split + "_mechanism_correct_count"] / base[split + "_mechanism_total_count"],
             )
             self.assertEqual(
                 base[f"{split}_false_discovery_rate"],
@@ -73,6 +95,32 @@ class SpikeHistoryInferenceTests(unittest.TestCase):
         result = oracle.evaluate(lambda problem: {})
         self.assertEqual(result["valid"], 0.0)
         self.assertEqual(result["combined_score"], 0.0)
+
+    def test_submission_fault_matrix(self):
+        oracle = _load("spike_faults", TASK / "verification" / "evaluator.py")
+        baseline = _load("spike_base_faults", TASK / "solution.py")
+        changes = [
+            lambda s: s.pop("confidence"),
+            lambda s: s.update(extra=1),
+            lambda s: s.update(diagnosis="unknown"),
+            lambda s: s.update(abstain="yes"),
+            lambda s: s.update(intercept=float("nan")),
+            lambda s: s.update(stimulus_gain=float("inf")),
+            lambda s: s.update(refractory_tau_ms=-1),
+            lambda s: s.update(prediction_probabilities=[]),
+            lambda s: s.update(confidence=2),
+            lambda s: s.update(evidence_trial_ids=["fabricated"] * 4),
+            lambda s: s.update(evidence_trial_ids=[]),
+        ]
+        for change in changes:
+            def candidate(problem):
+                claim = baseline.infer_spike_history(problem)
+                change(claim)
+                return claim
+            with self.subTest(change=change):
+                result = oracle.evaluate(candidate)
+                self.assertEqual(result["valid"], 0.0)
+                self.assertEqual(result["combined_score"], 0.0)
 
     def test_ablation_ladder_measures_reference_capabilities(self):
         oracle = _load("spike_ablation_eval", TASK / "verification" / "evaluator.py")

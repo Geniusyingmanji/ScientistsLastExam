@@ -58,6 +58,12 @@ seeds, fixed parameters, or a fixed diagnosis.
 
 ## Scoring
 
+The split-prefixed `mechanism_score` is the fraction of all worlds with the correct family
+diagnosis: a supported claim on a supported world, or the correct named refusal on an unsupported
+world. Each split publishes `mechanism_correct_count` and `mechanism_total_count`.
+Undetermined abstention and invalid submissions count as incorrect. This axis is separate from
+continuous parameter recovery, prediction, and the composite science score.
+
 On supported worlds, the science score combines recovery of all four parameters and the supported
 diagnosis; sealed conditional-probability prediction and confidence calibration are scored
 separately. Unsupported worlds reward only the correct named refusal. The clipped development
