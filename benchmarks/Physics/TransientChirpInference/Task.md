@@ -45,16 +45,27 @@ current-world `evidence_query_ids`. A non-abstaining answer additionally contain
 
 ## Scoring
 
-Supported worlds score model identification (0.55), continuous parameter recovery (0.20),
-amplitude recovery (0.15), and confidence (0.10). Ambiguous worlds score only for refusal.
-`combined_score` is development mechanism recovery normalized so blanket abstention is exactly
-zero; model accuracy, false discovery, refusal, feasibility, budget, and held-out transfer remain
-separate axes. Held-out worlds and truth are evaluator-only.
+Correctly labeled supported worlds score model identification (0.20), parameter recovery (0.50),
+amplitude recovery (0.20), and confidence (0.10); incorrect labels and supported-world refusals
+receive zero. Parameter quality is `max(0, 1 - absolute_error / tolerance)`: the frequency-slope
+tolerance is 0.003 cycles/day^2 for both chirps and lines (whose true slope is zero); glitch event
+time tolerance is 2 days. Amplitude tolerance is 0.25. Ambiguous worlds score one for refusal,
+zero for a claim. The headline is `max(0, (sum(world_scores) - unsupported_count) / supported_count)`
+times correct-refusal rate; both blanket refusal and never refusing score zero.
 
-The task-local reference scores 0.808. Removing detector coherence, chirp-grid fitting, or
-calibrated refusal lowers the score to 0.648, 0.314, or 0.475 respectively. A 2,916-strategy
-peak/amplitude-threshold sweep reaches 0.600, so the reference retains measurable headroom over
-the tested low-dimensional shortcuts.
+`development_mechanism_score` and `heldout_mechanism_score` are supported-world model accuracy,
+with abstentions counted as incorrect. `*_science_score` reports the separate unnormalized
+composite. False-discovery denominators count claims, refusal denominators count ambiguous worlds,
+and coverage denominators include every supported world. Counts and denominators accompany rates;
+`*_attempted_discovery` reports whether any claim was made. `*_confidence_score` reports
+`1 - abs(confidence - decision_correct)` separately, including wrong claims.
+`robustness_score` uses the same normalized headline on held-out worlds.
+
+All families have the same reported noise standard deviation; ambiguity comes from weak signal.
+Chirps and lines may have identical early/late sign-change counts, requiring phase-evolution fits.
+Each world starts a fresh candidate session. The initial frequency is in [0.04, 0.18] cycles/day.
+The reference observes t=0..11, leaving later localized transients and more adaptive schedules
+as explicit headroom. This is a reduced-order phase model, not a full inspiral waveform.
 
 ## Relationship to nearby tasks
 

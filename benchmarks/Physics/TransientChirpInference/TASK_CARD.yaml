@@ -8,7 +8,7 @@ oracle:
 normalization:
   baseline: six fixed H1 observations followed by a fixed coherent-line claim
   reference: dual-detector cadence, chirp/line grid comparison, localization check and low-SNR refusal
-  score: development mechanism recovery normalized above blanket abstention; accuracy, false discovery, refusal, budget, feasibility and held-out transfer remain separate
+  score: correct-label science quality with 0.50 parameter weight, normalized above blanket refusal and multiplied by correct-refusal rate; mechanism accuracy and composite science remain distinct
 citations:
 - id: doi:10.1103/PhysRevX.6.041015
   title: Observing gravitational-wave transient GW150914 with minimal assumptions
@@ -21,7 +21,7 @@ invariants:
 - duplicate queries, overspending, unknown epochs/detectors and malformed candidates fail closed
 - every answer cites at least six distinct current-world observations
 - model accuracy, false discovery, refusal, feasibility and held-out transfer are separate axes
-known_shortcuts: The fixed-line baseline normalizes to zero. H1-only inference scores 0.648322, below the 0.808362 reference because it cannot establish detector localization. A 2,916-policy peak/amplitude-threshold sweep peaks at 0.600015 development and 0.351875 held out. The reduced-order model omits real detector calibration, colored nonstationary noise, sky-position delays, precession and full waveform families; certification requires server-held traces and independent review.
+known_shortcuts: PR48 review found that a noise threshold and sign-count heuristic matched the old reference. The revised worlds share one noise standard deviation and include slow chirps paired with midpoint-matched lines; slope recovery is weighted and also applies to line claims. verification/calibrate.py includes both the historical threshold family and a noise/sign-count/RMS/slope grid. Old numerical bounds no longer apply; revised replay results belong in references/known_best.md. Real detector calibration, colored noise, sky-position delays and full inspiral waveform families remain outside this reduced-order model.
 review:
   domain: pending_external_gravitational_wave
   evaluator_security: automated_budget_determinism_refusal_and_malformed_candidate_checks_passed_clean_linux_replay
@@ -46,7 +46,7 @@ lineage:
   - deepseek-v4-pro
   calibration_runs:
   - experiments/transient_chirp_deepseek_calibration_2026-09-07.json
-  calibration_evidence_status: current_or_migration_replayed
+  calibration_evidence_status: historical_only
   edits_triggered_by_model: none
   shortcut_discoverer: builder_self_audit_with_task_local_ablation_sweep_and_deepseek_flash_pro_calibration
   frozen_before_eval: false

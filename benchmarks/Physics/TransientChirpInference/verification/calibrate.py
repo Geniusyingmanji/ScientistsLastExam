@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import importlib.util
+import argparse
 import itertools
 import json
 import math
@@ -132,7 +133,8 @@ def threshold_policy(sample_count, glitch_threshold, refusal_threshold, chirp_th
 
 def _summary(metrics):
     keys = (
-        "combined_score", "development_mechanism_score", "heldout_mechanism_score",
+        "combined_score", "robustness_score", "development_science_score", "heldout_science_score",
+        "development_mechanism_score", "heldout_mechanism_score",
         "development_model_accuracy", "heldout_model_accuracy",
         "development_false_discovery_rate", "heldout_false_discovery_rate",
         "development_correct_refusal_rate", "heldout_correct_refusal_rate",
@@ -140,12 +142,42 @@ def _summary(metrics):
     return {key: metrics[key] for key in keys}
 
 
+def sign_count_policy(sample_count=12, glitch_threshold=0.38, refusal_rms=0.0,
+                      uncertainty_threshold=0.08, count_delta=0, chirp_slope=0.02):
+    def infer(problem, observe):
+        times = [float(value) for value in problem["candidate_times"][:sample_count]]
+        rows = [observe(time, detector) for detector in ("H1", "L1") for time in times]
+        h = np.array([r["strain"] for r in rows[:sample_count]])
+        l = np.array([r["strain"] for r in rows[sample_count:]])
+        evidence = [r["query_id"] for r in rows]
+        if rows[0]["uncertainty"] > uncertainty_threshold or float(np.std(h)) < refusal_rms:
+            return {"abstain": True, "confidence": 0.8, "evidence_query_ids": evidence}
+        diff = np.abs(h - l)
+        if float(np.max(diff)) > glitch_threshold:
+            model, slope, event_time = "glitch", 0.0, times[int(np.argmax(diff))]
+            amplitude = float(np.max(np.abs(h)))
+        else:
+            early = int(np.sum(np.diff(np.signbit(h[:sample_count // 2]))))
+            late = int(np.sum(np.diff(np.signbit(h[sample_count // 2:]))))
+            model = "chirp" if late - early > count_delta else "line"
+            slope, event_time = (chirp_slope if model == "chirp" else 0.0), 9.0
+            amplitude = float(np.sqrt(2) * np.std(h))
+        return {"abstain": False, "model": model, "frequency_slope": slope,
+                "event_time": event_time, "amplitude": float(np.clip(amplitude, 0, 1)),
+                "confidence": 0.8, "evidence_query_ids": evidence}
+    return infer
+
+
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--output")
+    args = parser.parse_args()
     strategies = {
         "reference": REFERENCE.infer_transient,
         "h1_only": h1_only,
         "no_chirp_grid": no_chirp_grid,
         "never_refuse": never_refuse,
+        "maintainer_sign_count": sign_count_policy(),
     }
     results = {name: _summary(EVALUATOR.evaluate(strategy))
                for name, strategy in strategies.items()}
@@ -167,7 +199,23 @@ def main():
         "best_parameters": list(best[1]),
         **_summary(best[2]),
     }
-    print(json.dumps(results, indent=2, sort_keys=True))
+    best = None
+    count = 0
+    for parameters in itertools.product(
+        (6, 8, 10, 12), (0.28, 0.38, 0.48), (0.0, 0.08, 0.16),
+        (0.03, 0.05, 0.08), (-1, 0, 1), (0.003, 0.006, 0.014, 0.02, 0.03),
+    ):
+        metrics = EVALUATOR.evaluate(sign_count_policy(*parameters))
+        count += 1
+        if best is None or metrics["combined_score"] > best[0]:
+            best = (metrics["combined_score"], parameters, metrics)
+    results["sign_count_shortcut_probe"] = {
+        "strategy_count": count, "best_parameters": list(best[1]), **_summary(best[2])}
+    results["selection_protocol"] = "Development-only selection; trusted in-process sweep. Replay selected policies through the sandbox separately."
+    payload = json.dumps(results, indent=2, sort_keys=True)
+    if args.output:
+        Path(args.output).write_text(payload + "\n", encoding="utf-8")
+    print(payload)
 
 
 if __name__ == "__main__":

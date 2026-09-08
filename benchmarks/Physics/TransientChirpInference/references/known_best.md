@@ -1,5 +1,12 @@
 # TransientChirpInference reference results
 
+## Historical version
+
+The following measurements use revision c9e75ce's worlds and score. They are historical only,
+not performance claims for the PR48 hardening revision. In these historical tables, held-out
+is the old unnormalized composite, not normalized robustness or model accuracy. The old
+mechanism_score name also denoted that composite; the revised key measures accuracy instead.
+
 The deterministic task-local reference uses twelve H1 and twelve L1 observations, a grid fit for
 constant-frequency and chirping phase models, a cross-detector localized-glitch test, and a
 low-SNR refusal. It scores **0.808362** development and **0.853325** held out; the legal fixed-line

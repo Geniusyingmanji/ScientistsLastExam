@@ -23,7 +23,6 @@ def infer_transient(problem, observe):
     l = np.array([r["strain"] for r in rows[12:]], dtype=float)
     t = np.array(times, dtype=float)
     fit = _fit_grid(t, h)
-    line = _fit_grid(t, h)
     # A chirp fit must improve on the constant-frequency subgrid.
     line_err = float("inf")
     for f0 in np.linspace(.04, .18, 29):
