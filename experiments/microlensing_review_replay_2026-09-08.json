@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "task": "Exoplanets/MicrolensingEventCharacterization",
+  "source_revision": "571e130bf5c9539190bdd9c230919f70102c62d4",
+  "source_tree_clean": true,
+  "execution": "ali Linux, /usr/bin/python3, trusted driver and bubblewrap",
+  "model_generation": false,
+  "oracle_and_scoring_unchanged_from": "ca4a8833116b644ad67e197ad327fff13d792bb2",
+  "complete_metrics_identical_twice_for_all_probes": true,
+  "legacy_and_r_only_science_metrics_identical": true,
+  "all_probes_valid": true,
+  "columns": ["combined_score", "heldout_mechanism_score", "development_mean_budget_used"],
+  "scores": {
+    "reference": [0.5606363788906344, 0.7709058216991207, 18.0],
+    "legacy_reference_with_unused_g": [0.5606363788906344, 0.7709058216991207, 24.0],
+    "reference_without_refusal": [0.22730304555730108, 0.5209058216991207, 18.0],
+    "baseline": [0.0, 0.19062500000000002, 6.0],
+    "weak_threshold_r_only": [0.11833333333333333, 0.19187500000000002, 13.0],
+    "weak_threshold_never_refuse": [0.0, 0.19187500000000002, 19.0],
+    "blanket_abstain": [0.0, 0.25, 6.0],
+    "uncertainty_threshold": [0.3, 0.453125, 6.0]
+  },
+  "checks": {"task_gate_passed": 15, "task_gate_failed": 0, "related_pytest_passed": 78, "standard_bad_candidates_scored_invalid": 3, "full_repository_tests_run": false},
+  "notes": ["Held-out mechanism score is an unnormalized composite, unlike development combined_score.", "The former no-g-band and never-refuse rows were weak fixed policies, not reference ablations.", "Uncertainty-threshold refusal and the output bound excluding one true period remain disclosed nonblocking limitations.", "No new model draw; existing DeepSeek records were not relabeled as new measurements."]
+}

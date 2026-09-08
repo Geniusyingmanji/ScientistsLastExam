@@ -46,6 +46,24 @@ only mean budget use changes from 24 to 18. This is a zero-effect removal, not a
 `analysis.py` now reports this comparison and a genuine reference-without-refusal variant
 separately from its simple threshold policies.
 
+Clean Linux sandbox replay, executable revision `571e130bf5c9539190bdd9c230919f70102c62d4`:
+
+| Candidate | Development combined | Held-out raw composite | Observations |
+|---|---:|---:|---:|
+| Reference, r only | 0.560636 | 0.770906 | 18 |
+| Legacy reference with unused g queries | 0.560636 | 0.770906 | 24 |
+| Reference with refusal disabled | 0.227303 | 0.520906 | 18 |
+| Weak range-threshold fixed point claim, r only | 0.118333 | 0.191875 | 13 |
+| Weak fixed point claim without refusal | 0.000000 | 0.191875 | 19 |
+| Baseline | 0.000000 | 0.190625 | 6 |
+| Blanket refusal | 0.000000 | 0.250000 | 6 |
+| Uncertainty-threshold refusal and fixed point claim | 0.300000 | 0.453125 | 6 |
+
+All eight candidates were valid, with identical complete metrics on two runs each. Legacy and
+r-only reference metrics are identical after excluding budget counters, including per-world scores.
+Refusal removal costs 0.333333 development score, while g removal costs zero scientific score.
+Compact evidence is in `experiments/microlensing_review_replay_2026-09-08.json`.
+
 The previously labeled "no-g-band" result, 0.118333 / 0.191875, is actually a fixed point-lens
 policy with range-threshold refusal. The previously labeled "never-refuse" result,
 0.000000 / 0.191875, is that weak fixed policy without refusal, not the reference without refusal.
@@ -59,7 +77,7 @@ roughness, peak shape and one fixed time scale. The best development policy scor
 below the reference's **0.560636**; it reaches **0.444646** held out with only 0.333 model accuracy.
 That sweep excludes uncertainty. PR46 review supplied a stronger six-observation shortcut:
 refuse when the first reported uncertainty exceeds 0.05, otherwise make a constant point-lens
-claim. The maintainer measured 0.300 development. Thus 0.276213 is only the maximum within
+claim. We reproduced the maintainer's 0.300 development result. Thus 0.276213 is only the maximum within
 the recorded range/roughness grid, not a general shortcut ceiling. A matching public-input probe
 is included in `replay_review.py`. The uncertainty separation remains a known limitation; this
 revision corrects the unsupported evidence claims without changing the frozen worlds or scores.
@@ -89,3 +107,10 @@ reference parameter probe and shortcut sweep with:
 ```bash
 python3 benchmarks/Physics/MicrolensingEventCharacterization/verification/calibrate.py
 ```
+
+The 2026-09-08 review revision passed the full task contribution gate (15/15), 78 related pytest
+tests, and all three CLI bad-candidate checks on ali Linux. The task tests additionally cover
+11 malformed submissions, duplicate observations, editable-solution contract and unused-g
+invariance. No full-repository tests, new DeepSeek generation, or global evidence refresh were
+run. The oracle, candidate input schema and score are unchanged; previous model scores remain
+historical draws on that same objective, not newly generated results under the corrected prose.
