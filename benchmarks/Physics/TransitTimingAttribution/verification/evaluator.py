@@ -88,6 +88,9 @@ def _aggregate(rows):
     covered = sum(not r["abstain"] and r["supported"] for r in rows)
     # Subtract the raw reward of blanket refusal, including every unsupported world.
     score = max(0.0, (sum(r["score"] for r in rows) - unsupported) / supported) if supported else 0.0
+    # Discovery requires both supported inference and rejection of unsupported signals.
+    # The additive correction alone still rewards a fitted never-refuse strategy.
+    score *= refused / unsupported if unsupported else 1.0
     return {
         "combined_score": score,
         "mechanism_score": correct / supported if supported else 0.0,

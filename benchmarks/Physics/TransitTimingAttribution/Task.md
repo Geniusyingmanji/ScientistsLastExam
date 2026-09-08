@@ -39,8 +39,10 @@ Wrong mechanism claims receive no period or forecast credit. Each supported-worl
 abstention scores zero. Period quality is exponential relative-period accuracy for planets and
 0.5 for other supported mechanisms; forecast quality is exponential absolute error with scale
 four times the timing uncertainty. An unsupported-world refusal scores one, any claim zero.
-The headline score is `max(0, (sum(world_scores) - unsupported_count) / supported_count)`.
+The headline score is `max(0, (sum(world_scores) - unsupported_count) / supported_count)`
+multiplied by the correct-refusal rate on unsupported worlds.
 Thus blanket refusal scores zero and false claims on unsupported signals reduce the headline.
+Never refusing also scores zero, even with otherwise accurate supported-model fits.
 Rate metrics include counts and denominators. Instance order and split sizes are not a contract;
 each world starts a fresh candidate session, and the follow-up budget is four measurements.
 Malformed output, invented evidence, and budget overspend fail closed.

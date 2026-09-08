@@ -43,7 +43,8 @@ class TransitMechanismMetricsTests(unittest.TestCase):
         supported = [row(True, 0.8)] * 3
         good = evaluator._aggregate(supported + [row(False, 1, True)])
         bad = evaluator._aggregate(supported + [row(False, 0)])
-        self.assertAlmostEqual(good["combined_score"] - bad["combined_score"], 1 / 3)
+        self.assertAlmostEqual(good["combined_score"], 0.8)
+        self.assertEqual(bad["combined_score"], 0.0)
         result = evaluator.evaluate(lambda *a: {"abstain": True})
         self.assertEqual(result["combined_score"], 0)
         self.assertEqual(result["robustness_score"], 0)

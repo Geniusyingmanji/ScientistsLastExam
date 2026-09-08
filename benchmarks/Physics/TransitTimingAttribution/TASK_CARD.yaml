@@ -8,7 +8,7 @@ oracle:
 normalization:
   baseline: one legal follow-up timing followed by abstention
   reference: late-baseline active sampling, linear-clock removal and periodic residual comparison
-  score: all-world reward minus blanket-refusal reward, divided by supported count and clipped below at zero; wrong mechanisms receive no period or forecast credit
+  score: all-world reward minus blanket-refusal reward, divided by supported count and clipped below at zero, multiplied by correct-refusal rate; wrong mechanisms receive no period or forecast credit
 citations:
 - id: doi:10.1111/j.1365-2966.2005.08922.x
   title: On detecting terrestrial planets with timing of giant planet transits
