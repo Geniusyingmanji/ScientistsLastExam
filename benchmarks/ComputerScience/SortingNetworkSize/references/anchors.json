@@ -1,0 +1,108 @@
+{
+  "task": "Algorithm/SortingNetworkSize",
+  "anchors": [
+    {
+      "name": "sota_ref_n13",
+      "value": 45,
+      "source_url": "https://bertdobbelaere.github.io/sorting_networks.html",
+      "derivation": "smallest published size for 13 inputs per the live record page (updated 2025-11-07); TAOCP-era, also Juille 1995; lower bound 44, not proven optimal",
+      "retrieved_on": "2026-09-08",
+      "role": "raw_record_comparison_only_not_scoring_target",
+      "record_page_revision_date": "2025-11-07"
+    },
+    {
+      "name": "sota_ref_n14",
+      "value": 51,
+      "source_url": "https://bertdobbelaere.github.io/sorting_networks.html",
+      "derivation": "smallest published size for 14 inputs per the live record page (updated 2025-11-07); lower bound 48, not proven optimal",
+      "retrieved_on": "2026-09-08",
+      "role": "raw_record_comparison_only_not_scoring_target",
+      "record_page_revision_date": "2025-11-07"
+    },
+    {
+      "name": "sota_ref_n15",
+      "value": 56,
+      "source_url": "https://bertdobbelaere.github.io/sorting_networks.html",
+      "derivation": "smallest published size for 15 inputs per the live record page (updated 2025-11-07); lower bound 53, not proven optimal",
+      "retrieved_on": "2026-09-08",
+      "role": "raw_record_comparison_only_not_scoring_target",
+      "record_page_revision_date": "2025-11-07"
+    },
+    {
+      "name": "sota_ref_n16",
+      "value": 60,
+      "source_url": "https://bertdobbelaere.github.io/sorting_networks.html",
+      "derivation": "smallest published size for 16 inputs per the live record page (updated 2025-11-07): M. W. Green 1969 via Knuth TAOCP vol. 3, matched by SorterHunter; lower bound 57, not proven optimal",
+      "retrieved_on": "2026-09-08",
+      "role": "raw_record_comparison_only_not_scoring_target",
+      "record_page_revision_date": "2025-11-07"
+    },
+    {
+      "name": "sota_ref_n17",
+      "value": 71,
+      "source_url": "https://jmlr.org/papers/v14/valsalam13a.html",
+      "derivation": "smallest published size for 17 inputs, Valsalam-Miikkulainen JMLR 2013 (symmetry + evolutionary search), cross-checked against the live record page (updated 2025-11-07); lower bound 63, not proven optimal",
+      "retrieved_on": "2026-09-08",
+      "role": "raw_record_comparison_only_not_scoring_target",
+      "record_page_revision_date": "2025-11-07"
+    },
+    {
+      "name": "lower_bound_n13",
+      "value": 44,
+      "source_url": "https://bertdobbelaere.github.io/sorting_networks.html",
+      "derivation": "Reported size lower bound; 2025-04-21 update attributed to Jelmer Firet using Van Voorhis principles. External derivation not independently replayed; weaker recurrence cross-check in evaluator.",
+      "role": "score_one_target_not_constructive_record",
+      "retrieved_on": "2026-09-08",
+      "record_page_revision_date": "2025-11-07",
+      "lower_bound_update_date": "2025-04-21"
+    },
+    {
+      "name": "lower_bound_n14",
+      "value": 48,
+      "source_url": "https://bertdobbelaere.github.io/sorting_networks.html",
+      "derivation": "Reported size lower bound; 2025-04-21 update attributed to Jelmer Firet using Van Voorhis principles. External derivation not independently replayed; weaker recurrence cross-check in evaluator.",
+      "role": "score_one_target_not_constructive_record",
+      "retrieved_on": "2026-09-08",
+      "record_page_revision_date": "2025-11-07",
+      "lower_bound_update_date": "2025-04-21"
+    },
+    {
+      "name": "lower_bound_n15",
+      "value": 53,
+      "source_url": "https://bertdobbelaere.github.io/sorting_networks.html",
+      "derivation": "Reported size lower bound; 2025-04-21 update attributed to Jelmer Firet using Van Voorhis principles. External derivation not independently replayed; weaker recurrence cross-check in evaluator.",
+      "role": "score_one_target_not_constructive_record",
+      "retrieved_on": "2026-09-08",
+      "record_page_revision_date": "2025-11-07",
+      "lower_bound_update_date": "2025-04-21"
+    },
+    {
+      "name": "lower_bound_n16",
+      "value": 57,
+      "source_url": "https://bertdobbelaere.github.io/sorting_networks.html",
+      "derivation": "Reported size lower bound; 2025-04-21 update attributed to Jelmer Firet using Van Voorhis principles. External derivation not independently replayed; weaker recurrence cross-check in evaluator.",
+      "role": "score_one_target_not_constructive_record",
+      "retrieved_on": "2026-09-08",
+      "record_page_revision_date": "2025-11-07",
+      "lower_bound_update_date": "2025-04-21"
+    },
+    {
+      "name": "lower_bound_n17",
+      "value": 63,
+      "source_url": "https://bertdobbelaere.github.io/sorting_networks.html",
+      "derivation": "Reported size lower bound; 2025-04-21 update attributed to Jelmer Firet using Van Voorhis principles. External derivation not independently replayed; weaker recurrence cross-check in evaluator.",
+      "role": "score_one_target_not_constructive_record",
+      "retrieved_on": "2026-09-08",
+      "record_page_revision_date": "2025-11-07",
+      "lower_bound_update_date": "2025-04-21"
+    }
+  ],
+  "scoring_revision": "clipped_pruned_window_batcher_to_cited_lower_bound",
+  "baseline_sizes": {
+    "13": 48,
+    "14": 53,
+    "15": 59,
+    "16": 63,
+    "17": 75
+  }
+}

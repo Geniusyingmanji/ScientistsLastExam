@@ -64,6 +64,7 @@ DECLARED_EXTERNAL_ANCHORS = {
     "Mathematics/SchurPartition",
     "Mathematics/ErdosMinimumOverlap",
     "Mathematics/HeilbronnTrianglePacking",
+    'Algorithm/SortingNetworkSize',
     "Algorithm/TensorRank555",
     "Superconductivity/SuperconductorTcRecord",
 }

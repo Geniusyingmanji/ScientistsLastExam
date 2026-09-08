@@ -1,0 +1,124 @@
+schema_version: 2
+scientific_question: Construct smaller sorting networks for n=13..17, measuring progress from a reproducible
+  generic construction toward cited size lower bounds.
+artifact: A list of [i, j] compare-exchange gates (0 <= i < j < n) per input size; the oracle simulates
+  the exact gate sequence on all 2^n zero-one inputs.
+oracle:
+  model: exact 0-1-principle verification with one bitmask per wire (bit x set iff the wire holds 1 on
+    zero-one input x), gate (i, j) applied as wires[i], wires[j] = wires[i] & wires[j], wires[i] | wires[j],
+    output sorted iff wires[0] subset of wires[1] subset of ... subset of wires[n-1]
+  feasibility: every gate a pair of integral indices with 0 <= i < j < n, at most n*n gates, finite sequence,
+    and the network sorts all 2^n zero-one inputs; a purported construction strictly below the cited bound
+    is flagged for audit
+  deterministic: true
+  external_tooling: Python standard library only; candidate NumPy arrays remain supported
+difficulty_ladder:
+  default_level: 1
+  levels:
+    1: Five fixed open parameter choices; raw sizes and record gaps remain separately visible. Competitive
+      truth-blind reference and frontier calibration pending.
+normalization:
+  baseline: Generic Batcher construction with every contiguous sentinel window and exact deletion to a
+    fixed point; sizes 48/53/59/63/75, reconstructed by the oracle.
+  reference: No qualifying truth-blind reference yet. verification/reference_search.py is a bounded, data-free
+    search probe (48/53/59/63/74, score 0.016667); the attributed published reconstruction is only a lookup
+    probe (0.496667), not the reference.
+  target: 44/48/53/57/63 reported by Dobbelaere; detailed proof not independently replayed here
+  score: mean clip((baseline_size - size)/(baseline_size - lower_bound), 0, 1); published constructive
+    records are not score-one anchors
+  target_semantics: A valid construction attaining the cited lower bound is optimal conditional on that
+    external bound. The checker certifies construction validity, not the lower-bound theorem. Attainability
+    is unknown; unused score range is not measured headroom. This uses a theoretical-target interpretation,
+    not an approved admission exception. Unlike MiplibPrimalIncumbent, whose proved optimum is attained
+    by a feasible solution, these bounds need not be attainable. A competitive independent search reference
+    remains a merge blocker.
+  raw_score: Negative mean comparator count when all five instances are valid; -1e18 when any is invalid.
+    Invalid aggregate combined_score is zero.
+citations:
+- id: url:https://bertdobbelaere.github.io/sorting_networks.html
+  title: Size records and reported lower bounds; 2025-04-21 lower-bound update attributed to Jelmer Firet
+    / Van Voorhis
+- id: arxiv:2012.04400
+  title: Harder, An Answer to the Bose-Nelson Sorting Problem for 11 and 12 Channels; conservative recurrence
+    cross-check
+- id: url:https://jmlr.org/papers/volume14/valsalam13a/valsalam13a.pdf
+  title: Valsalam-Miikkulainen 2013; constructive records and Juille1995 history
+invariants:
+- Exact construction verification independent of reported size or claimed properties
+- Generic executable baseline is valid and scores zero
+- Published record reconstruction is below one; one is reserved for attaining the cited lower bound
+- Raw size, record gap, bound gap, target attainment and record improvements remain separately reported
+- Deterministic inputs; any invalid instance zeros the aggregate and uses raw sentinel -1e18, while feasibility
+  and diagnostics retain per-instance detail
+- The cited lower bounds are external mathematical assumptions, not proven by this evaluator
+known_shortcuts: 'Current zero-anchor revision: Batcher 48/53/59/63/85, window-offset grid 48/53/59/63/81,
+  deletion-only 48/53/59/63/79, offset grid plus exact deletion 48/53/59/63/75, and insertion sort all
+  score 0.000000. Published gate-list lookup scores 0.496667. Data-free 300-trial prefix search reaches
+  48/53/59/63/74 and 0.016667; disabling uphill acceptance gives the same result, so that component has
+  no demonstrated benefit. See known_best.md for dated maintainer negative-search evidence and local exploratory
+  failures. No admission-quality reference is claimed.'
+licensing:
+  task_package: repository_license_not_declared
+  external_assets: SorterHunter gate lists, MIT; see references/SorterHunter-LICENSE.txt and reference_sources.json
+  note: Only attributed construction data are redistributed; source commits, SHA-256 hashes and license
+    notices are retained. No paper prose copied.
+contamination:
+  status: public_data_replication_risk
+  rationale: Exact re-verification prevents fake constructions but cannot distinguish independent search
+    from public-data lookup. The shipped reconstruction is a shortcut probe, not evidence of truth-blind
+    problem-solving ability.
+review:
+  domain: pending_external_algorithms
+  evaluator_security: automated_invariant_and_malformed_candidate_sweeps
+provenance:
+  class: known_answer
+  target_source: Cited published size lower bounds, separate from constructive record sizes. See references/known_best.md
+    for proof provenance, trust assumptions and unresolved review.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: high
+  rationale: InformationTheory/ShannonCapacityCertificate also scores a construction against bounds on
+    an open mathematical quantity, but checks graph certificates. Mathematics/NonlinearCodeRecords constructs
+    distance-separated codes, while this task minimizes sequential comparators under exact 0-1 sorting
+    verification. Public-record lookup can still earn 0.496667; normalization does not remove contamination
+    or establish research difficulty.
+lineage:
+  status: complete
+  builder_model_ids:
+  - glm-5.3-subagent
+  builder_scaffolds:
+  - sle-contributing-template
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: Initial builder audits pinned exact bitmask direction and malformed-value
+    handling. The 2026-09-08 maintainer review identified a partial-invalid positive score, an incorrectly
+    ordered raw sentinel, an unbounded copy for lists, and a redundant zero anchor. These are corrected
+    with regression tests. Non-sequence iterators are bounded for direct evaluator diagnostics; the RPC
+    boundary already rejects generators. Independent search experiments use no published comparator tables
+    but remain far below the lookup probe; no frontier-model calibration was run.
+  shortcut_discoverer: initial_internal_red_team
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: AI-assisted benchmark engineering
+  reviewer_domain: pending_external_algorithms
+  expert_hours: null
+  red_team_rounds: 2
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: Exact baseline and shipped reconstruction verification plus existing
+    independent small-instance checker tests. Published lower-bound proofs are external and not independently
+    replayed. Local development diagnostics are not formal calibration evidence.
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+evaluation_budget:
+  timeout_seconds: 300
+  scope: Whole evaluation across all five candidate calls, including search and exact verification.
+  search_probe_trials_per_instance: 300
+  search_probe_status: Deterministic method probe only; no competitive reference or two-hour headroom
+    claim.

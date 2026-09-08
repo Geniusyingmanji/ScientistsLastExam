@@ -1,0 +1,35 @@
+{
+  "source_project": "Bert Dobbelaere / SorterHunter",
+  "commit": "392762f916688756242d90febced98ad157bc6d2",
+  "license": "MIT",
+  "retrieved_on": "2026-09-08",
+  "files": [
+    {
+      "path": "verification/data/Sort_13_45_10.json",
+      "source_url": "https://raw.githubusercontent.com/bertdobbelaere/SorterHunter/392762f916688756242d90febced98ad157bc6d2/Networks/Sorters/Sort_13_45_10.json",
+      "sha256": "f8fddc49be349926d009cf8acc97d89d4ebcbfe4105178e38da96c4744bd9642"
+    },
+    {
+      "path": "verification/data/Sort_14_51_10.json",
+      "source_url": "https://raw.githubusercontent.com/bertdobbelaere/SorterHunter/392762f916688756242d90febced98ad157bc6d2/Networks/Sorters/Sort_14_51_10.json",
+      "sha256": "69778c2dd632e09d763e8b372f50b3d13f2742fa013e0b8cf847e85501c92bb5"
+    },
+    {
+      "path": "verification/data/Sort_15_56_10.json",
+      "source_url": "https://raw.githubusercontent.com/bertdobbelaere/SorterHunter/392762f916688756242d90febced98ad157bc6d2/Networks/Sorters/Sort_15_56_10.json",
+      "sha256": "dba3d252f0ba4ab458a3d4fe1ea2616e0c8b4b10ace585ab8c5ed6cd026075d6"
+    },
+    {
+      "path": "verification/data/Sort_16_60_10.json",
+      "source_url": "https://raw.githubusercontent.com/bertdobbelaere/SorterHunter/392762f916688756242d90febced98ad157bc6d2/Networks/Sorters/Sort_16_60_10.json",
+      "sha256": "6880b0f02fa1d2001059eea5f7f984abb2c38990ba1a05a85c7e96869ed5519d"
+    },
+    {
+      "path": "verification/data/Sort_17_71_12.json",
+      "source_url": "https://raw.githubusercontent.com/bertdobbelaere/SorterHunter/392762f916688756242d90febced98ad157bc6d2/Networks/Sorters/Sort_17_71_12.json",
+      "sha256": "dc139714281074c8fef1ce3cc2835aee8b5e95cc4fe8067cef27454dbd9efbcc"
+    }
+  ],
+  "license_source_url": "https://raw.githubusercontent.com/bertdobbelaere/SorterHunter/392762f916688756242d90febced98ad157bc6d2/LICENSE",
+  "license_sha256": "392ae9933f7f9b1bde9c13c22c28fe5c5cd1d9d6b5ef070bcb8fd26ca0035db5"
+}

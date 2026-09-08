@@ -37,6 +37,7 @@ CHINESE_NAMES = {
     "Acoustics/RoomImpulseResponse": "房间声学处理设计",
     "Algorithm/GraphFromDistances": "距离查询重建图",
     "Algorithm/MatrixMultiplicationRank": "矩阵乘法秩",
+    'Algorithm/SortingNetworkSize': '排序网络最小规模',
     "Algorithm/TensorRank555": "5x5 与 6x6 张量秩",
     "Astrodynamics/LowThrustTransfer": "小推力轨道转移",
     "AtmosphericScience/RadiativeTransferFit": "辐射传输反演",
@@ -132,6 +133,7 @@ CHINESE_BRIEFS = {
     "Algorithm/MatrixMultiplicationRank": (
         "搜索双线性张量分解,减少矩阵乘法所需的标量乘法次数",
         "对最好已知乘法数的平均进度;无上限"),
+    'Algorithm/SortingNetworkSize': ('为 n=13..17 构造更少比较器的排序网络;n=16 的 60 门纪录自 1969 年未破', 'Batcher 为零、所引规模下界为理想满分;精确验证,保留实际门数与纪录差'),
     "Algorithm/TensorRank555": (
         "为 5x5 与 6x6 矩阵乘法找有限精度复系数分解,秩低于已知构造",
         "对最好已知乘法数的平均进度;无上限,实例与 MatrixMultiplicationRank 不相交"),
@@ -405,7 +407,7 @@ CHINESE_BRIEFS = {
 FORM_TITLES = OrderedDict([("optimization", "Optimization"), ("discovery", "Discovery")])
 ANALOGUE_TITLES = OrderedDict([
     ("engineering_design", "工程设计(engineering_design)"),
-    ("combinatorial", "开放组合纪录(combinatorial,无上限)"),
+    ("combinatorial", "组合构造(combinatorial)"),
     ("molecular_design", "分子与大分子设计(molecular_design)"),
 ])
 KIND_TITLES = OrderedDict([

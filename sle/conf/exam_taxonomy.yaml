@@ -74,6 +74,10 @@ tasks:
   InformationTheory/ShannonCapacityCertificate: {form: optimization, analogue: certificate_bound, note: two_sided_interval_for_an_open_capacity_lower_side_is_a_code_upper_side_is_exact_rational}
   Mathematics/NonlinearCodeRecords: {form: optimization, analogue: combinatorial}
   Algorithm/MatrixMultiplicationRank: {form: optimization, analogue: combinatorial}
+  Algorithm/SortingNetworkSize:
+    form: optimization
+    analogue: combinatorial
+    note: open_gate_counts_n13_17_not_bilinear_rank
   Algorithm/TensorRank555: {form: optimization, analogue: combinatorial, note: new_sizes_not_extension_of_certified_matmul}
   QuantumErrorCorrection/QuantumErrorDecoder: {form: optimization, analogue: combinatorial}
   # --- optimization / molecular & macromolecular design (PMO / BioDesign) -----

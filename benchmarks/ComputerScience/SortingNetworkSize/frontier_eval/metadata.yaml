@@ -1,0 +1,23 @@
+domain: Algorithm
+task: SortingNetworkSize
+scientific_role: optimization
+difficulty: hard
+tier: T2
+oracle_type: analytical
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 5
+science_metric: mean_gap_closure_to_cited_size_lower_bound
+sizes:
+- 13
+- 14
+- 15
+- 16
+- 17
+reference_baseline: pruned_all_sentinel_window_batcher
+reference_sota: Published records retained only as raw comparison and an attributed lookup probe; not
+  a qualifying reference.
+citation: Dobbelaere size-bound compilation (2025-04-21 update); Harder arXiv:2012.04400; Valsalam-Miikkulainen
+  JMLR14 (2013) 303-331
+reference_target: Cited lower bounds 44/48/53/57/63; proof external, attainability unknown
+reference_method_status: bounded_truth_blind_search_probe_added; competitive_reference_still_pending

@@ -29,6 +29,7 @@ RECORDED_LINEAGE = {
     "Mathematics/SchurPartition",
     "Mathematics/ErdosMinimumOverlap",
     "Mathematics/HeilbronnTrianglePacking",
+    'Algorithm/SortingNetworkSize',
     "Algorithm/TensorRank555",
     "Mathematics/Superpermutation",
     "AtmosphericChemistry/MethaneSourceAttribution",

@@ -1,0 +1,5 @@
+1) Only edit solution.py. Keep build_network(n) -> list of [i, j] pairs with 0 <= i < j < n.
+2) The network must sort all inputs (checked exactly via the 0-1 principle); any invalid instance -> combined_score 0, valid 0, raw_score -1e18.
+3) Fewer comparators score higher; at most n*n comparators per instance, longer output is rejected.
+4) numpy/stdlib only, CPU, 300-second total evaluation timeout across all five instances. Do not read verification/ or frontier_eval/.
+5) Score is clipped gap closure from the executable generic baseline to a cited size lower bound; matching a published record does not score 1. Raw size and record improvements are still reported.

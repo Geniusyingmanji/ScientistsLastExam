@@ -526,6 +526,13 @@ tasks:
       - url:https://cohn.mit.edu/kissing-numbers/
       - arxiv:2506.13131
       - arxiv:2606.18984
+  Algorithm/SortingNetworkSize:
+    status: candidate
+    reason: 'Exact 0-1 sorting verification with a pruned sentinel-window generic zero anchor and external size lower bounds; all-invalid and partial-invalid submissions fail closed. Published data remain a lookup probe. A bounded independent search probe is available but is not competitive; an admission-quality reference, proof review and model calibration remain pending.'
+    citation_ids:
+    - arxiv:2012.04400
+    - url:https://jmlr.org/papers/v14/valsalam13a.html
+    - url:https://bertdobbelaere.github.io/sorting_networks.html
   Algorithm/TensorRank555:
     status: candidate
     reason: >-
