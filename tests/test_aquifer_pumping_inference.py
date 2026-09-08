@@ -110,11 +110,11 @@ class AquiferPumpingInferenceTests(unittest.TestCase):
         finally:
             sys.path.pop(0)
         full = oracle.evaluate(reference.infer_aquifer)
-        two = oracle.evaluate(ablations.two_radii_only)
+        one_radius = oracle.evaluate(ablations.one_radius_repeated)
         fixed = oracle.evaluate(ablations.fixed_storage)
         never = oracle.evaluate(ablations.never_refuse)
         for key in ("combined_score", "robustness_score"):
-            self.assertGreater(full[key], two[key])
+            self.assertGreater(full[key], one_radius[key])
             self.assertGreater(full[key], fixed[key])
             self.assertGreater(full[key], never[key])
 

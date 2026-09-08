@@ -56,12 +56,13 @@ def _fit(kind, r, t, y, sigma, q, bounds):
     return best
 
 
-def _infer(problem, measure, radius_count=4, allow_refusal=True, fixed_storage=None):
+def _infer(problem, measure, radius_count=4, repeats=1, allow_refusal=True, fixed_storage=None):
     rows = []
     # Cross-scale sampling is essential: use four radii over six logarithmic times.
     for radius in problem["observation_radii_m"][:radius_count]:
         for time in problem["observation_times_s"][1:7]:
-            rows.append(measure(radius, time))
+            for _ in range(repeats):
+                rows.append(measure(radius, time))
     r = np.asarray([row["radius_m"] for row in rows], dtype=float)
     t = np.asarray([row["time_s"] for row in rows], dtype=float)
     y = np.asarray([row["drawdown_m"] for row in rows], dtype=float)

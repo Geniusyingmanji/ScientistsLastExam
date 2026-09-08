@@ -2,8 +2,8 @@
 from reference_solver import _infer
 
 
-def two_radii_only(problem, measure):
-    return _infer(problem, measure, radius_count=2)
+def one_radius_repeated(problem, measure):
+    return _infer(problem, measure, radius_count=1, repeats=2)
 
 
 def fixed_storage(problem, measure):
