@@ -86,6 +86,9 @@ an invalid submission, wrong family, or undetermined answer is incorrect.
 
 The truth-blind reference, ablations, and a 192-strategy shortcut probe are quantified in
 `references/known_best.md` and pin the capability ladder without exposing evaluator worlds.
+It scores `0.985962/0.983490` development/held out. One-radius repeated sampling scores
+`0.852296/0.839991`; fixed storativity scores `0.699741/0.722078`; never refusing scores
+`0.612462/0.609990`; and the summary-statistic shortcut sweep reaches only `0.361500/0.361500`.
 
 ## Relationship to nearby tasks
 
@@ -107,3 +110,4 @@ The supported equation follows Theis (1935), DOI `10.1029/TR016i002p00519`. Leak
 boundary diagnostics are grounded in Hantush and Jacob (1955), DOI `10.1029/TR036i001p00095`, and
 Ferris et al. (1962), USGS Water-Supply Paper 1536-E, DOI `10.3133/wsp1536E`. The oracle is an
 explicit reduced-order benchmark, not a field-site interpretation prescription.
+Delayed dual-porosity behavior is motivated by Moench (1984), DOI `10.1029/WR020i007p00831`.

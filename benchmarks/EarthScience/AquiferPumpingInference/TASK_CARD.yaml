@@ -16,6 +16,8 @@ citations:
   title: Non-steady radial flow in an infinite leaky aquifer
 - id: doi:10.3133/wsp1536E
   title: Theory of aquifer tests
+- id: doi:10.1029/WR020i007p00831
+  title: Double-porosity models for a fissured groundwater reservoir with fracture skin
 invariants:
 - confined drawdown follows the Theis exponential-integral solution and increases with elapsed time at fixed radius
 - confined drawdown decreases with radius and is invariant under equal values of radius squared divided by time
@@ -25,7 +27,7 @@ invariants:
 - malformed, non-finite, extra-key, fabricated-evidence, unlisted-coordinate, and over-budget candidates fail closed
 - development and held-out worlds use different parameters and deterministic noise seeds
 - the reference consumes only public problems and charged measurement callbacks
-known_shortcuts: Pending executable 192-strategy summary-statistic sweep before branch publication; the probe uses only early cross-radius attenuation, late-time growth, and curve curvature, without nonlinear Theis or alternative-family fits.
+known_shortcuts: A reproducible 192-strategy sweep using early cross-radius attenuation, late-time growth, and curvature thresholds scores 0.3615/0.3615 development/held out with 0.375 mechanism accuracy and 0.625 false discovery, below the truth-blind multi-model reference at 0.9860/0.9835. One-radius repeated sampling reaches 0.8523/0.8400, fixed storativity 0.6997/0.7221, and never refusing 0.6125/0.6100. The reduced-order laboratory omits partial penetration, well storage/skin, heterogeneity, anisotropy, unconfined flow, irregular boundaries and correlated drift.
 review:
   domain: pending_external_hydrogeology_review
   evaluator_security: automated_budget_contract_determinism_theis_invariant_bad_candidate_ablation_and_mechanism_accounting_tests
@@ -33,7 +35,7 @@ provenance:
   class: procedural
   target_source: Repository-visible deterministic multi-radius pumping-test generator with development and held-out supported and misspecified worlds.
   task_contract_public_before_evaluation: true
-  fresh_confirmation_status: pending_clean_linux_secure_eval
+  fresh_confirmation_status: linux_secure_eval_completed_at_frozen_revision
 novelty_risk:
   level: medium
   rationale: No repository or Frontier-Eng task performs pumping-test interpretation. GravityInversion reconstructs static density bodies; EnergyBalanceModel fits global climate response; DistributionNetworkTopology reconstructs pipe graphs. None uses radial groundwater diffusion, pumping interventions, or aquifer conceptual-model attribution.
@@ -44,10 +46,13 @@ lineage:
   builder_scaffolds:
   - science-benchmark-construction
   - active_multi_radius_pumping_test_discovery
-  calibrator_model_ids: []
-  calibration_runs: []
-  calibration_evidence_status: missing
-  edits_triggered_by_model: Pending first-proposal calibration after the executable task and shortcut/ablation evidence are frozen.
+  calibrator_model_ids:
+  - deepseek-v4-flash
+  - deepseek-v4-pro
+  calibration_runs:
+  - experiments/aquifer_pumping_deepseek_calibration_2026-09-08.json
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: No evaluator or public-contract change followed calibration. Pro recovered supported parameters and predictions but identified only one of three unsupported mechanisms; Flash required a larger output cap and then produced a valid but high-false-discovery candidate. These failures were retained rather than used to tune hidden worlds.
   shortcut_discoverer: builder_self_audit_with_192_strategy_summary_statistic_sweep
   frozen_before_eval: false
   freeze_timestamp: null
