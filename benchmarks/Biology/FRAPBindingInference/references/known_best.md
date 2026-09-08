@@ -2,6 +2,11 @@
 
 ## Scoring
 
+The PR-readiness review separated family-diagnosis accuracy from the composite science score,
+with split-level correct and total counts. It did not change candidate inputs, inference targets,
+or composite scoring. Historical model draws below remain calibration evidence for their recorded
+revision, not new runs of the revised diagnostic reporting.
+
 `combined_score` is clipped to `[0, 1]`. A valid `undetermined` blanket abstention is exactly zero.
 The task-local reference is an evaluation anchor for a reduced-order FRAP laboratory, not a claim
 of optimal experimental design or in-cell validation.
