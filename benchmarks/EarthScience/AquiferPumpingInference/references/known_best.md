@@ -45,8 +45,11 @@ checking therefore each change measured capability.
 
 ## Model calibration
 
-At executable task revision `d70ab470e`, one selection-blind first proposal per model used seed
-845, temperature 0.7, `greedy_rewrite`, and explicit `chat_thinking: disabled`. Both exact model
+The model proposals were generated against frozen evaluator/public contract revision `5603d13c6`
+and replayed with identical full metrics on clean executable revision `d70ab470e`; the intervening
+change affected only the reference ablation helper and its test. One selection-blind first proposal
+per model used seed 845, temperature 0.7, `greedy_rewrite`, and explicit
+`chat_thinking: disabled`. Both exact model
 IDs first returned `AQ_SMOKE_OK` in 32-token smoke tests. DeepSeek v4 Flash required a 16000-token
 replay after its 8000-token output was truncated into a candidate runtime failure. The completed
 Flash proposal is valid and scores `0.124000/0.000000`, with mechanism accuracy `0.125/0.000` and

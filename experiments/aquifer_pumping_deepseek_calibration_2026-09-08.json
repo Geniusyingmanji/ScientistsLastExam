@@ -3,6 +3,8 @@
   "evidence_scope": "MODEL_CALIBRATION_NOT_POPULATION_PERFORMANCE",
   "task": "Hydrology/AquiferPumpingInference",
   "task_source_revision": "d70ab470e",
+  "generation_source_revision": "5603d13c6",
+  "revision_note": "The only change between generation and clean replay was the task-local reference ablation helper and its test; evaluator, public contract, baseline, and candidate-visible files were unchanged.",
   "score_evaluation_source_tree_dirty": false,
   "trusted_secure_eval": true,
   "created_at": "2026-09-08",
