@@ -122,4 +122,30 @@ class TransientChirpInferenceTests(unittest.TestCase):
             self.assertEqual(result["combined_score"], 0)
             self.assertEqual(set(result), set(good))
 
+    def test_retuned_sign_probe_stays_below_reference(self):
+        calibration = load(TASK / "verification/calibrate.py", "chirp_probe_test")
+        # Best development-selected member of the registered 1,620-policy grid.
+        candidate = calibration.sign_count_policy(12, 0.28, 0.08, 0.05, 0, 0.006)
+        probe = self.ev.evaluate(candidate)
+        reference = self.ev.evaluate(self.ref.infer_transient)
+        for key in ("combined_score", "robustness_score"):
+            self.assertGreater(reference[key] - probe[key], 0.1)
+
+    def test_candidate_session_is_reset_between_worlds(self):
+        baseline = self.base.infer_transient
+        class Counter:
+            calls = 0
+            resets = 0
+            def reset_session(self):
+                self.calls = 0
+                self.resets += 1
+            def __call__(self, problem, observe):
+                self.calls += 1
+                if self.calls != 1:
+                    raise RuntimeError("cross-world state")
+                return baseline(problem, observe)
+        candidate = Counter()
+        self.assertEqual(self.ev.evaluate(candidate)["valid"], 1)
+        self.assertEqual(candidate.resets, len(self.ev.DEVELOPMENT_WORLDS) + len(self.ev.HELDOUT_WORLDS))
+
 if __name__ == "__main__": unittest.main()

@@ -21,7 +21,7 @@ invariants:
 - duplicate queries, overspending, unknown epochs/detectors and malformed candidates fail closed
 - every answer cites at least six distinct current-world observations
 - model accuracy, false discovery, refusal, feasibility and held-out transfer are separate axes
-known_shortcuts: PR48 review found that a noise threshold and sign-count heuristic matched the old reference. The revised worlds share one noise standard deviation and include slow chirps paired with midpoint-matched lines; slope recovery is weighted and also applies to line claims. verification/calibrate.py includes both the historical threshold family and a noise/sign-count/RMS/slope grid. Old numerical bounds no longer apply; revised replay results belong in references/known_best.md. Real detector calibration, colored noise, sky-position delays and full inspiral waveform families remain outside this reduced-order model.
+known_shortcuts: PR48's original noise/sign-count heuristic now scores 0/0 development/held-out. A development-selected 1,620-policy noise/RMS/sign-count/slope grid reaches 0.627261/0.543909 versus reference 0.787122/0.723428; the original 2,916-policy threshold family reaches 0.418415/0.214259. Selected candidates were replayed twice in the Linux sandbox. These are tested grid maxima, not a universal bound; the stronger shortcut still reaches about 80 percent of reference development score. All families now share one noise standard deviation, paired slow chirps/lines overlap in sign counts, and slope recovery is scored for lines too. Full inspiral waveforms, colored noise, detector calibration and sky delays remain out of scope.
 review:
   domain: pending_external_gravitational_wave
   evaluator_security: automated_budget_determinism_refusal_and_malformed_candidate_checks_passed_clean_linux_replay
@@ -46,9 +46,10 @@ lineage:
   - deepseek-v4-pro
   calibration_runs:
   - experiments/transient_chirp_deepseek_calibration_2026-09-07.json
-  calibration_evidence_status: historical_only
+  - experiments/transient_chirp_deepseek_review_2026-09-08.json
+  calibration_evidence_status: current_or_migration_replayed
   edits_triggered_by_model: none
-  shortcut_discoverer: builder_self_audit_with_task_local_ablation_sweep_and_deepseek_flash_pro_calibration
+  shortcut_discoverer: maintainer_PR48_sign_count_probe_and_expanded_development_only_grid
   frozen_before_eval: false
   freeze_timestamp: null
 long_horizon:
@@ -61,6 +62,6 @@ construction_audit:
   author_domain: computational_gravitational_wave
   reviewer_domain: pending_external_gravitational_wave
   expert_hours: null
-  red_team_rounds: 2
+  red_team_rounds: 3
   oracle_disagreement_status: not_quantified
   independent_recomputation_status: task-local reference, ablation sweep and deterministic tests replayed on a clean Linux worktree

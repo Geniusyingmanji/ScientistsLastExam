@@ -67,6 +67,13 @@ Each world starts a fresh candidate session. The initial frequency is in [0.04, 
 The reference observes t=0..11, leaving later localized transients and more adaptive schedules
 as explicit headroom. This is a reduced-order phase model, not a full inspiral waveform.
 
+Current reference: 0.787122 development / 0.723428 held-out normalized score. Removing H1/L1
+coherence gives 0.692047/0.643030; removing chirp fitting gives 0.479101/0.479147; fixing slopes
+to 0.02 gives 0.487122/0.431762; never refusing gives 0/0. The original noise/sign-count shortcut
+gives 0/0. A development-selected 1,620-policy noise/RMS/sign-count/slope grid reaches
+0.627261/0.543909, and the historical 2,916-policy threshold family reaches 0.418415/0.214259.
+These are tested grid maxima, not an exhaustive upper bound over possible algorithms.
+
 ## Relationship to nearby tasks
 
 `Gravitation/PTAHellingsDowns` uses angular correlations across many pulsars; this task fits one
